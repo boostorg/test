@@ -21,6 +21,7 @@
 
 // Boost
 #include <boost/type_traits/remove_reference.hpp>
+#include <boost/type_traits/remove_const.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -80,7 +81,9 @@ public:
             return (test_unit*)0;
 
         test_func_with_bound_param<ParamType> bound_test_func( m_test_func, *m_par_begin );
-        0; // !! MSVC bug
+#if BOOST_WORKAROUND(BOOST_MSVC,<=1200)
+        0;
+#endif
         test_unit* res = new test_case( m_tc_name, bound_test_func );
 
         ++m_par_begin;
@@ -113,13 +116,14 @@ make_test_case( callback1<ParamType> const& test_func,
 //____________________________________________________________________________//
 
 template<typename ParamType, typename ParamIter>
-inline ut_detail::param_test_case_generator<typename remove_reference<ParamType>::type,ParamIter>
+inline ut_detail::param_test_case_generator<
+    BOOST_DEDUCED_TYPENAME remove_const<BOOST_DEDUCED_TYPENAME remove_reference<ParamType>::type>::type,ParamIter>
 make_test_case( void (*test_func)( ParamType ),
                 const_string  tc_name, 
                 ParamIter     par_begin,
                 ParamIter     par_end )
 {
-    typedef typename remove_reference<ParamType>::type param_value_type;
+    typedef BOOST_DEDUCED_TYPENAME remove_const<BOOST_DEDUCED_TYPENAME remove_reference<ParamType>::type>::type param_value_type;
     return ut_detail::param_test_case_generator<param_value_type,ParamIter>( test_func, tc_name, par_begin, par_end );
 }
 
@@ -137,6 +141,9 @@ make_test_case( void (*test_func)( ParamType ),
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/02/21 10:25:04  rogeeff
+//  remove const during ParamType deduction
+//
 //  Revision 1.1  2005/02/20 08:27:06  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
