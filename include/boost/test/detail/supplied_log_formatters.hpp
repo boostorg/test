@@ -39,11 +39,11 @@ namespace ut_detail {
 class compiler_log_formatter : public unit_test_log_formatter {
 public:
     void    start_log( std::ostream&, bool log_build_info );
-    void    log_header( std::ostream&, unit_test_counter test_cases_amount );
+    void    log_header( std::ostream&, counter_t test_cases_amount );
     void    finish_log( std::ostream& );
 
-    void    track_test_case_enter( std::ostream&, test_case const& tc );
-    void    track_test_case_exit( std::ostream&, test_case const& tc, long testing_time_in_mks );
+    void    test_case_enter( std::ostream&, test_case const& tc );
+    void    test_case_exit( std::ostream&, test_case const& tc, long testing_time_in_mks );
 
     void    log_exception( std::ostream&, log_checkpoint_data const&, const_string test_case_name, const_string explanation );
     void    begin_log_entry( std::ostream&, log_entry_data const&, log_entry_types let );
@@ -64,11 +64,11 @@ public:
     xml_log_formatter();
 
     void    start_log( std::ostream&, bool log_build_info );
-    void    log_header( std::ostream&, unit_test_counter test_cases_amount );
+    void    log_header( std::ostream&, counter_t test_cases_amount );
     void    finish_log( std::ostream& );
 
-    void    track_test_case_enter( std::ostream&, test_case const& tc );
-    void    track_test_case_exit( std::ostream&, test_case const& tc, long testing_time_in_mks );
+    void    test_case_enter( std::ostream&, test_case const& tc );
+    void    test_case_exit( std::ostream&, test_case const& tc, long testing_time_in_mks );
 
     void    log_exception( std::ostream&, log_checkpoint_data const&, const_string test_case_name, const_string explanation );
     void    begin_log_entry( std::ostream&, log_entry_data const&, log_entry_types let );
@@ -96,6 +96,10 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.12  2005/01/30 01:49:29  rogeeff
+//  counter type renamed
+//  interface functions shortened
+//
 //  Revision 1.11  2005/01/22 19:22:12  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
