@@ -9,7 +9,8 @@
 //    7 Nov 00  Initial boost version (Beman Dawes)
 
 //  While it would appear that including boost/test_tools.hpp is unneeded,
-//  it is useful in the case that BOOST_INCLUDE_MAIN is defined.
+//  it is useful because  BOOST_INCLUDE_MAIN is defined.
+#define BOOST_INCLUDE_MAIN  // for testing, include rather than link
 #include <boost/test/test_tools.hpp>
 
 int test_main( int, char *[] )  // note the name

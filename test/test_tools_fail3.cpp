@@ -1,4 +1,4 @@
-//  test tools - test failure reported by BOOST_TEST_VERIFY  -----------------//
+//  test tools - test failure reported by BOOST_TEST  ------------------------//
 
 //  (C) Copyright Beman Dawes 2000. Permission to copy, use, modify, sell and
 //  distribute this software is granted provided this copyright notice appears
@@ -8,6 +8,7 @@
 //  Revision History
 //    7 Nov 00  Initial boost version (Beman Dawes)
 
+#define BOOST_INCLUDE_MAIN  // for testing, include rather than link
 #include <boost/test/test_tools.hpp>
 
 int test_main( int, char *[] )  // note the name

@@ -8,12 +8,14 @@
 //  Revision History
 //    7 Nov 00  Initial boost version (Beman Dawes)
 
+#define BOOST_INCLUDE_MAIN  // for testing, include rather than link
 #include <boost/test/test_tools.hpp>
 
 int test_main( int, char *[] )  // note the name
 {
   int v = 1;
   BOOST_TEST( v == 2 );
+  BOOST_ERROR( "sample BOOST_ERROR call" );
   BOOST_CRITICAL_TEST( 2 == v );
   throw "Opps! should never reach this point";
   return 1;

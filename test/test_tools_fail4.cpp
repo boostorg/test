@@ -8,6 +8,7 @@
 //  Revision History
 //    8 Feb 01  Initial boost version (Beman Dawes)
 
+#define BOOST_INCLUDE_MAIN  // for testing, include rather than link
 #include <boost/test/test_tools.hpp>
 
 int test_main( int, char *[] )  // note the name
