@@ -13,18 +13,18 @@
   <H4 class="underlined">Definition</H4> 
   <P>defined in <A href="../../../../../../../boost/test/unit_test_log.hpp">unit_test_log.hpp</A> </P> 
   <H5>Synopsis</H5> 
-  <PRE class="code"><SPAN class="reserv-word">enum</span> log_level<a name="log_level"></a> {
-    log_successful_tests     = <SPAN class="literal">0</span>,
-    log_test_suites          = <SPAN class="literal">1</span>,
-    log_messages             = <SPAN class="literal">2</span>,
-    log_warnings             = <SPAN class="literal">3</span>,
-    log_all_errors           = <SPAN class="literal">4</span>, <SPAN class="comment">// reported by unit test macros</span>
-    log_cpp_exception_errors = <SPAN class="literal">5</span>, <SPAN class="comment">// uncaught C++ exceptions</span>
-    log_system_errors        = <SPAN class="literal">6</span>, <SPAN class="comment">// including timeouts, signals, traps</span>
-    log_fatal_errors         = <SPAN class="literal">7</span>, <SPAN class="comment">// including unit test macros or</span>
-                                  <SPAN class="comment">// fatal system errors</span>
-    log_progress_only        = <SPAN class="literal">8</span>, <SPAN class="comment">// only unit test progress to be reported</span>
-    log_nothing              = <SPAN class="literal">9</span>
+  <PRE class="code"><SPAN class="reserv-word">enum</SPAN> log_level<A name="log_level"></A> {
+    log_successful_tests     = <SPAN class="literal">0</SPAN>,
+    log_test_suites          = <SPAN class="literal">1</SPAN>,
+    log_messages             = <SPAN class="literal">2</SPAN>,
+    log_warnings             = <SPAN class="literal">3</SPAN>,
+    log_all_errors           = <SPAN class="literal">4</SPAN>, <SPAN class="comment">// reported by unit test macros</SPAN>
+    log_cpp_exception_errors = <SPAN class="literal">5</SPAN>, <SPAN class="comment">// uncaught C++ exceptions</SPAN>
+    log_system_errors        = <SPAN class="literal">6</SPAN>, <SPAN class="comment">// including timeouts, signals, traps</SPAN>
+    log_fatal_errors         = <SPAN class="literal">7</SPAN>, <SPAN class="comment">// including unit test macros or</SPAN>
+                                  <SPAN class="comment">// fatal system errors</SPAN>
+    log_progress_only        = <SPAN class="literal">8</SPAN>, <SPAN class="comment">// only unit test progress to be reported</SPAN>
+    log_nothing              = <SPAN class="literal">9</SPAN>
 };
 
 
@@ -40,23 +40,30 @@
   <P class="first-line-indented">To manage the testing output stream the Unit Test Framework uses a singleton class unit_test_log. This class is responsible for managing and formatting testing log. There two formats supported for testing log: human readable format and XML format. In most cases you do not need to use this class interface directly. The framework provides a simple way to set the log level and log format from outside of the test program. For more details and for the list of acceptable values see the <A href="../../parameters/index.html">Framework parameters</A>.</P> 
   <UL> 
     <LI> unit_test_log::<SPAN class="new-term">set_log_stream</SPAN>(...)<BR> 
-      use this method to change the log output stream to the one specified by the <I>str</I> parameter. The default stream is std::cout.</LI> 
+      use this method to change the log output stream to the one specified by
+        the <I>str</I> parameter. The default stream is std::cout. Note you need
+        to be aware about lifetime of your log stream. It may have to extend
+        beyond any initialization and test functions,
+        unless you reset the log stream back to some other stream with longer
+        lifetime before leaving the function scope. For example, you could
+        use variable defined locally in test_main function, if you reset
+        log stream back to std::cout at the function end. </LI> 
     <LI> unit_test_log::<SPAN class="new-term">set_log_threshold_level</SPAN>(...)<BR> 
       use this method to set a log threshold level. Log record appears in output stream only if it's level exceed the threshold.</LI> 
     <LI> unit_test_log::<SPAN class="new-term">set_log_format</SPAN>(...)<BR> 
       use this method to set the log format. For the list of acceptable values see <A href="../../parameters/log_format.html">log_format</A> framework parameter.</LI> 
-    <LI>unit_test_log::<SPAN class="new-term">set_log_formatter</SPAN><a name="set_log_formatter"></a>( ... )<BR> 
-      use this method to specify custom log formatter - instance of the class that implements <a href="custom_log_formatter.html">unit_test_log_formatter</a> interface</LI> 
+    <LI>unit_test_log::<SPAN class="new-term">set_log_formatter</SPAN><A name="set_log_formatter"></A>( ... )<BR> 
+      use this method to specify custom log formatter - instance of the class that implements <A href="custom_log_formatter.html">unit_test_log_formatter</A> interface</LI> 
   </UL> 
   <H5>Construction</H5> 
-  <P class="first-line-indented">There is only one instance if this class automatically created by the framework at test startup. To access it use method unit_test_log::<SPAN class="new-term">instance</SPAN>()<a name="instance"></a>. </P> 
+  <P class="first-line-indented">There is only one instance if this class automatically created by the framework at test startup. To access it use method unit_test_log::<SPAN class="new-term">instance</SPAN>()<A name="instance"></A>. </P> 
 </DIV> 
 <DIV class="footer"> 
   <DIV class="footer-body"> 
-    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:rogeeff@fusemail.com'>Gennadiy Rozental</A> 2001-2004. <BR> 
-      Use, modification, and distribution are subject to the Boost Software License, Version 1.0. (See accompanying file <A href="../../../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P> 
+    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy Rozental</A> 2001-2004. <BR> 
+      Distributed under the Boost Software License, Version 1.0.(See accompanying file <A href="../../../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P> 
     <P>Revised:
-      <!-- #BeginDate format:Sw1 -->18 January, 2004<!-- #EndDate --> 
+      <!-- #BeginDate format:Sw1 -->18 July, 2004<!-- #EndDate --> 
     </P> 
   </DIV> 
 </DIV> 

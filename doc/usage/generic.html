@@ -44,7 +44,7 @@
     test_feature1();
     test_feature1();
     ...
-    test_featureN();			
+    test_featureN();            
 }</PRE> 
   <P class="first-line-indented">Why then not switch to test cases? In code like
     above if any exception occurred in test_feature1() rest of test is skipped.
@@ -52,7 +52,7 @@
     separately and you are getting more from your test. </P> 
   <H5>Prefer offline compiled libraries to the inline included components <A name="t3"></A></H5> 
   <P class="first-line-indented">If you are just want to write quick simple test
-    in environment where you never used Bosst.Test before - yes, use included
+    in environment where you never used Boost.Test before - yes, use included
     components. But if you plan to use Boost.Test on permanent basis, small investment
     of time needed to build (if not build yet), install and change you makefiles/project
     settings will soon return to you in a form of shorter compilation time. Why
@@ -111,10 +111,10 @@ specific_type_test( TestType* = <SPAN class="literal">0</SPAN> )
 </DIV> 
 <DIV class="footer"> 
   <DIV class="footer-body"> 
-    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:rogeeff@fusemail.com'>Gennadiy
+    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy
         Rozental</A> 2001-2004. <BR> 
-      Use, modification, and distribution are subject to the Boost Software License,
-      Version 1.0. (See accompanying file <A href="../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file <A href="../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or
       copy at <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P> 
     <P>Revised:
       <!-- #BeginDate format:Sw1 -->26 January, 2004<!-- #EndDate --> 

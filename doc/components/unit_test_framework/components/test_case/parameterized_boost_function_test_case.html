@@ -22,7 +22,7 @@
 {
     ... <SPAN class="comment">// Implementation</SPAN>
 };</PRE>
-  <H5>Description</H5>
+<H5>Description</H5>
   <P class="first-line-indented">In some cases it may be convenient to be able to use complex arity one 
     functor as a body of parameterized test case. It could be free function with bound argument, compound 
     functor or member function with bound object. All these and similar cases does not covered by simple 
@@ -50,29 +50,39 @@
     recommended to create a parameters list as local variable in init_unit_test_suite. A simple way to 
     handle a parameters list lifetime is to place it into a user defined test suite class.</P>
   <H5>Example</H5>
-  <PRE class="code">#<SPAN class="reserv-word">include</SPAN> &lt;boost/test/unit_test_ex.hpp&gt;
+<PRE class="code">#<SPAN class="reserv-word">include</SPAN> &lt;boost/test/unit_test_ex.hpp&gt;
+#<SPAN class="reserv-word">include</SPAN> &lt;boost/test/unit_test.hpp&gt;
 <SPAN class="reserv-word">using</SPAN> boost::unit_test::test_suite;
 #<SPAN class="reserv-word">include</SPAN> &lt;boost/bind.hpp&gt;
 
+#<SPAN class="reserv-word">include</SPAN> &lt;list&gt;
+
 <SPAN class="cpp-type">void</SPAN> test_mask( <SPAN class="cpp-type">int</SPAN> arg, <SPAN class="cpp-type">int</SPAN> mask )
 {
+    BOOST_MESSAGE( arg &lt;&lt; <SPAN class="literal">" "</SPAN> &lt;&lt; mask );
+
+
     BOOST_CHECK( (arg &amp; mask) != <SPAN class="literal">0</SPAN> );
 }
 
 <SPAN class="reserv-word">struct</SPAN> sub_test_suite : <SPAN class="reserv-word">public</SPAN> test_suite {
     sub_test_suite() 
     {
-		    parameters_list.push_back( 1 );
-				parameters_list.push_back( 5 );
-				parameters_list.push_back( 6 );
-				parameters_list.push_back( 7 );
-				parameters_list.push_back( 15 );
+	        parameters_list.push_back( <SPAN class="literal">1</SPAN> );
+	        parameters_list.push_back( <SPAN class="literal">5</SPAN> );
+	        parameters_list.push_back( <SPAN class="literal">6</SPAN> );
+	        parameters_list.push_back( <SPAN class="literal">7</SPAN> );
+	        parameters_list.push_back( <SPAN class="literal">140</SPAN> );
 
-        add( BOOST_PARAM_TEST_CASE( bind( &amp;test_mask, _1, <SPAN class="literal">0x80</SPAN> ), parameters_list.begin(), parameters_list.end() ) ) );
+
+        add( BOOST_PARAM_TEST_CASE( boost::function1&lt;void,int&gt;( bind( &amp;test_mask, _1, <SPAN class="literal">0x80</SPAN> ) ),
+                                    parameters_list.begin(), parameters_list.end() ) );
     }
 
-    <SPAN class="cpp-type">std::list</SPAN>&lt;<SPAN class="cpp-type">int</SPAN>&gt; parameters_list;<BR>}
-//____________________________________________________________________________//<BR>
+    <SPAN class="cpp-type">std::list</SPAN>&lt;<SPAN class="cpp-type">int</SPAN>&gt; parameters_list;
+	}
+//____________________________________________________________________________//
+
 test_suite*
 init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-type">char</SPAN>* argv[] ) {
     test_suite* test = BOOST_TEST_SUITE( <SPAN class="literal">&quot;Example&quot;</SPAN> );
@@ -84,11 +94,11 @@ init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-t
 </DIV>
 <DIV class="footer"> 
   <DIV class="footer-body"> 
-    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:rogeeff@fusemail.com'>Gennadiy Rozental</A> 2001-2004. <BR>
-      Use, modification, and distribution are subject to the Boost Software License, Version 1.0. 
+    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy Rozental</A> 2001-2004. <BR>
+      Distributed under the Boost Software License, Version 1.0.
       (See accompanying file <A href="../../../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>
-        <P>Revised:        <!-- #BeginDate format:Sw1 -->6 January, 2004<!-- #EndDate -->     </P>
+        <P>Revised:        <!-- #BeginDate format:Sw1 -->17 July, 2004<!-- #EndDate -->     </P>
   </DIV>
 </DIV>
 </BODY>

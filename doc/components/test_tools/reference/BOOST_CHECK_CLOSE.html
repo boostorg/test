@@ -38,22 +38,25 @@ H4
     <SPAN class="cpp-type">double</SPAN> v1 = <SPAN class="literal">1.23456e-10</SPAN>;
     <SPAN class="cpp-type">double</SPAN> v2 = <SPAN class="literal">1.23457e-10</SPAN>;
 
-    BOOST_CHECK_CLOSE( v1, v2, <SPAN class="literal">1e-6</SPAN> ); <SPAN class="comment">// should fail at tolerance supplied</SPAN>
+    BOOST_CHECK_CLOSE( v1, v2, <SPAN class="literal">0.0001</SPAN> );
+    <SPAN class="comment">// Absolute value of difference between these two values is 1e-15. They seems 
+    // to be very close. But we want to checks that these values differ no more then 0.0001%
+    // of their value. And this test will fail at tolerance supplied</SPAN>.
 
     <SPAN class="reserv-word">return</SPAN> <SPAN class="literal">0</SPAN>;
 }</PRE>
   <H4>Output:</H4>
-  <P class="test-output">test.cpp(4) : error in test_main: test v1 (==) v2 failed [1.23456e-10 != 1.23457e-10 
-    (1e-06)] </P>
+  <P class="test-output">test.cpp(4) : error in test_main: difference between
+    v1{1.23456e-10} and v2{1.23457e-10} exeeds 1e-04%</P>
   <H4>Example: test.cpp</H4>
   <PRE class="code"><SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
-    <SPAN class="cpp-type">double</SPAN> v1 = <SPAN class="literal">4.1;</SPAN>
+    <SPAN class="cpp-type">double</SPAN> v1 = <SPAN class="literal">1.23456e28;</SPAN>
+    <SPAN class="cpp-type">double</SPAN> v2 = <SPAN class="literal">1.23457e28;</SPAN>
 
-    v1 = v1 * v1;
-    BOOST_CHECK_CLOSE( v1, <SPAN class="literal">16.81</SPAN>, <SPAN class="literal">1</SPAN>+<SPAN class="literal">2</SPAN> );
-    <SPAN class="comment">// 1(arithmetic operation) + 
-    // 2(decimal to binary conversions) - 
-    // number of rounding errors; should pass</SPAN>
+    BOOST_CHECK_CLOSE( v1, v2, <SPAN class="literal">0.001</SPAN> );
+    <SPAN class="comment">// Absolute value of difference between these two values is 1e+23.
+    // But we are interested only that it does not exeed 0.001% of a values compared
+    // And this test will pass.</SPAN>
 
     <SPAN class="reserv-word">return</SPAN> <SPAN class="literal">0</SPAN>;
 }</PRE>
