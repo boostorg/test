@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2005.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -18,7 +18,7 @@
 
 // Boost.Test
 #include <boost/test/unit_test_suite.hpp>
-#include <boost/test/detail/workarounds.hpp>
+#include <boost/test/detail/workaround.hpp>
 
 // Boost
 #include <boost/function/function0.hpp>
@@ -95,7 +95,7 @@ make_test_case( function0<void> const& fct_, const_string name_ )
 
 template<typename ParamIterator, typename ParameterType>
 inline test_case*
-make_test_case( function1<void,ParameterType> const& fct_, const_string name_, 
+make_test_case( function1<void,ParameterType> const& fct_, const_string name_,
                   ParamIterator const& begin_, ParamIterator const& end_ )
 {
     return new parametrized_boost_function_test_case<ParamIterator,ParameterType>(
@@ -112,8 +112,11 @@ make_test_case( function1<void,ParameterType> const& fct_, const_string name_,
 
 // ***************************************************************************
 //  Revision History :
-//  
+//
 //  $Log$
+//  Revision 1.23  2005/02/22 01:33:13  vawjr
+//  Corrected a spelling error on one of the includes
+//
 //  Revision 1.22  2005/02/20 08:27:06  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
