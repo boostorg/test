@@ -32,11 +32,11 @@ namespace detail {
 
 #ifdef BOOST_NO_STD_DISTANCE
 template <class T>
-std::ptrdiff_t distance(const T& x, const T& y)
+std::ptrdiff_t distance( T const& x_, T const& y_ )
 { 
     std::ptrdiff_t res = 0;
 
-    std::distance( x, y, res );
+    std::distance( x_, y_, res );
 
     return res;
 }
@@ -54,6 +54,9 @@ using std::distance;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2002/08/20 22:24:53  rogeeff
+//  all formal arguments trailed with underscore
+//
 //  Revision 1.7  2002/08/20 08:52:41  rogeeff
 //  cvs keywords added
 //

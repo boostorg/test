@@ -34,7 +34,7 @@ char const* const BUILD_INFO        = "BOOST_TEST_BUILD_INFO";       // --build_
 enum result_report_level                { CONFIRMATION_REPORT, SHORT_REPORT, DETAILED_REPORT, NO_REPORT };
 char const* const report_level_names[] = { "confirm"          , "short"     , "detailed"     , "no"      };
 
-std::string retrieve_framework_parameter( char const* parameter_name, int* argc = NULL, char ** argv = NULL );
+std::string retrieve_framework_parameter( char const* parameter_name_, int* argc_ = NULL, char ** argv_ = NULL );
 
 } // namespace unit_test_framework
 
@@ -44,6 +44,9 @@ std::string retrieve_framework_parameter( char const* parameter_name, int* argc 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2002/08/20 22:24:54  rogeeff
+//  all formal arguments trailed with underscore
+//
 //  Revision 1.2  2002/08/20 08:52:41  rogeeff
 //  cvs keywords added
 //

@@ -69,10 +69,37 @@ private:
     bool        m_strong_or_weak;
 };
 
+//____________________________________________________________________________//
+
+template<typename FPT, typename ToleranceSource>
+bool
+check_is_closed( FPT left, FPT right, ToleranceSource tolerance, bool strong_or_weak = true )
+{
+    close_at_tolerance<FPT> pred( tolerance, strong_or_weak );
+
+    return pred( left, right );
+}
+
+//____________________________________________________________________________//
+
+template<typename FPT, typename ToleranceSource>
+FPT
+compute_tolerance( ToleranceSource tolerance, FPT /* unfortunately we need to pass type information this way*/ )
+{
+    close_at_tolerance<FPT> pred( tolerance );
+
+    return pred.p_tolerance.get();
+}
+
+//____________________________________________________________________________//
+
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2002/08/20 22:24:53  rogeeff
+//  all formal arguments trailed with underscore
+//
 //  Revision 1.3  2002/08/20 08:52:40  rogeeff
 //  cvs keywords added
 //

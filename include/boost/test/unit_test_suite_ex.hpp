@@ -18,9 +18,11 @@
 
 // LOCAL
 #include <boost/test/unit_test_suite.hpp>
+#include <boost/test/detail/unit_test_config.hpp>
 
 // BOOST
-#include <boost/function.hpp>
+#include <boost/function/function0.hpp>
+#include <boost/function/function1.hpp>
 
 namespace boost {
 
@@ -35,8 +37,8 @@ public:
     typedef function0<void> function_type;
 
     // Constructor
-    function_test_case_ex( function_type f, char const* name )
-    : test_case( name, 1 ), m_function( f ) {}
+    function_test_case_ex( function_type f_, char const* name_ )
+    : test_case( name_, 1 ), m_function( f_ ) {}
 
 protected:
     // test case implementation
@@ -57,16 +59,11 @@ public:
     typedef function1<void,ParameterType> function_type;
 
     // Constructor
-    parametrized_function_test_case_ex( function_type f, char const* name,
-                                     ParamIterator const& begin, ParamIterator const& end )
-    : test_case( name ), m_first_parameter( begin ), m_last_parameter( end ), m_function( f ) {
-#ifndef BOOST_NO_STD_DISTANCE
-        p_stages_amount.set( std::distance( begin, end ) );
-#else
-       unit_test_counter dist = 0;
-        std::distance( begin, end, dist );
-        p_stages_amount.set( dist );
-#endif
+    parametrized_function_test_case_ex( function_type f_, char const* name_,
+                                        ParamIterator const& begin_, ParamIterator const& end_ )
+    : test_case( name_ ), m_first_parameter( begin_ ), m_last_parameter( end_ ), m_function( f_ )
+    {
+        p_stages_amount.set( detail::distance( begin_, end_ ) );
     }
 
     // test case implementation
@@ -87,17 +84,18 @@ private:
 // ************************************************************************** //
 
 inline test_case*
-create_test_case( function0<void> const& fct, std::string name )
+create_test_case( function0<void> const& fct_, std::string name_ )
 {
-    return new function_test_case_ex( fct, detail::normalize_test_case_name( name ) );
+    return new function_test_case_ex( fct_, detail::normalize_test_case_name( name_ ) );
 }
 
 template<typename ParamIterator, typename ParameterType>
 inline test_case*
-create_test_case( function1<void,ParameterType> const& fct, std::string name, ParamIterator const& begin, ParamIterator const& end )
+create_test_case( function1<void,ParameterType> const& fct_, std::string name_, 
+                  ParamIterator const& begin_, ParamIterator const& end_ )
 {
     return new parametrized_function_test_case_ex<ParamIterator,ParameterType>(
-                    fct, detail::normalize_test_case_name( name ), begin, end );
+                    fct_, detail::normalize_test_case_name( name_ ), begin_, end_ );
 }
 
 } // unit_test_framework
@@ -108,6 +106,9 @@ create_test_case( function1<void,ParameterType> const& fct, std::string name, Pa
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2002/08/20 22:24:53  rogeeff
+//  all formal arguments trailed with underscore
+//
 //  Revision 1.4  2002/08/20 08:52:41  rogeeff
 //  cvs keywords added
 //

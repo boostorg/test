@@ -72,7 +72,7 @@ public:
 protected:
     // protected properties
     BOOST_READONLY_PROPERTY( std::string, 1, (test_case) )
-                        p_name;                     // name for this test case
+                        p_name;                     // name_ for this test case
     BOOST_READONLY_PROPERTY( bool, 2, (test_case,test_suite) )
                         p_compound_stage;           // used to properly manage progress report
     BOOST_READWRITE_PROPERTY( unit_test_counter )
@@ -84,9 +84,9 @@ protected:
     void                curr_stage_is_compound();
 
     // Constructor
-    explicit            test_case( char const*          name            = "Unnamed",
-                                   unit_test_counter    stages_number   = 0,
-                                   bool                 monitor_run     = true );
+    explicit            test_case( char const*          name_           = "Unnamed",
+                                   unit_test_counter    stages_number_  = 0,
+                                   bool                 monitor_run_    = true );
 
     // test case implementation hooks to be called with unit_test_monitor or alone
     virtual void        do_init()       {}
@@ -103,10 +103,10 @@ private:
 //____________________________________________________________________________//
 
 inline
-test_case::test_case( char const* name, unit_test_counter stages_number, bool monitor_run )
+test_case::test_case( char const* name_, unit_test_counter stages_number_, bool monitor_run_ )
 : p_timeout( 0 ), p_expected_failures( 0 ),
-  p_name( name ), p_compound_stage( false ), p_stages_amount( stages_number ),
-  m_monitor_run( monitor_run )
+  p_name( name_ ), p_compound_stage( false ), p_stages_amount( stages_number_ ),
+  m_monitor_run( monitor_run_ )
 {
 }
 
@@ -129,8 +129,8 @@ public:
     typedef void  (*function_type)();
 
     // Constructor
-    function_test_case( function_type f, char const* name )
-    : test_case( name, 1 ), m_function( f ) {}
+    function_test_case( function_type f_, char const* name_ )
+    : test_case( name_, 1 ), m_function( f_ ) {}
 
 protected:
     // test case implementation
@@ -151,8 +151,8 @@ public:
     typedef void  (UserTestCase::*function_type)();
 
     // Constructor
-    class_test_case( function_type f, char const* name, boost::shared_ptr<UserTestCase>& user_test_case )
-    : test_case( name, 1 ), m_user_test_case( user_test_case ), m_function( f ) {}
+    class_test_case( function_type f_, char const* name_, boost::shared_ptr<UserTestCase>& user_test_case_ )
+    : test_case( name_, 1 ), m_user_test_case( user_test_case_ ), m_function( f_ ) {}
 
 private:
     // test case implementation
@@ -174,11 +174,11 @@ public:
     typedef void  (*function_type)( ParameterType );
 
     // Constructor
-    parametrized_function_test_case( function_type f, char const* name,
-                                     ParamIterator const& par_begin, ParamIterator const& par_end )
-    : test_case( name ), m_first_parameter( par_begin ), m_last_parameter( par_end ), m_function( f )
+    parametrized_function_test_case( function_type f_, char const* name_,
+                                     ParamIterator const& par_begin_, ParamIterator const& par_end_ )
+    : test_case( name_ ), m_first_parameter( par_begin_ ), m_last_parameter( par_end_ ), m_function( f_ )
     {
-       p_stages_amount.set( detail::distance( par_begin, par_end ) );
+       p_stages_amount.set( detail::distance( par_begin_, par_end_ ) );
     }
 
     // test case implementation
@@ -204,12 +204,12 @@ public:
     typedef void  (UserTestCase::*function_type)( ParameterType );
 
     // Constructor
-    parametrized_class_test_case( function_type f, char const* name, boost::shared_ptr<UserTestCase>& user_test_case,
-                                  ParamIterator const& par_begin, ParamIterator const& par_end )
-    : test_case( name ), m_first_parameter( par_begin ), m_last_parameter( par_end ),
-      m_user_test_case( user_test_case ), m_function( f )
+    parametrized_class_test_case( function_type f_, char const* name_, boost::shared_ptr<UserTestCase>& user_test_case_,
+                                  ParamIterator const& par_begin_, ParamIterator const& par_end_ )
+    : test_case( name_ ), m_first_parameter( par_begin_ ), m_last_parameter( par_end_ ),
+      m_user_test_case( user_test_case_ ), m_function( f_ )
     {
-       p_stages_amount.set( detail::distance( par_begin, par_end ) );
+       p_stages_amount.set( detail::distance( par_begin_, par_end_ ) );
     }
 
     // test case implementation
@@ -234,13 +234,13 @@ private:
 class test_suite : public test_case {
 public:
     // Constructor
-    explicit test_suite( char const* name = "Master" );
+    explicit test_suite( char const* name_ = "Master" );
 
     // Destructor
     virtual             ~test_suite();
 
     // test case list management
-    void                add( test_case* tc, unit_test_counter expected_failures = 0, int timeout = 0 );
+    void                add( test_case* tc_, unit_test_counter expected_failures_ = 0, int timeout_ = 0 );
 
     // access methods
     unit_test_counter   size() const;
@@ -262,44 +262,44 @@ private:
 namespace detail {
 
 inline char const*
-normalize_test_case_name( std::string& name )
+normalize_test_case_name( std::string& name_ )
 {
-    if( name[0] == '&' )
-        name.erase( 0, 1 );
+    if( name_[0] == '&' )
+        name_.erase( 0, 1 );
 
-    return name.data();
+    return name_.data();
 }
 
 } // namespace detail
 
 inline test_case*
-create_test_case( void (*fct)(), std::string name )
+create_test_case( void (*fct_)(), std::string name_ )
 {
-    return new function_test_case( fct, detail::normalize_test_case_name( name ) );
+    return new function_test_case( fct_, detail::normalize_test_case_name( name_ ) );
 }
 
 template<class UserTestCase>
 inline test_case*
-create_test_case( void (UserTestCase::*fct)(), std::string name, boost::shared_ptr<UserTestCase>& user_test_case )
+create_test_case( void (UserTestCase::*fct_)(), std::string name_, boost::shared_ptr<UserTestCase>& user_test_case_ )
 {
-    return new class_test_case<UserTestCase>( fct, detail::normalize_test_case_name( name ), user_test_case );
+    return new class_test_case<UserTestCase>( fct_, detail::normalize_test_case_name( name_ ), user_test_case_ );
 }
 
 template<typename ParamIterator, typename ParamType>
 inline test_case*
-create_test_case( void (*fct)( ParamType ), std::string name, ParamIterator const& par_begin, ParamIterator const& par_end )
+create_test_case( void (*fct_)( ParamType ), std::string name_, ParamIterator const& par_begin_, ParamIterator const& par_end_ )
 {
     return new parametrized_function_test_case<ParamIterator,ParamType>(
-        fct, detail::normalize_test_case_name( name ), par_begin, par_end );
+        fct_, detail::normalize_test_case_name( name_ ), par_begin_, par_end_ );
 }
 
 template<class UserTestCase, typename ParamIterator, typename ParamType>
 inline test_case*
-create_test_case( void (UserTestCase::*fct)( ParamType ), std::string name, boost::shared_ptr<UserTestCase>& user_test_case,
-                  ParamIterator const& par_begin, ParamIterator const& par_end )
+create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, boost::shared_ptr<UserTestCase>& user_test_case_,
+                  ParamIterator const& par_begin_, ParamIterator const& par_end_ )
 {
     return new parametrized_class_test_case<UserTestCase,ParamIterator,ParamType>(
-        fct, detail::normalize_test_case_name( name ), user_test_case, par_begin, par_end );
+        fct_, detail::normalize_test_case_name( name_ ), user_test_case_, par_begin_, par_end_ );
 }
 
 } // unit_test_framework
@@ -310,6 +310,9 @@ create_test_case( void (UserTestCase::*fct)( ParamType ), std::string name, boos
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2002/08/20 22:24:53  rogeeff
+//  all formal arguments trailed with underscore
+//
 //  Revision 1.5  2002/08/20 08:52:41  rogeeff
 //  cvs keywords added
 //

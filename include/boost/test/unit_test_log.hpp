@@ -56,31 +56,31 @@ struct end {
 };
 
 struct level {
-    explicit    level( report_level l ) : m_level( l ) {}
+    explicit    level( report_level l_ ) : m_level( l_ ) {}
 
     report_level m_level;
 };
 
 struct line {
-    explicit    line( unsigned int ln ) : m_line_num( ln ) {}
+    explicit    line( unsigned int ln_ ) : m_line_num( ln_ ) {}
 
     unsigned int m_line_num;
 };
 
 struct file {
-    explicit    file( char const* fn ) : m_file_name( fn ) {}
+    explicit    file( char const* fn_ ) : m_file_name( fn_ ) {}
 
     char const* m_file_name;
 };
 
 struct checkpoint {
-    explicit    checkpoint( std::string const& message ) : m_message( message ) {}
+    explicit    checkpoint( std::string const& message_ ) : m_message( message_ ) {}
 
     std::string const& m_message;
 };
 
 struct report_exception {
-    report_exception( char const* what ) : m_what( what ) {}
+    report_exception( char const* what_ ) : m_what( what_ ) {}
 
     char const*     m_what;
 };
@@ -101,10 +101,10 @@ public:
     static unit_test_log& instance();
 
     // log configuration methods
-    void            start( unit_test_counter test_cases_amount, bool print_build_info = false );
-    void            set_log_stream( std::ostream& str );
-    void            set_log_threshold_level( report_level lev );
-    void            set_log_threshold_level_by_name( char const* lev );
+    void            start( unit_test_counter test_cases_amount_, bool print_build_info_ = false );
+    void            set_log_stream( std::ostream& str_ );
+    void            set_log_threshold_level( report_level lev_ );
+    void            set_log_threshold_level_by_name( char const* lev_ );
     void            clear_checkpoint();
 
     // entry configuration methods
@@ -115,11 +115,11 @@ public:
     unit_test_log&  operator<<( level const& );  // set entry level
     unit_test_log&  operator<<( checkpoint const& ); // set checkpoint
 
-    // print value methods
+    // print value_ methods
     unit_test_log&  operator<<( report_progress const& );
     unit_test_log&  operator<<( report_exception const& );
-    unit_test_log&  operator<<( char const* value );
-    unit_test_log&  operator<<( std::string const& value );
+    unit_test_log&  operator<<( char const* value_ );
+    unit_test_log&  operator<<( std::string const& value_ );
 
 private:
     // Constructor
@@ -155,6 +155,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2002/08/20 22:24:53  rogeeff
+//  all formal arguments trailed with underscore
+//
 //  Revision 1.6  2002/08/20 08:52:40  rogeeff
 //  cvs keywords added
 //

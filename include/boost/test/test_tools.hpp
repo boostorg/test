@@ -44,9 +44,9 @@
 // **************                    TOOL BOX                  ************** //
 // ************************************************************************** //
 
-#define BOOST_CHECKPOINT(message) \
+#define BOOST_CHECKPOINT(message_) \
     boost::test_toolbox::detail::checkpoint_impl( \
-        boost::test_toolbox::detail::wrapstrstream() << message, __FILE__, __LINE__)
+        boost::test_toolbox::detail::wrapstrstream() << message_, __FILE__, __LINE__)
 
 #define BOOST_WARN(predicate) \
     boost::test_toolbox::detail::warn_and_continue_impl((predicate), \
@@ -56,47 +56,47 @@
     boost::test_toolbox::detail::test_and_continue_impl((predicate), \
         boost::test_toolbox::detail::wrapstrstream() << #predicate, __FILE__, __LINE__)
 
-#define BOOST_CHECK_EQUAL(left, right) \
-    boost::test_toolbox::detail::equal_and_continue_impl((left), (right), \
-        boost::test_toolbox::detail::wrapstrstream() << #left " == " #right, __FILE__, __LINE__)
+#define BOOST_CHECK_EQUAL(left_, right_) \
+    boost::test_toolbox::detail::equal_and_continue_impl((left_), (right_), \
+        boost::test_toolbox::detail::wrapstrstream() << #left_ " == " #right_, __FILE__, __LINE__)
 
-#define BOOST_CHECK_CLOSE(left, right, tolerance_src) \
-    boost::test_toolbox::detail::compare_and_continue_impl((left), (right), (tolerance_src),\
-        boost::test_toolbox::detail::wrapstrstream() << #left " ~= " #right, __FILE__, __LINE__)
+#define BOOST_CHECK_CLOSE(left_, right_, tolerance_src) \
+    boost::test_toolbox::detail::compare_and_continue_impl((left_), (right_), (tolerance_src),\
+        boost::test_toolbox::detail::wrapstrstream() << #left_ " ~= " #right_, __FILE__, __LINE__)
 
 #define BOOST_REQUIRE(predicate) \
     boost::test_toolbox::detail::test_and_throw_impl((predicate), \
         boost::test_toolbox::detail::wrapstrstream() << #predicate, __FILE__, __LINE__)
 
-#define BOOST_MESSAGE(message) \
+#define BOOST_MESSAGE(message_) \
     boost::test_toolbox::detail::message_impl( \
-        boost::test_toolbox::detail::wrapstrstream() << message, __FILE__, __LINE__)
+        boost::test_toolbox::detail::wrapstrstream() << message_, __FILE__, __LINE__)
 
-#define BOOST_WARN_MESSAGE(predicate, message) \
+#define BOOST_WARN_MESSAGE(predicate, message_) \
     boost::test_toolbox::detail::warn_and_continue_impl((predicate), \
-        boost::test_toolbox::detail::wrapstrstream() << message, __FILE__, __LINE__,false)
+        boost::test_toolbox::detail::wrapstrstream() << message_, __FILE__, __LINE__,false)
 
-#define BOOST_CHECK_MESSAGE(predicate, message) \
+#define BOOST_CHECK_MESSAGE(predicate, message_) \
     boost::test_toolbox::detail::test_and_continue_impl((predicate), \
-        boost::test_toolbox::detail::wrapstrstream() << message, __FILE__, __LINE__,false)
+        boost::test_toolbox::detail::wrapstrstream() << message_, __FILE__, __LINE__,false)
 
-#define BOOST_REQUIRE_MESSAGE(predicate, message) \
+#define BOOST_REQUIRE_MESSAGE(predicate, message_) \
     boost::test_toolbox::detail::test_and_throw_impl((predicate), \
-        boost::test_toolbox::detail::wrapstrstream() << message, __FILE__, __LINE__,false)
+        boost::test_toolbox::detail::wrapstrstream() << message_, __FILE__, __LINE__,false)
 
-#define BOOST_CHECK_PREDICATE( prediate, arg_list_size, arg_list ) \
-    boost::test_toolbox::detail::test_and_continue_impl(prediate, BOOST_PLACE_PREDICATE_ARGS ## arg_list_size arg_list, \
-        boost::test_toolbox::detail::wrapstrstream() << #prediate << "("\
+#define BOOST_CHECK_PREDICATE( predicate, arg_list_size, arg_list ) \
+    boost::test_toolbox::detail::test_and_continue_impl(predicate, BOOST_PLACE_PREDICATE_ARGS ## arg_list_size arg_list, \
+        boost::test_toolbox::detail::wrapstrstream() << #predicate << "("\
         << BOOST_PRINT_PREDICATE_ARGS ## arg_list_size arg_list << ")", __FILE__, __LINE__)
 
-#define BOOST_REQUIRE_PREDICATE( prediate, arg_list_size, arg_list ) \
-    boost::test_toolbox::detail::test_and_throw_impl(prediate, BOOST_PLACE_PREDICATE_ARGS ## arg_list_size arg_list, \
-        boost::test_toolbox::detail::wrapstrstream() << #prediate << "("\
+#define BOOST_REQUIRE_PREDICATE( predicate, arg_list_size, arg_list ) \
+    boost::test_toolbox::detail::test_and_throw_impl(predicate, BOOST_PLACE_PREDICATE_ARGS ## arg_list_size arg_list, \
+        boost::test_toolbox::detail::wrapstrstream() << #predicate << "("\
         << BOOST_PRINT_PREDICATE_ARGS ## arg_list_size arg_list << ")", __FILE__, __LINE__)
 
-#define BOOST_ERROR(message) BOOST_CHECK_MESSAGE( false, message )
+#define BOOST_ERROR(message_) BOOST_CHECK_MESSAGE( false, message_ )
 
-#define BOOST_FAIL(message) BOOST_REQUIRE_MESSAGE( false, message )
+#define BOOST_FAIL(message_) BOOST_REQUIRE_MESSAGE( false, message_ )
 
 #define BOOST_CHECK_THROW( statement, exception ) \
     try { statement; BOOST_ERROR( "exception "#exception" is expected" ); } \
@@ -104,28 +104,28 @@
         BOOST_CHECK_MESSAGE( true, "exception "#exception" is caught" ); \
     }
 
-#define BOOST_CHECK_EQUAL_COLLECTIONS(left_begin, left_end, right_begin) \
-    boost::test_toolbox::detail::equal_and_continue_impl( (left_begin), (left_end), (right_begin),\
+#define BOOST_CHECK_EQUAL_COLLECTIONS(left_begin_, left_end_, right_begin_) \
+    boost::test_toolbox::detail::equal_and_continue_impl( (left_begin_), (left_end_), (right_begin_),\
         boost::test_toolbox::detail::wrapstrstream() << \
-            "{" #left_begin ", " #left_end "}" " == {" #right_begin ", ...}", __FILE__, __LINE__)
+            "{" #left_begin_ ", " #left_end_ "}" " == {" #right_begin_ ", ...}", __FILE__, __LINE__)
 
 #define BOOST_IS_DEFINED(symb) boost::test_toolbox::detail::is_defined_impl( #symb, BOOST_STRINGIZE(=symb) )
 
 // ***************************** //
 // helper macros
 
-#define BOOST_PLACE_PREDICATE_ARGS1( first ) first
-#define BOOST_PLACE_PREDICATE_ARGS2( first, second ) first, second
+#define BOOST_PLACE_PREDICATE_ARGS1( first_ ) first_
+#define BOOST_PLACE_PREDICATE_ARGS2( first_, second_ ) first_, second_
 
-#define BOOST_PRINT_PREDICATE_ARGS1( first ) #first
-#define BOOST_PRINT_PREDICATE_ARGS2( first, second ) #first << ", " << #second
+#define BOOST_PRINT_PREDICATE_ARGS1( first_ ) #first_
+#define BOOST_PRINT_PREDICATE_ARGS2( first_, second_ ) #first_ << ", " << #second_
 
 // ***************************** //
 // depricated interface
 
 #define BOOST_TEST(predicate)           BOOST_CHECK(predicate)
 #define BOOST_CRITICAL_TEST(predicate)  BOOST_REQUIRE(predicate)
-#define BOOST_CRITICAL_ERROR(message)   BOOST_FAIL(message)
+#define BOOST_CRITICAL_ERROR(message_)   BOOST_FAIL(message_)
 
 namespace boost {
 
@@ -177,8 +177,8 @@ operator<<( wrapstrstream const& targ, wrapstrstream const& src )
 
 struct extended_predicate_value {
     // Constructor
-    explicit    extended_predicate_value( bool predicate_value )
-    : p_predicate_value( predicate_value ), p_message( new wrapstrstream ) {}
+    explicit    extended_predicate_value( bool predicate_value_ )
+    : p_predicate_value( predicate_value_ ), p_message( new wrapstrstream ) {}
 
     bool        operator!() const { return !p_predicate_value.get(); }
 
@@ -193,8 +193,8 @@ struct extended_predicate_value {
 // exception used to implement critical checks
 
 struct test_tool_failed : public std::exception {
-    explicit            test_tool_failed( char const* message ) 
-    : m_what(message)                                   {}
+    explicit            test_tool_failed( char const* message_ ) 
+    : m_what( message_ )                                {}
     
                         ~test_tool_failed() throw()     {}
 
@@ -209,82 +209,90 @@ private:
 // ************************************************************************** //
 
 void
-checkpoint_impl( wrapstrstream const& message, char const* file_name, int line_num );
+checkpoint_impl( wrapstrstream const& message_, char const* file_name_, int line_num_ );
 
 //____________________________________________________________________________//
 
 void
-message_impl( wrapstrstream const& message, char const* file_name, int line_num );
+message_impl( wrapstrstream const& message_, char const* file_name_, int line_num_ );
 
 //____________________________________________________________________________//
 
 // ************************************* //
 
 void
-warn_and_continue_impl( bool predicate, wrapstrstream const& message, char const* file_name, int line_num,
-                        bool add_fail_pass = true );
+warn_and_continue_impl( bool predicate_, wrapstrstream const& message_,
+                        char const* file_name_, int line_num_,
+                        bool add_fail_pass_ = true );
 
 //____________________________________________________________________________//
 
 void
-warn_and_continue_impl( extended_predicate_value const& v, wrapstrstream const& message, char const* file_name, int line_num,
-                        bool add_fail_pass = true );
+warn_and_continue_impl( extended_predicate_value const& v_, wrapstrstream const& message_,
+                        char const* file_name_, int line_num_,
+                        bool add_fail_pass_ = true );
 
 //____________________________________________________________________________//
 
 // ************************************* //
 
 bool  // return true if error detected
-test_and_continue_impl( bool predicate, wrapstrstream const& message, char const* file_name, int line_num,
-                        bool add_fail_pass = true, 
-                        unit_test_framework::report_level loglevel = unit_test_framework::report_all_errors );
+test_and_continue_impl( bool predicate_, wrapstrstream const& message_,
+                        char const* file_name_, int line_num_,
+                        bool add_fail_pass_ = true, 
+                        unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors );
 void
-test_and_throw_impl   ( bool predicate, wrapstrstream const& message, char const* file_name, int line_num,
-                        bool add_fail_pass = true, 
-                        unit_test_framework::report_level loglevel = unit_test_framework::report_fatal_errors );
+test_and_throw_impl   ( bool predicate_, wrapstrstream const& message_,
+                        char const* file_name_, int line_num_,
+                        bool add_fail_pass_ = true, 
+                        unit_test_framework::report_level log_level_ = unit_test_framework::report_fatal_errors );
 
 //____________________________________________________________________________//
 
 bool
-test_and_continue_impl( extended_predicate_value const& v, wrapstrstream const& message, char const* file_name, int line_num,
-                        bool add_fail_pass = true, 
-                        unit_test_framework::report_level loglevel = unit_test_framework::report_all_errors );
+test_and_continue_impl( extended_predicate_value const& v_, wrapstrstream const& message_,
+                        char const* file_name_, int line_num_,
+                        bool add_fail_pass_ = true, 
+                        unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors );
 
 //____________________________________________________________________________//
 
 void
-test_and_throw_impl   ( extended_predicate_value const& v, wrapstrstream const& message, char const* file_name, int line_num,
-                        bool add_fail_pass = true, 
-                        unit_test_framework::report_level loglevel = unit_test_framework::report_fatal_errors );
+test_and_throw_impl   ( extended_predicate_value const& v_, wrapstrstream const& message_,
+                        char const* file_name_, int line_num_,
+                        bool add_fail_pass_ = true, 
+                        unit_test_framework::report_level log_level_ = unit_test_framework::report_fatal_errors );
 
 //____________________________________________________________________________//
 
 template<typename ArgType, typename Predicate>
 inline bool
-test_and_continue_impl( Predicate const& pred, ArgType const& arg_,
-                        wrapstrstream const& message, char const* file_name, int line_num,
-                        unit_test_framework::report_level loglevel = unit_test_framework::report_all_errors )
+test_and_continue_impl( Predicate const& pred_, ArgType const& arg_,
+                        wrapstrstream const& message_,
+                        char const* file_name_, int line_num_,
+                        unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors )
 {
-    bool predicate = pred( arg_ );
+    bool predicate = pred_( arg_ );
 
     if( !predicate ) {
         return test_and_continue_impl( predicate,
-                                       wrapstrstream() << "test " << message << " failed for " << arg_,
-                                       file_name, line_num, false, loglevel );
+                                       wrapstrstream() << "test " << message_ << " failed for " << arg_,
+                                       file_name_, line_num_, false, log_level_ );
     }
 
-    return test_and_continue_impl( predicate, message, file_name, line_num, true, loglevel );
+    return test_and_continue_impl( predicate, message_, file_name_, line_num_, true, log_level_ );
 }
 
 //____________________________________________________________________________//
 
 template<typename ArgType, typename Predicate>
 inline void
-test_and_throw_impl   ( Predicate const& pred, ArgType const& arg_,
-                        wrapstrstream const& message, char const* file_name, int line_num,
-                        unit_test_framework::report_level loglevel = unit_test_framework::report_fatal_errors )
+test_and_throw_impl   ( Predicate const& pred_, ArgType const& arg_,
+                        wrapstrstream const& message_,
+                        char const* file_name_, int line_num_,
+                        unit_test_framework::report_level log_level_ = unit_test_framework::report_fatal_errors )
 {
-    if( test_and_continue_impl( arg_, pred, message, file_name, line_num, loglevel ) ) {
+    if( test_and_continue_impl( arg_, pred_, message_, file_name_, line_num_, log_level_ ) ) {
         throw test_tool_failed( "" ); // error already reported by test_and_continue_impl
     }
 }
@@ -293,30 +301,31 @@ test_and_throw_impl   ( Predicate const& pred, ArgType const& arg_,
 
 template<typename First, typename Second, typename Predicate>
 inline bool
-test_and_continue_impl( Predicate const& pred, First const& first, Second const& second,
-                        wrapstrstream const& message, char const* file_name, int line_num,
-                        unit_test_framework::report_level loglevel = unit_test_framework::report_all_errors )
+test_and_continue_impl( Predicate const& pred_, First const& first_, Second const& second_,
+                        wrapstrstream const& message_,
+                        char const* file_name_, int line_num_,
+                        unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors )
 {
-    bool predicate = pred( first, second );
+    bool predicate = pred_( first_, second_ );
 
     if( !predicate ) {
         return test_and_continue_impl( predicate,
-            wrapstrstream() << "test " << message << " failed for (" << first << ", " << second << ")",
-            file_name, line_num, false, loglevel );
+            wrapstrstream() << "test " << message_ << " failed for (" << first_ << ", " << second_ << ")",
+            file_name_, line_num_, false, log_level_ );
     }
 
-    return test_and_continue_impl( predicate, message, file_name, line_num, true, loglevel );
+    return test_and_continue_impl( predicate, message_, file_name_, line_num_, true, log_level_ );
 }
 
 //____________________________________________________________________________//
 
 template<typename First, typename Second, typename Predicate>
 inline void
-test_and_throw_impl   ( First const& first, Second const& second, Predicate const& pred,
-                        wrapstrstream const& message, char const* file_name, int line_num,
-                        unit_test_framework::report_level loglevel = unit_test_framework::report_fatal_errors )
+test_and_throw_impl   ( First const& first_, Second const& second_, Predicate const& pred_,
+                        wrapstrstream const& message_, char const* file_name_, int line_num_,
+                        unit_test_framework::report_level log_level_ = unit_test_framework::report_fatal_errors )
 {
-    if( test_and_continue_impl( first, second, pred, message, file_name, line_num, loglevel ) ) {
+    if( test_and_continue_impl( first_, second_, pred_, message_, file_name_, line_num_, log_level_ ) ) {
         throw test_tool_failed( "" ); // error already reported by test_and_continue_impl
     }
 }
@@ -326,39 +335,41 @@ test_and_throw_impl   ( First const& first, Second const& second, Predicate cons
 // ************************************* //
 
 bool
-equal_and_continue_impl( char const* left, char const* right, wrapstrstream const& message,
-                         char const* file_name, int line_num,
-                         unit_test_framework::report_level loglevel = unit_test_framework::report_all_errors );
+equal_and_continue_impl( char const* left_, char const* right_, wrapstrstream const& message_,
+                         char const* file_name_, int line_num_,
+                         unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors );
 
 //____________________________________________________________________________//
 
 template <class Left, class Right>
 inline bool
-equal_and_continue_impl( Left const& left, Right const& right,
-                         wrapstrstream const& message, char const* file_name, int line_num,
-                         unit_test_framework::report_level loglevel = unit_test_framework::report_all_errors )
+equal_and_continue_impl( Left const& left_, Right const& right_,
+                         wrapstrstream const& message_, char const* file_name_, int line_num_,
+                         unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors )
 {
-    bool predicate = (left == right);
+    bool predicate = (left_ == right_);
 
     if( !predicate ) {
         return test_and_continue_impl( predicate,
-                                       wrapstrstream() << "test " << message << " failed [" << left << " != " << right << "]",
-                                       file_name, line_num, false, loglevel );
+            wrapstrstream() << "test " << message_ 
+                            << " failed [" << left_ << " != " << right_ << "]",
+            file_name_, line_num_, false, log_level_ );
     }
 
-    return test_and_continue_impl( predicate, message, file_name, line_num, true, loglevel );
+    return test_and_continue_impl( predicate, message_, file_name_, line_num_, true, log_level_ );
 }
 
 //____________________________________________________________________________//
 
 template <class Left, class Right>
 inline void
-equal_and_continue_impl( Left left_begin, Left left_end, Right right_begin, 
-                         wrapstrstream const& message, char const* file_name, int line_num,
-                         unit_test_framework::report_level loglevel = unit_test_framework::report_all_errors )
+equal_and_continue_impl( Left left_begin_, Left left_end_, Right right_begin_, 
+                         wrapstrstream const& message_,
+                         char const* file_name_, int line_num_,
+                         unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors )
 {
-    for( ;left_begin != left_end; ++left_begin, ++right_begin )
-        equal_and_continue_impl( *left_begin, *right_begin, message, file_name, line_num, loglevel );
+    for( ;left_begin_ != left_end_; ++left_begin_, ++right_begin_ )
+        equal_and_continue_impl( *left_begin_, *right_begin_, message_, file_name_, line_num_, log_level_ );
 }
 
 //____________________________________________________________________________//
@@ -367,22 +378,22 @@ equal_and_continue_impl( Left left_begin, Left left_end, Right right_begin,
 
 template<typename FPT, typename ToleranceSource>
 inline bool
-compare_and_continue_impl( FPT left, FPT right, ToleranceSource tolerance_src,
-                        wrapstrstream const& message, char const* file_name, int line_num,
-                        unit_test_framework::report_level loglevel = unit_test_framework::report_all_errors )
+compare_and_continue_impl( FPT left_, FPT right_, ToleranceSource tolerance_src,
+                           wrapstrstream const& message_,
+                           char const* file_name_, int line_num_,
+                           unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors )
 {
-    close_at_tolerance<FPT> pred( tolerance_src );
-    bool predicate = pred( left, right );
+    bool predicate = check_is_closed( left_, right_, tolerance_src );
 
     if( !predicate ) {
         return test_and_continue_impl( predicate,
-                                       wrapstrstream() << "test " << message 
-                                                       << " failed [" << left << " !~= " << right 
-                                                       << " (+/-" << pred.p_tolerance.get() << ")]",
-                                       file_name, line_num, false, loglevel );
+            wrapstrstream() << "test " << message_ 
+                            << " failed [" << left_ << " !~= " << right_ 
+                            << " (+/-" << compute_tolerance( tolerance_src, left_ ) << ")]",
+            file_name_, line_num_, false, log_level_ );
     }
 
-    return test_and_continue_impl( predicate, message, file_name, line_num, true, loglevel );
+    return test_and_continue_impl( predicate, message_, file_name_, line_num_, true, log_level_ );
 }
 
 //____________________________________________________________________________//
@@ -390,7 +401,7 @@ compare_and_continue_impl( FPT left, FPT right, ToleranceSource tolerance_src,
 // ************************************* //
 
 bool
-is_defined_impl( char const* symbol_name, char const* symbol_value );
+is_defined_impl( char const* symbol_name_, char const* symbol_value_ );
 
 //____________________________________________________________________________//
 
@@ -412,12 +423,12 @@ public:
     ~output_test_stream();
 
     // checking function
-    result_type     is_empty( bool flush_stream = true );
-    result_type     check_length( std::size_t length, bool flush_stream = true );
-    result_type     is_equal( char const* arg_, bool flush_stream = true );
-    result_type     is_equal( std::string const& arg_, bool flush_stream = true );
-    result_type     is_equal( char const* arg_, std::size_t n, bool flush_stream = true );
-    bool            match_pattern( bool flush_stream = true );
+    result_type     is_empty( bool flush_stream_ = true );
+    result_type     check_length( std::size_t length_, bool flush_stream_ = true );
+    result_type     is_equal( char const* arg_, bool flush_stream_ = true );
+    result_type     is_equal( std::string const& arg_, bool flush_stream_ = true );
+    result_type     is_equal( char const* arg_, std::size_t n_, bool flush_stream_ = true );
+    bool            match_pattern( bool flush_stream_ = true );
 
     // helper function
     void            flush();
@@ -438,6 +449,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.14  2002/08/20 22:24:53  rogeeff
+//  all formal arguments trailed with underscore
+//
 //  Revision 1.13  2002/08/20 20:57:01  david_abrahams
 //  VC6 workaround
 //

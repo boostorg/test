@@ -42,16 +42,16 @@ public:
         fatal_error             = -5,  // includes both system and user
         destructor_error        = -6
     };
-    static bool         is_critical_error( error_level e ) { return e <= fatal_error; }
+    static bool         is_critical_error( error_level e_ ) { return e_ <= fatal_error; }
 
     typedef void (test_case::*function_to_monitor)();
 
     // Constructor
-    unit_test_monitor( test_case& target_test_case, function_to_monitor f )
-    : m_test_case_function( f ), m_test_case( target_test_case ) {}
+    unit_test_monitor( test_case& target_test_case_, function_to_monitor f_ )
+    : m_test_case_function( f_ ), m_test_case( target_test_case_ ) {}
 
     // monitor method
-    error_level         execute_and_translate( int timeout );
+    error_level         execute_and_translate( int timeout_ );
 
     // ececution monitor hook implementation
     virtual int         function();
@@ -72,6 +72,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2002/08/20 22:24:53  rogeeff
+//  all formal arguments trailed with underscore
+//
 //  Revision 1.3  2002/08/20 08:52:41  rogeeff
 //  cvs keywords added
 //

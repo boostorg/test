@@ -72,8 +72,8 @@ public:
     };
     
     // Constructor
-    execution_exception( error_code ec, char const* what_msg ) // max length 256 inc '\0'
-    : m_error_code( ec ), m_what( what_msg ) {}
+    execution_exception( error_code ec_, char const* what_msg_ ) // max length 256 inc '\0'
+    : m_error_code( ec_ ), m_what( what_msg_ ) {}
 
     // access methods
     error_code      code() const { return m_error_code; }
@@ -94,7 +94,7 @@ public:
     // Destructor
     virtual ~execution_monitor()    {}
     
-    int execute( int timeout = 0 );  // timeout is in seconds
+    int execute( int timeout_ = 0 );  // timeout is in seconds
     //  The timeout argument specifies the seconds that elapse before
     //  a timer_error occurs.  May be ignored on some platforms.
     //
@@ -120,6 +120,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2002/08/20 22:24:53  rogeeff
+//  all formal arguments trailed with underscore
+//
 //  Revision 1.4  2002/08/20 08:52:40  rogeeff
 //  cvs keywords added
 //

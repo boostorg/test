@@ -38,16 +38,16 @@ public:
 
     // current test results access and management
     static unit_test_result& instance();
-    static void     test_case_start( char const* name, unit_test_counter expected_failures = 0 );
+    static void     test_case_start( char const* name_, unit_test_counter expected_failures_ = 0 );
     static void     test_case_end();
     
     // use to dynamically change amount of errors expected in current test case
     void            increase_expected_failures( unit_test_counter amount = 1 );
 
     // reporting
-    void            confirmation_report( std::ostream& where_to );              // shortest
-    void            short_report( std::ostream& where_to, int indent = 0 );     // short
-    void            detailed_report( std::ostream& where_to, int indent = 0 );  // long
+    void            confirmation_report( std::ostream& where_to_ );              // shortest
+    void            short_report( std::ostream& where_to_, int indent_ = 0 );     // short
+    void            detailed_report( std::ostream& where_to_, int indent_ = 0 );  // long
     int             result_code();                                              // to be returned from main
 
     // to be used by tool box implementation
@@ -62,7 +62,7 @@ public:
 
 private:
     // Constructor
-    unit_test_result( unit_test_result* parent, char const* test_case_name, unit_test_counter expected_failures = 0 );
+    unit_test_result( unit_test_result* parent_, char const* test_case_name_, unit_test_counter expected_failures_ = 0 );
    
     struct Impl;
     detail::grinning_ptr<Impl> m_pimpl;
@@ -76,6 +76,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2002/08/20 22:24:53  rogeeff
+//  all formal arguments trailed with underscore
+//
 //  Revision 1.4  2002/08/20 08:52:40  rogeeff
 //  cvs keywords added
 //
