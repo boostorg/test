@@ -1,5 +1,5 @@
-include ( 'vis_object_api.js', viso_path );
-include ( 'transitions.js', viso_path );
+JS.include( 'vis_object_api.js', viso_path );
+JS.include( 'transitions.js', viso_path );
 
 function VisObjLoopRoller( transition_id ) {
     this.curr_index    = 0;

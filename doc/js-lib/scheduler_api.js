@@ -1,4 +1,4 @@
-include ( 'callback_api.js', viso_path );
+JS.include( 'callback_api.js', viso_path );
 
 function ScheduledTaskInfo( func, once, finish_callback_func ) {
     this.func    = func;

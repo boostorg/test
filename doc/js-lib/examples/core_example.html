@@ -5,14 +5,15 @@
 </head>
 <body>
 <script language="javascript">
-var f = include;
-alert( include );
-alert( funcname( f ) );
-alert( Array.prototype.push );
-alert( funcname(Array.prototype.push) );
+function foo() {}
+var fvar = foo;
+var f = JS.include;
+alert( JS.include );
+alert( JS.funcname( f ) );
+alert( Array.prototype.indexOf );
+alert( JS.funcname( fvar ) );
 var p = new Pair;
 alert( p );
-alert( p.is_a( Pair ) );
 </script>
 </body>
 </html>

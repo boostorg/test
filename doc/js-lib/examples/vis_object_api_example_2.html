@@ -4,39 +4,39 @@
 <script language="javascript">var viso_path=".."</script>
 <script language="javascript" src="../core.js" > </script>
 <script language="javascript">
-include ( "vis_object_api.js", viso_path );
+JS.include( "vis_object_api.js", viso_path );
+
 
 function mmove_handler( e ) {
-    viso_get( "screen_x" ).innerHTML = e.screenX;
-    viso_get( "screen_y" ).innerHTML = e.screenY;
-    viso_get( "offset_x" ).innerHTML = viso_event_offset_x( e );
-    viso_get( "offset_y" ).innerHTML = viso_event_offset_x( e );
+    viso_set_html( viso_get( "screen_x" ), e.screenX );
+    viso_set_html( viso_get( "screen_y" ), e.screenY );
+    viso_set_html( viso_get( "offset_x" ), viso_event_offset_x( e ) );
+    viso_set_html( viso_get( "offset_y" ), viso_event_offset_x( e ) );
 }
 
 function page_init() {
-    viso_add_event_handler( "onmousemove", mmove_handler );
+    viso_add_event_handler( "mousemove", mmove_handler );
 
-    viso_get( "div1_x" ).innerHTML = viso_get_left( viso_get( "div1" ) );
-    viso_get( "div1_y" ).innerHTML = viso_get_top(  viso_get( "div1" ) );
-    viso_get( "div1_page_x" ).innerHTML = viso_get_page_left( viso_get( "div1" ) );
-    viso_get( "div1_page_y" ).innerHTML = viso_get_page_top(  viso_get( "div1" ) );
-    viso_get( "div1_parent" ).innerHTML = viso_get_parent(  viso_get( "div1" ) ).id;
-    viso_get( "div1_offset_parent" ).innerHTML = viso_get( "div1" ).offsetParent.id;
+    viso_set_html( viso_get( "div1_x" ), viso_get_left( viso_get( "div1" ) ) );
+    viso_set_html( viso_get( "div1_y" ), viso_get_top(  viso_get( "div1" ) ) );
+    viso_set_html( viso_get( "div1_page_x" ), viso_get_page_left( viso_get( "div1" ) ) );
+    viso_set_html( viso_get( "div1_page_y" ), viso_get_page_top(  viso_get( "div1" ) ) );
+    viso_set_html( viso_get( "div1_parent" ), viso_get( "div1" ).parentNode.id );
+    viso_set_html( viso_get( "div1_offset_parent" ), viso_get( "div1" ).offsetParent.id );
 
-    viso_get( "div2_x" ).innerHTML = viso_get_left( viso_get( "div2" ) );
-    viso_get( "div2_y" ).innerHTML = viso_get_top(  viso_get( "div2" ) );
-    viso_get( "div2_page_x" ).innerHTML = viso_get_page_left( viso_get( "div2" ) );
-    viso_get( "div2_page_y" ).innerHTML = viso_get_page_top(  viso_get( "div2" ) );
-    viso_get( "div2_parent" ).innerHTML = viso_get_parent(  viso_get( "div2" ) ).id;
-    viso_get( "div2_offset_parent" ).innerHTML = viso_get( "div2" ).offsetParent.id;
+    viso_set_html( viso_get( "div2_x" ), viso_get_left( viso_get( "div2" ) ) );
+    viso_set_html( viso_get( "div2_y" ), viso_get_top(  viso_get( "div2" ) ) );
+    viso_set_html( viso_get( "div2_page_x" ), viso_get_page_left( viso_get( "div2" ) ) );
+    viso_set_html( viso_get( "div2_page_y" ), viso_get_page_top(  viso_get( "div2" ) ) );
+    viso_set_html( viso_get( "div2_parent" ), viso_get( "div2" ).parentNode.id );
+    viso_set_html( viso_get( "div2_offset_parent" ), viso_get( "div2" ).offsetParent.id );
 
-    viso_get( "div3_x" ).innerHTML = viso_get_left( viso_get( "div3" ) );
-    viso_get( "div3_y" ).innerHTML = viso_get_top(  viso_get( "div3" ) );
-    viso_get( "div3_page_x" ).innerHTML = viso_get_page_left( viso_get( "div3" ) );
-    viso_get( "div3_page_y" ).innerHTML = viso_get_page_top(  viso_get( "div3" ) );
-    viso_get( "div3_parent" ).innerHTML = viso_get_parent(  viso_get( "div2" ) ).id;
-    viso_get( "div3_offset_parent" ).innerHTML = viso_get( "div2" ).offsetParent.id;
-
+    viso_set_html( viso_get( "div3_x" ), viso_get_left( viso_get( "div3" ) ) );
+    viso_set_html( viso_get( "div3_y" ), viso_get_top(  viso_get( "div3" ) ) );
+    viso_set_html( viso_get( "div3_page_x" ), viso_get_page_left( viso_get( "div3" ) ) );
+    viso_set_html( viso_get( "div3_page_y" ), viso_get_page_top(  viso_get( "div3" ) ) );
+    viso_set_html( viso_get( "div3_parent" ), viso_get( "div2" ).parentNode.id );
+    viso_set_html( viso_get( "div3_offset_parent" ), viso_get( "div2" ).offsetParent.id );
 }
 </script>
 <style> 

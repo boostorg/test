@@ -1,6 +1,6 @@
-include ( 'callback_api.js', viso_path );
-include ( 'scheduler_api.js', viso_path );
-include ( 'vis_object_api.js', viso_path );
+JS.include( 'callback_api.js', viso_path );
+JS.include( 'scheduler_api.js', viso_path );
+JS.include( 'vis_object_api.js', viso_path );
 
 function viso_make_transition( from_vis_obj, to_vis_obj, transition, speed, 
                                callback, x_step_size, y_step_size, 
@@ -171,7 +171,7 @@ function viso_make_transition( from_vis_obj, to_vis_obj, transition, speed,
         return;
     }
     if( !dont_align_parent && to_vis_obj ) {
-        var parent       = viso_get_parent( to_vis_obj );
+        var parent       = to_vis_obj.parentNode;
         var parent_sizes = viso_get_sizes( parent );
 
         if( parent_sizes.y < to_sizes.y ) {
@@ -203,7 +203,7 @@ function viso_do_transition( from_vis_obj, to_vis_obj,
     viso_remove( from_vis_obj );
 
     if( !dont_align_parent && to_vis_obj ) {
-        var parent       = viso_get_parent( to_vis_obj );
+        var parent       = to_vis_obj.parentNode;
         var parent_sizes = viso_get_sizes( parent );
         var to_sizes     = viso_get_sizes( to_vis_obj );
 

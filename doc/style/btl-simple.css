@@ -1,79 +1,80 @@
 @import "btl.css";
 
-table.depreciated-tools-list
+TABLE.depreciated-tools-list
 {
-    width: 90%;
-    padding: 0;
-    border: 1px solid black;
+    width:          90%;
+    padding:        0px;
+    border:         1px solid black;
 }
 
-table.depreciated-tools-list thead td
+TABLE.depreciated-tools-list THEAD TD
 {
-    background: white;
-    border: 1px solid black;
-    color:  black;
-    font-weight: bold
-    width: 50%;
+    background:     white;
+    border:         1px solid black;
+    color:          black;
+    font-weight:    bold
+    width:          50%;
 }
 
-table.depreciated-tools-list tbody td
+TABLE.depreciated-tools-list TBODY TD
 {
-    background: white;
-    border: 1px solid black;
-    color:  black;
-    width: 50%;   
+    background:     white;
+    border:         1px solid black;
+    color:          black;
+    width:          50%;   
 }
 
 BODY
 {
-    background: white;
+    background:     white;
 }
 
-table.body-table
+TABLE.body-table
 {
-    border: none;
-    width: 100%;
+    border:         none;
+    width:          100%;
 }
-table.body-table td
+TABLE.body-table TD
 {
-    color:      black;
-    background: white;
+    color:          black;
+    background:     white;
 }
 
 SPAN.literal
 {
-    color: black;
-    font-weight: normal;
-    font-style: normal;
+    color:          black;
+    font-weight:    normal;
+    font-style:     normal;
 }
 
 SPAN.reserv-word 
 {
-    color: black;
-    font-weight: normal;
-    font-style: normal;
+    color:          black;
+    font-weight:    normal;
+    font-style:     normal;
 }
 
 SPAN.cpp-type 
 {
-    color: black;
-    font-weight: normal;
-    font-style: normal;
+    color:          black;
+    font-weight:    normal;
+    font-style:     normal;
 }
 
 SPAN.comment 
 {
-    color: black;
-    font-weight: normal;
-    font-style: normal;
+    color:          black;
+    font-weight:    normal;
+    font-style:     normal;
 }
 
-span.ref-to-top
+SPAN.ref-to-top
 {
-    display: none;
+    display:        none;
 }
 
-span.example_roller
+SPAN.example_roller
 {
-    display: none;
+    display:        none;
 }
+

@@ -1,15 +1,13 @@
-include ( 'vis_object_api.js', viso_path );
-include ( 'scheduler_api.js', viso_path );
-include ( 'transitions.js', viso_path );
+JS.include( 'vis_object_api.js', viso_path );
+JS.include( 'scheduler_api.js', viso_path );
+JS.include( 'transitions.js', viso_path );
 
 function WipeAwayMenu( menu_id, menu_root_id, start_closed, direction, show_info, hide_info ) {
     this.menu_root     = viso_get( menu_root_id );
     this.menu          = viso_get( menu_id );
-    this.menu_state    = 1; // 0 - closing 1 - closed, 2 - opening, 3 - open
     this.trans_task_id = null;
     this.direction     = direction ? direction : "right";
     this.start_closed  = start_closed;
-    this.menu_parent   = viso_get_parent( this.menu );
     this.menu_size     = viso_get_sizes( this.menu );
 
     switch( this.direction ) {
@@ -33,11 +31,13 @@ function WipeAwayMenu( menu_id, menu_root_id, start_closed, direction, show_info
 
     this.init();
 
-    viso_add_event_handler( "onresize", new Callback( WipeAwayMenu.prototype.init, this ) );
-    viso_add_event_handler( "onscroll", new Callback( WipeAwayMenu.prototype.hide, this ) );
+    viso_add_event_handler( "resize", new Callback( WipeAwayMenu.prototype.init, this ) );
+    viso_add_event_handler( "scroll", new Callback( WipeAwayMenu.prototype.hide, this ) );
 }
 
 WipeAwayMenu.prototype.init = function () {
+    this.menu_state = 1; // 0 - closing 1 - closed, 2 - opening, 3 - open
+
     var root_pos    = viso_get_page_position( this.menu_root );
     var root_size   = viso_get_sizes( this.menu_root );
 
@@ -75,10 +75,10 @@ WipeAwayMenu.prototype.init = function () {
     if( !this.show_info.y_step )
         this.show_info.y_step = 0;
 
-    if( viso_get_id( this.menu_parent ) == "wipe-away-menu-holder" ) {
-        viso_move_to( this.menu_parent, parent_pos );
-        viso_insure_width( this.menu_parent, this.menu_size.x + root_size.x + 5 );
-        viso_insure_height( this.menu_parent, Math.max( this.menu_size.y, root_size.y ) );
+    if( this.menu.parentNode.id == "wipe-away-menu-holder" ) {
+        viso_move_to( this.menu.parentNode, parent_pos );
+        viso_insure_width( this.menu.parentNode, this.menu_size.x + root_size.x + 5 );
+        viso_insure_height( this.menu.parentNode, Math.max( this.menu_size.y, root_size.y ) );
     }
 
     viso_move_to( this.menu, menu_pos );

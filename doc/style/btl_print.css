@@ -19,17 +19,17 @@ BODY
 {
     background: white;
 }
-a:link
+A:link
 {
     color: black;
     text-decoration: none;
 }
-a:visited
+A:visited
 {
     color: black;
     text-decoration: none;
 }
-a:active
+A:active
 {
     color: black;
     text-decoration: none;
@@ -78,111 +78,111 @@ P.page-toc-indented
     display: none;
 }
 
-table.body-table
+TABLE.body-table
 {
     border: none;
     margin-top: 0;
     padding-top: 0;
     width: 100%;
 }
-table.body-table td
+TABLE.body-table TD
 {
-    margin-top: 0;
-    padding-top: 0;
-    color:      black;
-    background: white;
+    margin-top:     0px;
+    padding-top:    0px;
+    color:          black;
+    background:     white;
 }
 
-table.parameter-table
+TABLE.parameter-table
 {
-    border:        none;
-    border-bottom: ridge 2 black;
-    width:         100%
+    border:         black solid; 
+    border-width:   0px 0px 2px;
+    width:          100%
 }
-table.parameter-table td
+TABLE.parameter-table TD
 {
-    margin-top:    0px;
-    margin-bottom: 0px;
-    padding-top: 0px; 
+    margin-top:     0px;
+    margin-bottom:  0px;
+    padding-top:    0px; 
     padding-bottom: 10px; 
 }
 
-table.parameter-values-table
+TABLE.parameter-values-table
 {
-    border:        none;
-    width:         100%
+    border:         none;
+    width:          100%
 }
-table.parameter-values-table td
+TABLE.parameter-values-table TD
 {
     margin:         0px;
     padding-top:    0px; 
     padding-bottom: 5px; 
 }
 
-table.2fields
+TABLE.2fields
 {
-    border: none collapse;
-    padding: 0px;
-    margin: 0px;
+    border:         none collapse;
+    padding:        0px;
+    margin:         0px;
 }
-table.2fields td
+TABLE.2fields TD
 {
-    margin-left: 0px;
-    padding-left: 40px; 
-    valign: top;
+    margin-left:    0px;
+    padding-left:   40px; 
+    valign:         top;
 }
 
 SPAN.reserv-word
 {
-    font-style: italic;
+    font-style:     italic;
 }
 SPAN.cpp-type
 {
-    font-weight: bold;
+    font-weight:    bold;
 }
 SPAN.comment
 {
-    font-style: oblique
+    font-style:     oblique
 }
 SPAN.new-term
 {
-     font-weight: bold;
+     font-weight:   bold;
 }
 
 DIV.screen-header
 {
-    display: none;
+    display:        none;
 }
 
-table.depreciated-tools-list
+TABLE.depreciated-tools-list
 {
-    width: 100%;
-    padding: 0;
-    border: 1px solid black;
+    width:          100%;
+    padding:        0px;
+    border:         1px solid black;
 }
 
-table.depreciated-tools-list thead td
+TABLE.depreciated-tools-list THEAD TD
 {
-    border: 1px solid black;
-    color:  black;
-    font-weight: bold
-    width: 50%;
-    padding: 0;
+    border:         1px solid black;
+    color:          black;
+    font-weight:    bold
+    width:          50%;
+    padding:        0px;
 }
 
-table.depreciated-tools-list tbody td
+TABLE.depreciated-tools-list TBODY TD
 {
-    border: 1px solid black;
-    color:  black;
-    width: 50%;
+    border:         1px solid black;
+    color:          black;
+    width:          50%;
 }
 
-span.ref-to-top
+SPAN.ref-to-top
 {
-    display: none;
+    display:        none;
 }
 
-span.example_roller
+SPAN.example_roller
 {
-    display: none;
+    display:        none;
 }

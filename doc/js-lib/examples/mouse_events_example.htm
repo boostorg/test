@@ -18,10 +18,12 @@ function onMouseOver_h2( e ) {
     viso_get( "log" ).innerHTML += "<br>";
 }
 
+var handler2;
+
 function page_init() {
-    viso_add_event_handler( "onmouseout", onMouseOut_h, viso_get( "DIV1" ) );
-    viso_add_event_handler( "onmouseover", onMouseOver_h, viso_get( "DIV1" ) );
-    viso_add_event_handler( "onmouseover", onMouseOver_h2, viso_get( "DIV1" ) );
+    viso_add_event_handler( "mouseout", onMouseOut_h, viso_get( "DIV1" ) );
+    viso_add_event_handler( "mouseover", onMouseOver_h, viso_get( "DIV1" ) );
+    handler2 = viso_add_event_handler( "mouseover", onMouseOver_h2, viso_get( "DIV1" ) );
 }
 </script>
 
@@ -46,6 +48,9 @@ DIV {
 </div>
 <br>
 <br>
+<form>
+<input type="button" value="Remove space" onClick="viso_remove_event_handler( 'mouseover', handler2, viso_get( 'DIV1' ) );">
+</form>
 <br>
 <hr>
 <br>

@@ -5,15 +5,9 @@
 <script language="javascript">var viso_path="js-lib"</script>
 <script language="javascript" src="js-lib/core.js" > </script>
 
-<link id="screen_style" rel="stylesheet" type="text/css" href="style/btl.css" media="screen" />
-<link rel="stylesheet" type="text/css" href="style/btl_print.css" media="print" />
-
-<meta http-equiv="Content-Language" content="en-us" />
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-
 <script language="JavaScript">
-include ( "btl.js" );
-include ( "vis_obj_loop_roller.js", viso_path );
+JS.include( "btl.js" );
+JS.include( "vis_obj_loop_roller.js", viso_path );
 
 function page_init() {
     free_func_ex_roller = new VisObjLoopRoller( "wipe-right", 10, 25, 'ff_ex_1', 'ff_ex_2' );
@@ -28,6 +22,13 @@ function page_init() {
     btl_menu_init();
 }
 </script>
+
+<script>put_screen_style();</script>
+<link rel="stylesheet" type="text/css" href="style/btl_print.css" media="print" />
+
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
 </head>
 
 <body onLoad="page_init()">
@@ -769,9 +770,9 @@ located in the Boost Test Library src directory, compose the framework:</p>
     to start the test that run a 1 sec?. For a long and complex test we want to 
     be able to see the test progress.</p>
 <h2><a name="Design">Design</a></h2>
+<script language="Javascript">put_ref_to_top()</script>
 <p><a href="test_lib_design.htm">The Boost Test Library Design</a> document 
-describes the relationship between Boost Test Library components.
-<script language="Javascript">put_ref_to_top()</script></p>
+describes the relationship between Boost Test Library components.</p>
 <hr>
 <p>© <script language="Javascript">contact_addess()</script>
           <script language="JavaScript">

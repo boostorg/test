@@ -1,5 +1,6 @@
-include ( "vis_object_api.js", viso_path );
-include ( "wipe_away_menu.js", viso_path );
+JS.include( "vis_object_api.js", viso_path );
+JS.include( "wipe_away_menu.js", viso_path );
+JS.include( "cookies.js", viso_path );
 
 function get_copyright_date() {
    document.write( "2001-2002" )
@@ -48,22 +49,10 @@ function hide_btl_menu( e ) {
         btl_menu.hide();
 }
 
-style_switch.curr_style = true;
-function style_switch() { 
-    if( style_switch.curr_style )
-        viso_get( "screen_style" ).href = "style/btl-simple.css";
-    else
-        viso_get( "screen_style" ).href = "style/btl.css";
-
-    style_switch.curr_style = !style_switch.curr_style;
-
-    btl_menu.init();
-}
-
 function btl_menu_init() {
     btl_menu = new WipeAwayMenu( "header_menu", "header_menu_root", true, "left" );
-    viso_add_event_handler( "onmouseout", hide_btl_menu, viso_get( "active_area" ) )
-    viso_add_event_handler( "onclick", style_switch, viso_get( "header_menu_root" ) )   
+    viso_add_event_handler( "mouseout", hide_btl_menu, viso_get( "active_area" ) )
+    viso_add_event_handler( "click", style_switch, viso_get( "header_menu_root" ) )   
 }
 
 function put_ref_to_top() {
@@ -89,4 +78,31 @@ function put_examples_roller( roller_name ) {
         "<img src='imgs/next_arrow.gif' style='border-style:none;' align='top' height='22' /></a>" );
 
     document.write( "</span>" );
+}
+
+var styles = [ "btl", "btl-simple" ];
+function put_screen_style() {
+    var btl_style       = new Cookie( "btl_style" );
+
+    if( !btl_style.load() )
+        btl_style.v = 0;
+
+    var str = '<link id="screen_style" rel="stylesheet" type="text/css" href="style/' + 
+              styles[btl_style.v] + '.css" media="screen" />';
+
+    document.write( str );
+}
+
+function style_switch() { 
+    var btl_style       = new Cookie( "btl_style" );
+
+    if( !btl_style.load() )
+        btl_style.v = 0;
+
+    btl_style.v++;
+    btl_style.v %= styles.length;
+
+    btl_style.store( { days:365 } );
+
+    window.location = document.location;
 }

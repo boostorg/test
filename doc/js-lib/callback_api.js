@@ -7,7 +7,7 @@ function Callback( func, target_obj ) {
 
 Callback.prototype.toString = function() {
     var res = this.target_obj ? 'object.' : '';
-    res += funcname( this.func ) + '( ';
+    res += JS.funcname( this.func ) + '( ';
     for( var i=0; i < this.args.length; i++ )
         res += this.args[i];
     res += '... )';

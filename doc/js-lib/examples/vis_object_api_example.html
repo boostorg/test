@@ -1,19 +1,25 @@
 <html>
 <head>
+<style>
+SPAN.value
+{
+    COLOR: #af324d;
+}
+</style>
 <script language="javascript">var viso_path=".."</script>
 <script language="javascript" src="../core.js" > </script>
 <script language="javascript">
-include ( "vis_object_api.js", viso_path );
+JS.include( "vis_object_api.js", viso_path );
 
 function target_id()
 {
-    var selector = viso_get("id_selector");
+    var selector = viso_get( "id_selector" );
     return selector.options[selector.selectedIndex].value;
 }
 
 function wrap_parameter( value )
 {
-     return '<font color="rbg(200,50,75)">' + value + '</font>'
+     return '<span class="value">' + value + '</span>'
 }
 
 function update_parameters()
@@ -39,7 +45,6 @@ function update_parameters()
     viso_set_html( viso_get("par_visibility")  , wrap_parameter( '"'+ viso_get_visibility( viso_get( target_id() ) ) + '"' ) );
     viso_set_html( viso_get("par_is_visible")  , wrap_parameter( viso_is_visible( viso_get( target_id() ) ) ) );
     viso_set_html( viso_get("par_is_displayed"), wrap_parameter( viso_is_displayed( viso_get( target_id() ) ) ) );
-//    viso_set_html( viso_get("par_id")          , wrap_parameter( viso_get_id( viso_get( target_id() ) ) ) );
 }
 </script>
 </head>

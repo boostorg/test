@@ -1,4 +1,8 @@
-function include( file, path ) {
+function JS() {}
+
+// ************************************************************************** //
+
+JS.include = function( file, path ) {
     document.write( '<script language="javascript" src="' );
     if( path )
         document.write( path + '/' );
@@ -7,51 +11,50 @@ function include( file, path ) {
 
 // ************************************************************************** //
 
-function normalize_int( v ) {
-    var r = parseInt( v );
-    return isNaN( r ) ? 0 : r;
-}
-
-// ************************************************************************** //
-
-Object.prototype.is_a = function( type ) {
-    return this.constructor == type;
-}
-
-// ************************************************************************** //
-
-function funcname( f ) {
-    var s = f.toString().match( /function (\w*)/ )[1];
-
-    return (!s || s.length == 0) ? "anonymous" : s;
-}
-
-// ************************************************************************** //
-
-include ( 'browser.js', viso_path );
-include ( 'array_ex.js', viso_path );
-
-// ************************************************************************** //
-
-function normalize_integer_value( v ) {
+JS.normalize_int = function( v ) {
     if( v === undefined )
         return 0 ;
 
     if( v === null )
         return v;
 
-    return parseInt(v) || 0;
+    var r = parseInt( v );
+    return isNaN( r ) ? 0 : r;
 }
 
-Pair = function ( x, y ) {
-    this.x = normalize_integer_value( x );
-    this.y = normalize_integer_value( y );
+// ************************************************************************** //
+
+JS.funcname = function( f ) {
+    var matched = f.toString().match( /function (\w*)/ );
+    var s = matched ? matched[1] : null;
+
+    return (!s || s.length == 0) ? "anonymous" : s;
 }
 
-Pair.prototype.add = function( the_shift ) {
+// ************************************************************************** //
+
+JS.contain_ltwh = function( lt, wh, pos ) {
+    return pos.x > lt.x        && 
+           pos.y > lt.y        && 
+           pos.x < (lt.x+wh.x) &&
+           pos.y < (lt.y+wh.y); 
+}
+// ************************************************************************** //
+
+JS.include( 'browser.js', viso_path );
+JS.include( 'array_ex.js', viso_path );
+
+// ************************************************************************** //
+
+function Pair( x, y ) {
+    this.x = JS.normalize_int( x );
+    this.y = JS.normalize_int( y );
+}
+
+Pair.add = function( p1, p2 ) {
     return new Pair(
-        this.x + parseInt( the_shift.x ),
-        this.y + parseInt( the_shift.y ) );
+        parseInt( p1.x ) + parseInt( p2.x ),
+        parseInt( p1.y ) + parseInt( p2.y ) );
 }
 
 Pair.prototype.toString = function() {
@@ -61,18 +64,18 @@ Pair.prototype.toString = function() {
 // ************************************************************************** //
 
 function Quadruple( x1, x2, x3, x4 ) {
-    this.x1 = normalize_integer_value( x1 );
-    this.x2 = normalize_integer_value( x2 );
-    this.x3 = normalize_integer_value( x3 );
-    this.x4 = normalize_integer_value( x4 );
+    this.x1 = JS.normalize_int( x1 );
+    this.x2 = JS.normalize_int( x2 );
+    this.x3 = JS.normalize_int( x3 );
+    this.x4 = JS.normalize_int( x4 );
 }
 
-Quadruple.prototype.add = function( the_shift ) {
+Quadruple.add = function( q1, q2 ) {
     return new Quadruple(
-        this.x1 + parseInt( the_shift.x1 ),
-        this.x2 + parseInt( the_shift.x2 ),
-        this.x3 + parseInt( the_shift.x3 ),
-        this.x4 + parseInt( the_shift.x4 ) );
+        parseInt( q1.x1 ) + parseInt( q2.x1 ),
+        parseInt( q1.x2 ) + parseInt( q2.x2 ),
+        parseInt( q1.x3 ) + parseInt( q2.x3 ),
+        parseInt( q1.x4 ) + parseInt( q2.x4 ) );
 }
 
 // ************************************************************************** //
