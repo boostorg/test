@@ -36,8 +36,8 @@ class basic_cstring {
     typedef basic_cstring<CharT>                        self_type;
 public:
     // Subtypes
-    typedef detail::bcs_char_traits<CharT>              traits_type;
-    typedef typename detail::bcs_char_traits<CharT>::std_string  std_string;
+    typedef ut_detail::bcs_char_traits<CharT>           traits_type;
+    typedef typename ut_detail::bcs_char_traits<CharT>::std_string  std_string;
 
     typedef CharT                                       value_type;
     typedef value_type*                                 pointer;
@@ -137,8 +137,8 @@ private:
     static self_type default_trim_ex();
 
     // Data members
-    pointer         m_begin;
-    pointer         m_end;
+    iterator        m_begin;
+    iterator        m_end;
 };
 
 //____________________________________________________________________________//
@@ -715,6 +715,10 @@ last_char( basic_cstring<CharT> source )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2004/06/07 07:33:19  rogeeff
+//  amother borland patch
+//  detail namespace renamed
+//
 //  Revision 1.6  2004/06/05 11:02:15  rogeeff
 //  std::traits usage reworked
 //

@@ -39,8 +39,8 @@ namespace ut_detail {
 template<class CharT>
 struct case_ins
 {
-    static bool         eq( CharT const& c1, CharT const& c2 ) { return std::toupper( c1 ) == std::toupper( c2 ); }
-    static bool         lt( CharT const& c1, CharT const& c2 ) { return std::toupper( c1 ) <  std::toupper( c2 ); }
+    static bool         eq( CharT c1, CharT c2 ) { return std::toupper( c1 ) == std::toupper( c2 ); }
+    static bool         lt( CharT c1, CharT c2 ) { return std::toupper( c1 ) <  std::toupper( c2 ); }
 
     static int          compare( CharT const* s1, CharT const* s2, std::size_t n )
     {
@@ -60,7 +60,7 @@ struct case_ins
 
 template<class CharT>
 inline bool
-case_ins_eq( basic_cstring<CharT> const& x, basic_cstring<CharT> const& y )
+case_ins_eq( basic_cstring<CharT> x, basic_cstring<CharT> y )
 {
     return x.size() == y.size() && ut_detail::case_ins<CharT>::compare( x.begin(), y.begin(), x.size() ) == 0;
 }
@@ -75,7 +75,7 @@ template<class CharT>
 class case_ins_less : public std::binary_function<basic_cstring<CharT>,basic_cstring<CharT>,bool>
 {
 public:
-    bool operator()( basic_cstring<CharT> const& x, basic_cstring<CharT> const& y ) const
+    bool operator()( basic_cstring<CharT> x, basic_cstring<CharT> y ) const
     {
         return x.size() != y.size() 
                 ? x.size() < y.size() 
@@ -91,7 +91,7 @@ public:
 
 template<class CharT>
 inline bool
-operator <( basic_cstring<CharT> const& x, basic_cstring<CharT> const& y )
+operator <( basic_cstring<CharT> x, basic_cstring<CharT> y )
 {
     typedef typename basic_cstring<CharT>::traits_type traits_type;
     return x.size() != y.size() 
@@ -107,6 +107,10 @@ operator <( basic_cstring<CharT> const& x, basic_cstring<CharT> const& y )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2004/06/07 07:33:19  rogeeff
+//  amother borland patch
+//  detail namespace renamed
+//
 //  Revision 1.3  2004/06/05 11:02:15  rogeeff
 //  std::traits usage reworked
 //

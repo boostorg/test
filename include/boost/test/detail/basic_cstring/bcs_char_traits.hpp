@@ -28,7 +28,7 @@ namespace boost {
 
 namespace unit_test {
 
-namespace detail {
+namespace ut_detail {
 
 template<typename CharT> struct bcs_base_char           { typedef CharT type; };
 
@@ -47,7 +47,11 @@ template<> struct bcs_base_char<wchar_t const>          { typedef wchar_t type; 
 template<typename CharT>
 struct bcs_char_traits_impl
 {
+#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
+    typedef CharT const const_char;
+#else
     typedef typename boost::add_const<CharT>::type const_char;
+#endif
     static bool eq( CharT c1, CharT c2 )
     {
         return c1 == c2;
@@ -104,7 +108,7 @@ template<> struct bcs_char_traits_impl<wchar_t> : std::char_traits<wchar_t> {};
 
 template<typename CharT>
 class bcs_char_traits : public bcs_char_traits_impl<CharT> {
-    typedef typename detail::bcs_base_char<CharT>::type                                 the_base_char;
+    typedef typename ut_detail::bcs_base_char<CharT>::type                              the_base_char;
 public:
 #if  BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
     typedef std::basic_string<the_base_char, std::string_char_traits<the_base_char> >   std_string;
@@ -113,7 +117,7 @@ public:
 #endif
 };
 
-} // namespace detail
+} // namespace ut_detail
 
 } // namespace unit_test
 
@@ -123,6 +127,10 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2004/06/07 07:33:19  rogeeff
+//  amother borland patch
+//  detail namespace renamed
+//
 //  Revision 1.2  2004/06/06 05:50:09  rogeeff
 //  borland and como fix
 //
