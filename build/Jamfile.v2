@@ -32,17 +32,14 @@ UTF_SOURCES =
   supplied_log_formatters
   ;
 
-lib prg_exec_monitor : $(PRG_EXEC_MON_SOURCES).cpp
-#     : <threading>single/multi <runtime-link>static/dynamic
+lib boost_prg_exec_monitor : $(PRG_EXEC_MON_SOURCES).cpp
      ;
 
-lib test_exec_monitor : $(TEST_EXEC_MON_SOURCES).cpp
-#     : <sysinclude>$(BOOST_ROOT) <borland><*><cxxflags>-w-8080
-#     : <threading>single/multi <runtime-link>static/dynamic
+lib boost_test_exec_monitor : $(TEST_EXEC_MON_SOURCES).cpp
+     : <toolset>borland:<cxxflags>-w-8080
      ;
 
-lib unit_test_framework : $(UTF_SOURCES).cpp
-#     : <sysinclude>$(BOOST_ROOT) <borland><*><cxxflags>-w-8080
-#     : <threading>single/multi <runtime-link>static/dynamic
+lib boost_unit_test_framework : $(UTF_SOURCES).cpp
+     : <toolset>borland:<cxxflags>-w-8080
      ;
 
