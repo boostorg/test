@@ -1,25 +1,25 @@
 H1
 {
-    FONT-SIZE:      200%;
-    COLOR:          #00008B;
+    font-size:      200%;
+    color:          #00008B;
     text-align:     center;
     clear:          left;
 }
 H2
 {
-    FONT-SIZE:      150%;
+    font-size:      150%;
 }
 H3
 {
-    FONT-SIZE:      125%;
+    font-size:      125%;
 }
 H4
 {
-    FONT-SIZE:      115%;
+    font-size:      115%;
 }
 H5
 {
-    FONT-SIZE:      108%;
+    font-size:      108%;
 }
 BODY
 {
@@ -67,6 +67,13 @@ P.test-output
     font-family:    Arial; 
     font-size:      12pt;
     margin-left:    2em;
+    white-space:    nowrap
+}
+
+SPAN.test-output
+{
+    font-family:    Arial; 
+    font-size:      12pt;
     white-space:    nowrap
 }
 
@@ -254,3 +261,18 @@ DIV.footer
 {
     border-top:     solid 3px rgb(50,50,50);
 }
+
+TABLE.test-example-summary TD
+{
+    margin-top:     0px;
+    margin-bottom:  0px;
+    padding-top:    0px; 
+    padding-bottom: 10px; 
+}
+
+TABLE.test-example-summary TD.title
+{
+    font-size:      110%;
+    font-style:     italic
+}
+

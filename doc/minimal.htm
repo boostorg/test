@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>Boost Test Library: minimal testing</TITLE>
-<LINK rel="stylesheet" type="text/css" href="style/btl.css" media="screen">
+<LINK rel="stylesheet" type="text/css" href="style/btl-white.css" media="screen">
 <LINK rel="stylesheet" type="text/css" href="style/btl-print.css" media="print">
 <META http-equiv="Content-Language" content="en-us">
 <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -11,34 +11,35 @@
 <BODY>
 <DIV class="centered">
   <TABLE class="body-table" cellspacing="3" >
-    <TR>
-      <TD id="body"> <A name='TOP'><IMG src='../../../c++boost.gif' width='277' height='86' alt="Boost logo"></A>
-        <H1>Boost Test Library: minimal testing</H1>
-        <P class="page-toc"> <A href="#Introduction">Introduction</A><BR>
-          <A href="#Benefits">Benefits</A><BR>
-          <A href="#Example">Example</A><BR>
-          <A href="#Tools">Provided Test Tools </A><BR>
-          <A href="#Integration">Integration</A><BR>
-          <A href="#Test">Test Program</A><BR>
-          <A href="#Design">Design</A></P>
-        <H2><A name="Introduction">Introduction</A></H2>
-        <P class="1-line-indented">Boost.Test minimal testing facility provides
-          the functionality provided before by the original version of Boost.Test.
-          The same as the <A href="test_exec_monitor.htm">Test Execution Monitor</A>
-          it causes the test program to run in a monitored environment. In addition
-          it defines several simple test tools that behave similarly to ones defined
-          in <A href="test_tools.htm">Test Tools</A>. Minimal testing facility
-          does not require linking with external components, so could be a component
-          of choice for simple and quick testing needs. Unlike original Boost.Test
-          version macro BOOST_INCLUDE_MAIN is not used. main function is included
-          unconditionally. One consequence is that minimal testing could not be
-          used for multiunit testing. You will need to use other Boost.Test components
-          for that purpose.</P>
-        <H2><A name="Benefits">Benefits</A></H2>
-        <SPAN class="1-line-indented">Simple</SPAN> testing framework that provide
-        the monitored environment and minimal set of testing tools without need
-        to link with external components.
-        <H2><A name="Example">Example</A></H2>
+  <TR>
+  <TD id="body"> <A name='TOP'><IMG src='../../../c++boost.gif' width='277' height='86' alt="Boost logo"></A>
+  <H1>Boost Test Library: minimal testing</H1>
+  <P class="page-toc"> <A href="index.htm">Home</A><BR>
+    <A href="#Introduction">Introduction</A><BR>
+    <A href="#Benefits">Benefits</A><BR>
+    <A href="#Example">Example</A><BR>
+    <A href="#Tools">Provided Test Tools </A><BR>
+    <A href="#Integration">Integration</A><BR>
+    <A href="#Test">Test Program</A><BR>
+    <A href="#Design">Design</A></P>
+  <H2><A name="Introduction">Introduction</A></H2>
+  <P class="1-line-indented">Boost.Test minimal testing facility provides
+  the functionality provided before by the original version of Boost.Test.
+  The same as the <A href="test_exec_monitor.htm">Test Execution Monitor</A>
+  it causes the test program to run in a monitored environment. In addition
+  it defines several simple test tools that behave similarly to ones defined
+  in <A href="test_tools.htm">Test Tools</A>. Minimal testing facility
+  does not require linking with external components, so could be a component
+  of choice for simple and quick testing needs. Unlike original Boost.Test
+  version macro BOOST_INCLUDE_MAIN is not used. main function is included
+  unconditionally. One consequence is that minimal testing could not be
+  used for multiunit testing. You will need to use other Boost.Test components
+  for that purpose.</P>
+  <H2><A name="Benefits">Benefits</A></H2>
+  <P class="1-line-indented">Simple testing framework that provide
+  the monitored environment and minimal set of testing tools without need
+  to link with external components.</P>
+  <H2><A name="Example">Example</A></H2>
 <PRE class="code">#<SPAN class="reserv-word">include</SPAN> &lt;<A href="../../../boost/test/minimal.hpp">boost/test/minimal.hpp</A>&gt;
 
 <SPAN class="cpp-type">int</SPAN> add( <SPAN class="cpp-type">int</SPAN> i, <SPAN class="cpp-type">int</SPAN> j ) { <SPAN class="reserv-word">return</SPAN> i+j; }
@@ -83,7 +84,8 @@
           test code with the test tools library. Although it works fine with the
           Minimal testing facility libraries, and is very useful for running existing
           code under them, most C++ experts prefer using exceptions for error
-          reporting. <SPAN class="ref-to-top"><A href="#TOP"><IMG src="imgs/uarrow.gif" alt="reference to the top"></A></SPAN></P>
+          reporting. <SPAN class="ref-to-top"><A href="#TOP">
+        <IMG src="imgs/uarrow.gif" alt="reference to the top" width="45" height="43"></A></SPAN></P>
         <H2><A name="Tools">Provided Test Tools</A></H2>
         <P class="1-line-indented">Unlike the <A href="test_exec_monitor.htm">Test
           Execution Monitor</A> that support complete set of test tools implemented
@@ -100,23 +102,24 @@
           in a future.</P>
         <H2><A name="Integration">Integration</A></H2>
         <P class="1-line-indented">The only change (other then include boost/test/minimal.hpp)
-          you need to make to integrate yout test module with Minimal testing
+          you need to make to integrate your test module with Minimal testing
           facility is the signature of your main function. It should look like
           this:</P>
         <P class="indented">int test_main( int argc, char* argv[] )</P>
         <P class="1-line-indented">After that you will automatically start running
-          your tests in monitored invironment. Also you can start using test tools
-          provided by minimal testiing facility and get uniform errors reporting.</P>
+          your tests in monitored environment. Also you can start using test tools
+          provided by minimal testing facility and get uniform errors reporting.</P>
         <H2><A name="Test">Test Program</A></H2>
-        <P class="indented"><A href="../test/minimal_test.cpp">minimal_test.cpp</A></P>
+        <P class="indented"><a href="components_testing.htm#minimal_test">minimal_test</a></P>
         <H2><A name="Design">Design</A></H2>
-        <SPAN class="ref-to-top"><A href="#TOP"><IMG src="imgs/uarrow.gif" alt="reference to the top"></A></SPAN>
+        <SPAN class="ref-to-top"><A href="#TOP">
+  <IMG src="imgs/uarrow.gif" alt="reference to the top" width="45" height="43"></A></SPAN>
         <P>The <A href="test_lib_design.htm">Boost Test Library Design</A> document
           describes the relationship between Boost Test Library components.</P>
         <DIV class="footer">
           <P>&copy <A href='mailto:rogeeff@emailaccount.com'>Gennadiy Rozental</A>
             2001-2002 </P>
-          <P>Revised: 1 October, 2002</P>
+          <P>Revised: 12 February, 2003</P>
         </DIV>
       </TD>
     </TR>

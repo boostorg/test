@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>Frequently Asked Questions</TITLE>
-<LINK rel="stylesheet" type="text/css" href="style/btl.css" media="screen">
+<LINK rel="stylesheet" type="text/css" href="style/btl-white.css" media="screen">
 <LINK rel="stylesheet" type="text/css" href="style/btl-print.css" media="print">
 <META http-equiv="Content-Language" content="en-us">
 <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -15,7 +15,8 @@
   <TD id="body"> <A name='TOP'><IMG src='../../../c++boost.gif' width='277' height='86' alt="Boost logo"></A>
   <H1>Boost Test Library: frequently asked questions</H1>
   <UL>
-    <LI><A href="#Item 1">Where is the latest version of the Boost Test Library located?</A></LI>
+    <LI><A href="#Item 1">Where the latest version of the Boost Test Library is 
+    located?</A></LI>
     <LI><A href="#Item 2">I found a bug. Where could I report it?</A></LI>
     <LI><A href="#Item 3">I have a request for a new feature. Where could I ask for it?</A></LI>
     <LI><A href="#Item 4">How to create test case?</A></LI>
@@ -24,7 +25,8 @@
     <LI><A href="#Item 7">How could I redirect testing output?</A></LI>
     <LI><A href="#Item 8">I want different default log trace level</A></LI>
   </UL>
-  <H2><A name="Item 1">Where is located the latest version of the Boost Test Library?</A></H2>
+  <H2><A name="Item 1">Where the latest version of the Boost Test Library is 
+  located?</A></H2>
   <P class="1-line-indented">The latest version of Boost Test Library is available
     online on <A href="http://www.boost.org">www.boost.org</A>.</P>
   <H2><A name="Item 2">I found a bug. Where could I report it?</A></H2>
@@ -57,7 +59,7 @@
   <P>The reasons for this error is that in your implementation you should specify second
     argument of init_unit_test_suite exactly as in a specification, i.e.: char* [].</P>
   <H2><A name="Item 7">How could I redirect testing output?</A></H2>
-  <P class="1-line-indented">Use unit_test_log::instance()-&gt;set_log_output( std::ostream&amp;
+  <P class="1-line-indented">Use unit_test_log::instance().set_log_output( std::ostream&amp;
     ). For more details see <A href="unit_test_framework.htm#TestLog">Unit test framework</A>
     documentation.</P>
   <H2><A name="Item 8">I want different default log trace level</A></H2>
@@ -68,7 +70,7 @@
   <DIV class="footer">
     <P>&copy <A href='mailto:rogeeff@emailaccount.com'>Gennadiy Rozental</A> 2001-2002
     </P>
-    <P>Revised: 29 September, 2002</P>
+    <P>Revised: 12 February, 2003</P>
   </DIV>
   </TD>
   </TR>

@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>Test Tools</TITLE>
-<LINK rel="stylesheet" type="text/css" href="style/btl.css" media="screen">
+<LINK rel="stylesheet" type="text/css" href="style/btl-white.css" media="screen">
 <LINK rel="stylesheet" type="text/css" href="style/btl-print.css" media="print">
 <META http-equiv="Content-Language" content="en-us">
 <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -20,7 +20,8 @@ H4
   <TR> 
   <TD id="body"> <A name='TOP'><IMG src='../../../c++boost.gif' width='277' height='86' alt="Boost logo"></A> 
   <H1>Boost Test Library: Test Tools</H1>
-  <P class="page-toc"> <A href="#Introduction">Introduction</A><BR>
+  <P class="page-toc"> <A href="index.htm">Home</A><BR>
+    <A href="#Introduction">Introduction</A><BR>
     <A href="#Benifits">Benefits</A><BR>
     <A href="#Specification">Specification</A></P>
   <P class="page-toc-indented"> <A href="#BOOST_CHECKPOINT">BOOST_CHECKPOINT</A><BR>
@@ -74,10 +75,10 @@ H4
   <H4>Output:</H4>
   <P class="test-output"> Exception in test_main : C string:some_error<BR>
   test.cpp(2) : last checkpoint: Going to throw an exception</P>
-  <SPAN class="ref-to-top"><A href="#TOP"><IMG src="imgs/uarrow.gif" alt="reference to the top"></A></SPAN>		  
+  <SPAN class="ref-to-top"><A href="#TOP"><IMG src="imgs/uarrow.gif" alt="reference to the top"></A></SPAN>       
   <H3><A name="BOOST_WARN">BOOST_WARN</A>( predicate )</H3>
   <P class="1-line-indented">This tool is used to perform a weak validation of the 
-    the predicate. If predicate is true, the tool produces a conformation message in 
+    predicate. If predicate is true, the tool produces a conformation message in 
     other case it produces a warning message in a form &quot;warning in ...: condition 
     &lt;predicate&gt; is not satisfied&quot;</P>
   <H4>Example: test.cpp</H4>
@@ -205,7 +206,7 @@ H4
     i=2<BR>
     still testing...<BR>
     struct A.</P>
-  <SPAN class="ref-to-top"><A href="#TOP"><IMG src="imgs/uarrow.gif" alt="reference to the top"></A></SPAN>	
+  <SPAN class="ref-to-top"><A href="#TOP"><IMG src="imgs/uarrow.gif" alt="reference to the top"></A></SPAN> 
   <H3><A name="BOOST_CHECK_MESSAGE">BOOST_WARN_MESSAGE</A>( predicate, message )<BR>
     BOOST_CHECK_MESSAGE( predicate, message )<BR>
     <A name="BOOST_CHECK_MESSAGE">BOOST_REQUIRE_MESSAGE</A>( predicate, message )</H3>
@@ -377,10 +378,11 @@ H4
     deprecated names are still accepted but may be excluded in a future releases. Thanks 
     for Ullrich Koethe, who originally proposed new names. 
   <H2><A name="Examples">Examples and Test Programs</A></H2>
-  <P class="indented"><A href="../example/test_exec_example.cpp">test_exec_example.cpp</A><BR>
-    <A href="../test/test_exec_fail2.cpp">test_exec_fail2.cpp</A><BR>
-    <A href="../test/test_exec_fail3.cpp">test_exec_fail3.cpp</A><BR>
-    <A href="../test/test_tools_test.cpp">test_tools_test.cpp</A> </P>
+  <P class="indented"><a href="components_testing.htm#test_exec_example">test_exec_example</a><BR>
+    <a href="components_testing.htm#test_exec_fail2">test_exec_fail2</a><BR>
+    <a href="components_testing.htm#test_exec_fail3">test_exec_fail3</a><BR>
+    <a href="components_testing.htm#test_tools_test">test_tools_test</a><BR>
+    <a href="components_testing.htm#test_fp_comparisons">test_fp_comparisons</a> </P>
 
   <H2><A name="Design">Design</A></H2>
 
@@ -392,7 +394,7 @@ H4
   <DIV class="footer"> 
     <P>&copy <A href='mailto:rogeeff@emailaccount.com'>Gennadiy Rozental</A> 2001-2002 
     </P>
-    <P>Revised: 29 September, 2002</P>
+    <P>Revised: 12 February, 2003</P>
   </DIV>
   </TD>
   </TR>

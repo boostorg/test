@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>Boost Test Libraries</TITLE>
-<LINK rel="stylesheet" type="text/css" href="style/btl.css" media="screen">
+<LINK rel="stylesheet" type="text/css" href="style/btl-white.css" media="screen">
 <LINK rel="stylesheet" type="text/css" href="style/btl-print.css" media="print">
 <META http-equiv="Content-Language" content="en-us">
 <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -12,12 +12,13 @@
 <DIV class="centered">
   <TABLE class="body-table" cellspacing="3" >
     <TR>
-      <TD id="body"> <A name='TOP'><IMG src='../../../c++boost.gif' width='277' height='86' alt="Boost logo"></A>
+      <TD id="body"> <A name='TOP'><IMG src='../../../c++boost.gif' width='277' height='86' alt="Boost logo"></A> 
         <H1>Boost Test Library</H1>
         <P class=epigraph>&quot;Test everything that could possibly break&quot;</P>
         <P class=epigraph>XP maxim</P>
-        <P class="page-toc"> <A href="#Introduction">Introduction</A><BR>
-          <A href="#Components">Components</A> </P>
+        <P class="page-toc"> 
+        <A href="#Introduction">Introduction</A><BR>
+        <A href="#Components">Components</A> </P>
         <P class="page-toc-indented"> <A href="execution_monitor.htm">Execution
           monitor</A><BR>
           <A href="prg_exec_monitor.htm">Program Execution Monitor</A><BR>
@@ -27,7 +28,7 @@
           <A href="minimal.htm">Minimal Test</A></P>
         <P class="page-toc"> <A href="#FAQ">FAQ</A><BR>
           <A href="#Design">Design</A></P>
-        <P class="page-toc"> <a href="#Migration">Migration guide</a><BR>
+        <P class="page-toc"> <A href="#Migration">Migration guide</A><BR>
           <A href="#Open Issues">Open Issues</A><BR>
           <A href="#Portability">Portability</A><BR>
           <A href="#Acknowledgements">Acknowledgements</A> </P>
@@ -81,13 +82,13 @@
             use the <A href="test_tools.htm">Test Tools</A> to implement a test
             cases and provides a facility to manage a log report level and a result
             report level.</LI>
-          <LI><a href="minimal.htm">Minimal testing</a> - simple facility designed
+          <LI><A href="minimal.htm">Minimal testing</A> - simple facility designed
             to provide the functionality provided before by the original version
-            of Boost.Test.The same as the <a href="test_exec_monitor.htm">Test
-            Execution Monitor</a> it causes the test ptogram to run in a monitored
+            of Boost.Test.The same as the <A href="test_exec_monitor.htm">Test
+            Execution Monitor</A> it causes the test ptogram to run in a monitored
             environment. In addition it defines several simple test tools that
-            behave similarly to ones defined in <a href="test_tools.htm">Test
-            Tools</a>. Minimal testinf facility does not require linking with
+            behave similarly to ones defined in <A href="test_tools.htm">Test
+            Tools</A>. Minimal testinf facility does not require linking with
             external components, so could be a component of choice for simple
             and quick testing needs.</LI>
         </UL>
@@ -105,33 +106,33 @@
           of cpp_main facility, to migrate you will need to delete the inclusion
           of the &lt;boost/test/cpp_main.cpp&gt;, since this file is not present
           any more. After that you have following choices:</P>
-        <ul>
-          <li>Link with Program Execution Monitor (exact library name depends
+        <UL>
+          <LI>Link with Program Execution Monitor (exact library name depends
             on compiler you are using, but most probably it will be libprg_exec_monitor.lib).
-          </li>
-          <li>Include &lt;boost/test/included/prg_exec_monitor.hpp&gt;, in which
+          </LI>
+          <LI>Include &lt;boost/test/included/prg_exec_monitor.hpp&gt;, in which
             case you need not link with precompiled component but it may incur
-            probably some compile time overhead.</li>
-        </ul>
+            probably some compile time overhead.</LI>
+        </UL>
         <P class="1-line-indented">If your code were using the original version
           of test_main and test tools facilitates of Boost.Test library, to migrate
           to use of latest one you have following choices:</P>
-        <ul>
-          <li>Without changing of the code that were using Boost.Test facilities
+        <UL>
+          <LI>Without changing of the code that were using Boost.Test facilities
             link with Test Execution Monitor (exact library name depends on compiler
-            you are using, but most probably it will be libtest_exec_monitor.lib).</li>
-          <li>Include &lt;boost/test/included/test_exec_monitor.hpp&gt;, in which
+            you are using, but most probably it will be libtest_exec_monitor.lib).</LI>
+          <LI>Include &lt;boost/test/included/test_exec_monitor.hpp&gt;, in which
             case you need not link with precompiled component but it may incur
             probably some compile time overhead. Definition of BOOST_INCLUDE_MAIN
-            could be deleted either.</li>
-          <li>Include &lt;boost/test/minimal.hpp&gt;, in which case you need not link
+            could be deleted either.</LI>
+          <LI>Include &lt;boost/test/minimal.hpp&gt;, in which case you need not link
             with precompiled component and it most probably does not incur a compile
             time overhead, but you will be limited ti the set of features defined
             in the original test library. Definition of BOOST_INCLUDE_MAIN could
             be deleted either. Would you decide in a future to use any of newer
             Boost.Test features you will be enforced to snitch to one the two
-            chaises above. </li>
-        </ul>
+            chaises above. </LI>
+        </UL>
         <H2><A name="Open Issues">Open Issues</A></H2>
         <UL>
           <LI>What dependencies will we tolerate in Boost Test Library? Also we
@@ -143,15 +144,11 @@
           <LI>How to implement compilability checks.</LI>
           <LI>Selective test cases run: ways to define by user and notify the
             framework.</LI>
-          <LI>Command line argument processing facility: external or internal,
-            simple or advanced?</LI>
-          <LI>Integration of the unit test framework into the Boost Build System.</LI>
           <LI>Support for the testing of multithreaded programs.</LI>
           <LI>Make BOOST_TEST_CLOSE print values properly</LI>
           <LI>Timeout implementation on Win32 platform.</LI>
           <LI>Need to separate reference and tutorial material</LI>
           <LI>Unit Test Framework extension should be documented</LI>
-          <LI>Should the execution monitor page contain an example?</LI>
         </UL>
         <SPAN class="ref-to-top"><A href="#TOP"><IMG src="imgs/uarrow.gif" alt="reference to the top"></A></SPAN>
         <H2><A name="Portability">Portability</A></H2>
@@ -178,7 +175,7 @@
           Rozental is the developer and maintainer. </P>
         <DIV class="footer">
           <P>&copy Beman Dawes 2000, <A href='mailto:rogeeff@emailaccount.com'>Gennadiy Rozental</A> 2001-2002 </P>
-          <P>Revised: 29 September, 2002</P>
+          <P>Revised: 12 February, 2003</P>
         </DIV>
       </TD>
   </TR>
