@@ -16,59 +16,50 @@
 #include <boost/test/unit_test.hpp>
 
 #include <boost/test/detail/iterator/ifstream_line_iterator.hpp>
-#include <boost/test/detail/basic_cstring/compare.hpp>
-#include <boost/test/detail/fixed_mapping.hpp>
 
 namespace utf = boost::unit_test;
-namespace tt  = boost::test_tools;
-using utf::const_string;
 
 //____________________________________________________________________________//
 
 void test_default_delimeter()
 {
-    {
-        utf::ifstream_line_iterator it( "./test_files/ifstream_line_iterator.tst1" );
+    utf::ifstream_line_iterator it( "./test_files/ifstream_line_iterator.tst1" );
 
-        BOOST_CHECK( it != utf::ifstream_line_iterator() ); 
+    BOOST_CHECK( it != utf::ifstream_line_iterator() ); 
 
-        BOOST_CHECK_EQUAL( *it, "acv ffg" ); 
-        ++it;
+    BOOST_CHECK_EQUAL( *it, "acv ffg" ); 
+    ++it;
 
-        BOOST_CHECK_EQUAL( *it, "" ); 
-        ++it;
+    BOOST_CHECK_EQUAL( *it, "" ); 
+    ++it;
 
-        BOOST_CHECK_EQUAL( *it, " " ); 
-        ++it;
+    BOOST_CHECK_EQUAL( *it, " " ); 
+    ++it;
 
-        BOOST_CHECK_EQUAL( *it, "1" ); 
-        ++it;
+    BOOST_CHECK_EQUAL( *it, "1" ); 
+    ++it;
 
-        BOOST_CHECK( it == utf::ifstream_line_iterator() ); 
-    }
+    BOOST_CHECK( it == utf::ifstream_line_iterator() ); 
 }
 
 //____________________________________________________________________________//
 
 void test_custom_delimeter()
 {
+    utf::ifstream_line_iterator it( "./test_files/ifstream_line_iterator.tst2", '}' );
 
-    {
-        utf::ifstream_line_iterator it( "./test_files/ifstream_line_iterator.tst2", '}' );
+    BOOST_CHECK( it != utf::ifstream_line_iterator() ); 
 
-        BOOST_CHECK( it != utf::ifstream_line_iterator() ); 
+    BOOST_CHECK_EQUAL( *it, "{ abc d " ); 
+    ++it;
 
-        BOOST_CHECK_EQUAL( *it, "{ abc d " ); 
-        ++it;
+    BOOST_CHECK_EQUAL( *it, "\n{ d \n dsfg\n" ); 
+    ++it;
 
-        BOOST_CHECK_EQUAL( *it, "\n{ d \n dsfg\n" ); 
-        ++it;
+    BOOST_CHECK_EQUAL( *it, "\n" ); 
+    ++it;
 
-        BOOST_CHECK_EQUAL( *it, "\n" ); 
-        ++it;
-
-        BOOST_CHECK( it == utf::ifstream_line_iterator() ); 
-    }
+    BOOST_CHECK( it == utf::ifstream_line_iterator() ); 
 }
 
 
@@ -91,6 +82,9 @@ init_unit_test_suite( int argc, char* argv[] )
 // History :
 //
 // $Log$
+// Revision 1.3  2004/06/05 11:04:17  rogeeff
+// no message
+//
 // Revision 1.2  2004/05/27 06:30:48  rogeeff
 // no message
 //

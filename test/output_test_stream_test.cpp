@@ -46,17 +46,17 @@ test_constructor()
         BOOST_CHECK( output.is_empty() );
     }
     {
-        output_test_stream output( "./test_files/pattern.temp" );
+        output_test_stream output( "pattern.temp" );
         BOOST_CHECK( !output.match_pattern() );
         BOOST_CHECK( output.is_empty() );
     }
     {
-        output_test_stream output( "./test_files/pattern.temp2", false );
+        output_test_stream output( "pattern.temp2", false );
         BOOST_CHECK( output.match_pattern() );
         BOOST_CHECK( output.is_empty() );
     }
     {
-        output_test_stream output( "./test_files/pattern.temp2" );
+        output_test_stream output( "pattern.temp2" );
         BOOST_CHECK( output.match_pattern() );
         BOOST_CHECK( output.is_empty() );
     }
@@ -153,7 +153,7 @@ void
 test_match_pattern()
 {
     {
-        output_test_stream output( "./test_files/pattern.test", false );
+        output_test_stream output( "pattern.test", false );
         
         output << "text1\n";
         BOOST_CHECK( output.match_pattern() );
@@ -163,7 +163,7 @@ test_match_pattern()
         BOOST_CHECK( output.match_pattern() );
     }
     {
-        output_test_stream output( "./test_files/pattern.test" );
+        output_test_stream output( "pattern.test" );
         
         output << "text1\n";
         BOOST_CHECK( output.match_pattern() );
@@ -173,7 +173,7 @@ test_match_pattern()
         BOOST_CHECK( output.match_pattern() );
     }
     {
-        output_test_stream output( "./test_files/pattern.test" );
+        output_test_stream output( "pattern.test" );
         
         output << "text4\n";
         BOOST_CHECK( !output.match_pattern() );
@@ -183,7 +183,7 @@ test_match_pattern()
         BOOST_CHECK( output.match_pattern() );
     }
     {
-        output_test_stream output( "./test_files/pattern.test" );
+        output_test_stream output( "pattern.test" );
         
         output << "text\n";
         BOOST_CHECK( !output.match_pattern() );
@@ -215,6 +215,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.18  2004/06/05 11:04:17  rogeeff
+//  no message
+//
 //  Revision 1.17  2004/05/27 06:30:48  rogeeff
 //  no message
 //

@@ -38,6 +38,7 @@ using utf::const_string;
 
 namespace mpl = boost::mpl;
 
+typedef mpl::list<char const,wchar_t const>                                 base_const_char_types;
 typedef mpl::list<char,unsigned char,wchar_t>                               mutable_char_types;
 typedef mpl::transform<mutable_char_types,boost::add_const<mpl::_1> >::type const_char_types;
 typedef mpl::joint_view<const_char_types,mutable_char_types>                char_types;
@@ -126,7 +127,7 @@ BOOST_META_FUNC_TEST_CASE( constructors_test );
 //____________________________________________________________________________//
 
 template<typename CharT>
-void constructors_const_test( CharT* = 0 )
+void constructors_std_string_test( CharT* = 0 )
 {
     typedef typename utf::basic_cstring<CharT>::traits_type traits;
 
@@ -139,7 +140,7 @@ void constructors_const_test( CharT* = 0 )
 
 }
 
-BOOST_META_FUNC_TEST_CASE( constructors_const_test );
+BOOST_META_FUNC_TEST_CASE( constructors_std_string_test );
 
 //____________________________________________________________________________//
 
@@ -249,7 +250,7 @@ BOOST_META_FUNC_TEST_CASE( asignment_test );
 //____________________________________________________________________________//
 
 template<typename CharT>
-void asignment_const_test( CharT* = 0 )
+void asignment_std_string_test( CharT* = 0 )
 {
     typedef typename utf::basic_cstring<CharT>::traits_type traits_type;
 
@@ -266,7 +267,7 @@ void asignment_const_test( CharT* = 0 )
     BOOST_CHECK_EQUAL( traits_type::compare( bcs1.begin(), LITERAL( "es" ), bcs1.size() ), 0 );
 }
 
-BOOST_META_FUNC_TEST_CASE( asignment_const_test );
+BOOST_META_FUNC_TEST_CASE( asignment_std_string_test );
 
 //____________________________________________________________________________//
 
@@ -297,7 +298,7 @@ BOOST_META_FUNC_TEST_CASE( comparison_test );
 //____________________________________________________________________________//
 
 template<typename CharT>
-void comparison_const_test( CharT* = 0 )
+void comparison_std_string_test( CharT* = 0 )
 {
     utf::basic_cstring<CharT> bcs1( TEST_STRING );
     typename utf::basic_cstring<CharT>::std_string l( TEST_STRING );
@@ -315,7 +316,7 @@ void comparison_const_test( CharT* = 0 )
 #endif
 }
 
-BOOST_META_FUNC_TEST_CASE( comparison_const_test );
+BOOST_META_FUNC_TEST_CASE( comparison_std_string_test );
 
 //____________________________________________________________________________//
 
@@ -469,9 +470,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 
     test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( constructors_test, char_types ) );
 #if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x551))
-    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( constructors_const_test, const_char_types ) );
-    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( asignment_const_test, const_char_types ) );
-    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( comparison_const_test, const_char_types ) );
+    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( constructors_std_string_test, base_const_char_types ) );
+    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( asignment_std_string_test, base_const_char_types ) );
+    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( comparison_std_string_test, base_const_char_types ) );
 #endif
     test->add( BOOST_TEST_CASE( array_construction_test ) );
     test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( data_access_test, char_types ) );
@@ -491,6 +492,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 // History :
 //
 // $Log$
+// Revision 1.4  2004/06/05 11:04:17  rogeeff
+// no message
+//
 // Revision 1.3  2004/05/27 06:30:48  rogeeff
 // no message
 //
