@@ -169,10 +169,10 @@ operator<<( wrapstrstream const& targ, wrapstrstream const& src )
 
 struct extended_predicate_value {
     // Constructor
-    explicit    extended_predicate_value( bool predicate_value ) 
+    explicit    extended_predicate_value( bool predicate_value )
     : p_predicate_value( predicate_value ), p_message( new wrapstrstream ) {}
 
-    bool        operator!() { return !p_predicate_value.get(); }
+    bool        operator!() const { return !p_predicate_value.get(); }
 
     BOOST_READONLY_PROPERTY( bool, 0, () )  p_predicate_value;
     std::auto_ptr<wrapstrstream>            p_message;
@@ -219,7 +219,7 @@ warn_and_continue_impl( bool predicate, wrapstrstream const& message, char const
 //____________________________________________________________________________//
 
 void
-warn_and_continue_impl( extended_predicate_value v, wrapstrstream const& message, char const* file_name, int line_num,
+warn_and_continue_impl( extended_predicate_value const& v, wrapstrstream const& message, char const* file_name, int line_num,
                         bool add_fail_pass = true );
 
 //____________________________________________________________________________//
@@ -238,14 +238,14 @@ test_and_throw_impl   ( bool predicate, wrapstrstream const& message, char const
 //____________________________________________________________________________//
 
 bool
-test_and_continue_impl( extended_predicate_value v, wrapstrstream const& message, char const* file_name, int line_num,
+test_and_continue_impl( extended_predicate_value const& v, wrapstrstream const& message, char const* file_name, int line_num,
                         bool add_fail_pass = true, 
                         unit_test_framework::report_level loglevel = unit_test_framework::report_all_errors );
 
 //____________________________________________________________________________//
 
 void
-test_and_throw_impl   ( extended_predicate_value v, wrapstrstream const& message, char const* file_name, int line_num,
+test_and_throw_impl   ( extended_predicate_value const& v, wrapstrstream const& message, char const* file_name, int line_num,
                         bool add_fail_pass = true, 
                         unit_test_framework::report_level loglevel = unit_test_framework::report_fatal_errors );
 

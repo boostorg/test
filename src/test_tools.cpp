@@ -14,7 +14,6 @@
 #include <boost/config.hpp>
 
 // STL
-#include <strstream>
 #include <fstream>
 #include <algorithm>
 #include <cstring>
@@ -94,7 +93,7 @@ warn_and_continue_impl( bool predicate, wrapstrstream const& message,
 //____________________________________________________________________________//
 
 void
-warn_and_continue_impl( extended_predicate_value v, wrapstrstream const& message, char const* file_name, int line_num,
+warn_and_continue_impl( extended_predicate_value const& v, wrapstrstream const& message, char const* file_name, int line_num,
                         bool add_fail_pass )
 {
     warn_and_continue_impl( !!v,
@@ -132,7 +131,7 @@ test_and_continue_impl( bool predicate, wrapstrstream const& message,
 //____________________________________________________________________________//
 
 bool
-test_and_continue_impl( extended_predicate_value v, wrapstrstream const& message,
+test_and_continue_impl( extended_predicate_value const& v, wrapstrstream const& message,
                         char const* file_name, int line_num,
                         bool add_fail_pass, report_level loglevel )
 {
@@ -156,7 +155,7 @@ test_and_throw_impl( bool predicate, wrapstrstream const& message,
 //____________________________________________________________________________//
 
 void
-test_and_throw_impl( extended_predicate_value v, wrapstrstream const& message,
+test_and_throw_impl( extended_predicate_value const& v, wrapstrstream const& message,
                      char const* file_name, int line_num,
                      bool add_fail_pass, report_level loglevel )
 {
@@ -204,12 +203,19 @@ struct output_test_stream::Impl
     std::fstream    m_pattern_to_match_or_save;
     bool            m_match_or_save;
     std::string     m_synced_string;
+
+    void            check_and_fill( detail::extended_predicate_value& res )
+    {
+        if( !res.p_predicate_value.get() )
+            *(res.p_message) << ". Output content: \"" << m_synced_string << '\"';
+    }
 };
 
 //____________________________________________________________________________//
 
 output_test_stream::output_test_stream( char const* pattern_file, bool match_or_save )
-: m_pimpl( new Impl ) {
+: m_pimpl( new Impl )
+{
     if( pattern_file != NULL && pattern_file[0] != '\0' )
         m_pimpl->m_pattern_to_match_or_save.open( pattern_file, match_or_save ? std::ios::in : std::ios::out );
     m_pimpl->m_match_or_save = match_or_save;
@@ -217,23 +223,23 @@ output_test_stream::output_test_stream( char const* pattern_file, bool match_or_
 
 //____________________________________________________________________________//
 
-output_test_stream::~output_test_stream() {
+output_test_stream::~output_test_stream()
+{
 }
 
 //____________________________________________________________________________//
 
 detail::extended_predicate_value
-output_test_stream::is_empty( bool flush_stream ) {
+output_test_stream::is_empty( bool flush_stream )
+{
     sync();
 
     result_type res( m_pimpl->m_synced_string.empty() );
 
-    if( !res.p_predicate_value.get() ) {
-        *(res.p_message) << ". Output content: \"" << m_pimpl->m_synced_string << '\"';
+    m_pimpl->check_and_fill( res );
 
-        if( flush_stream )
-            flush();
-    }
+    if( flush_stream )
+        flush();
 
     return res;
 }
@@ -247,8 +253,7 @@ output_test_stream::check_length( std::size_t length_, bool flush_stream )
 
     result_type res( m_pimpl->m_synced_string.length() == length_ );
 
-    if( !res.p_predicate_value.get() )
-        *(res.p_message) << ". Output length is " << m_pimpl->m_synced_string.length();
+    m_pimpl->check_and_fill( res );
 
     if( flush_stream )
         flush();
@@ -265,8 +270,7 @@ output_test_stream::is_equal( char const* arg, bool flush_stream )
 
     result_type res( m_pimpl->m_synced_string == arg );
 
-    if( !res.p_predicate_value.get() )
-        *(res.p_message) << ". Output content: \"" << m_pimpl->m_synced_string << '\"';
+    m_pimpl->check_and_fill( res );
 
     if( flush_stream )
         flush();
@@ -279,7 +283,16 @@ output_test_stream::is_equal( char const* arg, bool flush_stream )
 detail::extended_predicate_value
 output_test_stream::is_equal( std::string const& arg, bool flush_stream )
 {
-    return is_equal( arg.c_str(), arg.length(), flush_stream );
+    sync();
+
+    result_type res( m_pimpl->m_synced_string == arg );
+
+    m_pimpl->check_and_fill( res );
+
+    if( flush_stream )
+        flush();
+
+    return res;
 }
 
 //____________________________________________________________________________//
@@ -291,8 +304,7 @@ output_test_stream::is_equal( char const* arg, std::size_t n, bool flush_stream 
 
     result_type res( m_pimpl->m_synced_string == std::string( arg, n ) );
 
-    if( !res.p_predicate_value.get() )
-        *(res.p_message) << ". Output content: \"" << m_pimpl->m_synced_string << '\"';
+    m_pimpl->check_and_fill( res );
 
     if( flush_stream )
         flush();

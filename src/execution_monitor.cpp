@@ -344,7 +344,7 @@ int catch_signals( execution_monitor & exmon, int )
 #if defined(BOOST_MS_STRCTURED_EXCEPTION_HANDLING)
 
 void
-ms_se_trans_func( unsigned int id, _EXCEPTION_POINTERS * exps )
+ms_se_trans_func( unsigned int id, _EXCEPTION_POINTERS* /* exps */ )
 {
     throw ms_se_exception( id );
 }
