@@ -24,9 +24,9 @@
 #include <boost/shared_ptr.hpp>
 
 // STL
-#include <iosfwd>   // for std::ostream&
-#include <cstddef>  // for std::size_t
-
+#include <iosfwd>                       // std::ostream
+#include <string>                       // std::string
+#include <cstddef>                      // std::size_t
 namespace boost {
 
 namespace unit_test_framework {
@@ -43,17 +43,21 @@ public:
 
     // current test results access and management
     static unit_test_result& instance();
-    static void     test_case_start( c_string_literal name_, unit_test_counter expected_failures_ = 0 );
+    static void     test_case_start( std::string const& name_, unit_test_counter expected_failures_ = 0 );
     static void     test_case_end();
     
+    static void     set_report_format( std::string const& reportformat );
+
     // use to dynamically change amount of errors expected in current test case
     void            increase_expected_failures( unit_test_counter amount = 1 );
 
     // reporting
-    void            confirmation_report( std::ostream& where_to_ );                 // shortest
-    void            short_report( std::ostream& where_to_, std::size_t indent_ = 0 );    // short
-    void            detailed_report( std::ostream& where_to_, std::size_t indent_ = 0 ); // long
-    int             result_code();                                                  // to be returned from main
+    void            report( std::string const& reportlevel, std::ostream& where_to_ );              // report by level
+    void            confirmation_report( std::ostream& where_to_ );                                 // shortest
+    void            short_report( std::ostream& where_to_ ) { report( "short", where_to_ ); }       // short
+    void            detailed_report( std::ostream& where_to_ ) { report( "detailed", where_to_ ); } // long
+
+    int             result_code();                                                                  // to be returned from main
 
     // to be used by tool box implementation
     void            inc_failed_assertions();
@@ -63,18 +67,22 @@ public:
     void            caught_exception();
 
     // access method; to be used by unit_test_log
-    c_string_literal     test_case_name();
+    std::string const& test_case_name();
 
     // used mostly by the Boost.Test unit testing
-    void            failures_details( unit_test_counter& num_of_failures, bool& exception_caught );
+    void            failures_details( unit_test_counter& num_of_failures_, bool& exception_caught_ );
 
 private:
+    // report impl method
+    void            report_result( std::ostream& where_to_, std::size_t indent_, bool detailed_ );
+
     // used to temporarely introduce new results set without polluting current one
     static void     reset_current_result_set();
 
     // Constructor
-    unit_test_result( unit_test_result* parent_, c_string_literal test_case_name_, unit_test_counter expected_failures_ = 0 );
+    unit_test_result( unit_test_result* parent_, std::string const& test_case_name_, unit_test_counter expected_failures_ = 0 );
    
+    // Data members
     struct Impl;
     boost::shared_ptr<Impl> m_pimpl;
 };
@@ -97,6 +105,10 @@ struct unit_test_result_saver
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.13  2003/02/13 08:26:33  rogeeff
+//  report format config method added
+//  result set interface changed slightly to allow single entry point with string as report selector
+//
 //  Revision 1.12  2002/12/11 13:41:19  beman_dawes
 //  fix missing std::
 //
