@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2003-2004.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at
+//  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -17,15 +17,16 @@
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/test_tools.hpp>
 #include <boost/test/test_case_template.hpp>
+#include <boost/test/unit_test_log.hpp>
 
 #if !defined ( __GNUC__ ) || __GNUC__ > 2
-#include <boost/test/detail/nullstream.hpp>
+#include <boost/test/utils/nullstream.hpp>
 typedef boost::onullstream onullstream_type;
 #else
-typedef boost::test_toolbox::output_test_stream onullstream_type;
+typedef boost::test_tools::output_test_stream onullstream_type;
 #endif
 
-// Boost
+// BOOST
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/list_c.hpp>
 #include <boost/scoped_ptr.hpp>
@@ -72,12 +73,12 @@ BOOST_META_FUNC_TEST_CASE( test2 );
 
 //____________________________________________________________________________//
 
-int test_main( int, char* [] )
+int test_main( int, char* [] ) 
 {
-    tf::unit_test_counter               num_of_failures;
+    tf::counter_t                       num_of_failures;
     bool                                exception_caught;
     onullstream_type                    null_output;
-    boost::scoped_ptr<tf::test_case>    test;
+    boost::scoped_ptr<tf::test_case>    test;  
 
     tf::unit_test_log.set_stream( null_output );
 
@@ -152,11 +153,10 @@ int test_main( int, char* [] )
 
 // ***************************************************************************
 //  Revision History :
-//
+//  
 //  $Log$
-//  Revision 1.10  2005/01/23 10:13:22  vawjr
-//  Changed - \r\r\n to \r\n in the windows flavors of the files
-//            VC++ 8.0 complains and won't compile them
+//  Revision 1.11  2005/01/30 03:35:55  rogeeff
+//  no message
 //
 //  Revision 1.9  2005/01/18 08:30:09  rogeeff
 //  unit_test_log rework:
@@ -165,22 +165,6 @@ int test_main( int, char* [] )
 //     straitend interface between log and formatters
 //     change compiler like formatter name
 //     minimized unit_test_log interface and reworked to use explicit calls
-//
-//  Revision 1.8  2004/10/05 04:23:54  rogeeff
-//  borland fix
-//
-//  Revision 1.7  2004/05/21 06:26:10  rogeeff
-//  licence update
-//
-//  Revision 1.6  2004/05/11 11:05:06  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//  namespace names shortened
-//
-//  Revision 1.5  2003/12/01 00:42:38  rogeeff
-//  prerelease cleaning
-//
-
 // ***************************************************************************
 
 // EOF

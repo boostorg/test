@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2003-2004.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at
+//  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -14,7 +14,7 @@
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
-#include <boost/test/detail/class_properties.hpp>
+#include <boost/test/utils/class_properties.hpp>
 using namespace boost::unit_test;
 
 // STL
@@ -26,7 +26,7 @@ struct A {
     operator bool() const { return true; }
 } a;
 
-struct B {
+struct B { 
     int foo() const { return 1; }
     int foo()       { return 2; }
 
@@ -194,11 +194,10 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 
 // ***************************************************************************
 //  Revision History :
-//
+//  
 //  $Log$
-//  Revision 1.4  2005/01/23 10:13:22  vawjr
-//  Changed - \r\r\n to \r\n in the windows flavors of the files
-//            VC++ 8.0 complains and won't compile them
+//  Revision 1.5  2005/01/30 03:35:55  rogeeff
+//  no message
 //
 //  Revision 1.3  2005/01/18 08:30:08  rogeeff
 //  unit_test_log rework:

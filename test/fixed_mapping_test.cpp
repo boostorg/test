@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2004.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at
+//  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -16,9 +16,9 @@
 #define BOOST_AUTO_TEST_MAIN
 #include <boost/test/auto_unit_test.hpp>
 
-#include <boost/test/detail/basic_cstring/basic_cstring.hpp>
-#include <boost/test/detail/basic_cstring/compare.hpp>
-#include <boost/test/detail/fixed_mapping.hpp>
+#include <boost/test/utils/basic_cstring/basic_cstring.hpp>
+#include <boost/test/utils/basic_cstring/compare.hpp>
+#include <boost/test/utils/fixed_mapping.hpp>
 
 namespace utf = boost::unit_test;
 namespace tt  = boost::test_tools;
@@ -28,7 +28,7 @@ using utf::const_string;
 
 BOOST_AUTO_UNIT_TEST( test_default_compare )
 {
-    utf::fixed_mapping<const_string,int> test_mapping(
+    utf::fixed_mapping<const_string,int> test_mapping( 
         "Key1", 1,
         "Key2", 2,
         "QWE" , 3,
@@ -56,7 +56,7 @@ BOOST_AUTO_UNIT_TEST( test_default_compare )
 
 BOOST_AUTO_UNIT_TEST( test_custom_compare )
 {
-    utf::fixed_mapping<const_string,int,utf::case_ins_less<char const> > test_mapping(
+    utf::fixed_mapping<const_string,int,utf::case_ins_less<char const> > test_mapping( 
         "Key1", 1,
         "Key2", 2,
         "QWE" , 3,
@@ -82,9 +82,8 @@ BOOST_AUTO_UNIT_TEST( test_custom_compare )
 // History :
 //
 // $Log$
-// Revision 1.4  2005/01/23 10:13:22  vawjr
-// Changed - \r\r\n to \r\n in the windows flavors of the files
-//           VC++ 8.0 complains and won't compile them
+// Revision 1.5  2005/01/30 03:35:55  rogeeff
+// no message
 //
 // Revision 1.3  2005/01/18 08:30:09  rogeeff
 // unit_test_log rework:

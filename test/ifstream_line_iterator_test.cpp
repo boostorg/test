@@ -15,7 +15,7 @@
 // Boost.Test
 #include <boost/test/unit_test.hpp>
 
-#include <boost/test/detail/iterator/ifstream_line_iterator.hpp>
+#include <boost/test/utils/iterator/ifstream_line_iterator.hpp>
 
 namespace utf = boost::unit_test;
 
@@ -82,6 +82,9 @@ init_unit_test_suite( int argc, char* argv[] )
 // History :
 //
 // $Log$
+// Revision 1.4  2005/01/30 03:35:55  rogeeff
+// no message
+//
 // Revision 1.3  2004/06/05 11:04:17  rogeeff
 // no message
 //

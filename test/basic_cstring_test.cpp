@@ -16,9 +16,10 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/test_case_template.hpp>
 
-#include <boost/test/detail/basic_cstring/basic_cstring.hpp>
-#include <boost/test/detail/basic_cstring/compare.hpp>
-#include <boost/test/detail/basic_cstring/io.hpp>
+#include <boost/test/utils/basic_cstring/basic_cstring.hpp>
+#include <boost/test/utils/basic_cstring/compare.hpp>
+#include <boost/test/utils/basic_cstring/io.hpp>
+#include <boost/test/output_test_stream.hpp>
 namespace utf = boost::unit_test;
 namespace tt  = boost::test_tools;
 using utf::const_string;
@@ -67,7 +68,7 @@ struct string_literal
     mutable_char buff[100];
 };
 
-#define LITERAL( s ) ((CharT*)string_literal<CharT>( s, sizeof( s ) ).buff)
+#define LITERAL( s ) (CharT*)string_literal<CharT>( s, sizeof( s ) ).buff
 #define LOCAL_DEF( name, s )                                                \
 string_literal<CharT> BOOST_JOIN( sl, __LINE__)(s, sizeof( s ));            \
 utf::basic_cstring<CharT> name( (CharT*)(BOOST_JOIN( sl, __LINE__).buff) )  \
@@ -507,6 +508,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 // History :
 //
 // $Log$
+// Revision 1.9  2005/01/30 03:35:55  rogeeff
+// no message
+//
 // Revision 1.8  2004/11/28 04:28:56  agurtovoy
 // merge RC_1_32_0 fixes
 //

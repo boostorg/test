@@ -97,6 +97,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_fp_comparisons", "test
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_tools_test", "test_tools_test.vcproj", "{2F0DF83D-F8E3-47E8-AD95-A3C73C2584B3}"
 	ProjectSection(ProjectDependencies) = postProject
+		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unit_test_example1", "unit_test_example1.vcproj", "{83EA2604-9468-4BB6-9DEF-44E1DD034DEE}"
@@ -135,7 +136,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unit_test_suite_ex_test", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_case_template_test", "test_case_template_test.vcproj", "{CBB6EB43-0BE0-44E9-A4B4-B4B8437410D9}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
+		{30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7} = {30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "auto_unit_test_test_mult", "auto_unit_test_test_mult.vcproj", "{E782C9A9-A9AC-41AA-82C1-5ECF8798ED81}"

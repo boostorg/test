@@ -2,7 +2,7 @@
 //  (C) Copyright Gennadiy Rozental & Ullrich Koethe 2001.
 //  (C) Copyright Gennadiy Rozental 2001-2004.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at
+//  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -95,11 +95,11 @@ struct account_test {
 
         // reports 'fatal error in "account_test::test_deposit": test std::not_equal_to<double>()(m_account.balance(), 999.9) failed
         //          for (999.9, 999.9)' on error
-        BOOST_REQUIRE_PREDICATE( std::not_equal_to<double>(), 2, (m_account.balance(), 999.9) );
+        BOOST_REQUIRE_PREDICATE( std::not_equal_to<double>(), (m_account.balance())(999.9) );
 
         // reports 'fatal error in "account_test::test_deposit": test close_at_tolerance<double>( 1e-9 )( m_account.balance(), 605.5)
         //          failed for (actual_value, 605.5)
-        BOOST_REQUIRE_PREDICATE( close_at_tolerance<double>( 1e-9 ), 2, (m_account.balance(), 605.5) );
+        BOOST_REQUIRE_PREDICATE( close_at_tolerance<double>( 1e-9 ), (m_account.balance())(605.5) );
     }
 
     void test_withdraw()

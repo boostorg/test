@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2004.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at
+//  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -17,8 +17,10 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/test_case_template.hpp>
+#include <boost/test/unit_test_log.hpp>
+#include <boost/test/output_test_stream.hpp>
 using namespace boost::unit_test;
-using namespace boost::test_toolbox;
+using namespace boost::test_tools;
 
 // Boost
 #include <boost/mpl/list.hpp>
@@ -30,7 +32,7 @@ using namespace boost::test_toolbox;
 
 #define CHECK_TOOL_USAGE( tool_usage, check )               \
 {                                                           \
-    boost::test_toolbox::output_test_stream output;         \
+    boost::test_tools::output_test_stream output;         \
                                                             \
     unit_test_log.set_stream( output );                     \
     { unit_test_result_saver saver;                         \
@@ -127,7 +129,7 @@ test_BOOST_CHECK_CLOSE( FPT = FPT() )
 
     BOOST_CHECK_CLOSE_SHOULD_PASS( 1     , 1.0001, 1.1e-2 );
     BOOST_CHECK_CLOSE_SHOULD_PASS( 1.0002, 1.0001, 1.1e-2 );
-
+    
     BOOST_CHECK_CLOSE_SHOULD_FAIL( 1     , 1.0002, 1.1e-2 );
 }
 
@@ -147,7 +149,7 @@ test_close_at_tolerance()
 
     close_at_tolerance<double> pred( epsilon, FPC_WEAK );
     CHECK_TOOL_USAGE(
-        BOOST_CHECK_PREDICATE( pred, 2, ( fp1, fp2 ) ),
+        BOOST_CHECK_PREDICATE( pred, (fp1)(fp2) ),
         output.is_empty()
     );
 
@@ -162,15 +164,15 @@ test_close_at_tolerance()
     epsilon = 8.1e-4;
 
     CHECK_TOOL_USAGE(
-        BOOST_CHECK_PREDICATE( close_at_tolerance<double>( epsilon, FPC_WEAK ), 2, ( fp1, fp2 ) ),
+        BOOST_CHECK_PREDICATE( close_at_tolerance<double>( epsilon, FPC_WEAK ), (fp1)(fp2) ),
         output.is_empty()
     );
 
     CHECK_TOOL_USAGE(
-        BOOST_CHECK_PREDICATE( close_at_tolerance<double>( epsilon ), 2, ( fp1, fp2 ) ),
-        output.is_equal( CHECK_PATTERN(
-                    "error in " TEST_CASE_NAME ": test close_at_tolerance<double>( epsilon )(fp1, fp2) "
-                    "failed for (" << fp1 << ", " << fp2 << ")\n", 4 ) )
+        BOOST_CHECK_PREDICATE( close_at_tolerance<double>( epsilon ), (fp1)(fp2) ),
+        output.is_equal( CHECK_PATTERN( 
+                    "error in " TEST_CASE_NAME ": test close_at_tolerance<double>( epsilon )( fp1, fp2 ) "
+                    "failed for ( " << fp1 << ", " << fp2 << " )\n", 4 ) )
     );
 }
 
@@ -192,11 +194,10 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 
 // ***************************************************************************
 //  Revision History :
-//
+//  
 //  $Log$
-//  Revision 1.15  2005/01/23 10:13:22  vawjr
-//  Changed - \r\r\n to \r\n in the windows flavors of the files
-//            VC++ 8.0 complains and won't compile them
+//  Revision 1.16  2005/01/30 03:35:55  rogeeff
+//  no message
 //
 //  Revision 1.14  2005/01/18 08:30:09  rogeeff
 //  unit_test_log rework:
@@ -205,28 +206,6 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //     straitend interface between log and formatters
 //     change compiler like formatter name
 //     minimized unit_test_log interface and reworked to use explicit calls
-//
-//  Revision 1.13  2004/10/05 01:46:32  rogeeff
-//  borland fix
-//
-//  Revision 1.12  2004/10/01 10:55:43  rogeeff
-//  some test errors workarrounds
-//
-//  Revision 1.11  2004/07/19 12:07:26  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.10  2004/05/21 06:26:11  rogeeff
-//  licence update
-//
-//  Revision 1.9  2004/05/11 11:05:06  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//  namespace names shortened
-//
-//  Revision 1.8  2003/12/01 00:42:38  rogeeff
-//  prerelease cleaning
-//
-
 // ***************************************************************************
 
 // EOF

@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2002-2004.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at
+//  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -16,18 +16,23 @@
 #include <boost/test/unit_test_suite.hpp>
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test_log.hpp>
 #if !defined ( __GNUC__ ) || __GNUC__ > 2
-#include <boost/test/detail/nullstream.hpp>
+#include <boost/test/utils/nullstream.hpp>
 typedef boost::onullstream onullstream_type;
 #else
-typedef boost::test_toolbox::output_test_stream onullstream_type;
+#include <boost/test/output_test_stream.hpp>
+typedef boost::test_tools::output_test_stream onullstream_type;
 #endif
 
 namespace utf=boost::unit_test;
 
+// BOOST
+#include <boost/scoped_ptr.hpp>
+
+// STL
 #include <list>
 #include <iostream>
-#include <boost/scoped_ptr.hpp>
 
 //____________________________________________________________________________//
 
@@ -57,11 +62,11 @@ void test1( int i )
 #endif
 
 int test_main( int, char* [] ) {
-    utf::unit_test_counter              num_of_failures;
+    utf::counter_t                      num_of_failures;
     bool                                exception_caught;
     bool                                passed;
     onullstream_type                    null_output;
-    boost::scoped_ptr<utf::test_case>   test;
+    boost::scoped_ptr<utf::test_case>   test;  
 
     utf::unit_test_log.set_stream( null_output );
     {
@@ -81,7 +86,7 @@ int test_main( int, char* [] ) {
     utf::unit_test_log.set_stream( null_output );
     {
     utf::unit_test_result_saver saver;
-    int test_data[] = { 1, 2, 2 };
+    int test_data[] = { 1, 2, 2 };    
     test.reset( BOOST_PARAM_TEST_CASE__( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
     test->run();
@@ -96,7 +101,7 @@ int test_main( int, char* [] ) {
     utf::unit_test_log.set_stream( null_output );
     {
     utf::unit_test_result_saver saver;
-    int test_data[] = { 1, 1, 2 };
+    int test_data[] = { 1, 1, 2 };    
     test.reset( BOOST_PARAM_TEST_CASE__( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
     test->run();
@@ -111,7 +116,7 @@ int test_main( int, char* [] ) {
     utf::unit_test_log.set_stream( null_output );
     {
     utf::unit_test_result_saver saver;
-    int test_data[] = { 1, 1, 1 };
+    int test_data[] = { 1, 1, 1 };    
     test.reset( BOOST_PARAM_TEST_CASE__( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
     test->run();
@@ -126,7 +131,7 @@ int test_main( int, char* [] ) {
     utf::unit_test_log.set_stream( null_output );
     {
     utf::unit_test_result_saver saver;
-    int test_data[] = { 6, 6, 6 };
+    int test_data[] = { 6, 6, 6 };    
     test.reset( BOOST_PARAM_TEST_CASE__( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
     test->run();
@@ -143,7 +148,7 @@ int test_main( int, char* [] ) {
     utf::unit_test_log.set_stream( null_output );
     {
     utf::unit_test_result_saver saver;
-    int test_data[] = { 0, 3, 9 };
+    int test_data[] = { 0, 3, 9 };    
     test.reset( BOOST_PARAM_TEST_CASE__( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
     test->run();
@@ -173,7 +178,7 @@ int test_main( int, char* [] ) {
     utf::unit_test_log.set_stream( null_output );
     {
     utf::unit_test_result_saver saver;
-    int test_data[] = { 3, 2, 6 };
+    int test_data[] = { 3, 2, 6 };    
     test.reset( BOOST_PARAM_TEST_CASE__( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
     test->run();
@@ -192,11 +197,10 @@ int test_main( int, char* [] ) {
 
 // ***************************************************************************
 //  Revision History :
-//
+//  
 //  $Log$
-//  Revision 1.16  2005/01/23 10:13:22  vawjr
-//  Changed - \r\r\n to \r\n in the windows flavors of the files
-//            VC++ 8.0 complains and won't compile them
+//  Revision 1.17  2005/01/30 03:35:55  rogeeff
+//  no message
 //
 //  Revision 1.15  2005/01/18 08:30:09  rogeeff
 //  unit_test_log rework:

@@ -14,9 +14,9 @@
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
-#include <boost/test/detail/class_properties.hpp>
-#include <boost/test/detail/basic_cstring/basic_cstring.hpp>
-#include <boost/test/detail/algorithm.hpp>
+#include <boost/test/utils/class_properties.hpp>
+#include <boost/test/utils/basic_cstring/basic_cstring.hpp>
+#include <boost/test/utils/algorithm.hpp>
 namespace utf = boost::unit_test;
 using utf::const_string;
 
@@ -131,6 +131,9 @@ init_unit_test_suite( int argc, char* argv[] )
 // History :
 //
 // $Log$
+// Revision 1.3  2005/01/30 03:35:55  rogeeff
+// no message
+//
 // Revision 1.2  2004/06/29 04:32:50  rogeeff
 // no message
 //

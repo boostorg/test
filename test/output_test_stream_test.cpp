@@ -14,7 +14,8 @@
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
-using boost::test_toolbox::output_test_stream;
+#include <boost/test/output_test_stream.hpp>
+using boost::test_tools::output_test_stream;
 using boost::unit_test::test_suite;
 
 // STL
@@ -215,6 +216,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.19  2005/01/30 03:35:55  rogeeff
+//  no message
+//
 //  Revision 1.18  2004/06/05 11:04:17  rogeeff
 //  no message
 //
