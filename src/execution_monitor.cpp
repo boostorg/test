@@ -34,7 +34,7 @@
 #endif
 
 // Microsoft + other compatible compilers such as Intel
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) || (defined(__MWERKS__) && __MWERKS__ >= 0x3000)
 
 #define BOOST_MS_STRCTURED_EXCEPTION_HANDLING
 #include <wtypes.h>
