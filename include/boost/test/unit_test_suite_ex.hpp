@@ -87,14 +87,14 @@ private:
 // ************************************************************************** //
 
 inline test_case*
-create_test_case( function0<void> const& fct_, std::string name_ )
+create_test_case( function0<void> const& fct_, const_string name_ )
 {
     return new boost_function_test_case( fct_, ut_detail::normalize_test_case_name( name_ ) );
 }
 
 template<typename ParamIterator, typename ParameterType>
 inline test_case*
-create_test_case( function1<void,ParameterType> const& fct_, std::string name_, 
+create_test_case( function1<void,ParameterType> const& fct_, const_string name_, 
                   ParamIterator const& begin_, ParamIterator const& end_ )
 {
     return new parametrized_boost_function_test_case<ParamIterator,ParameterType>(
@@ -109,6 +109,9 @@ create_test_case( function1<void,ParameterType> const& fct_, std::string name_,
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.20  2005/01/30 03:21:34  rogeeff
+//  interface changed to use const_string
+//
 //  Revision 1.19  2004/07/19 12:16:41  rogeeff
 //  guard rename
 //
