@@ -419,9 +419,9 @@ test_BOOST_CHECK_CLOSE( FPT dummy = 0. ) {
 
 void
 test_BOOST_CHECK_CLOSE_all() {
-    test_BOOST_CHECK_CLOSE<float>();
-    test_BOOST_CHECK_CLOSE<double>();
-    test_BOOST_CHECK_CLOSE<long double>();
+    test_BOOST_CHECK_CLOSE<float>( (float)0 );
+    test_BOOST_CHECK_CLOSE<double>( (double)0 );
+    test_BOOST_CHECK_CLOSE<long double>( (long double)0 );
 }
 
 //____________________________________________________________________________//
@@ -444,6 +444,7 @@ test_BOOST_CHECK_PREDICATE() {
         BOOST_CHECK_PREDICATE( &is_even, 1, (14) ),
         output.is_empty()
     );
+
     int i = 17;
     CHECK_TOOL_USAGE(
         BOOST_CHECK_PREDICATE( &is_even, 1, (i) ),
@@ -474,7 +475,6 @@ test_BOOST_CHECK_PREDICATE() {
         output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test fp1 ~= fp2 failed [" 
                                         << fp1 << " !~= " << fp2 << " (+/-" << epsilon << ")]\n" ) )
     );
-
 }
 
 //____________________________________________________________________________//
@@ -623,8 +623,8 @@ init_unit_test_suite( int argc, char* argv[] ) {
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_THROW ), 1 );
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_EQUAL_COLLECTIONS ), 2 );
     test->add( BOOST_TEST_CASE( &test_BOOST_IS_DEFINED ) );
-    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_PREDICATE ) );
-    test->add( BOOST_TEST_CASE( &test_BOOST_REQUIRE_PREDICATE ) );
+    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_PREDICATE ), 3 );
+    test->add( BOOST_TEST_CASE( &test_BOOST_REQUIRE_PREDICATE ), 1 );
 
     return test;
 }
