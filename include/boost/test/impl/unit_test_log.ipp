@@ -65,7 +65,7 @@ entry_value_collector::operator<<( const_string v )
 //____________________________________________________________________________//
 
 entry_value_collector
-entry_value_collector::operator<<( checkpoint const& cp )
+entry_value_collector::operator<<( log::checkpoint const& cp )
 {
     unit_test_log << cp;
 
@@ -80,7 +80,7 @@ entry_value_collector::operator<<( checkpoint const& cp )
 entry_value_collector::~entry_value_collector()
 {
     if( m_last )
-        unit_test_log << end();
+        unit_test_log << log::end();
 }
 
 //____________________________________________________________________________//
@@ -120,7 +120,7 @@ struct unit_test_log_impl {
         m_entry_in_progress = false;
         m_entry_has_value   = false;
     }
-    void                set_checkpoint( checkpoint const& cp )
+    void                set_checkpoint( log::checkpoint const& cp )
     {
         cp.m_message.assign_to( m_checkpoint_data.m_message );
         m_checkpoint_data.m_file    = m_entry_data.m_file;
@@ -214,12 +214,12 @@ unit_test_log_t::test_case_enter( test_case const& tc )
     if( s_impl().m_threshold_level > log_test_suites )
         return;
 
-    *this << begin();
+    *this << log::begin();
 
     s_impl().m_log_formatter->test_case_enter( s_impl().stream(), tc );
     s_impl().m_entry_has_value = true;
 
-    *this << end();
+    *this << log::end();
 }
 
 //____________________________________________________________________________//
@@ -232,21 +232,21 @@ unit_test_log_t::test_case_exit( test_case const& tc, long testing_time_in_mks )
 
     s_impl().clear_checkpoint();
 
-    *this << begin();
+    *this << log::begin();
 
     s_impl().m_log_formatter->test_case_exit( s_impl().stream(), tc, testing_time_in_mks );
     s_impl().m_entry_has_value = true;
 
-    *this << end();
+    *this << log::end();
 }
 
 //____________________________________________________________________________//
 
 unit_test_log_t&
-unit_test_log_t::operator<<( begin const& )
+unit_test_log_t::operator<<( log::begin const& )
 {
     if( s_impl().m_entry_in_progress )
-        *this << end();
+        *this << log::end();
 
     s_impl().m_entry_in_progress = true;
 
@@ -256,7 +256,7 @@ unit_test_log_t::operator<<( begin const& )
 //____________________________________________________________________________//
 
 unit_test_log_t&
-unit_test_log_t::operator<<( end const& )
+unit_test_log_t::operator<<( log::end const& )
 {
     if( s_impl().m_entry_has_value ) {
         s_impl().m_log_formatter->end_log_entry( s_impl().stream() );
@@ -277,7 +277,7 @@ set_unix_slash( char in )
 }
 
 unit_test_log_t&
-unit_test_log_t::operator<<( file const& f )
+unit_test_log_t::operator<<( log::file const& f )
 {
     if( s_impl().m_entry_in_progress ) {
         f.m_file_name.assign_to( s_impl().m_entry_data.m_file );
@@ -294,7 +294,7 @@ unit_test_log_t::operator<<( file const& f )
 //____________________________________________________________________________//
 
 unit_test_log_t&
-unit_test_log_t::operator<<( line const& l )
+unit_test_log_t::operator<<( log::line const& l )
 {
     if( s_impl().m_entry_in_progress )
         s_impl().m_entry_data.m_line = l.m_line_num;
@@ -305,7 +305,7 @@ unit_test_log_t::operator<<( line const& l )
 //____________________________________________________________________________//
 
 unit_test_log_t&
-unit_test_log_t::operator<<( checkpoint const& cp )
+unit_test_log_t::operator<<( log::checkpoint const& cp )
 {
     if( s_impl().m_entry_in_progress )
         s_impl().set_checkpoint( cp );
@@ -329,7 +329,7 @@ ut_detail::entry_value_collector
 unit_test_log_t::operator()( log_level l )
 {
     if( !s_impl().m_entry_in_progress )
-        *this << begin();
+        *this << log::begin();
 
     *this << l;
 
@@ -342,14 +342,14 @@ unit_test_log_t::operator()( log_level l )
 void
 unit_test_log_t::log_exception( log_level l, const_string what )
 {
-    *this << begin();
+    *this << log::begin();
 
     if( l >= s_impl().m_threshold_level ) {
         s_impl().m_log_formatter->log_exception( s_impl().stream(), s_impl().m_checkpoint_data, what );
         s_impl().m_entry_has_value = true;
     }
 
-    *this << end();
+    *this << log::end();
 }
 
 //____________________________________________________________________________//
@@ -357,12 +357,12 @@ unit_test_log_t::log_exception( log_level l, const_string what )
 void
 unit_test_log_t::log_progress()
 {
-    *this << begin();
+    *this << log::begin();
 
     if( s_impl().m_progress_display )
         ++(*s_impl().m_progress_display);
 
-    *this << end();
+    *this << log::end();
 }
 
 //____________________________________________________________________________//
@@ -483,6 +483,9 @@ unit_test_log_t::set_formatter( unit_test_log_formatter* the_formatter )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.5  2005/02/02 12:08:14  rogeeff
+//  namespace log added for log manipulators
+//
 //  Revision 1.4  2005/02/01 08:59:38  rogeeff
 //  supplied_log_formatters split
 //  change formatters interface to simplify result interface

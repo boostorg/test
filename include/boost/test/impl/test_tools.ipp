@@ -62,14 +62,14 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
             tool_level tl, check_type ct,
             std::size_t num_of_args, ... )
 {
-    using namespace boost::unit_test;
+    using namespace unit_test;
 
     if( !!pr )
         tl = PASS;
 
-    unit_test::log_level    ll;
-    char const*             prefix;
-    char const*             suffix;
+    log_level    ll;
+    char const*  prefix;
+    char const*  suffix;
 
     switch( tl ) {
     case PASS:
@@ -104,28 +104,30 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
 
     switch( ct ) {
     case CHECK_PRED:
-        unit_test_log << begin() << file( file_name ) << line( line_num ) << ll << prefix << check_descr.str() << suffix;
+        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) 
+                      << ll << prefix << check_descr.str() << suffix;
         
         if( !pr.has_empty_message() )
             unit_test_log << ". " << pr.message();
         
-        unit_test_log << end();
+        unit_test_log << log::end();
         break;
     case CHECK_MSG:
-        unit_test_log << begin() << file( file_name ) << line( line_num ) << ll << check_descr.str();
+        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) 
+                      << ll << check_descr.str();
         
-        if( !pr.has_empty_message() ) {
+        if( !pr.has_empty_message() )
             unit_test_log << ". " << pr.message();
-        }
 
-        unit_test_log << end();
+        unit_test_log << log::end();
         break;
     case MSG_ONLY:
-        unit_test_log << begin() << file( file_name ) << line( line_num ) << log_messages << check_descr.str() << end();
+        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) 
+                      << log_messages << check_descr.str() << log::end();
         break;
     case SET_CHECKPOINT:
-        unit_test_log << begin() << file( file_name ) << line( line_num ) << log_test_suites 
-                      << checkpoint( check_descr.str() ) << end();
+        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) 
+                      << log_test_suites   << log::checkpoint( check_descr.str() ) << log::end();
         break;
     case CHECK_EQUAL: {
         std::va_list args;
@@ -136,8 +138,8 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         char const* arg2_descr  = va_arg( args, char const* );
         char const* arg2_val    = va_arg( args, char const* );
 
-        unit_test_log << begin() << file( file_name ) << line( line_num ) << ll 
-                      << prefix << arg1_descr << " == " << arg2_descr << suffix;
+        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) 
+                      << ll << prefix << arg1_descr << " == " << arg2_descr << suffix;
 
         if( tl != PASS )
             unit_test_log << " [" << arg1_val << " != " << arg2_val << "]" ;
@@ -147,7 +149,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         if( !pr.has_empty_message() )
             unit_test_log << ". " << pr.message();
 
-        unit_test_log << end();
+        unit_test_log << log::end();
         break;
     }
     case CHECK_CLOSE: {
@@ -161,7 +163,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
            /* toler_descr = */    va_arg( args, char const* );
         char const* toler_val   = va_arg( args, char const* );
 
-        unit_test_log << begin() << file( file_name ) << line( line_num ) << ll;
+        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) << ll;
 
         unit_test_log << "difference between " << arg1_descr << "{" << arg1_val << "}" 
                       << " and "               << arg2_descr << "{" << arg2_val << "}"
@@ -173,11 +175,12 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         if( !pr.has_empty_message() )
             unit_test_log << ". " << pr.message();
 
-        unit_test_log << end();
+        unit_test_log << log::end();
         break;
     }
     case CHECK_PRED_WITH_ARGS: {
-        unit_test_log << begin() << file( file_name ) << line( line_num ) << ll << prefix << check_descr.str();
+        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) 
+                      << ll << prefix << check_descr.str();
 
         // print predicate call description
         {
@@ -215,7 +218,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         if( !pr.has_empty_message() )
             unit_test_log << ". " << pr.message();
 
-        unit_test_log << end();
+        unit_test_log << log::end();
         break;
     }
     case CHECK_EQUAL_COLL: {
@@ -227,8 +230,8 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         char const* right_begin_descr   = va_arg( args, char const* );
         char const* right_end_descr     = va_arg( args, char const* );
 
-        unit_test_log << begin() << file( file_name ) << line( line_num ) << ll 
-                      << prefix 
+        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) 
+                      << ll << prefix 
                       << "{ " << left_begin_descr  << ", " << left_end_descr  << " } == { " 
                               << right_begin_descr << ", " << right_end_descr << " }"
                       << suffix;
@@ -238,7 +241,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         if( !pr.has_empty_message() )
             unit_test_log << ". " << pr.message();
 
-        unit_test_log << end();
+        unit_test_log << log::end();
         break;
     }
     case CHECK_BITWISE_EQUAL: {
@@ -248,15 +251,15 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         char const* left_descr    = va_arg( args, char const* );
         char const* right_descr   = va_arg( args, char const* );
 
-        unit_test_log << begin() << file( file_name ) << line( line_num ) << ll 
-                      << prefix << left_descr  << " =.= " << right_descr << suffix;
+        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num )
+                      << ll << prefix << left_descr  << " =.= " << right_descr << suffix;
 
         va_end( args );
         
         if( !pr.has_empty_message() )
             unit_test_log << ". " << pr.message();
 
-        unit_test_log << end();
+        unit_test_log << log::end();
         break;
     }
     }
@@ -559,6 +562,9 @@ output_test_stream::sync()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.4  2005/02/02 12:08:14  rogeeff
+//  namespace log added for log manipulators
+//
 //  Revision 1.3  2005/02/01 06:40:07  rogeeff
 //  copyright update
 //  old log entries removed

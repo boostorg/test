@@ -38,6 +38,8 @@ namespace unit_test {
 // **************                log manipulators              ************** //
 // ************************************************************************** //
 
+namespace log {
+
 struct begin {};
 
 struct end {};
@@ -60,6 +62,8 @@ struct checkpoint {
     const_string m_message;
 };
 
+} // namespace log
+
 // ************************************************************************** //
 // **************             entry_value_collector            ************** //
 // ************************************************************************** //
@@ -75,7 +79,7 @@ public:
 
     // collection interface
     entry_value_collector operator<<( const_string );
-    entry_value_collector operator<<( checkpoint const& );
+    entry_value_collector operator<<( log::checkpoint const& );
 
 private:
     // Data members
@@ -109,12 +113,12 @@ public:
     void                test_case_exit( test_case const&, long testing_time_in_mks );
 
     // entry setup
-    unit_test_log_t&    operator<<( begin const& );         // begin entry 
-    unit_test_log_t&    operator<<( end const& );           // end entry
-    unit_test_log_t&    operator<<( file const& );          // set entry file name
-    unit_test_log_t&    operator<<( line const& );          // set entry line number
-    unit_test_log_t&    operator<<( checkpoint const& );    // set checkpoint
-    unit_test_log_t&    operator<<( log_level );            // set entry level
+    unit_test_log_t&    operator<<( log::begin const& );         // begin entry 
+    unit_test_log_t&    operator<<( log::end const& );           // end entry
+    unit_test_log_t&    operator<<( log::file const& );          // set entry file name
+    unit_test_log_t&    operator<<( log::line const& );          // set entry line number
+    unit_test_log_t&    operator<<( log::checkpoint const& );    // set checkpoint
+    unit_test_log_t&    operator<<( log_level );                 // set entry level
     ut_detail::entry_value_collector operator()( log_level );
 
     // logging methods
@@ -132,10 +136,10 @@ unit_test_log_t& unit_test_log = unit_test_log_t::instance();
 }
 
 // helper macros
-#define BOOST_UT_LOG_ENTRY                                                  \
-    (boost::unit_test::unit_test_log << boost::unit_test::begin()           \
-        << boost::unit_test::file( BOOST_TEST_STRING_LITERAL( __FILE__ ) )  \
-        << boost::unit_test::line( __LINE__ ))                              \
+#define BOOST_UT_LOG_ENTRY                                                       \
+    (boost::unit_test::unit_test_log << boost::unit_test::log::begin()           \
+        << boost::unit_test::log::file( BOOST_TEST_STRING_LITERAL( __FILE__ ) )  \
+        << boost::unit_test::log::line( __LINE__ ))                              \
 /**/
 
 } // namespace unit_test
@@ -148,6 +152,9 @@ unit_test_log_t& unit_test_log = unit_test_log_t::instance();
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.29  2005/02/02 12:08:14  rogeeff
+//  namespace log added for log manipulators
+//
 //  Revision 1.28  2005/02/01 06:40:06  rogeeff
 //  copyright update
 //  old log entries removed
