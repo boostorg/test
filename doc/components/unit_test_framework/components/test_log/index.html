@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+<TITLE>The Test Log</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../../../style/btl.css" media="screen">
+<LINK rel="stylesheet" type="text/css" href="../../../../style/btl-print.css" media="print">
+<META http-equiv="Content-Language" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</HEAD>
+<BODY>
+<DIV class="header"> <A href="../../../../index.html">Boost.Test</A> > <A href="../../../index.html">Components</A> 
+  > <A href="../../index.html">The Unit Test Framework</A> > <A href="../index.html">Components</A> > 
+  <SPAN class="current_article">The Test Log</SPAN> </DIV>
+<DIV class="body"> <IMG src='../../../../btl.gif' width='252' height='43' alt="Boost Test logo"> 
+  <H1 class="subtitle">The Test Log</H1>
+  <H4 class="underlined">Definition</H4>
+  <P>defined in <A href="../../../../../../../boost/test/unit_test_log.hpp">unit_test_log.hpp</A> </P>
+  <H5>Synopsis</H5>
+  <PRE class="code"><SPAN class="reserv-word">class</SPAN> unit_test_log
+{
+    <SPAN class="reserv-word">static</SPAN> unit_test_log&amp; instance();
+    <SPAN class="cpp-type">void</SPAN>                  set_log_stream( <SPAN class="cpp-type">std::ostream</SPAN>&amp; str );
+    <SPAN class="cpp-type">void</SPAN>                  set_log_threshold_level_by_name( log_level lev );
+    <SPAN class="cpp-type">void</SPAN>                  set_log_format( <SPAN class="cpp-type">std::string</SPAN> <SPAN class="reserv-word">const</SPAN>&amp; of );
+};</PRE>
+  <H5>Description</H5>
+  <P class="first_line_indented">To manage the testing output stream the Unit Test Framework uses a singleton 
+    class unit_test_log. This class is responsible for managing and formatting testing log. There two 
+    formats supported for testing log: human readable format and XML format. In most cases you do not 
+    need to use this class interface directly. The framework provides a simple way to set the log level 
+    and log format from outside of the test program. For more details and for the list of acceptable values 
+    see the<A href="../../parameters/index.html"> Framework parameters</A>.</P>
+  <UL>
+    <LI> unit_test_log::<SPAN class="new-term">set_log_stream</SPAN>(...)<BR>
+      use this method to change the log output stream to the one specified by the <I>str</I> parameter. 
+      The default stream is std::cout.</LI>
+    <LI> unit_test_log::<SPAN class="new-term">set_log_threshold_level</SPAN>(...)<BR>
+      use this method to set a log threshold level. Log record appears in output stream only if it's level 
+      exceed the threshold.</LI>
+    <LI> unit_test_log::<SPAN class="new-term"></SPAN><SPAN class="new-term">set_log_format</SPAN>(...)<BR>
+      use this method to set the log format. For the list of acceptable values see <A href="../../parameters/index.html">Framework 
+      parameters</A>.</LI>
+  </UL>
+  <H5>Construction</H5>
+  <P class="first_line_indented">There is only one instance if this class automatically created by the 
+    framework at test startup. To access it use method unit_test_log::<SPAN class="new-term">instance</SPAN>(). 
+  </P>
+</DIV>
+<DIV class="footer"> 
+  <DIV class="footer-body"> 
+    <P>Copyright &copy <A href='mailto:rogeeff@emailaccount.com'>Gennadiy Rozental</A> 2001-2003.<BR>
+      Permission to copy, use, modify, sell and distribute this document is granted provided this copyright 
+      notice appears in all copies. This document is provided "as is" without express or implied warranty 
+      and with no claim as to its suitability for any purpose.</P>
+    <P>Revised: 9 June, 2003</P>
+  </DIV>
+</DIV>
+</BODY>
+</HTML>
