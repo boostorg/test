@@ -27,7 +27,7 @@
 //____________________________________________________________________________//
 
 #define BOOST_META_FUNC_TEST_CASE( the_function )   \
-struct meta_ ## the_function {                      \
+struct BOOST_JOIN( meta_, the_function ) {          \
     template<typename T>                            \
     static void execute( T* = 0 )                   \
     {                                               \
@@ -37,7 +37,7 @@ struct meta_ ## the_function {                      \
 /**/
 
 #define BOOST_FUNC_TEMPLATE_TEST_CASE( the_function, typelist ) \
-boost::unit_test::create_test_case_template( meta_ ## the_function(), typelist(), #the_function )
+boost::unit_test::create_test_case_template( BOOST_JOIN( meta_, the_function )(), typelist(), BOOST_TEST_STRINGIZE( the_function ) )
     
 namespace boost {
 namespace unit_test {
@@ -98,7 +98,7 @@ public:
     : test_case( name_, false, 1, false ), m_template_holder( p_name.get() ) {}
 
     // access methods
-    unit_test_counter   size() const    { return ::boost::mpl::size<TestTypesList>::value; }
+    counter_t   size() const    { return ::boost::mpl::size<TestTypesList>::value; }
 
 protected:
     
@@ -120,7 +120,7 @@ protected:
 
 template<typename TestCaseTemplate, typename TestTypesList>
 inline test_case*
-create_test_case_template( TestCaseTemplate, TestTypesList, std::string name_ )
+create_test_case_template( TestCaseTemplate, TestTypesList, const_string name_ )
 {
     return new test_case_template<TestCaseTemplate,TestTypesList>( ut_detail::normalize_test_case_name( name_ ) );
 }
@@ -134,6 +134,9 @@ create_test_case_template( TestCaseTemplate, TestTypesList, std::string name_ )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2005/01/30 03:20:38  rogeeff
+//  use BOOST_JOIN and BOOST_TEST_STRINGIZE
+//
 //  Revision 1.8  2004/07/19 12:14:34  rogeeff
 //  guard rename
 //
