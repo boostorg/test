@@ -353,15 +353,15 @@ output_test_stream::match_pattern( bool flush_stream )
                          (*it == c);
 
                 if( !result ) {
-                    size_t suffix_size  = std::min( m_pimpl->m_synced_string.end() - it, 5 );
-                    size_t pos          = it - m_pimpl->m_synced_string.begin();
+                  std::size_t suffix_size  = std::min( m_pimpl->m_synced_string.end() - it, static_cast<std::ptrdiff_t>(5) );
+                    std::size_t pos          = it - m_pimpl->m_synced_string.begin();
 
                     // try to log area around the mismatch 
                     *(result.p_message) << "Mismatch in a position " << pos << '\n'
                         << "..." << m_pimpl->m_synced_string.substr( pos, suffix_size ) << "..." << '\n'
                         << "..." << c;
 
-                    size_t counter = suffix_size;
+                    std::size_t counter = suffix_size;
                     while( --counter ) {
                         char c = m_pimpl->get_char();
 
@@ -441,6 +441,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.18  2003/06/20 18:13:54  beman_dawes
+//  fix some but not all problems with previous commit
+//
 //  Revision 1.17  2003/06/20 11:01:15  rogeeff
 //  match_pattern show an error mismatch snippet
 //
