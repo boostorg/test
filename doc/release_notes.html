@@ -11,9 +11,54 @@
     Notes</SPAN> </DIV> 
 <DIV class="body"> <IMG src='btl1.gif' width='252' height='43' alt="Boost Test logo"> 
   <H1 class="subtitle">Release Notes</H1> 
-  <P class="page-toc"> <A href="#v1_30_0">Boost release 1.30.0</A><BR> 
-    <A href="#Migration">Migration guide from Boost Test v1</A> </P> 
-  <H2><A name="v1_30_0">Boost release 1.30.0</A></H2> 
+  <P class="page-toc"><A href="#v1_31_0">Boost release 1.31.0</A> </P>
+  <P class="page-toc"><A href="#v1_30_0">Boost release 1.30.0</A><BR> 
+    <A href="#Migration">Migration guide from Boost Test v1</A> </P>
+      <H2><A name="v1_31_0">Boost release 1.31.0</A></H2>
+  <UL>
+    <LI><A href="components/unit_test_framework/components/test_case/test_case_template.html">Zero arity function template based test case</A> </LI>
+    <LI><A href="components/execution_monitor/execution_monitor.html#register_exception_translator">Custom
+        exception translators support </A> in execution monitor and <A href="components/unit_test_framework/index.html">register_exception_translator</A>      added for unit test framework </LI>
+    <LI><A href="components/unit_test_framework/components/test_case/abstract_interface.html">Test
+    cases dependency support </A></LI>
+    <LI><A href="components/unit_test_framework/components/test_case/auto_register_facility.html">Added
+        support for multi-module unit tests in automatic registration facility </A></LI>
+    <LI>Floating point comaprison algorithm reworked (Is not backward compatible!!!)
+      <UL>
+        <LI><u>tolerance now expected in persent units</u></LI>
+          <LI>eliminated tolerance definition by number of rounding errors</LI>
+          <LI>switch to comparison type enumeration instead of boolean value </LI>
+      </UL>
+    </LI>
+    <LI><A href="usage/generic.html#t1">First failed assertion support</A></LI>
+    <LI>Major
+      documentation structure rework and update<BR>
+      I hope you will find handy new navigation system </LI>
+    <LI>Switched to new boost license</LI>
+    <LI><A href="components/test_tools/custom_predicate_support.html">Added support
+        for custom users predicate returning both boolean result code and possibly
+    error message </A></LI>
+    <LI><A href="components/test_tools/reference/BOOST_CHECK_EXCEPTION.html">BOOST_CHECK_EXCEPTION</A> test
+      tool introduced - to perform compelex validation of expected exception </LI>
+    <LI>BOOST_IGNORE_CHECK test tool introduced - to be used with BOOST_CHECK_EXCEPTION </LI>
+    <LI>Straiten return code logic for Program Execution Monitor and in case
+    of failed initialization in Unit Test Framework </LI>
+    <LI>Added position in the collection comparison results error message </LI>
+    <LI>Disable SEH if BOOST_DISABLE_WIN32 in effect</LI>
+    <LI>Como can't do structured exceptions</LI>
+    <LI>Added support for catch_system_error in Test Execution Monitor</LI>
+    <LI><A href="components/unit_test_framework/components/test_log/custom_log_formatter.html">Move
+    log formatter in public interface</A></LI>
+    <LI>Custom char value log print procedures</LI>
+    <LI>Support for logging variable values of types that does not support operator&lt;&lt; </LI>
+    <LI>match_pattern updated to show an error mismatch snippet</LI>
+    <LI>force UNIX slash for file name </LI>
+    <LI>Some annoying MSVC warnings suppressed </LI>
+    <LI>test_case_scope_tracker introduced for correct exception unwinding handling </LI>
+    <LI>unit_test_result_tracker introduced for correct exception handling </LI>
+    <LI>several minor bug and warnings fixes </LI>
+  </UL>
+  <H2><A name="v1_30_0">Boost release 1.30.0</A></H2>
   <UL> 
     <LI>Facility for automatic registration of unit tests is introduced<BR> 
       It was requested during original Boost Test review and now it supports
@@ -44,10 +89,10 @@ BOOST_AUTO_UNIT_TEST( test2 )
       boost_prg_exec_monitor<BR> 
       boost_test_exec_monitor<BR> 
       boost_unit_test_framework</LI> 
-    <LI>Components examples and test documentation page is introduced.<BR> 
+    <LI>Components examples and test documentation page is introduced<BR> 
       Now all test/examples links lead to this page that has summary information
         about all of them, that include expected output, type of test and so
-        on</LI> 
+    on</LI> 
     <LI>Catch system errors switch introduced<BR> 
       This will work among the lines described in <A href="http://lists.boost.org/MailArchives/boost/msg40028.php"> http://lists.boost.org/MailArchives/boost/msg40028.php</A><BR> 
       Environment variable name: BOOST_TEST_CATCH_SYSTEM_ERRORS[=&quot;no&quot;]<BR> 
@@ -128,7 +173,7 @@ BOOST_AUTO_UNIT_TEST( test2 )
       Version 1.0. (See accompanying file <A href="../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or
       copy at <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P> 
     <P>Revised:
-      <!-- #BeginDate format:Sw1 -->18 January, 2004<!-- #EndDate --> 
+      <!-- #BeginDate format:Sw1 -->26 January, 2004<!-- #EndDate --> 
     </P> 
   </DIV> 
 </DIV> 
