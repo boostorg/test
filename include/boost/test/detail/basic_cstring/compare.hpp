@@ -39,8 +39,8 @@ namespace ut_detail {
 template<class CharT>
 struct case_ins
 {
-    static bool         eq( CharT c1, CharT c2 ) { return std::toupper( c1 ) == std::toupper( c2 ); }
-    static bool         lt( CharT c1, CharT c2 ) { return std::toupper( c1 ) <  std::toupper( c2 ); }
+    static bool         eq( CharT c1, CharT c2 ) { return (std::toupper)( c1 ) == (std::toupper)( c2 ); }
+    static bool         lt( CharT c1, CharT c2 ) { return (std::toupper)( c1 ) <  (std::toupper)( c2 ); }
 
     static int          compare( CharT const* s1, CharT const* s2, std::size_t n )
     {
@@ -107,6 +107,9 @@ operator <( basic_cstring<CharT> x, basic_cstring<CharT> y )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2004/08/11 03:18:49  rogeeff
+//  second tru64cxx65 fix
+//
 //  Revision 1.6  2004/07/19 12:26:41  rogeeff
 //  guard rename
 //  portability fix
