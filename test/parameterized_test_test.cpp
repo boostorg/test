@@ -17,7 +17,9 @@
 #include <boost/test/unit_test_suite.hpp>
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/test_tools.hpp>
+#if !defined ( __GNUC__ ) || __GNUC__ > 2
 #include <boost/test/detail/nullstream.hpp>
+#endif
 
 using namespace boost::unit_test_framework;
 
@@ -53,7 +55,11 @@ void test1( int i )
 int test_main( int, char* [] ) {
     unit_test_counter               num_of_failures;
     bool                            exception_caught;
+#if !defined ( __GNUC__ ) || __GNUC__ > 2
     boost::onullstream              null_output;
+#else
+    boost::test_toolbox::output_test_stream null_output;
+#endif
     boost::scoped_ptr<test_case>    test;  
 
     {
@@ -160,6 +166,9 @@ int test_main( int, char* [] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2003/02/15 21:52:37  rogeeff
+//  mingw ostream fix
+//
 //  Revision 1.3  2002/12/09 05:16:10  rogeeff
 //  switched to use unit_test_result_saver for internal testing
 //

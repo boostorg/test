@@ -18,7 +18,9 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
+#if !defined ( __GNUC__ ) || __GNUC__ > 2
 #include <boost/test/detail/nullstream.hpp>
+#endif
 using boost::test_toolbox::output_test_stream;
 using namespace boost::unit_test_framework;
 
@@ -35,7 +37,11 @@ using namespace boost::unit_test_framework;
 
 void good_foo() {}
 void bad_foo()  { 
+#if !defined ( __GNUC__ ) || __GNUC__ > 2
     boost::onullstream null_stream;
+#else
+    output_test_stream null_stream;
+#endif
 
     unit_test_log::instance().set_log_stream( null_stream );
     BOOST_ERROR( "Sure" );
@@ -142,6 +148,9 @@ test_main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2003/02/15 21:52:37  rogeeff
+//  mingw ostream fix
+//
 //  Revision 1.7  2003/02/13 08:47:07  rogeeff
 //  *** empty log message ***
 //
