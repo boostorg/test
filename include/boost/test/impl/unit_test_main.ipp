@@ -16,7 +16,7 @@
 #define BOOST_UNIT_TEST_MAIN_IPP_012205GER
 
 // Boost.Test
-#include <boost/test/unit_test.hpp>   // for unit_test framework
+#include <boost/test/unit_test_suite.hpp>
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
@@ -26,7 +26,6 @@
 #include <boost/scoped_ptr.hpp>
 
 // STL
-#include <string>
 #include <iostream>                   // for cout, cerr
 
 extern boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] );  // prototype for user's test suite init function
@@ -93,6 +92,9 @@ main( int argc, char* argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2005/01/30 01:55:13  rogeeff
+//  eliminated dependency on log
+//
 //  Revision 1.1  2005/01/22 19:22:13  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
