@@ -300,7 +300,7 @@ public:
     // access methods
     static sigjmp_buf&      jump_buffer()
     {
-        assert( s_active_handler );
+        assert( !!s_active_handler );
 
         return s_active_handler->m_sigjmp_buf;
     }
@@ -591,6 +591,9 @@ static void report_error( execution_exception::error_code ec, const_string msg1,
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.35  2004/08/19 00:02:21  rogeeff
+//  another tru64cxx65 workaround
+//
 //  Revision 1.34  2004/07/19 12:08:12  rogeeff
 //  suppress warnings
 //
