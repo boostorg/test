@@ -37,8 +37,8 @@ c_string_literal const REPORT_FORMAT     = "BOOST_TEST_REPORT_FORMAT";          
 c_string_literal const LOG_FORMAT        = "BOOST_TEST_LOG_FORMAT";             // --log_format
 c_string_literal const OUTPUT_FORMAT     = "BOOST_TEST_OUTPUT_FORMAT";          // --output_format
 
-enum report_level                             { CONFIRMATION_REPORT, SHORT_REPORT, DETAILED_REPORT, NO_REPORT };
-c_string_literal const report_level_names[] = { "confirm"          , "short"     , "detailed"     , "no"      };
+enum report_level                             { CONFIRMATION_REPORT, SHORT_REPORT, DETAILED_REPORT, NO_REPORT, UNDEF_REPORT };
+c_string_literal const report_level_names[] = { "confirm"          , "short"     , "detailed"     , "no"     };
 
 enum output_format { HRF /* human readable format */, XML /* XML */ };
 
@@ -52,6 +52,9 @@ std::string retrieve_framework_parameter( c_string_literal parameter_name_, int*
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2003/06/10 03:36:51  rogeeff
+//  UNDEF report level introduced
+//
 //  Revision 1.8  2003/06/09 08:39:28  rogeeff
 //  1.30.beta1
 //
