@@ -23,7 +23,7 @@
 static boost::unit_test_framework::test_suite* test = BOOST_TEST_SUITE( "Auto Unit Test" );
 
 boost::unit_test_framework::test_suite*
-init_unit_test_suite( int argc, char * argv[] ) {
+init_unit_test_suite( int /* argc */, char* /* argv */ [] ) {
     return test;
 }
 
@@ -61,6 +61,9 @@ static void func_name()                                             \
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2003/02/13 08:11:34  rogeeff
+//  minor comment
+//
 //  Revision 1.1  2002/12/08 17:30:38  rogeeff
 //  Automatic registration of unit tests facility introduced
 //
