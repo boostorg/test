@@ -14,9 +14,9 @@
 // ***************************************************************************
 
 // Boost.Test
+#include <boost/test/floating_point_comparison.hpp>
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_result.hpp>
-#include <boost/test/floating_point_comparison.hpp>
 using namespace boost::unit_test_framework;
 
 // STL
@@ -209,6 +209,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2003/02/15 21:53:39  rogeeff
+//  cwpro8 fix
+//
 //  Revision 1.1  2003/02/13 08:47:11  rogeeff
 //  *** empty log message ***
 //
