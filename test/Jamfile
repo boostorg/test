@@ -43,7 +43,12 @@ test-suite "test_exec_monitor_test"
         ;
 
 test-suite "unit_test_framework_test"
-        : [ test-btl-lib run : errors_handling_test : boost_test_exec_monitor : $(test-dir)errors_handling_test.pattern ]
+        :
+
+# errors_handling_test has been commented out because it is in effect a Windows
+# only test and no one has volunteered to get it working on other O/S's.
+#          [ test-btl-lib run : errors_handling_test : boost_test_exec_monitor : $(test-dir)errors_handling_test.pattern ]
+
           [ test-btl-lib run : online_test ]
           [ test-btl-lib run-fail : minimal_test ]
           [ test-btl-lib run : output_test_stream_test  : boost_unit_test_framework ]
