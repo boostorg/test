@@ -37,11 +37,17 @@ namespace boost {
 
 template<typename CharT>
 class basic_wrap_stringstream {
+#if  BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+    typedef std::ostringstream               wrapped_stream;
+#else 
 #ifdef BOOST_NO_STRINGSTREAM
     typedef std::basic_ostrstream<CharT>     wrapped_stream;
 #else
     typedef std::basic_ostringstream<CharT>  wrapped_stream;
 #endif // BOOST_NO_STRINGSTREAM
+
+#endif // WORKAROUND
+
 public:
 
     // access methods
@@ -110,8 +116,9 @@ operator<<( basic_wrap_stringstream<CharT>& targ, basic_wrap_stringstream<CharT>
     return targ;
 }
 
-#ifndef BOOST_NO_STD_LOCALE
 //____________________________________________________________________________//
+
+#if !defined(BOOST_NO_STD_LOCALE) && BOOST_WORKAROUND(BOOST_MSVC, >= 1310)
 
 template <typename CharT>
 inline basic_wrap_stringstream<CharT>&
@@ -141,8 +148,9 @@ operator<<( basic_wrap_stringstream<CharT>& targ, std::basic_ios<Elem, Tr>& (*ma
     return targ;
 }
 
-#endif
 //____________________________________________________________________________//
+
+#endif
 
 // ************************************************************************** //
 // **************               wrap_stringstream              ************** //
@@ -163,6 +171,10 @@ typedef basic_wrap_stringstream<wchar_t>    wrap_wstringstream;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.12  2004/05/27 06:23:22  rogeeff
+//  workaround for gcc 2.95 io
+//  workaround for msvc < 7.1 for manipulator usage
+//
 //  Revision 1.11  2004/05/21 06:19:35  rogeeff
 //  licence update
 //
