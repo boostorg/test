@@ -17,20 +17,20 @@
 #ifndef BOOST_TEST_CLASS_PROPERTIES_HPP
 #define BOOST_TEST_CLASS_PROPERTIES_HPP
 
+// BOOST
+#include <boost/preprocessor/repetition/repeat.hpp> 
+#include <boost/preprocessor/array/elem.hpp>
+
 // ************************************************************************** //
 // **************               readonly_property              ************** //
 // ************************************************************************** //
 
-#define BOOST_FRIENDS_DECLARER0()
-#define BOOST_FRIENDS_DECLARER1( friend1 )                            friend class friend1;
-#define BOOST_FRIENDS_DECLARER2( friend1, friend2 )                   BOOST_FRIENDS_DECLARER1( friend1 ) friend class friend2;
-#define BOOST_FRIENDS_DECLARER3( friend1, friend2, friend3 )          BOOST_FRIENDS_DECLARER2( friend1, friend2 ) friend class friend3;
-#define BOOST_FRIENDS_DECLARER4( friend1, friend2, friend3, friend4 ) BOOST_FRIENDS_DECLARER3( friend1, friend2, friend3 ) friend class friend4;
+#define DECLARE_FRIEND( z, count, array ) friend class BOOST_PP_ARRAY_ELEM(count, array);
 
 #define BOOST_READONLY_PROPERTY( property_type, friends_num, friends )                                              \
 class BOOST_JOIN( readonly_property, __LINE__ )                                                                     \
 {                                                                                                                   \
-    BOOST_FRIENDS_DECLARER ## friends_num friends                                                                   \
+    BOOST_PP_REPEAT( friends_num, DECLARE_FRIEND, (friends_num, friends) )                                          \
 public:                                                                                                             \
     explicit BOOST_JOIN( readonly_property, __LINE__ )( property_type const& init_value  ) : value( init_value ) {} \
                                                                                                                     \
@@ -62,6 +62,9 @@ private:                                                                        
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2003/02/13 08:04:49  rogeeff
+//  switch on using Boost.Preprocessor for friends declarations
+//
 //  Revision 1.7  2002/12/08 17:34:46  rogeeff
 //  guard name fixed
 //
