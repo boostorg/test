@@ -3,3 +3,4 @@
 debug
 release
 pattern.*
+*.rsp
