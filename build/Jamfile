@@ -27,18 +27,29 @@ UTF_SOURCES =
   unit_test_main
   ;
 
-lib prg_exec_monitor : ../src/$(PRG_EXEC_MON_SOURCES).cpp
-     : <sysinclude>$(BOOST_ROOT)
-     : <threading>single/multi <runtime-link>static/dynamic
-     ;
-
-lib test_exec_monitor : ../src/$(TEST_EXEC_MON_SOURCES).cpp
+template boost_test_lib 
+     ## sources ##
+     : 
+     ## requirements ##
      : <sysinclude>$(BOOST_ROOT) <borland><*><cxxflags>-w-8080
+     ## default build ##
      : <threading>single/multi <runtime-link>static/dynamic
      ;
 
-lib unit_test_framework : ../src/$(UTF_SOURCES).cpp
-     : <sysinclude>$(BOOST_ROOT) <borland><*><cxxflags>-w-8080
-     : <threading>single/multi <runtime-link>static/dynamic
-     ;
+lib boost_prg_exec_monitor    : <template>boost_test_lib
+                                ../src/$(PRG_EXEC_MON_SOURCES).cpp ;
 
+dll boost_prg_exec_monitor    : <template>boost_test_lib
+                                ../src/$(PRG_EXEC_MON_SOURCES).cpp ;
+
+lib boost_test_exec_monitor   : <template>boost_test_lib
+                                ../src/$(TEST_EXEC_MON_SOURCES).cpp ; 
+
+dll boost_test_exec_monitor   : <template>boost_test_lib
+                                ../src/$(TEST_EXEC_MON_SOURCES).cpp ; 
+
+lib boost_unit_test_framework : <template>boost_test_lib
+                                ../src/$(UTF_SOURCES).cpp ; 
+
+dll boost_unit_test_framework : <template>boost_test_lib
+                                ../src/$(UTF_SOURCES).cpp ; 
