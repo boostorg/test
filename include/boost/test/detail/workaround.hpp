@@ -45,12 +45,13 @@ std::ptrdiff_t distance( T const& x_, T const& y_ )
 using std::distance;
 #endif
 
+template <class T> inline void ignore_unused_variable_warning(const T&) {}
+
 } // namespace ut_detail
 
 } // namespace unit_test
 
 namespace unit_test_framework = unit_test;
-namespace test_toolbox        = test_tools;
 
 } // namespace boost
 
@@ -62,6 +63,9 @@ namespace test_toolbox        = test_tools;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/02/21 10:20:04  rogeeff
+//  ignore unused vars helper
+//
 //  Revision 1.1  2005/02/20 08:27:06  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
