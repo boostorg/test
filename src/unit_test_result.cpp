@@ -19,6 +19,7 @@
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/test/detail/basic_cstring/compare.hpp>
 #include <boost/test/detail/fixed_mapping.hpp>
+#include <boost/test/detail/xml_printer.hpp>
 
 // BOOST
 #include <boost/config.hpp>
@@ -143,7 +144,7 @@ public:
                                         unit_test_counter num_passed, unit_test_counter num_failed )
     {
         unit_test_counter total_test_cases = num_passed + num_failed;
-        std::size_t       width = static_cast<std::size_t>( std::log10( (float)(std::min)( num_passed, num_failed ) ) ) + 1;
+        std::size_t       width = static_cast<std::size_t>( std::log10( (float)(std::max)( num_passed, num_failed ) ) ) + 1;
 
         where_to << std::setw( indent ) << "" << std::setw( width ) << num_passed
                  << " test " << ps_name( num_passed != 1, "case" ) << " out of " << total_test_cases << " passed\n"
@@ -157,7 +158,7 @@ public:
     {
         unit_test_counter total_assertions = num_passed + num_failed;
         std::size_t       width            = total_assertions > 0 
-                                               ? static_cast<std::size_t>( std::log10( (float)(std::min)( num_passed, num_failed ) ) ) + 1
+                                               ? static_cast<std::size_t>( std::log10( (float)(std::max)( num_passed, num_failed ) ) ) + 1
                                                : 1;
         
         where_to << std::setw( indent ) << "" << std::setw( width ) << num_passed 
@@ -185,7 +186,7 @@ private:
 // **************             xml_report_formatter             ************** //
 // ************************************************************************** //
 
-class xml_report_formatter : public report_formatter {
+class xml_report_formatter : public report_formatter, private ut_detail::xml_printer {
 public:
     void    start_result_report( std::ostream& where_to )
     {
@@ -201,8 +202,8 @@ public:
     {
         where_to << std::setw( indent ) << ""
                  << "<" << ( case_suite ? "TestCase" : "TestSuite" ) 
-                 << " name=\"" << test_case_name << '\"'
-                 << " result=" << (failed ? "\"failed\"" : "\"passed\"" ) << ">\n";
+                 << " name";    print_attr_value( where_to, test_case_name )
+                 << " result";  print_attr_value( where_to, failed ? "failed" : "passed" ) << ">\n";
     }
 
     void    start_confirmation_report( std::ostream& where_to,
@@ -210,8 +211,9 @@ public:
                                        unit_test_counter num_failed, unit_test_counter num_expected )
     {
         where_to << "<" << ( case_suite ? "TestCase" : "TestSuite" ) 
-                 << " name=\"" << test_case_name << '\"'
-                 << " result=" << (failed ? "\"failed\"" : "\"passed\"" );
+                 << " name";    print_attr_value( where_to, test_case_name )
+                 << " result";  print_attr_value( where_to, failed ? "failed" : "passed" );
+
         if( failed )
             where_to << " num_of_failures=" << num_failed
                      << " expected_failures=" << num_expected;
@@ -225,7 +227,7 @@ public:
         if( aborted ) {
             where_to << std::setw( indent+2 ) << ""
                      << "<" << "aborted" 
-                     << " reason=" << "\"due to uncaught exception, user assert or system error\""
+                     << " reason";  print_attr_value( where_to, "due to uncaught exception, user assert or system error" )
                      << "/>\n";
         }
 
@@ -238,8 +240,8 @@ public:
     {
         where_to << std::setw( indent+2 ) << ""
                  << "<SubTestCases"
-                 << " passed=\"" << num_passed << '\"'
-                 << " failed=\"" << num_failed << '\"'
+                 << " passed";  print_attr_value( where_to, num_passed )
+                 << " failed";  print_attr_value( where_to, num_failed )
                  << "/>\n";
     }
 
@@ -250,9 +252,9 @@ public:
     {
         where_to << std::setw( indent+2 ) << ""
                  << "<Asssertions"
-                 << " passed=\"" << num_passed << '\"'
-                 << " failed=\"" << num_failed << '\"'
-                 << " expected_failures=\"" << num_expected << '\"'
+                 << " passed";              print_attr_value( where_to, num_passed )
+                 << " failed";              print_attr_value( where_to, num_failed )
+                 << " expected_failures";   print_attr_value( where_to, num_expected )
                  << "/>\n";
     }
 };
@@ -598,6 +600,10 @@ unit_test_result::has_passed() const
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.29  2004/07/19 12:10:56  rogeeff
+//  added proper encoded of XML PCDATA
+//  min->max bug fix
+//
 //  Revision 1.28  2004/06/29 04:33:20  rogeeff
 //  use std::min
 //
