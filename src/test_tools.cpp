@@ -33,8 +33,6 @@ namespace std { using ::strcmp; using ::strncmp; using ::strlen; }
 
 namespace boost {
 
-using namespace unit_test_framework;
-
 namespace test_toolbox {
 
 namespace detail {
@@ -65,8 +63,8 @@ wrapstrstream::str() const {
 void
 checkpoint_impl( wrapstrstream const& message, char const* file_name, int line_num )
 {
-    BOOST_UT_LOG_BEGIN( file_name, line_num, report_test_suites )
-        checkpoint( message.str() )
+    BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::report_test_suites )
+        unit_test_framework::checkpoint( message.str() )
     BOOST_UT_LOG_END
 }
 
@@ -75,7 +73,7 @@ checkpoint_impl( wrapstrstream const& message, char const* file_name, int line_n
 void
 message_impl( wrapstrstream const& message, char const* file_name, int line_num )
 {
-    BOOST_UT_LOG_BEGIN( file_name, line_num, report_messages )
+    BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::report_messages )
         message.str()
     BOOST_UT_LOG_END
 }
@@ -87,12 +85,12 @@ warn_and_continue_impl( bool predicate, wrapstrstream const& message,
                         char const* file_name, int line_num, bool add_fail_pass )
 {
     if( !predicate ) {
-        BOOST_UT_LOG_BEGIN( file_name, line_num, report_warnings )
+        BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::report_warnings )
             (add_fail_pass ? "condition " : "") << message.str() << (add_fail_pass ? " is not satisfied" : "" )
         BOOST_UT_LOG_END
     }
     else {
-        BOOST_UT_LOG_BEGIN( file_name, line_num, report_successful_tests )
+        BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::report_successful_tests )
             "condition " << message.str() << " is satisfied"
         BOOST_UT_LOG_END
     }
@@ -114,10 +112,10 @@ warn_and_continue_impl( extended_predicate_value const& v, wrapstrstream const& 
 bool
 test_and_continue_impl( bool predicate, wrapstrstream const& message,
                         char const* file_name, int line_num,
-                        bool add_fail_pass, report_level loglevel )
+                        bool add_fail_pass, unit_test_framework::report_level loglevel )
 {
     if( !predicate ) {
-        unit_test_result::instance().inc_failed_assertions();
+        unit_test_framework::unit_test_result::instance().inc_failed_assertions();
 
         BOOST_UT_LOG_BEGIN( file_name, line_num, loglevel )
             (add_fail_pass ? "test " : "") << message.str() << (add_fail_pass ? " failed" : "")
@@ -126,9 +124,9 @@ test_and_continue_impl( bool predicate, wrapstrstream const& message,
         return true;
     }
     else {
-        unit_test_result::instance().inc_passed_assertions();
+        unit_test_framework::unit_test_result::instance().inc_passed_assertions();
 
-        BOOST_UT_LOG_BEGIN( file_name, line_num, report_successful_tests )
+        BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::report_successful_tests )
             (add_fail_pass ? "test " : "") << message.str() << (add_fail_pass ? " passed" : "")
         BOOST_UT_LOG_END
 
@@ -141,7 +139,7 @@ test_and_continue_impl( bool predicate, wrapstrstream const& message,
 bool
 test_and_continue_impl( extended_predicate_value const& v, wrapstrstream const& message,
                         char const* file_name, int line_num,
-                        bool add_fail_pass, report_level loglevel )
+                        bool add_fail_pass, unit_test_framework::report_level loglevel )
 {
     return test_and_continue_impl( !!v,
         message << (add_fail_pass ? (!v ? " failed" : " passed") : "") << *(v.p_message),
@@ -153,7 +151,7 @@ test_and_continue_impl( extended_predicate_value const& v, wrapstrstream const& 
 void
 test_and_throw_impl( bool predicate, wrapstrstream const& message,
                      char const* file_name, int line_num,
-                     bool add_fail_pass, report_level loglevel )
+                     bool add_fail_pass, unit_test_framework::report_level loglevel )
 {
     if( test_and_continue_impl( predicate, message, file_name, line_num, add_fail_pass, loglevel ) ) {
         throw test_tool_failed( "" ); // error already reported by test_and_continue_impl
@@ -165,7 +163,7 @@ test_and_throw_impl( bool predicate, wrapstrstream const& message,
 void
 test_and_throw_impl( extended_predicate_value const& v, wrapstrstream const& message,
                      char const* file_name, int line_num,
-                     bool add_fail_pass, report_level loglevel )
+                     bool add_fail_pass, unit_test_framework::report_level loglevel )
 {
     if( test_and_continue_impl( v, message, file_name, line_num, add_fail_pass, loglevel ) ) {
         throw test_tool_failed( "" ); // error already reported by test_and_continue_impl
@@ -177,7 +175,7 @@ test_and_throw_impl( extended_predicate_value const& v, wrapstrstream const& mes
 bool
 equal_and_continue_impl( char const* left, char const* right, wrapstrstream const& message,
                          char const* file_name, int line_num,
-                         report_level loglevel )
+                         unit_test_framework::report_level loglevel )
 {
     bool predicate = std::strcmp( left, right ) == 0;
 
@@ -370,10 +368,10 @@ output_test_stream::flush()
 {
     m_pimpl->m_synced_string.erase();
 
-    seekp( 0, std::ios::beg );
-
 #ifndef BOOST_NO_STRINGSTREAM
     str( std::string() );
+#else
+    seekp( 0, std::ios::beg );
 #endif
 }
 
@@ -410,6 +408,10 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2002/08/26 08:28:31  rogeeff
+//  Exclude using namespace for included use
+//  flush bud for new stringstream fixed
+//
 //  Revision 1.7  2002/08/20 22:10:30  rogeeff
 //  slightly modified failures report
 //
