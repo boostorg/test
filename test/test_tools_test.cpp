@@ -62,14 +62,15 @@ using namespace boost::unit_test_framework;
 
 //____________________________________________________________________________//
 
-#if !defined(__BORLANDC__)
+#if defined(__BORLANDC__) || defined(__IBMCPP__)
+
 #define CHECK_PATTERN( msg, shift ) \
-    (boost::wrap_stringstream().ref() << __FILE__ << "(" << __LINE__ << "): " << msg).str()
+    (boost::wrap_stringstream().ref() << __FILE__ << "(" << (__LINE__-shift) << "): " << msg).str()
 
 #else
 
 #define CHECK_PATTERN( msg, shift ) \
-    (boost::wrap_stringstream().ref() << __FILE__ << "(" << (__LINE__-shift) << "): " << msg).str()
+    (boost::wrap_stringstream().ref() << __FILE__ << "(" << __LINE__ << "): " << msg).str()
 
 #endif
 //____________________________________________________________________________//
@@ -235,7 +236,7 @@ test_BOOST_CHECKPOINT() {
         output.is_equal(
             (boost::wrap_stringstream().ref()
                 << "Exception in " TEST_CASE_NAME ": C string: some error\n"
-                << __FILE__ << "(" << 231 << ") : "
+                << __FILE__ << "(" << 232 << ") : "
                 << "last checkpoint: Going to do a silly things\n").str()
         )
     );
@@ -605,6 +606,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.17  2003/02/18 22:17:12  rogeeff
+//  Visual Age fix
+//
 //  Revision 1.16  2003/02/14 06:40:58  rogeeff
 //  Intel on linux fix
 //
