@@ -37,7 +37,9 @@ class test_case;
 // **************           first failed assertion hook        ************** //
 // ************************************************************************** //
 
-static void first_failed_assertion() {}
+namespace {
+void first_failed_assertion() {}
+}
 
 // ************************************************************************** //
 // **************               unit_test_result               ************** //
@@ -126,6 +128,9 @@ struct unit_test_result_tracker {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2003/06/20 10:57:25  rogeeff
+//  gcc warning fix
+//
 //  Revision 1.14  2003/06/09 08:58:40  rogeeff
 //  unit_test_result_tracker introduced for correct exception handling
 //  method has_passed introduced to support dependencies
