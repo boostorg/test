@@ -97,7 +97,7 @@ monitor* the_monitor;
 
 int main( int argc, char* argv[] )
 {
-	using boost::minimal_test::the_monitor;
+    using boost::minimal_test::the_monitor;
 
     the_monitor = new boost::minimal_test::monitor( argc, argv );
 
