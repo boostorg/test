@@ -68,7 +68,7 @@ msvc65_like_log_formatter::log_header( std::ostream& output, unit_test_counter t
 //____________________________________________________________________________//
 
 void
-msvc65_like_log_formatter::finish_log( std::ostream& output )
+msvc65_like_log_formatter::finish_log( std::ostream& /* output */ )
 {
 }
 
@@ -136,7 +136,7 @@ msvc65_like_log_formatter::log_entry_value( std::ostream& output, std::string co
 //____________________________________________________________________________//
 
 void
-msvc65_like_log_formatter::end_log_entry( std::ostream& output )
+msvc65_like_log_formatter::end_log_entry( std::ostream& /* output */ )
 {
 }
 
@@ -180,7 +180,9 @@ xml_log_formatter::start_log( std::ostream& output, bool log_build_info )
 //____________________________________________________________________________//
 
 void
-xml_log_formatter::log_header( std::ostream& output, unit_test_counter test_cases_amount ) {}
+xml_log_formatter::log_header( std::ostream& /* output */, unit_test_counter /* test_cases_amount */ )
+{
+}
 
 //____________________________________________________________________________//
 
@@ -315,6 +317,9 @@ xml_log_formatter::print_indent( std::ostream& output )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2003/07/09 12:51:29  jmaurer
+//  avoid "unused parameter" warnings with gcc
+//
 //  Revision 1.1  2003/07/02 09:11:24  rogeeff
 //  move log formatter in public interface
 //
