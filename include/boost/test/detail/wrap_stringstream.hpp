@@ -77,15 +77,6 @@ wrap_stringstream::ref()
 
 //____________________________________________________________________________//
 
-inline wrap_stringstream&
-operator<<( wrap_stringstream& targ, wrap_stringstream& src )
-{
-    targ << src.str();
-    return targ;
-}
-
-//____________________________________________________________________________//
-
 inline std::string const&
 wrap_stringstream::str()
 {
@@ -102,12 +93,25 @@ wrap_stringstream::str()
 
 //____________________________________________________________________________//
 
+inline wrap_stringstream&
+operator<<( wrap_stringstream& targ, wrap_stringstream& src )
+{
+    targ << src.str();
+    return targ;
+}
+
+//____________________________________________________________________________//
+
 }  // namespace boost
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2003/07/09 21:22:24  jmaurer
+//  define str() before it is first used to avoid "redeclared inline after
+//  begin called" error on IRIX MIPSpro
+//
 //  Revision 1.3  2003/06/09 08:39:28  rogeeff
 //  1.30.beta1
 //
