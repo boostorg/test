@@ -69,7 +69,7 @@ int main( int argc, char* argv[] ) {
 
     // return code
     return no_result_code 
-            ? 0 
+            ? boost::exit_success
             : ( test_main_result != 0 && test_main_result != boost::exit_success 
                    ? test_main_result 
                    : unit_test_result::instance().result_code() 

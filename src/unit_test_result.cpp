@@ -13,6 +13,7 @@
 // BOOST
 #include <boost/config.hpp>
 #include <boost/scoped_ptr.hpp>
+#include <boost/cstdlib.hpp>
 
 // STL
 #include <list>
@@ -49,9 +50,11 @@ struct unit_test_result::Impl {
     static unit_test_result*        m_curr;
 
     bool                            is_failed()   { return m_assertions_failed != m_expected_failures || m_exception_caught; }
-    unit_test_counter               result_code() { return is_failed() 
-                                                        ? ( (m_assertions_failed != 0) ? m_assertions_failed : -1 )
-                                                        : 0; }
+    int                             result_code() { return is_failed() 
+                                                        ? ( (m_assertions_failed != 0) 
+                                                               ? boost::exit_test_failure 
+                                                               : boost::exit_exception_failure  )
+                                                        : boost::exit_success; }
 };
 
 boost::scoped_ptr<unit_test_result> unit_test_result::Impl::m_head;

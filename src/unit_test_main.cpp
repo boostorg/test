@@ -99,7 +99,7 @@ main( int argc, char* argv[] )
     delete test;
     
     // return code
-    return no_result_code ? 0 : unit_test_result::instance().result_code();
+    return no_result_code ? boost::exit_success : unit_test_result::instance().result_code();
 }
 
 //  Revision History

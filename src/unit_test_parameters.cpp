@@ -35,7 +35,7 @@ const struct parameter_names {
 } ;
 
 std::string
-retrieve_framework_parameter( char const* parameter_name, int* argc, char ** argv )
+retrieve_framework_parameter( char const* parameter_name, int* argc, char** argv )
 {
     // first try to find parameter among command line arguments if present
     if( argc != NULL ) {

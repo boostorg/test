@@ -22,21 +22,21 @@
 namespace std { using ::getenv; using ::atoi; }
 #endif
 
-int cpp_main( int argc, char * argv[] );  // prototype for user's cpp_main()
+int cpp_main( int argc, char* argv[] );  // prototype for user's cpp_main()
 
 namespace
 {
 
 class cpp_main_caller : public boost::execution_monitor {
 public:
-    cpp_main_caller( int argc, char ** argv )
+    cpp_main_caller( int argc, char** argv )
     : m_argc( argc ), m_argv( argv )    {}
     
     int         function()              { return cpp_main( m_argc, m_argv ); }
     
 private:
     int         m_argc;
-    char **     m_argv;
+    char**      m_argv;
 };
 
 }
@@ -45,7 +45,7 @@ private:
 // **************                   cpp main                   ************** //
 // ************************************************************************** //
 
-int main( int argc, char * argv[] )
+int main( int argc, char* argv[] )
 {
     cpp_main_caller caller( argc, argv );
     
