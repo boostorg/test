@@ -31,6 +31,7 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : minimal_test ]
           [ test-btl-lib run : output_test_stream_test : unit_test_framework ]
           [ test-btl-lib run : result_report_test      : test_exec_monitor ]
+          [ test-btl-lib run : parameterized_test_test : test_exec_monitor ]
           [ test-btl-lib run : test_tools_test         : unit_test_framework ]
           [ test-btl-lib run : unit_test_suite_ex_test : unit_test_framework ]
         ;

@@ -15,6 +15,7 @@
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
+#include <boost/test/unit_test_result.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 using namespace boost::unit_test_framework;
 
@@ -33,8 +34,10 @@ using namespace boost::unit_test_framework;
     boost::test_toolbox::output_test_stream output;         \
                                                             \
     unit_test_log::instance().set_log_stream( output );     \
+    unit_test_result::reset_current_result_set();           \
     tool_usage;                                             \
                                                             \
+    unit_test_result::reset_current_result_set();           \
     unit_test_log::instance().set_log_stream( std::cout );  \
     BOOST_CHECK( check );                                   \
 }
@@ -46,12 +49,15 @@ using namespace boost::unit_test_framework;
     boost::test_toolbox::output_test_stream output;                         \
                                                                             \
     unit_test_log::instance().set_log_stream( output );                     \
+    unit_test_result::reset_current_result_set();                           \
     try {                                                                   \
         tool_usage;                                                         \
         unit_test_log::instance().set_log_stream( std::cout );              \
+        unit_test_result::reset_current_result_set();                       \
         BOOST_CHECK( nothrow_check );                                       \
     } catch( boost::test_toolbox::detail::test_tool_failed const&) {        \
         unit_test_log::instance().set_log_stream( std::cout );              \
+        unit_test_result::reset_current_result_set();                       \
         BOOST_CHECK( throw_check );                                         \
     }                                                                       \
 }
@@ -647,30 +653,30 @@ test_suite*
 init_unit_test_suite( int argc, char* argv[] ) {
     test_suite* test = BOOST_TEST_SUITE("Test Tools test");
 
-    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK ), 3 );
-    test->add( BOOST_TEST_CASE( &test_BOOST_REQUIRE ), 2 );
+    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK ) );
+    test->add( BOOST_TEST_CASE( &test_BOOST_REQUIRE ) );
     test->add( BOOST_TEST_CASE( &test_BOOST_MESSAGE ) );
     test->add( BOOST_TEST_CASE( &test_BOOST_WARN ) );
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECKPOINT ) );
     test->add( BOOST_TEST_CASE( &test_BOOST_WARN_MESSAGE ) );
-    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_MESSAGE ), 1 );
-    test->add( BOOST_TEST_CASE( &test_BOOST_REQUIRE_MESSAGE ), 1 );
-    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_EQUAL ), 3 );
+    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_MESSAGE ) );
+    test->add( BOOST_TEST_CASE( &test_BOOST_REQUIRE_MESSAGE ) );
+    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_EQUAL ) );
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_CLOSE_all ), 
 #if defined(__BORLANDC__) || defined(__GNUC__)
-        40
+        6
 #elif defined (_MSC_VER)
-        34
+        2
 #else
-        30
+        0
 #endif
 );
-    test->add( BOOST_TEST_CASE( &test_BOOST_ERROR ), 2 );
-    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_THROW ), 1 );
-    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_EQUAL_COLLECTIONS ), 2 );
+    test->add( BOOST_TEST_CASE( &test_BOOST_ERROR ) );
+    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_THROW ) );
+    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_EQUAL_COLLECTIONS ) );
     test->add( BOOST_TEST_CASE( &test_BOOST_IS_DEFINED ) );
-    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_PREDICATE ), 3 );
-    test->add( BOOST_TEST_CASE( &test_BOOST_REQUIRE_PREDICATE ), 1 );
+    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_PREDICATE ) );
+    test->add( BOOST_TEST_CASE( &test_BOOST_REQUIRE_PREDICATE ) );
 
     return test;
 }
@@ -681,6 +687,10 @@ init_unit_test_suite( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.11.2.1  2002/10/01 17:45:52  rogeeff
+//  some tests reworked
+//  "parameterized test" test added
+//
 //  Revision 1.11  2002/09/16 08:40:55  rogeeff
 //  test fixed to follow latest changes
 //

@@ -11,7 +11,7 @@
 //
 //  Version     : $Id$
 //
-//  Description : tests an ability of Unit Test Framework to catch all kinds 
+//  Description : tests an ability of Unit Test Framework to catch all kinds
 //  of test errors in a user code and properly report it.
 // ***************************************************************************
 
@@ -44,7 +44,8 @@ namespace {
     int divide_by_zero = 0;
 
     // will cause an error coresponding to the current error_type;
-    void error_on_demand() {
+    void error_on_demand()
+    {
         switch( error_type ) {
         case et_none:
             BOOST_MESSAGE( "error_on_demand() BOOST_MESSAGE" );
@@ -97,7 +98,7 @@ namespace {
         tct_end
     } test_case_type;
 
-    char const* test_case_type_name[] = { "free function", 
+    char const* test_case_type_name[] = { "free function",
                                           "user test case",
                                           "parameterized free function",
                                           "parameterized user test case"
@@ -109,7 +110,7 @@ namespace {
 
     struct bad_test
     {
-        void test() 
+        void test()
         {
             BOOST_MESSAGE( "(user test case)" );
             error_on_demand();
@@ -141,9 +142,9 @@ namespace {
 
 //____________________________________________________________________________//
 
-int 
-test_main( int argc, char * argv[] ) {
-    int  nonmatched    = 0;
+int
+test_main( int argc, char * argv[] )
+{
     bool match_or_save = retrieve_framework_parameter( SAVE_TEST_PATTERN, &argc, argv ) != "yes";
 
     output_test_stream output( "error_handling_test.pattern", match_or_save );
@@ -160,8 +161,8 @@ test_main( int argc, char * argv[] ) {
         unit_test_log::instance().set_log_threshold_level( level );
 
         // for each error type
-        for( error_type = et_begin; 
-             error_type != et_end; 
+        for( error_type = et_begin;
+             error_type != et_end;
              error_type = static_cast<error_type_enum>(error_type+1) )
         {
             // for each error location
@@ -204,17 +205,15 @@ test_main( int argc, char * argv[] ) {
                     continue;
                 }
 
+                unit_test_result::reset_current_result_set();
                 unit_test_log::instance().start( 1 );
                 test.run();
                 unit_test_log::instance() << report_progress();
+                unit_test_result::reset_current_result_set();
 
-                if( !output.match_pattern() ) {
-                    nonmatched++;
-                    unit_test_log::instance().set_log_stream( std::cout );
-                    BOOST_ERROR( "Pattern match" );
-                    unit_test_log::instance().set_log_stream( output );
-                }
-                    
+                unit_test_log::instance().set_log_threshold_level( report_all_errors );
+                BOOST_CHECK( output.match_pattern() );
+                unit_test_log::instance().set_log_threshold_level( level );
             }
         }
     }
@@ -222,15 +221,19 @@ test_main( int argc, char * argv[] ) {
     unit_test_result::instance().short_report( output );
     output.match_pattern();
 
-    return nonmatched;
+    return 0;
 } // main
 
 //____________________________________________________________________________//
 
 // ***************************************************************************
 //  Revision History :
-//  
+//
 //  $Log$
+//  Revision 1.7.2.1  2002/10/01 17:45:52  rogeeff
+//  some tests reworked
+//  "parameterized test" test added
+//
 //  Revision 1.7  2002/08/26 09:08:06  rogeeff
 //  cvs kw added
 //

@@ -18,6 +18,7 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
+#include <boost/test/detail/nullstream.hpp>
 using boost::test_toolbox::output_test_stream;
 using namespace boost::unit_test_framework;
 
@@ -34,9 +35,9 @@ using namespace boost::unit_test_framework;
 
 void good_foo() {}
 void bad_foo()  { 
-    output_test_stream dev_null;
+    boost::onullstream null_stream;
 
-    unit_test_log::instance().set_log_stream( dev_null );
+    unit_test_log::instance().set_log_stream( null_stream );
     BOOST_ERROR( "Sure" );
     unit_test_log::instance().set_log_stream( std::cout );
 }
@@ -64,6 +65,7 @@ test_main( int argc, char * argv[] )
     output_test_stream output( "result_report_test.pattern", match_or_save );
     
     test_suite* ts_0 = BOOST_TEST_SUITE( "0 test cases inside" );
+    
     test_suite* ts_1 = BOOST_TEST_SUITE( "1 test cases inside" );
         ts_1->add( BOOST_TEST_CASE( good_foo ) );
 
@@ -119,6 +121,10 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5.2.1  2002/10/01 17:45:52  rogeeff
+//  some tests reworked
+//  "parameterized test" test added
+//
 //  Revision 1.5  2002/08/26 09:08:06  rogeeff
 //  cvs kw added
 //
