@@ -12,12 +12,16 @@
 //  Description : forwarding source
 // ***************************************************************************
 
+#define BOOST_TEST_SOURCE
 #include <boost/test/impl/framework.ipp>
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/03/22 07:18:49  rogeeff
+//  no message
+//
 //  Revision 1.1  2005/02/20 08:28:34  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //

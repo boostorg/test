@@ -145,7 +145,7 @@ test_main( int argc, char * argv[] )
 {
 #define PATTERN_FILE_NAME "errors_handling_test.pattern"
     std::string pattern_file_name(
-        argc == 1 ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./test_files/" PATTERN_FILE_NAME )
+        argc <= 1 ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./test_files/" PATTERN_FILE_NAME )
                   : argv[1] );
 
 #ifdef __GNUC__
@@ -193,6 +193,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.31  2005/03/22 07:14:44  rogeeff
+//  no message
+//
 //  Revision 1.30  2005/02/23 06:36:01  vawjr
 //  Deleted - extraneous \r characters in the file
 //

@@ -12,12 +12,16 @@
 //  Description : forwarding source
 // ***************************************************************************
 
+#define BOOST_TEST_SOURCE
 #include <boost/test/impl/execution_monitor.ipp>
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.38  2005/03/22 07:18:39  rogeeff
+//  no message
+//
 //  Revision 1.37  2005/01/22 19:26:36  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //

@@ -35,7 +35,7 @@ Leaving test case "error_on_demand"
 log level: log_successful_tests; error type: cpp exception;
 
 Entering test case "error_on_demand"
-Exception in "error_on_demand": std::runtime_error: test std::runtime error what() message
+0: fatal error in "error_on_demand": std::runtime_error: test std::runtime error what() message
 114: last checkpoint: error_on_demand() throw runtime_error
 198: info: check 'Test case has less failures then expected' passed
 Leaving test case "error_on_demand"
@@ -44,7 +44,7 @@ Leaving test case "error_on_demand"
 log level: log_successful_tests; error type:  system error;
 
 Entering test case "error_on_demand"
-Exception in "error_on_demand": integer divide by zero
+0: fatal error in "error_on_demand": integer divide by zero
 119: last checkpoint: error_on_demand() divide by zero
 198: info: check 'Test case has less failures then expected' passed
 Leaving test case "error_on_demand"
@@ -61,7 +61,7 @@ Leaving test case "error_on_demand"
 log level: log_successful_tests; error type: system fatal error;
 
 Entering test case "error_on_demand"
-Exception in "error_on_demand": memory access violation
+0: fatal error in "error_on_demand": memory access violation
 124: last checkpoint: write to an invalid address
 Test is aborted
 198: info: check 'Test case has less failures then expected' passed
@@ -98,7 +98,7 @@ Leaving test case "error_on_demand"
 log level: log_test_suites; error type: cpp exception;
 
 Entering test case "error_on_demand"
-Exception in "error_on_demand": std::runtime_error: test std::runtime error what() message
+0: fatal error in "error_on_demand": std::runtime_error: test std::runtime error what() message
 114: last checkpoint: error_on_demand() throw runtime_error
 Leaving test case "error_on_demand"
 
@@ -106,7 +106,7 @@ Leaving test case "error_on_demand"
 log level: log_test_suites; error type:  system error;
 
 Entering test case "error_on_demand"
-Exception in "error_on_demand": integer divide by zero
+0: fatal error in "error_on_demand": integer divide by zero
 119: last checkpoint: error_on_demand() divide by zero
 Leaving test case "error_on_demand"
 
@@ -121,7 +121,7 @@ Leaving test case "error_on_demand"
 log level: log_test_suites; error type: system fatal error;
 
 Entering test case "error_on_demand"
-Exception in "error_on_demand": memory access violation
+0: fatal error in "error_on_demand": memory access violation
 124: last checkpoint: write to an invalid address
 Test is aborted
 Leaving test case "error_on_demand"
@@ -148,13 +148,13 @@ log level: log_messages; error type: user non-fatal error;
 ===========================
 log level: log_messages; error type: cpp exception;
 
-Exception in "error_on_demand": std::runtime_error: test std::runtime error what() message
+0: fatal error in "error_on_demand": std::runtime_error: test std::runtime error what() message
 114: last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 log level: log_messages; error type:  system error;
 
-Exception in "error_on_demand": integer divide by zero
+0: fatal error in "error_on_demand": integer divide by zero
 119: last checkpoint: error_on_demand() divide by zero
 
 ===========================
@@ -165,7 +165,7 @@ log level: log_messages; error type: user fatal error;
 ===========================
 log level: log_messages; error type: system fatal error;
 
-Exception in "error_on_demand": memory access violation
+0: fatal error in "error_on_demand": memory access violation
 124: last checkpoint: write to an invalid address
 Test is aborted
 
@@ -190,13 +190,13 @@ log level: log_warnings; error type: user non-fatal error;
 ===========================
 log level: log_warnings; error type: cpp exception;
 
-Exception in "error_on_demand": std::runtime_error: test std::runtime error what() message
+0: fatal error in "error_on_demand": std::runtime_error: test std::runtime error what() message
 114: last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 log level: log_warnings; error type:  system error;
 
-Exception in "error_on_demand": integer divide by zero
+0: fatal error in "error_on_demand": integer divide by zero
 119: last checkpoint: error_on_demand() divide by zero
 
 ===========================
@@ -207,7 +207,7 @@ log level: log_warnings; error type: user fatal error;
 ===========================
 log level: log_warnings; error type: system fatal error;
 
-Exception in "error_on_demand": memory access violation
+0: fatal error in "error_on_demand": memory access violation
 124: last checkpoint: write to an invalid address
 
 ===========================
@@ -230,13 +230,13 @@ log level: log_all_errors; error type: user non-fatal error;
 ===========================
 log level: log_all_errors; error type: cpp exception;
 
-Exception in "error_on_demand": std::runtime_error: test std::runtime error what() message
+0: fatal error in "error_on_demand": std::runtime_error: test std::runtime error what() message
 114: last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 log level: log_all_errors; error type:  system error;
 
-Exception in "error_on_demand": integer divide by zero
+0: fatal error in "error_on_demand": integer divide by zero
 119: last checkpoint: error_on_demand() divide by zero
 
 ===========================
@@ -247,7 +247,7 @@ log level: log_all_errors; error type: user fatal error;
 ===========================
 log level: log_all_errors; error type: system fatal error;
 
-Exception in "error_on_demand": memory access violation
+0: fatal error in "error_on_demand": memory access violation
 124: last checkpoint: write to an invalid address
 
 ===========================
@@ -269,13 +269,13 @@ log level: log_cpp_exception_errors; error type: user non-fatal error;
 ===========================
 log level: log_cpp_exception_errors; error type: cpp exception;
 
-Exception in "error_on_demand": std::runtime_error: test std::runtime error what() message
+0: fatal error in "error_on_demand": std::runtime_error: test std::runtime error what() message
 114: last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 log level: log_cpp_exception_errors; error type:  system error;
 
-Exception in "error_on_demand": integer divide by zero
+0: fatal error in "error_on_demand": integer divide by zero
 119: last checkpoint: error_on_demand() divide by zero
 
 ===========================
@@ -286,7 +286,7 @@ log level: log_cpp_exception_errors; error type: user fatal error;
 ===========================
 log level: log_cpp_exception_errors; error type: system fatal error;
 
-Exception in "error_on_demand": memory access violation
+0: fatal error in "error_on_demand": memory access violation
 124: last checkpoint: write to an invalid address
 
 ===========================
@@ -312,7 +312,7 @@ log level: log_system_errors; error type: cpp exception;
 ===========================
 log level: log_system_errors; error type:  system error;
 
-Exception in "error_on_demand": integer divide by zero
+0: fatal error in "error_on_demand": integer divide by zero
 119: last checkpoint: error_on_demand() divide by zero
 
 ===========================
@@ -323,7 +323,7 @@ log level: log_system_errors; error type: user fatal error;
 ===========================
 log level: log_system_errors; error type: system fatal error;
 
-Exception in "error_on_demand": memory access violation
+0: fatal error in "error_on_demand": memory access violation
 124: last checkpoint: write to an invalid address
 
 ===========================
@@ -358,7 +358,7 @@ log level: log_fatal_errors; error type: user fatal error;
 ===========================
 log level: log_fatal_errors; error type: system fatal error;
 
-Exception in "error_on_demand": memory access violation
+0: fatal error in "error_on_demand": memory access violation
 124: last checkpoint: write to an invalid address
 
 ===========================
@@ -391,36 +391,4 @@ log level: log_nothing; error type: user fatal error;
 
 ===========================
 log level: log_nothing; error type: system fatal error;
-
-
-===========================
-log level: no error; error type: no error;
-
-
-===========================
-log level: no error; error type: user message;
-
-
-===========================
-log level: no error; error type: user warning;
-
-
-===========================
-log level: no error; error type: user non-fatal error;
-
-
-===========================
-log level: no error; error type: cpp exception;
-
-
-===========================
-log level: no error; error type:  system error;
-
-
-===========================
-log level: no error; error type: user fatal error;
-
-
-===========================
-log level: no error; error type: system fatal error;
 

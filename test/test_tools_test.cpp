@@ -76,10 +76,10 @@ output_test_stream& ots()
     static boost::shared_ptr<output_test_stream> inst;
 
     if( !inst ) {
-        inst.reset( new output_test_stream( 
-                        runtime_config::save_pattern() ? save_file_name : match_file_name, 
-                        !runtime_config::save_pattern() ) 
-        );
+        inst.reset( 
+            auto_unit_test_suite()->argc <= 1
+                ? new output_test_stream( runtime_config::save_pattern() ? save_file_name : match_file_name, !runtime_config::save_pattern() )
+                : new output_test_stream( auto_unit_test_suite()->argv[1], !runtime_config::save_pattern() ) );
     }
 
     return *inst;
@@ -510,6 +510,9 @@ TEST_CASE( test_BOOST_IS_DEFINED )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.41  2005/03/22 07:14:44  rogeeff
+//  no message
+//
 //  Revision 1.40  2005/02/21 10:29:06  rogeeff
 //  no message
 //
