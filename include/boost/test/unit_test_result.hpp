@@ -25,6 +25,7 @@
 
 // STL
 #include <iosfwd>   // for std::ostream&
+#include <cstddef>  // for std::size_t
 
 namespace boost {
 
@@ -50,8 +51,8 @@ public:
 
     // reporting
     void            confirmation_report( std::ostream& where_to_ );                 // shortest
-    void            short_report( std::ostream& where_to_, size_t indent_ = 0 );    // short
-    void            detailed_report( std::ostream& where_to_, size_t indent_ = 0 ); // long
+    void            short_report( std::ostream& where_to_, std::size_t indent_ = 0 );    // short
+    void            detailed_report( std::ostream& where_to_, std::size_t indent_ = 0 ); // long
     int             result_code();                                                  // to be returned from main
 
     // to be used by tool box implementation
@@ -96,6 +97,9 @@ struct unit_test_result_saver
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.12  2002/12/11 13:41:19  beman_dawes
+//  fix missing std::
+//
 //  Revision 1.11  2002/12/08 17:47:31  rogeeff
 //  switched to use c_string_literal
 //  unit_test_result_saver introduced to properly managed reset_current_test_set calls

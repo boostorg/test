@@ -270,7 +270,7 @@ unit_test_result::confirmation_report( std::ostream& where_to )
 //____________________________________________________________________________//
 
 void
-unit_test_result::short_report( std::ostream& where_to, size_t indent )
+unit_test_result::short_report( std::ostream& where_to, std::size_t indent )
 {
     assert( this );
 
@@ -320,7 +320,7 @@ unit_test_result::short_report( std::ostream& where_to, size_t indent )
 //____________________________________________________________________________//
 
 void
-unit_test_result::detailed_report( std::ostream& where_to, size_t indent )
+unit_test_result::detailed_report( std::ostream& where_to, std::size_t indent )
 {
     short_report( where_to, indent );
 
@@ -351,6 +351,9 @@ unit_test_result::result_code()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.13  2002/12/11 13:41:49  beman_dawes
+//  fix missing std::
+//
 //  Revision 1.12  2002/12/08 18:16:57  rogeeff
 //  eliminated all uses of NULL
 //  switched to use c_string_literal
