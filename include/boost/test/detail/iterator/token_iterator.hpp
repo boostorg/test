@@ -109,8 +109,13 @@ struct token_assigner<single_pass_traversal_tag> {
     template<typename Iterator, typename Token>
     static void append_move( Iterator& b, Token& t )        { t += *b; ++b; }
 
+#if BOOST_WORKAROUND( BOOST_MSVC, <= 1200 ) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+    template<typename Token>
+    static void clear( Token& t )                           { t.erase(); }
+#else
     template<typename Token>
     static void clear( Token& t )                           { t.clear(); }
+#endif
 };
 
 // ************************************************************************** //
@@ -550,6 +555,9 @@ make_range_token_iterator( Iter begin, Iter end, M1 const& m1, M2 const& m2, M3 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2004/09/27 08:38:08  rogeeff
+//  msvc workaround
+//
 //  Revision 1.5  2004/09/19 09:22:13  rogeeff
 //  ios fix for classic iostreams
 //
