@@ -34,37 +34,66 @@ construction.&nbsp; Intended for use primarily in test programs.</p>
 of C++ classes, and the organization of these tests into test-suites. Intended
 for use almost exclusively in test programs.</p>
 <h2><a name="Requirements">Requirements</a></h2>
-<p><b> Execution Tools</b></p>
-<ul>
-  <li>Report errors from lower-level components.</li>
-  <li>Unify error notifications (return codes, exceptions, etc.) into the form
-    appropriate for the host operating environment.</li>
-  <li>Virtually no change in user programs.&nbsp; Renaming main() allowed, but
-    that's about it.</li>
-  <li>Virtually no perceived coupling or dependency costs.</li>
-</ul>
-<p><b>Test Tools</b></p>
-<ul>
-  <li>Report errors from lower-level components.</li>
-  <li>Unify error notifications (return codes, exceptions, etc.) into the form
-    appropriate for the host operating environment.</li>
-  <li>Virtually no change in user programs reporting errors via return code.
-    Renaming main() allowed, but that's about it.</li>
-  <li>Optional functions or macros to ease test case construction.</li>
-  <li>Very simple, easy-to-use. with no understanding of a larger framework
-    required.</li>
-  <li>Virtually no perceived coupling or dependency costs.</li>
-</ul>
-<p><b>Unit Test Tools</b></p>
-<ul>
-  <li>Report errors from lower-level components.</li>
-  <li>Unify error notifications (return codes, exceptions, etc.) into the form
-    appropriate for the host operating environment.</li>
-  <li>Classes, functions or macros to ease test case construction.</li>
-  <li>Classes, functions or macros to ease test suite construction.</li>
-  <li>Relatively simple, easy-to-use.</li>
-  <li>Reasonable coupling or dependency costs.</li>
-</ul>
+<table border="1" cellpadding="5">
+  <tr>
+    <td><b>Requirement</b></td>
+    <td><b>Execution<br>
+      Tools</b></td>
+    <td><b>Test<br>
+      Tools</b></td>
+    <td><b>Unit Test<br>
+      Tools</b></td>
+  </tr>
+  <tr>
+    <td>Report errors from lower-level components.</td>
+    <td>required</td>
+    <td>required</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>Unify error notifications (return codes, exceptions, etc.) into a form
+    appropriate for the host operating environment.</td>
+    <td>required</td>
+    <td>required</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>Virtually no changes required in existing user programs.&nbsp; Renaming main() allowed, but
+    that's about it.&nbsp; (Note that changing existing programs may be desirable
+      to take advantage of certain features. The point of this requirement is
+      that you don't have to if you don't want to.)</td>
+    <td>required</td>
+    <td>required</td>
+    <td>not required; most programs using unit test tools will be written from
+      scratch to do so.</td>
+  </tr>
+  <tr>
+    <td>Virtually no perceived coupling or dependency costs.</td>
+    <td>required</td>
+    <td>required</td>
+    <td>some cost acceptable</td>
+  </tr>
+  <tr>
+    <td>Maximum time required for an intermediate programmer to learn enough to
+      successfully use the tool.</td>
+    <td>10 seconds plus however long it takes to convince themselves renaming
+      main() is really all they have to do.</td>
+    <td>5-10 minutes</td>
+    <td>30-60 minutes&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Functions or macros available to ease test case construction.</td>
+    <td>not required or even desirable</td>
+    <td>required</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>Classes, functions or macros to ease test suite construction.</td>
+    <td>not required or even desirable</td>
+    <td>not required or even desirable</td>
+    <td>required</td>
+  </tr>
+</table>
 <h2><a name="Experience">Experience</a></h2>
 <p>Because the requirements for the other tools are almost a subset of the
 Unit Test Tools requirements, it is tempting to supply only the Unit Test Tools, perhaps with some convenience functions to ease use for simple test or
@@ -153,7 +182,7 @@ dependent function in the same source file to access those arguments.</p>
 <hr>
 <p>© Beman Dawes 2001</p>
 <p>Revised: <!--webbot bot="Timestamp" S-Type="EDITED"
-S-Format="%d %B, %Y" startspan -->28 February, 2001<!--webbot bot="Timestamp" endspan i-checksum="40412" -->
+S-Format="%d %B, %Y" startspan -->09 March, 2001<!--webbot bot="Timestamp" endspan i-checksum="28782" -->
 </p>
 
 </body>
