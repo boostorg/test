@@ -1,8 +1,5 @@
-//  (C) Copyright Gennadiy Rozental & Ullrich Koethe 2001.
-//  Permission to copy, use, modify, sell and distribute this software
-//  is granted provided this copyright notice appears in all copies.
-//  This software is provided "as is" without express or implied warranty,
-//  and with no claim as to its suitability for any purpose.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
+//  See accompanying license for terms and conditions of use.
 
 //  See http://www.boost.org for most recent version including documentation.
 //
@@ -48,7 +45,7 @@ public:
 
     // Constructor
     unit_test_monitor( test_case& target_test_case_, function_to_monitor f_ )
-    : m_test_case_function( f_ ), m_test_case( target_test_case_ ) {}
+    : m_test_case( target_test_case_ ), m_test_case_function( f_ ) {}
 
     // management method; same for all monitors
     static void         catch_system_errors( bool yes_no = true ) { s_catch_system_errors = yes_no; }
@@ -61,8 +58,8 @@ public:
 
 private:
     // Data members
-    function_to_monitor m_test_case_function;
     test_case&          m_test_case;
+    function_to_monitor m_test_case_function;
 
     static bool         s_catch_system_errors;
 }; // unit_test_monitor
@@ -77,6 +74,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10  2003/10/27 07:13:13  rogeeff
+//  licence update
+//
 //  Revision 1.9  2003/06/09 08:39:28  rogeeff
 //  1.30.beta1
 //

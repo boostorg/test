@@ -1,9 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2003.
 //  (C) Copyright Ullrich Koethe 2001.
-//  Permission to copy, use, modify, sell and distribute this software
-//  is granted provided this copyright notice appears in all copies.
-//  This software is provided "as is" without express or implied warranty,
-//  and with no claim as to its suitability for any purpose.
+//  See accompanying license for terms and conditions of use.
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 //
@@ -93,6 +90,9 @@ unit_test_monitor::function()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2003/10/27 07:13:32  rogeeff
+//  licence update
+//
 //  Revision 1.8  2003/06/09 09:17:10  rogeeff
 //  1.30.beta1
 //

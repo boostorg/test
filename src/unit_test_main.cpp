@@ -1,8 +1,5 @@
 //  (C) Copyright Gennadiy Rozental 2001-2003.
-//  Permission to copy, use, modify, sell and distribute this software
-//  is granted provided this copyright notice appears in all copies.
-//  This software is provided "as is" without express or implied warranty,
-//  and with no claim as to its suitability for any purpose.
+//  See accompanying license for terms and conditions of use.
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 //
@@ -90,6 +87,9 @@ main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.11  2003/10/27 07:13:32  rogeeff
+//  licence update
+//
 //  Revision 1.10  2003/06/09 09:16:19  rogeeff
 //  extract report level before passing cla to the user
 //  straiten result code in case of failed initialization

@@ -1,9 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2003.
 //  (C) Copyright Ullrich Koethe 2001.
-//  Permission to copy, use, modify, sell and distribute this software
-//  is granted provided this copyright notice appears in all copies.
-//  This software is provided "as is" without express or implied warranty,
-//  and with no claim as to its suitability for any purpose.
+//  See accompanying license for terms and conditions of use.
 
 //  See http://www.boost.org for most recent version including documentation.
 //
@@ -314,6 +311,9 @@ create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, bo
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2003/10/27 07:13:13  rogeeff
+//  licence update
+//
 //  Revision 1.14  2003/06/09 09:00:09  rogeeff
 //  methods has_passed and depend_on introduced to manage dependencies
 //

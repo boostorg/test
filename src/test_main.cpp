@@ -1,7 +1,5 @@
-//  implements main function for Test Execution Monitor
-
-//  Copyright Gennadiy Rozental 2001-2003.
-//  Copyright Beman Dawes 1995-2001. 
+//  (C) Copyright Gennadiy Rozental 2001-2003.
+//  (C) Copyright Beman Dawes 1995-2001. 
 //  See accompanying license for terms and conditions of use.
 
 //  See http://www.boost.org/libs/test for documentation.
@@ -70,7 +68,7 @@ int main( int argc, char* argv[] ) {
     bool no_result_code = retrieve_framework_parameter( NO_RESULT_CODE, &argc, argv ) == "no";
 
     // set catch_system_error switch
-	detail::unit_test_monitor::catch_system_errors( retrieve_framework_parameter( CATCH_SYS_ERRORS, &argc, argv ) != "no" );
+    detail::unit_test_monitor::catch_system_errors( retrieve_framework_parameter( CATCH_SYS_ERRORS, &argc, argv ) != "no" );
 
     //  set up the test   
     argc_ = argc;
@@ -98,6 +96,9 @@ int main( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.13  2003/10/27 07:13:32  rogeeff
+//  licence update
+//
 //  Revision 1.12  2003/09/14 12:42:22  beman_dawes
 //  Change to new license (with Gennadiy's permission)
 //

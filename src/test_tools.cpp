@@ -1,8 +1,6 @@
-//  (C) Copyright Ullrich Koethe 2001, Gennadiy Rozental 2001-2003.
-//  Permission to copy, use, modify, sell and distribute this software
-//  is granted provided this copyright notice appears in all copies.
-//  This software is provided "as is" without express or implied warranty,
-//  and with no claim as to its suitability for any purpose.
+//  (C) Gennadiy Rozental 2001-2003.
+//  (C) Copyright Ullrich Koethe 2001.
+//  See accompanying license for terms and conditions of use.
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 //
@@ -438,6 +436,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.21  2003/10/27 07:13:32  rogeeff
+//  licence update
+//
 //  Revision 1.20  2003/07/02 09:11:24  rogeeff
 //  move log formatter in public interface
 //

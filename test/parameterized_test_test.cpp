@@ -1,8 +1,5 @@
 //  (C) Copyright Gennadiy Rozental 2002-2003.
-//  Permission to copy, use, modify, sell and distribute this software
-//  is granted provided this copyright notice appears in all copies.
-//  This software is provided "as is" without express or implied warranty,
-//  and with no claim as to its suitability for any purpose.
+//  See accompanying license for terms and conditions of use.
 
 //  See http://www.boost.org for most recent version including documentation.
 //
@@ -195,6 +192,9 @@ int test_main( int, char* [] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2003/10/27 07:13:32  rogeeff
+//  licence update
+//
 //  Revision 1.8  2003/06/12 00:02:39  rogeeff
 //  *** empty log message ***
 //

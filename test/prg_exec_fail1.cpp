@@ -1,7 +1,5 @@
-//  Test error by throwing C-style string exception
-
-//  Copyright Gennadiy Rozental 2001-2003.
-//  Copyright Beman Dawes 2001. 
+//  (C) Copyright Gennadiy Rozental 2001-2003.
+//  (C) Copyright Beman Dawes 2001. 
 //  See accompanying license for terms and conditions of use.
 
 //  See http://www.boost.org/libs/test for documentation.
@@ -29,6 +27,9 @@ cpp_main( int argc, char *[] )  // note the name
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2003/10/27 07:13:32  rogeeff
+//  licence update
+//
 //  Revision 1.8  2003/09/14 12:42:22  beman_dawes
 //  Change to new license (with Gennadiy's permission)
 //

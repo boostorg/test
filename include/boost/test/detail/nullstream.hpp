@@ -1,9 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2002-2003.
 //  (C) Copyright Daryle Walker 2000-2001. 
-//  Permission to copy, use, modify, sell and distribute this software
-//  is granted provided this copyright notice appears in all copies.
-//  This software is provided "as is" without express or implied warranty,
-//  and with no claim as to its suitability for any purpose.
+//  See accompanying license for terms and conditions of use.
 
 //  See http://www.boost.org for most recent version including documentation.
 //
@@ -85,6 +82,9 @@ typedef basic_onullstream<wchar_t>  wonullstream;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2003/10/27 07:13:13  rogeeff
+//  licence update
+//
 //  Revision 1.4  2003/06/09 08:39:28  rogeeff
 //  1.30.beta1
 //

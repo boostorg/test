@@ -1,8 +1,5 @@
 //  (C) Copyright Gennadiy Rozental 2001-2003.
-//  Permission to copy, use, modify, sell and distribute this software
-//  is granted provided this copyright notice appears in all copies.
-//  This software is provided "as is" without express or implied warranty,
-//  and with no claim as to its suitability for any purpose.
+//  See accompanying license for terms and conditions of use.
 
 //  See http://www.boost.org for most recent version including documentation.
 //
@@ -56,6 +53,9 @@ using std::distance;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.14  2003/10/27 07:13:13  rogeeff
+//  licence update
+//
 //  Revision 1.13  2003/06/09 08:39:28  rogeeff
 //  1.30.beta1
 //

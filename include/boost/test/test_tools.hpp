@@ -1,9 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2003.
 //  (C) Copyright Ullrich Koethe 2001.
-//  Permission to copy, use, modify, sell and distribute this software
-//  is granted provided this copyright notice appears in all copies.
-//  This software is provided "as is" without express or implied warranty,
-//  and with no claim as to its suitability for any purpose.
+//  See accompanying license for terms and conditions of use.
 
 //  See http://www.boost.org for most recent version including documentation.
 //
@@ -523,6 +520,9 @@ private:
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.32  2003/10/27 07:13:12  rogeeff
+//  licence update
+//
 //  Revision 1.31  2003/07/15 09:00:46  rogeeff
 //  eliminate tolerance definition by number of rounding errors
 //

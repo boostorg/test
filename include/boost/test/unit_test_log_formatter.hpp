@@ -1,8 +1,5 @@
 //  (C) Copyright Gennadiy Rozental 2003.
-//  Permission to copy, use, modify, sell and distribute this software
-//  is granted provided this copyright notice appears in all copies.
-//  This software is provided "as is" without express or implied warranty,
-//  and with no claim as to its suitability for any purpose.
+//  See accompanying license for terms and conditions of use.
 
 //  See http://www.boost.org for most recent version including documentation.
 //
@@ -79,6 +76,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2003/10/27 07:13:12  rogeeff
+//  licence update
+//
 //  Revision 1.1  2003/07/02 09:15:57  rogeeff
 //  move log formatter in public interface
 //

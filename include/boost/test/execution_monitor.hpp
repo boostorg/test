@@ -1,7 +1,5 @@
-//  execution monitor header - traps and reports errors and exceptions
-
-//  Copyright Gennadiy Rozental 2001-2003.
-//  Copyright Beman Dawes 2001.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
+//  (C) Copyright Beman Dawes 2001.
 //  See accompanying license for terms and conditions of use.
 
 //  See http://www.boost.org/libs/test for documentation.
@@ -125,6 +123,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.11  2003/10/27 07:13:12  rogeeff
+//  licence update
+//
 //  Revision 1.10  2003/09/14 12:40:04  beman_dawes
 //  Change to new license (with Gennadiy's permission)
 //
