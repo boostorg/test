@@ -3,8 +3,15 @@
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
 //  and with no claim as to its suitability for any purpose.
+
+//  See http://www.boost.org for updates, documentation, and revision history.
 //
-//  See http://www.boost.org for most recent version including documentation.
+//  File        : $RCSfile$
+//
+//  Version     : $Id$
+//
+//  Description : main function implementation for Unit Test Framework
+// ***************************************************************************
 
 #include <boost/test/unit_test.hpp>   // for unit_test framework
 #include <boost/test/unit_test_result.hpp>
@@ -102,7 +109,15 @@ main( int argc, char* argv[] )
     return no_result_code ? boost::exit_success : unit_test_result::instance().result_code();
 }
 
-//  Revision History
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.6  2002/08/20 08:24:13  rogeeff
+//  cvs keywords added
+//
 //   5 Oct 01  Initial version (Gennadiy Rozental)
+
+// ***************************************************************************
 
 // EOF

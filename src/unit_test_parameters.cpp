@@ -1,10 +1,20 @@
-//  (C) Copyright Gennadiy Rozental 2002.
+//  (C) Copyright Gennadiy Rozental 2001-2002.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
 //  and with no claim as to its suitability for any purpose.
+
+//  See http://www.boost.org for updates, documentation, and revision history.
 //
-//  See http://www.boost.org for most recent version including documentation.
+//  File        : $RCSfile$
+//
+//  Version     : $Id$
+//
+//  Description : simple implementation for Unit Test Framework parameter 
+//  handling routines. May be rewritten in future to use some kind of 
+//  command-line arguments parsing facility and environment variable handling 
+//  facility
+// ***************************************************************************
 
 // LOCAL
 #include <boost/test/detail/unit_test_parameters.hpp>
@@ -73,7 +83,15 @@ retrieve_framework_parameter( char const* parameter_name, int* argc, char** argv
 
 } // namespace boost
 
-//  Revision History
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.3  2002/08/20 08:24:13  rogeeff
+//  cvs keywords added
+//
 //   26 Oct 01  Initial version (Gennadiy Rozental)
+
+// ***************************************************************************
 
 // EOF

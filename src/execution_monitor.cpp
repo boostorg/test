@@ -1,6 +1,4 @@
-//  Boost Test Library execution_monitor.cpp  --------------------------------//
-
-//  (C) Copyright Gennadiy Rozental 2001.
+//  (C) Copyright Gennadiy Rozental 2001-2002.
 //  (C) Copyright Beman Dawes and Ullrich Koethe 1995-2001.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
@@ -8,12 +6,21 @@
 //  and with no claim as to its suitability for any purpose.
 
 //  See http://www.boost.org for updates, documentation, and revision history.
-
+//
+//  File        : $RCSfile$
+//
+//  Version     : $Id$
+//
+//  Description : provides execution monitor implementation for all supported 
+//  configurations, including Microsoft structured exception based, unix signals
+//  based and special workarounds for borland
+//
 //  Note that when testing requirements or user wishes preclude use of this
 //  file as a separate compilation uses, it may be #included as a header file.
-
+//
 //  Header dependencies are deliberately restricted to reduce coupling to other
 //  boost libraries.
+// ***************************************************************************
 
 // LOCAL
 #include <boost/test/execution_monitor.hpp>
@@ -232,7 +239,7 @@ extern "C" {
 
 static void execution_monitor_signal_handler( int sig )
 {
-    siglongjmp(execution_monitor_jump_buffer(), sig );
+    siglongjmp( execution_monitor_jump_buffer(), sig );
 }
 
 }
@@ -450,17 +457,24 @@ static void report_error( execution_exception::error_code ec, char const* msg1, 
 
 } // namespace boost
 
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.7  2002/08/20 08:24:13  rogeeff
+//  cvs keywords added
+//
+//   5 Oct 01 Slightly reworked:  (Gennadiy Rozental)
+//   5 Jun 01 Made SE code work with several Win32 compilers (Beman)
+//   4 Jun 01 New interface to old code (was catch_exceptions.hpp)
+//            to avoid use of template as requested by users (Beman)
+//   4 Apr 01 Added signal handling code. (Ullrich)
+//   4 Apr 01 Removed default output at end of exception handling (Ullrich)
+//  26 Feb 01 Numerous changes suggested during formal review (Beman)
+//  25 Jan 01 catch_exceptions.hpp code factored out of cpp_main.cpp
+//  22 Jan 01 Remove test_tools dependencies to reduce coupling
+//   5 Nov 00 Initial boost version (Beman Dawes)
 
-//  Revision History
-//    5 Oct 01 Slightly reworked:  (Gennadiy Rozental)
-//    5 Jun 01 Made SE code work with several Win32 compilers (Beman)
-//    4 Jun 01 New interface to old code (was catch_exceptions.hpp)
-//             to avoid use of template as requested by users (Beman)
-//    4 Apr 01 Added signal handling code. (Ullrich)
-//    4 Apr 01 Removed default output at end of exception handling (Ullrich)
-//   26 Feb 01 Numerous changes suggested during formal review (Beman)
-//   25 Jan 01 catch_exceptions.hpp code factored out of cpp_main.cpp
-//   22 Jan 01 Remove test_tools dependencies to reduce coupling
-//    5 Nov 00 Initial boost version (Beman Dawes)
+// ***************************************************************************
 
 // EOF

@@ -3,8 +3,16 @@
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
 //  and with no claim as to its suitability for any purpose.
+
+//  See http://www.boost.org for updates, documentation, and revision history.
 //
-//  See http://www.boost.org for most recent version including documentation.
+//  File        : $RCSfile$
+//
+//  Version     : $Id$
+//
+//  Description : implemets Unit Test Log, Majority of implementation details 
+//  are hidden in this file with use of pimpl idiom.
+// ***************************************************************************
 
 // LOCAL
 #include <boost/test/unit_test_log.hpp>
@@ -29,7 +37,7 @@ namespace boost {
 namespace unit_test_framework {
 
 // ************************************************************************** //
-// **************                log manipulators              ************** //
+// **************                 unit_test_log                ************** //
 // ************************************************************************** //
 
 struct unit_test_log::Impl {
@@ -351,7 +359,15 @@ unit_test_log::start( unit_test_counter test_cases_amount, bool print_build_info
 
 } // namespace boost
 
-//  Revision History
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.6  2002/08/20 08:24:13  rogeeff
+//  cvs keywords added
+//
 //   5 Oct 01  Initial version (Gennadiy Rozental)
+
+// ***************************************************************************
 
 // EOF

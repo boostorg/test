@@ -3,8 +3,16 @@
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
 //  and with no claim as to its suitability for any purpose.
+
+//  See http://www.boost.org for updates, documentation, and revision history.
 //
-//  See http://www.boost.org for most recent version including documentation.
+//  File        : $RCSfile$
+//
+//  Version     : $Id$
+//
+//  Description : implements Unit Test Result reporting facility. Note that majority of 
+//  implementation is hidden in this file using pimple idiom.
+// ***************************************************************************
 
 // LOCAL
 #include <boost/test/unit_test_result.hpp>
@@ -294,7 +302,15 @@ unit_test_result::result_code()
 
 } // namespace boost
 
-//  Revision History
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.7  2002/08/20 08:24:13  rogeeff
+//  cvs keywords added
+//
 //   5 Oct 01  Initial version (Gennadiy Rozental)
+
+// ***************************************************************************
 
 // EOF

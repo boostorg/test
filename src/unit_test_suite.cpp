@@ -3,8 +3,16 @@
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
 //  and with no claim as to its suitability for any purpose.
+
+//  See http://www.boost.org for updates, documentation, and revision history.
 //
-//  See http://www.boost.org for most recent version including documentation.
+//  File        : $RCSfile$
+//
+//  Version     : $Id$
+//
+//  Description : privide core implementation for Unit Test Framework. 
+//  Extensions could be provided in separate files
+// ***************************************************************************
 
 // LOCAL
 #include <boost/test/unit_test_suite.hpp>
@@ -39,7 +47,7 @@ test_case::run()
         "\nEntering test " << (size() > 1 ? "suite" : "case") << " \"" << name << "\""
     BOOST_TEST_SUITE_MESSAGE_END
 
-    // 2. Init test case
+    // 2. Initialize test case
     if( m_monitor_run ) {
         error_level_type init_result =
             detail::unit_test_monitor( *this, &test_case::do_init ).execute_and_translate( p_timeout );
@@ -70,7 +78,7 @@ test_case::run()
             unit_test_log::instance() << report_progress();
     }
 
-    // 3. Deinit test case
+    // 3. Finalize test case
     if( is_initialized && !s_abort_testing ) {
         if( m_monitor_run ) {
             error_level_type destroy_result =
@@ -183,7 +191,15 @@ test_suite::do_run()
 
 } // namespace boost
 
-//  Revision History
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.4  2002/08/20 08:24:13  rogeeff
+//  cvs keywords added
+//
 //   5 Oct 01  Initial version (Gennadiy Rozental)
+
+// ***************************************************************************
 
 // EOF

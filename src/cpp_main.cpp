@@ -1,12 +1,18 @@
-//  Boost Test Library cpp_main.cpp ------------------------------------------//
-
-//  (C) Copyright Beman Dawes 1995-2001. Gennadiy Rozental 2001-2202.
+//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Beman Dawes 1995-2001.
 //  Permission to copy, use, modify, sell and distribute this software is 
 //  granted provided this copyright notice appears in all copies. This software
 //  is provided "as is" without express or implied warranty, and with no 
 //  claim as to its suitability for any purpose.
 
 //  See http://www.boost.org for updates, documentation, and revision history.
+//
+//  File        : $RCSfile$
+//
+//  Version     : $Id$
+//
+//  Description : main function implementation for Program Executon Monitor
+// ***************************************************************************
 
 // LOCAL
 #include <boost/test/execution_monitor.hpp>
@@ -78,12 +84,20 @@ int main( int argc, char* argv[] )
 
 //____________________________________________________________________________//
 
-//  Revision History
-//   16 Nov 01 Minor message fix (Gennadiy)
-//    4 Jun 01 Rewrite to use exception_monitor
-//   26 Feb 01 Numerous changes suggested during formal review.
-//   25 Jan 01 catch_exceptions.hpp code factored out.
-//   22 Jan 01 Remove test_tools dependencies to reduce coupling.
-//    5 Nov 00 Initial boost version (Beman Dawes)
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.5  2002/08/20 08:24:13  rogeeff
+//  cvs keywords added
+//
+//  16 Nov 01 Minor message fix (Gennadiy)
+//   4 Jun 01 Rewrite to use exception_monitor
+//  26 Feb 01 Numerous changes suggested during formal review.
+//  25 Jan 01 catch_exceptions.hpp code factored out.
+//  22 Jan 01 Remove test_tools dependencies to reduce coupling.
+//   5 Nov 00 Initial boost version (Beman Dawes)
+
+// ***************************************************************************
 
 // EOF

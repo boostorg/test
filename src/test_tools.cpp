@@ -3,8 +3,15 @@
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
 //  and with no claim as to its suitability for any purpose.
+
+//  See http://www.boost.org for updates, documentation, and revision history.
 //
-//  See http://www.boost.org for most recent version including documentation.
+//  File        : $RCSfile$
+//
+//  Version     : $Id$
+//
+//  Description : supplies offline implemtation for the Test Tools
+// ***************************************************************************
 
 // LOCAL
 #include <boost/test/test_tools.hpp>
@@ -398,8 +405,16 @@ output_test_stream::sync()
 
 } // namespace boost
 
-//  Revision History
-//   ? ??? 01  Initial version (Ullrich Koethe)
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.6  2002/08/20 08:24:13  rogeeff
+//  cvs keywords added
+//
 //   5 Oct 01  Reworked version (Gennadiy Rozental)
+//   ? ??? 01  Initial version (Ullrich Koethe)
+
+// ***************************************************************************
 
 // EOF

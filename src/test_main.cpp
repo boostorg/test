@@ -1,11 +1,18 @@
-//  test_main.cpp  -----------------------------------------------------------//
-
-//  (C) Copyright Beman Dawes 1995-2001. Permission to copy, use, modify, sell
-//  and distribute this software is granted provided this copyright notice
-//  appears in all copies. This software is provided "as is" without express or
-//  implied warranty, and with no claim as to its suitability for any purpose.
+//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Beman Dawes 1995-2001. 
+//  Permission to copy, use, modify, sell and distribute this software
+//  is granted provided this copyright notice appears in all copies.
+//  This software is provided "as is" without express or implied warranty,
+//  and with no claim as to its suitability for any purpose.
 
 //  See http://www.boost.org for updates, documentation, and revision history.
+//
+//  File        : $RCSfile$
+//
+//  Version     : $Id$
+//
+//  Description : implements main function for Test Execution Monitor. 
+// ***************************************************************************
 
 // LOCAL
 #include <boost/test/unit_test.hpp>         // for unit test framework
@@ -76,12 +83,19 @@ int main( int argc, char* argv[] ) {
               );
 }
 
-//  Revision History
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.6  2002/08/20 08:24:13  rogeeff
+//  cvs keywords added
+//
+//  10 Apr 01 Use new unit_test log features (Ullrich)
+//   8 Apr 01 Use boost/test/unit_test.hpp as framework. (Beman)
+//  26 Feb 01 Numerous changes suggested during formal review. (Beman)
+//  22 Jan 01 Use boost/cpp_main.hpp as framework. (Beman)
+//   5 Nov 00 Initial boost version (Beman Dawes)
 
-//   10 Apr 01 Use new unit_test log features (Ullrich)
-//    8 Apr 01 Use boost/test/unit_test.hpp as framework. (Beman)
-//   26 Feb 01 Numerous changes suggested during formal review. (Beman)
-//   22 Jan 01 Use boost/cpp_main.hpp as framework. (Beman)
-//    5 Nov 00 Initial boost version (Beman Dawes)
+// ***************************************************************************
 
 // EOF
