@@ -95,12 +95,13 @@
     itself doesn't introduce any additional errors. The IEEE754 standard does not require same behavior 
     from most non-arithmetic operation. The underflow/overflow and division-by-zero errors may cause rounding 
     errors with unpredictable upper limits.</P>
-  <P class="first-line-indented">At last be aware that 1/2*epsilon rules are not transitive. In other words combination of two arithmetic operations may produce rounding error that significantly exceed 2*1/2*epsilon. All in all there is no generic rules on how to select the tolerance and users need to apply common sense and domain/problem specific knowledge to decide on tolerance value. </P>
-  <P class="first-line-indented">To simplify things in most usage cases latest
-    version of algorithm below I opted to use percentage values for tolerance
-    specification (instead of fractions of releated values). In other words now
-    you use it to check that difference between two values does not exceed x
-    percent. </P>
+  <P class="first-line-indented">At last be aware that 1/2*epsilon rules are not transitive. In other words 
+  combination of two arithmetic operations may produce rounding error that significantly exceed 2*1/2*epsilon. 
+  All in all there is no generic rules on how to select the tolerance and users need to apply common sense and 
+  domain/problem specific knowledge to decide on tolerance value. </P>
+  <P class="first-line-indented">To simplify things in most usage cases latest version of algorithm below opted 
+    to use percentage values for tolerance specification (instead of fractions of releated values). In other words 
+    now you use it to check that difference between two values does not exceed x percent. </P>
   <P class="first-line-indented">For more reading about floating-point comparison see references at the 
     end.</P>
   <H2>The <A name="Specification">close_at_tolerance</A> algorithm</H2>
