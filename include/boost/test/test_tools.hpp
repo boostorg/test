@@ -112,7 +112,7 @@
         boost::wrap_stringstream().ref() << \
             "{" #left_begin_ ", " #left_end_ "}" " == {" #right_begin_ ", ...}", __FILE__, __LINE__)
 
-#define BOOST_IS_DEFINED(symb) boost::test_toolbox::detail::is_defined_impl( #symb, BOOST_STRINGIZE(=symb) )
+#define BOOST_IS_DEFINED(symb) boost::test_toolbox::detail::is_defined_impl( #symb, BOOST_STRINGIZE(symb) )
 
 // ***************************** //
 // helper macros
@@ -146,6 +146,10 @@ struct extended_predicate_value {
     // Constructor
     explicit    extended_predicate_value( bool predicate_value_ )
     : p_predicate_value( predicate_value_ ), p_message( new wrap_stringstream ) {}
+
+    extended_predicate_value( extended_predicate_value const& rhs )
+    : p_predicate_value( rhs.p_predicate_value.get() ), 
+      p_message( const_cast<extended_predicate_value&>(rhs).p_message ) {}
 
     bool        operator!() const { return !p_predicate_value.get(); }
 
@@ -459,6 +463,10 @@ private:
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.27  2003/02/14 06:42:18  rogeeff
+//  Mingw fix for is_defined
+//  Visual age fix for extendeded boolean value
+//
 //  Revision 1.26  2003/02/14 00:56:23  rogeeff
 //  added std to size_t
 //
