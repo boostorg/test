@@ -217,8 +217,8 @@ unit_test_result::confirmation_report( std::ostream& where_to )
                      << ps_name( m_pimpl->m_assertions_failed != 1, " failure" );
 
             if( m_pimpl->m_expected_failures != 0 ) {
-            where_to << "(" << m_pimpl->m_expected_failures
-                     << ps_name( m_pimpl->m_expected_failures != 1, " failure" ) << " expected";
+            where_to << " (" << m_pimpl->m_expected_failures
+                     << ps_name( m_pimpl->m_expected_failures != 1, " failure" ) << " expected) ";
             }
 
             where_to << " in test " << cs_name( case_suite ) 
@@ -313,6 +313,9 @@ unit_test_result::result_code()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2002/08/21 15:15:12  rogeeff
+//  previos fix finished
+//
 //  Revision 1.8  2002/08/20 22:10:31  rogeeff
 //  slightly modified failures report
 //
