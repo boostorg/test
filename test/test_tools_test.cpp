@@ -216,15 +216,15 @@ test_BOOST_MESSAGE()
         output.is_equal( "struct A\n" )
     );
 
-	CHECK_TOOL_USAGE(
-		BOOST_MESSAGE( std::hex << std::showbase << 20 ),
-		output.is_equal( "0x14\n" )
-	);
+    CHECK_TOOL_USAGE(
+        BOOST_MESSAGE( std::hex << std::showbase << 20 ),
+        output.is_equal( "0x14\n" )
+    );
 
-	CHECK_TOOL_USAGE(
-		BOOST_MESSAGE( std::setw( 4 ) << 20 ),
-		output.is_equal( "  20\n" )
-		);
+    CHECK_TOOL_USAGE(
+        BOOST_MESSAGE( std::setw( 4 ) << 20 ),
+        output.is_equal( "  20\n" )
+        );
 }
 
 //____________________________________________________________________________//
@@ -270,7 +270,7 @@ test_BOOST_CHECKPOINT()
         output.is_equal(
             (boost::wrap_stringstream().ref()
                 << "Exception in " TEST_CASE_NAME ": C string: some error\n"
-                << normalize_file_name( __FILE__ ) << "(" << 264 << "): "
+                << normalize_file_name( __FILE__ ) << "(" << 266 << "): "
                 << "last checkpoint: Going to do a silly things\n").str()
         )
     );
@@ -707,6 +707,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.25  2003/11/06 07:59:20  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.24  2003/11/06 07:31:42  rogeeff
 //  Licence update
 //
