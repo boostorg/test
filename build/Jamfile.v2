@@ -24,7 +24,8 @@ TEST_EXEC_MON_SOURCES =
   unit_test_result
   unit_test_suite
   test_main
-  supplied_log_formatters
+  compiler_log_formatter
+  xml_log_formatter
   ;
 
 UTF_SOURCES =
@@ -36,7 +37,8 @@ UTF_SOURCES =
   unit_test_result
   unit_test_suite
   unit_test_main
-  supplied_log_formatters
+  compiler_log_formatter
+  xml_log_formatter
   ;
 
 lib boost_prg_exec_monitor : $(PRG_EXEC_MON_SOURCES).cpp

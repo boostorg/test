@@ -61,7 +61,7 @@ LIB32=link.exe -lib
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "Debug"
-# PROP Intermediate_Dir "c:\temp\boost_test_library\Debug"
+# PROP Intermediate_Dir "C:\Docume~1\gennadiy\temp\\boost_test_library\Debug"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "../../../../" /D "_LIB" /D "WIN32" /D "_DEBUG" /D "_MBCS" /Fr /YX /FD /GZ /c
@@ -72,7 +72,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo
+# ADD LIB32 /nologo /out:"../Debug/unit_test_framework.65.lib"
 
 !ENDIF 
 
@@ -86,6 +86,10 @@ LIB32=link.exe -lib
 # Begin Source File
 
 SOURCE=..\..\src\execution_monitor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\supplied_log_formatters.cpp
 # End Source File
 # Begin Source File
 
