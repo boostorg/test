@@ -59,7 +59,7 @@ namespace std { using ::strlen; using ::strncat; }
 #define BOOST_MS_STRCTURED_EXCEPTION_HANDLING
 #include <windows.h>  // Borland 5.5.1 has its own way of doing things.
 
-#elif defined(_POSIX_VERSION)
+#elif defined(BOOST_HAS_SIGACTION)
 
 #define BOOST_POSIX_STYLE_SIGNAL_HANDLING
 #include <unistd.h>
@@ -517,6 +517,9 @@ static void report_error( execution_exception::error_code ec, c_string_literal m
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.19  2003/02/14 06:40:00  rogeeff
+//  use BOOST_HAS_SIGACTION for signal based algorithm selection
+//
 //  Revision 1.18  2003/02/13 08:34:12  rogeeff
 //  tentative fix for signal handling selection algorithm
 //  other minor fixes
