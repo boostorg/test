@@ -1,0 +1,55 @@
+<html>
+
+<head>
+<script language="javascript">var viso_path=".."</script>
+<script language="javascript" src="../core.js" > </script>
+<script language="javascript">
+include ( "vis_object_api.js", viso_path );
+
+function onMouseOut_h( e ) {
+    viso_get( "log" ).innerHTML += "Leaving  " + viso_event_target( e ).id + "<br>";
+}
+
+function onMouseOver_h( e ) {                 
+    viso_get( "log" ).innerHTML += "Entering " + viso_event_target( e ).id + "<br>";
+}
+
+function onMouseOver_h2( e ) {
+    viso_get( "log" ).innerHTML += "<br>";
+}
+
+function page_init() {
+    viso_add_event_handler( "onmouseout", onMouseOut_h, viso_get( "DIV1" ) );
+    viso_add_event_handler( "onmouseover", onMouseOver_h, viso_get( "DIV1" ) );
+    viso_add_event_handler( "onmouseover", onMouseOver_h2, viso_get( "DIV1" ) );
+}
+</script>
+
+<style> 
+
+DIV { 
+    border-width:1px; 
+    border-style:solid;
+} </style>
+
+</head>
+
+<body onLoad="page_init();">
+
+<div id="DIV1" style="width: 300; " align="right">
+<div id="DIVin1" style="width: 200; hight: 30; ">
+1
+</div>
+<div id="DIVin2" style="width: 200; hight: 30; ">
+2
+</div>
+</div>
+<br>
+<br>
+<br>
+<hr>
+<br>
+<br>
+<span id="log"></span>
+</body>
+</html>
