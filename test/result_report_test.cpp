@@ -43,9 +43,9 @@ void bad_foo()  {
     output_test_stream null_stream;
 #endif
 
-    unit_test_log::instance().set_log_stream( null_stream );
+    unit_test_log.set_stream( null_stream );
     BOOST_ERROR( "Sure" );
-    unit_test_log::instance().set_log_stream( std::cout );
+    unit_test_log.set_stream( std::cout );
 }
 
 //____________________________________________________________________________//
@@ -148,6 +148,14 @@ test_main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.16  2005/01/18 08:30:09  rogeeff
+//  unit_test_log rework:
+//     eliminated need for ::instance()
+//     eliminated need for << end and ...END macro
+//     straitend interface between log and formatters
+//     change compiler like formatter name
+//     minimized unit_test_log interface and reworked to use explicit calls
+//
 //  Revision 1.15  2004/05/27 06:30:48  rogeeff
 //  no message
 //
@@ -162,7 +170,6 @@ test_main( int argc, char* argv[] )
 //  Revision 1.12  2003/12/01 00:42:38  rogeeff
 //  prerelease cleaning
 //
-
 // ***************************************************************************
 
 // EOF

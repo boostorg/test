@@ -39,12 +39,56 @@ namespace boost {
 namespace unit_test {
 
 // ************************************************************************** //
+// **************             entry_value_collector            ************** //
+// ************************************************************************** //
+
+namespace ut_detail {
+
+entry_value_collector
+entry_value_collector::operator<<( const_string v )
+{
+    unit_test_log.log_value( v );
+
+    m_last = false;
+
+    entry_value_collector res;
+    return res;
+}
+
+//____________________________________________________________________________//
+
+entry_value_collector
+entry_value_collector::operator<<( checkpoint const& cp )
+{
+    unit_test_log << cp;
+
+    m_last = false;
+
+    entry_value_collector res;
+    return res;
+}
+
+//____________________________________________________________________________//
+
+entry_value_collector::~entry_value_collector()
+{
+    if( m_last )
+        unit_test_log << end();
+}
+
+//____________________________________________________________________________//
+
+} // namespace ut_detail
+
+// ************************************************************************** //
 // **************                 unit_test_log                ************** //
 // ************************************************************************** //
 
-struct unit_test_log::Impl {
+namespace { 
+
+struct unit_test_log_impl {
     // Constructor
-    Impl() : m_stream( &std::cout ) {}
+    unit_test_log_impl() : m_stream( &std::cout ) {}
 
     // log data
     std::ostream*       m_stream;
@@ -78,61 +122,58 @@ struct unit_test_log::Impl {
     void                clear_checkpoint()  { m_checkpoint_data.clear(); }
 };
 
+unit_test_log_impl& s_impl() { static unit_test_log_impl the_inst; return the_inst; }
+
+} // local namespace
+
 //____________________________________________________________________________//
 
-unit_test_log::unit_test_log() : m_pimpl( new Impl() )
+unit_test_log_t::unit_test_log_t()
 {
-    m_pimpl->m_threshold_level = log_all_errors;
+    s_impl().m_threshold_level = log_all_errors;
 
-    m_pimpl->m_log_formatter.reset( new ut_detail::msvc65_like_log_formatter( *this ) );
+    s_impl().m_log_formatter.reset( new ut_detail::compiler_log_formatter );
 
-    m_pimpl->clear_entry_data();
-    m_pimpl->clear_checkpoint();
+    s_impl().clear_entry_data();
+    s_impl().clear_checkpoint();
 }
 
 //____________________________________________________________________________//
 
-unit_test_log&
-unit_test_log::instance()
+unit_test_log_t&
+unit_test_log_t::instance()
 {
-    static unit_test_log the_instance;
+    static unit_test_log_t the_instance;
 
     return the_instance;
 }
 
 //____________________________________________________________________________//
 
-unit_test_log::~unit_test_log()
-{
-    delete m_pimpl;
-}
-
-//____________________________________________________________________________//
-
 void
-unit_test_log::set_log_stream( std::ostream& str )
+unit_test_log_t::set_stream( std::ostream& str )
 {
-    if( m_pimpl->m_entry_in_progress )
+    if( s_impl().m_entry_in_progress )
         return;
 
-    m_pimpl->m_stream = &str;
+    s_impl().m_stream = &str;
 }
 
 //____________________________________________________________________________//
 
 void
-unit_test_log::set_log_threshold_level( log_level lev )
+unit_test_log_t::set_threshold_level( log_level lev )
 {
-    if( m_pimpl->m_entry_in_progress || lev == invalid_log_level )
+    if( s_impl().m_entry_in_progress || lev == invalid_log_level )
         return;
 
-    m_pimpl->m_threshold_level = lev;
+    s_impl().m_threshold_level = lev;
 }
 
 //____________________________________________________________________________//
 
 void
-unit_test_log::set_log_threshold_level_by_name( const_string lev )
+unit_test_log_t::set_threshold_level_by_name( const_string lev )
 {
     static fixed_mapping<const_string,log_level> log_level_name(
         "all"           , log_successful_tests,
@@ -150,60 +191,55 @@ unit_test_log::set_log_threshold_level_by_name( const_string lev )
         invalid_log_level
     );
 
-    if( m_pimpl->m_entry_in_progress )
+    if( s_impl().m_entry_in_progress )
         return;
 
-    set_log_threshold_level( log_level_name[lev] );
+    set_threshold_level( log_level_name[lev] );
 }
 
 //____________________________________________________________________________//
 
 void
-unit_test_log::clear_checkpoint()
+unit_test_log_t::track_test_case_scope( test_case const& tc, bool in_out )
 {
-    m_pimpl->clear_checkpoint();
-}
-
-//____________________________________________________________________________//
-
-void
-unit_test_log::track_test_case_scope( test_case const& tc, bool in_out )
-{
-    if( m_pimpl->m_threshold_level > log_test_suites )
+    if( s_impl().m_threshold_level > log_test_suites )
         return;
+
+    if( !in_out )
+        s_impl().clear_checkpoint();
 
     *this << begin();
 
-    m_pimpl->m_log_formatter->track_test_case_scope( m_pimpl->stream(), tc, in_out );
-    m_pimpl->m_entry_has_value = true;
+    s_impl().m_log_formatter->track_test_case_scope( s_impl().stream(), tc, in_out );
+    s_impl().m_entry_has_value = true;
 
     *this << end();
 }
 
 //____________________________________________________________________________//
 
-unit_test_log&
-unit_test_log::operator<<( begin const& )
+unit_test_log_t&
+unit_test_log_t::operator<<( begin const& )
 {
-    if( m_pimpl->m_entry_in_progress )
+    if( s_impl().m_entry_in_progress )
         *this << end();
 
-    m_pimpl->m_entry_in_progress = true;
+    s_impl().m_entry_in_progress = true;
 
     return *this;
 }
 
 //____________________________________________________________________________//
 
-unit_test_log&
-unit_test_log::operator<<( end const& )
+unit_test_log_t&
+unit_test_log_t::operator<<( end const& )
 {
-    if( m_pimpl->m_entry_has_value ) {
-        m_pimpl->m_log_formatter->end_log_entry( m_pimpl->stream() );
-        m_pimpl->flush_entry();
+    if( s_impl().m_entry_has_value ) {
+        s_impl().m_log_formatter->end_log_entry( s_impl().stream() );
+        s_impl().flush_entry();
     }
 
-    m_pimpl->clear_entry_data();
+    s_impl().clear_entry_data();
 
     return *this;
 }
@@ -216,15 +252,15 @@ set_unix_slash( char in )
     return in == '\\' ? '/' : in;
 }
 
-unit_test_log&
-unit_test_log::operator<<( file const& f )
+unit_test_log_t&
+unit_test_log_t::operator<<( file const& f )
 {
-    if( m_pimpl->m_entry_in_progress ) {
-        f.m_file_name.assign_to( m_pimpl->m_entry_data.m_file );
+    if( s_impl().m_entry_in_progress ) {
+        f.m_file_name.assign_to( s_impl().m_entry_data.m_file );
 
         // normalize file name
-        std::transform( m_pimpl->m_entry_data.m_file.begin(), m_pimpl->m_entry_data.m_file.end(), 
-                        m_pimpl->m_entry_data.m_file.begin(),
+        std::transform( s_impl().m_entry_data.m_file.begin(), s_impl().m_entry_data.m_file.end(), 
+                        s_impl().m_entry_data.m_file.begin(),
                         &set_unix_slash );
     }
 
@@ -233,141 +269,149 @@ unit_test_log::operator<<( file const& f )
 
 //____________________________________________________________________________//
 
-unit_test_log&
-unit_test_log::operator<<( line const& l )
+unit_test_log_t&
+unit_test_log_t::operator<<( line const& l )
 {
-    if( m_pimpl->m_entry_in_progress )
-        m_pimpl->m_entry_data.m_line = l.m_line_num;
+    if( s_impl().m_entry_in_progress )
+        s_impl().m_entry_data.m_line = l.m_line_num;
 
     return *this;
 }
 
 //____________________________________________________________________________//
 
-unit_test_log&
-unit_test_log::operator<<( level const& lev )
+unit_test_log_t&
+unit_test_log_t::operator<<( checkpoint const& cp )
 {
-    if( m_pimpl->m_entry_in_progress )
-        m_pimpl->m_entry_data.m_level = lev.m_level;
+    if( s_impl().m_entry_in_progress )
+        s_impl().set_checkpoint( cp );
 
     return *this;
 }
 
 //____________________________________________________________________________//
 
-unit_test_log&
-unit_test_log::operator<<( checkpoint const& cp )
+ut_detail::entry_value_collector
+unit_test_log_t::operator()( log_level const& l )
 {
-    if( m_pimpl->m_entry_in_progress )
-        m_pimpl->set_checkpoint( cp );
+    s_impl().m_entry_data.m_level = l;
 
-    return *this;
+    ut_detail::entry_value_collector res;
+    return res;
 }
 
 //____________________________________________________________________________//
 
-unit_test_log&
-unit_test_log::operator<<( log_exception const& re )
+void
+unit_test_log_t::log_exception( log_level l, const_string what )
 {
-    if( m_pimpl->m_entry_in_progress && m_pimpl->m_entry_data.m_level >= m_pimpl->m_threshold_level ) {
-        m_pimpl->m_log_formatter->log_exception( m_pimpl->stream(), unit_test_result::instance().test_case_name(), re.m_what );
-        m_pimpl->m_entry_has_value = true;
+    *this << begin();
+
+    if( l >= s_impl().m_threshold_level ) {
+        s_impl().m_log_formatter->log_exception( s_impl().stream(), s_impl().m_checkpoint_data, 
+                                               unit_test_result::instance().test_case_name(), what );
+        s_impl().m_entry_has_value = true;
     }
 
-    return *this;
+    *this << end();
 }
 
 //____________________________________________________________________________//
 
-unit_test_log&
-unit_test_log::operator<<( log_progress const& )
+void
+unit_test_log_t::log_progress()
 {
-    if( m_pimpl->m_progress_display )
-        ++(*m_pimpl->m_progress_display);
+    *this << begin();
 
-    return *this;
+    if( s_impl().m_progress_display )
+        ++(*s_impl().m_progress_display);
+
+    *this << end();
 }
 
 //____________________________________________________________________________//
 
-unit_test_log&
-unit_test_log::operator<<( const_string value )
+void
+unit_test_log_t::log_value( const_string value )
 {
-    if( m_pimpl->m_entry_in_progress && m_pimpl->m_entry_data.m_level >= m_pimpl->m_threshold_level && !value.empty() ) {
-        if( !m_pimpl->m_entry_has_value ) {
-            switch( m_pimpl->m_entry_data.m_level ) {
+    if( s_impl().m_entry_in_progress && s_impl().m_entry_data.m_level >= s_impl().m_threshold_level && !value.empty() ) {
+        if( !s_impl().m_entry_has_value ) {
+            switch( s_impl().m_entry_data.m_level ) {
             case log_successful_tests:
-                m_pimpl->m_log_formatter->begin_log_entry( m_pimpl->stream(), unit_test_log_formatter::BOOST_UTL_ET_INFO );
+                s_impl().m_log_formatter->begin_log_entry( s_impl().stream(), s_impl().m_entry_data,
+                                                         unit_test_log_formatter::BOOST_UTL_ET_INFO );
                 break;
             case log_messages:
-                m_pimpl->m_log_formatter->begin_log_entry( m_pimpl->stream(), unit_test_log_formatter::BOOST_UTL_ET_MESSAGE );
+                s_impl().m_log_formatter->begin_log_entry( s_impl().stream(), s_impl().m_entry_data,
+                                                         unit_test_log_formatter::BOOST_UTL_ET_MESSAGE );
                 break;
             case log_warnings:
-                m_pimpl->m_log_formatter->begin_log_entry( m_pimpl->stream(), unit_test_log_formatter::BOOST_UTL_ET_WARNING );
+                s_impl().m_log_formatter->begin_log_entry( s_impl().stream(), s_impl().m_entry_data,
+                                                         unit_test_log_formatter::BOOST_UTL_ET_WARNING );
                 break;
             case log_all_errors:
             case log_cpp_exception_errors:
             case log_system_errors:
-                m_pimpl->m_log_formatter->begin_log_entry( m_pimpl->stream(), unit_test_log_formatter::BOOST_UTL_ET_ERROR );
+                s_impl().m_log_formatter->begin_log_entry( s_impl().stream(), s_impl().m_entry_data,
+                                                         unit_test_log_formatter::BOOST_UTL_ET_ERROR );
                 break;
             case log_fatal_errors:
-                m_pimpl->m_log_formatter->begin_log_entry( m_pimpl->stream(), unit_test_log_formatter::BOOST_UTL_ET_FATAL_ERROR );
+                s_impl().m_log_formatter->begin_log_entry( s_impl().stream(), s_impl().m_entry_data,
+                                                         unit_test_log_formatter::BOOST_UTL_ET_FATAL_ERROR );
                 break;
             case log_progress_only:
             case log_nothing:
             case log_test_suites:
             case invalid_log_level:
-                return *this;
+                return;
             }
         }
 
-        m_pimpl->m_log_formatter->log_entry_value( m_pimpl->stream(), value );
-        m_pimpl->m_entry_has_value = true;
+        s_impl().m_log_formatter->log_entry_value( s_impl().stream(), value );
+        s_impl().m_entry_has_value = true;
     }
-
-    return *this;
 }
 
 //____________________________________________________________________________//
 
 void
-unit_test_log::start( bool print_build_info )
+unit_test_log_t::start( bool log_build_info )
 {
-    m_pimpl->m_log_formatter->start_log( m_pimpl->stream(), print_build_info );
+    s_impl().m_log_formatter->start_log( s_impl().stream(), log_build_info );
 }
 
 //____________________________________________________________________________//
 
 void
-unit_test_log::header( unit_test_counter test_cases_amount )
+unit_test_log_t::header( unit_test_counter test_cases_amount )
 {
-    if( m_pimpl->m_threshold_level != log_nothing && test_cases_amount > 0 )
-        m_pimpl->m_log_formatter->log_header( m_pimpl->stream(), test_cases_amount );
+    if( s_impl().m_threshold_level != log_nothing && test_cases_amount > 0 )
+        s_impl().m_log_formatter->log_header( s_impl().stream(), test_cases_amount );
 
-    if( m_pimpl->m_threshold_level == log_progress_only )
-        m_pimpl->m_progress_display.reset(
-            new boost::progress_display( test_cases_amount, m_pimpl->stream() ) );
+    if( s_impl().m_threshold_level == log_progress_only )
+        s_impl().m_progress_display.reset(
+            new boost::progress_display( test_cases_amount, s_impl().stream() ) );
     else
-        m_pimpl->m_progress_display.reset();
+        s_impl().m_progress_display.reset();
 }
 
 //____________________________________________________________________________//
 
 void
-unit_test_log::finish( unit_test_counter test_cases_amount )
+unit_test_log_t::finish( unit_test_counter test_cases_amount )
 {
     if( test_cases_amount == 1 )
-        *this << log_progress();
+        log_progress();
 
-    m_pimpl->m_log_formatter->finish_log( m_pimpl->stream() );
+    s_impl().m_log_formatter->finish_log( s_impl().stream() );
 }
 
 //____________________________________________________________________________//
 
 void
-unit_test_log::set_log_format( const_string log_format_name )
+unit_test_log_t::set_format( const_string log_format_name )
 {
-    if( m_pimpl->m_entry_in_progress )
+    if( s_impl().m_entry_in_progress )
         return;
 
     static fixed_mapping<const_string,output_format,case_ins_less<char const> > log_format(
@@ -378,33 +422,17 @@ unit_test_log::set_log_format( const_string log_format_name )
         );
 
     if( log_format[log_format_name] == HRF )
-        set_log_formatter( new ut_detail::msvc65_like_log_formatter( *this ) );
+        set_formatter( new ut_detail::compiler_log_formatter );
     else
-        set_log_formatter( new ut_detail::xml_log_formatter( *this ) );
+        set_formatter( new ut_detail::xml_log_formatter );
 }
 
 //____________________________________________________________________________//
 
 void
-unit_test_log::set_log_formatter( unit_test_log_formatter* the_formatter )
+unit_test_log_t::set_formatter( unit_test_log_formatter* the_formatter )
 {
-    m_pimpl->m_log_formatter.reset( the_formatter );
-}
-
-//____________________________________________________________________________//
-
-log_entry_data const&
-unit_test_log::entry_data() const
-{
-    return m_pimpl->m_entry_data;
-}
-
-//____________________________________________________________________________//
-
-log_checkpoint_data const&
-unit_test_log::checkpoint_data() const
-{
-    return m_pimpl->m_checkpoint_data;
+    s_impl().m_log_formatter.reset( the_formatter );
 }
 
 //____________________________________________________________________________//
@@ -417,27 +445,14 @@ unit_test_log::checkpoint_data() const
 //  Revision History :
 //
 //  $Log$
-//  Revision 1.24  2004/06/07 07:34:22  rogeeff
-//  detail namespace renamed
+//  Revision 1.25  2005/01/18 08:30:08  rogeeff
+//  unit_test_log rework:
+//     eliminated need for ::instance()
+//     eliminated need for << end and ...END macro
+//     straitend interface between log and formatters
+//     change compiler like formatter name
+//     minimized unit_test_log interface and reworked to use explicit calls
 //
-//  Revision 1.23  2004/05/27 06:29:59  rogeeff
-//  eliminate  warnings
-//
-//  Revision 1.22  2004/05/21 06:26:09  rogeeff
-//  licence update
-//
-//  Revision 1.21  2004/05/13 09:04:43  rogeeff
-//  added fixed_mapping
-//
-//  Revision 1.20  2004/05/11 11:04:44  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//  namespace names shortened
-//
-//  Revision 1.19  2003/12/01 00:42:37  rogeeff
-//  prerelease cleaning
-//
-
 // ***************************************************************************
 
 // EOF

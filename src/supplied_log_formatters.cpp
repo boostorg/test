@@ -16,6 +16,7 @@
 #include <boost/test/detail/supplied_log_formatters.hpp>
 #include <boost/test/unit_test_suite.hpp>
 #include <boost/test/unit_test_result.hpp>
+#include <boost/test/unit_test_log.hpp>
 
 // BOOST
 #include <boost/version.hpp>
@@ -33,17 +34,11 @@ namespace unit_test {
 namespace ut_detail {
 
 // ************************************************************************** //
-// **************           msvc65_like_log_formatter          ************** //
+// **************           compiler_log_formatter          ************** //
 // ************************************************************************** //
 
-msvc65_like_log_formatter::msvc65_like_log_formatter( unit_test_log const& log ) 
-: unit_test_log_formatter( log )
-{}
-
-//____________________________________________________________________________//
-
 void
-msvc65_like_log_formatter::start_log( std::ostream& output, bool log_build_info )
+compiler_log_formatter::start_log( std::ostream& output, bool log_build_info )
 {
     if( log_build_info )
         output  << "Platform: " << BOOST_PLATFORM            << '\n'
@@ -57,7 +52,7 @@ msvc65_like_log_formatter::start_log( std::ostream& output, bool log_build_info 
 //____________________________________________________________________________//
 
 void
-msvc65_like_log_formatter::log_header( std::ostream& output, unit_test_counter test_cases_amount )
+compiler_log_formatter::log_header( std::ostream& output, unit_test_counter test_cases_amount )
 {
     output  << "Running " << test_cases_amount << " test "
             << (test_cases_amount > 1 ? "cases" : "case") << "...\n";
@@ -66,14 +61,14 @@ msvc65_like_log_formatter::log_header( std::ostream& output, unit_test_counter t
 //____________________________________________________________________________//
 
 void
-msvc65_like_log_formatter::finish_log( std::ostream& /* output */ )
+compiler_log_formatter::finish_log( std::ostream& /* output */ )
 {
 }
 
 //____________________________________________________________________________//
 
 void
-msvc65_like_log_formatter::track_test_case_scope( std::ostream& output, test_case const& tc, bool in_out )
+compiler_log_formatter::track_test_case_scope( std::ostream& output, test_case const& tc, bool in_out )
 {
     output  << (in_out ? "Entering" : "Leaving")
             << " test " << ( tc.p_type ? "case" : "suite" )
@@ -83,41 +78,40 @@ msvc65_like_log_formatter::track_test_case_scope( std::ostream& output, test_cas
 //____________________________________________________________________________//
 
 void
-msvc65_like_log_formatter::log_exception( std::ostream& output, const_string test_case_name, const_string explanation )
+compiler_log_formatter::log_exception( std::ostream& output, log_checkpoint_data const& checkpoint_data ,
+                                       const_string test_case_name, const_string explanation )
 {
     output << "Exception in \"" << test_case_name << "\": " << explanation;
 
-    log_checkpoint_data const& chpd = checkpoint_data();
-
-    if( !chpd.m_message.empty() ) {
+    if( !checkpoint_data.m_message.empty() ) {
         output << '\n';
-        print_prefix( output, chpd.m_file, chpd.m_line );
-        output << "last checkpoint: " << chpd.m_message;
+        print_prefix( output, checkpoint_data.m_file, checkpoint_data.m_line );
+        output << "last checkpoint: " << checkpoint_data.m_message;
     }
 }
 
 //____________________________________________________________________________//
 
 void
-msvc65_like_log_formatter::begin_log_entry( std::ostream& output, log_entry_types let )
+compiler_log_formatter::begin_log_entry( std::ostream& output, log_entry_data const& entry_data, log_entry_types let )
 {
     switch( let ) {
         case BOOST_UTL_ET_INFO:
-            print_prefix( output, entry_data().m_file, entry_data().m_line );
+            print_prefix( output, entry_data.m_file, entry_data.m_line );
             output << "info: ";
             break;
         case BOOST_UTL_ET_MESSAGE:
             break;
         case BOOST_UTL_ET_WARNING:
-            print_prefix( output, entry_data().m_file, entry_data().m_line );
+            print_prefix( output, entry_data.m_file, entry_data.m_line );
             output << "warning in \"" << unit_test_result::instance().test_case_name() << "\": ";
             break;
         case BOOST_UTL_ET_ERROR:
-            print_prefix( output, entry_data().m_file, entry_data().m_line );
+            print_prefix( output, entry_data.m_file, entry_data.m_line );
             output << "error in \"" << unit_test_result::instance().test_case_name() << "\": ";
             break;
         case BOOST_UTL_ET_FATAL_ERROR:
-            print_prefix( output, entry_data().m_file, entry_data().m_line );
+            print_prefix( output, entry_data.m_file, entry_data.m_line );
             output << "fatal error in \"" << unit_test_result::instance().test_case_name() << "\": ";
             break;
     }
@@ -126,7 +120,7 @@ msvc65_like_log_formatter::begin_log_entry( std::ostream& output, log_entry_type
 //____________________________________________________________________________//
 
 void
-msvc65_like_log_formatter::log_entry_value( std::ostream& output, const_string value )
+compiler_log_formatter::log_entry_value( std::ostream& output, const_string value )
 {
     output << value;
 }
@@ -134,14 +128,14 @@ msvc65_like_log_formatter::log_entry_value( std::ostream& output, const_string v
 //____________________________________________________________________________//
 
 void
-msvc65_like_log_formatter::end_log_entry( std::ostream& /* output */ )
+compiler_log_formatter::end_log_entry( std::ostream& /* output */ )
 {
 }
 
 //____________________________________________________________________________//
 
 void
-msvc65_like_log_formatter::print_prefix( std::ostream& output, const_string file, std::size_t line )
+compiler_log_formatter::print_prefix( std::ostream& output, const_string file, std::size_t line )
 {
     output << file << '(' << line << "): ";
 }
@@ -152,8 +146,8 @@ msvc65_like_log_formatter::print_prefix( std::ostream& output, const_string file
 // **************               xml_log_formatter              ************** //
 // ************************************************************************** //
 
-xml_log_formatter::xml_log_formatter( unit_test_log const& log ) 
-: unit_test_log_formatter( log ), m_indent( 0 )
+xml_log_formatter::xml_log_formatter() 
+: m_indent( 0 )
 {
 }
 
@@ -215,7 +209,7 @@ xml_log_formatter::track_test_case_scope( std::ostream& output, test_case const&
 //____________________________________________________________________________//
 
 void
-xml_log_formatter::log_exception( std::ostream& output, const_string test_case_name, const_string explanation )
+xml_log_formatter::log_exception( std::ostream& output, log_checkpoint_data const& checkpoint_data, const_string test_case_name, const_string explanation )
 {
     print_indent( output );
     output << "<Exception name"; print_attr_value( output, test_case_name ) << ">\n";
@@ -225,18 +219,16 @@ xml_log_formatter::log_exception( std::ostream& output, const_string test_case_n
     print_indent( output );
     print_pcdata( output, explanation ) << '\n';
 
-    log_checkpoint_data const& chpd = checkpoint_data();
-
-    if( !chpd.m_message.empty() ) {
+    if( !checkpoint_data.m_message.empty() ) {
         print_indent( output );
-        output << "<LastCheckpoint file";   print_attr_value( output, chpd.m_file )
-               << " line";                  print_attr_value( output, chpd.m_line ) 
+        output << "<LastCheckpoint file";   print_attr_value( output, checkpoint_data.m_file )
+               << " line";                  print_attr_value( output, checkpoint_data.m_line ) 
                << ">\n";
 
         m_indent += 2;
 
         print_indent( output );
-        print_pcdata( output, chpd.m_message ) << "\n";
+        print_pcdata( output, checkpoint_data.m_message ) << "\n";
 
         m_indent -= 2;
 
@@ -253,7 +245,7 @@ xml_log_formatter::log_exception( std::ostream& output, const_string test_case_n
 //____________________________________________________________________________//
 
 void
-xml_log_formatter::begin_log_entry( std::ostream& output, log_entry_types let )
+xml_log_formatter::begin_log_entry( std::ostream& output, log_entry_data const& entry_data, log_entry_types let )
 {
     static literal_string xml_tags[] = { "Info", "Message", "Warning", "Error", "FatalError" };
 
@@ -261,8 +253,8 @@ xml_log_formatter::begin_log_entry( std::ostream& output, log_entry_types let )
 
     m_curr_tag = xml_tags[let];
     output << '<' << m_curr_tag
-           << " file";  print_attr_value( output, entry_data().m_file )
-           << " line";  print_attr_value( output, entry_data().m_line )
+           << " file";  print_attr_value( output, entry_data.m_file )
+           << " line";  print_attr_value( output, entry_data.m_line )
            << ">\n";
 
     m_indent += 2;
@@ -315,6 +307,14 @@ xml_log_formatter::print_indent( std::ostream& output )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.13  2005/01/18 08:29:59  rogeeff
+//  unit_test_log rework:
+//     eliminated need for ::instance()
+//     eliminated need for << end and ...END macro
+//     straitend interface between log and formatters
+//     change compiler like formatter name
+//     minimized unit_test_log interface and reworked to use explicit calls
+//
 //  Revision 1.12  2004/07/20 17:03:55  dgregor
 //  Documentation update from Jon T. Pedant
 //

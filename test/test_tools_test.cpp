@@ -34,11 +34,11 @@ using boost::test_toolbox::extended_predicate_value;
 {                                                           \
     boost::test_toolbox::output_test_stream output;         \
                                                             \
-    unit_test_log::instance().set_log_stream( output );     \
+    unit_test_log.set_stream( output );     \
     { unit_test_result_saver saver;                         \
       tool_usage;                                           \
     }                                                       \
-    unit_test_log::instance().set_log_stream( std::cout );  \
+    unit_test_log.set_stream( std::cout );  \
     BOOST_CHECK( check );                                   \
 }
 
@@ -48,15 +48,15 @@ using boost::test_toolbox::extended_predicate_value;
 {                                                                           \
     boost::test_toolbox::output_test_stream output;                         \
                                                                             \
-    unit_test_log::instance().set_log_stream( output );                     \
+    unit_test_log.set_stream( output );                     \
     try {                                                                   \
         {   unit_test_result_saver saver;                                   \
             tool_usage;                                                     \
         }                                                                   \
-        unit_test_log::instance().set_log_stream( std::cout );              \
+        unit_test_log.set_stream( std::cout );              \
         BOOST_CHECK( nothrow_check );                                       \
     } catch( boost::test_toolbox::tt_detail::test_tool_failed const&) {     \
-        unit_test_log::instance().set_log_stream( std::cout );              \
+        unit_test_log.set_stream( std::cout );              \
         BOOST_CHECK( throw_check );                                         \
     }                                                                       \
 }
@@ -106,7 +106,7 @@ test_BOOST_CHECK()
 {
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( log_all_errors );
+    unit_test_log.set_threshold_level( log_all_errors );
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK( true ),
@@ -137,12 +137,12 @@ test_BOOST_CHECK()
         output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test i==1 failed\n", 2 ) )
     );
 
-    unit_test_log::instance().set_log_threshold_level( log_successful_tests );
+    unit_test_log.set_threshold_level( log_successful_tests );
     CHECK_TOOL_USAGE(
         BOOST_CHECK( i==2 ),
         output.is_equal( CHECK_PATTERN( "info: test i==2 passed\n", 2 ) )
     );
-    unit_test_log::instance().set_log_threshold_level( log_all_errors );
+    unit_test_log.set_threshold_level( log_all_errors );
 }
 
 //____________________________________________________________________________//
@@ -153,7 +153,7 @@ test_BOOST_REQUIRE()
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_REQUIRE" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( log_all_errors );
+    unit_test_log.set_threshold_level( log_all_errors );
 
     CHECK_CRITICAL_TOOL_USAGE(
         BOOST_REQUIRE( true ),
@@ -172,12 +172,12 @@ test_BOOST_REQUIRE()
         false, output.is_equal( CHECK_PATTERN( "fatal error in " TEST_CASE_NAME ": test j > 5 failed\n", 2 ) )
     );
 
-    unit_test_log::instance().set_log_threshold_level( log_successful_tests );
+    unit_test_log.set_threshold_level( log_successful_tests );
     CHECK_CRITICAL_TOOL_USAGE(
         BOOST_REQUIRE( j < 5 ),
         output.is_equal( CHECK_PATTERN( "info: test j < 5 passed\n", 1 ) ) , false
     );
-    unit_test_log::instance().set_log_threshold_level( log_all_errors );
+    unit_test_log.set_threshold_level( log_all_errors );
 }
 
 //____________________________________________________________________________//
@@ -192,7 +192,7 @@ test_BOOST_MESSAGE()
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_REQUIRE" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( log_messages );
+    unit_test_log.set_threshold_level( log_messages );
 
     CHECK_TOOL_USAGE(
         BOOST_MESSAGE( "still testing" ),
@@ -239,7 +239,7 @@ test_BOOST_WARN()
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_WARN" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( log_warnings );
+    unit_test_log.set_threshold_level( log_warnings );
 
     CHECK_TOOL_USAGE(
         BOOST_WARN( sizeof(int) == sizeof(short) ),
@@ -265,7 +265,7 @@ test_BOOST_CHECKPOINT()
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECKPOINT" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( log_all_errors );
+    unit_test_log.set_threshold_level( log_all_errors );
 
     BOOST_CHECKPOINT( "Going to do a silly things" );
 
@@ -288,7 +288,7 @@ test_BOOST_WARN_MESSAGE()
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_WARN_MESSAGE" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( log_warnings );
+    unit_test_log.set_threshold_level( log_warnings );
 
     CHECK_TOOL_USAGE(
         BOOST_WARN_MESSAGE( sizeof(int) == sizeof(short), "memory won't be used efficiently" ),
@@ -313,7 +313,7 @@ test_BOOST_CHECK_MESSAGE()
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_MESSAGE" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( log_all_errors );
+    unit_test_log.set_threshold_level( log_all_errors );
 
 
     CHECK_TOOL_USAGE(
@@ -331,7 +331,7 @@ test_BOOST_REQUIRE_MESSAGE()
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_REQUIRE_MESSAGE" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( log_all_errors );
+    unit_test_log.set_threshold_level( log_all_errors );
 
     CHECK_CRITICAL_TOOL_USAGE(
         BOOST_REQUIRE_MESSAGE( false, "Here we should stop" ),
@@ -357,7 +357,7 @@ test_BOOST_CHECK_EQUAL()
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_EQUAL" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( log_all_errors );
+    unit_test_log.set_threshold_level( log_all_errors );
 
     int i=1;
     int j=2;
@@ -494,7 +494,7 @@ test_BOOST_ERROR()
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_ERROR" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( log_all_errors );
+    unit_test_log.set_threshold_level( log_all_errors );
 
     CHECK_TOOL_USAGE(
         BOOST_ERROR( "Fail to miss an error" ),
@@ -523,7 +523,7 @@ test_BOOST_CHECK_THROW()
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_THROW" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( log_all_errors );
+    unit_test_log.set_threshold_level( log_all_errors );
 
     int i=0;
     CHECK_TOOL_USAGE(
@@ -531,14 +531,14 @@ test_BOOST_CHECK_THROW()
         output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": exception my_exception is expected\n", 2 ) )
     );
 
-    unit_test_log::instance().set_log_threshold_level( log_successful_tests );
+    unit_test_log.set_threshold_level( log_successful_tests );
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK_THROW( throw my_exception(), my_exception ),
         output.is_equal( CHECK_PATTERN( "info: exception my_exception is caught\n", 2 ) )
     );
 
-    unit_test_log::instance().set_log_threshold_level( log_all_errors );
+    unit_test_log.set_threshold_level( log_all_errors );
 }
 
 //____________________________________________________________________________//
@@ -549,21 +549,21 @@ test_BOOST_CHECK_EXCEPTION()
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_EXCEPTION" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( log_all_errors );
+    unit_test_log.set_threshold_level( log_all_errors );
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK_EXCEPTION( throw my_exception( 1 ), my_exception, is_critical ),
         output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": incorrect exception my_exception is caught\n", 2 ) )
     );
 
-    unit_test_log::instance().set_log_threshold_level( log_successful_tests );
+    unit_test_log.set_threshold_level( log_successful_tests );
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK_EXCEPTION( throw my_exception( -1 ), my_exception, is_critical ),
         output.is_equal( CHECK_PATTERN( "info: incorrect exception my_exception is caught\n", 2 ) )
     );
 
-    unit_test_log::instance().set_log_threshold_level( log_all_errors );
+    unit_test_log.set_threshold_level( log_all_errors );
 }
 
 //____________________________________________________________________________//
@@ -594,7 +594,7 @@ test_BOOST_CHECK_EQUAL_COLLECTIONS()
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_EQUAL_COLLECTIONS" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( log_all_errors );
+    unit_test_log.set_threshold_level( log_all_errors );
 
     int pattern [] = { 1, 2, 3, 4, 5, 6, 7 };
 
@@ -711,6 +711,14 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.35  2005/01/18 08:30:09  rogeeff
+//  unit_test_log rework:
+//     eliminated need for ::instance()
+//     eliminated need for << end and ...END macro
+//     straitend interface between log and formatters
+//     change compiler like formatter name
+//     minimized unit_test_log interface and reworked to use explicit calls
+//
 //  Revision 1.34  2004/10/05 01:46:33  rogeeff
 //  borland fix
 //

@@ -29,7 +29,6 @@
 
 #include <stdexcept>        // for std::exception
 #include <cstddef>          // for std::size_t
-#include <memory>           // for std::auto_ptr
 #include <string>           // for std::string
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -442,7 +441,7 @@ equal_and_continue_impl( Left const& left_, Right const& right_,
     }
 
     return test_and_continue_impl( predicate, wrap_stringstream().ref() << message_, file_name_, line_num_, true, log_level_ );
-    //----------------------------------------------^ this is added to prevent message_ corruption when reused by collection comparison
+    //----------------------------------------------^ this is added to prevent message corruption when reused by collection comparison
 }
 
 //____________________________________________________________________________//
@@ -577,40 +576,13 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
-//  Revision 1.45  2004/07/25 08:31:10  rogeeff
-//  don't use wchar if BOOST_NO_CWCHAR is defined
-//
-//  Revision 1.44  2004/07/19 12:15:45  rogeeff
-//  guard rename
-//  warning suppress reworked
-//
-//  Revision 1.43  2004/06/07 07:33:49  rogeeff
-//  detail namespace renamed
-//
-//  Revision 1.42  2004/06/05 10:59:58  rogeeff
-//  proper IBM VA port
-//
-//  Revision 1.41  2004/06/03 10:38:31  tknapen
-//  port to vacpp version 6
-//
-//  Revision 1.40  2004/05/27 06:36:26  rogeeff
-//  eliminate c_string_literal typedef
-//
-//  Revision 1.39  2004/05/27 06:20:53  rogeeff
-//  wide C string comparison support added
-//
-//  Revision 1.38  2004/05/21 06:19:35  rogeeff
-//  licence update
-//
-//  Revision 1.37  2004/05/11 11:00:35  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//
-//  Revision 1.36  2004/01/05 11:56:25  johnmaddock
-//  Borland specific workaround needs to be inline to prevent linker errors, and is unneeded for version 6 of the compiler.
-//
-//  Revision 1.35  2003/12/01 00:41:56  rogeeff
-//  prerelease cleaning
+//  Revision 1.46  2005/01/18 08:26:01  rogeeff
+//  unit_test_log rework:
+//     eliminated need for ::instance()
+//     eliminated need for << end and ...END macro
+//     straitend interface between log and formatters
+//     change compiler like formatter name
+//     minimized unit_test_log interface and reworked to use explicit calls
 //
 // ***************************************************************************
 

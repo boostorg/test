@@ -47,8 +47,7 @@ unit_test_monitor::execute_and_translate( test_case* target_test_case, function_
              exex.code() <= execution_exception::cpp_exception_error ? log_cpp_exception_errors :
             (exex.code() <= execution_exception::timeout_error       ? log_system_errors :
                                                                        log_fatal_errors);
-        unit_test_log::instance() 
-            << begin() << level( loglevel ) << log_exception( exex.what() ) << end();
+        unit_test_log.log_exception( loglevel, exex.what() );
 
         unit_test_result::instance().caught_exception();
 
@@ -95,6 +94,14 @@ unit_test_monitor::function()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.16  2005/01/18 08:30:08  rogeeff
+//  unit_test_log rework:
+//     eliminated need for ::instance()
+//     eliminated need for << end and ...END macro
+//     straitend interface between log and formatters
+//     change compiler like formatter name
+//     minimized unit_test_log interface and reworked to use explicit calls
+//
 //  Revision 1.15  2004/06/07 07:34:23  rogeeff
 //  detail namespace renamed
 //

@@ -118,15 +118,13 @@ test_case::run()
 
     // 2. Initialize test case
     if( m_pimpl->m_monitor_run ) {
-        error_level_type init_result =
+        error_level_type setup_result =
             the_monitor.execute_and_translate( this, &test_case::do_init, p_timeout );
 
-        if( init_result != unit_test_monitor::test_ok ) {
-            m_pimpl->s_abort_testing  = unit_test_monitor::is_critical_error( init_result );
+        if( setup_result != unit_test_monitor::test_ok ) {
+            m_pimpl->s_abort_testing  = unit_test_monitor::is_critical_error( setup_result );
 
-            BOOST_UT_LOG_BEGIN( BOOST_TEST_STRING_LITERAL( __FILE__ ), __LINE__, log_fatal_errors )
-                "Test case initialization has failed"
-            BOOST_UT_LOG_END;
+            BOOST_UT_LOG_ENTRY( log_fatal_errors ) << "Test case setup has failed";
 
             return;
         }
@@ -147,9 +145,7 @@ test_case::run()
             if( unit_test_monitor::is_critical_error( run_result ) ) {
                 m_pimpl->s_abort_testing = true;
 
-                BOOST_UT_LOG_BEGIN( BOOST_TEST_STRING_LITERAL( __FILE__ ), __LINE__, log_fatal_errors )
-                    "Testing aborted"
-                BOOST_UT_LOG_END;
+                BOOST_UT_LOG_ENTRY( log_fatal_errors ) << "Testing aborted";
             }
 
             if( m_pimpl->s_abort_testing )
@@ -160,15 +156,15 @@ test_case::run()
         }
 
         if( p_stages_amount != 1 && !p_compound_stage ) // compound test
-            unit_test_log::instance() << log_progress();
+            unit_test_log.log_progress();
     }
 
     // 3. Finalize test case
     if( m_pimpl->m_monitor_run ) {
-        error_level_type destroy_result =
+        error_level_type teardown_result =
             the_monitor.execute_and_translate( this, &test_case::do_destroy, p_timeout );
         
-        m_pimpl->s_abort_testing = unit_test_monitor::is_critical_error( destroy_result );
+        m_pimpl->s_abort_testing = unit_test_monitor::is_critical_error( teardown_result );
     }
     else {
         do_destroy();
@@ -278,6 +274,14 @@ normalize_test_case_name( std::string& name_ )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.17  2005/01/18 08:30:08  rogeeff
+//  unit_test_log rework:
+//     eliminated need for ::instance()
+//     eliminated need for << end and ...END macro
+//     straitend interface between log and formatters
+//     change compiler like formatter name
+//     minimized unit_test_log interface and reworked to use explicit calls
+//
 //  Revision 1.16  2004/06/07 07:34:23  rogeeff
 //  detail namespace renamed
 //

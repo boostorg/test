@@ -17,9 +17,8 @@
 
 // Boost.Test
 #include <boost/test/detail/unit_test_config.hpp>
-#include <boost/test/unit_test_log.hpp>
-
-// BOOST
+#include <boost/test/detail/log_level.hpp>
+#include <boost/test/fwd_decl.hpp>
 
 // STL
 #include <iosfwd>
@@ -30,6 +29,41 @@
 namespace boost {
 
 namespace unit_test {
+
+// ************************************************************************** //
+// **************                log_entry_data                ************** //
+// ************************************************************************** //
+
+struct log_entry_data {
+    std::string     m_file;
+    std::size_t     m_line;
+    log_level       m_level;
+
+    void clear()
+    {
+        m_file    = std::string();
+        m_line    = 0;
+        m_level   = log_nothing;
+    }
+};
+
+// ************************************************************************** //
+// **************                checkpoint_data               ************** //
+// ************************************************************************** //
+
+struct log_checkpoint_data
+{
+    std::string     m_file;
+    std::size_t     m_line;
+    std::string     m_message;
+
+    void clear()
+    {
+        m_file    = std::string();
+        m_line    = 0;
+        m_message = std::string();
+    }
+};
 
 // ************************************************************************** //
 // **************            unit_test_log_formatter           ************** //
@@ -43,33 +77,21 @@ public:
                            BOOST_UTL_ET_ERROR,
                            BOOST_UTL_ET_FATAL_ERROR };
 
-    // Constructor
-    explicit unit_test_log_formatter( unit_test_log const& log )
-    : m_log( log ) {}
-
     // Destructor
     virtual             ~unit_test_log_formatter() {}
 
     // Formatter interface
-    virtual void        start_log( std::ostream& output, bool log_build_info ) = 0;
-    virtual void        log_header( std::ostream& output, unit_test_counter test_cases_amount ) = 0;
-    virtual void        finish_log( std::ostream& output ) = 0;
+    virtual void        start_log( std::ostream&, bool log_build_info ) = 0;
+    virtual void        log_header( std::ostream&, unit_test_counter test_cases_amount ) = 0;
+    virtual void        finish_log( std::ostream& ) = 0;
 
-    virtual void        track_test_case_scope( std::ostream& output, test_case const& tc, bool in_out ) = 0;
-    virtual void        log_exception( std::ostream& output, const_string test_case_name, const_string explanation ) = 0;
+    virtual void        track_test_case_scope( std::ostream&, test_case const& tc, bool in_out ) = 0;
+    virtual void        log_exception( std::ostream&, log_checkpoint_data const&, 
+                                       const_string test_case_name, const_string explanation ) = 0;
 
-    virtual void        begin_log_entry( std::ostream& output, log_entry_types let ) = 0;
-    virtual void        log_entry_value( std::ostream& output, const_string value ) = 0;
-    virtual void        end_log_entry( std::ostream& output ) = 0;
-
-protected:
-    // Implementation interface
-    log_entry_data      const& entry_data() const       { return m_log.entry_data(); }
-    log_checkpoint_data const& checkpoint_data() const  { return m_log.checkpoint_data(); }
-
-private:
-    // Data members
-    unit_test_log const& m_log;
+    virtual void        begin_log_entry( std::ostream&, log_entry_data const&, log_entry_types let ) = 0;
+    virtual void        log_entry_value( std::ostream&, const_string value ) = 0;
+    virtual void        end_log_entry( std::ostream& ) = 0;
 };
 
 } // namespace unit_test
@@ -82,6 +104,14 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2005/01/18 08:26:12  rogeeff
+//  unit_test_log rework:
+//     eliminated need for ::instance()
+//     eliminated need for << end and ...END macro
+//     straitend interface between log and formatters
+//     change compiler like formatter name
+//     minimized unit_test_log interface and reworked to use explicit calls
+//
 //  Revision 1.7  2004/07/19 12:16:23  rogeeff
 //  guard rename
 //  warning suppressed

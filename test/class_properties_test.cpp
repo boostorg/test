@@ -196,6 +196,14 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2005/01/18 08:30:08  rogeeff
+//  unit_test_log rework:
+//     eliminated need for ::instance()
+//     eliminated need for << end and ...END macro
+//     straitend interface between log and formatters
+//     change compiler like formatter name
+//     minimized unit_test_log interface and reworked to use explicit calls
+//
 //  Revision 1.2  2004/05/21 06:26:10  rogeeff
 //  licence update
 //
@@ -207,7 +215,6 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision 1.3  2003/12/01 00:42:37  rogeeff
 //  prerelease cleaning
 //
-
 // ***************************************************************************
 
 // EOF

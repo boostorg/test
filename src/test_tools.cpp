@@ -45,6 +45,8 @@ namespace boost {
 
 namespace test_tools {
 
+#define LOG BOOST_UT_LOG_ENTRY_FL( file_name, line_num ) 
+
 namespace tt_detail {
 
 // ************************************************************************** //
@@ -54,9 +56,7 @@ namespace tt_detail {
 void
 checkpoint_impl( wrap_stringstream& message, const_string file_name, std::size_t line_num )
 {
-    BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test::log_test_suites )
-        unit_test::checkpoint( message.str() )
-    BOOST_UT_LOG_END
+    LOG( unit_test::log_test_suites ) << unit_test::checkpoint( message.str() );
 }
 
 //____________________________________________________________________________//
@@ -64,9 +64,7 @@ checkpoint_impl( wrap_stringstream& message, const_string file_name, std::size_t
 void
 message_impl( wrap_stringstream& message, const_string file_name, std::size_t line_num )
 {
-    BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test::log_messages )
-        message.str()
-    BOOST_UT_LOG_END
+    LOG( unit_test::log_messages ) << message.str();
 }
 
 //____________________________________________________________________________//
@@ -76,25 +74,23 @@ warn_and_continue_impl( bool predicate, wrap_stringstream& message,
                         const_string file_name, std::size_t line_num, bool add_fail_pass )
 {
     if( !predicate ) {
-        BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test::log_warnings )
-            (add_fail_pass ? "condition " : "") << message.str() << (add_fail_pass ? " is not satisfied" : "" )
-        BOOST_UT_LOG_END
+        LOG( unit_test::log_warnings ) << (add_fail_pass ? "condition " : "") << message.str() 
+                                       << (add_fail_pass ? " is not satisfied" : "" );
     }
     else {
-        BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test::log_successful_tests )
-            "condition " << message.str() << " is satisfied"
-        BOOST_UT_LOG_END
+        LOG( unit_test::log_successful_tests ) << "condition " << message.str() << " is satisfied";
     }
 }
 
 //____________________________________________________________________________//
 
 void
-warn_and_continue_impl( extended_predicate_value const& v, wrap_stringstream& message, const_string file_name, std::size_t line_num,
-                        bool add_fail_pass )
+warn_and_continue_impl( extended_predicate_value const& v, wrap_stringstream& message, 
+                        const_string file_name, std::size_t line_num, bool add_fail_pass )
 {
     warn_and_continue_impl( !!v,
-        message << (add_fail_pass && !v ? " is not satisfied. " : "" ) << *(v.p_message),
+        wrap_stringstream().ref() << (add_fail_pass ? "condition " : "") << message 
+                                  << (add_fail_pass && !v ? " is not satisfied. " : "" ) << *(v.p_message),
         file_name, line_num, false );
 }
 
@@ -102,24 +98,21 @@ warn_and_continue_impl( extended_predicate_value const& v, wrap_stringstream& me
 
 bool
 test_and_continue_impl( bool predicate, wrap_stringstream& message,
-                        const_string file_name, std::size_t line_num,
-                        bool add_fail_pass, unit_test::log_level loglevel )
+                        const_string file_name, std::size_t line_num, bool add_fail_pass,
+                        unit_test::log_level loglevel )
 {
     if( !predicate ) {
         unit_test::unit_test_result::instance().inc_failed_assertions();
 
-        BOOST_UT_LOG_BEGIN( file_name, line_num, loglevel )
-            (add_fail_pass ? "test " : "") << message.str() << (add_fail_pass ? " failed" : "")
-        BOOST_UT_LOG_END
+        LOG( loglevel ) << (add_fail_pass ? "test " : "") << message.str() << (add_fail_pass ? " failed" : "");
 
         return true;
     }
     else {
         unit_test::unit_test_result::instance().inc_passed_assertions();
 
-        BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test::log_successful_tests )
-            (add_fail_pass ? "test " : "") << message.str() << (add_fail_pass ? " passed" : "")
-        BOOST_UT_LOG_END
+        LOG( unit_test::log_successful_tests ) << (add_fail_pass ? "test " : "") << message.str() 
+                                               << (add_fail_pass ? " passed" : "");
 
         return false;
     }
@@ -129,11 +122,12 @@ test_and_continue_impl( bool predicate, wrap_stringstream& message,
 
 bool
 test_and_continue_impl( extended_predicate_value const& v, wrap_stringstream& message,
-                        const_string file_name, std::size_t line_num,
-                        bool add_fail_pass, unit_test::log_level loglevel )
+                        const_string file_name, std::size_t line_num, bool add_fail_pass, 
+                        unit_test::log_level loglevel )
 {
     return test_and_continue_impl( !!v,
-        message << (add_fail_pass ? (!v ? " failed. " : " passed. ") : "") << *(v.p_message),
+        wrap_stringstream().ref() << (add_fail_pass ? "test " : "") << message 
+                                  << (add_fail_pass ? (!v ? " failed. " : " passed. ") : "") << *(v.p_message),
         file_name, line_num, false, loglevel );
 }
 
@@ -144,9 +138,8 @@ test_and_throw_impl( bool predicate, wrap_stringstream& message,
                      const_string file_name, std::size_t line_num,
                      bool add_fail_pass, unit_test::log_level loglevel )
 {
-    if( test_and_continue_impl( predicate, message, file_name, line_num, add_fail_pass, loglevel ) ) {
+    if( test_and_continue_impl( predicate, message, file_name, line_num, add_fail_pass, loglevel ) )
         throw test_tool_failed(); // error already reported by test_and_continue_impl
-    }
 }
 
 //____________________________________________________________________________//
@@ -156,9 +149,8 @@ test_and_throw_impl( extended_predicate_value const& v, wrap_stringstream& messa
                      const_string file_name, std::size_t line_num,
                      bool add_fail_pass, unit_test::log_level loglevel )
 {
-    if( test_and_continue_impl( v, message, file_name, line_num, add_fail_pass, loglevel ) ) {
+    if( test_and_continue_impl( v, message, file_name, line_num, add_fail_pass, loglevel ) )
         throw test_tool_failed(); // error already reported by test_and_continue_impl
-    }
 }
 
 //____________________________________________________________________________//
@@ -457,60 +449,22 @@ output_test_stream::sync()
 
 } // namespace test_tools
 
+#undef LOG
+
 } // namespace boost
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.41  2004/09/19 09:21:58  rogeeff
-//  ios fix for classic iostreams
+//  Revision 1.42  2005/01/18 08:30:08  rogeeff
+//  unit_test_log rework:
+//     eliminated need for ::instance()
+//     eliminated need for << end and ...END macro
+//     straitend interface between log and formatters
+//     change compiler like formatter name
+//     minimized unit_test_log interface and reworked to use explicit calls
 //
-//  Revision 1.40  2004/09/18 05:44:21  rogeeff
-//  RW STL 6.0 fix
-//
-//  Revision 1.39  2004/07/25 08:49:15  rogeeff
-//  don't use wchar if BOOST_NO_CWCHAR is defined
-//
-//  Revision 1.36  2004/07/22 09:59:20  rogeeff
-//  preper wide char workaround
-//
-//  Revision 1.35  2004/07/20 17:03:55  dgregor
-//  Documentation update from Jon T. Pedant
-//
-//  Revision 1.34  2004/07/19 12:08:48  rogeeff
-//  suppress warnings
-//
-//  Revision 1.33  2004/06/23 04:49:48  eric_niebler
-//  remove std_min and std_max, update minmax coding guidelines
-//
-//  Revision 1.32  2004/06/07 07:34:22  rogeeff
-//  detail namespace renamed
-//
-//  Revision 1.31  2004/05/27 06:35:54  rogeeff
-//  eliminate c_string_literal typedef
-//
-//  Revision 1.30  2004/05/27 06:29:20  rogeeff
-//  support for wide C string comparizon
-//
-//  Revision 1.29  2004/05/21 06:26:09  rogeeff
-//  licence update
-//
-//  Revision 1.28  2004/05/11 11:04:44  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//  namespace names shortened
-//
-//  Revision 1.27  2004/03/10 09:39:45  tknapen
-//  parenthesis around std::isprint because it's a macro on mipspro
-//
-//  Revision 1.26  2004/02/26 18:27:01  eric_niebler
-//  remove minmax hack from win32.hpp and fix all places that could be affected by the minmax macros
-//
-//  Revision 1.25  2003/12/01 00:42:37  rogeeff
-//  prerelease cleaning
-//
-
 // ***************************************************************************
 
 // EOF

@@ -32,11 +32,11 @@ using namespace boost::test_toolbox;
 {                                                           \
     boost::test_toolbox::output_test_stream output;         \
                                                             \
-    unit_test_log::instance().set_log_stream( output );     \
+    unit_test_log.set_stream( output );                     \
     { unit_test_result_saver saver;                         \
       tool_usage;                                           \
     }                                                       \
-    unit_test_log::instance().set_log_stream( std::cout );  \
+    unit_test_log.set_stream( std::cout );  \
     BOOST_CHECK( check );                                   \
 }
 
@@ -79,7 +79,7 @@ test_BOOST_CHECK_CLOSE( FPT = FPT() )
 {
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_CLOSE" << "\"" <<
-    unit_test_log::instance().set_log_threshold_level( log_messages );
+    unit_test_log.set_threshold_level( log_messages );
 
     BOOST_MESSAGE( "testing BOOST_CHECK_CLOSE for " << typeid(FPT).name() );
 
@@ -194,6 +194,14 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.14  2005/01/18 08:30:09  rogeeff
+//  unit_test_log rework:
+//     eliminated need for ::instance()
+//     eliminated need for << end and ...END macro
+//     straitend interface between log and formatters
+//     change compiler like formatter name
+//     minimized unit_test_log interface and reworked to use explicit calls
+//
 //  Revision 1.13  2004/10/05 01:46:32  rogeeff
 //  borland fix
 //

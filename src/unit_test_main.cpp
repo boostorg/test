@@ -41,17 +41,17 @@ main( int argc, char* argv[] )
     bool    print_build_info;
 
     // set the log level
-    unit_test_log::instance().set_log_threshold_level_by_name( retrieve_framework_parameter( LOG_LEVEL, &argc, argv ) );
+    unit_test_log.set_threshold_level_by_name( retrieve_framework_parameter( LOG_LEVEL, &argc, argv ) );
 
     // set the log/report format
     const_string output_format = retrieve_framework_parameter( OUTPUT_FORMAT, &argc, argv );
     
     if( output_format.empty() ) {
-        unit_test_log::instance().set_log_format( retrieve_framework_parameter( LOG_FORMAT, &argc, argv ) );
+        unit_test_log.set_format( retrieve_framework_parameter( LOG_FORMAT, &argc, argv ) );
         unit_test_result::set_report_format( retrieve_framework_parameter( REPORT_FORMAT, &argc, argv ) );
     }
     else {
-        unit_test_log::instance().set_log_format( output_format );
+        unit_test_log.set_format( output_format );
         unit_test_result::set_report_format( output_format );
     }
 
@@ -73,10 +73,10 @@ main( int argc, char* argv[] )
     }
 
     // start testing
-    unit_test_log::instance().start( print_build_info );
-    unit_test_log::instance().header( test->size() );
+    unit_test_log.start( print_build_info );
+    unit_test_log.header( test->size() );
     test->run();
-    unit_test_log::instance().finish( test->size() );
+    unit_test_log.finish( test->size() );
 
     // report results
     unit_test_result::instance().report( report_level, std::cerr );
@@ -89,6 +89,14 @@ main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.17  2005/01/18 08:30:08  rogeeff
+//  unit_test_log rework:
+//     eliminated need for ::instance()
+//     eliminated need for << end and ...END macro
+//     straitend interface between log and formatters
+//     change compiler like formatter name
+//     minimized unit_test_log interface and reworked to use explicit calls
+//
 //  Revision 1.16  2004/06/07 07:34:23  rogeeff
 //  detail namespace renamed
 //

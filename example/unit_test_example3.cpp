@@ -8,8 +8,8 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 // Boost.Test
-#include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
+#include <boost/test/unit_test.hpp>
 using boost::unit_test::test_suite;
 using boost::unit_test::test_case;
 using boost::test_toolbox::close_at_tolerance;

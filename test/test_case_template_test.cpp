@@ -79,7 +79,7 @@ int test_main( int, char* [] )
     onullstream_type                    null_output;
     boost::scoped_ptr<tf::test_case>    test;  
 
-    tf::unit_test_log::instance().set_log_stream( null_output );
+    tf::unit_test_log.set_stream( null_output );
 
     {
         tf::unit_test_result_saver saver;
@@ -91,11 +91,11 @@ int test_main( int, char* [] )
         tf::unit_test_result::instance().failures_details( num_of_failures, exception_caught );
     }
 
-    tf::unit_test_log::instance().set_log_stream( std::cout );
+    tf::unit_test_log.set_stream( std::cout );
     BOOST_CHECK_EQUAL( num_of_failures, (std::size_t)0 );
     BOOST_CHECK( !exception_caught );
 
-    tf::unit_test_log::instance().set_log_stream( null_output );
+    tf::unit_test_log.set_stream( null_output );
 
     {
     tf::unit_test_result_saver saver;
@@ -107,11 +107,11 @@ int test_main( int, char* [] )
     tf::unit_test_result::instance().failures_details( num_of_failures, exception_caught );
     }
 
-    tf::unit_test_log::instance().set_log_stream( std::cout );
+    tf::unit_test_log.set_stream( std::cout );
     BOOST_CHECK_EQUAL( num_of_failures, (std::size_t)9 );
     BOOST_CHECK( !exception_caught );
 
-    tf::unit_test_log::instance().set_log_stream( null_output );
+    tf::unit_test_log.set_stream( null_output );
 
     {
         tf::unit_test_result_saver saver;
@@ -123,11 +123,11 @@ int test_main( int, char* [] )
         tf::unit_test_result::instance().failures_details( num_of_failures, exception_caught );
     }
 
-    tf::unit_test_log::instance().set_log_stream( std::cout );
+    tf::unit_test_log.set_stream( std::cout );
     BOOST_CHECK_EQUAL( num_of_failures, (std::size_t)7 );
     BOOST_CHECK( !exception_caught );
 
-    tf::unit_test_log::instance().set_log_stream( null_output );
+    tf::unit_test_log.set_stream( null_output );
     bool passed = false;
     {
         tf::unit_test_result_saver saver;
@@ -140,7 +140,7 @@ int test_main( int, char* [] )
         passed = tf::unit_test_result::instance().has_passed();
     }
 
-    tf::unit_test_log::instance().set_log_stream( std::cout );
+    tf::unit_test_log.set_stream( std::cout );
     BOOST_CHECK_EQUAL( num_of_failures, (std::size_t)0 );
     BOOST_CHECK( !exception_caught );
     BOOST_CHECK( !passed );
@@ -154,6 +154,14 @@ int test_main( int, char* [] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2005/01/18 08:30:09  rogeeff
+//  unit_test_log rework:
+//     eliminated need for ::instance()
+//     eliminated need for << end and ...END macro
+//     straitend interface between log and formatters
+//     change compiler like formatter name
+//     minimized unit_test_log interface and reworked to use explicit calls
+//
 //  Revision 1.8  2004/10/05 04:23:54  rogeeff
 //  borland fix
 //

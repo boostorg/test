@@ -49,7 +49,7 @@ int main( int argc, char* argv[] ) {
     using namespace boost::unit_test;
 
     // set the log level
-    unit_test_log::instance().set_log_threshold_level_by_name( retrieve_framework_parameter( LOG_LEVEL, &argc, argv ) );
+    unit_test_log.set_threshold_level_by_name( retrieve_framework_parameter( LOG_LEVEL, &argc, argv ) );
 
     // set the report level
     const_string reportlevel = retrieve_framework_parameter( REPORT_LEVEL, &argc, argv );
@@ -58,11 +58,11 @@ int main( int argc, char* argv[] ) {
     const_string output_format = retrieve_framework_parameter( OUTPUT_FORMAT, &argc, argv );
     
     if( output_format.empty() ) {
-        unit_test_log::instance().set_log_format( retrieve_framework_parameter( LOG_FORMAT, &argc, argv ) );
+        unit_test_log.set_format( retrieve_framework_parameter( LOG_FORMAT, &argc, argv ) );
         unit_test_result::set_report_format( retrieve_framework_parameter( REPORT_FORMAT, &argc, argv ) );
     }
     else {
-        unit_test_log::instance().set_log_format( output_format );
+        unit_test_log.set_format( output_format );
         unit_test_result::set_report_format( output_format );
     }
 
@@ -78,9 +78,9 @@ int main( int argc, char* argv[] ) {
     boost::scoped_ptr<test_case> test_main_tc( BOOST_TEST_CASE( &call_test_main ) );
 
     // start testing
-    unit_test_log::instance().start( retrieve_framework_parameter( BUILD_INFO, &argc, argv ) == "yes" );
+    unit_test_log.start( retrieve_framework_parameter( BUILD_INFO, &argc, argv ) == "yes" );
     test_main_tc->run();
-    unit_test_log::instance().finish( 1 );
+    unit_test_log.finish( 1 );
     
     // report results
     unit_test_result::instance().report( reportlevel, std::cout );
@@ -98,6 +98,14 @@ int main( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.19  2005/01/18 08:30:08  rogeeff
+//  unit_test_log rework:
+//     eliminated need for ::instance()
+//     eliminated need for << end and ...END macro
+//     straitend interface between log and formatters
+//     change compiler like formatter name
+//     minimized unit_test_log interface and reworked to use explicit calls
+//
 //  Revision 1.18  2004/06/07 07:34:22  rogeeff
 //  detail namespace renamed
 //

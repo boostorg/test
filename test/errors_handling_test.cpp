@@ -26,11 +26,8 @@ using namespace boost::test_tools;
 // STL
 #include <iostream>
 
-struct this_test_log_formatter : public boost::unit_test::ut_detail::msvc65_like_log_formatter 
+struct this_test_log_formatter : public boost::unit_test::ut_detail::compiler_log_formatter 
 {
-    explicit this_test_log_formatter( unit_test_log const& log )
-    : boost::unit_test::ut_detail::msvc65_like_log_formatter( log ) {}
-
     void    print_prefix( std::ostream& output, boost::unit_test::const_string, std::size_t line )
     {
         output << line << ": ";
@@ -171,8 +168,8 @@ test_main( int argc, char * argv[] )
 
     output_test_stream output( pattern_file_name, match_or_save );
 
-    unit_test_log::instance().set_log_stream( output );
-    unit_test_log::instance().set_log_formatter( new this_test_log_formatter( unit_test_log::instance() ) );
+    unit_test_log.set_stream( output );
+    unit_test_log.set_formatter( new this_test_log_formatter );
 
     boost::shared_ptr<bad_test> bad_test_instance( new bad_test );
 
@@ -181,8 +178,7 @@ test_main( int argc, char * argv[] )
          level           <= log_nothing;
          level           = static_cast<log_level>(level+1) )
     {
-        unit_test_log::instance().set_log_threshold_level( level );
-
+        unit_test_log.set_threshold_level( level );
         // for each error type
         for( error_type = et_begin;
              error_type != et_end;
@@ -234,15 +230,15 @@ test_main( int argc, char * argv[] )
 
                 { 
                     unit_test_result_saver saver;
-                    unit_test_log::instance().start();
-                    unit_test_log::instance().header( 1 );
+                    unit_test_log.start();
+                    unit_test_log.header( 1 );
                     test.run();
-                    unit_test_log::instance().finish( 1 );
+                    unit_test_log.finish( 1 );
                 }
 
-                unit_test_log::instance().set_log_threshold_level( log_all_errors );
+                unit_test_log.set_threshold_level( log_all_errors );
                 BOOST_CHECK( output.match_pattern() );
-                unit_test_log::instance().set_log_threshold_level( level );
+                unit_test_log.set_threshold_level( level );
             }
         }
     }
@@ -259,6 +255,14 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.25  2005/01/18 08:30:08  rogeeff
+//  unit_test_log rework:
+//     eliminated need for ::instance()
+//     eliminated need for << end and ...END macro
+//     straitend interface between log and formatters
+//     change compiler like formatter name
+//     minimized unit_test_log interface and reworked to use explicit calls
+//
 //  Revision 1.24  2004/10/05 04:27:09  rogeeff
 //  31 length fix
 //
