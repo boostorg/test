@@ -143,7 +143,7 @@ class readwrite_property : public class_property<PropertyType> {
     typedef typename base::address_res_t                const_arrow_res_t;
     typedef typename base::write_param_t                write_param_t;
 public:
-#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570) || BOOST_WORKAROUND( __COMO__, <= 0x433 )
+#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570) || BOOST_WORKAROUND( __COMO__, <= 0x433 ) || BOOST_WORKAROUND( __INTEL_COMPILER <= 700 )
                     readwrite_property() : base(), value(base::value) {}
     explicit        readwrite_property( write_param_t init_value ) : base( init_value ), value(base::value) {}
                     readwrite_property( readwrite_property const& rhs ) : base( rhs ), value( base::value ) {}
@@ -157,7 +157,7 @@ public:
     arrow_res_t     operator->()            { return boost::addressof( base::value ); }
     const_arrow_res_t operator->() const    { return boost::addressof( base::value ); }
 
-#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570) || BOOST_WORKAROUND( __COMO__, <= 0x433 )
+#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570) || BOOST_WORKAROUND( __COMO__, <= 0x433 ) || BOOST_WORKAROUND( __INTEL_COMPILER <= 700 )
     PropertyType&   value;
 #else
     using           base::value;
@@ -174,6 +174,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.18  2004/05/23 08:56:58  rogeeff
+//  add intel into workaround branch
+//
 //  Revision 1.17  2004/05/21 06:19:11  rogeeff
 //  hack for non-using version of readwrite properties
 //  licence update
