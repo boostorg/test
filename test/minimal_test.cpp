@@ -48,7 +48,7 @@ struct bool_convertible3 {
 //____________________________________________________________________________//
 
 int 
-test_main( int argc, char* argv[] ) 
+test_main( int /*argc*/, char* /*argv*/[] ) 
 {
     int i = 1;
 
@@ -77,6 +77,9 @@ test_main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2003/02/15 21:51:56  rogeeff
+//  borland warnings fix
+//
 //  Revision 1.3  2002/11/02 20:04:43  rogeeff
 //  release 1.29.0 merged into the main trank
 //
