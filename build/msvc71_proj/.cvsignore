@@ -1,0 +1,4 @@
+*.nsb
+*.suo
+debug
+release
