@@ -93,7 +93,7 @@ public:
     static unit_test_log& instance();
 
     // log configuration methods
-    void            start( unit_test_counter test_cases_amount );
+    void            start( unit_test_counter test_cases_amount, bool print_build_info = false );
     void            set_log_stream( std::ostream& str );
     void            set_log_threshold_level( report_level lev );
     void            set_log_threshold_level_by_name( char const* lev );
@@ -124,7 +124,7 @@ private:
 #define BOOST_UT_LOG_BEGIN( file_name, line_num, loglevel )                             \
     boost::unit_test_framework::unit_test_log::instance()                               \
                                      << boost::unit_test_framework::begin()             \
-                                     << boost::unit_test_framework::level( loglevel ) \
+                                     << boost::unit_test_framework::level( loglevel )   \
                                      << boost::unit_test_framework::file( file_name )   \
                                      << boost::unit_test_framework::line( line_num ) <<
 

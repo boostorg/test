@@ -27,10 +27,11 @@ char const* const NO_RESULT_CODE    = "BOOST_TEST_RESULT_CODE";      // --result
 char const* const RESULT_REPORT     = "BOOST_TEST_REPORT_LEVEL";     // --result_report
 char const* const TESTS_TO_RUN      = "BOOST_TESTS_TO_RUN";          // --run_test
 char const* const SAVE_TEST_PATTERN = "BOOST_TEST_SAVE_PATTERN";     // --save_pattern
+char const* const BUILD_INFO        = "BOOST_TEST_BUILD_INFO";       // --build_info
 
 
-enum result_report_type                 { CONFIRMATION_REPORT, SHORT_REPORT, DETAILED_REPORT, NO_REPORT };
-char const* const report_type_names[] = { "confirm"          , "short"     , "detailed"     , "no"      };
+enum result_report_level                { CONFIRMATION_REPORT, SHORT_REPORT, DETAILED_REPORT, NO_REPORT };
+char const* const report_level_names[] = { "confirm"          , "short"     , "detailed"     , "no"      };
 
 std::string retrieve_framework_parameter( char const* parameter_name, int* argc = NULL, char ** argv = NULL );
 

@@ -127,7 +127,7 @@ namespace detail {
 struct wrapstrstream {
     mutable std::ostrstream buf;
 
-    char const*          str() const;
+    char const* str() const;
 };
 
 //____________________________________________________________________________//
