@@ -71,7 +71,7 @@ protected: // provide access to the Derived
     ValueType           m_value;
 
 private:
-    friend class iterator_core_access;
+    friend class boost::iterator_core_access;
 
     // iterator facade interface implementation
     void                increment()
@@ -101,6 +101,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2004/10/05 02:17:14  rogeeff
+//  como fix
+//
 //  Revision 1.5  2004/07/19 12:29:57  rogeeff
 //  guard rename
 //  mingw port
