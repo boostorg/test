@@ -343,6 +343,8 @@ output_test_stream::match_pattern( bool flush_stream )
     }
     else {
         if( m_pimpl->m_match_or_save ) {
+/*
+// some older libraries don't implement operator-() on iterators, so this code was rewritten (see below)
             std::string::const_iterator it = m_pimpl->m_synced_string.begin();
 
             while( it != m_pimpl->m_synced_string.end() ) {
@@ -379,6 +381,41 @@ output_test_stream::match_pattern( bool flush_stream )
                     break;
                 }
                 ++it;
+            }
+*/
+            for ( std::string::size_type i = 0; i < m_pimpl->m_synced_string.length(); ++i ) {
+                char c = m_pimpl->get_char();
+
+                result = !m_pimpl->m_pattern_to_match_or_save.fail() && 
+                         !m_pimpl->m_pattern_to_match_or_save.eof() && 
+                         (m_pimpl->m_synced_string[i] == c);
+
+                if( !result ) {
+                    std::string::size_type suffix_size  = std::min( m_pimpl->m_synced_string.length() - i,
+                                                                    static_cast<std::string::size_type>(5) );
+
+                    // try to log area around the mismatch 
+                    *(result.p_message) << "Mismatch at position " << i << '\n'
+                        << "..." << m_pimpl->m_synced_string.substr( i, suffix_size ) << "..." << '\n'
+                        << "..." << c;
+
+                    std::string::size_type counter = suffix_size;
+                    while( --counter ) {
+                        char c = m_pimpl->get_char();
+
+                        if( m_pimpl->m_pattern_to_match_or_save.fail() || 
+                            m_pimpl->m_pattern_to_match_or_save.eof() )
+                            break;
+
+                        *(result.p_message) << c;
+                    }
+
+                    *(result.p_message) << "...";
+
+                    // skip rest of the bytes. May help for further matching
+                    m_pimpl->m_pattern_to_match_or_save.ignore( m_pimpl->m_synced_string.length() - i - suffix_size);
+                    break;
+                }
             }
         }
         else {
@@ -441,6 +478,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.19  2003/06/23 22:37:13  beman_dawes
+//  workaround broken std libraries
+//
 //  Revision 1.18  2003/06/20 18:13:54  beman_dawes
 //  fix some but not all problems with previous commit
 //
