@@ -53,7 +53,7 @@ public:
     // monitor method
     error_level         execute_and_translate( int timeout_ );
 
-    // ececution monitor hook implementation
+    // execution monitor hook implementation
     virtual int         function();
 
 private:
@@ -72,6 +72,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2002/09/04 07:28:11  rogeeff
+//  comment typo
+//
 //  Revision 1.4  2002/08/20 22:24:53  rogeeff
 //  all formal arguments trailed with underscore
 //
