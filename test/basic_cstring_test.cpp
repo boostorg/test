@@ -159,6 +159,7 @@ BOOST_META_FUNC_TEST_CASE( constructors_std_string_test );
 
 void array_construction_test()
 {
+#if !BOOST_WORKAROUND(__BORLANDC__, < 0x600)
     const_string bcs_array[] = { "str1", "str2" };
 
     BOOST_CHECK_EQUAL( const_string::traits_type::compare( bcs_array[0].begin(), "str1", bcs_array[0].size() ), 0 );
@@ -166,6 +167,7 @@ void array_construction_test()
 
     const_string bcs( "abc" );
     BOOST_CHECK_EQUAL( const_string::traits_type::compare( bcs.begin(), "abc", bcs.size() ), 0 );
+#endif
 }
 
 //____________________________________________________________________________//
@@ -317,14 +319,14 @@ void comparison_std_string_test( CharT* = 0 )
     typename utf::basic_cstring<CharT>::std_string l( TEST_STRING );
 
     BOOST_CHECK( bcs1 == l );
-#if BOOST_WORKAROUND(BOOST_MSVC, > 1200)
+#if BOOST_WORKAROUND(BOOST_MSVC, > 1300)
     BOOST_CHECK( l == bcs1 );
 #endif
 
     bcs1.resize( 4 );
 
     BOOST_CHECK( bcs1 != l );
-#if BOOST_WORKAROUND(BOOST_MSVC, > 1200)
+#if BOOST_WORKAROUND(BOOST_MSVC, > 1300)
     BOOST_CHECK( l != bcs1 );
 #endif
 }
@@ -505,6 +507,12 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 // History :
 //
 // $Log$
+// Revision 1.8  2004/11/28 04:28:56  agurtovoy
+// merge RC_1_32_0 fixes
+//
+// Revision 1.7.2.1  2004/10/30 11:33:38  agurtovoy
+// MSVC/Borland fixes
+//
 // Revision 1.7  2004/10/01 10:55:43  rogeeff
 // some test errors workarrounds
 //
