@@ -9,6 +9,33 @@ function get_copyright_date() {
 function contact_addess() {
    document.write( "<a href='mailto:rogeeff@emailaccount.com'>Gennadiy Rozental</a>" )
 }
+
+var styles = [ "btl", "btl-simple" ];
+function put_screen_style() {
+    var btl_style       = new Cookie( "btl_style" );
+
+    if( !btl_style.load() )
+        btl_style.v = 0;
+
+    var str = '<link id="screen_style" rel="stylesheet" type="text/css" href="style/' + 
+              styles[btl_style.v] + '.css" media="screen" />';
+
+    document.write( str );
+}
+
+function style_switch() { 
+    var btl_style       = new Cookie( "btl_style" );
+
+    if( !btl_style.load() )
+        btl_style.v = 0;
+
+    btl_style.v++;
+    btl_style.v %= styles.length;
+
+    btl_style.store( { days:365 } );
+
+    window.location.reload( false );
+}
     
 function btl_header() {
     document.write( "<div class='print-header'>" );
@@ -27,6 +54,11 @@ function btl_header() {
 
     document.write( "<div id='wipe-away-menu-holder'>" );
 
+    var btl_style       = new Cookie( "btl_style" );
+
+    if( !btl_style.load() )
+        btl_style.v = 0;
+
     document.write( "<div id='header_menu' class='header-menu'><nobr>" );
     document.write( "<a href='index.htm'>Home</a> " );
     document.write( "<a href='faq.htm'>FAQ</a> " );
@@ -34,7 +66,10 @@ function btl_header() {
     document.write( "<a href='../../../libs/libraries.htm'>Boost libraries</a> " );
     document.write( "</nobr></div>" );
 
-    document.write( "<img id='header_menu_root' class='header-menu-root' src='imgs/menu_root.gif' onMouseOver='this.src=\"imgs/menu_root_on.gif\";btl_menu.show();' onMouseOut='this.src=\"imgs/menu_root.gif\";' >" );
+    if( btl_style.v == 0 )
+        document.write( "<img id='header_menu_root' class='header-menu-root' src='imgs/menu_root.gif' onMouseOver='this.src=\"imgs/menu_root_on.gif\";btl_menu.show();' onMouseOut='this.src=\"imgs/menu_root.gif\";' >" );
+    else
+        document.write( "<img id='header_menu_root' class='header-menu-root' src='imgs/menu_root.gif' onMouseOver='btl_menu.show();'>" );
 
     document.write( "</div>" );
 
@@ -77,29 +112,3 @@ function put_examples_roller( roller_name ) {
     document.write( "</span>" );
 }
 
-var styles = [ "btl", "btl-simple" ];
-function put_screen_style() {
-    var btl_style       = new Cookie( "btl_style" );
-
-    if( !btl_style.load() )
-        btl_style.v = 0;
-
-    var str = '<link id="screen_style" rel="stylesheet" type="text/css" href="style/' + 
-              styles[btl_style.v] + '.css" media="screen" />';
-
-    document.write( str );
-}
-
-function style_switch() { 
-    var btl_style       = new Cookie( "btl_style" );
-
-    if( !btl_style.load() )
-        btl_style.v = 0;
-
-    btl_style.v++;
-    btl_style.v %= styles.length;
-
-    btl_style.store( { days:365 } );
-
-    window.location.reload( false );
-}

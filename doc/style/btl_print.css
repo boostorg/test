@@ -154,14 +154,14 @@ DIV.screen-header
     display:        none;
 }
 
-TABLE.depreciated-tools-list
+TABLE.2-column-table
 {
     width:          100%;
     padding:        0px;
     border:         1px solid black;
 }
 
-TABLE.depreciated-tools-list THEAD TD
+TABLE.2-column-table THEAD TD
 {
     border:         1px solid black;
     color:          black;
@@ -170,7 +170,7 @@ TABLE.depreciated-tools-list THEAD TD
     padding:        0px;
 }
 
-TABLE.depreciated-tools-list TBODY TD
+TABLE.2-column-table TBODY TD
 {
     border:         1px solid black;
     color:          black;

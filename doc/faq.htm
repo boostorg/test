@@ -26,16 +26,16 @@ JS.include( "btl.js" );
 
 <h1>Boost Test Library: frequently asked questions</h1>
 
-<ul>
-  <li><a href="#Item 1">Where is located the latest version of the Boost Test Library?</a></li>
-  <li><a href="#Item 2">I found a bug. Where could I report it?</a></li>
-  <li><a href="#Item 3">I have a request for a new feature. Where could I ask for it?</a></li>
-  <li><a href="#Item 4">How to create test case?</a></li>
-  <li><a href="#Item 5">How to create test suite?</a></li>
-  <li><a href="#Item 7">Why did I get a linker error when compiling my test program?</a></li>
-  <li><a href="#Item 7">How could I redirect testing output?</a></li>
-  <li><a href="#Item 8">I want different default log trace level</a></li>
-</ul>
+                <ul>
+                    <li><a href="#Item 1">Where is located the latest version of the Boost Test Library?</a></li>
+                    <li><a href="#Item 2">I found a bug. Where could I report it?</a></li>
+                    <li><a href="#Item 3">I have a request for a new feature. Where could I ask for it?</a></li>
+                    <li><a href="#Item 4">How to create test case?</a></li>
+                    <li><a href="#Item 5">How to create test suite?</a></li>
+                    <li><a href="#Item 7">Why did I get a linker error when compiling my test program?</a></li>
+                    <li><a href="#Item 7">How could I redirect testing output?</a></li>
+                    <li><a href="#Item 8">I want different default log trace level</a></li>
+                </ul>
 
 <h2><a name="Item 1">Where is located the latest version of the Boost Test Library?</a></h2>
 
@@ -62,9 +62,18 @@ details see <a href="unit_test_framework.htm#TestSuite">Unit test framework</a> 
 
 <h2><a name="Item 6">Why did I get a linker error when compiling my test program?</a></h2>
 
-<p class="1-line-indented">Boost Test Library is implemented offline. To create a test program you 
-should link with the compiled framework library of include the framework source 
-files into your test program.</p>
+                <p class="1-line-indented">Boost Test Library is implemented offline. To create 
+                    a test program you should link with the one of the recompiled 
+                    Library components or use "included" version of the component 
+                    located in a boost/test/included directory. Note also that 
+                    you should strictly follow specification on integration function 
+                    in other case some compilers may produce linker error like 
+                    this:
+                <p>
+<p>Unresolved external 'init_unit_test_suite(int, char * *).</p>
+                <p>The reasons for this error is that in your implementation you 
+                    should specify second argument of init_unit_test_suite exactly 
+                    as in a specification, i.e.: char* [].</p>
 
 <h2><a name="Item 7">How could I redirect testing output?</a></h2>
 
@@ -84,7 +93,7 @@ list of acceptable values see
 </p>
 <p>Revised: 
 <!--webbot bot="Timestamp" S-Type="EDITED"
-S-Format="%d %B, %Y" startspan -->26 July, 2002<!--webbot bot="Timestamp" endspan i-checksum="21090" -->
+S-Format="%d %B, %Y" startspan -->22 August, 2002<!--webbot bot="Timestamp" endspan i-checksum="21090" -->
 </p>
 
 </td>

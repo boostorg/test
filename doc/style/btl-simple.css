@@ -1,13 +1,13 @@
 @import "btl.css";
 
-TABLE.depreciated-tools-list
+TABLE.2-column-table
 {
     width:          90%;
     padding:        0px;
     border:         1px solid black;
 }
 
-TABLE.depreciated-tools-list THEAD TD
+TABLE.2-column-table THEAD TD
 {
     background:     white;
     border:         1px solid black;
@@ -16,7 +16,7 @@ TABLE.depreciated-tools-list THEAD TD
     width:          50%;
 }
 
-TABLE.depreciated-tools-list TBODY TD
+TABLE.2-column-table TBODY TD
 {
     background:     white;
     border:         1px solid black;
