@@ -14,8 +14,8 @@
 //  properties in C++ classes. Original idea by Henrik Ravn.
 // ***************************************************************************
 
-#ifndef CLASS_PROPERTY_HPP
-#define CLASS_PROPERTY_HPP
+#ifndef BOOST_TEST_CLASS_PROPERTIES_HPP
+#define BOOST_TEST_CLASS_PROPERTIES_HPP
 
 // ************************************************************************** //
 // **************               readonly_property              ************** //
@@ -62,10 +62,13 @@ private:                                                                        
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2002/12/08 17:34:46  rogeeff
+//  guard name fixed
+//
 //  Revision 1.6  2002/11/02 19:31:05  rogeeff
 //  merged into the main trank
 //
 
 // ***************************************************************************
 
-#endif // CLASS_PROPERTY_HPP
+#endif // BOOST_TEST_CLASS_PROPERTIES_HPP
