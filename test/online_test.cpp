@@ -28,10 +28,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.6  2002/08/26 09:07:41  rogeeff
-//  switch to use included Test Execution Monitor
+//  Revision 1.7  2002/11/02 20:04:43  rogeeff
+//  release 1.29.0 merged into the main trank
 //
-//   5 Oct 01  Initial version (Gennadiy Rozental)
 
 // ***************************************************************************
 

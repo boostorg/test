@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
 <HTML>
 
@@ -23,16 +23,16 @@
 <H1>Getting started to use unit test framework</H1>
 
 <P class="1-line-indented">Today is a momentous day. Today I am going to start a new life. I am going to stop
-eating a greasy food, start attending a fitness club and ... since today I am going to  test programs 
-I am writing. I can start after the last line of a program is completed or, even 
-better idea, I can write tests while I am coding. And maybe next time I will 
+eating a greasy food, start attending a fitness club and ... since today I am going to  test programs
+I am writing. I can start after the last line of a program is completed or, even
+better idea, I can write tests while I am coding. And maybe next time I will
 write tests before the coding during the design stage. I have read a lot of literature
 on how to write the tests, I have the unit test framework in hand and an idea of new
 class. So let's get started.</P>
 <P class="1-line-indented">Let say I want to encapsulate an unchangeable C character buffer with a length
 into the simple class <B>const_string</B>. Rationale: a string class that does not
 allocate a memory and provide a convenient read-only access to the preallocated
-character buffer. I will probably want <B>const_string</B> to have an interface similar to 
+character buffer. I will probably want <B>const_string</B> to have an interface similar to
 the class std::string. What will I do  first? In my
 new life I will start with writing a test module for future class <B>const_string</B>. It will look
 like this:</P>
@@ -50,7 +50,7 @@ init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-t
 
 <SPAN class="comment">// EOF</SPAN></PRE>
 
-<P class="1-line-indented">Now I can compile it and link with the unit test framework. Done! I have a 
+<P class="1-line-indented">Now I can compile it and link with the unit test framework. Done! I have a
 working test program. It is empty, so when I
 run the program it produces following output:</P>
 <P class="test-output">*** No errors detected</P>
@@ -66,7 +66,7 @@ methods. So my class initial version looks like this:</P>
     const_string( <SPAN class="cpp-type">char</SPAN> <SPAN class="reserv-word">const</SPAN>* s );
     const_string( <SPAN class="cpp-type">char</SPAN> <SPAN class="reserv-word">const</SPAN>* s, <SPAN class="cpp-type">size_t</SPAN> length );
     const_string( <SPAN class="cpp-type">char</SPAN> <SPAN class="reserv-word">const</SPAN>* begin, <SPAN class="cpp-type">char</SPAN> <SPAN class="reserv-word">const</SPAN>* end );
-    
+
     // Access methods
     <SPAN class="cpp-type">char</SPAN> <SPAN class="reserv-word">const</SPAN>* data() <SPAN class="reserv-word">const</SPAN>;
     <SPAN class="cpp-type">size_t</SPAN>      length() <SPAN class="reserv-word">const</SPAN>;
@@ -80,32 +80,32 @@ to a test suite. My test program became to look like this:</P>
 <PRE class="code">#include &lt;boost/test/unit_test.hpp&gt;
 <SPAN class="reserv-word">using namespace</SPAN> boost::unit_test_framework;
 
-<SPAN class="cpp-type">void</SPAN> constructors_test() { 
+<SPAN class="cpp-type">void</SPAN> constructors_test() {
      const_string cs0( <SPAN class="literal">&quot;&quot;</SPAN> );                                                 <SPAN class="comment">// 1 //</SPAN>
      BOOST_CHECK_EQUAL( cs0.length(), (<SPAN class="cpp-type">size_t</SPAN>)<SPAN class="literal">0</SPAN> );
      BOOST_CHECK( cs0.is_empty() );
-     
+
      const_string cs01( NULL );                                              <SPAN class="comment">// 2 //</SPAN>
      BOOST_CHECK_EQUAL( cs01.length(), (<SPAN class="cpp-type">size_t</SPAN>)<SPAN class="literal">0</SPAN> );
      BOOST_CHECK( cs01.is_empty() );
-     
+
      const_string cs1( <SPAN class="literal">&quot;test_string&quot;</SPAN> );                                      <SPAN class="comment">// 3 //</SPAN>
      BOOST_CHECK_EQUAL( std::strcmp( cs1.data(), <SPAN class="literal">&quot;test_string&quot;</SPAN> ), <SPAN class="literal">0</SPAN> );
      BOOST_CHECK_EQUAL( cs1.length(), std::strlen(&quot;test_string&quot;) );
-     
+
      <SPAN class="cpp-type">std::string</SPAN> s( <SPAN class="literal">&quot;test_string&quot;</SPAN> );                                         <SPAN class="comment">// 4 //</SPAN>
      const_string cs2( s );
      BOOST_CHECK_EQUAL( std::strcmp( cs2.data(), <SPAN class="literal">&quot;test_string&quot;</SPAN> ), <SPAN class="literal">0</SPAN> );
-     
+
      const_string cs3( cs1 );                                                <SPAN class="comment">// 5 //</SPAN>
      BOOST_CHECK_EQUAL( std::strcmp( cs1.data(), <SPAN class="literal">&quot;test_string&quot;</SPAN> ), <SPAN class="literal">0</SPAN> );
-     
+
      const_string cs4( <SPAN class="literal">&quot;test_string&quot;</SPAN>, <SPAN class="literal">4</SPAN> );                                   <SPAN class="comment">// 6 //</SPAN>
      BOOST_CHECK_EQUAL( std::strncmp( cs4.data(), <SPAN class="literal">&quot;test&quot;</SPAN>, cs4.length() ), <SPAN class="literal">0</SPAN> );
-     
+
      const_string cs5( s.data(), s.data() + s.length() );                    <SPAN class="comment">// 7 //</SPAN>
      BOOST_CHECK_EQUAL( std::strncmp( cs5.data(), <SPAN class="literal">&quot;test_string&quot;</SPAN>, cs5.length() ), <SPAN class="literal">0</SPAN> );
-     
+
      const_string cs_array[] = { <SPAN class="literal">&quot;str1&quot;</SPAN>, <SPAN class="literal">&quot;str2&quot;</SPAN> };                           <SPAN class="comment">// 8 //</SPAN>
      BOOST_CHECK_EQUAL( cs_array[<SPAN class="literal">0</SPAN>], <SPAN class="literal">&quot;str1&quot;</SPAN> );
      BOOST_CHECK_EQUAL( cs_array[<SPAN class="literal">1</SPAN>], <SPAN class="literal">&quot;str2&quot;</SPAN> );
@@ -115,7 +115,7 @@ test_suite*
 init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-type">char</SPAN>* argv[] )
 {
     test_suite* test= BOOST_TEST_SUITE( <SPAN class="literal">&quot;const_string test&quot;</SPAN> );
-    
+
     test-&gt;add( BOOST_TEST_CASE( &amp;constructors_test ) );
 
     <SPAN class="reserv-word">return</SPAN> test;
@@ -130,7 +130,7 @@ contains and a length. The specification of the class const_string does not cont
 expected failures, so, though the constructor can fail if I would pass a pointer to
 an invalid memory,  error check control is not performed (can't require what was not
 promised :-)). But for any valid input it should work. So I am trying to check
-a construction for an empty string (1), a NULL string (2) a regular C string(3), 
+a construction for an empty string (1), a NULL string (2) a regular C string(3),
 an STL string(4), a copy construction(5) and so on . Well, after fixing all the errors in
 the implementation (do you write programs without errors from scratch?) I am able to pass
 this test case and the unit test framework gives me the following report:</P>
@@ -206,13 +206,10 @@ ability to make a changes of any complexity without involving a lengthy regressi
 testing of your whole product. Your test module and the unit test framework will
 stay behind your back to help you with any occasional errors.</P>
 <DIV class="footer">
-<P>© <A href='mailto:rogeeff@emailaccount.com'>Gennadiy Rozental</A>
+<P>&copy <A href='mailto:rogeeff@emailaccount.com'>Gennadiy Rozental</A>
 2001-2002
 </P>
-<P>Revised: 
-<!--webbot bot="Timestamp" S-Type="EDITED"
-S-Format="%d %B, %Y" startspan -->09 September, 2002<!--webbot bot="Timestamp" endspan i-checksum="21094" -->
-</P>
+<P>Revised: 29 September, 2002</P>
 </DIV></TD>
 </TR>
 </TABLE>

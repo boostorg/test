@@ -14,7 +14,7 @@
 //  Extensions could be provided in separate files
 // ***************************************************************************
 
-// LOCAL
+// Boost.Test
 #include <boost/test/unit_test_suite.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/unit_test_result.hpp>
@@ -195,10 +195,9 @@ test_suite::do_run()
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.4  2002/08/20 08:24:13  rogeeff
-//  cvs keywords added
+//  Revision 1.5  2002/11/02 20:04:42  rogeeff
+//  release 1.29.0 merged into the main trank
 //
-//   5 Oct 01  Initial version (Gennadiy Rozental)
 
 // ***************************************************************************
 

@@ -22,7 +22,7 @@
 //  boost libraries.
 // ***************************************************************************
 
-// LOCAL
+// Boost.Test
 #include <boost/test/execution_monitor.hpp>
 
 // BOOST
@@ -462,34 +462,9 @@ static void report_error( execution_exception::error_code ec, char const* msg1, 
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.12  2002/09/16 10:37:57  rogeeff
-//  excessive boost:: removed. Fix for VACPP
+//  Revision 1.13  2002/11/02 20:04:41  rogeeff
+//  release 1.29.0 merged into the main trank
 //
-//  Revision 1.11  2002/09/16 08:45:09  rogeeff
-//  STL includes normalized
-//
-//  Revision 1.10  2002/09/15 11:17:23  johnmaddock
-//  Added missing includes
-//
-//  Revision 1.9  2002/09/04 07:27:08  rogeeff
-//  space before colon deleted
-//
-//  Revision 1.8  2002/08/22 11:50:39  johnmaddock
-//  Added Kylix 3 support
-//
-//  Revision 1.7  2002/08/20 08:24:13  rogeeff
-//  cvs keywords added
-//
-//   5 Oct 01 Slightly reworked:  (Gennadiy Rozental)
-//   5 Jun 01 Made SE code work with several Win32 compilers (Beman)
-//   4 Jun 01 New interface to old code (was catch_exceptions.hpp)
-//            to avoid use of template as requested by users (Beman)
-//   4 Apr 01 Added signal handling code. (Ullrich)
-//   4 Apr 01 Removed default output at end of exception handling (Ullrich)
-//  26 Feb 01 Numerous changes suggested during formal review (Beman)
-//  25 Jan 01 catch_exceptions.hpp code factored out of cpp_main.cpp
-//  22 Jan 01 Remove test_tools dependencies to reduce coupling
-//   5 Nov 00 Initial boost version (Beman Dawes)
 
 // ***************************************************************************
 

@@ -14,7 +14,7 @@
 //  implementation is hidden in this file using pimple idiom.
 // ***************************************************************************
 
-// LOCAL
+// Boost.Test
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/unit_test_suite.hpp>
 
@@ -195,6 +195,37 @@ unit_test_result::test_case_name()
 
 //____________________________________________________________________________//
 
+void
+unit_test_result::reset_current_result_set()
+{
+    static unit_test_result* backup = NULL;
+    static boost::scoped_ptr<unit_test_result> temporary_substitute;
+
+    assert( Impl::m_curr != NULL );
+
+    if( backup ) {
+        Impl::m_curr = backup;
+        backup = NULL;
+        temporary_substitute.reset();
+    }
+    else {
+        backup = Impl::m_curr;
+        Impl::m_curr = new unit_test_result( NULL, Impl::m_curr->test_case_name(), 0 );
+        temporary_substitute.reset( Impl::m_curr );
+    }
+}
+
+//____________________________________________________________________________//
+
+void
+unit_test_result::failures_details( unit_test_counter& num_of_failures, bool& exception_caught )
+{
+    num_of_failures  = m_pimpl->m_assertions_failed;
+    exception_caught = m_pimpl->m_exception_caught;
+}
+
+//____________________________________________________________________________//
+
 namespace {
 std::string ps_name( bool p_s, char const* singular_form )  { return p_s ? std::string( singular_form ).append( "s" ) : std::string( singular_form ); }
 std::string cs_name( bool c_s )                             { return c_s ? "case" : "suite"; }
@@ -313,19 +344,9 @@ unit_test_result::result_code()
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.10  2002/08/26 08:29:48  rogeeff
-//  *** empty log message ***
+//  Revision 1.11  2002/11/02 20:04:42  rogeeff
+//  release 1.29.0 merged into the main trank
 //
-//  Revision 1.9  2002/08/21 15:15:12  rogeeff
-//  previos fix finished
-//
-//  Revision 1.8  2002/08/20 22:10:31  rogeeff
-//  slightly modified failures report
-//
-//  Revision 1.7  2002/08/20 08:24:13  rogeeff
-//  cvs keywords added
-//
-//   5 Oct 01  Initial version (Gennadiy Rozental)
 
 // ***************************************************************************
 

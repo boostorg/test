@@ -14,7 +14,7 @@
 //  Description : implements main function for Test Execution Monitor. 
 // ***************************************************************************
 
-// LOCAL
+// Boost.Test
 #include <boost/test/unit_test.hpp>         // for unit test framework
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
@@ -45,9 +45,9 @@ namespace {
 // **************                   test main                  ************** //
 // ************************************************************************** //
 
-using namespace boost::unit_test_framework;
-
 int main( int argc, char* argv[] ) {
+    using namespace boost::unit_test_framework;
+
     std::string         loglevel;
     bool                no_result_code;
     result_report_level report_level;
@@ -90,20 +90,9 @@ int main( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.8  2002/09/16 09:29:21  rogeeff
-//  since boost::smart_ptrs now support incomplete types on borland, no need in grinning_ptr any more
+//  Revision 1.9  2002/11/02 20:04:41  rogeeff
+//  release 1.29.0 merged into the main trank
 //
-//  Revision 1.7  2002/09/04 07:27:08  rogeeff
-//  space before colon deleted
-//
-//  Revision 1.6  2002/08/20 08:24:13  rogeeff
-//  cvs keywords added
-//
-//  10 Apr 01 Use new unit_test log features (Ullrich)
-//   8 Apr 01 Use boost/test/unit_test.hpp as framework. (Beman)
-//  26 Feb 01 Numerous changes suggested during formal review. (Beman)
-//  22 Jan 01 Use boost/cpp_main.hpp as framework. (Beman)
-//   5 Nov 00 Initial boost version (Beman Dawes)
 
 // ***************************************************************************
 

@@ -18,6 +18,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "minimal_test"=".\minimal_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "online_test"=".\online_test.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -40,6 +52,21 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name unit_test_framework
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "parameterized_test_test"=".\parameterized_test_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name test_exec_monitor
     End Project Dependency
 }}}
 

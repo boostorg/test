@@ -25,9 +25,7 @@
 #include <string>
 #include <iostream>                   // for cout, cerr
 
-using namespace boost::unit_test_framework;
-
-extern test_suite* init_unit_test_suite( int argc, char* argv[] );  // prototype for user's test suite init function
+extern boost::unit_test_framework::test_suite* init_unit_test_suite( int argc, char* argv[] );  // prototype for user's test suite init function
 
 // ************************************************************************** //
 // **************                 unit test main               ************** //
@@ -36,6 +34,8 @@ extern test_suite* init_unit_test_suite( int argc, char* argv[] );  // prototype
 int
 main( int argc, char* argv[] )
 {
+    using namespace boost::unit_test_framework;
+
     std::string         loglevel;
     bool                no_result_code;
     bool                print_build_info;
@@ -113,10 +113,9 @@ main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.6  2002/08/20 08:24:13  rogeeff
-//  cvs keywords added
+//  Revision 1.7  2002/11/02 20:04:42  rogeeff
+//  release 1.29.0 merged into the main trank
 //
-//   5 Oct 01  Initial version (Gennadiy Rozental)
 
 // ***************************************************************************
 

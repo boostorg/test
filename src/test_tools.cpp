@@ -13,7 +13,7 @@
 //  Description : supplies offline implemtation for the Test Tools
 // ***************************************************************************
 
-// LOCAL
+// Boost.Test
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_result.hpp>
 
@@ -45,10 +45,10 @@ std::string const&
 wrapstrstream::str() const {
 
 #ifdef BOOST_NO_STRINGSTREAM
-    m_str.assign( m_buf.str(), m_buf.pcount() );
-    m_buf.freeze( false );
+    m_str.assign( m_buf->str(), m_buf->pcount() );
+    m_buf->freeze( false );
 #else
-    m_str = m_buf.str();
+    m_str = m_buf->str();
 #endif
 
     return m_str;
@@ -408,21 +408,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.9  2002/09/16 08:45:09  rogeeff
-//  STL includes normalized
+//  Revision 1.10  2002/11/02 20:04:41  rogeeff
+//  release 1.29.0 merged into the main trank
 //
-//  Revision 1.8  2002/08/26 08:28:31  rogeeff
-//  Exclude using namespace for included use
-//  flush bug for new stringstream fixed
-//
-//  Revision 1.7  2002/08/20 22:10:30  rogeeff
-//  slightly modified failures report
-//
-//  Revision 1.6  2002/08/20 08:24:13  rogeeff
-//  cvs keywords added
-//
-//   5 Oct 01  Reworked version (Gennadiy Rozental)
-//   ? ??? 01  Initial version (Ullrich Koethe)
 
 // ***************************************************************************
 

@@ -67,7 +67,7 @@ P.test-output
     font-family:    Arial; 
     font-size:      12pt;
     margin-left:    2em;
-    white-space:    pre
+    white-space:    nowrap
 }
 
 P.page-toc

@@ -14,7 +14,7 @@
 //  Description : main function implementation for Program Executon Monitor
 // ***************************************************************************
 
-// LOCAL
+// Boost.Test
 #include <boost/test/execution_monitor.hpp>
 
 // BOOST
@@ -88,15 +88,9 @@ int main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.5  2002/08/20 08:24:13  rogeeff
-//  cvs keywords added
+//  Revision 1.6  2002/11/02 20:04:41  rogeeff
+//  release 1.29.0 merged into the main trank
 //
-//  16 Nov 01 Minor message fix (Gennadiy)
-//   4 Jun 01 Rewrite to use exception_monitor
-//  26 Feb 01 Numerous changes suggested during formal review.
-//  25 Jan 01 catch_exceptions.hpp code factored out.
-//  22 Jan 01 Remove test_tools dependencies to reduce coupling.
-//   5 Nov 00 Initial boost version (Beman Dawes)
 
 // ***************************************************************************
 
