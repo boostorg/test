@@ -177,7 +177,7 @@ test_main( int argc, char * argv[] )
 
             unit_test_log.set_stream( std::cout );
             unit_test_log.set_format( runtime_config::log_format() );
-            unit_test_log.set_threshold_level( runtime_config::log_level() != invalid_log_level 
+            unit_test_log.set_threshold_level( runtime_config::log_level() != invalid_log_level
                                                 ? runtime_config::log_level()
                                                 : log_all_errors );
             BOOST_CHECK( test_output.match_pattern() );
@@ -193,6 +193,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.30  2005/02/23 06:36:01  vawjr
+//  Deleted - extraneous \r characters in the file
+//
 //  Revision 1.29  2005/02/20 08:28:34  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
