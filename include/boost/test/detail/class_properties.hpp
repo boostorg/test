@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001.
+//  (C) Copyright Gennadiy Rozental 2001-2002.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -62,13 +62,9 @@ private:                                                                        
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.5  2002/09/09 09:07:03  rogeeff
-//  descriptions added
+//  Revision 1.6  2002/11/02 19:31:05  rogeeff
+//  merged into the main trank
 //
-//  Revision 1.4  2002/08/20 08:52:41  rogeeff
-//  cvs keywords added
-//
-//   5 Oct 01  Initial version (Gennadiy Rozental)
 
 // ***************************************************************************
 

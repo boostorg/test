@@ -121,8 +121,8 @@
 // ***************************** //
 // depricated interface
 
-#define BOOST_TEST(predicate)           BOOST_CHECK(predicate)
-#define BOOST_CRITICAL_TEST(predicate)  BOOST_REQUIRE(predicate)
+#define BOOST_TEST(predicate)            BOOST_CHECK(predicate)
+#define BOOST_CRITICAL_TEST(predicate)   BOOST_REQUIRE(predicate)
 #define BOOST_CRITICAL_ERROR(message_)   BOOST_FAIL(message_)
 
 namespace boost {
@@ -142,8 +142,10 @@ typedef std::ostringstream  out_stringstream;
 // ************************************************************************** //
 
 struct wrapstrstream {
-    mutable out_stringstream    m_buf;
+    mutable boost::shared_ptr<out_stringstream> m_buf;
     mutable std::string         m_str;
+
+    wrapstrstream() : m_buf( new out_stringstream ) {}
 
     std::string const&          str() const;
 };
@@ -153,16 +155,16 @@ struct wrapstrstream {
 template <class T>
 inline wrapstrstream const&
 operator<<( wrapstrstream const& targ, T const& t )
-{ 
-    targ.m_buf << t;
+{
+    *(targ.m_buf) << t;
     return targ;
 }
 
 //____________________________________________________________________________//
 
-inline wrapstrstream const& 
+inline wrapstrstream const&
 operator<<( wrapstrstream const& targ, wrapstrstream const& src )
-{ 
+{
     targ << src.str();
     return targ;
 }
@@ -191,9 +193,9 @@ struct extended_predicate_value {
 // exception used to implement critical checks
 
 struct test_tool_failed : public std::exception {
-    explicit            test_tool_failed( char const* message_ ) 
+    explicit            test_tool_failed( char const* message_ )
     : m_what( message_ )                                {}
-    
+
                         ~test_tool_failed() throw()     {}
 
     virtual char const* what() const throw()            { return m_what.c_str(); }
@@ -237,12 +239,12 @@ warn_and_continue_impl( extended_predicate_value const& v_, wrapstrstream const&
 bool  // return true if error detected
 test_and_continue_impl( bool predicate_, wrapstrstream const& message_,
                         char const* file_name_, int line_num_,
-                        bool add_fail_pass_ = true, 
+                        bool add_fail_pass_ = true,
                         unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors );
 void
 test_and_throw_impl   ( bool predicate_, wrapstrstream const& message_,
                         char const* file_name_, int line_num_,
-                        bool add_fail_pass_ = true, 
+                        bool add_fail_pass_ = true,
                         unit_test_framework::report_level log_level_ = unit_test_framework::report_fatal_errors );
 
 //____________________________________________________________________________//
@@ -250,7 +252,7 @@ test_and_throw_impl   ( bool predicate_, wrapstrstream const& message_,
 bool
 test_and_continue_impl( extended_predicate_value const& v_, wrapstrstream const& message_,
                         char const* file_name_, int line_num_,
-                        bool add_fail_pass_ = true, 
+                        bool add_fail_pass_ = true,
                         unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors );
 
 //____________________________________________________________________________//
@@ -260,7 +262,7 @@ test_and_continue_impl( extended_predicate_value const& v_, wrapstrstream const&
 bool
 test_and_continue_impl( void* ptr, wrapstrstream const& message_,
                         char const* file_name_, int line_num_,
-                        bool add_fail_pass_ = true, 
+                        bool add_fail_pass_ = true,
                         unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors )
 {
     return test_and_continue_impl( !!ptr, message_, file_name_, line_num_, add_fail_pass_, log_level_ );
@@ -272,7 +274,7 @@ test_and_continue_impl( void* ptr, wrapstrstream const& message_,
 void
 test_and_throw_impl   ( extended_predicate_value const& v_, wrapstrstream const& message_,
                         char const* file_name_, int line_num_,
-                        bool add_fail_pass_ = true, 
+                        bool add_fail_pass_ = true,
                         unit_test_framework::report_level log_level_ = unit_test_framework::report_fatal_errors );
 
 //____________________________________________________________________________//
@@ -363,7 +365,7 @@ equal_and_continue_impl( Left const& left_, Right const& right_,
 
     if( !predicate ) {
         return test_and_continue_impl( predicate,
-            wrapstrstream() << "test " << message_ 
+            wrapstrstream() << "test " << message_
                             << " failed [" << left_ << " != " << right_ << "]",
             file_name_, line_num_, false, log_level_ );
     }
@@ -375,7 +377,7 @@ equal_and_continue_impl( Left const& left_, Right const& right_,
 
 template <class Left, class Right>
 inline void
-equal_and_continue_impl( Left left_begin_, Left left_end_, Right right_begin_, 
+equal_and_continue_impl( Left left_begin_, Left left_end_, Right right_begin_,
                          wrapstrstream const& message_,
                          char const* file_name_, int line_num_,
                          unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors )
@@ -399,8 +401,8 @@ compare_and_continue_impl( FPT left_, FPT right_, ToleranceSource tolerance_src,
 
     if( !predicate ) {
         return test_and_continue_impl( predicate,
-            wrapstrstream() << "test " << message_ 
-                            << " failed [" << left_ << " !~= " << right_ 
+            wrapstrstream() << "test " << message_
+                            << " failed [" << left_ << " !~= " << right_
                             << " (+/-" << compute_tolerance( tolerance_src, left_ ) << ")]",
             file_name_, line_num_, false, log_level_ );
     }
@@ -459,40 +461,11 @@ private:
 
 // ***************************************************************************
 //  Revision History :
-//  
+//
 //  $Log$
-//  Revision 1.21  2002/10/01 05:45:54  rogeeff
-//  comment clarified
+//  Revision 1.22  2002/11/02 19:31:04  rogeeff
+//  merged into the main trank
 //
-//  Revision 1.20  2002/09/16 09:29:52  rogeeff
-//  since boost::smart_ptrs now support incomplete types on borland, no need in grinning_ptr any more
-//
-//  Revision 1.19  2002/09/16 08:47:29  rogeeff
-//  STL includes normalized
-//
-//  Revision 1.18  2002/09/15 11:52:47  johnmaddock
-//  Added needed <cstddef> include
-//
-//  Revision 1.17  2002/09/09 09:07:02  rogeeff
-//  descriptions added
-//
-//  Revision 1.16  2002/08/26 08:31:28  rogeeff
-//  Borlan overloading bug workaround
-//
-//  Revision 1.15  2002/08/21 15:01:23  rogeeff
-//  gcc specific fix removed since general is provided
-//
-//  Revision 1.14  2002/08/20 22:24:53  rogeeff
-//  all formal arguments trailed with underscore
-//
-//  Revision 1.13  2002/08/20 20:57:01  david_abrahams
-//  VC6 workaround
-//
-//  Revision 1.12  2002/08/20 08:52:40  rogeeff
-//  cvs keywords added
-//
-//   5 Oct 01  Reworked version (Gennadiy Rozental)
-//   ? ??? 01  Initial version (Ullrich Koethe)
 
 // ***************************************************************************
 

@@ -97,19 +97,9 @@ compute_tolerance( ToleranceSource tolerance, FPT /* unfortunately we need to pa
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.6  2002/09/16 08:47:29  rogeeff
-//  STL includes normalized
+//  Revision 1.7  2002/11/02 19:31:04  rogeeff
+//  merged into the main trank
 //
-//  Revision 1.5  2002/09/09 09:07:02  rogeeff
-//  descriptions added
-//
-//  Revision 1.4  2002/08/20 22:24:53  rogeeff
-//  all formal arguments trailed with underscore
-//
-//  Revision 1.3  2002/08/20 08:52:40  rogeeff
-//  cvs keywords added
-//
-//   9 Dec 01  Initial version (Gennadiy Rozental)
 
 // ***************************************************************************
 

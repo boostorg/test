@@ -48,10 +48,10 @@ public:
     void            increase_expected_failures( unit_test_counter amount = 1 );
 
     // reporting
-    void            confirmation_report( std::ostream& where_to_ );              // shortest
-    void            short_report( std::ostream& where_to_, int indent_ = 0 );     // short
-    void            detailed_report( std::ostream& where_to_, int indent_ = 0 );  // long
-    int             result_code();                                              // to be returned from main
+    void            confirmation_report( std::ostream& where_to_ );                 // shortest
+    void            short_report( std::ostream& where_to_, int indent_ = 0 );       // short
+    void            detailed_report( std::ostream& where_to_, int indent_ = 0 );    // long
+    int             result_code();                                                  // to be returned from main
 
     // to be used by tool box implementation
     void            inc_failed_assertions();
@@ -62,6 +62,10 @@ public:
 
     // access method; to be used by unit_test_log
     char const*     test_case_name();
+
+    // used mostly by the Boost.Test unit testing
+    static void     reset_current_result_set();
+    void            failures_details( unit_test_counter& num_of_failures, bool& exception_caught );
 
 private:
     // Constructor
@@ -79,25 +83,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.9  2002/10/01 05:45:54  rogeeff
-//  comment clarified
+//  Revision 1.10  2002/11/02 19:31:04  rogeeff
+//  merged into the main trank
 //
-//  Revision 1.8  2002/09/16 09:29:52  rogeeff
-//  since boost::smart_ptrs now support incomplete types on borland, no need in grinning_ptr any more
-//
-//  Revision 1.7  2002/09/16 08:47:29  rogeeff
-//  STL includes normalized
-//
-//  Revision 1.6  2002/09/09 09:07:03  rogeeff
-//  descriptions added
-//
-//  Revision 1.5  2002/08/20 22:24:53  rogeeff
-//  all formal arguments trailed with underscore
-//
-//  Revision 1.4  2002/08/20 08:52:40  rogeeff
-//  cvs keywords added
-//
-//   5 Oct 01  Initial version (Gennadiy Rozental)
 
 // ***************************************************************************
 

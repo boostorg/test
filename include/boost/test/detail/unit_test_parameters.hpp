@@ -44,16 +44,9 @@ std::string retrieve_framework_parameter( char const* parameter_name_, int* argc
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.4  2002/09/09 09:07:03  rogeeff
-//  descriptions added
+//  Revision 1.5  2002/11/02 19:31:05  rogeeff
+//  merged into the main trank
 //
-//  Revision 1.3  2002/08/20 22:24:54  rogeeff
-//  all formal arguments trailed with underscore
-//
-//  Revision 1.2  2002/08/20 08:52:41  rogeeff
-//  cvs keywords added
-//
-//   8 Aug 02  Initial version (Gennadiy Rozental)
 
 // ***************************************************************************
 

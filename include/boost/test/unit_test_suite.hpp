@@ -176,7 +176,8 @@ public:
                                      ParamIterator const& par_begin_, ParamIterator const& par_end_ )
     : test_case( name_ ), m_first_parameter( par_begin_ ), m_last_parameter( par_end_ ), m_function( f_ )
     {
-       p_stages_amount.set( detail::distance( par_begin_, par_end_ ) );
+       // the typecasts are here to keep Borland C++ Builder 5 happy, for other compilers they have no effect:
+       p_stages_amount.set( detail::distance( (ParamIterator)par_begin_, (ParamIterator)par_end_ ) );
     }
 
     // test case implementation
@@ -207,7 +208,8 @@ public:
     : test_case( name_ ), m_first_parameter( par_begin_ ), m_last_parameter( par_end_ ),
       m_user_test_case( user_test_case_ ), m_function( f_ )
     {
-       p_stages_amount.set( detail::distance( par_begin_, par_end_ ) );
+       // the typecasts are here to keep Borland C++ Builder 5 happy, for other compilers they have no effect:
+       p_stages_amount.set( detail::distance( (ParamIterator)par_begin_, (ParamIterator)par_end_ ) );
     }
 
     // test case implementation
@@ -308,27 +310,11 @@ create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, bo
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.10  2002/10/01 05:45:54  rogeeff
-//  comment clarified
+//  Revision 1.11  2002/11/02 19:31:04  rogeeff
+//  merged into the main trank
 //
-//  Revision 1.9  2002/09/16 09:29:52  rogeeff
-//  since boost::smart_ptrs now support incomplete types on borland, no need in grinning_ptr any more
-//
-//  Revision 1.8  2002/09/16 08:47:29  rogeeff
-//  STL includes normalized
-//
-//  Revision 1.7  2002/09/09 09:07:03  rogeeff
-//  descriptions added
-//
-//  Revision 1.6  2002/08/20 22:24:53  rogeeff
-//  all formal arguments trailed with underscore
-//
-//  Revision 1.5  2002/08/20 08:52:41  rogeeff
-//  cvs keywords added
-//
-//   5 Oct 01  New design (Gennadiy Rozental)
-//   ? ??? 01  Initial version (Ullrich Koethe)
 
 // ***************************************************************************
 
 #endif // BOOST_UNIT_TEST_SUITE_HPP
+

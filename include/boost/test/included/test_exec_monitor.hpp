@@ -10,12 +10,13 @@
 //
 //  Version     : $Id$
 //
-//  Description : included (vs. linked ) version of Test Execution Monitor
+//  Description : included (vs. linked) version of Test Execution Monitor
 // ***************************************************************************
 
 #ifndef BOOST_INCLUDED_TEST_EXEC_MONITOR_HPP
 #define BOOST_INCLUDED_TEST_EXEC_MONITOR_HPP
 
+#include <boost/test/detail/unit_test_config.hpp> //!! for borland workaround
 #include <libs/test/src/execution_monitor.cpp>
 
 #include <libs/test/src/test_tools.cpp>
@@ -32,6 +33,12 @@
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2002/11/02 19:31:05  rogeeff
+//  merged into the main trank
+//
+//  Revision 1.1.2.1  2002/10/01 17:25:29  rogeeff
+//  borland bug workaround
+//
 //  Revision 1.1  2002/08/26 09:09:00  rogeeff
 //  Initial commit
 //

@@ -55,20 +55,9 @@ using std::distance;
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.10  2002/09/16 08:47:29  rogeeff
-//  STL includes normalized
+//  Revision 1.11  2002/11/02 19:31:05  rogeeff
+//  merged into the main trank
 //
-//  Revision 1.9  2002/09/09 09:07:03  rogeeff
-//  descriptions added
-//
-//  Revision 1.8  2002/08/20 22:24:53  rogeeff
-//  all formal arguments trailed with underscore
-//
-//  Revision 1.7  2002/08/20 08:52:41  rogeeff
-//  cvs keywords added
-//
-//   8 Aug 02  Parameters definition separated (Gennadiy Rozental)
-//   5 Oct 01  Initial version (Gennadiy Rozental)
 
 // ***************************************************************************
 

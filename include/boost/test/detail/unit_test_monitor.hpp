@@ -73,19 +73,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.6  2002/09/09 09:07:03  rogeeff
-//  descriptions added
+//  Revision 1.7  2002/11/02 19:31:05  rogeeff
+//  merged into the main trank
 //
-//  Revision 1.5  2002/09/04 07:28:11  rogeeff
-//  comment typo
-//
-//  Revision 1.4  2002/08/20 22:24:53  rogeeff
-//  all formal arguments trailed with underscore
-//
-//  Revision 1.3  2002/08/20 08:52:41  rogeeff
-//  cvs keywords added
-//
-//   5 Oct 01  Initial version (Gennadiy Rozental)
 
 // ***************************************************************************
 

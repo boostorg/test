@@ -145,14 +145,8 @@ int main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.5  2002/09/16 08:47:29  rogeeff
-//  STL includes normalized
-//
-//  Revision 1.4  2002/09/12 08:29:38  rogeeff
-//  caught exception handling fixed
-//
-//  Revision 1.3  2002/09/09 08:49:25  rogeeff
-//  cvs id and copyright header added
+//  Revision 1.6  2002/11/02 19:31:04  rogeeff
+//  merged into the main trank
 //
 
 // ***************************************************************************
