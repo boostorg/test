@@ -16,9 +16,9 @@
 #define BOOST_TEST_CALLBACK_020505GER
 
 // Boost
-#include <boost/shared_ptr.hpp>
-#include <boost/detail/workaround.hpp>
 #include <boost/config.hpp>
+#include <boost/detail/workaround.hpp>
+#include <boost/shared_ptr.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -44,6 +44,8 @@ struct invoker {
     R       invoke( Functor& f, T1 t1, T2 t2, T3 t3 )   { return f( t1, t2, t3 ); }
 };
 
+//____________________________________________________________________________//
+
 template<>
 struct invoker<unused> {
     template<typename Functor>
@@ -55,6 +57,8 @@ struct invoker<unused> {
     template<typename Functor, typename T1, typename T2, typename T3>
     unused  invoke( Functor& f, T1 t1, T2 t2, T3 t3 )   { f( t1, t2, t3 ); return unused(); }
 };
+
+//____________________________________________________________________________//
 
 } // namespace ut_detail
 
@@ -71,6 +75,8 @@ struct callback0_impl {
     virtual R invoke() = 0;
 };
 
+//____________________________________________________________________________//
+
 template<typename R, typename Functor>
 struct callback0_impl_t : callback0_impl<R> {
     // Constructor
@@ -82,6 +88,8 @@ private:
     // Data members
     Functor m_f;
 };
+
+//____________________________________________________________________________//
 
 } // namespace ut_detail
 
@@ -125,6 +133,8 @@ struct callback1_impl {
     virtual R invoke( T1 t1 ) = 0;
 };
 
+//____________________________________________________________________________//
+
 template<typename R, typename T1,typename Functor>
 struct callback1_impl_t : callback1_impl<R,T1> {
     // Constructor
@@ -136,6 +146,8 @@ private:
     // Data members
     Functor m_f;
 };
+
+//____________________________________________________________________________//
 
 } // namespace ut_detail
 
@@ -179,17 +191,25 @@ struct callback2_impl {
     virtual R invoke( T1 t1, T2 t2 ) = 0;
 };
 
+//____________________________________________________________________________//
+
 template<typename R, typename T1, typename T2, typename Functor>
 struct callback2_impl_t : callback2_impl<R,T1,T2> {
     // Constructor
     explicit callback2_impl_t( Functor f ) : m_f( f ) {}
 
+#if BOOST_WORKAROUND( BOOST_MSVC, == 1310 )
+    virtual R invoke( T1 t1, T2 t2 ) { return invoker<R>().template invoke<Functor,T1,T2>( m_f, t1, t2 ); }
+#else
     virtual R invoke( T1 t1, T2 t2 ) { return invoker<R>().invoke( m_f, t1, t2 ); }
+#endif
 
 private:
     // Data members
     Functor m_f;
 };
+
+//____________________________________________________________________________//
 
 } // namespace ut_detail
 
@@ -232,6 +252,8 @@ struct callback3_impl {
     virtual R invoke( T1 t1, T2 t2, T3 t3 ) = 0;
 };
 
+//____________________________________________________________________________//
+
 template<typename R, typename T1, typename T2, typename T3, typename Functor>
 struct callback3_impl_t : callback3_impl<R,T1,T2,T3> {
     // Constructor
@@ -243,6 +265,8 @@ private:
     // Data members
     Functor m_f;
 };
+
+//____________________________________________________________________________//
 
 } // namespace ut_detail
 
@@ -285,6 +309,9 @@ private:
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.3  2005/03/22 07:05:18  rogeeff
+//   minor vc7.1 workaround
+//
 //   Revision 1.2  2005/02/24 19:28:17  turkanis
 //   removed redundant copy ctors, except for VC6
 //
