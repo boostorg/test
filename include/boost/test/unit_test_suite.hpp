@@ -57,9 +57,8 @@ public:
 
     // number of tests in this test case
     virtual unit_test_counter size() const;
-    virtual c_string_literal  type() const;         // case or suite
 
-    // execute this method to run this test case
+    // execute this method to run the test case
     void                run();
 
     // public properties
@@ -67,11 +66,14 @@ public:
                         p_timeout;                  // timeout for the excecution monitor
     BOOST_READONLY_PROPERTY( unit_test_counter, 1, (test_suite) )
                         p_expected_failures;        // number of aseertions that are expected to fail in this test case
+    BOOST_READONLY_PROPERTY( bool, 0, () )
+                        p_type;                     // true = test case, false - test suite
+    BOOST_READONLY_PROPERTY( std::string, 0, () )
+                        p_name;                     // name for this test case
+
 
 protected:
     // protected properties
-    BOOST_READONLY_PROPERTY( std::string, 0, () )
-                        p_name;                     // name for this test case
     BOOST_READONLY_PROPERTY( bool, 2, (test_case,test_suite) )
                         p_compound_stage;           // used to properly manage progress report
     BOOST_READWRITE_PROPERTY( unit_test_counter )
@@ -83,8 +85,9 @@ protected:
     void                curr_stage_is_compound();
 
     // Constructor
-    explicit            test_case( c_string_literal     name_           = "Unnamed",
-                                   unit_test_counter    stages_number_  = 0,
+    explicit            test_case( std::string const&   name_,
+                                   bool                 type_,
+                                   unit_test_counter    stages_number_,
                                    bool                 monitor_run_    = true );
 
     // test case implementation hooks to be called with unit_test_monitor or alone
@@ -110,8 +113,8 @@ public:
     typedef void  (*function_type)();
 
     // Constructor
-    function_test_case( function_type f_, c_string_literal name_ )
-    : test_case( name_, 1 ), m_function( f_ ) {}
+    function_test_case( function_type f_, std::string const& name_ )
+    : test_case( name_, true, 1 ), m_function( f_ ) {}
 
 protected:
     // test case implementation
@@ -132,8 +135,8 @@ public:
     typedef void  (UserTestCase::*function_type)();
 
     // Constructor
-    class_test_case( function_type f_, c_string_literal name_, boost::shared_ptr<UserTestCase>& user_test_case_ )
-    : test_case( name_, 1 ), m_user_test_case( user_test_case_ ), m_function( f_ ) 
+    class_test_case( function_type f_, std::string const& name_, boost::shared_ptr<UserTestCase> const& user_test_case_ )
+    : test_case( name_, true, 1 ), m_user_test_case( user_test_case_ ), m_function( f_ ) 
     {}
 
 private:
@@ -163,9 +166,9 @@ public:
     typedef void  (*function_type)( ParameterType );
 
     // Constructor
-    parametrized_function_test_case( function_type f_, c_string_literal name_,
+    parametrized_function_test_case( function_type f_, std::string const& name_,
                                      ParamIterator const& par_begin_, ParamIterator const& par_end_ )
-    : test_case( name_ ), m_first_parameter( par_begin_ ), m_last_parameter( par_end_ ), m_function( f_ )
+    : test_case( name_, true, 0 ), m_first_parameter( par_begin_ ), m_last_parameter( par_end_ ), m_function( f_ )
     {
        // the typecasts are here to keep Borland C++ Builder 5 happy, for other compilers they have no effect:
        p_stages_amount.set( detail::distance( (ParamIterator)par_begin_, (ParamIterator)par_end_ ) );
@@ -194,9 +197,9 @@ public:
     typedef void  (UserTestCase::*function_type)( ParameterType );
 
     // Constructor
-    parametrized_class_test_case( function_type f_, c_string_literal name_, boost::shared_ptr<UserTestCase>& user_test_case_,
+    parametrized_class_test_case( function_type f_, std::string const& name_, boost::shared_ptr<UserTestCase>const & user_test_case_,
                                   ParamIterator const& par_begin_, ParamIterator const& par_end_ )
-    : test_case( name_ ), m_first_parameter( par_begin_ ), m_last_parameter( par_end_ ),
+    : test_case( name_, true, 0 ), m_first_parameter( par_begin_ ), m_last_parameter( par_end_ ),
       m_user_test_case( user_test_case_ ), m_function( f_ )
     {
        // the typecasts are here to keep Borland C++ Builder 5 happy, for other compilers they have no effect:
@@ -225,7 +228,7 @@ private:
 class test_suite : public test_case {
 public:
     // Constructor
-    explicit test_suite( c_string_literal name_ = "Master" );
+    explicit test_suite( std::string const& name_ = "Master" );
 
     // Destructor
     virtual             ~test_suite();
@@ -235,7 +238,6 @@ public:
 
     // access methods
     unit_test_counter   size() const;
-    c_string_literal    type() const;
 
     // test case implementation
     void                do_init();
@@ -253,7 +255,7 @@ private:
 
 namespace detail {
 
-c_string_literal normalize_test_case_name( std::string& name_ );
+std::string const& normalize_test_case_name( std::string& name_ );
 
 } // namespace detail
 
@@ -269,7 +271,7 @@ create_test_case( void (*fct_)(), std::string name_ )
 
 template<class UserTestCase>
 inline test_case*
-create_test_case( void (UserTestCase::*fct_)(), std::string name_, boost::shared_ptr<UserTestCase>& user_test_case_ )
+create_test_case( void (UserTestCase::*fct_)(), std::string name_, boost::shared_ptr<UserTestCase> const& user_test_case_ )
 {
     return new class_test_case<UserTestCase>( fct_, detail::normalize_test_case_name( name_ ), user_test_case_ );
 }
@@ -288,7 +290,7 @@ create_test_case( void (*fct_)( ParamType ), std::string name_, ParamIterator co
 
 template<class UserTestCase, typename ParamIterator, typename ParamType>
 inline test_case*
-create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, boost::shared_ptr<UserTestCase>& user_test_case_,
+create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, boost::shared_ptr<UserTestCase> const& user_test_case_,
                   ParamIterator const& par_begin_, ParamIterator const& par_end_ )
 {
     return new parametrized_class_test_case<UserTestCase,ParamIterator,ParamType>(
@@ -305,6 +307,11 @@ create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, bo
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.13  2003/02/13 08:23:08  rogeeff
+//  C strings eliminated
+//  type: virtual method -> property
+//  const added to user test case shared instance reference
+//
 //  Revision 1.12  2002/12/08 17:51:04  rogeeff
 //  notion of number of stages is separated from number of test cases, so that
 //  parameterized test case in reported as one test case
