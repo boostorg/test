@@ -142,6 +142,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.1  2005/01/22 18:21:40  rogeeff
+//  moved sharable staff into utils
+//
 //  Revision 1.6  2004/10/01 10:51:28  rogeeff
 //  gcc 2.95 workarounds
 //

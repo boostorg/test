@@ -565,6 +565,9 @@ make_range_token_iterator( Iter begin, Iter end, M1 const& m1, M2 const& m2, M3 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.1  2005/01/22 18:21:40  rogeeff
+//  moved sharable staff into utils
+//
 //  Revision 1.8  2004/11/28 03:17:50  agurtovoy
 //  merge RC_1_32_0 fixes
 //

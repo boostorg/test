@@ -170,6 +170,9 @@ typedef basic_wrap_stringstream<wchar_t>    wrap_wstringstream;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.1  2005/01/22 18:21:40  rogeeff
+//  moved sharable staff into utils
+//
 //  Revision 1.14  2004/09/19 09:22:12  rogeeff
 //  ios fix for classic iostreams
 //

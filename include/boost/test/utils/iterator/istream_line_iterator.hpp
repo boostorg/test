@@ -89,6 +89,9 @@ typedef basic_istream_line_iterator<wchar_t>    wistream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.1  2005/01/22 18:21:40  rogeeff
+//  moved sharable staff into utils
+//
 //  Revision 1.7  2004/09/19 09:22:13  rogeeff
 //  ios fix for classic iostreams
 //

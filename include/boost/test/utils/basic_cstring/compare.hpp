@@ -107,6 +107,9 @@ operator <( basic_cstring<CharT> x, basic_cstring<CharT> y )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.1  2005/01/22 18:21:40  rogeeff
+//  moved sharable staff into utils
+//
 //  Revision 1.7  2004/08/11 03:18:49  rogeeff
 //  second tru64cxx65 fix
 //

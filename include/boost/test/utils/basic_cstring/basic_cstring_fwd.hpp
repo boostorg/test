@@ -40,6 +40,9 @@ typedef char const* const           c_literal_string;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.1  2005/01/22 18:21:40  rogeeff
+//  moved sharable staff into utils
+//
 //  Revision 1.5  2004/08/18 05:28:57  rogeeff
 //  another tru64cxx65 workaround
 //

@@ -101,6 +101,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.1  2005/01/22 18:21:40  rogeeff
+//  moved sharable staff into utils
+//
 //  Revision 1.6  2004/10/05 02:17:14  rogeeff
 //  como fix
 //

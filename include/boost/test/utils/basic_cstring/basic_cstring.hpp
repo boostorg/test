@@ -714,6 +714,9 @@ last_char( basic_cstring<CharT> source )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.1  2005/01/22 18:21:40  rogeeff
+//  moved sharable staff into utils
+//
 //  Revision 1.12  2005/01/21 07:33:51  rogeeff
 //  small aCC fix
 //

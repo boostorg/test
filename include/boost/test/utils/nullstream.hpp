@@ -84,6 +84,9 @@ typedef basic_onullstream<wchar_t>  wonullstream;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.1  2005/01/22 18:21:40  rogeeff
+//  moved sharable staff into utils
+//
 //  Revision 1.9  2004/07/19 12:21:08  rogeeff
 //  guard rename
 //

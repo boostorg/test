@@ -111,6 +111,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.1  2005/01/22 18:21:39  rogeeff
+//  moved sharable staff into utils
+//
 //  Revision 1.4  2004/07/26 05:35:53  david_abrahams
 //  Use boost::detail::lower_bound, which is actually guaranteed to work
 //  with heterogeneous comparisons.  C++98 binary searches are not, and

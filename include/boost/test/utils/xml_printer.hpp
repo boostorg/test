@@ -114,6 +114,9 @@ operator<<( custom_printer<pcdata> const& p, const_string value )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.1  2005/01/22 18:21:40  rogeeff
+//  moved sharable staff into utils
+//
 //  Revision 1.3  2005/01/21 07:31:44  rogeeff
 //  xml helper facilities reworked to present manipulator interfaces
 //

@@ -223,6 +223,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.1  2005/01/22 18:21:39  rogeeff
+//  moved sharable staff into utils
+//
 //  Revision 1.28  2004/10/05 07:38:09  rogeeff
 //  typo fix
 //
