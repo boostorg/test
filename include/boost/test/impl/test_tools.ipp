@@ -181,6 +181,29 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         unit_test_log << log::end();
         break;
     }
+    case CHECK_SMALL: {
+        std::va_list args;
+
+        va_start( args, num_of_args );
+        char const* arg1_descr  = va_arg( args, char const* );
+        char const* arg1_val    = va_arg( args, char const* );
+        /* toler_descr = */       va_arg( args, char const* );
+        char const* toler_val   = va_arg( args, char const* );
+
+        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) << ll;
+
+        unit_test_log << "absolute value of " << arg1_descr << "{" << arg1_val << "}" 
+                      << ( tl == PASS ? " doesn't exceed " : " exceeds " )
+                      << toler_val,
+
+        va_end( args );
+        
+        if( !pr.has_empty_message() )
+            unit_test_log << ". " << pr.message();
+
+        unit_test_log << log::end();
+        break;
+    }
     case CHECK_PRED_WITH_ARGS: {
         unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) 
                       << ll << prefix << check_descr.str();
@@ -574,6 +597,9 @@ output_test_stream::sync()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.6  2005/02/21 10:14:04  rogeeff
+//  CHECK_SMALL tool implemented
+//
 //  Revision 1.5  2005/02/20 08:27:07  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
