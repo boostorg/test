@@ -35,6 +35,7 @@
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
 #define BOOST_TEST_STRING_LITERAL( s ) boost::unit_test::literal_string( s, sizeof( s ) - 1 )
+#define BOOST_TEST_STRINGIZE( s ) BOOST_TEST_STRING_LITERAL( BOOST_STRINGIZE( s ) )
 #define BOOST_TEST_EMPTY_STRING BOOST_TEST_STRING_LITERAL( "" )
 
 #if defined(BOOST_HAS_SIGACTION)
@@ -59,7 +60,7 @@ namespace boost {
 
 namespace unit_test {
 
-typedef unsigned long   unit_test_counter;
+typedef unsigned long   counter_t;
 
 namespace ut_detail {
 
@@ -91,6 +92,10 @@ namespace unit_test_framework = unit_test;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.26  2005/01/30 01:48:24  rogeeff
+//  BOOST_TEST_STRINGIZE introduced
+//  counter type renamed
+//
 //  Revision 1.25  2005/01/22 19:22:12  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
