@@ -38,7 +38,7 @@
 #include <cstring>            // for C string API
 
 #ifdef BOOST_NO_STDC_NAMESPACE
-    namespace std { using ::strlen; using ::strncat; }
+namespace std { using ::strlen; using ::strncat; }
 #endif
 
 // Microsoft + other compatible compilers such as Intel
@@ -50,6 +50,9 @@
 #include <excpt.h>
 #include <eh.h> 
 
+#define BOOST_MS_CRT_DEBUG_HOOK
+#include <crtdbg.h>
+
 #elif (defined(__BORLANDC__) && defined(_Windows))
 #define BOOST_MS_STRCTURED_EXCEPTION_HANDLING
 #include <windows.h>  // Borland 5.5.1 has its own way of doing things.
@@ -60,8 +63,8 @@
 
 #define BOOST_UNIX_STYLE_SIGNAL_HANDLING
 #include <unistd.h>
-#include <signal.h>
-#include <setjmp.h>
+#include <csignal>
+#include <csetjmp>
 
 #else
 #define BOOST_NO_SIGNAL_HANDLING
@@ -72,14 +75,22 @@ namespace boost {
 
 namespace detail {
 
+using unit_test_framework::c_string_literal;
+
 //  boost::execution_monitor::execute() calls boost::detail::catch_signals() to
 //    execute user function with signals control
 //  boost::execution_monitor::execute() calls boost::detail::report_error(...) to
 //    report any caught exception and throw execution_exception
 
-static int  catch_signals( execution_monitor & exmon, int timeout ); //  timeout is in seconds. 0 implies none.
-static void report_error( execution_exception::error_code ec,
-                          char const* msg1, char const* msg2 = "" );
+const size_t REPORT_ERROR_BUFFER_SIZE = 512;
+
+static int  catch_signals( execution_monitor & exmon, bool catch_system_errors, int timeout ); //  timeout is in seconds. 0 implies none.
+
+static void report_error( execution_exception::error_code   ec,
+                          c_string_literal                  msg1,           // first part of the message
+                          c_string_literal                  msg2 = "" );    // second part of the message; sum length msg1 + msg2 should
+                                                                            // exceed REPORT_ERROR_BUFFER_SIZE; never concatinate mesages
+                                                                            // manually, cause it should work even in case of memory lack
 
 //____________________________________________________________________________//
 
@@ -90,22 +101,24 @@ static void report_error( execution_exception::error_code ec,
 class ms_se_exception {
 public:
     // Constructor
-    ms_se_exception( unsigned int n ) : m_se_id( n ) {}
+    explicit        ms_se_exception( unsigned int n ) 
+    : m_se_id( n )                      {}
 
     // Destructor
-    ~ms_se_exception() {}
+                    ~ms_se_exception()  {}
 
     // access methods
-    unsigned int id() const { return m_se_id; }
+    unsigned int    id() const          { return m_se_id; }
 
 private:
     // Data members
-    unsigned int m_se_id;
+    unsigned int    m_se_id;
 };
 
 //____________________________________________________________________________//
 
-void ms_se_trans_func( unsigned int id, _EXCEPTION_POINTERS * exps );
+void ms_se_trans_func( unsigned int id, _EXCEPTION_POINTERS* exps );
+void ms_se_forward_func( unsigned int id, _EXCEPTION_POINTERS* exps );
 static void report_ms_se_error( unsigned int id );
 
 //____________________________________________________________________________//
@@ -116,24 +129,45 @@ static void report_ms_se_error( unsigned int id );
 class unix_signal_exception {
 public:
     // Constructor
-    unix_signal_exception( execution_exception::error_code ec, char const* em )
+    unix_signal_exception( execution_exception::error_code ec, c_string_literal em )
     : m_error_code( ec ), m_error_message( em )             {}
 
     // Destructor
-    ~unix_signal_exception() {}
+    ~unix_signal_exception()                                {}
 
     // access methods
     execution_exception::error_code error_code() const      { return m_error_code;    }
-    char const*                     error_message() const   { return m_error_message; }
+    c_string_literal        error_message() const   { return m_error_message; }
 private:
     // Data members
     execution_exception::error_code m_error_code;
-    char const*                     m_error_message;
+    c_string_literal        m_error_message;
 };
 
 #endif
 
 //____________________________________________________________________________//
+
+#if defined(BOOST_MS_CRT_DEBUG_HOOK)
+
+int
+assert_reporting_function( int reportType, char* userMessage, int* retVal )
+{
+    switch( reportType ) {
+    case _CRT_ASSERT:
+        detail::report_error( execution_exception::user_error, userMessage );
+        
+        return 1; // return value and retVal are not important since we never reach this line
+    case _CRT_ERROR:
+        detail::report_error( execution_exception::system_error, userMessage );
+        
+        return 1; // return value and retVal are not important since we never reach this line
+    default:
+        return 0; // use usual reporting method
+    }
+}
+
+#endif
 
 }  // namespace detail
 
@@ -141,15 +175,24 @@ private:
 // **************               execution_monitor              ************** //
 // ************************************************************************** //
 
-int execution_monitor::execute( int timeout )
+int execution_monitor::execute( bool catch_system_errors, int timeout )
 {
+    using unit_test_framework::c_string_literal;
 
 #if defined(BOOST_MS_STRCTURED_EXCEPTION_HANDLING) && !defined(__BORLANDC__)
-    _set_se_translator( detail::ms_se_trans_func );
+    if( catch_system_errors )
+        _set_se_translator( detail::ms_se_trans_func );
+    else
+        _set_se_translator( detail::ms_se_forward_func );
+#endif
+
+#if defined(BOOST_MS_CRT_DEBUG_HOOK)
+    if( catch_system_errors )
+        _CrtSetReportHook( &detail::assert_reporting_function );
 #endif
 
     try {
-        return detail::catch_signals( *this, timeout );
+        return detail::catch_signals( *this, catch_system_errors, timeout );
     }
 
     //  Catch-clause reference arguments are a bit different from function
@@ -157,7 +200,7 @@ int execution_monitor::execute( int timeout )
     //  required.  Programmers ask for const anyhow, so we supply it.  That's
     //  easier than answering questions about non-const usage.
 
-    catch( char const* ex )
+    catch( c_string_literal ex )
       { detail::report_error( execution_exception::cpp_exception_error, "C string: ", ex ); }
     catch( std::string const& ex )
       { detail::report_error( execution_exception::cpp_exception_error, "std::string", ex.c_str() ); }
@@ -174,9 +217,9 @@ int execution_monitor::execute( int timeout )
       { detail::report_error( execution_exception::cpp_exception_error, "std::bad_typeid: ", ex.what() ); }
 #else
     catch( std::bad_cast const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, "std::bad_cast", "" ); }
+      { detail::report_error( execution_exception::cpp_exception_error, "std::bad_cast" ); }
     catch( std::bad_typeid const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, "std::bad_typeid", "" ); }
+      { detail::report_error( execution_exception::cpp_exception_error, "std::bad_typeid" ); }
 #endif
 
     catch( std::bad_exception const& ex )
@@ -213,7 +256,7 @@ int execution_monitor::execute( int timeout )
     catch( execution_exception const& ) { throw; }
 
     catch( ... )
-      { detail::report_error( execution_exception::cpp_exception_error, "unknown type", "" ); }
+      { detail::report_error( execution_exception::cpp_exception_error, "unknown type" ); }
 
     return 0;  // never reached; supplied to quiet compiler warnings
 } // execute
@@ -246,27 +289,32 @@ static void execution_monitor_signal_handler( int sig )
 }
 //____________________________________________________________________________//
 
-int catch_signals( execution_monitor & exmon, int timeout )
+int catch_signals( execution_monitor & exmon, bool catch_system_errors, int timeout )
 {
+    typedef struct sigaction* sigaction_ptr;
     static struct sigaction all_signals_action;
-    all_signals_action.sa_flags   = 0;
-    all_signals_action.sa_handler = &execution_monitor_signal_handler;
-    sigemptyset( &all_signals_action.sa_mask );
-
     struct sigaction old_SIGFPE_action;
     struct sigaction old_SIGTRAP_action;
     struct sigaction old_SIGSEGV_action;
     struct sigaction old_SIGBUS_action;
+    struct sigaction old_SIGABRT_action;
     struct sigaction old_SIGALRM_action;
 
-    sigaction( SIGFPE , &all_signals_action, &old_SIGFPE_action  );
-    sigaction( SIGTRAP, &all_signals_action, &old_SIGTRAP_action );
-    sigaction( SIGSEGV, &all_signals_action, &old_SIGSEGV_action );
-    sigaction( SIGBUS , &all_signals_action, &old_SIGBUS_action  );
+    if( catch_system_errors ) {
+        all_signals_action.sa_flags   = 0;
+        all_signals_action.sa_handler = &execution_monitor_signal_handler;
+        sigemptyset( &all_signals_action.sa_mask );
+
+        sigaction( SIGFPE , &all_signals_action, &old_SIGFPE_action  );
+        sigaction( SIGTRAP, &all_signals_action, &old_SIGTRAP_action );
+        sigaction( SIGSEGV, &all_signals_action, &old_SIGSEGV_action );
+        sigaction( SIGBUS , &all_signals_action, &old_SIGBUS_action  );
+        sigaction( SIGABRT, &all_signals_action, &old_SIGABRT_action  );
+    }
 
     int                             result;
     execution_exception::error_code ec = execution_exception::no_error;
-    char const*                     em;
+    c_string_literal                em;
 
     if( timeout ) {
         sigaction( SIGALRM , &all_signals_action, &old_SIGALRM_action );
@@ -291,6 +339,10 @@ int catch_signals( execution_monitor & exmon, int timeout )
             ec = execution_exception::system_error;
             em = "signal: SIGFPE (arithmetic exception)";
             break;
+        case SIGABRT:
+            ec = execution_exception::system_error;
+            em = "signal: SIGABRT (application abort requested)";
+            break;
         case SIGSEGV:
         case SIGBUS:
             ec = execution_exception::system_fatal_error;
@@ -303,12 +355,15 @@ int catch_signals( execution_monitor & exmon, int timeout )
     }
     if( timeout ) {
         alarm(0);
-        sigaction( SIGALRM, &old_SIGALRM_action, NULL );
+        sigaction( SIGALRM, &old_SIGALRM_action, sigaction_ptr() );
     }
-    sigaction( SIGFPE , &old_SIGFPE_action , NULL );
-    sigaction( SIGTRAP, &old_SIGTRAP_action, NULL );
-    sigaction( SIGSEGV, &old_SIGSEGV_action, NULL );
-    sigaction( SIGBUS , &old_SIGBUS_action , NULL );
+    if( catch_system_errors ) {
+        sigaction( SIGFPE , &old_SIGFPE_action , sigaction_ptr() );
+        sigaction( SIGTRAP, &old_SIGTRAP_action, sigaction_ptr() );
+        sigaction( SIGSEGV, &old_SIGSEGV_action, sigaction_ptr() );
+        sigaction( SIGBUS , &old_SIGBUS_action , sigaction_ptr() );
+        sigaction( SIGABRT, &old_SIGABRT_action, sigaction_ptr()  );
+    }
 
     if( ec != execution_exception::no_error ) {
         throw unix_signal_exception( ec, em );
@@ -322,23 +377,27 @@ int catch_signals( execution_monitor & exmon, int timeout )
 #elif (defined(__BORLANDC__) && defined(_Windows))
 
 // this works for Borland but not other Win32 compilers (which trap too many cases)
-int catch_signals( execution_monitor & exmon, int )
+int catch_signals( execution_monitor & exmon, bool catch_system_errors, int )
 {
     int result;
 
-    __try { result = exmon.function(); }
-
-    __except (1)
-    {
-        throw ms_se_exception( GetExceptionCode() );
+    if( catch_system_errors ) {
+        __try { result = exmon.function(); }
+        
+        __except (1)
+        {
+            throw ms_se_exception( GetExceptionCode() );
+        }
     }
-
+    else {
+        result = exmon.function();
+    }
     return result;
 }
 
 #else  // default signal handler
 
-int catch_signals( execution_monitor & exmon, int )
+int catch_signals( execution_monitor & exmon, bool, int )
 {
     return exmon.function();
 }
@@ -360,64 +419,61 @@ ms_se_trans_func( unsigned int id, _EXCEPTION_POINTERS* /* exps */ )
 //____________________________________________________________________________//
 
 void
+ms_se_forward_func( unsigned int id, _EXCEPTION_POINTERS* /* exps */ )
+{
+    throw;
+}
+
+//____________________________________________________________________________//
+
+void
 report_ms_se_error( unsigned int id )
 {
     switch( id ) {
         // cases classified as fatal_system_error
     case EXCEPTION_ACCESS_VIOLATION:
-        detail::report_error( execution_exception::system_fatal_error,
-            "memory access violation", "" );
+        detail::report_error( execution_exception::system_fatal_error, "memory access violation" );
         break;
 
     case EXCEPTION_ILLEGAL_INSTRUCTION:
-        detail::report_error( execution_exception::system_fatal_error,
-            "illegal instruction", "" );
+        detail::report_error( execution_exception::system_fatal_error, "illegal instruction" );
         break;
 
     case EXCEPTION_PRIV_INSTRUCTION:
-        detail::report_error( execution_exception::system_fatal_error,
-            "privilaged instruction", "" );
+        detail::report_error( execution_exception::system_fatal_error, "privilaged instruction" );
         break;
 
     case EXCEPTION_IN_PAGE_ERROR:
-        detail::report_error( execution_exception::system_fatal_error,
-            "memory page error", "" );
+        detail::report_error( execution_exception::system_fatal_error, "memory page error" );
         break;
 
     case EXCEPTION_STACK_OVERFLOW:
-        detail::report_error( execution_exception::system_fatal_error,
-            "stack overflow", "" );
+        detail::report_error( execution_exception::system_fatal_error, "stack overflow" );
         break;
 
         // cases classified as (non-fatal) system_trap
     case EXCEPTION_DATATYPE_MISALIGNMENT:
-        detail::report_error( execution_exception::system_error,
-            "data misalignment", "" );
+        detail::report_error( execution_exception::system_error, "data misalignment" );
         break;
 
     case EXCEPTION_INT_DIVIDE_BY_ZERO:
-        detail::report_error( execution_exception::system_error,
-            "integer divide by zero", "" );
+        detail::report_error( execution_exception::system_error, "integer divide by zero" );
         break;
 
     case EXCEPTION_INT_OVERFLOW:
-        detail::report_error( execution_exception::system_error,
-            "integer overflow", "" );
+        detail::report_error( execution_exception::system_error, "integer overflow" );
         break;
 
     case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:
-        detail::report_error( execution_exception::system_error,
-            "array bounds exceeded", "" );
+        detail::report_error( execution_exception::system_error, "array bounds exceeded" );
         break;
 
     case EXCEPTION_FLT_DIVIDE_BY_ZERO:
-        detail::report_error( execution_exception::system_error,
-            "floating point divide by zero", "" );
+        detail::report_error( execution_exception::system_error, "floating point divide by zero" );
         break;
 
     case EXCEPTION_FLT_STACK_CHECK:
-        detail::report_error( execution_exception::system_error,
-            "floating point stack check", "" );
+        detail::report_error( execution_exception::system_error, "floating point stack check" );
         break;
 
     case EXCEPTION_FLT_DENORMAL_OPERAND:
@@ -425,13 +481,11 @@ report_ms_se_error( unsigned int id )
     case EXCEPTION_FLT_INVALID_OPERATION:
     case EXCEPTION_FLT_OVERFLOW:
     case EXCEPTION_FLT_UNDERFLOW:
-        detail::report_error( execution_exception::system_error,
-            "floating point error", "" );
+        detail::report_error( execution_exception::system_error, "floating point error" );
         break;
 
     default:
-        detail::report_error( execution_exception::system_error,
-            "unrecognized exception or signal", "" );
+        detail::report_error( execution_exception::system_error, "unrecognized exception or signal" );
     }  // switch
 }  // report_ms_se_error
 
@@ -443,9 +497,9 @@ report_ms_se_error( unsigned int id )
 // **************                  report_error                ************** //
 // ************************************************************************** //
 
-static void report_error( execution_exception::error_code ec, char const* msg1, char const* msg2 )
+static void report_error( execution_exception::error_code ec, c_string_literal msg1, c_string_literal msg2 )
 {
-    static char buf[512];
+    static char buf[REPORT_ERROR_BUFFER_SIZE];
     buf[0] = '\0';
     std::strncat( buf, msg1, sizeof(buf)-1 );
     std::strncat( buf, msg2, sizeof(buf)-1-std::strlen(buf) );
@@ -462,6 +516,14 @@ static void report_error( execution_exception::error_code ec, char const* msg1, 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.14  2002/12/08 18:02:14  rogeeff
+//  MS C runtime debug hooks added
+//  switched to csignal and csetjmp
+//  switched to use c_string_literal
+//  catch_system_errors switch introduced for all configurations
+//  SIGABRT catch added
+//  REPORT_ERROR_BUFFER_SIZE is named
+//
 //  Revision 1.13  2002/11/02 20:04:41  rogeeff
 //  release 1.29.0 merged into the main trank
 //
