@@ -4,7 +4,7 @@ log level: log_successful_tests; error type: no error;
 
 Entering test case "error_on_demand"
 96: info: check 'no error' passed
-198: info: check 'Test case has less failures then expected' passed
+197: info: check 'Test case has less failures then expected' passed
 Leaving test case "error_on_demand"
 
 ===========================
@@ -12,7 +12,7 @@ log level: log_successful_tests; error type: user message;
 
 Entering test case "error_on_demand"
 message
-198: info: check 'Test case has less failures then expected' passed
+197: info: check 'Test case has less failures then expected' passed
 Leaving test case "error_on_demand"
 
 ===========================
@@ -20,7 +20,7 @@ log level: log_successful_tests; error type: user warning;
 
 Entering test case "error_on_demand"
 104: warning in "error_on_demand": warning
-198: info: check 'Test case has less failures then expected' passed
+197: info: check 'Test case has less failures then expected' passed
 Leaving test case "error_on_demand"
 
 ===========================
@@ -28,7 +28,7 @@ log level: log_successful_tests; error type: user non-fatal error;
 
 Entering test case "error_on_demand"
 108: error in "error_on_demand": non-fatal error
-198: info: check 'Test case has less failures then expected' passed
+197: info: check 'Test case has less failures then expected' passed
 Leaving test case "error_on_demand"
 
 ===========================
@@ -37,7 +37,7 @@ log level: log_successful_tests; error type: cpp exception;
 Entering test case "error_on_demand"
 0: fatal error in "error_on_demand": std::runtime_error: test std::runtime error what() message
 118: last checkpoint: error_on_demand() throw runtime_error
-198: info: check 'Test case has less failures then expected' passed
+197: info: check 'Test case has less failures then expected' passed
 Leaving test case "error_on_demand"
 
 ===========================
@@ -45,7 +45,7 @@ log level: log_successful_tests; error type:  system error;
 
 Entering test case "error_on_demand"
 112: fatal error in "error_on_demand": fatal error
-198: info: check 'Test case has less failures then expected' passed
+197: info: check 'Test case has less failures then expected' passed
 Leaving test case "error_on_demand"
 
 ===========================
