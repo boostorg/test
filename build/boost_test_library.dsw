@@ -18,6 +18,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "minimal_test"=".\minimal_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "online_test"=".\online_test.dsp" - Package Owner=<4>
 
 Package=<5>
