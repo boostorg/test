@@ -185,8 +185,8 @@ init( int argc, char* argv[] )
     if( runtime_config::show_progress() )
         register_observer( progress_monitor );
 
-    if( runtime_config::detect_memory_leaks() )
-        boost::detect_memory_leaks();
+    if( runtime_config::detect_memory_leak() > 0 )
+        detect_memory_leak( runtime_config::detect_memory_leak() );
 
     // init master unit test suite
     test_suite const* master_suite = init_unit_test_suite( argc, argv );
@@ -388,6 +388,9 @@ test_unit_aborted()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.4  2005/04/05 06:11:37  rogeeff
+//  memory leak allocation point detection\nextra help with _WIN32_WINNT
+//
 //  Revision 1.3  2005/03/23 21:02:19  rogeeff
 //  Sunpro CC 5.3 fixes
 //

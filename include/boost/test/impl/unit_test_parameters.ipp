@@ -59,7 +59,7 @@ literal_string CATCH_SYS_ERRORS  = "BOOST_TEST_CATCH_SYSTEM_ERRORS";
 literal_string REPORT_FORMAT     = "BOOST_TEST_REPORT_FORMAT";
 literal_string LOG_FORMAT        = "BOOST_TEST_LOG_FORMAT";
 literal_string OUTPUT_FORMAT     = "BOOST_TEST_OUTPUT_FORMAT";
-literal_string DETECT_MEM_LEAKS  = "BOOST_TEST_DETECT_MEMORY_LEAKS";
+literal_string DETECT_MEM_LEAK   = "BOOST_TEST_DETECT_MEMORY_LEAK";
 literal_string RANDOM_SEED       = "BOOST_TEST_RANDOM";
 
 unit_test::log_level     s_log_level;
@@ -72,7 +72,7 @@ bool                     s_show_progress;
 bool                     s_catch_sys_errors;
 output_format            s_report_format;
 output_format            s_log_format;
-bool                     s_detect_mem_leaks;
+long                     s_detect_mem_leaks;
 unsigned int             s_random_seed;
 
 // ************************************************************************** //
@@ -94,7 +94,7 @@ retrieve_framework_parameter( const_string parameter_name, int* argc, char** arg
         REPORT_FORMAT     , "--report_format",
         LOG_FORMAT        , "--log_format",
         OUTPUT_FORMAT     , "--output_format",
-        DETECT_MEM_LEAKS  , "--detect_memory_leaks",
+        DETECT_MEM_LEAK   , "--detect_memory_leak",
         RANDOM_SEED       , "--random",
         
         ""
@@ -107,8 +107,7 @@ retrieve_framework_parameter( const_string parameter_name, int* argc, char** arg
 
         if( !cla_name.is_empty() ) {
             for( int i = 1; i < *argc; ++i ) {
-                if( cla_name == const_string( argv[i], cla_name.size() ) &&
-                    argv[i][cla_name.size()] == '=' ) {
+                if( cla_name == const_string( argv[i], cla_name.size() ) && argv[i][cla_name.size()] == '=' ) {
                     const_string result = argv[i] + cla_name.size() + 1;
 
                     for( int j = i; j < *argc; ++j ) {
@@ -172,12 +171,9 @@ init( int* argc, char** argv )
     s_show_progress     = retrieve_framework_parameter( SHOW_PROGRESS, argc, argv ) == "yes";
     s_catch_sys_errors  = retrieve_framework_parameter( CATCH_SYS_ERRORS, argc, argv ) != "no";
     s_tests_to_run      = retrieve_framework_parameter( TESTS_TO_RUN, argc, argv );
+
     const_string rs_str = retrieve_framework_parameter( RANDOM_SEED, argc, argv );
-    
-    if( rs_str.empty() )
-        s_random_seed = 0;
-    else
-        s_random_seed   = boost::lexical_cast<unsigned int>( rs_str );
+    s_random_seed       = rs_str.is_empty() ? 0 : lexical_cast<unsigned int>( rs_str );
     
     s_log_level         = log_level_name[retrieve_framework_parameter( LOG_LEVEL, argc, argv )];
     s_report_level      = report_level_name[retrieve_framework_parameter( REPORT_LEVEL, argc, argv )];
@@ -191,7 +187,8 @@ init( int* argc, char** argv )
         s_log_format        = output_format_name[output_format];
     }
 
-    s_detect_mem_leaks  = retrieve_framework_parameter( DETECT_MEM_LEAKS, argc, argv ) != "no";
+    const_string ml_str = retrieve_framework_parameter( DETECT_MEM_LEAK, argc, argv );
+    s_detect_mem_leaks  =  ml_str.is_empty() ? 0 : lexical_cast<long>( ml_str );
 }
 
 //____________________________________________________________________________//
@@ -276,8 +273,8 @@ log_format()
 
 //____________________________________________________________________________//
 
-bool
-detect_memory_leaks()
+long
+detect_memory_leak()
 {
     return s_detect_mem_leaks;
 }
@@ -304,6 +301,9 @@ random_seed()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.6  2005/04/05 06:11:37  rogeeff
+//  memory leak allocation point detection\nextra help with _WIN32_WINNT
+//
 //  Revision 1.5  2005/02/21 10:12:22  rogeeff
 //  Support for random order of test cases implemented
 //

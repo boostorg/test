@@ -200,11 +200,11 @@ execution_monitor::register_exception_translator( ExceptionTranslator const& tr,
 }
 
 // ************************************************************************** //
-// **************             detect_memory_leaks              ************** //
+// **************              detect_memory_leak              ************** //
 // ************************************************************************** //
 
 // turn on system memory leak detection
-void    detect_memory_leaks();
+void    detect_memory_leak( long mem_leak_alloc_num = 0 );
 
 // ************************************************************************** //
 // **************               execution_aborted              ************** //
@@ -222,6 +222,9 @@ struct execution_aborted {};
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.23  2005/04/05 06:11:37  rogeeff
+//  memory leak allocation point detection\nextra help with _WIN32_WINNT
+//
 //  Revision 1.22  2005/02/20 08:27:05  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
@@ -236,7 +239,7 @@ struct execution_aborted {};
 //  depricated tools removed
 //
 //  Revision 1.19  2005/01/31 05:59:18  rogeeff
-//  detect_memory_leaks feature added
+//  detect_memory_leak feature added
 //
 // ***************************************************************************
 

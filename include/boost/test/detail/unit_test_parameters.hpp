@@ -44,7 +44,7 @@ bool                    show_progress();
 bool                    catch_sys_errors();
 output_format           report_format();
 output_format           log_format();
-bool                    detect_memory_leaks();
+long                    detect_memory_leak();
 int                     random_seed();
 
 } // namespace runtime_config
@@ -61,6 +61,9 @@ int                     random_seed();
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.21  2005/04/05 06:11:37  rogeeff
+//  memory leak allocation point detection\nextra help with _WIN32_WINNT
+//
 //  Revision 1.20  2005/02/21 10:18:30  rogeeff
 //  random cla support
 //

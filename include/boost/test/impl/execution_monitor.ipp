@@ -50,37 +50,45 @@ namespace std { using ::strlen; using ::strncat; }
 #if !defined(BOOST_DISABLE_WIN32) &&                                        \
     !defined(__BORLANDC__) &&                                               \
     (defined(_MSC_VER) && !defined(__COMO__)) ||                            \
-    (defined(__INTEL__) && defined(__MWERKS__) && __MWERKS__ >= 0x3000)
+    (defined(__INTEL__) && BOOST_WORKAROUND(__MWERKS__, >= 0x3000))
 
-#define BOOST_MS_STRCTURED_EXCEPTION_HANDLING
-#if !defined(_WIN32_WINNT)
-#define _WIN32_WINNT 0x0400
-#endif
+#  define BOOST_MS_STRCTURED_EXCEPTION_HANDLING
 
-#include <wtypes.h>
-#include <winbase.h>
-#include <excpt.h>
-#include <eh.h>
+#  ifndef _WIN32_WINNT
+#    ifdef _WINBASE_
+#      warning Debugger check disabled. Either define _WIN32_WINNT or include Boost.Test header in front of winbase.h
+#    else
+#      define BOOST_TEST_DEBUGGER_CHECK
+#      define _WIN32_WINNT 0x0400
+#    endif
+#  endif
 
-#if !defined(NDEBUG) && !defined(__MWERKS__)  // __MWERKS__ does not seem to supply implementation of C runtime debug hooks, causing linking errors
-#define BOOST_MS_CRT_DEBUG_HOOKS
-#include <crtdbg.h>
-#endif
+#  include <wtypes.h>
+#  include <winbase.h>
+#  include <excpt.h>
+#  include <eh.h>
+
+#  if !defined(NDEBUG) && !defined(__MWERKS__)  // __MWERKS__ does not seem to supply implementation of C runtime debug hooks, causing linking errors
+#    define BOOST_MS_CRT_DEBUG_HOOKS
+#    include <crtdbg.h>
+#  endif
 
 #elif (defined(__BORLANDC__) && defined(_Windows) && !defined(BOOST_DISABLE_WIN32))
-#define BOOST_MS_STRCTURED_EXCEPTION_HANDLING
-#include <windows.h>  // Borland 5.5.1 has its own way of doing things.
+
+#  define BOOST_MS_STRUCTURED_EXCEPTION_HANDLING
+#  include <windows.h>  // Borland 5.5.1 has its own way of doing things.
 
 #elif defined(BOOST_HAS_SIGACTION)
 
-#define BOOST_SIGACTION_BASED_SIGNAL_HANDLING
-#include <unistd.h>
-#include <signal.h>
-#include <setjmp.h>
+#  define BOOST_SIGACTION_BASED_SIGNAL_HANDLING
+
+#  include <unistd.h>
+#  include <signal.h>
+#  include <setjmp.h>
 
 #else
 
-#define BOOST_NO_SIGNAL_HANDLING
+#  define BOOST_NO_SIGNAL_HANDLING
 
 #endif
 
@@ -109,7 +117,7 @@ static void report_error(
 //____________________________________________________________________________//
 
 // Declaration for Microsoft structured exception handling (unix alternative - signal)
-#ifdef BOOST_MS_STRCTURED_EXCEPTION_HANDLING
+#ifdef BOOST_MS_STRUCTURED_EXCEPTION_HANDLING
 
 //  this class defined per the Microsoft structured exception documentation
 class ms_se_exception {
@@ -195,17 +203,19 @@ execution_monitor::execute( unit_test::callback0<int> const& F, bool catch_syste
 {
     using unit_test::const_string;
 
-#if defined(BOOST_MS_STRCTURED_EXCEPTION_HANDLING) && !defined(__BORLANDC__)
+# ifdef BOOST_TEST_DEBUGGER_CHECK
     if( IsDebuggerPresent() )
         catch_system_errors = false;
+#endif
 
+#if defined(BOOST_MS_STRUCTURED_EXCEPTION_HANDLING) && !defined(__BORLANDC__)
     if( catch_system_errors )
         _set_se_translator( detail::ms_se_trans_func );
     else
         _set_se_translator( detail::ms_se_forward_func );
 #endif
 
-#if defined(BOOST_MS_CRT_DEBUG_HOOKS)
+#ifdef BOOST_MS_CRT_DEBUG_HOOKS
     if( catch_system_errors )
         _CrtSetReportHook( &detail::assert_reporting_function );
 #endif
@@ -231,16 +241,16 @@ execution_monitor::execute( unit_test::callback0<int> const& F, bool catch_syste
     catch( std::bad_alloc const& ex )
       { detail::report_error( execution_exception::cpp_exception_error, "std::bad_alloc: ", ex.what() ); }
 
-#if !defined(__BORLANDC__) || __BORLANDC__ > 0x0551
-    catch( std::bad_cast const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, "std::bad_cast: ", ex.what() ); }
-    catch( std::bad_typeid const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, "std::bad_typeid: ", ex.what() ); }
-#else
+#if BOOST_WORKAROUND(__BORLANDC__, <= 0x0551)
     catch( std::bad_cast const& ex )
       { detail::report_error( execution_exception::cpp_exception_error, "std::bad_cast" ); }
     catch( std::bad_typeid const& ex )
       { detail::report_error( execution_exception::cpp_exception_error, "std::bad_typeid" ); }
+#else
+    catch( std::bad_cast const& ex )
+      { detail::report_error( execution_exception::cpp_exception_error, "std::bad_cast: ", ex.what() ); }
+    catch( std::bad_typeid const& ex )
+      { detail::report_error( execution_exception::cpp_exception_error, "std::bad_typeid: ", ex.what() ); }
 #endif
 
     catch( std::bad_exception const& ex )
@@ -266,7 +276,7 @@ execution_monitor::execute( unit_test::callback0<int> const& F, bool catch_syste
     catch( std::exception const& ex )
       { detail::report_error( execution_exception::cpp_exception_error, "std::exception: ", ex.what() ); }
 
-#if   defined(BOOST_MS_STRCTURED_EXCEPTION_HANDLING)
+#if   defined(BOOST_MS_STRUCTURED_EXCEPTION_HANDLING)
     catch( detail::ms_se_exception const& ex )
       { detail::report_ms_se_error( ex.id() ); }
 #elif defined(BOOST_SIGACTION_BASED_SIGNAL_HANDLING)
@@ -488,7 +498,7 @@ execution_monitor::catch_signals( unit_test::callback0<int> const& F, bool, int 
 // **************   Microsoft structured exception handling    ************** //
 // ************************************************************************** //
 
-#if defined(BOOST_MS_STRCTURED_EXCEPTION_HANDLING)
+#if defined(BOOST_MS_STRUCTURED_EXCEPTION_HANDLING)
 
 namespace detail {
 
@@ -601,16 +611,19 @@ static void report_error( execution_exception::error_code ec, const_string msg1,
 } // namespace detail
 
 // ************************************************************************** //
-// **************             detect_memory_leaks              ************** //
+// **************             detect_memory_leak              ************** //
 // ************************************************************************** //
 
 void
-detect_memory_leaks()
+detect_memory_leak( long mem_leak_alloc_num )
 {
 #ifdef BOOST_MS_CRT_DEBUG_HOOKS
     _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
     _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);
     _CrtSetReportFile(_CRT_WARN, _CRTDBG_FILE_STDOUT);
+    
+    if( mem_leak_alloc_num > 1 )
+        _CrtSetBreakAlloc( mem_leak_alloc_num );
 #endif // BOOST_MS_CRT_DEBUG_HOOKS
 }
 
@@ -624,6 +637,9 @@ detect_memory_leaks()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.6  2005/04/05 06:11:37  rogeeff
+//  memory leak allocation point detection\nextra help with _WIN32_WINNT
+//
 //  Revision 1.5  2005/02/20 08:27:07  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
@@ -637,7 +653,7 @@ detect_memory_leaks()
 //  cdecl portability fix
 //
 //  Revision 1.2  2005/01/31 05:58:03  rogeeff
-//  detect_memory_leaks feature added
+//  detect_memory_leak feature added
 //
 //  Revision 1.1  2005/01/22 19:22:12  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
