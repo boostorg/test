@@ -35,7 +35,7 @@ namespace std { using ::strcmp; using ::strncmp; using ::strlen; using ::isprint
 
 namespace boost {
 
-namespace test_toolbox {
+namespace test_tools {
 
 namespace detail {
 
@@ -44,19 +44,19 @@ namespace detail {
 // ************************************************************************** //
 
 void
-checkpoint_impl( wrap_stringstream& message, c_string_literal file_name, std::size_t line_num )
+checkpoint_impl( wrap_stringstream& message, const_string file_name, std::size_t line_num )
 {
-    BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::log_test_suites )
-        unit_test_framework::checkpoint( message.str() )
+    BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test::log_test_suites )
+        unit_test::checkpoint( message.str() )
     BOOST_UT_LOG_END
 }
 
 //____________________________________________________________________________//
 
 void
-message_impl( wrap_stringstream& message, c_string_literal file_name, std::size_t line_num )
+message_impl( wrap_stringstream& message, const_string file_name, std::size_t line_num )
 {
-    BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::log_messages )
+    BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test::log_messages )
         message.str()
     BOOST_UT_LOG_END
 }
@@ -65,15 +65,15 @@ message_impl( wrap_stringstream& message, c_string_literal file_name, std::size_
 
 void
 warn_and_continue_impl( bool predicate, wrap_stringstream& message,
-                        c_string_literal file_name, std::size_t line_num, bool add_fail_pass )
+                        const_string file_name, std::size_t line_num, bool add_fail_pass )
 {
     if( !predicate ) {
-        BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::log_warnings )
+        BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test::log_warnings )
             (add_fail_pass ? "condition " : "") << message.str() << (add_fail_pass ? " is not satisfied" : "" )
         BOOST_UT_LOG_END
     }
     else {
-        BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::log_successful_tests )
+        BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test::log_successful_tests )
             "condition " << message.str() << " is satisfied"
         BOOST_UT_LOG_END
     }
@@ -82,7 +82,7 @@ warn_and_continue_impl( bool predicate, wrap_stringstream& message,
 //____________________________________________________________________________//
 
 void
-warn_and_continue_impl( extended_predicate_value const& v, wrap_stringstream& message, c_string_literal file_name, std::size_t line_num,
+warn_and_continue_impl( extended_predicate_value const& v, wrap_stringstream& message, const_string file_name, std::size_t line_num,
                         bool add_fail_pass )
 {
     warn_and_continue_impl( !!v,
@@ -94,11 +94,11 @@ warn_and_continue_impl( extended_predicate_value const& v, wrap_stringstream& me
 
 bool
 test_and_continue_impl( bool predicate, wrap_stringstream& message,
-                        c_string_literal file_name, std::size_t line_num,
-                        bool add_fail_pass, unit_test_framework::log_level loglevel )
+                        const_string file_name, std::size_t line_num,
+                        bool add_fail_pass, unit_test::log_level loglevel )
 {
     if( !predicate ) {
-        unit_test_framework::unit_test_result::instance().inc_failed_assertions();
+        unit_test::unit_test_result::instance().inc_failed_assertions();
 
         BOOST_UT_LOG_BEGIN( file_name, line_num, loglevel )
             (add_fail_pass ? "test " : "") << message.str() << (add_fail_pass ? " failed" : "")
@@ -107,9 +107,9 @@ test_and_continue_impl( bool predicate, wrap_stringstream& message,
         return true;
     }
     else {
-        unit_test_framework::unit_test_result::instance().inc_passed_assertions();
+        unit_test::unit_test_result::instance().inc_passed_assertions();
 
-        BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::log_successful_tests )
+        BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test::log_successful_tests )
             (add_fail_pass ? "test " : "") << message.str() << (add_fail_pass ? " passed" : "")
         BOOST_UT_LOG_END
 
@@ -121,8 +121,8 @@ test_and_continue_impl( bool predicate, wrap_stringstream& message,
 
 bool
 test_and_continue_impl( extended_predicate_value const& v, wrap_stringstream& message,
-                        c_string_literal file_name, std::size_t line_num,
-                        bool add_fail_pass, unit_test_framework::log_level loglevel )
+                        const_string file_name, std::size_t line_num,
+                        bool add_fail_pass, unit_test::log_level loglevel )
 {
     return test_and_continue_impl( !!v,
         message << (add_fail_pass ? (!v ? " failed. " : " passed. ") : "") << *(v.p_message),
@@ -133,8 +133,8 @@ test_and_continue_impl( extended_predicate_value const& v, wrap_stringstream& me
 
 void
 test_and_throw_impl( bool predicate, wrap_stringstream& message,
-                     c_string_literal file_name, std::size_t line_num,
-                     bool add_fail_pass, unit_test_framework::log_level loglevel )
+                     const_string file_name, std::size_t line_num,
+                     bool add_fail_pass, unit_test::log_level loglevel )
 {
     if( test_and_continue_impl( predicate, message, file_name, line_num, add_fail_pass, loglevel ) ) {
         throw test_tool_failed(); // error already reported by test_and_continue_impl
@@ -145,8 +145,8 @@ test_and_throw_impl( bool predicate, wrap_stringstream& message,
 
 void
 test_and_throw_impl( extended_predicate_value const& v, wrap_stringstream& message,
-                     c_string_literal file_name, std::size_t line_num,
-                     bool add_fail_pass, unit_test_framework::log_level loglevel )
+                     const_string file_name, std::size_t line_num,
+                     bool add_fail_pass, unit_test::log_level loglevel )
 {
     if( test_and_continue_impl( v, message, file_name, line_num, add_fail_pass, loglevel ) ) {
         throw test_tool_failed(); // error already reported by test_and_continue_impl
@@ -157,8 +157,8 @@ test_and_throw_impl( extended_predicate_value const& v, wrap_stringstream& messa
 
 bool
 equal_and_continue_impl( c_string_literal left, c_string_literal right, wrap_stringstream& message,
-                         c_string_literal file_name, std::size_t line_num,
-                         unit_test_framework::log_level loglevel )
+                         const_string file_name, std::size_t line_num,
+                         unit_test::log_level loglevel )
 {
     bool predicate = (left && right) ? std::strcmp( left, right ) == 0 : (left == right);
 
@@ -177,10 +177,11 @@ equal_and_continue_impl( c_string_literal left, c_string_literal right, wrap_str
 //____________________________________________________________________________//
 
 bool
-is_defined_impl( c_string_literal symbol_name, c_string_literal symbol_value )
+is_defined_impl( const_string symbol_name, const_string symbol_value )
 {
+    symbol_value.trim_left( 2 );
 //    return std::strncmp( symbol_name, symbol_value, std::strlen( symbol_name ) ) != 0;
-    return std::strcmp( symbol_name, symbol_value + 2 ) != 0;
+    return symbol_name != symbol_value;
 }
 
 //____________________________________________________________________________//
@@ -248,29 +249,18 @@ struct output_test_stream::Impl
 
     void            check_and_fill( extended_predicate_value& res )
     {
-        if( !res.p_predicate_value.get() )
+        if( !res.p_predicate_value )
             *(res.p_message) << "Output content: \"" << m_synced_string << '\"';
     }
 };
 
 //____________________________________________________________________________//
 
-output_test_stream::output_test_stream( std::string const& pattern_file_name, bool match_or_save )
+output_test_stream::output_test_stream( const_string pattern_file_name, bool match_or_save )
 : m_pimpl( new Impl )
 {
-    if( !pattern_file_name.empty() )
-        m_pimpl->m_pattern_to_match_or_save.open( pattern_file_name.c_str(), match_or_save ? std::ios::in : std::ios::out );
-
-    m_pimpl->m_match_or_save = match_or_save;
-}
-
-//____________________________________________________________________________//
-
-output_test_stream::output_test_stream( c_string_literal pattern_file_name, bool match_or_save )
-: m_pimpl( new Impl )
-{
-    if( pattern_file_name && pattern_file_name[0] != '\0' )
-        m_pimpl->m_pattern_to_match_or_save.open( pattern_file_name, match_or_save ? std::ios::in : std::ios::out );
+    if( !pattern_file_name.is_empty() )
+        m_pimpl->m_pattern_to_match_or_save.open( pattern_file_name.begin(), match_or_save ? std::ios::in : std::ios::out );
 
     m_pimpl->m_match_or_save = match_or_save;
 }
@@ -318,45 +308,11 @@ output_test_stream::check_length( std::size_t length_, bool flush_stream )
 //____________________________________________________________________________//
 
 extended_predicate_value
-output_test_stream::is_equal( c_string_literal arg, bool flush_stream )
+output_test_stream::is_equal( const_string arg, bool flush_stream )
 {
     sync();
 
-    result_type res( m_pimpl->m_synced_string == arg );
-
-    m_pimpl->check_and_fill( res );
-
-    if( flush_stream )
-        flush();
-
-    return res;
-}
-
-//____________________________________________________________________________//
-
-extended_predicate_value
-output_test_stream::is_equal( std::string const& arg, bool flush_stream )
-{
-    sync();
-
-    result_type res( m_pimpl->m_synced_string == arg );
-
-    m_pimpl->check_and_fill( res );
-
-    if( flush_stream )
-        flush();
-
-    return res;
-}
-
-//____________________________________________________________________________//
-
-extended_predicate_value
-output_test_stream::is_equal( c_string_literal arg, std::size_t n, bool flush_stream )
-{
-    sync();
-
-    result_type res( m_pimpl->m_synced_string == std::string( arg, n ) );
+    result_type res( const_string( m_pimpl->m_synced_string ) == arg );
 
     m_pimpl->check_and_fill( res );
 
@@ -469,7 +425,7 @@ output_test_stream::sync()
 
 //____________________________________________________________________________//
 
-} // namespace test_toolbox
+} // namespace test_tools
 
 } // namespace boost
 
@@ -477,6 +433,11 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.28  2004/05/11 11:04:44  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//  namespace names shortened
+//
 //  Revision 1.27  2004/03/10 09:39:45  tknapen
 //  parenthesis around std::isprint because it's a macro on mipspro
 //

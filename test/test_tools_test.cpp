@@ -15,7 +15,7 @@
 // Boost.Test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_result.hpp>
-using namespace boost::unit_test_framework;
+using namespace boost::unit_test;
 using boost::test_toolbox::extended_predicate_value;
 
 // BOOST
@@ -718,6 +718,11 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.29  2004/05/11 11:05:06  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//  namespace names shortened
+//
 //  Revision 1.28  2003/12/23 13:23:35  johnmaddock
 //  Added patch for gcc2.95.3 (and no new iostreams).
 //

@@ -28,7 +28,7 @@
 
 namespace boost {
 
-namespace unit_test_framework {
+namespace unit_test {
 
 namespace detail {
 
@@ -77,13 +77,13 @@ msvc65_like_log_formatter::track_test_case_scope( std::ostream& output, test_cas
 {
     output << (in_out ? "Entering" : "Leaving")
         << " test " << ( tc.p_type ? "case" : "suite" )
-        << " \"" << tc.p_name.get() << "\"";
+        << " \"" << tc.p_name << "\"";
 }
 
 //____________________________________________________________________________//
 
 void
-msvc65_like_log_formatter::log_exception( std::ostream& output, std::string const& test_case_name, c_string_literal explanation )
+msvc65_like_log_formatter::log_exception( std::ostream& output, const_string test_case_name, const_string explanation )
 {
     output << "Exception in \"" << test_case_name << "\": " << explanation;
 
@@ -126,7 +126,7 @@ msvc65_like_log_formatter::begin_log_entry( std::ostream& output, log_entry_type
 //____________________________________________________________________________//
 
 void
-msvc65_like_log_formatter::log_entry_value( std::ostream& output, std::string const& value )
+msvc65_like_log_formatter::log_entry_value( std::ostream& output, const_string value )
 {
     output << value;
 }
@@ -141,9 +141,9 @@ msvc65_like_log_formatter::end_log_entry( std::ostream& /* output */ )
 //____________________________________________________________________________//
 
 void
-msvc65_like_log_formatter::print_prefix( std::ostream& output, std::string const& file, std::size_t line )
+msvc65_like_log_formatter::print_prefix( std::ostream& output, const_string file, std::size_t line )
 {
-        output << file << '(' << line << "): ";
+    output << file << '(' << line << "): ";
 }
 
 //____________________________________________________________________________//
@@ -153,7 +153,7 @@ msvc65_like_log_formatter::print_prefix( std::ostream& output, std::string const
 // ************************************************************************** //
 
 xml_log_formatter::xml_log_formatter( unit_test_log const& log ) 
-: unit_test_log_formatter( log ), m_indent( 0 ), m_curr_tag( c_string_literal() )
+: unit_test_log_formatter( log ), m_indent( 0 )
 {
 }
 
@@ -166,11 +166,11 @@ xml_log_formatter::start_log( std::ostream& output, bool log_build_info )
 
     if( log_build_info )
         output  << " platform=\"" << BOOST_PLATFORM            << '\"'
-        << " compiler=\"" << BOOST_COMPILER            << '\"'
-        << " stl=\""      << BOOST_STDLIB              << '\"'
-        << " boost=\""    << BOOST_VERSION/100000      << "."
-        << BOOST_VERSION/100 % 1000  << "."
-        << BOOST_VERSION % 100       << '\"';
+                << " compiler=\"" << BOOST_COMPILER            << '\"'
+                << " stl=\""      << BOOST_STDLIB              << '\"'
+                << " boost=\""    << BOOST_VERSION/100000      << "."
+                                  << BOOST_VERSION/100 % 1000  << "."
+                                  << BOOST_VERSION % 100       << '\"';
 
     output  << ">\n";
 }
@@ -204,7 +204,7 @@ xml_log_formatter::track_test_case_scope( std::ostream& output, test_case const&
         << ( tc.p_type ? "TestCase" : "TestSuite" );
 
     if( in_out )
-        output << " name=\"" << tc.p_name.get() << "\"";
+        output << " name=\"" << tc.p_name << "\"";
 
     output << ">";
 
@@ -215,7 +215,7 @@ xml_log_formatter::track_test_case_scope( std::ostream& output, test_case const&
 //____________________________________________________________________________//
 
 void
-xml_log_formatter::log_exception( std::ostream& output, std::string const& test_case_name, c_string_literal explanation )
+xml_log_formatter::log_exception( std::ostream& output, const_string test_case_name, const_string explanation )
 {
     print_indent( output );
 
@@ -255,7 +255,7 @@ xml_log_formatter::log_exception( std::ostream& output, std::string const& test_
 void
 xml_log_formatter::begin_log_entry( std::ostream& output, log_entry_types let )
 {
-    static c_string_literal const xml_tags[] = { "Info", "Message", "Warning", "Error", "FatalError" };
+    static literal_string xml_tags[] = { "Info", "Message", "Warning", "Error", "FatalError" };
 
     print_indent( output );
 
@@ -272,7 +272,7 @@ xml_log_formatter::begin_log_entry( std::ostream& output, log_entry_types let )
 //____________________________________________________________________________//
 
 void
-xml_log_formatter::log_entry_value( std::ostream& output, std::string const& value )
+xml_log_formatter::log_entry_value( std::ostream& output, const_string value )
 {
     output << value;
 }
@@ -282,7 +282,7 @@ xml_log_formatter::log_entry_value( std::ostream& output, std::string const& val
 void
 xml_log_formatter::end_log_entry( std::ostream& output )
 {
-    if( !m_curr_tag )
+    if( m_curr_tag.is_empty() )
         return;
 
     output << '\n';
@@ -292,7 +292,7 @@ xml_log_formatter::end_log_entry( std::ostream& output )
 
     output << "</" << m_curr_tag << ">";
 
-    m_curr_tag = c_string_literal();
+    m_curr_tag.clear();
 }
 
 //____________________________________________________________________________//
@@ -307,7 +307,7 @@ xml_log_formatter::print_indent( std::ostream& output )
 
 } // namespace detail
 
-} // namespace unit_test_framework
+} // namespace unit_test
 
 } // namespace boost
 
@@ -315,6 +315,11 @@ xml_log_formatter::print_indent( std::ostream& output )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.7  2004/05/11 11:04:44  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//  namespace names shortened
+//
 //  Revision 1.6  2003/12/01 00:42:37  rogeeff
 //  prerelease cleaning
 //

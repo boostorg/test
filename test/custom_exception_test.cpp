@@ -14,7 +14,7 @@
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
-using namespace boost::unit_test_framework;
+using namespace boost::unit_test;
 
 //____________________________________________________________________________//
 
@@ -77,6 +77,11 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2004/05/11 11:05:05  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//  namespace names shortened
+//
 //  Revision 1.3  2003/12/01 00:42:37  rogeeff
 //  prerelease cleaning
 //

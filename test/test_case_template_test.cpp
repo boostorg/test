@@ -30,7 +30,7 @@ typedef boost::test_toolbox::output_test_stream onullstream_type;
 #include <boost/mpl/list_c.hpp>
 #include <boost/scoped_ptr.hpp>
 
-namespace tf  = boost::unit_test_framework;
+namespace tf  = boost::unit_test;
 namespace mpl = boost::mpl;
 
 // STL
@@ -154,6 +154,11 @@ int test_main( int, char* [] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2004/05/11 11:05:06  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//  namespace names shortened
+//
 //  Revision 1.5  2003/12/01 00:42:38  rogeeff
 //  prerelease cleaning
 //

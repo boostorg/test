@@ -46,16 +46,16 @@ namespace {
 // ************************************************************************** //
 
 int main( int argc, char* argv[] ) {
-    using namespace boost::unit_test_framework;
+    using namespace boost::unit_test;
 
     // set the log level
     unit_test_log::instance().set_log_threshold_level_by_name( retrieve_framework_parameter( LOG_LEVEL, &argc, argv ) );
 
     // set the report level
-    std::string reportlevel = retrieve_framework_parameter( REPORT_LEVEL, &argc, argv );
+    const_string reportlevel = retrieve_framework_parameter( REPORT_LEVEL, &argc, argv );
 
     // set the log/report format
-    std::string output_format = retrieve_framework_parameter( OUTPUT_FORMAT, &argc, argv );
+    const_string output_format = retrieve_framework_parameter( OUTPUT_FORMAT, &argc, argv );
     
     if( output_format.empty() ) {
         unit_test_log::instance().set_log_format( retrieve_framework_parameter( LOG_FORMAT, &argc, argv ) );
@@ -98,6 +98,11 @@ int main( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.16  2004/05/11 11:04:44  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//  namespace names shortened
+//
 //  Revision 1.15  2003/12/01 00:42:37  rogeeff
 //  prerelease cleaning
 //

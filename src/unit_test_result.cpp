@@ -17,6 +17,7 @@
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/unit_test_suite.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
+#include <boost/test/detail/basic_cstring/compare.hpp>
 
 // BOOST
 #include <boost/config.hpp>
@@ -31,6 +32,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
+#include <map>
 
 # ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::log10; using ::strncmp; }
@@ -38,7 +40,7 @@ namespace std { using ::log10; using ::strncmp; }
 
 namespace boost {
 
-namespace unit_test_framework {
+namespace unit_test {
 
 typedef unit_test_result* unit_test_result_ptr;
 
@@ -55,14 +57,14 @@ public:
     virtual void    finish_result_report( std::ostream& where_to ) = 0;
 
     virtual void    start_test_case_report( std::ostream& where_to, std::size_t indent, 
-                                            std::string const& test_case_name, bool case_suite, bool failed ) = 0;
+                                            const_string test_case_name, bool case_suite, bool failed ) = 0;
 
     virtual void    start_confirmation_report( std::ostream& where_to,
-                                               std::string const& test_case_name, bool case_suite, bool failed,
+                                               const_string test_case_name, bool case_suite, bool failed,
                                                unit_test_counter num_failed, unit_test_counter num_expected ) = 0;
 
     virtual void    finish_test_case_report( std::ostream& where_to, std::size_t indent, 
-                                             std::string const& test_case_name, bool case_suite, bool aborted ) = 0;
+                                             const_string test_case_name, bool case_suite, bool aborted ) = 0;
 
     virtual void    report_sub_test_cases_stat( std::ostream& where_to, std::size_t indent,
                                                 unit_test_counter num_passed, unit_test_counter num_failed ) = 0;
@@ -81,12 +83,23 @@ public:
 // ************************************************************************** //
 
 class hrf_report_formatter : public report_formatter {
+    struct quote {
+        explicit quote( const_string str ) : m_str( str ) {}
+
+        friend std::ostream& operator<<( std::ostream& os, quote const& q )
+        {
+            return os << '"' << q.m_str << '"';
+        }
+
+    private:
+        const_string m_str;
+    };
 public:
     void    start_result_report( std::ostream& /* where_to */ ) {}
     void    finish_result_report( std::ostream& /* where_to */ ) {}
 
     void    start_test_case_report( std::ostream& where_to, std::size_t indent,
-                                    std::string const& test_case_name, bool case_suite, bool failed )
+                                    const_string test_case_name, bool case_suite, bool failed )
     {
         where_to << "\n" << std::setw( indent ) << "" << "Test " << cs_name( case_suite ) << " " << quote( test_case_name )
                  << (failed ? " failed with:\n" : " passed with:\n");
@@ -94,7 +107,7 @@ public:
     }
 
     void    start_confirmation_report( std::ostream& where_to,
-                                       std::string const& test_case_name, bool case_suite, bool failed,
+                                       const_string test_case_name, bool case_suite, bool failed,
                                        unit_test_counter num_failed, unit_test_counter num_expected )
     {
         if( failed ) {
@@ -117,7 +130,7 @@ public:
     }
 
     void    finish_test_case_report( std::ostream& where_to, std::size_t indent, 
-                                     std::string const& test_case_name, bool case_suite, bool aborted )
+                                     const_string test_case_name, bool case_suite, bool aborted )
     {
         if( aborted )
             where_to << std::setw( indent ) << "" << "Test " << cs_name( case_suite ) << " " << quote( test_case_name )
@@ -166,10 +179,6 @@ private:
     { 
         return c_s ? "case" : "suite";
     }
-    static  std::string quote( std::string const& name )
-    {
-        return std::string( "\"" ).append( name ).append( "\"");
-    }
 };
 
 // ************************************************************************** //
@@ -188,7 +197,7 @@ public:
     }
 
     void    start_test_case_report( std::ostream& where_to, std::size_t indent, 
-                                    std::string const& test_case_name, bool case_suite, bool failed )
+                                    const_string test_case_name, bool case_suite, bool failed )
     {
         where_to << std::setw( indent ) << ""
                  << "<" << ( case_suite ? "TestCase" : "TestSuite" ) 
@@ -197,8 +206,8 @@ public:
     }
 
     void    start_confirmation_report( std::ostream& where_to,
-                                               std::string const& test_case_name, bool case_suite, bool failed,
-                                               unit_test_counter num_failed, unit_test_counter num_expected )
+                                       const_string test_case_name, bool case_suite, bool failed,
+                                       unit_test_counter num_failed, unit_test_counter num_expected )
     {
         where_to << "<" << ( case_suite ? "TestCase" : "TestSuite" ) 
                  << " name=\"" << test_case_name << '\"'
@@ -211,7 +220,7 @@ public:
     }
 
     void    finish_test_case_report( std::ostream& where_to, std::size_t indent, 
-                                     std::string const& /* test_case_name */, bool case_suite, bool aborted )
+                                     const_string /* test_case_name */, bool case_suite, bool aborted )
     {
         if( aborted ) {
             where_to << std::setw( indent+2 ) << ""
@@ -287,11 +296,11 @@ boost::scoped_ptr<report_formatter> unit_test_result::Impl::m_report_formatter( 
 
 //____________________________________________________________________________//
 
-unit_test_result::unit_test_result( unit_test_result_ptr parent, std::string const& test_case_name, unit_test_counter exp_fail )
+unit_test_result::unit_test_result( unit_test_result_ptr parent, const_string test_case_name, unit_test_counter exp_fail )
 : m_pimpl( new Impl )
 {
     m_pimpl->m_parent            = parent;
-    m_pimpl->m_test_case_name    = test_case_name;
+    test_case_name.assign_to( m_pimpl->m_test_case_name );
 
     m_pimpl->m_assertions_passed = 0;
     m_pimpl->m_assertions_failed = 0;
@@ -327,7 +336,7 @@ unit_test_result::instance()
 //____________________________________________________________________________//
 
 void
-unit_test_result::test_case_start( std::string const& name, unit_test_counter expected_failures )
+unit_test_result::test_case_start( const_string name, unit_test_counter expected_failures )
 {
     unit_test_result_ptr new_test_case_result_inst = new unit_test_result( Impl::m_curr, name, expected_failures );
 
@@ -371,28 +380,26 @@ unit_test_result::test_case_end()
 
 //____________________________________________________________________________//
 
-void
-unit_test_result::set_report_format( std::string const& reportformat )
+struct report_format_name_map : std::map<const_string,output_format>
 {
-    struct my_pair {
-        c_string_literal    format_name;
-        output_format       format_value;
-    };
+    report_format_name_map() {
+        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "HRF" ) , HRF ) );
+        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "XML" ) , XML ) );
+    }
+};
 
-    static const my_pair name_value_map[] = {
-        { "HRF" , HRF },
-        { "XML" , XML },
-    };
+static report_format_name_map report_format_name;
 
-    static int const map_size = sizeof(name_value_map)/sizeof(my_pair);
+void
+unit_test_result::set_report_format( const_string reportformat )
+{
 
     output_format of = HRF;
-    for( int i = 0; i < map_size; i++ ) {
-        if( reportformat == name_value_map[i].format_name ) {
-            of = name_value_map[i].format_value;
-            break;
-        }
-    }
+
+    report_format_name_map::const_iterator it = report_format_name.find( reportformat );
+
+    if( it != report_format_name.end() )
+        of = it->second;
 
     if( of == HRF )
         Impl::m_report_formatter.reset( new hrf_report_formatter );
@@ -440,7 +447,7 @@ unit_test_result::caught_exception()
 
 //____________________________________________________________________________//
 
-std::string const&
+const_string
 unit_test_result::test_case_name()
 {
     return m_pimpl->m_test_case_name;
@@ -480,9 +487,9 @@ unit_test_result::failures_details( unit_test_counter& num_of_failures, bool& ex
 //____________________________________________________________________________//
 
 void
-unit_test_result::report( std::string const& reportlevel, std::ostream& where_to_ )
+unit_test_result::report( const_string reportlevel, std::ostream& where_to_ )
 {
-    static int const map_size = sizeof(report_level_names)/sizeof(c_string_literal);
+    static int const map_size = sizeof(report_level_names)/sizeof(const_string);
 
     report_level rl = UNDEF_REPORT;
     if( reportlevel.empty() )
@@ -588,7 +595,7 @@ unit_test_result::has_passed() const
 
 //____________________________________________________________________________//
 
-} // namespace unit_test_framework
+} // namespace unit_test
 
 } // namespace boost
 
@@ -596,6 +603,11 @@ unit_test_result::has_passed() const
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.24  2004/05/11 11:05:04  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//  namespace names shortened
+//
 //  Revision 1.23  2004/02/26 18:27:02  eric_niebler
 //  remove minmax hack from win32.hpp and fix all places that could be affected by the minmax macros
 //

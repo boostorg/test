@@ -17,7 +17,7 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/test_case_template.hpp>
-using namespace boost::unit_test_framework;
+using namespace boost::unit_test;
 using namespace boost::test_toolbox;
 
 // Boost
@@ -192,6 +192,11 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2004/05/11 11:05:06  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//  namespace names shortened
+//
 //  Revision 1.8  2003/12/01 00:42:38  rogeeff
 //  prerelease cleaning
 //

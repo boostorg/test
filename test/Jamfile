@@ -28,6 +28,12 @@ rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file ? : source
           ] ;
 }
 
+test-suite "basics_test"
+        :
+          [ test-btl-lib run : class_properties_test    : boost_unit_test_framework ]
+          [ test-btl-lib run : basic_cstring_test    : boost_unit_test_framework ]
+        ;
+
 test-suite "prg_exec_monitor_test"
         : [ test-btl-lib run-fail : prg_exec_fail1 : boost_prg_exec_monitor ]
           [ test-btl-lib run-fail : prg_exec_fail2 : boost_prg_exec_monitor ]
@@ -47,8 +53,7 @@ test-suite "unit_test_framework_test"
 
 # errors_handling_test has been commented out because it is in effect a Windows
 # only test and no one has volunteered to get it working on other O/S's.
-#          [ test-btl-lib run : errors_handling_test : boost_test_exec_monitor : $(test-dir)errors_handling_test.pattern ]
-
+          [ test-btl-lib run : errors_handling_test : boost_test_exec_monitor : $(test-dir)errors_handling_test.pattern ]
           [ test-btl-lib run : online_test ]
           [ test-btl-lib run-fail : minimal_test ]
           [ test-btl-lib run : output_test_stream_test  : boost_unit_test_framework ]

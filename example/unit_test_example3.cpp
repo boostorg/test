@@ -10,8 +10,8 @@
 // Boost.Test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
-using boost::unit_test_framework::test_suite;
-using boost::unit_test_framework::test_case;
+using boost::unit_test::test_suite;
+using boost::unit_test::test_case;
 using boost::test_toolbox::close_at_tolerance;
 
 // BOOST

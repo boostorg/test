@@ -23,7 +23,7 @@
 
 namespace boost {
 
-namespace unit_test_framework {
+namespace unit_test {
 
 namespace detail {
 
@@ -76,7 +76,7 @@ unit_test_monitor::function()
     try {
         (m_test_case->*m_test_case_method)();
     }
-    catch( test_toolbox::detail::test_tool_failed const& /*e*/ ) { // e not used; error already reported
+    catch( test_tools::detail::test_tool_failed const& /*e*/ ) { // e not used; error already reported
         // nothing to do
     }
 
@@ -87,7 +87,7 @@ unit_test_monitor::function()
 
 } // namespace detail
 
-} // namespace unit_test_framework
+} // namespace unit_test
 
 } // namespace boost
 
@@ -95,6 +95,11 @@ unit_test_monitor::function()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.13  2004/05/11 11:05:04  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//  namespace names shortened
+//
 //  Revision 1.12  2003/12/01 00:42:37  rogeeff
 //  prerelease cleaning
 //

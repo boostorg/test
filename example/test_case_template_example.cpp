@@ -8,7 +8,7 @@
 // Boost.Test
 #include <boost/test/test_tools.hpp>
 #include <boost/test/test_case_template.hpp>
-using boost::unit_test_framework::test_suite;
+using boost::unit_test::test_suite;
 
 // Boost.MPL
 #include <boost/mpl/range_c.hpp>

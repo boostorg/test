@@ -28,7 +28,7 @@
     It will look like this:</P>
   <P>const_string_test.cpp:</P>
   <PRE class="code">#<SPAN class="reserv-word">include</SPAN> &lt;boost/test/unit_test.hpp&gt;
-<SPAN class="reserv-word">using namespace</SPAN> boost::unit_test_framework;
+<SPAN class="reserv-word">using namespace</SPAN> boost::unit_test;
 
 test_suite*
 init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-type">char</SPAN>* argv[] )
@@ -67,7 +67,7 @@ init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-t
     testing - and add it to a test suite. My test program became to look like this:</P>
   <P>const_string_test.cpp:</P>
   <PRE class="code">#include &lt;boost/test/unit_test.hpp&gt;
-<SPAN class="reserv-word">using namespace</SPAN> boost::unit_test_framework;
+<SPAN class="reserv-word">using namespace</SPAN> boost::unit_test;
 
 <SPAN class="cpp-type">void</SPAN> constructors_test() {
      const_string cs0( <SPAN class="literal">&quot;&quot;</SPAN> );                                                 <SPAN class="comment">// 1 //</SPAN>
@@ -139,7 +139,7 @@ init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-t
     to check it. As a result my test suite became to look like this:</P>
   <P>const_string_test.cpp:</P>
   <PRE class="code">#<SPAN class="reserv-word">include</SPAN> &lt;boost/test/unit_test.hpp&gt;
-<SPAN class="reserv-word">using namespace</SPAN> boost::unit_test_framework;
+<SPAN class="reserv-word">using namespace</SPAN> boost::unit_test;
 
 <SPAN class="cpp-type">void</SPAN> constructors_test() {
     ...

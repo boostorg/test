@@ -58,8 +58,8 @@ int main( int argc, char* argv[] )
     
     int result;
 
-    boost::unit_test_framework::c_string_literal p( std::getenv( "BOOST_TEST_CATCH_SYSTEM_ERRORS" ) );
-    bool catch_system_errors = !p || (std::strcmp( p, "no" ) != 0);
+    boost::unit_test::const_string p( std::getenv( "BOOST_TEST_CATCH_SYSTEM_ERRORS" ) );
+    bool catch_system_errors = p != "no";
         
     try {
         result = caller.execute( catch_system_errors );
@@ -84,8 +84,8 @@ int main( int argc, char* argv[] )
         //  like the clutter.  Use an environment variable to avoid command
         //  line argument modifications; for use in production programs
         //  that's a no-no in some organizations.
-        boost::unit_test_framework::c_string_literal p( std::getenv( "BOOST_PRG_MON_CONFIRM" ) );
-        if( !p || std::strcmp( p, "no" ) != 0 ) { 
+        boost::unit_test::const_string p( std::getenv( "BOOST_PRG_MON_CONFIRM" ) );
+        if( p != "no" ) { 
             std::cerr << std::flush << "no errors detected" << std::endl; 
         }
     }
@@ -99,6 +99,11 @@ int main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.14  2004/05/11 11:04:44  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//  namespace names shortened
+//
 //  Revision 1.13  2003/12/01 00:42:37  rogeeff
 //  prerelease cleaning
 //

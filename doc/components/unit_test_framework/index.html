@@ -62,7 +62,7 @@
     function main() that initializing testing environment and taking care about results reporting. The 
     main function also includes a hook for the function that should be supplied by the user. So, to integrate 
     test program with the framework you should provide the function with the following specification:</P>
-  <P>boost::unit_test_framework::test_suite* <SPAN class="new-term">init_unit_test_suite</SPAN> ( int 
+  <P>boost::unit_test::test_suite* <SPAN class="new-term">init_unit_test_suite</SPAN> ( int 
     argc, char* argv[] )</P>
   <P class="first-line-indented">This function should create and initialize top 
     level instance of the class test_suite. The NULL pointer returned by the function 
@@ -81,7 +81,7 @@
   <P class="first-line-indented">In case if your test cases may throw custom  exceptions (see <a href="../execution_monitor/index.html#caught_exception">here</a> for list of exceptions translated by default), you could register  translator specific for that exception. For more details on translator specification you could see <a href="../execution_monitor/execution_monitor.html">excecution_monitor</a> description. To register translator in test case monitor use following template function defined in the framework:</P>
   <P>template&lt;typename Exception, typename ExceptionTranslator&gt;<br>
     void <br>
-    boost::unit_test_framework::<SPAN class="new-term">register_exception_translator</span>( ExceptionTranslator const&amp; tr, boost::type&lt;Exception&gt;* d = 0 )
+    boost::unit_test::<SPAN class="new-term">register_exception_translator</span>( ExceptionTranslator const&amp; tr, boost::type&lt;Exception&gt;* d = 0 )
   </P>
   <P class="first-line-indented">Once testing is finished, the framework reports the results and returns 
     the result code. Here the list of values returned by the test programs integrated with the unit test 

@@ -22,7 +22,7 @@
 #include <boost/test/detail/nullstream.hpp>
 #endif
 using boost::test_toolbox::output_test_stream;
-using namespace boost::unit_test_framework;
+using namespace boost::unit_test;
 
 // BOOST
 #include <boost/lexical_cast.hpp>
@@ -50,7 +50,7 @@ void bad_foo()  {
 
 //____________________________________________________________________________//
 
-void check( output_test_stream& output, std::string const& report_format )
+void check( output_test_stream& output, const_string report_format )
 {
     unit_test_result::instance().set_report_format( report_format );
 
@@ -81,7 +81,7 @@ int
 test_main( int argc, char* argv[] ) 
 {
     bool match_or_save = retrieve_framework_parameter( SAVE_TEST_PATTERN, &argc, argv ) != "yes";
-    std::string pattern_file_name( argc > 1 ? argv[1] : "result_report_test.pattern" );
+    const_string pattern_file_name( argc > 1 ? argv[1] : "result_report_test.pattern" );
 
     output_test_stream output( pattern_file_name, match_or_save );
   
@@ -133,7 +133,7 @@ test_main( int argc, char* argv[] )
 
     check( output );
 
-    std::string output_format = retrieve_framework_parameter( OUTPUT_FORMAT, &argc, argv );
+    const_string output_format = retrieve_framework_parameter( OUTPUT_FORMAT, &argc, argv );
     
     if( output_format.empty() ) {
         unit_test_result::set_report_format( retrieve_framework_parameter( REPORT_FORMAT, &argc, argv ) );
@@ -148,6 +148,11 @@ test_main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.13  2004/05/11 11:05:06  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//  namespace names shortened
+//
 //  Revision 1.12  2003/12/01 00:42:38  rogeeff
 //  prerelease cleaning
 //

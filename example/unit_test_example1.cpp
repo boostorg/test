@@ -8,13 +8,16 @@
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
-using boost::unit_test_framework::test_suite;
+using boost::unit_test::test_suite;
 
 // most frequently you implement test cases as a free functions
 void free_test_function()
 {
     // reports 'error in "free_test_function": test 2 == 1 failed'
     BOOST_CHECK(2 == 1); // non-critical test => continue after failure
+
+    int* p = (int*)0;
+    *p = 0;
 }
 
 test_suite*

@@ -42,7 +42,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile=".\Debug\unix_test_framework.lib"
+				OutputFile=".\Debug\unit_test_framework.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"/>
@@ -350,6 +350,22 @@
 				<File
 					RelativePath="..\..\..\..\boost\test\detail\wrap_stringstream.hpp">
 				</File>
+				<Filter
+					Name="basic_cstring"
+					Filter="">
+					<File
+						RelativePath="..\..\..\..\boost\test\detail\basic_cstring\basic_cstring.hpp">
+					</File>
+					<File
+						RelativePath="..\..\..\..\boost\test\detail\basic_cstring\basic_cstring_fwd.hpp">
+					</File>
+					<File
+						RelativePath="..\..\..\..\boost\test\detail\basic_cstring\compare.hpp">
+					</File>
+					<File
+						RelativePath="..\..\..\..\boost\test\detail\basic_cstring\io.hpp">
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="included"

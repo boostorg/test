@@ -16,7 +16,7 @@
 #include <boost/test/unit_test_suite_ex.hpp>
 #include <boost/test/test_tools.hpp>
 
-using boost::unit_test_framework::test_suite;
+using boost::unit_test::test_suite;
 
 #if !defined(BOOST_MSVC) && !defined(__SUNPRO_CC)
 // BOOST
@@ -109,6 +109,11 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.14  2004/05/11 11:05:06  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//  namespace names shortened
+//
 //  Revision 1.13  2003/12/01 00:42:38  rogeeff
 //  prerelease cleaning
 //

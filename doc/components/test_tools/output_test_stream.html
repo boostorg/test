@@ -37,8 +37,8 @@
   <P class="first-line-indented">There are two ways to use the output_test_stream tool: explicit output 
     checks and pattern file matching.</P>
   <H3 class="first-line-indented">Explicit output checks</H3>
-  <PRE class="code"><SPAN class="reserv-word">using</SPAN> boost::test_toolbox::output_test_stream;
-	
+  <PRE class="code"><SPAN class="reserv-word">using</SPAN> boost::test_tools::output_test_stream;
+    
 <SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
     output_test_stream output;
     <SPAN class="cpp-type">int</SPAN> i=<SPAN class="literal">2</SPAN>;
@@ -57,8 +57,8 @@
     possible. It's not only simplify patters you compare with, but also allows you to more closely identify 
     possible source of failure.</P>
   <H3 class="first-line-indented">Pattern file matching</H3>
-  <PRE class="code"><SPAN class="reserv-word">using</SPAN> boost::test_toolbox::output_test_stream;
-	
+  <PRE class="code"><SPAN class="reserv-word">using</SPAN> boost::test_tools::output_test_stream;
+    
 <SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-type">char</SPAN>* [] ) {
     output_test_stream output( <SPAN class="literal">&quot;pattern_file&quot;, </SPAN>argc == <SPAN class="literal">1</SPAN>);
     <SPAN class="cpp-type">int</SPAN> i=<SPAN class="literal">2</SPAN>;
@@ -75,7 +75,7 @@
   <P class="first-line-indented">Even more simpler: no need to generate expected patterns. Though you 
     need to keep the pattern file all the time somewhere around. Your testing will look like a serious 
     of output operators followed by match pattern checks. And so on again. Try to perform checks as frequently 
-    as possible,cause it allows you to more closely identify possible source of failure.</P>	
+    as possible,cause it allows you to more closely identify possible source of failure.</P>    
   <H2><A name="Tests">Example and test</A> programs</H2>
   <P class="indented"> <A href="../../tests/output_test_stream_test.html">output_test_stream_test</A><BR>
     <A href="../../tests/result_report_test.html">result_report_test</A><BR>

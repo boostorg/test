@@ -8,7 +8,7 @@
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
-using boost::unit_test_framework::test_suite;
+using boost::unit_test::test_suite;
 
 void force_division_by_zero()
 {

@@ -19,6 +19,7 @@
 #include <boost/test/detail/supplied_log_formatters.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/test/unit_test_result.hpp>
+#include <boost/test/detail/basic_cstring/compare.hpp>
 
 // BOOST
 #include <boost/scoped_ptr.hpp>
@@ -26,6 +27,7 @@
 
 // STL
 #include <algorithm>
+#include <map>
 
 # ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::strcmp; }
@@ -33,7 +35,7 @@ namespace std { using ::strcmp; }
 
 namespace boost {
 
-namespace unit_test_framework {
+namespace unit_test {
 
 // ************************************************************************** //
 // **************                 unit_test_log                ************** //
@@ -68,7 +70,7 @@ struct unit_test_log::Impl {
     }
     void                set_checkpoint( checkpoint const& cp )
     {
-        m_checkpoint_data.m_message = cp.m_message;
+        cp.m_message.assign_to( m_checkpoint_data.m_message );
         m_checkpoint_data.m_file    = m_entry_data.m_file;
         m_checkpoint_data.m_line    = m_entry_data.m_line;
     }
@@ -128,42 +130,38 @@ unit_test_log::set_log_threshold_level( log_level lev )
 
 //____________________________________________________________________________//
 
+struct log_level_name_map : std::map<const_string,log_level>
+{
+    log_level_name_map() {
+        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "all" )             , log_successful_tests ) );
+        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "success" )         , log_successful_tests ) );
+        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "test_suite" )      , log_test_suites ) );
+        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "messages" )        , log_messages ) );
+        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "warnings" )        , log_warnings ) );
+        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "all_errors" )      , log_all_errors ) );
+        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "cpp_exceptions" )  , log_cpp_exception_errors ) );
+        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "system_errors" )   , log_system_errors ) );
+        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "fatal_errors" )    , log_fatal_errors ) );
+        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "progress" )        , log_progress_only) );
+        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "nothing" )         , log_nothing ) );
+    }
+};
+
+static log_level_name_map log_level_name;
+
 void
-unit_test_log::set_log_threshold_level_by_name( std::string const& lev )
+unit_test_log::set_log_threshold_level_by_name( const_string lev )
 {
     if( m_pimpl->m_entry_in_progress )
         return;
 
-    struct my_pair {
-        c_string_literal    level_name;
-        log_level           level_value;
-    };
-
-    static const my_pair name_value_map[] = {
-        { "all"             , log_successful_tests },
-        { "success"         , log_successful_tests },
-        { "test_suite"      , log_test_suites },
-        { "messages"        , log_messages },
-        { "warnings"        , log_warnings },
-        { "all_errors"      , log_all_errors },
-        { "cpp_exceptions"  , log_cpp_exception_errors },
-        { "system_errors"   , log_system_errors },
-        { "fatal_errors"    , log_fatal_errors },
-        { "progress"        , log_progress_only},
-        { "nothing"         , log_nothing },
-    };
-
-    static int const map_size = sizeof(name_value_map)/sizeof(my_pair);
-
     if( lev.empty() )
         return;
 
-    for( int i=0; i < map_size; i++ ) {
-        if( lev == name_value_map[i].level_name ) {
-            set_log_threshold_level( name_value_map[i].level_value );
-            return;
-        }
-    }
+    log_level_name_map::const_iterator it = log_level_name.find( lev );
+
+    if( it != log_level_name.end() )
+        set_log_threshold_level( it->second );
 }
 
 //____________________________________________________________________________//
@@ -230,7 +228,7 @@ unit_test_log&
 unit_test_log::operator<<( file const& f )
 {
     if( m_pimpl->m_entry_in_progress ) {
-        m_pimpl->m_entry_data.m_file = f.m_file_name;
+        f.m_file_name.assign_to( m_pimpl->m_entry_data.m_file );
 
         // normalize file name
         std::transform( m_pimpl->m_entry_data.m_file.begin(), m_pimpl->m_entry_data.m_file.end(), 
@@ -301,7 +299,7 @@ unit_test_log::operator<<( log_progress const& )
 //____________________________________________________________________________//
 
 unit_test_log&
-unit_test_log::operator<<( std::string const& value )
+unit_test_log::operator<<( const_string value )
 {
     if( m_pimpl->m_entry_in_progress && m_pimpl->m_entry_data.m_level >= m_pimpl->m_threshold_level && !value.empty() ) {
         if( !m_pimpl->m_entry_has_value ) {
@@ -335,14 +333,6 @@ unit_test_log::operator<<( std::string const& value )
     }
 
     return *this;
-}
-
-//____________________________________________________________________________//
-
-unit_test_log&
-unit_test_log::operator<<( c_string_literal value )
-{
-    return *this << std::string( value ? value : "" );
 }
 
 //____________________________________________________________________________//
@@ -381,31 +371,28 @@ unit_test_log::finish( unit_test_counter test_cases_amount )
 
 //____________________________________________________________________________//
 
+struct log_format_name_map : std::map<const_string,output_format>
+{
+    log_format_name_map() {
+        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "HRF" ) , HRF ) );
+        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "XML" ) , XML ) );
+    }
+};
+
+static log_format_name_map log_format_name;
+
 void
-unit_test_log::set_log_format( std::string const& logformat )
+unit_test_log::set_log_format( const_string logformat )
 {
     if( m_pimpl->m_entry_in_progress )
         return;
 
-    struct my_pair {
-        c_string_literal    format_name;
-        output_format       format_value;
-    };
-
-    static const my_pair name_value_map[] = {
-        { "HRF" , HRF },
-        { "XML" , XML },
-    };
-
-    static int const map_size = sizeof(name_value_map)/sizeof(my_pair);
-
     output_format of = HRF;
-    for( int i=0; i < map_size; i++ ) {
-        if( logformat == name_value_map[i].format_name ) {
-            of = name_value_map[i].format_value;
-            break;
-        }
-    }
+
+    log_format_name_map::const_iterator it = log_format_name.find( logformat );
+
+    if( it != log_format_name.end() )
+        of = it->second;
 
     if( of == HRF )
         set_log_formatter( new detail::msvc65_like_log_formatter( *this ) );
@@ -439,7 +426,7 @@ unit_test_log::checkpoint_data() const
 
 //____________________________________________________________________________//
 
-} // namespace unit_test_framework
+} // namespace unit_test
 
 } // namespace boost
 
@@ -447,6 +434,11 @@ unit_test_log::checkpoint_data() const
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.20  2004/05/11 11:04:44  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//  namespace names shortened
+//
 //  Revision 1.19  2003/12/01 00:42:37  rogeeff
 //  prerelease cleaning
 //

@@ -15,7 +15,7 @@
 using common_layer::const_string;
 
 #include <boost/test/unit_test.hpp>
-using namespace boost::unit_test_framework;
+using namespace boost::unit_test;
 
 #include <iomanip>
 #include <iostream>

@@ -17,56 +17,51 @@
 
 // Boost.Test
 #include <boost/test/detail/unit_test_parameters.hpp>
+#include <boost/test/detail/basic_cstring/compare.hpp>
 
 //BOOST
 #include <boost/config.hpp>           // for broken compiler workarounds
-// for strcmp etc:
-#include <cstring>
-#include <cstdlib>
+#include <map>
 
 # ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::getenv; using ::strncmp; using ::strcmp; }
 # endif
 
 namespace boost {
-
-namespace unit_test_framework {
-
-const struct parameter_names {
-    c_string_literal env_name;
-    c_string_literal cla_name;
-} parameter_cla_names [] = {
-    { LOG_LEVEL         , "--log_level" },
-    { NO_RESULT_CODE    , "--result_code" },
-    { REPORT_LEVEL      , "--report_level" },
-    { TESTS_TO_RUN      , "--run_test" },
-    { SAVE_TEST_PATTERN , "--save_pattern" },
-    { BUILD_INFO        , "--build_info" },
-    { CATCH_SYS_ERRORS  , "--catch_system_errors" },
-    { REPORT_FORMAT     , "--report_format" },
-    { LOG_FORMAT        , "--log_format" },
-    { OUTPUT_FORMAT     , "--output_format" },
-    { c_string_literal(), c_string_literal() }
     
-} ;
+namespace unit_test {
 
-std::string
-retrieve_framework_parameter( c_string_literal parameter_name, int* argc, char** argv )
+struct parameter_names_map : std::map<const_string,const_string>
+{
+    parameter_names_map() {
+        insert( std::make_pair( LOG_LEVEL         , BOOST_TEST_STRING_LITERAL( "--log_level" ) ) );
+        insert( std::make_pair( NO_RESULT_CODE    , BOOST_TEST_STRING_LITERAL( "--result_code" ) ) );
+        insert( std::make_pair( REPORT_LEVEL      , BOOST_TEST_STRING_LITERAL( "--report_level" ) ) );
+        insert( std::make_pair( TESTS_TO_RUN      , BOOST_TEST_STRING_LITERAL( "--run_test" ) ) );
+        insert( std::make_pair( SAVE_TEST_PATTERN , BOOST_TEST_STRING_LITERAL( "--save_pattern" ) ) );
+        insert( std::make_pair( BUILD_INFO        , BOOST_TEST_STRING_LITERAL( "--build_info" ) ) );
+        insert( std::make_pair( CATCH_SYS_ERRORS  , BOOST_TEST_STRING_LITERAL( "--catch_system_errors" ) ) );
+        insert( std::make_pair( REPORT_FORMAT     , BOOST_TEST_STRING_LITERAL( "--report_format" ) ) );
+        insert( std::make_pair( LOG_FORMAT        , BOOST_TEST_STRING_LITERAL( "--log_format" ) ) );
+        insert( std::make_pair( OUTPUT_FORMAT     , BOOST_TEST_STRING_LITERAL( "--output_format" ) ) );
+    }
+};
+
+static parameter_names_map parameter_names;
+
+const_string
+retrieve_framework_parameter( const_string parameter_name, int* argc, char** argv )
 {
     // first try to find parameter among command line arguments if present
     if( argc ) {
         // locate corresponding cla name
-        parameter_names const* curr = parameter_cla_names;
-        while( curr->env_name && std::strcmp( curr->env_name, parameter_name ) != 0 )
-            curr++;
+        parameter_names_map::const_iterator it = parameter_names.find( parameter_name );
 
-        if( curr->env_name ) {
-            std::string parameter_cla_name = curr->cla_name;
-            parameter_cla_name += '=';
-            
+        if( it != parameter_names.end() ) {
             for( int i = 1; i < *argc; ++i ) {
-                if( std::strncmp( parameter_cla_name.c_str(), argv[i], parameter_cla_name.length() ) == 0 ) {
-                    std::string result = argv[i] + parameter_cla_name.length();
+                if( it->second == const_string( argv[i], it->second.size() ) && 
+                    argv[i][it->second.size()] == '=' ) {
+                    const_string result = argv[i] + it->second.size() + 1;
                     
                     for( int j = i; j < *argc; ++j ) {
                         argv[j] = argv[j+1];
@@ -79,13 +74,12 @@ retrieve_framework_parameter( c_string_literal parameter_name, int* argc, char**
         }
     }
 
-    c_string_literal env_var_value = std::getenv( parameter_name );
-    return  env_var_value ? env_var_value : "";
+    return std::getenv( parameter_name.begin() );
 }
 
 //____________________________________________________________________________//
 
-} // namespace unit_test_framework
+} // namespace unit_test
 
 } // namespace boost
 
@@ -93,6 +87,11 @@ retrieve_framework_parameter( c_string_literal parameter_name, int* argc, char**
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.12  2004/05/11 11:05:04  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//  namespace names shortened
+//
 //  Revision 1.11  2003/12/01 00:42:37  rogeeff
 //  prerelease cleaning
 //
