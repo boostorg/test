@@ -33,12 +33,12 @@ lib prg_exec_monitor : ../src/$(PRG_EXEC_MON_SOURCES).cpp
      ;
 
 lib test_exec_monitor : ../src/$(TEST_EXEC_MON_SOURCES).cpp
-     : <sysinclude>$(BOOST_ROOT)
+     : <sysinclude>$(BOOST_ROOT) <borland><*><cxxflags>-w-8080"
      : <threading>single/multi <runtime-link>static/dynamic
      ;
 
 lib unit_test_framework : ../src/$(UTF_SOURCES).cpp
-     : <sysinclude>$(BOOST_ROOT)
+     : <sysinclude>$(BOOST_ROOT) <borland><*><cxxflags>-w-8080
      : <threading>single/multi <runtime-link>static/dynamic
      ;
 
