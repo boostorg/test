@@ -33,10 +33,6 @@
 namespace std { using ::strcmp; using ::wcscmp; using ::strlen; using ::isprint; }
 # endif
 
-#if defined( __GNUC__ ) && defined( BOOST_NO_CWCHAR )
-namespace std { using ::wcscmp; }
-#endif
-
 #include <boost/test/detail/suppress_warnings.hpp>
 
 namespace boost {
@@ -187,7 +183,13 @@ equal_and_continue_impl( wchar_t const* left, wchar_t const* right, wrap_strings
                          const_string file_name, std::size_t line_num,
                          unit_test::log_level loglevel )
 {
-    bool predicate = (left && right) ? std::wcscmp( left, right ) == 0 : (left == right);
+    bool predicate = (left == right);
+    
+    if (left && right)
+    {
+        using namespace std;
+        predicate = wcscmp( left, right ) == 0;
+    }
 
     left  = left  ? left  : L"null string";
     right = right ? right : L"null string";
@@ -459,6 +461,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.37  2004/07/23 11:59:31  david_abrahams
+//  Got tired of waiting for workarounds; fix for cygwin gcc2 and mingw-2.0.
+//
 //  Revision 1.36  2004/07/22 09:59:20  rogeeff
 //  preper wide char workaround
 //
