@@ -182,7 +182,7 @@ assert_reporting_function( int reportType, char* userMessage, int* retVal )
 int
 execution_monitor::run_function()
 {
-	return m_custom_translators ? (*m_custom_translators)( *this ) : function();
+    return m_custom_translators ? (*m_custom_translators)( *this ) : function();
 }
 
 //____________________________________________________________________________//
@@ -583,26 +583,9 @@ static void report_error( execution_exception::error_code ec, c_string_literal m
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.28  2003/11/06 07:31:12  rogeeff
-//  Licence update
+//  Revision 1.29  2003/12/01 00:42:37  rogeeff
+//  prerelease cleaning
 //
-//  Revision 1.27  2003/11/02 04:43:09  rogeeff
-//  custom exception translators support
-//
-//  Revision 1.26  2003/10/27 07:13:32  rogeeff
-//  licence update
-//
-//  Revision 1.25  2003/09/14 12:42:22  beman_dawes
-//  Change to new license (with Gennadiy's permission)
-//
-//  Revision 1.24  2003/06/10 03:34:28  rogeeff
-//  desable SEH if BOOST_DISABLE_WIN32 in effect
-//
-//  Revision 1.23  2003/06/09 09:13:05  rogeeff
-//  1.30.beta1
-//
-//  Revision 1.22  2003/05/02 17:57:40  beman_dawes
-//  como can't do structured exceptions
 
 // ***************************************************************************
 

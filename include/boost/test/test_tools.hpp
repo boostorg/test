@@ -36,29 +36,29 @@
 // **************                    TOOL BOX                  ************** //
 // ************************************************************************** //
 
-#define BOOST_CHECKPOINT(message_)											\
-    boost::test_toolbox::detail::checkpoint_impl(							\
-        boost::wrap_stringstream().ref() << message_, __FILE__, __LINE__)	\
+#define BOOST_CHECKPOINT(message_)                                          \
+    boost::test_toolbox::detail::checkpoint_impl(                           \
+        boost::wrap_stringstream().ref() << message_, __FILE__, __LINE__)   \
 /**/
 
-#define BOOST_WARN(predicate)												\
-    boost::test_toolbox::detail::warn_and_continue_impl((predicate),		\
-        boost::wrap_stringstream().ref() << #predicate, __FILE__, __LINE__)	\
+#define BOOST_WARN(predicate)                                               \
+    boost::test_toolbox::detail::warn_and_continue_impl((predicate),        \
+        boost::wrap_stringstream().ref() << #predicate, __FILE__, __LINE__) \
 /**/
 
-#define BOOST_CHECK(predicate)												\
-    boost::test_toolbox::detail::test_and_continue_impl((predicate),		\
-        boost::wrap_stringstream().ref() << #predicate, __FILE__, __LINE__)	\
+#define BOOST_CHECK(predicate)                                              \
+    boost::test_toolbox::detail::test_and_continue_impl((predicate),        \
+        boost::wrap_stringstream().ref() << #predicate, __FILE__, __LINE__) \
 /**/
 
-#define BOOST_CHECK_EQUAL(left_, right_)												\
-    boost::test_toolbox::detail::equal_and_continue_impl((left_), (right_),				\
+#define BOOST_CHECK_EQUAL(left_, right_)                                                \
+    boost::test_toolbox::detail::equal_and_continue_impl((left_), (right_),             \
         boost::wrap_stringstream().ref() << #left_ " == " #right_, __FILE__, __LINE__)
 /**/
 
 #define BOOST_CHECK_CLOSE(left_, right_, tolerance) \
     boost::test_toolbox::detail::compare_and_continue_impl((left_), (right_), (tolerance),\
-														   #left_,  #right_, __FILE__, __LINE__)
+                                                           #left_,  #right_, __FILE__, __LINE__)
 /**/
 
 #define BOOST_BITWISE_EQUAL(left_, right_) \
@@ -107,18 +107,18 @@
 
 #define BOOST_FAIL(message_) BOOST_REQUIRE_MESSAGE( false, message_ )
 
-#define BOOST_CHECK_THROW( statement, exception )												\
-    try { statement; BOOST_ERROR( "exception "#exception" is expected" ); }						\
-    catch( exception const& ) {																	\
-        BOOST_CHECK_MESSAGE( true, "exception "#exception" is caught" );						\
-    }																							\
+#define BOOST_CHECK_THROW( statement, exception )                                               \
+    try { statement; BOOST_ERROR( "exception "#exception" is expected" ); }                     \
+    catch( exception const& ) {                                                                 \
+        BOOST_CHECK_MESSAGE( true, "exception "#exception" is caught" );                        \
+    }                                                                                           \
 /**/
 
-#define BOOST_CHECK_EXCEPTION( statement, exception, predicate )								\
-    try { statement; BOOST_ERROR( "exception "#exception" is expected" ); }						\
-    catch( exception const& ex ) {																\
-        BOOST_CHECK_MESSAGE( predicate( ex ), "incorrect exception "#exception" is caught" );	\
-    }																							\
+#define BOOST_CHECK_EXCEPTION( statement, exception, predicate )                                \
+    try { statement; BOOST_ERROR( "exception "#exception" is expected" ); }                     \
+    catch( exception const& ex ) {                                                              \
+        BOOST_CHECK_MESSAGE( predicate( ex ), "incorrect exception "#exception" is caught" );   \
+    }                                                                                           \
 /**/
 
 #define BOOST_IGNORE_CHECK( e ) true
@@ -313,7 +313,7 @@ test_and_continue_impl( extended_predicate_value const& v_, wrap_stringstream& m
 //____________________________________________________________________________//
 
 // Borland bug workaround
-#if defined(__BORLANDC__) && (__BORLANDC__ < 0x560)
+#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x570))
 bool
 test_and_continue_impl( void* ptr, wrap_stringstream& message_,
                         c_string_literal file_name_, std::size_t line_num_,
@@ -418,19 +418,19 @@ inline bool
 equal_and_continue_impl( Left const& left_, Right const& right_,
                          wrap_stringstream& message_, c_string_literal file_name_, std::size_t line_num_,
                          unit_test_framework::log_level log_level_ = unit_test_framework::log_all_errors,
-						 std::size_t pos = (std::size_t)-1 )
+                         std::size_t pos = (std::size_t)-1 )
 {
     extended_predicate_value predicate( left_ == right_ );
 
     if( !predicate ) {
-		wrap_stringstream error_message;
+        wrap_stringstream error_message;
         error_message.ref() << "test " << message_ << " failed";
 
-		if( pos != (std::size_t)-1 )
-			error_message.ref() <<  " in a position " << pos;
+        if( pos != (std::size_t)-1 )
+            error_message.ref() <<  " in a position " << pos;
 
         error_message.ref() << " [" 
-			                << print_helper<Left>( left_ )   << " != " 
+                            << print_helper<Left>( left_ )   << " != " 
                             << print_helper<Right>( right_ ) << "]";
 
         return test_and_continue_impl( predicate, error_message, file_name_, line_num_, false, log_level_ );
@@ -449,8 +449,8 @@ equal_and_continue_impl( Left left_begin_, Left left_end_, Right right_begin_,
                          c_string_literal file_name_, std::size_t line_num_,
                          unit_test_framework::log_level log_level_ = unit_test_framework::log_all_errors )
 {
-	std::size_t pos = 0;
-	for( ; left_begin_ != left_end_; ++left_begin_, ++right_begin_, ++pos )
+    std::size_t pos = 0;
+    for( ; left_begin_ != left_end_; ++left_begin_, ++right_begin_, ++pos )
         equal_and_continue_impl( *left_begin_, *right_begin_, message_, file_name_, line_num_, log_level_, pos );
 }
 
@@ -579,33 +579,8 @@ private:
 //  Revision History :
 //
 //  $Log$
-//  Revision 1.34  2003/11/06 07:38:58  rogeeff
-//  Licence update
-//  Floating point check reworked (Is not backward compartible!!!)
-//  Some annoying MSVC wrnings suppressed
-//
-//  Revision 1.33  2003/11/02 06:19:55  rogeeff
-//  custom exception translator registration support
-//  added position for the collection comparison results error message
-//  special log print methods for char values
-//  BOOST_IGNORE_CHECK - to be used with BOOST_CHECK_EXCEPTION
-//  some macro allignment
-//
-//  Revision 1.32  2003/10/27 07:13:12  rogeeff
-//  licence update
-//
-//  Revision 1.31  2003/07/15 09:00:46  rogeeff
-//  eliminate tolerance definition by number of rounding errors
-//
-//  Revision 1.30  2003/06/20 10:56:26  rogeeff
-//  printing posponed differently
-//  extended predicate value allowed to reset the value
-//
-//  Revision 1.29  2003/06/09 08:55:08  rogeeff
-//  BOOST_CHECK_EXCEPTION introduced
-//  type for line parameter changed to size_t
-//  support for using types without operator<< implemented
-//  support for extended user defined predicates that could return cause of error
+//  Revision 1.35  2003/12/01 00:41:56  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

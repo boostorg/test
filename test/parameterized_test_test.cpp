@@ -49,7 +49,7 @@ void test1( int i )
 //____________________________________________________________________________//
 
 
-#if defined(__BORLANDC__) && (__BORLANDC__ < 0x570)
+##if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x570))
 #define BOOST_PARAM_TEST_CASE__( arg1, arg2, arg3 ) \
     boost::unit_test_framework::create_test_case<int*,int>( (arg1), std::string( "" ), (arg2), (arg3) )
 #else
@@ -194,33 +194,8 @@ int test_main( int, char* [] ) {
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.10  2003/11/06 07:31:42  rogeeff
-//  Licence update
-//
-//  Revision 1.9  2003/10/27 07:13:32  rogeeff
-//  licence update
-//
-//  Revision 1.8  2003/06/12 00:02:39  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.7  2003/06/11 15:47:03  rogeeff
-//  eliminate mismatch types warning
-//
-//  Revision 1.6  2003/06/10 07:57:33  rogeeff
-//  test_case_template_test added
-//  parameterized test updated
-//
-//  Revision 1.5  2003/06/09 09:25:24  rogeeff
-//  1.30.beta1
-//
-//  Revision 1.4  2003/02/15 21:52:37  rogeeff
-//  mingw ostream fix
-//
-//  Revision 1.3  2002/12/09 05:16:10  rogeeff
-//  switched to use utf::unit_test_result_saver for internal testing
-//
-//  Revision 1.2  2002/11/02 20:04:43  rogeeff
-//  release 1.29.0 merged into the main trank
+//  Revision 1.11  2003/12/01 00:42:37  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

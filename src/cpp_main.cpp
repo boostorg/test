@@ -99,20 +99,8 @@ int main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.12  2003/11/06 07:31:12  rogeeff
-//  Licence update
-//
-//  Revision 1.11  2003/10/27 07:13:31  rogeeff
-//  licence update
-//
-//  Revision 1.10  2003/09/14 12:42:22  beman_dawes
-//  Change to new license (with Gennadiy's permission)
-//
-//  Revision 1.9  2003/07/11 16:26:21  jmaurer
-//  need <cstring> before being able to use std::strcmp etc.
-//
-//  Revision 1.8  2003/06/09 09:12:26  rogeeff
-//  straiten return code logic for Program Execution Monitor
+//  Revision 1.13  2003/12/01 00:42:37  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

@@ -315,20 +315,8 @@ xml_log_formatter::print_indent( std::ostream& output )
 //  Revision History :
 //
 //  $Log$
-//  Revision 1.5  2003/11/06 07:31:12  rogeeff
-//  Licence update
-//
-//  Revision 1.4  2003/10/27 07:13:32  rogeeff
-//  licence update
-//
-//  Revision 1.3  2003/07/15 08:31:24  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.2  2003/07/09 12:51:29  jmaurer
-//  avoid "unused parameter" warnings with gcc
-//
-//  Revision 1.1  2003/07/02 09:11:24  rogeeff
-//  move log formatter in public interface
+//  Revision 1.6  2003/12/01 00:42:37  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

@@ -93,14 +93,8 @@ retrieve_framework_parameter( c_string_literal parameter_name, int* argc, char**
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.10  2003/11/06 07:31:12  rogeeff
-//  Licence update
-//
-//  Revision 1.9  2003/10/27 07:13:32  rogeeff
-//  licence update
-//
-//  Revision 1.8  2003/06/09 09:17:11  rogeeff
-//  1.30.beta1
+//  Revision 1.11  2003/12/01 00:42:37  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

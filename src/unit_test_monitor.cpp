@@ -36,8 +36,8 @@ bool unit_test_monitor::s_catch_system_errors = true;
 unit_test_monitor::error_level
 unit_test_monitor::execute_and_translate( test_case* target_test_case, function_to_monitor f, int timeout ) 
 {
-	m_test_case			= target_test_case;
-	m_test_case_method	= f;
+    m_test_case         = target_test_case;
+    m_test_case_method  = f;
 
     try {
         execute( s_catch_system_errors, timeout );
@@ -95,17 +95,8 @@ unit_test_monitor::function()
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.11  2003/11/06 07:31:12  rogeeff
-//  Licence update
-//
-//  Revision 1.10  2003/11/02 06:02:29  rogeeff
-//  use shared global unit_test_monitor
-//
-//  Revision 1.9  2003/10/27 07:13:32  rogeeff
-//  licence update
-//
-//  Revision 1.8  2003/06/09 09:17:10  rogeeff
-//  1.30.beta1
+//  Revision 1.12  2003/12/01 00:42:37  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

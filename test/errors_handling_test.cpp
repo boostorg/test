@@ -203,14 +203,14 @@ test_main( int argc, char * argv[] )
                     break;
                 case tct_param_free_function:
 // Borland bug workaround
-#if defined(__BORLANDC__) && (__BORLANDC__ < 0x570)
+#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x570))
                     test.add( boost::unit_test_framework::create_test_case<int*,int>( &bad_function_param, std::string( "bad_function_param" ), (int*)params, params+1 ) );
 #else
                     test.add( BOOST_PARAM_TEST_CASE( &bad_function_param, (int*)params, params+1 ) );
 #endif
                     break;
                 case tct_param_user_test_case:
-#if defined(__BORLANDC__) && (__BORLANDC__ < 0x570)
+#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x570))
                     test.add( boost::unit_test_framework::create_test_case<bad_test,int*,int>( &bad_test::test_param, std::string( "bad_test::test_param" ),  bad_test_instance, (int*)params, params+1 ) );
 #else
                     test.add( BOOST_PARAM_CLASS_TEST_CASE( &bad_test::test_param, bad_test_instance, (int*)params, params+1 ) );
@@ -247,32 +247,8 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
-//  Revision 1.16  2003/11/06 07:31:42  rogeeff
-//  Licence update
-//
-//  Revision 1.15  2003/10/27 07:13:32  rogeeff
-//  licence update
-//
-//  Revision 1.14  2003/09/14 12:42:22  beman_dawes
-//  Change to new license (with Gennadiy's permission)
-//
-//  Revision 1.13  2003/07/02 09:14:22  rogeeff
-//  move log formatter in public interface
-//
-//  Revision 1.12  2003/06/09 09:23:03  rogeeff
-//  1.30.beta1
-//
-//  Revision 1.11  2003/02/15 21:49:57  rogeeff
-//  borland warning fix
-//
-//  Revision 1.10  2003/02/13 08:47:05  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.9  2002/12/09 05:14:45  rogeeff
-//  switch to use unit_test_result_saver for internal testing
-//
-//  Revision 1.8  2002/11/02 20:04:43  rogeeff
-//  release 1.29.0 merged into the main trank
+//  Revision 1.17  2003/12/01 00:42:37  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

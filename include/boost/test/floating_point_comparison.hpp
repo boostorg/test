@@ -80,8 +80,8 @@ public:
     }
 
     // Public properties
-    BOOST_READONLY_PROPERTY( FPT, 0, () )	p_fraction_tolerance;
-    BOOST_READONLY_PROPERTY( bool, 0, () )	p_strong_or_weak;
+    BOOST_READONLY_PROPERTY( FPT, 0, () )   p_fraction_tolerance;
+    BOOST_READONLY_PROPERTY( bool, 0, () )  p_strong_or_weak;
 };
 
 //____________________________________________________________________________//
@@ -119,22 +119,8 @@ compute_tolerance( FPT tolerance )
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.12  2003/11/06 07:38:57  rogeeff
-//  Licence update
-//  Floating point check reworked (Is not backward compartible!!!)
-//  Some annoying MSVC wrnings suppressed
-//
-//  Revision 1.11  2003/10/27 07:13:12  rogeeff
-//  licence update
-//
-//  Revision 1.10  2003/07/15 09:00:46  rogeeff
-//  eliminate tolerance definition by number of rounding errors
-//
-//  Revision 1.9  2003/07/02 09:15:57  rogeeff
-//  move log formatter in public interface
-//
-//  Revision 1.8  2003/06/09 08:43:47  rogeeff
-//  added comparison type and algorithm constructor accepting it
+//  Revision 1.13  2003/12/01 00:41:56  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

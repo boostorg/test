@@ -125,7 +125,7 @@ test_is_equal()
     output << '\0';
     BOOST_CHECK( output.is_equal( "", (std::size_t)1 ) );
 
-	output << std::setw( 10 ) << "qwerty" << '\n';
+    output << std::setw( 10 ) << "qwerty" << '\n';
     BOOST_CHECK( output.is_equal( "    qwerty\n" ) );
 
     std::string s( "test string" );
@@ -215,27 +215,8 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.13  2003/11/06 07:31:42  rogeeff
-//  Licence update
-//
-//  Revision 1.12  2003/11/02 06:10:02  rogeeff
-//  manipulator usage testing added
-//
-//  Revision 1.11  2003/10/27 07:13:32  rogeeff
-//  licence update
-//
-//  Revision 1.10  2003/06/09 09:25:24  rogeeff
-//  1.30.beta1
-//
-//  Revision 1.9  2003/02/15 21:51:17  rogeeff
-//  borland warnings fix
-//  cwpro complains on size_t fix
-//
-//  Revision 1.8  2002/12/09 05:15:26  rogeeff
-//  NULL eliminated
-//
-//  Revision 1.7  2002/11/02 20:04:43  rogeeff
-//  release 1.29.0 merged into the main trank
+//  Revision 1.14  2003/12/01 00:42:37  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

@@ -22,7 +22,8 @@ rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file ? : source
    return [ $(test-rule) $(source_files) <lib>../build/$(lib-name)
             : #args
             : $(pattern_file)
-            : <stlport-iostream>on <borland><*><cxxflags>-w-8080 # requirements
+            : <stlport-iostream>on <borland><*><cxxflags>-w-8080 
+              <define>BOOST_TEST_NO_AUTO_LINK=1 # requirements
             : $(test-name)
           ] ;
 }

@@ -24,14 +24,8 @@ int cpp_main( int, char* [] )  // note the name
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.3  2003/11/06 07:31:42  rogeeff
-//  Licence update
-//
-//  Revision 1.2  2003/10/27 07:13:32  rogeeff
-//  licence update
-//
-//  Revision 1.1  2003/06/09 09:21:47  rogeeff
-//  test the Execution Monitor logic regards cpp_main return values
+//  Revision 1.4  2003/12/01 00:42:38  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

@@ -111,8 +111,8 @@ operator<<( wrap_stringstream& targ, wrap_stringstream& src )
 inline wrap_stringstream&
 operator<<( wrap_stringstream& targ, std::ios_base& (*man)(std::ios_base&) )
 {
-	targ.stream() << man;
-	return targ;
+    targ.stream() << man;
+    return targ;
 }
 
 //____________________________________________________________________________//
@@ -121,8 +121,8 @@ template<typename Elem,typename Tr>
 inline wrap_stringstream&
 operator<<( wrap_stringstream& targ, std::basic_ostream<Elem,Tr>& (*man)(std::basic_ostream<Elem, Tr>&) )
 {
-	targ.stream() << man;
-	return targ;
+    targ.stream() << man;
+    return targ;
 }
 
 //____________________________________________________________________________//
@@ -131,8 +131,8 @@ template<typename Elem,typename Tr>
 inline wrap_stringstream&
 operator<<( wrap_stringstream& targ, std::basic_ios<Elem, Tr>& (*man)(std::basic_ios<Elem, Tr>&) )
 {
-	targ.stream() << man;
-	return targ;
+    targ.stream() << man;
+    return targ;
 }
 
 #endif
@@ -150,24 +150,8 @@ operator<<( wrap_stringstream& targ, std::basic_ios<Elem, Tr>& (*man)(std::basic
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.8  2003/11/28 15:20:47  johnmaddock
-//  Added fix for gcc2.95
-//
-//  Revision 1.7  2003/11/06 07:39:36  rogeeff
-//  Licence update
-//
-//  Revision 1.6  2003/11/02 06:21:57  rogeeff
-//  added stl manipulators support
-//
-//  Revision 1.5  2003/10/27 07:13:13  rogeeff
-//  licence update
-//
-//  Revision 1.4  2003/07/09 21:22:24  jmaurer
-//  define str() before it is first used to avoid "redeclared inline after
-//  begin called" error on IRIX MIPSpro
-//
-//  Revision 1.3  2003/06/09 08:39:28  rogeeff
-//  1.30.beta1
+//  Revision 1.9  2003/12/01 00:41:56  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

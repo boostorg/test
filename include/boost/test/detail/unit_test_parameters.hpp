@@ -51,17 +51,8 @@ std::string retrieve_framework_parameter( c_string_literal parameter_name_, int*
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.11  2003/11/06 07:39:36  rogeeff
-//  Licence update
-//
-//  Revision 1.10  2003/10/27 07:13:13  rogeeff
-//  licence update
-//
-//  Revision 1.9  2003/06/10 03:36:51  rogeeff
-//  UNDEF report level introduced
-//
-//  Revision 1.8  2003/06/09 08:39:28  rogeeff
-//  1.30.beta1
+//  Revision 1.12  2003/12/01 00:41:56  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

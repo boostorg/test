@@ -595,24 +595,8 @@ unit_test_result::has_passed() const
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.21  2003/11/06 07:31:12  rogeeff
-//  Licence update
-//
-//  Revision 1.20  2003/10/27 07:13:32  rogeeff
-//  licence update
-//
-//  Revision 1.19  2003/07/09 12:59:29  jmaurer
-//  avoid "unused parameter" warnings with gcc
-//
-//  Revision 1.18  2003/06/10 08:00:34  rogeeff
-//  has_failed conseder test_case_failed != 0 as an error
-//
-//  Revision 1.17  2003/06/10 03:35:38  rogeeff
-//  set report level algorithm patched
-//
-//  Revision 1.16  2003/06/09 09:18:19  rogeeff
-//  First failed assertion support
-//  dependency support
+//  Revision 1.22  2003/12/01 00:42:37  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

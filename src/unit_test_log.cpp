@@ -447,23 +447,8 @@ unit_test_log::checkpoint_data() const
 //  Revision History :
 //
 //  $Log$
-//  Revision 1.18  2003/11/06 07:31:12  rogeeff
-//  Licence update
-//
-//  Revision 1.17  2003/10/27 07:13:32  rogeeff
-//  licence update
-//
-//  Revision 1.16  2003/07/02 09:11:25  rogeeff
-//  move log formatter in public interface
-//
-//  Revision 1.15  2003/06/11 04:34:22  rogeeff
-//  minor fix
-//
-//  Revision 1.14  2003/06/11 01:52:09  rogeeff
-//  force unix slash for file name
-//
-//  Revision 1.13  2003/06/09 09:14:57  rogeeff
-//  1.30.beta1
+//  Revision 1.19  2003/12/01 00:42:37  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

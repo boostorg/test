@@ -127,18 +127,8 @@ struct unit_test_result_tracker {
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.17  2003/11/06 07:39:36  rogeeff
-//  Licence update
-//
-//  Revision 1.16  2003/10/27 07:13:13  rogeeff
-//  licence update
-//
-//  Revision 1.15  2003/06/20 10:57:25  rogeeff
-//  gcc warning fix
-//
-//  Revision 1.14  2003/06/09 08:58:40  rogeeff
-//  unit_test_result_tracker introduced for correct exception handling
-//  method has_passed introduced to support dependencies
+//  Revision 1.18  2003/12/01 00:41:56  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

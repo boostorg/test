@@ -74,17 +74,8 @@ init_unit_test_suite( int /* argc */, char* /* argv */ [] ) {
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.6  2003/11/06 07:39:36  rogeeff
-//  Licence update
-//
-//  Revision 1.5  2003/11/02 06:16:14  rogeeff
-//  fixed to support multi-module unit testing
-//
-//  Revision 1.4  2003/10/27 07:13:12  rogeeff
-//  licence update
-//
-//  Revision 1.3  2003/06/09 08:40:26  rogeeff
-//  1.30.beta1
+//  Revision 1.7  2003/12/01 00:41:56  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

@@ -225,17 +225,8 @@ private:
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.19  2003/11/06 07:39:36  rogeeff
-//  Licence update
-//
-//  Revision 1.18  2003/10/27 07:13:12  rogeeff
-//  licence update
-//
-//  Revision 1.17  2003/07/02 09:15:57  rogeeff
-//  move log formatter in public interface
-//
-//  Revision 1.16  2003/06/09 08:56:15  rogeeff
-//  test_case_csope_tracker introduced for correct exception unwinding handling
+//  Revision 1.20  2003/12/01 00:41:56  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

@@ -32,20 +32,8 @@ BOOST_AUTO_UNIT_TEST( test2 )
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.5  2003/11/06 07:31:42  rogeeff
-//  Licence update
-//
-//  Revision 1.4  2003/11/02 06:13:27  rogeeff
-//  2 new tests added: multiple module auto unit testing and custom exception translator regitry unit test
-//
-//  Revision 1.3  2003/10/27 07:13:32  rogeeff
-//  licence update
-//
-//  Revision 1.2  2003/06/09 09:23:03  rogeeff
-//  1.30.beta1
-//
-//  Revision 1.1  2002/12/09 05:13:31  rogeeff
-//  Initial commit
+//  Revision 1.6  2003/12/01 00:42:37  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

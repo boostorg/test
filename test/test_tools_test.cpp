@@ -81,7 +81,7 @@ normalize_file_name( char const* f )
     return buffer;
 }
 
-#if defined(__BORLANDC__) || defined(__IBMCPP__)
+#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x570)) || BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600))
 
 #define CHECK_PATTERN( msg, shift ) \
     (boost::wrap_stringstream().ref() << normalize_file_name( __FILE__ ) << "(" << (__LINE__-shift) << "): " << msg).str()
@@ -707,56 +707,8 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.26  2003/11/23 22:37:18  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.25  2003/11/06 07:59:20  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.24  2003/11/06 07:31:42  rogeeff
-//  Licence update
-//
-//  Revision 1.23  2003/11/02 06:12:06  rogeeff
-//  manipulator usage tests added
-//  collections comarison tests updated
-//
-//  Revision 1.22  2003/10/27 07:13:32  rogeeff
-//  licence update
-//
-//  Revision 1.21  2003/07/15 09:01:36  rogeeff
-//  eliminate tolerance definition by number of rounding errors
-//
-//  Revision 1.20  2003/07/02 09:14:22  rogeeff
-//  move log formatter in public interface
-//
-//  Revision 1.19  2003/06/20 11:01:57  rogeeff
-//  no message
-//
-//  Revision 1.18  2003/06/09 09:24:47  rogeeff
-//  added test for:
-//  BOOST_TEST_DONT_PRINT_LOG_VALUE
-//  custom predicate
-//  BOOST_CHECK_EXCEPTION
-//
-//  Revision 1.17  2003/02/18 22:17:12  rogeeff
-//  Visual Age fix
-//
-//  Revision 1.16  2003/02/14 06:40:58  rogeeff
-//  Intel on linux fix
-//
-//  Revision 1.15  2003/02/13 08:47:12  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.14  2002/12/09 05:18:34  rogeeff
-//  switched to use unit_test_result_saver for internal testing
-//  switched to wrap_stringstream
-//  test cases added for the NULL char strings comparisons
-//
-//  Revision 1.13  2002/11/02 20:23:24  rogeeff
-//  wrapstream copy constructor isuue fix reworked
-//
-//  Revision 1.12  2002/11/02 20:04:43  rogeeff
-//  release 1.29.0 merged into the main trank
+//  Revision 1.27  2003/12/01 00:42:38  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

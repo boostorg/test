@@ -51,20 +51,20 @@ namespace detail {
 
 class translate_exception_base {
 public:
-	// Constructor
-	explicit	translate_exception_base( boost::scoped_ptr<translate_exception_base>& next )
-	{
-		next.swap( m_next );
-	}
+    // Constructor
+    explicit    translate_exception_base( boost::scoped_ptr<translate_exception_base>& next )
+    {
+        next.swap( m_next );
+    }
 
-	// Destructor
-	virtual		~translate_exception_base() {}
+    // Destructor
+    virtual     ~translate_exception_base() {}
 
-	virtual int operator()( boost::execution_monitor& mon ) = 0;
+    virtual int operator()( boost::execution_monitor& mon ) = 0;
 
 protected:
-	// Data members
-	boost::scoped_ptr<translate_exception_base> m_next;
+    // Data members
+    boost::scoped_ptr<translate_exception_base> m_next;
 };
 
 }
@@ -150,15 +150,15 @@ public:
     virtual int function() = 0;
     //  user supplied function called by run_function()
     
-	int			run_function();
-	// call function() and translate user exceptions with translators registered
+    int         run_function();
+    // call function() and translate user exceptions with translators registered
 
-	template<typename Exception, typename ExceptionTranslator>
-	void		register_exception_translator( ExceptionTranslator const& tr, boost::type<Exception>* = 0 );
+    template<typename Exception, typename ExceptionTranslator>
+    void        register_exception_translator( ExceptionTranslator const& tr, boost::type<Exception>* = 0 );
 
 private:
-	// Data members
-	boost::scoped_ptr<detail::translate_exception_base> m_custom_translators;
+    // Data members
+    boost::scoped_ptr<detail::translate_exception_base> m_custom_translators;
 
 }; // execution_monitor
 
@@ -171,26 +171,26 @@ namespace detail {
 template<typename Exception, typename ExceptionTranslator>
 class translate_exception : public translate_exception_base
 {
-	typedef boost::scoped_ptr<translate_exception_base> base_ptr;
+    typedef boost::scoped_ptr<translate_exception_base> base_ptr;
 public:
-	explicit	translate_exception( ExceptionTranslator const& tr, base_ptr& next )
-	: translate_exception_base( next ), m_translator( tr ) {}
+    explicit    translate_exception( ExceptionTranslator const& tr, base_ptr& next )
+    : translate_exception_base( next ), m_translator( tr ) {}
 
-	virtual int operator()( boost::execution_monitor& mon )
-	{
-		try {
-			return m_next ? (*m_next)( mon ) : mon.function();
-		}
-		catch( Exception const& e )
-		{
-			m_translator( e );
-			return true;
-		}
-	}
+    virtual int operator()( boost::execution_monitor& mon )
+    {
+        try {
+            return m_next ? (*m_next)( mon ) : mon.function();
+        }
+        catch( Exception const& e )
+        {
+            m_translator( e );
+            return true;
+        }
+    }
 
 private:
-	// Data members
-	ExceptionTranslator m_translator;
+    // Data members
+    ExceptionTranslator m_translator;
 };
 
 } // namespace detail
@@ -199,8 +199,8 @@ template<typename Exception, typename ExceptionTranslator>
 void
 execution_monitor::register_exception_translator( ExceptionTranslator const& tr, boost::type<Exception>* )
 {
-	m_custom_translators.reset( 
-		new detail::translate_exception<Exception,ExceptionTranslator>( tr,m_custom_translators ) );
+    m_custom_translators.reset( 
+        new detail::translate_exception<Exception,ExceptionTranslator>( tr,m_custom_translators ) );
 }
 
 }  // namespace boost
@@ -209,20 +209,8 @@ execution_monitor::register_exception_translator( ExceptionTranslator const& tr,
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.13  2003/11/06 07:39:36  rogeeff
-//  Licence update
-//
-//  Revision 1.12  2003/11/02 06:16:56  rogeeff
-//  custom exception translator registration support
-//
-//  Revision 1.11  2003/10/27 07:13:12  rogeeff
-//  licence update
-//
-//  Revision 1.10  2003/09/14 12:40:04  beman_dawes
-//  Change to new license (with Gennadiy's permission)
-//
-//  Revision 1.9  2003/06/09 08:41:02  rogeeff
-//  1.30.beta1
+//  Revision 1.14  2003/12/01 00:41:56  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

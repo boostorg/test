@@ -18,7 +18,7 @@
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
 
-#if 0 // BOOST_TEST_NO_AUTO_LINK
+#ifndef BOOST_TEST_NO_AUTO_LINK
 
 #define BOOST_LIB_NAME unix_test_framework
 #define BOOST_LIB_DIAGNOSTIC yes
@@ -30,14 +30,8 @@
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.9  2003/11/06 07:39:36  rogeeff
-//  Licence update
-//
-//  Revision 1.8  2003/10/27 07:13:12  rogeeff
-//  licence update
-//
-//  Revision 1.7  2003/06/09 08:41:42  rogeeff
-//  1.30.beta1
+//  Revision 1.10  2003/12/01 00:41:56  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

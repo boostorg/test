@@ -476,32 +476,8 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.24  2003/11/28 15:20:24  johnmaddock
-//  Added fix for gcc2.95
-//
-//  Revision 1.23  2003/11/06 07:31:12  rogeeff
-//  Licence update
-//
-//  Revision 1.22  2003/11/02 06:01:05  rogeeff
-//  custom char value log print procedues
-//
-//  Revision 1.21  2003/10/27 07:13:32  rogeeff
-//  licence update
-//
-//  Revision 1.20  2003/07/02 09:11:24  rogeeff
-//  move log formatter in public interface
-//
-//  Revision 1.19  2003/06/23 22:37:13  beman_dawes
-//  workaround broken std libraries
-//
-//  Revision 1.18  2003/06/20 18:13:54  beman_dawes
-//  fix some but not all problems with previous commit
-//
-//  Revision 1.17  2003/06/20 11:01:15  rogeeff
-//  match_pattern show an error mismatch snippet
-//
-//  Revision 1.16  2003/06/09 09:14:35  rogeeff
-//  added support for extended users predicate returning also error message
+//  Revision 1.25  2003/12/01 00:42:37  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

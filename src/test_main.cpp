@@ -98,17 +98,8 @@ int main( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.14  2003/11/06 07:31:12  rogeeff
-//  Licence update
-//
-//  Revision 1.13  2003/10/27 07:13:32  rogeeff
-//  licence update
-//
-//  Revision 1.12  2003/09/14 12:42:22  beman_dawes
-//  Change to new license (with Gennadiy's permission)
-//
-//  Revision 1.11  2003/06/09 09:10:50  rogeeff
-//  added support for catch_system_error in Test Execution Monitor
+//  Revision 1.15  2003/12/01 00:42:37  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

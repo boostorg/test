@@ -101,7 +101,7 @@ test_case::has_passed() const
 void
 test_case::run()
 {
-	using detail::unit_test_monitor;
+    using detail::unit_test_monitor;
 
     test_case_scope_tracker scope_tracker( *this );
     
@@ -277,18 +277,8 @@ normalize_test_case_name( std::string& name_ )
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.11  2003/11/06 07:31:12  rogeeff
-//  Licence update
-//
-//  Revision 1.10  2003/11/02 06:03:04  rogeeff
-//  use shared global unit_test_monitor
-//
-//  Revision 1.9  2003/10/27 07:13:32  rogeeff
-//  licence update
-//
-//  Revision 1.8  2003/06/09 09:21:04  rogeeff
-//  dependency check support
-//  simplified testing abort procedures
+//  Revision 1.12  2003/12/01 00:42:37  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

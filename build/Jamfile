@@ -40,7 +40,7 @@ template boost_test_lib
      ## sources ##
      : 
      ## requirements ##
-     : <sysinclude>$(BOOST_ROOT) <borland><*><cxxflags>-w-8080
+     : <sysinclude>$(BOOST_ROOT) <borland><*><cxxflags>-w-8080 <define>BOOST_TEST_NO_AUTO_LINK=1
      ## default build ##
      : <threading>single/multi <runtime-link>static/dynamic
      ;
@@ -75,4 +75,24 @@ install test lib
         <lib>boost_prg_exec_monitor
         <lib>boost_test_exec_monitor
         <lib>boost_unit_test_framework
+    ;
+
+stage stage/lib 
+    : 
+        [ unless $(NT) :
+            <dll>boost_prg_exec_monitor
+            <dll>boost_test_exec_monitor
+            <dll>boost_unit_test_framework ]
+        <lib>boost_prg_exec_monitor
+        <lib>boost_test_exec_monitor
+        <lib>boost_unit_test_framework
+
+    :
+        <locate>$(BOOST_ROOT)
+        common-stage-tag
+        <tag><postfix>-$(version-tag)
+        <target>stage
+        <target>all
+    :
+        debug release
     ;

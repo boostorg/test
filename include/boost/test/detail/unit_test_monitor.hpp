@@ -56,16 +56,16 @@ public:
     static void         catch_system_errors( bool yes_no = true ) { s_catch_system_errors = yes_no; }
 
     // monitor method
-    error_level			execute_and_translate( test_case* target_test_case_, function_to_monitor f_, int timeout_ );
+    error_level         execute_and_translate( test_case* target_test_case_, function_to_monitor f_, int timeout_ );
 
     // execution monitor hook implementation
     virtual int         function();
 
 private:
     // Data members
-    function_to_monitor	m_test_case_method;
-    test_case*			m_test_case;
-    static bool			s_catch_system_errors;
+    function_to_monitor m_test_case_method;
+    test_case*          m_test_case;
+    static bool         s_catch_system_errors;
 }; // unit_test_monitor
 
 } // namespace detail
@@ -84,17 +84,8 @@ private:
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.12  2003/11/06 07:39:36  rogeeff
-//  Licence update
-//
-//  Revision 1.11  2003/11/02 06:21:33  rogeeff
-//  use shared global monitor for all test cases
-//
-//  Revision 1.10  2003/10/27 07:13:13  rogeeff
-//  licence update
-//
-//  Revision 1.9  2003/06/09 08:39:28  rogeeff
-//  1.30.beta1
+//  Revision 1.13  2003/12/01 00:41:56  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

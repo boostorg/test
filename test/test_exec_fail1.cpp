@@ -19,7 +19,7 @@
 
 int test_main( int, char* [] )  // note the name
 {
-	return 1;
+    return 1;
 }
 
 //____________________________________________________________________________//
@@ -28,23 +28,8 @@ int test_main( int, char* [] )  // note the name
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.10  2003/11/06 07:31:42  rogeeff
-//  Licence update
-//
-//  Revision 1.9  2003/11/02 06:10:24  rogeeff
-//  no message
-//
-//  Revision 1.8  2003/10/27 07:13:32  rogeeff
-//  licence update
-//
-//  Revision 1.7  2003/09/14 12:42:22  beman_dawes
-//  Change to new license (with Gennadiy's permission)
-//
-//  Revision 1.6  2003/06/09 09:25:24  rogeeff
-//  1.30.beta1
-//
-//  Revision 1.5  2002/11/02 20:04:43  rogeeff
-//  release 1.29.0 merged into the main trank
+//  Revision 1.11  2003/12/01 00:42:38  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

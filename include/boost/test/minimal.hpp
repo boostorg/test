@@ -145,14 +145,8 @@ int main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.10  2003/11/06 07:39:36  rogeeff
-//  Licence update
-//
-//  Revision 1.9  2003/10/27 07:13:12  rogeeff
-//  licence update
-//
-//  Revision 1.8  2003/06/09 08:41:01  rogeeff
-//  1.30.beta1
+//  Revision 1.11  2003/12/01 00:41:56  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

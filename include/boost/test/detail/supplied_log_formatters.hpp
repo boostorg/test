@@ -90,14 +90,8 @@ private:
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.3  2003/11/06 07:39:36  rogeeff
-//  Licence update
-//
-//  Revision 1.2  2003/10/27 07:13:13  rogeeff
-//  licence update
-//
-//  Revision 1.1  2003/07/02 09:15:57  rogeeff
-//  move log formatter in public interface
+//  Revision 1.4  2003/12/01 00:41:56  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

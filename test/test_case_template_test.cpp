@@ -154,18 +154,8 @@ int test_main( int, char* [] )
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.4  2003/11/06 07:31:42  rogeeff
-//  Licence update
-//
-//  Revision 1.3  2003/10/27 07:13:32  rogeeff
-//  licence update
-//
-//  Revision 1.2  2003/06/11 04:34:22  rogeeff
-//  minor fix
-//
-//  Revision 1.1  2003/06/10 07:57:33  rogeeff
-//  test_case_template_test added
-//  parameterized test updated
+//  Revision 1.5  2003/12/01 00:42:38  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************

@@ -109,14 +109,8 @@ create_test_case( function1<void,ParameterType> const& fct_, std::string name_,
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.14  2003/11/06 07:39:36  rogeeff
-//  Licence update
-//
-//  Revision 1.13  2003/10/27 07:13:13  rogeeff
-//  licence update
-//
-//  Revision 1.12  2003/06/09 09:00:44  rogeeff
-//  1.30.beta1
+//  Revision 1.15  2003/12/01 00:41:56  rogeeff
+//  prerelease cleaning
 //
 
 // ***************************************************************************
