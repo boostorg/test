@@ -11,7 +11,7 @@
   Execution Monitor</A> > <SPAN class="current_article">boost::execution_exception</SPAN> </DIV>
 <DIV class="body"> <IMG src='../../btl1.gif' width='252' height='43' alt="Boost Test logo"> 
   <H1 class="subtitle">boost::execution_exception</H1>
-  <P class="first_line_indented"> The boost::execution exception is an exception used by the Execution Monitor to report problems 
+  <P class="first-line-indented"> The boost::execution exception is an exception used by the Execution Monitor to report problems 
     detected during controlled function run. It intentionally does not allocate any memory to be safe to use in case of lack 
     of memory.</P>
   <PRE class="code"><SPAN class="reserv-word">class</SPAN> <SPAN class="new-term">execution_exception</SPAN> {
@@ -29,21 +29,21 @@
     <SPAN class="cpp-type">char</SPAN> <SPAN class="reserv-word">const</SPAN>* what() <SPAN class="reserv-word">const</SPAN>;   <SPAN class="comment">// use this method to get an error message for the exception</SPAN>
 };
 </PRE>
-  <P class="first_line_indented"> Note 1: Only uncaught C++ exceptions are treated as errors. If the application catches a 
+  <P class="first-line-indented"> Note 1: Only uncaught C++ exceptions are treated as errors. If the application catches a 
     C++ exception, it will never reach the <A href="execution_monitor.html">boost::execution_monitor</A>.</P>
-  <P class="first_line_indented"> Note 2: These errors include UNIX signals and Windows structured exceptions. 
+  <P class="first-line-indented"> Note 2: These errors include UNIX signals and Windows structured exceptions. 
     They are often initiated by hardware traps.</P>
-  <P class="first_line_indented"> The implementation decides what is a fatal_system_exception and what is just a system_exception. 
+  <P class="first-line-indented"> The implementation decides what is a fatal_system_exception and what is just a system_exception. 
     Fatal errors are so likely to have corrupted machine state (like a stack overflow or addressing exception) that it is 
     unreasonable to continue execution. </P>
 </DIV>
 <DIV class="footer"> 
   <DIV class="footer-body"> 
-    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:rogeeff@fusemail.com'>Gennadiy Rozental</A> 2001-2003. <BR>
+    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:rogeeff@fusemail.com'>Gennadiy Rozental</A> 2001-2004. <BR>
       Use, modification, and distribution are subject to the Boost Software License, Version 1.0. 
       (See accompanying file <A href="../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>
-    <P>Revised: 9 June, 2003</P>
+        <P>Revised:        <!-- #BeginDate format:Sw1 -->6 January, 2004<!-- #EndDate -->     </P>
   </DIV>
 </DIV>
 </BODY>

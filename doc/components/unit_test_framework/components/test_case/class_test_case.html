@@ -14,7 +14,7 @@
 <DIV class="body"> <IMG src='../../../../btl1.gif' width='252' height='43' alt="Boost Test logo"> 
   <H1 class="subtitle">The class member function based test cases</H1>
   <H5>Definition</H5>
-  <P class="first_line_indented"> defined in <A href="../../../../../../../boost/test/unit_test_suite.hpp">unit_test_suite.hpp</A> 
+  <P class="first-line-indented"> defined in <A href="../../../../../../../boost/test/unit_test_suite.hpp">unit_test_suite.hpp</A> 
   <H5>Synopsis</H5>
   <PRE class="code"><SPAN class="reserv-word">template</SPAN>&lt;<SPAN class="reserv-word">class</SPAN> UserTestClass&gt;
 <SPAN class="reserv-word">class</SPAN> <SPAN class="new-term">class_test_case</SPAN> : <SPAN class="reserv-word">public</SPAN> test_case
@@ -27,7 +27,7 @@
     ... <SPAN class="comment">// Implementation</SPAN>
 };</PRE>
   <H5>Description</H5>
-  <P class="first_line_indented">Instances of the class class_test_case are created by the framework for 
+  <P class="first-line-indented">Instances of the class class_test_case are created by the framework for 
     the supplied member function and instance of the user's test class with the following specification: 
     void (UserTestClass::*fct)(). To allow sharing on the same instance, so that one test case could use 
     results of another, class_test_case is constructed based on boost::shared_ptr to the user test case 
@@ -47,11 +47,11 @@
   a test logic in a free function. Due to usage of templates in an implementation of the class_test_case, 
   a compilation can be longer would you use the function_test_case. 
   <H5>Construction</H5>
-  <P class="first_line_indented">To create an instance of the class class_test_case use the following 
+  <P class="first-line-indented">To create an instance of the class class_test_case use the following 
     macro:</P>
   <P><SPAN class="new-term">BOOST_CLASS_TEST_CASE</SPAN>( member_function_address, shared_test_case_instance 
     ).</P>
-  <P class="first_line_indented">BOOST_CLASS_TEST_CASE creates a new instance of the class class_test_case 
+  <P class="first-line-indented">BOOST_CLASS_TEST_CASE creates a new instance of the class class_test_case 
     and returns a pointer to the base class test_case. In most cases you will use it as an argument to 
     the method <A href="../test_suite/index.html">test_suite</A>::add(...). The first parameter of above 
     macro is the pointer to the class member function - body of the test case. The second parameter is 
@@ -102,11 +102,11 @@ Ts&gt;add( BOOST_CLASS_TEST_CASE( &amp;compound_test::test_access_methods, insta
 </DIV>
 <DIV class="footer"> 
   <DIV class="footer-body"> 
-    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:rogeeff@fusemail.com'>Gennadiy Rozental</A> 2001-2003. <BR>
+    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:rogeeff@fusemail.com'>Gennadiy Rozental</A> 2001-2004. <BR>
       Use, modification, and distribution are subject to the Boost Software License, Version 1.0. 
       (See accompanying file <A href="../../../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>
-    <P>Revised: 9 June, 2003</P>
+        <P>Revised:        <!-- #BeginDate format:Sw1 -->6 January, 2004<!-- #EndDate -->     </P>
   </DIV>
 </DIV>
 </BODY>

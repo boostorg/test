@@ -16,7 +16,7 @@
     <A href="#Usage">Usage<BR>
     </A> <A href="#Tests">Example and test programs</A></P>
   <H2><A name="Introduction">Introduction</A></H2>
-  <P class="first_line_indented">How do you perform correctness test for operator&lt;&lt;( std::ostream&amp;, 
+  <P class="first-line-indented">How do you perform correctness test for operator&lt;&lt;( std::ostream&amp;, 
     ... ) operations. You may print into the standard output stream and manually check that everything 
     is as you expected. But this is not really fit for regression testing. You may use stringstream and 
     compare resulting output buffer with the expected pattern string. But you are required to perform 
@@ -26,17 +26,17 @@
     comply to std::ostream interface so it can be used in place of any std::ostream parameter. It provides 
     several methods to validate output content - you may compare with expected pattern string or perform 
     only length check. Flushing, synchronizing, string comparison is automated for you by this tool</P>
-  <P class="first_line_indented">In some cases it may not be good enough. It becomes even more obvious 
+  <P class="first-line-indented">In some cases it may not be good enough. It becomes even more obvious 
     when it's difficult to generate the expected pattern. What we need is to be able to check once manually 
     that the output is as expected and to be able in a future check that is stays the same. To help manage 
     this logic the class output_test_stream also allows to match/save output content versus/into specified 
     file.</P>
-  <P class="first_line_indented">For detailed description of the facilities provided by the output_test_stream 
+  <P class="first-line-indented">For detailed description of the facilities provided by the output_test_stream 
     see it's <A href="output_test_stream_spec.html">specification</A>.</P>
   <H2><A name="Usage">Usage</A></H2>
-  <P class="first_line_indented">There are two ways to use the output_test_stream tool: explicit output 
+  <P class="first-line-indented">There are two ways to use the output_test_stream tool: explicit output 
     checks and pattern file matching.</P>
-  <H3 class="first_line_indented">Explicit output checks</H3>
+  <H3 class="first-line-indented">Explicit output checks</H3>
   <PRE class="code"><SPAN class="reserv-word">using</SPAN> boost::test_toolbox::output_test_stream;
 	
 <SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
@@ -49,14 +49,14 @@
 
     <SPAN class="reserv-word">return</SPAN> <SPAN class="literal">0</SPAN>;
 }</PRE>
-  <P class="first_line_indented">As simple as that: just use instance of output_test_stream as an output 
+  <P class="first-line-indented">As simple as that: just use instance of output_test_stream as an output 
     stream and then check output content using supplied tool's methods. Note use of <I>false</I> to prevent 
     output flashing in first two invocation of check functions. Unless you want to perform several different 
     checks for the same output you wouldn't need to use it though. Your testing will look like a serious 
     of output operators followed by check one. And so on again. Try to perform checks as frequently as 
     possible. It's not only simplify patters you compare with, but also allows you to more closely identify 
     possible source of failure.</P>
-  <H3 class="first_line_indented">Pattern file matching</H3>
+  <H3 class="first-line-indented">Pattern file matching</H3>
   <PRE class="code"><SPAN class="reserv-word">using</SPAN> boost::test_toolbox::output_test_stream;
 	
 <SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-type">char</SPAN>* [] ) {
@@ -72,7 +72,7 @@
 
     <SPAN class="reserv-word">return</SPAN> <SPAN class="literal">0</SPAN>;
 }</PRE>
-  <P class="first_line_indented">Even more simpler: no need to generate expected patterns. Though you 
+  <P class="first-line-indented">Even more simpler: no need to generate expected patterns. Though you 
     need to keep the pattern file all the time somewhere around. Your testing will look like a serious 
     of output operators followed by match pattern checks. And so on again. Try to perform checks as frequently 
     as possible,cause it allows you to more closely identify possible source of failure.</P>	
@@ -84,11 +84,11 @@
 </DIV>
 <DIV class="footer"> 
   <DIV class="footer-body"> 
-    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:rogeeff@fusemail.com'>Gennadiy Rozental</A> 2001-2003. <BR>
+    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:rogeeff@fusemail.com'>Gennadiy Rozental</A> 2001-2004. <BR>
       Use, modification, and distribution are subject to the Boost Software License, Version 1.0. 
       (See accompanying file <A href="../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>
-    <P>Revised: 9 June, 2003</P>
+        <P>Revised:        <!-- #BeginDate format:Sw1 -->6 January, 2004<!-- #EndDate -->     </P>
   </DIV>
 </DIV>
 </BODY>
