@@ -31,20 +31,45 @@ namespace unit_test_framework {
 // **************                   test_case                  ************** //
 // ************************************************************************** //
 
+test_case::test_case( c_string_literal name_, unit_test_counter stages_number_, bool monitor_run_ )
+: p_timeout( 0 ), p_expected_failures( 0 ),
+  p_name( name_ ), p_compound_stage( false ), p_stages_amount( stages_number_ ),
+  m_monitor_run( monitor_run_ )
+{
+}
+
+//____________________________________________________________________________//
+
+unit_test_counter
+test_case::size() const
+{
+    return 1;
+}
+
+//____________________________________________________________________________//
+
+c_string_literal
+test_case::type() const
+{
+    return "case";
+}
+
+//____________________________________________________________________________//
+
 void
 test_case::run()
 {
     bool is_initialized  = true;
          s_abort_testing = false;
 
-    char const* name = ((std::string&)p_name).data();
+    c_string_literal name = ((std::string&)p_name).data();
 
     // 1. Init test results
     unit_test_result::test_case_start( name, p_expected_failures );
 
 
     BOOST_TEST_SUITE_MESSAGE_BEGIN
-        "\nEntering test " << (size() > 1 ? "suite" : "case") << " \"" << name << "\""
+        "\nEntering test " << type() << " \"" << name << "\""
     BOOST_TEST_SUITE_MESSAGE_END
 
     // 2. Initialize test case
@@ -98,7 +123,7 @@ test_case::run()
     }
 
     BOOST_TEST_SUITE_MESSAGE_BEGIN
-        "Leaving  test " << (size() > 1 ? "suite" : "case") << " \"" << name << "\""
+        "Leaving  test " << type() << " \"" << name << "\""
     BOOST_TEST_SUITE_MESSAGE_END
 
     unit_test_result::test_case_end();
@@ -120,7 +145,7 @@ struct test_suite::Impl {
 
 //____________________________________________________________________________//
 
-test_suite::test_suite( char const* name ) : test_case( name, 0, false ), m_pimpl( new Impl )
+test_suite::test_suite( c_string_literal name ) : test_case( name, 0, false ), m_pimpl( new Impl )
 {
     m_pimpl->m_cumulative_size = 0;
 }
@@ -164,6 +189,14 @@ test_suite::size() const
 
 //____________________________________________________________________________//
 
+c_string_literal
+test_suite::type() const
+{
+    return "suite";
+}
+
+//____________________________________________________________________________//
+
 void
 test_suite::do_init()
 {
@@ -187,6 +220,19 @@ test_suite::do_run()
 // **************               object generators              ************** //
 // ************************************************************************** //
 
+namespace detail {
+
+c_string_literal
+normalize_test_case_name( std::string& name_ )
+{
+    if( name_[0] == '&' )
+        name_.erase( 0, 1 );
+
+    return name_.data();
+}
+
+} // namespace detail
+
 } // namespace unit_test_framework
 
 } // namespace boost
@@ -195,6 +241,9 @@ test_suite::do_run()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2002/12/08 18:15:19  rogeeff
+//  switched to use c_string_literal
+//
 //  Revision 1.5  2002/11/02 20:04:42  rogeeff
 //  release 1.29.0 merged into the main trank
 //
