@@ -144,19 +144,23 @@ namespace test_toolbox {
 // **************            extended_predicate_value          ************** //
 // ************************************************************************** //
 
-struct extended_predicate_value {
+class extended_predicate_value {
+public:
     // Constructor
-                extended_predicate_value( bool predicate_value_ )
+    extended_predicate_value( bool predicate_value_ )
     : p_predicate_value( predicate_value_ ), p_message( new wrap_stringstream ) {}
 
-                extended_predicate_value( extended_predicate_value const& rhs )
+    extended_predicate_value( extended_predicate_value const& rhs )
     : p_predicate_value( rhs.p_predicate_value.get() ), 
-      p_message( rhs.p_message ) {}
+      p_message( rhs.p_message )                    {}
 
-    bool        operator!() const { return !p_predicate_value.get(); }
+    bool        operator!() const                   { return !p_predicate_value.get(); }
+    void        operator=( bool predicate_value_ )  { p_predicate_value.value = predicate_value_; }
 
-    BOOST_READONLY_PROPERTY( bool, 0, () )  p_predicate_value;
-    boost::shared_ptr<wrap_stringstream>    p_message;
+    BOOST_READONLY_PROPERTY( bool, 1, (extended_predicate_value) )
+                p_predicate_value;
+    boost::shared_ptr<wrap_stringstream>
+                p_message;
 };
 
 namespace detail {
@@ -177,18 +181,21 @@ struct test_tool_failed : public std::exception {
 // ************************************************************************** //
 
 template<typename T>
-inline void
-print_log_value( std::ostream& ostr, T const& t, long )
-{
-    ostr << t; // by default print the value
-}
+struct print_log_value {
+    void    operator()( std::ostream& ostr, T const& t )
+    {
+        ostr << t; // by default print the value
+    }
+};
 
 //____________________________________________________________________________//
 
 #define BOOST_TEST_DONT_PRINT_LOG_VALUE( the_type )                 \
 namespace boost { namespace test_toolbox { namespace detail {       \
-inline void                                                         \
-print_log_value( std::ostream& ostr, the_type const& t, int ) {}    \
+template<>                                                          \
+struct print_log_value<the_type > {                                 \
+    void operator()( std::ostream& ostr, the_type const& t ) {}     \
+};                                                                  \
 }}}                                                                 \
 /**/
 
@@ -207,7 +214,7 @@ template<typename T>
 inline std::ostream& 
 operator<<( std::ostream& ostr, print_helper<T> const& ph )
 {
-    print_log_value( ostr, ph.m_t, 0 );
+    print_log_value<T>()( ostr, ph.m_t );
 
     return ostr;
 }
@@ -495,7 +502,7 @@ public:
     result_type     is_equal( c_string_literal arg_, bool flush_stream_ = true );
     result_type     is_equal( std::string const& arg_, bool flush_stream_ = true );
     result_type     is_equal( c_string_literal arg_, std::size_t n_, bool flush_stream_ = true );
-    bool            match_pattern( bool flush_stream_ = true );
+    result_type     match_pattern( bool flush_stream_ = true );
 
     // helper function
     void            flush();
@@ -516,6 +523,10 @@ private:
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.30  2003/06/20 10:56:26  rogeeff
+//  printing posponed differently
+//  extended predicate value allowed to reset the value
+//
 //  Revision 1.29  2003/06/09 08:55:08  rogeeff
 //  BOOST_CHECK_EXCEPTION introduced
 //  type for line parameter changed to size_t
