@@ -1,0 +1,155 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Test Execution Monitor</title>
+</head>
+
+<body bgcolor="#808080" text="#000000" link="#336699" vlink="#3F7EBE" alink="#699BCD">
+  <div align="center">
+	<center>
+  <table border="2" cellpadding="13" bordercolor="#CDCDCD" width="80%" id="AutoNumber1" cellspacing="3" style="border-collapse: collapse">
+    <tr>
+      <td width="100%" align="left" valign="top" bgcolor="#f0f0f0" border="0" >
+
+<a name="TOP"><img src="../../../c++boost.gif"  alt="c++boost.gif (8819 bytes)" width="277" height="86"></a><br clear="left">
+
+<h1 align="center">Boost Test Library: Test Execution Monitor</h1>
+
+<p><b><font color="#3F7EBE"><a href="#Introduction">Introduction</a><br>
+<a href="#Benefits">Benefits</a><br>
+<a href="#Introduction">Example</a><br>
+<a href="#MonitorCompilation">Compilation</a><br>
+<a href="#Tests">Test/Example Programs</a><br>
+<a href="#Rationale">Rationale</a><br>
+</font></b>
+<a href="#Design"><b>Design</b><br>
+</a><br>
+Also see: <b> <a href="uni_test_framework.htm">
+Unit Test Framework</a></b></p>
+<h2><a name="Introduction">Introduction</a></h2>
+<p>The Boost Test Library's Test Execution Monitor provides a <b>main()</b> function which calls a user-supplied <b>test_main()</b>
+function. The library supplied <b>main()</b> relieves users from messy error detection and reporting duties.
+The Test Execution Monitor is intended for fairly simple test programs or to dig a problem in
+an existent production code. <a href="prg_exec_monitor.htm">Program Execution Monitor</a> may be more suitable to monitor production (non-test) programs. <a href="unit_test_framework.htm">Unit Test Framework</a> may be more suitable for complex test programs. </p>
+
+<h2><a name="Benefits">Benefits</a></h2>
+<p>The Test Execution Monitor provides a simple framework for program testing.<a href="#TOP"><img border="0" src="uarrow.gif" align="right" width="19" height="20"></a></p>
+
+<h2><a name="Example">Example</a></h2>
+<p>The example program shows six different ways to detect and report an error in the
+add() function.</p>
+<blockquote>
+  <pre>#include <b><font color="#3F7EBE">&lt;</font><a href="../../../boost/test/test_tools.hpp">boost/test/test_tools.hpp</a></b>&gt;
+
+int add( int i, int j ) { return i+j; }
+
+int test_main( int, char *[] )  // note the name!
+{
+  // six ways to detect and report the same error:
+  BOOST_CHECK( add(2,2) == 4 );          // #1 continues on error
+  BOOST_REQUIRE( add(2,2) == 4 );  	 // #2 throws on error
+  if ( add(2,2) != 4 )
+    BOOST_ERROR( &quot;Ouch...&quot;);             // #3 continues on error
+  if ( add(2,2) != 4 )
+    BOOST_FAIL(&quot;Ouch...&quot;);     		 // #4 throws on error
+  if ( add(2,2) != 4 ) throw &quot;Oops...&quot;;  // #5 throws on error
+  return add(2,2) == 4 ? 0 : 1;          // #6 returns error code
+}</pre>
+</blockquote>
+<p><b>Approach #1</b> uses the BOOST_CHECK tool, which displays an error message
+on std::cout that includes the expression that failed, the source file name, and
+the source file line number.&nbsp; It also increments an error count.&nbsp; At program termination,
+the error count will be displayed automatically by the Test Execution Monitor.</p>
+<p><b>Approach #2</b> using the BOOST_REQUIRE tool, is similar to #1, except that after
+displaying the error, an exception is thrown, to be caught by the Test Execution
+Monitor. This approach is suitable when writing a
+explicit test program, and the error would be so severe as to make further
+testing impractical. BOOST_REQUIRE differs from the C++ Standard Library's
+assert() macro in that it is always generated, and channels error detection into
+the uniform Test Execution Monitor reporting procedure.</p>
+<p><b>Approaches #3 and #4</b> are similar to #1 and #2 respectively, except
+that the error detection is coded separately.&nbsp; This is most useful when the
+specific condition being tested is not indicative of the reason for failure.</p>
+<p><b>Approach #5</b> throws an exception, which will be caught and reported by the Test
+Execution Monitor.&nbsp; This approach is suitable for both production and test code, in
+libraries or not.&nbsp; The error message displayed when the exception is caught
+will be most meaningful if the exception is derived from std::exception, or is a
+char* or std::string.</p>
+<p><b>Approach #6</b> uses a return value to inform the caller of the error. This approach is particularly suitable for
+integrating existing test code with the test tools library.&nbsp; Although it
+works fine with the Boost Program Execution Monitor or Test Execution Monitor libraries, and is very
+useful for running existing code under them, most C++ experts prefer using exceptions for error reporting.
+<a href="#TOP"><img border="0" src="uarrow.gif" align="right" width="19" height="20"></a></p>
+
+<h2>The Test <a name="MonitorCompilation">Execution Monitor compilation</a></h2>
+<p>The Test Execution Monitor is supplied as an offline library and should be compiled and 
+linked with a test program. Following files, that are located in the Boost Test Library
+<b>src</b> directory, compose the component:</p>
+<blockquote>
+<p>
+<a href="../src/execution_monitor.cpp">execution_monitor.cpp</a><br>
+<a href="../src/test_tools.cpp">test_tools.cpp</a><br>
+<a href="../src/unit_test_config.cpp">unit_test_config.cpp</a><br>
+<a href="../src/unit_test_log.cpp">unit_test_log.cpp</a><br>
+<a href="../src/unit_test_monitor.cpp">unit_test_monitor.cpp</a><br>
+<a href="../src/unit_test_result.cpp">unit_test_result.cpp</a><br>
+<a href="../src/unit_test_suite.cpp">unit_test_suite.cpp</a><br>
+<a href="../src/test_main.cpp">test_main.cpp</a></p>
+</blockquote>
+
+<h2><a name="Tests">Example and Test</a> Programs</h2>
+<blockquote>
+<pre><a href="../example/test_exec_example.cpp">test_exec_example.cpp</a>
+<a href="../test/test_exec_fail1.cpp">test_exec_fail1.cpp</a>
+<a href="../test/test_exec_fail2.cpp">test_exec_fail2.cpp</a>
+<a href="../test/test_exec_fail3.cpp">test_exec_fail3.cpp</a>
+<a href="../test/test_exec_fail4.cpp">test_exec_fail4.cpp</a></pre>
+</blockquote>
+<h2><a name="Rationale">Rationale</a><a href="#TOP"><img border="0" src="uarrow.gif" align="right" width="19" height="20"></a></h2>
+<p>How should a test program report errors?</p>
+<p>Displaying an error message is an obvious possibility:</p>
+<blockquote>
+  <pre>if ( something_bad_detected )
+  std::cout &lt;&lt; &quot;something bad has been detected&quot; &lt;&lt; std::endl;</pre>
+</blockquote>
+<p>But that requires inspection of the program's output after each run to
+determine if an error occurred.&nbsp; Since test programs are often run as part
+of a regression test suite, human inspection of output to detect error messages
+is too time consuming and unreliable. Test frameworks like GNU/expect can do the
+inspections automatically, but are overly complex for simple testing.</p>
+<p>A better simple way to report errors is for the test program to return
+EXIT_SUCCESS (normally 0) if the test program completes satisfactorily, and
+EXIT_FAILURE if an error is detected. This allows a simple regression test script to
+automatically and unambiguous detect success or failure.&nbsp; Further
+appropriate actions such as creating an HTML table or emailing an alert can be
+taken by the script, and can be modified as desired without having to change the
+actual C++ test programs.</p>
+<p>A testing protocol based on a policy of test programs returning EXIT_SUCCESS or
+EXIT_FAILURE does not require any supporting tools; the C++ language and standard
+library are sufficient.&nbsp; The programmer must remember, however, to catch
+all exceptions and convert them to program exits with non-zero return codes. The
+programmer must also remember to not use the standard library assert() macro for
+test code, because on some systems it results in undesirable side effects like a message
+requiring manual intervention.</p>
+<p>The Test Execution Monitor automates those tasks, yet can be ignored by
+programmers who prefer to implement the zero return testing protocol themselves.</p>
+
+<h2><a name="Design">Design</a></h2>
+<p>The <a href="test_lib_design.htm">Boost Test Library Design</a> document describes the relationship 
+between Boost Test Library components.
+<a href="#TOP"><img border="0" src="uarrow.gif" align="right" width="19" height="20"></a></p>
+<hr>
+<p>© Beman Dawes&nbsp; 2000, <a href="mailto:boost_test_library@consultant.com">Gennadiy Rozental</a> 2001</p>
+
+<p>Revised 
+<!--webbot bot="Timestamp" S-Type="EDITED"
+S-Format="%d %b %Y" startspan -->24 Dec 2001<!--webbot bot="Timestamp" endspan i-checksum="14398" -->
+</p>
+</TR>
+</TABLE>
+
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+subproject libs/test/test ;
+
+# bring in the rules for testing
+SEARCH on testing.jam = $(BOOST_BUILD_PATH) ;
+include testing.jam ;
+
+rule test-btl-lib ( test-rule : test-name : lib-name ? )
+{
+   return [ $(test-rule) $(test-name).cpp <lib>../build/$(lib-name)
+            : #args
+            : #input-files
+            : <stlport-iostream>on # requirements
+          ] ;
+}
+
+test-suite "prg_exec_monitor_test"
+        : [ test-btl-lib run-fail : prg_exec_fail1 : prg_exec_monitor ]
+          [ test-btl-lib run-fail : prg_exec_fail2 : prg_exec_monitor ]
+        ;
+
+test-suite "test_exec_monitor_test"
+        : [ test-btl-lib run-fail : test_exec_fail1 : test_exec_monitor ]
+          [ test-btl-lib run-fail : test_exec_fail2 : test_exec_monitor ]
+          [ test-btl-lib run-fail : test_exec_fail3 : test_exec_monitor ]
+          [ test-btl-lib run-fail : test_exec_fail4 : test_exec_monitor ]
+        ;
+
+test-suite "unit_test_framework_test"
+        : [ test-btl-lib run : errors_handling_test    : test_exec_monitor ]
+          [ test-btl-lib run : online_test ]
+          [ test-btl-lib run : output_test_stream_test : unit_test_framework ]
+          [ test-btl-lib run : result_report_test      : test_exec_monitor ]
+          [ test-btl-lib run : test_tools_test         : unit_test_framework ]
+          [ test-btl-lib run : unit_test_suite_ex_test : unit_test_framework ]
+        ;

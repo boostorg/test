@@ -1,0 +1,252 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Program Execution Monitor</title>
+</head>
+
+<body bgcolor="#808080" text="#000000" link="#336699" vlink="#3F7EBE" alink="#699BCD">
+  <div align="center">
+	<center>
+  <table border="2" cellpadding="13" bordercolor="#CDCDCD" width="80%" id="AutoNumber1" cellspacing="3" style="border-collapse: collapse">
+    <tr>
+      <td width="100%" align="left" valign="top" bgcolor="#f0f0f0" border="0" >
+
+<a name="TOP"><img border="0" src="../../../c++boost.gif" width="277" height="86"></a><br clear=left>
+
+<h1 align="center">Boost Test Library: examples and tests</h1>
+
+<h2>Examples</h2>
+
+<h3>1. The Program Execution Monitor example</h3>
+
+<h3>2. The Test Execution Monitor example</h3>
+
+<h3>3. The Unit Test Framework example 1</h3>
+
+<h3>4. The Unit Test Framework example 2</h3>
+
+<h3>5. The Unit Test Framework example 3</h3>
+
+<h3>6. The Unit Test Framework example 4</h3>
+
+<h3>7. The Unit Test Framework example 5</h3>
+
+<h2>Tests</h2>
+
+<h3>1. The Program Execution Monitor test 1</h3>
+
+<p><tt>Rationale: intended to check an ability of the Program Execution <br>
+Monitor to catch a user exception.<br>
+Type: run-time-failure<br>
+Component needed: the Program Execution Monitor<br>
+Need test pattern: no<br>
+Expected output:<br>
+<br>
+*** Error: C string:Test error by throwing C-style string exception<br>
+<br>
+**** error return code 205<br>
+******* errors detected; see standard output for details ****<br>
+Result Code: 205</tt></p>
+
+<h3>2. The Program Execution Monitor test 2</h3>
+
+<p><tt>Monitor to catch a system exeption.<br>
+Type: run-time-failure<br>
+Component needed: the Program Execution Monitor<br>
+Need test pattern: no<br>
+Expected output:<br>
+<br>
+*** Error: integer divide by zero<br>
+<br>
+**** error return code 210<br>
+******* errors detected; see standard output for details ****<br>
+Result Code: 210</tt></p>
+
+<h3>3. The Test Execution Monitor test 1</h3>
+
+<p><tt>Rationale: intended to check an ability of the Test Execution Monitor <br>
+to catch non-zero return code from test_main<br>
+Type: run-time-failure<br>
+Component needed: the Test Execution Monitor<br>
+Need test pattern: no<br>
+Expected output:<br>
+&lt;your_boost_home&gt;\libs\test\src\test_main.cpp(49) : error in &quot;call_tes<br>
+t_main&quot;: test test_main_result == 0 || test_main_result == <br>
+boost::exit_success failed<br>
+<br>
+*** Failures in &quot;call_test_main&quot;<br>
+Result Code: 1</tt></p>
+
+<h3>4. The Test Execution Monitor test 2</h3>
+
+<p><tt>Rationale: intended to check an ability of the Test Execution Monitor <br>
+to catch and report test errors using the Test Tools.<br>
+Type: run-time-failure<br>
+Component needed: the Test Execution Monitor<br>
+Need test pattern: no<br>
+Expected output:<br>
+&lt;your_boost_home&gt;\libs\test\test\test_exec_fail2.cpp(14) : error in &quot;c<br>
+all_test_main&quot;: test v == 2 failed<br>
+&lt;your_boost_home&gt;\libs\test\test\test_exec_fail2.cpp(15) : error in &quot;c<br>
+all_test_main&quot;: sample BOOST_ERROR call<br>
+&lt;your_boost_home&gt;\libs\test\test\test_exec_fail2.cpp(16) : fatal error<br>
+in &quot;call_test_main&quot;: test 2 == v failed<br>
+<br>
+*** Failures in &quot;call_test_main&quot;<br>
+Result Code: 3</tt></p>
+
+<h3>5. The Test Execution Monitor test 3</h3>
+
+<p><tt>Rationale: intended to check an ability of the Test Execution Monitor <br>
+to catch and report test errors using the Test Tools.<br>
+Type: run-time-failure<br>
+Component needed: the Test Execution Monitor<br>
+Need test pattern: no<br>
+Expected output:<br>
+&lt;your_boost_home&gt;\libs\test\test\test_exec_fail3.cpp(14) : error <br>
+in &quot;call_test_main&quot;: test v == 2 failed<br>
+&lt;your_boost_home&gt;\libs\test\test\test_exec_fail3.cpp(15) : error in &quot;c<br>
+all_test_main&quot;: test 2 == v failed<br>
+<br>
+*** Failures in &quot;call_test_main&quot;<br>
+Result Code: 2</tt></p>
+
+<h3>6. The Test Execution Monitor test 4</h3>
+
+<p><tt>Rationale: intended to check an ability of the Test Execution Monitor <br>
+to catch and report exceptions in tests.<br>
+Type: run-time-failure<br>
+Component needed: the Test Execution Monitor<br>
+Need test pattern: no<br>
+Expected output:<br>
+Exception in &quot;call_test_main&quot;: C string:Test error by throwing C-<br>
+style string exception<br>
+<br>
+*** Failures in &quot;call_test_main&quot;<br>
+Result Code: -1</tt></p>
+
+<h3>7. The Test Tools test</h3>
+
+<p><tt>Rationale: detailed self test for the Test Tools. Intended to check <br>
+that every test tool is working properly, i.e. catch what is supposed <br>
+to catch and report the way it is supposed to report. Due to self <br>
+test nature the result code will always be non zero. The presence of <br>
+errors is detected by presence of lines with errors.<br>
+Type: run-time<br>
+Component needed: the Unit Test Framework<br>
+Need test pattern: no<br>
+Expected output: may vary from one compiler to another, example:<br>
+&lt;your_boost_home&gt;\libs\test\test\test_tools_test.cpp(91) : info: test<br>
+output.is_equal( (boost::test_toolbox::detail::wrapstrstream() <br>
+&lt;&lt; &quot;&lt;your_boost_home&gt;\\libs\\test\\test\\test_tools_test.cpp&quot; &lt;&lt; &quot;(&quot; <br>
+&lt;&lt; (__LINE__Var+31) &lt;&lt; &quot;) : &quot; &lt;&lt; &quot;info: test i==2 passed\n&quot;).str() ) <br>
+passed<br>
+&lt;your_boost_home&gt;\libs\test\test\test_tools_test.cpp(125) : info: test<br>
+output.is_equal( (boost::test_toolbox::detail::wrapstrstream() <br>
+&lt;&lt; &quot;&lt;your_boost_home&gt;\\libs\\test\\test\\test_tools_test.cpp&quot; &lt;&lt; &quot;(&quot; <br>
+&lt;&lt; (__LINE__Var+27) &lt;&lt; &quot;) : &quot; &lt;&lt; &quot;info: test j &lt; 5 passed\n&quot;).str() ) <br>
+passed<br>
+testing BOOST_CHECK_CLOSE for float<br>
+testing BOOST_CHECK_CLOSE for double<br>
+testing BOOST_CHECK_CLOSE for long double<br>
+&lt;your_boost_home&gt;\libs\test\test\test_tools_test.cpp(549) : info: test<br>
+output.is_equal( (boost::test_toolbox::detail::wrapstrstream() <br>
+&lt;&lt; &quot;&lt;your_boost_home&gt;\\libs\\test\\test\\test_tools_test.cpp&quot; &lt;&lt; &quot;(&quot; <br>
+&lt;&lt; (__LINE__Var+17) &lt;&lt; &quot;) : &quot; &lt;&lt; &quot;info: exception my_exception is <br>
+caught\n&quot;).str() ) passed<br>
+<br>
+*** Failures in &quot;Test Tools test&quot;</tt></p>
+
+<p><tt>Result Code: 4</tt></p>
+
+<h3>8. The Unit Test Framework online test</h3>
+
+<p><tt>Rationale: intended to demonstrate how to use the program Execution <br>
+Monitor online (i.e. included into test program vs linked as a <br>
+separate library). It's compile-time check. Once compiled it means <br>
+that passed.<br>
+Type: compile-time<br>
+Component needed: none<br>
+Need test pattern (see below): no<br>
+Expected output:<br>
+<br>
+*** No errors detected<br>
+Result Code: 0<br>
+&nbsp;</tt></p>
+
+<h3>9. The Unit Test Framework output test stream test</h3>
+
+<p><tt>Rationale: self test for output_test_stream Test Tool. validate that <br>
+all test mechanisms working properly. Include 5 test cases: <br>
+test_constructor, test_is_empty, test_check_length, test_is_equal, <br>
+test_match_pattern.<br>
+Type: run-time<br>
+Component needed: the Unit Test Framework<br>
+Need test pattern: no, but will generate 2 files automatically.<br>
+Expected output:<br>
+Running 5 test cases...<br>
+<br>
+*** No errors detected<br>
+Result Code: 0<br>
+&nbsp;</tt></p>
+
+<h3>10. The Unit Test Framework result report test</h3>
+
+<p><tt>Rationale: the Unit Test Framework reporting facilities testing. <br>
+Check that all reports (short, conformation, detailed) are <br>
+constructed as expected. To do this output is matched vs. pattern <br>
+file. The pattern file result_report_test.pattern is located in test <br>
+directory. To run test match mode (default) does not provide any <br>
+arguments. To run test in save mode (this way you cne generate <br>
+pattern file) run test with the argument --save_pattern=yes.<br>
+Type: run-time<br>
+Component needed: the Test Execution Monitor<br>
+Need test pattern: yes<br>
+Expected output:<br>
+<br>
+*** No errors detected<br>
+Result Code: 0</tt></p>
+
+<h3>11. The Unit Test Framework extension test</h3>
+
+<p><tt>Rationale: the Unit Test Extention test.<br>
+Type: run-time<br>
+Component needed: the Unit Test Framework<br>
+Need test pattern: no<br>
+Expected output:<br>
+Running 6 test cases...<br>
+<br>
+*** No errors detected<br>
+Result Code: 0</tt></p>
+
+<h3>12. The Unit Test Framework errors handling test</h3>
+
+<p><tt>Rationale: intended to test that the Unit Test Framework properly <br>
+handle different errors during different stages of testing. Tesing <br>
+output is matchind the pattern file. The pattern file example is <br>
+located in test directory (Cause output includes your local path I <br>
+could not provide pattern file to everybody). To run test match mode <br>
+(default) does not provide any arguments. To run test in save mode <br>
+(this way you cne generate pattern file) run test with the argument --<br>
+save_pattern=yes.<br>
+Type: run-time<br>
+Component needed: the Test Execuiton Monitor<br>
+Need test pattern: yes<br>
+Expected output:<br>
+<br>
+*** Failures in &quot;call_test_main&quot;<br>
+Result Code: 120</tt></p>
+<hr>
+<p>© <a href="mailto:boost_test_library@consultant.com">Gennadiy Rozental</a> 2001</p>
+<p>Revised: 
+<!--webbot bot="Timestamp" S-Type="EDITED"
+S-Format="%d %B, %Y" startspan -->25 December, 2001<!--webbot bot="Timestamp" endspan i-checksum="38513" -->
+</p>
+</TR>
+</TABLE>
+
+</body>
+
+</html>

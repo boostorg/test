@@ -1,0 +1,133 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Execution Monitor</title>
+</head>
+
+<body bgcolor="#808080" text="#000000" link="#336699" vlink="#3F7EBE" alink="#699BCD">
+
+   <div align="center">
+     <center>
+
+  <table border="2" cellpadding="13" bordercolor="#CDCDCD" width="80%" id="AutoNumber1" cellspacing="3" style="border-collapse: collapse">
+    <tr>
+      <td width="100%" align="left" valign="TOP" bgcolor="#f0f0f0" border="0" >
+
+<a name="TOP"><img border="0" src="../../../c++boost.gif" width="277" height="86"></a><br clear=left>
+
+<h1 align="center">Boost Test Library: Execution Monitor</h1>
+
+<p><b>
+<a href="#Introduction">Introduction</a><br>
+<a href="#Benefits">Benefits</a><br>
+<a href="#Specifications:monitor">Specifications</a><br>
+<a href="#MonitorCompilation">Compilation</a><br>
+<a href="#Examples">Examples</a><br>
+<a href="#Rationale">Rationale</a><br>
+<a href="#Design">Design
+</a></b></p>
+
+<h2><a name="Introduction">Introduction</a></h2>
+<p>
+The Boost Test Library's Execution Monitor calls a user-supplied function in a 
+controlled environment, relieving users from
+a messy error detection.
+
+To use the Execution Monitor 
+derive a class from 
+the <b>
+<a href="#Specifications:monitor">boost::execution_monitor</a>  </b>and overwrite 
+the virtual
+method <i>int</i> <b>execution_monitor</b>::function(). To start the monitored 
+function call the <b>execution_monitor</b><u>:</u>:execute( timeout ) 
+member function. The Execution Monitor then call&nbsp; The
+
+<a href="#TOP"><img border="0" src="uarrow.gif" align="right" width="19" height="20"></a>All 
+symbols in the Execution Monitor implementation are located in the namespace 
+boost. </p>
+
+<h2><a name="Benefits">Benefits</a></h2>
+<p>Controlled execution of error prone functions with a uniform error notification.</p>
+
+<h2><a name="Specifications:monitor">Specification</a> of boost::execution_monitor</h2>
+<p><b>
+<a href="#Specifications:monitor">boost::execution_monitor</a>  </b>uniformly detects and reports the occurrence of several types of signals and exceptions, reducing various errors 
+to a uniform <b> <a href="#Specifications:exception"> boost::execution_exception</a> </b>which is returned to 
+a caller.</p>
+<p>Usage:</p>
+<ol>
+  <li>Create class inherited from the <b>execution_monitor</b>.</li>
+  <li>Overwrite the virtual function <i>int</i> <b>execution_monitor</b>::function().</li>
+  <li>Call the method <b>execution_monitor</b>::execute( timeout ). The timeout argument specifies seconds that elapse before a
+  <b><a href="#Specifications:exception"> timer_error</a></b> occurs. May be ignored on some platforms.</li>
+</ol>
+Effects:
+<blockquote>
+  Calls the <b>execution_monitor</b>::function() inside a try/catch block which may  
+  also include 
+   
+  other unspecified platform dependent error detection code.
+  Throws<b>  <a href="#Specifications:exception">boost::execution_exception</a></b> on an uncaught C++ exception,
+  a hardware or software signal, trap, or  other exception.
+  <b>execution_monitor</b>::execute() <u>doesn't</u> consider it an error for 
+  the <b>execution_monitor</b>::function() to return a non-zero value.
+</blockquote>
+Returns:
+<blockquote>
+The integer value returned by the <b>execution_monitor</b>::function().
+</blockquote>
+<h2><a name="Specifications:exception">Specification</a> of boost::execution_exception<a href="#TOP"><img border="0" src="uarrow.gif" align="right" width="19" height="20"></a></h2>
+<p>class execution_exception {<br>
+public:&nbsp;<br>
+&nbsp;&nbsp;&nbsp; enum error_code {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; user_error,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// user reported non-fatal error<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cpp_exception_error,&nbsp;&nbsp; // see note (1) below&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; system_error,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// see note (2) below&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; timeout_error,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// only detectable on certain platforms&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; user_fatal_error,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// user reported fatal error&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; system_fatal_error&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// see note (2) below&nbsp;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp;&nbsp; error_code&nbsp;&nbsp;&nbsp;&nbsp; code() const;<br>
+&nbsp;&nbsp;&nbsp; char    const*&nbsp;&nbsp;&nbsp;&nbsp; what() const;&nbsp;<br>
+};</p>
+<p>  Note 1: Only uncaught C++ exceptions are treated as errors.  If the application catches a C++ exception, it will never reach  the
+<b><a href="#Specifications:monitor">boost::execution_monitor</a></b>.&nbsp;</p>
+<p>  Note 2: These errors include Unix signals and Windows structured  exceptions.  They are often initiated by hardware traps.&nbsp;</p>
+<p>  The implementation decides what is a fatal_system_exception and what is  just a system_exception. Fatal errors are so likely to have corrupted  machine state (like a stack overflow or addressing exception) that it is 
+unreasonable to continue execution.
+<a href="#TOP"><img border="0" src="uarrow.gif" align="right" width="19" height="20"></a></p>
+<h2>The <a name="MonitorCompilation">Execution Monitor compilation</a></h2>
+<p>To use the Execution Monitor standalone you should include an
+<a href="../src/execution_monitor.cpp">execution_monitor.cpp</a> into your 
+project. It is also supplied as a part of all other Boost Test Library's 
+components.</p>
+<h2><a name="Examples">Examples</a></h2>
+
+For examples of usage of Execution Monitor see&nbsp;<a href="prg_exec_framework.htm">Program 
+Execution Monitor</a> 
+or <a href="unit_test_framework.htm">Unit Test Framework.</a>
+
+<h2><a name="Rationale">Rationale</a></h2>
+<p>Sometimes we need to call a function and make sure that no user or
+system originated exception are being thrown by it. Also uniform exception reporting would be convenient.
+While designing we should be aware that we can be in a situation with no (or
+almost no) memory available.</p>
+<h2><a name="Design">Design</a></h2>
+<p>The <a href="test_lib_design.htm">Boost Test Library Design</a><b> </b>document describes the relationship between 
+the Execution Monitor and several other components.
+<a href="#TOP"><img border="0" src="uarrow.gif" align="right" width="19" height="20"></a></p>
+<hr>
+<p>© <a href="mailto:boost_test_library@consultant.com">Gennadiy Rozental</a> 2001</p>
+<p>Revised: 
+<!--webbot bot="Timestamp" S-Type="EDITED"
+S-Format="%d %B, %Y" startspan -->24 December, 2001<!--webbot bot="Timestamp" endspan i-checksum="38511" -->
+</p></TR>
+</table>
+</body>

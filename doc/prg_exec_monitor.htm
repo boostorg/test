@@ -1,0 +1,162 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Program Execution Monitor</title>
+</head>
+
+<body bgcolor="#808080" text="#000000" link="#336699" vlink="#3F7EBE" alink="#699BCD">
+  <div align="center">
+	<center>
+  <table border="2" cellpadding="13" bordercolor="#CDCDCD" width="80%" id="AutoNumber1" cellspacing="3" style="border-collapse: collapse">
+    <tr>
+      <td width="100%" align="left" valign="top" bgcolor="#f0f0f0" border="0" >
+
+<a name="TOP"><img border="0" src="../../../c++boost.gif" width="277" height="86"></a><br clear=left>
+
+<h1 align="center">Boost Test Library: Program Execution Monitor</h1>
+<p><b><a href="#Introduction">Introduction</a><br>
+<a href="#Benefits">Benefits</a><br>
+<a href="#Specifications">Specifications</a><br>
+<a href="#MonitorCompilation">Compilation</a><br>
+<a href="#Example">Example Programs</a><br>
+<a href="#Rationale">Rationale</a><br>
+<a href="#Design">Design</a></b>
+
+<h2><a name="Introduction">Introduction</a></h2>
+<p>The Boost Test Library's Program Execution Monitor provides a replacement <b>main()</b>
+ function which calls a user-supplied <b>cpp_main()</b>   function within a try
+block. The  supplied <b>main()</b>   then catches and reports
+exceptions, relieving users from messy error detection and reporting duties.</p>
+<p>For use with the Program Execution Monitor, the traditional Hello World
+program becomes:</p>
+<blockquote>
+  <pre>#include &lt;iostream&gt;
+
+<i>int</i> cpp_main( <i>int</i>, <i>char</i> *[] )  // note name
+{
+  std::cout &lt;&lt; &quot;Hello, world\n&quot;;
+  <i>return</i> 0;
+}</pre>
+</blockquote>
+<p>It really is that simple - just change the name of your initial function from
+main to <b>cpp_main()</b>.&nbsp; Do make sure the argc and arcv parameters are specified
+(although you don't have to name them if you don't use them). Now you can
+compile it and link with the Program Execution Monitor library.</p>
+<p>When the above program executes, the output will be:</p>
+<blockquote>
+<pre>Hello, world
+no errors detected</pre>
+</blockquote>
+<p>But what if some lower-level function had thrown a runtime_error with the
+message &quot;big trouble&quot;?&nbsp; Then the output would look something like
+this:</p>
+<blockquote>
+  <pre>** exception: std::runtime_error: big trouble
+**** error return code 5 
+**********  errors detected; see <font COLOR="#000000">standard</font><font COLOR="#0000ff"> </font><font COLOR="#000000">output</font> for details  ***********</pre>
+</blockquote>
+<p>And if a lower-level function had bubbled up a return code of 5, the output
+would look something like this:</p>
+<blockquote>
+  <pre>**** error return code 5 
+*********** errors detected; see <font COLOR="#000000">standard</font><font COLOR="#0000ff"> </font><font COLOR="#000000">output</font> for details  ***********</pre>
+</blockquote>
+<p>Note that the primary messages appear on <font COLOR="#000000">standard</font><font COLOR="#0000ff">
+</font><font COLOR="#000000">output stream</font>, while the final message
+appears on <font COLOR="#000000">standard</font><font COLOR="#0000ff"> </font><font color="#000000">error
+stream</font>.&nbsp; This increases the visibility of error notification if
+standard output and error streams are directed to different devices or files.<a href="#TOP"><img border="0" src="uarrow.gif" align="right" width="19" height="20"></a></p>
+<h2><a name="Benefits">Benefits</a></h2>
+<p>More uniform reporting of errors, particularly exceptions.</p>
+<p><b>In production programs:</b>&nbsp;</p>
+<p>More uniform error reporting is particularly useful for programs running
+unattended under control of scripts or batch files. Some operating systems pop
+up message boxes if an uncaught exception occurs, and this requires operator
+intervention. By converting such exceptions to non-zero program return codes,
+the library makes the program a better citizen.</p>
+<p>More uniform reporting of errors isn't a benefit to some programs,
+particularly programs always run by hand by a knowledgeable person. So <b>
+cpp_main()</b>
+wouldn't be worth using in that environment.</p>
+<p><b>In test programs:</b></p>
+<p>More uniform error reporting could be useful in test environments such as the boost
+regression tests. But in this case it is preferable to use the <a href="test_exec_framework.htm">Test Execution Monitor</a> 
+or <a href="unit_test_framework.htm">Unit Test Framework</a>, cause they allows 
+you to use Test Tools and generate more detailed error information.</p>
+
+<h2><a name="Specifications">Specifications</a>  of the supplied main()</h2>
+<p>Uniformly detects and reports the occurrence of several types of errors,
+reducing the various errors to a uniform return value which is returned to the
+host environment.</p>
+<p>There are two intended uses:</p>
+<ul>
+  <li>In production programs, which require no further action beyond naming the
+    top-level function <b>cpp_main()</b> instead of main().</li>
+  <li>In test frameworks, which supply <b>cpp_main()</b> to detect (or catch) test
+    specific errors, report them, and then return a presumably non-zero value.</li>
+</ul>
+<p>Requires:</p>
+<p>A user-supplied <b>cpp_main()</b> function with same interface as main().</p>
+Effects:
+  <p>Call <b>cpp_main</b>( argc, argv ) in a try block.</p>
+  <p>Treat as errors:</p>
+  <ul>
+    <li>Exceptions from <b>cpp_main()</b>.</li>
+    <li>Non-zero return from <b>cpp_main()</b>.</li>
+  </ul>
+  <p>Report errors to both cout (with details) and cerr (summary). Rationale:
+  Detail error reporting goes to cout so that it is properly interlaced with
+  other output, thus aiding error analysis. Summary goes to cerr in case cout is
+  redirected.</p>
+
+<p>Returns:</p>
+
+<p>non-zero if any error was detected, zero otherwise.
+<a href="#TOP"><img border="0" src="uarrow.gif" align="right" width="19" height="20"></a></p>
+
+<h2>The Program <a name="MonitorCompilation">Execution Monitor compilation</a></h2>
+<p>The Program Execution Monitor is supplied as an offline library and should be compiled and 
+linked with a test program. Following files, that are located in the Boost Test Library
+<b>src</b> directory, compose the component:</p>
+<blockquote>
+<p>
+<a href="../src/execution_monitor.cpp">execution_monitor.cpp</a><br>
+<a href="../src/cpp_main.cpp">cpp_main.cpp</a></p>
+</blockquote>
+
+<h2><a name="Example">Example</a> Program</h2>
+<blockquote>
+<pre><a href="../example/prg_exec_example.cpp">prg_exec_example.cpp</a></pre>
+</blockquote>
+
+<h2><a name="Rationale">Rationale</a></h2>
+<p>The components of a C++ program may report user-detected errors in several
+ways, such as via a return value or throwing an exception.&nbsp; System-detected
+errors such as dereferencing an invalid pointer are reported in other ways,
+totally operating system and compiler dependent.&nbsp;</p>
+<p>Yet many C++ programs, both production and test, must run in an environment
+where uniform reporting of errors is necessary.&nbsp; For example, converting
+otherwise uncaught exceptions to non-zero program return codes allows many
+command line, script, or batch environments to continue processing in a
+controlled manner.&nbsp; Even some GUI environments benefit from the unification
+of errors into program return codes.</p>
+<h2><a name="Design">Design</a></h2>
+<p>The <a href="test_lib_design.htm">Boost Test Library Design</a>
+document describes the relationship between the Program Execution Monitor and <a href="execution_monitor.htm">
+Execution Monitor</a><u>.</u>
+
+<a href="#TOP"><img border="0" src="uarrow.gif" align="right" width="19" height="20"></a></p>
+<hr>
+<p>© Beman Dawes, <a href="mailto:boost_test_library@consultant.com">Gennadiy Rozental</a> 2001</p>
+<p>Revised: 
+<!--webbot bot="Timestamp" S-Type="EDITED"
+S-Format="%d %B, %Y" startspan -->24 December, 2001<!--webbot bot="Timestamp" endspan i-checksum="38511" -->
+</p>
+</TR>
+</TABLE>
+
+</body>
+
+</html>

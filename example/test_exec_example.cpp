@@ -1,6 +1,5 @@
-//  boost test_main example program  ----------------------------------------//
+//  boost Test Execution Monitor example program  ------------------------//
 
-#define BOOST_INCLUDE_MAIN  // for testing, include rather than link
 #include <boost/test/test_tools.hpp>
 
 int add( int i, int j ) { return i+j; }
