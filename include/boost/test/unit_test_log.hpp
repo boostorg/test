@@ -38,6 +38,7 @@ namespace unit_test {
 
 //  each log level includes all subsequent higher loging levels
 enum            log_level {
+    invalid_log_level        = -1,
     log_successful_tests     = 0,
     log_test_suites          = 1,
     log_messages             = 2,
@@ -224,6 +225,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.22  2004/05/13 09:06:48  rogeeff
+//  added fixed_mapping
+//
 //  Revision 1.21  2004/05/11 11:00:51  rogeeff
 //  basic_cstring introduced and used everywhere
 //  class properties reworked

@@ -218,34 +218,33 @@ void
 xml_log_formatter::log_exception( std::ostream& output, const_string test_case_name, const_string explanation )
 {
     print_indent( output );
-
     output << "<Exception name=\"" << test_case_name << "\">\n";
-
+    
     m_indent += 2;
-    print_indent( output );
 
-    output << explanation << '\n';
     print_indent( output );
+    output << explanation << '\n';
 
     log_checkpoint_data const& chpd = checkpoint_data();
 
     if( !chpd.m_message.empty() ) {
+        print_indent( output );
         output << "<LastCheckpoint file=\"" << chpd.m_file << "\""
             << " line=\"" << chpd.m_line << "\">\n";
 
         m_indent += 2;
-        print_indent( output );
 
+        print_indent( output );
         output << chpd.m_message << "\n";
 
         m_indent -= 2;
-        print_indent( output );
 
+        print_indent( output );
         output << "</LastCheckpoint>\n";
-
-        m_indent -= 2;
-        print_indent( output );
     }
+
+    m_indent -= 2;
+    print_indent( output );
 
     output << "</Exception>";
 }
@@ -300,7 +299,7 @@ xml_log_formatter::end_log_entry( std::ostream& output )
 void
 xml_log_formatter::print_indent( std::ostream& output )
 {
-        output << std::setw( m_indent ) << "";
+    output << std::setw( m_indent ) << "";
 }
 
 //____________________________________________________________________________//
@@ -315,6 +314,9 @@ xml_log_formatter::print_indent( std::ostream& output )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.8  2004/05/13 09:04:43  rogeeff
+//  added fixed_mapping
+//
 //  Revision 1.7  2004/05/11 11:04:44  rogeeff
 //  basic_cstring introduced and used everywhere
 //  class properties reworked

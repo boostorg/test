@@ -333,6 +333,9 @@
 					RelativePath="..\..\..\..\boost\test\detail\class_properties.hpp">
 				</File>
 				<File
+					RelativePath="..\..\..\..\boost\test\detail\fixed_mapping.hpp">
+				</File>
+				<File
 					RelativePath="..\..\..\..\boost\test\detail\nullstream.hpp">
 				</File>
 				<File

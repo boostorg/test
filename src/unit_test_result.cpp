@@ -18,6 +18,7 @@
 #include <boost/test/unit_test_suite.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/test/detail/basic_cstring/compare.hpp>
+#include <boost/test/detail/fixed_mapping.hpp>
 
 // BOOST
 #include <boost/config.hpp>
@@ -383,25 +384,20 @@ unit_test_result::test_case_end()
 struct report_format_name_map : std::map<const_string,output_format>
 {
     report_format_name_map() {
-        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "HRF" ) , HRF ) );
-        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "XML" ) , XML ) );
     }
 };
 
-static report_format_name_map report_format_name;
-
 void
-unit_test_result::set_report_format( const_string reportformat )
+unit_test_result::set_report_format( const_string report_format_name )
 {
+    static fixed_mapping<const_string,output_format,case_ins_less<char const> > report_format(
+        "HRF", HRF,
+        "XML", XML,
 
-    output_format of = HRF;
+        HRF
+    );
 
-    report_format_name_map::const_iterator it = report_format_name.find( reportformat );
-
-    if( it != report_format_name.end() )
-        of = it->second;
-
-    if( of == HRF )
+    if( report_format[report_format_name] == HRF )
         Impl::m_report_formatter.reset( new hrf_report_formatter );
     else
         Impl::m_report_formatter.reset( new xml_report_formatter );
@@ -603,6 +599,9 @@ unit_test_result::has_passed() const
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.25  2004/05/13 09:04:44  rogeeff
+//  added fixed_mapping
+//
 //  Revision 1.24  2004/05/11 11:05:04  rogeeff
 //  basic_cstring introduced and used everywhere
 //  class properties reworked

@@ -20,6 +20,7 @@
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/detail/basic_cstring/compare.hpp>
+#include <boost/test/detail/fixed_mapping.hpp>
 
 // BOOST
 #include <boost/scoped_ptr.hpp>
@@ -122,7 +123,7 @@ unit_test_log::set_log_stream( std::ostream& str )
 void
 unit_test_log::set_log_threshold_level( log_level lev )
 {
-    if( m_pimpl->m_entry_in_progress )
+    if( m_pimpl->m_entry_in_progress || lev == invalid_log_level )
         return;
 
     m_pimpl->m_threshold_level = lev;
@@ -130,38 +131,29 @@ unit_test_log::set_log_threshold_level( log_level lev )
 
 //____________________________________________________________________________//
 
-struct log_level_name_map : std::map<const_string,log_level>
-{
-    log_level_name_map() {
-        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "all" )             , log_successful_tests ) );
-        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "success" )         , log_successful_tests ) );
-        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "test_suite" )      , log_test_suites ) );
-        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "messages" )        , log_messages ) );
-        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "warnings" )        , log_warnings ) );
-        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "all_errors" )      , log_all_errors ) );
-        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "cpp_exceptions" )  , log_cpp_exception_errors ) );
-        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "system_errors" )   , log_system_errors ) );
-        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "fatal_errors" )    , log_fatal_errors ) );
-        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "progress" )        , log_progress_only) );
-        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "nothing" )         , log_nothing ) );
-    }
-};
-
-static log_level_name_map log_level_name;
-
 void
 unit_test_log::set_log_threshold_level_by_name( const_string lev )
 {
+    static fixed_mapping<const_string,log_level> log_level_name(
+        "all"           , log_successful_tests,
+        "success"       , log_successful_tests,
+        "test_suite"    , log_test_suites,
+        "messages"      , log_messages,
+        "warnings"      , log_warnings,
+        "all_errors"    , log_all_errors,
+        "cpp_exceptions", log_cpp_exception_errors,
+        "system_errors" , log_system_errors,
+        "fatal_errors"  , log_fatal_errors,
+        "progress"      , log_progress_only,
+        "nothing"       , log_nothing,
+
+        invalid_log_level
+    );
+
     if( m_pimpl->m_entry_in_progress )
         return;
 
-    if( lev.empty() )
-        return;
-
-    log_level_name_map::const_iterator it = log_level_name.find( lev );
-
-    if( it != log_level_name.end() )
-        set_log_threshold_level( it->second );
+    set_log_threshold_level( log_level_name[lev] );
 }
 
 //____________________________________________________________________________//
@@ -371,30 +363,20 @@ unit_test_log::finish( unit_test_counter test_cases_amount )
 
 //____________________________________________________________________________//
 
-struct log_format_name_map : std::map<const_string,output_format>
-{
-    log_format_name_map() {
-        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "HRF" ) , HRF ) );
-        insert( std::make_pair( BOOST_TEST_STRING_LITERAL( "XML" ) , XML ) );
-    }
-};
-
-static log_format_name_map log_format_name;
-
 void
-unit_test_log::set_log_format( const_string logformat )
+unit_test_log::set_log_format( const_string log_format_name )
 {
     if( m_pimpl->m_entry_in_progress )
         return;
 
-    output_format of = HRF;
+    static fixed_mapping<const_string,output_format,case_ins_less<char const> > log_format(
+        "HRF", HRF,
+        "XML", XML,
 
-    log_format_name_map::const_iterator it = log_format_name.find( logformat );
+        HRF
+        );
 
-    if( it != log_format_name.end() )
-        of = it->second;
-
-    if( of == HRF )
+    if( log_format[log_format_name] == HRF )
         set_log_formatter( new detail::msvc65_like_log_formatter( *this ) );
     else
         set_log_formatter( new detail::xml_log_formatter( *this ) );
@@ -434,6 +416,9 @@ unit_test_log::checkpoint_data() const
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.21  2004/05/13 09:04:43  rogeeff
+//  added fixed_mapping
+//
 //  Revision 1.20  2004/05/11 11:04:44  rogeeff
 //  basic_cstring introduced and used everywhere
 //  class properties reworked
