@@ -111,7 +111,7 @@ struct unit_test_log::Impl {
         m_entry_level           = log_nothing;
         m_entry_in_progress     = false;
         m_entry_has_value       = false;
-        m_entry_file            = c_string_literal();
+        m_entry_file            = std::string();
         m_entry_line            = 0;
     }
     void                set_checkpoint( checkpoint const& cp )
@@ -122,9 +122,9 @@ struct unit_test_log::Impl {
     }
     void                clear_checkpoint()
     {
-        m_checkpoint_file       = c_string_literal();
+        m_checkpoint_file       = std::string();
         m_checkpoint_line       = 0;
-        m_checkpoint_message    = c_string_literal();
+        m_checkpoint_message    = std::string();
     }
 
 };
@@ -693,6 +693,9 @@ unit_test_log::set_log_format( std::string const& logformat )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.15  2003/06/11 04:34:22  rogeeff
+//  minor fix
+//
 //  Revision 1.14  2003/06/11 01:52:09  rogeeff
 //  force unix slash for file name
 //

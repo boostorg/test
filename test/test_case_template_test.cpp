@@ -93,7 +93,7 @@ int test_main( int, char* [] )
     }
 
     tf::unit_test_log::instance().set_log_stream( std::cout );
-    BOOST_CHECK_EQUAL( num_of_failures, 0 );
+    BOOST_CHECK_EQUAL( num_of_failures, (std::size_t)0 );
     BOOST_CHECK( !exception_caught );
 
     tf::unit_test_log::instance().set_log_stream( null_output );
@@ -109,7 +109,7 @@ int test_main( int, char* [] )
     }
 
     tf::unit_test_log::instance().set_log_stream( std::cout );
-    BOOST_CHECK_EQUAL( num_of_failures, 9 );
+    BOOST_CHECK_EQUAL( num_of_failures, (std::size_t)9 );
     BOOST_CHECK( !exception_caught );
 
     tf::unit_test_log::instance().set_log_stream( null_output );
@@ -125,7 +125,7 @@ int test_main( int, char* [] )
     }
 
     tf::unit_test_log::instance().set_log_stream( std::cout );
-    BOOST_CHECK_EQUAL( num_of_failures, 7 );
+    BOOST_CHECK_EQUAL( num_of_failures, (std::size_t)7 );
     BOOST_CHECK( !exception_caught );
 
     tf::unit_test_log::instance().set_log_stream( null_output );
@@ -142,7 +142,7 @@ int test_main( int, char* [] )
     }
 
     tf::unit_test_log::instance().set_log_stream( std::cout );
-    BOOST_CHECK_EQUAL( num_of_failures, 0 );
+    BOOST_CHECK_EQUAL( num_of_failures, (std::size_t)0 );
     BOOST_CHECK( !exception_caught );
     BOOST_CHECK( !passed );
 
@@ -155,6 +155,9 @@ int test_main( int, char* [] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2003/06/11 04:34:22  rogeeff
+//  minor fix
+//
 //  Revision 1.1  2003/06/10 07:57:33  rogeeff
 //  test_case_template_test added
 //  parameterized test updated
