@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -8,7 +8,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : implemets Unit Test Log, Majority of implementation details
 //  are hidden in this file with use of pimpl idiom.
@@ -680,19 +680,8 @@ unit_test_log::set_log_format( std::string const& logformat )
 //  Revision History :
 //
 //  $Log$
-//  Revision 1.12  2003/02/15 22:25:42  rogeeff
-//  include parameters moved to source file
-//
-//  Revision 1.11  2003/02/13 08:36:54  rogeeff
-//  reworked to support multiply log formats
-//
-//  Revision 1.10  2002/12/08 18:07:16  rogeeff
-//  switched to use c_string_literal
-//  all NULLs substituted with c_string_literal default constructors
-//  build info is printed independently of report level
-//
-//  Revision 1.9  2002/11/02 20:04:42  rogeeff
-//  release 1.29.0 merged into the main trank
+//  Revision 1.13  2003/06/09 09:14:57  rogeeff
+//  1.30.beta1
 //
 
 // ***************************************************************************

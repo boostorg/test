@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  (C) Copyright Beman Dawes and Ullrich Koethe 1995-2001.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
@@ -9,14 +9,14 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : provides execution monitor implementation for all supported 
 //  configurations, including Microsoft structured exception based, unix signals
 //  based and special workarounds for borland
 //
 //  Note that when testing requirements or user wishes preclude use of this
-//  file as a separate compilation uses, it may be #included as a header file.
+//  file as a separate compilation unit, it may be included as a header file.
 //
 //  Header dependencies are deliberately restricted to reduce coupling to other
 //  boost libraries.
@@ -91,7 +91,7 @@ static int  catch_signals( execution_monitor & exmon, bool catch_system_errors, 
 static void report_error( execution_exception::error_code   ec,
                           c_string_literal                  msg1,           // first part of the message
                           c_string_literal                  msg2 = "" );    // second part of the message; sum length msg1 + msg2 should
-                                                                            // exceed REPORT_ERROR_BUFFER_SIZE; never concatinate mesages
+                                                                            // exceed REPORT_ERROR_BUFFER_SIZE; never concatenate messages
                                                                             // manually, cause it should work even in case of memory lack
 
 //____________________________________________________________________________//
@@ -452,7 +452,7 @@ int catch_signals( execution_monitor & exmon, bool catch_system_errors, int )
 
 #else  // default signal handler
 
-int catch_signals( execution_monitor & exmon, bool, int )
+int catch_signals( execution_monitor& exmon, bool, int )
 {
     return exmon.function();
 }
@@ -495,7 +495,7 @@ report_ms_se_error( unsigned int id )
         break;
 
     case EXCEPTION_PRIV_INSTRUCTION:
-        detail::report_error( execution_exception::system_fatal_error, "privilaged instruction" );
+        detail::report_error( execution_exception::system_fatal_error, "privileged instruction" );
         break;
 
     case EXCEPTION_IN_PAGE_ERROR:
@@ -541,6 +541,7 @@ report_ms_se_error( unsigned int id )
 
     default:
         detail::report_error( execution_exception::system_error, "unrecognized exception or signal" );
+        break;
     }  // switch
 }  // report_ms_se_error
 
@@ -571,42 +572,11 @@ static void report_error( execution_exception::error_code ec, c_string_literal m
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.23  2003/06/09 09:13:05  rogeeff
+//  1.30.beta1
+//
 //  Revision 1.22  2003/05/02 17:57:40  beman_dawes
 //  como can't do structured exceptions
-//
-//  Revision 1.21  2003/02/17 10:04:21  rogeeff
-//  some exception safety and reentrance issues addressed
-//
-//  Revision 1.20  2003/02/15 21:56:14  rogeeff
-//  temporary cwpro fix for most of link problems
-//
-//  Revision 1.19  2003/02/14 06:40:00  rogeeff
-//  use BOOST_HAS_SIGACTION for signal based algorithm selection
-//
-//  Revision 1.18  2003/02/13 08:34:12  rogeeff
-//  tentative fix for signal handling selection algorithm
-//  other minor fixes
-//
-//  Revision 1.17  2002/12/18 17:04:18  beman_dawes
-//  quiet unused parameter warning
-//
-//  Revision 1.16  2002/12/17 22:01:09  beman_dawes
-//  Add :space to std::string to prevent garbled msg
-//
-//  Revision 1.15  2002/12/10 21:09:49  beman_dawes
-//  Metrowerks fix
-//
-//  Revision 1.14  2002/12/08 18:02:14  rogeeff
-//  MS C runtime debug hooks added
-//  switched to csignal and csetjmp
-//  switched to use c_string_literal
-//  catch_system_errors switch introduced for all configurations
-//  SIGABRT catch added
-//  REPORT_ERROR_BUFFER_SIZE is named
-//
-//  Revision 1.13  2002/11/02 20:04:41  rogeeff
-//  release 1.29.0 merged into the main trank
-//
 
 // ***************************************************************************
 

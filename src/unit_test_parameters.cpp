@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -8,7 +8,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : simple implementation for Unit Test Framework parameter 
 //  handling routines. May be rewritten in future to use some kind of 
@@ -94,17 +94,8 @@ retrieve_framework_parameter( c_string_literal parameter_name, int* argc, char**
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.7  2003/02/13 08:40:05  rogeeff
-//  log_format, report_format, output_format introduced
-//  data() -> c_str()
-//
-//  Revision 1.6  2002/12/08 18:18:10  rogeeff
-//  catch ststem error parameter introduced
-//  eliminated of uses of NULL
-//  switched to use c_string_literal
-//
-//  Revision 1.5  2002/11/02 20:04:42  rogeeff
-//  release 1.29.0 merged into the main trank
+//  Revision 1.8  2003/06/09 09:17:11  rogeeff
+//  1.30.beta1
 //
 
 // ***************************************************************************
