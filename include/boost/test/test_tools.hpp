@@ -18,7 +18,7 @@
 #endif
 
 // BOOST
-#include <boost/cstdlib.hpp> // for boost::exit_success; people expecting it
+#include <boost/cstdlib.hpp> // for boost::exit_success;
 #include <boost/config.hpp>
 
 // STL
