@@ -309,7 +309,7 @@ protected:
         typedef ut_detail::token_assigner<BOOST_DEDUCED_TYPENAME iterator_traversal<Iter>::type> Assigner;
         Iter checkpoint;
 
-        Assigner::clear( m_value );
+        Assigner::clear( this->m_value );
 
         if( !m_keep_empty_tokens ) {
             while( begin != end && m_is_dropped( *begin ) )
@@ -550,6 +550,9 @@ make_range_token_iterator( Iter begin, Iter end, M1 const& m1, M2 const& m2, M3 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2004/07/20 12:46:39  vladimir_prus
+//  Add "this->", since gcc 3.4 has two-phase lookup.
+//
 //  Revision 1.3  2004/07/19 12:29:57  rogeeff
 //  guard rename
 //  mingw port
