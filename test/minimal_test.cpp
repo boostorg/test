@@ -1,7 +1,9 @@
 //  (C) Copyright Gennadiy Rozental 2001-2003.
-//  See accompanying license for terms and conditions of use.
+//  Use, modification, and distribution are subject to the 
+//  Boost Software License, Version 1.0. (See accompanying file 
+//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-//  See http://www.boost.org for most recent version including documentation.
+//  See http://www.boost.org/libs/test for the library home page.
 //
 //  File        : $RCSfile$
 //
@@ -74,6 +76,9 @@ test_main( int /*argc*/, char* /*argv*/[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2003/11/06 07:31:42  rogeeff
+//  Licence update
+//
 //  Revision 1.6  2003/10/27 07:13:32  rogeeff
 //  licence update
 //

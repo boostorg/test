@@ -23,7 +23,7 @@
 				AdditionalOptions="/EHa"
 				Optimization="0"
 				AdditionalIncludeDirectories="../../../../"
-				PreprocessorDefinitions="_LIB;WIN32;_DEBUG"
+				PreprocessorDefinitions="_LIB;WIN32;_DEBUG,BOOST_TEST_NO_AUTO_LINK"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -42,7 +42,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile=".\Debug\unit_test_framework.lib"
+				OutputFile=".\Debug\unix_test_framework.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"/>

@@ -1,8 +1,10 @@
 //  (C) Copyright Gennadiy Rozental 2001-2003.
 //  (C) Copyright Beman Dawes 2000.
-//  See accompanying license for terms and conditions of use.
+//  Use, modification, and distribution are subject to the 
+//  Boost Software License, Version 1.0. (See accompanying file 
+//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-//  See http://www.boost.org/libs/test for documentation.
+//  See http://www.boost.org/libs/test for the library home page.
 //
 //  File        : $RCSfile$
 //
@@ -36,6 +38,9 @@ int test_main( int, char *[] )  // note the name
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10  2003/11/06 07:31:42  rogeeff
+//  Licence update
+//
 //  Revision 1.9  2003/10/27 07:13:32  rogeeff
 //  licence update
 //

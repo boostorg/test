@@ -1,7 +1,9 @@
 //  (C) Copyright Gennadiy Rozental 2001-2003.
-//  See accompanying license for terms and conditions of use.
+//  Use, modification, and distribution are subject to the 
+//  Boost Software License, Version 1.0. (See accompanying file 
+//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-//  See http://www.boost.org for most recent version including documentation.
+//  See http://www.boost.org/libs/test for the library home page.
 //
 //  File        : $RCSfile$
 //
@@ -99,33 +101,33 @@ test_BOOST_CHECK_CLOSE( FPT = FPT() )
                                                                 \
     CHECK_TOOL_USAGE(                                           \
         BOOST_CHECK_CLOSE( fp1, fp2, epsilon ),                 \
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test fp1 ~= fp2 failed [" \
-                                        << fp1 << " !~= " << fp2 << " (+/-" << epsilon << ")]\n", 0 ) ) \
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": difference between fp1{" <<                 \
+                                            fp1 << "} and fp2{" << fp2 << "} exceeds " << epsilon << "%\n", 0 ) ) \
     )                                                           \
 /**/
     FPT fp1, fp2, epsilon;
 
     BOOST_CHECK_CLOSE_SHOULD_PASS( 1, 1, 0 );
 
-    BOOST_CHECK_CLOSE_SHOULD_FAIL( 0, 1e-20, 1e-7 );
-    BOOST_CHECK_CLOSE_SHOULD_FAIL( 0, 1e-30, 1e-7 );
-    BOOST_CHECK_CLOSE_SHOULD_FAIL( 0, -1e-10, 1e-3 );
-    BOOST_CHECK_CLOSE_SHOULD_FAIL( 0.123456, 0.123457, 1e-6 );
+    BOOST_CHECK_CLOSE_SHOULD_FAIL( 0, 1e-20, 1e-5 );
+    BOOST_CHECK_CLOSE_SHOULD_FAIL( 0, 1e-30, 1e-5 );
+    BOOST_CHECK_CLOSE_SHOULD_FAIL( 0, -1e-10, 0.1 );
+    BOOST_CHECK_CLOSE_SHOULD_FAIL( 0.123456, 0.123457, 1e-4 );
 
-    BOOST_CHECK_CLOSE_SHOULD_PASS( 0.123456, 0.123457, 1e-5 );
+    BOOST_CHECK_CLOSE_SHOULD_PASS( 0.123456, 0.123457, 1e-3 );
 
-    BOOST_CHECK_CLOSE_SHOULD_FAIL( 0.123456, -0.123457, 1e-5 );
+    BOOST_CHECK_CLOSE_SHOULD_FAIL( 0.123456, -0.123457, 1e-3 );
 
-    BOOST_CHECK_CLOSE_SHOULD_PASS( 1.23456e28, 1.23457e28, 1e-5 );
+    BOOST_CHECK_CLOSE_SHOULD_PASS( 1.23456e28, 1.23457e28, 1e-3 );
 
-    BOOST_CHECK_CLOSE_SHOULD_FAIL( 1.23456e-10, 1.23457e-11, 1e-5 );
-    BOOST_CHECK_CLOSE_SHOULD_FAIL( 1.111e-10, 1.112e-10, 0.0008999 );
-    BOOST_CHECK_CLOSE_SHOULD_FAIL( 1.112e-10, 1.111e-10, 0.0008999 );
+    BOOST_CHECK_CLOSE_SHOULD_FAIL( 1.23456e-10, 1.23457e-11, 1e-3 );
+    BOOST_CHECK_CLOSE_SHOULD_FAIL( 1.111e-10, 1.112e-10, 0.08999 );
+    BOOST_CHECK_CLOSE_SHOULD_FAIL( 1.112e-10, 1.111e-10, 0.08999 );
 
-    BOOST_CHECK_CLOSE_SHOULD_PASS( 1     , 1.0001, 1.1e-4 );
-    BOOST_CHECK_CLOSE_SHOULD_PASS( 1.0002, 1.0001, 1.1e-4 );
+    BOOST_CHECK_CLOSE_SHOULD_PASS( 1     , 1.0001, 1.1e-2 );
+    BOOST_CHECK_CLOSE_SHOULD_PASS( 1.0002, 1.0001, 1.1e-2 );
     
-    BOOST_CHECK_CLOSE_SHOULD_FAIL( 1     , 1.0002, 1.1e-4 );
+    BOOST_CHECK_CLOSE_SHOULD_FAIL( 1     , 1.0002, 1.1e-2 );
 }
 
 BOOST_META_FUNC_TEST_CASE( test_BOOST_CHECK_CLOSE );
@@ -140,7 +142,7 @@ test_close_at_tolerance()
 
     double fp1     = 1.00000001;
     double fp2     = 1.00000002;
-    double epsilon = 1e-8;
+    double epsilon = 1e-6;
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK_PREDICATE( close_at_tolerance<double>( epsilon, FPC_WEAK ), 2, ( fp1, fp2 ) ),
@@ -149,13 +151,13 @@ test_close_at_tolerance()
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK_CLOSE( fp1, fp2, epsilon ),
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test fp1 ~= fp2 failed [" 
-                                        << fp1 << " !~= " << fp2 << " (+/-" << epsilon << ")]\n", 3 ) )
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": difference between fp1{" <<
+                                         fp1 << "} and fp2{" << fp2 << "} exceeds " << epsilon << "%\n", 3 ) )
     );
 
     fp1     = 1.23456e-10;
     fp2     = 1.23457e-10;
-    epsilon = 8.1e-6;
+    epsilon = 8.1e-4;
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK_PREDICATE( close_at_tolerance<double>( epsilon, FPC_WEAK ), 2, ( fp1, fp2 ) ),
@@ -190,6 +192,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2003/11/06 07:31:42  rogeeff
+//  Licence update
+//
 //  Revision 1.6  2003/10/27 07:13:32  rogeeff
 //  licence update
 //

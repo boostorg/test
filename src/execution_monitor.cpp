@@ -1,8 +1,10 @@
 //  (C) Copyright Gennadiy Rozental 2001-2003.
 //  (C) Copyright Beman Dawes and Ullrich Koethe 1995-2001.
-//  See accompanying license for terms and conditions of use.
+//  Use, modification, and distribution are subject to the 
+//  Boost Software License, Version 1.0. (See accompanying file 
+//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-//  See http://www.boost.org/libs/test for documentation.
+//  See http://www.boost.org/libs/test for the library home page.
 //
 //  File        : $RCSfile$
 //
@@ -581,6 +583,9 @@ static void report_error( execution_exception::error_code ec, c_string_literal m
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.28  2003/11/06 07:31:12  rogeeff
+//  Licence update
+//
 //  Revision 1.27  2003/11/02 04:43:09  rogeeff
 //  custom exception translators support
 //

@@ -1,7 +1,9 @@
 //  (C) Copyright Gennadiy Rozental 2001-2003.
-//  See accompanying license for terms and conditions of use.
+//  Use, modification, and distribution are subject to the 
+//  Boost Software License, Version 1.0. (See accompanying file 
+//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-//  See http://www.boost.org for most recent version including documentation.
+//  See http://www.boost.org/libs/test for the library home page.
 //
 //  File        : $RCSfile$
 //
@@ -12,8 +14,9 @@
 // ***************************************************************************
 
 // Boost.Test
-#include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_result.hpp>
+#include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test_suite.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
 #if !defined ( __GNUC__ ) || __GNUC__ > 2
 #include <boost/test/detail/nullstream.hpp>
@@ -145,6 +148,9 @@ test_main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.11  2003/11/06 07:31:42  rogeeff
+//  Licence update
+//
 //  Revision 1.10  2003/10/27 07:13:32  rogeeff
 //  licence update
 //

@@ -82,7 +82,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\..\.."
-				PreprocessorDefinitions="_CONSOLE;WIN32;_DEBUG"
+				PreprocessorDefinitions="_CONSOLE;WIN32;_DEBUG,BOOST_TEST_NO_AUTO_LINK"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
