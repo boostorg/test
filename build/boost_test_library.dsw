@@ -171,6 +171,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "test_case_template_example"=".\test_case_template_example.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "test_exec_example"=".\test_exec_example.dsp" - Package Owner=<4>
 
 Package=<5>
