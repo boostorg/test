@@ -11,8 +11,8 @@
 //  Version     : $Id$
 //
 //  Description : defines singleton class unit_test_log and all manipulators.
-//  unit_test_log has output stream like interface. It's implementation is completely 
-//  hidden with pimple idiom
+//  unit_test_log has output stream like interface. It's implementation is
+//  completely hidden with pimple idiom
 // ***************************************************************************
 
 #ifndef BOOST_UNIT_TEST_LOG_HPP
@@ -70,9 +70,9 @@ struct line {
 };
 
 struct file {
-    explicit    file( char const* fn_ ) : m_file_name( fn_ ) {}
+    explicit    file( c_string_literal fn_ ) : m_file_name( fn_ ) {}
 
-    char const* m_file_name;
+    c_string_literal m_file_name;
 };
 
 struct checkpoint {
@@ -82,9 +82,9 @@ struct checkpoint {
 };
 
 struct report_exception {
-    report_exception( char const* what_ ) : m_what( what_ ) {}
+    report_exception( c_string_literal what_ ) : m_what( what_ ) {}
 
-    char const*     m_what;
+    c_string_literal     m_what;
 };
 
 struct report_progress {
@@ -106,21 +106,21 @@ public:
     void            start( unit_test_counter test_cases_amount_, bool print_build_info_ = false );
     void            set_log_stream( std::ostream& str_ );
     void            set_log_threshold_level( report_level lev_ );
-    void            set_log_threshold_level_by_name( char const* lev_ );
+    void            set_log_threshold_level_by_name( c_string_literal lev_ );
     void            clear_checkpoint();
 
     // entry configuration methods
-    unit_test_log&  operator<<( begin const& ); // begin entry 
-    unit_test_log&  operator<<( end const& );   // end entry
-    unit_test_log&  operator<<( file const& );  // set file name
-    unit_test_log&  operator<<( line const& );  // set line number
-    unit_test_log&  operator<<( level const& );  // set entry level
-    unit_test_log&  operator<<( checkpoint const& ); // set checkpoint
+    unit_test_log&  operator<<( begin const& );         // begin entry 
+    unit_test_log&  operator<<( end const& );           // end entry
+    unit_test_log&  operator<<( file const& );          // set file name
+    unit_test_log&  operator<<( line const& );          // set line number
+    unit_test_log&  operator<<( level const& );         // set entry level
+    unit_test_log&  operator<<( checkpoint const& );    // set checkpoint
 
     // print value_ methods
     unit_test_log&  operator<<( report_progress const& );
     unit_test_log&  operator<<( report_exception const& );
-    unit_test_log&  operator<<( char const* value_ );
+    unit_test_log&  operator<<( c_string_literal value_ );
     unit_test_log&  operator<<( std::string const& value_ );
 
 private:
@@ -157,6 +157,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.13  2002/12/08 17:43:55  rogeeff
+//  switched to use c_string_literal
+//
 //  Revision 1.12  2002/11/02 19:31:04  rogeeff
 //  merged into the main trank
 //

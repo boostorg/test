@@ -61,6 +61,7 @@ namespace boost {
 namespace minimal_test {
 
 class monitor : public boost::execution_monitor {
+    typedef unit_test_framework::c_string_literal c_string_literal;
 public:
     // constructor
     monitor( int argc, char** argv )
@@ -72,7 +73,7 @@ public:
         return test_main( m_argc, m_argv );
     }
 
-    void        report_error( const char* msg_, const char* file_, int line_, char const* func_name_, bool is_msg_ = false )
+    void        report_error( const char* msg_, const char* file_, int line_, c_string_literal func_name_, bool is_msg_ = false )
     {
         ++p_errors_counter.value;
         std::cerr << file_ << "(" << line_ << "): ";
@@ -88,7 +89,7 @@ public:
         std::cerr << std::endl;
     }
 
-    void        report_critical_error( const char* msg_, const char* file_, int line_, char const* func_name_, bool is_msg_ = false )
+    void        report_critical_error( const char* msg_, const char* file_, int line_, c_string_literal func_name_, bool is_msg_ = false )
     {
         report_error( msg_, file_, line_, func_name_, is_msg_ );
         throw boost::execution_exception( boost::execution_exception::no_error, "" );
@@ -145,6 +146,9 @@ int main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2002/12/08 17:41:57  rogeeff
+//  switched to use c_string_literal
+//
 //  Revision 1.6  2002/11/02 19:31:04  rogeeff
 //  merged into the main trank
 //
