@@ -345,7 +345,7 @@ basic_cstring<CharT>::trim_right( basic_cstring exclusions )
     iterator it;
 
     for( it = end()-1; it != begin()-1; --it ) {
-        if( basic_cstring::traits_type::find( exclusions.begin(),  exclusions.size(), *it ) == (pointer)0 )
+        if( self_type::traits_type::find( exclusions.begin(),  exclusions.size(), *it ) == (pointer)0 )
             break;
     }
     
@@ -714,6 +714,9 @@ last_char( basic_cstring<CharT> source )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.12  2005/01/21 07:33:51  rogeeff
+//  small aCC fix
+//
 //  Revision 1.11  2004/10/05 02:17:47  rogeeff
 //  workaround guard rewritten
 //
