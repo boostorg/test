@@ -33,7 +33,6 @@ namespace boost {
 namespace unit_test {
 
 typedef unsigned long   unit_test_counter;
-typedef char const*     c_string_literal;
 
 namespace detail {
 
@@ -65,6 +64,9 @@ namespace unit_test_framework = unit_test;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.19  2004/05/27 06:36:26  rogeeff
+//  eliminate c_string_literal typedef
+//
 //  Revision 1.18  2004/05/21 06:19:35  rogeeff
 //  licence update
 //

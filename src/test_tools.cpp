@@ -161,7 +161,7 @@ test_and_throw_impl( extended_predicate_value const& v, wrap_stringstream& messa
 //____________________________________________________________________________//
 
 bool
-equal_and_continue_impl( c_string_literal left, c_string_literal right, wrap_stringstream& message,
+equal_and_continue_impl( char const* left, char const* right, wrap_stringstream& message,
                          const_string file_name, std::size_t line_num,
                          unit_test::log_level loglevel )
 {
@@ -458,6 +458,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.31  2004/05/27 06:35:54  rogeeff
+//  eliminate c_string_literal typedef
+//
 //  Revision 1.30  2004/05/27 06:29:20  rogeeff
 //  support for wide C string comparizon
 //

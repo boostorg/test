@@ -167,7 +167,6 @@ namespace boost {
 namespace test_tools {
 
 typedef boost::unit_test::const_string      const_string;
-typedef boost::unit_test::c_string_literal  c_string_literal;
 
 // ************************************************************************** //
 // **************            extended_predicate_value          ************** //
@@ -408,7 +407,7 @@ test_and_throw_impl( First const& first_, Second const& second_, Predicate const
 // ************************************* //
 
 bool
-equal_and_continue_impl( c_string_literal left_, c_string_literal right_, wrap_stringstream& message_,
+equal_and_continue_impl( char const* left_, char const* right_, wrap_stringstream& message_,
                          const_string file_name_, std::size_t line_num_,
                          unit_test::log_level log_level_ = unit_test::log_all_errors );
 
@@ -584,6 +583,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.40  2004/05/27 06:36:26  rogeeff
+//  eliminate c_string_literal typedef
+//
 //  Revision 1.39  2004/05/27 06:20:53  rogeeff
 //  wide C string comparison support added
 //
