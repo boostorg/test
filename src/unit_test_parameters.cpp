@@ -37,13 +37,16 @@ const struct parameter_names {
     c_string_literal env_name;
     c_string_literal cla_name;
 } parameter_cla_names [] = {
-    { LOGLEVEL          , "--log_level" },
+    { LOG_LEVEL         , "--log_level" },
     { NO_RESULT_CODE    , "--result_code" },
-    { RESULT_REPORT     , "--report_level" },
+    { REPORT_LEVEL      , "--report_level" },
     { TESTS_TO_RUN      , "--run_test" },
     { SAVE_TEST_PATTERN , "--save_pattern" },
     { BUILD_INFO        , "--build_info" },
     { CATCH_SYS_ERRORS  , "--catch_system_errors" },
+    { REPORT_FORMAT     , "--report_format" },
+    { LOG_FORMAT        , "--log_format" },
+    { OUTPUT_FORMAT     , "--output_format" },
     { c_string_literal(), c_string_literal() }
     
 } ;
@@ -63,7 +66,7 @@ retrieve_framework_parameter( c_string_literal parameter_name, int* argc, char**
             parameter_cla_name += '=';
             
             for( int i = 1; i < *argc; ++i ) {
-                if( std::strncmp( parameter_cla_name.data(), argv[i], parameter_cla_name.length() ) == 0 ) {
+                if( std::strncmp( parameter_cla_name.c_str(), argv[i], parameter_cla_name.length() ) == 0 ) {
                     std::string result = argv[i] + parameter_cla_name.length();
                     
                     for( int j = i; j < *argc; ++j ) {
@@ -91,6 +94,10 @@ retrieve_framework_parameter( c_string_literal parameter_name, int* argc, char**
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2003/02/13 08:40:05  rogeeff
+//  log_format, report_format, output_format introduced
+//  data() -> c_str()
+//
 //  Revision 1.6  2002/12/08 18:18:10  rogeeff
 //  catch ststem error parameter introduced
 //  eliminated of uses of NULL
