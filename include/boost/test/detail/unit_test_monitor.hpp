@@ -13,16 +13,12 @@
 //  test cases. Translates executioin exception into error level
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_MONITOR_HPP
-#define BOOST_UNIT_TEST_MONITOR_HPP
+#ifndef BOOST_UNIT_TEST_MONITOR_HPP_071894GER
+#define BOOST_UNIT_TEST_MONITOR_HPP_071894GER
 
 #include <boost/test/execution_monitor.hpp>
 
-#ifdef BOOST_MSVC
-# pragma warning(push)
-# pragma warning(disable: 4511) // copy constructor could not be generated
-# pragma warning(disable: 4512) // assignment operator could not be generated
-#endif
+#include <boost/test/detail/suppress_warnings.hpp>
 
 namespace boost {
 
@@ -74,16 +70,16 @@ private:
 
 } // namespace boost
 
-#ifdef BOOST_MSVC
-# pragma warning(default: 4511) // copy constructor could not be generated
-# pragma warning(default: 4512) // assignment operator could not be generated
-# pragma warning(pop)
-#endif
+#include <boost/test/detail/enable_warnings.hpp>
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.17  2004/07/19 12:24:01  rogeeff
+//  guard rename
+//  suppress warnings reworked
+//
 //  Revision 1.16  2004/06/07 07:33:49  rogeeff
 //  detail namespace renamed
 //
@@ -99,4 +95,4 @@ private:
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_MONITOR_HPP
+#endif // BOOST_UNIT_TEST_MONITOR_HPP_071894GER
