@@ -12,17 +12,20 @@
 //  Description : contains log formatters supplied by the framework definitions 
 // ***************************************************************************
 
-#ifndef BOOST_TEST_SUPPLIED_LOG_FORMATTERS_HPP
-#define BOOST_TEST_SUPPLIED_LOG_FORMATTERS_HPP
+#ifndef BOOST_TEST_SUPPLIED_LOG_FORMATTERS_HPP_071894GER
+#define BOOST_TEST_SUPPLIED_LOG_FORMATTERS_HPP_071894GER
 
 // Boost.Test
 #include <boost/test/unit_test_log_formatter.hpp>
+#include <boost/test/detail/xml_printer.hpp>
 
 // BOOST
 #include <boost/config.hpp>
 
 // STL
 #include <cstddef>
+
+#include <boost/test/detail/suppress_warnings.hpp>
 
 namespace boost {
 
@@ -57,7 +60,7 @@ protected:
 // **************               xml_log_formatter              ************** //
 // ************************************************************************** //
 
-class xml_log_formatter : public unit_test_log_formatter {
+class xml_log_formatter : public unit_test_log_formatter, private xml_printer {
 public:
     explicit xml_log_formatter( unit_test_log const& log );
 
@@ -86,10 +89,16 @@ private:
 
 } // namespace boost
 
+#include <boost/test/detail/enable_warnings.hpp>
+
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2004/07/19 12:22:49  rogeeff
+//  guard rename
+//  suppress warnings
+//
 //  Revision 1.7  2004/06/07 07:33:49  rogeeff
 //  detail namespace renamed
 //
@@ -105,4 +114,4 @@ private:
 //
 // ***************************************************************************
 
-#endif // BOOST_TEST_SUPPLIED_LOG_FORMATTERS_HPP
+#endif // BOOST_TEST_SUPPLIED_LOG_FORMATTERS_HPP_071894GER
