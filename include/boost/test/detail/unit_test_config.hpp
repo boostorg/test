@@ -27,7 +27,8 @@ namespace boost {
 
 namespace unit_test_framework {
 
-typedef unsigned long unit_test_counter;
+typedef unsigned long   unit_test_counter;
+typedef char const*     c_string_literal;
 
 namespace detail {
 
@@ -55,6 +56,9 @@ using std::distance;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.12  2002/12/08 17:35:26  rogeeff
+//  c_string_literal introduced
+//
 //  Revision 1.11  2002/11/02 19:31:05  rogeeff
 //  merged into the main trank
 //
