@@ -48,8 +48,8 @@ template<typename CharT1, typename Tr,typename CharT2>
 inline std::basic_ostream<CharT1,Tr>&
 operator<<( std::basic_ostream<CharT1,Tr>& os, basic_cstring<CharT2> const& str )
 {
-    CharT1 const* const beg = reinterpret_cast<CharT1 const* const>( str.begin() ); //!!
-    CharT1 const* const end = reinterpret_cast<CharT1 const* const>( str.end() );
+    CharT1 const* const beg = reinterpret_cast<CharT1 const*>( str.begin() ); //!!
+    CharT1 const* const end = reinterpret_cast<CharT1 const*>( str.end() );
     os << std::basic_string<CharT1,Tr>( beg, end - beg );
 
     return os;
@@ -68,6 +68,9 @@ operator<<( std::basic_ostream<CharT1,Tr>& os, basic_cstring<CharT2> const& str 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2004/07/21 16:28:09  dgregor
+//  io.hpp: Eliminate useless "const" qualifiers on an rvalue
+//
 //  Revision 1.7  2004/07/19 12:27:05  rogeeff
 //  guard rename
 //
