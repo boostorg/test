@@ -21,6 +21,7 @@ using boost::test_toolbox::extended_predicate_value;
 
 // STL
 #include <iostream>
+#include <iomanip>
 #include <list>
 #include <typeinfo>
 #include <cassert>
@@ -212,6 +213,16 @@ test_BOOST_MESSAGE()
         BOOST_MESSAGE( a ),
         output.is_equal( "struct A\n" )
     );
+
+	CHECK_TOOL_USAGE(
+		BOOST_MESSAGE( std::hex << std::showbase << 20 ),
+		output.is_equal( "0x14\n" )
+	);
+
+	CHECK_TOOL_USAGE(
+		BOOST_MESSAGE( std::setw( 4 ) << 20 ),
+		output.is_equal( "  20\n" )
+		);
 }
 
 //____________________________________________________________________________//
@@ -257,7 +268,7 @@ test_BOOST_CHECKPOINT()
         output.is_equal(
             (boost::wrap_stringstream().ref()
                 << "Exception in " TEST_CASE_NAME ": C string: some error\n"
-                << normalize_file_name( __FILE__ ) << "(" << 256 << "): "
+                << normalize_file_name( __FILE__ ) << "(" << 264 << "): "
                 << "last checkpoint: Going to do a silly things\n").str()
         )
     );
@@ -595,18 +606,18 @@ test_BOOST_CHECK_EQUAL_COLLECTIONS()
     CHECK_TOOL_USAGE(
         BOOST_CHECK_EQUAL_COLLECTIONS( testlist.begin(), testlist.end(), pattern ),
             output.is_equal( CHECK_PATTERN( 
-              "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [4 != 3]\n"
+              "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed in a position 2 [4 != 3]\n"
               << normalize_file_name( __FILE__ ) << "(" << __LINE__ << "): "
-              << "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [7 != 6]\n"
+              << "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed in a position 5 [7 != 6]\n"
               , 6 ) )
     );
 #else
     CHECK_TOOL_USAGE(
         BOOST_CHECK_EQUAL_COLLECTIONS( testlist.begin(), testlist.end(), pattern ),
             output.is_equal( CHECK_PATTERN( 
-              "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [4 != 3]\n"
+              "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed in a position 2 [4 != 3]\n"
               << normalize_file_name( __FILE__ ) << "(" << (__LINE__-6) << "): "
-              << "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [7 != 6]\n"
+              << "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed in a position 5 [7 != 6]\n"
               , 6 ) )
     );
 #endif
@@ -694,6 +705,10 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.23  2003/11/02 06:12:06  rogeeff
+//  manipulator usage tests added
+//  collections comarison tests updated
+//
 //  Revision 1.22  2003/10/27 07:13:32  rogeeff
 //  licence update
 //
