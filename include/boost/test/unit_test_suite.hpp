@@ -108,6 +108,17 @@ private:
 
 //____________________________________________________________________________//
 
+extern detail::unit_test_monitor the_monitor;
+
+template<typename Exception, typename ExceptionTranslator>
+void
+register_exception_translator( ExceptionTranslator const& tr, boost::type<Exception>* d = 0 )
+{
+	the_monitor.register_exception_translator( tr, d );
+}
+
+//____________________________________________________________________________//
+
 // ************************************************************************** //
 // **************              function_test_case              ************** //
 // ************************************************************************** //
@@ -311,6 +322,9 @@ create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, bo
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.16  2003/11/02 06:20:55  rogeeff
+//  register_exception_translator added for unit test framework
+//
 //  Revision 1.15  2003/10/27 07:13:13  rogeeff
 //  licence update
 //
