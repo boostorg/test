@@ -188,14 +188,14 @@ test_main( int argc, char * argv[] )
                     break;
                 case tct_param_free_function:
 // Borland bug workaround
-#if defined(__BORLANDC__) && (__BORLANDC__ < 0x560)
+#if defined(__BORLANDC__) && (__BORLANDC__ < 0x570)
                     test.add( boost::unit_test_framework::create_test_case<int*,int>( &bad_function_param, std::string( "bad_function_param" ), (int*)params, params+1 ) );
 #else
                     test.add( BOOST_PARAM_TEST_CASE( &bad_function_param, (int*)params, params+1 ) );
 #endif
                     break;
                 case tct_param_user_test_case:
-#if defined(__BORLANDC__) && (__BORLANDC__ < 0x560)
+#if defined(__BORLANDC__) && (__BORLANDC__ < 0x570)
                     test.add( boost::unit_test_framework::create_test_case<bad_test,int*,int>( &bad_test::test_param, std::string( "bad_test::test_param" ),  bad_test_instance, (int*)params, params+1 ) );
 #else
                     test.add( BOOST_PARAM_CLASS_TEST_CASE( &bad_test::test_param, bad_test_instance, (int*)params, params+1 ) );
@@ -230,6 +230,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.7.2.2  2002/10/05 11:11:16  johnmaddock
+//  Updated Borland version checks to the latest version with the problem (0x570).
+//
 //  Revision 1.7.2.1  2002/10/01 17:45:52  rogeeff
 //  some tests reworked
 //  "parameterized test" test added
@@ -243,3 +246,4 @@ test_main( int argc, char * argv[] )
 // ***************************************************************************
 
 // EOF
+
