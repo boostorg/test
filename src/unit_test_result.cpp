@@ -267,7 +267,10 @@ struct unit_test_result::Impl {
     static unit_test_result_ptr                 m_curr;
     static boost::scoped_ptr<report_formatter>  m_report_formatter;
 
-    bool                            has_failed()   { return m_assertions_failed != m_expected_failures || m_exception_caught; }
+    bool                            has_failed()
+    {
+        return m_test_cases_failed != 0 || m_assertions_failed != m_expected_failures || m_exception_caught;
+    }
     int                             result_code()
     { 
         return has_failed() 
@@ -353,7 +356,7 @@ unit_test_result::test_case_end()
         parent->m_pimpl->m_test_cases_passed += curr_impl->m_test_cases_passed;
         parent->m_pimpl->m_test_cases_failed += curr_impl->m_test_cases_failed;
 
-        // for test_cases (vs. test_suite)
+        // for test_cases (vs. test_suite) //!! need better identification
         if( curr_impl->m_test_cases_passed == 0 && curr_impl->m_test_cases_failed == 0 ) {
             if( curr_impl->has_failed() )
                 parent->m_pimpl->m_test_cases_failed++;
@@ -593,6 +596,9 @@ unit_test_result::has_passed() const
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.18  2003/06/10 08:00:34  rogeeff
+//  has_failed conseder test_case_failed != 0 as an error
+//
 //  Revision 1.17  2003/06/10 03:35:38  rogeeff
 //  set report level algorithm patched
 //
