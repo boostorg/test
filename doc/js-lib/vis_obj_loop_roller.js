@@ -19,7 +19,6 @@ function VisObjLoopRoller( transition_id ) {
     }
 }
 
-
 VisObjLoopRoller.prototype.roll = function() {
     var from_obj = this.objs[this.curr_index++];
 

@@ -33,22 +33,24 @@ if( !Array.prototype.indexOf ) {
 if( !Array.prototype.contains ) {
     Array.prototype.contains = function( el ) {
         return this.indexOf( el ) != -1;
-};
+    };
+}
 
 if( !Array.prototype.remove ) {
     Array.prototype.remove = function( el ) {
-    var index = this.indexOf( el );
+        var index = this.indexOf( el );
 
-    if( index > -1 ) {
-        for( var index2 = index+1; index2 < this.length; index2++ ) {
-            this[index2-1] = this[index2];
+        if( index > -1 ) {
+            for( var index2 = index+1; index2 < this.length; index2++ ) {
+                this[index2-1] = this[index2];
+            }
+
+            this.pop();
+            return true;
         }
 
-        this.pop();
-        return true;
-    }
-
-    return false;
-};
+        return false;
+    };
+}
 
 // EOF

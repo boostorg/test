@@ -192,7 +192,7 @@ function viso_make_transition( from_vis_obj, to_vis_obj, transition, speed,
 }
 
 function viso_do_transition( from_vis_obj, to_vis_obj, 
-                             dcl_from, dcl_to, total_steps, 
+                             dcl_from, dcl_to, total_steps,
                              dont_align_parent, counter ) {
     viso_change_clip_by( from_vis_obj, dcl_from );
     viso_change_clip_by( to_vis_obj, dcl_to );
