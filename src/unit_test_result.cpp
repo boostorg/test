@@ -23,7 +23,7 @@
 #include <cmath>
 
 # ifdef BOOST_NO_STDC_NAMESPACE
-namespace std { using ::getenv; using ::log10; using ::strncmp; }
+namespace std { using ::log10; using ::strncmp; }
 # endif
 
 namespace boost {
@@ -48,7 +48,10 @@ struct unit_test_result::Impl {
     static boost::scoped_ptr<unit_test_result> m_head;
     static unit_test_result*        m_curr;
 
-    bool                            is_failed() { return m_assertions_failed != m_expected_failures || m_exception_caught; }
+    bool                            is_failed()   { return m_assertions_failed != m_expected_failures || m_exception_caught; }
+    unit_test_counter               result_code() { return is_failed() 
+                                                        ? ( (m_assertions_failed != 0) ? m_assertions_failed : -1 )
+                                                        : 0; }
 };
 
 boost::scoped_ptr<unit_test_result> unit_test_result::Impl::m_head;
@@ -181,22 +184,35 @@ unit_test_result::test_case_name()
 
 //____________________________________________________________________________//
 
+namespace {
+std::string ps_name( bool p_s, char const* singular_form )  { return p_s ? std::string( singular_form ).append( "s" ) : singular_form; }
+std::string cs_name( bool c_s )                             { return c_s ? "case" : "suite"; }
+std::string quote( char const* name )                       { return std::string( " \"" ).append( name ).append( "\" "); }
+}
+
+//____________________________________________________________________________//
+
 void
 unit_test_result::confirmation_report( std::ostream& where_to )
 {
     assert( this != NULL );
 
-    bool failed = m_pimpl->m_test_cases_failed != 0 || m_pimpl->is_failed();
+    bool failed     = m_pimpl->m_test_cases_failed != 0 || m_pimpl->is_failed();
+    bool case_suite = m_pimpl->m_test_cases_failed + m_pimpl->m_test_cases_passed <= 1;
 
     if( failed ) {
-        where_to << "\n*** " << m_pimpl->m_assertions_failed << " Failures in \"" << m_pimpl->m_test_case_name << "\"" << std::endl;
+        if( m_pimpl->m_assertions_failed > 0 )
+            where_to << "\n*** " << m_pimpl->m_assertions_failed 
+                     << ps_name( m_pimpl->m_assertions_failed != 1, " Failure" ) 
+                     << " in test " << cs_name( case_suite ) 
+                     << quote( m_pimpl->m_test_case_name );
+        if( m_pimpl->m_exception_caught )
+            where_to << "\n*** Test " << cs_name( case_suite )
+                     << quote( m_pimpl->m_test_case_name ) << "is aborted due to uncaught exception or fatal error";
+        where_to << std::endl;
     }
-    else {
-        char const* p = std::getenv( "BOOST_TEST_RESULT_CONFIRMATION" );
-        if( p == NULL || std::strncmp( p, "no", 3 ) != 0 ) {
-            where_to << "\n*** No errors detected" << std::endl;
-        }
-    }
+    else
+        where_to << "\n*** No errors detected" << std::endl;
 }
 
 //____________________________________________________________________________//
@@ -212,27 +228,34 @@ unit_test_result::short_report( std::ostream& where_to, int indent )
     
     std::string indent_string( indent*2, ' ' );
 
-    where_to << "\n" << indent_string << "Test " << ( total_test_cases > 1 ? "suite" : "case")
-             << " \""<< m_pimpl->m_test_case_name << "\" "
+    where_to << "\n" << indent_string << "Test " << cs_name( total_test_cases <= 1 )
+             << quote( m_pimpl->m_test_case_name )
              << (failed ? "failed with:\n" : "passed with:\n");
 
     if( total_test_cases > 1 ) {
-        int width = static_cast<int>( std::log10( (float)std::max( m_pimpl->m_test_cases_passed, m_pimpl->m_test_cases_failed ))) + 1;
+        int width = static_cast<int>( std::log10( (float)std::max( m_pimpl->m_test_cases_passed, 
+                                                                   m_pimpl->m_test_cases_failed ) ) ) + 1;
         where_to << indent_string << std::setw( width ) << m_pimpl->m_test_cases_passed
-                 << " test cases out of " << total_test_cases << " passed\n";
+                 << " test " << ps_name( m_pimpl->m_test_cases_passed != 1, "case" ) << " out of " << total_test_cases << " passed\n";
         where_to << indent_string << std::setw( width ) << m_pimpl->m_test_cases_failed
-                 << " test cases out of " << total_test_cases << " failed\n";
+                 << " test " << ps_name( m_pimpl->m_test_cases_failed != 1, "case" ) << " out of " << total_test_cases << " failed\n";
     }
 
-    int width = total_assertions > 0 ? static_cast<int>( std::log10( (float)std::max( m_pimpl->m_assertions_passed, m_pimpl->m_assertions_failed ))) + 1
-                                     : 1;
-    where_to << indent_string << std::setw( width ) << m_pimpl->m_assertions_passed << " assertions out of "
+    int width = total_assertions > 0 
+                  ? static_cast<int>( std::log10( (float)std::max( m_pimpl->m_assertions_passed, 
+                                                                   m_pimpl->m_assertions_failed ) ) ) + 1
+                  : 1;
+
+    where_to << indent_string << std::setw( width ) << m_pimpl->m_assertions_passed 
+             << ps_name( m_pimpl->m_assertions_passed != 1, " assertion" ) << " out of "
              << total_assertions << " passed\n";
-    where_to << indent_string << std::setw( width ) << m_pimpl->m_assertions_failed << " assertions out of "
+    where_to << indent_string << std::setw( width ) << m_pimpl->m_assertions_failed 
+             << ps_name( m_pimpl->m_assertions_failed != 1, " assertion" ) << " out of "
              << total_assertions << " failed\n";
 
     if( m_pimpl->m_expected_failures > 0 ) {
-        where_to << indent_string << "while " << m_pimpl->m_expected_failures << " failures expected\n";
+        where_to << indent_string << "while " << m_pimpl->m_expected_failures 
+                 << ps_name( m_pimpl->m_expected_failures != 1, " failure" ) << " expected\n";
     }
 
     where_to.flush();
@@ -259,9 +282,7 @@ unit_test_result::detailed_report( std::ostream& where_to, int indent )
 int
 unit_test_result::result_code()
 {
-    return m_pimpl->m_test_cases_failed != 0
-            ? m_pimpl->m_test_cases_failed
-            : ( (m_pimpl->is_failed()) ? m_pimpl->m_assertions_failed : 0 );
+    return m_pimpl->result_code();
 }
 
 //____________________________________________________________________________//

@@ -21,32 +21,32 @@ using namespace boost::unit_test_framework;
 #include <list>
 #include <typeinfo.h>
 
-#define CHECK_TOOL_USAGE( tool_usage, check ) \
-{ \
-    boost::test_toolbox::output_test_stream output;\
-\
-    unit_test_log::instance().set_log_stream( output );\
-    tool_usage;\
-\
-    unit_test_log::instance().set_log_stream( std::cout );\
-    BOOST_CHECK( check );\
+#define CHECK_TOOL_USAGE( tool_usage, check )               \
+{                                                           \
+    boost::test_toolbox::output_test_stream output;         \
+                                                            \
+    unit_test_log::instance().set_log_stream( output );     \
+    tool_usage;                                             \
+                                                            \
+    unit_test_log::instance().set_log_stream( std::cout );  \
+    BOOST_CHECK( check );                                   \
 }
 
 //____________________________________________________________________________//
 
 #define CHECK_CRITICAL_TOOL_USAGE( tool_usage, nothrow_check, throw_check ) \
-{ \
-    boost::test_toolbox::output_test_stream output;\
-\
-    unit_test_log::instance().set_log_stream( output );\
-    try { \
-        tool_usage;\
-        unit_test_log::instance().set_log_stream( std::cout );\
-        BOOST_CHECK( nothrow_check );\
-    } catch( boost::test_toolbox::detail::test_tool_failed const&) {\
-        unit_test_log::instance().set_log_stream( std::cout );\
-        BOOST_CHECK( throw_check );\
-    } \
+{                                                                           \
+    boost::test_toolbox::output_test_stream output;                         \
+                                                                            \
+    unit_test_log::instance().set_log_stream( output );                     \
+    try {                                                                   \
+        tool_usage;                                                         \
+        unit_test_log::instance().set_log_stream( std::cout );              \
+        BOOST_CHECK( nothrow_check );                                       \
+    } catch( boost::test_toolbox::detail::test_tool_failed const&) {        \
+        unit_test_log::instance().set_log_stream( std::cout );              \
+        BOOST_CHECK( throw_check );                                         \
+    }                                                                       \
 }
 
 //____________________________________________________________________________//
@@ -203,7 +203,7 @@ test_BOOST_CHECKPOINT() {
         bad.run(),
         output.is_equal(
             (boost::test_toolbox::detail::wrapstrstream()
-                << "Exception in " TEST_CASE_NAME ": C string:some error\n"
+                << "Exception in " TEST_CASE_NAME ": C string: some error\n"
                 << __FILE__ << "(" << __LINE__ - 10 << ") : "
                 << "last checkpoint: Going to do a silly things\n").str()
         )
@@ -349,8 +349,8 @@ test_BOOST_CHECK_CLOSE( FPT dummy = 0. ) {
                                                                 \
     CHECK_TOOL_USAGE(                                           \
         BOOST_CHECK_CLOSE( fp1, fp2, epsilon ),                 \
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test fp1 (==) fp2 failed [" \
-                                        << fp1 << " (!=) " << fp2 << " (" << epsilon << ")]\n" ) ) \
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test fp1 ~= fp2 failed [" \
+                                        << fp1 << " !~= " << fp2 << " (+/-" << epsilon << ")]\n" ) ) \
     )
 
 #define BOOST_CHECK_CLOSE_SHOULD_FAIL_N( first, second, num )   \
@@ -360,8 +360,8 @@ test_BOOST_CHECK_CLOSE( FPT dummy = 0. ) {
                                                                 \
     CHECK_TOOL_USAGE(                                           \
         BOOST_CHECK_CLOSE( fp1, fp2, num ),                     \
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test fp1 (==) fp2 failed [" \
-                                        << fp1 << " (!=) " << fp2 << " (" << epsilon << ")]\n" ) ) \
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test fp1 ~= fp2 failed [" \
+                                        << fp1 << " !~= " << fp2 << " (+/-" << epsilon << ")]\n" ) ) \
     )
 
     FPT fp1, fp2, epsilon, tmp;
@@ -471,8 +471,8 @@ test_BOOST_CHECK_PREDICATE() {
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK_CLOSE( fp1, fp2, epsilon ),
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test fp1 (==) fp2 failed [" 
-                                        << fp1 << " (!=) " << fp2 << " (" << epsilon << ")]\n" ) )
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test fp1 ~= fp2 failed [" 
+                                        << fp1 << " !~= " << fp2 << " (+/-" << epsilon << ")]\n" ) )
     );
 
 }

@@ -8,10 +8,11 @@
 
 #include <boost/test/test_tools.hpp>
 
-int test_main( int, char *[] )  // note the name
+int test_main( int, char* [] )  // note the name
 {
-  throw "Test error by throwing C-style string exception";
-  return 0;
+    BOOST_ERROR( "Msg" );
+    throw "Test error by throwing C-style string exception";
+    return 0;
 }
 
 //  Revision History

@@ -31,32 +31,39 @@ main( int argc, char* argv[] )
 {
     std::string         loglevel;
     bool                no_result_code;
-    result_report_type  report_type;
+    bool                print_build_info;
+    result_report_level report_level;
 
     // 1. set the log level
     unit_test_log::instance().set_log_threshold_level_by_name(
         retrieve_framework_parameter( LOGLEVEL, &argc, argv ).data() );
 
-    // 2. set the result code flag
-    no_result_code = retrieve_framework_parameter( NO_RESULT_CODE, &argc, argv ) == "no";
+    // 2. set the result code and build info flags
+    no_result_code    = retrieve_framework_parameter( NO_RESULT_CODE, &argc, argv ) == "no";
+    print_build_info  = retrieve_framework_parameter( BUILD_INFO, &argc, argv ) == "yes";
 
     // 3. set the report type
     std::string report_type_to_set = retrieve_framework_parameter( RESULT_REPORT, &argc, argv );
 
-    if( report_type_to_set == report_type_names[CONFIRMATION_REPORT] ) {
-        report_type = CONFIRMATION_REPORT;
+    if( report_type_to_set == report_level_names[CONFIRMATION_REPORT] ) {
+        report_level = CONFIRMATION_REPORT;
     }
-    else if( report_type_to_set == report_type_names[SHORT_REPORT] ) {
-        report_type = SHORT_REPORT;
+    else if( report_type_to_set == report_level_names[SHORT_REPORT] ) {
+        report_level = SHORT_REPORT;
     }
-    else if( report_type_to_set == report_type_names[DETAILED_REPORT] ) {
-        report_type = DETAILED_REPORT;
+    else if( report_type_to_set == report_level_names[DETAILED_REPORT] ) {
+        report_level = DETAILED_REPORT;
     }
-    else if( report_type_to_set == report_type_names[NO_REPORT] ) {
-        report_type = NO_REPORT;
+    else if( report_type_to_set == report_level_names[NO_REPORT] ) {
+        report_level = NO_REPORT;
     }
-    else
-        report_type = CONFIRMATION_REPORT;
+    else if( report_type_to_set == "" ) {
+        report_level = CONFIRMATION_REPORT;
+    }
+    else {
+        std::cerr << "*** Unrecognized report level" << std::endl;
+        return -999;
+    }
 
     // init master unit test suite
     test_suite* test = init_unit_test_suite( argc, argv );
@@ -66,7 +73,7 @@ main( int argc, char* argv[] )
     }
 
     // start testing
-    unit_test_log::instance().start( test->size() );
+    unit_test_log::instance().start( test->size(), print_build_info );
     test->run();
 
     // odd case: we have 1 test case in 1 test suite
@@ -74,7 +81,7 @@ main( int argc, char* argv[] )
         unit_test_log::instance() << report_progress();
 
     // report result
-    switch( report_type ) {
+    switch( report_level ) {
     case CONFIRMATION_REPORT:
         unit_test_result::instance().confirmation_report( std::cout );
         break;

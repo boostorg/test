@@ -311,14 +311,15 @@ unit_test_log::operator<<( char const* value )
 //____________________________________________________________________________//
 
 void
-unit_test_log::start( unit_test_counter test_cases_amount )
+unit_test_log::start( unit_test_counter test_cases_amount, bool print_build_info )
 {
     m_pimpl->m_expected_total_test_cases_amount = test_cases_amount;
 
-    if( m_pimpl->m_threshold_level != report_nothing ) {
+    if( m_pimpl->m_threshold_level != report_nothing && test_cases_amount > 0 )
         m_pimpl->stream() << "Running " << test_cases_amount << " test " 
                           << (test_cases_amount > 1 ? "cases" : "case") << "...\n";
 
+    if( print_build_info && m_pimpl->m_threshold_level <= report_test_suites ) {
         if( m_pimpl->m_threshold_level <= report_test_suites ) {
             m_pimpl->stream() << " Platform: " << BOOST_PLATFORM            << '\n'
                               << " Compiler: " << BOOST_COMPILER            << '\n'

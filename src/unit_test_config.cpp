@@ -29,6 +29,7 @@ const struct parameter_names {
     { RESULT_REPORT     , "--report_level" },
     { TESTS_TO_RUN      , "--run_test" },
     { SAVE_TEST_PATTERN , "--save_pattern" },
+    { BUILD_INFO        , "--build_info" },
     { NULL              , NULL }
     
 } ;
@@ -62,7 +63,8 @@ retrieve_framework_parameter( char const* parameter_name, int* argc, char ** arg
         }
     }
 
-    return std::getenv( parameter_name ) == NULL ? "" : std::getenv( parameter_name );
+    char const* env_var_value = std::getenv( parameter_name );
+    return  env_var_value == NULL ? "" : env_var_value;
 }
 
 //____________________________________________________________________________//

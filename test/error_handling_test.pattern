@@ -3,10 +3,6 @@
 
 log level: 0; error type: no error; test case type: free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -20,10 +16,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: no error; test case type: user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -37,10 +29,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: no error; test case type: parameterized free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -54,10 +42,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: no error; test case type: parameterized user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -71,10 +55,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: user error; test case type: free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -88,10 +68,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: user error; test case type: user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -105,10 +81,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: user error; test case type: parameterized free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -122,10 +94,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: user error; test case type: parameterized user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -139,10 +107,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: cpp exception; test case type: free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -157,10 +121,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: cpp exception; test case type: user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -175,10 +135,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: cpp exception; test case type: parameterized free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -193,10 +149,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: cpp exception; test case type: parameterized user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -211,10 +163,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type:  system error; test case type: free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -229,10 +177,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type:  system error; test case type: user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -247,10 +191,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type:  system error; test case type: parameterized free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -265,10 +205,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type:  system error; test case type: parameterized user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -283,10 +219,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: fatal user error; test case type: free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -300,10 +232,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: fatal user error; test case type: user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -317,10 +245,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: fatal user error; test case type: parameterized free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -334,10 +258,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: fatal user error; test case type: parameterized user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -351,10 +271,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: fatal system error; test case type: free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -371,10 +287,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: fatal system error; test case type: user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -391,10 +303,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: fatal system error; test case type: parameterized free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -411,10 +319,6 @@ Leaving  test case "Errors handling test"
 
 log level: 0; error type: fatal system error; test case type: parameterized user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -431,10 +335,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: no error; test case type: free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -448,10 +348,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: no error; test case type: user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -465,10 +361,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: no error; test case type: parameterized free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -482,10 +374,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: no error; test case type: parameterized user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -499,10 +387,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: user error; test case type: free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -516,10 +400,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: user error; test case type: user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -533,10 +413,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: user error; test case type: parameterized free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -550,10 +426,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: user error; test case type: parameterized user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -567,10 +439,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: cpp exception; test case type: free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -585,10 +453,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: cpp exception; test case type: user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -603,10 +467,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: cpp exception; test case type: parameterized free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -621,10 +481,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: cpp exception; test case type: parameterized user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -639,10 +495,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type:  system error; test case type: free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -657,10 +509,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type:  system error; test case type: user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -675,10 +523,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type:  system error; test case type: parameterized free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -693,10 +537,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type:  system error; test case type: parameterized user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -711,10 +551,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: fatal user error; test case type: free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -728,10 +564,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: fatal user error; test case type: user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -745,10 +577,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: fatal user error; test case type: parameterized free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -762,10 +590,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: fatal user error; test case type: parameterized user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -779,10 +603,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: fatal system error; test case type: free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -799,10 +619,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: fatal system error; test case type: user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -819,10 +635,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: fatal system error; test case type: parameterized free function;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
@@ -839,10 +651,6 @@ Leaving  test case "Errors handling test"
 
 log level: 1; error type: fatal system error; test case type: parameterized user test case;
 Running 1 test case...
- Platform: Win32
- Compiler: Microsoft Visual C++ version 1200
- STL     : STLPort standard library version 0x450
- Boost   : 1.29.0
 
 Entering test case "Errors handling test"
 
