@@ -61,10 +61,10 @@ class basic_ifstream_line_iterator : detail::ifstream_holder<CharT>, public basi
 {
 public:
     basic_ifstream_line_iterator( basic_cstring<CharT> file_name, CharT delimeter )
-    : detail::ifstream_holder<CharT>( file_name ), basic_istream_line_iterator<CharT>( m_stream, delimeter ) {}
+    : detail::ifstream_holder<CharT>( file_name ), basic_istream_line_iterator<CharT>( this->m_stream, delimeter ) {}
 
     explicit basic_ifstream_line_iterator( basic_cstring<CharT> file_name = basic_cstring<CharT>() )
-    : detail::ifstream_holder<CharT>( file_name ), basic_istream_line_iterator<CharT>( m_stream ) {}
+    : detail::ifstream_holder<CharT>( file_name ), basic_istream_line_iterator<CharT>( this->m_stream ) {}
 };
 
 typedef basic_ifstream_line_iterator<char>      ifstream_line_iterator;
@@ -78,6 +78,9 @@ typedef basic_ifstream_line_iterator<wchar_t>   wifstream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2004/05/27 07:01:49  rogeeff
+//  portability workarounds
+//
 //  Revision 1.2  2004/05/25 10:29:09  rogeeff
 //  use standard getline
 //  eliminate initialize

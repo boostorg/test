@@ -42,7 +42,7 @@ public:
                 istream_line_iterator_impl( std::basic_istream<CharT>& input, CharT delimeter )
     : m_input_stream( &input ), m_delimeter( delimeter )            {}
 
-    bool        get()                                               { return getline( *m_input_stream, m_buffer, m_delimeter ); }
+    bool        get()                                               { return std::getline( *m_input_stream, m_buffer, m_delimeter ); }
     reference   dereference( bool valid ) const                     { return m_buffer; }
     bool        equal( istream_line_iterator_impl const& ) const    { return false; }
 
@@ -82,6 +82,9 @@ typedef basic_istream_line_iterator<wchar_t>    wistream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2004/05/27 07:01:49  rogeeff
+//  portability workarounds
+//
 //  Revision 1.2  2004/05/25 10:29:09  rogeeff
 //  use standard getline
 //  eliminate initialize
