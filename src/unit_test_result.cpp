@@ -185,7 +185,7 @@ unit_test_result::test_case_name()
 //____________________________________________________________________________//
 
 namespace {
-std::string ps_name( bool p_s, char const* singular_form )  { return p_s ? std::string( singular_form ).append( "s" ) : singular_form; }
+std::string ps_name( bool p_s, char const* singular_form )  { return p_s ? std::string( singular_form ).append( "s" ) : std::string( singular_form ); }
 std::string cs_name( bool c_s )                             { return c_s ? "case" : "suite"; }
 std::string quote( char const* name )                       { return std::string( " \"" ).append( name ).append( "\" "); }
 }
