@@ -141,7 +141,7 @@ private:
 // **************               execution_monitor              ************** //
 // ************************************************************************** //
 
-int boost::execution_monitor::execute( int timeout )
+int execution_monitor::execute( int timeout )
 {
 
 #if defined(BOOST_MS_STRCTURED_EXCEPTION_HANDLING) && !defined(__BORLANDC__)
@@ -462,6 +462,9 @@ static void report_error( execution_exception::error_code ec, char const* msg1, 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.12  2002/09/16 10:37:57  rogeeff
+//  excessive boost:: removed. Fix for VACPP
+//
 //  Revision 1.11  2002/09/16 08:45:09  rogeeff
 //  STL includes normalized
 //
