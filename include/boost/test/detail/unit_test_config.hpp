@@ -12,6 +12,9 @@
 // BOOST
 #include <boost/config.hpp>
 
+// STL
+#include <iterator>
+
 namespace boost {
 
 namespace unit_test_framework {
