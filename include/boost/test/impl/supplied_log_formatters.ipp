@@ -57,7 +57,7 @@ compiler_log_formatter::start_log( std::ostream& output, bool log_build_info )
 //____________________________________________________________________________//
 
 void
-compiler_log_formatter::log_header( std::ostream& output, unit_test_counter test_cases_amount )
+compiler_log_formatter::log_header( std::ostream& output, counter_t test_cases_amount )
 {
     output  << "Running " << test_cases_amount << " test "
             << (test_cases_amount > 1 ? "cases" : "case") << "...\n";
@@ -73,7 +73,7 @@ compiler_log_formatter::finish_log( std::ostream& /* output */ )
 //____________________________________________________________________________//
 
 void
-compiler_log_formatter::track_test_case_enter( std::ostream& output, test_case const& tc )
+compiler_log_formatter::test_case_enter( std::ostream& output, test_case const& tc )
 {
     output  << "Entering test " << ( tc.p_type ? "case" : "suite" ) << " \"" << tc.p_name << "\"";
 }
@@ -81,7 +81,7 @@ compiler_log_formatter::track_test_case_enter( std::ostream& output, test_case c
 //____________________________________________________________________________//
 
 void
-compiler_log_formatter::track_test_case_exit( std::ostream& output, test_case const& tc, long testing_time_in_mks )
+compiler_log_formatter::test_case_exit( std::ostream& output, test_case const& tc, long testing_time_in_mks )
 {
     output << "Leaving test " << ( tc.p_type ? "case" : "suite" ) << " \"" << tc.p_name << "\"";
     if( testing_time_in_mks > 0 ) {
@@ -191,7 +191,7 @@ xml_log_formatter::start_log( std::ostream& output, bool log_build_info )
 //____________________________________________________________________________//
 
 void
-xml_log_formatter::log_header( std::ostream& /* output */, unit_test_counter /* test_cases_amount */ )
+xml_log_formatter::log_header( std::ostream& /* output */, counter_t /* test_cases_amount */ )
 {
 }
 
@@ -206,7 +206,7 @@ xml_log_formatter::finish_log( std::ostream& output )
 //____________________________________________________________________________//
 
 void
-xml_log_formatter::track_test_case_enter( std::ostream& output, test_case const& tc )
+xml_log_formatter::test_case_enter( std::ostream& output, test_case const& tc )
 {
     print_indent( output );
 
@@ -220,15 +220,17 @@ xml_log_formatter::track_test_case_enter( std::ostream& output, test_case const&
 //____________________________________________________________________________//
 
 void
-xml_log_formatter::track_test_case_exit( std::ostream& output, test_case const& tc, long testing_time_in_mks )
+xml_log_formatter::test_case_exit( std::ostream& output, test_case const& tc, long testing_time_in_mks )
 {
+    print_indent( output );
+
+    output << "<TestingTime>" << testing_time_in_mks << "</TestingTime>";
+
     m_indent -= 2;
 
     print_indent( output );
 
-    output << "</" << ( tc.p_type ? "TestCase" : "TestSuite" )
-           << " testing_time" << attr_value() << testing_time_in_mks
-           << ">";
+    output << "</" << ( tc.p_type ? "TestCase" : "TestSuite" ) << ">";
 }
 
 //____________________________________________________________________________//
@@ -332,6 +334,10 @@ xml_log_formatter::print_indent( std::ostream& output )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2005/01/30 01:57:24  rogeeff
+//  counter type renamed
+//  testing time separated in a xml element
+//
 //  Revision 1.1  2005/01/22 19:22:12  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
