@@ -47,11 +47,11 @@
   be constructed. As a general rule it is recommended to use the class_test_case
   only if you can't implement  a test logic in a free function. Due to usage
   of templates in an implementation of the class_test_case,  a compilation can
-  be longer would you use the function_test_case. 
+  be longer would you use the function_tc. 
   <H5>Construction</H5>
   <P class="first-line-indented">To create an instance of the class class_test_case use the following 
     macro:</P>
-  <P><SPAN class="new-term">BOOST_CLASS_TEST_CASE</SPAN>( member_function_address, shared_test_case_instance 
+  <P><SPAN class="new-term">BOOST_CLASS_TEST_CASE</SPAN>( member_function_address, shared_tc_instance 
     ).</P>
   <P class="first-line-indented">BOOST_CLASS_TEST_CASE creates a new instance of the class class_test_case 
     and returns a pointer to the base class test_case. In most cases you will use it as an argument to 

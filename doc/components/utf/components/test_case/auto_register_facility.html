@@ -18,9 +18,9 @@
     auto_unit_test.hpp</A> 
   <H5>Description</H5>
   <P class="first-line-indented">This form of test cases is based on free function, 
-    but unlike class <a href="function_test_case.html">function_test_case</a> 
+    but unlike class <a href="function_tc.html">function_test_case</a> 
     you don't need to manually create and register them. Instances of the class 
-    <a href="function_test_case.html">function_test_case</a> are created automatically 
+    <a href="function_tc.html">function_test_case</a> are created automatically 
     by the framework at the point of test case definition and registered in single 
     global test suite. This way you never forget to include any test cases - it's 
     done on a fly. You doesn't need to supply init_unit_test_suite anymore. It's 
@@ -32,10 +32,10 @@
   <H5>Construction</H5>
   <P class="first-line-indented">To use automatic registration facility you need
     to define a test case as a zero arity free function, but instead of usual 
-    void test_case_name(), use following statement</P>
-  <P><SPAN class="new-term">BOOST_AUTO_UNIT_TEST</SPAN>( test_case_name )</P>
+    void tc_name(), use following statement</P>
+  <P><SPAN class="new-term">BOOST_AUTO_UNIT_TEST</SPAN>( tc_name )</P>
   <P class="first-line-indented">BOOST_TEST_CASE hides all the machinery used 
-    to implement <a href="function_test_case.html"></a>automatic registration. 
+    to implement <a href="function_tc.html"></a>automatic registration. 
     The only requirements are that test case names are unique within compilation 
     unit and no two test case definition are located on the same line.</P>
   <H5>Examples</H5>

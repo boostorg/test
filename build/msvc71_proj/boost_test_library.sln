@@ -1,12 +1,10 @@
 Microsoft Visual Studio Solution File, Format Version 8.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "auto_unit_test_test", "auto_unit_test_test.vcproj", "{BA5E1831-B906-4048-8D48-F0CE573800EB}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "errors_handling_test", "errors_handling_test.vcproj", "{B8BA93CF-F690-4322-A522-3C63DE7DA3BA}"
 	ProjectSection(ProjectDependencies) = postProject
-		{30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7} = {30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "minimal_test", "minimal_test.vcproj", "{D62CB6A3-42BD-4FBF-ACD9-83AAF40A3CCA}"
@@ -19,27 +17,22 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "online_test", "online_test.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "output_test_stream_test", "output_test_stream_test.vcproj", "{585A2442-7808-4BBB-9043-18057FF0BDB0}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "parameterized_test_test", "parameterized_test_test.vcproj", "{E59D4008-8BB7-41F4-ABE8-CF05BF916584}"
 	ProjectSection(ProjectDependencies) = postProject
-		{30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7} = {30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "prg_exec_example", "prg_exec_example.vcproj", "{B5DB95B1-3C48-4AD6-90B2-E7F55FA36A3A}"
 	ProjectSection(ProjectDependencies) = postProject
-		{E462F886-5C5E-4796-83E1-2AA0F9ED39FA} = {E462F886-5C5E-4796-83E1-2AA0F9ED39FA}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "prg_exec_fail1", "prg_exec_fail1.vcproj", "{071FC467-3497-4D07-8933-FA2EF3FD032C}"
 	ProjectSection(ProjectDependencies) = postProject
-		{E462F886-5C5E-4796-83E1-2AA0F9ED39FA} = {E462F886-5C5E-4796-83E1-2AA0F9ED39FA}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "prg_exec_fail2", "prg_exec_fail2.vcproj", "{1F9DFFE7-90DF-4BD0-9DC8-DE6E7BBE9586}"
 	ProjectSection(ProjectDependencies) = postProject
-		{E462F886-5C5E-4796-83E1-2AA0F9ED39FA} = {E462F886-5C5E-4796-83E1-2AA0F9ED39FA}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "prg_exec_fail3", "prg_exec_fail3.vcproj", "{A1A9847E-858D-4001-9E75-C2DD994B930D}"
@@ -52,36 +45,30 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "prg_exec_monitor", "prg_exe
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "result_report_test", "result_report_test.vcproj", "{7221E901-6ED0-450A-8326-A5FA34DF329B}"
 	ProjectSection(ProjectDependencies) = postProject
-		{30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7} = {30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_case_template_example", "test_case_template_example.vcproj", "{489A082D-B677-4F7F-BFDF-DF49332791D0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_case_template_example", "test_case_template_ex.vcproj", "{489A082D-B677-4F7F-BFDF-DF49332791D0}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_exec_example", "test_exec_example.vcproj", "{635DF74E-4759-49F9-823C-481AE9733762}"
 	ProjectSection(ProjectDependencies) = postProject
-		{30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7} = {30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_exec_fail1", "test_exec_fail1.vcproj", "{E33EC845-38D0-407A-96FC-4CAB93CD1FDD}"
 	ProjectSection(ProjectDependencies) = postProject
-		{30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7} = {30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_exec_fail2", "test_exec_fail2.vcproj", "{80BCA090-58A8-4E6C-8C7F-7F8FC12EE6CC}"
 	ProjectSection(ProjectDependencies) = postProject
-		{30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7} = {30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_exec_fail3", "test_exec_fail3.vcproj", "{30F7D7BB-44FE-4ADB-9CAB-E6960E0D6A90}"
 	ProjectSection(ProjectDependencies) = postProject
-		{30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7} = {30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_exec_fail4", "test_exec_fail4.vcproj", "{B6941BAD-86B0-4A8C-BDB4-B09A487600D9}"
 	ProjectSection(ProjectDependencies) = postProject
-		{30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7} = {30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_exec_monitor", "test_exec_monitor.vcproj", "{30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7}"
@@ -90,37 +77,30 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_exec_monitor", "test_e
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_fp_comparisons", "test_fp_comparisons.vcproj", "{C1EE29A6-F0E4-493F-BA2B-CE5C4AB93AD5}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_tools_test", "test_tools_test.vcproj", "{2F0DF83D-F8E3-47E8-AD95-A3C73C2584B3}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unit_test_example1", "unit_test_example1.vcproj", "{83EA2604-9468-4BB6-9DEF-44E1DD034DEE}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unit_test_example2", "unit_test_example2.vcproj", "{47AD34D0-617B-4D13-9D17-3D446B4F6970}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unit_test_example3", "unit_test_example3.vcproj", "{F42D9D93-AAE2-4BB2-86CB-C107EBB5182A}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unit_test_example4", "unit_test_example4.vcproj", "{9F2C64DB-5C59-4F7C-932E-527B71224811}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unit_test_example5", "unit_test_example5.vcproj", "{C1A69A36-97DF-4CA0-B8A8-1A54FC47B364}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unit_test_framework", "unit_test_framework.vcproj", "{9466C117-7AE0-4AFD-B327-E1612568BCF1}"
@@ -129,17 +109,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unit_test_framework", "unit
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unit_test_suite_ex_test", "unit_test_suite_ex_test.vcproj", "{643A15A4-F17F-4ACE-AB83-167AA2160BEC}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_case_template_test", "test_case_template_test.vcproj", "{CBB6EB43-0BE0-44E9-A4B4-B4B8437410D9}"
 	ProjectSection(ProjectDependencies) = postProject
-		{30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7} = {30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "auto_unit_test_test_mult", "auto_unit_test_test_mult.vcproj", "{E782C9A9-A9AC-41AA-82C1-5ECF8798ED81}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "exec_mon_example", "exec_mon_example.vcproj", "{9B50CF21-1612-4920-BD4D-D0B7E119DD09}"
@@ -148,32 +125,26 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "exec_mon_example", "exec_mo
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "custom_exception_test", "custom_exception_test.vcproj", "{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "class_properties_test", "class_properties_test.vcproj", "{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basic_cstring_test", "basic_cstring_test.vcproj", "{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fixed_mapping_test", "fixed_mapping_test.vcproj", "{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ifstream_line_iterator_test", "ifstream_line_iterator_test.vcproj", "{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ifstream_line_iterator_test", "ifstream_line_it_tst.vcproj", "{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "token_iterator_test", "token_iterator_test.vcproj", "{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "algorithms_test", "algorithms_test.vcproj", "{09DC2B39-462E-412E-ACFB-67F90DC76AA2}"

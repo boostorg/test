@@ -17,7 +17,7 @@
     <A href="compilation.html">Compilation</A><BR>
     <A href="#Configuration">Configuration</A><BR>
     <A href="#Examples">Examples and tests</A><BR>
-    <BR>See also: <A href="../unit_test_framework/index.html">Unit Test Framework</A></P>
+    <BR>See also: <A href="../utf/index.html">Unit Test Framework</A></P>
   <H2><A name="Introduction">Introduction</A></H2>
   <P class="first-line-indented">How should a test program report errors? Displaying an error message 
     is an obvious possibility:</P>
@@ -46,7 +46,7 @@
   <P class="first-line-indented">The Test Execution Monitor is intended for fairly simple test programs 
     or to dig a problem in an existent production code. The <A href="../prg_exec_monitor/index.html">Program 
     Execution Monitor</A> may be more suitable to monitor production (non-test) programs, cause it does 
-    not affect your program performance. The <A href="../unit_test_framework/index.html">Unit Test Framework</A> 
+    not affect your program performance. The <A href="../utf/index.html">Unit Test Framework</A> 
     may be, for several reasons, more suitable for complex test programs:<BR>
   <UL>
     <LI>you will be able to separate test on several test cases. The Unit test framework will produce 
@@ -132,15 +132,15 @@
     existing code under them, most C++ experts prefer using exceptions for error reporting. </P>
   <H2><A name="Implementation">Implementation</A></H2>
   <P class="first-line-indented"> The Test Execution Monitor implements a special case of the framework 
-    usage. Accordingly it shares most of the implementation with the <A href="../unit_test_framework/index.html">Unit 
+    usage. Accordingly it shares most of the implementation with the <A href="../utf/index.html">Unit 
     Test Framework</A>. The Test Execution Monitor supplies the separate function main() in <A href="../../../src/test_main.cpp">libs/test/src/test_main.cpp</A>. 
   </P>
 	<P class="first-line-indented">Check <A href="compilation.html">compilation</A> instructions to see 
     how to build standalone library for this component.</P>
   <H2><A name="Configuration">Configuration</A></H2>
   <P class="first-line-indented"> The Test Execution Monitor uses the same configuration mechanisms as 
-    the <A href="../unit_test_framework/index.html">Unit Test Framework</A> do. For the list of supported 
-    parameters and their description see the Unit Test Framework <A href="../unit_test_framework/parameters/index.html">parameters 
+    the <A href="../utf/index.html">Unit Test Framework</A> do. For the list of supported 
+    parameters and their description see the Unit Test Framework <A href="../utf/parameters/index.html">parameters 
     description</A>. 
   <H2><A name="Examples">Examples and tests</A></H2>
   <P class="indented"> <A href="../../examples/test_exec_monitor_example.html">test_exec_example</A><BR>

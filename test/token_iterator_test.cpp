@@ -161,7 +161,7 @@ void test_make_range_token_iterator()
 {
     char const* str = "Abc22sdf sd2fg ";
 
-#if !BOOST_WORKAROUND( BOOST_MSVC, <= 1200 )
+#if !BOOST_WORKAROUND( BOOST_MSVC, <= 1200 ) && !BOOST_WORKAROUND( __BORLANDC__, <= 0x550 )
     foo( boost::make_transform_iterator( str, loo ),
          boost::make_transform_iterator( str+15, loo ) );
 #endif
@@ -193,6 +193,9 @@ init_unit_test_suite( int argc, char* argv[] )
 // History :
 //
 // $Log$
+// Revision 1.5  2004/10/05 01:32:09  rogeeff
+// file/directory renaming for the sake of CD burning
+//
 // Revision 1.4  2004/10/01 10:55:43  rogeeff
 // some test errors workarrounds
 //
