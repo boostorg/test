@@ -63,15 +63,33 @@ using boost::test_toolbox::extended_predicate_value;
 
 //____________________________________________________________________________//
 
+char
+set_unix_slash( char in )
+{
+    return in == '\\' ? '/' : in;
+}
+
+static std::string const&
+normalize_file_name( char const* f )
+{
+    static std::string buffer;
+
+    buffer = f;
+
+    std::transform( buffer.begin(), buffer.end(), buffer.begin(), &set_unix_slash );
+
+    return buffer;
+}
+
 #if defined(__BORLANDC__) || defined(__IBMCPP__)
 
 #define CHECK_PATTERN( msg, shift ) \
-    (boost::wrap_stringstream().ref() << __FILE__ << "(" << (__LINE__-shift) << "): " << msg).str()
+    (boost::wrap_stringstream().ref() << normalize_file_name( __FILE__ ) << "(" << (__LINE__-shift) << "): " << msg).str()
 
 #else
 
 #define CHECK_PATTERN( msg, shift ) \
-    (boost::wrap_stringstream().ref() << __FILE__ << "(" << __LINE__ << "): " << msg).str()
+    (boost::wrap_stringstream().ref() << normalize_file_name( __FILE__ ) << "(" << __LINE__ << "): " << msg).str()
 
 #endif
 //____________________________________________________________________________//
@@ -237,7 +255,7 @@ test_BOOST_CHECKPOINT() {
         output.is_equal(
             (boost::wrap_stringstream().ref()
                 << "Exception in " TEST_CASE_NAME ": C string: some error\n"
-                << __FILE__ << "(" << 233 << ") : "
+                << normalize_file_name( __FILE__ ) << "(" << 251 << ") : "
                 << "last checkpoint: Going to do a silly things\n").str()
         )
     );
@@ -572,8 +590,8 @@ test_BOOST_CHECK_EQUAL_COLLECTIONS() {
         BOOST_CHECK_EQUAL_COLLECTIONS( testlist.begin(), testlist.end(), pattern ),
             output.is_equal( CHECK_PATTERN( 
               "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [4 != 3]\n"
-              __FILE__ << "(" << __LINE__ << "): " << 
-              "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [7 != 6]\n"
+              << normalize_file_name( __FILE__ ) << "(" << __LINE__ << "): "
+              << "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [7 != 6]\n"
               , 6 ) )
     );
 #else
@@ -581,8 +599,8 @@ test_BOOST_CHECK_EQUAL_COLLECTIONS() {
         BOOST_CHECK_EQUAL_COLLECTIONS( testlist.begin(), testlist.end(), pattern ),
             output.is_equal( CHECK_PATTERN( 
               "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [4 != 3]\n"
-              __FILE__ << "(" << (__LINE__-6) << "): " << 
-              "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [7 != 6]\n"
+              << normalize_file_name( __FILE__ ) << "(" << (__LINE__-6) << "): "
+              << "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [7 != 6]\n"
               , 6 ) )
     );
 #endif
@@ -667,6 +685,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.19  2003/06/20 11:01:57  rogeeff
+//  no message
+//
 //  Revision 1.18  2003/06/09 09:24:47  rogeeff
 //  added test for:
 //  BOOST_TEST_DONT_PRINT_LOG_VALUE
