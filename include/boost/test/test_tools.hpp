@@ -57,6 +57,10 @@
     boost::test_toolbox::detail::compare_and_continue_impl((left_), (right_), (tolerance_src),\
         boost::wrap_stringstream().ref() << #left_ " ~= " #right_, __FILE__, __LINE__)
 
+#define BOOST_BITWISE_EQUAL(left_, right_) \
+    boost::test_toolbox::detail::bitwise_equal_and_continue_impl((left_), (right_), \
+        boost::wrap_stringstream().ref() << #left_ " =.= " #right_, __FILE__, __LINE__)
+
 #define BOOST_REQUIRE(predicate) \
     boost::test_toolbox::detail::test_and_throw_impl((predicate), \
         boost::wrap_stringstream().ref() << #predicate, __FILE__, __LINE__)
@@ -95,6 +99,12 @@
     try { statement; BOOST_ERROR( "exception "#exception" is expected" ); } \
     catch( exception const& ) { \
         BOOST_CHECK_MESSAGE( true, "exception "#exception" is caught" ); \
+    }
+
+#define BOOST_CHECK_NO_THROW( statement ) \
+    try { statement; BOOST_CHECK_MESSAGE( true, "no exceptions was thrown by "#statement ); } \
+    catch( ... ) { \
+        BOOST_ERROR( "exception was thrown by "#statement ); \
     }
 
 #define BOOST_CHECK_EQUAL_COLLECTIONS(left_begin_, left_end_, right_begin_) \
@@ -140,7 +150,7 @@ struct extended_predicate_value {
     bool        operator!() const { return !p_predicate_value.get(); }
 
     BOOST_READONLY_PROPERTY( bool, 0, () )  p_predicate_value;
-    std::auto_ptr<wrap_stringstream>            p_message;
+    std::auto_ptr<wrap_stringstream>        p_message;
 };
 
 // ************************************************************************** //
@@ -150,15 +160,6 @@ struct extended_predicate_value {
 // exception used to implement critical checks
 
 struct test_tool_failed : public std::exception {
-    explicit            test_tool_failed( c_string_literal message_ )
-    : m_what( message_ )                                    {}
-
-                             ~test_tool_failed() throw()    {}
-
-    virtual c_string_literal what() const throw()           { return m_what.c_str(); }
-
-private:
-    std::string              m_what;
 };
 
 // ************************************************************************** //
@@ -197,12 +198,12 @@ bool  // return true if error detected
 test_and_continue_impl( bool predicate_, wrap_stringstream& message_,
                         c_string_literal file_name_, int line_num_,
                         bool add_fail_pass_ = true,
-                        unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors );
+                        unit_test_framework::log_level log_level_ = unit_test_framework::log_all_errors );
 void
 test_and_throw_impl   ( bool predicate_, wrap_stringstream& message_,
                         c_string_literal file_name_, int line_num_,
                         bool add_fail_pass_ = true,
-                        unit_test_framework::report_level log_level_ = unit_test_framework::report_fatal_errors );
+                        unit_test_framework::log_level log_level_ = unit_test_framework::log_fatal_errors );
 
 //____________________________________________________________________________//
 
@@ -210,7 +211,7 @@ bool
 test_and_continue_impl( extended_predicate_value const& v_, wrap_stringstream& message_,
                         c_string_literal file_name_, int line_num_,
                         bool add_fail_pass_ = true,
-                        unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors );
+                        unit_test_framework::log_level log_level_ = unit_test_framework::log_all_errors );
 
 //____________________________________________________________________________//
 
@@ -220,7 +221,7 @@ bool
 test_and_continue_impl( void* ptr, wrap_stringstream& message_,
                         c_string_literal file_name_, int line_num_,
                         bool add_fail_pass_ = true,
-                        unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors )
+                        unit_test_framework::log_level log_level_ = unit_test_framework::log_all_errors )
 {
     return test_and_continue_impl( !!ptr, message_, file_name_, line_num_, add_fail_pass_, log_level_ );
 }
@@ -232,7 +233,7 @@ void
 test_and_throw_impl   ( extended_predicate_value const& v_, wrap_stringstream& message_,
                         c_string_literal file_name_, int line_num_,
                         bool add_fail_pass_ = true,
-                        unit_test_framework::report_level log_level_ = unit_test_framework::report_fatal_errors );
+                        unit_test_framework::log_level log_level_ = unit_test_framework::log_fatal_errors );
 
 //____________________________________________________________________________//
 
@@ -241,7 +242,7 @@ inline bool
 test_and_continue_impl( Predicate const& pred_, ArgType const& arg_,
                         wrap_stringstream& message_,
                         c_string_literal file_name_, int line_num_,
-                        unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors )
+                        unit_test_framework::log_level log_level_ = unit_test_framework::log_all_errors )
 {
     bool predicate = pred_( arg_ );
 
@@ -261,10 +262,10 @@ inline void
 test_and_throw_impl   ( Predicate const& pred_, ArgType const& arg_,
                         wrap_stringstream& message_,
                         c_string_literal file_name_, int line_num_,
-                        unit_test_framework::report_level log_level_ = unit_test_framework::report_fatal_errors )
+                        unit_test_framework::log_level log_level_ = unit_test_framework::log_fatal_errors )
 {
     if( test_and_continue_impl( arg_, pred_, message_, file_name_, line_num_, log_level_ ) ) {
-        throw test_tool_failed( "" ); // error already reported by test_and_continue_impl
+        throw test_tool_failed(); // error already reported by test_and_continue_impl
     }
 }
 
@@ -275,7 +276,7 @@ inline bool
 test_and_continue_impl( Predicate const& pred_, First const& first_, Second const& second_,
                         wrap_stringstream& message_,
                         c_string_literal file_name_, int line_num_,
-                        unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors )
+                        unit_test_framework::log_level log_level_ = unit_test_framework::log_all_errors )
 {
     bool predicate = pred_( first_, second_ );
 
@@ -294,10 +295,10 @@ template<typename First, typename Second, typename Predicate>
 inline void
 test_and_throw_impl( First const& first_, Second const& second_, Predicate const& pred_,
                      wrap_stringstream& message_, c_string_literal file_name_, int line_num_,
-                     unit_test_framework::report_level log_level_ = unit_test_framework::report_fatal_errors )
+                     unit_test_framework::log_level log_level_ = unit_test_framework::log_fatal_errors )
 {
     if( test_and_continue_impl( first_, second_, pred_, message_, file_name_, line_num_, log_level_ ) ) {
-        throw test_tool_failed( "" ); // error already reported by test_and_continue_impl
+        throw test_tool_failed(); // error already reported by test_and_continue_impl
     }
 }
 
@@ -308,7 +309,7 @@ test_and_throw_impl( First const& first_, Second const& second_, Predicate const
 bool
 equal_and_continue_impl( c_string_literal left_, c_string_literal right_, wrap_stringstream& message_,
                          c_string_literal file_name_, int line_num_,
-                         unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors );
+                         unit_test_framework::log_level log_level_ = unit_test_framework::log_all_errors );
 
 //____________________________________________________________________________//
 
@@ -316,7 +317,7 @@ template <class Left, class Right>
 inline bool
 equal_and_continue_impl( Left const& left_, Right const& right_,
                          wrap_stringstream& message_, c_string_literal file_name_, int line_num_,
-                         unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors )
+                         unit_test_framework::log_level log_level_ = unit_test_framework::log_all_errors )
 {
     bool predicate = (left_ == right_);
 
@@ -337,7 +338,7 @@ inline void
 equal_and_continue_impl( Left left_begin_, Left left_end_, Right right_begin_,
                          wrap_stringstream& message_,
                          c_string_literal file_name_, int line_num_,
-                         unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors )
+                         unit_test_framework::log_level log_level_ = unit_test_framework::log_all_errors )
 {
     for( ;left_begin_ != left_end_; ++left_begin_, ++right_begin_ )
         equal_and_continue_impl( *left_begin_, *right_begin_, message_, file_name_, line_num_, log_level_ );
@@ -352,7 +353,7 @@ inline bool
 compare_and_continue_impl( FPT left_, FPT right_, ToleranceSource tolerance_src,
                            wrap_stringstream& message_,
                            c_string_literal file_name_, int line_num_,
-                           unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors )
+                           unit_test_framework::log_level log_level_ = unit_test_framework::log_all_errors )
 {
     bool predicate = check_is_closed( left_, right_, tolerance_src );
 
@@ -365,6 +366,34 @@ compare_and_continue_impl( FPT left_, FPT right_, ToleranceSource tolerance_src,
     }
 
     return test_and_continue_impl( predicate, message_, file_name_, line_num_, true, log_level_ );
+}
+
+//____________________________________________________________________________//
+
+template <class Left, class Right>
+inline void
+bitwise_equal_and_continue_impl( Left const& left_, Right const& right_,
+                                 wrap_stringstream& message_, char const* file_name_, int line_num_,
+                                 unit_test_framework::log_level log_level_ = unit_test_framework::log_all_errors )
+{
+    size_t left_bit_size  = sizeof(Left)*CHAR_BIT;
+    size_t right_bit_size = sizeof(Right)*CHAR_BIT;
+
+    static Left const L1( 1 );
+    static Right const R1( 1 );
+
+    if( left_bit_size != right_bit_size )
+        warn_and_continue_impl( false, wrap_stringstream().ref() << message_ << ": operands bit sizes does not coinside", 
+                                file_name_, line_num_, false );
+
+    size_t total_bits = left_bit_size < right_bit_size ? left_bit_size : right_bit_size;
+
+    for( size_t counter = 0; counter < total_bits; ++counter ) {
+        bool predicate = ( left_ & ( L1 << counter ) ) == ( right_ & ( R1 << counter ) );
+
+        test_and_continue_impl( predicate, wrap_stringstream().ref() << message_.str() << " in the position " << counter,
+                                file_name_, line_num_, true, log_level_ );
+    }
 }
 
 //____________________________________________________________________________//
@@ -384,7 +413,6 @@ is_defined_impl( c_string_literal symbol_name_, c_string_literal symbol_value_ )
 
 // class to be used to simplify testing of ostream print functions
 
-
 class output_test_stream : public 
 #ifdef BOOST_NO_STRINGSTREAM
     std::ostrstream
@@ -396,8 +424,10 @@ class output_test_stream : public
     typedef detail::c_string_literal         c_string_literal;
 public:
     // Constructor
-    explicit        output_test_stream( c_string_literal pattern_file  = c_string_literal(),
-                                        bool             match_or_save = true );
+    explicit        output_test_stream( std::string const&  pattern_file_name = std::string(),
+                                        bool                match_or_save     = true );
+    explicit        output_test_stream( c_string_literal    pattern_file_name,
+                                        bool                match_or_save     = true );
 
     // Destructor
     ~output_test_stream();
@@ -429,6 +459,13 @@ private:
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.25  2003/02/13 08:18:35  rogeeff
+//  BOOST_BITWISE_EQUAL introduced
+//  BOOST_CHECK_NO_THROW introduced
+//  report_level -> log_level
+//  C strings eliminated
+//  other minor fixes
+//
 //  Revision 1.24  2002/12/08 17:54:09  rogeeff
 //  wrapstrstream separated in standalone file and renamed
 //  switched to use c_string_literal
