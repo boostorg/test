@@ -50,6 +50,7 @@ retrieve_framework_parameter( const_string parameter_name, int* argc, char** arg
         REPORT_FORMAT     , "--report_format",
         LOG_FORMAT        , "--log_format",
         OUTPUT_FORMAT     , "--output_format",
+        DETECT_MEM_LEAKS  , "--detect_memory_leaks",
 
         ""
     );
@@ -89,6 +90,9 @@ retrieve_framework_parameter( const_string parameter_name, int* argc, char** arg
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/01/31 05:58:03  rogeeff
+//  detect_memory_leaks feature added
+//
 //  Revision 1.1  2005/01/22 19:22:13  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //

@@ -62,7 +62,7 @@ namespace std { using ::strlen; using ::strncat; }
 #include <eh.h>
 
 #if !defined(NDEBUG) && !defined(__MWERKS__)  // __MWERKS__ does not seem to supply implementation of C runtime debug hooks, causing linking errors
-#define BOOST_MS_CRT_DEBUG_HOOK
+#define BOOST_MS_CRT_DEBUG_HOOKS
 #include <crtdbg.h>
 #endif
 
@@ -132,8 +132,8 @@ private:
 
 //____________________________________________________________________________//
 
-void ms_se_trans_func( unsigned int id, _EXCEPTION_POINTERS* exps );
-void ms_se_forward_func( unsigned int id, _EXCEPTION_POINTERS* exps );
+void __cdecl ms_se_trans_func( unsigned int id, _EXCEPTION_POINTERS* exps );
+void __cdecl ms_se_forward_func( unsigned int id, _EXCEPTION_POINTERS* exps );
 static void report_ms_se_error( unsigned int id );
 
 //____________________________________________________________________________//
@@ -164,9 +164,9 @@ private:
 
 //____________________________________________________________________________//
 
-#if defined(BOOST_MS_CRT_DEBUG_HOOK)
+#if defined(BOOST_MS_CRT_DEBUG_HOOKS)
 
-int
+int __cdecl
 assert_reporting_function( int reportType, char* userMessage, int* retVal )
 {
     switch( reportType ) {
@@ -214,7 +214,7 @@ execution_monitor::execute( bool catch_system_errors, int timeout )
         _set_se_translator( detail::ms_se_forward_func );
 #endif
 
-#if defined(BOOST_MS_CRT_DEBUG_HOOK)
+#if defined(BOOST_MS_CRT_DEBUG_HOOKS)
     if( catch_system_errors )
         _CrtSetReportHook( &detail::assert_reporting_function );
 #endif
@@ -491,7 +491,7 @@ int catch_signals( execution_monitor& exmon, bool, int )
 
 #if defined(BOOST_MS_STRCTURED_EXCEPTION_HANDLING)
 
-void
+void __cdecl
 ms_se_trans_func( unsigned int id, _EXCEPTION_POINTERS* /* exps */ )
 {
     throw ms_se_exception( id );
@@ -499,7 +499,7 @@ ms_se_trans_func( unsigned int id, _EXCEPTION_POINTERS* /* exps */ )
 
 //____________________________________________________________________________//
 
-void
+void __cdecl 
 ms_se_forward_func( unsigned int /* id */, _EXCEPTION_POINTERS* /* exps */ )
 {
     throw;
@@ -595,12 +595,31 @@ static void report_error( execution_exception::error_code ec, const_string msg1,
 
 } // namespace detail
 
+// ************************************************************************** //
+// **************             detect_memory_leaks              ************** //
+// ************************************************************************** //
+
+void
+detect_memory_leaks()
+{
+#ifdef BOOST_MS_CRT_DEBUG_HOOKS
+    _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+    _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);
+    _CrtSetReportFile(_CRT_WARN, _CRTDBG_FILE_STDOUT);
+#endif // BOOST_MS_CRT_DEBUG_HOOKS
+}
+
+//____________________________________________________________________________//
+
 } // namespace boost
 
 // ***************************************************************************
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2005/01/31 05:58:03  rogeeff
+//  detect_memory_leaks feature added
+//
 //  Revision 1.1  2005/01/22 19:22:12  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
