@@ -12,8 +12,8 @@
 //  Description : 
 // ***************************************************************************
 
-#ifndef BOOST_ISTREAM_LINE_ITERATOR_HPP
-#define BOOST_ISTREAM_LINE_ITERATOR_HPP
+#ifndef BOOST_ISTREAM_LINE_ITERATOR_HPP_071894GER
+#define BOOST_ISTREAM_LINE_ITERATOR_HPP_071894GER
 
 // Boost
 #include <boost/test/detail/basic_cstring/basic_cstring.hpp>
@@ -40,18 +40,28 @@ class basic_istream_line_iterator
     typedef input_iterator_facade<basic_istream_line_iterator<CharT>,
                                   std::basic_string<CharT>,
                                   basic_cstring<CharT const> > base;
+#if BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+    typedef std::istream              istream_type;
+#else
+    typedef std::basic_istream<CharT> istream_type;
+#endif
 public:
     // Constructors
     basic_istream_line_iterator() {}
-    basic_istream_line_iterator( std::basic_istream<CharT>& input, CharT delimeter )
+    basic_istream_line_iterator( istream_type& input, CharT delimeter )
     : m_input_stream( &input ), m_delimeter( delimeter )
     {
-        init();
+        this->init();
     }
-    explicit basic_istream_line_iterator( std::basic_istream<CharT>& input )
-    : m_input_stream( &input ), m_delimeter( input.widen( '\n' ) )
+    explicit basic_istream_line_iterator( istream_type& input )
+    : m_input_stream( &input ), 
+#if BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+    m_delimeter( '\n' )
+#else
+    m_delimeter( input.widen( '\n' ) )
+#endif
     {
-        init();
+        this->init();
     }
 
 private:
@@ -64,8 +74,8 @@ private:
     }
 
     // Data members
-    std::basic_istream<CharT>*  m_input_stream;
-    CharT                       m_delimeter;
+    istream_type* m_input_stream;
+    CharT         m_delimeter;
 };
 
 typedef basic_istream_line_iterator<char>       istream_line_iterator;
@@ -79,6 +89,10 @@ typedef basic_istream_line_iterator<wchar_t>    wistream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2004/07/19 12:29:57  rogeeff
+//  guard rename
+//  mingw port
+//
 //  Revision 1.5  2004/06/07 07:33:50  rogeeff
 //  detail namespace renamed
 //
@@ -99,5 +113,5 @@ typedef basic_istream_line_iterator<wchar_t>    wistream_line_iterator;
 //
 // ***************************************************************************
 
-#endif // BOOST_ISTREAM_LINE_ITERATOR_HPP
+#endif // BOOST_ISTREAM_LINE_ITERATOR_HPP_071894GER
 

@@ -12,8 +12,8 @@
 //  Description : 
 // ***************************************************************************
 
-#ifndef BOOST_INPUT_ITERATOR_FACADE_HPP
-#define BOOST_INPUT_ITERATOR_FACADE_HPP
+#ifndef BOOST_INPUT_ITERATOR_FACADE_HPP_071894GER
+#define BOOST_INPUT_ITERATOR_FACADE_HPP_071894GER
 
 // Boost
 #include <boost/iterator/iterator_facade.hpp>
@@ -101,6 +101,10 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2004/07/19 12:29:57  rogeeff
+//  guard rename
+//  mingw port
+//
 //  Revision 1.4  2004/06/07 07:33:50  rogeeff
 //  detail namespace renamed
 //
@@ -118,5 +122,5 @@ private:
 //
 // ***************************************************************************
 
-#endif // BOOST_INPUT_ITERATOR_FACADE_HPP
+#endif // BOOST_INPUT_ITERATOR_FACADE_HPP_071894GER
 

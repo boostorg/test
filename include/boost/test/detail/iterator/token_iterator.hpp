@@ -12,8 +12,8 @@
 //  Description : token iterator for string and range tokenization
 // ***************************************************************************
 
-#ifndef BOOST_TOKEN_ITERATOR_HPP
-#define BOOST_TOKEN_ITERATOR_HPP
+#ifndef BOOST_TOKEN_ITERATOR_HPP_071894GER
+#define BOOST_TOKEN_ITERATOR_HPP_071894GER
 
 // Boost
 #include <boost/iterator/iterator_categories.hpp>
@@ -95,10 +95,10 @@ struct token_assigner {
     static void assign( Iterator b, Iterator e, Token& t )  { t.assign( b, e ); }
 
     template<typename Iterator, typename Token>
-    static void append_move( Iterator& b, Token& t )        { ++b; }
+    static void append_move( Iterator& b, Token& )          { ++b; }
 
     template<typename Token>
-    static void clear( Token& t )                           {}
+    static void clear( Token& )                             {}
 };
 
 template<>
@@ -550,6 +550,10 @@ make_range_token_iterator( Iter begin, Iter end, M1 const& m1, M2 const& m2, M3 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2004/07/19 12:29:57  rogeeff
+//  guard rename
+//  mingw port
+//
 //  Revision 1.2  2004/06/07 07:33:50  rogeeff
 //  detail namespace renamed
 //
@@ -559,5 +563,5 @@ make_range_token_iterator( Iter begin, Iter end, M1 const& m1, M2 const& m2, M3 
 //
 // ***************************************************************************
 
-#endif // BOOST_TOKEN_ITERATOR_HPP
+#endif // BOOST_TOKEN_ITERATOR_HPP_071894GER
 

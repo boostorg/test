@@ -12,8 +12,8 @@
 //  Description : 
 // ***************************************************************************
 
-#ifndef BOOST_IFSTREAM_LINE_ITERATOR_HPP
-#define BOOST_IFSTREAM_LINE_ITERATOR_HPP
+#ifndef BOOST_IFSTREAM_LINE_ITERATOR_HPP_071894GER
+#define BOOST_IFSTREAM_LINE_ITERATOR_HPP_071894GER
 
 // Boost
 #include <boost/test/detail/iterator/istream_line_iterator.hpp>
@@ -49,7 +49,11 @@ public:
     }
 
 protected:
+#if BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+    typedef std::ifstream                                       stream_t;
+#else
     typedef std::basic_ifstream<CharT,std::char_traits<CharT> > stream_t;
+#endif
 
     // Data members
     stream_t    m_stream;
@@ -83,6 +87,10 @@ typedef basic_ifstream_line_iterator<wchar_t>   wifstream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2004/07/19 12:29:57  rogeeff
+//  guard rename
+//  mingw port
+//
 //  Revision 1.6  2004/06/29 04:32:25  rogeeff
 //  no message
 //
@@ -106,5 +114,5 @@ typedef basic_ifstream_line_iterator<wchar_t>   wifstream_line_iterator;
 //
 // ***************************************************************************
 
-#endif // BOOST_IFSTREAM_LINE_ITERATOR_HPP
+#endif // BOOST_IFSTREAM_LINE_ITERATOR_HPP_071894GER
 
