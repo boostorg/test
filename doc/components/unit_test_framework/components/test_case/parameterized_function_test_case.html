@@ -46,7 +46,7 @@
 
 <SPAN class="reserv-word">struct</SPAN> reader_testing : <SPAN class="reserv-word">public</SPAN> boost::unit_test_framework::test_suite
 {
-    <SPAN class="cpp-type">void</SPAN> reader_testing()
+    reader_testing()
     {
         files_to_test.push_back( <SPAN class="literal">&quot;file 1&quot;</SPAN> );
         ...
@@ -60,7 +60,7 @@
     <SPAN class="cpp-type">std::list</SPAN>&lt;<SPAN class="cpp-type">std::string</SPAN>&gt; files_to_test;
 };
 ...
-ts-&gt;add( <SPAN class="reserv-word">new</SPAN> reader_testing );</PRE>	
+ts-&gt;add( <SPAN class="reserv-word">new</SPAN> reader_testing );</PRE>    
 </DIV>
 <DIV class="footer"> 
   <DIV class="footer-body"> 

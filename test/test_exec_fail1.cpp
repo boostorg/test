@@ -17,7 +17,7 @@
 
 int test_main( int, char* [] )  // note the name
 {
-  return 1;
+	return 1;
 }
 
 //____________________________________________________________________________//
@@ -26,6 +26,9 @@ int test_main( int, char* [] )  // note the name
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2003/11/02 06:10:24  rogeeff
+//  no message
+//
 //  Revision 1.8  2003/10/27 07:13:32  rogeeff
 //  licence update
 //
