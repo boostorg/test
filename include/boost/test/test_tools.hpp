@@ -17,7 +17,7 @@
 #ifndef BOOST_TEST_TOOLS_HPP
 #define BOOST_TEST_TOOLS_HPP
 
-// LOCAL
+// Boost.Test
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/detail/class_properties.hpp>
 
@@ -461,6 +461,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.21  2002/10/01 05:45:54  rogeeff
+//  comment clarified
+//
 //  Revision 1.20  2002/09/16 09:29:52  rogeeff
 //  since boost::smart_ptrs now support incomplete types on borland, no need in grinning_ptr any more
 //

@@ -18,7 +18,7 @@
 #ifndef BOOST_UNIT_TEST_LOG_HPP
 #define BOOST_UNIT_TEST_LOG_HPP
 
-// LOCAL
+// Boost.Test
 #include <boost/test/detail/unit_test_config.hpp>
 
 // BOOST
@@ -157,6 +157,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.11  2002/10/01 05:45:54  rogeeff
+//  comment clarified
+//
 //  Revision 1.10  2002/09/19 08:23:23  rogeeff
 //  explicit private added to shut down warnings
 //

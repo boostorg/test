@@ -17,7 +17,7 @@
 #ifndef BOOST_UNIT_TEST_SUITE_EX_HPP
 #define BOOST_UNIT_TEST_SUITE_EX_HPP
 
-// LOCAL
+// Boost.Test
 #include <boost/test/unit_test_suite.hpp>
 #include <boost/test/detail/unit_test_config.hpp>
 
@@ -110,6 +110,9 @@ create_test_case( function1<void,ParameterType> const& fct_, std::string name_,
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2002/10/01 05:45:54  rogeeff
+//  comment clarified
+//
 //  Revision 1.7  2002/09/16 08:47:29  rogeeff
 //  STL includes normalized
 //
