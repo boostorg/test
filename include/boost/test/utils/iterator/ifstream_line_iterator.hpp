@@ -65,6 +65,11 @@ protected:
 // **************         basic_ifstream_line_iterator         ************** //
 // ************************************************************************** //
 
+#ifdef BOOST_MSVC
+# pragma warning(push)
+# pragma warning(disable: 4355) // 'this' : used in base member initializer list
+#endif
+
 template<typename CharT>
 class basic_ifstream_line_iterator : ut_detail::ifstream_holder<CharT>, public basic_istream_line_iterator<CharT>
 {
@@ -75,6 +80,10 @@ public:
     explicit basic_ifstream_line_iterator( basic_cstring<CharT const> file_name = basic_cstring<CharT const>() )
     : ut_detail::ifstream_holder<CharT>( file_name ), basic_istream_line_iterator<CharT>( this->m_stream ) {}
 };
+
+#ifdef BOOST_MSVC
+# pragma warning(default: 4355)
+#endif
 
 typedef basic_ifstream_line_iterator<char>      ifstream_line_iterator;
 typedef basic_ifstream_line_iterator<wchar_t>   wifstream_line_iterator;
@@ -87,6 +96,9 @@ typedef basic_ifstream_line_iterator<wchar_t>   wifstream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2005/01/30 01:44:14  rogeeff
+//  warnings suppressed
+//
 //  Revision 1.2  2005/01/22 19:22:13  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //

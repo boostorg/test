@@ -23,11 +23,7 @@
 #include <sstream>          // for std::ostringstream
 #endif // BOOST_NO_STRINGSTREAM
 
-#ifdef BOOST_MSVC
-# pragma warning(push)
-# pragma warning(disable: 4511) // copy constructor could not be generated
-# pragma warning(disable: 4512) // assignment operator could not be generated
-#endif
+#include <boost/test/detail/suppress_warnings.hpp>
 
 namespace boost {
 
@@ -37,18 +33,14 @@ namespace boost {
 
 template<typename CharT>
 class basic_wrap_stringstream {
-#ifdef BOOST_CLASSIC_IOSTREAMS
+public:
+#if defined(BOOST_CLASSIC_IOSTREAMS)
     typedef std::ostringstream               wrapped_stream;
-#else 
-#ifdef BOOST_NO_STRINGSTREAM
+#elif defined(BOOST_NO_STRINGSTREAM)
     typedef std::basic_ostrstream<CharT>     wrapped_stream;
 #else
     typedef std::basic_ostringstream<CharT>  wrapped_stream;
 #endif // BOOST_NO_STRINGSTREAM
-
-#endif // WORKAROUND
-
-public:
     // Access methods
     basic_wrap_stringstream&        ref();
     wrapped_stream&                 stream();
@@ -160,39 +152,17 @@ typedef basic_wrap_stringstream<wchar_t>    wrap_wstringstream;
 
 }  // namespace boost
 
-#ifdef BOOST_MSVC
-# pragma warning(default: 4511) // copy constructor could not be generated
-# pragma warning(default: 4512) // assignment operator could not be generated
-# pragma warning(pop)
-#endif
+#include <boost/test/detail/enable_warnings.hpp>
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/01/30 01:43:57  rogeeff
+//  warnings suppressed
+//
 //  Revision 1.1  2005/01/22 18:21:40  rogeeff
 //  moved sharable staff into utils
-//
-//  Revision 1.14  2004/09/19 09:22:12  rogeeff
-//  ios fix for classic iostreams
-//
-//  Revision 1.13  2004/07/19 12:24:32  rogeeff
-//  guard rename
-//
-//  Revision 1.12  2004/05/27 06:23:22  rogeeff
-//  workaround for gcc 2.95 io
-//  workaround for msvc < 7.1 for manipulator usage
-//
-//  Revision 1.11  2004/05/21 06:19:35  rogeeff
-//  licence update
-//
-//  Revision 1.10  2004/05/11 11:00:53  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//
-//  Revision 1.9  2003/12/01 00:41:56  rogeeff
-//  prerelease cleaning
-//
 // ***************************************************************************
 
 #endif  // BOOST_WRAP_STRINGSTREAM_HPP_071894GER

@@ -65,6 +65,11 @@ typedef basic_nullbuf<wchar_t>  wnullbuf;
 // ************************************************************************** //
 //  Output streams based on basic_nullbuf.
 
+#ifdef BOOST_MSVC
+# pragma warning(push)
+# pragma warning(disable: 4355) // 'this' : used in base member initializer list
+#endif
+
 template< typename CharType, class CharTraits = ::std::char_traits<CharType> >
 class basic_onullstream : private boost::base_from_member<basic_nullbuf<CharType, CharTraits> >
                         , public ::std::basic_ostream<CharType, CharTraits> {
@@ -75,6 +80,10 @@ public:
     basic_onullstream() : pbase_type(), base_type( &this->pbase_type::member ) {}
 };
 
+#ifdef BOOST_MSVC
+# pragma warning(default: 4355)
+#endif
+
 typedef basic_onullstream<char>      onullstream;
 typedef basic_onullstream<wchar_t>  wonullstream;
 
@@ -84,6 +93,9 @@ typedef basic_onullstream<wchar_t>  wonullstream;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/01/30 01:42:49  rogeeff
+//  warnings suppressed
+//
 //  Revision 1.1  2005/01/22 18:21:40  rogeeff
 //  moved sharable staff into utils
 //
