@@ -19,7 +19,6 @@
 
 // BOOST
 #include <boost/config.hpp>
-#include <boost/minmax.hpp>
 
 // STL
 #include <fstream>
@@ -371,7 +370,7 @@ output_test_stream::match_pattern( bool flush_stream )
                          (m_pimpl->m_synced_string[i] == c);
 
                 if( !result ) {
-                    std::string::size_type suffix_size  = std_min( m_pimpl->m_synced_string.length() - i,
+                    std::string::size_type suffix_size  = (std::min)( m_pimpl->m_synced_string.length() - i,
                                                                     static_cast<std::string::size_type>(5) );
 
                     // try to log area around the mismatch 
@@ -458,6 +457,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.33  2004/06/23 04:49:48  eric_niebler
+//  remove std_min and std_max, update minmax coding guidelines
+//
 //  Revision 1.32  2004/06/07 07:34:22  rogeeff
 //  detail namespace renamed
 //

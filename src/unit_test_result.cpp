@@ -143,8 +143,9 @@ public:
     void    report_sub_test_cases_stat( std::ostream& where_to, std::size_t indent, 
                                         unit_test_counter num_passed, unit_test_counter num_failed )
     {
+        BOOST_USING_STD_MAX();
         unit_test_counter total_test_cases = num_passed + num_failed;
-        std::size_t       width = static_cast<std::size_t>( std::log10( (float)std_max( num_passed, num_failed ) ) ) + 1;
+        std::size_t       width = static_cast<std::size_t>( std::log10( (float)max BOOST_PREVENT_MACRO_SUBSTITUTION( num_passed, num_failed ) ) ) + 1;
 
         where_to << std::setw( indent ) << "" << std::setw( width ) << num_passed
                  << " test " << ps_name( num_passed != 1, "case" ) << " out of " << total_test_cases << " passed\n"
@@ -156,9 +157,10 @@ public:
     void    report_assertions_stat( std::ostream& where_to, std::size_t indent,
                                     unit_test_counter num_passed, unit_test_counter num_failed, unit_test_counter num_expected )
     {
+        BOOST_USING_STD_MAX();
         unit_test_counter total_assertions = num_passed + num_failed;
         std::size_t       width            = total_assertions > 0 
-                                               ? static_cast<std::size_t>( std::log10( (float)std_max( num_passed, num_failed ) ) ) + 1
+                                               ? static_cast<std::size_t>( std::log10( (float)max BOOST_PREVENT_MACRO_SUBSTITUTION( num_passed, num_failed ) ) ) + 1
                                                : 1;
         
         where_to << std::setw( indent ) << "" << std::setw( width ) << num_passed 
@@ -599,6 +601,9 @@ unit_test_result::has_passed() const
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.27  2004/06/23 04:49:48  eric_niebler
+//  remove std_min and std_max, update minmax coding guidelines
+//
 //  Revision 1.26  2004/05/21 06:26:10  rogeeff
 //  licence update
 //
