@@ -39,8 +39,13 @@ using utf::const_string;
 
 namespace mpl = boost::mpl;
 
+#if BOOST_WORKAROUND(__GNUC__, < 3)
+typedef mpl::list<char const>                                               base_const_char_types;
+typedef mpl::list<char,unsigned char>                                       mutable_char_types;
+#else
 typedef mpl::list<char const,wchar_t const>                                 base_const_char_types;
 typedef mpl::list<char,unsigned char,wchar_t>                               mutable_char_types;
+#endif
 typedef mpl::transform<mutable_char_types,boost::add_const<mpl::_1> >::type const_char_types;
 typedef mpl::joint_view<const_char_types,mutable_char_types>                char_types;
 typedef mpl::list<char,const char>                                          io_test_types;
@@ -500,6 +505,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 // History :
 //
 // $Log$
+// Revision 1.7  2004/10/01 10:55:43  rogeeff
+// some test errors workarrounds
+//
 // Revision 1.6  2004/07/19 12:07:26  rogeeff
 // *** empty log message ***
 //

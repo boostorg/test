@@ -159,7 +159,15 @@ test_main( int argc, char * argv[] )
 
     bool match_or_save = retrieve_framework_parameter( SAVE_TEST_PATTERN, &argc, argv ) != "yes";
 
-    std::string pattern_file_name( argc > 1 ? argv[1] : "./test_files/errors_handling_test.pattern" );
+#define PATTERN_FILE_NAME "errors_handling_test.pattern"
+
+    std::string pattern_file_name( argc == 1 
+                                     ? (match_or_save ? "./test_files/" PATTERN_FILE_NAME : PATTERN_FILE_NAME)
+                                     : argv[1] );
+
+#ifdef __GNUC__
+    pattern_file_name.append( ".gcc" );
+#endif
 
     output_test_stream output( pattern_file_name, match_or_save );
 
@@ -180,6 +188,10 @@ test_main( int argc, char * argv[] )
              error_type != et_end;
              error_type = static_cast<error_type_enum>(error_type+1) )
         {
+#ifdef __GNUC__
+            if( error_type == et_system || error_type == et_fatal_system )
+                continue;
+#endif
             // for each error location
             for( test_case_type = tct_begin;
                  test_case_type != tct_end;
@@ -247,6 +259,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.22  2004/10/01 10:55:43  rogeeff
+//  some test errors workarrounds
+//
 //  Revision 1.21  2004/06/07 07:34:23  rogeeff
 //  detail namespace renamed
 //

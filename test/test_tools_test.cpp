@@ -81,7 +81,7 @@ normalize_file_name( char const* f )
     return buffer;
 }
 
-#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x570)) || BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600))
+#if BOOST_TEST_SHIFTED_LINE
 
 #define CHECK_PATTERN( msg, shift ) \
     (boost::wrap_stringstream().ref() << normalize_file_name( __FILE__ ) << "(" << (__LINE__-shift) << "): " << msg).str()
@@ -711,6 +711,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.33  2004/10/01 10:55:43  rogeeff
+//  some test errors workarrounds
+//
 //  Revision 1.32  2004/06/07 07:34:23  rogeeff
 //  detail namespace renamed
 //

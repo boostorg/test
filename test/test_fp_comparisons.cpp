@@ -60,14 +60,15 @@ normalize_file_name( char const* f )
     return buffer;
 }
 
-#if !defined(__BORLANDC__)
+#if BOOST_TEST_SHIFTED_LINE
+
 #define CHECK_PATTERN( msg, shift ) \
-    (boost::wrap_stringstream().ref() << normalize_file_name( __FILE__ ) << "(" << __LINE__ << "): " << msg).str()
+    (boost::wrap_stringstream().ref() << normalize_file_name( __FILE__ ) << "(" << (__LINE__-shift) << "): " << msg).str()
 
 #else
 
 #define CHECK_PATTERN( msg, shift ) \
-    (boost::wrap_stringstream().ref() << normalize_file_name( __FILE__ ) << "(" << (__LINE__-shift) << "): " << msg).str()
+    (boost::wrap_stringstream().ref() << normalize_file_name( __FILE__ ) << "(" << __LINE__ << "): " << msg).str()
 
 #endif
 //____________________________________________________________________________//
@@ -193,6 +194,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.12  2004/10/01 10:55:43  rogeeff
+//  some test errors workarrounds
+//
 //  Revision 1.11  2004/07/19 12:07:26  rogeeff
 //  *** empty log message ***
 //

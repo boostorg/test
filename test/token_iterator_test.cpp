@@ -113,7 +113,7 @@ void test_range_token_iterator()
     char const* pattern = "a bc , cd";
     std::copy( pattern, pattern+9, std::back_inserter( l ) );
 
-#if !BOOST_WORKAROUND( BOOST_MSVC, <= 1200 )
+#if !BOOST_WORKAROUND( BOOST_MSVC, <= 1200 ) && !BOOST_WORKAROUND( __GNUC__, < 3 )
     my_token_iterator tit( l.begin(), l.end() );
     char const* res[] = { "a", "bc", ",", "cd" };
 
@@ -193,6 +193,9 @@ init_unit_test_suite( int argc, char* argv[] )
 // History :
 //
 // $Log$
+// Revision 1.4  2004/10/01 10:55:43  rogeeff
+// some test errors workarrounds
+//
 // Revision 1.3  2004/09/28 17:27:25  rogeeff
 // unnesseary check removed
 //
