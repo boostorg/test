@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2004.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -18,9 +18,7 @@
 
 // Boost.Test
 #include <boost/test/detail/basic_cstring/basic_cstring_fwd.hpp>
-
-// Boost
-#include <boost/type_traits/remove_const.hpp>
+#include <boost/test/detail/basic_cstring/bcs_char_traits.hpp>
 
 // STL
 #include <string>
@@ -36,15 +34,10 @@ namespace unit_test {
 template<typename CharT>
 class basic_cstring {
     typedef basic_cstring<CharT>                        self_type;
-    typedef typename boost::remove_const<CharT>::type   mutable_char;
 public:
     // Subtypes
-#if  BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
-    typedef std::string_char_traits<mutable_char>       traits_type;
-#else
-    typedef std::char_traits<mutable_char>              traits_type;
-#endif
-    typedef std::basic_string<mutable_char, traits_type> std_string;
+    typedef detail::bcs_char_traits<CharT>              traits_type;
+    typedef typename detail::bcs_char_traits<CharT>::std_string  std_string;
 
     typedef CharT                                       value_type;
     typedef value_type*                                 pointer;
@@ -580,7 +573,7 @@ template<typename CharT>
 inline basic_cstring<CharT>
 basic_cstring<CharT>::default_trim_ex()
 {
-    static mutable_char ws[3] = { mutable_char(' '), mutable_char('\t'), mutable_char('\n') };
+    static CharT ws[3] = { CharT(' '), CharT('\t'), CharT('\n') }; //!! wide case
 
     return self_type( ws, 3 );
 }
@@ -722,6 +715,9 @@ last_char( basic_cstring<CharT> source )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2004/06/05 11:02:15  rogeeff
+//  std::traits usage reworked
+//
 //  Revision 1.5  2004/06/01 11:07:53  tknapen
 //  port to vacpp version 6
 //
