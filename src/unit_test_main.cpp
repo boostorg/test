@@ -37,43 +37,29 @@ main( int argc, char* argv[] )
 {
     using namespace boost::unit_test_framework;
 
-    std::string         loglevel;
-    bool                no_result_code;
-    bool                print_build_info;
-    result_report_level report_level;
+    bool    no_result_code;
+    bool    print_build_info;
 
-    // 1. set the log level
-    unit_test_log::instance().set_log_threshold_level_by_name(
-        retrieve_framework_parameter( LOGLEVEL, &argc, argv ).data() );
+    // set the log level
+    unit_test_log::instance().set_log_threshold_level_by_name( retrieve_framework_parameter( LOG_LEVEL, &argc, argv ) );
 
-    // 2. set the result code and build info flags
+    // set the log/report format
+    std::string output_format = retrieve_framework_parameter( OUTPUT_FORMAT, &argc, argv );
+    
+    if( output_format.empty() ) {
+        unit_test_log::instance().set_log_format( retrieve_framework_parameter( LOG_FORMAT, &argc, argv ) );
+        unit_test_result::set_report_format( retrieve_framework_parameter( REPORT_FORMAT, &argc, argv ) );
+    }
+    else {
+        unit_test_log::instance().set_log_format( output_format );
+        unit_test_result::set_report_format( output_format );
+    }
+
+    // set the result code and build info flags
     no_result_code    = retrieve_framework_parameter( NO_RESULT_CODE, &argc, argv ) == "no";
     print_build_info  = retrieve_framework_parameter( BUILD_INFO, &argc, argv ) == "yes";
 
-    // 3. set the report type
-    std::string report_type_to_set = retrieve_framework_parameter( RESULT_REPORT, &argc, argv );
-
-    if( report_type_to_set == report_level_names[CONFIRMATION_REPORT] ) {
-        report_level = CONFIRMATION_REPORT;
-    }
-    else if( report_type_to_set == report_level_names[SHORT_REPORT] ) {
-        report_level = SHORT_REPORT;
-    }
-    else if( report_type_to_set == report_level_names[DETAILED_REPORT] ) {
-        report_level = DETAILED_REPORT;
-    }
-    else if( report_type_to_set == report_level_names[NO_REPORT] ) {
-        report_level = NO_REPORT;
-    }
-    else if( report_type_to_set == "" ) {
-        report_level = CONFIRMATION_REPORT;
-    }
-    else {
-        std::cerr << "*** Unrecognized report level" << std::endl;
-        return -999;
-    }
-
-    // 4. set catch_system_error switch
+    // set catch_system_error switch
     detail::unit_test_monitor::catch_system_errors( retrieve_framework_parameter( CATCH_SYS_ERRORS, &argc, argv ) != "no" );
 
     // init master unit test suite
@@ -84,28 +70,13 @@ main( int argc, char* argv[] )
     }
 
     // start testing
-    unit_test_log::instance().start( test->size(), print_build_info );
+    unit_test_log::instance().start( print_build_info );
+    unit_test_log::instance().header( test->size() );
     test->run();
+    unit_test_log::instance().finish( test->size() );
 
-    // odd case: we have 1 test case in 1 test suite
-    if( test->size() == 1 )
-        unit_test_log::instance() << report_progress();
-
-    // report result
-    switch( report_level ) {
-    case CONFIRMATION_REPORT:
-        unit_test_result::instance().confirmation_report( std::cout );
-        break;
-    case SHORT_REPORT:
-        unit_test_result::instance().short_report( std::cout );
-        break;
-    case DETAILED_REPORT:
-        unit_test_result::instance().detailed_report( std::cout );
-        break;
-    case NO_REPORT:
-    default:
-        break;
-    }
+    // report results
+    unit_test_result::instance().report( retrieve_framework_parameter( REPORT_LEVEL, &argc, argv ), std::cerr );
 
     // return code
     return no_result_code ? boost::exit_success : unit_test_result::instance().result_code();
@@ -115,6 +86,11 @@ main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2003/02/13 08:43:01  rogeeff
+//  log/report format option accepted,
+//  report selection logic moved in class method
+//  log/report separated into different stream stdout/stderr
+//
 //  Revision 1.8  2002/12/08 18:11:39  rogeeff
 //  catch system errors switch added
 //  switch back to scoped_ptr instead of raw test_suite pointer
