@@ -45,10 +45,10 @@ std::string const&
 wrapstrstream::str() const {
 
 #ifdef BOOST_NO_STRINGSTREAM
-    m_str.assign( m_buf.str(), m_buf.pcount() );
-    m_buf.freeze( false );
+    m_str.assign( m_buf->str(), m_buf->pcount() );
+    m_buf->freeze( false );
 #else
-    m_str = m_buf.str();
+    m_str = m_buf->str();
 #endif
 
     return m_str;
@@ -408,6 +408,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9.2.2  2002/10/01 17:37:00  rogeeff
+//  rvalue in addressable memory should have copy constructor issue addressed
+//
 //  Revision 1.9.2.1  2002/10/01 05:48:27  rogeeff
 //  coment clarified
 //
