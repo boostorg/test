@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -8,7 +8,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : simple facility that mimmic notion of read-only read-write 
 //  properties in C++ classes. Original idea by Henrik Ravn.
@@ -62,6 +62,9 @@ private:                                                                        
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2003/04/07 06:34:32  rogeeff
+//  cvs keyword changed
+//
 //  Revision 1.8  2003/02/13 08:04:49  rogeeff
 //  switch on using Boost.Preprocessor for friends declarations
 //
