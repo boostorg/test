@@ -176,6 +176,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "token_iterator_test", "toke
 		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "algorithms_test", "algorithms_test.vcproj", "{09DC2B39-462E-412E-ACFB-67F90DC76AA2}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -330,6 +334,10 @@ Global
 		{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}.Debug.Build.0 = Debug|Win32
 		{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}.Release.ActiveCfg = Release|Win32
 		{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}.Release.Build.0 = Release|Win32
+		{09DC2B39-462E-412E-ACFB-67F90DC76AA2}.Debug.ActiveCfg = Debug|Win32
+		{09DC2B39-462E-412E-ACFB-67F90DC76AA2}.Debug.Build.0 = Debug|Win32
+		{09DC2B39-462E-412E-ACFB-67F90DC76AA2}.Release.ActiveCfg = Release|Win32
+		{09DC2B39-462E-412E-ACFB-67F90DC76AA2}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

@@ -34,7 +34,7 @@
 				ProgramDataBaseFileName="c:\temp\boost_test_library\Debug/"
 				BrowseInformation="1"
 				BrowseInformationFile="c:\temp\boost_test_library\Debug/"
-				WarningLevel="3"
+				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="4"
 				CompileAs="0"/>
@@ -352,6 +352,9 @@
 				</File>
 				<File
 					RelativePath="..\..\..\..\boost\test\detail\wrap_stringstream.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\test\detail\xml_printer.hpp">
 				</File>
 				<Filter
 					Name="basic_cstring"
