@@ -49,7 +49,7 @@ void test1( int i )
 //____________________________________________________________________________//
 
 
-##if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x570))
+#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x570))
 #define BOOST_PARAM_TEST_CASE__( arg1, arg2, arg3 ) \
     boost::unit_test_framework::create_test_case<int*,int>( (arg1), std::string( "" ), (arg2), (arg3) )
 #else
@@ -194,6 +194,9 @@ int test_main( int, char* [] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.12  2003/12/03 01:22:40  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.11  2003/12/01 00:42:37  rogeeff
 //  prerelease cleaning
 //
