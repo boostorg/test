@@ -14,8 +14,8 @@
 //  completely hidden with pimple idiom
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_LOG_HPP
-#define BOOST_UNIT_TEST_LOG_HPP
+#ifndef BOOST_UNIT_TEST_LOG_HPP_071894GER
+#define BOOST_UNIT_TEST_LOG_HPP_071894GER
 
 // Boost.Test
 #include <boost/test/detail/unit_test_config.hpp>
@@ -27,10 +27,7 @@
 #include <iosfwd>   // for std::ostream&
 #include <string>   // for std::string&; in fact need only forward declaration
 
-#ifdef BOOST_MSVC
-# pragma warning(push)
-# pragma warning(disable: 4512) // assignment operator could not be generated
-#endif
+#include <boost/test/detail/suppress_warnings.hpp>
 
 namespace boost {
 
@@ -216,15 +213,16 @@ private:
 
 } // namespace boost
 
-#ifdef BOOST_MSVC
-# pragma warning(default: 4512) // assignment operator could not be generated
-# pragma warning(pop)
-#endif
+#include <boost/test/detail/enable_warnings.hpp>
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.24  2004/07/19 12:15:45  rogeeff
+//  guard rename
+//  warning suppress reworked
+//
 //  Revision 1.23  2004/05/21 06:19:35  rogeeff
 //  licence update
 //
@@ -240,5 +238,5 @@ private:
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_LOG_HPP
+#endif // BOOST_UNIT_TEST_LOG_HPP_071894GER
 

@@ -13,8 +13,8 @@
 //  Description : contains definition for all test tools in test toolbox
 // ***************************************************************************
 
-#ifndef BOOST_TEST_TOOLS_HPP
-#define BOOST_TEST_TOOLS_HPP
+#ifndef BOOST_TEST_TOOLS_HPP_071894GER
+#define BOOST_TEST_TOOLS_HPP_071894GER
 
 // Boost.Test
 #include <boost/test/detail/unit_test_config.hpp>
@@ -31,6 +31,8 @@
 #include <cstddef>          // for std::size_t
 #include <memory>           // for std::auto_ptr
 #include <string>           // for std::string
+
+#include <boost/test/detail/suppress_warnings.hpp>
 
 // ************************************************************************** //
 // **************                    TOOL BOX                  ************** //
@@ -155,12 +157,6 @@
 #define BOOST_TEST(predicate)            BOOST_CHECK(predicate)
 #define BOOST_CRITICAL_TEST(predicate)   BOOST_REQUIRE(predicate)
 #define BOOST_CRITICAL_ERROR(message_)   BOOST_FAIL(message_)
-
-#ifdef BOOST_MSVC
-# pragma warning(push)
-# pragma warning(disable: 4511) // copy constructor could not be generated
-# pragma warning(disable: 4512) // assignment operator could not be generated
-#endif
 
 namespace boost {
 
@@ -472,7 +468,7 @@ compare_and_continue_impl( FPT left_, FPT right_, PersentType tolerance_,
                            const_string file_name_, std::size_t line_num_,
                            unit_test::log_level log_level_ = unit_test::log_all_errors )
 {
-    extended_predicate_value predicate( check_is_closed( left_, right_, tolerance_ ) );
+    extended_predicate_value predicate( check_is_close( left_, right_, tolerance_ ) );
 
     if( !predicate ) {
         return test_and_continue_impl( predicate,
@@ -573,16 +569,16 @@ namespace test_toolbox = test_tools;
 
 } // namespace boost
 
-#ifdef BOOST_MSVC
-# pragma warning(default: 4511) // copy constructor could not be generated
-# pragma warning(default: 4512) // assignment operator could not be generated
-# pragma warning(pop)
-#endif
+#include <boost/test/detail/enable_warnings.hpp>
 
 // ***************************************************************************
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.44  2004/07/19 12:15:45  rogeeff
+//  guard rename
+//  warning suppress reworked
+//
 //  Revision 1.43  2004/06/07 07:33:49  rogeeff
 //  detail namespace renamed
 //
@@ -613,4 +609,4 @@ namespace test_toolbox = test_tools;
 //
 // ***************************************************************************
 
-#endif // BOOST_TEST_TOOLS_HPP
+#endif // BOOST_TEST_TOOLS_HPP_071894GER
