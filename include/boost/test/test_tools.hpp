@@ -112,7 +112,7 @@
         boost::wrap_stringstream().ref() << \
             "{" #left_begin_ ", " #left_end_ "}" " == {" #right_begin_ ", ...}", __FILE__, __LINE__)
 
-#define BOOST_IS_DEFINED(symb) boost::test_toolbox::detail::is_defined_impl( #symb, BOOST_STRINGIZE(symb) )
+#define BOOST_IS_DEFINED(symb) boost::test_toolbox::detail::is_defined_impl( #symb, BOOST_STRINGIZE(= symb) )
 
 // ***************************** //
 // helper macros
@@ -463,6 +463,9 @@ private:
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.28  2003/02/15 21:54:35  rogeeff
+//  is_defined made portable
+//
 //  Revision 1.27  2003/02/14 06:42:18  rogeeff
 //  Mingw fix for is_defined
 //  Visual age fix for extendeded boolean value

@@ -177,7 +177,8 @@ equal_and_continue_impl( c_string_literal left, c_string_literal right, wrap_str
 bool
 is_defined_impl( c_string_literal symbol_name, c_string_literal symbol_value )
 {
-    return std::strcmp( symbol_name, symbol_value ) != 0;
+//    return std::strncmp( symbol_name, symbol_value, std::strlen( symbol_name ) ) != 0;
+    return std::strcmp( symbol_name, symbol_value + 2 ) != 0;
 }
 
 //____________________________________________________________________________//
@@ -405,6 +406,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2003/02/15 21:54:18  rogeeff
+//  is_defined made portable
+//
 //  Revision 1.14  2003/02/14 06:40:27  rogeeff
 //  mingw fix
 //
