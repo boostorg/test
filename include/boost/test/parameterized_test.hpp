@@ -81,7 +81,7 @@ public:
             return (test_unit*)0;
 
         test_func_with_bound_param<ParamType> bound_test_func( m_test_func, *m_par_begin );
-#if BOOST_WORKAROUND(BOOST_MSVC,<=1200)
+#if BOOST_WORKAROUND(BOOST_MSVC,<1300)
         0;
 #endif
         test_unit* res = new test_case( m_tc_name, bound_test_func );
@@ -141,6 +141,9 @@ make_test_case( void (*test_func)( ParamType ),
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2005/03/21 15:32:31  rogeeff
+//  check reworked
+//
 //  Revision 1.2  2005/02/21 10:25:04  rogeeff
 //  remove const during ParamType deduction
 //

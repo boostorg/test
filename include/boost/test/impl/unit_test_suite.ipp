@@ -89,7 +89,7 @@ test_case::test_case( const_string name, callback0<> const& test_func )
 , m_test_func( test_func )
 {
     // !! weirdest MSVC BUG; try to remove this statement; looks like it eats first token of next statement
-#if BOOST_WORKAROUND(BOOST_MSVC,<=1200)
+#if BOOST_WORKAROUND(BOOST_MSVC,<1300)
     0;
 #endif
 
@@ -226,6 +226,9 @@ normalize_test_case_name( const_string name )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.8  2005/03/21 15:33:15  rogeeff
+//  check reworked
+//
 //  Revision 1.7  2005/02/25 21:27:44  turkanis
 //  fix for random_shuffle on Borland 5.x w/ STLPort
 //
