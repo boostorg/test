@@ -1,21 +1,30 @@
 <html>
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-<title>Program Execution Monitor</title>
+<title>Examples ans test modules</title>
+<script language="javascript">var viso_path="js-lib"</script>
+<script language="javascript" src="js-lib/core.js" > </script>
+
+<link id="screen_style" rel="stylesheet" type="text/css" href="style/btl.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="style/btl_print.css" media="print" />
+
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+
+<script language="JavaScript">
+include ( "btl.js" );
+</script>
 </head>
 
-<body bgcolor="#808080" text="#000000" link="#336699" vlink="#3F7EBE" alink="#699BCD">
-  <div align="center">
-	<center>
-  <table border="2" cellpadding="13" bordercolor="#CDCDCD" width="80%" id="AutoNumber1" cellspacing="3" style="border-collapse: collapse">
-    <tr>
-      <td width="100%" align="left" valign="top" bgcolor="#f0f0f0" border="0" >
+<body onload="btl_menu_init()">
+<div align="center">
+<table class="body-table" cellspacing="3" >
+<tr>
+<td>
 
-<a name="TOP"><img border="0" src="../../../c++boost.gif" width="277" height="86"></a><br clear=left>
+<script language="Javascript">btl_header()</script>
 
-<h1 align="center">Boost Test Library: examples and tests</h1>
+<h1>Boost Test Library: examples and tests</h1>
 
 <h2>Examples</h2>
 
@@ -48,7 +57,7 @@ Expected output:<br>
 <br>
 **** error return code 205<br>
 ******* errors detected; see standard output for details ****<br>
-Result Code: 205</tt></p>
+Result code: 205</tt></p>
 
 <h3>2. The Program Execution Monitor test 2</h3>
 
@@ -62,7 +71,7 @@ Expected output:<br>
 <br>
 **** error return code 210<br>
 ******* errors detected; see standard output for details ****<br>
-Result Code: 210</tt></p>
+Result code: 210</tt></p>
 
 <h3>3. The Test Execution Monitor test 1</h3>
 
@@ -77,7 +86,7 @@ t_main&quot;: test test_main_result == 0 || test_main_result == <br>
 boost::exit_success failed<br>
 <br>
 *** Failures in &quot;call_test_main&quot;<br>
-Result Code: 1</tt></p>
+Result code: 1</tt></p>
 
 <h3>4. The Test Execution Monitor test 2</h3>
 
@@ -95,7 +104,7 @@ all_test_main&quot;: sample BOOST_ERROR call<br>
 in &quot;call_test_main&quot;: test 2 == v failed<br>
 <br>
 *** Failures in &quot;call_test_main&quot;<br>
-Result Code: 3</tt></p>
+Result code: 3</tt></p>
 
 <h3>5. The Test Execution Monitor test 3</h3>
 
@@ -111,7 +120,7 @@ in &quot;call_test_main&quot;: test v == 2 failed<br>
 all_test_main&quot;: test 2 == v failed<br>
 <br>
 *** Failures in &quot;call_test_main&quot;<br>
-Result Code: 2</tt></p>
+Result code: 2</tt></p>
 
 <h3>6. The Test Execution Monitor test 4</h3>
 
@@ -125,7 +134,7 @@ Exception in &quot;call_test_main&quot;: C string:Test error by throwing C-<br>
 style string exception<br>
 <br>
 *** Failures in &quot;call_test_main&quot;<br>
-Result Code: -1</tt></p>
+Result code: -1</tt></p>
 
 <h3>7. The Test Tools test</h3>
 
@@ -159,7 +168,7 @@ caught\n&quot;).str() ) passed<br>
 <br>
 *** Failures in &quot;Test Tools test&quot;</tt></p>
 
-<p><tt>Result Code: 4</tt></p>
+<p><tt>Result code: 4</tt></p>
 
 <h3>8. The Unit Test Framework online test</h3>
 
@@ -173,7 +182,7 @@ Need test pattern (see below): no<br>
 Expected output:<br>
 <br>
 *** No errors detected<br>
-Result Code: 0<br>
+Result code: 0<br>
 &nbsp;</tt></p>
 
 <h3>9. The Unit Test Framework output test stream test</h3>
@@ -189,7 +198,7 @@ Expected output:<br>
 Running 5 test cases...<br>
 <br>
 *** No errors detected<br>
-Result Code: 0<br>
+Result code: 0<br>
 &nbsp;</tt></p>
 
 <h3>10. The Unit Test Framework result report test</h3>
@@ -207,7 +216,10 @@ Need test pattern: yes<br>
 Expected output:<br>
 <br>
 *** No errors detected<br>
-Result Code: 0</tt></p>
+Result code: 0</tt></p>
+
+ <iframe src="../test/result_report_test.cpp" name="inline_source" class="inline-source-inlclusion"> 
+ </iframe><br>
 
 <h3>11. The Unit Test Framework extension test</h3>
 
@@ -219,7 +231,7 @@ Expected output:<br>
 Running 6 test cases...<br>
 <br>
 *** No errors detected<br>
-Result Code: 0</tt></p>
+Result code: 0</tt></p>
 
 <h3>12. The Unit Test Framework errors handling test</h3>
 
@@ -237,16 +249,20 @@ Need test pattern: yes<br>
 Expected output:<br>
 <br>
 *** Failures in &quot;call_test_main&quot;<br>
-Result Code: 120</tt></p>
+Result code: 120</tt></p>
 <hr>
-<p>© <a href="mailto:boost_test_library@consultant.com">Gennadiy Rozental</a> 2001</p>
+<p>© <script language="Javascript">contact_addess()</script>
+<script language="Javascript">get_copyright_date()</script>
+</p>
+
 <p>Revised: 
 <!--webbot bot="Timestamp" S-Type="EDITED"
-S-Format="%d %B, %Y" startspan -->25 December, 2001<!--webbot bot="Timestamp" endspan i-checksum="38513" -->
+S-Format="%d %B, %Y" startspan -->25 July, 2002<!--webbot bot="Timestamp" endspan i-checksum="21088" -->
 </p>
-</TR>
-</TABLE>
 
+</td>
+</tr>
+</table>
+</div>
 </body>
-
 </html>

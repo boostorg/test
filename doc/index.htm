@@ -1,153 +1,152 @@
 <html>
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
 <title>Boost Test Libraries</title>
+<script language="javascript">var viso_path="js-lib"</script>
+<script language="javascript" src="js-lib/core.js" > </script>
+
+<link id="screen_style" rel="stylesheet" type="text/css" href="style/btl.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="style/btl_print.css" media="print" />
+
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+
+<script language="JavaScript">
+include ( "btl.js" );
+</script>
 </head>
 
-<body bgcolor="#808080" text="#000000" link="#336699" vlink="#3F7EBE" alink="#699BCD">
-  <div align="center">
-	<center>
-  <table border="2" cellpadding="13" bordercolor="#CDCDCD" width="80%" id="AutoNumber1" cellspacing="3" style="border-collapse: collapse">
-    <tr>
-      <td width="100%" align="left" valign="top" bgcolor="#f0f0f0" border="0" >
+<body onload="btl_menu_init()">
+<div align="center"">
+<table class="body-table" cellspacing="3" >
+<tr>
+<td>
 
-<a name="TOP"><img src="../../../c++boost.gif"  alt="c++boost.gif (8819 bytes)" width="277" height="86" align="left"></a>
-<br>
-<br>
-<p align="right"><b>
+<script language="Javascript">btl_header()</script>
 
-<a href="../../../index.htm"><font face="Arial" color="#000000">Home</font></a>
-<a href="../../../libs/libraries.htm"><font face="Arial" color="#000000">Libraries</font></a>
-<a href="../../../people/people.htm"><font face="Arial" color="#000000">People</font></a>
-<a href="../../../more/faq.htm"><font face="Arial" color="#000000">FAQ</font></a>
-<a href="../../../more/index.htm"><font face="Arial" color="#000000">More</font></a></b><br clear=left>
+<h1>Boost Test Library</h1>
 
+<p class=epigraph>&quot;Test everything that could possibly break&quot;</p>
+<p class=epigraph>XP maxim</p>
 
-<h1 align="center"><b>Boost Test Library</b></h1>
-
-<p align="right"><font face="Century Gothic"><i>&quot;Test everything that could 
-possibly break&quot;</i></font></p>
-
-<p align="right"><i><font face="Century Gothic">XP maxim</font></i></p>
-
-<p><b>
+<p class="page-toc">
 <a href="#Introduction">Introduction</a><br>
-<a href="#Components">Components<br></a>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="execution_monitor.htm">Execution monitor</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="prg_exec_monitor.htm">Program Execution Monitor</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="test_tools.htm">Test Tools</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="test_exec_monitor.htm">Test Execution Monitor</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="unit_test_framework.htm">Unit Test Framework</a>
-<a href="#FAQ"><br>FAQ</a><br>
+<a href="#Components">Components</a>
+  <p class="page-toc-indented">
+    <a href="execution_monitor.htm">Execution monitor</a><br>
+    <a href="prg_exec_monitor.htm">Program Execution Monitor</a><br>
+    <a href="test_tools.htm">Test Tools</a><br>
+    <a href="test_exec_monitor.htm">Test Execution Monitor</a><br>
+    <a href="unit_test_framework.htm">Unit Test Framework</a>
+  </p>
+<p class="page-toc">
+<a href="#FAQ">FAQ</a><br>
 <a href="#Design">Design</a><br>
 <a href="#Open Issues">Open Issues</a><br>
 <a href="#Portability">Portability</a><br>
 <a href="#Acknowledgements">Acknowledgements</a>
-</b></p>
+</p>
 
 <h2><a name="Introduction">Introduction</a></h2>
-<p>&nbsp;&nbsp;&nbsp; Boost Test Library provides a matched set of components for writing test programs,
-organizing tests in to simple test cases, test suites, and controlling their
-runtime execution. The 
+<p class="1-line-indented">The Boost Test Library provides a matched set of components for writing test programs,
+organizing tests in to simple test cases and test suites, and controlling their runtime execution. The 
 <a href="prg_exec_monitor.htm"> Program Execution Monitor</a> is also useful in some production (non-test) environments. 
-<a href="#TOP"><img border="0" src="uarrow.gif" align="right" width="19" height="20"></a></p>
+</p>
+<script language="Javascript">put_ref_to_top()</script>
 <h2><a name="Components">Components</a></h2>
 <ul>
-  <li><a href="execution_monitor.htm">Execution Monitor</a> - a basic exception and error 
-  detection and reporting facility for use in both production and test programs. 
-  The Execution Monitor calls a user-supplied function and reports all caught 
-  runtime exceptions. It is used internally by other Boost Test Library&nbsp; 
-  components. It also could be used in some production environment to implement 
-  controlled dangerous functions call.</li>
+  <li><a href="execution_monitor.htm">Execution Monitor</a> - a basic exception 
+  and error detection and reporting facility for use in both production and test 
+  programs. The Execution Monitor calls a user-supplied function and reports all 
+  caught runtime exceptions. It is used internally by other Boost Test Library  
+  components. It also could be used in some production environment to make 
+  controlled calls of functions which might otherwise crash the program.</li>
 </ul>
 <ul>
   <li><a href="prg_exec_monitor.htm">Program Execution Monitor</a> - a simple helper facility to 
   be used to monitor a program execution. The Program Execution Monitor provides 
   the <b>main()</b> function 
-  and uses the Execution Monitor to control a program execution. It is supposed 
-  to be used in production environment to produce uniform error reports. To 
-  control programs working in test environment prefer the <a href="test_exec_monitor.htm">Test Execution Monitor</a>.</li>
+  and uses the Execution Monitor to control a program execution. It should be used in production environment to produce uniform error reports. To 
+  control programs working in test environment, use the <a href="test_exec_monitor.htm">Test Execution Monitor</a> 
+  instead.</li>
 </ul>
 <ul>
-  <li><a href="test_tools.htm">Test Tools</a> -&nbsp; a toolbox for various testing needs. 
+  <li><a href="test_tools.htm">Test Tools</a> - a toolbox for various testing needs. 
   Test Tools are used  by test programs working under control of the <a href="test_exec_monitor.htm">Test Execution Monitor</a> 
   or the <a href="unit_test_framework.htm">Unit Test Framework</a>.
   </li>
 </ul>
 <ul>
-  <li><a href="test_exec_monitor.htm">Test Execution Monitor</a> - a simple helper facility 
-  to be used to monitor a test program execution. The Test Execution Monitor provides 
-  the <b>main()</b> 
-  function to control a simple test program execution and allows to use the <a href="test_tools.htm">Test Tools</a> 
+  <li><a href="test_exec_monitor.htm">Test Execution Monitor</a> - causes a test 
+  program to run in a monitored environment. The Test Execution Monitor provides 
+  the <b>main()</b> function to control a simple test program execution and allows to use the <a href="test_tools.htm">Test Tools</a> 
   to implement test logic. It is intended to be used in test environment. To 
   control production code execution use the <a href="prg_exec_monitor.htm">Program Execution Monitor</a>.</li>
 </ul>
 <ul>
   <li><a href="unit_test_framework.htm">Unit Test Framework</a> - a framework 
-  that simplifies writing 
-  and organizing test cases. The framework supports test cases written as simple 
-  free functions or member functions and organizes them into a tree of test 
-  suites. The framework allows to use the <a href="test_tools.htm">Test Tools</a> 
-  to implement a test cases and provides
-    a facility to 
-  manage a log report level and a result report level.<a href="#TOP"><img border="0" src="uarrow.gif" align="right" width="19" height="20"></a>
+  that simplifies writing and organizing test cases. The framework supports test cases written as simple 
+  free functions or member functions and organizes them into a tree of test suites. The framework allows 
+  to use the <a href="test_tools.htm">Test Tools</a> to implement a test cases and provides a facility to 
+  manage a log report level and a result report level.
   </li>
 </ul>
+<script language="Javascript">put_ref_to_top()</script>
+
 <h2><a name="FAQ">FAQ</a></h2>
-<p>See <a href="faq.htm">Boost Test Library FAQ</a>.</p>
+<p class="1-line-indented">See <a href="faq.htm">Boost Test Library FAQ</a>.</p>
 <h2><a name="Design">Design</a></h2>
-      <p>See <a href="test_lib_design.htm">Boost Test Library Design</a>.&nbsp;
-      </p>
+      <p class="1-line-indented">See <a href="test_lib_design.htm">Boost Test Library Design</a>.</p>
 <h2><a name="Open Issues">Open Issues</a></h2>
 <ul>
   <li>What dependences will we tolerate in Boost Test Library? Also we need
     means to overcome this restriction for extensions.</li>
   <li>Memory usage test tools.</li>
   <li>Performance test tools.</li>
-  <li>Facilities to allow testing of template function for the provided type
-    list.</li>
+  <li>Facilities to allow testing of template function for the provided type list.</li>
   <li>How to implement compilability checks.</li>
-  <li>Selective test cases run: ways to define by user and notify the
-    framework.</li>
-  <li>Command line argument processing facility: external or internal, simple or
-    advanced?</li>
+  <li>Selective test cases run: ways to define by user and notify the framework.</li>
+  <li>Command line argument processing facility: external or internal, simple or advanced?</li>
   <li>Integration of the unit test framework into the Boost Build System.</li>
   <li>Support for the testing of multi-threaded programs.</li>
-  <li>Make BOOST_TEST_CLOSE to print values properly</li>
+  <li>Make BOOST_TEST_CLOSE print values properly</li>
   <li>Timeout implementation on Win32 platform.</li>
   <li>Need to separate reference and tutorial material</li>
   <li>Unit Test Framework extension should be documented</li>
-  <li>Should the execution monitor page contain an example?&nbsp;<a href="#TOP"><img border="0" src="uarrow.gif" align="right" width="19" height="20"></a></li>
+  <li>Should the execution monitor page contain an example?</li>
 </ul>
+<script language="Javascript">put_ref_to_top()</script>
 <h2><a name="Portability">Portability</a></h2>
-<p>Because the Boost Test Library is critical for porting and testing Boost libraries, it has been written to be 
-extremely conservative in
-its use of C++ features, and to keep dependencies to a bare minimum.</p>
-  <p>Tests have been run (and work) under numerous compilers.</p>
+<p class="1-line-indented">Because the Boost Test Library is critical for porting and testing Boost libraries, it has been written to be 
+extremely conservative in its use of C++ features, and to keep dependencies to a bare minimum.</p>
+<p class="1-line-indented">Tests have been run (and work) under numerous compilers.</p>
 <h2><a name="Acknowledgements">Acknowledgements</a></h2>
 <p>Original Test Library:</p>
-<p>Ed Brey, Kevlin Henney, Ullrich Koethe, and Thomas Matelich provided very
+<p class="1-line-indented">Ed Brey, Kevlin Henney, Ullrich Koethe, and Thomas Matelich provided very
 helpful comments during development. Dave Abrahams, Ed Brey, William Kempf, Jens
-Maurer, and Wilka suggested numerous improvements during the Formal
-Review.&nbsp; Jens Maurer was the review manager.&nbsp; Beman Dawes was the
+Maurer, and Wilka suggested numerous improvements during the Formal Review. Jens Maurer was the review manager. Beman Dawes is the
 developer and maintainer.</p>
 <p>Second Release:</p>
-<p>Beman Dawes and Ullrich Koethe started the library.<br>
-Gennadiy Rozental is the developer and maintainer.<a href="#TOP"><img border="0" src="uarrow.gif" align="right" width="19" height="20"></a></p>
-
+<p class="1-line-indented">Beman Dawes and Ullrich Koethe started the library.
+Fernando Cacciola, Jeremy Siek, Beman Dawes, Ullrich Koethe, Dave Abrahams 
+suggested numerous improvements during the Formal Review. Jeremy Siek was the review manager. Dave Abrahams edited this documentation.
+Beman Dawes was a great help in both final testing and merging library with rest of the boost.
+Gennadiy Rozental is the developer and maintainer.
+<script language="Javascript">put_ref_to_top()</script>
+</p>
 <hr>
-<p>© Beman Dawes, <a href="mailto:boost_test_library@consultant.com">Gennadiy Rozental</a> 2001</p>
+<p>© Beman Dawes 2000, <script language="Javascript">contact_addess()</script>
+<script language="Javascript">get_copyright_date()</script>
+</p>
+
 <p>Revised 
 <!--webbot bot="Timestamp" S-Type="EDITED"
-S-Format="%d %B, %Y" startspan -->12 August, 2002<!--webbot bot="Timestamp" endspan i-checksum="34409" -->
+S-Format="%d %B, %Y" startspan -->09 August, 2002<!--webbot bot="Timestamp" endspan i-CheckSum="34422" -->
 </p>
 
 </td>
 </tr>
 </table>
-
+</div>
 </body>
-
 </html>

@@ -1,0 +1,17 @@
+@import "btl.css";
+
+BODY
+{
+    background: white;
+}
+
+table.body-table
+{
+    border: none;
+    width: 100%;
+}
+table.body-table td
+{
+    color:      black;
+    background: white;
+}

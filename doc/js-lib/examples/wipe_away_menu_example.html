@@ -1,0 +1,98 @@
+<html>
+
+<head>
+<script language="javascript">var viso_path=".."</script>
+<script language="javascript" src="../core.js" > </script>
+<script language="javascript">
+include ( "wipe_away_menu.js", viso_path );
+
+function mmove_handler() {
+    screen_x.innerText = event.screenX;
+    screen_y.innerText = event.screenY;
+    offset_x.innerText = event.offsetX;
+    offset_y.innerText = event.offsetY;
+    client_x.innerText = event.clientX;
+    client_y.innerText = event.clientY;
+}
+
+var menu1, menu2, menu3, menu4;
+
+function page_init() {
+    menu1 = new WipeAwayMenu( "menu1", "menu_root", true, "left", 
+                              { tran:"box-out", speed:10, x_step:20 },
+                              { tran:"box-in", speed:10, x_step:20 } );
+    menu2 = new WipeAwayMenu( "menu2", "menu_root", true, "right",
+                              { tran:"split-out-hor", speed:10, y_step:3 },
+                              { tran:"split-in-hor", speed:10, y_step:3 } );
+    menu3 = new WipeAwayMenu( "menu3", "menu_root", true, "top",
+                              { tran:"split-out-vert", speed:10, x_step:7 },
+                              { tran:"split-in-vert", speed:10, x_step:7 } );
+    menu4 = new WipeAwayMenu( "menu4", "menu_root", true, "down" );
+}
+
+function show_menus() {
+    menu1.show();
+    menu2.show();
+    menu3.show();
+    menu4.show();
+}
+
+function close_menus() {
+    menu1.hide();
+    menu2.hide();
+    menu3.hide();
+    menu4.hide();
+}
+
+</script>
+<style>
+.menu
+{
+    font-weight: bold;
+    font-family: Arial; 
+    position:    absolute;
+}
+</style>
+
+</head>
+
+<body id="BODY" onLoad="page_init();" onMouseMove="mmove_handler()">
+
+<div id="centerer" align="center" >
+
+<div id="menu_holder">
+
+<div id="menu1" class="menu" style="position: absolute;">
+<nobr><font size=8>Link1&nbspLink2&nbspLink3&nbsp</font></nobr>
+</div>
+
+<div id="menu2" class="menu">
+<nobr><font size=3>Link4&nbspLink5&nbspLink5&nbsp</font></nobr>
+</div>
+
+<div id="menu3" class="menu">
+<font size=8>Link1<br>Link2<br>Link3</font>
+</div>
+
+<div id="menu4" class="menu">
+<font size=3>Link4<br>Link5<br>Link6</font>
+</div>
+
+
+<span id="menu_root" style="position:relative; top:350">
+<a href="javascript:void close_menus();"><span onMouseOver="show_menus();"><font size=6>Menu</font></span></a>
+</span>
+
+</div>
+
+</div>
+<div style="position: absolute; bottom: 0px; width: 100%; height: 100px;">
+<hr>
+Screen X: &nbsp;&nbsp;<span id="screen_x"></span>
+Screen Y: &nbsp;&nbsp;<span id="screen_y"></span><br>
+Offset X: &nbsp;&nbsp;<span id="offset_x"></span>
+Offset Y: &nbsp;&nbsp;<span id="offset_y"></span>
+</div>
+
+</body>
+</html>

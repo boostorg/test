@@ -1,0 +1,53 @@
+<html>
+<head>
+<script language="javascript">var viso_path=".."</script>
+<script language="javascript" src="../core.js" > </script>
+<script language="javascript">
+include ( "vis_object_api.js", viso_path );
+
+function hmove() {
+    viso_smooth_move( viso_get( "idMove" ), 10, 
+        function( counter ) { 
+            return (counter < 160) ? new Pair( counter*4, 0 ) : null; 
+        } );
+}
+
+function vmove() {
+    viso_smooth_move( viso_get( "idMove" ), 10, 
+        function( counter ) { 
+            return (counter < 80) ? new Pair( 0, counter*5 ) : null;
+        } );
+}
+
+function hvmove() {
+    viso_smooth_move( viso_get( "idMove" ), 10, 
+        function( counter ) { 
+            return (counter < 80) ? new Pair( counter*5, counter*counter/15 ) : null;
+        } );
+}
+
+function algmove() {
+    viso_smooth_move( viso_get( "idMove" ), 10, 
+        new Function( "counter", viso_get( "alg" ).value ) );
+}
+
+</script>
+</head>
+
+<body>
+<div>
+<span id="idMove" style="position:relative"/>To be moved</span>
+</div>
+<div style="position: absolute; bottom: 0px; width: 100%; height: 100px;">
+<input type="button" value="Restore" onClick="viso_move_to( viso_get( 'idMove' ), new Pair(0,0) );"><br>
+<input type="button" value="HMove" onClick="hmove();">
+<input type="button" value="VMove" onClick="vmove();">
+<input type="button" value="HVMove" onClick="hvmove();"><br>
+function( counter ) { <br>
+<textarea id="alg" cols="80" rows="5"></textarea><br>
+}<br>
+<input type="button" value="Move using this algorithm" onClick="algmove();"><br>
+</div>
+</body>
+
+</html>

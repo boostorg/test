@@ -1,0 +1,158 @@
+H1
+{
+    FONT-SIZE: 200%;
+    text-align: center;
+}
+H2
+{
+    FONT-SIZE: 150%;
+}
+H3
+{
+    FONT-SIZE: 125%;
+}
+H4
+{
+    FONT-SIZE: 108%;
+}
+BODY
+{
+    background: white;
+}
+a:link
+{
+    color: black;
+    text-decoration: none;
+}
+a:visited
+{
+    color: black;
+    text-decoration: none;
+}
+a:active
+{
+    color: black;
+    text-decoration: none;
+}
+             
+P.1-line-indented
+{
+    text-indent: 10px;
+}
+P.indented
+{
+    margin-left:20; 
+    margin-top:0;
+    margin-bottom:0;
+}
+PRE.code
+{
+    border-left-style: groove; 
+    border-left-width: 1px; 
+    padding-left: 2em; 
+    font-size: 70%
+}
+
+P.epigraph
+{
+    text-align: right; 
+    font-family: Century Gothic; 
+    font-style: italic
+}
+
+P.test-output
+{
+    font-family: Arial; 
+    font-size: 10pt;
+    margin-left: 2em;
+    white-space: pre
+}
+
+P.page-toc
+{
+    display: none;
+}
+
+P.page-toc-indented
+{
+    display: none;
+}
+
+table.body-table
+{
+    border: none;
+    margin-top: 0;
+    padding-top: 0;
+    width: 100%;
+}
+table.body-table td
+{
+    margin-top: 0;
+    padding-top: 0;
+    color:      black;
+    background: white;
+}
+
+table.parameter-table
+{
+    border:        none;
+    border-bottom: ridge 2 black;
+    width:         100%
+}
+table.parameter-table td
+{
+    margin-top:    0px;
+    margin-bottom: 0px;
+    padding-top: 0px; 
+    padding-bottom: 10px; 
+}
+
+table.parameter-values-table
+{
+    border:        none;
+    width:         100%
+}
+table.parameter-values-table td
+{
+    margin:         0px;
+    padding-top:    0px; 
+    padding-bottom: 5px; 
+}
+
+table.2fields
+{
+    border: none collapse;
+    padding: 0px;
+    margin: 0px;
+}
+table.2fields td
+{
+    margin-left: 0px;
+    padding-left: 40px; 
+    valign: top;
+}
+
+SPAN.reserv-word
+{
+    font-style: italic;
+}
+SPAN.cpp-type
+{
+    font-weight: bold;
+}
+SPAN.comment
+{
+    font-style: oblique
+}
+SPAN.new-term
+{
+     font-weight: bold;
+}
+DIV.ref-to-top
+{
+    display: none;
+}
+DIV.screen-header
+{
+    display: none;
+}

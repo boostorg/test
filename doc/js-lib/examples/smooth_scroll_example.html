@@ -1,0 +1,85 @@
+<html>
+<head>
+<script language="javascript">var viso_path=".."</script>
+<script language="javascript" src="../core.js" > </script>
+<script language="javascript">
+include ( "vis_object_api.js", viso_path );
+</script>
+<script language="javascript">
+function lscroll() {
+    viso_smooth_scroll( viso_get( "idMove" ), 10, 
+        function( counter ) { 
+            return new Pair( counter*5, 0 ); 
+        } );
+}
+
+function rscroll() {
+    viso_smooth_scroll( viso_get( "idMove" ), 10, 
+        function( counter ) { 
+            return new Pair( -counter*5, 0 ); 
+        } );
+}
+
+function tscroll() {
+    viso_smooth_scroll( viso_get( "idMove" ), 10, 
+        function( counter ) { 
+            return new Pair( 0, counter*5 ); 
+        } );
+}
+
+function bscroll() {
+    viso_smooth_scroll( viso_get( "idMove" ), 10, 
+        function( counter ) { 
+            return new Pair( 0, -counter*5 ); 
+        } );
+}
+
+function algscroll() {
+    viso_smooth_scroll( viso_get( "idMove" ), 10, 
+        function( counter ) { 
+            return new Pair( counter*5, counter*5 ); 
+        } );
+}
+
+function update_parameters()
+{
+    viso_set_html( viso_get("par_clip_left")   , viso_get_clip_area( viso_get( "idMove" ) ).x1 );
+    viso_set_html( viso_get("par_clip_right")  , viso_get_clip_area( viso_get( "idMove" ) ).x3 );
+    viso_set_html( viso_get("par_clip_top")    , viso_get_clip_area( viso_get( "idMove" ) ).x2 );
+    viso_set_html( viso_get("par_clip_bottom") , viso_get_clip_area( viso_get( "idMove" ) ).x4 );
+    viso_set_html( viso_get("par_clip_width")  , viso_get_clip_width( viso_get( "idMove" ) ) );
+    viso_set_html( viso_get("par_clip_height") , viso_get_clip_height( viso_get( "idMove" ) ) );
+
+    return true;
+}
+
+TaskScheduler.schedule( new Callback( update_parameters ), 100 );
+</script>
+</head>
+
+<body>
+
+Clip left:&nbsp;&nbsp;<span id="par_clip_left"></span> &nbsp;&nbsp;
+Clip Right:  <span id="par_clip_right"></span>&nbsp;&nbsp;
+Clip top:&nbsp;&nbsp; <span id="par_clip_top"></span>&nbsp;&nbsp;
+Clip Bottom: <span id="par_clip_bottom"></span>&nbsp;&nbsp;
+Clip Width: <span id="par_clip_width"></span>&nbsp;&nbsp;
+Clip Height: <span id="par_clip_height"></span>&nbsp;&nbsp;
+<br><br><br>
+
+<div id="idMove" style="border: 2 solid; width:300; height:100; position:absolute; left:300; top:200; clip: rect(0,200,50,0)">
+<table border="1" >
+<tr><td>To be moved</td></tr></table>
+</div>
+<div style="position: absolute; bottom: 0px; width: 100%; height: 100px;">
+<input type="button" value="Scroll Left" onClick="lscroll();">
+<input type="button" value="Scroll Right" onClick="rscroll();"<br>
+<br>
+<input type="button" value="Scroll Top" onClick="tscroll();">
+<input type="button" value="Scroll Bottom" onClick="bscroll();"<br>
+<br>
+<input type="button" value="Scroll Alg" onClick="algscroll();">
+</div>
+</body>
+
+</html>

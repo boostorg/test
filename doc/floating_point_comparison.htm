@@ -1,70 +1,97 @@
 <html>
 
 <head>
+<title>Floating point comparison</title>
+<script language="javascript">var viso_path="js-lib"</script>
+<script language="javascript" src="js-lib/core.js" > </script>
 
-<meta http-equiv="Content-Language" content="en-us">
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-<title>Test Tools</title>
+<link id="screen_style" rel="stylesheet" type="text/css" href="style/btl.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="style/btl_print.css" media="print" />
+
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+
+<script language="JavaScript">
+include ( "btl.js" );
+</script>
 </head>
 
-<body bgcolor="#808080" text="#000000" link="#336699" vlink="#3F7EBE" alink="#699BCD">
-  <div align="center">
-	<center>
-  <table border="2" cellpadding="13" bordercolor="#CDCDCD" width="80%" id="AutoNumber1" cellspacing="3" style="border-collapse: collapse">
-    <tr>
-      <td width="100%" align="left" valign="TOP" bgcolor="#f0f0f0" border="0" >
+<body onload="btl_menu_init()">
+<div align="center">
+<table class="body-table" cellspacing="3" >
+<tr>
+<td>
 
-<a name="TOP"><img src="../../../c++boost.gif"  alt="c++boost.gif (8819 bytes)" width="277" height="86"></a><br clear="left">
+<script language="Javascript">btl_header()</script>
 
-<h1 align="center">Floating-point comparison algorithms</h1>
-<p><b>
+<h1>Floating-point comparison algorithms</h1>
+
+<p class="page-toc">
 <a href="#Introduction">Introduction</a><br>
 <a href="#tolerance">How to choose a tolerance</a><br>
-<a href="#Specification">The close_at_tolerance algorithm</a></b><br>
-<b><a href="#Compilation">Compilation</a></b><br>
-<b>
+<a href="#Specification">The close_at_tolerance algorithm</a><br>
+<a href="#Compilation">Compilation</a><br>
 <a href="#Acknowledgements">Acknowledgements</a><br>
 <a href="#References">References</a>
-</b></p>
+</p>
 
 <h2><a name="Introduction">Introduction</a></h2>
 
-<p>In most cases it is unreasonable to use an operator=(...) for a 
+<p class="1-line-indented">In most cases it is unreasonable to use an operator=(...) for a 
 floating-point values equality check The simple solution like abs(f1-f2) &lt;= e  does not work 
 for very small or very big values. This floating-point comparison algorithm is 
 based on the more confident solution presented by Knuth in [1]. For a 
 given floating point values <i>u</i> and <i>v</i> and a tolerance <i>e</i>:</p>
 
-<p>&nbsp;&nbsp;&nbsp; |<i> u </i>-<i> v </i>| &lt;= <i>e * |u|</i> and |<i> u </i>-<i> 
-v </i>| &lt;= <i>e * |v|</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<b><a name="F.1">1</a></b>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-defines a &quot;very close with tolerance <i>e</i>&quot; relationship between <i>u</i> and
-<i>v<br>
-</i>&nbsp;&nbsp;&nbsp; |<i> u </i>-<i> v </i>| &lt;= <i>e * |u|</i> or&nbsp;&nbsp; 
-|<i> u </i>-<i> v </i>| &lt;= <i>e * |v|</i> <i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>(<b><a name="F.2">2</a></b>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-defines a &quot;close enough with tolerance <i>e</i>&quot; relationship between <i>u</i> and
-<i>v</i></p>
+<table class="2fields">
+<tr>
+<td>
+  <p style="text-indent: -20">
+      |<i> u </i>-<i> v </i>| &lt;= <i>e * |u|</i> and |<i> u </i>-<i> v </i>| &lt;= <i>e * |v|<br>
+      </i>defines a &quot;very close with tolerance <i>e</i>&quot; relationship between <i>u</i> and <i>v</i>
+</td>
+<td valign="top">
+      (<b><a name="F.1">1</a></b>)</td>
+</tr>
+<tr>
+<td>
+  <p style="text-indent: -20">
+      |<i> u </i>-<i> v </i>| &lt;= <i>e * |u|</i> or&nbsp;&nbsp; |<i> u </i>-<i> v </i>| &lt;= <i>e * |v|<br>
+      </i>defines a &quot;close enough with tolerance <i>e</i>&quot; relationship between <i>u</i> and <i>v</i>
+</td>
+<td valign="top">
+      (<a name="F.1"><b>2</b></a>)
+</td>
+</tr>
+</table>
 
-<p>Both relationships are commutative but are not transitive. The relationship 
+<p class="1-line-indented">Both relationships are commutative but are not transitive. The relationship 
 defined by inequations (<b>1</b>) is stronger that the relationship defined by 
-inequations (<b>2</b>) (i.e. (<b>1</b>) =&gt; (<b>2</b>) ).&nbsp; Because of the multiplication 
+inequations (<b>2</b>) (i.e. (<b>1</b>) =&gt; (<b>2</b>) ). Because of the multiplication 
 in the  right side of inequations, that could cause an unwanted underflow condition, the 
 implementation is using modified version of the inequations (<b>1</b>) and (<b>2</b>) 
 where all underflow, overflow conditions could be guarded safely:</p>
 
-<p>&nbsp;&nbsp;&nbsp; |<i> u </i>-<i> v </i>| / <i> |u| </i>&lt;= <i>e</i> and |<i> u </i>-<i> 
-v </i>| / <i> |v| </i>&lt;= <i>e</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-(<b>1`</b>)<br>
-&nbsp;&nbsp;&nbsp; |<i> u </i>-<i> v </i>| / <i> |u| </i> &lt;= <i>e</i>
-or&nbsp;&nbsp; |<i> u </i>-<i> 
-v </i>| / <i> |v| </i> &lt;= <i>e</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-(<b>2`</b>)<a href="#TOP"><img border="0" src="uarrow.gif" align="right" width="19" height="20"></a></p>
+<table class="2fields">
+<tr>
+<td>
+  <p style="margin-left: -20">
 
-<h2><b>
-<a name="tolerance">How to choose a tolerance</a></b></h2>
+  |<i> u </i>-<i> v </i>| / <i> |u| </i>&lt;= <i>e</i> and |<i> u </i>-<i> v </i>| / <i> |v| </i>&lt;= <i>e<br>
+      </i>|<i> u </i>-<i> v </i>| / <i> |u| </i> &lt;= <i>e</i> or&nbsp;&nbsp; |<i> u </i>-<i> v </i>| / <i> |v| </i> &lt;= <i>e</i>
+</td>
+<td>
+      (<b>1`</b>)<br>
+      (<b>2`</b>)
+</td>
+</tr>
+</table>
 
-<p>In case of absence of a domain specific requirements the value of tolerance could be chosen 
+<script language="Javascript">put_ref_to_top()</script>
+
+<h2><a name="tolerance">How to choose a tolerance</a></h2>
+
+<p class="1-line-indented">In case of absence of a domain specific requirements the value of tolerance could be chosen 
 as a sum of the predicted upper limits for
 &quot;relative rounding errors&quot; of compared values. The &quot;rounding&quot; is the operation 
 by which a real value 'x' is represented in a floating-point format with 'p' 
@@ -80,7 +107,7 @@ point value may be caused by several reasons:</p>
   <li>Non-arithmetic operation</li>
 </ul>
 
-<p>The first two operations proved to have a relative rounding error that does 
+<p class="1-line-indented">The first two operations proved to have a relative rounding error that does 
 not exceed 1/2 * &quot;machine epsilon value&quot; for the appropriate floating point type 
 (represented by std::numeric_limits&lt;FPT&gt;::epsilon()). conversion to binary 
 presentation, sadly, does not have such requirement. So we can't assume that 
@@ -92,7 +119,7 @@ arithmetic and non arithmetic operations might also produce others
 as underflow/overflow,
 division-by-zero or 'operation errors'. </p>
 
-<p>All theorems about the upper limit of a rounding error, including that of 
+<p class="1-line-indented">All theorems about the upper limit of a rounding error, including that of 
 1/2*epsilon, refers <u>only</u> to the 'rounding' operation, nothing more. This 
 means that the 'operation error', that is, the error incurred by the operation 
 itself, besides rounding, isn't considered. In order for numerical software to 
@@ -106,48 +133,61 @@ does not require same behavior from most non-arithmetic operation. The
 underflow/overflow and division-by-zero errors may cause rounding errors with unpredictable 
 upper limits.</p>
 
-<p>For a given number of rounding error (in a simple case it's just&nbsp; a 
-number of floating point constants and arithmetic involved) it is proposed to 
-calculate a tolerance as follows:</p>
+<p class="1-line-indented">For a given number of rounding error (in a simple case it's just a 
+number of floating point constants and arithmetic involved) it is proposed to calculate a tolerance as follows:</p>
 
-<p>&nbsp;&nbsp;&nbsp; <i>n</i>*std::numeric_limits&lt;T&gt;::epsilon()/2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<b><a name="F.3">3</a></b>)</p>
+
+<table class="2fields">
+<tr>
+<td>
+    <i>n</i>*std::numeric_limits&lt;T&gt;::epsilon()/2</td>
+<td>
+    (<b>3</b>)
+</td>
+</tr>
+</table>
 
 <p>where n is number of floating-point rounding errors.</p>
 
-<p>For more reading about floating-point comparison see references at the end.</p>
+<p class="1-line-indented">For more reading about floating-point comparison see references at the end.</p>
 
-<h2> <b>
-The <a name="Specification">close_at_tolerance</a> algorithm</b></h2>
+<h2>The <a name="Specification">close_at_tolerance</a> algorithm</h2>
 
 <p>The <b>
 <a name="Specification">close_at_tolerance</a></b> algorithm allows to check the 
 relationship defines by inequations (<b><a href="#F.1">1</a></b>) or (<b><a href="#F.2">2</a></b>). 
 It is implemented as binary predicate.</p>
 
-<p><i>template</i>&lt;<i>typename</i> FPT&gt;<br>
-<i>class</i> close_at_tolerance {<br>
-<i>public</i>:<br>
-&nbsp;&nbsp;&nbsp; close_at_tolerance( FPT tolerance, <i>bool</i> strong_or_weak 
-= <i>true</i> );<br>
-&nbsp;&nbsp;&nbsp; close_at_tolerance( <i>int</i> number_of_rounding_errors, <i>
-bool</i> strong_or_weak = <i>true</i> );<br>
-<br>
-&nbsp;&nbsp;&nbsp; <i>bool</i> operator()( FPT left, FPT right ) <i>const</i>;<br>
-};</p>
+<pre class="code"><span class="reserv-word">template</span><<span class="reserv-word">typename</span> FPT>
+<span class="reserv-word">class</span> close_at_tolerance
+{
+<span class="reserv-word">public</span>:
+    close_at_tolerance( FPT tolerance, <span class="cpp-type">bool</span> strong_or_weak = <span class="reserv-word">true</span> );
+    close_at_tolerance( <span class="cpp-type">int</span> number_of_rounding_errors,
+                        <span class="cpp-type">bool</span> strong_or_weak = <span class="reserv-word">true</span> );
 
-<p>The first constructor allows to specify a tolerance value to compare against. 
+    <span class="cpp-type">bool</span> <span class="reserv-word">operator</span>()( FPT left, FPT right ) <span class="reserv-word">const</span>;
+};
+</pre>
+
+<p class="1-line-indented">The first constructor allows to specify a tolerance value to compare against. 
 The first constructor allows to specify a number of rounding errors, in which 
 case a tolerance is computed using expression (<b><a href="#F.3">3</a></b>). The 
 strong_or_weak switch allows to which relationship is checked. The default 
-behavior is to check strong relationship defined by inequations (<b><a href="#F.1">1</a></b>).<a href="#TOP"><img border="0" src="uarrow.gif" align="right" width="19" height="20"></a></p>
+behavior is to check strong relationship defined by inequations (<b><a href="#F.1">1</a></b>).<script language="Javascript">put_ref_to_top()</script></p>
 <h2><a name="Compilation">Compilation</a></h2>
-<p>The <b>
+<p class="1-line-indented">The <b>
 <a name="Specification">close_at_tolerance</a></b> algorithm is implemented in 
 the header file
 <a href="../../../boost/test/detail/floating_point_comparison.hpp">
-floating_point_comparison.hpp</a>.</p>
+detail/floating_point_comparison.hpp</a>. It is recommended to use test tools 
+wrappers located on <a href="../../../boost/test/test_tools.hpp">test_tools.hpp</a>. 
+Note that you still need to include
+<a href="../../../boost/test/detail/floating_point_comparison.hpp">
+detail/floating_point_comparison.hpp</a> yourself since it does not get included 
+automatically.</p>
 <h2><a name="Acknowledgement">Acknowledgement</a></h2>
-<p>Fernando Cacciola for very helpful discussion of floating point arithmetic in 
+<p class="1-line-indented">Fernando Cacciola for very helpful discussion of floating point arithmetic in 
 the boost forum.</p>
 <h2><a name="References">References</a></h2>
 <p>[1] Knuth D.E. <i>The art of computer programming</i> (vol II)<b>.</b><br>
@@ -167,16 +207,20 @@ Rounding Error Estimation to Automatic Correction with Automatic Differentiation
 Floats: How To Determine if Floating Quantities Are Close Enough Once a
 Tolerance Has Been Reached</a><b> </b>C++ Report&nbsp; March 2000.<br>
 [5] Pete Becker The Journeyman's Shop: Trap Handlers, Sticky Bits, and
-Floating-Point Comparisons C/C++ Users Journal December 2000.<a href="#TOP"><img border="0" src="uarrow.gif" align="right" width="19" height="20"></a></p>
+Floating-Point Comparisons C/C++ Users Journal December 2000.<script language="Javascript">put_ref_to_top()</script></p>
 <hr>
-<p>© <a href="mailto:boost_test_library@consultant.com">Gennadiy Rozental</a> 2001</p>
+<p>© <script language="Javascript">contact_addess()</script>
+<script language="Javascript">get_copyright_date()</script>
+</p>
 
 <p>Revised 
 <!--webbot bot="Timestamp" S-Type="EDITED"
-S-Format="%d %b %Y" startspan -->24 Dec 2001<!--webbot bot="Timestamp" endspan i-checksum="14398" -->
+S-Format="%d %b %Y" startspan -->28 Jul 2002<!--webbot bot="Timestamp" endspan i-checksum="15002" -->
 </p>
-</TR>
-</TABLE>
-</body>
 
+</td>
+</tr>
+</table>
+</div>
+</body>
 </html>

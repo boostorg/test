@@ -1,77 +1,95 @@
 <html>
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-<title>Program Execution Monitor</title>
+<title>Frequently Asked Questions</title>
+<script language="javascript">var viso_path="js-lib"</script>
+<script language="javascript" src="js-lib/core.js" > </script>
+
+<link id="screen_style" rel="stylesheet" type="text/css" href="style/btl.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="style/btl_print.css" media="print" />
+
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+
+<script language="JavaScript">
+include ( "btl.js" );
+</script>
 </head>
 
-<body bgcolor="#808080" text="#000000" link="#336699" vlink="#3F7EBE" alink="#699BCD">
-  <div align="center">
-	<center>
-  <table border="2" cellpadding="13" bordercolor="#CDCDCD" width="80%" id="AutoNumber1" cellspacing="3" style="border-collapse: collapse">
-    <tr>
-      <td width="100%" align="left" valign="top" bgcolor="#f0f0f0" border="0" >
+<body onload="btl_menu_init()">
+<div align="center">
+<table class="body-table" cellspacing="3" >
+<tr>
+<td>
 
-<a name="TOP"><img border="0" src="../../../c++boost.gif" width="277" height="86"></a><br clear=left>
+<script language="Javascript">btl_header()</script>
 
-<h1 align="center">Boost Test Library: frequently asked questions</h1>
+<h1>Boost Test Library: frequently asked questions</h1>
+
 <ul>
-  <li><a href="#Item 1">Where is located the latest version of the Boost Test 
-  Library?</a></li>
+  <li><a href="#Item 1">Where is located the latest version of the Boost Test Library?</a></li>
   <li><a href="#Item 2">I found a bug. Where could I report it?</a></li>
-  <li><a href="#Item 3">I have a request for a new feature. Where could I ask 
-  for it?</a></li>
+  <li><a href="#Item 3">I have a request for a new feature. Where could I ask for it?</a></li>
   <li><a href="#Item 4">How to create test case?</a></li>
   <li><a href="#Item 5">How to create test suite?</a></li>
-  <li><a href="#Item 6">Why did I get a linker error when compiling my test 
-  program?</a></li>
+  <li><a href="#Item 7">Why did I get a linker error when compiling my test program?</a></li>
+  <li><a href="#Item 7">How could I redirect testing output?</a></li>
+  <li><a href="#Item 8">I want different default log trace level</a></li>
 </ul>
 
-<h2><a name="Item 1">Where is located the latest version of the Boost Test 
-Library?</a></h2>
+<h2><a name="Item 1">Where is located the latest version of the Boost Test Library?</a></h2>
 
-<p>The latest version of Boost Test Library is available online on
+<p class="1-line-indented">The latest version of Boost Test Library is available online on
 <a href="http://www.boost.org">www.boost.org</a>.</p>
 
 <h2><a name="Item 2">I found a bug. Where could I report it?</a></h2>
 
-<p>You can send a bug to <a href="mailto:boost_test_library@consultant.com">
-boost_test_library@consultant.com</a>.</p>
+<p class="1-line-indented">Send a bug report to <script language="Javascript">contact_addess()</script>.</p>
 
-<h2><a name="Item 3">I have a request for a new feature. Where could I ask for 
-it?</a></h2>
+<h2><a name="Item 3">I have a request for a new feature. Where could I ask for it?</a></h2>
 
-<p>You can send a request to <a href="mailto:boost_test_library@consultant.com">
-boost_test_library@consultant.com</a>.</p>
+<p class="1-line-indented">You can send a request to <script language="Javascript">contact_addess()</script>.</p>
 
 <h2><a name="Item 4">How to create test case?</a></h2>
 
-<p>To create a test case use the macro BOOST_TEST_CASE( test_function ). For 
-more details see <a href="unit_test_framework.htm">Unit test framework</a> 
-documentation.</p>
+<p class="1-line-indented">To create a test case use the macro BOOST_TEST_CASE( test_function ). For 
+more details see <a href="unit_test_framework.htm#Components">Unit test framework</a> documentation.</p>
 
 <h2><a name="Item 5">How to create test suite?</a></h2>
 
-<p>To create a test suite use the macro BOOST_TEST_SUITE( suite_name ). For more 
-details see <a href="unit_test_framework.htm">Unit test framework</a> 
-documentation.</p>
+<p class="1-line-indented">To create a test suite use the macro BOOST_TEST_SUITE( suite_name ). For more 
+details see <a href="unit_test_framework.htm#TestSuite">Unit test framework</a> documentation.</p>
 
-<h2><a name="Item 6">Why did I get a linker error when compiling my test 
-program?</a></h2>
+<h2><a name="Item 6">Why did I get a linker error when compiling my test program?</a></h2>
 
-<p>Boost Test Library is implemented offline. To create a test program you 
+<p class="1-line-indented">Boost Test Library is implemented offline. To create a test program you 
 should link with the compiled framework library of include the framework source 
 files into your test program.</p>
+
+<h2><a name="Item 7">How could I redirect testing output?</a></h2>
+
+<p class="1-line-indented">Use unit_test_log::instance()-&gt;set_log_output( std::ostream&amp; ). For more 
+details see <a href="unit_test_framework.htm#TestLog">Unit test framework</a> 
+documentation.</p>
+
+<h2><a name="Item 8">I want different default log trace level</a></h2>
+
+<p class="1-line-indented">Use environment variable BOOST_TEST_LOG_LEVEL to define desired log trace 
+level. You still will be able to reset this value from the command line. For the 
+list of acceptable values see
+<a href="unit_test_framework.htm#FrameworkParameters">Unit test framework</a> documentation. </p>
 <hr>
-<p>© <a href="mailto:boost_test_library@consultant.com">Gennadiy Rozental</a> 2001</p>
+<p>© <script language="Javascript">contact_addess()</script>
+<script language="Javascript">get_copyright_date()</script>
+</p>
 <p>Revised: 
 <!--webbot bot="Timestamp" S-Type="EDITED"
-S-Format="%d %B, %Y" startspan -->25 December, 2001<!--webbot bot="Timestamp" endspan i-checksum="38513" -->
+S-Format="%d %B, %Y" startspan -->26 July, 2002<!--webbot bot="Timestamp" endspan i-checksum="21090" -->
 </p>
-</TR>
-</TABLE>
 
+</td>
+</tr>
+</table>
+</div>
 </body>
-
 </html>

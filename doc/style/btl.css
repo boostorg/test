@@ -1,0 +1,196 @@
+H1
+{
+    FONT-SIZE: 200%;
+    COLOR: #00008B;
+    text-align: center;
+}
+H2
+{
+    FONT-SIZE: 150%;
+}
+H3
+{
+    FONT-SIZE: 125%;
+}
+H4
+{
+    FONT-SIZE: 108%;
+}
+BODY
+{
+    background: #808080;
+}
+a:link
+{
+    color: #336699;
+}
+a:visited
+{
+    color: #3F7EBE;
+}
+a:active
+{
+    color: #699BCD;
+}
+             
+P.1-line-indented
+{
+    text-indent: 10px;
+}
+P.indented
+{
+    margin-left:20; 
+    margin-top:0;
+    margin-bottom:0;
+}
+PRE.code
+{
+    border-left-style: groove; 
+    border-left-width: 1px; 
+    padding-left: 2em; 
+}
+
+P.epigraph
+{
+    text-align: right; 
+    font-family: Century Gothic; 
+    font-style: italic
+}
+
+P.test-output
+{
+    font-family: Arial; 
+    font-size: 12pt;
+    margin-left: 2em;
+    white-space: pre
+}
+
+P.page-toc
+{
+    font-weight: bold;
+    margin-top:0;
+    margin-bottom:0;
+}
+
+P.page-toc-indented
+{
+    font-weight: bold;
+    margin-left:20; 
+    margin-top:0;
+    margin-bottom:0;
+}
+
+table.body-table
+{
+    border: 5px solid #CDCDCD;
+    width: 90%;
+}
+table.body-table td
+{
+    margin:     3px;
+    padding:    13px; 
+    color:      black;
+    background: #F0F0F0;
+}
+
+table.parameter-table
+{
+    border:        none;
+    border-bottom: ridge 2 black;
+    width:         100%
+}
+table.parameter-table td
+{
+    margin-top:    0px;
+    margin-bottom: 0px;
+    padding-top: 0px; 
+    padding-bottom: 10px; 
+}
+
+table.parameter-values-table
+{
+    border:        none;
+    width:         100%
+}
+table.parameter-values-table td
+{
+    margin:         0px;
+    padding-top:    0px; 
+    padding-bottom: 5px; 
+}
+
+table.2fields
+{
+    border: none collapse;
+    padding: 0px;
+    margin: 0px;
+}
+table.2fields td
+{
+    margin-left: 0px;
+    padding-left: 40px; 
+    valign: top;
+}
+
+SPAN.literal
+{
+    color: rgb(140,35,00);
+}
+SPAN.reserv-word
+{
+    color: #6666FF;
+    font-style: italic
+}
+SPAN.cpp-type
+{
+    color: rgb(150,0,205);
+    font-weight: bold;
+}
+SPAN.comment
+{
+    color: rgb(00,99,33);
+}
+SPAN.new-term
+{
+    font-weight: bold;
+}
+IFRAME.inline-source-inlclusion
+{
+    border-style: groove;
+    border-width: 1;
+    marginheight: 10;
+    marginwidth:  10;
+    width:'95%';
+    height:200;
+    scrolling:auto;
+}
+
+DIV.print-header
+{
+    display: none;
+}
+
+.header-menu
+{
+    font-weight: bold;
+    font-family: Arial; 
+    position:    absolute;
+}
+
+.header-menu a:link
+{
+    color:       black;
+}
+.header-menu a:visited
+{
+    color:       black;
+}
+.header-menu a:active
+{
+    color:       black;
+}
+
+.header-menu-root
+{
+    border-style:none;
+}
