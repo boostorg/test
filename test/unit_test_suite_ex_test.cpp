@@ -81,7 +81,11 @@ init_unit_test_suite( int argc, char* argv[] ) {
     test->add( BOOST_TEST_CASE( fct2 ) );
 #endif
 
-    test->add( new sub_test_suite, 7 );
+    test->add( new sub_test_suite
+#if !defined(BOOST_MSVC) && !defined(__SUNPRO_CC)
+    , 7 
+#endif
+    );
 
     return test;
 }
