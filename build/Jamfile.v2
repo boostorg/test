@@ -1,6 +1,8 @@
 
 project boost/test 
     : source-location ../src
+    : requirements <define>BOOST_TEST_NO_AUTO_LINK=1
+                   <os>NT:<link>static
     ;
 
 PRG_EXEC_MON_SOURCES =
