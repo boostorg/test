@@ -1,7 +1,7 @@
 //  (C) Copyright Gennadiy Rozental 2001-2003.
 //  (C) Copyright Beman Dawes and Ullrich Koethe 1995-2001.
-//  Use, modification, and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
+//  Use, modification, and distribution are subject to the
+//  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -10,7 +10,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : provides execution monitor implementation for all supported 
+//  Description : provides execution monitor implementation for all supported
 //  configurations, including Microsoft structured exception based, unix signals
 //  based and special workarounds for borland
 //
@@ -44,6 +44,7 @@ namespace std { using ::strlen; using ::strncat; }
 
 // Microsoft + other compatible compilers such as Intel
 #if !defined(BOOST_DISABLE_WIN32) &&                                        \
+    !defined(__BORLANDC__) &&                                               \
     (defined(_MSC_VER) && !defined(__COMO__)) ||                            \
     (defined(__INTEL__) && defined(__MWERKS__) && __MWERKS__ >= 0x3000)
 
@@ -51,14 +52,14 @@ namespace std { using ::strlen; using ::strncat; }
 #include <wtypes.h>
 #include <winbase.h>
 #include <excpt.h>
-#include <eh.h> 
+#include <eh.h>
 
 #if !defined(NDEBUG) && !defined(__MWERKS__)  // __MWERKS__ does not seem to supply implementation of C runtime debug hooks, causing linking errors
 #define BOOST_MS_CRT_DEBUG_HOOK
 #include <crtdbg.h>
 #endif
 
-#elif (defined(__BORLANDC__) && defined(_Windows))
+#elif (defined(__BORLANDC__) && defined(_Windows) && !defined(BOOST_DISABLE_WIN32))
 #define BOOST_MS_STRCTURED_EXCEPTION_HANDLING
 #include <windows.h>  // Borland 5.5.1 has its own way of doing things.
 
@@ -70,7 +71,7 @@ namespace std { using ::strlen; using ::strncat; }
 #include <setjmp.h>
 
 #else
- 
+
 #define BOOST_NO_SIGNAL_HANDLING
 
 #endif
@@ -105,7 +106,7 @@ static void report_error( execution_exception::error_code   ec,
 class ms_se_exception {
 public:
     // Constructor
-    explicit        ms_se_exception( unsigned int n ) 
+    explicit        ms_se_exception( unsigned int n )
     : m_se_id( n )                      {}
 
     // Destructor
@@ -160,11 +161,11 @@ assert_reporting_function( int reportType, char* userMessage, int* retVal )
     switch( reportType ) {
     case _CRT_ASSERT:
         detail::report_error( execution_exception::user_error, userMessage );
-        
+
         return 1; // return value and retVal are not important since we never reach this line
     case _CRT_ERROR:
         detail::report_error( execution_exception::system_error, userMessage );
-        
+
         return 1; // return value and retVal are not important since we never reach this line
     default:
         return 0; // use usual reporting method
@@ -340,13 +341,13 @@ signal_handler::signal_handler( bool catch_system_errors, int timeout )
   m_set_timeout( timeout > 0 )
 {
     s_active_handler = this;
-    
+
     if( m_catch_system_errors || m_set_timeout ) {
         m_same_action_for_all_signals.sa_flags   = 0;
         m_same_action_for_all_signals.sa_handler = &execution_monitor_signal_handler;
         sigemptyset( &m_same_action_for_all_signals.sa_mask );
     }
-    
+
     if( m_catch_system_errors ) {
         sigaction( SIGFPE , &m_same_action_for_all_signals, &m_old_SIGFPE_action  );
         sigaction( SIGTRAP, &m_same_action_for_all_signals, &m_old_SIGTRAP_action );
@@ -354,7 +355,7 @@ signal_handler::signal_handler( bool catch_system_errors, int timeout )
         sigaction( SIGBUS , &m_same_action_for_all_signals, &m_old_SIGBUS_action  );
         sigaction( SIGABRT, &m_same_action_for_all_signals, &m_old_SIGABRT_action  );
     }
-    
+
     if( m_set_timeout ) {
         sigaction( SIGALRM , &m_same_action_for_all_signals, &m_old_SIGALRM_action );
         alarm( timeout );
@@ -440,7 +441,7 @@ int catch_signals( execution_monitor & exmon, bool catch_system_errors, int time
 
 //____________________________________________________________________________//
 
-#elif (defined(__BORLANDC__) && defined(_Windows))
+#elif (defined(__BORLANDC__) && defined(_Windows) && !defined(BOOST_DISABLE_WIN32))
 
 // this works for Borland but not other Win32 compilers (which trap too many cases)
 int catch_signals( execution_monitor & exmon, bool catch_system_errors, int )
@@ -449,7 +450,7 @@ int catch_signals( execution_monitor & exmon, bool catch_system_errors, int )
 
     if( catch_system_errors ) {
         __try { result = exmon.run_function(); }
-        
+
         __except (1)
         {
             throw ms_se_exception( GetExceptionCode() );
@@ -581,8 +582,11 @@ static void report_error( execution_exception::error_code ec, c_string_literal m
 
 // ***************************************************************************
 //  Revision History :
-//  
+//
 //  $Log$
+//  Revision 1.30  2003/12/20 11:27:28  johnmaddock
+//  Added fixes for Borland C++ 6.0 compiler (With EDG frontend).
+//
 //  Revision 1.29  2003/12/01 00:42:37  rogeeff
 //  prerelease cleaning
 //
