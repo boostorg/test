@@ -1,0 +1,149 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Program Execution Library</title>
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+
+<h1><img border="0" src="../../../c++boost.gif" width="277" height="86">Boost
+Test Library: Execution Tools</h1>
+<p><a href="#Introduction">Introduction</a><br>
+<a href="#Benefits">Benefits</a><br>
+<a href="#Specifications">Specifications</a><br>
+<a href="#Sample">Sample Program</a><br>
+<a href="#Header Imp">Header Implementation Option</a><br>
+<a href="#catch">Header boost/detail/catch_exceptions.hpp</a><br>
+<a href="#Rationale">Rationale</a><br>
+<a href="#Design">Design<br>
+<br>
+</a>Also see: <a href="../../../boost/test/test_tools.hpp">Test Tools</a></p>
+<h2><a name="Introduction">Introduction</a></h2>
+<p>The Boost Test Library's Execution Tools provides a replacement <b>main()</b>
+function which calls a user-supplied <b>cpp_main()</b>  function within a try
+block.. The library
+supplied <b>main()</b>  then catches and reports exceptions, relieving users from messy error detection and reporting
+duties.</p>
+<p>For use with the Execution Tools, the traditional Hello World
+program becomes:</p>
+<blockquote>
+  <pre>#include &lt;iostream&gt;
+
+int cpp_main( int, char *[] )  // note name
+{
+  std::cout &lt;&lt; &quot;Hello, world\n&quot;;
+  return 0;
+}</pre>
+</blockquote>
+<p>It really is that simple - just change the name of your initial function from
+main to cpp_main.&nbsp; Do make sure the argc and arcv parameters are specified
+(although you don't have to name them if you don't use them).</p>
+<p>When the above program executes, the output will be:</p>
+<blockquote>
+<pre>Hello, world
+no errors detected</pre>
+</blockquote>
+<p>But what if some lower-level function had thrown a runtime_error with the
+message &quot;big trouble&quot;?&nbsp; Then the output would look something like
+this:</p>
+<blockquote>
+  <pre>** exception: std::runtime_error: big trouble</pre>
+  <pre>**** returning with error code 200
+**********  errors detected; see stdout for details  ***********</pre>
+</blockquote>
+<p>And if a lower-level function had bubbled up a return code of 5, the output
+would look something like this:</p>
+<blockquote>
+  <pre>**** returning with error code 5
+**********  errors detected; see stdout for details  ***********</pre>
+</blockquote>
+<p>Note that the primary messages appear on stdout, while the final message
+appears on stderr.&nbsp; This increases the visibility of error notification if
+stdout and stderr are directed to different devices or files.</p>
+<h2><a name="Benefits">Benefits</a></h2>
+<p>More uniform reporting of errors, particularly exceptions.</p>
+<p><b>In production programs:</b>&nbsp;</p>
+<p>More uniform error reporting is particularly useful for programs running
+unattended under control of scripts or batch files. Some operating systems pop
+up message boxes if an uncaught exception occurs, and this requires operator
+intervention. By converting such exceptions to non-zero program return codes,
+the library makes the program a better citizen.</p>
+<p>More uniform reporting of errors isn't a benefit to some programs,
+particularly programs always run by hand by a knowledgeable person. So cpp_main()
+wouldn't be worth using in that environment.</p>
+<p><b>In test programs:</b></p>
+<p>More uniform error reporting is useful in test environments such as the boost
+regression tests. See the <a href="test_tools.htm">Test Tools</a>,
+which uses cpp_main() as part of the test framework.</p>
+<h2><a name="Specifications">Specifications</a> of the supplied main()</h2>
+<p>Uniformly detects and reports the occurrence of several types of errors,
+reducing the various errors to a uniform return value which is returned to the
+host environment.</p>
+<p>There are two intended uses:</p>
+<ul>
+  <li>In production programs, which require no further action beyond naming the
+    top-level function cpp_main() instead of main().</li>
+  <li>In test frameworks, which supply cpp_main() to detect (or catch) test
+    specific errors, report them, and then return a presumably non-zero value.</li>
+</ul>
+<p>Requires: A user-supplied cpp_main() function with same interface as main().</p>
+<p>Effects:</p>
+<blockquote>
+  <p>Call cpp_main( argc, argv ) in a try block.</p>
+  <p>Treat as errors:</p>
+  <ul>
+    <li>Exceptions from cpp_main().</li>
+    <li>Non-zero return from cpp_main().</li>
+  </ul>
+  <p>Report errors to both cout (with details) and cerr (summary). Rationale:
+  Detail error reporting goes to cout so that it is properly interlaced with
+  other output, thus aiding error analysis. Summary goes to cerr in case cout is
+  redirected.</p>
+</blockquote>
+<p>Returns: non-zero if any error was detected.</p>
+<h2><a name="Sample">Sample</a> Program</h2>
+<blockquote>
+<pre><a href="../example/cpp_main_example.cpp">cpp_main_example.cpp</a></pre>
+</blockquote>
+<h2><a name="Header Imp">Header Imp</a>lementation Option</h2>
+<p>The library supplied main() function may be stored in an object library and
+linked into the final program just like any other supplied function.&nbsp; If
+this is not convenient, the main() function may be supplied at compile time by
+including it as a header:</p>
+<blockquote>
+  <pre>#include <a href="../../../boost/test/cpp_main.cpp">&lt;boost/test/cpp_main.cpp&gt;</a></pre>
+</blockquote>
+<p>Although this usage is unusual, it is quite useful in environments
+where it may be difficult or undesirable to link to an object library.</p>
+<h2><a name="catch">Header</a> <a href="../../../boost/detail/catch_exceptions.hpp">boost/detail/catch_exceptions.hpp</a></h2>
+<p>The actual exception catching code from the replacement main() function has
+been factored out into a separate header for those wishing to reuse this
+code.&nbsp; It is not otherwise documented.</p>
+<h2><a name="Rationale">Rationale</a></h2>
+<p>The components of a C++ program may report user-detected errors in several
+ways, such as via a return value or throwing an exception.&nbsp; System-detected
+errors such as dereferencing an invalid pointer are reported in other ways,
+totally operating system and compiler dependent.&nbsp;</p>
+<p>Yet many C++ programs, both production and test, must run in an environment
+where uniform reporting of errors is necessary.&nbsp; For example, converting
+otherwise uncaught exceptions to non-zero program return codes allows many
+command line, script, or batch environments to continue processing in a
+controlled manner.&nbsp; Even some GUI environments benefit from the unification
+of errors into program return codes.</p>
+<h2><a name="Design">Design</a></h2>
+<p>The <a href="test_lib_design.htm">Boost Test Library Design</a>
+document describes the relationship between the Execution Tools and several
+other components.</p>
+<hr>
+<p>© Beman Dawes 2001</p>
+<p>Revised: <!--webbot bot="Timestamp" S-Type="EDITED"
+S-Format="%d %B, %Y" startspan -->28 February, 2001<!--webbot bot="Timestamp" endspan i-checksum="40412" -->
+</p>
+
+</body>
+
+</html>
