@@ -106,7 +106,7 @@ int test_main( int, char* [] ) {
     }
 
     utf::unit_test_log::instance().set_log_stream( std::cout );
-    BOOST_CHECK_EQUAL( num_of_failures, 2 );
+    BOOST_CHECK_EQUAL( num_of_failures, (size_t)2 );
     BOOST_CHECK( !exception_caught );
 
     utf::unit_test_log::instance().set_log_stream( null_output );
@@ -121,7 +121,7 @@ int test_main( int, char* [] ) {
     }
 
     utf::unit_test_log::instance().set_log_stream( std::cout );
-    BOOST_CHECK_EQUAL( num_of_failures, 3 );
+    BOOST_CHECK_EQUAL( num_of_failures, (size_t)3 );
     BOOST_CHECK( !exception_caught );
 
     utf::unit_test_log::instance().set_log_stream( null_output );
@@ -137,7 +137,7 @@ int test_main( int, char* [] ) {
     }
 
     utf::unit_test_log::instance().set_log_stream( std::cout );
-    BOOST_CHECK_EQUAL( num_of_failures, 0 );
+    BOOST_CHECK_EQUAL( num_of_failures, (size_t)0 );
     BOOST_CHECK( !exception_caught );
     BOOST_CHECK( !passed );
 
@@ -153,7 +153,7 @@ int test_main( int, char* [] ) {
     }
 
     utf::unit_test_log::instance().set_log_stream( std::cout );
-    BOOST_CHECK_EQUAL( num_of_failures, 2 );
+    BOOST_CHECK_EQUAL( num_of_failures, (size_t)2 );
     BOOST_CHECK( !exception_caught );
 
     utf::unit_test_log::instance().set_log_stream( null_output );
@@ -168,7 +168,7 @@ int test_main( int, char* [] ) {
     }
 
     utf::unit_test_log::instance().set_log_stream( std::cout );
-    BOOST_CHECK_EQUAL( num_of_failures, 2 );
+    BOOST_CHECK_EQUAL( num_of_failures, (size_t)2 );
     BOOST_CHECK( !exception_caught );
 
     utf::unit_test_log::instance().set_log_stream( null_output );
@@ -183,7 +183,7 @@ int test_main( int, char* [] ) {
     }
 
     utf::unit_test_log::instance().set_log_stream( std::cout );
-    BOOST_CHECK_EQUAL( num_of_failures, 1 );
+    BOOST_CHECK_EQUAL( num_of_failures, (size_t)1 );
     BOOST_CHECK( !exception_caught );
 
     return 0;
@@ -195,6 +195,9 @@ int test_main( int, char* [] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2003/06/11 15:47:03  rogeeff
+//  eliminate mismatch types warning
+//
 //  Revision 1.6  2003/06/10 07:57:33  rogeeff
 //  test_case_template_test added
 //  parameterized test updated
