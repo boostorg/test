@@ -1,17 +1,20 @@
-//  Boost online_test.cpp  ---------------------------------------------------//
-
 //  (C) Copyright Gennadiy Rozental 2001-2002.
-//  Permission to copy, use, modify, sell and distribute this software is
-//  granted provided this copyright notice appears in all copies.
+//  Permission to copy, use, modify, sell and distribute this software
+//  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
 //  and with no claim as to its suitability for any purpose.
 
-//  See http://www.boost.org for updates, documentation, and revision history.
+//  See http://www.boost.org for most recent version including documentation.
+//
+//  File        : $RCSfile$
+//
+//  Version     : $Id$
+//
+//  Description : included Test Execution Monitor test
+// ***************************************************************************
 
-#include <libs/test/src/unit_test_result.cpp>
-#include <libs/test/src/unit_test_suite.cpp>
-
-#include <boost/test/test_tools.hpp>
+// Boost.Test
+#include <boost/test/included/test_exec_monitor.hpp>
 
 int 
 test_main( int argc, char * argv[] ) 
@@ -19,14 +22,17 @@ test_main( int argc, char * argv[] )
     return 0;
 }
 
-#include <libs/test/src/execution_monitor.cpp>
-#include <libs/test/src/test_main.cpp>
-#include <libs/test/src/test_tools.cpp>
-#include <libs/test/src/unit_test_parameters.cpp>
-#include <libs/test/src/unit_test_log.cpp>
-#include <libs/test/src/unit_test_monitor.cpp>
+//____________________________________________________________________________//
 
-//  Revision History
-//  25 Nov 01  Initial  version (Gennadiy Rozental)
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.6  2002/08/26 09:07:41  rogeeff
+//  switch to use included Test Execution Monitor
+//
+//   5 Oct 01  Initial version (Gennadiy Rozental)
+
+// ***************************************************************************
 
 // EOF
