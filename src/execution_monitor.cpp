@@ -42,7 +42,7 @@ namespace std { using ::strlen; using ::strncat; }
 #endif
 
 // Microsoft + other compatible compilers such as Intel
-#if defined(_MSC_VER) || (defined(__MWERKS__) && __MWERKS__ >= 0x3000)
+#if defined(_MSC_VER) || (defined(__INTEL__) && defined(__MWERKS__) && __MWERKS__ >= 0x3000)
 
 #define BOOST_MS_STRCTURED_EXCEPTION_HANDLING
 #include <wtypes.h>
@@ -50,7 +50,7 @@ namespace std { using ::strlen; using ::strncat; }
 #include <excpt.h>
 #include <eh.h> 
 
-#if !defined(__MWERKS__)
+#ifndef NDEBUG
 #define BOOST_MS_CRT_DEBUG_HOOK
 #include <crtdbg.h>
 #endif
@@ -59,16 +59,15 @@ namespace std { using ::strlen; using ::strncat; }
 #define BOOST_MS_STRCTURED_EXCEPTION_HANDLING
 #include <windows.h>  // Borland 5.5.1 has its own way of doing things.
 
-// for testing on Win32, GCC thinks it is a unix platform
-// TODO: figure out how to tell it is really unix
-#elif defined(__unix) && !defined(__GNUC__)
+#elif defined(_POSIX_VERSION)
 
-#define BOOST_UNIX_STYLE_SIGNAL_HANDLING
+#define BOOST_POSIX_STYLE_SIGNAL_HANDLING
 #include <unistd.h>
-#include <csignal>
-#include <csetjmp>
+#include <signal.h>
+#include <setjmp.h>
 
 #else
+ 
 #define BOOST_NO_SIGNAL_HANDLING
 
 #endif
@@ -84,7 +83,7 @@ using unit_test_framework::c_string_literal;
 //  boost::execution_monitor::execute() calls boost::detail::report_error(...) to
 //    report any caught exception and throw execution_exception
 
-const size_t REPORT_ERROR_BUFFER_SIZE = 512;
+const std::size_t REPORT_ERROR_BUFFER_SIZE = 512;
 
 static int  catch_signals( execution_monitor & exmon, bool catch_system_errors, int timeout ); //  timeout is in seconds. 0 implies none.
 
@@ -126,7 +125,7 @@ static void report_ms_se_error( unsigned int id );
 //____________________________________________________________________________//
 
 // Declarations for unix-style signal handling
-#elif defined(BOOST_UNIX_STYLE_SIGNAL_HANDLING)
+#elif defined(BOOST_POSIX_STYLE_SIGNAL_HANDLING)
 
 class unix_signal_exception {
 public:
@@ -250,10 +249,10 @@ int execution_monitor::execute( bool catch_system_errors, int timeout )
 #if   defined(BOOST_MS_STRCTURED_EXCEPTION_HANDLING)
     catch( detail::ms_se_exception const& ex )
       { detail::report_ms_se_error( ex.id() ); }
-#elif defined(BOOST_UNIX_STYLE_SIGNAL_HANDLING)
+#elif defined(BOOST_POSIX_STYLE_SIGNAL_HANDLING)
     catch( detail::unix_signal_exception const& ex )
       { detail::report_error( ex.error_code(), ex.error_message() ); }
-#endif  // BOOST_UNIX_STYLE_SIGNAL_HANDLING
+#endif  // BOOST_POSIX_STYLE_SIGNAL_HANDLING
 
     catch( execution_exception const& ) { throw; }
 
@@ -271,7 +270,7 @@ namespace detail {
 // **************          boost::detail::catch_signals        ************** //
 // ************************************************************************** //
 
-#if defined(BOOST_UNIX_STYLE_SIGNAL_HANDLING)
+#if defined(BOOST_POSIX_STYLE_SIGNAL_HANDLING)
 
 inline sigjmp_buf & execution_monitor_jump_buffer()
 {
@@ -518,6 +517,10 @@ static void report_error( execution_exception::error_code ec, c_string_literal m
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.18  2003/02/13 08:34:12  rogeeff
+//  tentative fix for signal handling selection algorithm
+//  other minor fixes
+//
 //  Revision 1.17  2002/12/18 17:04:18  beman_dawes
 //  quiet unused parameter warning
 //
@@ -542,4 +545,3 @@ static void report_error( execution_exception::error_code ec, c_string_literal m
 // ***************************************************************************
 
 // EOF
-
