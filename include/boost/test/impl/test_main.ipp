@@ -21,6 +21,7 @@
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/test/detail/unit_test_monitor.hpp>
+#include <boost/test/unit_test_log.hpp>
 
 // BOOST
 #include <boost/scoped_ptr.hpp>
@@ -101,6 +102,9 @@ int main( int argc, char* argv[] ) {
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2005/01/30 01:58:33  rogeeff
+//  include log explecetly
+//
 //  Revision 1.1  2005/01/22 19:22:12  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
