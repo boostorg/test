@@ -52,7 +52,7 @@ public:
 
     //!! should also present reverse_iterator, const_reverse_iterator
 
-#ifndef __IBMCPP__
+#if !BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600))
     enum npos_type { npos = (size_type)-1 };
 #else
     // IBM/VisualAge version 6 is not able to handle enums larger than 4 bytes.
@@ -714,6 +714,9 @@ last_char( basic_cstring<CharT> source )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.11  2004/10/05 02:17:47  rogeeff
+//  workaround guard rewritten
+//
 //  Revision 1.10  2004/10/01 10:51:28  rogeeff
 //  gcc 2.95 workarounds
 //
