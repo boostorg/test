@@ -19,8 +19,7 @@
         <P class="page-toc"> 
         <A href="#Introduction">Introduction</A><BR>
         <A href="#Components">Components</A> </P>
-        <P class="page-toc-indented"> <A href="execution_monitor.htm">Execution
-          monitor</A><BR>
+        <P class="page-toc-indented"> <A href="execution_monitor.htm">Execution monitor</A><BR>
           <A href="prg_exec_monitor.htm">Program Execution Monitor</A><BR>
           <A href="test_tools.htm">Test Tools</A><BR>
           <A href="test_exec_monitor.htm">Test Execution Monitor</A><BR>
@@ -28,8 +27,8 @@
           <A href="minimal.htm">Minimal Test</A></P>
         <P class="page-toc"> <A href="#FAQ">FAQ</A><BR>
           <A href="#Design">Design</A></P>
-        <P class="page-toc"> <A href="#Migration">Migration guide</A><BR>
-          <A href="#Open Issues">Open Issues</A><BR>
+        <P class="page-toc"> <a href="#ReleaseNotes">Release notes</a><BR>
+          <A href="#OpenIssues">Open Issues</A><BR>
           <A href="#Portability">Portability</A><BR>
           <A href="#Acknowledgements">Acknowledgements</A> </P>
         <H2><A name="Introduction">Introduction</A></H2>
@@ -38,7 +37,8 @@
           test cases and test suites, and controlling their runtime execution.
           The <A href="prg_exec_monitor.htm"> Program Execution Monitor</A> is
           also useful in some production (non-test) environments. </P>
-        <SPAN class="ref-to-top"><A href="#TOP"><IMG src="imgs/uarrow.gif" alt="reference to the top"></A></SPAN>
+        <SPAN class="ref-to-top"><A href="#TOP">
+      <IMG src="imgs/uarrow.gif" alt="reference to the top" width="45" height="43"></A></SPAN>
         <H2><A name="Components">Components</A></H2>
         <UL>
           <LI><A href="execution_monitor.htm">Execution Monitor</A> - a basic
@@ -84,73 +84,68 @@
             report level.</LI>
           <LI><A href="minimal.htm">Minimal testing</A> - simple facility designed
             to provide the functionality provided before by the original version
-            of Boost.Test.The same as the <A href="test_exec_monitor.htm">Test
-            Execution Monitor</A> it causes the test ptogram to run in a monitored
+            of Boost Test. The same as the <A href="test_exec_monitor.htm">Test
+            Execution Monitor</A> it causes the test program to run in a monitored
             environment. In addition it defines several simple test tools that
             behave similarly to ones defined in <A href="test_tools.htm">Test
-            Tools</A>. Minimal testinf facility does not require linking with
+            Tools</A>. Minimal testing facility does not require linking with
             external components, so could be a component of choice for simple
             and quick testing needs.</LI>
         </UL>
-        <SPAN class="ref-to-top"><A href="#TOP"><IMG src="imgs/uarrow.gif" alt="reference to the top"></A></SPAN>
+        <SPAN class="ref-to-top"><A href="#TOP">
+      <IMG src="imgs/uarrow.gif" alt="reference to the top" width="45" height="43"></A></SPAN>
         <H2><A name="FAQ">FAQ</A></H2>
         <P class="1-line-indented">See <A href="faq.htm">Boost Test Library FAQ</A>.</P>
         <H2><A name="Design">Design</A></H2>
         <P class="1-line-indented">See <A href="test_lib_design.htm">Boost Test
           Library Design</A>.</P>
-        <H2><A name="Migration">Boost.Test migration guide</A></H2>
-        <P class="1-line-indented">This version of Boost.Test library substitute
-          the original testing library used in a Boost. These are several simple
-          steps you need to follow to smoothly migrate to the latest software.</P>
-        <P class="1-line-indented">If your code were using the original version
-          of cpp_main facility, to migrate you will need to delete the inclusion
-          of the &lt;boost/test/cpp_main.cpp&gt;, since this file is not present
-          any more. After that you have following choices:</P>
-        <UL>
-          <LI>Link with Program Execution Monitor (exact library name depends
-            on compiler you are using, but most probably it will be libprg_exec_monitor.lib).
-          </LI>
-          <LI>Include &lt;boost/test/included/prg_exec_monitor.hpp&gt;, in which
-            case you need not link with precompiled component but it may incur
-            probably some compile time overhead.</LI>
-        </UL>
-        <P class="1-line-indented">If your code were using the original version
-          of test_main and test tools facilitates of Boost.Test library, to migrate
-          to use of latest one you have following choices:</P>
-        <UL>
-          <LI>Without changing of the code that were using Boost.Test facilities
-            link with Test Execution Monitor (exact library name depends on compiler
-            you are using, but most probably it will be libtest_exec_monitor.lib).</LI>
-          <LI>Include &lt;boost/test/included/test_exec_monitor.hpp&gt;, in which
-            case you need not link with precompiled component but it may incur
-            probably some compile time overhead. Definition of BOOST_INCLUDE_MAIN
-            could be deleted either.</LI>
-          <LI>Include &lt;boost/test/minimal.hpp&gt;, in which case you need not link
-            with precompiled component and it most probably does not incur a compile
-            time overhead, but you will be limited ti the set of features defined
-            in the original test library. Definition of BOOST_INCLUDE_MAIN could
-            be deleted either. Would you decide in a future to use any of newer
-            Boost.Test features you will be enforced to snitch to one the two
-            chaises above. </LI>
-        </UL>
-        <H2><A name="Open Issues">Open Issues</A></H2>
-        <UL>
-          <LI>What dependencies will we tolerate in Boost Test Library? Also we
-            need means to overcome this restriction for extensions.</LI>
-          <LI>Memory usage test tools.</LI>
-          <LI>Performance test tools.</LI>
-          <LI>Facilities to allow testing of template function for the provided
-            type list.</LI>
-          <LI>How to implement compilability checks.</LI>
-          <LI>Selective test cases run: ways to define by user and notify the
-            framework.</LI>
-          <LI>Support for the testing of multithreaded programs.</LI>
-          <LI>Make BOOST_TEST_CLOSE print values properly</LI>
-          <LI>Timeout implementation on Win32 platform.</LI>
-          <LI>Need to separate reference and tutorial material</LI>
-          <LI>Unit Test Framework extension should be documented</LI>
-        </UL>
-        <SPAN class="ref-to-top"><A href="#TOP"><IMG src="imgs/uarrow.gif" alt="reference to the top"></A></SPAN>
+        <H2><a name="ReleaseNotes">Release notes</a></H2>
+
+  <ul>
+
+    <li>Facility for automatic registration of unit tests is introduced</li>
+
+    <li>XML log format is introduced</li>
+      
+    <li>XML report format is introduced</li>
+    
+    <li>BOOST_CHECK_NO_THROW test tool is introduced</li>
+    
+    <li>BOOST_BITWISE_CHECK test tool is introduced</li>
+
+    <li>libraries file names changed</li>
+    
+    <li>Components examples and test documentation page is introduced</li>
+
+    <li>Catch system errors switch introduced</li>
+      
+    <li>MS C runtime debug hooks introduced</li>
+  </ul>
+
+
+  <p>For more details see complete <a href="release_notes.htm#v1_30_0">release notes</a></p>
+
+  <SPAN class="ref-to-top"><A href="#TOP">
+    <IMG src="imgs/uarrow.gif" alt="reference to the top" width="45" height="40"></A></SPAN>
+
+  <H2><A name="OpenIssues">Open Issues</A></H2>
+  <UL>
+    <LI>What dependencies will we tolerate in Boost Test Library? Also we need means to overcome
+        this restriction for extensions.</LI>
+    <LI>Memory usage test tools.</LI>
+    <LI>Performance test tools.</LI>
+    <LI>Facilities to allow testing of template function for the provided type list.</LI>
+    <LI>How to implement compilability checks.</LI>
+    <LI>Selective test cases run: ways to define by user and notify the framework.</LI>
+    <LI>Support for the testing of multithreaded programs.</LI>
+    <LI>Make BOOST_TEST_CLOSE print values properly</LI>
+    <LI>Timeout implementation on Win32 platform.</LI>
+    <LI>Need to separate reference and tutorial material</LI>
+    <LI>Unit Test Framework extension should be documented</LI>
+  </UL>
+  
+  <SPAN class="ref-to-top"><A href="#TOP">
+      <IMG src="imgs/uarrow.gif" alt="reference to the top" width="45" height="43"></A></SPAN>
         <H2><A name="Portability">Portability</A></H2>
         <P class="1-line-indented">Because the Boost Test Library is critical
           for porting and testing Boost libraries, it has been written to be extremely
@@ -169,13 +164,14 @@
         <P class="1-line-indented">Beman Dawes and Ullrich Koethe started the
           library. Fernando Cacciola, Jeremy Siek, Beman Dawes, Ullrich Koethe,
           Dave Abrahams suggested numerous improvements during the Formal Review.
-          Jeremy Siek was the review manager. Dave <SPAN class="ref-to-top"><A href="#TOP"><IMG src="imgs/uarrow.gif" alt="reference to the top"></A></SPAN>
+          Jeremy Siek was the review manager. Dave <SPAN class="ref-to-top"><A href="#TOP">
+        <IMG src="imgs/uarrow.gif" alt="reference to the top" width="45" height="43"></A></SPAN>
           Abrahams edited this documentation. Beman Dawes was a great help in
           both final testing and merging library with rest of the boost. Gennadiy
           Rozental is the developer and maintainer. </P>
         <DIV class="footer">
           <P>&copy Beman Dawes 2000, <A href='mailto:rogeeff@emailaccount.com'>Gennadiy Rozental</A> 2001-2002 </P>
-          <P>Revised: 12 February, 2003</P>
+          <P>Revised: 17 February, 2003</P>
         </DIV>
       </TD>
   </TR>
