@@ -10,8 +10,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : implemets Unit Test Log, Majority of implementation details
-//  are hidden in this file with use of pimpl idiom.
+//  Description : implemets Unit Test Log formatters
 // ***************************************************************************
 
 // Boost.Test
@@ -317,6 +316,9 @@ xml_log_formatter::print_indent( std::ostream& output )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.3  2003/07/15 08:31:24  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.2  2003/07/09 12:51:29  jmaurer
 //  avoid "unused parameter" warnings with gcc
 //
