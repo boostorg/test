@@ -25,8 +25,8 @@
 #include <boost/utility.hpp>
 
 // STL
-#include <iosfwd>
-#include <string> //!! need only forward
+#include <iosfwd>   // for std::ostream&
+#include <string>   // for std::string&; in fact need only forward declaration
 
 namespace boost {
 
@@ -157,6 +157,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2002/09/16 08:47:29  rogeeff
+//  STL includes normalized
+//
 //  Revision 1.8  2002/09/09 09:07:03  rogeeff
 //  descriptions added
 //

@@ -46,12 +46,12 @@
 #include <boost/test/detail/class_properties.hpp>
 
 // BOOST
-#include <boost/cstdlib.hpp>  // for exit codes
-#include <boost/current_function.hpp>  // for BOOST_CURRENT_FUNCTION
+#include <boost/cstdlib.hpp>            // for exit codes
+#include <boost/current_function.hpp>   // for BOOST_CURRENT_FUNCTION
 
 // STL
-#include <iostream>
-#include <stdexcept>
+#include <iostream>                     // std::cerr, std::endl
+#include <string>                       // std::string
 
 //____________________________________________________________________________//
 
@@ -145,6 +145,9 @@ int main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2002/09/16 08:47:29  rogeeff
+//  STL includes normalized
+//
 //  Revision 1.4  2002/09/12 08:29:38  rogeeff
 //  caught exception handling fixed
 //

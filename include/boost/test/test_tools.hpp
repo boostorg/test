@@ -24,19 +24,19 @@
 
 // BOOST
 #include <boost/cstdlib.hpp> // for boost::exit_success;
-#include <boost/config.hpp>
+#include <boost/config.hpp>  // compilers workarounds
 
 // STL
 #ifdef BOOST_NO_STRINGSTREAM
-#include <strstream>
+#include <strstream>        // for ostrstream
 #else
-#include <sstream>
+#include <sstream>          // for ostringstream
 #endif // BOOST_NO_STRINGSTREAM
 
-#include <cstdlib>
-#include <cstddef>
-#include <stdexcept>
-#include <memory>
+#include <stdexcept>        // for std::exception
+#include <cstddef>          // for std::size_t
+#include <memory>           // for std::auto_ptr
+#include <string>           // for std::string
 
 // ************************************************************************** //
 // **************                    TOOL BOX                  ************** //
@@ -145,7 +145,7 @@ struct wrapstrstream {
     mutable out_stringstream    m_buf;
     mutable std::string         m_str;
 
-    std::string&                str() const;
+    std::string const&          str() const;
 };
 
 //____________________________________________________________________________//
@@ -461,6 +461,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.19  2002/09/16 08:47:29  rogeeff
+//  STL includes normalized
+//
 //  Revision 1.18  2002/09/15 11:52:47  johnmaddock
 //  Added needed <cstddef> include
 //

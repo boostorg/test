@@ -19,7 +19,6 @@
 #define BOOST_UNIT_TEST_SUITE_HPP
 
 // BOOST
-#include <boost/config.hpp> // for distance workaround
 #include <boost/shared_ptr.hpp>
 
 // LOCAL
@@ -29,8 +28,7 @@
 #include <boost/test/detail/grinning_ptr.hpp>
 
 // STL
-#include <stdexcept>
-#include <string>
+#include <string>  // for std::string
 
 #define BOOST_TEST_CASE( function ) \
 boost::unit_test_framework::create_test_case((function), #function )
@@ -311,6 +309,9 @@ create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, bo
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2002/09/16 08:47:29  rogeeff
+//  STL includes normalized
+//
 //  Revision 1.7  2002/09/09 09:07:03  rogeeff
 //  descriptions added
 //

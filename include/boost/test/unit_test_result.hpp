@@ -22,7 +22,7 @@
 #include <boost/test/detail/grinning_ptr.hpp>
 
 // STL
-#include <iosfwd>
+#include <iosfwd>   // for std::ostream&
 
 namespace boost {
 
@@ -77,6 +77,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2002/09/16 08:47:29  rogeeff
+//  STL includes normalized
+//
 //  Revision 1.6  2002/09/09 09:07:03  rogeeff
 //  descriptions added
 //

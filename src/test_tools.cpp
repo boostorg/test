@@ -24,7 +24,7 @@
 #include <fstream>
 #include <iostream>
 #include <algorithm>
-#include <cstring>
+#include <cstring>  
 #include <string>
 
 # ifdef BOOST_NO_STDC_NAMESPACE
@@ -41,7 +41,7 @@ namespace detail {
 // **************                 wrapstrstream                ************** //
 // ************************************************************************** //
 
-std::string&
+std::string const&
 wrapstrstream::str() const {
 
 #ifdef BOOST_NO_STRINGSTREAM
@@ -408,9 +408,12 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2002/09/16 08:45:09  rogeeff
+//  STL includes normalized
+//
 //  Revision 1.8  2002/08/26 08:28:31  rogeeff
 //  Exclude using namespace for included use
-//  flush bud for new stringstream fixed
+//  flush bug for new stringstream fixed
 //
 //  Revision 1.7  2002/08/20 22:10:30  rogeeff
 //  slightly modified failures report

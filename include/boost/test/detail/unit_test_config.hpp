@@ -17,10 +17,11 @@
 #define BOOST_UNIT_TEST_CONFIG_HPP
 
 // BOOST
-#include <boost/config.hpp>
+#include <boost/config.hpp> // compilers workarounds and std::ptrdiff_t
 
 // STL
-#include <iterator>
+#include <iterator>     // for std::distance
+#include <cstddef>      // for std::ptrdiff_t
 
 namespace boost {
 
@@ -54,6 +55,9 @@ using std::distance;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10  2002/09/16 08:47:29  rogeeff
+//  STL includes normalized
+//
 //  Revision 1.9  2002/09/09 09:07:03  rogeeff
 //  descriptions added
 //

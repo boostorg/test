@@ -16,7 +16,7 @@
 #ifndef BOOST_FLOATING_POINT_COMPARISON_HPP
 #define BOOST_FLOATING_POINT_COMPARISON_HPP
 
-#include <boost/limits.hpp>
+#include <boost/limits.hpp>  // for std::numareic_limits
 
 #include <boost/test/detail/class_properties.hpp>
 
@@ -97,6 +97,9 @@ compute_tolerance( ToleranceSource tolerance, FPT /* unfortunately we need to pa
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2002/09/16 08:47:29  rogeeff
+//  STL includes normalized
+//
 //  Revision 1.5  2002/09/09 09:07:02  rogeeff
 //  descriptions added
 //
