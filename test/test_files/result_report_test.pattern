@@ -22,14 +22,14 @@ Test case "call_test_main" passed with:
 
 <TestResult>
 <TestCase name="call_test_main" result="passed">
-  <Asssertions passed="4" failed="0" expected_failures="0"/>
+  <Assertions passed="4" failed="0" expected_failures="0"/>
 </TestCase>
 </TestResult>
 *************************************************************************
 
 <TestResult>
 <TestCase name="call_test_main" result="passed">
-  <Asssertions passed="5" failed="0" expected_failures="0"/>
+  <Assertions passed="5" failed="0" expected_failures="0"/>
 </TestCase>
 </TestResult>
 *************************************************************************
@@ -62,16 +62,16 @@ Test suite "call_test_main" passed with:
 
 <TestResult>
 <TestSuite name="call_test_main" result="passed">
-  <Asssertions passed="10" failed="0" expected_failures="0"/>
+  <Assertions passed="10" failed="0" expected_failures="0"/>
 </TestSuite>
 </TestResult>
 *************************************************************************
 
 <TestResult>
 <TestSuite name="call_test_main" result="passed">
-  <Asssertions passed="11" failed="0" expected_failures="0"/>
+  <Assertions passed="11" failed="0" expected_failures="0"/>
   <TestCase name="0 test cases inside" result="passed">
-    <Asssertions passed="0" failed="0" expected_failures="0"/>
+    <Assertions passed="0" failed="0" expected_failures="0"/>
   </TestCase>
 </TestSuite>
 </TestResult>
@@ -118,7 +118,7 @@ Test suite "call_test_main" passed with:
 <TestResult>
 <TestSuite name="call_test_main" result="passed">
   <SubTestCases passed="2" failed="0"/>
-  <Asssertions passed="16" failed="0" expected_failures="0"/>
+  <Assertions passed="16" failed="0" expected_failures="0"/>
 </TestSuite>
 </TestResult>
 *************************************************************************
@@ -126,14 +126,14 @@ Test suite "call_test_main" passed with:
 <TestResult>
 <TestSuite name="call_test_main" result="passed">
   <SubTestCases passed="2" failed="0"/>
-  <Asssertions passed="17" failed="0" expected_failures="0"/>
+  <Assertions passed="17" failed="0" expected_failures="0"/>
   <TestCase name="0 test cases inside" result="passed">
-    <Asssertions passed="0" failed="0" expected_failures="0"/>
+    <Assertions passed="0" failed="0" expected_failures="0"/>
   </TestCase>
   <TestSuite name="1 test cases inside" result="passed">
-    <Asssertions passed="0" failed="0" expected_failures="0"/>
+    <Assertions passed="0" failed="0" expected_failures="0"/>
     <TestCase name="good_foo" result="passed">
-      <Asssertions passed="0" failed="0" expected_failures="0"/>
+      <Assertions passed="0" failed="0" expected_failures="0"/>
     </TestCase>
   </TestSuite>
 </TestSuite>
@@ -199,7 +199,7 @@ while 1 failure expected
 <TestResult>
 <TestSuite name="call_test_main" result="passed">
   <SubTestCases passed="4" failed="0"/>
-  <Asssertions passed="22" failed="1" expected_failures="1"/>
+  <Assertions passed="22" failed="1" expected_failures="1"/>
 </TestSuite>
 </TestResult>
 *************************************************************************
@@ -207,24 +207,24 @@ while 1 failure expected
 <TestResult>
 <TestSuite name="call_test_main" result="passed">
   <SubTestCases passed="4" failed="0"/>
-  <Asssertions passed="23" failed="1" expected_failures="1"/>
+  <Assertions passed="23" failed="1" expected_failures="1"/>
   <TestCase name="0 test cases inside" result="passed">
-    <Asssertions passed="0" failed="0" expected_failures="0"/>
+    <Assertions passed="0" failed="0" expected_failures="0"/>
   </TestCase>
   <TestSuite name="1 test cases inside" result="passed">
-    <Asssertions passed="0" failed="0" expected_failures="0"/>
+    <Assertions passed="0" failed="0" expected_failures="0"/>
     <TestCase name="good_foo" result="passed">
-      <Asssertions passed="0" failed="0" expected_failures="0"/>
+      <Assertions passed="0" failed="0" expected_failures="0"/>
     </TestCase>
   </TestSuite>
   <TestSuite name="2 test cases inside" result="passed">
     <SubTestCases passed="2" failed="0"/>
-    <Asssertions passed="0" failed="1" expected_failures="1"/>
+    <Assertions passed="0" failed="1" expected_failures="1"/>
     <TestCase name="good_foo" result="passed">
-      <Asssertions passed="0" failed="0" expected_failures="0"/>
+      <Assertions passed="0" failed="0" expected_failures="0"/>
     </TestCase>
     <TestCase name="bad_foo" result="passed">
-      <Asssertions passed="0" failed="1" expected_failures="1"/>
+      <Assertions passed="0" failed="1" expected_failures="1"/>
     </TestCase>
   </TestSuite>
 </TestSuite>
@@ -300,7 +300,7 @@ while 2 failures expected
 <TestResult>
 <TestSuite name="call_test_main" result="passed">
   <SubTestCases passed="5" failed="0"/>
-  <Asssertions passed="28" failed="2" expected_failures="2"/>
+  <Assertions passed="28" failed="2" expected_failures="2"/>
 </TestSuite>
 </TestResult>
 *************************************************************************
@@ -308,30 +308,30 @@ while 2 failures expected
 <TestResult>
 <TestSuite name="call_test_main" result="passed">
   <SubTestCases passed="5" failed="0"/>
-  <Asssertions passed="29" failed="2" expected_failures="2"/>
+  <Assertions passed="29" failed="2" expected_failures="2"/>
   <TestCase name="0 test cases inside" result="passed">
-    <Asssertions passed="0" failed="0" expected_failures="0"/>
+    <Assertions passed="0" failed="0" expected_failures="0"/>
   </TestCase>
   <TestSuite name="1 test cases inside" result="passed">
-    <Asssertions passed="0" failed="0" expected_failures="0"/>
+    <Assertions passed="0" failed="0" expected_failures="0"/>
     <TestCase name="good_foo" result="passed">
-      <Asssertions passed="0" failed="0" expected_failures="0"/>
+      <Assertions passed="0" failed="0" expected_failures="0"/>
     </TestCase>
   </TestSuite>
   <TestSuite name="2 test cases inside" result="passed">
     <SubTestCases passed="2" failed="0"/>
-    <Asssertions passed="0" failed="1" expected_failures="1"/>
+    <Assertions passed="0" failed="1" expected_failures="1"/>
     <TestCase name="good_foo" result="passed">
-      <Asssertions passed="0" failed="0" expected_failures="0"/>
+      <Assertions passed="0" failed="0" expected_failures="0"/>
     </TestCase>
     <TestCase name="bad_foo" result="passed">
-      <Asssertions passed="0" failed="1" expected_failures="1"/>
+      <Assertions passed="0" failed="1" expected_failures="1"/>
     </TestCase>
   </TestSuite>
   <TestSuite name="1 bad test cases inside" result="passed">
-    <Asssertions passed="0" failed="1" expected_failures="1"/>
+    <Assertions passed="0" failed="1" expected_failures="1"/>
     <TestCase name="bad_foo" result="passed">
-      <Asssertions passed="0" failed="1" expected_failures="1"/>
+      <Assertions passed="0" failed="1" expected_failures="1"/>
     </TestCase>
   </TestSuite>
 </TestSuite>
@@ -427,7 +427,7 @@ while 3 failures expected
 <TestResult>
 <TestSuite name="call_test_main" result="passed">
   <SubTestCases passed="8" failed="0"/>
-  <Asssertions passed="34" failed="3" expected_failures="3"/>
+  <Assertions passed="34" failed="3" expected_failures="3"/>
 </TestSuite>
 </TestResult>
 *************************************************************************
@@ -435,43 +435,43 @@ while 3 failures expected
 <TestResult>
 <TestSuite name="call_test_main" result="passed">
   <SubTestCases passed="8" failed="0"/>
-  <Asssertions passed="35" failed="3" expected_failures="3"/>
+  <Assertions passed="35" failed="3" expected_failures="3"/>
   <TestCase name="0 test cases inside" result="passed">
-    <Asssertions passed="0" failed="0" expected_failures="0"/>
+    <Assertions passed="0" failed="0" expected_failures="0"/>
   </TestCase>
   <TestSuite name="1 test cases inside" result="passed">
-    <Asssertions passed="0" failed="0" expected_failures="0"/>
+    <Assertions passed="0" failed="0" expected_failures="0"/>
     <TestCase name="good_foo" result="passed">
-      <Asssertions passed="0" failed="0" expected_failures="0"/>
+      <Assertions passed="0" failed="0" expected_failures="0"/>
     </TestCase>
   </TestSuite>
   <TestSuite name="2 test cases inside" result="passed">
     <SubTestCases passed="2" failed="0"/>
-    <Asssertions passed="0" failed="1" expected_failures="1"/>
+    <Assertions passed="0" failed="1" expected_failures="1"/>
     <TestCase name="good_foo" result="passed">
-      <Asssertions passed="0" failed="0" expected_failures="0"/>
+      <Assertions passed="0" failed="0" expected_failures="0"/>
     </TestCase>
     <TestCase name="bad_foo" result="passed">
-      <Asssertions passed="0" failed="1" expected_failures="1"/>
+      <Assertions passed="0" failed="1" expected_failures="1"/>
     </TestCase>
   </TestSuite>
   <TestSuite name="1 bad test cases inside" result="passed">
-    <Asssertions passed="0" failed="1" expected_failures="1"/>
+    <Assertions passed="0" failed="1" expected_failures="1"/>
     <TestCase name="bad_foo" result="passed">
-      <Asssertions passed="0" failed="1" expected_failures="1"/>
+      <Assertions passed="0" failed="1" expected_failures="1"/>
     </TestCase>
   </TestSuite>
   <TestSuite name="3 test cases inside" result="passed">
     <SubTestCases passed="3" failed="0"/>
-    <Asssertions passed="0" failed="1" expected_failures="1"/>
+    <Assertions passed="0" failed="1" expected_failures="1"/>
     <TestCase name="good_foo" result="passed">
-      <Asssertions passed="0" failed="0" expected_failures="0"/>
+      <Assertions passed="0" failed="0" expected_failures="0"/>
     </TestCase>
     <TestCase name="good_foo" result="passed">
-      <Asssertions passed="0" failed="0" expected_failures="0"/>
+      <Assertions passed="0" failed="0" expected_failures="0"/>
     </TestCase>
     <TestCase name="bad_foo" result="passed">
-      <Asssertions passed="0" failed="1" expected_failures="1"/>
+      <Assertions passed="0" failed="1" expected_failures="1"/>
     </TestCase>
   </TestSuite>
 </TestSuite>
@@ -622,7 +622,7 @@ while 5 failures expected
 <TestResult>
 <TestSuite name="call_test_main" result="passed">
   <SubTestCases passed="15" failed="0"/>
-  <Asssertions passed="40" failed="5" expected_failures="5"/>
+  <Assertions passed="40" failed="5" expected_failures="5"/>
 </TestSuite>
 </TestResult>
 *************************************************************************
@@ -630,78 +630,78 @@ while 5 failures expected
 <TestResult>
 <TestSuite name="call_test_main" result="passed">
   <SubTestCases passed="15" failed="0"/>
-  <Asssertions passed="41" failed="5" expected_failures="5"/>
+  <Assertions passed="41" failed="5" expected_failures="5"/>
   <TestCase name="0 test cases inside" result="passed">
-    <Asssertions passed="0" failed="0" expected_failures="0"/>
+    <Assertions passed="0" failed="0" expected_failures="0"/>
   </TestCase>
   <TestSuite name="1 test cases inside" result="passed">
-    <Asssertions passed="0" failed="0" expected_failures="0"/>
+    <Assertions passed="0" failed="0" expected_failures="0"/>
     <TestCase name="good_foo" result="passed">
-      <Asssertions passed="0" failed="0" expected_failures="0"/>
+      <Assertions passed="0" failed="0" expected_failures="0"/>
     </TestCase>
   </TestSuite>
   <TestSuite name="2 test cases inside" result="passed">
     <SubTestCases passed="2" failed="0"/>
-    <Asssertions passed="0" failed="1" expected_failures="1"/>
+    <Assertions passed="0" failed="1" expected_failures="1"/>
     <TestCase name="good_foo" result="passed">
-      <Asssertions passed="0" failed="0" expected_failures="0"/>
+      <Assertions passed="0" failed="0" expected_failures="0"/>
     </TestCase>
     <TestCase name="bad_foo" result="passed">
-      <Asssertions passed="0" failed="1" expected_failures="1"/>
+      <Assertions passed="0" failed="1" expected_failures="1"/>
     </TestCase>
   </TestSuite>
   <TestSuite name="1 bad test cases inside" result="passed">
-    <Asssertions passed="0" failed="1" expected_failures="1"/>
+    <Assertions passed="0" failed="1" expected_failures="1"/>
     <TestCase name="bad_foo" result="passed">
-      <Asssertions passed="0" failed="1" expected_failures="1"/>
+      <Assertions passed="0" failed="1" expected_failures="1"/>
     </TestCase>
   </TestSuite>
   <TestSuite name="3 test cases inside" result="passed">
     <SubTestCases passed="3" failed="0"/>
-    <Asssertions passed="0" failed="1" expected_failures="1"/>
+    <Assertions passed="0" failed="1" expected_failures="1"/>
     <TestCase name="good_foo" result="passed">
-      <Asssertions passed="0" failed="0" expected_failures="0"/>
+      <Assertions passed="0" failed="0" expected_failures="0"/>
     </TestCase>
     <TestCase name="good_foo" result="passed">
-      <Asssertions passed="0" failed="0" expected_failures="0"/>
+      <Assertions passed="0" failed="0" expected_failures="0"/>
     </TestCase>
     <TestCase name="bad_foo" result="passed">
-      <Asssertions passed="0" failed="1" expected_failures="1"/>
+      <Assertions passed="0" failed="1" expected_failures="1"/>
     </TestCase>
   </TestSuite>
   <TestSuite name="Fake Test Suite Hierarchy" result="passed">
     <SubTestCases passed="7" failed="0"/>
-    <Asssertions passed="0" failed="2" expected_failures="2"/>
+    <Assertions passed="0" failed="2" expected_failures="2"/>
     <TestCase name="0 test cases inside" result="passed">
-      <Asssertions passed="0" failed="0" expected_failures="0"/>
+      <Assertions passed="0" failed="0" expected_failures="0"/>
     </TestCase>
     <TestSuite name="1 test cases inside" result="passed">
-      <Asssertions passed="0" failed="0" expected_failures="0"/>
+      <Assertions passed="0" failed="0" expected_failures="0"/>
       <TestCase name="good_foo" result="passed">
-        <Asssertions passed="0" failed="0" expected_failures="0"/>
+        <Assertions passed="0" failed="0" expected_failures="0"/>
       </TestCase>
     </TestSuite>
     <TestSuite name="2 test cases inside" result="passed">
       <SubTestCases passed="2" failed="0"/>
-      <Asssertions passed="0" failed="1" expected_failures="1"/>
+      <Assertions passed="0" failed="1" expected_failures="1"/>
       <TestCase name="good_foo" result="passed">
-        <Asssertions passed="0" failed="0" expected_failures="0"/>
+        <Assertions passed="0" failed="0" expected_failures="0"/>
       </TestCase>
       <TestCase name="bad_foo" result="passed">
-        <Asssertions passed="0" failed="1" expected_failures="1"/>
+        <Assertions passed="0" failed="1" expected_failures="1"/>
       </TestCase>
     </TestSuite>
     <TestSuite name="3 test cases inside" result="passed">
       <SubTestCases passed="3" failed="0"/>
-      <Asssertions passed="0" failed="1" expected_failures="1"/>
+      <Assertions passed="0" failed="1" expected_failures="1"/>
       <TestCase name="good_foo" result="passed">
-        <Asssertions passed="0" failed="0" expected_failures="0"/>
+        <Assertions passed="0" failed="0" expected_failures="0"/>
       </TestCase>
       <TestCase name="good_foo" result="passed">
-        <Asssertions passed="0" failed="0" expected_failures="0"/>
+        <Assertions passed="0" failed="0" expected_failures="0"/>
       </TestCase>
       <TestCase name="bad_foo" result="passed">
-        <Asssertions passed="0" failed="1" expected_failures="1"/>
+        <Assertions passed="0" failed="1" expected_failures="1"/>
       </TestCase>
     </TestSuite>
   </TestSuite>
