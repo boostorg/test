@@ -45,9 +45,9 @@ namespace {
 // **************                   test main                  ************** //
 // ************************************************************************** //
 
-using namespace boost::unit_test_framework;
-
 int main( int argc, char* argv[] ) {
+    using namespace boost::unit_test_framework;
+
     std::string         loglevel;
     bool                no_result_code;
     result_report_level report_level;
@@ -90,6 +90,9 @@ int main( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8.2.1  2002/09/29 18:12:00  rogeeff
+//  move using declaraion into main to prevent global namespace polution in case of included components
+//
 //  Revision 1.8  2002/09/16 09:29:21  rogeeff
 //  since boost::smart_ptrs now support incomplete types on borland, no need in grinning_ptr any more
 //
