@@ -82,11 +82,11 @@ public:
 
     // Formatter interface
     virtual void        start_log( std::ostream&, bool log_build_info ) = 0;
-    virtual void        log_header( std::ostream&, unit_test_counter test_cases_amount ) = 0;
+    virtual void        log_header( std::ostream&, counter_t test_cases_amount ) = 0;
     virtual void        finish_log( std::ostream& ) = 0;
 
-    virtual void        track_test_case_enter( std::ostream&, test_case const& tc ) = 0;
-    virtual void        track_test_case_exit( std::ostream&, test_case const& tc, long testing_time_in_mks ) = 0;
+    virtual void        test_case_enter( std::ostream&, test_case const& tc ) = 0;
+    virtual void        test_case_exit( std::ostream&, test_case const& tc, long testing_time_in_mks ) = 0;
 
     virtual void        log_exception( std::ostream&, log_checkpoint_data const&, 
                                        const_string test_case_name, const_string explanation ) = 0;
@@ -106,6 +106,10 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10  2005/01/30 03:23:58  rogeeff
+//  counter type renamed
+//  log interface slightly shortened
+//
 //  Revision 1.9  2005/01/21 07:30:24  rogeeff
 //  to log testing time log formatter interfaces changed
 //
