@@ -23,6 +23,7 @@
 //BOOST
 #include <boost/config.hpp>           // for broken compiler workarounds
 #include <map>
+#include <cstdlib>
 
 # ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::getenv; using ::strncmp; using ::strcmp; }
@@ -85,6 +86,9 @@ retrieve_framework_parameter( const_string parameter_name, int* argc, char** arg
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.14  2004/05/18 13:34:15  dgregor
+//  Needed to include <cstdlib> to get std::getenv.
+//
 //  Revision 1.13  2004/05/13 09:04:43  rogeeff
 //  added fixed_mapping
 //
