@@ -599,7 +599,6 @@ template<typename CharT1,typename CharT2>
 inline bool
 operator==( basic_cstring<CharT1> const& s1, CharT2* s2 )
 {
-
     return s1 == basic_cstring<CharT2>( s2 );
 }
 
@@ -715,6 +714,9 @@ last_char( basic_cstring<CharT> source )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10  2004/10/01 10:51:28  rogeeff
+//  gcc 2.95 workarounds
+//
 //  Revision 1.9  2004/07/19 12:25:48  rogeeff
 //  guard rename
 //  portability fix

@@ -99,8 +99,23 @@ struct bcs_char_traits_impl
 };
 
 #ifdef BOOST_CLASSIC_IOSTREAMS
-template<> struct bcs_char_traits_impl<char> : std::string_char_traits<char> {};
-template<> struct bcs_char_traits_impl<wchar_t> : std::string_char_traits<wchar_t> {};
+template<typename CharT>
+struct char_traits_with_find : std::string_char_traits<CharT> {
+    static CharT const* find( CharT const* s, std::size_t n, CharT c )
+    {
+        while( n > 0 ) {
+            if( eq( *s, c ) )
+                return s;
+
+            ++s;
+            --n;
+        }
+        return 0;
+    }
+};
+
+template<> struct bcs_char_traits_impl<char> : char_traits_with_find<char> {};
+template<> struct bcs_char_traits_impl<wchar_t> : char_traits_with_find<wchar_t> {};
 #else
 template<> struct bcs_char_traits_impl<char> : std::char_traits<char> {};
 template<> struct bcs_char_traits_impl<wchar_t> : std::char_traits<wchar_t> {};
@@ -127,6 +142,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2004/10/01 10:51:28  rogeeff
+//  gcc 2.95 workarounds
+//
 //  Revision 1.5  2004/09/19 09:22:13  rogeeff
 //  ios fix for classic iostreams
 //
