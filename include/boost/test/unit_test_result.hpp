@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -8,7 +8,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : defines class unit_test_result that is responsible for 
 //  gathering test results and presenting this information to end-user
@@ -31,6 +31,14 @@ namespace boost {
 
 namespace unit_test_framework {
 
+class test_case;
+
+// ************************************************************************** //
+// **************           first failed assertion hook        ************** //
+// ************************************************************************** //
+
+static void first_failed_assertion() {}
+
 // ************************************************************************** //
 // **************               unit_test_result               ************** //
 // ************************************************************************** //
@@ -46,6 +54,7 @@ public:
     static void     test_case_start( std::string const& name_, unit_test_counter expected_failures_ = 0 );
     static void     test_case_end();
     
+    // report format configuration
     static void     set_report_format( std::string const& reportformat );
 
     // use to dynamically change amount of errors expected in current test case
@@ -54,11 +63,13 @@ public:
     // reporting
     void            report( std::string const& reportlevel, std::ostream& where_to_ );              // report by level
     void            confirmation_report( std::ostream& where_to_ );                                 // shortest
-    void            short_report( std::ostream& where_to_ ) { report( "short", where_to_ ); }       // short
+    void            short_report( std::ostream& where_to_ )    { report( "short", where_to_ ); }    // short
     void            detailed_report( std::ostream& where_to_ ) { report( "detailed", where_to_ ); } // long
 
-    int             result_code();                                                                  // to be returned from main
-
+    // test case result
+    int             result_code() const;                                                            // to be returned from main
+    bool            has_passed() const;                                                             // to manage test cases dependency
+    
     // to be used by tool box implementation
     void            inc_failed_assertions();
     void            inc_passed_assertions(); 
@@ -76,7 +87,7 @@ private:
     // report impl method
     void            report_result( std::ostream& where_to_, std::size_t indent_, bool detailed_ );
 
-    // used to temporarely introduce new results set without polluting current one
+    // used to temporarily introduce new results set without polluting current one
     static void     reset_current_result_set();
 
     // Constructor
@@ -97,6 +108,16 @@ struct unit_test_result_saver
     ~unit_test_result_saver() { unit_test_result::reset_current_result_set(); }
 };
 
+// ************************************************************************** //
+// **************            unit_test_result_tracker          ************** //
+// ************************************************************************** //
+
+struct unit_test_result_tracker {
+    explicit            unit_test_result_tracker( std::string const& name_, unit_test_counter expected_failures_ ) 
+                                                    { unit_test_result::test_case_start( name_, expected_failures_ ); }
+                        ~unit_test_result_tracker() { unit_test_result::test_case_end(); }
+};
+
 } // namespace unit_test_framework
 
 } // namespace boost
@@ -105,20 +126,9 @@ struct unit_test_result_saver
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.13  2003/02/13 08:26:33  rogeeff
-//  report format config method added
-//  result set interface changed slightly to allow single entry point with string as report selector
-//
-//  Revision 1.12  2002/12/11 13:41:19  beman_dawes
-//  fix missing std::
-//
-//  Revision 1.11  2002/12/08 17:47:31  rogeeff
-//  switched to use c_string_literal
-//  unit_test_result_saver introduced to properly managed reset_current_test_set calls
-//  in case of exceptions
-//
-//  Revision 1.10  2002/11/02 19:31:04  rogeeff
-//  merged into the main trank
+//  Revision 1.14  2003/06/09 08:58:40  rogeeff
+//  unit_test_result_tracker introduced for correct exception handling
+//  method has_passed introduced to support dependencies
 //
 
 // ***************************************************************************
