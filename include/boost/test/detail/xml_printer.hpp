@@ -36,7 +36,7 @@ namespace ut_detail {
 // ************************************************************************** //
 
 class xml_printer {
-    static std::ostream& print_escaped( std::ostream& where_to, const_string value )
+    static inline std::ostream& print_escaped( std::ostream& where_to, const_string value )
     {
         static fixed_mapping<char,char const*> char_type(
             '<' , "lt",
@@ -60,19 +60,19 @@ class xml_printer {
         return where_to;
     }
 protected:
-    static std::ostream&    print_attr_value( std::ostream& where_to, const_string value )
+    static inline std::ostream&    print_attr_value( std::ostream& where_to, const_string value )
     {
         where_to << "=\"";
         return print_escaped( where_to, value ) << '"';
     }
 
     template<typename T>
-    static std::ostream&    print_attr_value( std::ostream& where_to, T const& value )
+    static inline std::ostream&    print_attr_value( std::ostream& where_to, T const& value )
     {
         return where_to << "=\"" << value << '"';
     }
 
-    static std::ostream&    print_pcdata( std::ostream& where_to, const_string value )
+    static inline std::ostream&    print_pcdata( std::ostream& where_to, const_string value )
     {
         return print_escaped( where_to, value );
     }
@@ -88,6 +88,9 @@ protected:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2004/08/04 02:50:27  rogeeff
+//  darwin workarounds
+//
 //  Revision 1.1  2004/07/19 12:22:15  rogeeff
 //  shared xml printer utils
 //

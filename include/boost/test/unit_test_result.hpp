@@ -37,7 +37,7 @@ class test_case;
 // ************************************************************************** //
 
 namespace {
-void first_failed_assertion() {}
+inline void first_failed_assertion() {}
 }
 
 // ************************************************************************** //
@@ -127,6 +127,9 @@ struct unit_test_result_tracker {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.22  2004/08/04 02:50:27  rogeeff
+//  darwin workarounds
+//
 //  Revision 1.21  2004/07/19 12:16:41  rogeeff
 //  guard rename
 //
