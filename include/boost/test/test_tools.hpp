@@ -376,8 +376,8 @@ bitwise_equal_and_continue_impl( Left const& left_, Right const& right_,
                                  wrap_stringstream& message_, char const* file_name_, int line_num_,
                                  unit_test_framework::log_level log_level_ = unit_test_framework::log_all_errors )
 {
-    size_t left_bit_size  = sizeof(Left)*CHAR_BIT;
-    size_t right_bit_size = sizeof(Right)*CHAR_BIT;
+    std::size_t left_bit_size  = sizeof(Left)*CHAR_BIT;
+    std::size_t right_bit_size = sizeof(Right)*CHAR_BIT;
 
     static Left const L1( 1 );
     static Right const R1( 1 );
@@ -386,9 +386,9 @@ bitwise_equal_and_continue_impl( Left const& left_, Right const& right_,
         warn_and_continue_impl( false, wrap_stringstream().ref() << message_ << ": operands bit sizes does not coinside", 
                                 file_name_, line_num_, false );
 
-    size_t total_bits = left_bit_size < right_bit_size ? left_bit_size : right_bit_size;
+    std::size_t total_bits = left_bit_size < right_bit_size ? left_bit_size : right_bit_size;
 
-    for( size_t counter = 0; counter < total_bits; ++counter ) {
+    for( std::size_t counter = 0; counter < total_bits; ++counter ) {
         bool predicate = ( left_ & ( L1 << counter ) ) == ( right_ & ( R1 << counter ) );
 
         test_and_continue_impl( predicate, wrap_stringstream().ref() << message_.str() << " in the position " << counter,
@@ -459,6 +459,9 @@ private:
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.26  2003/02/14 00:56:23  rogeeff
+//  added std to size_t
+//
 //  Revision 1.25  2003/02/13 08:18:35  rogeeff
 //  BOOST_BITWISE_EQUAL introduced
 //  BOOST_CHECK_NO_THROW introduced
