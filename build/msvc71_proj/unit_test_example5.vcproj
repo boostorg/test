@@ -24,6 +24,7 @@
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\..\.."
 				PreprocessorDefinitions="_CONSOLE;WIN32;_DEBUG"
+				GeneratePreprocessedFile="0"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
