@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2004.
+//  (C) Copyright Gennadiy Rozental 2004-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -20,7 +20,7 @@
 #include <boost/test/utils/fixed_mapping.hpp>
 #include <boost/test/utils/custom_manip.hpp>
 
-// BOOST
+// Boost
 #include <boost/config.hpp>
 
 // STL
@@ -106,6 +106,12 @@ operator<<( custom_printer<pcdata> const& p, const_string value )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.4  2005/02/01 06:40:08  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.3  2005/01/23 09:59:34  vawjr
 //  Changed - all the \r\r\n to \r\n in the windows flavor of the file
 //            because VC++ 8.0 complains and refuses to compile
@@ -118,12 +124,6 @@ operator<<( custom_printer<pcdata> const& p, const_string value )
 //
 //  Revision 1.3  2005/01/21 07:31:44  rogeeff
 //  xml helper facilities reworked to present manipulator interfaces
-//
-//  Revision 1.2  2004/08/04 02:50:27  rogeeff
-//  darwin workarounds
-//
-//  Revision 1.1  2004/07/19 12:22:15  rogeeff
-//  shared xml printer utils
 //
 // ***************************************************************************
 

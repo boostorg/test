@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  (C) Copyright Ullrich Koethe 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
@@ -22,7 +22,7 @@
 #include <boost/test/detail/unit_test_config.hpp>
 #include <boost/test/utils/class_properties.hpp>
 
-// BOOST
+// Boost
 #include <boost/shared_ptr.hpp>
 
 // STL
@@ -216,8 +216,11 @@ public:
     // Constructor
     parametrized_class_test_case( function_type f_, const_string name_, boost::shared_ptr<UserTestCase>const & user_test_case_,
                                   ParamIterator const& par_begin_, ParamIterator const& par_end_ )
-    : test_case( name_, true, 0 ), m_first_parameter( par_begin_ ), m_last_parameter( par_end_ ),
-      m_user_test_case( user_test_case_ ), m_function( f_ )
+    : test_case( name_, true, 0 )
+    , m_first_parameter( par_begin_ )
+    , m_last_parameter( par_end_ )
+    , m_user_test_case( user_test_case_ )
+    , m_function( f_ )
     {
        // the typecasts are here to keep Borland C++ Builder 5 happy, for other compilers they have no effect:
        p_stages_amount.set( ut_detail::distance( (ParamIterator)par_begin_, (ParamIterator)par_end_ ) );
@@ -324,34 +327,18 @@ create_test_case( void (UserTestCase::*fct_)( ParamType ), const_string name_, b
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.27  2005/02/01 06:40:06  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.26  2005/01/30 03:22:07  rogeeff
 //  interface changed to use const_string
 //  use BOOST_TEST_STRINGIZE
 //
 //  Revision 1.25  2005/01/22 19:22:12  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
-//
-//  Revision 1.24  2004/07/19 12:16:41  rogeeff
-//  guard rename
-//
-//  Revision 1.23  2004/06/07 07:33:49  rogeeff
-//  detail namespace renamed
-//
-//  Revision 1.22  2004/06/05 10:59:58  rogeeff
-//  proper IBM VA port
-//
-//  Revision 1.21  2004/06/03 10:38:32  tknapen
-//  port to vacpp version 6
-//
-//  Revision 1.20  2004/05/21 06:19:35  rogeeff
-//  licence update
-//
-//  Revision 1.19  2004/05/11 11:00:51  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//
-//  Revision 1.18  2003/12/01 00:41:56  rogeeff
-//  prerelease cleaning
 //
 // ***************************************************************************
 

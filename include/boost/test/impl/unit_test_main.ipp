@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -22,7 +22,7 @@
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/test/detail/unit_test_monitor.hpp>
 
-// BOOST
+// Boost
 #include <boost/scoped_ptr.hpp>
 
 // STL
@@ -95,6 +95,12 @@ main( int argc, char* argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.5  2005/02/01 06:40:07  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.4  2005/01/31 07:50:06  rogeeff
 //  cdecl portability fix
 //
@@ -121,21 +127,6 @@ main( int argc, char* argv[] )
 //     change compiler like formatter name
 //     minimized unit_test_log interface and reworked to use explicit calls
 //
-//  Revision 1.16  2004/06/07 07:34:23  rogeeff
-//  detail namespace renamed
-//
-//  Revision 1.15  2004/05/21 06:26:10  rogeeff
-//  licence update
-//
-//  Revision 1.14  2004/05/11 11:05:04  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//  namespace names shortened
-//
-//  Revision 1.13  2003/12/01 00:42:37  rogeeff
-//  prerelease cleaning
-//
-
 // ***************************************************************************
 
 #endif // BOOST_UNIT_TEST_MAIN_IPP_012205GER

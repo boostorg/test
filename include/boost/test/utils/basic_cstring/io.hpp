@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2004.
+//  (C) Copyright Gennadiy Rozental 2004-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -68,39 +68,17 @@ operator<<( std::basic_ostream<CharT1,Tr>& os, basic_cstring<CharT2> const& str 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2005/02/01 06:40:08  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.2  2005/01/22 19:22:13  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
 //  Revision 1.1  2005/01/22 18:21:40  rogeeff
 //  moved sharable staff into utils
-//
-//  Revision 1.9  2004/09/19 09:22:13  rogeeff
-//  ios fix for classic iostreams
-//
-//  Revision 1.8  2004/07/21 16:28:09  dgregor
-//  io.hpp: Eliminate useless "const" qualifiers on an rvalue
-//
-//  Revision 1.7  2004/07/19 12:27:05  rogeeff
-//  guard rename
-//
-//  Revision 1.6  2004/06/30 07:52:56  rogeeff
-//  typo fix
-//
-//  Revision 1.5  2004/06/29 04:31:49  rogeeff
-//  gcc 2.95 fix
-//
-//  Revision 1.4  2004/06/05 11:02:15  rogeeff
-//  std::traits usage reworked
-//
-//  Revision 1.3  2004/05/27 06:24:44  rogeeff
-//  workaround for gcc 2.95 io
-//
-//  Revision 1.2  2004/05/21 06:19:35  rogeeff
-//  licence update
-//
-//  Revision 1.1  2004/05/11 11:00:55  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
 //
 // ***************************************************************************
 

@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -18,7 +18,7 @@
 // Boost.Test
 #include <boost/test/unit_test_log_formatter.hpp>
 
-// BOOST
+// Boost
 #include <boost/config.hpp>
 
 // STL
@@ -96,6 +96,12 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.13  2005/02/01 06:40:07  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.12  2005/01/30 01:49:29  rogeeff
 //  counter type renamed
 //  interface functions shortened
@@ -113,23 +119,6 @@ private:
 //     straitend interface between log and formatters
 //     change compiler like formatter name
 //     minimized unit_test_log interface and reworked to use explicit calls
-//
-//  Revision 1.8  2004/07/19 12:22:49  rogeeff
-//  guard rename
-//  suppress warnings
-//
-//  Revision 1.7  2004/06/07 07:33:49  rogeeff
-//  detail namespace renamed
-//
-//  Revision 1.6  2004/05/21 06:19:35  rogeeff
-//  licence update
-//
-//  Revision 1.5  2004/05/11 11:00:53  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//
-//  Revision 1.4  2003/12/01 00:41:56  rogeeff
-//  prerelease cleaning
 //
 // ***************************************************************************
 

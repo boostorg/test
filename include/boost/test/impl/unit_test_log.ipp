@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -25,7 +25,7 @@
 #include <boost/test/utils/basic_cstring/compare.hpp>
 #include <boost/test/utils/fixed_mapping.hpp>
 
-// BOOST
+// Boost
 #include <boost/scoped_ptr.hpp>
 #include <boost/progress.hpp>
 
@@ -478,6 +478,12 @@ unit_test_log_t::set_formatter( unit_test_log_formatter* the_formatter )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.3  2005/02/01 06:40:07  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.2  2005/01/30 01:59:36  rogeeff
 //  counter type renamed
 //

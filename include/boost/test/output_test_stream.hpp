@@ -19,7 +19,7 @@
 #include <boost/test/detail/unit_test_config.hpp>
 #include <boost/test/utils/wrap_stringstream.hpp>
 
-// BOOST
+// Boost
 #include <boost/config.hpp>  // compilers workarounds
 #include <boost/shared_ptr.hpp>
 
@@ -78,6 +78,12 @@ private:
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2005/02/01 06:40:06  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.1  2005/01/30 03:25:24  rogeeff
 //  output_test_stream moved into separate file
 //

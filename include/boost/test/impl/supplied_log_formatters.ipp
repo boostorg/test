@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -23,7 +23,7 @@
 
 #include <boost/test/utils/xml_printer.hpp>
 
-// BOOST
+// Boost
 #include <boost/version.hpp>
 
 // STL
@@ -334,6 +334,12 @@ xml_log_formatter::print_indent( std::ostream& output )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.3  2005/02/01 06:40:07  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.2  2005/01/30 01:57:24  rogeeff
 //  counter type renamed
 //  testing time separated in a xml element
@@ -351,29 +357,6 @@ xml_log_formatter::print_indent( std::ostream& output )
 //     straitend interface between log and formatters
 //     change compiler like formatter name
 //     minimized unit_test_log interface and reworked to use explicit calls
-//
-//  Revision 1.12  2004/07/20 17:03:55  dgregor
-//  Documentation update from Jon T. Pedant
-//
-//  Revision 1.11  2004/07/19 12:09:25  rogeeff
-//  added proper encoded of XML PCDATA
-//
-//  Revision 1.10  2004/06/07 07:34:22  rogeeff
-//  detail namespace renamed
-//
-//  Revision 1.9  2004/05/21 06:26:09  rogeeff
-//  licence update
-//
-//  Revision 1.8  2004/05/13 09:04:43  rogeeff
-//  added fixed_mapping
-//
-//  Revision 1.7  2004/05/11 11:04:44  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//  namespace names shortened
-//
-//  Revision 1.6  2003/12/01 00:42:37  rogeeff
-//  prerelease cleaning
 //
 // ***************************************************************************
 

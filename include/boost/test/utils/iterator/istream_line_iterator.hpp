@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2004.
+//  (C) Copyright Gennadiy Rozental 2004-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -54,11 +54,11 @@ public:
         this->init();
     }
     explicit basic_istream_line_iterator( istream_type& input )
-    : m_input_stream( &input ), 
+    : m_input_stream( &input ) 
 #if BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
-    m_delimeter( '\n' )
+    , m_delimeter( '\n' )
 #else
-    m_delimeter( input.widen( '\n' ) )
+    , m_delimeter( input.widen( '\n' ) )
 #endif
     {
         this->init();
@@ -89,36 +89,17 @@ typedef basic_istream_line_iterator<wchar_t>    wistream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2005/02/01 06:40:08  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.2  2005/01/22 19:22:14  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
 //  Revision 1.1  2005/01/22 18:21:40  rogeeff
 //  moved sharable staff into utils
-//
-//  Revision 1.7  2004/09/19 09:22:13  rogeeff
-//  ios fix for classic iostreams
-//
-//  Revision 1.6  2004/07/19 12:29:57  rogeeff
-//  guard rename
-//  mingw port
-//
-//  Revision 1.5  2004/06/07 07:33:50  rogeeff
-//  detail namespace renamed
-//
-//  Revision 1.4  2004/06/05 11:03:12  rogeeff
-//  input_iterator_adaptor simplified
-//  token_iterator added
-//
-//  Revision 1.3  2004/05/27 07:01:49  rogeeff
-//  portability workarounds
-//
-//  Revision 1.2  2004/05/25 10:29:09  rogeeff
-//  use standard getline
-//  eliminate initialize
-//  proper handle \n in wide case
-//
-//  Revision 1.1  2004/05/21 06:30:10  rogeeff
-//  ifstream_line_iterator added
 //
 // ***************************************************************************
 

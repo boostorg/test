@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2004.
+//  (C) Copyright Gennadiy Rozental 2004-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -217,17 +217,14 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/02/01 06:40:07  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.1  2005/01/22 18:21:39  rogeeff
 //  moved sharable staff into utils
-//
-//  Revision 1.6  2004/07/19 12:17:48  rogeeff
-//  guard rename
-//
-//  Revision 1.5  2004/06/29 04:32:25  rogeeff
-//  no message
-//
-//  Revision 1.4  2004/05/23 09:51:32  rogeeff
-//  more algorithms added
 //
 // ***************************************************************************
 

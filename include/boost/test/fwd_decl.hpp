@@ -19,6 +19,7 @@ namespace boost {
 
 namespace unit_test {
 
+class  execution_monitor;
 class  test_case;
 class  unit_test_log_formatter;
 struct log_entry_data;
@@ -33,6 +34,12 @@ class  unit_test_log_t;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/02/01 06:40:06  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.1  2005/01/18 08:27:30  rogeeff
 //  unit_test_log rework:
 //     eliminated need for ::instance()

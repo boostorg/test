@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2004.
+//  (C) Copyright Gennadiy Rozental 2004-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -142,27 +142,14 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/02/01 06:40:08  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.1  2005/01/22 18:21:40  rogeeff
 //  moved sharable staff into utils
-//
-//  Revision 1.6  2004/10/01 10:51:28  rogeeff
-//  gcc 2.95 workarounds
-//
-//  Revision 1.5  2004/09/19 09:22:13  rogeeff
-//  ios fix for classic iostreams
-//
-//  Revision 1.4  2004/07/19 12:28:17  rogeeff
-//  guard rename
-//
-//  Revision 1.3  2004/06/07 07:33:19  rogeeff
-//  amother borland patch
-//  detail namespace renamed
-//
-//  Revision 1.2  2004/06/06 05:50:09  rogeeff
-//  borland and como fix
-//
-//  Revision 1.1  2004/06/05 11:02:15  rogeeff
-//  std::traits usage reworked
 //
 // ***************************************************************************
 

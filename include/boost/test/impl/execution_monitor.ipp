@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  (C) Copyright Beman Dawes and Ullrich Koethe 1995-2001.
 //  Use, modification, and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
@@ -27,15 +27,15 @@
 // Boost.Test
 #include <boost/test/execution_monitor.hpp>
 
-// BOOST
+// Boost
 #include <boost/cstdlib.hpp>  // for exit codes
 #include <boost/config.hpp>   // for workarounds
 
 // STL
-#include <string>             // for string
-#include <new>                // for bad_alloc
-#include <typeinfo>           // for bad_cast, bad_typeid
-#include <exception>          // for exception, bad_exception
+#include <string>             // for std::string
+#include <new>                // for std::bad_alloc
+#include <typeinfo>           // for std::bad_cast, std::bad_typeid
+#include <exception>          // for std::exception, std::bad_exception
 #include <stdexcept>          // for std exception hierarchy
 #include <cstring>            // for C string API
 #include <cassert>            // for assert
@@ -350,9 +350,9 @@ static void execution_monitor_signal_handler( int sig )
 //____________________________________________________________________________//
 
 signal_handler::signal_handler( bool catch_system_errors, int timeout )
-: m_prev_handler( s_active_handler ),
-  m_catch_system_errors( catch_system_errors ),
-  m_set_timeout( timeout > 0 )
+: m_prev_handler( s_active_handler )
+, m_catch_system_errors( catch_system_errors )
+, m_set_timeout( timeout > 0 )
 {
     s_active_handler = this;
 
@@ -617,6 +617,12 @@ detect_memory_leaks()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.4  2005/02/01 06:40:07  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.3  2005/01/31 07:50:06  rogeeff
 //  cdecl portability fix
 //
@@ -629,30 +635,6 @@ detect_memory_leaks()
 //  Revision 1.36  2005/01/21 07:21:38  rogeeff
 //  detect presence of debugger under VC and automatically prevent catching system errors
 //
-//  Revision 1.35  2004/08/19 00:02:21  rogeeff
-//  another tru64cxx65 workaround
-//
-//  Revision 1.34  2004/07/19 12:08:12  rogeeff
-//  suppress warnings
-//
-//  Revision 1.33  2004/06/07 07:34:22  rogeeff
-//  detail namespace renamed
-//
-//  Revision 1.32  2004/05/21 06:26:09  rogeeff
-//  licence update
-//
-//  Revision 1.31  2004/05/11 11:04:44  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//  namespace names shortened
-//
-//  Revision 1.30  2003/12/20 11:27:28  johnmaddock
-//  Added fixes for Borland C++ 6.0 compiler (With EDG frontend).
-//
-//  Revision 1.29  2003/12/01 00:42:37  rogeeff
-//  prerelease cleaning
-//
-
 // ***************************************************************************
 
 #endif // BOOST_EXECUTION_MONITOR_IPP_012205GER

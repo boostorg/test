@@ -1,5 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
-//  (C) Copyright Ullrich Koethe 2001.
+//  (C) Copyright Gennadiy Rozental 2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -21,7 +20,7 @@
 #include <boost/test/utils/wrap_stringstream.hpp>
 #include <boost/test/predicate_result.hpp>
 
-// BOOST
+// Boost
 #include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/preprocessor/seq/size.hpp>
 #include <boost/preprocessor/seq/enum.hpp> 
@@ -444,6 +443,12 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.49  2005/02/01 06:40:06  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.48  2005/01/30 03:32:57  rogeeff
 //  Test Tools completely reworked:
 //    interfaces streamlined to provide 3 version for each tool

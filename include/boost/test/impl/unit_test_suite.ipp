@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -22,7 +22,7 @@
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/utils/wrap_stringstream.hpp>
 
-// BOOST
+// Boost
 #include <boost/mem_fn.hpp>
 #include <boost/timer.hpp>
 
@@ -94,11 +94,14 @@ test_case::Impl::check_dependencies()
 
 //____________________________________________________________________________//
 
-test_case::test_case( const_string name_, bool type, counter_t stages_amount_, bool monitor_run_ )
-: p_timeout( 0 ), p_expected_failures( 0 ), p_type( type ),
-  p_name( std::string( name_.begin(), name_.end() ) ),
-  p_compound_stage( false ), p_stages_amount( stages_amount_ ),
-  m_pimpl( new Impl( monitor_run_ ) )
+test_case::test_case( const_string name, bool type, counter_t stages_amount, bool monitor_run )
+: p_timeout( 0 )
+, p_expected_failures( 0 )
+, p_type( type )
+, p_name( std::string( name.begin(), name.end() ) )
+, p_compound_stage( false )
+, p_stages_amount( stages_amount )
+, m_pimpl( new Impl( monitor_run ) )
 {
 }
 
@@ -305,6 +308,12 @@ normalize_test_case_name( const_string name )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2005/02/01 06:40:07  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.3  2005/01/30 01:52:47  rogeeff
 //  counter type renamed
 //  log interface functions shortened
@@ -322,23 +331,6 @@ normalize_test_case_name( const_string name )
 //     straitend interface between log and formatters
 //     change compiler like formatter name
 //     minimized unit_test_log interface and reworked to use explicit calls
-//
-//  Revision 1.16  2004/06/07 07:34:23  rogeeff
-//  detail namespace renamed
-//
-//  Revision 1.15  2004/05/21 06:26:10  rogeeff
-//  licence update
-//
-//  Revision 1.14  2004/05/18 13:26:47  dgregor
-//  unit_test_suite.cpp: Try to work around an Intel 7.1 bug with conversions in a base class.
-//
-//  Revision 1.13  2004/05/11 11:05:04  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//  namespace names shortened
-//
-//  Revision 1.12  2003/12/01 00:42:37  rogeeff
-//  prerelease cleaning
 //
 // ***************************************************************************
 

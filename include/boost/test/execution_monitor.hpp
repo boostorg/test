@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  (C) Copyright Beman Dawes 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
@@ -32,17 +32,15 @@
 #ifndef BOOST_EXECUTION_MONITOR_HPP_071894GER
 #define BOOST_EXECUTION_MONITOR_HPP_071894GER
 
-// BOOST TEST
+// Boost.Test
 #include <boost/test/detail/unit_test_config.hpp>
 
-// BOOST
+// Boost
 #include <boost/scoped_ptr.hpp>
 #include <boost/type.hpp>
 #include <boost/cstdlib.hpp>
 
 namespace boost {
-
-class execution_monitor;
 
 namespace detail {
 
@@ -217,6 +215,12 @@ void    detect_memory_leaks();
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.20  2005/02/01 06:40:06  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.19  2005/01/31 05:59:18  rogeeff
 //  detect_memory_leaks feature added
 //

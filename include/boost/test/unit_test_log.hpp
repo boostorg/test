@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -22,12 +22,11 @@
 #include <boost/test/detail/log_level.hpp>
 #include <boost/test/fwd_decl.hpp>
 
-// BOOST
+// Boost
 #include <boost/utility.hpp>
 
 // STL
 #include <iosfwd>   // for std::ostream&
-#include <string>   // for std::string&; in fact need only forward declaration
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -149,6 +148,12 @@ unit_test_log_t& unit_test_log = unit_test_log_t::instance();
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.28  2005/02/01 06:40:06  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.27  2005/01/30 03:26:29  rogeeff
 //  return an ability for explicit end()
 //

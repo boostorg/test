@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -19,7 +19,7 @@
 // Boost.Test
 #include <boost/test/detail/unit_test_config.hpp>
 
-// BOOST
+// Boost
 #if !BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600))
 #include <boost/preprocessor/seq/for_each.hpp>
 #endif
@@ -214,63 +214,17 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2005/02/01 06:40:07  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.2  2005/01/22 19:22:13  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
 //  Revision 1.1  2005/01/22 18:21:39  rogeeff
 //  moved sharable staff into utils
-//
-//  Revision 1.28  2004/10/05 07:38:09  rogeeff
-//  typo fix
-//
-//  Revision 1.27  2004/10/05 02:18:18  rogeeff
-//  gcc2.85 fix
-//
-//  Revision 1.26  2004/09/19 09:22:12  rogeeff
-//  ios fix for classic iostreams
-//
-//  Revision 1.25  2004/08/10 04:08:30  rogeeff
-//  first tru64cxx65 fix
-//
-//  Revision 1.24  2004/08/04 04:14:58  rogeeff
-//  irix6 fix
-//
-//  Revision 1.23  2004/07/19 12:19:05  rogeeff
-//  guard rename
-//  no using workaroung reworked
-//
-//  Revision 1.22  2004/06/05 11:00:26  rogeeff
-//  proper IBM VA port
-//
-//  Revision 1.21  2004/05/27 06:22:17  rogeeff
-//  workaround for gcc 2.95 io
-//  workaround for msvc logical properties operators
-//
-//  Revision 1.20  2004/05/25 10:16:22  rogeeff
-//  upgrade workaround version for Intel
-//
-//  Revision 1.19  2004/05/23 08:58:12  rogeeff
-//  add intel into workaround branch
-//
-//  Revision 1.18  2004/05/23 08:56:58  rogeeff
-//  add intel into workaround branch
-//
-//  Revision 1.17  2004/05/21 06:19:11  rogeeff
-//  hack for non-using version of readwrite properties
-//  licence update
-//
-//  Revision 1.16  2004/05/18 13:39:32  dgregor
-//  class_properties.hpp: Make the empty character constant into a single space (which isn't used), because the Sun compiler is very eager to spit out an error here.
-//
-//  Revision 1.15  2004/05/18 13:10:49  dgregor
-//  class_properties.hpp: Borland C++ does not handle using declarations for data members properly; fixed the existing Borland workaround.
-//
-//  Revision 1.14  2004/05/11 11:00:53  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//
-//  Revision 1.13  2003/12/01 00:41:56  rogeeff
-//  prerelease cleaning
 //
 // ***************************************************************************
 

@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2002-2003.
+//  (C) Copyright Gennadiy Rozental 2002-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -158,6 +158,12 @@ typedef basic_wrap_stringstream<wchar_t>    wrap_wstringstream;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2005/02/01 06:40:07  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.4  2005/01/31 07:50:06  rogeeff
 //  cdecl portability fix
 //
@@ -169,6 +175,7 @@ typedef basic_wrap_stringstream<wchar_t>    wrap_wstringstream;
 //
 //  Revision 1.1  2005/01/22 18:21:40  rogeeff
 //  moved sharable staff into utils
+//
 // ***************************************************************************
 
 #endif  // BOOST_WRAP_STRINGSTREAM_HPP_071894GER

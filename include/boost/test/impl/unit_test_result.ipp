@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -24,7 +24,7 @@
 #include <boost/test/utils/fixed_mapping.hpp>
 #include <boost/test/utils/xml_printer.hpp>
 
-// BOOST
+// Boost
 #include <boost/config.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/cstdlib.hpp>
@@ -604,6 +604,12 @@ unit_test_result::has_passed() const
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2005/02/01 06:40:07  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.2  2005/01/30 01:56:10  rogeeff
 //  counter type renamed
 //
@@ -613,40 +619,6 @@ unit_test_result::has_passed() const
 //  Revision 1.32  2005/01/21 07:26:41  rogeeff
 //  xml printing helpers reworked to employ generic custom manipulators
 //
-//  Revision 1.31  2004/09/17 12:34:13  rogeeff
-//  XML typo
-//
-//  Revision 1.30  2004/08/10 04:02:18  rogeeff
-//  first tru64cxx65 fix
-//
-//  Revision 1.29  2004/07/19 12:10:56  rogeeff
-//  added proper encoded of XML PCDATA
-//  min->max bug fix
-//
-//  Revision 1.28  2004/06/29 04:33:20  rogeeff
-//  use std::min
-//
-//  Revision 1.27  2004/06/23 04:49:48  eric_niebler
-//  remove std_min and std_max, update minmax coding guidelines
-//
-//  Revision 1.26  2004/05/21 06:26:10  rogeeff
-//  licence update
-//
-//  Revision 1.25  2004/05/13 09:04:44  rogeeff
-//  added fixed_mapping
-//
-//  Revision 1.24  2004/05/11 11:05:04  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//  namespace names shortened
-//
-//  Revision 1.23  2004/02/26 18:27:02  eric_niebler
-//  remove minmax hack from win32.hpp and fix all places that could be affected by the minmax macros
-//
-//  Revision 1.22  2003/12/01 00:42:37  rogeeff
-//  prerelease cleaning
-//
-
 // ***************************************************************************
 
 #endif // BOOST_UNIT_TEST_RESULT_IPP_012205GER

@@ -19,7 +19,7 @@
 #include <boost/test/utils/class_properties.hpp>
 #include <boost/test/utils/wrap_stringstream.hpp>
 
-// BOOST
+// Boost
 #include <boost/shared_ptr.hpp>
 
 // STL
@@ -88,6 +88,12 @@ private:
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.3  2005/02/01 06:40:06  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.2  2005/01/31 20:07:19  rogeeff
 //  Sunpro CC 5.3 workarounds
 //

@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2002-2003.
+//  (C) Copyright Gennadiy Rozental 2002-2005.
 //  (C) Copyright Daryle Walker 2000-2001. 
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
@@ -93,20 +93,17 @@ typedef basic_onullstream<wchar_t>  wonullstream;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2005/02/01 06:40:07  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.2  2005/01/30 01:42:49  rogeeff
 //  warnings suppressed
 //
 //  Revision 1.1  2005/01/22 18:21:40  rogeeff
 //  moved sharable staff into utils
-//
-//  Revision 1.9  2004/07/19 12:21:08  rogeeff
-//  guard rename
-//
-//  Revision 1.8  2004/05/21 06:19:35  rogeeff
-//  licence update
-//
-//  Revision 1.7  2003/12/01 00:41:56  rogeeff
-//  prerelease cleaning
 //
 // ***************************************************************************
 

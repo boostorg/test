@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -114,25 +114,17 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2005/02/01 06:40:07  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.2  2005/01/31 20:07:19  rogeeff
 //  Sunpro CC 5.3 workarounds
 //
 //  Revision 1.1  2005/01/22 18:21:39  rogeeff
 //  moved sharable staff into utils
-//
-//  Revision 1.4  2004/07/26 05:35:53  david_abrahams
-//  Use boost::detail::lower_bound, which is actually guaranteed to work
-//  with heterogeneous comparisons.  C++98 binary searches are not, and
-//  VC++ 8.0 beta rejects the code using std::lower_bound.
-//
-//  Revision 1.3  2004/07/19 12:21:08  rogeeff
-//  guard rename
-//
-//  Revision 1.2  2004/05/21 06:19:35  rogeeff
-//  licence update
-//
-//  Revision 1.1  2004/05/13 09:06:48  rogeeff
-//  added fixed_mapping
 //
 // ***************************************************************************
 

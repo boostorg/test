@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2004.
+//  (C) Copyright Gennadiy Rozental 2004-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -40,24 +40,14 @@ typedef char const* const           c_literal_string;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/02/01 06:40:08  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.1  2005/01/22 18:21:40  rogeeff
 //  moved sharable staff into utils
-//
-//  Revision 1.5  2004/08/18 05:28:57  rogeeff
-//  another tru64cxx65 workaround
-//
-//  Revision 1.4  2004/07/19 12:28:17  rogeeff
-//  guard rename
-//
-//  Revision 1.3  2004/06/05 11:02:15  rogeeff
-//  std::traits usage reworked
-//
-//  Revision 1.2  2004/05/21 06:19:35  rogeeff
-//  licence update
-//
-//  Revision 1.1  2004/05/11 11:00:55  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
 //
 // ***************************************************************************
 

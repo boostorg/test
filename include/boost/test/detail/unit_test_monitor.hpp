@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -10,21 +10,20 @@
 //  Version     : $Revision$
 //
 //  Description : defines specific version of execution monitor used to run unit 
-//  test cases. Translates executioin exception into error level
+//  test cases. Translates execution exception into error level
 // ***************************************************************************
 
 #ifndef BOOST_UNIT_TEST_MONITOR_HPP_071894GER
 #define BOOST_UNIT_TEST_MONITOR_HPP_071894GER
 
+// Boost.Test
 #include <boost/test/execution_monitor.hpp>
-
+#include <boost/test/fwd_decl.hpp>
 #include <boost/test/detail/suppress_warnings.hpp>
 
 namespace boost {
 
 namespace unit_test {
-
-class test_case;
 
 namespace ut_detail {
 
@@ -76,22 +75,11 @@ private:
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.17  2004/07/19 12:24:01  rogeeff
-//  guard rename
-//  suppress warnings reworked
-//
-//  Revision 1.16  2004/06/07 07:33:49  rogeeff
-//  detail namespace renamed
-//
-//  Revision 1.15  2004/05/21 06:19:35  rogeeff
-//  licence update
-//
-//  Revision 1.14  2004/05/11 11:00:53  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//
-//  Revision 1.13  2003/12/01 00:41:56  rogeeff
-//  prerelease cleaning
+//  Revision 1.18  2005/02/01 06:40:07  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
 //
 // ***************************************************************************
 

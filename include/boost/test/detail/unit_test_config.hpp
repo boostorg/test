@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -15,7 +15,7 @@
 #ifndef BOOST_UNIT_TEST_CONFIG_HPP_071894GER
 #define BOOST_UNIT_TEST_CONFIG_HPP_071894GER
 
-// BOOST
+// Boost
 #include <boost/config.hpp> // compilers workarounds and std::ptrdiff_t
 #include <boost/detail/workaround.hpp>
 
@@ -98,6 +98,12 @@ namespace unit_test_framework = unit_test;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.28  2005/02/01 06:40:07  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.27  2005/01/31 07:50:06  rogeeff
 //  cdecl portability fix
 //
@@ -110,31 +116,6 @@ namespace unit_test_framework = unit_test;
 //
 //  Revision 1.24  2005/01/21 07:33:20  rogeeff
 //  BOOST_TEST_SUPPORT_TIMEOUT flag introduced to be used by used to switch code by timeout support
-//
-//  Revision 1.23  2004/10/01 10:52:11  rogeeff
-//  shared some workaround detection
-//
-//  Revision 1.22  2004/09/19 09:22:12  rogeeff
-//  ios fix for classic iostreams
-//
-//  Revision 1.21  2004/07/19 12:23:28  rogeeff
-//  guard rename
-//
-//  Revision 1.20  2004/06/07 07:33:49  rogeeff
-//  detail namespace renamed
-//
-//  Revision 1.19  2004/05/27 06:36:26  rogeeff
-//  eliminate c_string_literal typedef
-//
-//  Revision 1.18  2004/05/21 06:19:35  rogeeff
-//  licence update
-//
-//  Revision 1.17  2004/05/11 11:00:53  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//
-//  Revision 1.16  2003/12/01 00:41:56  rogeeff
-//  prerelease cleaning
 //
 // ***************************************************************************
 

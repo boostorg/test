@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  (C) Copyright Beman Dawes 1995-2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
@@ -20,7 +20,7 @@
 #include <boost/test/execution_monitor.hpp>
 #include <boost/test/detail/unit_test_config.hpp>
 
-// BOOST
+// Boost
 #include <boost/cstdlib.hpp>
 #include <boost/config.hpp>
 
@@ -103,6 +103,12 @@ int BOOST_TEST_CALL_DECL main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2005/02/01 06:40:07  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.3  2005/01/31 07:50:06  rogeeff
 //  cdecl portability fix
 //
@@ -111,17 +117,6 @@ int BOOST_TEST_CALL_DECL main( int argc, char* argv[] )
 //
 //  Revision 1.1  2005/01/22 19:22:12  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
-//
-//  Revision 1.15  2004/05/21 06:26:09  rogeeff
-//  licence update
-//
-//  Revision 1.14  2004/05/11 11:04:44  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//  namespace names shortened
-//
-//  Revision 1.13  2003/12/01 00:42:37  rogeeff
-//  prerelease cleaning
 //
 // ***************************************************************************
 

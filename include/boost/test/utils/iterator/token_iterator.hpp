@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2004.
+//  (C) Copyright Gennadiy Rozental 2004-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -302,10 +302,10 @@ class token_iterator_base
 public:
     // Constructor
     explicit    token_iterator_base()
-    : m_is_dropped( use_isspace ),
-      m_is_kept( use_ispunct ),
-      m_keep_empty_tokens( false ),
-      m_token_produced( false )
+    : m_is_dropped( use_isspace )
+    , m_is_kept( use_ispunct )
+    , m_keep_empty_tokens( false )
+    , m_token_produced( false )
     {
     }
 
@@ -565,40 +565,17 @@ make_range_token_iterator( Iter begin, Iter end, M1 const& m1, M2 const& m2, M3 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2005/02/01 06:40:08  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.2  2005/01/22 19:22:14  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
 //  Revision 1.1  2005/01/22 18:21:40  rogeeff
 //  moved sharable staff into utils
-//
-//  Revision 1.8  2004/11/28 03:17:50  agurtovoy
-//  merge RC_1_32_0 fixes
-//
-//  Revision 1.7.2.1  2004/10/30 11:34:27  agurtovoy
-//  MSVC/Borland fixes
-//
-//  Revision 1.7  2004/10/01 10:50:40  rogeeff
-//  gcc 2.95 workarounds
-//
-//  Revision 1.6  2004/09/27 08:38:08  rogeeff
-//  msvc workaround
-//
-//  Revision 1.5  2004/09/19 09:22:13  rogeeff
-//  ios fix for classic iostreams
-//
-//  Revision 1.4  2004/07/20 12:46:39  vladimir_prus
-//  Add "this->", since gcc 3.4 has two-phase lookup.
-//
-//  Revision 1.3  2004/07/19 12:29:57  rogeeff
-//  guard rename
-//  mingw port
-//
-//  Revision 1.2  2004/06/07 07:33:50  rogeeff
-//  detail namespace renamed
-//
-//  Revision 1.1  2004/06/05 11:03:12  rogeeff
-//  input_iterator_adaptor simplified
-//  token_iterator added
 //
 // ***************************************************************************
 

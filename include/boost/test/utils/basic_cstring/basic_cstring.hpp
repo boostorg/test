@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2004.
+//  (C) Copyright Gennadiy Rozental 2004-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -156,7 +156,8 @@ basic_cstring<CharT>::null_str()
 template<typename CharT>
 inline
 basic_cstring<CharT>::basic_cstring()
-: m_begin( null_str() ), m_end( m_begin )
+: m_begin( null_str() )
+, m_end( m_begin )
 {
 }
 
@@ -165,16 +166,18 @@ basic_cstring<CharT>::basic_cstring()
 template<typename CharT>
 inline
 basic_cstring<CharT>::basic_cstring( std_string const& s )
-: m_begin( s.c_str() ),
-  m_end( m_begin + s.size() )   {}
+: m_begin( s.c_str() )
+, m_end( m_begin + s.size() )
+{
+}
 
 //____________________________________________________________________________//
 
 template<typename CharT>
 inline
 basic_cstring<CharT>::basic_cstring( pointer s )
-: m_begin( s ? s : null_str() ),
-  m_end  ( m_begin + (s ? traits_type::length( s ) : 0 ) ) 
+: m_begin( s ? s : null_str() )
+, m_end  ( m_begin + (s ? traits_type::length( s ) : 0 ) )
 {
 }
 
@@ -192,7 +195,8 @@ basic_cstring<CharT>::basic_cstring( pointer s, size_type arg_size )
 template<typename CharT>
 inline
 basic_cstring<CharT>::basic_cstring( pointer first, pointer last )
-: m_begin( first ), m_end( last )
+: m_begin( first )
+, m_end( last )
 {
 }
 
@@ -714,6 +718,12 @@ last_char( basic_cstring<CharT> source )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2005/02/01 06:40:08  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.2  2005/01/22 19:22:13  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
@@ -722,43 +732,6 @@ last_char( basic_cstring<CharT> source )
 //
 //  Revision 1.12  2005/01/21 07:33:51  rogeeff
 //  small aCC fix
-//
-//  Revision 1.11  2004/10/05 02:17:47  rogeeff
-//  workaround guard rewritten
-//
-//  Revision 1.10  2004/10/01 10:51:28  rogeeff
-//  gcc 2.95 workarounds
-//
-//  Revision 1.9  2004/07/19 12:25:48  rogeeff
-//  guard rename
-//  portability fix
-//
-//  Revision 1.8  2004/06/29 04:32:25  rogeeff
-//  no message
-//
-//  Revision 1.7  2004/06/07 07:33:19  rogeeff
-//  amother borland patch
-//  detail namespace renamed
-//
-//  Revision 1.6  2004/06/05 11:02:15  rogeeff
-//  std::traits usage reworked
-//
-//  Revision 1.5  2004/06/01 11:07:53  tknapen
-//  port to vacpp version 6
-//
-//  Revision 1.4  2004/05/27 06:24:28  rogeeff
-//  workaround for gcc 2.95 io
-//  workaround for cwpro array definition
-//
-//  Revision 1.3  2004/05/25 11:01:25  rogeeff
-//  make npos to have a named type
-//
-//  Revision 1.2  2004/05/21 06:19:35  rogeeff
-//  licence update
-//
-//  Revision 1.1  2004/05/11 11:00:55  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
 //
 // ***************************************************************************
 

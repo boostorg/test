@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2002-2003.
+//  (C) Copyright Gennadiy Rozental 2002-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -32,19 +32,11 @@
 
 //____________________________________________________________________________//
 
-// deprecated interface
-
-#define BOOST_TEST(predicate_)           BOOST_CHECK(predicate_)
-#define BOOST_CRITICAL_TEST(predicate_)  BOOST_REQUIRE(predicate_)
-#define BOOST_CRITICAL_ERROR(message_)   BOOST_FAIL(message_)
-
-//____________________________________________________________________________//
-
 // Boost.Test
 #include <boost/test/impl/execution_monitor.ipp>
 #include <boost/test/utils/class_properties.hpp>
 
-// BOOST
+// Boost
 #include <boost/cstdlib.hpp>            // for exit codes
 #include <boost/current_function.hpp>   // for BOOST_CURRENT_FUNCTION
 
@@ -148,6 +140,12 @@ int BOOST_TEST_CALL_DECL main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.18  2005/02/01 06:40:06  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.17  2005/01/31 07:50:05  rogeeff
 //  cdecl portability fix
 //
@@ -156,19 +154,6 @@ int BOOST_TEST_CALL_DECL main( int argc, char* argv[] )
 //
 //  Revision 1.15  2005/01/22 19:22:12  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
-//
-//  Revision 1.14  2004/07/19 12:14:34  rogeeff
-//  guard rename
-//
-//  Revision 1.13  2004/05/21 06:19:35  rogeeff
-//  licence update
-//
-//  Revision 1.12  2004/05/11 11:00:35  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//
-//  Revision 1.11  2003/12/01 00:41:56  rogeeff
-//  prerelease cleaning
 //
 // ***************************************************************************
 

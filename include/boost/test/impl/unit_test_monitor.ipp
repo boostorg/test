@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  (C) Copyright Ullrich Koethe 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
@@ -97,6 +97,12 @@ unit_test_monitor::function()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2005/02/01 06:40:07  rogeeff
+//  copyright update
+//  old log entries removed
+//  minor stilistic changes
+//  depricated tools removed
+//
 //  Revision 1.1  2005/01/22 19:22:13  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
@@ -114,21 +120,6 @@ unit_test_monitor::function()
 //     change compiler like formatter name
 //     minimized unit_test_log interface and reworked to use explicit calls
 //
-//  Revision 1.15  2004/06/07 07:34:23  rogeeff
-//  detail namespace renamed
-//
-//  Revision 1.14  2004/05/21 06:26:10  rogeeff
-//  licence update
-//
-//  Revision 1.13  2004/05/11 11:05:04  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//  namespace names shortened
-//
-//  Revision 1.12  2003/12/01 00:42:37  rogeeff
-//  prerelease cleaning
-//
-
 // ***************************************************************************
 
 #endif // BOOST_UNIT_TEST_MONITOR_IPP_012205GER
