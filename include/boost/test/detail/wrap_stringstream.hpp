@@ -20,7 +20,7 @@
 #else
 #include <sstream>          // for std::ostringstream
 #endif // BOOST_NO_STRINGSTREAM
-#include <string>           // std::string
+
 namespace boost {
 
 // ************************************************************************** //
@@ -99,12 +99,44 @@ operator<<( wrap_stringstream& targ, wrap_stringstream& src )
 
 //____________________________________________________________________________//
 
+inline wrap_stringstream&
+operator<<( wrap_stringstream& targ, std::ios_base& (*man)(std::ios_base&) )
+{
+	targ.stream() << man;
+	return targ;
+}
+
+//____________________________________________________________________________//
+
+template<typename Elem,typename Tr>
+inline wrap_stringstream&
+operator<<( wrap_stringstream& targ, std::basic_ostream<Elem,Tr>& (*man)(std::basic_ostream<Elem, Tr>&) )
+{
+	targ.stream() << man;
+	return targ;
+}
+
+//____________________________________________________________________________//
+
+template<typename Elem,typename Tr>
+inline wrap_stringstream&
+operator<<( wrap_stringstream& targ, std::basic_ios<Elem, Tr>& (*man)(std::basic_ios<Elem, Tr>&) )
+{
+	targ.stream() << man;
+	return targ;
+}
+
+//____________________________________________________________________________//
+
 }  // namespace boost
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2003/11/02 06:21:57  rogeeff
+//  added stl manipulators support
+//
 //  Revision 1.5  2003/10/27 07:13:13  rogeeff
 //  licence update
 //
