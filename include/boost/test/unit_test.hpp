@@ -18,6 +18,7 @@
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
 
+#if 0
 #ifndef BOOST_TEST_NO_AUTO_LINK
 
 #define BOOST_LIB_NAME unix_test_framework
@@ -25,11 +26,15 @@
 #include <boost/config/auto_link.hpp>
 
 #endif
+#endif
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.11  2003/12/01 17:13:22  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.10  2003/12/01 00:41:56  rogeeff
 //  prerelease cleaning
 //
