@@ -1,4 +1,4 @@
-*.nsb
+*.ncb
 *.suo
 debug
 release
