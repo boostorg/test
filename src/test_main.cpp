@@ -70,7 +70,7 @@ int main( int argc, char* argv[] ) {
     bool no_result_code = retrieve_framework_parameter( NO_RESULT_CODE, &argc, argv ) == "no";
 
     // set catch_system_error switch
-    detail::unit_test_monitor::catch_system_errors( retrieve_framework_parameter( CATCH_SYS_ERRORS, &argc, argv ) != "no" );
+    ut_detail::unit_test_monitor::catch_system_errors( retrieve_framework_parameter( CATCH_SYS_ERRORS, &argc, argv ) != "no" );
 
     //  set up the test   
     argc_ = argc;
@@ -98,6 +98,9 @@ int main( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.18  2004/06/07 07:34:22  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.17  2004/05/21 06:26:09  rogeeff
 //  licence update
 //

@@ -41,7 +41,7 @@ boost::unit_test::create_test_case_template( meta_ ## the_function(), typelist()
     
 namespace boost {
 namespace unit_test {
-namespace detail {
+namespace ut_detail {
 
 // ************************************************************************** //
 // **************          test_case_template_instance         ************** //
@@ -84,7 +84,7 @@ struct test_case_instance_runner {
     const_string    m_template_name;
 };
 
-} // namespace detail
+} // namespace ut_detail
 
 // ************************************************************************** //
 // **************              test_case_template              ************** //
@@ -109,7 +109,7 @@ protected:
     }
 
     // Data members
-    detail::test_case_instance_runner<TestCaseTemplate> m_template_holder; // need instance to match for_each interface
+    ut_detail::test_case_instance_runner<TestCaseTemplate> m_template_holder; // need instance to match for_each interface
 };
 
 //____________________________________________________________________________//
@@ -122,7 +122,7 @@ template<typename TestCaseTemplate, typename TestTypesList>
 inline test_case*
 create_test_case_template( TestCaseTemplate, TestTypesList, std::string name_ )
 {
-    return new test_case_template<TestCaseTemplate,TestTypesList>( detail::normalize_test_case_name( name_ ) );
+    return new test_case_template<TestCaseTemplate,TestTypesList>( ut_detail::normalize_test_case_name( name_ ) );
 }
 
 //____________________________________________________________________________//
@@ -134,6 +134,9 @@ create_test_case_template( TestCaseTemplate, TestTypesList, std::string name_ )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2004/06/07 07:33:49  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.6  2004/05/21 06:19:35  rogeeff
 //  licence update
 //

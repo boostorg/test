@@ -34,7 +34,7 @@ namespace unit_test {
 
 typedef unsigned long   unit_test_counter;
 
-namespace detail {
+namespace ut_detail {
 
 #ifdef BOOST_NO_STD_DISTANCE
 template <class T>
@@ -52,7 +52,7 @@ using std::distance;
 
 #define BOOST_TEST_L( s ) const_string( s, sizeof(s) )
 
-} // namespace detail
+} // namespace ut_detail
 
 } // namespace unit_test
 
@@ -64,6 +64,9 @@ namespace unit_test_framework = unit_test;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.20  2004/06/07 07:33:49  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.19  2004/05/27 06:36:26  rogeeff
 //  eliminate c_string_literal typedef
 //

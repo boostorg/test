@@ -363,6 +363,9 @@
 						RelativePath="..\..\..\..\boost\test\detail\basic_cstring\basic_cstring_fwd.hpp">
 					</File>
 					<File
+						RelativePath="..\..\..\..\boost\test\detail\basic_cstring\bcs_char_traits.hpp">
+					</File>
+					<File
 						RelativePath="..\..\..\..\boost\test\detail\basic_cstring\compare.hpp">
 					</File>
 					<File
@@ -380,6 +383,9 @@
 					</File>
 					<File
 						RelativePath="..\..\..\..\boost\test\detail\iterator\istream_line_iterator.hpp">
+					</File>
+					<File
+						RelativePath="..\..\..\..\boost\test\detail\iterator\token_iterator.hpp">
 					</File>
 				</Filter>
 			</Filter>

@@ -139,6 +139,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_case_template_test", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "auto_unit_test_test_mult", "auto_unit_test_test_mult.vcproj", "{E782C9A9-A9AC-41AA-82C1-5ECF8798ED81}"
 	ProjectSection(ProjectDependencies) = postProject
+		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "exec_mon_example", "exec_mon_example.vcproj", "{9B50CF21-1612-4920-BD4D-D0B7E119DD09}"
@@ -147,6 +148,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "exec_mon_example", "exec_mo
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "custom_exception_test", "custom_exception_test.vcproj", "{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}"
 	ProjectSection(ProjectDependencies) = postProject
+		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "class_properties_test", "class_properties_test.vcproj", "{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}"
@@ -161,10 +163,17 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basic_cstring_test", "basic
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fixed_mapping_test", "fixed_mapping_test.vcproj", "{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}"
 	ProjectSection(ProjectDependencies) = postProject
+		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ifstream_line_iterator_test", "ifstream_line_iterator_test.vcproj", "{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}"
 	ProjectSection(ProjectDependencies) = postProject
+		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "token_iterator_test", "token_iterator_test.vcproj", "{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
 Global
@@ -297,6 +306,10 @@ Global
 		{9B50CF21-1612-4920-BD4D-D0B7E119DD09}.Debug.Build.0 = Debug|Win32
 		{9B50CF21-1612-4920-BD4D-D0B7E119DD09}.Release.ActiveCfg = Release|Win32
 		{9B50CF21-1612-4920-BD4D-D0B7E119DD09}.Release.Build.0 = Release|Win32
+		{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}.Debug.ActiveCfg = Debug|Win32
+		{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}.Debug.Build.0 = Debug|Win32
+		{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}.Release.ActiveCfg = Release|Win32
+		{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}.Release.Build.0 = Release|Win32
 		{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}.Debug.ActiveCfg = Debug|Win32
 		{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}.Debug.Build.0 = Debug|Win32
 		{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}.Release.ActiveCfg = Release|Win32

@@ -55,7 +55,7 @@ using boost::test_toolbox::extended_predicate_value;
         }                                                                   \
         unit_test_log::instance().set_log_stream( std::cout );              \
         BOOST_CHECK( nothrow_check );                                       \
-    } catch( boost::test_toolbox::detail::test_tool_failed const&) {        \
+    } catch( boost::test_toolbox::tt_detail::test_tool_failed const&) {     \
         unit_test_log::instance().set_log_stream( std::cout );              \
         BOOST_CHECK( throw_check );                                         \
     }                                                                       \
@@ -711,6 +711,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.32  2004/06/07 07:34:23  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.31  2004/05/27 06:30:48  rogeeff
 //  no message
 //

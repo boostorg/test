@@ -37,70 +37,70 @@
 // ************************************************************************** //
 
 #define BOOST_CHECKPOINT(message_) \
-    boost::test_tools::detail::checkpoint_impl( \
+    boost::test_tools::tt_detail::checkpoint_impl( \
         boost::wrap_stringstream().ref() << message_, BOOST_TEST_STRING_LITERAL(__FILE__), (std::size_t)__LINE__)   \
 /**/
 
 #define BOOST_WARN(predicate) \
-    boost::test_tools::detail::warn_and_continue_impl((predicate), \
+    boost::test_tools::tt_detail::warn_and_continue_impl((predicate), \
         boost::wrap_stringstream().ref() << #predicate, BOOST_TEST_STRING_LITERAL(__FILE__), (std::size_t)__LINE__) \
 /**/
 
 #define BOOST_CHECK(predicate) \
-    boost::test_tools::detail::test_and_continue_impl((predicate), \
+    boost::test_tools::tt_detail::test_and_continue_impl((predicate), \
         boost::wrap_stringstream().ref() << #predicate, BOOST_TEST_STRING_LITERAL(__FILE__), (std::size_t)__LINE__) \
 /**/
 
 #define BOOST_CHECK_EQUAL(left_, right_) \
-    boost::test_tools::detail::equal_and_continue_impl((left_), (right_), \
+    boost::test_tools::tt_detail::equal_and_continue_impl((left_), (right_), \
         boost::wrap_stringstream().ref() << #left_ " == " #right_, BOOST_TEST_STRING_LITERAL(__FILE__), (std::size_t)__LINE__)
 /**/
 
 #define BOOST_CHECK_CLOSE(left_, right_, tolerance) \
-    boost::test_tools::detail::compare_and_continue_impl((left_), (right_), (tolerance), \
+    boost::test_tools::tt_detail::compare_and_continue_impl((left_), (right_), (tolerance), \
                                                           BOOST_TEST_STRING_LITERAL( #left_ ), \
                                                           BOOST_TEST_STRING_LITERAL( #right_ ), \
                                                           BOOST_TEST_STRING_LITERAL(__FILE__), (std::size_t)__LINE__) \
 /**/
 
 #define BOOST_BITWISE_EQUAL(left_, right_) \
-    boost::test_tools::detail::bitwise_equal_and_continue_impl((left_), (right_), \
+    boost::test_tools::tt_detail::bitwise_equal_and_continue_impl((left_), (right_), \
         boost::wrap_stringstream().ref() << #left_ " =.= " #right_, BOOST_TEST_STRING_LITERAL(__FILE__), (std::size_t)__LINE__)
 /**/
 
 #define BOOST_REQUIRE(predicate) \
-    boost::test_tools::detail::test_and_throw_impl((predicate), \
+    boost::test_tools::tt_detail::test_and_throw_impl((predicate), \
         boost::wrap_stringstream().ref() << #predicate, BOOST_TEST_STRING_LITERAL(__FILE__), (std::size_t)__LINE__)
 /**/
 
 #define BOOST_MESSAGE(message_) \
-    boost::test_tools::detail::message_impl( \
+    boost::test_tools::tt_detail::message_impl( \
         boost::wrap_stringstream().ref() << message_, BOOST_TEST_STRING_LITERAL(__FILE__), (std::size_t)__LINE__)
 /**/
 
 #define BOOST_WARN_MESSAGE(predicate, message_) \
-    boost::test_tools::detail::warn_and_continue_impl((predicate), \
+    boost::test_tools::tt_detail::warn_and_continue_impl((predicate), \
         boost::wrap_stringstream().ref() << message_, BOOST_TEST_STRING_LITERAL(__FILE__), (std::size_t)__LINE__,false)
 /**/
 
 #define BOOST_CHECK_MESSAGE(predicate, message_) \
-    boost::test_tools::detail::test_and_continue_impl((predicate), \
+    boost::test_tools::tt_detail::test_and_continue_impl((predicate), \
         boost::wrap_stringstream().ref() << message_, BOOST_TEST_STRING_LITERAL(__FILE__), (std::size_t)__LINE__,false)
 /**/
 
 #define BOOST_REQUIRE_MESSAGE(predicate, message_) \
-    boost::test_tools::detail::test_and_throw_impl((predicate), \
+    boost::test_tools::tt_detail::test_and_throw_impl((predicate), \
         boost::wrap_stringstream().ref() << message_, BOOST_TEST_STRING_LITERAL(__FILE__), (std::size_t)__LINE__,false)
 /**/
 
 #define BOOST_CHECK_PREDICATE( predicate, arg_list_size, arg_list ) \
-    boost::test_tools::detail::test_and_continue_impl(predicate, BOOST_PLACE_PREDICATE_ARGS ## arg_list_size arg_list, \
+    boost::test_tools::tt_detail::test_and_continue_impl(predicate, BOOST_PLACE_PREDICATE_ARGS ## arg_list_size arg_list, \
         boost::wrap_stringstream().ref() << #predicate << "("\
             << BOOST_PRINT_PREDICATE_ARGS ## arg_list_size arg_list << ")", BOOST_TEST_STRING_LITERAL(__FILE__), (std::size_t)__LINE__)
 /**/
 
 #define BOOST_REQUIRE_PREDICATE( predicate, arg_list_size, arg_list ) \
-    boost::test_tools::detail::test_and_throw_impl(predicate, BOOST_PLACE_PREDICATE_ARGS ## arg_list_size arg_list, \
+    boost::test_tools::tt_detail::test_and_throw_impl(predicate, BOOST_PLACE_PREDICATE_ARGS ## arg_list_size arg_list, \
         boost::wrap_stringstream().ref() << #predicate << "("\
             << BOOST_PRINT_PREDICATE_ARGS ## arg_list_size arg_list << ")", BOOST_TEST_STRING_LITERAL(__FILE__), (std::size_t)__LINE__)
 /**/
@@ -133,12 +133,12 @@
 /**/
 
 #define BOOST_CHECK_EQUAL_COLLECTIONS( left_begin_, left_end_, right_begin_ ) \
-    boost::test_tools::detail::equal_and_continue_impl( (left_begin_), (left_end_), (right_begin_),\
+    boost::test_tools::tt_detail::equal_and_continue_impl( (left_begin_), (left_end_), (right_begin_),\
         boost::wrap_stringstream().ref() << \
             "{" #left_begin_ ", " #left_end_ "}" " == {" #right_begin_ ", ...}", BOOST_TEST_STRING_LITERAL(__FILE__), (std::size_t)__LINE__)
 /**/
 
-#define BOOST_IS_DEFINED(symb) boost::test_tools::detail::is_defined_impl( #symb, BOOST_STRINGIZE(= symb) )
+#define BOOST_IS_DEFINED(symb) boost::test_tools::tt_detail::is_defined_impl( #symb, BOOST_STRINGIZE(= symb) )
 
 // ***************************** //
 // helper macros
@@ -189,7 +189,7 @@ public:
     boost::shared_ptr<wrap_stringstream>                        p_message;
 };
 
-namespace detail {
+namespace tt_detail {
 
 // ************************************************************************** //
 // **************                test_tool_failed              ************** //
@@ -229,7 +229,7 @@ struct print_log_value<unsigned char> {
 //____________________________________________________________________________//
 
 #define BOOST_TEST_DONT_PRINT_LOG_VALUE( the_type )                 \
-namespace boost { namespace test_tools { namespace detail {         \
+namespace boost { namespace test_tools { namespace tt_detail {      \
 template<>                                                          \
 struct print_log_value<the_type > {                                 \
     void operator()( std::ostream& ostr, the_type const& t ) {}     \
@@ -526,7 +526,7 @@ is_defined_impl( const_string symbol_name_, const_string symbol_value_ );
 
 //____________________________________________________________________________//
 
-} // namespace detail
+} // namespace tt_detail
 
 // ************************************************************************** //
 // **************               output_test_stream             ************** //
@@ -583,6 +583,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.43  2004/06/07 07:33:49  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.42  2004/06/05 10:59:58  rogeeff
 //  proper IBM VA port
 //

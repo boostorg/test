@@ -35,7 +35,7 @@ enum floating_point_comparison_type { FPC_STRONG, FPC_WEAK };
 // **************                    details                   ************** //
 // ************************************************************************** //
 
-namespace detail {
+namespace tt_detail {
 
 template<typename FPT>
 inline FPT
@@ -51,15 +51,14 @@ template<typename FPT>
 inline FPT 
 safe_fpt_division( FPT f1, FPT f2 )
 {
-    return  (f2 < 1 && f1 > f2 * (std::numeric_limits<FPT>::max)())   ? (std::numeric_limits<FPT>::max)() :
-           ((f2 > 1 && f1 < f2 * (std::numeric_limits<FPT>::min)() || 
-             f1 == 0)                                               ? 0                               :
-                                                                      f1/f2 );
+    return  (f2 < 1 && f1 > f2 * (std::numeric_limits<FPT>::max)())               ? (std::numeric_limits<FPT>::max)()
+            : ((f2 > 1 && f1 < f2 * (std::numeric_limits<FPT>::min)() || f1 == 0) ? 0
+                                                                                  : f1/f2 );
 }
 
 //____________________________________________________________________________//
 
-} // namespace detail
+} // namespace tt_detail
 
 // ************************************************************************** //
 // **************             close_at_tolerance               ************** //
@@ -73,9 +72,9 @@ public:
 
     bool        operator()( FPT left, FPT right ) const
     {
-        FPT diff = detail::fpt_abs( left - right );
-        FPT d1   = detail::safe_fpt_division( diff, detail::fpt_abs( right ) );
-        FPT d2   = detail::safe_fpt_division( diff, detail::fpt_abs( left ) );
+        FPT diff = tt_detail::fpt_abs( left - right );
+        FPT d1   = tt_detail::safe_fpt_division( diff, tt_detail::fpt_abs( right ) );
+        FPT d2   = tt_detail::safe_fpt_division( diff, tt_detail::fpt_abs( left ) );
         
         return p_strong_or_weak ? (d1 <= p_fraction_tolerance.get() && d2 <= p_fraction_tolerance.get()) 
                                 : (d1 <= p_fraction_tolerance.get() || d2 <= p_fraction_tolerance.get());
@@ -93,7 +92,7 @@ public:
 // ************************************************************************** //
 
 template<typename FPT, typename PersentType>
-bool
+inline bool
 check_is_closed( FPT left, FPT right, PersentType tolerance, floating_point_comparison_type fpc_type = FPC_STRONG )
 {
     close_at_tolerance<FPT,PersentType> pred( tolerance, fpc_type );
@@ -104,7 +103,7 @@ check_is_closed( FPT left, FPT right, PersentType tolerance, floating_point_comp
 //____________________________________________________________________________//
 
 template<typename FPT>
-FPT
+inline FPT
 compute_tolerance( FPT tolerance )
 {
     close_at_tolerance<FPT> pred( tolerance );
@@ -121,6 +120,9 @@ compute_tolerance( FPT tolerance )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.17  2004/06/07 07:33:49  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.16  2004/05/21 06:19:35  rogeeff
 //  licence update
 //

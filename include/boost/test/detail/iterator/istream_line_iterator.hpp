@@ -60,7 +60,7 @@ private:
     // increment implementation
     bool                     get()
     {
-        return std::getline( *m_input_stream, m_value, m_delimeter );
+        return std::getline( *m_input_stream, this->m_value, m_delimeter );
     }
 
     // Data members
@@ -79,6 +79,9 @@ typedef basic_istream_line_iterator<wchar_t>    wistream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2004/06/07 07:33:50  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.4  2004/06/05 11:03:12  rogeeff
 //  input_iterator_adaptor simplified
 //  token_iterator added

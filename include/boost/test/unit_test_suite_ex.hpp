@@ -66,7 +66,7 @@ public:
                                         ParamIterator const& begin_, ParamIterator const& end_ )
     : test_case( name_, true, 0 ), m_first_parameter( begin_ ), m_last_parameter( end_ ), m_function( f_ )
     {
-        p_stages_amount.set( detail::distance( begin_, end_ ) );
+        p_stages_amount.set( ut_detail::distance( begin_, end_ ) );
     }
 
     // test case implementation
@@ -89,7 +89,7 @@ private:
 inline test_case*
 create_test_case( function0<void> const& fct_, std::string name_ )
 {
-    return new boost_function_test_case( fct_, detail::normalize_test_case_name( name_ ) );
+    return new boost_function_test_case( fct_, ut_detail::normalize_test_case_name( name_ ) );
 }
 
 template<typename ParamIterator, typename ParameterType>
@@ -98,7 +98,7 @@ create_test_case( function1<void,ParameterType> const& fct_, std::string name_,
                   ParamIterator const& begin_, ParamIterator const& end_ )
 {
     return new parametrized_boost_function_test_case<ParamIterator,ParameterType>(
-                    fct_, detail::normalize_test_case_name( name_ ), begin_, end_ );
+                    fct_, ut_detail::normalize_test_case_name( name_ ), begin_, end_ );
 }
 
 } // unit_test
@@ -109,6 +109,9 @@ create_test_case( function1<void,ParameterType> const& fct_, std::string name_,
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.18  2004/06/07 07:33:49  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.17  2004/05/21 06:19:35  rogeeff
 //  licence update
 //

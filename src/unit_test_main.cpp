@@ -35,7 +35,7 @@ int
 main( int argc, char* argv[] )
 {
     using namespace boost::unit_test;
-    using namespace boost::unit_test::detail;
+    using namespace boost::unit_test::ut_detail;
 
     bool    no_result_code;
     bool    print_build_info;
@@ -89,6 +89,9 @@ main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.16  2004/06/07 07:34:23  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.15  2004/05/21 06:26:10  rogeeff
 //  licence update
 //

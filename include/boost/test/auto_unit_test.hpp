@@ -25,7 +25,7 @@
 
 namespace boost {
 namespace unit_test {
-namespace detail {
+namespace ut_detail {
 
 inline boost::unit_test::test_suite*
 auto_unit_test_suite()
@@ -41,9 +41,9 @@ struct auto_unit_test_registrar
     explicit auto_unit_test_registrar( test_case* tc ) { auto_unit_test_suite()->add( tc ); }
 };
 
-} // detail
+} // namespace ut_detail
 
-} // unit_test
+} // namespace unit_test
 
 } // namespace boost
 
@@ -53,7 +53,7 @@ struct auto_unit_test_registrar
 
 #define BOOST_AUTO_UNIT_TEST( func_name )                           \
 static void func_name();                                            \
-static boost::unit_test::detail::auto_unit_test_registrar \
+static boost::unit_test::ut_detail::auto_unit_test_registrar        \
     BOOST_JOIN( test_registrar, __LINE__)                           \
         ( BOOST_TEST_CASE( func_name ) );                           \
 static void func_name()                                             \
@@ -66,7 +66,7 @@ static void func_name()                                             \
 #ifdef BOOST_AUTO_TEST_MAIN
 boost::unit_test::test_suite*
 init_unit_test_suite( int /* argc */, char* /* argv */ [] ) {
-    return boost::unit_test::detail::auto_unit_test_suite();
+    return boost::unit_test::ut_detail::auto_unit_test_suite();
 }
 #endif
 
@@ -74,6 +74,9 @@ init_unit_test_suite( int /* argc */, char* /* argv */ [] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10  2004/06/07 07:33:42  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.9  2004/05/21 06:19:35  rogeeff
 //  licence update
 //

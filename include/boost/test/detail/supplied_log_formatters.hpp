@@ -28,7 +28,7 @@ namespace boost {
 
 namespace unit_test {
 
-namespace detail {
+namespace ut_detail {
 
 // ************************************************************************** //
 // **************           msvc65_like_log_formatter          ************** //
@@ -80,7 +80,7 @@ private:
     const_string    m_curr_tag;
 };
 
-} // namespace detail
+} // namespace ut_detail
 
 } // namespace unit_test
 
@@ -90,6 +90,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2004/06/07 07:33:49  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.6  2004/05/21 06:19:35  rogeeff
 //  licence update
 //

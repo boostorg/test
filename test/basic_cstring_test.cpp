@@ -466,7 +466,7 @@ void const_conversion()
 utf::test_suite*
 init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 {
-    utf::test_suite* test= BOOST_TEST_SUITE("Const string test");
+    utf::test_suite* test= BOOST_TEST_SUITE("basic_cstring test");
 
     test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( constructors_test, char_types ) );
 #if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x551))
@@ -492,6 +492,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 // History :
 //
 // $Log$
+// Revision 1.5  2004/06/07 07:34:23  rogeeff
+// detail namespace renamed
+//
 // Revision 1.4  2004/06/05 11:04:17  rogeeff
 // no message
 //

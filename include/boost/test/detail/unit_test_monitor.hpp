@@ -30,7 +30,7 @@ namespace unit_test {
 
 class test_case;
 
-namespace detail {
+namespace ut_detail {
 
 // ************************************************************************** //
 // **************               unit_test_monitor              ************** //
@@ -68,7 +68,7 @@ private:
     static bool         s_catch_system_errors;
 }; // unit_test_monitor
 
-} // namespace detail
+} // namespace ut_detail
 
 } // namespace unit_test
 
@@ -84,6 +84,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.16  2004/06/07 07:33:49  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.15  2004/05/21 06:19:35  rogeeff
 //  licence update
 //

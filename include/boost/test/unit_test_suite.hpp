@@ -51,7 +51,7 @@ namespace unit_test {
 
 class test_case {
 public:
-    typedef detail::unit_test_monitor::error_level error_level_type;
+    typedef ut_detail::unit_test_monitor::error_level error_level_type;
 
     // post creation configuration
     void                depends_on( test_case const* rhs );
@@ -110,7 +110,7 @@ private:
 
 //____________________________________________________________________________//
 
-extern detail::unit_test_monitor the_monitor;
+extern ut_detail::unit_test_monitor the_monitor;
 
 template<typename Exception, typename ExceptionTranslator>
 void
@@ -188,7 +188,7 @@ public:
     : test_case( name_, true, 0 ), m_first_parameter( par_begin_ ), m_last_parameter( par_end_ ), m_function( f_ )
     {
        // the typecasts are here to keep Borland C++ Builder 5 happy, for other compilers they have no effect:
-       p_stages_amount.set( detail::distance( (ParamIterator)par_begin_, (ParamIterator)par_end_ ) );
+       p_stages_amount.set( ut_detail::distance( (ParamIterator)par_begin_, (ParamIterator)par_end_ ) );
     }
 
     // test case implementation
@@ -220,7 +220,7 @@ public:
       m_user_test_case( user_test_case_ ), m_function( f_ )
     {
        // the typecasts are here to keep Borland C++ Builder 5 happy, for other compilers they have no effect:
-       p_stages_amount.set( detail::distance( (ParamIterator)par_begin_, (ParamIterator)par_end_ ) );
+       p_stages_amount.set( ut_detail::distance( (ParamIterator)par_begin_, (ParamIterator)par_end_ ) );
     }
 
     // test case implementation
@@ -270,18 +270,18 @@ private:
 // **************               object generators              ************** //
 // ************************************************************************** //
 
-namespace detail {
+namespace ut_detail {
 
 std::string const& normalize_test_case_name( std::string& name_ );
 
-} // namespace detail
+} // namespace ut_detail
 
 //____________________________________________________________________________//
 
 inline test_case*
 create_test_case( void (*fct_)(), std::string name_ )
 {
-    return new function_test_case( fct_, detail::normalize_test_case_name( name_ ) );
+    return new function_test_case( fct_, ut_detail::normalize_test_case_name( name_ ) );
 }
 
 //____________________________________________________________________________//
@@ -290,7 +290,7 @@ template<class UserTestCase>
 inline test_case*
 create_test_case( void (UserTestCase::*fct_)(), std::string name_, boost::shared_ptr<UserTestCase> const& user_test_case_ )
 {
-    return new class_test_case<UserTestCase>( fct_, detail::normalize_test_case_name( name_ ), user_test_case_ );
+    return new class_test_case<UserTestCase>( fct_, ut_detail::normalize_test_case_name( name_ ), user_test_case_ );
 }
 
 //____________________________________________________________________________//
@@ -300,7 +300,7 @@ inline test_case*
 create_test_case( void (*fct_)( ParamType ), std::string name_, ParamIterator const& par_begin_, ParamIterator const& par_end_ )
 {
     return new parametrized_function_test_case<ParamIterator,ParamType>(
-        fct_, detail::normalize_test_case_name( name_ ), par_begin_, par_end_ );
+        fct_, ut_detail::normalize_test_case_name( name_ ), par_begin_, par_end_ );
 }
 
 //____________________________________________________________________________//
@@ -311,7 +311,7 @@ create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, bo
                   ParamIterator const& par_begin_, ParamIterator const& par_end_ )
 {
     return new parametrized_class_test_case<UserTestCase,ParamIterator,ParamType>(
-        fct_, detail::normalize_test_case_name( name_ ), user_test_case_, par_begin_, par_end_ );
+        fct_, ut_detail::normalize_test_case_name( name_ ), user_test_case_, par_begin_, par_end_ );
 }
 
 //____________________________________________________________________________//
@@ -324,6 +324,9 @@ create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, bo
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.23  2004/06/07 07:33:49  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.22  2004/06/05 10:59:58  rogeeff
 //  proper IBM VA port
 //

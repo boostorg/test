@@ -68,7 +68,7 @@ protected:
     boost::scoped_ptr<translate_exception_base> m_next;
 };
 
-}
+} // namespace detail
 
 // ************************************************************************** //
 // **************              execution_exception             ************** //
@@ -210,6 +210,9 @@ execution_monitor::register_exception_translator( ExceptionTranslator const& tr,
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.17  2004/06/07 07:33:49  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.16  2004/05/21 06:19:35  rogeeff
 //  licence update
 //
@@ -223,4 +226,3 @@ execution_monitor::register_exception_translator( ExceptionTranslator const& tr,
 // ***************************************************************************
 
 #endif
-

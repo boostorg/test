@@ -26,10 +26,10 @@ using namespace boost::test_tools;
 // STL
 #include <iostream>
 
-struct this_test_log_formatter : public boost::unit_test::detail::msvc65_like_log_formatter 
+struct this_test_log_formatter : public boost::unit_test::ut_detail::msvc65_like_log_formatter 
 {
     explicit this_test_log_formatter( unit_test_log const& log )
-    : boost::unit_test::detail::msvc65_like_log_formatter( log ) {}
+    : boost::unit_test::ut_detail::msvc65_like_log_formatter( log ) {}
 
     void    print_prefix( std::ostream& output, boost::unit_test::const_string, std::size_t line )
     {
@@ -247,6 +247,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.21  2004/06/07 07:34:23  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.20  2004/05/27 06:30:48  rogeeff
 //  no message
 //

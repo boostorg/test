@@ -42,7 +42,7 @@ namespace boost {
 
 namespace test_tools {
 
-namespace detail {
+namespace tt_detail {
 
 // ************************************************************************** //
 // **************            TOOL BOX Implementation           ************** //
@@ -248,7 +248,7 @@ print_log_value<unsigned char>::operator()( std::ostream& ostr, unsigned char t 
 
 //____________________________________________________________________________//
 
-} // namespace detail
+} // namespace tt_detail
 
 // ************************************************************************** //
 // **************               output_test_stream             ************** //
@@ -458,6 +458,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.32  2004/06/07 07:34:22  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.31  2004/05/27 06:35:54  rogeeff
 //  eliminate c_string_literal typedef
 //

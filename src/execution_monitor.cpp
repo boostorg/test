@@ -176,7 +176,7 @@ assert_reporting_function( int reportType, char* userMessage, int* retVal )
 
 #endif
 
-}  // namespace detail
+} // namespace detail
 
 // ************************************************************************** //
 // **************               execution_monitor              ************** //
@@ -589,6 +589,9 @@ static void report_error( execution_exception::error_code ec, const_string msg1,
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.33  2004/06/07 07:34:22  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.32  2004/05/21 06:26:09  rogeeff
 //  licence update
 //

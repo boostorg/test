@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : 
+//  Description : token iterator for string and range tokenization
 // ***************************************************************************
 
 #ifndef BOOST_TOKEN_ITERATOR_HPP
@@ -40,7 +40,7 @@ namespace unit_test {
 
 enum ti_delimeter_type { use_delim, use_ispunct, use_isspace };
 
-namespace detail {
+namespace ut_detail {
 
 // ************************************************************************** //
 // **************                 delim_policy                 ************** //
@@ -225,7 +225,7 @@ struct keep_empty_tokens_m
     bool m_keep_empty_tokens;
 };
 
-} // namespace detail
+} // namespace ut_detail
 
 // ************************************************************************** //
 // **************              modifiers generators            ************** //
@@ -233,37 +233,37 @@ struct keep_empty_tokens_m
 
 static struct dropped_delimeters_generator {
     template<typename CharT>
-    detail::dropped_delimeters_m<CharT>
-    operator=( basic_cstring<CharT const> d ) { return detail::dropped_delimeters_m<CharT>( d ); }
+    ut_detail::dropped_delimeters_m<CharT>
+    operator=( basic_cstring<CharT const> d ) { return ut_detail::dropped_delimeters_m<CharT>( d ); }
     template<typename CharT>
-    detail::dropped_delimeters_m<CharT>
-    operator=( CharT const* d ) { return detail::dropped_delimeters_m<CharT>( basic_cstring<CharT const>( d ) ); }
+    ut_detail::dropped_delimeters_m<CharT>
+    operator=( CharT const* d ) { return ut_detail::dropped_delimeters_m<CharT>( basic_cstring<CharT const>( d ) ); }
 
-    detail::dropped_delimeters_m<ti_delimeter_type>
-    operator=( ti_delimeter_type t ) { return detail::dropped_delimeters_m<ti_delimeter_type>( t ); }
+    ut_detail::dropped_delimeters_m<ti_delimeter_type>
+    operator=( ti_delimeter_type t ) { return ut_detail::dropped_delimeters_m<ti_delimeter_type>( t ); }
 } dropped_delimeters;
 
 //____________________________________________________________________________//
 
 static struct kept_delimeters_generator {
     template<typename CharT>
-    detail::kept_delimeters_m<CharT>
-    operator=( basic_cstring<CharT const> d ) { return detail::kept_delimeters_m<CharT>( d ); }
+    ut_detail::kept_delimeters_m<CharT>
+    operator=( basic_cstring<CharT const> d ) { return ut_detail::kept_delimeters_m<CharT>( d ); }
     template<typename CharT>
-    detail::kept_delimeters_m<CharT>
-    operator=( CharT const* d ) { return detail::kept_delimeters_m<CharT>( basic_cstring<CharT const>( d ) ); }
+    ut_detail::kept_delimeters_m<CharT>
+    operator=( CharT const* d ) { return ut_detail::kept_delimeters_m<CharT>( basic_cstring<CharT const>( d ) ); }
 
-    detail::kept_delimeters_m<ti_delimeter_type>
-    operator=( ti_delimeter_type t ) { return detail::kept_delimeters_m<ti_delimeter_type>( t ); }
+    ut_detail::kept_delimeters_m<ti_delimeter_type>
+    operator=( ti_delimeter_type t ) { return ut_detail::kept_delimeters_m<ti_delimeter_type>( t ); }
 } kept_delimeters;
 
 //____________________________________________________________________________//
 
-static struct keep_empty_tokens_generator : detail::keep_empty_tokens_m {
-    keep_empty_tokens_generator() : detail::keep_empty_tokens_m( true ) {}
+static struct keep_empty_tokens_generator : ut_detail::keep_empty_tokens_m {
+    keep_empty_tokens_generator() : ut_detail::keep_empty_tokens_m( true ) {}
 
-    detail::keep_empty_tokens_m
-    operator=( bool v ) { return detail::keep_empty_tokens_m( v ); }
+    ut_detail::keep_empty_tokens_m
+    operator=( bool v ) { return ut_detail::keep_empty_tokens_m( v ); }
 } keep_empty_tokens;
 
 //____________________________________________________________________________//
@@ -274,15 +274,16 @@ static struct keep_empty_tokens_generator : detail::keep_empty_tokens_m {
 
 template<typename Derived,
          typename CharT,
-         typename CharCompare   = detail::default_char_compare<CharT>,
+         typename CharCompare   = ut_detail::default_char_compare<CharT>,
          typename ValueType     = basic_cstring<CharT const>,
          typename Reference     = basic_cstring<CharT const>,
          typename Traversal     = forward_traversal_tag>
 class token_iterator_base
 : public input_iterator_facade<Derived,ValueType,Reference,Traversal> {
     typedef basic_cstring<CharT const>                                      cstring;
-    typedef detail::delim_policy<CharT,CharCompare>                         delim_policy;
+    typedef ut_detail::delim_policy<CharT,CharCompare>                      delim_policy;
     typedef input_iterator_facade<Derived,ValueType,Reference,Traversal>    base;
+
 public:
     // Constructor
     explicit    token_iterator_base()
@@ -305,7 +306,7 @@ protected:
     template<typename Iter> 
     bool                    get( Iter& begin, Iter end )
     {
-        typedef detail::token_assigner<BOOST_DEDUCED_TYPENAME iterator_traversal<Iter>::type> Assigner;
+        typedef ut_detail::token_assigner<BOOST_DEDUCED_TYPENAME iterator_traversal<Iter>::type> Assigner;
         Iter checkpoint;
 
         Assigner::clear( m_value );
@@ -320,10 +321,10 @@ protected:
             checkpoint = begin;
 
             if( m_is_kept( *begin ) )
-                Assigner::append_move( begin, m_value );
+                Assigner::append_move( begin, this->m_value );
             else
                 while( begin != end && !m_is_dropped( *begin ) && !m_is_kept( *begin ) )
-                    Assigner::append_move( begin, m_value );
+                    Assigner::append_move( begin, this->m_value );
         } 
         else { // m_keep_empty_tokens ia true
             checkpoint = begin;
@@ -336,7 +337,7 @@ protected:
             }
             else if( m_is_kept( *begin ) ) {
                 if( m_token_produced ) 
-                    Assigner::append_move( begin, m_value );
+                    Assigner::append_move( begin, this->m_value );
 
                 m_token_produced = !m_token_produced;
             } 
@@ -347,13 +348,13 @@ protected:
                     checkpoint = ++begin;
 
                 while( begin != end && !m_is_dropped( *begin ) && !m_is_kept( *begin ) )
-                    Assigner::append_move( begin, m_value );
+                    Assigner::append_move( begin, this->m_value );
 
                 m_token_produced = true;
             }
         }
 
-        Assigner::assign( checkpoint, begin, m_value );
+        Assigner::assign( checkpoint, begin, this->m_value );
 
         return true;
     }
@@ -371,7 +372,7 @@ private:
 // ************************************************************************** //
 
 template<typename CharT,
-         typename CharCompare = detail::default_char_compare<CharT> >
+         typename CharCompare = ut_detail::default_char_compare<CharT> >
 class basic_string_token_iterator
 : public token_iterator_base<basic_string_token_iterator<CharT,CharCompare>,CharT,CharCompare> {
     typedef basic_cstring<CharT const> cstring;
@@ -440,7 +441,7 @@ typedef basic_string_token_iterator<wchar_t>    wstring_token_iterator;
 // ************************************************************************** //
 
 template<typename Iter,
-         typename CharCompare = detail::default_char_compare<BOOST_DEDUCED_TYPENAME iterator_value<Iter>::type>,
+         typename CharCompare = ut_detail::default_char_compare<BOOST_DEDUCED_TYPENAME iterator_value<Iter>::type>,
          typename ValueType   = std::basic_string<BOOST_DEDUCED_TYPENAME iterator_value<Iter>::type>,
          typename Reference   = ValueType const&>
 class range_token_iterator
@@ -549,6 +550,9 @@ make_range_token_iterator( Iter begin, Iter end, M1 const& m1, M2 const& m2, M3 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2004/06/07 07:33:50  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.1  2004/06/05 11:03:12  rogeeff
 //  input_iterator_adaptor simplified
 //  token_iterator added

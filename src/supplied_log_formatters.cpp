@@ -30,7 +30,7 @@ namespace boost {
 
 namespace unit_test {
 
-namespace detail {
+namespace ut_detail {
 
 // ************************************************************************** //
 // **************           msvc65_like_log_formatter          ************** //
@@ -304,7 +304,7 @@ xml_log_formatter::print_indent( std::ostream& output )
 
 //____________________________________________________________________________//
 
-} // namespace detail
+} // namespace ut_detail
 
 } // namespace unit_test
 
@@ -314,6 +314,9 @@ xml_log_formatter::print_indent( std::ostream& output )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.10  2004/06/07 07:34:22  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.9  2004/05/21 06:26:09  rogeeff
 //  licence update
 //

@@ -84,7 +84,7 @@ unit_test_log::unit_test_log() : m_pimpl( new Impl() )
 {
     m_pimpl->m_threshold_level = log_all_errors;
 
-    m_pimpl->m_log_formatter.reset( new detail::msvc65_like_log_formatter( *this ) );
+    m_pimpl->m_log_formatter.reset( new ut_detail::msvc65_like_log_formatter( *this ) );
 
     m_pimpl->clear_entry_data();
     m_pimpl->clear_checkpoint();
@@ -378,9 +378,9 @@ unit_test_log::set_log_format( const_string log_format_name )
         );
 
     if( log_format[log_format_name] == HRF )
-        set_log_formatter( new detail::msvc65_like_log_formatter( *this ) );
+        set_log_formatter( new ut_detail::msvc65_like_log_formatter( *this ) );
     else
-        set_log_formatter( new detail::xml_log_formatter( *this ) );
+        set_log_formatter( new ut_detail::xml_log_formatter( *this ) );
 }
 
 //____________________________________________________________________________//
@@ -417,6 +417,9 @@ unit_test_log::checkpoint_data() const
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.24  2004/06/07 07:34:22  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.23  2004/05/27 06:29:59  rogeeff
 //  eliminate  warnings
 //

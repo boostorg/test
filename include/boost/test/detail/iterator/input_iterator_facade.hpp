@@ -59,7 +59,18 @@ public:
     // Constructor
     input_iterator_facade() : m_valid( false ), m_value() {}
 
-protected:
+protected: // provide access to the Derived
+    void                init()
+    {
+        m_valid = true;
+        increment();
+    }
+
+    // Data members
+    bool                m_valid;
+    ValueType           m_value;
+
+private:
     friend class iterator_core_access;
 
     // iterator facade interface implementation
@@ -74,18 +85,6 @@ protected:
         return m_value;
     }
 
-protected: // provide access to the Derived
-    void                init()
-    {
-        m_valid = true;
-        increment();
-    }
-
-    // Data members
-    bool                m_valid;
-    ValueType           m_value;
-
-private:
     // iterator facade interface implementation
     bool                equal( input_iterator_facade const& rhs ) const
     {
@@ -102,6 +101,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2004/06/07 07:33:50  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.3  2004/06/05 11:03:12  rogeeff
 //  input_iterator_adaptor simplified
 //  token_iterator added

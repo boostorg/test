@@ -33,7 +33,7 @@ namespace unit_test {
 // **************                   test_case                  ************** //
 // ************************************************************************** //
 
-detail::unit_test_monitor the_monitor;
+ut_detail::unit_test_monitor the_monitor;
 
 typedef unit_test_result const* unit_test_result_cptr;
 
@@ -102,7 +102,7 @@ test_case::has_passed() const
 void
 test_case::run()
 {
-    using detail::unit_test_monitor;
+    using ut_detail::unit_test_monitor;
 
     test_case_scope_tracker scope_tracker( *this );
     
@@ -257,7 +257,7 @@ test_suite::do_run()
 // **************               object generators              ************** //
 // ************************************************************************** //
 
-namespace detail {
+namespace ut_detail {
 
 std::string const&
 normalize_test_case_name( std::string& name_ )
@@ -268,7 +268,7 @@ normalize_test_case_name( std::string& name_ )
     return name_;
 }
 
-} // namespace detail
+} // namespace ut_detail
 
 } // namespace unit_test
 
@@ -278,6 +278,9 @@ normalize_test_case_name( std::string& name_ )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.16  2004/06/07 07:34:23  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.15  2004/05/21 06:26:10  rogeeff
 //  licence update
 //

@@ -25,7 +25,7 @@ namespace boost {
 
 namespace unit_test {
 
-namespace detail {
+namespace ut_detail {
 
 // ************************************************************************** //
 // **************                ifstream_holder               ************** //
@@ -50,21 +50,21 @@ protected:
     stream_t    m_stream;
 };
 
-} // namespace detail
+} // namespace ut_detail
 
 // ************************************************************************** //
 // **************         basic_ifstream_line_iterator         ************** //
 // ************************************************************************** //
 
 template<typename CharT>
-class basic_ifstream_line_iterator : detail::ifstream_holder<CharT>, public basic_istream_line_iterator<CharT>
+class basic_ifstream_line_iterator : ut_detail::ifstream_holder<CharT>, public basic_istream_line_iterator<CharT>
 {
 public:
     basic_ifstream_line_iterator( basic_cstring<CharT const> file_name, CharT delimeter )
-    : detail::ifstream_holder<CharT>( file_name ), basic_istream_line_iterator<CharT>( this->m_stream, delimeter ) {}
+    : ut_detail::ifstream_holder<CharT>( file_name ), basic_istream_line_iterator<CharT>( this->m_stream, delimeter ) {}
 
     explicit basic_ifstream_line_iterator( basic_cstring<CharT const> file_name = basic_cstring<CharT const>() )
-    : detail::ifstream_holder<CharT>( file_name ), basic_istream_line_iterator<CharT>( this->m_stream ) {}
+    : ut_detail::ifstream_holder<CharT>( file_name ), basic_istream_line_iterator<CharT>( this->m_stream ) {}
 };
 
 typedef basic_ifstream_line_iterator<char>      ifstream_line_iterator;
@@ -78,6 +78,9 @@ typedef basic_ifstream_line_iterator<wchar_t>   wifstream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2004/06/07 07:33:49  rogeeff
+//  detail namespace renamed
+//
 //  Revision 1.4  2004/06/05 11:03:12  rogeeff
 //  input_iterator_adaptor simplified
 //  token_iterator added
