@@ -31,13 +31,13 @@
 //____________________________________________________________________________//
 
 #define BOOST_TEST_CASE( function ) \
-boost::unit_test::create_test_case((function), #function )
+boost::unit_test::create_test_case((function), BOOST_TEST_STRINGIZE( function ) )
 #define BOOST_CLASS_TEST_CASE( function, tc_instance ) \
-boost::unit_test::create_test_case((function), #function, tc_instance )
+boost::unit_test::create_test_case((function), BOOST_TEST_STRINGIZE( function ), tc_instance )
 #define BOOST_PARAM_TEST_CASE( function, begin, end ) \
-boost::unit_test::create_test_case((function), #function, (begin), (end) )
+boost::unit_test::create_test_case((function), BOOST_TEST_STRINGIZE( function ), (begin), (end) )
 #define BOOST_PARAM_CLASS_TEST_CASE( function, tc_instance, begin, end ) \
-boost::unit_test::create_test_case((function), #function, tc_instance, (begin), (end) )
+boost::unit_test::create_test_case((function), BOOST_TEST_STRINGIZE( function ), tc_instance, (begin), (end) )
 #define BOOST_TEST_SUITE( testsuite_name ) \
 ( new boost::unit_test::test_suite( testsuite_name ) )
 
@@ -60,7 +60,7 @@ public:
     virtual             ~test_case()    {}
 
     // total number of test cases
-    virtual unit_test_counter size() const;
+    virtual counter_t size() const;
 
     // execute this method to run the test case
     void                run();
@@ -71,7 +71,7 @@ public:
     // public properties
     BOOST_READONLY_PROPERTY( int, (test_case)(test_suite) )
                         p_timeout;                  // timeout for the excecution monitor
-    BOOST_READONLY_PROPERTY( unit_test_counter, (test_suite) )
+    BOOST_READONLY_PROPERTY( counter_t, (test_suite) )
                         p_expected_failures;        // number of assertions that are expected to fail in this test case
     readonly_property<bool>
                         p_type;                     // true = test case, false - test suite
@@ -83,7 +83,7 @@ protected:
     // protected properties
     BOOST_READONLY_PROPERTY( bool, (test_case)(test_suite) )
                         p_compound_stage;           // used to properly manage progress report
-    readwrite_property<unit_test_counter>
+    readwrite_property<counter_t>
                         p_stages_amount;            // number of stages this test consist of; stage could be another test case
                                                     // like with test_suite, another parameterized test for parameterized_test_case
                                                     // or 1 stage that reflect single test_case behaviour
@@ -94,7 +94,7 @@ protected:
     // Constructor
     explicit            test_case( const_string         name_,
                                    bool                 type_,
-                                   unit_test_counter    stages_amount_,
+                                   counter_t    stages_amount_,
                                    bool                 monitor_run_    = true );
 
     // test case implementation hooks to be called with unit_test_monitor or alone
@@ -251,10 +251,10 @@ public:
     virtual             ~test_suite();
 
     // test case list management
-    void                add( test_case* tc_, unit_test_counter expected_failures_ = 0, int timeout_ = 0 );
+    void                add( test_case* tc_, counter_t expected_failures_ = 0, int timeout_ = 0 );
 
     // access methods
-    unit_test_counter   size() const;
+    counter_t   size() const;
 
     // test case implementation
     void                do_init();
@@ -272,14 +272,14 @@ private:
 
 namespace ut_detail {
 
-std::string const& normalize_test_case_name( std::string& name_ );
+std::string normalize_test_case_name( const_string name_ );
 
 } // namespace ut_detail
 
 //____________________________________________________________________________//
 
 inline test_case*
-create_test_case( void (*fct_)(), std::string name_ )
+create_test_case( void (*fct_)(), const_string name_ )
 {
     return new function_test_case( fct_, ut_detail::normalize_test_case_name( name_ ) );
 }
@@ -288,7 +288,7 @@ create_test_case( void (*fct_)(), std::string name_ )
 
 template<class UserTestCase>
 inline test_case*
-create_test_case( void (UserTestCase::*fct_)(), std::string name_, boost::shared_ptr<UserTestCase> const& user_test_case_ )
+create_test_case( void (UserTestCase::*fct_)(), const_string name_, boost::shared_ptr<UserTestCase> const& user_test_case_ )
 {
     return new class_test_case<UserTestCase>( fct_, ut_detail::normalize_test_case_name( name_ ), user_test_case_ );
 }
@@ -297,7 +297,7 @@ create_test_case( void (UserTestCase::*fct_)(), std::string name_, boost::shared
 
 template<typename ParamIterator, typename ParamType>
 inline test_case*
-create_test_case( void (*fct_)( ParamType ), std::string name_, ParamIterator const& par_begin_, ParamIterator const& par_end_ )
+create_test_case( void (*fct_)( ParamType ), const_string name_, ParamIterator const& par_begin_, ParamIterator const& par_end_ )
 {
     return new parametrized_function_test_case<ParamIterator,ParamType>(
         fct_, ut_detail::normalize_test_case_name( name_ ), par_begin_, par_end_ );
@@ -307,7 +307,7 @@ create_test_case( void (*fct_)( ParamType ), std::string name_, ParamIterator co
 
 template<class UserTestCase, typename ParamIterator, typename ParamType>
 inline test_case*
-create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, boost::shared_ptr<UserTestCase> const& user_test_case_,
+create_test_case( void (UserTestCase::*fct_)( ParamType ), const_string name_, boost::shared_ptr<UserTestCase> const& user_test_case_,
                   ParamIterator const& par_begin_, ParamIterator const& par_end_ )
 {
     return new parametrized_class_test_case<UserTestCase,ParamIterator,ParamType>(
@@ -324,6 +324,10 @@ create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, bo
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.26  2005/01/30 03:22:07  rogeeff
+//  interface changed to use const_string
+//  use BOOST_TEST_STRINGIZE
+//
 //  Revision 1.25  2005/01/22 19:22:12  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
