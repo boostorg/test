@@ -369,6 +369,19 @@
 						RelativePath="..\..\..\..\boost\test\detail\basic_cstring\io.hpp">
 					</File>
 				</Filter>
+				<Filter
+					Name="iterator"
+					Filter="">
+					<File
+						RelativePath="..\..\..\..\boost\test\detail\iterator\ifstream_line_iterator.hpp">
+					</File>
+					<File
+						RelativePath="..\..\..\..\boost\test\detail\iterator\input_iterator_facade.hpp">
+					</File>
+					<File
+						RelativePath="..\..\..\..\boost\test\detail\iterator\istream_line_iterator.hpp">
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="included"

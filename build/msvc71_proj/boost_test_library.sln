@@ -163,6 +163,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fixed_mapping_test", "fixed
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ifstream_line_iterator_test", "ifstream_line_iterator_test.vcproj", "{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -293,6 +297,10 @@ Global
 		{9B50CF21-1612-4920-BD4D-D0B7E119DD09}.Debug.Build.0 = Debug|Win32
 		{9B50CF21-1612-4920-BD4D-D0B7E119DD09}.Release.ActiveCfg = Release|Win32
 		{9B50CF21-1612-4920-BD4D-D0B7E119DD09}.Release.Build.0 = Release|Win32
+		{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}.Debug.ActiveCfg = Debug|Win32
+		{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}.Debug.Build.0 = Debug|Win32
+		{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}.Release.ActiveCfg = Release|Win32
+		{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}.Release.Build.0 = Release|Win32
 		{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}.Debug.ActiveCfg = Debug|Win32
 		{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}.Debug.Build.0 = Debug|Win32
 		{84B8BFE6-0722-4F7A-BB34-B039BD7D6CD7}.Release.ActiveCfg = Release|Win32

@@ -67,4 +67,5 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : test_case_template_test  : boost_test_exec_monitor ]
           [ test-btl-lib run : custom_exception_test    : boost_unit_test_framework ]
           [ test-btl-lib run : fixed_mapping_test       : boost_unit_test_framework ]
+          [ test-btl-lib run : ifstream_line_iterator_test : boost_unit_test_framework ]
         ;
