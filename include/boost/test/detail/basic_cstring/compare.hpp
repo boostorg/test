@@ -12,8 +12,8 @@
 //  Description : class basic_cstring comparisons implementation
 // ***************************************************************************
 
-#ifndef  BASIC_CSTRING_COMPARE_HPP
-#define  BASIC_CSTRING_COMPARE_HPP
+#ifndef  BASIC_CSTRING_COMPARE_HPP_071894GER
+#define  BASIC_CSTRING_COMPARE_HPP_071894GER
 
 // Boost.Test
 #include <boost/test/detail/basic_cstring/basic_cstring.hpp>
@@ -22,7 +22,7 @@
 #include <functional>
 #include <cctype>
 
-# if defined(BOOST_NO_STDC_NAMESPACE) && !BOOST_WORKAROUND(__BORLANDC__, <= 0x570)
+# if defined(BOOST_NO_STDC_NAMESPACE) && !BOOST_WORKAROUND(__BORLANDC__, <= 0x570) && !BOOST_WORKAROUND(__GNUC__, < 3)
 namespace std { using ::toupper; }
 # endif
 
@@ -107,6 +107,10 @@ operator <( basic_cstring<CharT> x, basic_cstring<CharT> y )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2004/07/19 12:26:41  rogeeff
+//  guard rename
+//  portability fix
+//
 //  Revision 1.5  2004/06/29 04:32:25  rogeeff
 //  no message
 //
@@ -126,4 +130,4 @@ operator <( basic_cstring<CharT> x, basic_cstring<CharT> y )
 //
 // ***************************************************************************
 
-#endif // BASIC_CSTRING_COMPARE_HPP
+#endif // BASIC_CSTRING_COMPARE_HPP_071894GER

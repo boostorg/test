@@ -13,8 +13,8 @@
 //                interface
 // ***************************************************************************
 
-#ifndef BASIC_CSTRING_HPP
-#define BASIC_CSTRING_HPP
+#ifndef BASIC_CSTRING_HPP_071894GER
+#define BASIC_CSTRING_HPP_071894GER
 
 // Boost.Test
 #include <boost/test/detail/basic_cstring/basic_cstring_fwd.hpp>
@@ -517,7 +517,7 @@ inline typename basic_cstring<CharT>::size_type
 basic_cstring<CharT>::find( basic_cstring<CharT> substr ) const
 {
     if( substr.is_empty() || substr.size() > size() )
-        return npos;
+        return (size_type)npos;
 
     const_iterator it   = begin();
     const_iterator last = end() - substr.size() + 1;
@@ -529,7 +529,7 @@ basic_cstring<CharT>::find( basic_cstring<CharT> substr ) const
         ++it;
     }
 
-    return it == last ? npos : it - begin();
+    return it == last ? (size_type)npos : it - begin();
 }
 
 //____________________________________________________________________________//
@@ -539,7 +539,7 @@ inline typename basic_cstring<CharT>::size_type
 basic_cstring<CharT>::rfind( basic_cstring<CharT> substr ) const
 {
     if( substr.is_empty() || substr.size() > size() )
-        return npos;
+        return (size_type)npos;
 
     const_iterator it   = end() - substr.size();
     const_iterator last = begin()-1;
@@ -715,6 +715,10 @@ last_char( basic_cstring<CharT> source )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2004/07/19 12:25:48  rogeeff
+//  guard rename
+//  portability fix
+//
 //  Revision 1.8  2004/06/29 04:32:25  rogeeff
 //  no message
 //
@@ -744,4 +748,4 @@ last_char( basic_cstring<CharT> source )
 //
 // ***************************************************************************
 
-#endif // BASIC_CSTRING_HPP
+#endif // BASIC_CSTRING_HPP_071894GER
