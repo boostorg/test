@@ -305,7 +305,10 @@ static void safe_delete( unit_test_result_ptr ptr ) { boost::checked_delete<unit
 
 unit_test_result::~unit_test_result()
 {
-    std::for_each( m_pimpl->m_children.begin(), m_pimpl->m_children.end(), &safe_delete );
+    std::list<unit_test_result_ptr>::iterator beg = m_pimpl->m_children.begin();
+    std::list<unit_test_result_ptr>::iterator end = m_pimpl->m_children.end();
+
+    std::for_each( beg, end, &safe_delete );
 }
 
 //____________________________________________________________________________//
@@ -591,6 +594,9 @@ unit_test_result::result_code()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2003/02/15 21:55:32  rogeeff
+//  bormland warning fix
+//
 //  Revision 1.14  2003/02/13 08:37:59  rogeeff
 //  reworked to support multiple report formats
 //  C strings eliminated
