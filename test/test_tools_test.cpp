@@ -216,10 +216,21 @@ test_BOOST_MESSAGE()
         output.is_equal( "struct A\n" )
     );
 
+#ifndef BOOST_NO_STD_LOCALE
+
     CHECK_TOOL_USAGE(
         BOOST_MESSAGE( std::hex << std::showbase << 20 ),
         output.is_equal( "0x14\n" )
     );
+
+#else
+
+    CHECK_TOOL_USAGE(
+        BOOST_MESSAGE( std::hex << "0x" << 20 ),
+        output.is_equal( "0x14\n" )
+    );
+
+#endif
 
     CHECK_TOOL_USAGE(
         BOOST_MESSAGE( std::setw( 4 ) << 20 ),
@@ -270,7 +281,7 @@ test_BOOST_CHECKPOINT()
         output.is_equal(
             (boost::wrap_stringstream().ref()
                 << "Exception in " TEST_CASE_NAME ": C string: some error\n"
-                << normalize_file_name( __FILE__ ) << "(" << 266 << "): "
+                << normalize_file_name( __FILE__ ) << "(" << 277 << "): "
                 << "last checkpoint: Going to do a silly things\n").str()
         )
     );
@@ -707,6 +718,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.28  2003/12/23 13:23:35  johnmaddock
+//  Added patch for gcc2.95.3 (and no new iostreams).
+//
 //  Revision 1.27  2003/12/01 00:42:38  rogeeff
 //  prerelease cleaning
 //
