@@ -261,15 +261,15 @@ test_and_throw_impl   ( extended_predicate_value const& v, wrapstrstream const& 
 
 template<typename ArgType, typename Predicate>
 inline bool
-test_and_continue_impl( Predicate const& pred, ArgType const& arg,
+test_and_continue_impl( Predicate const& pred, ArgType const& arg_,
                         wrapstrstream const& message, char const* file_name, int line_num,
                         unit_test_framework::report_level loglevel = unit_test_framework::report_all_errors )
 {
-    bool predicate = pred( arg );
+    bool predicate = pred( arg_ );
 
     if( !predicate ) {
         return test_and_continue_impl( predicate,
-                                       wrapstrstream() << "test " << message << " failed for " << arg,
+                                       wrapstrstream() << "test " << message << " failed for " << arg_,
                                        file_name, line_num, false, loglevel );
     }
 
@@ -280,11 +280,11 @@ test_and_continue_impl( Predicate const& pred, ArgType const& arg,
 
 template<typename ArgType, typename Predicate>
 inline void
-test_and_throw_impl   ( Predicate const& pred, ArgType const& arg,
+test_and_throw_impl   ( Predicate const& pred, ArgType const& arg_,
                         wrapstrstream const& message, char const* file_name, int line_num,
                         unit_test_framework::report_level loglevel = unit_test_framework::report_fatal_errors )
 {
-    if( test_and_continue_impl( arg, pred, message, file_name, line_num, loglevel ) ) {
+    if( test_and_continue_impl( arg_, pred, message, file_name, line_num, loglevel ) ) {
         throw test_tool_failed( "" ); // error already reported by test_and_continue_impl
     }
 }
@@ -414,9 +414,9 @@ public:
     // checking function
     result_type     is_empty( bool flush_stream = true );
     result_type     check_length( std::size_t length, bool flush_stream = true );
-    result_type     is_equal( char const* arg, bool flush_stream = true );
-    result_type     is_equal( std::string const& arg, bool flush_stream = true );
-    result_type     is_equal( char const* arg, std::size_t n, bool flush_stream = true );
+    result_type     is_equal( char const* arg_, bool flush_stream = true );
+    result_type     is_equal( std::string const& arg_, bool flush_stream = true );
+    result_type     is_equal( char const* arg_, std::size_t n, bool flush_stream = true );
     bool            match_pattern( bool flush_stream = true );
 
     // helper function
@@ -438,6 +438,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.13  2002/08/20 20:57:01  david_abrahams
+//  VC6 workaround
+//
 //  Revision 1.12  2002/08/20 08:52:40  rogeeff
 //  cvs keywords added
 //
