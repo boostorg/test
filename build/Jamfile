@@ -53,7 +53,7 @@ lib boost_test_exec_monitor   : <template>boost_test_lib
 lib boost_unit_test_framework : <template>boost_test_lib
                                 ../src/$(UTF_SOURCES).cpp ; 
 
-if ! $(NT)
+if ! $(NT) && ( ! $(UNIX) || $(OS) != CYGWIN )
 {
 dll boost_prg_exec_monitor    : <template>boost_test_lib
                                 ../src/$(PRG_EXEC_MON_SOURCES).cpp ;
