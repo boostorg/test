@@ -109,7 +109,14 @@ compiler_log_formatter::test_unit_skipped( std::ostream& output, test_unit const
 void
 compiler_log_formatter::log_exception( std::ostream& output, log_checkpoint_data const& checkpoint_data, const_string explanation )
 {
-    output << "Exception in \"" << framework::current_test_case().p_name << "\": " << explanation;
+    print_prefix( output, BOOST_TEST_L( "unknown location" ), 0 );
+    output << "fatal error in \"" << framework::current_test_case().p_name << "\": ";
+
+    if( !explanation.is_empty() )
+        output << explanation;
+    else
+        output << "uncaught exception, system error or abort requested";
+
 
     if( !checkpoint_data.m_message.empty() ) {
         output << '\n';
@@ -187,6 +194,9 @@ compiler_log_formatter::print_prefix( std::ostream& output, const_string file, s
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.3  2005/02/21 10:09:26  rogeeff
+//  exception logging changes so that it produce a string recognizable by compiler as an error
+//
 //  Revision 1.2  2005/02/20 08:27:06  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
