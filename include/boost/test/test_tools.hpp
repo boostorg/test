@@ -414,6 +414,13 @@ equal_and_continue_impl( c_string_literal left_, c_string_literal right_, wrap_s
 
 //____________________________________________________________________________//
 
+bool
+equal_and_continue_impl( wchar_t const* left_, wchar_t const* right_, wrap_stringstream& message_,
+                         const_string file_name_, std::size_t line_num_,
+                         unit_test::log_level log_level_ = unit_test::log_all_errors );
+
+//____________________________________________________________________________//
+
 template <class Left, class Right>
 inline bool
 equal_and_continue_impl( Left const& left_, Right const& right_,
@@ -577,6 +584,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.39  2004/05/27 06:20:53  rogeeff
+//  wide C string comparison support added
+//
 //  Revision 1.38  2004/05/21 06:19:35  rogeeff
 //  licence update
 //
