@@ -25,5 +25,6 @@
 129: error in "test_BOOST_CHECK_CLOSE": difference between fp1{1.111e-010} and fp2{1.112e-010} exceeds 0.08999%
 130: error in "test_BOOST_CHECK_CLOSE": difference between fp1{1.112e-010} and fp2{1.111e-010} exceeds 0.08999%
 135: error in "test_BOOST_CHECK_CLOSE": difference between fp1{1} and fp2{1.0002} exceeds 0.011%
-175: error in "test_close_at_tolerance": difference between fp1{1} and fp2{1} exceeds 1e-006%
-182: error in "test_close_at_tolerance": check close_at_tolerance<double>( epsilon )( fp1, fp2 ) failed for ( 1.23456e-010, 1.23457e-010 )
+169: error in "test_CHECK_SMALL": absolute value of 1e-6{1e-006} exceeds 1e-007
+184: error in "test_close_at_tolerance": difference between fp1{1} and fp2{1} exceeds 1e-006%
+191: error in "test_close_at_tolerance": check close_at_tolerance<double>( epsilon )( fp1, fp2 ) failed for ( 1.23456e-010, 1.23457e-010 )

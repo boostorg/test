@@ -21,8 +21,6 @@
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/test/output/compiler_log_formatter.hpp>
 #include <boost/test/framework.hpp>
-using namespace boost::unit_test;
-using namespace boost::test_tools;
 
 // Boost
 #include <boost/bind.hpp>
@@ -30,6 +28,9 @@ using namespace boost::test_tools;
 // STL
 #include <iostream>
 #include <iomanip>
+
+using namespace boost::unit_test;
+using namespace boost::test_tools;
 
 //____________________________________________________________________________//
 
@@ -315,6 +316,8 @@ TEST_CASE( test_BOOST_CHECK_EQUAL )
     int i=1;
     int j=2;
     BOOST_CHECK_EQUAL( i, j );
+    BOOST_CHECK_EQUAL( ++i, j );
+    BOOST_CHECK_EQUAL( i++, j );
 
     char const* str1 = "test1";
     char const* str2 = "test12";
@@ -467,6 +470,8 @@ TEST_CASE( test_BOOST_MESSAGE )
 
 #if !defined(BOOST_NO_STD_LOCALE) && ( !defined(BOOST_MSVC) || BOOST_WORKAROUND(BOOST_MSVC, >= 1310))
     BOOST_MESSAGE( std::hex << std::showbase << 20 );
+#else
+    BOOST_MESSAGE( "0x14" );
 #endif
 
     BOOST_MESSAGE( std::setw( 4 ) << 20 );
@@ -505,6 +510,9 @@ TEST_CASE( test_BOOST_IS_DEFINED )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.40  2005/02/21 10:29:06  rogeeff
+//  no message
+//
 //  Revision 1.39  2005/02/20 08:28:34  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //

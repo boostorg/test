@@ -48,11 +48,18 @@ void bad_foo()  {
     unit_test_log.set_stream( std::cout );
 }
 
+struct log_guard {
+    ~log_guard()
+    {
+        unit_test_log.set_stream( std::cout );
+    }
+};
+
 void very_bad_foo()  { 
+    log_guard lg;
     onullstream_type null_out;
     unit_test_log.set_stream( null_out );
     BOOST_FAIL( "" );
-    unit_test_log.set_stream( std::cout );
 }
 
 //____________________________________________________________________________//
@@ -100,11 +107,13 @@ test_main( int argc, char* argv[] )
     guard G;
 
 #define PATTERN_FILE_NAME "result_report_test.pattern"
+
     std::string pattern_file_name(
         argc == 1 ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./test_files/" PATTERN_FILE_NAME )
         : argv[1] );
 
     output_test_stream test_output( pattern_file_name, !runtime_config::save_pattern() );
+    results_reporter::set_stream( test_output );
 
     test_suite* ts_0 = BOOST_TEST_SUITE( "0 test cases inside" );
     
@@ -132,37 +141,27 @@ test_main( int argc, char* argv[] )
         ts_main->add( ts_2 );
         ts_main->add( ts_3 );
 
-    results_reporter::set_stream( test_output );
     framework::run( ts_0 );
-    results_reporter::set_stream( std::cout );
     check( test_output, ts_0->p_id );
 
-    results_reporter::set_stream( test_output );
     framework::run( ts_1 );
-    results_reporter::set_stream( std::cout );
     check( test_output, ts_1->p_id );
 
-    results_reporter::set_stream( test_output );
     framework::run( ts_1b );
-    results_reporter::set_stream( std::cout );
     check( test_output, ts_1b->p_id );
 
-    results_reporter::set_stream( test_output );
     framework::run( ts_2 );
-    results_reporter::set_stream( std::cout );
     check( test_output, ts_2->p_id );
 
-    results_reporter::set_stream( test_output );
     framework::run( ts_3 );
-    results_reporter::set_stream( std::cout );
     check( test_output, ts_3->p_id );
 
     ts_3->depends_on( tc1 );
 
-    results_reporter::set_stream( test_output );
     framework::run( ts_main );
-    results_reporter::set_stream( std::cout );
     check( test_output, ts_main->p_id );
+
+    results_reporter::set_stream( std::cout );
 
     return 0;
 }
@@ -173,6 +172,9 @@ test_main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.21  2005/02/21 10:29:04  rogeeff
+//  no message
+//
 //  Revision 1.20  2005/02/20 08:28:34  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //

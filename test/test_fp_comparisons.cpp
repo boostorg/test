@@ -163,6 +163,15 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( test_BOOST_CHECK_CLOSE, FPT, test_types )
 
 //____________________________________________________________________________//
 
+TEST_CASE( test_CHECK_SMALL )
+{
+    BOOST_CHECK_SMALL( 1e-6, 1e-5 );
+    BOOST_CHECK_SMALL( 1e-6, 1e-7 );
+    BOOST_CHECK_SMALL( -1e-6, 1e-5 );
+}
+
+//____________________________________________________________________________//
+
 TEST_CASE( test_close_at_tolerance )
 {
     double fp1     = 1.00000001;
@@ -188,6 +197,9 @@ TEST_CASE( test_close_at_tolerance )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.18  2005/02/21 10:29:04  rogeeff
+//  no message
+//
 //  Revision 1.17  2005/02/20 08:28:34  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
