@@ -15,15 +15,15 @@ H4
 <BODY>
 <DIV class="body"> 
   <H3>BOOST_CHECK_NO_THROW( statement )</H3>
-  <P class="first_line_indented">This tool is used to perform an no throw check. The tool executes the 
+  <P class="first-line-indented">This tool is used to perform an no throw check. The tool executes the 
     supplied statement and check that it does not throw any exceptions. Error would be reported by the 
     framework even if test statement appear directly in test case body and throw any exception. But this 
     tool allows to proceed further with test case in this case.</P>
-  <P class="first_line_indented">If check is successful, the tool produces a confirmation message (note: 
+  <P class="first-line-indented">If check is successful, the tool produces a confirmation message (note: 
     to manage what messages appear in the test output stream set the proper log level), in other case 
     it produces an error message in a form &quot;error in &lt;test case name&gt;: exception was thrown 
     by &lt;statement&gt;.</P>
-  <P class="first_line_indented">The only tool's parameter is the statement to execute while checking 
+  <P class="first-line-indented">The only tool's parameter is the statement to execute while checking 
     for exception. Use block statement if you want to execute more than one statement.</P>
   <H4>Example: test.cpp</H4>
   <PRE class="code"><SPAN class="reserv-word">class</SPAN> my_exception{};
@@ -36,7 +36,7 @@ H4
   <P class="test-output">test.cpp(4) : error in test_main: exception was thrown by throw my_exception()</P>
   <DIV class="see_also"> 
     <H4>See Also</H4>
-    <P class="see_also_content"><A href="BOOST_CHECK_THROW.html" target="descr">BOOST_CHECK_THROW</A></P>
+    <P class="see-also-content"><A href="BOOST_CHECK_THROW.html" target="descr">BOOST_CHECK_THROW</A></P>
   </DIV>
 </DIV>
 </BODY>

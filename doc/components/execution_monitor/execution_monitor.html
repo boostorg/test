@@ -11,21 +11,27 @@
   Execution Monitor</A> > <SPAN class="current_article">boost::execution_monitor</SPAN> </DIV>
 <DIV class="body"> <IMG src='../../btl1.gif' width='252' height='43' alt="Boost Test logo"> 
   <H1 class="subtitle">boost::execution_monitor</H1>
-  <P class="first_line_indented">boost::execution_monitor uniformly detects and reports the occurrence of several types of 
+  <P class="first-line-indented">boost::execution_monitor uniformly detects and reports the occurrence of several types of 
     signals and exceptions, reducing various errors to a uniform <A href="execution_exception.html">boost::execution_exception</A> 
     which is returned to a caller.</P>
   <PRE class="code"><SPAN class="reserv-word">class</SPAN> <SPAN class="new-term">execution_monitor</SPAN> {
-public:
-    virtual     ~execution_monitor();
+<SPAN class="reserv-word">public</span>:
+    <SPAN class="reserv-word">virtual</span>     ~execution_monitor();
     
-    int         execute( bool catch_system_errors = true, int timeout = 0 );
+    <SPAN class="reserv-word">template</span>&lt;<SPAN class="reserv-word">typename</span> Exception, <SPAN class="reserv-word">typename</span> ExceptionTranslator&gt;
+    <SPAN class="cpp-type">void</span>        register_exception_translator( ExceptionTranslator <SPAN class="reserv-word">const</span>&amp; tr, boost::type&lt;Exception&gt;* = <SPAN class="literal">0</span> );
+	
+    <SPAN class="cpp-type">int</span>         execute( <SPAN class="cpp-type">bool</span> catch_system_errors = true, <SPAN class="cpp-type">int</span> timeout = <SPAN class="literal">0</span> );
     
-    virtual int function() = 0;
+    <SPAN class="reserv-word">virtual</span> <SPAN class="cpp-type">int</span> function() = <SPAN class="literal">0</span>;
     
-}; // exception monitor
+}; <SPAN class="comment">// exception monitor</span>
 </PRE>
   <H3>execution_monitor::~execution_monitor()</H3>
-  <P class="indented">Supplied cause this class intended to be used polymorphically.</P>	
+  <P class="first-line-indented">Supplied cause this class intended to be used polymorphically.</P>
+  <H3>execution_monitor::<span class="code">register_exception_translator</span>( ExceptionTranslator const&amp; tr, boost::type&lt;Exception&gt;* )</H3>
+  <P class="first-line-indented">Use this template member function to register translator for any custom exceptions types of your choice. Translators gets chained, so you could register as many as you want. Translator function of functor should accept single parameter - const reference to the instance of the class Exception. The return value is ignored. An example usage is like this:</P>
+  <P class="first-line-indented">the_monitor.register_exception_translator&lt;my_exception1&gt;( translate_my_exception1 ) </P>
   <H3>execution_monitor::execute( bool catch_system_errors, int timeout )</H3>
   <P>Effects:</P>
   <P class="indented"> Calls the execution_monitor::function() inside a try/catch block which may also include other unspecified 
@@ -35,18 +41,17 @@ public:
     <SPAN style="text-decoration: underline">doesn't</SPAN> consider it an error for the execution_monitor::function() to 
     return a non-zero value. </P>
   <P>Returns: 
-  <P> 
   <P class="indented"> The integer value returned by the execution_monitor::function(). </P>
   <H3>execution_monitor::function()</H3>
-  <P class="indented">User supplied function to monitor.</P>
+  <P class="first-line-indented">User supplied function to monitor.</P>
 </DIV>
 <DIV class="footer"> 
   <DIV class="footer-body"> 
-    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:rogeeff@fusemail.com'>Gennadiy Rozental</A> 2001-2003. <BR>
+    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:rogeeff@fusemail.com'>Gennadiy Rozental</A> 2001-2004. <BR>
       Use, modification, and distribution are subject to the Boost Software License, Version 1.0. 
       (See accompanying file <A href="../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>
-    <P>Revised: 9 June, 2003</P>
+        <P>Revised:        <!-- #BeginDate format:Sw1 -->11 January, 2004<!-- #EndDate -->     </P>
   </DIV>
 </DIV>
 </BODY>

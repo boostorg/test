@@ -1,4 +1,4 @@
-P.first_line_indented
+P.first-line-indented
 {
     text-indent:    10px;
 }
@@ -40,7 +40,7 @@ P.page-toc-indented
     margin-bottom:  0px;
 }
 
-P.see_also_content
+P.see-also-content
 {
     padding-left:   40px;
 }

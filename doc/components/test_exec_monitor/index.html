@@ -19,31 +19,31 @@
     <A href="#Examples">Examples and tests</A><BR>
     <BR>See also: <A href="../unit_test_framework/index.html">Unit Test Framework</A></P>
   <H2><A name="Introduction">Introduction</A></H2>
-  <P class="first_line_indented">How should a test program report errors? Displaying an error message 
+  <P class="first-line-indented">How should a test program report errors? Displaying an error message 
     is an obvious possibility:</P>
   <PRE class="code"><SPAN class="reserv-word">if</SPAN>( something_bad_detected )
   std::cout &lt;&lt; &quot;something bad has been detected&quot; &lt;&lt; std::endl;</PRE>
-  <P class="first_line_indented">But that requires inspection of the program's output after each run to 
+  <P class="first-line-indented">But that requires inspection of the program's output after each run to 
     determine if an error occurred. Since test programs are often run as part of a regression test suite, 
     human inspection of output to detect error messages is too time consuming and unreliable. Test frameworks 
     like GNU/expect can do the inspections automatically, but are overly complex for simple testing.</P>
-  <P class="first_line_indented">A better simple way to report errors is for the test program to return 
+  <P class="first-line-indented">A better simple way to report errors is for the test program to return 
     EXIT_SUCCESS (normally 0) if the test program completes satisfactorily, and EXIT_FAILURE if an error 
     is detected. This allows a simple regression test script to automatically and unambiguous detect success 
     or failure. Further appropriate actions such as creating an HTML table or emailing an alert can be 
     taken by the script, and can be modified as desired without having to change the actual C++ test programs.</P>
-  <P class="first_line_indented">A testing protocol based on a policy of test programs returning EXIT_SUCCESS 
+  <P class="first-line-indented">A testing protocol based on a policy of test programs returning EXIT_SUCCESS 
     or EXIT_FAILURE does not require any supporting tools; the C++ language and standard library are sufficient. 
     The programmer must remember, however, to catch all exceptions and convert them to program exits with 
     non-zero return codes. The programmer must also remember to not use the standard library assert() 
     macro for test code, because on some systems it results in undesirable side effects like a message 
     requiring manual intervention.</P>
-  <P class="first_line_indented">The Boost Test Library's Test Execution Monitor combines the powers of 
+  <P class="first-line-indented">The Boost Test Library's Test Execution Monitor combines the powers of 
     the <A href="../test_tools/index.html">Test Tools</A> and the <A href="../execution_monitor/index.html">Execution 
     Monitor</A> to automates those tasks. It provides a main() function which calls a user-supplied <SPAN class="new-term">test_main()</SPAN> 
     function. The library supplied main() relieves users from messy error detection and reporting duties. 
     Users could use the Test Tools to perform complex validation tasks.</P>
-  <P class="first_line_indented">The Test Execution Monitor is intended for fairly simple test programs 
+  <P class="first-line-indented">The Test Execution Monitor is intended for fairly simple test programs 
     or to dig a problem in an existent production code. The <A href="../prg_exec_monitor/index.html">Program 
     Execution Monitor</A> may be more suitable to monitor production (non-test) programs, cause it does 
     not affect your program performance. The <A href="../unit_test_framework/index.html">Unit Test Framework</A> 
@@ -58,7 +58,7 @@
     <LI>extra options for configuration</LI>
   </UL>
   <H2><A name="Usage">Usage</A></H2>
-  <P class="first_line_indented"> Let's take a look on the following simple test program:</P>
+  <P class="first-line-indented"> Let's take a look on the following simple test program:</P>
   <PRE class="code">#<SPAN class="reserv-word">include</SPAN> &lt;my_class.hpp&gt;
 
 <SPAN class="cpp-type">int</SPAN> main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] )
@@ -68,14 +68,14 @@
     <SPAN class="reserv-word">return</SPAN> test_object.is_valid() ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 </PRE>
-  <P class="first_line_indented">There are several issues with above test. 
+  <P class="first-line-indented">There are several issues with above test. 
   <OL>
     <LI>You need to convert is_valid result in proper result code.</LI>
     <LI>Would exception happened in test_object construction of method is_valid invocation, the program 
       will crash.</LI>
     <LI>You wont see any output, would you run this test manually.</LI>
   </OL>
-  <P class="first_line_indented">The Test Execution Monitor solve all these issues. To integrate with 
+  <P class="first-line-indented">The Test Execution Monitor solve all these issues. To integrate with 
     it above program needs to be changed to: </P>
   <PRE class="code">#<SPAN class="reserv-word">include</SPAN> &lt;my_class.hpp&gt;
 #<SPAN class="reserv-word">include</SPAN> &lt;<A href="../../../../../boost/test/test_tools.hpp">boost/test/test_tools.hpp</A>&gt;
@@ -89,7 +89,7 @@
     <SPAN class="reserv-word">return</SPAN> 0;
 }
 </PRE>
-  <P class="first_line_indented">Now, you not only receive uniform result code, even in case of exception, 
+  <P class="first-line-indented">Now, you not only receive uniform result code, even in case of exception, 
     but also nicely formatted output from BOOST_CHECK tool, would you choose to see it. Is there any other 
     ways to perform checks? The following example test program shows six different ways to detect and 
     report an error in the add() function.</P>
@@ -131,14 +131,14 @@
     the Program Execution Monitor or the Test Execution Monitor libraries, and is very useful for running 
     existing code under them, most C++ experts prefer using exceptions for error reporting. </P>
   <H2><A name="Implementation">Implementation</A></H2>
-  <P class="first_line_indented"> The Test Execution Monitor implements a special case of the framework 
+  <P class="first-line-indented"> The Test Execution Monitor implements a special case of the framework 
     usage. Accordingly it shares most of the implementation with the <A href="../unit_test_framework/index.html">Unit 
     Test Framework</A>. The Test Execution Monitor supplies the separate function main() in <A href="../../../src/test_main.cpp">libs/test/src/test_main.cpp</A>. 
   </P>
-	<P class="first_line_indented">Check <A href="compilation.html">compilation</A> instructions to see 
+	<P class="first-line-indented">Check <A href="compilation.html">compilation</A> instructions to see 
     how to build standalone library for this component.</P>
   <H2><A name="Configuration">Configuration</A></H2>
-  <P class="first_line_indented"> The Test Execution Monitor uses the same configuration mechanisms as 
+  <P class="first-line-indented"> The Test Execution Monitor uses the same configuration mechanisms as 
     the <A href="../unit_test_framework/index.html">Unit Test Framework</A> do. For the list of supported 
     parameters and their description see the Unit Test Framework <A href="../unit_test_framework/parameters/index.html">parameters 
     description</A>. 
@@ -151,11 +151,11 @@
 </DIV>
 <DIV class="footer"> 
   <DIV class="footer-body"> 
-    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:rogeeff@fusemail.com'>Gennadiy Rozental</A> 2001-2003. <BR>
+    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:rogeeff@fusemail.com'>Gennadiy Rozental</A> 2001-2004. <BR>
       Use, modification, and distribution are subject to the Boost Software License, Version 1.0. 
       (See accompanying file <A href="../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>
-    <P>Revised: 9 June, 2003</P>
+        <P>Revised:        <!-- #BeginDate format:Sw1 -->6 January, 2004<!-- #EndDate -->     </P>
   </DIV>
 </DIV>
 </BODY>

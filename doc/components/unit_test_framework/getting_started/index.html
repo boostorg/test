@@ -11,7 +11,7 @@
   > <A href="../index.html">Unit Test Framework</A> > <SPAN class="current_article">Getting started</SPAN> </DIV>
 <DIV class="body"> <IMG src='../../../btl1.gif' width='252' height='43' alt="Boost Test logo"> 
   <H1 class="subtitle">Getting started to use the Unit Test Framework</H1>
-  <P class="first_line_indented">Today is a momentous day. Today I am going to start 
+  <P class="first-line-indented">Today is a momentous day. Today I am going to start 
     a new life. I am going to stop eating a greasy food, start attending a fitness 
     club and ... since today I am going to test programs I am writing. I can start 
     after the last line of a program is completed or, even better idea, I can write 
@@ -19,7 +19,7 @@
     during the design stage. I have read a lot of literature on how to write the tests, 
     I have the unit test framework in hand and an idea of new class. So let's get 
     started.</P>
-  <P class="first_line_indented">Let say I want to encapsulate an unchangeable C character 
+  <P class="first-line-indented">Let say I want to encapsulate an unchangeable C character 
     buffer with a length into the simple class <B>const_string</B>. Rationale: a string 
     class that does not allocate a memory and provide a convenient read-only access 
     to the preallocated character buffer. I will probably want <B>const_string</B> 
@@ -39,11 +39,11 @@ init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-t
 }
 
 <SPAN class="comment">// EOF</SPAN></PRE>
-  <P class="first_line_indented">Now I can compile it and link with the unit test 
+  <P class="first-line-indented">Now I can compile it and link with the unit test 
     framework. Done! I have a working test program. It is empty, so when I run the 
     program it produces following output:</P>
   <P class="test-output">*** No errors detected</P>
-  <P class="first_line_indented">Well, now it could be a good time to start a work 
+  <P class="first-line-indented">Well, now it could be a good time to start a work 
     on <B>const_string</B>. First thing I imagine would be good to have is a constructors 
     and trivial access methods. So my class initial version looks like this:</P>
   <P>const_string.hpp</P>
@@ -63,7 +63,7 @@ init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-t
 
     ...
 };</PRE>
-  <P class="first_line_indented">Now I am able to write a first test case - constructors 
+  <P class="first-line-indented">Now I am able to write a first test case - constructors 
     testing - and add it to a test suite. My test program became to look like this:</P>
   <P>const_string_test.cpp:</P>
   <PRE class="code">#include &lt;boost/test/unit_test.hpp&gt;
@@ -111,7 +111,7 @@ init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-t
 }
 
 <SPAN class="comment">// EOF</SPAN></PRE>
-  <P class="first_line_indented">The constructors_test test case is intended to check 
+  <P class="first-line-indented">The constructors_test test case is intended to check 
     a simple feature of the class const_string: an ability to construct itself properly 
     based on different arguments. To test this feature I am using such characteristics 
     of constructed object as a data it contains and a length. The specification of 
@@ -125,7 +125,7 @@ init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-t
     case and the unit test framework gives me the following report:</P>
   <P class="test-output">Running 1 test case...<BR>
     *** No errors detected</P>
-  <P class="first_line_indented">Encouraged I am moving on and adding more access 
+  <P class="first-line-indented">Encouraged I am moving on and adding more access 
     methods:</P>
   <P>const_string.hpp</P>
   <PRE class="code"><SPAN class="reserv-word">class</SPAN> const_string {
@@ -135,7 +135,7 @@ init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-t
     ...
 };
 </PRE>
-  <P class="first_line_indented">I added the new feature - I need a new test case 
+  <P class="first-line-indented">I added the new feature - I need a new test case 
     to check it. As a result my test suite became to look like this:</P>
   <P>const_string_test.cpp:</P>
   <PRE class="code">#<SPAN class="reserv-word">include</SPAN> &lt;boost/test/unit_test.hpp&gt;
@@ -170,7 +170,7 @@ init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-t
 
 <SPAN class="comment">// EOF</SPAN>
 </PRE>
-  <P class="first_line_indented">In the data_access_test test case I am trying to 
+  <P class="first-line-indented">In the data_access_test test case I am trying to 
     check the class const_string character access correctness. While tests (1) checks 
     valid access using const_string::operator[] and test (2) checks valid access using 
     method const_string::at(), there is one more thing to test. The specification 
@@ -179,12 +179,12 @@ init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-t
     of a validation and error handling code is an important part of a unit testing 
     and should not be left for a production stage. The data_access_test test case 
     passed and I am ready for the next step.</P>
-  <P class="first_line_indented">Continuing my effort I am able to complete class 
+  <P class="first-line-indented">Continuing my effort I am able to complete class 
     const_string (see <A href="const_string.hpp">Listing 1</A>) and 
     testing module for it (see <A href="const_string_test.cpp">Listing 
     2</A>) that is checking all features that are presented in the class const_string 
     specification.</P>
-  <P class="first_line_indented">Your testing habits could be a little different. 
+  <P class="first-line-indented">Your testing habits could be a little different. 
     You could start with a class/library development and then at some point start 
     writing test cases on feature basis. Or you can, given a detailed specification 
     for the future product, including expected interfaces, immediately start with 
@@ -198,11 +198,11 @@ init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-t
 </DIV>
 <DIV class="footer"> 
   <DIV class="footer-body"> 
-    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:rogeeff@fusemail.com'>Gennadiy Rozental</A> 2001-2003. <BR>
+    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:rogeeff@fusemail.com'>Gennadiy Rozental</A> 2001-2004. <BR>
       Use, modification, and distribution are subject to the Boost Software License, Version 1.0. 
       (See accompanying file <A href="../../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>
-    <P>Revised: 9 June, 2003</P>
+        <P>Revised:        <!-- #BeginDate format:Sw1 -->6 January, 2004<!-- #EndDate -->     </P>
   </DIV>
 </DIV>
 </BODY>
