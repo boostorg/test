@@ -166,6 +166,10 @@ public:
 
 #if BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600))
 
+#define BOOST_READONLY_PROPERTY( property_type, friends ) boost::unit_test::readwrite_property<property_type >
+
+#else
+
 #define BOOST_READONLY_PROPERTY_DECLARE_FRIEND(r, data, elem) friend class elem;
 
 #define BOOST_READONLY_PROPERTY( property_type, friends )                           \
@@ -180,10 +184,6 @@ public:                                                                         
     : base( init_v ) {}                                                             \
 }                                                                                   \
 /**/
-
-#else
-
-#define BOOST_READONLY_PROPERTY( property_type, friends ) boost::unit_test::readwrite_property<property_type >
 
 #endif
 
@@ -223,6 +223,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.28  2004/10/05 07:38:09  rogeeff
+//  typo fix
+//
 //  Revision 1.27  2004/10/05 02:18:18  rogeeff
 //  gcc2.85 fix
 //
