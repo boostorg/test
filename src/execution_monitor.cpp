@@ -49,6 +49,10 @@ namespace std { using ::strlen; using ::strncat; }
     (defined(__INTEL__) && defined(__MWERKS__) && __MWERKS__ >= 0x3000)
 
 #define BOOST_MS_STRCTURED_EXCEPTION_HANDLING
+#if !defined(_WIN32_WINNT)
+#define _WIN32_WINNT 0x0400
+#endif
+
 #include <wtypes.h>
 #include <winbase.h>
 #include <excpt.h>
@@ -198,6 +202,9 @@ execution_monitor::execute( bool catch_system_errors, int timeout )
     using unit_test::const_string;
 
 #if defined(BOOST_MS_STRCTURED_EXCEPTION_HANDLING) && !defined(__BORLANDC__)
+    if( IsDebuggerPresent() )
+        catch_system_errors = false;
+
     if( catch_system_errors )
         _set_se_translator( detail::ms_se_trans_func );
     else
@@ -591,6 +598,9 @@ static void report_error( execution_exception::error_code ec, const_string msg1,
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.36  2005/01/21 07:21:38  rogeeff
+//  detect presence of debugger under VC and automatically prevent catching system errors
+//
 //  Revision 1.35  2004/08/19 00:02:21  rogeeff
 //  another tru64cxx65 workaround
 //
