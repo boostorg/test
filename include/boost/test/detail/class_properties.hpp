@@ -16,6 +16,9 @@
 #ifndef BOOST_TEST_CLASS_PROPERTIES_HPP_071894GER
 #define BOOST_TEST_CLASS_PROPERTIES_HPP_071894GER
 
+// Boost.Test
+#include <boost/test/detail/unit_test_config.hpp>
+
 // BOOST
 #include <boost/preprocessor/repetition/repeat.hpp> 
 #include <boost/preprocessor/seq/for_each.hpp>
@@ -27,11 +30,12 @@
 // STL
 #include <iosfwd>
 
-#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570)     || \
-    BOOST_WORKAROUND( __COMO__, <= 0x433 )       || \
-    BOOST_WORKAROUND( __INTEL_COMPILER, <= 800 ) || \
-    BOOST_WORKAROUND(__GNUC__, < 3)              || \
-    defined(__sgi) && _COMPILER_VERSION <= 730   || \
+#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570)           || \
+    BOOST_WORKAROUND( __COMO__, <= 0x433 )             || \
+    BOOST_WORKAROUND( __INTEL_COMPILER, <= 800 )       || \
+    BOOST_WORKAROUND(__GNUC__, < 3)                    || \
+    defined(__sgi) && _COMPILER_VERSION <= 730         || \
+    BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600)) || \
     defined(__DECCXX)
 #define BOOST_TEST_NO_PROTECTED_USING
 #endif
@@ -160,7 +164,7 @@ public:
 
 //____________________________________________________________________________//
 
-#ifndef __IBMCPP__
+#if BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600))
 
 #define BOOST_READONLY_PROPERTY_DECLARE_FRIEND(r, data, elem) friend class elem;
 
@@ -219,6 +223,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.27  2004/10/05 02:18:18  rogeeff
+//  gcc2.85 fix
+//
 //  Revision 1.26  2004/09/19 09:22:12  rogeeff
 //  ios fix for classic iostreams
 //
