@@ -1,3 +1,18 @@
+//  (C) Copyright Gennadiy Rozental 2002.
+//  Permission to copy, use, modify, sell and distribute this software
+//  is granted provided this copyright notice appears in all copies.
+//  This software is provided "as is" without express or implied warranty,
+//  and with no claim as to its suitability for any purpose.
+
+//  See http://www.boost.org for most recent version including documentation.
+//
+//  File        : $RCSfile$
+//
+//  Version     : $Id$
+//
+//  Description : simple minimal testing definitions and implementation
+// ***************************************************************************
+
 #ifndef BOOST_TEST_MINIMAL_HPP
 #define BOOST_TEST_MINIMAL_HPP
 
@@ -18,7 +33,7 @@
 
 //____________________________________________________________________________//
 
-// depricated interface
+// deprecated interface
 
 #define BOOST_TEST(predicate_)           BOOST_CHECK(predicate_)
 #define BOOST_CRITICAL_TEST(predicate_)  BOOST_REQUIRE(predicate_)
@@ -32,7 +47,7 @@
 
 // BOOST
 #include <boost/cstdlib.hpp>  // for exit codes
-#include <boost/current_function.hpp>  // for BOOST_CURENT_FUNCTION
+#include <boost/current_function.hpp>  // for BOOST_CURRENT_FUNCTION
 
 // STL
 #include <iostream>
@@ -123,5 +138,16 @@ int main( int argc, char* argv[] )
     delete the_monitor;
     return boost::exit_success;
 }
+
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.3  2002/09/09 08:49:25  rogeeff
+//  cvs id and copyright header added
+//
+
+// ***************************************************************************
+
 
 #endif // BOOST_TEST_MINIMAL_HPP
