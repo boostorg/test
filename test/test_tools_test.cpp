@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -8,7 +8,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : tests all Test Tools but output_test_stream
 // ***************************************************************************
@@ -17,6 +17,7 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_result.hpp>
 using namespace boost::unit_test_framework;
+using boost::test_toolbox::extended_predicate_value;
 
 // BOOST
 #include <boost/compose.hpp>
@@ -236,7 +237,7 @@ test_BOOST_CHECKPOINT() {
         output.is_equal(
             (boost::wrap_stringstream().ref()
                 << "Exception in " TEST_CASE_NAME ": C string: some error\n"
-                << __FILE__ << "(" << 232 << ") : "
+                << __FILE__ << "(" << 233 << ") : "
                 << "last checkpoint: Going to do a silly things\n").str()
         )
     );
@@ -370,6 +371,24 @@ int foo( int arg, int mod )
     return arg % mod;
 }
 
+BOOST_TEST_DONT_PRINT_LOG_VALUE( std::list<int> )
+
+extended_predicate_value
+compare_lists( std::list<int> const& l1, std::list<int> const& l2 )
+{
+    if( l1.size() != l2.size() ) {
+        extended_predicate_value res( false );
+
+        res.p_message.reset( new boost::wrap_stringstream );
+
+        *res.p_message << " Different sizes [" << l1.size() << "!=" << l2.size() << "]";
+
+        return res;
+    }
+
+    return true;
+}
+
 void
 test_BOOST_CHECK_PREDICATE() {
 #undef  TEST_CASE_NAME
@@ -394,6 +413,17 @@ test_BOOST_CHECK_PREDICATE() {
     CHECK_TOOL_USAGE(
         BOOST_CHECK_PREDICATE( boost::compose_f_gxy( std::ptr_fun( &is_even ), std::ptr_fun( &foo ) ), 2, (i,15) ),
         output.is_empty()
+    );
+
+    std::list<int> l1, l2, l3;
+    l1.push_back( 1 );
+    l3.push_back( 1 );
+    l1.push_back( 2 );
+    l3.push_back( 3 );
+
+    CHECK_TOOL_USAGE(
+        BOOST_CHECK_PREDICATE( &compare_lists, 2, (l1,l2) ),
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test &compare_lists(l1, l2) failed for (, ) Different sizes [2!=0]\n", 2 ) )
     );
 }
 
@@ -442,7 +472,13 @@ test_BOOST_ERROR() {
 
 //____________________________________________________________________________//
 
-class my_exception {};
+struct my_exception {
+    explicit my_exception( int ec = 0 ) : m_error_code( ec ) {}
+    
+    int m_error_code;
+};
+
+bool is_critical( my_exception const& ex ) { return ex.m_error_code < 0; }
 
 void
 test_BOOST_CHECK_THROW() {
@@ -462,6 +498,30 @@ test_BOOST_CHECK_THROW() {
     CHECK_TOOL_USAGE(
         BOOST_CHECK_THROW( throw my_exception(), my_exception ),
         output.is_equal( CHECK_PATTERN( "info: exception my_exception is caught\n", 2 ) )
+    );
+
+    unit_test_log::instance().set_log_threshold_level( log_all_errors );
+}
+
+//____________________________________________________________________________//
+
+void
+test_BOOST_CHECK_EXCEPTION() {
+#undef  TEST_CASE_NAME
+#define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_EXCEPTION" << '\"' <<
+
+    unit_test_log::instance().set_log_threshold_level( log_all_errors );
+
+    CHECK_TOOL_USAGE(
+        BOOST_CHECK_EXCEPTION( throw my_exception( 1 ), my_exception, is_critical ),
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": incorrect exception my_exception is caught\n", 2 ) )
+    );
+
+    unit_test_log::instance().set_log_threshold_level( log_successful_tests );
+
+    CHECK_TOOL_USAGE(
+        BOOST_CHECK_EXCEPTION( throw my_exception( -1 ), my_exception, is_critical ),
+        output.is_equal( CHECK_PATTERN( "info: incorrect exception my_exception is caught\n", 2 ) )
     );
 
     unit_test_log::instance().set_log_threshold_level( log_all_errors );
@@ -591,6 +651,7 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
     test->add( BOOST_TEST_CASE( &test_BOOST_ERROR ) );
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_THROW ) );
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_NO_THROW ) );
+    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_EXCEPTION ) );
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_EQUAL_COLLECTIONS ) );
     test->add( BOOST_TEST_CASE( &test_BOOST_IS_DEFINED ) );
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_PREDICATE ) );
@@ -606,6 +667,12 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.18  2003/06/09 09:24:47  rogeeff
+//  added test for:
+//  BOOST_TEST_DONT_PRINT_LOG_VALUE
+//  custom predicate
+//  BOOST_CHECK_EXCEPTION
+//
 //  Revision 1.17  2003/02/18 22:17:12  rogeeff
 //  Visual Age fix
 //
