@@ -33,6 +33,8 @@
 #ifndef BOOST_EXECUTION_MONITOR_HPP
 #define BOOST_EXECUTION_MONITOR_HPP
 
+#include <boost/test/detail/unit_test_config.hpp>
+
 namespace boost {
     
 // ************************************************************************** //
@@ -42,6 +44,7 @@ namespace boost {
 //  design rationale: fear of being out (or nearly out) of memory.
     
 class execution_exception {
+    typedef unit_test_framework::c_string_literal c_string_literal;
 public:
     enum error_code {
         //  These values are sometimes used as program return codes.
@@ -72,17 +75,17 @@ public:
     };
     
     // Constructor
-    execution_exception( error_code ec_, char const* what_msg_ ) // max length 256 inc '\0'
+    execution_exception( error_code ec_, c_string_literal what_msg_ ) // max length 256 inc '\0'
     : m_error_code( ec_ ), m_what( what_msg_ ) {}
 
     // access methods
-    error_code      code() const { return m_error_code; }
-    char const*     what() const { return m_what; }
+    error_code          code() const { return m_error_code; }
+    c_string_literal    what() const { return m_what; }
 
 private:
     // Data members
-    error_code      m_error_code;
-    char const*     m_what;
+    error_code          m_error_code;
+    c_string_literal    m_what;
 };
 
 // ************************************************************************** //
@@ -94,7 +97,10 @@ public:
     // Destructor
     virtual ~execution_monitor()    {}
     
-    int execute( int timeout_ = 0 );  // timeout is in seconds
+    int execute( bool catch_system_errors = true, int timeout_ = 0 );  // timeout is in seconds
+    //  The catch_system_errors parameter specifies whether the monitor should 
+    //  try to catch system errors/exeptions that would cause program to crash 
+    //  in regular case
     //  The timeout argument specifies the seconds that elapse before
     //  a timer_error occurs.  May be ignored on some platforms.
     //
@@ -109,8 +115,8 @@ public:
     //  Note: execute() doesn't consider it an error for function() to
     //  return a non-zero value.
     
-    //  user supplied function called by execute()
     virtual int function() = 0;
+    //  user supplied function called by execute()
     
 }; // exception monitor
 
@@ -120,6 +126,10 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2002/12/08 17:40:59  rogeeff
+//  catch_system_errors switch introduced
+//  switched to use c_string_literal
+//
 //  Revision 1.7  2002/11/02 19:31:04  rogeeff
 //  merged into the main trank
 //
