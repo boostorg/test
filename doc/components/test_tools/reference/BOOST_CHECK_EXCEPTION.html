@@ -15,12 +15,14 @@ H4
 <BODY>
 <DIV class="body"> 
   <H3>BOOST_CHECK_EXCEPTION( statement, exception, predicate )</H3>
-  <P class="first-line-indented">This tool is used to perform an exception detection and validation check. 
-    The tool executes the supplied statement and check that it throw the supplied exception or it's child 
-    and that exception comply to the supplied predicate. If the statement throw any other unrelated exception, 
-    doesn't throw at all or predicate evaluates to <I>false</I> with caught exception, check fails. In 
-    comparison with BOOST_CHECK_THROW this tool allows to perform more fine grained checks, for example 
-    that expected exception has specific error message e.t.c.</P>
+  <P class="first-line-indented">This tool is used to perform an exception detection
+    and validation check.  The tool executes the supplied statement and check
+    that it throw the supplied exception or it's child  and that exception comply
+    to the supplied predicate. If the statement throw any other unrelated exception,
+     doesn't throw at all or predicate evaluates to <I>false</I> with caught
+     exception, check fails. In  comparison with BOOST_CHECK_THROW this tool
+     allows to perform more fine grained checks, for example  that expected exception
+     has specific error message etc.</P>
   <P class="first-line-indented">If check is successful, the tool produces a confirmation message (note: 
     to manage what messages appear in the test output stream set the proper log level). In case if no 
     exception thrown it produces an error message in a form &quot;error in &lt;test case name&gt;: exception 

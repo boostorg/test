@@ -40,12 +40,14 @@
     instance.test2();
     ...
 };</PRE>
-  The only drawback of this version that you could not separate results of one test case from another. 
-  Another reason to use class member function based test cases is to test non default constructable user 
-  test case. In other words, if user test case need command line arguments or some other parameters to 
-  be constructed. As a general rule it is recommended to use the class_test_case only if you can't implement 
-  a test logic in a free function. Due to usage of templates in an implementation of the class_test_case, 
-  a compilation can be longer would you use the function_test_case. 
+  The only drawback of this version that you could not separate results of one
+  test case from another.  Another reason to use class member function based
+  test cases is to test non default constructible user  test case. In other words,
+  if user test case need command line arguments or some other parameters to 
+  be constructed. As a general rule it is recommended to use the class_test_case
+  only if you can't implement  a test logic in a free function. Due to usage
+  of templates in an implementation of the class_test_case,  a compilation can
+  be longer would you use the function_test_case. 
   <H5>Construction</H5>
   <P class="first-line-indented">To create an instance of the class class_test_case use the following 
     macro:</P>
@@ -106,7 +108,7 @@ Ts&gt;add( BOOST_CLASS_TEST_CASE( &amp;compound_test::test_access_methods, insta
       Use, modification, and distribution are subject to the Boost Software License, Version 1.0. 
       (See accompanying file <A href="../../../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>
-        <P>Revised:        <!-- #BeginDate format:Sw1 -->6 January, 2004<!-- #EndDate -->     </P>
+        <P>Revised:        <!-- #BeginDate format:Sw1 -->24 May, 2004<!-- #EndDate -->     </P>
   </DIV>
 </DIV>
 </BODY>

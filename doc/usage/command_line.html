@@ -1,6 +1,6 @@
 <HTML>
 <HEAD>
-<TITLE>Boost Test Library command line recomendations</TITLE>
+<TITLE>Boost Test Library command line recommendations</TITLE>
 <LINK rel="stylesheet" type="text/css" href="../style/btl.css" media="screen">
 <LINK rel="stylesheet" type="text/css" href="../style/btl-print.css" media="print">
 <META http-equiv="Content-Language" content="en-us">
@@ -12,7 +12,7 @@
 	
 <DIV class="body"> <IMG src='../btl1.gif' width='252' height='43' alt="Boost Test logo"> 
   <H1 class="subtitle"><SPAN class="first-line-indented">Command line </SPAN> usage
-    recomendations</H1> 
+    recommendations</H1> 
   <UL>
     <LI><A href="#t1">If you got fatal exception somewhere within test case, make program
       generate coredump by adding extra command line argument</A></LI>
@@ -25,20 +25,20 @@
     (or any other message indication fatal or system error) when you run you
     test, to get more information of error location add --catch_system_errors=no
   to the test run command line. Now run the test again  and it
-  will create a coredump you could analize using you prefereble debugger. Or
+  will create a coredump you could analyze using you preferable debugger. Or
     run it under debugger in a first place and it will break at the point of
     failure.</P>
   <H5 class="first-line-indented">How to use test module build with Boost.Test
   framework under management of automated regression test facilities?<A name="t2"></A></H5>
-  <P class="first-line-indented">My first recomendation is to make sure that
+  <P class="first-line-indented">My first recommendation is to make sure that
     the test framework catches all fatal errors using catch_system_error=yes.
     In other case test program may produce unwanted dialogs (depends on compiler
     and OS) that will halt you regression tests run. Second suppress any results
     reports using report_level=no and errors log using log_level=nothing, so
-    it wont produce undesireble output no one is goint to look at anyway. I recomment
-    to rely only on result code that will be consystent for all test programs.
-    An alternative to my second recomendation is direct both log and report to
-    separate file you could alalize later on. More over you could make Boost.Test
+    it wont produce undesirable output no one is going to look at anyway. I recommend
+    to rely only on result code that will be consistent for all test programs.
+    An alternative to my second recommendation is direct both log and report
+    to separate file you could analize later on. More over you could make Boost.Test
     to produce them in XML format using output_format=XML and use some automated
     tools that format this information as you like. </P>
 </DIV> 
@@ -50,7 +50,7 @@
       Version 1.0. (See accompanying file <A href="../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or
       copy at <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P> 
     <P>Revised:
-      <!-- #BeginDate format:Sw1 -->26 January, 2004<!-- #EndDate --> 
+      <!-- #BeginDate format:Sw1 -->24 May, 2004<!-- #EndDate --> 
     </P> 
   </DIV> 
 </DIV> 
