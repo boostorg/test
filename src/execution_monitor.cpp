@@ -49,7 +49,7 @@
 #include <excpt.h>
 #include <eh.h> 
 
-#elif defined(__BORLANDC__)
+#elif (defined(__BORLANDC__) && defined(_Windows))
 #define BOOST_MS_STRCTURED_EXCEPTION_HANDLING
 #include <windows.h>  // Borland 5.5.1 has its own way of doing things.
 
@@ -318,7 +318,7 @@ int catch_signals( execution_monitor & exmon, int timeout )
 
 //____________________________________________________________________________//
 
-#elif defined(__BORLANDC__)
+#elif (defined(__BORLANDC__) && defined(_Windows))
 
 // this works for Borland but not other Win32 compilers (which trap too many cases)
 int catch_signals( execution_monitor & exmon, int )
@@ -461,6 +461,9 @@ static void report_error( execution_exception::error_code ec, char const* msg1, 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2002/08/22 11:50:39  johnmaddock
+//  Added Kylix 3 support
+//
 //  Revision 1.7  2002/08/20 08:24:13  rogeeff
 //  cvs keywords added
 //
