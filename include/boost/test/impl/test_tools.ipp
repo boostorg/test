@@ -19,6 +19,8 @@
 // Boost.Test
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_result.hpp>
+#include <boost/test/unit_test_log.hpp>
+#include <boost/test/output_test_stream.hpp>
 
 // BOOST
 #include <boost/config.hpp>
@@ -34,9 +36,10 @@
 #ifdef BOOST_STANDARD_IOSTREAMS
 #include <ios>
 #endif
+#include <cstdarg>
 
 # ifdef BOOST_NO_STDC_NAMESPACE
-namespace std { using ::strcmp; using ::strlen; using ::isprint; }
+namespace std { using ::strcmp; using ::strlen; using ::isprint; using ::va_list; }
 #if !defined( BOOST_NO_CWCHAR )
 namespace std { using ::wcscmp; }
 #endif
@@ -48,8 +51,6 @@ namespace boost {
 
 namespace test_tools {
 
-#define LOG BOOST_UT_LOG_ENTRY_FL( file_name, line_num )
-
 namespace tt_detail {
 
 // ************************************************************************** //
@@ -57,147 +58,232 @@ namespace tt_detail {
 // ************************************************************************** //
 
 void
-checkpoint_impl( wrap_stringstream& message, const_string file_name, std::size_t line_num )
+check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
+            const_string file_name, std::size_t line_num,
+            tool_level tl, check_type ct,
+            std::size_t num_of_args, ... )
 {
-    LOG( unit_test::log_test_suites ) << unit_test::checkpoint( message.str() );
-}
+    using namespace boost::unit_test;
 
-//____________________________________________________________________________//
+    if( !!pr )
+        tl = PASS;
 
-void
-message_impl( wrap_stringstream& message, const_string file_name, std::size_t line_num )
-{
-    LOG( unit_test::log_messages ) << message.str();
-}
+    unit_test::log_level    ll;
+    char const*             prefix;
+    char const*             suffix;
 
-//____________________________________________________________________________//
+    switch( tl ) {
+    case PASS:
+        unit_test_result::instance().inc_passed_assertions();
 
-void
-warn_and_continue_impl( bool predicate, wrap_stringstream& message,
-                        const_string file_name, std::size_t line_num, bool add_fail_pass )
-{
-    if( !predicate ) {
-        LOG( unit_test::log_warnings ) << (add_fail_pass ? "condition " : "") << message.str()
-                                       << (add_fail_pass ? " is not satisfied" : "" );
-    }
-    else {
-        LOG( unit_test::log_successful_tests ) << "condition " << message.str() << " is satisfied";
-    }
-}
+        ll      = log_successful_tests;
+        prefix  = "test ";
+        suffix  = " passed";
+        break;
+    case WARN:
+        ll      = log_warnings;
+        prefix  = "condition ";
+        suffix  = " is not satisfied";
+        break;
+    case CHECK:
+        unit_test_result::instance().inc_failed_assertions();
 
-//____________________________________________________________________________//
+        ll      = log_all_errors;
+        prefix  = "test ";
+        suffix  = " failed";
+        break;
+    case REQUIRE:
+        unit_test_result::instance().inc_failed_assertions();
 
-void
-warn_and_continue_impl( extended_predicate_value const& v, wrap_stringstream& message,
-                        const_string file_name, std::size_t line_num, bool add_fail_pass )
-{
-    warn_and_continue_impl( !!v,
-        wrap_stringstream().ref() << (add_fail_pass ? "condition " : "") << message
-                                  << (add_fail_pass && !v ? " is not satisfied. " : "" ) << *(v.p_message),
-        file_name, line_num, false );
-}
-
-//____________________________________________________________________________//
-
-bool
-test_and_continue_impl( bool predicate, wrap_stringstream& message,
-                        const_string file_name, std::size_t line_num, bool add_fail_pass,
-                        unit_test::log_level loglevel )
-{
-    if( !predicate ) {
-        unit_test::unit_test_result::instance().inc_failed_assertions();
-
-        LOG( loglevel ) << (add_fail_pass ? "test " : "") << message.str() << (add_fail_pass ? " failed" : "");
-
-        return true;
-    }
-    else {
-        unit_test::unit_test_result::instance().inc_passed_assertions();
-
-        LOG( unit_test::log_successful_tests ) << (add_fail_pass ? "test " : "") << message.str()
-                                               << (add_fail_pass ? " passed" : "");
-
-        return false;
-    }
-}
-
-//____________________________________________________________________________//
-
-bool
-test_and_continue_impl( extended_predicate_value const& v, wrap_stringstream& message,
-                        const_string file_name, std::size_t line_num, bool add_fail_pass,
-                        unit_test::log_level loglevel )
-{
-    return test_and_continue_impl( !!v,
-        wrap_stringstream().ref() << (add_fail_pass ? "test " : "") << message
-                                  << (add_fail_pass ? (!v ? " failed. " : " passed. ") : "") << *(v.p_message),
-        file_name, line_num, false, loglevel );
-}
-
-//____________________________________________________________________________//
-
-void
-test_and_throw_impl( bool predicate, wrap_stringstream& message,
-                     const_string file_name, std::size_t line_num,
-                     bool add_fail_pass, unit_test::log_level loglevel )
-{
-    if( test_and_continue_impl( predicate, message, file_name, line_num, add_fail_pass, loglevel ) )
-        throw test_tool_failed(); // error already reported by test_and_continue_impl
-}
-
-//____________________________________________________________________________//
-
-void
-test_and_throw_impl( extended_predicate_value const& v, wrap_stringstream& message,
-                     const_string file_name, std::size_t line_num,
-                     bool add_fail_pass, unit_test::log_level loglevel )
-{
-    if( test_and_continue_impl( v, message, file_name, line_num, add_fail_pass, loglevel ) )
-        throw test_tool_failed(); // error already reported by test_and_continue_impl
-}
-
-//____________________________________________________________________________//
-
-bool
-equal_and_continue_impl( char const* left, char const* right, wrap_stringstream& message,
-                         const_string file_name, std::size_t line_num,
-                         unit_test::log_level loglevel )
-{
-    bool predicate = (left && right) ? std::strcmp( left, right ) == 0 : (left == right);
-
-    left  = left  ? left  : "null string";
-    right = right ? right : "null string";
-
-    if( !predicate ) {
-        return test_and_continue_impl( false,
-            wrap_stringstream().ref() << "test " << message.str() << " failed [" << left << " != " << right << "]",
-            file_name, line_num, false, loglevel );
+        ll      = log_fatal_errors;
+        prefix  = "critical test ";
+        suffix  = " failed";
+        break;
+    default:
+        return;
     }
 
-    return test_and_continue_impl( true, message, file_name, line_num, true, loglevel );
+    switch( ct ) {
+    case CHECK_PRED:
+        unit_test_log << begin() << file( file_name ) << line( line_num ) << ll << prefix << check_descr.str() << suffix;
+        
+        if( !pr.has_empty_message() )
+            unit_test_log << ". " << pr.message();
+        
+        unit_test_log << end();
+        break;
+    case CHECK_MSG:
+        unit_test_log << begin() << file( file_name ) << line( line_num ) << ll << check_descr.str();
+        
+        if( !pr.has_empty_message() ) {
+            unit_test_log << ". " << pr.message();
+        }
+
+        unit_test_log << end();
+        break;
+    case MSG_ONLY:
+        unit_test_log << begin() << file( file_name ) << line( line_num ) << log_messages << check_descr.str() << end();
+        break;
+    case SET_CHECKPOINT:
+        unit_test_log << begin() << file( file_name ) << line( line_num ) << log_test_suites 
+                      << checkpoint( check_descr.str() ) << end();
+        break;
+    case CHECK_EQUAL: {
+        std::va_list args;
+
+        va_start( args, num_of_args );
+        char const* arg1_descr  = va_arg( args, char const* );
+        char const* arg1_val    = va_arg( args, char const* );
+        char const* arg2_descr  = va_arg( args, char const* );
+        char const* arg2_val    = va_arg( args, char const* );
+
+        unit_test_log << begin() << file( file_name ) << line( line_num ) << ll 
+                      << prefix << arg1_descr << " == " << arg2_descr << suffix;
+
+        if( tl != PASS )
+            unit_test_log << " [" << arg1_val << " != " << arg2_val << "]" ;
+
+        va_end( args );
+        
+        if( !pr.has_empty_message() )
+            unit_test_log << ". " << pr.message();
+
+        unit_test_log << end();
+        break;
+    }
+    case CHECK_CLOSE: {
+        std::va_list args;
+
+        va_start( args, num_of_args );
+        char const* arg1_descr  = va_arg( args, char const* );
+        char const* arg1_val    = va_arg( args, char const* );
+        char const* arg2_descr  = va_arg( args, char const* );
+        char const* arg2_val    = va_arg( args, char const* );
+           /* toler_descr = */    va_arg( args, char const* );
+        char const* toler_val   = va_arg( args, char const* );
+
+        unit_test_log << begin() << file( file_name ) << line( line_num ) << ll;
+
+        unit_test_log << "difference between " << arg1_descr << "{" << arg1_val << "}" 
+                      << " and "               << arg2_descr << "{" << arg2_val << "}"
+                      << ( tl == PASS ? " doesn't exceed " : " exceeds " )
+                      << toler_val << "%",
+
+        va_end( args );
+        
+        if( !pr.has_empty_message() )
+            unit_test_log << ". " << pr.message();
+
+        unit_test_log << end();
+        break;
+    }
+    case CHECK_PRED_WITH_ARGS: {
+        unit_test_log << begin() << file( file_name ) << line( line_num ) << ll << prefix << check_descr.str();
+
+        // print predicate call description
+        {
+            std::va_list args;
+            va_start( args, num_of_args );
+
+            unit_test_log << "( ";
+            for( std::size_t i = 0; i < num_of_args; ++i ) {
+                unit_test_log << va_arg( args, char const* );
+                va_arg( args, char const* ); // skip argument value;
+                
+                if( i != num_of_args-1 )
+                    unit_test_log << ", ";
+            }
+            unit_test_log << " )" << suffix;
+            va_end( args );
+        }
+                        
+        if( tl != PASS ) {
+            std::va_list args;
+            va_start( args, num_of_args );
+
+            unit_test_log << " for ( ";
+            for( std::size_t i = 0; i < num_of_args; ++i ) {
+                va_arg( args, char const* ); // skip argument description;            
+                unit_test_log << va_arg( args, char const* );
+                
+                if( i != num_of_args-1 )
+                    unit_test_log << ", ";
+            }
+            unit_test_log << " )";
+            va_end( args );
+        }
+       
+        if( !pr.has_empty_message() )
+            unit_test_log << ". " << pr.message();
+
+        unit_test_log << end();
+        break;
+    }
+    case CHECK_EQUAL_COLL: {
+        std::va_list args;
+
+        va_start( args, num_of_args );
+        char const* left_begin_descr    = va_arg( args, char const* );
+        char const* left_end_descr      = va_arg( args, char const* );
+        char const* right_begin_descr   = va_arg( args, char const* );
+        char const* right_end_descr     = va_arg( args, char const* );
+
+        unit_test_log << begin() << file( file_name ) << line( line_num ) << ll 
+                      << prefix 
+                      << "{ " << left_begin_descr  << ", " << left_end_descr  << " } == { " 
+                              << right_begin_descr << ", " << right_end_descr << " }"
+                      << suffix;
+
+        va_end( args );
+        
+        if( !pr.has_empty_message() )
+            unit_test_log << ". " << pr.message();
+
+        unit_test_log << end();
+        break;
+    }
+    case CHECK_BITWISE_EQUAL: {
+        std::va_list args;
+
+        va_start( args, num_of_args );
+        char const* left_descr    = va_arg( args, char const* );
+        char const* right_descr   = va_arg( args, char const* );
+
+        unit_test_log << begin() << file( file_name ) << line( line_num ) << ll 
+                      << prefix << left_descr  << " =.= " << right_descr << suffix;
+
+        va_end( args );
+        
+        if( !pr.has_empty_message() )
+            unit_test_log << ". " << pr.message();
+
+        unit_test_log << end();
+        break;
+    }
+    }
+
+    if( tl == REQUIRE )
+        throw test_tool_failed();
+}
+
+//____________________________________________________________________________//
+
+predicate_result
+equal_impl( char const* left, char const* right )
+{
+    return (left && right) ? std::strcmp( left, right ) == 0 : (left == right);
 }
 
 //____________________________________________________________________________//
 
 #if !defined( BOOST_NO_CWCHAR )
-bool
-equal_and_continue_impl( wchar_t const* left, wchar_t const* right, wrap_stringstream& message,
-                         const_string file_name, std::size_t line_num,
-                         unit_test::log_level loglevel )
+
+predicate_result
+equal_impl( wchar_t const* left, wchar_t const* right )
 {
-    bool predicate = (left && right) ? std::wcscmp( left, right ) == 0 : (left == right);
-
-    left  = left  ? left  : L"null string";
-    right = right ? right : L"null string";
-
-    if( !predicate ) {
-        return test_and_continue_impl( false,
-            wrap_stringstream().ref() << "test " << message.str() << " failed",
-            file_name, line_num, false, loglevel );
-    }
-
-    return test_and_continue_impl( true, message, file_name, line_num, true, loglevel );
+    return (left && right) ? std::wcscmp( left, right ) == 0 : (left == right);
 }
+
 #endif // !defined( BOOST_NO_CWCHAR )
 
 //____________________________________________________________________________//
@@ -248,6 +334,22 @@ print_log_value<unsigned char>::operator()( std::ostream& ostr, unsigned char t 
 
 //____________________________________________________________________________//
 
+void
+print_log_value<char const*>::operator()( std::ostream& ostr, char const* t )
+{
+    ostr << ( t ? t : "null string" );
+}
+
+//____________________________________________________________________________//
+
+void
+print_log_value<wchar_t const*>::operator()( std::ostream& ostr, wchar_t const* t )
+{
+    ostr << ( t ? t : L"null string" );
+}
+
+//____________________________________________________________________________//
+
 } // namespace tt_detail
 
 // ************************************************************************** //
@@ -272,10 +374,10 @@ struct output_test_stream::Impl
         return res;
     }
 
-    void            check_and_fill( extended_predicate_value& res )
+    void            check_and_fill( predicate_result& res )
     {
         if( !res.p_predicate_value )
-            *(res.p_message) << "Output content: \"" << m_synced_string << '\"';
+            res.message() << "Output content: \"" << m_synced_string << '\"';
     }
 };
 
@@ -298,7 +400,7 @@ output_test_stream::~output_test_stream()
 
 //____________________________________________________________________________//
 
-extended_predicate_value
+predicate_result
 output_test_stream::is_empty( bool flush_stream )
 {
     sync();
@@ -315,7 +417,7 @@ output_test_stream::is_empty( bool flush_stream )
 
 //____________________________________________________________________________//
 
-extended_predicate_value
+predicate_result
 output_test_stream::check_length( std::size_t length_, bool flush_stream )
 {
     sync();
@@ -332,7 +434,7 @@ output_test_stream::check_length( std::size_t length_, bool flush_stream )
 
 //____________________________________________________________________________//
 
-extended_predicate_value
+predicate_result
 output_test_stream::is_equal( const_string arg, bool flush_stream )
 {
     sync();
@@ -349,7 +451,7 @@ output_test_stream::is_equal( const_string arg, bool flush_stream )
 
 //____________________________________________________________________________//
 
-extended_predicate_value
+predicate_result
 output_test_stream::match_pattern( bool flush_stream )
 {
     sync();
@@ -358,7 +460,7 @@ output_test_stream::match_pattern( bool flush_stream )
 
     if( !m_pimpl->m_pattern_to_match_or_save.is_open() ) {
         result = false;
-        *(result.p_message) << "Couldn't open pattern file for "
+        result.message() << "Couldn't open pattern file for "
             << ( m_pimpl->m_match_or_save ? "reading" : "writing");
     }
     else {
@@ -375,7 +477,7 @@ output_test_stream::match_pattern( bool flush_stream )
                                                                     static_cast<std::string::size_type>(5) );
 
                     // try to log area around the mismatch
-                    *(result.p_message) << "Mismatch at position " << i << '\n'
+                    result.message() << "Mismatch at position " << i << '\n'
                         << "..." << m_pimpl->m_synced_string.substr( i, suffix_size ) << "..." << '\n'
                         << "..." << c;
 
@@ -387,10 +489,10 @@ output_test_stream::match_pattern( bool flush_stream )
                             m_pimpl->m_pattern_to_match_or_save.eof() )
                             break;
 
-                        *(result.p_message) << c;
+                        result.message() << c;
                     }
 
-                    *(result.p_message) << "...";
+                    result.message() << "...";
 
                     // skip rest of the bytes. May help for further matching
                     m_pimpl->m_pattern_to_match_or_save.ignore( m_pimpl->m_synced_string.length() - i - suffix_size);
@@ -452,14 +554,15 @@ output_test_stream::sync()
 
 } // namespace test_tools
 
-#undef LOG
-
 } // namespace boost
 
 // ***************************************************************************
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2005/01/30 03:18:27  rogeeff
+//  test tools implementation completely reworked. All tools inplemented through single vararg function
+//
 //  Revision 1.1  2005/01/22 19:22:12  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
@@ -473,7 +576,6 @@ output_test_stream::sync()
 //     straitend interface between log and formatters
 //     change compiler like formatter name
 //     minimized unit_test_log interface and reworked to use explicit calls
-//
 // ***************************************************************************
 
 #endif // BOOST_TEST_TOOLS_IPP_012205GER
