@@ -95,24 +95,38 @@ public:
 // **************               check_is_close                 ************** //
 // ************************************************************************** //
 
-template<typename FPT, typename PersentType>
-inline bool
-check_is_close( FPT left, FPT right, PersentType percentage_tolerance, floating_point_comparison_type fpc_type = FPC_STRONG )
-{
-    close_at_tolerance<FPT,PersentType> pred( percentage_tolerance, fpc_type );
+struct check_is_close_t {
+    template<typename FPT, typename PersentType>
+    bool
+    operator()( FPT left, FPT right, PersentType percentage_tolerance, floating_point_comparison_type fpc_type = FPC_STRONG )
+    {
+        close_at_tolerance<FPT,PersentType> pred( percentage_tolerance, fpc_type );
 
-    return pred( left, right );
+        return pred( left, right );
+    }
+};
+
+namespace {
+check_is_close_t check_is_close;
 }
 
 //____________________________________________________________________________//
 
-template<typename FPT>
-inline FPT
-compute_tolerance( FPT percentage_tolerance )
-{
-    close_at_tolerance<FPT> pred( percentage_tolerance );
+// ************************************************************************** //
+// **************               check_is_small                 ************** //
+// ************************************************************************** //
 
-    return pred.p_fraction_tolerance.get();
+struct check_is_small_t {
+    template<typename FPT>
+    bool
+    operator()( FPT fpv, FPT tolerance )
+    {
+        return tt_detail::fpt_abs( fpv ) < tolerance;
+    }
+};
+
+namespace {
+check_is_small_t check_is_small;
 }
 
 //____________________________________________________________________________//
@@ -129,6 +143,10 @@ compute_tolerance( FPT percentage_tolerance )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.22  2005/02/21 10:21:40  rogeeff
+//  check_is_small implemented
+//  check functions implemented as function objects
+//
 //  Revision 1.21  2005/02/20 08:27:05  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
