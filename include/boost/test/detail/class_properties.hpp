@@ -131,7 +131,7 @@ class BOOST_JOIN( readonly_property, __LINE__ )                                 
 : public boost::unit_test::readonly_property<property_type >                        \
 {                                                                                   \
     typedef boost::unit_test::readonly_property<property_type > base;               \
-    BOOST_PP_SEQ_FOR_EACH( DECLARE_FRIEND, '', friends )                            \
+    BOOST_PP_SEQ_FOR_EACH( DECLARE_FRIEND, ' ', friends )                           \
     typedef base::write_param_t  write_param_t;                                     \
 public:                                                                             \
                 BOOST_JOIN( readonly_property, __LINE__ )() {}                      \
@@ -176,6 +176,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.16  2004/05/18 13:39:32  dgregor
+//  class_properties.hpp: Make the empty character constant into a single space (which isn't used), because the Sun compiler is very eager to spit out an error here.
+//
 //  Revision 1.15  2004/05/18 13:10:49  dgregor
 //  class_properties.hpp: Borland C++ does not handle using declarations for data members properly; fixed the existing Borland workaround.
 //
