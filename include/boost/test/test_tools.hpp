@@ -17,12 +17,6 @@
 #ifndef BOOST_TEST_TOOLS_HPP
 #define BOOST_TEST_TOOLS_HPP
 
-//  for convenience, allow the user to request inclusion of lower-level layers
-#ifdef BOOST_INCLUDE_MAIN
-#include <boost/test/cpp_main.cpp>
-#include <boost/test/test_main.cpp>
-#endif
-
 //  header dependencies eliminated to reducing coupling.
 
 //  macros (gasp!) ease use of reporting functions
@@ -52,5 +46,11 @@ namespace boost
   void report_critical_error( const char * msg, const char * file, int line );
   //  Effects: report_error(msg,file,line), throw test_tools_exception.
 }
+
+//  for convenience, allow the user to request inclusion of lower-level layers
+#ifdef BOOST_INCLUDE_MAIN
+#include <boost/test/cpp_main.cpp>
+#include <boost/test/test_main.cpp>
+#endif
 
 #endif // BOOST_TEST_TOOLS_HPP
