@@ -87,6 +87,9 @@ void test_find_last_of()
 
     another = "qw";
     BOOST_CHECK( utf::find_last_of( cs.begin(), cs.end(), another.begin(), another.end() ) == cs.end() );
+
+    cs = "qerty";
+    BOOST_CHECK_EQUAL( utf::find_last_of( cs.begin(), cs.end(), another.begin(), another.end() ) - cs.begin(), 0 );
 }
 
 //____________________________________________________________________________//
@@ -128,6 +131,9 @@ init_unit_test_suite( int argc, char* argv[] )
 // History :
 //
 // $Log$
+// Revision 1.2  2004/06/29 04:32:50  rogeeff
+// no message
+//
 // Revision 1.1  2004/05/23 09:49:39  rogeeff
 // algorithms test added
 //

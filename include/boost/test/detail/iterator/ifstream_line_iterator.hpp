@@ -43,6 +43,11 @@ public:
         m_stream.open( file_name.begin(), std::ios::in );
     }
 
+    bool is_valid()
+    {
+        return m_stream.is_open();
+    }
+
 protected:
     typedef std::basic_ifstream<CharT,std::char_traits<CharT> > stream_t;
 
@@ -78,6 +83,9 @@ typedef basic_ifstream_line_iterator<wchar_t>   wifstream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2004/06/29 04:32:25  rogeeff
+//  no message
+//
 //  Revision 1.5  2004/06/07 07:33:49  rogeeff
 //  detail namespace renamed
 //

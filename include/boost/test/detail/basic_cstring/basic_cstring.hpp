@@ -609,14 +609,14 @@ template<typename CharT>
 inline bool
 operator==( basic_cstring<CharT> const& s1, typename basic_cstring<CharT>::std_string const& s2 )
 {
-    return s1 == basic_cstring<CharT const>( s2 );
+    return s1 == basic_cstring<CharT>( s2 );
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
+template<typename CharT1,typename CharT2>
 inline bool
-operator==( CharT* s2, basic_cstring<CharT> const& s1 )
+operator==( CharT1* s2, basic_cstring<CharT2> const& s1 )
 {
     return s1 == s2;
 }
@@ -715,6 +715,9 @@ last_char( basic_cstring<CharT> source )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2004/06/29 04:32:25  rogeeff
+//  no message
+//
 //  Revision 1.7  2004/06/07 07:33:19  rogeeff
 //  amother borland patch
 //  detail namespace renamed

@@ -12,8 +12,8 @@
 //  Description : addition to STL algorithms
 // ***************************************************************************
 
-#ifndef BOOST_ALGORITHM_HPP
-#define BOOST_ALGORITHM_HPP
+#ifndef BOOST_ALGORITHM_HPP_06232004
+#define BOOST_ALGORITHM_HPP_06232004
 
 #include <utility>
 
@@ -24,7 +24,7 @@ namespace unit_test {
 /// @brief this algorithm search through two collections for first mismatch position that get returned as a pair
 /// of iterators, first pointing to the mismatch position in first collection, second iterator in second one
 
-/// @param _F1 - first collection begin iterator
+/// @param first1 - first collection begin iterator
 /// @param last1 - first collection end iterator
 /// @param first2 - second collection begin iterator
 /// @param last2 - second collection end iterator
@@ -47,7 +47,7 @@ mismatch( InputIter1 first1, InputIter1 last1,
 /// of iterators, first pointing to the mismatch position in first collection, second iterator in second one. This algorithms
 /// uses supplied predicate for collection elements comparison
 
-/// @param _F1 - first collection begin iterator
+/// @param first1 - first collection begin iterator
 /// @param last1 - first collection end iterator
 /// @param first2 - second collection begin iterator
 /// @param last2 - second collection end iterator
@@ -130,13 +130,9 @@ find_last_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
         return last1;
 
     BidirectionalIterator1 it1 = last1;
-    while( true ) {
-        --it1;
-        if( std::find( first2, last2, *it1 ) != last2 || it1 == first1 )
-            break;
-    }
+    while( --it1 != first1 && std::find( first2, last2, *it1 ) == last2 );
 
-    return it1 == first1 ? last1 : it1;
+    return it1 == first1 && std::find( first2, last2, *it1 ) == last2 ? last1 : it1;
 }
 
 //____________________________________________________________________________//
@@ -159,13 +155,9 @@ find_last_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
         return last1;
 
     BidirectionalIterator1 it1 = last1;
-    while( true ) {
-        --it1;
-        if( std::find_if( first2, last2, std::bind1st( pred, *it1 ) ) != last2 || it1 == first1 )
-            break;
-    }
+    while( --it1 != first1 && std::find_if( first2, last2, std::bind1st( pred, *it1 ) ) == last2 );
 
-    return it1 == first1 ? last1 : it1;
+    return it1 == first1 && std::find_if( first2, last2, std::bind1st( pred, *it1 ) ) == last2 ? last1 : it1;
 }
 
 //____________________________________________________________________________//
@@ -185,13 +177,9 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
         return last1;
 
     BidirectionalIterator1 it1 = last1;
-    while( true ) {
-        --it1;
-        if( std::find( first2, last2, *it1 ) == last2 || it1 == first1 )
-            break;
-    }
+    while( --it1 != first1 && std::find( first2, last2, *it1 ) != last2 );
 
-    return it1 == first1 ? last1 : it1;
+    return it1 == first1 && std::find( first2, last2, *it1 ) != last2 ? last1 : it1;
 }
 
 //____________________________________________________________________________//
@@ -214,14 +202,9 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
         return last1;
 
     BidirectionalIterator1 it1 = last1;
+    while( --it1 != first1 && std::find_if( first2, last2, std::bind1st( pred, *it1 ) ) != last2 );
 
-    while( true ) {
-        --it1;
-        if( std::find_if( first2, last2, std::bind1st( pred, *it1 ) ) == last2 || it1 == first1 )
-            break;
-    }
-
-    return it1 == first1 ? last1 : it1;
+    return it1 == first1 && std::find_if( first2, last2, std::bind1st( pred, *it1 ) ) == last2 ? last1 : it1;
 }
 
 //____________________________________________________________________________//
@@ -234,10 +217,13 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2004/06/29 04:32:25  rogeeff
+//  no message
+//
 //  Revision 1.4  2004/05/23 09:51:32  rogeeff
 //  more algorithms added
 //
 // ***************************************************************************
 
-#endif // BOOST_ALGORITHM_HPP
+#endif // BOOST_ALGORITHM_HPP_06232004
 

@@ -22,7 +22,7 @@
 #include <functional>
 #include <cctype>
 
-# ifdef BOOST_NO_STDC_NAMESPACE
+# if defined(BOOST_NO_STDC_NAMESPACE) && !BOOST_WORKAROUND(__BORLANDC__, <= 0x570)
 namespace std { using ::toupper; }
 # endif
 
@@ -107,6 +107,9 @@ operator <( basic_cstring<CharT> x, basic_cstring<CharT> y )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2004/06/29 04:32:25  rogeeff
+//  no message
+//
 //  Revision 1.4  2004/06/07 07:33:19  rogeeff
 //  amother borland patch
 //  detail namespace renamed
