@@ -24,6 +24,7 @@
 
 // STL
 #include <iostream>
+#include <cstring>
 
 #ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::getenv; using ::strcmp; }
@@ -99,6 +100,9 @@ int main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2003/07/11 16:26:21  jmaurer
+//  need <cstring> before being able to use std::strcmp etc.
+//
 //  Revision 1.8  2003/06/09 09:12:26  rogeeff
 //  straiten return code logic for Program Execution Monitor
 //
