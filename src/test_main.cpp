@@ -29,13 +29,13 @@ namespace {
     char**   argv_;
     int      test_main_result;
     
-    void call_test_main() {
+    void call_test_main()
+    {
         test_main_result = test_main( argc_, argv_ );
         
-        // translate a test_main non-success return into a unit_test error
-        BOOST_TEST( test_main_result == 0 || test_main_result == boost::exit_success );
+        // translate a test_main non-success return into a test error
+        BOOST_CHECK( test_main_result == 0 || test_main_result == boost::exit_success );
     }
-    
 }
 
 // ************************************************************************** //
@@ -87,6 +87,9 @@ int main( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2002/09/04 07:27:08  rogeeff
+//  space before colon deleted
+//
 //  Revision 1.6  2002/08/20 08:24:13  rogeeff
 //  cvs keywords added
 //

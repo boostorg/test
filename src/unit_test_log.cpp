@@ -84,7 +84,7 @@ struct unit_test_log::Impl {
     void            flush_entry()       { stream() << std::endl; }
 
     void            print_prefix() {
-        stream() << m_entry_file << '(' << m_entry_line << ") : ";
+        stream() << m_entry_file << '(' << m_entry_line << "): ";
     }
 };
 
@@ -370,6 +370,9 @@ unit_test_log::start( unit_test_counter test_cases_amount, bool print_build_info
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2002/09/04 07:27:08  rogeeff
+//  space before colon deleted
+//
 //  Revision 1.7  2002/08/20 22:10:30  rogeeff
 //  slightly modified failures report
 //

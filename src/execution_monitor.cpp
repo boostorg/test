@@ -148,7 +148,7 @@ int boost::execution_monitor::execute( int timeout )
 #endif
 
     try {
-      return detail::catch_signals( *this, timeout );
+        return detail::catch_signals( *this, timeout );
     }
 
     //  Catch-clause reference arguments are a bit different from function
@@ -461,6 +461,9 @@ static void report_error( execution_exception::error_code ec, char const* msg1, 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2002/09/04 07:27:08  rogeeff
+//  space before colon deleted
+//
 //  Revision 1.8  2002/08/22 11:50:39  johnmaddock
 //  Added Kylix 3 support
 //
