@@ -6,7 +6,7 @@
 //
 //  See http://www.boost.org for most recent version including documentation.
 
-// TEST LIB
+// Boost.Test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 using boost::unit_test_framework::test_suite;
@@ -131,12 +131,12 @@ init_unit_test_suite( int argc, char * argv[] ) {
 
     try {
         if( argc < 2 )
-            return NULL;
+            return (test_suite*)0;
 
         test->add( new account_test_suite( boost::lexical_cast<double>( argv[1] ) ) );
     }
     catch( boost::bad_lexical_cast& ) {
-        return NULL;
+        return (test_suite*)0;
     }
 
     return test.release();
