@@ -185,23 +185,7 @@ public:
     bool        operator!() const                   { return !p_predicate_value; }
     void        operator=( bool predicate_value_ )  { p_predicate_value.value = predicate_value_; }
 
-#ifndef __IBMCPP__
     BOOST_READONLY_PROPERTY( bool, (extended_predicate_value) ) p_predicate_value;
-#else
-    // VisualAge version 6 has some problem with the BOOST_READONLY_PROPERTY macro.
-    class p_predicate : public boost::unit_test::readonly_property<bool>
-    {
-      typedef boost::unit_test::readonly_property<bool> base ;
-      typedef base::write_param_t write_param_t ;
-
-      friend class extended_predicate_value ; 
-
-    public:
-      p_predicate() {}
-      explicit p_predicate(write_param_t init_v) : base( init_v ) {}
-    } ;
-    p_predicate                                                 p_predicate_value ;
-#endif
     boost::shared_ptr<wrap_stringstream>                        p_message;
 };
 
@@ -599,6 +583,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.42  2004/06/05 10:59:58  rogeeff
+//  proper IBM VA port
+//
 //  Revision 1.41  2004/06/03 10:38:31  tknapen
 //  port to vacpp version 6
 //

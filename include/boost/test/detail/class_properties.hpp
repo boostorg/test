@@ -152,6 +152,8 @@ public:
 
 //____________________________________________________________________________//
 
+#ifndef __IBMCPP__
+
 #define BOOST_READONLY_PROPERTY_DECLARE_FRIEND(r, data, elem) friend class elem;
 
 #define BOOST_READONLY_PROPERTY( property_type, friends )                           \
@@ -166,6 +168,12 @@ public:                                                                         
     : base( init_v ) {}                                                             \
 }                                                                                   \
 /**/
+
+#else
+
+#define BOOST_READONLY_PROPERTY( property_type, friends ) boost::unit_test::readwrite_property<property_type >
+
+#endif
 
 // ************************************************************************** //
 // **************              readwrite_property              ************** //
@@ -209,6 +217,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.22  2004/06/05 11:00:26  rogeeff
+//  proper IBM VA port
+//
 //  Revision 1.21  2004/05/27 06:22:17  rogeeff
 //  workaround for gcc 2.95 io
 //  workaround for msvc logical properties operators

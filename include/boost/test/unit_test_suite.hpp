@@ -69,36 +69,10 @@ public:
     bool                has_passed() const;
 
     // public properties
-#ifndef __IBMCPP__
     BOOST_READONLY_PROPERTY( int, (test_case)(test_suite) )
                         p_timeout;                  // timeout for the excecution monitor
     BOOST_READONLY_PROPERTY( unit_test_counter, (test_suite) )
                         p_expected_failures;        // number of assertions that are expected to fail in this test case
-#else
-    // VisualAge version 6 has some problem with the BOOST_READONLY_PROPERTY macro.
-    class p_timeout_class : public readonly_property<int>
-    {
-      typedef readonly_property<int> base ;
-      typedef base::write_param_t    write_param_t ;
-      friend class test_case ;
-      friend class test_suite ;
-    public:
-      p_timeout_class() {}
-      explicit p_timeout_class(write_param_t init_v) : base( init_v ) {}
-    } ;
-    p_timeout_class p_timeout ;
-
-    class p_expected_failures_class : public readonly_property<unit_test_counter>
-    {
-      typedef readonly_property<unit_test_counter> base ;
-      typedef base::write_param_t    write_param_t ;
-      friend class test_suite ;
-    public:
-      p_expected_failures_class() {}
-      explicit p_expected_failures_class(write_param_t init_v) : base( init_v ) {}
-    } ;
-    p_expected_failures_class p_expected_failures ;
-#endif
     readonly_property<bool>
                         p_type;                     // true = test case, false - test suite
     readonly_property<std::string>
@@ -107,22 +81,8 @@ public:
 
 protected:
     // protected properties
-#ifndef __IBMCPP__
     BOOST_READONLY_PROPERTY( bool, (test_case)(test_suite) )
                         p_compound_stage;           // used to properly manage progress report
-#else
-    class p_compound_stage_class : public readonly_property<bool>
-    {
-      typedef readonly_property<bool> base ;
-      typedef base::write_param_t    write_param_t ;
-      friend class test_case ;
-      friend class test_suite ;
-    public:
-      p_compound_stage_class() {}
-      explicit p_compound_stage_class(write_param_t init_v) : base( init_v ) {}
-    } ;
-    p_compound_stage_class p_compound_stage ;
-#endif
     readwrite_property<unit_test_counter>
                         p_stages_amount;            // number of stages this test consist of; stage could be another test case
                                                     // like with test_suite, another parameterized test for parameterized_test_case
@@ -364,6 +324,9 @@ create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, bo
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.22  2004/06/05 10:59:58  rogeeff
+//  proper IBM VA port
+//
 //  Revision 1.21  2004/06/03 10:38:32  tknapen
 //  port to vacpp version 6
 //
