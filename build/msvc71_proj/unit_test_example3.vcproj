@@ -98,7 +98,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="unit_test_framework.lib"
 				OutputFile=".\Debug/unit_test_example3.exe"
-				LinkIncremental="1"
+				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="Debug"
 				GenerateDebugInformation="TRUE"
@@ -110,8 +110,7 @@
 				TypeLibraryName=".\Debug/unit_test_example3.tlb"
 				HeaderFileName=""/>
 			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="&quot;Debug\unit_test_example3.exe&quot; -1 --result_code=no --report_level=no"/>
+				Name="VCPostBuildEventTool"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool

@@ -12,7 +12,7 @@
 using boost::unit_test_framework::test_suite;
 
 // Boost.MPL
-#include "boost/mpl/range_c.hpp"
+#include <boost/mpl/range_c.hpp>
 
 template<typename Number>
 void free_test_function( Number* = 0 ) {

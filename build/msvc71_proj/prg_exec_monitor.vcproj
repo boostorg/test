@@ -70,9 +70,11 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/EHa"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\..\.."
 				PreprocessorDefinitions="_LIB;WIN32;_DEBUG"
+				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
@@ -161,13 +163,13 @@
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl">
 			<File
-				RelativePath="..\..\..\boost\test\execution_monitor.hpp">
+				RelativePath="..\..\..\..\boost\test\execution_monitor.hpp">
 			</File>
 			<Filter
 				Name="included"
 				Filter="">
 				<File
-					RelativePath="..\..\..\boost\test\included\prg_exec_monitor.hpp">
+					RelativePath="..\..\..\..\boost\test\included\prg_exec_monitor.hpp">
 				</File>
 			</Filter>
 		</Filter>

@@ -40,7 +40,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="test_exec_monitor.lib"
 				OutputFile=".\Debug/result_report_test.exe"
-				LinkIncremental="1"
+				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="Debug"
 				GenerateDebugInformation="TRUE"

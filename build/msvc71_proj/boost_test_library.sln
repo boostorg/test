@@ -132,6 +132,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unit_test_suite_ex_test", "
 		{9466C117-7AE0-4AFD-B327-E1612568BCF1} = {9466C117-7AE0-4AFD-B327-E1612568BCF1}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_case_template_test", "test_case_template_test.vcproj", "{CBB6EB43-0BE0-44E9-A4B4-B4B8437410D9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7} = {30AE2EB6-0F78-4D13-9D67-AA5A1052B4C7}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -250,6 +255,10 @@ Global
 		{643A15A4-F17F-4ACE-AB83-167AA2160BEC}.Debug.Build.0 = Debug|Win32
 		{643A15A4-F17F-4ACE-AB83-167AA2160BEC}.Release.ActiveCfg = Release|Win32
 		{643A15A4-F17F-4ACE-AB83-167AA2160BEC}.Release.Build.0 = Release|Win32
+		{CBB6EB43-0BE0-44E9-A4B4-B4B8437410D9}.Debug.ActiveCfg = Debug|Win32
+		{CBB6EB43-0BE0-44E9-A4B4-B4B8437410D9}.Debug.Build.0 = Debug|Win32
+		{CBB6EB43-0BE0-44E9-A4B4-B4B8437410D9}.Release.ActiveCfg = Release|Win32
+		{CBB6EB43-0BE0-44E9-A4B4-B4B8437410D9}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

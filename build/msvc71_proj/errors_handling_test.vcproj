@@ -93,12 +93,15 @@
 				DebugInformationFormat="4"
 				CompileAs="0"/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCCustomBuildTool"
+				Description="Auto run test"
+				CommandLine="&quot;$(TargetDir)\$(TargetName).exe&quot; --result_code=no --report_level=no"
+				Outputs="$(TargetDir)\$(TargetName).exe"/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="test_exec_monitor.lib"
 				OutputFile=".\Debug/errors_handling_test.exe"
-				LinkIncremental="1"
+				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="Debug"
 				GenerateDebugInformation="TRUE"

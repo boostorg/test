@@ -40,7 +40,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="prg_exec_monitor.lib"
 				OutputFile=".\Debug/prg_exec_fail3.exe"
-				LinkIncremental="1"
+				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="Debug"
 				GenerateDebugInformation="TRUE"
@@ -53,7 +53,8 @@
 				HeaderFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="&quot;Debug\prg_exec_fail3.exe&quot; --result_code=no --report_level=no"/>
+				Description="Auto run test"
+				CommandLine="&quot;$(TargetDir)\$(TargetName).exe&quot; --result_code=no --report_level=no"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool

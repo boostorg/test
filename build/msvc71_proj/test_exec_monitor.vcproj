@@ -70,9 +70,11 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/EHa"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\..\.."
 				PreprocessorDefinitions="_LIB;WIN32;_DEBUG"
+				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
@@ -275,47 +277,47 @@
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl">
 			<File
-				RelativePath="..\..\..\boost\test\execution_monitor.hpp">
+				RelativePath="..\..\..\..\boost\test\execution_monitor.hpp">
 			</File>
 			<File
-				RelativePath="..\..\..\boost\test\unit_test.hpp">
+				RelativePath="..\..\..\..\boost\test\unit_test.hpp">
 			</File>
 			<File
-				RelativePath="..\..\..\boost\test\unit_test_log.hpp">
+				RelativePath="..\..\..\..\boost\test\unit_test_log.hpp">
 			</File>
 			<File
-				RelativePath="..\..\..\boost\test\unit_test_result.hpp">
+				RelativePath="..\..\..\..\boost\test\unit_test_result.hpp">
 			</File>
 			<File
-				RelativePath="..\..\..\boost\test\unit_test_suite.hpp">
+				RelativePath="..\..\..\..\boost\test\unit_test_suite.hpp">
 			</File>
 			<File
-				RelativePath="..\..\..\boost\test\unit_test_tools.hpp">
+				RelativePath="..\..\..\..\boost\test\unit_test_tools.hpp">
 			</File>
 			<Filter
 				Name="detail"
 				Filter="">
 				<File
-					RelativePath="..\..\..\boost\test\detail\class_properties.hpp">
+					RelativePath="..\..\..\..\boost\test\detail\class_properties.hpp">
 				</File>
 				<File
-					RelativePath="..\..\..\boost\test\detail\nullstream.hpp">
+					RelativePath="..\..\..\..\boost\test\detail\nullstream.hpp">
 				</File>
 				<File
-					RelativePath="..\..\..\boost\test\detail\unit_test_config.hpp">
+					RelativePath="..\..\..\..\boost\test\detail\unit_test_config.hpp">
 				</File>
 				<File
-					RelativePath="..\..\..\boost\test\detail\unit_test_monitor.hpp">
+					RelativePath="..\..\..\..\boost\test\detail\unit_test_monitor.hpp">
 				</File>
 				<File
-					RelativePath="..\..\..\boost\test\detail\unit_test_parameters.hpp">
+					RelativePath="..\..\..\..\boost\test\detail\unit_test_parameters.hpp">
 				</File>
 			</Filter>
 			<Filter
 				Name="included"
 				Filter="">
 				<File
-					RelativePath="..\..\..\boost\test\included\test_exec_monitor.hpp">
+					RelativePath="..\..\..\..\boost\test\included\test_exec_monitor.hpp">
 				</File>
 			</Filter>
 		</Filter>
