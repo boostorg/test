@@ -185,7 +185,7 @@ init( int argc, char* argv[] )
     if( runtime_config::show_progress() )
         register_observer( progress_monitor );
 
-    if( runtime_config::detect_memory_leak() > 0 )
+    if( runtime_config::detect_memory_leak() >= 0 )
         detect_memory_leak( runtime_config::detect_memory_leak() );
 
     // init master unit test suite
@@ -388,6 +388,9 @@ test_unit_aborted()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.5  2005/04/05 07:23:20  rogeeff
+//  restore default
+//
 //  Revision 1.4  2005/04/05 06:11:37  rogeeff
 //  memory leak allocation point detection\nextra help with _WIN32_WINNT
 //

@@ -124,6 +124,29 @@ retrieve_framework_parameter( const_string parameter_name, int* argc, char** arg
     return std::getenv( parameter_name.begin() );
 }
 
+long interpret_long( const_string from )
+{
+    bool negative = false;
+    long res = 0;
+
+    if( first_char( from ) == '-' ) {
+        negative = true;
+        from.trim_left( 1 );
+    }
+
+    const_string::iterator it = from.begin();
+    for( ;it != from.end(); ++it ) {
+        int d = *it - '0';
+
+        res = 10 * res + d;
+    }
+
+    if( negative )
+        res = -res;
+
+    return res;
+}
+
 } // local namespace
 
 //____________________________________________________________________________//
@@ -188,7 +211,7 @@ init( int* argc, char** argv )
     }
 
     const_string ml_str = retrieve_framework_parameter( DETECT_MEM_LEAK, argc, argv );
-    s_detect_mem_leaks  =  ml_str.is_empty() ? 0 : lexical_cast<long>( ml_str );
+    s_detect_mem_leaks  =  ml_str.is_empty() ? 0 : interpret_long( ml_str );
 }
 
 //____________________________________________________________________________//
@@ -301,6 +324,9 @@ random_seed()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.7  2005/04/05 07:23:21  rogeeff
+//  restore default
+//
 //  Revision 1.6  2005/04/05 06:11:37  rogeeff
 //  memory leak allocation point detection\nextra help with _WIN32_WINNT
 //
