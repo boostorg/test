@@ -254,6 +254,20 @@ test_and_continue_impl( extended_predicate_value const& v_, wrapstrstream const&
 
 //____________________________________________________________________________//
 
+// Borland bug workaround
+#if defined(__BORLANDC__) && (__BORLANDC__ < 0x560)
+bool
+test_and_continue_impl( void* ptr, wrapstrstream const& message_,
+                        char const* file_name_, int line_num_,
+                        bool add_fail_pass_ = true, 
+                        unit_test_framework::report_level log_level_ = unit_test_framework::report_all_errors )
+{
+    return test_and_continue_impl( !!ptr, message_, file_name_, line_num_, add_fail_pass_, log_level_ );
+}
+#endif
+
+//____________________________________________________________________________//
+
 void
 test_and_throw_impl   ( extended_predicate_value const& v_, wrapstrstream const& message_,
                         char const* file_name_, int line_num_,
@@ -446,6 +460,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.16  2002/08/26 08:31:28  rogeeff
+//  Borlan overloading bug workaround
+//
 //  Revision 1.15  2002/08/21 15:01:23  rogeeff
 //  gcc specific fix removed since general is provided
 //
