@@ -1,25 +1,31 @@
-//  Boost errors_handling_test.cpp  ------------------------------------------//
-
-//  (C) Copyright Gennadiy Rozental & Beman Dawes 2001.
-//  Permission to copy, use, modify, sell and distribute this software is
-//  granted provided this copyright notice appears in all copies.
+//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Beman Dawes 2001.
+//  Permission to copy, use, modify, sell and distribute this software
+//  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
 //  and with no claim as to its suitability for any purpose.
 
 //  See http://www.boost.org for updates, documentation, and revision history.
+//
+//  File        : $RCSfile$
+//
+//  Version     : $Id$
+//
+//  Description : tests an ability of Unit Test Framework to catch all kinds 
+//  of test errors in a user code and properly report it.
+// ***************************************************************************
 
-#if defined(__BORLANDC__) && (__BORLANDC__ < 0x560)
-#define _RWSTD_NO_CLASS_PARTIAL_SPEC
-#endif
-
+// Boost.Test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
-
 using namespace boost::unit_test_framework;
 using namespace boost::test_toolbox;
 
+// STL
 #include <iostream>
+
+//____________________________________________________________________________//
 
 namespace {
     enum error_type_enum {
@@ -97,9 +103,9 @@ namespace {
                                           "parameterized user test case"
     };
 
-    //  simulated user classes to be tested  -----------------------------------//
+    //  simulated user classes to be tested  --------------------------------//
 
-    // user test cases  -----------------------------------------------------------------//
+    // user test cases   ----------------------------------------------------//
 
     struct bad_test
     {
@@ -132,6 +138,8 @@ namespace {
     int params[] = { 0 };
 
 }  // unnamed namespace
+
+//____________________________________________________________________________//
 
 int 
 test_main( int argc, char * argv[] ) {
@@ -217,8 +225,18 @@ test_main( int argc, char * argv[] ) {
     return nonmatched;
 } // main
 
-//  Revision History
+//____________________________________________________________________________//
+
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.7  2002/08/26 09:08:06  rogeeff
+//  cvs kw added
+//
+//   7 Jul 01  Reworked version (Gennadiy Rozental)
 //  16 Jun 01  Initial  version (Beman Dawes)
-//   7 Jun 10  Reworked version (Gennadiy Rozental)
+
+// ***************************************************************************
 
 // EOF

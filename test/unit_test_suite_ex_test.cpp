@@ -1,14 +1,19 @@
-//  Boost ostream_test_stream_test.cpp  --------------------------------------//
-
-//  (C) Copyright Gennadiy Rozental 2001.
-//  Permission to copy, use, modify, sell and distribute this software is
-//  granted provided this copyright notice appears in all copies.
+//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  Permission to copy, use, modify, sell and distribute this software
+//  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
 //  and with no claim as to its suitability for any purpose.
 
-//  See http://www.boost.org for updates, documentation, and revision history.
+//  See http://www.boost.org for most recent version including documentation.
+//
+//  File        : $RCSfile$
+//
+//  Version     : $Id$
+//
+//  Description : tests an extentions to Unit Test Framework
+// ***************************************************************************
 
-// BTL
+// Boost.Test
 #include <boost/test/unit_test_suite_ex.hpp>
 #include <boost/test/test_tools.hpp>
 
@@ -25,20 +30,28 @@ using namespace boost;
 // STL
 #include <list>
 
+//____________________________________________________________________________//
+
 void test0()
 {
     BOOST_MESSAGE( "Hello there" );
 }
+
+//____________________________________________________________________________//
 
 void test1( int arg )
 {
     BOOST_CHECK( (arg & 0x80) == 0 );
 }
 
+//____________________________________________________________________________//
+
 void test2( int arg, int mask )
 {
     BOOST_CHECK( (arg & mask) != 0 );
 }
+
+//____________________________________________________________________________//
 
 struct sub_test_suite : public test_suite {
     sub_test_suite()
@@ -68,6 +81,7 @@ struct sub_test_suite : public test_suite {
     std::list<int> masks_list;
 };
 
+//____________________________________________________________________________//
 
 test_suite*
 init_unit_test_suite( int argc, char* argv[] ) {
@@ -90,7 +104,17 @@ init_unit_test_suite( int argc, char* argv[] ) {
     return test;
 }
 
-//  Revision History
-//  6 Nov 01  Initial  version (Gennadiy Rozental)
+//____________________________________________________________________________//
+
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.6  2002/08/26 09:08:06  rogeeff
+//  cvs kw added
+//
+//   6 Nov 01  Initial  version (Gennadiy Rozental)
+
+// ***************************************************************************
 
 // EOF

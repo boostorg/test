@@ -1,17 +1,23 @@
-//  Boost result_report_test.cpp  --------------------------------------------//
-
-//  (C) Copyright Gennadiy Rozental 2001.
-//  Permission to copy, use, modify, sell and distribute this software is
-//  granted provided this copyright notice appears in all copies.
+//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  Permission to copy, use, modify, sell and distribute this software
+//  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
 //  and with no claim as to its suitability for any purpose.
 
-//  See http://www.boost.org for updates, documentation, and revision history.
+//  See http://www.boost.org for most recent version including documentation.
+//
+//  File        : $RCSfile$
+//
+//  Version     : $Id$
+//
+//  Description : tests Unit Test Framework reporting facilities against
+//  pattern file
+// ***************************************************************************
 
+// Boost.Test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
-
 using boost::test_toolbox::output_test_stream;
 using namespace boost::unit_test_framework;
 
@@ -24,6 +30,8 @@ using namespace boost::unit_test_framework;
 #include <utility>
 #include <list>
 
+//____________________________________________________________________________//
+
 void good_foo() {}
 void bad_foo()  { 
     output_test_stream dev_null;
@@ -32,6 +40,8 @@ void bad_foo()  {
     BOOST_ERROR( "Sure" );
     unit_test_log::instance().set_log_stream( std::cout );
 }
+
+//____________________________________________________________________________//
 
 void check( output_test_stream& output )
 {
@@ -44,6 +54,8 @@ void check( output_test_stream& output )
     unit_test_result::instance().detailed_report( output );
     BOOST_CHECK( output.match_pattern() );
 }
+
+//____________________________________________________________________________//
 
 int 
 test_main( int argc, char * argv[] ) 
@@ -101,7 +113,17 @@ test_main( int argc, char * argv[] )
     return 0;
 }
 
-//  Revision History
+//____________________________________________________________________________//
+
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.5  2002/08/26 09:08:06  rogeeff
+//  cvs kw added
+//
 //  6 Nov 01  Initial  version (Gennadiy Rozental)
+
+// ***************************************************************************
 
 // EOF
