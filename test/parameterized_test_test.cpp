@@ -43,7 +43,7 @@ void test1( int i )
 //____________________________________________________________________________//
 
 
-#if defined(__BORLANDC__) && (__BORLANDC__ < 0x560)
+#if defined(__BORLANDC__) && (__BORLANDC__ < 0x570)
 #define BOOST_PARAM_TEST_CASE__( arg1, arg2, arg3 ) \
     boost::unit_test_framework::create_test_case<int*,int>( (arg1), std::string( "" ), (arg2), (arg3) )
 #else
@@ -56,7 +56,8 @@ int test_main( int, char* [] ) {
     boost::onullstream              null_output;
     boost::scoped_ptr<test_case>    test;  
 
-    unit_test_result::reset_current_result_set();
+    {
+    unit_test_result_saver saver;
     unit_test_log::instance().set_log_stream( null_output );
 
     {
@@ -99,8 +100,9 @@ int test_main( int, char* [] ) {
     BOOST_CHECK( !exception_caught );
     }
 
-    unit_test_result::reset_current_result_set();
-    unit_test_result::reset_current_result_set();
+    }
+    {
+    unit_test_result_saver saver;
 
     {
     int test_data[] = { 6, 6, 6 };    
@@ -112,8 +114,9 @@ int test_main( int, char* [] ) {
     BOOST_CHECK( !exception_caught );
     }
 
-    unit_test_result::reset_current_result_set();
-    unit_test_result::reset_current_result_set();
+    }
+    {
+    unit_test_result_saver saver;
 
     {
     int test_data[] = { 0, 3, 9 };    
@@ -126,7 +129,7 @@ int test_main( int, char* [] ) {
     }
 
     {
-    int test_data[] = { 2, 3, 3 };    
+    int test_data[] = { 2, 3, 9 };
     test.reset( BOOST_PARAM_TEST_CASE__( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
     test->run();
 
@@ -145,7 +148,7 @@ int test_main( int, char* [] ) {
     BOOST_CHECK( exception_caught );
     }
 
-    unit_test_result::reset_current_result_set();
+    }
     unit_test_log::instance().set_log_stream( std::cout );
 
     return 0;
@@ -157,6 +160,9 @@ int test_main( int, char* [] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2002/12/09 05:16:10  rogeeff
+//  switched to use unit_test_result_saver for internal testing
+//
 //  Revision 1.2  2002/11/02 20:04:43  rogeeff
 //  release 1.29.0 merged into the main trank
 //
