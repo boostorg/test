@@ -18,10 +18,6 @@
 
 // BOOST
 #include <boost/config.hpp> // compilers workarounds and std::ptrdiff_t
-#if defined(__BORLANDC__) && (__BORLANDC__ < 0x560) //!! temporary bug fix
-#define _RWSTD_NO_CLASS_PARTIAL_SPEC
-#define BOOST_NO_STD_DISTANCE
-#endif
 
 // STL
 #include <iterator>     // for std::distance
@@ -59,6 +55,9 @@ using std::distance;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10.2.2  2002/10/10 18:14:41  rogeeff
+//  removed incorrect fix
+//
 //  Revision 1.10.2.1  2002/10/01 17:23:15  rogeeff
 //  borlang temporary bug fix introduced
 //
