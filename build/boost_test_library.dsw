@@ -204,21 +204,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "test_testswo"=".\test_testswo.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name unit_test_framework
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "test_tools_test"=".\test_tools_test.dsp" - Package Owner=<4>
 
 Package=<5>
