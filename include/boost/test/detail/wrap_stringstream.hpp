@@ -105,6 +105,7 @@ operator<<( wrap_stringstream& targ, wrap_stringstream& src )
     return targ;
 }
 
+#ifndef BOOST_NO_STD_LOCALE
 //____________________________________________________________________________//
 
 inline wrap_stringstream&
@@ -134,6 +135,7 @@ operator<<( wrap_stringstream& targ, std::basic_ios<Elem, Tr>& (*man)(std::basic
 	return targ;
 }
 
+#endif
 //____________________________________________________________________________//
 
 }  // namespace boost
@@ -148,6 +150,9 @@ operator<<( wrap_stringstream& targ, std::basic_ios<Elem, Tr>& (*man)(std::basic
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2003/11/28 15:20:47  johnmaddock
+//  Added fix for gcc2.95
+//
 //  Revision 1.7  2003/11/06 07:39:36  rogeeff
 //  Licence update
 //

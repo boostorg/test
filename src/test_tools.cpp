@@ -194,7 +194,14 @@ print_log_value<char>::operator()( std::ostream& ostr, char t )
     if( std::isprint( t ) )
         ostr << '\'' << t << '\'';
     else
-        ostr << std::hex << std::showbase << (int)t;
+        ostr << std::hex 
+        // showbase is only available for new style streams:
+#ifndef BOOST_NO_STD_LOCALE
+        << std::showbase
+#else
+        << "0x"
+#endif
+        << (int)t;
 }
 
 //____________________________________________________________________________//
@@ -202,7 +209,14 @@ print_log_value<char>::operator()( std::ostream& ostr, char t )
 void
 print_log_value<unsigned char>::operator()( std::ostream& ostr, unsigned char t )
 {
-    ostr << std::hex << std::showbase << (int)t;
+    ostr << std::hex 
+        // showbase is only available for new style streams:
+#ifndef BOOST_NO_STD_LOCALE
+        << std::showbase
+#else
+        << "0x"
+#endif
+       << (int)t;
 }
 
 //____________________________________________________________________________//
@@ -462,6 +476,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.24  2003/11/28 15:20:24  johnmaddock
+//  Added fix for gcc2.95
+//
 //  Revision 1.23  2003/11/06 07:31:12  rogeeff
 //  Licence update
 //
