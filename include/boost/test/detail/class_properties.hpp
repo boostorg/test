@@ -60,12 +60,25 @@ protected:
 
 //____________________________________________________________________________//
 
+#if  BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+
+template<class PropertyType>
+inline std::ostream&
+operator<<( std::ostream& os, class_property<PropertyType> const& p )
+{
+    return os << p.get();
+}
+
+#else
+
 template<typename CharT1, typename Tr,class PropertyType>
 inline std::basic_ostream<CharT1,Tr>&
 operator<<( std::basic_ostream<CharT1,Tr>& os, class_property<PropertyType> const& p )
 {
     return os << p.get();
 }
+
+#endif
 
 //____________________________________________________________________________//
 
@@ -95,6 +108,28 @@ DEFINE_PROPERTY_FREE_BINARY_OPERATOR( == )
 DEFINE_PROPERTY_FREE_BINARY_OPERATOR( != )
 
 #undef DEFINE_PROPERTY_FREE_BINARY_OPERATOR
+
+#if BOOST_WORKAROUND(BOOST_MSVC, <= 1200)
+
+#define DEFINE_PROPERTY_LOGICAL_OPERATOR( op )                                  \
+template<class PropertyType>                                                    \
+inline bool                                                                     \
+operator op( bool b, class_property<PropertyType> const& p )                    \
+{                                                                               \
+    return b op p.get();                                                        \
+}                                                                               \
+template<class PropertyType>                                                    \
+inline bool                                                                     \
+operator op( class_property<PropertyType> const& p, bool b )                    \
+{                                                                               \
+    return b op p.get();                                                        \
+}                                                                               \
+/**/
+
+DEFINE_PROPERTY_LOGICAL_OPERATOR( && )
+DEFINE_PROPERTY_LOGICAL_OPERATOR( || )
+
+#endif
 
 // ************************************************************************** //
 // **************               readonly_property              ************** //
@@ -174,6 +209,10 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.21  2004/05/27 06:22:17  rogeeff
+//  workaround for gcc 2.95 io
+//  workaround for msvc logical properties operators
+//
 //  Revision 1.20  2004/05/25 10:16:22  rogeeff
 //  upgrade workaround version for Intel
 //
