@@ -9,8 +9,7 @@
 subproject libs/test/test ;
 
 # bring in the rules for testing
-SEARCH on testing.jam = $(BOOST_BUILD_PATH) ;
-include testing.jam ;
+import testing ;
 
 local test-dir = "$(BOOST_ROOT)$(SLASH)libs$(SLASH)test$(SLASH)test$(SLASH)" ;
 
