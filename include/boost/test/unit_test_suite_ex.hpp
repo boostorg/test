@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -8,7 +8,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : provides extention for unit test framework that allows usage
 //  boost::function as a test case base function.
@@ -33,15 +33,15 @@ namespace boost {
 namespace unit_test_framework {
 
 // ************************************************************************** //
-// **************            function_test_case_ex             ************** //
+// **************            boost_function_test_case             ************** //
 // ************************************************************************** //
 
-class function_test_case_ex : public test_case {
+class boost_function_test_case : public test_case {
 public:
     typedef function0<void> function_type;
 
     // Constructor
-    function_test_case_ex( function_type f_, std::string const& name_ )
+    boost_function_test_case( function_type f_, std::string const& name_ )
     : test_case( name_, true, 1 ), m_function( f_ ) {}
 
 protected:
@@ -58,12 +58,12 @@ private:
 // ************************************************************************** //
 
 template <typename ParamIterator, typename ParameterType>
-class parametrized_function_test_case_ex : public test_case {
+class parametrized_boost_function_test_case : public test_case {
 public:
     typedef function1<void,ParameterType> function_type;
 
     // Constructor
-    parametrized_function_test_case_ex( function_type f_, std::string const& name_,
+    parametrized_boost_function_test_case( function_type f_, std::string const& name_,
                                         ParamIterator const& begin_, ParamIterator const& end_ )
     : test_case( name_, true, 0 ), m_first_parameter( begin_ ), m_last_parameter( end_ ), m_function( f_ )
     {
@@ -90,7 +90,7 @@ private:
 inline test_case*
 create_test_case( function0<void> const& fct_, std::string name_ )
 {
-    return new function_test_case_ex( fct_, detail::normalize_test_case_name( name_ ) );
+    return new boost_function_test_case( fct_, detail::normalize_test_case_name( name_ ) );
 }
 
 template<typename ParamIterator, typename ParameterType>
@@ -98,7 +98,7 @@ inline test_case*
 create_test_case( function1<void,ParameterType> const& fct_, std::string name_, 
                   ParamIterator const& begin_, ParamIterator const& end_ )
 {
-    return new parametrized_function_test_case_ex<ParamIterator,ParameterType>(
+    return new parametrized_boost_function_test_case<ParamIterator,ParameterType>(
                     fct_, detail::normalize_test_case_name( name_ ), begin_, end_ );
 }
 
@@ -110,14 +110,8 @@ create_test_case( function1<void,ParameterType> const& fct_, std::string name_,
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.11  2003/02/13 08:23:56  rogeeff
-//  test case type: virtual method -> property
-//
-//  Revision 1.10  2002/12/08 17:52:25  rogeeff
-//  switched to use c_string_literal
-//
-//  Revision 1.9  2002/11/02 19:31:04  rogeeff
-//  merged into the main trank
+//  Revision 1.12  2003/06/09 09:00:44  rogeeff
+//  1.30.beta1
 //
 
 // ***************************************************************************
