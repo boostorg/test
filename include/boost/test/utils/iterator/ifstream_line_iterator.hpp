@@ -16,7 +16,7 @@
 #define BOOST_IFSTREAM_LINE_ITERATOR_HPP_071894GER
 
 // Boost
-#include <boost/test/detail/iterator/istream_line_iterator.hpp>
+#include <boost/test/utils/iterator/istream_line_iterator.hpp>
 
 // STL
 #include <fstream>
@@ -87,6 +87,9 @@ typedef basic_ifstream_line_iterator<wchar_t>   wifstream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/01/22 19:22:13  rogeeff
+//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
+//
 //  Revision 1.1  2005/01/22 18:21:40  rogeeff
 //  moved sharable staff into utils
 //

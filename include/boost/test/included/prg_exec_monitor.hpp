@@ -15,14 +15,17 @@
 #ifndef BOOST_INCLUDED_PRG_EXEC_MONITOR_HPP_071894GER
 #define BOOST_INCLUDED_PRG_EXEC_MONITOR_HPP_071894GER
 
-#include <libs/test/src/execution_monitor.cpp>
+#include <boost/test/impl/execution_monitor.ipp>
 
-#include <libs/test/src/cpp_main.cpp>
+#include <boost/test/impl/cpp_main.ipp>
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2005/01/22 19:22:13  rogeeff
+//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
+//
 //  Revision 1.7  2004/07/19 12:30:49  rogeeff
 //  guard rename
 //

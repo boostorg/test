@@ -20,7 +20,7 @@
 // Boost.Test
 #include <boost/test/detail/unit_test_monitor.hpp>
 #include <boost/test/detail/unit_test_config.hpp>
-#include <boost/test/detail/class_properties.hpp>
+#include <boost/test/utils/class_properties.hpp>
 
 // BOOST
 #include <boost/shared_ptr.hpp>
@@ -324,6 +324,9 @@ create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, bo
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.25  2005/01/22 19:22:12  rogeeff
+//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
+//
 //  Revision 1.24  2004/07/19 12:16:41  rogeeff
 //  guard rename
 //

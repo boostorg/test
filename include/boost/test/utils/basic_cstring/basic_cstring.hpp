@@ -17,8 +17,8 @@
 #define BASIC_CSTRING_HPP_071894GER
 
 // Boost.Test
-#include <boost/test/detail/basic_cstring/basic_cstring_fwd.hpp>
-#include <boost/test/detail/basic_cstring/bcs_char_traits.hpp>
+#include <boost/test/utils/basic_cstring/basic_cstring_fwd.hpp>
+#include <boost/test/utils/basic_cstring/bcs_char_traits.hpp>
 
 // STL
 #include <string>
@@ -714,6 +714,9 @@ last_char( basic_cstring<CharT> source )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/01/22 19:22:13  rogeeff
+//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
+//
 //  Revision 1.1  2005/01/22 18:21:40  rogeeff
 //  moved sharable staff into utils
 //

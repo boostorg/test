@@ -16,23 +16,26 @@
 #define BOOST_INCLUDED_TEST_EXEC_MONITOR_HPP_071894GER
 
 #include <boost/test/detail/unit_test_config.hpp> //!! for borland workaround
-#include <libs/test/src/execution_monitor.cpp>
+#include <boost/test/impl/execution_monitor.ipp>
 
-#include <libs/test/src/test_tools.cpp>
+#include <boost/test/impl/test_tools.ipp>
 
-#include <libs/test/src/unit_test_result.cpp>
-#include <libs/test/src/unit_test_suite.cpp>
-#include <libs/test/src/unit_test_parameters.cpp>
-#include <libs/test/src/unit_test_log.cpp>
-#include <libs/test/src/unit_test_monitor.cpp>
-#include <libs/test/src/supplied_log_formatters.cpp>
+#include <boost/test/impl/unit_test_result.ipp>
+#include <boost/test/impl/unit_test_suite.ipp>
+#include <boost/test/impl/unit_test_parameters.ipp>
+#include <boost/test/impl/unit_test_log.ipp>
+#include <boost/test/impl/unit_test_monitor.ipp>
+#include <boost/test/impl/supplied_log_formatters.ipp>
 
-#include <libs/test/src/test_main.cpp>
+#include <boost/test/impl/test_main.ipp>
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10  2005/01/22 19:22:13  rogeeff
+//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
+//
 //  Revision 1.9  2004/07/19 12:30:49  rogeeff
 //  guard rename
 //

@@ -16,9 +16,9 @@
 #define BOOST_TEST_XML_PRINTER_HPP_071894GER
 
 // Boost.Test
-#include <boost/test/detail/basic_cstring/basic_cstring.hpp>
-#include <boost/test/detail/fixed_mapping.hpp>
-#include <boost/test/detail/custom_manip.hpp>
+#include <boost/test/utils/basic_cstring/basic_cstring.hpp>
+#include <boost/test/utils/fixed_mapping.hpp>
+#include <boost/test/utils/custom_manip.hpp>
 
 // BOOST
 #include <boost/config.hpp>
@@ -31,10 +31,6 @@
 namespace boost {
 
 namespace unit_test {
-
-#if !defined(BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP) && !BOOST_WORKAROUND(__BORLANDC__, < 0x564)
-namespace ut_detail {
-#endif
 
 // ************************************************************************** //
 // **************               xml print helpers              ************** //
@@ -100,10 +96,6 @@ operator<<( custom_printer<pcdata> const& p, const_string value )
 
 //____________________________________________________________________________//
 
-#if !defined(BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP) && !BOOST_WORKAROUND(__BORLANDC__, < 0x564)
-} // namespace ut_detail
-#endif
-
 } // namespace unit_test
 
 } // namespace boost
@@ -114,6 +106,9 @@ operator<<( custom_printer<pcdata> const& p, const_string value )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/01/22 19:22:13  rogeeff
+//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
+//
 //  Revision 1.1  2005/01/22 18:21:40  rogeeff
 //  moved sharable staff into utils
 //

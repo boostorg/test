@@ -20,8 +20,9 @@
 #include <boost/test/detail/unit_test_config.hpp>
 
 // BOOST
-#include <boost/preprocessor/repetition/repeat.hpp> 
+#if !BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600))
 #include <boost/preprocessor/seq/for_each.hpp>
+#endif
 #include <boost/call_traits.hpp>
 #include <boost/type_traits/add_pointer.hpp>
 #include <boost/type_traits/add_const.hpp>
@@ -29,16 +30,6 @@
 
 // STL
 #include <iosfwd>
-
-#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570)           || \
-    BOOST_WORKAROUND( __COMO__, <= 0x433 )             || \
-    BOOST_WORKAROUND( __INTEL_COMPILER, <= 800 )       || \
-    BOOST_WORKAROUND(__GNUC__, < 3)                    || \
-    defined(__sgi) && _COMPILER_VERSION <= 730         || \
-    BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600)) || \
-    defined(__DECCXX)
-#define BOOST_TEST_NO_PROTECTED_USING
-#endif
 
 namespace boost {
 
@@ -223,6 +214,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/01/22 19:22:13  rogeeff
+//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
+//
 //  Revision 1.1  2005/01/22 18:21:39  rogeeff
 //  moved sharable staff into utils
 //

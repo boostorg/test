@@ -41,8 +41,8 @@
 //____________________________________________________________________________//
 
 // Boost.Test
-#include <libs/test/src/execution_monitor.cpp>
-#include <boost/test/detail/class_properties.hpp>
+#include <boost/test/impl/execution_monitor.ipp>
+#include <boost/test/utils/class_properties.hpp>
 
 // BOOST
 #include <boost/cstdlib.hpp>            // for exit codes
@@ -148,6 +148,9 @@ int main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2005/01/22 19:22:12  rogeeff
+//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
+//
 //  Revision 1.14  2004/07/19 12:14:34  rogeeff
 //  guard rename
 //

@@ -17,7 +17,6 @@
 
 // Boost.Test
 #include <boost/test/unit_test_log_formatter.hpp>
-#include <boost/test/detail/xml_printer.hpp>
 
 // BOOST
 #include <boost/config.hpp>
@@ -97,6 +96,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.11  2005/01/22 19:22:12  rogeeff
+//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
+//
 //  Revision 1.10  2005/01/21 07:30:45  rogeeff
 //  to log testing time log formatter interfaces changed
 //

@@ -16,8 +16,8 @@
 #define BOOST_ISTREAM_LINE_ITERATOR_HPP_071894GER
 
 // Boost
-#include <boost/test/detail/basic_cstring/basic_cstring.hpp>
-#include <boost/test/detail/iterator/input_iterator_facade.hpp>
+#include <boost/test/utils/basic_cstring/basic_cstring.hpp>
+#include <boost/test/utils/iterator/input_iterator_facade.hpp>
 
 // STL
 #include <iosfwd>
@@ -89,6 +89,9 @@ typedef basic_istream_line_iterator<wchar_t>    wistream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/01/22 19:22:14  rogeeff
+//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
+//
 //  Revision 1.1  2005/01/22 18:21:40  rogeeff
 //  moved sharable staff into utils
 //

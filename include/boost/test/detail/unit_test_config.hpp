@@ -32,13 +32,23 @@
 #endif
 
 // Boost.Test
-#include <boost/test/detail/basic_cstring/basic_cstring.hpp>
-#include <boost/test/detail/basic_cstring/io.hpp>
+#include <boost/test/utils/basic_cstring/basic_cstring.hpp>
+#include <boost/test/utils/basic_cstring/io.hpp>
 #define BOOST_TEST_STRING_LITERAL( s ) boost::unit_test::literal_string( s, sizeof( s ) - 1 )
 #define BOOST_TEST_EMPTY_STRING BOOST_TEST_STRING_LITERAL( "" )
 
 #if defined(BOOST_HAS_SIGACTION)
 #define BOOST_TEST_SUPPORT_TIMEOUT
+#endif
+
+#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570)           || \
+    BOOST_WORKAROUND( __COMO__, <= 0x433 )             || \
+    BOOST_WORKAROUND( __INTEL_COMPILER, <= 800 )       || \
+    BOOST_WORKAROUND(__GNUC__, < 3)                    || \
+    defined(__sgi) && _COMPILER_VERSION <= 730         || \
+    BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600)) || \
+    defined(__DECCXX)
+#define BOOST_TEST_NO_PROTECTED_USING
 #endif
 
 // STL
@@ -81,6 +91,9 @@ namespace unit_test_framework = unit_test;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.25  2005/01/22 19:22:12  rogeeff
+//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
+//
 //  Revision 1.24  2005/01/21 07:33:20  rogeeff
 //  BOOST_TEST_SUPPORT_TIMEOUT flag introduced to be used by used to switch code by timeout support
 //

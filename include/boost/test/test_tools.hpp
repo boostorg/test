@@ -19,8 +19,8 @@
 // Boost.Test
 #include <boost/test/detail/unit_test_config.hpp>
 #include <boost/test/unit_test_log.hpp>
-#include <boost/test/detail/class_properties.hpp>
-#include <boost/test/detail/wrap_stringstream.hpp>
+#include <boost/test/utils/class_properties.hpp>
+#include <boost/test/utils/wrap_stringstream.hpp>
 
 // BOOST
 #include <boost/cstdlib.hpp> // for boost::exit_success;
@@ -576,6 +576,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.47  2005/01/22 19:22:12  rogeeff
+//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
+//
 //  Revision 1.46  2005/01/18 08:26:01  rogeeff
 //  unit_test_log rework:
 //     eliminated need for ::instance()

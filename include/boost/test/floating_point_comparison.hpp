@@ -17,7 +17,7 @@
 
 #include <boost/limits.hpp>  // for std::numeric_limits
 
-#include <boost/test/detail/class_properties.hpp>
+#include <boost/test/utils/class_properties.hpp>
 
 namespace boost {
 
@@ -120,6 +120,9 @@ compute_tolerance( FPT percentage_tolerance )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.19  2005/01/22 19:22:12  rogeeff
+//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
+//
 //  Revision 1.18  2004/07/19 12:14:09  rogeeff
 //  guard rename
 //  tolerance parameter renamed for clarity

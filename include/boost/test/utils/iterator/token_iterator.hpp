@@ -19,8 +19,8 @@
 #include <boost/iterator/iterator_categories.hpp>
 #include <boost/iterator/iterator_traits.hpp>
 
-#include <boost/test/detail/iterator/input_iterator_facade.hpp>
-#include <boost/test/detail/basic_cstring/basic_cstring.hpp>
+#include <boost/test/utils/iterator/input_iterator_facade.hpp>
+#include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 
 // STL
 #include <iosfwd>
@@ -565,6 +565,9 @@ make_range_token_iterator( Iter begin, Iter end, M1 const& m1, M2 const& m2, M3 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/01/22 19:22:14  rogeeff
+//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
+//
 //  Revision 1.1  2005/01/22 18:21:40  rogeeff
 //  moved sharable staff into utils
 //
