@@ -9,7 +9,7 @@ rule test-btl-lib ( test-rule : test-name : lib-name ? )
    return [ $(test-rule) $(test-name).cpp <lib>../build/$(lib-name)
             : #args
             : #input-files
-            : <stlport-iostream>on # requirements
+            : <stlport-iostream>on <borland><*><cxxflags>-w-8080 # requirements
           ] ;
 }
 
