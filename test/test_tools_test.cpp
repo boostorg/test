@@ -765,7 +765,7 @@ BOOST_AUTO_UNIT_TEST( test_BOOST_MESSAGE )
         output.is_equal( "struct A\n" )
     );
 
-#if !defined(BOOST_NO_STD_LOCALE) && BOOST_WORKAROUND(BOOST_MSVC, >= 1310)
+#if !defined(BOOST_NO_STD_LOCALE) && ( !defined(BOOST_MSVC) || BOOST_WORKAROUND(BOOST_MSVC, >= 1310))
 
     CHECK_TOOL_USAGE(
         BOOST_MESSAGE( std::hex << std::showbase << 20 ),
@@ -835,6 +835,9 @@ BOOST_AUTO_UNIT_TEST( test_BOOST_IS_DEFINED )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.38  2005/01/31 06:04:31  rogeeff
+//  workaround fixed
+//
 //  Revision 1.37  2005/01/30 03:35:55  rogeeff
 //  no message
 //
