@@ -34,7 +34,7 @@ template<typename CharT>
 inline std::ostream&
 operator<<( std::ostream& os, basic_cstring<CharT> const& str )
 {
-    typedef typename basic_cstring<CharT>::mutable_char char_type;
+    typedef typename ut_detail::bcs_base_char<CharT> char_type;
     char_type const* const beg = reinterpret_cast<char_type const* const>( str.begin() );
     char_type const* const end = reinterpret_cast<char_type const* const>( str.end() );
     os << std::basic_string<char_type>( beg, end - beg );
@@ -68,6 +68,9 @@ operator<<( std::basic_ostream<CharT1,Tr>& os, basic_cstring<CharT2> const& str 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2004/06/29 04:31:49  rogeeff
+//  gcc 2.95 fix
+//
 //  Revision 1.4  2004/06/05 11:02:15  rogeeff
 //  std::traits usage reworked
 //
