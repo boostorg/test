@@ -34,6 +34,7 @@
 #endif // BOOST_NO_STRINGSTREAM
 
 #include <cstdlib>
+#include <cstddef>
 #include <stdexcept>
 #include <memory>
 
@@ -460,6 +461,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.18  2002/09/15 11:52:47  johnmaddock
+//  Added needed <cstddef> include
+//
 //  Revision 1.17  2002/09/09 09:07:02  rogeeff
 //  descriptions added
 //
