@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2004.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -45,7 +45,7 @@ main( int argc, char* argv[] )
 
     // set the log/report format
     const_string output_format = retrieve_framework_parameter( OUTPUT_FORMAT, &argc, argv );
-    
+
     if( output_format.empty() ) {
         unit_test_log.set_format( retrieve_framework_parameter( LOG_FORMAT, &argc, argv ) );
         unit_test_result::set_report_format( retrieve_framework_parameter( REPORT_FORMAT, &argc, argv ) );
@@ -87,8 +87,14 @@ main( int argc, char* argv[] )
 
 // ***************************************************************************
 //  Revision History :
-//  
+//
 //  $Log$
+//  Revision 1.18  2005/01/19 16:34:07  vawjr
+//  Changed the \r\r\n back to \r\n on windows so we don't get errors when compiling
+//  on VC++8.0.  I don't know why Microsoft thinks it's a good idea to call this an error,
+//  but they do.  I also don't know why people insist on checking out files on Windows and
+//  copying them to a unix system to check them in (which will cause exactly this problem)
+//
 //  Revision 1.17  2005/01/18 08:30:08  rogeeff
 //  unit_test_log rework:
 //     eliminated need for ::instance()

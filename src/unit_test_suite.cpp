@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2004.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : privide core implementation for Unit Test Framework. 
+//  Description : privide core implementation for Unit Test Framework.
 //  Extensions could be provided in separate files
 // ***************************************************************************
 
@@ -44,7 +44,7 @@ struct test_case::Impl {
                                                         // of implementation function
     std::list<test_case const*> m_dependencies_list;    // list of test cases this test case depends on. We won't run it until they pass
     unit_test_result_cptr       m_results_set;          // results set instance reference for this test case
-    
+
     static bool                 s_abort_testing;        // used to flag critical error and try gracefully stop testing
 
     bool                        check_dependencies();
@@ -58,8 +58,8 @@ bool test_case::Impl::s_abort_testing = false;
 inline bool
 test_case::Impl::check_dependencies()
 {
-    return std::find_if( m_dependencies_list.begin(), 
-                         m_dependencies_list.end(), 
+    return std::find_if( m_dependencies_list.begin(),
+                         m_dependencies_list.end(),
                          std::not1( boost::mem_fn( &test_case::has_passed ) ) ) == m_dependencies_list.end();
 }
 
@@ -105,7 +105,7 @@ test_case::run()
     using ut_detail::unit_test_monitor;
 
     test_case_scope_tracker scope_tracker( *this );
-    
+
     // 0. Check if we allowed to run this test case
     if( !m_pimpl->check_dependencies() )
         return;
@@ -163,7 +163,7 @@ test_case::run()
     if( m_pimpl->m_monitor_run ) {
         error_level_type teardown_result =
             the_monitor.execute_and_translate( this, &test_case::do_destroy, p_timeout );
-        
+
         m_pimpl->s_abort_testing = unit_test_monitor::is_critical_error( teardown_result );
     }
     else {
@@ -196,7 +196,7 @@ test_suite::test_suite( const_string name )
 static void safe_delete_test_case( test_case* ptr ) { boost::checked_delete<test_case>( ptr ); }
 
 test_suite::~test_suite()
-{   
+{
     std::for_each( m_pimpl->m_test_cases.begin(), m_pimpl->m_test_cases.end(), &safe_delete_test_case );
 }
 
@@ -272,8 +272,14 @@ normalize_test_case_name( std::string& name_ )
 
 // ***************************************************************************
 //  Revision History :
-//  
+//
 //  $Log$
+//  Revision 1.18  2005/01/19 16:34:07  vawjr
+//  Changed the \r\r\n back to \r\n on windows so we don't get errors when compiling
+//  on VC++8.0.  I don't know why Microsoft thinks it's a good idea to call this an error,
+//  but they do.  I also don't know why people insist on checking out files on Windows and
+//  copying them to a unix system to check them in (which will cause exactly this problem)
+//
 //  Revision 1.17  2005/01/18 08:30:08  rogeeff
 //  unit_test_log rework:
 //     eliminated need for ::instance()

@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2004.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -146,7 +146,7 @@ compiler_log_formatter::print_prefix( std::ostream& output, const_string file, s
 // **************               xml_log_formatter              ************** //
 // ************************************************************************** //
 
-xml_log_formatter::xml_log_formatter() 
+xml_log_formatter::xml_log_formatter()
 : m_indent( 0 )
 {
 }
@@ -213,7 +213,7 @@ xml_log_formatter::log_exception( std::ostream& output, log_checkpoint_data cons
 {
     print_indent( output );
     output << "<Exception name"; print_attr_value( output, test_case_name ) << ">\n";
-    
+
     m_indent += 2;
 
     print_indent( output );
@@ -222,7 +222,7 @@ xml_log_formatter::log_exception( std::ostream& output, log_checkpoint_data cons
     if( !checkpoint_data.m_message.empty() ) {
         print_indent( output );
         output << "<LastCheckpoint file";   print_attr_value( output, checkpoint_data.m_file )
-               << " line";                  print_attr_value( output, checkpoint_data.m_line ) 
+               << " line";                  print_attr_value( output, checkpoint_data.m_line )
                << ">\n";
 
         m_indent += 2;
@@ -307,6 +307,12 @@ xml_log_formatter::print_indent( std::ostream& output )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.14  2005/01/19 16:34:05  vawjr
+//  Changed the \r\r\n back to \r\n on windows so we don't get errors when compiling
+//  on VC++8.0.  I don't know why Microsoft thinks it's a good idea to call this an error,
+//  but they do.  I also don't know why people insist on checking out files on Windows and
+//  copying them to a unix system to check them in (which will cause exactly this problem)
+//
 //  Revision 1.13  2005/01/18 08:29:59  rogeeff
 //  unit_test_log rework:
 //     eliminated need for ::instance()

@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2004.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -84,7 +84,7 @@ entry_value_collector::~entry_value_collector()
 // **************                 unit_test_log                ************** //
 // ************************************************************************** //
 
-namespace { 
+namespace {
 
 struct unit_test_log_impl {
     // Constructor
@@ -259,7 +259,7 @@ unit_test_log_t::operator<<( file const& f )
         f.m_file_name.assign_to( s_impl().m_entry_data.m_file );
 
         // normalize file name
-        std::transform( s_impl().m_entry_data.m_file.begin(), s_impl().m_entry_data.m_file.end(), 
+        std::transform( s_impl().m_entry_data.m_file.begin(), s_impl().m_entry_data.m_file.end(),
                         s_impl().m_entry_data.m_file.begin(),
                         &set_unix_slash );
     }
@@ -308,7 +308,7 @@ unit_test_log_t::log_exception( log_level l, const_string what )
     *this << begin();
 
     if( l >= s_impl().m_threshold_level ) {
-        s_impl().m_log_formatter->log_exception( s_impl().stream(), s_impl().m_checkpoint_data, 
+        s_impl().m_log_formatter->log_exception( s_impl().stream(), s_impl().m_checkpoint_data,
                                                unit_test_result::instance().test_case_name(), what );
         s_impl().m_entry_has_value = true;
     }
@@ -445,6 +445,12 @@ unit_test_log_t::set_formatter( unit_test_log_formatter* the_formatter )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.26  2005/01/19 16:34:06  vawjr
+//  Changed the \r\r\n back to \r\n on windows so we don't get errors when compiling
+//  on VC++8.0.  I don't know why Microsoft thinks it's a good idea to call this an error,
+//  but they do.  I also don't know why people insist on checking out files on Windows and
+//  copying them to a unix system to check them in (which will cause exactly this problem)
+//
 //  Revision 1.25  2005/01/18 08:30:08  rogeeff
 //  unit_test_log rework:
 //     eliminated need for ::instance()

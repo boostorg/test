@@ -1,7 +1,7 @@
 //  (C) Copyright Gennadiy Rozental 2001-2004.
 //  (C) Copyright Ullrich Koethe 2001.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -34,7 +34,7 @@ namespace ut_detail {
 bool unit_test_monitor::s_catch_system_errors = true;
 
 unit_test_monitor::error_level
-unit_test_monitor::execute_and_translate( test_case* target_test_case, function_to_monitor f, int timeout ) 
+unit_test_monitor::execute_and_translate( test_case* target_test_case, function_to_monitor f, int timeout )
 {
     m_test_case         = target_test_case;
     m_test_case_method  = f;
@@ -70,7 +70,7 @@ unit_test_monitor::execute_and_translate( test_case* target_test_case, function_
 //____________________________________________________________________________//
 
 int
-unit_test_monitor::function() 
+unit_test_monitor::function()
 {
     try {
         (m_test_case->*m_test_case_method)();
@@ -92,8 +92,14 @@ unit_test_monitor::function()
 
 // ***************************************************************************
 //  Revision History :
-//  
+//
 //  $Log$
+//  Revision 1.17  2005/01/19 16:34:07  vawjr
+//  Changed the \r\r\n back to \r\n on windows so we don't get errors when compiling
+//  on VC++8.0.  I don't know why Microsoft thinks it's a good idea to call this an error,
+//  but they do.  I also don't know why people insist on checking out files on Windows and
+//  copying them to a unix system to check them in (which will cause exactly this problem)
+//
 //  Revision 1.16  2005/01/18 08:30:08  rogeeff
 //  unit_test_log rework:
 //     eliminated need for ::instance()
