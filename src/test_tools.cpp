@@ -28,6 +28,7 @@
 #include <string>
 #include <cctype>
 #include <cwchar>
+#include <ios>
 
 # ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::strcmp; using ::strlen; using ::isprint; }
@@ -460,6 +461,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.40  2004/09/18 05:44:21  rogeeff
+//  RW STL 6.0 fix
+//
 //  Revision 1.39  2004/07/25 08:49:15  rogeeff
 //  don't use wchar if BOOST_NO_CWCHAR is defined
 //
