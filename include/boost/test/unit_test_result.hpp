@@ -52,14 +52,14 @@ public:
 
     // current test results access and management
     static unit_test_result& instance();
-    static void     test_case_start( const_string name_, unit_test_counter expected_failures_ = 0 );
-    static void     test_case_end();
+    static void     test_case_enter( const_string name_, counter_t expected_failures_ = 0 );
+    static void     test_case_exit();
     
     // report format configuration
     static void     set_report_format( const_string reportformat );
 
     // use to dynamically change amount of errors expected in current test case
-    void            increase_expected_failures( unit_test_counter amount = 1 );
+    void            increase_expected_failures( counter_t amount = 1 );
 
     // reporting
     void            report( const_string reportlevel, std::ostream& where_to_ );                    // report by level
@@ -82,7 +82,7 @@ public:
     const_string    test_case_name();
 
     // used mostly by the Boost.Test unit testing
-    void            failures_details( unit_test_counter& num_of_failures_, bool& exception_caught_ );
+    void            failures_details( counter_t& num_of_failures_, bool& exception_caught_ );
 
 private:
     // report impl method
@@ -92,7 +92,7 @@ private:
     static void     reset_current_result_set();
 
     // Constructor
-    unit_test_result( unit_test_result* parent_, const_string test_case_name_, unit_test_counter expected_failures_ = 0 );
+    unit_test_result( unit_test_result* parent_, const_string test_case_name_, counter_t expected_failures_ = 0 );
    
     // Data members
     struct Impl;
@@ -109,16 +109,6 @@ struct unit_test_result_saver
     ~unit_test_result_saver() { unit_test_result::reset_current_result_set(); }
 };
 
-// ************************************************************************** //
-// **************            unit_test_result_tracker          ************** //
-// ************************************************************************** //
-
-struct unit_test_result_tracker {
-    explicit            unit_test_result_tracker( const_string name_, unit_test_counter expected_failures_ ) 
-                                                    { unit_test_result::test_case_start( name_, expected_failures_ ); }
-                        ~unit_test_result_tracker() { unit_test_result::test_case_end(); }
-};
-
 } // namespace unit_test
 
 } // namespace boost
@@ -127,6 +117,10 @@ struct unit_test_result_tracker {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.23  2005/01/30 03:23:06  rogeeff
+//  result_tracker class removed
+//  counter type renamed
+//
 //  Revision 1.22  2004/08/04 02:50:27  rogeeff
 //  darwin workarounds
 //
