@@ -21,6 +21,7 @@
 #include <boost/test/utils/class_properties.hpp>
 #include <boost/test/utils/callback.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
+#include <boost/test/detail/workaround.hpp>
 
 // Boost
 #include <boost/shared_ptr.hpp>
@@ -28,6 +29,7 @@
 // STL
 #include <string>   // for std::string
 #include <list>     // for std::list
+#include <vector>   // for std::list
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -131,7 +133,7 @@ private:
     ~test_suite() {}
 
     // Data members
-    std::list<test_unit_id> m_members;
+    std::vector<test_unit_id> m_members;
 };
 
 // ************************************************************************** //
@@ -247,6 +249,9 @@ make_test_case( void (UserTestCase::*test_method )(),
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.29  2005/02/21 10:25:54  rogeeff
+//  use std::vector so we could employ random_shuffle
+//
 //  Revision 1.28  2005/02/20 08:27:06  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
