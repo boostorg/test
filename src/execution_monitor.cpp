@@ -43,7 +43,9 @@ namespace std { using ::strlen; using ::strncat; }
 #endif
 
 // Microsoft + other compatible compilers such as Intel
-#if (defined(_MSC_VER) && !defined(__COMO__)) || (defined(__INTEL__) && defined(__MWERKS__) && __MWERKS__ >= 0x3000)
+#if !defined(BOOST_DISABLE_WIN32) &&                                        \
+    (defined(_MSC_VER) && !defined(__COMO__)) ||                            \
+    (defined(__INTEL__) && defined(__MWERKS__) && __MWERKS__ >= 0x3000)
 
 #define BOOST_MS_STRCTURED_EXCEPTION_HANDLING
 #include <wtypes.h>
@@ -572,6 +574,9 @@ static void report_error( execution_exception::error_code ec, c_string_literal m
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.24  2003/06/10 03:34:28  rogeeff
+//  desable SEH if BOOST_DISABLE_WIN32 in effect
+//
 //  Revision 1.23  2003/06/09 09:13:05  rogeeff
 //  1.30.beta1
 //
