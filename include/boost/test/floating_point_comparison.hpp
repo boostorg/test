@@ -12,8 +12,8 @@
 //  Description : defines algoirthms for comparing 2 floating point values
 // ***************************************************************************
 
-#ifndef BOOST_FLOATING_POINT_COMPARISON_HPP
-#define BOOST_FLOATING_POINT_COMPARISON_HPP
+#ifndef BOOST_FLOATING_POINT_COMPARISON_HPP_071894GER
+#define BOOST_FLOATING_POINT_COMPARISON_HPP_071894GER
 
 #include <boost/limits.hpp>  // for std::numeric_limits
 
@@ -67,8 +67,8 @@ safe_fpt_division( FPT f1, FPT f2 )
 template<typename FPT, typename PersentType = FPT >
 class close_at_tolerance {
 public:
-    explicit    close_at_tolerance( PersentType tolerance, floating_point_comparison_type fpc_type = FPC_STRONG ) 
-    : p_fraction_tolerance( static_cast<FPT>(0.01)*tolerance ), p_strong_or_weak( fpc_type ==  FPC_STRONG ) {}
+    explicit    close_at_tolerance( PersentType percentage_tolerance, floating_point_comparison_type fpc_type = FPC_STRONG ) 
+    : p_fraction_tolerance( static_cast<FPT>(0.01)*percentage_tolerance ), p_strong_or_weak( fpc_type ==  FPC_STRONG ) {}
 
     bool        operator()( FPT left, FPT right ) const
     {
@@ -88,14 +88,14 @@ public:
 //____________________________________________________________________________//
 
 // ************************************************************************** //
-// **************               check_is_closed                ************** //
+// **************               check_is_close                 ************** //
 // ************************************************************************** //
 
 template<typename FPT, typename PersentType>
 inline bool
-check_is_closed( FPT left, FPT right, PersentType tolerance, floating_point_comparison_type fpc_type = FPC_STRONG )
+check_is_close( FPT left, FPT right, PersentType percentage_tolerance, floating_point_comparison_type fpc_type = FPC_STRONG )
 {
-    close_at_tolerance<FPT,PersentType> pred( tolerance, fpc_type );
+    close_at_tolerance<FPT,PersentType> pred( percentage_tolerance, fpc_type );
 
     return pred( left, right );
 }
@@ -104,9 +104,9 @@ check_is_closed( FPT left, FPT right, PersentType tolerance, floating_point_comp
 
 template<typename FPT>
 inline FPT
-compute_tolerance( FPT tolerance )
+compute_tolerance( FPT percentage_tolerance )
 {
-    close_at_tolerance<FPT> pred( tolerance );
+    close_at_tolerance<FPT> pred( percentage_tolerance );
 
     return pred.p_fraction_tolerance.get();
 }
@@ -120,6 +120,10 @@ compute_tolerance( FPT tolerance )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.18  2004/07/19 12:14:09  rogeeff
+//  guard rename
+//  tolerance parameter renamed for clarity
+//
 //  Revision 1.17  2004/06/07 07:33:49  rogeeff
 //  detail namespace renamed
 //
@@ -138,4 +142,4 @@ compute_tolerance( FPT tolerance )
 //
 // ***************************************************************************
 
-#endif // BOOST_FLOATING_POINT_COMAPARISON_HPP
+#endif // BOOST_FLOATING_POINT_COMAPARISON_HPP_071894GER
