@@ -195,6 +195,18 @@ struct output_test_stream::Impl
     bool            m_match_or_save;
     std::string     m_synced_string;
 
+    char            get_char()
+    {
+        char res;
+        do {
+            m_pattern_to_match_or_save.get( res );
+        } while( res == '\r'                        &&
+                 !m_pattern_to_match_or_save.fail() &&
+                 !m_pattern_to_match_or_save.eof() );
+
+        return res;
+    }
+
     void            check_and_fill( extended_predicate_value& res )
     {
         if( !res.p_predicate_value.get() )
@@ -317,33 +329,56 @@ output_test_stream::is_equal( c_string_literal arg, std::size_t n, bool flush_st
 
 //____________________________________________________________________________//
 
-bool
+extended_predicate_value
 output_test_stream::match_pattern( bool flush_stream )
 {
     sync();
 
-    bool result = true;
+    result_type result( true );
 
-    if( !m_pimpl->m_pattern_to_match_or_save.is_open() )
+    if( !m_pimpl->m_pattern_to_match_or_save.is_open() ) {
         result = false;
+        *(result.p_message) << "Couldn't open pattern file for " 
+            << ( m_pimpl->m_match_or_save ? "reading" : "writing");
+    }
     else {
         if( m_pimpl->m_match_or_save ) {
-            c_string_literal ptr = m_pimpl->m_synced_string.c_str();
+            std::string::const_iterator it = m_pimpl->m_synced_string.begin();
 
-            for( std::size_t i = 0; i != m_pimpl->m_synced_string.length(); i++, ptr++ ) {
-                char c;
-                m_pimpl->m_pattern_to_match_or_save.get( c );
+            while( it != m_pimpl->m_synced_string.end() ) {
+                char c = m_pimpl->get_char();
 
-                if( m_pimpl->m_pattern_to_match_or_save.fail() ||
-                    m_pimpl->m_pattern_to_match_or_save.eof() )
-                {
-                    result = false;
+                result = !m_pimpl->m_pattern_to_match_or_save.fail() && 
+                         !m_pimpl->m_pattern_to_match_or_save.eof() && 
+                         (*it == c);
+
+                if( !result ) {
+                    size_t suffix_size  = std::min( m_pimpl->m_synced_string.end() - it, 5 );
+                    size_t pos          = it - m_pimpl->m_synced_string.begin();
+
+                    // try to log area around the mismatch 
+                    *(result.p_message) << "Mismatch in a position " << pos << '\n'
+                        << "..." << m_pimpl->m_synced_string.substr( pos, suffix_size ) << "..." << '\n'
+                        << "..." << c;
+
+                    size_t counter = suffix_size;
+                    while( --counter ) {
+                        char c = m_pimpl->get_char();
+
+                        if( m_pimpl->m_pattern_to_match_or_save.fail() || 
+                            m_pimpl->m_pattern_to_match_or_save.eof() )
+                            break;
+
+                        *(result.p_message) << c;
+                    }
+
+                    *(result.p_message) << "...";
+
+                    // skip rest of the bytes. May help for further matching
+                    m_pimpl->m_pattern_to_match_or_save.ignore( m_pimpl->m_synced_string.end() - it - suffix_size);
                     break;
                 }
-
-                if( *ptr != c ) {
-                    result = false;
-                }
+                ++it;
             }
         }
         else {
@@ -406,6 +441,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.17  2003/06/20 11:01:15  rogeeff
+//  match_pattern show an error mismatch snippet
+//
 //  Revision 1.16  2003/06/09 09:14:35  rogeeff
 //  added support for extended users predicate returning also error message
 //
