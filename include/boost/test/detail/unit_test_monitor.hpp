@@ -41,27 +41,23 @@ public:
         fatal_error             = -5,  // includes both system and user
         destructor_error        = -6
     };
-    static bool         is_critical_error( error_level e_ ) { return e_ <= fatal_error; }
 
-    // Constructor
-    unit_test_monitor( test_case& target_test_case_, function_to_monitor f_ )
-    : m_test_case( target_test_case_ ), m_test_case_function( f_ ) {}
+    static bool         is_critical_error( error_level e_ ) { return e_ <= fatal_error; }
 
     // management method; same for all monitors
     static void         catch_system_errors( bool yes_no = true ) { s_catch_system_errors = yes_no; }
 
     // monitor method
-    error_level         execute_and_translate( int timeout_ );
+    error_level			execute_and_translate( test_case* target_test_case_, function_to_monitor f_, int timeout_ );
 
     // execution monitor hook implementation
     virtual int         function();
 
 private:
     // Data members
-    test_case&          m_test_case;
-    function_to_monitor m_test_case_function;
-
-    static bool         s_catch_system_errors;
+    test_case*			m_test_case;
+    function_to_monitor	m_test_case_method;
+    static bool			s_catch_system_errors;
 }; // unit_test_monitor
 
 } // namespace detail
@@ -74,6 +70,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.11  2003/11/02 06:21:33  rogeeff
+//  use shared global monitor for all test cases
+//
 //  Revision 1.10  2003/10/27 07:13:13  rogeeff
 //  licence update
 //
