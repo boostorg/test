@@ -94,7 +94,7 @@ struct report_progress {
 // **************                 unit_test_log                ************** //
 // ************************************************************************** //
 
-class unit_test_log : boost::noncopyable { //!! Singleton
+class unit_test_log : private boost::noncopyable { //!! Singleton
 public:
     // Destructor
     ~unit_test_log();
@@ -157,6 +157,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10  2002/09/19 08:23:23  rogeeff
+//  explicit private added to shut down warnings
+//
 //  Revision 1.9  2002/09/16 08:47:29  rogeeff
 //  STL includes normalized
 //
