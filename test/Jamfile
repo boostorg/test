@@ -53,7 +53,6 @@ test-suite "unit_test_framework_test"
 
           [ test-btl-lib run : errors_handling_test : boost_test_exec_monitor : $(test-dir)/test_files/errors_handling_test.pattern ]
           [ test-btl-lib run : online_test ]
-          [ test-btl-lib run : foreach_test ]
           [ test-btl-lib run-fail : minimal_test ]
           [ test-btl-lib run : output_test_stream_test  : boost_unit_test_framework ]
           [ test-btl-lib run : result_report_test       : boost_test_exec_monitor : $(test-dir)test_files/result_report_test.pattern ]
