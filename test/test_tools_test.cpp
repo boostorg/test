@@ -19,7 +19,7 @@ using namespace boost::unit_test_framework;
 using boost::test_toolbox::extended_predicate_value;
 
 // BOOST
-#include <boost/compose.hpp>
+#include <boost/bind.hpp>
 
 // STL
 #include <iostream>
@@ -442,7 +442,7 @@ test_BOOST_CHECK_PREDICATE()
     );
 
     CHECK_TOOL_USAGE(
-        BOOST_CHECK_PREDICATE( boost::compose_f_gxy( std::ptr_fun( &is_even ), std::ptr_fun( &foo ) ), 2, (i,15) ),
+        BOOST_CHECK_PREDICATE( boost::bind( &is_even, boost::bind( &foo, _1, _2 ) ), 2, (i,15) ),
         output.is_empty()
     );
 
@@ -707,6 +707,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.26  2003/11/23 22:37:18  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.25  2003/11/06 07:59:20  rogeeff
 //  *** empty log message ***
 //
