@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -8,7 +8,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : defines singleton class unit_test_log and all manipulators.
 //  unit_test_log has output stream like interface. It's implementation is
@@ -152,6 +152,19 @@ private:
 /**/
 #define BOOST_UT_LOG_END             << boost::unit_test_framework::end();
 
+// ************************************************************************** //
+// **************            test_case_scope_tracker           ************** //
+// ************************************************************************** //
+
+struct test_case_scope_tracker {
+    explicit            test_case_scope_tracker( test_case const& tc ) 
+    : m_tc( tc )                                    { unit_test_log::instance().track_test_case_scope( m_tc, true ); }
+                        ~test_case_scope_tracker()  { unit_test_log::instance().track_test_case_scope( m_tc, false ); }
+
+private:
+    test_case const&    m_tc;
+};
+
 } // namespace unit_test_framework
 
 } // namespace boost
@@ -160,20 +173,8 @@ private:
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.15  2003/02/15 22:26:00  rogeeff
-//  excessive include parameters moved to source file
-//
-//  Revision 1.14  2003/02/13 08:20:56  rogeeff
-//  report_level->log_level
-//  log format config methods added
-//  log interface slightly changed to allow multiple log formats
-//  Unused macros deleted
-//
-//  Revision 1.13  2002/12/08 17:43:55  rogeeff
-//  switched to use c_string_literal
-//
-//  Revision 1.12  2002/11/02 19:31:04  rogeeff
-//  merged into the main trank
+//  Revision 1.16  2003/06/09 08:56:15  rogeeff
+//  test_case_csope_tracker introduced for correct exception unwinding handling
 //
 
 // ***************************************************************************
