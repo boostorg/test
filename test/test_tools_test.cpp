@@ -81,7 +81,7 @@ normalize_file_name( char const* f )
     return buffer;
 }
 
-#if BOOST_TEST_SHIFTED_LINE
+#ifdef BOOST_TEST_SHIFTED_LINE
 
 #define CHECK_PATTERN( msg, shift ) \
     (boost::wrap_stringstream().ref() << normalize_file_name( __FILE__ ) << "(" << (__LINE__-shift) << "): " << msg).str()
@@ -711,6 +711,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.34  2004/10/05 01:46:33  rogeeff
+//  borland fix
+//
 //  Revision 1.33  2004/10/01 10:55:43  rogeeff
 //  some test errors workarrounds
 //
