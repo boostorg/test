@@ -235,7 +235,7 @@ test_BOOST_CHECKPOINT() {
         output.is_equal(
             (boost::wrap_stringstream().ref()
                 << "Exception in " TEST_CASE_NAME ": C string: some error\n"
-                << __FILE__ << "(" << (__LINE__ - 10) << ") : "
+                << __FILE__ << "(" << 231 << ") : "
                 << "last checkpoint: Going to do a silly things\n").str()
         )
     );
@@ -605,6 +605,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.16  2003/02/14 06:40:58  rogeeff
+//  Intel on linux fix
+//
 //  Revision 1.15  2003/02/13 08:47:12  rogeeff
 //  *** empty log message ***
 //
