@@ -41,12 +41,12 @@ unit_test_monitor::execute_and_translate( int timeout )
         execute( s_catch_system_errors, timeout );
     }
     catch( execution_exception const& exex ) {
-        report_level report_level =
-             exex.code() <= execution_exception::cpp_exception_error ? report_cpp_exception_errors :
-            (exex.code() <= execution_exception::timeout_error       ? report_system_errors :
-                                                                       report_fatal_errors);
+        log_level loglevel =
+             exex.code() <= execution_exception::cpp_exception_error ? log_cpp_exception_errors :
+            (exex.code() <= execution_exception::timeout_error       ? log_system_errors :
+                                                                       log_fatal_errors);
         unit_test_log::instance() 
-            << begin() << level( report_level ) << report_exception( exex.what() ) << end();
+            << begin() << level( loglevel ) << log_exception( exex.what() ) << end();
 
         unit_test_result::instance().caught_exception();
 
@@ -93,6 +93,9 @@ unit_test_monitor::function()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2003/02/13 08:40:44  rogeeff
+//  report_level -> log_level
+//
 //  Revision 1.6  2002/12/08 18:19:06  rogeeff
 //  catch system errors switch introduced
 //
