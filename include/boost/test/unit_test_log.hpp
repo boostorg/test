@@ -95,8 +95,8 @@ public:
     static unit_test_log_t& instance();
 
     void                start( bool log_build_info = false );
-    void                header( unit_test_counter );
-    void                finish( unit_test_counter );
+    void                header( counter_t );
+    void                finish( counter_t );
 
     // log configuration methods
     void                set_stream( std::ostream& );
@@ -106,8 +106,8 @@ public:
     void                set_formatter( unit_test_log_formatter* );
 
     // test case scope tracking
-    void                track_test_case_enter( test_case const& );
-    void                track_test_case_exit( test_case const&, long testing_time_in_mks );
+    void                test_case_enter( test_case const& );
+    void                test_case_exit( test_case const&, long testing_time_in_mks );
 
     // entry setup
     unit_test_log_t&    operator<<( begin const& );         // begin entry 
@@ -115,10 +115,11 @@ public:
     unit_test_log_t&    operator<<( file const& );          // set entry file name
     unit_test_log_t&    operator<<( line const& );          // set entry line number
     unit_test_log_t&    operator<<( checkpoint const& );    // set checkpoint
-    ut_detail::entry_value_collector operator()( log_level const& );
+    unit_test_log_t&    operator<<( log_level );            // set entry level
+    ut_detail::entry_value_collector operator()( log_level );
 
     // logging methods
-    void                log_value( const_string );
+    unit_test_log_t&    operator<<( const_string );
     void                log_progress();
     void                log_exception( log_level, const_string );
 
@@ -132,13 +133,11 @@ unit_test_log_t& unit_test_log = unit_test_log_t::instance();
 }
 
 // helper macros
-#define BOOST_UT_LOG_ENTRY_FL( f, l )                                   \
-    (boost::unit_test::unit_test_log << boost::unit_test::begin()       \
-                                     << boost::unit_test::file( f )     \
-                                     << boost::unit_test::line( l ) )   \
+#define BOOST_UT_LOG_ENTRY                                                  \
+    (boost::unit_test::unit_test_log << boost::unit_test::begin()           \
+        << boost::unit_test::file( BOOST_TEST_STRING_LITERAL( __FILE__ ) )  \
+        << boost::unit_test::line( __LINE__ ))                              \
 /**/
-
-#define BOOST_UT_LOG_ENTRY BOOST_UT_LOG_ENTRY_FL( BOOST_TEST_STRING_LITERAL( __FILE__ ), __LINE__ )
 
 } // namespace unit_test
 
@@ -150,6 +149,9 @@ unit_test_log_t& unit_test_log = unit_test_log_t::instance();
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.27  2005/01/30 03:26:29  rogeeff
+//  return an ability for explicit end()
+//
 //  Revision 1.26  2005/01/21 07:30:24  rogeeff
 //  to log testing time log formatter interfaces changed
 //
