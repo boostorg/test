@@ -1,11 +1,10 @@
-//  (C) Copyright Gennadiy Rozental 2001-2003.
-//  (C) Copyright Beman Dawes 1995-2001.
-//  Permission to copy, use, modify, sell and distribute this software is 
-//  granted provided this copyright notice appears in all copies. This software
-//  is provided "as is" without express or implied warranty, and with no 
-//  claim as to its suitability for any purpose.
+//  main function implementation for Program Executon Monitor
 
-//  See http://www.boost.org for updates, documentation, and revision history.
+//  Copyright Gennadiy Rozental 2001-2003.
+//  Copyright Beman Dawes 1995-2001.
+//  See accompanying license for terms and conditions of use.
+
+//  See http://www.boost.org/libs/test for documentation.
 //
 //  File        : $RCSfile$
 //
@@ -100,6 +99,9 @@ int main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10  2003/09/14 12:42:22  beman_dawes
+//  Change to new license (with Gennadiy's permission)
+//
 //  Revision 1.9  2003/07/11 16:26:21  jmaurer
 //  need <cstring> before being able to use std::strcmp etc.
 //

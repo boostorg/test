@@ -1,11 +1,10 @@
-//  (C) Copyright Gennadiy Rozental 2001-2003.
-//  (C) Copyright Beman Dawes and Ullrich Koethe 1995-2001.
-//  Permission to copy, use, modify, sell and distribute this software
-//  is granted provided this copyright notice appears in all copies.
-//  This software is provided "as is" without express or implied warranty,
-//  and with no claim as to its suitability for any purpose.
+//  execution monitor implementation - traps and reports errors and exceptions
 
-//  See http://www.boost.org for updates, documentation, and revision history.
+//  Copyright Gennadiy Rozental 2001-2003.
+//  Copyright Beman Dawes and Ullrich Koethe 1995-2001.
+//  See accompanying license for terms and conditions of use.
+
+//  See http://www.boost.org/libs/test for documentation.
 //
 //  File        : $RCSfile$
 //
@@ -574,6 +573,9 @@ static void report_error( execution_exception::error_code ec, c_string_literal m
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.25  2003/09/14 12:42:22  beman_dawes
+//  Change to new license (with Gennadiy's permission)
+//
 //  Revision 1.24  2003/06/10 03:34:28  rogeeff
 //  desable SEH if BOOST_DISABLE_WIN32 in effect
 //

@@ -1,11 +1,10 @@
-//  (C) Copyright Gennadiy Rozental 2001-2003.
-//  (C) Copyright Beman Dawes 1995-2001. 
-//  Permission to copy, use, modify, sell and distribute this software
-//  is granted provided this copyright notice appears in all copies.
-//  This software is provided "as is" without express or implied warranty,
-//  and with no claim as to its suitability for any purpose.
+//  implements main function for Test Execution Monitor
 
-//  See http://www.boost.org for updates, documentation, and revision history.
+//  Copyright Gennadiy Rozental 2001-2003.
+//  Copyright Beman Dawes 1995-2001. 
+//  See accompanying license for terms and conditions of use.
+
+//  See http://www.boost.org/libs/test for documentation.
 //
 //  File        : $RCSfile$
 //
@@ -99,6 +98,9 @@ int main( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.12  2003/09/14 12:42:22  beman_dawes
+//  Change to new license (with Gennadiy's permission)
+//
 //  Revision 1.11  2003/06/09 09:10:50  rogeeff
 //  added support for catch_system_error in Test Execution Monitor
 //

@@ -1,11 +1,10 @@
-//  (C) Copyright Gennadiy Rozental 2001-2003.
-//  (C) Copyright Beman Dawes 2001. 
-//  Permission to copy, use, modify, sell and distribute this software
-//  is granted provided this copyright notice appears in all copies.
-//  This software is provided "as is" without express or implied warranty,
-//  and with no claim as to its suitability for any purpose.
+//  Divide by zero test
 
-//  See http://www.boost.org for most recent version including documentation.
+//  Copyright Gennadiy Rozental 2001-2003.
+//  Copyright Beman Dawes 2001. 
+//  See accompanying license for terms and conditions of use.
+
+//  See http://www.boost.org/libs/test for documentation.
 //
 //  File        : $RCSfile$
 //
@@ -27,6 +26,9 @@ int cpp_main( int, char *[] )  // note the name
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2003/09/14 12:42:22  beman_dawes
+//  Change to new license (with Gennadiy's permission)
+//
 //  Revision 1.7  2003/06/09 09:25:24  rogeeff
 //  1.30.beta1
 //
