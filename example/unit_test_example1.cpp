@@ -1,3 +1,4 @@
+//  (C) Copyright Gennadiy Rozental 2002-2003.
 //  (C) Copyright Gennadiy Rozental & Ullrich Koethe 2001.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
@@ -18,7 +19,7 @@ void free_test_function()
 }
 
 test_suite*
-init_unit_test_suite( int argc, char * argv[] ) {
+init_unit_test_suite( int, char* [] ) {
     test_suite* test= BOOST_TEST_SUITE( "Unit test example 1" );
 
     // this example will pass cause we know ahead of time number of expected failures

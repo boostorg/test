@@ -1,4 +1,10 @@
-//  boost Test Execution Monitor example program  ------------------------//
+//  (C) Copyright Gennadiy Rozental 2001-2003.
+//  Permission to copy, use, modify, sell and distribute this software
+//  is granted provided this copyright notice appears in all copies.
+//  This software is provided "as is" without express or implied warranty,
+//  and with no claim as to its suitability for any purpose.
+//
+//  See http://www.boost.org for most recent version including documentation.
 
 // Boost.Test
 #include <boost/test/test_tools.hpp>
@@ -23,3 +29,5 @@ int test_main( int, char* [] )  // note the name!
 
     return add(2,2) == 4 ? 0 : 1;          // #6 returns error code
 }
+
+// EOF

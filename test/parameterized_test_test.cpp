@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2002.
+//  (C) Copyright Gennadiy Rozental 2002-2003.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -6,9 +6,9 @@
 
 //  See http://www.boost.org for most recent version including documentation.
 //
-//  File        : $$
+//  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : tests parameterized tests
 // ***************************************************************************
@@ -69,6 +69,7 @@ int test_main( int, char* [] ) {
     {
     int test_data[] = { 2, 2, 2 };
     test.reset( BOOST_PARAM_TEST_CASE__( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
+
     test->run();
 
     unit_test_result::instance().failures_details( num_of_failures, exception_caught );
@@ -166,6 +167,9 @@ int test_main( int, char* [] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2003/06/09 09:25:24  rogeeff
+//  1.30.beta1
+//
 //  Revision 1.4  2003/02/15 21:52:37  rogeeff
 //  mingw ostream fix
 //

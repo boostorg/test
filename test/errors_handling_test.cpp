@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  (C) Copyright Beman Dawes 2001.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
@@ -9,7 +9,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : tests an ability of Unit Test Framework to catch all kinds
 //  of test errors in a user code and properly report it.
@@ -233,6 +233,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.12  2003/06/09 09:23:03  rogeeff
+//  1.30.beta1
+//
 //  Revision 1.11  2003/02/15 21:49:57  rogeeff
 //  borland warning fix
 //

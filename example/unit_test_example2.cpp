@@ -1,3 +1,4 @@
+//  (C) Copyright Gennadiy Rozental 2002-2003.
 //  (C) Copyright Gennadiy Rozental & Ullrich Koethe 2001.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.

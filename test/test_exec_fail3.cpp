@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  (C) Copyright Beman Dawes 2000.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
@@ -9,7 +9,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : test failures reported by BOOST_CHECK. Should fail during run.
 // ***************************************************************************
@@ -33,6 +33,9 @@ int test_main( int, char*[] )  // note the name
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2003/06/09 09:25:24  rogeeff
+//  1.30.beta1
+//
 //  Revision 1.6  2003/02/13 08:47:10  rogeeff
 //  *** empty log message ***
 //
