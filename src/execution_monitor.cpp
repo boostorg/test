@@ -205,7 +205,7 @@ int execution_monitor::execute( bool catch_system_errors, int timeout )
     catch( c_string_literal ex )
       { detail::report_error( execution_exception::cpp_exception_error, "C string: ", ex ); }
     catch( std::string const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, "std::string", ex.c_str() ); }
+    { detail::report_error( execution_exception::cpp_exception_error, "std::string: ", ex.c_str() ); }
 
     //  std:: exceptions
 
@@ -518,6 +518,9 @@ static void report_error( execution_exception::error_code ec, c_string_literal m
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.16  2002/12/17 22:01:09  beman_dawes
+//  Add :space to std::string to prevent garbled msg
+//
 //  Revision 1.15  2002/12/10 21:09:49  beman_dawes
 //  Metrowerks fix
 //
