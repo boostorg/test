@@ -43,7 +43,9 @@ public:
     void    log_header( std::ostream&, unit_test_counter test_cases_amount );
     void    finish_log( std::ostream& );
 
-    void    track_test_case_scope( std::ostream&, test_case const& tc, bool in_out );
+    void    track_test_case_enter( std::ostream&, test_case const& tc );
+    void    track_test_case_exit( std::ostream&, test_case const& tc, long testing_time_in_mks );
+
     void    log_exception( std::ostream&, log_checkpoint_data const&, const_string test_case_name, const_string explanation );
     void    begin_log_entry( std::ostream&, log_entry_data const&, log_entry_types let );
 
@@ -58,7 +60,7 @@ protected:
 // **************               xml_log_formatter              ************** //
 // ************************************************************************** //
 
-class xml_log_formatter : public unit_test_log_formatter, private xml_printer {
+class xml_log_formatter : public unit_test_log_formatter {
 public:
     xml_log_formatter();
 
@@ -66,7 +68,9 @@ public:
     void    log_header( std::ostream&, unit_test_counter test_cases_amount );
     void    finish_log( std::ostream& );
 
-    void    track_test_case_scope( std::ostream&, test_case const& tc, bool in_out );
+    void    track_test_case_enter( std::ostream&, test_case const& tc );
+    void    track_test_case_exit( std::ostream&, test_case const& tc, long testing_time_in_mks );
+
     void    log_exception( std::ostream&, log_checkpoint_data const&, const_string test_case_name, const_string explanation );
     void    begin_log_entry( std::ostream&, log_entry_data const&, log_entry_types let );
 
@@ -93,6 +97,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10  2005/01/21 07:30:45  rogeeff
+//  to log testing time log formatter interfaces changed
+//
 //  Revision 1.9  2005/01/18 08:26:12  rogeeff
 //  unit_test_log rework:
 //     eliminated need for ::instance()

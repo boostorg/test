@@ -106,7 +106,8 @@ public:
     void                set_formatter( unit_test_log_formatter* );
 
     // test case scope tracking
-    void                track_test_case_scope( test_case const&, bool );
+    void                track_test_case_enter( test_case const& );
+    void                track_test_case_exit( test_case const&, long testing_time_in_mks );
 
     // entry setup
     unit_test_log_t&    operator<<( begin const& );         // begin entry 
@@ -139,20 +140,6 @@ unit_test_log_t& unit_test_log = unit_test_log_t::instance();
 
 #define BOOST_UT_LOG_ENTRY BOOST_UT_LOG_ENTRY_FL( BOOST_TEST_STRING_LITERAL( __FILE__ ), __LINE__ )
 
-
-// ************************************************************************** //
-// **************            test_case_scope_tracker           ************** //
-// ************************************************************************** //
-
-struct test_case_scope_tracker {
-    explicit            test_case_scope_tracker( test_case const& tc ) 
-    : m_tc( tc )                                    { unit_test_log.track_test_case_scope( m_tc, true ); }
-                        ~test_case_scope_tracker()  { unit_test_log.track_test_case_scope( m_tc, false ); }
-
-private:
-    test_case const&    m_tc;
-};
-
 } // namespace unit_test
 
 } // namespace boost
@@ -163,6 +150,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.26  2005/01/21 07:30:24  rogeeff
+//  to log testing time log formatter interfaces changed
+//
 //  Revision 1.25  2005/01/18 08:26:12  rogeeff
 //  unit_test_log rework:
 //     eliminated need for ::instance()
