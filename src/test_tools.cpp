@@ -19,6 +19,7 @@
 
 // BOOST
 #include <boost/config.hpp>
+#include <boost/minmax.hpp>
 
 // STL
 #include <fstream>
@@ -389,7 +390,7 @@ output_test_stream::match_pattern( bool flush_stream )
                          (m_pimpl->m_synced_string[i] == c);
 
                 if( !result ) {
-                    std::string::size_type suffix_size  = std::min( m_pimpl->m_synced_string.length() - i,
+                    std::string::size_type suffix_size  = std_min( m_pimpl->m_synced_string.length() - i,
                                                                     static_cast<std::string::size_type>(5) );
 
                     // try to log area around the mismatch 
@@ -476,6 +477,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.26  2004/02/26 18:27:01  eric_niebler
+//  remove minmax hack from win32.hpp and fix all places that could be affected by the minmax macros
+//
 //  Revision 1.25  2003/12/01 00:42:37  rogeeff
 //  prerelease cleaning
 //

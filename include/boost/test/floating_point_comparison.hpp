@@ -49,8 +49,8 @@ template<typename FPT>
 inline FPT 
 safe_fpt_division( FPT f1, FPT f2 )
 {
-    return  (f2 < 1 && f1 > f2 * std::numeric_limits<FPT>::max())   ? std::numeric_limits<FPT>::max() :
-           ((f2 > 1 && f1 < f2 * std::numeric_limits<FPT>::min() || 
+    return  (f2 < 1 && f1 > f2 * (std::numeric_limits<FPT>::max)())   ? (std::numeric_limits<FPT>::max)() :
+           ((f2 > 1 && f1 < f2 * (std::numeric_limits<FPT>::min)() || 
              f1 == 0)                                               ? 0                               :
                                                                       f1/f2 );
 }
@@ -119,6 +119,9 @@ compute_tolerance( FPT tolerance )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.14  2004/02/26 18:26:57  eric_niebler
+//  remove minmax hack from win32.hpp and fix all places that could be affected by the minmax macros
+//
 //  Revision 1.13  2003/12/01 00:41:56  rogeeff
 //  prerelease cleaning
 //

@@ -22,6 +22,7 @@
 #include <boost/config.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/cstdlib.hpp>
+#include <boost/minmax.hpp>
 
 // STL
 #include <list>
@@ -129,7 +130,7 @@ public:
                                         unit_test_counter num_passed, unit_test_counter num_failed )
     {
         unit_test_counter total_test_cases = num_passed + num_failed;
-        std::size_t       width = static_cast<std::size_t>( std::log10( (float)std::max( num_passed, num_failed ) ) ) + 1;
+        std::size_t       width = static_cast<std::size_t>( std::log10( (float)std_max( num_passed, num_failed ) ) ) + 1;
 
         where_to << std::setw( indent ) << "" << std::setw( width ) << num_passed
                  << " test " << ps_name( num_passed != 1, "case" ) << " out of " << total_test_cases << " passed\n"
@@ -143,7 +144,7 @@ public:
     {
         unit_test_counter total_assertions = num_passed + num_failed;
         std::size_t       width            = total_assertions > 0 
-                                               ? static_cast<std::size_t>( std::log10( (float)std::max( num_passed, num_failed ) ) ) + 1
+                                               ? static_cast<std::size_t>( std::log10( (float)std_max( num_passed, num_failed ) ) ) + 1
                                                : 1;
         
         where_to << std::setw( indent ) << "" << std::setw( width ) << num_passed 
@@ -595,6 +596,9 @@ unit_test_result::has_passed() const
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.23  2004/02/26 18:27:02  eric_niebler
+//  remove minmax hack from win32.hpp and fix all places that could be affected by the minmax macros
+//
 //  Revision 1.22  2003/12/01 00:42:37  rogeeff
 //  prerelease cleaning
 //
