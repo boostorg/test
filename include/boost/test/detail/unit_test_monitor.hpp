@@ -32,6 +32,7 @@ namespace detail {
 // ************************************************************************** //
 
 class unit_test_monitor : public execution_monitor {
+    typedef void (test_case::*function_to_monitor)();
 public:
     enum error_level { 
         test_fail               =  1,
@@ -45,11 +46,12 @@ public:
     };
     static bool         is_critical_error( error_level e_ ) { return e_ <= fatal_error; }
 
-    typedef void (test_case::*function_to_monitor)();
-
     // Constructor
     unit_test_monitor( test_case& target_test_case_, function_to_monitor f_ )
     : m_test_case_function( f_ ), m_test_case( target_test_case_ ) {}
+
+    // management method; same for all monitors
+    static void         catch_system_errors( bool yes_no = true ) { s_catch_system_errors = yes_no; }
 
     // monitor method
     error_level         execute_and_translate( int timeout_ );
@@ -61,6 +63,8 @@ private:
     // Data members
     function_to_monitor m_test_case_function;
     test_case&          m_test_case;
+
+    static bool         s_catch_system_errors;
 }; // unit_test_monitor
 
 } // namespace detail
@@ -73,6 +77,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2002/12/08 17:36:32  rogeeff
+//  catch system errors switch introduced
+//
 //  Revision 1.7  2002/11/02 19:31:05  rogeeff
 //  merged into the main trank
 //
