@@ -21,14 +21,14 @@
 #include <boost/test/output_test_stream.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
-#include <boost/test/detail/supplied_log_formatters.hpp>
+#include <boost/test/output/compiler_log_formatter.hpp>
 using namespace boost::unit_test;
 using namespace boost::test_tools;
 
 // STL
 #include <iostream>
 
-struct this_test_log_formatter : public boost::unit_test::ut_detail::compiler_log_formatter 
+struct this_test_log_formatter : public boost::unit_test::output::compiler_log_formatter 
 {
     void    print_prefix( std::ostream& output, boost::unit_test::const_string, std::size_t line )
     {
@@ -263,6 +263,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.28  2005/02/02 12:06:52  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.27  2005/01/30 03:35:55  rogeeff
 //  no message
 //
