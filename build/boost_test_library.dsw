@@ -3,6 +3,21 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "auto_unit_test_test"=".\auto_unit_test_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name unit_test_framework
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "errors_handling_test"=".\errors_handling_test.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -113,6 +128,18 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name prg_exec_monitor
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "prg_exec_fail3"=".\prg_exec_fail3.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################

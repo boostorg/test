@@ -120,6 +120,38 @@ SOURCE=..\src\unit_test_suite.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Group "detail"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\..\..\boost\test\detail\class_properties.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\boost\test\detail\nullstream.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\boost\test\detail\unit_test_config.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\boost\test\detail\unit_test_monitor.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\boost\test\detail\unit_test_parameters.hpp
+# End Source File
+# End Group
+# Begin Group "included"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\..\..\boost\test\included\test_exec_monitor.hpp
+# End Source File
+# End Group
 # Begin Source File
 
 SOURCE=..\..\..\boost\test\execution_monitor.hpp
@@ -130,15 +162,7 @@ SOURCE=..\..\..\boost\test\unit_test.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\boost\test\detail\unit_test_config.hpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\boost\test\unit_test_log.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\boost\test\detail\unit_test_monitor.hpp
 # End Source File
 # Begin Source File
 

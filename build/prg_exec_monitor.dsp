@@ -95,6 +95,14 @@ SOURCE=..\src\execution_monitor.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Group "included"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\..\..\boost\test\included\prg_exec_monitor.hpp
+# End Source File
+# End Group
 # Begin Source File
 
 SOURCE=..\..\..\boost\test\execution_monitor.hpp
