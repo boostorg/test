@@ -34,6 +34,11 @@
 #include <boost/preprocessor/arithmetic/add.hpp>
 #include <boost/limits.hpp>
 
+#include <boost/type_traits/is_array.hpp>
+#include <boost/type_traits/is_function.hpp>
+
+#include <boost/mpl/or.hpp>
+
 // STL
 #include <cstddef>          // for std::size_t
 #include <iosfwd>
@@ -261,13 +266,20 @@ template<typename T>
 struct print_log_value {
     void    operator()( std::ostream& ostr, T const& t )
     {
-#if !BOOST_WORKAROUND(BOOST_MSVC,BOOST_TESTED_AT(1310))
-        // Show all possibly significant digits (for example, 17 for 64-bit double). 
-        if( std::numeric_limits<T>::is_specialized && std::numeric_limits<T>::radix == 2 )
-            ostr.precision(2 + std::numeric_limits<T>::digits * 301/1000); 
-#endif
+        typedef typename mpl::or_<is_array<T>,is_function<T> >::type couldnt_use_nl;
+
+        set_precision( ostr, couldnt_use_nl() );
+
         ostr << t; // by default print the value
     }
+
+    void set_precision( std::ostream& ostr, mpl::false_ )
+    {
+        if( std::numeric_limits<T>::is_specialized && std::numeric_limits<T>::radix == 2 )
+            ostr.precision( 2 + std::numeric_limits<T>::digits * 301/1000 ); 
+    }
+
+    void set_precision( std::ostream&, mpl::true_ ) {}
 };
 
 //____________________________________________________________________________//
@@ -397,17 +409,6 @@ BOOST_PP_REPEAT( BOOST_TEST_MAX_PREDICATE_ARITY, IMPL_FRWD, _ )
 
 //____________________________________________________________________________//
 
-struct equal_impl_frwd {
-    template <class Left, class Right>
-    inline predicate_result
-    operator()( Left const& left, Right const& right ) const
-    {
-        return equal_impl( left, right );
-    }
-};
-
-//____________________________________________________________________________//
-
 template <class Left, class Right>
 predicate_result    equal_impl( Left const& left, Right const& right )
 {
@@ -416,10 +417,43 @@ predicate_result    equal_impl( Left const& left, Right const& right )
 
 //____________________________________________________________________________//
 
-predicate_result    equal_impl( char const* left, char const* right );
+predicate_result        equal_impl( char const* left, char const* right );
+inline predicate_result equal_impl( char* left, char const* right ) { return equal_impl( (char const*)left, (char const*)right ); }
+inline predicate_result equal_impl( char const* left, char* right ) { return equal_impl( (char const*)left, (char const*)right ); }
+inline predicate_result equal_impl( char* left, char* right )       { return equal_impl( (char const*)left, (char const*)right ); }
+
 #if !defined( BOOST_NO_CWCHAR )
-predicate_result    equal_impl( wchar_t const* left, wchar_t const* right );
+predicate_result        equal_impl( wchar_t const* left, wchar_t const* right );
+inline predicate_result equal_impl( wchar_t* left, wchar_t const* right ) { return equal_impl( (wchar_t const*)left, (wchar_t const*)right ); }
+inline predicate_result equal_impl( wchar_t const* left, wchar_t* right ) { return equal_impl( (wchar_t const*)left, (wchar_t const*)right ); }
+inline predicate_result equal_impl( wchar_t* left, wchar_t* right )       { return equal_impl( (wchar_t const*)left, (wchar_t const*)right ); }
 #endif
+
+//____________________________________________________________________________//
+
+struct equal_impl_frwd {
+    template <typename Left, typename Right>
+    inline predicate_result
+    call_impl( Left const& left, Right const& right, mpl::false_ ) const
+    {
+        return equal_impl( left, right );
+    }
+
+    template <typename Left, typename Right>
+    inline predicate_result
+    call_impl( Left const& left, Right const& right, mpl::true_ ) const
+    {
+        return (*this)( right, &left[0] );
+    }
+
+    template <typename Left, typename Right>
+    inline predicate_result
+    operator()( Left const& left, Right const& right ) const
+    {
+        typedef typename is_array<Left>::type left_is_array;
+        return call_impl( left, right, left_is_array() );
+    }
+};
 
 //____________________________________________________________________________//
 
@@ -515,6 +549,10 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.52  2005/03/22 07:08:47  rogeeff
+//  string comparisons streamlined
+//  precision settings made portable
+//
 //  Revision 1.51  2005/02/21 10:23:54  rogeeff
 //  major issue with TT redesign causing TT to reevaluate it's arguments fixed
 //  FP precision extended
