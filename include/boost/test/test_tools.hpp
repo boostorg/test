@@ -409,10 +409,12 @@ equal_and_continue_impl( char const* left_, char const* right_, wrap_stringstrea
 
 //____________________________________________________________________________//
 
+#if !defined( BOOST_NO_CWCHAR )
 bool
 equal_and_continue_impl( wchar_t const* left_, wchar_t const* right_, wrap_stringstream& message_,
                          const_string file_name_, std::size_t line_num_,
                          unit_test::log_level log_level_ = unit_test::log_all_errors );
+#endif // !defined( BOOST_NO_CWCHAR )
 
 //____________________________________________________________________________//
 
@@ -575,6 +577,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.45  2004/07/25 08:31:10  rogeeff
+//  don't use wchar if BOOST_NO_CWCHAR is defined
+//
 //  Revision 1.44  2004/07/19 12:15:45  rogeeff
 //  guard rename
 //  warning suppress reworked
