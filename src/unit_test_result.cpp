@@ -61,7 +61,7 @@ struct unit_test_result::Impl {
     int                             result_code() { return is_failed() 
                                                         ? ( (m_assertions_failed != 0) 
                                                                ? boost::exit_test_failure 
-                                                               : boost::exit_exception_failure  )
+                                                               : boost::exit_exception_failure )
                                                         : boost::exit_success; }
 };
 
@@ -313,6 +313,9 @@ unit_test_result::result_code()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10  2002/08/26 08:29:48  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.9  2002/08/21 15:15:12  rogeeff
 //  previos fix finished
 //
