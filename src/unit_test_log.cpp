@@ -29,6 +29,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cstring>
+#include <string>
 
 # ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using :: strcmp; }
@@ -94,11 +95,11 @@ struct unit_test_log::Impl {
     log_level           m_entry_level;
     bool                m_entry_in_progress;
     bool                m_entry_has_value;
-    c_string_literal    m_entry_file;
+    std::string         m_entry_file;
     std::size_t         m_entry_line;
 
     // checkpoint data
-    c_string_literal    m_checkpoint_file;
+    std::string         m_checkpoint_file;
     std::size_t         m_checkpoint_line;
     std::string         m_checkpoint_message;
 
@@ -123,7 +124,7 @@ struct unit_test_log::Impl {
     {
         m_checkpoint_file       = c_string_literal();
         m_checkpoint_line       = 0;
-        m_checkpoint_message    = "";
+        m_checkpoint_message    = c_string_literal();
     }
 
 };
@@ -261,11 +262,23 @@ unit_test_log::operator<<( end const& )
 
 //____________________________________________________________________________//
 
+char
+set_unix_slash( char in )
+{
+    return in == '\\' ? '/' : in;
+}
+
 unit_test_log&
 unit_test_log::operator<<( file const& f )
 {
-    if( m_pimpl->m_entry_in_progress )
+    if( m_pimpl->m_entry_in_progress ) {
         m_pimpl->m_entry_file = f.m_file_name;
+
+        // normalize file name
+        std::transform( m_pimpl->m_entry_file.begin(), m_pimpl->m_entry_file.end(), 
+                        m_pimpl->m_entry_file.begin(),
+                        &set_unix_slash );
+    }
 
     return *this;
 }
@@ -680,6 +693,9 @@ unit_test_log::set_log_format( std::string const& logformat )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.14  2003/06/11 01:52:09  rogeeff
+//  force unix slash for file name
+//
 //  Revision 1.13  2003/06/09 09:14:57  rogeeff
 //  1.30.beta1
 //
