@@ -1,89 +1,93 @@
 H1
 {
-    FONT-SIZE: 200%;
-    text-align: center;
+    FONT-SIZE:      200%;
+    text-align:     center;
 }
 H2
 {
-    FONT-SIZE: 150%;
+    FONT-SIZE:      150%;
 }
 H3
 {
-    FONT-SIZE: 125%;
+    FONT-SIZE:      125%;
 }
 H4
 {
-    FONT-SIZE: 108%;
+    FONT-SIZE:      115%;
+}
+H5
+{
+    FONT-SIZE:      108%;
 }
 BODY
 {
-    background: white;
+    background:     white;
 }
 A:link
 {
-    color: black;
-    text-decoration: none;
+    color:          black;
+    text-decoration:none;
 }
 A:visited
 {
-    color: black;
-    text-decoration: none;
+    color:          black;
+    text-decoration:none;
 }
 A:active
 {
-    color: black;
-    text-decoration: none;
+    color:          black;
+    text-decoration:none;
 }
              
 P.1-line-indented
 {
-    text-indent: 10px;
+    text-indent:    10px;
 }
 P.indented
 {
-    margin-left:20; 
-    margin-top:0;
-    margin-bottom:0;
+    margin-left:    20px; 
+    margin-top:     0px;
+    margin-bottom:  0px;
 }
 PRE.code
 {
     border-left-style: groove; 
     border-left-width: 1px; 
-    padding-left: 2em; 
-    font-size: 70%
+    padding-left:   2em; 
+    font-size:      70%
 }
 
 P.epigraph
 {
-    text-align: right; 
-    font-family: Century Gothic; 
-    font-style: italic
+    text-align:     right; 
+    font-family:    Century Gothic; 
+    font-style:     italic
 }
 
 P.test-output
 {
-    font-family: Arial; 
-    font-size: 10pt;
-    margin-left: 2em;
-    white-space: pre
+    font-family:    Arial; 
+    font-size:      10pt;
+    margin-left:    2em;
+    white-space:    pre
 }
 
 P.page-toc
 {
-    display: none;
+    display:        none;
 }
 
 P.page-toc-indented
 {
-    display: none;
+    display:        none;
 }
 
 TABLE.body-table
 {
-    border: none;
-    margin-top: 0;
-    padding-top: 0;
-    width: 100%;
+    border:         none;
+    margin-top:     0px;
+    padding-top:    0px;
+    width:          100%;
 }
 TABLE.body-table TD
 {
@@ -106,6 +110,12 @@ TABLE.parameter-table TD
     padding-top:    0px; 
     padding-bottom: 10px; 
 }
+
+TABLE.parameter-table TD.name
+{
+    width:          25%;
+}
+
 
 TABLE.parameter-values-table
 {
@@ -154,27 +164,29 @@ DIV.screen-header
     display:        none;
 }
 
-TABLE.2-column-table
+TABLE.#depricated-tools-list
 {
     width:          100%;
     padding:        0px;
     border:         1px solid black;
 }
 
-TABLE.2-column-table THEAD TD
+TABLE.#two-column-table THEAD TD
 {
     border:         1px solid black;
     color:          black;
     font-weight:    bold
     width:          50%;
     padding:        0px;
+    text-align:     center;
 }
 
-TABLE.2-column-table TBODY TD
+TABLE.#two-column-table TBODY TD
 {
     border:         1px solid black;
     color:          black;
     width:          50%;
+    text-align:     left;
 }
 
 SPAN.ref-to-top
@@ -185,4 +197,20 @@ SPAN.ref-to-top
 SPAN.example_roller
 {
     display:        none;
+}
+
+DIV.centered
+{
+    text-align:     center;
+}
+
+DIV.centered TABLE.body-table
+{
+    margin:         0px auto;
+    text-align:     left;
+} 
+
+DIV.footer
+{
+    border-top:     solid 3px rgb(50,50,50);
 }

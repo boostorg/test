@@ -1,133 +1,129 @@
-<html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
 
-<head>
-<title>Getting started</title>
-<script language="javascript">var viso_path="js-lib"</script>
-<script language="javascript" src="js-lib/core.js" > </script>
+<HTML>
 
-<script language="JavaScript">
-JS.include( "btl.js" );
-</script>
+<HEAD>
+<TITLE>Getting started</TITLE>
 
-<script>put_screen_style();</script>
-<link rel="stylesheet" type="text/css" href="style/btl_print.css" media="print" />
+<LINK rel="stylesheet" type="text/css" href="style/btl.css" media="screen">
+<LINK rel="stylesheet" type="text/css" href="style/btl-print.css" media="print">
 
-<meta http-equiv="Content-Language" content="en-us" />
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-</head>
+<META http-equiv="Content-Language" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</HEAD>
 
-<body onload="btl_menu_init()">
-<div align="center">
-<table class="body-table" cellspacing="3" >
-<tr>
-<td id="body">
+<BODY>
+<DIV class="centered">
+<TABLE class="body-table" cellspacing="3" >
+<TR>
+<TD id="body">
 
-<script language="Javascript">btl_header()</script>
+<A name='TOP'><IMG src='../../../c++boost.gif' width='277' height='86' alt="Boost logo"></A>
 
-<h1 align="center">Getting started to use unit test framework</h1>
+<H1>Getting started to use unit test framework</H1>
 
-<p class="1-line-indented">Today is a momentous day. Today I am going to start a new life. I am going to stop
+<P class="1-line-indented">Today is a momentous day. Today I am going to start a new life. I am going to stop
 eating a greasy food, start attending a fitness club and ... since today I am going to  test programs 
 I am writing. I can start after the last line of a program is completed or, even 
 better idea, I can write tests while I am coding. And maybe next time I will 
 write tests before the coding during the design stage. I have read a lot of literature
 on how to write the tests, I have the unit test framework in hand and an idea of new
-class. So let's get started.</p>
-<p class="1-line-indented">Let say I want to encapsulate an unchangeable C character buffer with a length
-into the simple class <b>const_string</b>. Rationale: a string class that does not
+class. So let's get started.</P>
+<P class="1-line-indented">Let say I want to encapsulate an unchangeable C character buffer with a length
+into the simple class <B>const_string</B>. Rationale: a string class that does not
 allocate a memory and provide a convenient read-only access to the preallocated
-character buffer. I will probably want <b>const_string</b> to have an interface similar to 
+character buffer. I will probably want <B>const_string</B> to have an interface similar to 
 the class std::string. What will I do  first? In my
-new life I will start with writing a test module for future class <b>const_string</b>. It will look
-like this:</p>
-<p>const_string_test.cpp:</p>
-<pre class="code">#<span class="reserv-word">include</span> &lt;boost/test/unit_test.hpp&gt;
-<span class="reserv-word">using namespace</span> boost::unit_test_framework;
+new life I will start with writing a test module for future class <B>const_string</B>. It will look
+like this:</P>
+<P>const_string_test.cpp:</P>
+<PRE class="code">#<SPAN class="reserv-word">include</SPAN> &lt;boost/test/unit_test.hpp&gt;
+<SPAN class="reserv-word">using namespace</SPAN> boost::unit_test_framework;
 
 test_suite*
-init_unit_test_suite( <span class="cpp-type">int</span> argc, <span class="cpp-type">char</span>* argv[] )
+init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-type">char</SPAN>* argv[] )
 {
-    test_suite* test= BOOST_TEST_SUITE( <span class="literal">"const_string test"</span> );
+    test_suite* test= BOOST_TEST_SUITE( <SPAN class="literal">"const_string test"</SPAN> );
 
-    <span class="reserv-word">return</span> test;
+    <SPAN class="reserv-word">return</SPAN> test;
 }
 
-<span class="comment">// EOF</span></pre>
+<SPAN class="comment">// EOF</SPAN></PRE>
 
-<p class="1-line-indented">Now I can compile it and link with the unit test framework. Done! I have a 
+<P class="1-line-indented">Now I can compile it and link with the unit test framework. Done! I have a 
 working test program. It is empty, so when I
-run the program it produces following output:</p>
-<p class="test-output">*** No errors detected</p>
-<p class="1-line-indented">Well, now it could be a good time to start a work on <b>const_string</b>.
+run the program it produces following output:</P>
+<P class="test-output">*** No errors detected</P>
+<P class="1-line-indented">Well, now it could be a good time to start a work on <B>const_string</B>.
 First thing I imagine would be good to have is a constructors and trivial access
-methods. So my class initial version looks like this:</p>
-<p>const_string.hpp</p>
-<pre class="code"><span class="reserv-word">class</span> const_string {
-<span class="reserv-word">public</span>:
+methods. So my class initial version looks like this:</P>
+<P>const_string.hpp</P>
+<PRE class="code"><SPAN class="reserv-word">class</SPAN> const_string {
+<SPAN class="reserv-word">public</SPAN>:
     // Constructors
     const_string();
-    const_string( <span class="cpp-type">std::string</span> <span class="reserv-word">const</span>&amp; s )
-    const_string( <span class="cpp-type">char</span> <span class="reserv-word">const</span>* s );
-    const_string( <span class="cpp-type">char</span> <span class="reserv-word">const</span>* s, <span class="cpp-type">size_t</span> length );
-    const_string( <span class="cpp-type">char</span> <span class="reserv-word">const</span>* begin, <span class="cpp-type">char</span> <span class="reserv-word">const</span>* end );
+    const_string( <SPAN class="cpp-type">std::string</SPAN> <SPAN class="reserv-word">const</SPAN>&amp; s )
+    const_string( <SPAN class="cpp-type">char</SPAN> <SPAN class="reserv-word">const</SPAN>* s );
+    const_string( <SPAN class="cpp-type">char</SPAN> <SPAN class="reserv-word">const</SPAN>* s, <SPAN class="cpp-type">size_t</SPAN> length );
+    const_string( <SPAN class="cpp-type">char</SPAN> <SPAN class="reserv-word">const</SPAN>* begin, <SPAN class="cpp-type">char</SPAN> <SPAN class="reserv-word">const</SPAN>* end );
     
     // Access methods
-    <span class="cpp-type">char</span> <span class="reserv-word">const</span>* data() <span class="reserv-word">const</span>;
-    <span class="cpp-type">size_t</span>      length() <span class="reserv-word">const</span>;
-    <span class="cpp-type">bool</span>        is_empty() <span class="reserv-word">const</span>;
+    <SPAN class="cpp-type">char</SPAN> <SPAN class="reserv-word">const</SPAN>* data() <SPAN class="reserv-word">const</SPAN>;
+    <SPAN class="cpp-type">size_t</SPAN>      length() <SPAN class="reserv-word">const</SPAN>;
+    <SPAN class="cpp-type">bool</SPAN>        is_empty() <SPAN class="reserv-word">const</SPAN>;
 
     ...
-};</pre>
-<p class="1-line-indented">Now I am able to write a first test case - constructors testing - and add it
-to a test suite. My test program became to look like this:</p>
-<p>const_string_test.cpp:</p>
-<pre class="code">#include &lt;boost/test/unit_test.hpp&gt;
-<span class="reserv-word">using namespace</span> boost::unit_test_framework;
+};</PRE>
+<P class="1-line-indented">Now I am able to write a first test case - constructors testing - and add it
+to a test suite. My test program became to look like this:</P>
+<P>const_string_test.cpp:</P>
+<PRE class="code">#include &lt;boost/test/unit_test.hpp&gt;
+<SPAN class="reserv-word">using namespace</SPAN> boost::unit_test_framework;
 
-<span class="cpp-type">void</span> constructors_test() { 
-     const_string cs0( <span class="literal">&quot;&quot;</span> );                                                 <span class="comment">// 1 //</span>
-     BOOST_CHECK_EQUAL( cs0.length(), (<span class="cpp-type">size_t</span>)<span class="literal">0</span> );
+<SPAN class="cpp-type">void</SPAN> constructors_test() { 
+     const_string cs0( <SPAN class="literal">&quot;&quot;</SPAN> );                                                 <SPAN class="comment">// 1 //</SPAN>
+     BOOST_CHECK_EQUAL( cs0.length(), (<SPAN class="cpp-type">size_t</SPAN>)<SPAN class="literal">0</SPAN> );
      BOOST_CHECK( cs0.is_empty() );
      
-     const_string cs01( NULL );                                              <span class="comment">// 2 //</span>
-     BOOST_CHECK_EQUAL( cs01.length(), (<span class="cpp-type">size_t</span>)<span class="literal">0</span> );
+     const_string cs01( NULL );                                              <SPAN class="comment">// 2 //</SPAN>
+     BOOST_CHECK_EQUAL( cs01.length(), (<SPAN class="cpp-type">size_t</SPAN>)<SPAN class="literal">0</SPAN> );
      BOOST_CHECK( cs01.is_empty() );
      
-     const_string cs1( <span class="literal">&quot;test_string&quot;</span> );                                      <span class="comment">// 3 //</span>
-     BOOST_CHECK_EQUAL( std::strcmp( cs1.data(), <span class="literal">&quot;test_string&quot;</span> ), <span class="literal">0</span> );
+     const_string cs1( <SPAN class="literal">&quot;test_string&quot;</SPAN> );                                      <SPAN class="comment">// 3 //</SPAN>
+     BOOST_CHECK_EQUAL( std::strcmp( cs1.data(), <SPAN class="literal">&quot;test_string&quot;</SPAN> ), <SPAN class="literal">0</SPAN> );
      BOOST_CHECK_EQUAL( cs1.length(), std::strlen(&quot;test_string&quot;) );
      
-     <span class="cpp-type">std::string</span> s( <span class="literal">&quot;test_string&quot;</span> );                                         <span class="comment">// 4 //</span>
+     <SPAN class="cpp-type">std::string</SPAN> s( <SPAN class="literal">&quot;test_string&quot;</SPAN> );                                         <SPAN class="comment">// 4 //</SPAN>
      const_string cs2( s );
-     BOOST_CHECK_EQUAL( std::strcmp( cs2.data(), <span class="literal">&quot;test_string&quot;</span> ), <span class="literal">0</span> );
+     BOOST_CHECK_EQUAL( std::strcmp( cs2.data(), <SPAN class="literal">&quot;test_string&quot;</SPAN> ), <SPAN class="literal">0</SPAN> );
      
-     const_string cs3( cs1 );                                                <span class="comment">// 5 //</span>
-     BOOST_CHECK_EQUAL( std::strcmp( cs1.data(), <span class="literal">&quot;test_string&quot;</span> ), <span class="literal">0</span> );
+     const_string cs3( cs1 );                                                <SPAN class="comment">// 5 //</SPAN>
+     BOOST_CHECK_EQUAL( std::strcmp( cs1.data(), <SPAN class="literal">&quot;test_string&quot;</SPAN> ), <SPAN class="literal">0</SPAN> );
      
-     const_string cs4( <span class="literal">&quot;test_string&quot;</span>, <span class="literal">4</span> );                                   <span class="comment">// 6 //</span>
-     BOOST_CHECK_EQUAL( std::strncmp( cs4.data(), <span class="literal">&quot;test&quot;</span>, cs4.length() ), <span class="literal">0</span> );
+     const_string cs4( <SPAN class="literal">&quot;test_string&quot;</SPAN>, <SPAN class="literal">4</SPAN> );                                   <SPAN class="comment">// 6 //</SPAN>
+     BOOST_CHECK_EQUAL( std::strncmp( cs4.data(), <SPAN class="literal">&quot;test&quot;</SPAN>, cs4.length() ), <SPAN class="literal">0</SPAN> );
      
-     const_string cs5( s.data(), s.data() + s.length() );                    <span class="comment">// 7 //</span>
-     BOOST_CHECK_EQUAL( std::strncmp( cs5.data(), <span class="literal">&quot;test_string&quot;</span>, cs5.length() ), <span class="literal">0</span> );
+     const_string cs5( s.data(), s.data() + s.length() );                    <SPAN class="comment">// 7 //</SPAN>
+     BOOST_CHECK_EQUAL( std::strncmp( cs5.data(), <SPAN class="literal">&quot;test_string&quot;</SPAN>, cs5.length() ), <SPAN class="literal">0</SPAN> );
      
-     const_string cs_array[] = { <span class="literal">&quot;str1&quot;</span>, <span class="literal">&quot;str2&quot;</span> };                           <span class="comment">// 8 //</span>
-     BOOST_CHECK_EQUAL( cs_array[<span class="literal">0</span>], <span class="literal">&quot;str1&quot;</span> );
-     BOOST_CHECK_EQUAL( cs_array[<span class="literal">1</span>], <span class="literal">&quot;str2&quot;</span> );
+     const_string cs_array[] = { <SPAN class="literal">&quot;str1&quot;</SPAN>, <SPAN class="literal">&quot;str2&quot;</SPAN> };                           <SPAN class="comment">// 8 //</SPAN>
+     BOOST_CHECK_EQUAL( cs_array[<SPAN class="literal">0</SPAN>], <SPAN class="literal">&quot;str1&quot;</SPAN> );
+     BOOST_CHECK_EQUAL( cs_array[<SPAN class="literal">1</SPAN>], <SPAN class="literal">&quot;str2&quot;</SPAN> );
 }
 
 test_suite*
-init_unit_test_suite( <span class="cpp-type">int</span> argc, <span class="cpp-type">char</span>* argv[] )
+init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-type">char</SPAN>* argv[] )
 {
-    test_suite* test= BOOST_TEST_SUITE( <span class="literal">&quot;const_string test&quot;</span> );
+    test_suite* test= BOOST_TEST_SUITE( <SPAN class="literal">&quot;const_string test&quot;</SPAN> );
     
     test-&gt;add( BOOST_TEST_CASE( &amp;constructors_test ) );
 
-    <span class="reserv-word">return</span> test;
+    <SPAN class="reserv-word">return</SPAN> test;
 }
 
-<span class="comment">// EOF</span></pre>
+<SPAN class="comment">// EOF</SPAN></PRE>
 
-<p class="1-line-indented">The constructors_test test case is intended to check a simple feature of the class const_string:
+<P class="1-line-indented">The constructors_test test case is intended to check a simple feature of the class const_string:
 an ability to construct itself properly based on different arguments. To test this
 feature I am using such characteristics of constructed object as a data it
 contains and a length. The specification of the class const_string does not contain any
@@ -137,69 +133,69 @@ promised :-)). But for any valid input it should work. So I am trying to check
 a construction for an empty string (1), a NULL string (2) a regular C string(3), 
 an STL string(4), a copy construction(5) and so on . Well, after fixing all the errors in
 the implementation (do you write programs without errors from scratch?) I am able to pass
-this test case and the unit test framework gives me the following report:</p>
+this test case and the unit test framework gives me the following report:</P>
 
-<p class="test-output">Running 1 test case...<br>
-*** No errors detected</p>
+<P class="test-output">Running 1 test case...<BR>
+*** No errors detected</P>
 
-<p class="1-line-indented">Encouraged I am moving on and adding more access methods:</p>
-<p>const_string.hpp</p>
-<pre class="code"><span class="reserv-word">class</span> const_string {
-<span class="reserv-word">public</span>:
-    <span class="cpp-type">char</span> <span class="reserv-word">operator</span>[]( <span class="cpp-type">size_t</span> index ) <span class="reserv-word">const</span>;
-    <span class="cpp-type">char</span> at( <span class="cpp-type">size_t</span> index ) <span class="reserv-word">const</span>;
+<P class="1-line-indented">Encouraged I am moving on and adding more access methods:</P>
+<P>const_string.hpp</P>
+<PRE class="code"><SPAN class="reserv-word">class</SPAN> const_string {
+<SPAN class="reserv-word">public</SPAN>:
+    <SPAN class="cpp-type">char</SPAN> <SPAN class="reserv-word">operator</SPAN>[]( <SPAN class="cpp-type">size_t</SPAN> index ) <SPAN class="reserv-word">const</SPAN>;
+    <SPAN class="cpp-type">char</SPAN> at( <SPAN class="cpp-type">size_t</SPAN> index ) <SPAN class="reserv-word">const</SPAN>;
     ...
 };
-</pre>
-<p class="1-line-indented">I added the new feature - I need a new test case to check it. As a
-result my test suite became to look like this:</p>
-<p>const_string_test.cpp:</p>
-<pre class="code">#<span class="reserv-word">include</span> &lt;boost/test/unit_test.hpp&gt;
-<span class="reserv-word">using namespace</span> boost::unit_test_framework;
+</PRE>
+<P class="1-line-indented">I added the new feature - I need a new test case to check it. As a
+result my test suite became to look like this:</P>
+<P>const_string_test.cpp:</P>
+<PRE class="code">#<SPAN class="reserv-word">include</SPAN> &lt;boost/test/unit_test.hpp&gt;
+<SPAN class="reserv-word">using namespace</SPAN> boost::unit_test_framework;
 
-<span class="cpp-type">void</span> constructors_test() {
+<SPAN class="cpp-type">void</SPAN> constructors_test() {
     ...
 }
 
-<span class="cpp-type">void</span> data_access_test() {
-    const_string cs1( <span class="literal">&quot;test_string&quot;</span> );                                 <span class="comment">// 1 //</span>
-    BOOST_CHECK_EQUAL( cs1[(<span class="cpp-type">size_t</span>)<span class="literal">0</span>], <span class="literal">'t'</span> );
-    BOOST_CHECK_EQUAL( cs1[(<span class="cpp-type">size_t</span>)<span class="literal">4</span>], <span class="literal">'_'</span> );
-    BOOST_CHECK_EQUAL( cs1[cs1.length()-<span class="literal">1</span>], <span class="literal">'g'</span> );
+<SPAN class="cpp-type">void</SPAN> data_access_test() {
+    const_string cs1( <SPAN class="literal">&quot;test_string&quot;</SPAN> );                                 <SPAN class="comment">// 1 //</SPAN>
+    BOOST_CHECK_EQUAL( cs1[(<SPAN class="cpp-type">size_t</SPAN>)<SPAN class="literal">0</SPAN>], <SPAN class="literal">'t'</SPAN> );
+    BOOST_CHECK_EQUAL( cs1[(<SPAN class="cpp-type">size_t</SPAN>)<SPAN class="literal">4</SPAN>], <SPAN class="literal">'_'</SPAN> );
+    BOOST_CHECK_EQUAL( cs1[cs1.length()-<SPAN class="literal">1</SPAN>], <SPAN class="literal">'g'</SPAN> );
 
-    BOOST_CHECK_EQUAL( cs1[(<span class="cpp-type">size_t</span>)<span class="literal">0</span>], cs1.at( <span class="literal">0</span> ) );                  <span class="comment">// 2 //</span>
-    BOOST_CHECK_EQUAL( cs1[(<span class="cpp-type">size_t</span>)<span class="literal">2</span>], cs1.at( <span class="literal">5</span> ) );
-    BOOST_CHECK_EQUAL( cs1.at( cs1.length() - <span class="literal">1</span> ), <span class="literal">'g'</span> );
+    BOOST_CHECK_EQUAL( cs1[(<SPAN class="cpp-type">size_t</SPAN>)<SPAN class="literal">0</SPAN>], cs1.at( <SPAN class="literal">0</SPAN> ) );                  <SPAN class="comment">// 2 //</SPAN>
+    BOOST_CHECK_EQUAL( cs1[(<SPAN class="cpp-type">size_t</SPAN>)<SPAN class="literal">2</SPAN>], cs1.at( <SPAN class="literal">5</SPAN> ) );
+    BOOST_CHECK_EQUAL( cs1.at( cs1.length() - <SPAN class="literal">1</SPAN> ), <SPAN class="literal">'g'</SPAN> );
 
-    BOOST_CHECK_THROW( cs1.at( cs1.length() ), std::out_of_range );    <span class="comment">// 3 //</span>
+    BOOST_CHECK_THROW( cs1.at( cs1.length() ), std::out_of_range );    <SPAN class="comment">// 3 //</SPAN>
 }
 
 test_suite*
-init_unit_test_suite( <span class="cpp-type">int</span> argc, <span class="cpp-type">char</span>* argv[] )
+init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-type">char</SPAN>* argv[] )
 {
-    test_suite* test= BOOST_TEST_SUITE( <span class="literal">&quot;const_string test&quot;</span> );
+    test_suite* test= BOOST_TEST_SUITE( <SPAN class="literal">&quot;const_string test&quot;</SPAN> );
     test-&gt;add( BOOST_TEST_CASE( &amp;constructors_test ) );
     test-&gt;add( BOOST_TEST_CASE( &amp;data_access_test ) );
 
-    <span class="reserv-word">return</span> test;
+    <SPAN class="reserv-word">return</SPAN> test;
 }
 
-<span class="comment">// EOF</span>
-</pre>
+<SPAN class="comment">// EOF</SPAN>
+</PRE>
 
-<p class="1-line-indented">In the data_access_test test case I am trying to check the class const_string character access
+<P class="1-line-indented">In the data_access_test test case I am trying to check the class const_string character access
 correctness. While tests (1) checks valid access using const_string::operator[] and test (2)
 checks valid access using method const_string::at(), there is one more thing to test. The
 specification of the method const_string::at() contains validation for the out of bound access. That
 was test (3) is intended to do: check that the validation is working. A testing of
 a validation and error handling code is an important part of a unit testing and should
 not be left for a production stage. The data_access_test test case passed and I am ready for the next
-step.</p>
-<p class="1-line-indented">Continuing my effort I am able to complete class const_string (see <a href="getting_started/const_string.hpp">Listing
-1</a>) and testing module for it (see <a href="getting_started/const_string_test.cpp">Listing
-2</a>) that is checking all features that are presented in the class const_string
-specification.</p>
-<p class="1-line-indented">Your testing habits could be a little different. You could start with a class/library development and then at some point start writing test cases on
+step.</P>
+<P class="1-line-indented">Continuing my effort I am able to complete class const_string (see <A href="getting_started/const_string.hpp">Listing
+1</A>) and testing module for it (see <A href="getting_started/const_string_test.cpp">Listing
+2</A>) that is checking all features that are presented in the class const_string
+specification.</P>
+<P class="1-line-indented">Your testing habits could be a little different. You could start with a class/library development and then at some point start writing test cases on
 feature basis. Or you can, given a detailed specification for the future product,
 including expected interfaces, immediately start with writing all test cases (or
 it could be a different person, while you working on implementation at the same
@@ -208,18 +204,18 @@ by the unit test framework and, let me hope, be able to write a stable,
 bulletproof code. And what is even more important is your confidence in an
 ability to make a changes of any complexity without involving a lengthy regression
 testing of your whole product. Your test module and the unit test framework will
-stay behind your back to help you with any occasional errors.</p>
-<hr>
-<p>© <script language="Javascript">contact_addess()</script>
-<script language="Javascript">get_copyright_date()</script>
-</p>
-<p>Revised: 
+stay behind your back to help you with any occasional errors.</P>
+<DIV class="footer">
+<P>© <A href='mailto:rogeeff@emailaccount.com'>Gennadiy Rozental</A>
+2001-2002
+</P>
+<P>Revised: 
 <!--webbot bot="Timestamp" S-Type="EDITED"
-S-Format="%d %B, %Y" startspan -->28 July, 2002<!--webbot bot="Timestamp" endspan i-checksum="21094" -->
-</p>
-</td>
-</tr>
-</table>
-</div>
-</body>
-<html>
+S-Format="%d %B, %Y" startspan -->09 September, 2002<!--webbot bot="Timestamp" endspan i-checksum="21094" -->
+</P>
+</DIV></TD>
+</TR>
+</TABLE>
+</DIV>
+</BODY>
+

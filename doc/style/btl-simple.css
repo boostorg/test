@@ -1,27 +1,31 @@
+
 @import "btl.css";
 
-TABLE.2-column-table
+TABLE.#two-column-table
 {
     width:          90%;
     padding:        0px;
     border:         1px solid black;
 }
 
-TABLE.2-column-table THEAD TD
+TABLE.#two-column-table THEAD TD
 {
     background:     white;
     border:         1px solid black;
     color:          black;
     font-weight:    bold
     width:          50%;
+    font-size:      12pt;
+    text-align:     center;
 }
 
-TABLE.2-column-table TBODY TD
+TABLE.#two-column-table TBODY TD
 {
     background:     white;
     border:         1px solid black;
     color:          black;
-    width:          50%;   
+    width:          50%;
+    text-align:     left;
 }
 
 BODY
