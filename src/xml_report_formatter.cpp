@@ -12,14 +12,14 @@
 //  Description : forwarding source
 // ***************************************************************************
 
-#include <boost/test/impl/unit_test_result.ipp>
+#include <boost/test/impl/xml_report_formatter.ipp>
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.33  2005/01/22 19:26:37  rogeeff
-//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
+//  Revision 1.1  2005/02/20 08:28:34  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
 // ***************************************************************************
 

@@ -8,6 +8,7 @@
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
+#include <boost/test/parameterized_test.hpp>
 using boost::unit_test::test_suite;
 
 // STL
@@ -20,15 +21,13 @@ void check_string( std::string const& s )
     BOOST_CHECK_EQUAL( s.substr( 0, 3 ), "hdr" );
 }
 
-namespace {
-    std::string const params[] = { "hdr1 ", "hdr2", "3  " };
-}
-
 test_suite*
 init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
     test_suite* test= BOOST_TEST_SUITE( "Unit test example 4" );
 
-    test->add( BOOST_PARAM_TEST_CASE( &check_string, (std::string const*)params, params+3 ), 1 );
+    std::string const params[] = { "hdr1 ", "hdr2", "3  " };
+
+    test->add( BOOST_PARAM_TEST_CASE( &check_string, (std::string const*)params, params+3 ) );
 
     return test; 
 }

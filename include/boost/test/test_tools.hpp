@@ -12,13 +12,17 @@
 //  Description : contains definition for all test tools in test toolbox
 // ***************************************************************************
 
-#ifndef BOOST_TEST_TOOLS_HPP_012705GER
-#define BOOST_TEST_TOOLS_HPP_012705GER
+#ifndef BOOST_TEST_TEST_TOOLS_HPP_012705GER
+#define BOOST_TEST_TEST_TOOLS_HPP_012705GER
 
 // Boost.Test
-#include <boost/test/detail/unit_test_config.hpp>
-#include <boost/test/utils/wrap_stringstream.hpp>
 #include <boost/test/predicate_result.hpp>
+
+#include <boost/test/detail/config.hpp>
+#include <boost/test/detail/global_typedef.hpp>
+
+#include <boost/test/utils/wrap_stringstream.hpp>
+#include <boost/test/utils/basic_cstring/io.hpp>
 
 // Boost
 #include <boost/preprocessor/seq/for_each.hpp>
@@ -26,11 +30,12 @@
 #include <boost/preprocessor/seq/enum.hpp> 
 
 // STL
-#include <stdexcept>        // for std::exception
 #include <cstddef>          // for std::size_t
 #include <iosfwd>
 
 #include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
 
 // ************************************************************************** //
 // **************                    TOOL BOX                  ************** //
@@ -51,7 +56,7 @@
     boost::test_tools::tt_detail::check_impl(               \
         P,                                                  \
         boost::wrap_stringstream().ref() << check_descr,    \
-        BOOST_TEST_STRING_LITERAL(__FILE__),                \
+        BOOST_TEST_L(__FILE__),                             \
         (std::size_t)__LINE__,                              \
         boost::test_tools::tt_detail::TL,                   \
         boost::test_tools::tt_detail::CT                    \
@@ -214,7 +219,7 @@ namespace boost {
 
 namespace test_tools {
 
-typedef boost::unit_test::const_string      const_string;
+typedef unit_test::const_string      const_string;
 
 namespace tt_detail {
 
@@ -237,13 +242,6 @@ enum check_type {
 enum tool_level {
     WARN, CHECK, REQUIRE, PASS
 };
-
-// ************************************************************************** //
-// **************                test_tool_failed              ************** //
-// ************************************************************************** //
-
-// Exception to be used to report critical tools failures
-struct test_tool_failed : public std::exception {};
 
 // ************************************************************************** //
 // **************               log print helper               ************** //
@@ -433,9 +431,9 @@ bool is_defined_impl( const_string symbol_name_, const_string symbol_value_ );
 
 } // namespace test_tools
 
-namespace test_toolbox = test_tools;
-
 } // namespace boost
+
+//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 
@@ -443,6 +441,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.50  2005/02/20 08:27:06  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.49  2005/02/01 06:40:06  rogeeff
 //  copyright update
 //  old log entries removed
@@ -462,4 +463,4 @@ namespace test_toolbox = test_tools;
 //
 // ***************************************************************************
 
-#endif // BOOST_TEST_TOOLS_HPP_012705GER
+#endif // BOOST_TEST_TEST_TOOLS_HPP_012705GER

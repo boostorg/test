@@ -1,6 +1,5 @@
-//  (C) Copyright Gennadiy Rozental 2002-2004.
-//  (C) Copyright Gennadiy Rozental & Ullrich Koethe 2001.
 //  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental & Ullrich Koethe 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -12,7 +11,7 @@
 #include <boost/test/unit_test.hpp>
 using boost::unit_test::test_suite;
 using boost::unit_test::test_case;
-using boost::test_toolbox::close_at_tolerance;
+using boost::test_tools::close_at_tolerance;
 
 // BOOST
 #include <boost/lexical_cast.hpp>
@@ -127,7 +126,7 @@ struct account_test_suite : public test_suite {
         test_case* withdraw_test_case = BOOST_CLASS_TEST_CASE( &account_test::test_withdraw, instance );
 
         deposit_test_case->depends_on( init_test_case );
-        withdraw_test_case->depends_on( init_test_case );
+        withdraw_test_case->depends_on( deposit_test_case );
 
         add( init_test_case, 1 );
         add( deposit_test_case, 1 );
@@ -137,7 +136,7 @@ struct account_test_suite : public test_suite {
 
 test_suite*
 init_unit_test_suite( int argc, char * argv[] ) {
-    std::auto_ptr<test_suite> test( BOOST_TEST_SUITE( "Unit test example 3" ) );
+    test_suite* test( BOOST_TEST_SUITE( "Unit test example 3" ) );
 
     try {
         if( argc < 2 )
@@ -149,7 +148,7 @@ init_unit_test_suite( int argc, char * argv[] ) {
         return (test_suite*)0;
     }
 
-    return test.release();
+    return test;
 }
 
 // EOF

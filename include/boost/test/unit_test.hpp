@@ -12,8 +12,8 @@
 //  Description : wrapper include . To be used by end-user
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_HPP_071894GER
-#define BOOST_UNIT_TEST_HPP_071894GER
+#ifndef BOOST_TEST_UNIT_TEST_HPP_071894GER
+#define BOOST_TEST_UNIT_TEST_HPP_071894GER
 
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
@@ -32,6 +32,9 @@
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2005/02/20 08:27:06  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.14  2005/02/01 06:40:06  rogeeff
 //  copyright update
 //  old log entries removed
@@ -40,4 +43,4 @@
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_HPP_071894GER
+#endif // BOOST_TEST_UNIT_TEST_HPP_071894GER

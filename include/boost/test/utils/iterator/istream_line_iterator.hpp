@@ -22,6 +22,10 @@
 // STL
 #include <iosfwd>
 
+#include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
+
 namespace boost {
 
 namespace unit_test {
@@ -85,10 +89,17 @@ typedef basic_istream_line_iterator<wchar_t>    wistream_line_iterator;
 
 } // namespace boost
 
+//____________________________________________________________________________//
+
+#include <boost/test/detail/enable_warnings.hpp>
+
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2005/02/20 08:27:09  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.3  2005/02/01 06:40:08  rogeeff
 //  copyright update
 //  old log entries removed

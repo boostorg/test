@@ -16,29 +16,40 @@ PRG_EXEC_MON_SOURCES =
   ;
 
 TEST_EXEC_MON_SOURCES =
-  execution_monitor
-  test_tools
-  unit_test_parameters
-  unit_test_log
-  unit_test_monitor
-  unit_test_result
-  unit_test_suite
-  test_main
   compiler_log_formatter
+  execution_monitor
+  framework
+  plain_report_formatter
+  progress_monitor
+  results_collector
+  results_reporter
+  test_main
+  test_tools
+  unit_test_log
+  unit_test_main
+  unit_test_monitor
+  unit_test_parameters
+  unit_test_suite
   xml_log_formatter
+  xml_report_formatter
   ;
 
 UTF_SOURCES =
-  execution_monitor
-  test_tools
-  unit_test_parameters
-  unit_test_log
-  unit_test_monitor
-  unit_test_result
-  unit_test_suite
-  unit_test_main
   compiler_log_formatter
+  execution_monitor
+  framework
+  plain_report_formatter
+  progress_monitor
+  results_collector
+  results_reporter
+  test_tools
+  unit_test_log
+  unit_test_main
+  unit_test_monitor
+  unit_test_parameters
+  unit_test_suite
   xml_log_formatter
+  xml_report_formatter
   ;
 
 lib boost_prg_exec_monitor : $(PRG_EXEC_MON_SOURCES).cpp

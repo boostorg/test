@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2005.
+//  (C) Copyright Gennadiy Rozental 2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -9,16 +9,19 @@
 //
 //  Version     : $Revision$
 //
-//  Description : contains compiler like log formatter definition
+//  Description : contains compiler like Log formatter definition
 // ***************************************************************************
 
 #ifndef BOOST_TEST_COMPILER_LOG_FORMATTER_HPP_020105GER
 #define BOOST_TEST_COMPILER_LOG_FORMATTER_HPP_020105GER
 
 // Boost.Test
+#include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/unit_test_log_formatter.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
 
 namespace boost {
 
@@ -32,25 +35,23 @@ namespace output {
 
 class compiler_log_formatter : public unit_test_log_formatter {
 public:
-    void    start_log( std::ostream&, bool log_build_info );
-    void    log_header( std::ostream&, counter_t test_cases_amount );
-    void    finish_log( std::ostream& );
+    // Formatter interface
+    void    log_start( std::ostream&, counter_t test_cases_amount );
+    void    log_finish( std::ostream& );
+    void    log_build_info( std::ostream& );
 
-    void    start_test_case( test_case const& tc );
-    void    test_case_enter( std::ostream&, test_case const& tc );
-    void    test_case_exit( std::ostream&, test_case const& tc, long testing_time_in_mks );
+    void    test_unit_start( std::ostream&, test_unit const& tu );
+    void    test_unit_finish( std::ostream&, test_unit const& tu, unsigned long elapsed );
+    void    test_unit_skipped( std::ostream&, test_unit const& tu );
 
     void    log_exception( std::ostream&, log_checkpoint_data const&, const_string explanation );
-    void    begin_log_entry( std::ostream&, log_entry_data const&, log_entry_types let );
 
+    void    log_entry_start( std::ostream&, log_entry_data const&, log_entry_types let );
     void    log_entry_value( std::ostream&, const_string value );
-    void    end_log_entry( std::ostream& );
+    void    log_entry_finish( std::ostream& );
 
 protected:
     virtual void    print_prefix( std::ostream&, const_string file, std::size_t line );
-
-    // data members
-    const_string m_curr_test_case_name;
 };
 
 } // namespace output
@@ -59,12 +60,17 @@ protected:
 
 } // namespace boost
 
+//____________________________________________________________________________//
+
 #include <boost/test/detail/enable_warnings.hpp>
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/02/20 08:27:08  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.1  2005/02/01 08:59:39  rogeeff
 //  supplied_log_formatters split
 //  change formatters interface to simplify result interface

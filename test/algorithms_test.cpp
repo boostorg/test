@@ -113,7 +113,7 @@ void test_find_last_not_of()
 //____________________________________________________________________________//
 
 utf::test_suite*
-init_unit_test_suite( int argc, char* argv[] )
+init_unit_test_suite( int /* argc */, char* /* argv */ [] )
 {
     utf::test_suite* test= BOOST_TEST_SUITE("Algorithms test");
 
@@ -131,6 +131,9 @@ init_unit_test_suite( int argc, char* argv[] )
 // History :
 //
 // $Log$
+// Revision 1.4  2005/02/20 08:28:34  rogeeff
+// This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 // Revision 1.3  2005/01/30 03:35:55  rogeeff
 // no message
 //

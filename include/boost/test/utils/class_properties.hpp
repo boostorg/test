@@ -17,7 +17,7 @@
 #define BOOST_TEST_CLASS_PROPERTIES_HPP_071894GER
 
 // Boost.Test
-#include <boost/test/detail/unit_test_config.hpp>
+#include <boost/test/detail/config.hpp>
 
 // Boost
 #if !BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600))
@@ -30,6 +30,10 @@
 
 // STL
 #include <iosfwd>
+
+#include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
 
 namespace boost {
 
@@ -49,7 +53,8 @@ protected:
 public:
     // Constructor
                     class_property() : value( PropertyType() ) {}
-    explicit        class_property( write_param_t init_value ) : value( init_value ) {}
+    explicit        class_property( write_param_t init_value )
+    : value( init_value ) {}
 
     // Access methods
     operator        read_access_t() const   { return value; }
@@ -208,12 +213,19 @@ public:
 
 } // namespace boost
 
+//____________________________________________________________________________//
+
+#include <boost/test/detail/enable_warnings.hpp>
+
 #undef BOOST_TEST_NO_PROTECTED_USING
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2005/02/20 08:27:08  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.3  2005/02/01 06:40:07  rogeeff
 //  copyright update
 //  old log entries removed

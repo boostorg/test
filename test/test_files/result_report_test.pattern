@@ -2,710 +2,189 @@
 *** No errors detected
 *************************************************************************
 
+Test suite "0 test cases inside" passed
 
-Test case "call_test_main" passed with:
-1 assertion out of 1 passed
-0 assertions out of 1 failed
 *************************************************************************
 
+Test suite "0 test cases inside" passed
 
-Test case "call_test_main" passed with:
-2 assertions out of 2 passed
-0 assertions out of 2 failed
 *************************************************************************
-
-<TestResult>
-<TestCase name="call_test_main" result="passed">
-</TestCase>
-</TestResult>
-*************************************************************************
-
-<TestResult>
-<TestCase name="call_test_main" result="passed">
-  <Assertions passed="4" failed="0" expected_failures="0"/>
-</TestCase>
-</TestResult>
-*************************************************************************
-
-<TestResult>
-<TestCase name="call_test_main" result="passed">
-  <Assertions passed="5" failed="0" expected_failures="0"/>
-</TestCase>
-</TestResult>
-*************************************************************************
-
+<TestResult><TestSuite name="0 test cases inside" result="passed" assertions_passed="0" assertions_failed="0" expected_failures="0" test_cases_passed="0" test_cases_failed="0" test_cases_skipped="0"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="0 test cases inside" result="passed" assertions_passed="0" assertions_failed="0" expected_failures="0" test_cases_passed="0" test_cases_failed="0" test_cases_skipped="0"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="0 test cases inside" result="passed" assertions_passed="0" assertions_failed="0" expected_failures="0" test_cases_passed="0" test_cases_failed="0" test_cases_skipped="0"></TestSuite></TestResult>*************************************************************************
 
 *** No errors detected
 *************************************************************************
 
+Test suite "1 test cases inside" passed with:
+  1 assertion out of 1 passed
+  1 test case out of 1 passed
 
-Test suite "call_test_main" passed with:
-7 assertions out of 7 passed
-0 assertions out of 7 failed
 *************************************************************************
 
+Test suite "1 test cases inside" passed with:
+  1 assertion out of 1 passed
+  1 test case out of 1 passed
 
-Test suite "call_test_main" passed with:
-8 assertions out of 8 passed
-0 assertions out of 8 failed
+  Test case "good_foo" passed with:
+    1 assertion out of 1 passed
 
-  Test case "0 test cases inside" passed with:
-  0 assertions out of 0 passed
-  0 assertions out of 0 failed
 *************************************************************************
-
-<TestResult>
-<TestSuite name="call_test_main" result="passed">
-</TestSuite>
-</TestResult>
-*************************************************************************
-
-<TestResult>
-<TestSuite name="call_test_main" result="passed">
-  <Assertions passed="10" failed="0" expected_failures="0"/>
-</TestSuite>
-</TestResult>
-*************************************************************************
-
-<TestResult>
-<TestSuite name="call_test_main" result="passed">
-  <Assertions passed="11" failed="0" expected_failures="0"/>
-  <TestCase name="0 test cases inside" result="passed">
-    <Assertions passed="0" failed="0" expected_failures="0"/>
-  </TestCase>
-</TestSuite>
-</TestResult>
-*************************************************************************
-
+<TestResult><TestSuite name="1 test cases inside" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="1 test cases inside" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="1 test cases inside" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0"><TestCase name="good_foo" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0"></TestCase></TestSuite></TestResult>*************************************************************************
 
 *** No errors detected
 *************************************************************************
 
+Test suite "1 bad test cases inside" passed with:
+  1 assertion out of 2 passed
+  1 assertion out of 2 failed
+  1 failure expected
+  1 test case out of 1 passed
 
-Test suite "call_test_main" passed with:
-2 test cases out of 2 passed
-0 test cases out of 2 failed
-13 assertions out of 13 passed
- 0 assertions out of 13 failed
 *************************************************************************
 
+Test suite "1 bad test cases inside" passed with:
+  1 assertion out of 2 passed
+  1 assertion out of 2 failed
+  1 failure expected
+  1 test case out of 1 passed
 
-Test suite "call_test_main" passed with:
-2 test cases out of 2 passed
-0 test cases out of 2 failed
-14 assertions out of 14 passed
- 0 assertions out of 14 failed
+  Test case "bad_foo" passed with:
+    1 assertion out of 2 passed
+    1 assertion out of 2 failed
+    1 failure expected
 
-  Test case "0 test cases inside" passed with:
-  0 assertions out of 0 passed
-  0 assertions out of 0 failed
-
-  Test suite "1 test cases inside" passed with:
-  0 assertions out of 0 passed
-  0 assertions out of 0 failed
-
-    Test case "good_foo" passed with:
-    0 assertions out of 0 passed
-    0 assertions out of 0 failed
 *************************************************************************
-
-<TestResult>
-<TestSuite name="call_test_main" result="passed">
-</TestSuite>
-</TestResult>
-*************************************************************************
-
-<TestResult>
-<TestSuite name="call_test_main" result="passed">
-  <SubTestCases passed="2" failed="0"/>
-  <Assertions passed="16" failed="0" expected_failures="0"/>
-</TestSuite>
-</TestResult>
-*************************************************************************
-
-<TestResult>
-<TestSuite name="call_test_main" result="passed">
-  <SubTestCases passed="2" failed="0"/>
-  <Assertions passed="17" failed="0" expected_failures="0"/>
-  <TestCase name="0 test cases inside" result="passed">
-    <Assertions passed="0" failed="0" expected_failures="0"/>
-  </TestCase>
-  <TestSuite name="1 test cases inside" result="passed">
-    <Assertions passed="0" failed="0" expected_failures="0"/>
-    <TestCase name="good_foo" result="passed">
-      <Assertions passed="0" failed="0" expected_failures="0"/>
-    </TestCase>
-  </TestSuite>
-</TestSuite>
-</TestResult>
-*************************************************************************
-
+<TestResult><TestSuite name="1 bad test cases inside" result="passed" assertions_passed="1" assertions_failed="1" expected_failures="1" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="1 bad test cases inside" result="passed" assertions_passed="1" assertions_failed="1" expected_failures="1" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="1 bad test cases inside" result="passed" assertions_passed="1" assertions_failed="1" expected_failures="1" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0"><TestCase name="bad_foo" result="passed" assertions_passed="1" assertions_failed="1" expected_failures="1"></TestCase></TestSuite></TestResult>*************************************************************************
 
 *** No errors detected
 *************************************************************************
 
-
-Test suite "call_test_main" passed with:
-4 test cases out of 4 passed
-0 test cases out of 4 failed
-19 assertions out of 20 passed
- 1 assertion out of 20 failed
-while 1 failure expected
-*************************************************************************
-
-
-Test suite "call_test_main" passed with:
-4 test cases out of 4 passed
-0 test cases out of 4 failed
-20 assertions out of 21 passed
- 1 assertion out of 21 failed
-while 1 failure expected
-
-  Test case "0 test cases inside" passed with:
-  0 assertions out of 0 passed
-  0 assertions out of 0 failed
-
-  Test suite "1 test cases inside" passed with:
-  0 assertions out of 0 passed
-  0 assertions out of 0 failed
-
-    Test case "good_foo" passed with:
-    0 assertions out of 0 passed
-    0 assertions out of 0 failed
-
-  Test suite "2 test cases inside" passed with:
+Test suite "2 test cases inside" passed with:
+  2 assertions out of 3 passed
+  1 assertion out of 3 failed
+  1 failure expected
   2 test cases out of 2 passed
-  0 test cases out of 2 failed
-  0 assertions out of 1 passed
-  1 assertion out of 1 failed
-  while 1 failure expected
 
-    Test case "good_foo" passed with:
-    0 assertions out of 0 passed
-    0 assertions out of 0 failed
-
-    Test case "bad_foo" passed with:
-    0 assertions out of 1 passed
-    1 assertion out of 1 failed
-    while 1 failure expected
 *************************************************************************
 
-<TestResult>
-<TestSuite name="call_test_main" result="passed">
-</TestSuite>
-</TestResult>
+Test suite "2 test cases inside" passed with:
+  2 assertions out of 3 passed
+  1 assertion out of 3 failed
+  1 failure expected
+  2 test cases out of 2 passed
+
+  Test case "good_foo" passed with:
+    1 assertion out of 1 passed
+
+  Test case "bad_foo" passed with:
+    1 assertion out of 2 passed
+    1 assertion out of 2 failed
+    1 failure expected
+
+*************************************************************************
+<TestResult><TestSuite name="2 test cases inside" result="passed" assertions_passed="2" assertions_failed="1" expected_failures="1" test_cases_passed="2" test_cases_failed="0" test_cases_skipped="0"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="2 test cases inside" result="passed" assertions_passed="2" assertions_failed="1" expected_failures="1" test_cases_passed="2" test_cases_failed="0" test_cases_skipped="0"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="2 test cases inside" result="passed" assertions_passed="2" assertions_failed="1" expected_failures="1" test_cases_passed="2" test_cases_failed="0" test_cases_skipped="0"><TestCase name="good_foo" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0"></TestCase><TestCase name="bad_foo" result="passed" assertions_passed="1" assertions_failed="1" expected_failures="1"></TestCase></TestSuite></TestResult>*************************************************************************
+
+*** 2 failures detected in test suite "3 test cases inside"
 *************************************************************************
 
-<TestResult>
-<TestSuite name="call_test_main" result="passed">
-  <SubTestCases passed="4" failed="0"/>
-  <Assertions passed="22" failed="1" expected_failures="1"/>
-</TestSuite>
-</TestResult>
+Test suite "3 test cases inside" failed with:
+  2 assertions out of 4 passed
+  2 assertions out of 4 failed
+  2 test cases out of 3 failed
+  1 test case out of 3 skipped
+
 *************************************************************************
 
-<TestResult>
-<TestSuite name="call_test_main" result="passed">
-  <SubTestCases passed="4" failed="0"/>
-  <Assertions passed="23" failed="1" expected_failures="1"/>
-  <TestCase name="0 test cases inside" result="passed">
-    <Assertions passed="0" failed="0" expected_failures="0"/>
-  </TestCase>
-  <TestSuite name="1 test cases inside" result="passed">
-    <Assertions passed="0" failed="0" expected_failures="0"/>
-    <TestCase name="good_foo" result="passed">
-      <Assertions passed="0" failed="0" expected_failures="0"/>
-    </TestCase>
-  </TestSuite>
-  <TestSuite name="2 test cases inside" result="passed">
-    <SubTestCases passed="2" failed="0"/>
-    <Assertions passed="0" failed="1" expected_failures="1"/>
-    <TestCase name="good_foo" result="passed">
-      <Assertions passed="0" failed="0" expected_failures="0"/>
-    </TestCase>
-    <TestCase name="bad_foo" result="passed">
-      <Assertions passed="0" failed="1" expected_failures="1"/>
-    </TestCase>
-  </TestSuite>
-</TestSuite>
-</TestResult>
+Test suite "3 test cases inside" failed with:
+  2 assertions out of 4 passed
+  2 assertions out of 4 failed
+  2 test cases out of 3 failed
+  1 test case out of 3 skipped
+
+  Test case "bad_foo" failed with:
+    1 assertion out of 2 passed
+    1 assertion out of 2 failed
+
+  Test case "very_bad_foo" aborted with:
+    1 assertion out of 2 passed
+    1 assertion out of 2 failed
+
+  Test case "bad_foo" skipped
+
+*************************************************************************
+<TestResult><TestSuite name="3 test cases inside" result="failed" assertions_passed="2" assertions_failed="2" expected_failures="0" test_cases_passed="0" test_cases_failed="2" test_cases_skipped="1"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="3 test cases inside" result="failed" assertions_passed="2" assertions_failed="2" expected_failures="0" test_cases_passed="0" test_cases_failed="2" test_cases_skipped="1"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="3 test cases inside" result="failed" assertions_passed="2" assertions_failed="2" expected_failures="0" test_cases_passed="0" test_cases_failed="2" test_cases_skipped="1"><TestCase name="bad_foo" result="failed" assertions_passed="1" assertions_failed="1" expected_failures="0"></TestCase><TestCase name="very_bad_foo" result="aborted" assertions_passed="1" assertions_failed="1" expected_failures="0"></TestCase><TestCase name="bad_foo" result="skipped" assertions_passed="0" assertions_failed="0" expected_failures="0"></TestCase></TestSuite></TestResult>*************************************************************************
+
+*** 5 failures detected (1 failure expected) in test suite "Fake Test Suite Hierarchy"
 *************************************************************************
 
+Test suite "Fake Test Suite Hierarchy" failed with:
+  11 assertions out of 16 passed
+  5 assertions out of 16 failed
+  1 failure expected
+  5 test cases out of 11 passed
+  3 test cases out of 11 failed
+  3 test cases out of 11 skipped
 
-*** No errors detected
 *************************************************************************
 
+Test suite "Fake Test Suite Hierarchy" failed with:
+  11 assertions out of 16 passed
+  5 assertions out of 16 failed
+  1 failure expected
+  5 test cases out of 11 passed
+  3 test cases out of 11 failed
+  3 test cases out of 11 skipped
 
-Test suite "call_test_main" passed with:
-5 test cases out of 5 passed
-0 test cases out of 5 failed
-25 assertions out of 27 passed
- 2 assertions out of 27 failed
-while 2 failures expected
-*************************************************************************
-
-
-Test suite "call_test_main" passed with:
-5 test cases out of 5 passed
-0 test cases out of 5 failed
-26 assertions out of 28 passed
- 2 assertions out of 28 failed
-while 2 failures expected
-
-  Test case "0 test cases inside" passed with:
-  0 assertions out of 0 passed
-  0 assertions out of 0 failed
+  Test suite "0 test cases inside" passed
 
   Test suite "1 test cases inside" passed with:
-  0 assertions out of 0 passed
-  0 assertions out of 0 failed
-
-    Test case "good_foo" passed with:
-    0 assertions out of 0 passed
-    0 assertions out of 0 failed
-
-  Test suite "2 test cases inside" passed with:
-  2 test cases out of 2 passed
-  0 test cases out of 2 failed
-  0 assertions out of 1 passed
-  1 assertion out of 1 failed
-  while 1 failure expected
-
-    Test case "good_foo" passed with:
-    0 assertions out of 0 passed
-    0 assertions out of 0 failed
-
-    Test case "bad_foo" passed with:
-    0 assertions out of 1 passed
-    1 assertion out of 1 failed
-    while 1 failure expected
-
-  Test suite "1 bad test cases inside" passed with:
-  0 assertions out of 1 passed
-  1 assertion out of 1 failed
-  while 1 failure expected
-
-    Test case "bad_foo" passed with:
-    0 assertions out of 1 passed
-    1 assertion out of 1 failed
-    while 1 failure expected
-*************************************************************************
-
-<TestResult>
-<TestSuite name="call_test_main" result="passed">
-</TestSuite>
-</TestResult>
-*************************************************************************
-
-<TestResult>
-<TestSuite name="call_test_main" result="passed">
-  <SubTestCases passed="5" failed="0"/>
-  <Assertions passed="28" failed="2" expected_failures="2"/>
-</TestSuite>
-</TestResult>
-*************************************************************************
-
-<TestResult>
-<TestSuite name="call_test_main" result="passed">
-  <SubTestCases passed="5" failed="0"/>
-  <Assertions passed="29" failed="2" expected_failures="2"/>
-  <TestCase name="0 test cases inside" result="passed">
-    <Assertions passed="0" failed="0" expected_failures="0"/>
-  </TestCase>
-  <TestSuite name="1 test cases inside" result="passed">
-    <Assertions passed="0" failed="0" expected_failures="0"/>
-    <TestCase name="good_foo" result="passed">
-      <Assertions passed="0" failed="0" expected_failures="0"/>
-    </TestCase>
-  </TestSuite>
-  <TestSuite name="2 test cases inside" result="passed">
-    <SubTestCases passed="2" failed="0"/>
-    <Assertions passed="0" failed="1" expected_failures="1"/>
-    <TestCase name="good_foo" result="passed">
-      <Assertions passed="0" failed="0" expected_failures="0"/>
-    </TestCase>
-    <TestCase name="bad_foo" result="passed">
-      <Assertions passed="0" failed="1" expected_failures="1"/>
-    </TestCase>
-  </TestSuite>
-  <TestSuite name="1 bad test cases inside" result="passed">
-    <Assertions passed="0" failed="1" expected_failures="1"/>
-    <TestCase name="bad_foo" result="passed">
-      <Assertions passed="0" failed="1" expected_failures="1"/>
-    </TestCase>
-  </TestSuite>
-</TestSuite>
-</TestResult>
-*************************************************************************
-
-
-*** No errors detected
-*************************************************************************
-
-
-Test suite "call_test_main" passed with:
-8 test cases out of 8 passed
-0 test cases out of 8 failed
-31 assertions out of 34 passed
- 3 assertions out of 34 failed
-while 3 failures expected
-*************************************************************************
-
-
-Test suite "call_test_main" passed with:
-8 test cases out of 8 passed
-0 test cases out of 8 failed
-32 assertions out of 35 passed
- 3 assertions out of 35 failed
-while 3 failures expected
-
-  Test case "0 test cases inside" passed with:
-  0 assertions out of 0 passed
-  0 assertions out of 0 failed
-
-  Test suite "1 test cases inside" passed with:
-  0 assertions out of 0 passed
-  0 assertions out of 0 failed
-
-    Test case "good_foo" passed with:
-    0 assertions out of 0 passed
-    0 assertions out of 0 failed
-
-  Test suite "2 test cases inside" passed with:
-  2 test cases out of 2 passed
-  0 test cases out of 2 failed
-  0 assertions out of 1 passed
-  1 assertion out of 1 failed
-  while 1 failure expected
-
-    Test case "good_foo" passed with:
-    0 assertions out of 0 passed
-    0 assertions out of 0 failed
-
-    Test case "bad_foo" passed with:
-    0 assertions out of 1 passed
-    1 assertion out of 1 failed
-    while 1 failure expected
-
-  Test suite "1 bad test cases inside" passed with:
-  0 assertions out of 1 passed
-  1 assertion out of 1 failed
-  while 1 failure expected
-
-    Test case "bad_foo" passed with:
-    0 assertions out of 1 passed
-    1 assertion out of 1 failed
-    while 1 failure expected
-
-  Test suite "3 test cases inside" passed with:
-  3 test cases out of 3 passed
-  0 test cases out of 3 failed
-  0 assertions out of 1 passed
-  1 assertion out of 1 failed
-  while 1 failure expected
-
-    Test case "good_foo" passed with:
-    0 assertions out of 0 passed
-    0 assertions out of 0 failed
-
-    Test case "good_foo" passed with:
-    0 assertions out of 0 passed
-    0 assertions out of 0 failed
-
-    Test case "bad_foo" passed with:
-    0 assertions out of 1 passed
-    1 assertion out of 1 failed
-    while 1 failure expected
-*************************************************************************
-
-<TestResult>
-<TestSuite name="call_test_main" result="passed">
-</TestSuite>
-</TestResult>
-*************************************************************************
-
-<TestResult>
-<TestSuite name="call_test_main" result="passed">
-  <SubTestCases passed="8" failed="0"/>
-  <Assertions passed="34" failed="3" expected_failures="3"/>
-</TestSuite>
-</TestResult>
-*************************************************************************
-
-<TestResult>
-<TestSuite name="call_test_main" result="passed">
-  <SubTestCases passed="8" failed="0"/>
-  <Assertions passed="35" failed="3" expected_failures="3"/>
-  <TestCase name="0 test cases inside" result="passed">
-    <Assertions passed="0" failed="0" expected_failures="0"/>
-  </TestCase>
-  <TestSuite name="1 test cases inside" result="passed">
-    <Assertions passed="0" failed="0" expected_failures="0"/>
-    <TestCase name="good_foo" result="passed">
-      <Assertions passed="0" failed="0" expected_failures="0"/>
-    </TestCase>
-  </TestSuite>
-  <TestSuite name="2 test cases inside" result="passed">
-    <SubTestCases passed="2" failed="0"/>
-    <Assertions passed="0" failed="1" expected_failures="1"/>
-    <TestCase name="good_foo" result="passed">
-      <Assertions passed="0" failed="0" expected_failures="0"/>
-    </TestCase>
-    <TestCase name="bad_foo" result="passed">
-      <Assertions passed="0" failed="1" expected_failures="1"/>
-    </TestCase>
-  </TestSuite>
-  <TestSuite name="1 bad test cases inside" result="passed">
-    <Assertions passed="0" failed="1" expected_failures="1"/>
-    <TestCase name="bad_foo" result="passed">
-      <Assertions passed="0" failed="1" expected_failures="1"/>
-    </TestCase>
-  </TestSuite>
-  <TestSuite name="3 test cases inside" result="passed">
-    <SubTestCases passed="3" failed="0"/>
-    <Assertions passed="0" failed="1" expected_failures="1"/>
-    <TestCase name="good_foo" result="passed">
-      <Assertions passed="0" failed="0" expected_failures="0"/>
-    </TestCase>
-    <TestCase name="good_foo" result="passed">
-      <Assertions passed="0" failed="0" expected_failures="0"/>
-    </TestCase>
-    <TestCase name="bad_foo" result="passed">
-      <Assertions passed="0" failed="1" expected_failures="1"/>
-    </TestCase>
-  </TestSuite>
-</TestSuite>
-</TestResult>
-*************************************************************************
-
-
-*** No errors detected
-*************************************************************************
-
-
-Test suite "call_test_main" passed with:
-15 test cases out of 15 passed
- 0 test cases out of 15 failed
-37 assertions out of 42 passed
- 5 assertions out of 42 failed
-while 5 failures expected
-*************************************************************************
-
-
-Test suite "call_test_main" passed with:
-15 test cases out of 15 passed
- 0 test cases out of 15 failed
-38 assertions out of 43 passed
- 5 assertions out of 43 failed
-while 5 failures expected
-
-  Test case "0 test cases inside" passed with:
-  0 assertions out of 0 passed
-  0 assertions out of 0 failed
-
-  Test suite "1 test cases inside" passed with:
-  0 assertions out of 0 passed
-  0 assertions out of 0 failed
-
-    Test case "good_foo" passed with:
-    0 assertions out of 0 passed
-    0 assertions out of 0 failed
-
-  Test suite "2 test cases inside" passed with:
-  2 test cases out of 2 passed
-  0 test cases out of 2 failed
-  0 assertions out of 1 passed
-  1 assertion out of 1 failed
-  while 1 failure expected
-
-    Test case "good_foo" passed with:
-    0 assertions out of 0 passed
-    0 assertions out of 0 failed
-
-    Test case "bad_foo" passed with:
-    0 assertions out of 1 passed
-    1 assertion out of 1 failed
-    while 1 failure expected
-
-  Test suite "1 bad test cases inside" passed with:
-  0 assertions out of 1 passed
-  1 assertion out of 1 failed
-  while 1 failure expected
-
-    Test case "bad_foo" passed with:
-    0 assertions out of 1 passed
-    1 assertion out of 1 failed
-    while 1 failure expected
-
-  Test suite "3 test cases inside" passed with:
-  3 test cases out of 3 passed
-  0 test cases out of 3 failed
-  0 assertions out of 1 passed
-  1 assertion out of 1 failed
-  while 1 failure expected
-
-    Test case "good_foo" passed with:
-    0 assertions out of 0 passed
-    0 assertions out of 0 failed
-
-    Test case "good_foo" passed with:
-    0 assertions out of 0 passed
-    0 assertions out of 0 failed
-
-    Test case "bad_foo" passed with:
-    0 assertions out of 1 passed
-    1 assertion out of 1 failed
-    while 1 failure expected
-
-  Test suite "Fake Test Suite Hierarchy" passed with:
-  7 test cases out of 7 passed
-  0 test cases out of 7 failed
-  0 assertions out of 2 passed
-  2 assertions out of 2 failed
-  while 2 failures expected
-
-    Test case "0 test cases inside" passed with:
-    0 assertions out of 0 passed
-    0 assertions out of 0 failed
-
-    Test suite "1 test cases inside" passed with:
-    0 assertions out of 0 passed
-    0 assertions out of 0 failed
-
-      Test case "good_foo" passed with:
-      0 assertions out of 0 passed
-      0 assertions out of 0 failed
-
-    Test suite "2 test cases inside" passed with:
+    3 assertions out of 3 passed
     2 test cases out of 2 passed
-    0 test cases out of 2 failed
-    0 assertions out of 1 passed
-    1 assertion out of 1 failed
-    while 1 failure expected
 
-      Test case "good_foo" passed with:
-      0 assertions out of 0 passed
-      0 assertions out of 0 failed
+    Test case "good_foo" passed with:
+      2 assertions out of 2 passed
 
-      Test case "bad_foo" passed with:
-      0 assertions out of 1 passed
-      1 assertion out of 1 failed
-      while 1 failure expected
+  Test suite "2 test cases inside" failed with:
+    6 assertions out of 9 passed
+    3 assertions out of 9 failed
+    1 failure expected
+    3 test cases out of 4 passed
+    1 test case out of 4 failed
 
-    Test suite "3 test cases inside" passed with:
-    3 test cases out of 3 passed
-    0 test cases out of 3 failed
-    0 assertions out of 1 passed
-    1 assertion out of 1 failed
-    while 1 failure expected
+    Test case "good_foo" passed with:
+      2 assertions out of 2 passed
 
-      Test case "good_foo" passed with:
-      0 assertions out of 0 passed
-      0 assertions out of 0 failed
+    Test case "bad_foo" failed with:
+      2 assertions out of 4 passed
+      2 assertions out of 4 failed
+      1 failure expected
 
-      Test case "good_foo" passed with:
-      0 assertions out of 0 passed
-      0 assertions out of 0 failed
+  Test suite "3 test cases inside" failed with:
+    2 assertions out of 4 passed
+    2 assertions out of 4 failed
+    2 test cases out of 5 failed
+    3 test cases out of 5 skipped
 
-      Test case "bad_foo" passed with:
-      0 assertions out of 1 passed
-      1 assertion out of 1 failed
-      while 1 failure expected
+    Test case "bad_foo" failed with:
+      1 assertion out of 2 passed
+      1 assertion out of 2 failed
+
+    Test case "very_bad_foo" aborted with:
+      1 assertion out of 2 passed
+      1 assertion out of 2 failed
+
+    Test case "bad_foo" skipped
+
 *************************************************************************
-
-<TestResult>
-<TestSuite name="call_test_main" result="passed">
-</TestSuite>
-</TestResult>
-*************************************************************************
-
-<TestResult>
-<TestSuite name="call_test_main" result="passed">
-  <SubTestCases passed="15" failed="0"/>
-  <Assertions passed="40" failed="5" expected_failures="5"/>
-</TestSuite>
-</TestResult>
-*************************************************************************
-
-<TestResult>
-<TestSuite name="call_test_main" result="passed">
-  <SubTestCases passed="15" failed="0"/>
-  <Assertions passed="41" failed="5" expected_failures="5"/>
-  <TestCase name="0 test cases inside" result="passed">
-    <Assertions passed="0" failed="0" expected_failures="0"/>
-  </TestCase>
-  <TestSuite name="1 test cases inside" result="passed">
-    <Assertions passed="0" failed="0" expected_failures="0"/>
-    <TestCase name="good_foo" result="passed">
-      <Assertions passed="0" failed="0" expected_failures="0"/>
-    </TestCase>
-  </TestSuite>
-  <TestSuite name="2 test cases inside" result="passed">
-    <SubTestCases passed="2" failed="0"/>
-    <Assertions passed="0" failed="1" expected_failures="1"/>
-    <TestCase name="good_foo" result="passed">
-      <Assertions passed="0" failed="0" expected_failures="0"/>
-    </TestCase>
-    <TestCase name="bad_foo" result="passed">
-      <Assertions passed="0" failed="1" expected_failures="1"/>
-    </TestCase>
-  </TestSuite>
-  <TestSuite name="1 bad test cases inside" result="passed">
-    <Assertions passed="0" failed="1" expected_failures="1"/>
-    <TestCase name="bad_foo" result="passed">
-      <Assertions passed="0" failed="1" expected_failures="1"/>
-    </TestCase>
-  </TestSuite>
-  <TestSuite name="3 test cases inside" result="passed">
-    <SubTestCases passed="3" failed="0"/>
-    <Assertions passed="0" failed="1" expected_failures="1"/>
-    <TestCase name="good_foo" result="passed">
-      <Assertions passed="0" failed="0" expected_failures="0"/>
-    </TestCase>
-    <TestCase name="good_foo" result="passed">
-      <Assertions passed="0" failed="0" expected_failures="0"/>
-    </TestCase>
-    <TestCase name="bad_foo" result="passed">
-      <Assertions passed="0" failed="1" expected_failures="1"/>
-    </TestCase>
-  </TestSuite>
-  <TestSuite name="Fake Test Suite Hierarchy" result="passed">
-    <SubTestCases passed="7" failed="0"/>
-    <Assertions passed="0" failed="2" expected_failures="2"/>
-    <TestCase name="0 test cases inside" result="passed">
-      <Assertions passed="0" failed="0" expected_failures="0"/>
-    </TestCase>
-    <TestSuite name="1 test cases inside" result="passed">
-      <Assertions passed="0" failed="0" expected_failures="0"/>
-      <TestCase name="good_foo" result="passed">
-        <Assertions passed="0" failed="0" expected_failures="0"/>
-      </TestCase>
-    </TestSuite>
-    <TestSuite name="2 test cases inside" result="passed">
-      <SubTestCases passed="2" failed="0"/>
-      <Assertions passed="0" failed="1" expected_failures="1"/>
-      <TestCase name="good_foo" result="passed">
-        <Assertions passed="0" failed="0" expected_failures="0"/>
-      </TestCase>
-      <TestCase name="bad_foo" result="passed">
-        <Assertions passed="0" failed="1" expected_failures="1"/>
-      </TestCase>
-    </TestSuite>
-    <TestSuite name="3 test cases inside" result="passed">
-      <SubTestCases passed="3" failed="0"/>
-      <Assertions passed="0" failed="1" expected_failures="1"/>
-      <TestCase name="good_foo" result="passed">
-        <Assertions passed="0" failed="0" expected_failures="0"/>
-      </TestCase>
-      <TestCase name="good_foo" result="passed">
-        <Assertions passed="0" failed="0" expected_failures="0"/>
-      </TestCase>
-      <TestCase name="bad_foo" result="passed">
-        <Assertions passed="0" failed="1" expected_failures="1"/>
-      </TestCase>
-    </TestSuite>
-  </TestSuite>
-</TestSuite>
-</TestResult>
-*************************************************************************
-
+<TestResult><TestSuite name="Fake Test Suite Hierarchy" result="failed" assertions_passed="11" assertions_failed="5" expected_failures="1" test_cases_passed="5" test_cases_failed="3" test_cases_skipped="3"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="Fake Test Suite Hierarchy" result="failed" assertions_passed="11" assertions_failed="5" expected_failures="1" test_cases_passed="5" test_cases_failed="3" test_cases_skipped="3"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="Fake Test Suite Hierarchy" result="failed" assertions_passed="11" assertions_failed="5" expected_failures="1" test_cases_passed="5" test_cases_failed="3" test_cases_skipped="3"><TestSuite name="0 test cases inside" result="passed" assertions_passed="0" assertions_failed="0" expected_failures="0" test_cases_passed="0" test_cases_failed="0" test_cases_skipped="0"></TestSuite><TestSuite name="1 test cases inside" result="passed" assertions_passed="3" assertions_failed="0" expected_failures="0" test_cases_passed="2" test_cases_failed="0" test_cases_skipped="0"><TestCase name="good_foo" result="passed" assertions_passed="2" assertions_failed="0" expected_failures="0"></TestCase></TestSuite><TestSuite name="2 test cases inside" result="failed" assertions_passed="6" assertions_failed="3" expected_failures="1" test_cases_passed="3" test_cases_failed="1" test_cases_skipped="0"><TestCase name="good_foo" result="passed" assertions_passed="2" assertions_failed="0" expected_failures="0"></TestCase><TestCase name="bad_foo" result="failed" assertions_passed="2" assertions_failed="2" expected_failures="1"></TestCase></TestSuite><TestSuite name="3 test cases inside" result="failed" assertions_passed="2" assertions_failed="2" expected_failures="0" test_cases_passed="0" test_cases_failed="2" test_cases_skipped="3"><TestCase name="bad_foo" result="failed" assertions_passed="1" assertions_failed="1" expected_failures="0"></TestCase><TestCase name="very_bad_foo" result="aborted" assertions_passed="1" assertions_failed="1" expected_failures="0"></TestCase><TestCase name="bad_foo" result="skipped" assertions_passed="0" assertions_failed="0" expected_failures="0"></TestCase></TestSuite></TestSuite></TestResult>*************************************************************************

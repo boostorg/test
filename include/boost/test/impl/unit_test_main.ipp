@@ -12,23 +12,27 @@
 //  Description : main function implementation for Unit Test Framework
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_MAIN_IPP_012205GER
-#define BOOST_UNIT_TEST_MAIN_IPP_012205GER
+#ifndef BOOST_TEST_UNIT_TEST_MAIN_IPP_012205GER
+#define BOOST_TEST_UNIT_TEST_MAIN_IPP_012205GER
 
 // Boost.Test
+#include <boost/test/framework.hpp>
+#include <boost/test/results_collector.hpp>
 #include <boost/test/unit_test_suite.hpp>
-#include <boost/test/unit_test_result.hpp>
-#include <boost/test/unit_test_log.hpp>
+#include <boost/test/results_reporter.hpp>
+
 #include <boost/test/detail/unit_test_parameters.hpp>
-#include <boost/test/detail/unit_test_monitor.hpp>
 
 // Boost
-#include <boost/scoped_ptr.hpp>
+#include <boost/cstdlib.hpp>
 
 // STL
-#include <iostream>                   // for cout, cerr
+#include <stdexcept>
+#include <iostream>
 
-extern boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] );  // prototype for user's test suite init function
+#include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
 
 // ************************************************************************** //
 // **************                 unit test main               ************** //
@@ -38,95 +42,41 @@ int BOOST_TEST_CALL_DECL
 main( int argc, char* argv[] )
 {
     using namespace boost::unit_test;
-    using namespace boost::unit_test::ut_detail;
+   
+    try {
+        framework::init( argc, argv );
 
-    bool    no_result_code;
-    bool    print_build_info;
+        framework::run();
 
-    // set the log level
-    unit_test_log.set_threshold_level_by_name( retrieve_framework_parameter( LOG_LEVEL, &argc, argv ) );
+        results_reporter::make_report();
 
-    // set the log/report format
-    const_string output_format = retrieve_framework_parameter( OUTPUT_FORMAT, &argc, argv );
-
-    if( output_format.empty() ) {
-        unit_test_log.set_format( retrieve_framework_parameter( LOG_FORMAT, &argc, argv ) );
-        unit_test_result::set_report_format( retrieve_framework_parameter( REPORT_FORMAT, &argc, argv ) );
+        return runtime_config::no_result_code() 
+                    ? boost::exit_success 
+                    : results_collector.results( framework::master_test_suite().p_id ).result_code();
     }
-    else {
-        unit_test_log.set_format( output_format );
-        unit_test_result::set_report_format( output_format );
+    catch( std::logic_error const& ex ) {
+        std::cerr << "Boost.Test internal framework error: " << ex.what() << std::endl;
+        
+        return boost::exit_exception_failure;
     }
-
-    // set the result code and build info flags
-    no_result_code    = retrieve_framework_parameter( NO_RESULT_CODE, &argc, argv ) == "no";
-    print_build_info  = retrieve_framework_parameter( BUILD_INFO, &argc, argv ) == "yes";
-
-    // set catch_system_error switch
-    unit_test_monitor::catch_system_errors( retrieve_framework_parameter( CATCH_SYS_ERRORS, &argc, argv ) != "no" );
-
-    // save report level for future reporting
-    const_string report_level = retrieve_framework_parameter( REPORT_LEVEL, &argc, argv );
-
-    // init master unit test suite
-    boost::scoped_ptr<test_suite> test( init_unit_test_suite( argc, argv ) );
-    if( !test ) {
-        std::cerr << "*** Fail to initialize test suite" << std::endl;
-        return boost::exit_test_failure;
+    catch( ... ) {
+        std::cerr << "Boost.Test internal framework error: unknown reason" << std::endl;
+        
+        return boost::exit_exception_failure;
     }
-
-    if( retrieve_framework_parameter( DETECT_MEM_LEAKS, &argc, argv ) == "yes" )
-        boost::detect_memory_leaks();
-
-    // start testing
-    unit_test_log.start( print_build_info );
-    unit_test_log.header( test->size() );
-    test->run();
-    unit_test_log.finish( test->size() );
-
-    // report results
-    unit_test_result::instance().report( report_level, std::cerr );
-
-    // return code
-    return no_result_code ? boost::exit_success : unit_test_result::instance().result_code();
 }
+
+//____________________________________________________________________________//
+
+#include <boost/test/detail/enable_warnings.hpp>
 
 // ***************************************************************************
 //  Revision History :
 //
 //  $Log$
-//  Revision 1.5  2005/02/01 06:40:07  rogeeff
-//  copyright update
-//  old log entries removed
-//  minor stilistic changes
-//  depricated tools removed
-//
-//  Revision 1.4  2005/01/31 07:50:06  rogeeff
-//  cdecl portability fix
-//
-//  Revision 1.3  2005/01/31 06:01:54  rogeeff
-//  BOOST_TEST_CALL_DECL correctness fixes
-//
-//  Revision 1.2  2005/01/30 01:55:13  rogeeff
-//  eliminated dependency on log
-//
-//  Revision 1.1  2005/01/22 19:22:13  rogeeff
-//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
-//
-//  Revision 1.18  2005/01/19 16:34:07  vawjr
-//  Changed the \r\r\n back to \r\n on windows so we don't get errors when compiling
-//  on VC++8.0.  I don't know why Microsoft thinks it's a good idea to call this an error,
-//  but they do.  I also don't know why people insist on checking out files on Windows and
-//  copying them to a unix system to check them in (which will cause exactly this problem)
-//
-//  Revision 1.17  2005/01/18 08:30:08  rogeeff
-//  unit_test_log rework:
-//     eliminated need for ::instance()
-//     eliminated need for << end and ...END macro
-//     straitend interface between log and formatters
-//     change compiler like formatter name
-//     minimized unit_test_log interface and reworked to use explicit calls
+//  Revision 1.6  2005/02/20 08:27:07  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_MAIN_IPP_012205GER
+#endif // BOOST_TEST_UNIT_TEST_MAIN_IPP_012205GER

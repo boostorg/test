@@ -20,6 +20,8 @@
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
+//____________________________________________________________________________//
+
 namespace boost {
 
 namespace unit_test {
@@ -54,12 +56,17 @@ operator<<( std::ostream& ostr, custom_manip<Uniq> const& ) { return custom_prin
 
 } // namespace boost
 
+//____________________________________________________________________________//
+
 #include <boost/test/detail/enable_warnings.hpp>
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/02/20 08:27:08  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.1  2005/01/22 18:21:39  rogeeff
 //  moved sharable staff into utils
 //

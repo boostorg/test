@@ -12,24 +12,23 @@
 //  Description : supplies offline implementation for the Test Tools
 // ***************************************************************************
 
-#ifndef BOOST_TEST_TOOLS_IPP_012205GER
-#define BOOST_TEST_TOOLS_IPP_012205GER
+#ifndef BOOST_TEST_TEST_TOOLS_IPP_012205GER
+#define BOOST_TEST_TEST_TOOLS_IPP_012205GER
 
 // Boost.Test
 #include <boost/test/test_tools.hpp>
-#include <boost/test/unit_test_result.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/output_test_stream.hpp>
+#include <boost/test/framework.hpp>
+#include <boost/test/execution_monitor.hpp> // execution_aborted
 
 // Boost
 #include <boost/config.hpp>
 
 // STL
 #include <fstream>
-#include <iostream>
-#include <algorithm>
-#include <cstring>
 #include <string>
+#include <cstring>
 #include <cctype>
 #include <cwchar>
 #ifdef BOOST_STANDARD_IOSTREAMS
@@ -37,14 +36,16 @@
 #endif
 #include <cstdarg>
 
+#include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
+
 # ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::strcmp; using ::strlen; using ::isprint; using ::va_list; }
 #if !defined( BOOST_NO_CWCHAR )
 namespace std { using ::wcscmp; }
 #endif
 # endif
-
-#include <boost/test/detail/suppress_warnings.hpp>
 
 namespace boost {
 
@@ -71,12 +72,15 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
     char const*  prefix;
     char const*  suffix;
 
+    if( tl == PASS )
+        framework::assertion_result( true );
+    else if( tl != WARN )
+        framework::assertion_result( false );    
+        
     switch( tl ) {
     case PASS:
-        unit_test_result::instance().inc_passed_assertions();
-
         ll      = log_successful_tests;
-        prefix  = "test ";
+        prefix  = "check ";
         suffix  = " passed";
         break;
     case WARN:
@@ -85,15 +89,11 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         suffix  = " is not satisfied";
         break;
     case CHECK:
-        unit_test_result::instance().inc_failed_assertions();
-
         ll      = log_all_errors;
-        prefix  = "test ";
+        prefix  = "check ";
         suffix  = " failed";
         break;
     case REQUIRE:
-        unit_test_result::instance().inc_failed_assertions();
-
         ll      = log_fatal_errors;
         prefix  = "critical test ";
         suffix  = " failed";
@@ -113,8 +113,12 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         unit_test_log << log::end();
         break;
     case CHECK_MSG:
-        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) 
-                      << ll << check_descr.str();
+        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) << ll;
+        
+        if( tl == PASS )
+            unit_test_log << prefix << "'" << check_descr.str() << "'" << suffix;
+        else
+            unit_test_log << check_descr.str();
         
         if( !pr.has_empty_message() )
             unit_test_log << ". " << pr.message();
@@ -126,8 +130,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
                       << log_messages << check_descr.str() << log::end();
         break;
     case SET_CHECKPOINT:
-        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) 
-                      << log_test_suites   << log::checkpoint( check_descr.str() ) << log::end();
+        unit_test_log << log::file( file_name ) << log::line( line_num ) << log::checkpoint( check_descr.str() );
         break;
     case CHECK_EQUAL: {
         std::va_list args;
@@ -160,7 +163,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         char const* arg1_val    = va_arg( args, char const* );
         char const* arg2_descr  = va_arg( args, char const* );
         char const* arg2_val    = va_arg( args, char const* );
-           /* toler_descr = */    va_arg( args, char const* );
+        /* toler_descr = */       va_arg( args, char const* );
         char const* toler_val   = va_arg( args, char const* );
 
         unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) << ll;
@@ -264,8 +267,11 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
     }
     }
 
-    if( tl == REQUIRE )
-        throw test_tool_failed();
+    if( tl == REQUIRE ) {
+        framework::test_unit_aborted();
+
+        throw execution_aborted();
+    }
 }
 
 //____________________________________________________________________________//
@@ -360,7 +366,7 @@ print_log_value<wchar_t const*>::operator()( std::ostream& ostr, wchar_t const* 
 
 struct output_test_stream::Impl
 {
-    std::fstream    m_pattern_to_match_or_save;
+    std::fstream    m_pattern;
     bool            m_match_or_save;
     std::string     m_synced_string;
 
@@ -368,10 +374,8 @@ struct output_test_stream::Impl
     {
         char res;
         do {
-            m_pattern_to_match_or_save.get( res );
-        } while( res == '\r'                        &&
-                 !m_pattern_to_match_or_save.fail() &&
-                 !m_pattern_to_match_or_save.eof() );
+            m_pattern.get( res );
+        } while( res == '\r' && !m_pattern.fail() && !m_pattern.eof() );
 
         return res;
     }
@@ -388,8 +392,13 @@ struct output_test_stream::Impl
 output_test_stream::output_test_stream( const_string pattern_file_name, bool match_or_save )
 : m_pimpl( new Impl )
 {
-    if( !pattern_file_name.is_empty() )
-        m_pimpl->m_pattern_to_match_or_save.open( pattern_file_name.begin(), match_or_save ? std::ios::in : std::ios::out );
+    if( !pattern_file_name.is_empty() ) {
+        m_pimpl->m_pattern.open( pattern_file_name.begin(), match_or_save ? std::ios::in : std::ios::out );
+
+        BOOST_WARN_MESSAGE( m_pimpl->m_pattern.is_open(),
+                             "Couldn't open pattern file " << pattern_file_name
+                                << " for " << ( m_pimpl->m_match_or_save ? "reading" : "writing") );
+    }
 
     m_pimpl->m_match_or_save = match_or_save;
 }
@@ -398,6 +407,7 @@ output_test_stream::output_test_stream( const_string pattern_file_name, bool mat
 
 output_test_stream::~output_test_stream()
 {
+    delete m_pimpl;
 }
 
 //____________________________________________________________________________//
@@ -460,18 +470,17 @@ output_test_stream::match_pattern( bool flush_stream )
 
     result_type result( true );
 
-    if( !m_pimpl->m_pattern_to_match_or_save.is_open() ) {
+    if( !m_pimpl->m_pattern.is_open() ) {
         result = false;
-        result.message() << "Couldn't open pattern file for "
-            << ( m_pimpl->m_match_or_save ? "reading" : "writing");
+        result.message() << "I/O failure";
     }
     else {
         if( m_pimpl->m_match_or_save ) {
             for ( std::string::size_type i = 0; i < m_pimpl->m_synced_string.length(); ++i ) {
                 char c = m_pimpl->get_char();
 
-                result = !m_pimpl->m_pattern_to_match_or_save.fail() &&
-                         !m_pimpl->m_pattern_to_match_or_save.eof() &&
+                result = !m_pimpl->m_pattern.fail() &&
+                         !m_pimpl->m_pattern.eof()  &&
                          (m_pimpl->m_synced_string[i] == c);
 
                 if( !result ) {
@@ -487,8 +496,7 @@ output_test_stream::match_pattern( bool flush_stream )
                     while( --counter ) {
                         char c = m_pimpl->get_char();
 
-                        if( m_pimpl->m_pattern_to_match_or_save.fail() ||
-                            m_pimpl->m_pattern_to_match_or_save.eof() )
+                        if( m_pimpl->m_pattern.fail() || m_pimpl->m_pattern.eof() )
                             break;
 
                         result.message() << c;
@@ -497,15 +505,15 @@ output_test_stream::match_pattern( bool flush_stream )
                     result.message() << "...";
 
                     // skip rest of the bytes. May help for further matching
-                    m_pimpl->m_pattern_to_match_or_save.ignore( m_pimpl->m_synced_string.length() - i - suffix_size);
+                    m_pimpl->m_pattern.ignore( m_pimpl->m_synced_string.length() - i - suffix_size );
                     break;
                 }
             }
         }
         else {
-            m_pimpl->m_pattern_to_match_or_save.write( m_pimpl->m_synced_string.c_str(),
-                                                       static_cast<std::streamsize>( m_pimpl->m_synced_string.length() ) );
-            m_pimpl->m_pattern_to_match_or_save.flush();
+            m_pimpl->m_pattern.write( m_pimpl->m_synced_string.c_str(),
+                                      static_cast<std::streamsize>( m_pimpl->m_synced_string.length() ) );
+            m_pimpl->m_pattern.flush();
         }
     }
 
@@ -558,10 +566,17 @@ output_test_stream::sync()
 
 } // namespace boost
 
+//____________________________________________________________________________//
+
+#include <boost/test/detail/enable_warnings.hpp>
+
 // ***************************************************************************
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.5  2005/02/20 08:27:07  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.4  2005/02/02 12:08:14  rogeeff
 //  namespace log added for log manipulators
 //
@@ -590,4 +605,4 @@ output_test_stream::sync()
 //
 // ***************************************************************************
 
-#endif // BOOST_TEST_TOOLS_IPP_012205GER
+#endif // BOOST_TEST_TEST_TOOLS_IPP_012205GER

@@ -26,6 +26,10 @@
 #include <iosfwd>
 #include <cctype>
 
+#include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
+
 #ifdef BOOST_NO_STDC_NAMESPACE
 namespace std{ using ::ispunct; using ::isspace; }
 #endif
@@ -561,10 +565,17 @@ make_range_token_iterator( Iter begin, Iter end, M1 const& m1, M2 const& m2, M3 
 
 } // namespace boost
 
+//____________________________________________________________________________//
+
+#include <boost/test/detail/enable_warnings.hpp>
+
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2005/02/20 08:27:09  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.3  2005/02/01 06:40:08  rogeeff
 //  copyright update
 //  old log entries removed

@@ -12,17 +12,22 @@
 //  Description : generic char traits class; wraps std::char_traits
 // ***************************************************************************
 
-#ifndef BCS_CHAR_TRAITS_HPP_071894GER
-#define BCS_CHAR_TRAITS_HPP_071894GER
+#ifndef BOOST_TEST_BCS_CHAR_TRAITS_HPP_071894GER
+#define BOOST_TEST_BCS_CHAR_TRAITS_HPP_071894GER
 
 // Boost
 #include <boost/config.hpp>
 #include <boost/detail/workaround.hpp>
+#include <boost/test/detail/config.hpp>
 #include <boost/type_traits/add_const.hpp>
 
 // STL
 #include <string>                       // std::char_traits
 #include <cstddef>                      // std::size_t
+
+#include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
 
 namespace boost {
 
@@ -138,10 +143,17 @@ public:
 
 } // namespace boost
 
+//____________________________________________________________________________//
+
+#include <boost/test/detail/enable_warnings.hpp>
+
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2005/02/20 08:27:09  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.2  2005/02/01 06:40:08  rogeeff
 //  copyright update
 //  old log entries removed
@@ -153,4 +165,4 @@ public:
 //
 // ***************************************************************************
 
-#endif // BCS_CHAR_TRAITS_HPP_071894GER
+#endif // BOOST_TEST_BCS_CHAR_TRAITS_HPP_071894GER

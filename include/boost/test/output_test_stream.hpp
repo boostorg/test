@@ -16,17 +16,16 @@
 #define BOOST_TEST_OUTPUT_TEST_STREAM_HPP_012705GER
 
 // Boost.Test
-#include <boost/test/detail/unit_test_config.hpp>
+#include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/utils/wrap_stringstream.hpp>
-
-// Boost
-#include <boost/config.hpp>  // compilers workarounds
-#include <boost/shared_ptr.hpp>
+#include <boost/test/predicate_result.hpp>
 
 // STL
 #include <cstddef>          // for std::size_t
 
 #include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
 
 // ************************************************************************** //
 // **************               output_test_stream             ************** //
@@ -40,8 +39,8 @@ namespace test_tools {
 
 class output_test_stream : public wrap_stringstream::wrapped_stream
 {
-    typedef boost::unit_test::const_string      const_string;
-    typedef predicate_result                    result_type;
+    typedef unit_test::const_string const_string;
+    typedef predicate_result        result_type;
 public:
     // Constructor
     explicit        output_test_stream( const_string    pattern_file_name = const_string(),
@@ -51,10 +50,10 @@ public:
     ~output_test_stream();
 
     // checking function
-    result_type     is_empty( bool flush_stream_ = true );
-    result_type     check_length( std::size_t length_, bool flush_stream_ = true );
-    result_type     is_equal( const_string arg_, bool flush_stream_ = true );
-    result_type     match_pattern( bool flush_stream_ = true );
+    result_type     is_empty( bool flush_stream = true );
+    result_type     check_length( std::size_t length, bool flush_stream = true );
+    result_type     is_equal( const_string arg_, bool flush_stream = true );
+    result_type     match_pattern( bool flush_stream = true );
 
     // explicit flush
     void            flush();
@@ -72,12 +71,17 @@ private:
 
 } // namespace boost
 
+//____________________________________________________________________________//
+
 #include <boost/test/detail/enable_warnings.hpp>
 
 // ***************************************************************************
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.3  2005/02/20 08:27:06  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.2  2005/02/01 06:40:06  rogeeff
 //  copyright update
 //  old log entries removed

@@ -12,12 +12,16 @@
 //  Description : defines algoirthms for comparing 2 floating point values
 // ***************************************************************************
 
-#ifndef BOOST_FLOATING_POINT_COMPARISON_HPP_071894GER
-#define BOOST_FLOATING_POINT_COMPARISON_HPP_071894GER
+#ifndef BOOST_TEST_FLOATING_POINT_COMPARISON_HPP_071894GER
+#define BOOST_TEST_FLOATING_POINT_COMPARISON_HPP_071894GER
 
 #include <boost/limits.hpp>  // for std::numeric_limits
 
 #include <boost/test/utils/class_properties.hpp>
+
+#include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
 
 namespace boost {
 
@@ -117,10 +121,17 @@ compute_tolerance( FPT percentage_tolerance )
 
 } // namespace boost
 
+//____________________________________________________________________________//
+
+#include <boost/test/detail/enable_warnings.hpp>
+
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.21  2005/02/20 08:27:05  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.20  2005/02/01 06:40:06  rogeeff
 //  copyright update
 //  old log entries removed

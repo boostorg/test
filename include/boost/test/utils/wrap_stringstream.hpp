@@ -16,6 +16,9 @@
 #ifndef BOOST_WRAP_STRINGSTREAM_HPP_071894GER
 #define BOOST_WRAP_STRINGSTREAM_HPP_071894GER
 
+// Boost.Test
+#include <boost/test/detail/config.hpp>
+
 // STL
 #ifdef BOOST_NO_STRINGSTREAM
 #include <strstream>        // for std::ostrstream
@@ -24,6 +27,8 @@
 #endif // BOOST_NO_STRINGSTREAM
 
 #include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
 
 namespace boost {
 
@@ -152,12 +157,17 @@ typedef basic_wrap_stringstream<wchar_t>    wrap_wstringstream;
 
 }  // namespace boost
 
+//____________________________________________________________________________//
+
 #include <boost/test/detail/enable_warnings.hpp>
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2005/02/20 08:27:08  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.5  2005/02/01 06:40:07  rogeeff
 //  copyright update
 //  old log entries removed

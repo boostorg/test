@@ -13,12 +13,10 @@ using boost::unit_test::test_suite;
 // Boost.MPL
 #include <boost/mpl/range_c.hpp>
 
-template<typename Number>
-void free_test_function( Number* = 0 ) {
+BOOST_TEST_CASE_TEMPLATE_FUNCTION( free_test_function, Number )
+{
     BOOST_CHECK_EQUAL( 2, (int const)Number::value );
 }
-
-BOOST_META_FUNC_TEST_CASE( free_test_function );
 
 test_suite*
 init_unit_test_suite( int, char* [] ) {
@@ -26,7 +24,7 @@ init_unit_test_suite( int, char* [] ) {
 
     typedef boost::mpl::range_c<int,0,10> numbers;
 
-    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( free_test_function, numbers ) );
+    test->add( BOOST_TEST_CASE_TEMPLATE( free_test_function, numbers ) );
 
     return test;
 }

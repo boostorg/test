@@ -26,7 +26,7 @@ using utf::const_string;
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_UNIT_TEST( test_default_compare )
+BOOST_AUTO_TEST_CASE( test_default_compare )
 {
     utf::fixed_mapping<const_string,int> test_mapping( 
         "Key1", 1,
@@ -54,7 +54,7 @@ BOOST_AUTO_UNIT_TEST( test_default_compare )
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_UNIT_TEST( test_custom_compare )
+BOOST_AUTO_TEST_CASE( test_custom_compare )
 {
     utf::fixed_mapping<const_string,int,utf::case_ins_less<char const> > test_mapping( 
         "Key1", 1,
@@ -82,6 +82,9 @@ BOOST_AUTO_UNIT_TEST( test_custom_compare )
 // History :
 //
 // $Log$
+// Revision 1.6  2005/02/20 08:28:34  rogeeff
+// This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 // Revision 1.5  2005/01/30 03:35:55  rogeeff
 // no message
 //

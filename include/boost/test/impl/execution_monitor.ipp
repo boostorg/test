@@ -21,10 +21,11 @@
 //  boost libraries.
 // ***************************************************************************
 
-#ifndef BOOST_EXECUTION_MONITOR_IPP_012205GER
-#define BOOST_EXECUTION_MONITOR_IPP_012205GER
+#ifndef BOOST_TEST_EXECUTION_MONITOR_IPP_012205GER
+#define BOOST_TEST_EXECUTION_MONITOR_IPP_012205GER
 
 // Boost.Test
+#include <boost/test/detail/config.hpp>
 #include <boost/test/execution_monitor.hpp>
 
 // Boost
@@ -85,20 +86,18 @@ namespace std { using ::strlen; using ::strncat; }
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
+//____________________________________________________________________________//
+
 namespace boost {
 
 namespace detail {
 
 using unit_test::const_string;
 
-//  boost::execution_monitor::execute() calls boost::detail::catch_signals() to
-//    execute user function with signals control
 //  boost::execution_monitor::execute() calls boost::detail::report_error(...) to
 //    report any caught exception and throw execution_exception
 
 const std::size_t REPORT_ERROR_BUFFER_SIZE = 512;
-
-static int  catch_signals( execution_monitor & exmon, bool catch_system_errors, int timeout ); //  timeout is in seconds. 0 implies none.
 
 static void report_error( 
     execution_exception::error_code   ec,
@@ -134,7 +133,7 @@ private:
 
 void BOOST_TEST_CALL_DECL ms_se_trans_func( unsigned int id, _EXCEPTION_POINTERS* exps );
 void BOOST_TEST_CALL_DECL ms_se_forward_func( unsigned int id, _EXCEPTION_POINTERS* exps );
-static void report_ms_se_error( unsigned int id );
+static void               report_ms_se_error( unsigned int id );
 
 //____________________________________________________________________________//
 
@@ -192,15 +191,7 @@ assert_reporting_function( int reportType, char* userMessage, int* retVal )
 // ************************************************************************** //
 
 int
-execution_monitor::run_function()
-{
-    return m_custom_translators ? (*m_custom_translators)( *this ) : function();
-}
-
-//____________________________________________________________________________//
-
-int
-execution_monitor::execute( bool catch_system_errors, int timeout )
+execution_monitor::execute( unit_test::callback0<int> const& F, bool catch_system_errors, int timeout )
 {
     using unit_test::const_string;
 
@@ -220,7 +211,7 @@ execution_monitor::execute( bool catch_system_errors, int timeout )
 #endif
 
     try {
-        return detail::catch_signals( *this, catch_system_errors, timeout );
+        return catch_signals( F, catch_system_errors, timeout );
     }
 
     //  Catch-clause reference arguments are a bit different from function
@@ -228,10 +219,12 @@ execution_monitor::execute( bool catch_system_errors, int timeout )
     //  required.  Programmers ask for const anyhow, so we supply it.  That's
     //  easier than answering questions about non-const usage.
 
+    catch( execution_aborted const& )
+      { return 0; }
     catch( char const* ex )
       { detail::report_error( execution_exception::cpp_exception_error, "C string: ", ex ); }
     catch( std::string const& ex )
-    { detail::report_error( execution_exception::cpp_exception_error, "std::string: ", ex.c_str() ); }
+      { detail::report_error( execution_exception::cpp_exception_error, "std::string: ", ex.c_str() ); }
 
     //  std:: exceptions
 
@@ -291,13 +284,13 @@ execution_monitor::execute( bool catch_system_errors, int timeout )
 
 //____________________________________________________________________________//
 
-namespace detail {
-
 #if defined(BOOST_SIGACTION_BASED_SIGNAL_HANDLING)
 
 // ************************************************************************** //
 // **************          boost::detail::signal_handler       ************** //
 // ************************************************************************** //
+
+namespace detail {
 
 class signal_handler {
 public:
@@ -402,20 +395,26 @@ signal_handler::~signal_handler()
 
 //____________________________________________________________________________//
 
+} // namespace detail
+
 // ************************************************************************** //
-// **************          boost::detail::catch_signals        ************** //
+// **************        execution_monitor::catch_signals      ************** //
 // ************************************************************************** //
 
-int catch_signals( execution_monitor & exmon, bool catch_system_errors, int timeout )
+int
+execution_monitor::catch_signals( unit_test::callback0<int> const& F, bool catch_system_errors, int timeout )
 {
-    signal_handler                  local_signal_handler( catch_system_errors, timeout );
-    int                             result = 0;
-    execution_exception::error_code ec     = execution_exception::no_error;
-    const_string                    em;
+    using namespace detail;
+    typedef execution_exception::error_code ec_type;
 
-    volatile int sigtype = sigsetjmp( signal_handler::jump_buffer(), 1 );
+    signal_handler local_signal_handler( catch_system_errors, timeout );
+    int            result = 0;
+    ec_type        ec     = execution_exception::no_error;
+    const_string   em;
+
+    volatile int   sigtype = sigsetjmp( signal_handler::jump_buffer(), 1 );
     if( sigtype == 0 ) {
-        result = exmon.run_function();
+        result = m_custom_translators ? (*m_custom_translators)( F ) : F();
     }
     else {
         switch(sigtype) {
@@ -446,9 +445,8 @@ int catch_signals( execution_monitor & exmon, bool catch_system_errors, int time
         }
     }
 
-    if( ec != execution_exception::no_error ) {
+    if( ec != execution_exception::no_error )
         throw unix_signal_exception( ec, em );
-    }
 
     return result;
 }  // unix catch_signals
@@ -458,29 +456,30 @@ int catch_signals( execution_monitor & exmon, bool catch_system_errors, int time
 #elif (defined(__BORLANDC__) && defined(_Windows) && !defined(BOOST_DISABLE_WIN32))
 
 // this works for Borland but not other Win32 compilers (which trap too many cases)
-int catch_signals( execution_monitor & exmon, bool catch_system_errors, int )
+int
+execution_monitor::catch_signals( unit_test::callback0<int> const& F, bool catch_system_errors, int )
 {
     int result;
 
     if( catch_system_errors ) {
-        __try { result = exmon.run_function(); }
+        __try { result = m_custom_translators ? (*m_custom_translators)( F ) : F(); }
 
-        __except (1)
-        {
-            throw ms_se_exception( GetExceptionCode() );
+        __except (1) {
+            throw detail::ms_se_exception( GetExceptionCode() );
         }
     }
-    else {
-        result = exmon.run_function();
-    }
+    else
+        result = m_custom_translators ? (*m_custom_translators)( F ) : F();
+
     return result;
 }
 
 #else  // default signal handler
 
-int catch_signals( execution_monitor& exmon, bool, int )
+int
+execution_monitor::catch_signals( unit_test::callback0<int> const& F, bool, int )
 {
-    return exmon.run_function();
+    return m_custom_translators ? (*m_custom_translators)( F ) : F();
 }
 
 #endif  // choose signal handler
@@ -490,6 +489,8 @@ int catch_signals( execution_monitor& exmon, bool, int )
 // ************************************************************************** //
 
 #if defined(BOOST_MS_STRCTURED_EXCEPTION_HANDLING)
+
+namespace detail {
 
 void BOOST_TEST_CALL_DECL
 ms_se_trans_func( unsigned int id, _EXCEPTION_POINTERS* /* exps */ )
@@ -573,11 +574,15 @@ report_ms_se_error( unsigned int id )
 
 //____________________________________________________________________________//
 
+} // namespace detail
+
 #endif  // Microsoft structured exception handling
 
 // ************************************************************************** //
 // **************                  report_error                ************** //
 // ************************************************************************** //
+
+namespace detail {
 
 static void report_error( execution_exception::error_code ec, const_string msg1, const_string msg2 )
 {
@@ -609,14 +614,19 @@ detect_memory_leaks()
 #endif // BOOST_MS_CRT_DEBUG_HOOKS
 }
 
+} // namespace boost
+
 //____________________________________________________________________________//
 
-} // namespace boost
+#include <boost/test/detail/enable_warnings.hpp>
 
 // ***************************************************************************
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.5  2005/02/20 08:27:07  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.4  2005/02/01 06:40:07  rogeeff
 //  copyright update
 //  old log entries removed
@@ -637,4 +647,4 @@ detect_memory_leaks()
 //
 // ***************************************************************************
 
-#endif // BOOST_EXECUTION_MONITOR_IPP_012205GER
+#endif // BOOST_TEST_EXECUTION_MONITOR_IPP_012205GER

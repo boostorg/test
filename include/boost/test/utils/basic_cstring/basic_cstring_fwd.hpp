@@ -13,8 +13,8 @@
 //                interface
 // ***************************************************************************
 
-#ifndef BASIC_CSTRING_FWD_HPP_071894GER
-#define BASIC_CSTRING_FWD_HPP_071894GER
+#ifndef BOOST_TEST_BASIC_CSTRING_FWD_HPP_071894GER
+#define BOOST_TEST_BASIC_CSTRING_FWD_HPP_071894GER
 
 #include <boost/detail/workaround.hpp>
 
@@ -40,6 +40,9 @@ typedef char const* const           c_literal_string;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2005/02/20 08:27:09  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.2  2005/02/01 06:40:08  rogeeff
 //  copyright update
 //  old log entries removed
@@ -51,5 +54,5 @@ typedef char const* const           c_literal_string;
 //
 // ***************************************************************************
 
-#endif // BASIC_CSTRING_FWD_HPP_071894GER
+#endif // BOOST_TEST_BASIC_CSTRING_FWD_HPP_071894GER
 

@@ -18,14 +18,18 @@
 // Boost.Test
 #include <boost/test/utils/class_properties.hpp>
 #include <boost/test/utils/wrap_stringstream.hpp>
+#include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 
 // Boost
 #include <boost/shared_ptr.hpp>
+#include <boost/detail/workaround.hpp>
 
 // STL
 #include <cstddef>          // for std::size_t
 
 #include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
 
 namespace boost {
 
@@ -36,7 +40,7 @@ namespace test_tools {
 // ************************************************************************** //
 
 class predicate_result {
-    typedef boost::unit_test::const_string      const_string;
+    typedef unit_test::const_string      const_string;
 public:
     // Constructor
     predicate_result( bool pv_ ) 
@@ -80,7 +84,7 @@ private:
     wrap_stringstream*  m_message;
 #else
     // Data members
-    boost::shared_ptr<wrap_stringstream> m_message;
+    shared_ptr<wrap_stringstream> m_message;
 #endif
 };
 
@@ -88,12 +92,17 @@ private:
 
 } // namespace boost
 
+//____________________________________________________________________________//
+
 #include <boost/test/detail/enable_warnings.hpp>
 
 // ***************************************************************************
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.5  2005/02/20 08:27:06  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.4  2005/02/03 20:39:12  rogeeff
 //  m_message zero init for sunpro
 //

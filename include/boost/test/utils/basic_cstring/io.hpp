@@ -12,8 +12,8 @@
 //  Description : basic_cstring i/o implementation
 // ***************************************************************************
 
-#ifndef  BASIC_CSTRING_IO_HPP_071894GER
-#define  BASIC_CSTRING_IO_HPP_071894GER
+#ifndef  BOOST_TEST_BASIC_CSTRING_IO_HPP_071894GER
+#define  BOOST_TEST_BASIC_CSTRING_IO_HPP_071894GER
 
 // Boost.Test
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
@@ -21,6 +21,8 @@
 // STL
 #include <iosfwd>
 #include <string>
+
+#include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
 
@@ -64,10 +66,17 @@ operator<<( std::basic_ostream<CharT1,Tr>& os, basic_cstring<CharT2> const& str 
 
 } // namespace boost
 
+//____________________________________________________________________________//
+
+#include <boost/test/detail/enable_warnings.hpp>
+
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2005/02/20 08:27:09  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.3  2005/02/01 06:40:08  rogeeff
 //  copyright update
 //  old log entries removed
@@ -82,4 +91,4 @@ operator<<( std::basic_ostream<CharT1,Tr>& os, basic_cstring<CharT2> const& str 
 //
 // ***************************************************************************
 
-#endif // BASIC_CSTRING_IO_HPP_071894GER
+#endif // BOOST_TEST_BASIC_CSTRING_IO_HPP_071894GER

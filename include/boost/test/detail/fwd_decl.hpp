@@ -18,14 +18,25 @@
 namespace boost {
 
 class  execution_monitor;
+class  execution_exception;
 
 namespace unit_test {
 
+class  test_unit;
 class  test_case;
+class  test_suite;
+
+class  test_tree_visitor;
+class  test_observer;
+
+// singletons
+class  unit_test_monitor_t;
+class  unit_test_log_t;
+
 class  unit_test_log_formatter;
 struct log_entry_data;
 struct log_checkpoint_data;
-class  unit_test_log_t;
+
 
 } // namespace unit_test
 
@@ -35,23 +46,8 @@ class  unit_test_log_t;
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.3  2005/02/01 08:59:28  rogeeff
-//  supplied_log_formatters split
-//  change formatters interface to simplify result interface
-//
-//  Revision 1.2  2005/02/01 06:40:06  rogeeff
-//  copyright update
-//  old log entries removed
-//  minor stilistic changes
-//  depricated tools removed
-//
-//  Revision 1.1  2005/01/18 08:27:30  rogeeff
-//  unit_test_log rework:
-//     eliminated need for ::instance()
-//     eliminated need for << end and ...END macro
-//     straitend interface between log and formatters
-//     change compiler like formatter name
-//     minimized unit_test_log interface and reworked to use explicit calls
+//  Revision 1.1  2005/02/20 08:27:06  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
 // ***************************************************************************
 

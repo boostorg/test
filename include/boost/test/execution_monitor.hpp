@@ -29,17 +29,22 @@
 //  design presented here.
 // ***************************************************************************
 
-#ifndef BOOST_EXECUTION_MONITOR_HPP_071894GER
-#define BOOST_EXECUTION_MONITOR_HPP_071894GER
+#ifndef BOOST_TEST_EXECUTION_MONITOR_HPP_071894GER
+#define BOOST_TEST_EXECUTION_MONITOR_HPP_071894GER
 
 // Boost.Test
-#include <boost/test/detail/unit_test_config.hpp>
-#include <boost/test/fwd_decl.hpp>
+#include <boost/test/detail/global_typedef.hpp>
+#include <boost/test/detail/fwd_decl.hpp>
+#include <boost/test/utils/callback.hpp>
 
 // Boost
 #include <boost/scoped_ptr.hpp>
 #include <boost/type.hpp>
 #include <boost/cstdlib.hpp>
+
+#include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
 
 namespace boost {
 
@@ -60,7 +65,7 @@ public:
     // Destructor
     virtual     ~translate_exception_base() {}
 
-    virtual int operator()( boost::execution_monitor& mon ) = 0;
+    virtual int operator()( unit_test::callback0<int> const& F ) = 0;
 
 protected:
     // Data members
@@ -126,10 +131,7 @@ private:
 
 class execution_monitor {
 public:
-    // Destructor
-    virtual ~execution_monitor()    {}
-    
-    int execute( bool catch_system_errors = true, int timeout_ = 0 );  // timeout is in seconds
+    int execute( unit_test::callback0<int> const& F, bool catch_system_errors = true, int timeout = 0 ); 
     //  The catch_system_errors parameter specifies whether the monitor should 
     //  try to catch system errors/exceptions that would cause program to crash 
     //  in regular case
@@ -138,28 +140,24 @@ public:
     //
     //  Returns:  Value returned by function().
     //
-    //  Effects:  Calls run_function() inside a try/catch block which also may
+    //  Effects:  Calls executes supplied function F inside a try/catch block which also may
     //  include other unspecified platform dependent error detection code.
     //
     //  Throws: execution_exception on an uncaught C++ exception,
     //  a hardware or software signal, trap, or other exception.
     //
-    //  Note: execute() doesn't consider it an error for function() to
-    //  return a non-zero value.
+    //  Note: execute() doesn't consider it an error for F to return a non-zero value.
     
-    virtual int function() = 0;
-    //  user supplied function called by run_function()
-    
-    int         run_function();
-    // call function() and translate user exceptions with translators registered
-
+    // register custom (user supplied) exception translator
     template<typename Exception, typename ExceptionTranslator>
     void        register_exception_translator( ExceptionTranslator const& tr, boost::type<Exception>* = 0 );
 
 private:
+    // implementation helpers
+    int         catch_signals( unit_test::callback0<int> const& F, bool catch_system_errors, int timeout );
+
     // Data members
     boost::scoped_ptr<detail::translate_exception_base> m_custom_translators;
-
 }; // execution_monitor
 
 namespace detail {
@@ -176,13 +174,11 @@ public:
     explicit    translate_exception( ExceptionTranslator const& tr, base_ptr& next )
     : translate_exception_base( next ), m_translator( tr ) {}
 
-    virtual int operator()( boost::execution_monitor& mon )
+    int operator()( unit_test::callback0<int> const& F )
     {
         try {
-            return m_next ? (*m_next)( mon ) : mon.function();
-        }
-        catch( Exception const& e )
-        {
+            return m_next ? (*m_next)( F ) : F();
+        } catch( Exception const& e ) {
             m_translator( e );
             return boost::exit_exception_failure;
         }
@@ -210,12 +206,25 @@ execution_monitor::register_exception_translator( ExceptionTranslator const& tr,
 // turn on system memory leak detection
 void    detect_memory_leaks();
 
+// ************************************************************************** //
+// **************               execution_aborted              ************** //
+// ************************************************************************** //
+
+struct execution_aborted {};
+
 }  // namespace boost
+
+//____________________________________________________________________________//
+
+#include <boost/test/detail/enable_warnings.hpp>
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.22  2005/02/20 08:27:05  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.21  2005/02/01 08:59:28  rogeeff
 //  supplied_log_formatters split
 //  change formatters interface to simplify result interface

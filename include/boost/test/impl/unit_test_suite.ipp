@@ -1,6 +1,6 @@
-//  (C) Copyright Gennadiy Rozental 2001-2005.
+//  (C) Copyright Gennadiy Rozental 2005.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -9,197 +9,79 @@
 //
 //  Version     : $Revision$
 //
-//  Description : privide core implementation for Unit Test Framework. 
+//  Description : privide core implementation for Unit Test Framework.
 //  Extensions could be provided in separate files
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_SUITE_IPP_012205GER
-#define BOOST_UNIT_TEST_SUITE_IPP_012205GER
+#ifndef BOOST_TEST_UNIT_TEST_SUITE_IPP_012205GER
+#define BOOST_TEST_UNIT_TEST_SUITE_IPP_012205GER
 
 // Boost.Test
 #include <boost/test/unit_test_suite.hpp>
-#include <boost/test/unit_test_log.hpp>
-#include <boost/test/unit_test_result.hpp>
-#include <boost/test/utils/wrap_stringstream.hpp>
+#include <boost/test/framework.hpp>
+#include <boost/test/utils/foreach.hpp>
+#include <boost/test/results_collector.hpp>
 
 // Boost
-#include <boost/mem_fn.hpp>
 #include <boost/timer.hpp>
 
 // STL
-#include <list>
 #include <algorithm>
 
 #include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
 
 namespace boost {
 
 namespace unit_test {
 
 // ************************************************************************** //
-// **************            test_case_scope_tracker           ************** //
+// **************                   test_unit                  ************** //
 // ************************************************************************** //
 
-struct test_case_scope_tracker {
-    explicit            test_case_scope_tracker( test_case const& tc ) 
-    : m_tc( tc )
-    {
-        unit_test_log.test_case_enter( m_tc );
-        unit_test_result::test_case_enter( m_tc.p_name.get(), m_tc.p_expected_failures );
-    }
-    ~test_case_scope_tracker()
-    {
-        unit_test_log.test_case_exit( m_tc, (long)(m_timer.elapsed() * 1e6) );
-        unit_test_result::test_case_exit();
-    }
-
-private:
-    test_case const&    m_tc;
-    boost::timer        m_timer;
-};
-
-// ************************************************************************** //
-// **************                   test_case                  ************** //
-// ************************************************************************** //
-
-ut_detail::unit_test_monitor the_monitor;
-
-typedef unit_test_result const* unit_test_result_cptr;
-
-struct test_case::Impl {
-    Impl( bool monitor_run_ ) : m_monitor_run( monitor_run_ ), m_results_set( unit_test_result_cptr() ) {}
-
-    bool                        m_monitor_run;          // true - unit_test_monitor will be user to monitor running
-                                                        // of implementation function
-    std::list<test_case const*> m_dependencies_list;    // list of test cases this test case depends on. We won't run it until they pass
-    unit_test_result_cptr       m_results_set;          // results set instance reference for this test case
-    
-    static bool                 s_abort_testing;        // used to flag critical error and try gracefully stop testing
-
-    bool                        check_dependencies();
-};
-
-bool test_case::Impl::s_abort_testing = false;
-
-//____________________________________________________________________________//
-
-
-inline bool
-test_case::Impl::check_dependencies()
+test_unit::test_unit( const_string name, test_unit_type t )
+: p_name( std::string( name.begin(), name.size() ) )
+, p_type( t )
+, p_type_name( t == tut_case ? "case" : "suite" )
+, p_id( INV_TEST_UNIT_ID )
 {
-    return std::find_if( m_dependencies_list.begin(), 
-                         m_dependencies_list.end(), 
-                         std::not1( boost::mem_fn( &test_case::has_passed ) ) ) == m_dependencies_list.end();
-}
-
-//____________________________________________________________________________//
-
-test_case::test_case( const_string name, bool type, counter_t stages_amount, bool monitor_run )
-: p_timeout( 0 )
-, p_expected_failures( 0 )
-, p_type( type )
-, p_name( std::string( name.begin(), name.end() ) )
-, p_compound_stage( false )
-, p_stages_amount( stages_amount )
-, m_pimpl( new Impl( monitor_run ) )
-{
-}
-
-//____________________________________________________________________________//
-
-counter_t
-test_case::size() const
-{
-    return 1;
 }
 
 //____________________________________________________________________________//
 
 void
-test_case::depends_on( test_case const* rhs )
+test_unit::depends_on( test_unit* tu )
 {
-    m_pimpl->m_dependencies_list.push_back( rhs );
+    m_dependencies.push_back( tu->p_id );
 }
 
 //____________________________________________________________________________//
 
 bool
-test_case::has_passed() const
+test_unit::check_dependencies() const
 {
-    return m_pimpl->m_results_set != unit_test_result_cptr() && m_pimpl->m_results_set->has_passed();
+    BOOST_TEST_FOREACH( test_unit_id, tu_id, m_dependencies ) {
+        if( !unit_test::results_collector.results( tu_id ).passed() )
+            return false;
+    }
+
+    return true;
 }
 
 //____________________________________________________________________________//
 
-void
-test_case::run()
+// ************************************************************************** //
+// **************                   test_case                  ************** //
+// ************************************************************************** //
+
+test_case::test_case( const_string name, callback0<> const& test_func )
+: test_unit( name, (test_unit_type)type )
+, m_test_func( test_func )
 {
-    using ut_detail::unit_test_monitor;
-  
-    // 0. Check if we allowed to run this test case
-    if( !m_pimpl->check_dependencies() )
-        return;
+    0; // !! weirdest MSVC BUG; try to remove this statement; looks like it eats first token of next statement
 
-    test_case_scope_tracker scope_tracker( *this );
-
-    m_pimpl->s_abort_testing = false;
-
-    // 1. Init test results
-    m_pimpl->m_results_set = &unit_test_result::instance();
-
-    // 2. Initialize test case
-    if( m_pimpl->m_monitor_run ) {
-        error_level_type setup_result =
-            the_monitor.execute_and_translate( this, &test_case::do_init, p_timeout );
-
-        if( setup_result != unit_test_monitor::test_ok ) {
-            m_pimpl->s_abort_testing  = unit_test_monitor::is_critical_error( setup_result );
-
-            BOOST_UT_LOG_ENTRY( log_fatal_errors ) << "Test case setup has failed";
-
-            return;
-        }
-    }
-    else {
-        do_init();
-    }
-
-    // 3. Run test case (all stages)
-    for( counter_t i=0; i != p_stages_amount; ++i ) {
-        p_compound_stage.value = false; // could be set by do_run to mark compound stage;
-                                        // than no need to report progress here
-
-        if( m_pimpl->m_monitor_run ) {
-            error_level_type run_result =
-                the_monitor.execute_and_translate( this, &test_case::do_run, p_timeout );
-
-            if( unit_test_monitor::is_critical_error( run_result ) ) {
-                m_pimpl->s_abort_testing = true;
-
-                BOOST_UT_LOG_ENTRY( log_fatal_errors ) << "Testing aborted";
-            }
-
-            if( m_pimpl->s_abort_testing )
-                return;
-        }
-        else {
-            do_run();
-        }
-
-        if( p_stages_amount != 1 && !p_compound_stage ) // compound test
-            unit_test_log.log_progress();
-    }
-
-    // 3. Finalize test case
-    if( m_pimpl->m_monitor_run ) {
-        error_level_type teardown_result =
-            the_monitor.execute_and_translate( this, &test_case::do_destroy, p_timeout );
-        
-        m_pimpl->s_abort_testing = unit_test_monitor::is_critical_error( teardown_result );
-    }
-    else {
-        do_destroy();
-    }
+    framework::register_test_unit( this );
 }
 
 //____________________________________________________________________________//
@@ -208,74 +90,83 @@ test_case::run()
 // **************                  test_suite                  ************** //
 // ************************************************************************** //
 
-struct test_suite::Impl {
-    std::list<test_case*>           m_test_cases;
-    std::list<test_case*>::iterator m_curr_test_case;
-    counter_t               m_cumulative_size;
-};
-
 //____________________________________________________________________________//
 
 test_suite::test_suite( const_string name )
-: test_case( name, false, 0, false ), m_pimpl( new Impl )
+: test_unit( name, (test_unit_type)type )
 {
-    m_pimpl->m_cumulative_size = 0;
+    framework::register_test_unit( this );
 }
 
 //____________________________________________________________________________//
 
-static void safe_delete_test_case( test_case* ptr ) { boost::checked_delete<test_case>( ptr ); }
-
-test_suite::~test_suite()
-{   
-    std::for_each( m_pimpl->m_test_cases.begin(), m_pimpl->m_test_cases.end(), &safe_delete_test_case );
-}
-
-//____________________________________________________________________________//
+// !! need to prevent modifing test unit once it is added to tree
 
 void
-test_suite::add( test_case* tc, counter_t exp_fail, int timeout )
+test_suite::add( test_unit* tu, counter_t expected_failures, unsigned timeout )
 {
-    if( exp_fail != 0 ) {
-        tc->p_expected_failures.value = exp_fail;
-    }
+    if( expected_failures != 0 )
+        tu->p_expected_failures.value = expected_failures;
 
-    p_expected_failures.value += tc->p_expected_failures;
+    p_expected_failures.value += tu->p_expected_failures;
 
     if( timeout != 0 )
-        tc->p_timeout.value = timeout;
+        tu->p_timeout.value = timeout;
 
-    m_pimpl->m_test_cases.push_back( tc );
-    m_pimpl->m_cumulative_size += tc->size();
-
-    p_stages_amount.value = p_stages_amount + 1;
-}
-
-//____________________________________________________________________________//
-
-counter_t
-test_suite::size() const
-{
-    return m_pimpl->m_cumulative_size;
+    m_members.push_back( tu->p_id );
 }
 
 //____________________________________________________________________________//
 
 void
-test_suite::do_init()
+test_suite::add( test_unit_generator const& gen, unsigned timeout )
 {
-    m_pimpl->m_curr_test_case = m_pimpl->m_test_cases.begin();
+    test_unit* tu;
+    while( tu = gen.next() )
+        add( tu, 0, timeout );
+}
+
+//____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************               traverse_test_tree             ************** //
+// ************************************************************************** //
+
+void
+traverse_test_tree( test_case const& tc, test_tree_visitor& V )
+{
+    V.visit( tc );
+}
+
+//____________________________________________________________________________//
+
+void    traverse_test_tree( test_suite const& suite, test_tree_visitor& V )
+{
+    if( !V.test_suite_start( suite ) )
+        return;
+
+    try {
+        // !!!! random
+        BOOST_TEST_FOREACH( test_unit_id, id, suite.m_members )
+            traverse_test_tree( id, V );
+    } catch( test_aborted const& ) {
+        V.test_suite_finish( suite );
+
+        throw;
+    }
+
+    V.test_suite_finish( suite );
 }
 
 //____________________________________________________________________________//
 
 void
-test_suite::do_run()
+traverse_test_tree( test_unit_id id, test_tree_visitor& V )
 {
-    if( (*m_pimpl->m_curr_test_case)->size() > 1 )
-        p_compound_stage.value = true;
-    (*m_pimpl->m_curr_test_case)->run();
-    ++m_pimpl->m_curr_test_case;
+    if( test_id_2_unit_type( id ) == tut_case )
+        traverse_test_tree( framework::get<test_case>( id ), V );
+    else
+        traverse_test_tree( framework::get<test_suite>( id ), V );
 }
 
 //____________________________________________________________________________//
@@ -302,36 +193,17 @@ normalize_test_case_name( const_string name )
 
 } // namespace boost
 
+//____________________________________________________________________________//
+
 #include <boost/test/detail/enable_warnings.hpp>
 
 // ***************************************************************************
 //  Revision History :
-//  
+//
 //  $Log$
-//  Revision 1.4  2005/02/01 06:40:07  rogeeff
-//  copyright update
-//  old log entries removed
-//  minor stilistic changes
-//  depricated tools removed
-//
-//  Revision 1.3  2005/01/30 01:52:47  rogeeff
-//  counter type renamed
-//  log interface functions shortened
-//
-//  Revision 1.1  2005/01/22 19:22:13  rogeeff
-//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
-//
-//  Revision 1.19  2005/01/21 07:26:41  rogeeff
-//  xml printing helpers reworked to employ generic custom manipulators
-//
-//  Revision 1.17  2005/01/18 08:30:08  rogeeff
-//  unit_test_log rework:
-//     eliminated need for ::instance()
-//     eliminated need for << end and ...END macro
-//     straitend interface between log and formatters
-//     change compiler like formatter name
-//     minimized unit_test_log interface and reworked to use explicit calls
+//  Revision 1.5  2005/02/20 08:27:07  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_SUITE_IPP_012205GER
+#endif // BOOST_TEST_UNIT_TEST_SUITE_IPP_012205GER

@@ -34,8 +34,7 @@ enum            log_level {
     log_system_errors        = 6, // including timeouts, signals, traps
     log_fatal_errors         = 7, // including unit test macros or
                                   // fatal system errors
-    log_progress_only        = 8, // only unit test progress to be reported
-    log_nothing              = 9
+    log_nothing              = 8
 };
 
 } // namespace unit_test
@@ -45,6 +44,9 @@ enum            log_level {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/02/20 08:27:06  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.1  2005/01/18 08:27:30  rogeeff
 //  unit_test_log rework:
 //     eliminated need for ::instance()

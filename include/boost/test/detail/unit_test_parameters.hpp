@@ -12,52 +12,57 @@
 //  Description : storage for unit test framework parameters information
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_PARAMETERS_HPP_071894GER
-#define BOOST_UNIT_TEST_PARAMETERS_HPP_071894GER
+#ifndef BOOST_TEST_UNIT_TEST_PARAMETERS_HPP_071894GER
+#define BOOST_TEST_UNIT_TEST_PARAMETERS_HPP_071894GER
 
-#include <boost/test/detail/unit_test_config.hpp>
+#include <boost/test/detail/global_typedef.hpp>
+#include <boost/test/detail/log_level.hpp>
+
+#include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
 
 namespace boost {
 
 namespace unit_test {
 
-// framework parameters and there corresponding command-line arguments
-static literal_string LOG_LEVEL         = "BOOST_TEST_LOG_LEVEL";               // --log_level
-static literal_string NO_RESULT_CODE    = "BOOST_TEST_RESULT_CODE";             // --result_code
-static literal_string REPORT_LEVEL      = "BOOST_TEST_REPORT_LEVEL";            // --report_level
-static literal_string TESTS_TO_RUN      = "BOOST_TESTS_TO_RUN";                 // --run_test
-static literal_string SAVE_TEST_PATTERN = "BOOST_TEST_SAVE_PATTERN";            // --save_pattern
-static literal_string BUILD_INFO        = "BOOST_TEST_BUILD_INFO";              // --build_info
-static literal_string CATCH_SYS_ERRORS  = "BOOST_TEST_CATCH_SYSTEM_ERRORS";     // --catch_system_errors
-static literal_string REPORT_FORMAT     = "BOOST_TEST_REPORT_FORMAT";           // --report_format
-static literal_string LOG_FORMAT        = "BOOST_TEST_LOG_FORMAT";              // --log_format
-static literal_string OUTPUT_FORMAT     = "BOOST_TEST_OUTPUT_FORMAT";           // --output_format
-static literal_string DETECT_MEM_LEAKS  = "BOOST_TEST_DETECT_MEMORY_LEAKS";     // --detect_memory_leaks
+// ************************************************************************** //
+// **************                 runtime_config               ************** //
+// ************************************************************************** //
 
-enum report_level                            { CONFIRMATION_REPORT, SHORT_REPORT, DETAILED_REPORT, NO_REPORT, UNDEF_REPORT };
-static literal_string report_level_names[] = { "confirm"          , "short"     , "detailed"     , "no"     };
+namespace runtime_config {
 
-enum output_format { HRF /* human readable format */, XML /* XML */ };
+void                    init( int* argc, char** argv );
 
-const_string retrieve_framework_parameter( const_string parameter_name_, int* argc_, char** argv_ );
+unit_test::log_level    log_level();
+bool                    no_result_code();
+unit_test::report_level report_level();
+const_string            test_to_run();
+bool                    save_pattern();
+bool                    show_build_info();
+bool                    show_progress();
+bool                    catch_sys_errors();
+output_format           report_format();
+output_format           log_format();
+bool                    detect_memory_leaks();
+
+} // namespace runtime_config
 
 } // namespace unit_test
 
 } // namespace boost
 
+//____________________________________________________________________________//
+
+#include <boost/test/detail/enable_warnings.hpp>
+
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.18  2005/02/01 06:40:07  rogeeff
-//  copyright update
-//  old log entries removed
-//  minor stilistic changes
-//  depricated tools removed
-//
-//  Revision 1.17  2005/01/31 05:59:36  rogeeff
-//  detect_memory_leaks feature added
+//  Revision 1.19  2005/02/20 08:27:06  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_CONFIG_HPP_071894GER
+#endif // BOOST_TEST_UNIT_TEST_PARAMETERS_HPP_071894GER

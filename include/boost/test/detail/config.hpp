@@ -9,14 +9,14 @@
 //
 //  Version     : $Revision$
 //
-//  Description : contains workarounds and works as a central place for configurable types
+//  Description : as a central place for global configuration switches
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_CONFIG_HPP_071894GER
-#define BOOST_UNIT_TEST_CONFIG_HPP_071894GER
+#ifndef BOOST_TEST_CONFIG_HPP_071894GER
+#define BOOST_TEST_CONFIG_HPP_071894GER
 
 // Boost
-#include <boost/config.hpp> // compilers workarounds and std::ptrdiff_t
+#include <boost/config.hpp> // compilers workarounds
 #include <boost/detail/workaround.hpp>
 
 #if BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
@@ -25,11 +25,15 @@
 #define BOOST_STANDARD_IOSTREAMS
 #endif
 
+//____________________________________________________________________________//
+
 #if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x570)) || \
     BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600))     || \
     (defined __sgi && BOOST_WORKAROUND(_COMPILER_VERSION, BOOST_TESTED_AT(730)))
 #define BOOST_TEST_SHIFTED_LINE
 #endif
+
+//____________________________________________________________________________//
 
 #if defined(BOOST_MSVC) || (defined(__BORLANDC__) && !defined(BOOST_DISABLE_WIN32))
 #   define BOOST_TEST_CALL_DECL __cdecl
@@ -37,16 +41,13 @@
 #   define BOOST_TEST_CALL_DECL /**/
 #endif
 
-// Boost.Test
-#include <boost/test/utils/basic_cstring/basic_cstring.hpp>
-#include <boost/test/utils/basic_cstring/io.hpp>
-#define BOOST_TEST_STRING_LITERAL( s ) boost::unit_test::literal_string( s, sizeof( s ) - 1 )
-#define BOOST_TEST_STRINGIZE( s ) BOOST_TEST_STRING_LITERAL( BOOST_STRINGIZE( s ) )
-#define BOOST_TEST_EMPTY_STRING BOOST_TEST_STRING_LITERAL( "" )
+//____________________________________________________________________________//
 
 #if defined(BOOST_HAS_SIGACTION)
 #define BOOST_TEST_SUPPORT_TIMEOUT
 #endif
+
+//____________________________________________________________________________//
 
 #if BOOST_WORKAROUND(__BORLANDC__, <= 0x570)           || \
     BOOST_WORKAROUND( __COMO__, <= 0x433 )             || \
@@ -58,46 +59,19 @@
 #define BOOST_TEST_NO_PROTECTED_USING
 #endif
 
-// STL
-#include <iterator>     // for std::distance
-#include <cstddef>      // for std::ptrdiff_t
+//____________________________________________________________________________//
 
-namespace boost {
+#define BOOST_TEST_PROTECTED_VIRTUAL virtual
 
-namespace unit_test {
-
-typedef unsigned long   counter_t;
-
-namespace ut_detail {
-
-#ifdef BOOST_NO_STD_DISTANCE
-template <class T>
-std::ptrdiff_t distance( T const& x_, T const& y_ )
-{ 
-    std::ptrdiff_t res = 0;
-
-    std::distance( x_, y_, res );
-
-    return res;
-}
-#else
-using std::distance;
-#endif
-
-#define BOOST_TEST_L( s ) const_string( s, sizeof(s) )
-
-} // namespace ut_detail
-
-} // namespace unit_test
-
-namespace unit_test_framework = unit_test;
-
-} // namespace boost
+//____________________________________________________________________________//
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.1  2005/02/20 08:27:06  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.28  2005/02/01 06:40:07  rogeeff
 //  copyright update
 //  old log entries removed
@@ -119,4 +93,4 @@ namespace unit_test_framework = unit_test;
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_CONFIG_HPP_071894GER
+#endif // BOOST_TEST_CONFIG_HPP_071894GER

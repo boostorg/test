@@ -22,6 +22,10 @@
 
 #include <boost/utility/base_from_member.hpp>
 
+#include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
+
 namespace boost {
 
 // ************************************************************************** //
@@ -89,10 +93,17 @@ typedef basic_onullstream<wchar_t>  wonullstream;
 
 }  // namespace boost
 
+//____________________________________________________________________________//
+
+#include <boost/test/detail/enable_warnings.hpp>
+
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2005/02/20 08:27:08  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.3  2005/02/01 06:40:07  rogeeff
 //  copyright update
 //  old log entries removed

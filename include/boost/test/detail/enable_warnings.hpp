@@ -17,6 +17,8 @@
 # pragma warning(default: 4512) // assignment operator could not be generated
 # pragma warning(default: 4100) // unreferenced formal parameter 
 # pragma warning(default: 4996) // <symbol> was declared deprecated 
+# pragma warning(default: 4355) // 'this' : used in base member initializer list
+# pragma warning(default: 4706) // assignment within conditional expression
 # pragma warning(pop)
 #endif
 
@@ -24,6 +26,9 @@
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2005/02/20 08:27:06  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.3  2005/02/01 06:40:07  rogeeff
 //  copyright update
 //  old log entries removed

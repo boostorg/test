@@ -1,7 +1,7 @@
 //  (C) Copyright Gennadiy Rozental 2001-2004.
 //  (C) Copyright Beman Dawes 2001.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 
@@ -17,242 +17,172 @@
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
-#include <boost/test/unit_test_result.hpp>
 #include <boost/test/output_test_stream.hpp>
 #include <boost/test/unit_test_log.hpp>
+#include <boost/test/framework.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/test/output/compiler_log_formatter.hpp>
+#include <boost/test/results_reporter.hpp>
 using namespace boost::unit_test;
 using namespace boost::test_tools;
 
 // STL
 #include <iostream>
+#include <stdexcept>
 
-struct this_test_log_formatter : public boost::unit_test::output::compiler_log_formatter 
+namespace {
+
+struct this_test_log_formatter : public boost::unit_test::output::compiler_log_formatter
 {
     void    print_prefix( std::ostream& output, boost::unit_test::const_string, std::size_t line )
     {
         output << line << ": ";
     }
 
-    void test_case_exit( std::ostream& output, test_case const& tc, long testing_time_in_mks )
+    void test_unit_finish( std::ostream& output, test_unit const& tu, unsigned long elapsed )
     {
-        output << "Leaving test " << ( tc.p_type ? "case" : "suite" ) << " \"" << tc.p_name << "\"";
+        output << "Leaving test " << tu.p_type_name << " \"" << tu.p_name << "\"" << std::endl;
     }
 
 };
 
 //____________________________________________________________________________//
 
-namespace {
-    enum error_type_enum {
-        et_begin,
-        et_none = et_begin,
-        et_user,
-        et_cpp_exception,
-        et_system,
-        et_fatal_user,
-        et_fatal_system,
-        et_end
-    } error_type;
+char const* log_level_name[] = {
+    "log_successful_tests",
+    "log_test_suites",
+    "log_messages",
+    "log_warnings",
+    "log_all_errors",
+    "log_cpp_exception_errors",
+    "log_system_errors",
+    "log_fatal_errors",
+    "log_nothing"
+};
 
-    char const* error_type_name[] = { "no error", "user error", "cpp exception", " system error", "fatal user error", "fatal system error" };
+enum error_type_enum {
+    et_begin,
+    et_none = et_begin,
+    et_message,
+    et_warning,
+    et_user,
+    et_cpp_exception,
+#ifdef __GNUC__
+    et_fatal_user,
+#else
+    et_system,
+    et_fatal_user,
+    et_fatal_system,
+#endif
+    et_end
+} error_type;
 
-    int divide_by_zero = 0;
+char const* error_type_name[] = {
+    "no error", "user message", "user warning",
+    "user non-fatal error", "cpp exception", " system error",
+    "user fatal error", "system fatal error"
+};
 
-    // will cause an error coresponding to the current error_type;
-    void error_on_demand()
-    {
-        switch( error_type ) {
-        case et_none:
-            BOOST_MESSAGE( "error_on_demand() BOOST_MESSAGE" );
-            break;
+int divide_by_zero = 0;
 
-        case et_user:
-            unit_test_result::instance().increase_expected_failures();
-            BOOST_ERROR( "error_on_demand() BOOST_ERROR" );
-            break;
+void error_on_demand()
+{
+    switch( error_type ) {
+    case et_none:
+        BOOST_CHECK_MESSAGE( divide_by_zero == 0, "no error" );
+        break;
 
-        case et_fatal_user:
-            unit_test_result::instance().increase_expected_failures();
-            BOOST_FAIL( "error_on_demand() BOOST_FAIL" );
+    case et_message:
+        BOOST_MESSAGE( "message" );
+        break;
+
+    case et_warning:
+        BOOST_WARN_MESSAGE( divide_by_zero != 0, "warning" );
+        break;
+
+    case et_user:
+        BOOST_ERROR( "non-fatal error" );
+        break;
+
+    case et_fatal_user:
+        BOOST_FAIL( "fatal error" );
+
+        BOOST_ERROR( "Should never reach this code!" );
+        break;
+
+    case et_cpp_exception:
+        BOOST_CHECKPOINT( "error_on_demand() throw runtime_error" );
+        throw std::runtime_error( "test std::runtime error what() message" );
+
+#ifndef __GNUC__
+    case et_system:
+        BOOST_CHECKPOINT( "error_on_demand() divide by zero" );
+        divide_by_zero = 1 / divide_by_zero;
+        break;
+
+    case et_fatal_system:
+        BOOST_CHECKPOINT( "write to an invalid address" );
+        {
+            int* p = 0;
+            *p = 0;
 
             BOOST_ERROR( "Should never reach this code!" );
-            break;
-
-        case et_cpp_exception:
-            BOOST_CHECKPOINT( "error_on_demand() throw runtime_error" );
-            throw std::runtime_error( "test std::runtime error what() message" );
-
-        case et_system:
-            BOOST_CHECKPOINT( "error_on_demand() divide by zero" );
-            divide_by_zero = 1 / divide_by_zero;
-            break;
-
-        case et_fatal_system:
-            BOOST_CHECKPOINT( "error_on_demand() write to an invalid address" );
-            {
-                int* p = 0;
-                *p = 0;
-
-                BOOST_ERROR( "Should never reach this code!" );
-            }
-            break;
-
-        default:
-            BOOST_ERROR( "Should never reach this code!" );
         }
-        return;
+        break;
+#endif
+    default:
+        BOOST_ERROR( "Should never reach this code!" );
     }
+    return;
+}
 
-    enum test_case_type_enum {
-        tct_begin,
-        tct_free_function = tct_begin,
-        tct_user_test_case,
-        tct_param_free_function,
-        tct_param_user_test_case,
-        tct_end
-    } test_case_type;
-
-    char const* test_case_type_name[] = { "free function",
-                                          "user test case",
-                                          "parameterized free function",
-                                          "parameterized user test case"
-    };
-
-    //  simulated user classes to be tested  --------------------------------//
-
-    // user test cases   ----------------------------------------------------//
-
-    struct bad_test
-    {
-        void test()
-        {
-            BOOST_MESSAGE( "(user test case)" );
-            error_on_demand();
-        }
-        void test_param( int )
-        {
-            BOOST_MESSAGE( "(parameterized user test case)" );
-            error_on_demand();
-        }
-    };
-
-    //  free function tests  ---------------------------------------------------//
-
-    void bad_function()
-    {
-        BOOST_MESSAGE( "(free function)" );
-        error_on_demand();
-    }
-
-    void bad_function_param( int )
-    {
-        BOOST_MESSAGE( "(parameterized free function)" );
-        error_on_demand();
-    }
-
-    int params[] = { 0 };
-
-}  // unnamed namespace
+}  // local namespace
 
 //____________________________________________________________________________//
 
 int
 test_main( int argc, char * argv[] )
 {
-
-    bool match_or_save = retrieve_framework_parameter( SAVE_TEST_PATTERN, &argc, argv ) != "yes";
-
 #define PATTERN_FILE_NAME "errors_handling_test.pattern"
-
-    std::string pattern_file_name( argc == 1 
-                                     ? (match_or_save ? "./test_files/" PATTERN_FILE_NAME : PATTERN_FILE_NAME)
-                                     : argv[1] );
+    std::string pattern_file_name(
+        argc == 1 ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./test_files/" PATTERN_FILE_NAME )
+                  : argv[1] );
 
 #ifdef __GNUC__
-    pattern_file_name.append( "2" );
+    pattern_file_name += "2";
 #endif
 
-    output_test_stream output( pattern_file_name, match_or_save );
+    output_test_stream test_output( pattern_file_name, !runtime_config::save_pattern() );
 
-    unit_test_log.set_stream( output );
-    unit_test_log.set_formatter( new this_test_log_formatter );
-
-    boost::shared_ptr<bad_test> bad_test_instance( new bad_test );
+    test_case* test = BOOST_TEST_CASE( &error_on_demand );
 
     // for each log level
     for( log_level level = log_successful_tests;
-         level           <= log_nothing;
+         level          <= log_nothing;
          level           = static_cast<log_level>(level+1) )
     {
-        unit_test_log.set_threshold_level( level );
         // for each error type
         for( error_type = et_begin;
              error_type != et_end;
              error_type = static_cast<error_type_enum>(error_type+1) )
         {
-#ifdef __GNUC__
-            if( error_type == et_system || error_type == et_fatal_system )
-                continue;
-#endif
-            // for each error location
-            for( test_case_type = tct_begin;
-                 test_case_type != tct_end;
-                 test_case_type = static_cast<test_case_type_enum>(test_case_type+1) )
-            {
-                output << "\n===========================\n\n"
-                       << "log level: "       << int(level) << ';'
-                       << " error type: "     << error_type_name[error_type] << ';'
-                       << " test case type: " << test_case_type_name[test_case_type] << ';'<< std::endl;
+            test_output << "\n===========================\n"
+                        << "log level: "       << log_level_name[level] << ';'
+                        << " error type: "     << error_type_name[error_type] << ";\n" << std::endl;
 
-                // In typical user code, multiple test cases would be added to a single
-                // test suite.  But for testing the unit test code itself, it is easier
-                // to isolate each case in its own test suite.
-                test_suite test( "Errors handling test" );
-                switch( test_case_type ) {
-                case tct_free_function:
-                    test.add( BOOST_TEST_CASE( &bad_function ) );
-                    break;
-                case tct_user_test_case:
-                    test.add( BOOST_CLASS_TEST_CASE( &bad_test::test, bad_test_instance ) );
-                    break;
-                case tct_param_free_function:
-// Borland bug workaround
-#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x570))
-                    test.add( boost::unit_test::create_test_case<int*,int>( &bad_function_param, std::string( "bad_function_param" ), (int*)params, params+1 ) );
-#else
-                    test.add( BOOST_PARAM_TEST_CASE( &bad_function_param, (int*)params, params+1 ) );
-#endif
-                    break;
-                case tct_param_user_test_case:
-#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x570))
-                    test.add( boost::unit_test::create_test_case<bad_test,int*,int>( &bad_test::test_param, std::string( "bad_test::test_param" ),  bad_test_instance, (int*)params, params+1 ) );
-#else
-                    test.add( BOOST_PARAM_CLASS_TEST_CASE( &bad_test::test_param, bad_test_instance, (int*)params, params+1 ) );
-#endif
-                    break;
-                default:
-                    continue;
-                }
+            unit_test_log.set_stream( test_output );
+            unit_test_log.set_formatter( new this_test_log_formatter );
+            unit_test_log.set_threshold_level( level );
+            framework::run( test );
 
-                { 
-                    unit_test_result_saver saver;
-                    unit_test_log.start();
-                    unit_test_log.header( 1 );
-                    test.run();
-                    unit_test_log.finish( 1 );
-                }
-
-                unit_test_log.set_threshold_level( log_all_errors );
-                BOOST_CHECK( output.match_pattern() );
-                unit_test_log.set_threshold_level( level );
-            }
+            unit_test_log.set_stream( std::cout );
+            unit_test_log.set_format( runtime_config::log_format() );
+            unit_test_log.set_threshold_level( runtime_config::log_level() != invalid_log_level 
+                                                ? runtime_config::log_level()
+                                                : log_all_errors );
+            BOOST_CHECK( test_output.match_pattern() );
         }
     }
-
-    unit_test_result::instance().short_report( output );
-    output.match_pattern();
 
     return 0;
 } // main
@@ -263,47 +193,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
-//  Revision 1.28  2005/02/02 12:06:52  rogeeff
-//  *** empty log message ***
+//  Revision 1.29  2005/02/20 08:28:34  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
-//  Revision 1.27  2005/01/30 03:35:55  rogeeff
-//  no message
-//
-//  Revision 1.25  2005/01/18 08:30:08  rogeeff
-//  unit_test_log rework:
-//     eliminated need for ::instance()
-//     eliminated need for << end and ...END macro
-//     straitend interface between log and formatters
-//     change compiler like formatter name
-//     minimized unit_test_log interface and reworked to use explicit calls
-//
-//  Revision 1.24  2004/10/05 04:27:09  rogeeff
-//  31 length fix
-//
-//  Revision 1.23  2004/10/05 01:32:09  rogeeff
-//  file/directory renaming for the sake of CD burning
-//
-//  Revision 1.22  2004/10/01 10:55:43  rogeeff
-//  some test errors workarrounds
-//
-//  Revision 1.21  2004/06/07 07:34:23  rogeeff
-//  detail namespace renamed
-//
-//  Revision 1.20  2004/05/27 06:30:48  rogeeff
-//  no message
-//
-//  Revision 1.19  2004/05/21 06:26:10  rogeeff
-//  licence update
-//
-//  Revision 1.18  2004/05/11 11:05:06  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//  namespace names shortened
-//
-//  Revision 1.17  2003/12/01 00:42:37  rogeeff
-//  prerelease cleaning
-//
-
 // ***************************************************************************
 
 // EOF

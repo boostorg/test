@@ -13,16 +13,20 @@
 //  boost::function as a test case base function.
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_SUITE_EX_HPP_071894GER
-#define BOOST_UNIT_TEST_SUITE_EX_HPP_071894GER
+#ifndef BOOST_TEST_SUITE_EX_HPP_071894GER
+#define BOOST_TEST_SUITE_EX_HPP_071894GER
 
 // Boost.Test
 #include <boost/test/unit_test_suite.hpp>
-#include <boost/test/detail/unit_test_config.hpp>
+#include <boost/test/detail/workarounds.hpp>
 
 // Boost
 #include <boost/function/function0.hpp>
 #include <boost/function/function1.hpp>
+
+#include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
 
 namespace boost {
 
@@ -84,14 +88,14 @@ private:
 // ************************************************************************** //
 
 inline test_case*
-create_test_case( function0<void> const& fct_, const_string name_ )
+make_test_case( function0<void> const& fct_, const_string name_ )
 {
     return new boost_function_test_case( fct_, ut_detail::normalize_test_case_name( name_ ) );
 }
 
 template<typename ParamIterator, typename ParameterType>
 inline test_case*
-create_test_case( function1<void,ParameterType> const& fct_, const_string name_, 
+make_test_case( function1<void,ParameterType> const& fct_, const_string name_, 
                   ParamIterator const& begin_, ParamIterator const& end_ )
 {
     return new parametrized_boost_function_test_case<ParamIterator,ParameterType>(
@@ -102,10 +106,17 @@ create_test_case( function1<void,ParameterType> const& fct_, const_string name_,
 
 } // namespace boost
 
+//____________________________________________________________________________//
+
+#include <boost/test/detail/enable_warnings.hpp>
+
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.22  2005/02/20 08:27:06  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.21  2005/02/01 06:40:07  rogeeff
 //  copyright update
 //  old log entries removed
@@ -117,4 +128,4 @@ create_test_case( function1<void,ParameterType> const& fct_, const_string name_,
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_SUITE_EX_HPP_071894GER
+#endif // BOOST_TEST_SUITE_EX_HPP_071894GER

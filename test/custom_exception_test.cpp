@@ -14,6 +14,7 @@
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
+#include <boost/test/unit_test_monitor.hpp>
 using namespace boost::unit_test;
 
 //____________________________________________________________________________//
@@ -48,7 +49,7 @@ void my_exception1_translator( my_exception1 )
 
 void throw_my_exception2()
 {
-    throw my_exception1( 89 );
+    throw my_exception2( 89 );
 }
 
 void my_exception2_translator( my_exception2 )
@@ -62,8 +63,8 @@ test_suite*
 init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
     test_suite* test = BOOST_TEST_SUITE("custom_exception_test");
 
-    register_exception_translator<my_exception1>( &my_exception1_translator );
-    register_exception_translator<my_exception2>( &my_exception2_translator );
+    unit_test_monitor.register_exception_translator<my_exception1>( &my_exception1_translator );
+    unit_test_monitor.register_exception_translator<my_exception2>( &my_exception2_translator );
 
     test->add( BOOST_TEST_CASE( &throw_my_exception1 ) );
     test->add( BOOST_TEST_CASE( &throw_my_exception2 ) );
@@ -77,6 +78,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2005/02/20 08:28:34  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.5  2004/05/21 06:26:10  rogeeff
 //  licence update
 //

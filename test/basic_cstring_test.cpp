@@ -36,7 +36,6 @@ using utf::const_string;
 #include <iomanip>
 #include <iostream>
 #include <stdexcept>
-#include <typeinfo>
 
 namespace mpl = boost::mpl;
 
@@ -87,11 +86,8 @@ test_string( CharT* = 0 )
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-void constructors_test( CharT* = 0 )
+BOOST_TEST_CASE_TEMPLATE_FUNCTION( constructors_test, CharT )
 {
-    BOOST_MESSAGE( "Let's run \"&constructors_test\"<" << typeid(CharT).name() << ">" );
-
     {
         utf::basic_cstring<CharT> bcs;
         BOOST_CHECK_EQUAL( bcs.size(), 0 );
@@ -136,12 +132,9 @@ void constructors_test( CharT* = 0 )
     }
 }
 
-BOOST_META_FUNC_TEST_CASE( constructors_test );
-
 //____________________________________________________________________________//
 
-template<typename CharT>
-void constructors_std_string_test( CharT* = 0 )
+BOOST_TEST_CASE_TEMPLATE_FUNCTION( constructors_std_string_test, CharT )
 {
     typedef typename utf::basic_cstring<CharT>::traits_type traits;
 
@@ -154,13 +147,11 @@ void constructors_std_string_test( CharT* = 0 )
 
 }
 
-BOOST_META_FUNC_TEST_CASE( constructors_std_string_test );
-
 //____________________________________________________________________________//
 
 void array_construction_test()
 {
-#if !BOOST_WORKAROUND(__BORLANDC__, < 0x600)
+#if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x600))
     const_string bcs_array[] = { "str1", "str2" };
 
     BOOST_CHECK_EQUAL( const_string::traits_type::compare( bcs_array[0].begin(), "str1", bcs_array[0].size() ), 0 );
@@ -173,8 +164,7 @@ void array_construction_test()
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-void data_access_test( CharT* = 0 )
+BOOST_TEST_CASE_TEMPLATE_FUNCTION( data_access_test, CharT )
 {
     typedef typename utf::basic_cstring<CharT>::traits_type traits_type;
 
@@ -199,12 +189,9 @@ void data_access_test( CharT* = 0 )
     BOOST_CHECK_EQUAL( utf::last_char( utf::basic_cstring<CharT>() ), 0 );
 }
 
-BOOST_META_FUNC_TEST_CASE( data_access_test );
-
 //____________________________________________________________________________//
 
-template<typename CharT>
-void size_test( CharT* = 0 )
+BOOST_TEST_CASE_TEMPLATE_FUNCTION( size_test, CharT )
 {
     utf::basic_cstring<CharT> bcs1;
 
@@ -228,12 +215,9 @@ void size_test( CharT* = 0 )
     BOOST_CHECK_EQUAL( bcs1.size(), 3 );
 }
 
-BOOST_META_FUNC_TEST_CASE( size_test );
-
 //____________________________________________________________________________//
 
-template<typename CharT>
-void asignment_test( CharT* = 0 )
+BOOST_TEST_CASE_TEMPLATE_FUNCTION( asignment_test, CharT )
 {
     typedef typename utf::basic_cstring<CharT>::traits_type traits_type;
 
@@ -261,12 +245,9 @@ void asignment_test( CharT* = 0 )
     BOOST_CHECK_EQUAL( traits_type::compare( bcs2.begin(), LITERAL( "_st" ), bcs2.size() ), 0 );
 }
 
-BOOST_META_FUNC_TEST_CASE( asignment_test );
-
 //____________________________________________________________________________//
 
-template<typename CharT>
-void asignment_std_string_test( CharT* = 0 )
+BOOST_TEST_CASE_TEMPLATE_FUNCTION( asignment_std_string_test, CharT )
 {
     typedef typename utf::basic_cstring<CharT>::traits_type traits_type;
 
@@ -283,12 +264,9 @@ void asignment_std_string_test( CharT* = 0 )
     BOOST_CHECK_EQUAL( traits_type::compare( bcs1.begin(), LITERAL( "es" ), bcs1.size() ), 0 );
 }
 
-BOOST_META_FUNC_TEST_CASE( asignment_std_string_test );
-
 //____________________________________________________________________________//
 
-template<typename CharT>
-void comparison_test( CharT* = 0 )
+BOOST_TEST_CASE_TEMPLATE_FUNCTION( comparison_test, CharT )
 {
     utf::basic_cstring<CharT> bcs1( TEST_STRING );
     utf::basic_cstring<CharT> bcs2( TEST_STRING );
@@ -309,12 +287,9 @@ void comparison_test( CharT* = 0 )
     BOOST_CHECK( utf::case_ins_eq( bcs1, bcs3 ) );
 }
 
-BOOST_META_FUNC_TEST_CASE( comparison_test );
-
 //____________________________________________________________________________//
 
-template<typename CharT>
-void comparison_std_string_test( CharT* = 0 )
+BOOST_TEST_CASE_TEMPLATE_FUNCTION( comparison_std_string_test, CharT )
 {
     utf::basic_cstring<CharT> bcs1( TEST_STRING );
     typename utf::basic_cstring<CharT>::std_string l( TEST_STRING );
@@ -332,12 +307,9 @@ void comparison_std_string_test( CharT* = 0 )
 #endif
 }
 
-BOOST_META_FUNC_TEST_CASE( comparison_std_string_test );
-
 //____________________________________________________________________________//
 
-template<typename CharT>
-void ordering_test( CharT* = 0 )
+BOOST_TEST_CASE_TEMPLATE_FUNCTION( ordering_test, CharT )
 {
     LOCAL_DEF( bcs1, "aBcd" );
     LOCAL_DEF( bcs2, "aBbdd" );
@@ -353,12 +325,9 @@ void ordering_test( CharT* = 0 )
     BOOST_CHECK( cil( bcs4, bcs1 ) );
 }
 
-BOOST_META_FUNC_TEST_CASE( ordering_test );
-
 //____________________________________________________________________________//
 
-template<typename CharT>
-void trim_test( CharT* = 0 )
+BOOST_TEST_CASE_TEMPLATE_FUNCTION( trim_test, CharT )
 {
     LOCAL_DEF( bcs0, "tes" );
 
@@ -408,12 +377,9 @@ void trim_test( CharT* = 0 )
     BOOST_CHECK_EQUAL( bcs3, LITERAL( "abcd" ) );
 }
 
-BOOST_META_FUNC_TEST_CASE( trim_test );
-
 //____________________________________________________________________________//
 
-template<typename CharT>
-void io_test( CharT* = 0 )
+BOOST_TEST_CASE_TEMPLATE_FUNCTION( io_test, CharT )
 {
     utf::basic_cstring<CharT> bcs1( TEST_STRING );
     bcs1.trim_right( 7 );
@@ -430,12 +396,9 @@ void io_test( CharT* = 0 )
     BOOST_CHECK( ostr.is_equal( "test " ) );
 }
 
-BOOST_META_FUNC_TEST_CASE( io_test );
-
 //____________________________________________________________________________//
 
-template<typename CharT>
-void find_test( CharT* = 0 )
+BOOST_TEST_CASE_TEMPLATE_FUNCTION( find_test, CharT )
 {
     utf::basic_cstring<CharT> bcs1( TEST_STRING );
 
@@ -460,8 +423,6 @@ void find_test( CharT* = 0 )
     BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "tst" ) ), utf::basic_cstring<CharT>::npos );
 }
 
-BOOST_META_FUNC_TEST_CASE( find_test );
-
 //____________________________________________________________________________//
 
 void const_conversion()
@@ -484,21 +445,21 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 {
     utf::test_suite* test= BOOST_TEST_SUITE("basic_cstring test");
 
-    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( constructors_test, char_types ) );
+    test->add( BOOST_TEST_CASE_TEMPLATE( constructors_test, char_types ) );
 #if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x551))
-    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( constructors_std_string_test, base_const_char_types ) );
-    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( asignment_std_string_test, base_const_char_types ) );
-    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( comparison_std_string_test, base_const_char_types ) );
+    test->add( BOOST_TEST_CASE_TEMPLATE( constructors_std_string_test, base_const_char_types ) );
+    test->add( BOOST_TEST_CASE_TEMPLATE( asignment_std_string_test, base_const_char_types ) );
+    test->add( BOOST_TEST_CASE_TEMPLATE( comparison_std_string_test, base_const_char_types ) );
 #endif
     test->add( BOOST_TEST_CASE( array_construction_test ) );
-    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( data_access_test, char_types ) );
-    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( size_test, char_types ) );
-    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( asignment_test, char_types ) );
-    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( comparison_test, char_types ) );
-    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( ordering_test, char_types ) );
-    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( trim_test, char_types ) );
-    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( io_test, io_test_types ) );
-    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( find_test, char_types ) );
+    test->add( BOOST_TEST_CASE_TEMPLATE( data_access_test, char_types ) );
+    test->add( BOOST_TEST_CASE_TEMPLATE( size_test, char_types ) );
+    test->add( BOOST_TEST_CASE_TEMPLATE( asignment_test, char_types ) );
+    test->add( BOOST_TEST_CASE_TEMPLATE( comparison_test, char_types ) );
+    test->add( BOOST_TEST_CASE_TEMPLATE( ordering_test, char_types ) );
+    test->add( BOOST_TEST_CASE_TEMPLATE( trim_test, char_types ) );
+    test->add( BOOST_TEST_CASE_TEMPLATE( io_test, io_test_types ) );
+    test->add( BOOST_TEST_CASE_TEMPLATE( find_test, char_types ) );
     test->add( BOOST_TEST_CASE( &const_conversion ) );
 
     return test;
@@ -508,6 +469,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 // History :
 //
 // $Log$
+// Revision 1.10  2005/02/20 08:28:34  rogeeff
+// This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 // Revision 1.9  2005/01/30 03:35:55  rogeeff
 // no message
 //

@@ -1,1804 +1,426 @@
 
 ===========================
+log level: log_successful_tests; error type: no error;
 
-log level: 0; error type: no error; test case type: free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function"
-(free function)
-error_on_demand() BOOST_MESSAGE
-Leaving test case "bad_function"
-Leaving test suite "Errors handling test"
+Entering test case "error_on_demand"
+92: info: check 'no error' passed
+198: info: check 'Test case has less failures then expected' passed
+Leaving test case "error_on_demand"
 
 ===========================
+log level: log_successful_tests; error type: user message;
 
-log level: 0; error type: no error; test case type: user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test"
-(user test case)
-error_on_demand() BOOST_MESSAGE
-Leaving test case "bad_test::test"
-Leaving test suite "Errors handling test"
+Entering test case "error_on_demand"
+message
+198: info: check 'Test case has less failures then expected' passed
+Leaving test case "error_on_demand"
 
 ===========================
+log level: log_successful_tests; error type: user warning;
 
-log level: 0; error type: no error; test case type: parameterized free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function_param"
-(parameterized free function)
-error_on_demand() BOOST_MESSAGE
-Leaving test case "bad_function_param"
-Leaving test suite "Errors handling test"
+Entering test case "error_on_demand"
+100: warning in "error_on_demand": warning
+198: info: check 'Test case has less failures then expected' passed
+Leaving test case "error_on_demand"
 
 ===========================
+log level: log_successful_tests; error type: user non-fatal error;
 
-log level: 0; error type: no error; test case type: parameterized user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test_param"
-(parameterized user test case)
-error_on_demand() BOOST_MESSAGE
-Leaving test case "bad_test::test_param"
-Leaving test suite "Errors handling test"
+Entering test case "error_on_demand"
+104: error in "error_on_demand": non-fatal error
+198: info: check 'Test case has less failures then expected' passed
+Leaving test case "error_on_demand"
 
 ===========================
+log level: log_successful_tests; error type: cpp exception;
 
-log level: 0; error type: user error; test case type: free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function"
-(free function)
-73: error in "bad_function": error_on_demand() BOOST_ERROR
-Leaving test case "bad_function"
-Leaving test suite "Errors handling test"
+Entering test case "error_on_demand"
+Exception in "error_on_demand": std::runtime_error: test std::runtime error what() message
+114: last checkpoint: error_on_demand() throw runtime_error
+198: info: check 'Test case has less failures then expected' passed
+Leaving test case "error_on_demand"
 
 ===========================
+log level: log_successful_tests; error type:  system error;
 
-log level: 0; error type: user error; test case type: user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test"
-(user test case)
-73: error in "bad_test::test": error_on_demand() BOOST_ERROR
-Leaving test case "bad_test::test"
-Leaving test suite "Errors handling test"
+Entering test case "error_on_demand"
+Exception in "error_on_demand": integer divide by zero
+119: last checkpoint: error_on_demand() divide by zero
+198: info: check 'Test case has less failures then expected' passed
+Leaving test case "error_on_demand"
 
 ===========================
+log level: log_successful_tests; error type: user fatal error;
 
-log level: 0; error type: user error; test case type: parameterized free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function_param"
-(parameterized free function)
-73: error in "bad_function_param": error_on_demand() BOOST_ERROR
-Leaving test case "bad_function_param"
-Leaving test suite "Errors handling test"
+Entering test case "error_on_demand"
+108: fatal error in "error_on_demand": fatal error
+198: info: check 'Test case has less failures then expected' passed
+Leaving test case "error_on_demand"
 
 ===========================
+log level: log_successful_tests; error type: system fatal error;
 
-log level: 0; error type: user error; test case type: parameterized user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test_param"
-(parameterized user test case)
-73: error in "bad_test::test_param": error_on_demand() BOOST_ERROR
-Leaving test case "bad_test::test_param"
-Leaving test suite "Errors handling test"
+Entering test case "error_on_demand"
+Exception in "error_on_demand": memory access violation
+124: last checkpoint: write to an invalid address
+Test is aborted
+198: info: check 'Test case has less failures then expected' passed
+Leaving test case "error_on_demand"
 
 ===========================
+log level: log_test_suites; error type: no error;
 
-log level: 0; error type: cpp exception; test case type: free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function"
-(free function)
-Exception in "bad_function": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-Leaving test case "bad_function"
-Leaving test suite "Errors handling test"
+Entering test case "error_on_demand"
+Leaving test case "error_on_demand"
 
 ===========================
+log level: log_test_suites; error type: user message;
 
-log level: 0; error type: cpp exception; test case type: user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test"
-(user test case)
-Exception in "bad_test::test": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-Leaving test case "bad_test::test"
-Leaving test suite "Errors handling test"
+Entering test case "error_on_demand"
+message
+Leaving test case "error_on_demand"
 
 ===========================
+log level: log_test_suites; error type: user warning;
 
-log level: 0; error type: cpp exception; test case type: parameterized free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function_param"
-(parameterized free function)
-Exception in "bad_function_param": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-Leaving test case "bad_function_param"
-Leaving test suite "Errors handling test"
+Entering test case "error_on_demand"
+100: warning in "error_on_demand": warning
+Leaving test case "error_on_demand"
 
 ===========================
+log level: log_test_suites; error type: user non-fatal error;
 
-log level: 0; error type: cpp exception; test case type: parameterized user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test_param"
-(parameterized user test case)
-Exception in "bad_test::test_param": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-Leaving test case "bad_test::test_param"
-Leaving test suite "Errors handling test"
+Entering test case "error_on_demand"
+104: error in "error_on_demand": non-fatal error
+Leaving test case "error_on_demand"
 
 ===========================
+log level: log_test_suites; error type: cpp exception;
 
-log level: 0; error type:  system error; test case type: free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function"
-(free function)
-Exception in "bad_function": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-Leaving test case "bad_function"
-Leaving test suite "Errors handling test"
+Entering test case "error_on_demand"
+Exception in "error_on_demand": std::runtime_error: test std::runtime error what() message
+114: last checkpoint: error_on_demand() throw runtime_error
+Leaving test case "error_on_demand"
 
 ===========================
+log level: log_test_suites; error type:  system error;
 
-log level: 0; error type:  system error; test case type: user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test"
-(user test case)
-Exception in "bad_test::test": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-Leaving test case "bad_test::test"
-Leaving test suite "Errors handling test"
+Entering test case "error_on_demand"
+Exception in "error_on_demand": integer divide by zero
+119: last checkpoint: error_on_demand() divide by zero
+Leaving test case "error_on_demand"
 
 ===========================
+log level: log_test_suites; error type: user fatal error;
 
-log level: 0; error type:  system error; test case type: parameterized free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function_param"
-(parameterized free function)
-Exception in "bad_function_param": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-Leaving test case "bad_function_param"
-Leaving test suite "Errors handling test"
+Entering test case "error_on_demand"
+108: fatal error in "error_on_demand": fatal error
+Leaving test case "error_on_demand"
 
 ===========================
+log level: log_test_suites; error type: system fatal error;
 
-log level: 0; error type:  system error; test case type: parameterized user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test_param"
-(parameterized user test case)
-Exception in "bad_test::test_param": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-Leaving test case "bad_test::test_param"
-Leaving test suite "Errors handling test"
+Entering test case "error_on_demand"
+Exception in "error_on_demand": memory access violation
+124: last checkpoint: write to an invalid address
+Test is aborted
+Leaving test case "error_on_demand"
 
 ===========================
+log level: log_messages; error type: no error;
 
-log level: 0; error type: fatal user error; test case type: free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function"
-(free function)
-78: fatal error in "bad_function": error_on_demand() BOOST_FAIL
-Leaving test case "bad_function"
-Leaving test suite "Errors handling test"
 
 ===========================
+log level: log_messages; error type: user message;
 
-log level: 0; error type: fatal user error; test case type: user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test"
-(user test case)
-78: fatal error in "bad_test::test": error_on_demand() BOOST_FAIL
-Leaving test case "bad_test::test"
-Leaving test suite "Errors handling test"
+message
 
 ===========================
+log level: log_messages; error type: user warning;
 
-log level: 0; error type: fatal user error; test case type: parameterized free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function_param"
-(parameterized free function)
-78: fatal error in "bad_function_param": error_on_demand() BOOST_FAIL
-Leaving test case "bad_function_param"
-Leaving test suite "Errors handling test"
+100: warning in "error_on_demand": warning
 
 ===========================
+log level: log_messages; error type: user non-fatal error;
 
-log level: 0; error type: fatal user error; test case type: parameterized user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test_param"
-(parameterized user test case)
-78: fatal error in "bad_test::test_param": error_on_demand() BOOST_FAIL
-Leaving test case "bad_test::test_param"
-Leaving test suite "Errors handling test"
+104: error in "error_on_demand": non-fatal error
 
 ===========================
+log level: log_messages; error type: cpp exception;
 
-log level: 0; error type: fatal system error; test case type: free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function"
-(free function)
-Exception in "bad_function": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_function": Testing aborted
-Leaving test case "bad_function"
-Leaving test suite "Errors handling test"
+Exception in "error_on_demand": std::runtime_error: test std::runtime error what() message
+114: last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
+log level: log_messages; error type:  system error;
 
-log level: 0; error type: fatal system error; test case type: user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test"
-(user test case)
-Exception in "bad_test::test": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_test::test": Testing aborted
-Leaving test case "bad_test::test"
-Leaving test suite "Errors handling test"
+Exception in "error_on_demand": integer divide by zero
+119: last checkpoint: error_on_demand() divide by zero
 
 ===========================
+log level: log_messages; error type: user fatal error;
 
-log level: 0; error type: fatal system error; test case type: parameterized free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function_param"
-(parameterized free function)
-Exception in "bad_function_param": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_function_param": Testing aborted
-Leaving test case "bad_function_param"
-Leaving test suite "Errors handling test"
+108: fatal error in "error_on_demand": fatal error
 
 ===========================
+log level: log_messages; error type: system fatal error;
 
-log level: 0; error type: fatal system error; test case type: parameterized user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test_param"
-(parameterized user test case)
-Exception in "bad_test::test_param": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_test::test_param": Testing aborted
-Leaving test case "bad_test::test_param"
-Leaving test suite "Errors handling test"
+Exception in "error_on_demand": memory access violation
+124: last checkpoint: write to an invalid address
+Test is aborted
 
 ===========================
+log level: log_warnings; error type: no error;
 
-log level: 1; error type: no error; test case type: free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function"
-(free function)
-error_on_demand() BOOST_MESSAGE
-Leaving test case "bad_function"
-Leaving test suite "Errors handling test"
 
 ===========================
+log level: log_warnings; error type: user message;
 
-log level: 1; error type: no error; test case type: user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test"
-(user test case)
-error_on_demand() BOOST_MESSAGE
-Leaving test case "bad_test::test"
-Leaving test suite "Errors handling test"
 
 ===========================
+log level: log_warnings; error type: user warning;
 
-log level: 1; error type: no error; test case type: parameterized free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function_param"
-(parameterized free function)
-error_on_demand() BOOST_MESSAGE
-Leaving test case "bad_function_param"
-Leaving test suite "Errors handling test"
+100: warning in "error_on_demand": warning
 
 ===========================
+log level: log_warnings; error type: user non-fatal error;
 
-log level: 1; error type: no error; test case type: parameterized user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test_param"
-(parameterized user test case)
-error_on_demand() BOOST_MESSAGE
-Leaving test case "bad_test::test_param"
-Leaving test suite "Errors handling test"
+104: error in "error_on_demand": non-fatal error
 
 ===========================
+log level: log_warnings; error type: cpp exception;
 
-log level: 1; error type: user error; test case type: free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function"
-(free function)
-73: error in "bad_function": error_on_demand() BOOST_ERROR
-Leaving test case "bad_function"
-Leaving test suite "Errors handling test"
+Exception in "error_on_demand": std::runtime_error: test std::runtime error what() message
+114: last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
+log level: log_warnings; error type:  system error;
 
-log level: 1; error type: user error; test case type: user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test"
-(user test case)
-73: error in "bad_test::test": error_on_demand() BOOST_ERROR
-Leaving test case "bad_test::test"
-Leaving test suite "Errors handling test"
+Exception in "error_on_demand": integer divide by zero
+119: last checkpoint: error_on_demand() divide by zero
 
 ===========================
+log level: log_warnings; error type: user fatal error;
 
-log level: 1; error type: user error; test case type: parameterized free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function_param"
-(parameterized free function)
-73: error in "bad_function_param": error_on_demand() BOOST_ERROR
-Leaving test case "bad_function_param"
-Leaving test suite "Errors handling test"
+108: fatal error in "error_on_demand": fatal error
 
 ===========================
+log level: log_warnings; error type: system fatal error;
 
-log level: 1; error type: user error; test case type: parameterized user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test_param"
-(parameterized user test case)
-73: error in "bad_test::test_param": error_on_demand() BOOST_ERROR
-Leaving test case "bad_test::test_param"
-Leaving test suite "Errors handling test"
+Exception in "error_on_demand": memory access violation
+124: last checkpoint: write to an invalid address
 
 ===========================
+log level: log_all_errors; error type: no error;
 
-log level: 1; error type: cpp exception; test case type: free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function"
-(free function)
-Exception in "bad_function": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-Leaving test case "bad_function"
-Leaving test suite "Errors handling test"
 
 ===========================
+log level: log_all_errors; error type: user message;
 
-log level: 1; error type: cpp exception; test case type: user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test"
-(user test case)
-Exception in "bad_test::test": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-Leaving test case "bad_test::test"
-Leaving test suite "Errors handling test"
 
 ===========================
+log level: log_all_errors; error type: user warning;
 
-log level: 1; error type: cpp exception; test case type: parameterized free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function_param"
-(parameterized free function)
-Exception in "bad_function_param": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-Leaving test case "bad_function_param"
-Leaving test suite "Errors handling test"
 
 ===========================
+log level: log_all_errors; error type: user non-fatal error;
 
-log level: 1; error type: cpp exception; test case type: parameterized user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test_param"
-(parameterized user test case)
-Exception in "bad_test::test_param": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-Leaving test case "bad_test::test_param"
-Leaving test suite "Errors handling test"
+104: error in "error_on_demand": non-fatal error
 
 ===========================
+log level: log_all_errors; error type: cpp exception;
 
-log level: 1; error type:  system error; test case type: free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function"
-(free function)
-Exception in "bad_function": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-Leaving test case "bad_function"
-Leaving test suite "Errors handling test"
+Exception in "error_on_demand": std::runtime_error: test std::runtime error what() message
+114: last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
+log level: log_all_errors; error type:  system error;
 
-log level: 1; error type:  system error; test case type: user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test"
-(user test case)
-Exception in "bad_test::test": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-Leaving test case "bad_test::test"
-Leaving test suite "Errors handling test"
+Exception in "error_on_demand": integer divide by zero
+119: last checkpoint: error_on_demand() divide by zero
 
 ===========================
+log level: log_all_errors; error type: user fatal error;
 
-log level: 1; error type:  system error; test case type: parameterized free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function_param"
-(parameterized free function)
-Exception in "bad_function_param": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-Leaving test case "bad_function_param"
-Leaving test suite "Errors handling test"
+108: fatal error in "error_on_demand": fatal error
 
 ===========================
+log level: log_all_errors; error type: system fatal error;
 
-log level: 1; error type:  system error; test case type: parameterized user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test_param"
-(parameterized user test case)
-Exception in "bad_test::test_param": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-Leaving test case "bad_test::test_param"
-Leaving test suite "Errors handling test"
+Exception in "error_on_demand": memory access violation
+124: last checkpoint: write to an invalid address
 
 ===========================
+log level: log_cpp_exception_errors; error type: no error;
 
-log level: 1; error type: fatal user error; test case type: free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function"
-(free function)
-78: fatal error in "bad_function": error_on_demand() BOOST_FAIL
-Leaving test case "bad_function"
-Leaving test suite "Errors handling test"
 
 ===========================
+log level: log_cpp_exception_errors; error type: user message;
 
-log level: 1; error type: fatal user error; test case type: user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test"
-(user test case)
-78: fatal error in "bad_test::test": error_on_demand() BOOST_FAIL
-Leaving test case "bad_test::test"
-Leaving test suite "Errors handling test"
 
 ===========================
+log level: log_cpp_exception_errors; error type: user warning;
 
-log level: 1; error type: fatal user error; test case type: parameterized free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function_param"
-(parameterized free function)
-78: fatal error in "bad_function_param": error_on_demand() BOOST_FAIL
-Leaving test case "bad_function_param"
-Leaving test suite "Errors handling test"
 
 ===========================
+log level: log_cpp_exception_errors; error type: user non-fatal error;
 
-log level: 1; error type: fatal user error; test case type: parameterized user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test_param"
-(parameterized user test case)
-78: fatal error in "bad_test::test_param": error_on_demand() BOOST_FAIL
-Leaving test case "bad_test::test_param"
-Leaving test suite "Errors handling test"
 
 ===========================
+log level: log_cpp_exception_errors; error type: cpp exception;
 
-log level: 1; error type: fatal system error; test case type: free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function"
-(free function)
-Exception in "bad_function": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_function": Testing aborted
-Leaving test case "bad_function"
-Leaving test suite "Errors handling test"
+Exception in "error_on_demand": std::runtime_error: test std::runtime error what() message
+114: last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
+log level: log_cpp_exception_errors; error type:  system error;
 
-log level: 1; error type: fatal system error; test case type: user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test"
-(user test case)
-Exception in "bad_test::test": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_test::test": Testing aborted
-Leaving test case "bad_test::test"
-Leaving test suite "Errors handling test"
+Exception in "error_on_demand": integer divide by zero
+119: last checkpoint: error_on_demand() divide by zero
 
 ===========================
+log level: log_cpp_exception_errors; error type: user fatal error;
 
-log level: 1; error type: fatal system error; test case type: parameterized free function;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_function_param"
-(parameterized free function)
-Exception in "bad_function_param": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_function_param": Testing aborted
-Leaving test case "bad_function_param"
-Leaving test suite "Errors handling test"
+108: fatal error in "error_on_demand": fatal error
 
 ===========================
+log level: log_cpp_exception_errors; error type: system fatal error;
 
-log level: 1; error type: fatal system error; test case type: parameterized user test case;
-Running 1 test case...
-Entering test suite "Errors handling test"
-Entering test case "bad_test::test_param"
-(parameterized user test case)
-Exception in "bad_test::test_param": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_test::test_param": Testing aborted
-Leaving test case "bad_test::test_param"
-Leaving test suite "Errors handling test"
+Exception in "error_on_demand": memory access violation
+124: last checkpoint: write to an invalid address
 
 ===========================
+log level: log_system_errors; error type: no error;
 
-log level: 2; error type: no error; test case type: free function;
-Running 1 test case...
-(free function)
-error_on_demand() BOOST_MESSAGE
 
 ===========================
+log level: log_system_errors; error type: user message;
 
-log level: 2; error type: no error; test case type: user test case;
-Running 1 test case...
-(user test case)
-error_on_demand() BOOST_MESSAGE
 
 ===========================
+log level: log_system_errors; error type: user warning;
 
-log level: 2; error type: no error; test case type: parameterized free function;
-Running 1 test case...
-(parameterized free function)
-error_on_demand() BOOST_MESSAGE
 
 ===========================
+log level: log_system_errors; error type: user non-fatal error;
 
-log level: 2; error type: no error; test case type: parameterized user test case;
-Running 1 test case...
-(parameterized user test case)
-error_on_demand() BOOST_MESSAGE
 
 ===========================
+log level: log_system_errors; error type: cpp exception;
 
-log level: 2; error type: user error; test case type: free function;
-Running 1 test case...
-(free function)
-73: error in "bad_function": error_on_demand() BOOST_ERROR
 
 ===========================
+log level: log_system_errors; error type:  system error;
 
-log level: 2; error type: user error; test case type: user test case;
-Running 1 test case...
-(user test case)
-73: error in "bad_test::test": error_on_demand() BOOST_ERROR
+Exception in "error_on_demand": integer divide by zero
+119: last checkpoint: error_on_demand() divide by zero
 
 ===========================
+log level: log_system_errors; error type: user fatal error;
 
-log level: 2; error type: user error; test case type: parameterized free function;
-Running 1 test case...
-(parameterized free function)
-73: error in "bad_function_param": error_on_demand() BOOST_ERROR
+108: fatal error in "error_on_demand": fatal error
 
 ===========================
+log level: log_system_errors; error type: system fatal error;
 
-log level: 2; error type: user error; test case type: parameterized user test case;
-Running 1 test case...
-(parameterized user test case)
-73: error in "bad_test::test_param": error_on_demand() BOOST_ERROR
+Exception in "error_on_demand": memory access violation
+124: last checkpoint: write to an invalid address
 
 ===========================
+log level: log_fatal_errors; error type: no error;
 
-log level: 2; error type: cpp exception; test case type: free function;
-Running 1 test case...
-(free function)
-Exception in "bad_function": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
+log level: log_fatal_errors; error type: user message;
 
-log level: 2; error type: cpp exception; test case type: user test case;
-Running 1 test case...
-(user test case)
-Exception in "bad_test::test": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
+log level: log_fatal_errors; error type: user warning;
 
-log level: 2; error type: cpp exception; test case type: parameterized free function;
-Running 1 test case...
-(parameterized free function)
-Exception in "bad_function_param": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
+log level: log_fatal_errors; error type: user non-fatal error;
 
-log level: 2; error type: cpp exception; test case type: parameterized user test case;
-Running 1 test case...
-(parameterized user test case)
-Exception in "bad_test::test_param": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
+log level: log_fatal_errors; error type: cpp exception;
 
-log level: 2; error type:  system error; test case type: free function;
-Running 1 test case...
-(free function)
-Exception in "bad_function": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
 
 ===========================
+log level: log_fatal_errors; error type:  system error;
 
-log level: 2; error type:  system error; test case type: user test case;
-Running 1 test case...
-(user test case)
-Exception in "bad_test::test": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
 
 ===========================
+log level: log_fatal_errors; error type: user fatal error;
 
-log level: 2; error type:  system error; test case type: parameterized free function;
-Running 1 test case...
-(parameterized free function)
-Exception in "bad_function_param": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
+108: fatal error in "error_on_demand": fatal error
 
 ===========================
+log level: log_fatal_errors; error type: system fatal error;
 
-log level: 2; error type:  system error; test case type: parameterized user test case;
-Running 1 test case...
-(parameterized user test case)
-Exception in "bad_test::test_param": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
+Exception in "error_on_demand": memory access violation
+124: last checkpoint: write to an invalid address
 
 ===========================
+log level: log_nothing; error type: no error;
 
-log level: 2; error type: fatal user error; test case type: free function;
-Running 1 test case...
-(free function)
-78: fatal error in "bad_function": error_on_demand() BOOST_FAIL
 
 ===========================
+log level: log_nothing; error type: user message;
 
-log level: 2; error type: fatal user error; test case type: user test case;
-Running 1 test case...
-(user test case)
-78: fatal error in "bad_test::test": error_on_demand() BOOST_FAIL
 
 ===========================
+log level: log_nothing; error type: user warning;
 
-log level: 2; error type: fatal user error; test case type: parameterized free function;
-Running 1 test case...
-(parameterized free function)
-78: fatal error in "bad_function_param": error_on_demand() BOOST_FAIL
 
 ===========================
+log level: log_nothing; error type: user non-fatal error;
 
-log level: 2; error type: fatal user error; test case type: parameterized user test case;
-Running 1 test case...
-(parameterized user test case)
-78: fatal error in "bad_test::test_param": error_on_demand() BOOST_FAIL
 
 ===========================
+log level: log_nothing; error type: cpp exception;
 
-log level: 2; error type: fatal system error; test case type: free function;
-Running 1 test case...
-(free function)
-Exception in "bad_function": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_function": Testing aborted
 
 ===========================
+log level: log_nothing; error type:  system error;
 
-log level: 2; error type: fatal system error; test case type: user test case;
-Running 1 test case...
-(user test case)
-Exception in "bad_test::test": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_test::test": Testing aborted
 
 ===========================
+log level: log_nothing; error type: user fatal error;
 
-log level: 2; error type: fatal system error; test case type: parameterized free function;
-Running 1 test case...
-(parameterized free function)
-Exception in "bad_function_param": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_function_param": Testing aborted
 
 ===========================
+log level: log_nothing; error type: system fatal error;
 
-log level: 2; error type: fatal system error; test case type: parameterized user test case;
-Running 1 test case...
-(parameterized user test case)
-Exception in "bad_test::test_param": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_test::test_param": Testing aborted
 
 ===========================
+log level: no error; error type: no error;
 
-log level: 3; error type: no error; test case type: free function;
-Running 1 test case...
 
 ===========================
+log level: no error; error type: user message;
 
-log level: 3; error type: no error; test case type: user test case;
-Running 1 test case...
 
 ===========================
+log level: no error; error type: user warning;
 
-log level: 3; error type: no error; test case type: parameterized free function;
-Running 1 test case...
 
 ===========================
+log level: no error; error type: user non-fatal error;
 
-log level: 3; error type: no error; test case type: parameterized user test case;
-Running 1 test case...
 
 ===========================
+log level: no error; error type: cpp exception;
 
-log level: 3; error type: user error; test case type: free function;
-Running 1 test case...
-73: error in "bad_function": error_on_demand() BOOST_ERROR
 
 ===========================
+log level: no error; error type:  system error;
 
-log level: 3; error type: user error; test case type: user test case;
-Running 1 test case...
-73: error in "bad_test::test": error_on_demand() BOOST_ERROR
 
 ===========================
+log level: no error; error type: user fatal error;
 
-log level: 3; error type: user error; test case type: parameterized free function;
-Running 1 test case...
-73: error in "bad_function_param": error_on_demand() BOOST_ERROR
 
 ===========================
+log level: no error; error type: system fatal error;
 
-log level: 3; error type: user error; test case type: parameterized user test case;
-Running 1 test case...
-73: error in "bad_test::test_param": error_on_demand() BOOST_ERROR
-
-===========================
-
-log level: 3; error type: cpp exception; test case type: free function;
-Running 1 test case...
-Exception in "bad_function": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-
-===========================
-
-log level: 3; error type: cpp exception; test case type: user test case;
-Running 1 test case...
-Exception in "bad_test::test": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-
-===========================
-
-log level: 3; error type: cpp exception; test case type: parameterized free function;
-Running 1 test case...
-Exception in "bad_function_param": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-
-===========================
-
-log level: 3; error type: cpp exception; test case type: parameterized user test case;
-Running 1 test case...
-Exception in "bad_test::test_param": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-
-===========================
-
-log level: 3; error type:  system error; test case type: free function;
-Running 1 test case...
-Exception in "bad_function": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-
-===========================
-
-log level: 3; error type:  system error; test case type: user test case;
-Running 1 test case...
-Exception in "bad_test::test": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-
-===========================
-
-log level: 3; error type:  system error; test case type: parameterized free function;
-Running 1 test case...
-Exception in "bad_function_param": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-
-===========================
-
-log level: 3; error type:  system error; test case type: parameterized user test case;
-Running 1 test case...
-Exception in "bad_test::test_param": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-
-===========================
-
-log level: 3; error type: fatal user error; test case type: free function;
-Running 1 test case...
-78: fatal error in "bad_function": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 3; error type: fatal user error; test case type: user test case;
-Running 1 test case...
-78: fatal error in "bad_test::test": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 3; error type: fatal user error; test case type: parameterized free function;
-Running 1 test case...
-78: fatal error in "bad_function_param": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 3; error type: fatal user error; test case type: parameterized user test case;
-Running 1 test case...
-78: fatal error in "bad_test::test_param": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 3; error type: fatal system error; test case type: free function;
-Running 1 test case...
-Exception in "bad_function": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_function": Testing aborted
-
-===========================
-
-log level: 3; error type: fatal system error; test case type: user test case;
-Running 1 test case...
-Exception in "bad_test::test": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_test::test": Testing aborted
-
-===========================
-
-log level: 3; error type: fatal system error; test case type: parameterized free function;
-Running 1 test case...
-Exception in "bad_function_param": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_function_param": Testing aborted
-
-===========================
-
-log level: 3; error type: fatal system error; test case type: parameterized user test case;
-Running 1 test case...
-Exception in "bad_test::test_param": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_test::test_param": Testing aborted
-
-===========================
-
-log level: 4; error type: no error; test case type: free function;
-Running 1 test case...
-
-===========================
-
-log level: 4; error type: no error; test case type: user test case;
-Running 1 test case...
-
-===========================
-
-log level: 4; error type: no error; test case type: parameterized free function;
-Running 1 test case...
-
-===========================
-
-log level: 4; error type: no error; test case type: parameterized user test case;
-Running 1 test case...
-
-===========================
-
-log level: 4; error type: user error; test case type: free function;
-Running 1 test case...
-73: error in "bad_function": error_on_demand() BOOST_ERROR
-
-===========================
-
-log level: 4; error type: user error; test case type: user test case;
-Running 1 test case...
-73: error in "bad_test::test": error_on_demand() BOOST_ERROR
-
-===========================
-
-log level: 4; error type: user error; test case type: parameterized free function;
-Running 1 test case...
-73: error in "bad_function_param": error_on_demand() BOOST_ERROR
-
-===========================
-
-log level: 4; error type: user error; test case type: parameterized user test case;
-Running 1 test case...
-73: error in "bad_test::test_param": error_on_demand() BOOST_ERROR
-
-===========================
-
-log level: 4; error type: cpp exception; test case type: free function;
-Running 1 test case...
-Exception in "bad_function": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-
-===========================
-
-log level: 4; error type: cpp exception; test case type: user test case;
-Running 1 test case...
-Exception in "bad_test::test": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-
-===========================
-
-log level: 4; error type: cpp exception; test case type: parameterized free function;
-Running 1 test case...
-Exception in "bad_function_param": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-
-===========================
-
-log level: 4; error type: cpp exception; test case type: parameterized user test case;
-Running 1 test case...
-Exception in "bad_test::test_param": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-
-===========================
-
-log level: 4; error type:  system error; test case type: free function;
-Running 1 test case...
-Exception in "bad_function": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-
-===========================
-
-log level: 4; error type:  system error; test case type: user test case;
-Running 1 test case...
-Exception in "bad_test::test": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-
-===========================
-
-log level: 4; error type:  system error; test case type: parameterized free function;
-Running 1 test case...
-Exception in "bad_function_param": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-
-===========================
-
-log level: 4; error type:  system error; test case type: parameterized user test case;
-Running 1 test case...
-Exception in "bad_test::test_param": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-
-===========================
-
-log level: 4; error type: fatal user error; test case type: free function;
-Running 1 test case...
-78: fatal error in "bad_function": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 4; error type: fatal user error; test case type: user test case;
-Running 1 test case...
-78: fatal error in "bad_test::test": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 4; error type: fatal user error; test case type: parameterized free function;
-Running 1 test case...
-78: fatal error in "bad_function_param": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 4; error type: fatal user error; test case type: parameterized user test case;
-Running 1 test case...
-78: fatal error in "bad_test::test_param": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 4; error type: fatal system error; test case type: free function;
-Running 1 test case...
-Exception in "bad_function": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_function": Testing aborted
-
-===========================
-
-log level: 4; error type: fatal system error; test case type: user test case;
-Running 1 test case...
-Exception in "bad_test::test": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_test::test": Testing aborted
-
-===========================
-
-log level: 4; error type: fatal system error; test case type: parameterized free function;
-Running 1 test case...
-Exception in "bad_function_param": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_function_param": Testing aborted
-
-===========================
-
-log level: 4; error type: fatal system error; test case type: parameterized user test case;
-Running 1 test case...
-Exception in "bad_test::test_param": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_test::test_param": Testing aborted
-
-===========================
-
-log level: 5; error type: no error; test case type: free function;
-Running 1 test case...
-
-===========================
-
-log level: 5; error type: no error; test case type: user test case;
-Running 1 test case...
-
-===========================
-
-log level: 5; error type: no error; test case type: parameterized free function;
-Running 1 test case...
-
-===========================
-
-log level: 5; error type: no error; test case type: parameterized user test case;
-Running 1 test case...
-
-===========================
-
-log level: 5; error type: user error; test case type: free function;
-Running 1 test case...
-
-===========================
-
-log level: 5; error type: user error; test case type: user test case;
-Running 1 test case...
-
-===========================
-
-log level: 5; error type: user error; test case type: parameterized free function;
-Running 1 test case...
-
-===========================
-
-log level: 5; error type: user error; test case type: parameterized user test case;
-Running 1 test case...
-
-===========================
-
-log level: 5; error type: cpp exception; test case type: free function;
-Running 1 test case...
-Exception in "bad_function": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-
-===========================
-
-log level: 5; error type: cpp exception; test case type: user test case;
-Running 1 test case...
-Exception in "bad_test::test": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-
-===========================
-
-log level: 5; error type: cpp exception; test case type: parameterized free function;
-Running 1 test case...
-Exception in "bad_function_param": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-
-===========================
-
-log level: 5; error type: cpp exception; test case type: parameterized user test case;
-Running 1 test case...
-Exception in "bad_test::test_param": std::runtime_error: test std::runtime error what() message
-84: last checkpoint: error_on_demand() throw runtime_error
-
-===========================
-
-log level: 5; error type:  system error; test case type: free function;
-Running 1 test case...
-Exception in "bad_function": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-
-===========================
-
-log level: 5; error type:  system error; test case type: user test case;
-Running 1 test case...
-Exception in "bad_test::test": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-
-===========================
-
-log level: 5; error type:  system error; test case type: parameterized free function;
-Running 1 test case...
-Exception in "bad_function_param": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-
-===========================
-
-log level: 5; error type:  system error; test case type: parameterized user test case;
-Running 1 test case...
-Exception in "bad_test::test_param": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-
-===========================
-
-log level: 5; error type: fatal user error; test case type: free function;
-Running 1 test case...
-78: fatal error in "bad_function": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 5; error type: fatal user error; test case type: user test case;
-Running 1 test case...
-78: fatal error in "bad_test::test": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 5; error type: fatal user error; test case type: parameterized free function;
-Running 1 test case...
-78: fatal error in "bad_function_param": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 5; error type: fatal user error; test case type: parameterized user test case;
-Running 1 test case...
-78: fatal error in "bad_test::test_param": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 5; error type: fatal system error; test case type: free function;
-Running 1 test case...
-Exception in "bad_function": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_function": Testing aborted
-
-===========================
-
-log level: 5; error type: fatal system error; test case type: user test case;
-Running 1 test case...
-Exception in "bad_test::test": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_test::test": Testing aborted
-
-===========================
-
-log level: 5; error type: fatal system error; test case type: parameterized free function;
-Running 1 test case...
-Exception in "bad_function_param": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_function_param": Testing aborted
-
-===========================
-
-log level: 5; error type: fatal system error; test case type: parameterized user test case;
-Running 1 test case...
-Exception in "bad_test::test_param": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_test::test_param": Testing aborted
-
-===========================
-
-log level: 6; error type: no error; test case type: free function;
-Running 1 test case...
-
-===========================
-
-log level: 6; error type: no error; test case type: user test case;
-Running 1 test case...
-
-===========================
-
-log level: 6; error type: no error; test case type: parameterized free function;
-Running 1 test case...
-
-===========================
-
-log level: 6; error type: no error; test case type: parameterized user test case;
-Running 1 test case...
-
-===========================
-
-log level: 6; error type: user error; test case type: free function;
-Running 1 test case...
-
-===========================
-
-log level: 6; error type: user error; test case type: user test case;
-Running 1 test case...
-
-===========================
-
-log level: 6; error type: user error; test case type: parameterized free function;
-Running 1 test case...
-
-===========================
-
-log level: 6; error type: user error; test case type: parameterized user test case;
-Running 1 test case...
-
-===========================
-
-log level: 6; error type: cpp exception; test case type: free function;
-Running 1 test case...
-
-===========================
-
-log level: 6; error type: cpp exception; test case type: user test case;
-Running 1 test case...
-
-===========================
-
-log level: 6; error type: cpp exception; test case type: parameterized free function;
-Running 1 test case...
-
-===========================
-
-log level: 6; error type: cpp exception; test case type: parameterized user test case;
-Running 1 test case...
-
-===========================
-
-log level: 6; error type:  system error; test case type: free function;
-Running 1 test case...
-Exception in "bad_function": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-
-===========================
-
-log level: 6; error type:  system error; test case type: user test case;
-Running 1 test case...
-Exception in "bad_test::test": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-
-===========================
-
-log level: 6; error type:  system error; test case type: parameterized free function;
-Running 1 test case...
-Exception in "bad_function_param": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-
-===========================
-
-log level: 6; error type:  system error; test case type: parameterized user test case;
-Running 1 test case...
-Exception in "bad_test::test_param": integer divide by zero
-88: last checkpoint: error_on_demand() divide by zero
-
-===========================
-
-log level: 6; error type: fatal user error; test case type: free function;
-Running 1 test case...
-78: fatal error in "bad_function": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 6; error type: fatal user error; test case type: user test case;
-Running 1 test case...
-78: fatal error in "bad_test::test": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 6; error type: fatal user error; test case type: parameterized free function;
-Running 1 test case...
-78: fatal error in "bad_function_param": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 6; error type: fatal user error; test case type: parameterized user test case;
-Running 1 test case...
-78: fatal error in "bad_test::test_param": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 6; error type: fatal system error; test case type: free function;
-Running 1 test case...
-Exception in "bad_function": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_function": Testing aborted
-
-===========================
-
-log level: 6; error type: fatal system error; test case type: user test case;
-Running 1 test case...
-Exception in "bad_test::test": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_test::test": Testing aborted
-
-===========================
-
-log level: 6; error type: fatal system error; test case type: parameterized free function;
-Running 1 test case...
-Exception in "bad_function_param": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_function_param": Testing aborted
-
-===========================
-
-log level: 6; error type: fatal system error; test case type: parameterized user test case;
-Running 1 test case...
-Exception in "bad_test::test_param": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_test::test_param": Testing aborted
-
-===========================
-
-log level: 7; error type: no error; test case type: free function;
-Running 1 test case...
-
-===========================
-
-log level: 7; error type: no error; test case type: user test case;
-Running 1 test case...
-
-===========================
-
-log level: 7; error type: no error; test case type: parameterized free function;
-Running 1 test case...
-
-===========================
-
-log level: 7; error type: no error; test case type: parameterized user test case;
-Running 1 test case...
-
-===========================
-
-log level: 7; error type: user error; test case type: free function;
-Running 1 test case...
-
-===========================
-
-log level: 7; error type: user error; test case type: user test case;
-Running 1 test case...
-
-===========================
-
-log level: 7; error type: user error; test case type: parameterized free function;
-Running 1 test case...
-
-===========================
-
-log level: 7; error type: user error; test case type: parameterized user test case;
-Running 1 test case...
-
-===========================
-
-log level: 7; error type: cpp exception; test case type: free function;
-Running 1 test case...
-
-===========================
-
-log level: 7; error type: cpp exception; test case type: user test case;
-Running 1 test case...
-
-===========================
-
-log level: 7; error type: cpp exception; test case type: parameterized free function;
-Running 1 test case...
-
-===========================
-
-log level: 7; error type: cpp exception; test case type: parameterized user test case;
-Running 1 test case...
-
-===========================
-
-log level: 7; error type:  system error; test case type: free function;
-Running 1 test case...
-
-===========================
-
-log level: 7; error type:  system error; test case type: user test case;
-Running 1 test case...
-
-===========================
-
-log level: 7; error type:  system error; test case type: parameterized free function;
-Running 1 test case...
-
-===========================
-
-log level: 7; error type:  system error; test case type: parameterized user test case;
-Running 1 test case...
-
-===========================
-
-log level: 7; error type: fatal user error; test case type: free function;
-Running 1 test case...
-78: fatal error in "bad_function": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 7; error type: fatal user error; test case type: user test case;
-Running 1 test case...
-78: fatal error in "bad_test::test": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 7; error type: fatal user error; test case type: parameterized free function;
-Running 1 test case...
-78: fatal error in "bad_function_param": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 7; error type: fatal user error; test case type: parameterized user test case;
-Running 1 test case...
-78: fatal error in "bad_test::test_param": error_on_demand() BOOST_FAIL
-
-===========================
-
-log level: 7; error type: fatal system error; test case type: free function;
-Running 1 test case...
-Exception in "bad_function": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_function": Testing aborted
-
-===========================
-
-log level: 7; error type: fatal system error; test case type: user test case;
-Running 1 test case...
-Exception in "bad_test::test": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_test::test": Testing aborted
-
-===========================
-
-log level: 7; error type: fatal system error; test case type: parameterized free function;
-Running 1 test case...
-Exception in "bad_function_param": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_function_param": Testing aborted
-
-===========================
-
-log level: 7; error type: fatal system error; test case type: parameterized user test case;
-Running 1 test case...
-Exception in "bad_test::test_param": memory access violation
-93: last checkpoint: error_on_demand() write to an invalid address
-176: fatal error in "bad_test::test_param": Testing aborted
-
-===========================
-
-log level: 8; error type: no error; test case type: free function;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: no error; test case type: user test case;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: no error; test case type: parameterized free function;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: no error; test case type: parameterized user test case;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: user error; test case type: free function;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: user error; test case type: user test case;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: user error; test case type: parameterized free function;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: user error; test case type: parameterized user test case;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: cpp exception; test case type: free function;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: cpp exception; test case type: user test case;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: cpp exception; test case type: parameterized free function;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: cpp exception; test case type: parameterized user test case;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type:  system error; test case type: free function;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type:  system error; test case type: user test case;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type:  system error; test case type: parameterized free function;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type:  system error; test case type: parameterized user test case;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: fatal user error; test case type: free function;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: fatal user error; test case type: user test case;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: fatal user error; test case type: parameterized free function;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: fatal user error; test case type: parameterized user test case;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: fatal system error; test case type: free function;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: fatal system error; test case type: user test case;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: fatal system error; test case type: parameterized free function;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 8; error type: fatal system error; test case type: parameterized user test case;
-Running 1 test case...
-
-0%   10   20   30   40   50   60   70   80   90   100%
-|----|----|----|----|----|----|----|----|----|----|
-***************************************************
-
-===========================
-
-log level: 9; error type: no error; test case type: free function;
-
-===========================
-
-log level: 9; error type: no error; test case type: user test case;
-
-===========================
-
-log level: 9; error type: no error; test case type: parameterized free function;
-
-===========================
-
-log level: 9; error type: no error; test case type: parameterized user test case;
-
-===========================
-
-log level: 9; error type: user error; test case type: free function;
-
-===========================
-
-log level: 9; error type: user error; test case type: user test case;
-
-===========================
-
-log level: 9; error type: user error; test case type: parameterized free function;
-
-===========================
-
-log level: 9; error type: user error; test case type: parameterized user test case;
-
-===========================
-
-log level: 9; error type: cpp exception; test case type: free function;
-
-===========================
-
-log level: 9; error type: cpp exception; test case type: user test case;
-
-===========================
-
-log level: 9; error type: cpp exception; test case type: parameterized free function;
-
-===========================
-
-log level: 9; error type: cpp exception; test case type: parameterized user test case;
-
-===========================
-
-log level: 9; error type:  system error; test case type: free function;
-
-===========================
-
-log level: 9; error type:  system error; test case type: user test case;
-
-===========================
-
-log level: 9; error type:  system error; test case type: parameterized free function;
-
-===========================
-
-log level: 9; error type:  system error; test case type: parameterized user test case;
-
-===========================
-
-log level: 9; error type: fatal user error; test case type: free function;
-
-===========================
-
-log level: 9; error type: fatal user error; test case type: user test case;
-
-===========================
-
-log level: 9; error type: fatal user error; test case type: parameterized free function;
-
-===========================
-
-log level: 9; error type: fatal user error; test case type: parameterized user test case;
-
-===========================
-
-log level: 9; error type: fatal system error; test case type: free function;
-
-===========================
-
-log level: 9; error type: fatal system error; test case type: user test case;
-
-===========================
-
-log level: 9; error type: fatal system error; test case type: parameterized free function;
-
-===========================
-
-log level: 9; error type: fatal system error; test case type: parameterized user test case;
-
-Test case "call_test_main" passed with:
-240 assertions out of 240 passed
-  0 assertions out of 240 failed

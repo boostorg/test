@@ -17,6 +17,10 @@
 
 #include <utility>
 
+#include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
+
 namespace boost {
 
 namespace unit_test {
@@ -213,10 +217,17 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 
 } // namespace boost
 
+//____________________________________________________________________________//
+
+#include <boost/test/detail/enable_warnings.hpp>
+
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2005/02/20 08:27:08  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.3  2005/02/01 08:59:39  rogeeff
 //  supplied_log_formatters split
 //  change formatters interface to simplify result interface

@@ -1,5 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2005.
-//  (C) Copyright Ullrich Koethe 2001.
+//  (C) Copyright Gennadiy Rozental 2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -14,48 +13,54 @@
 //  Test Framework to monitor test cases run.
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_MONITOR_IPP_012205GER
-#define BOOST_UNIT_TEST_MONITOR_IPP_012205GER
+#ifndef BOOST_TEST_UNIT_TEST_MONITOR_IPP_012205GER
+#define BOOST_TEST_UNIT_TEST_MONITOR_IPP_012205GER
 
 // Boost.Test
-#include <boost/test/detail/unit_test_monitor.hpp>
-#include <boost/test/unit_test_log.hpp>
-#include <boost/test/unit_test_result.hpp>
+#include <boost/test/unit_test_monitor.hpp>
 #include <boost/test/unit_test_suite.hpp>
 #include <boost/test/test_tools.hpp>
+#include <boost/test/framework.hpp>
+
+#include <boost/test/detail/unit_test_parameters.hpp>
+
+#include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
 
 namespace boost {
 
 namespace unit_test {
 
-namespace ut_detail {
+namespace {
+struct zero_return_wrapper {
+    explicit zero_return_wrapper( callback0<> const& f ) : m_f( f ) {}
+    
+    int operator()() { m_f(); return 0; }
+    
+    callback0<> const& m_f;
+};
+
+}
 
 // ************************************************************************** //
 // **************               unit_test_monitor              ************** //
 // ************************************************************************** //
 
-bool unit_test_monitor::s_catch_system_errors = true;
-
-unit_test_monitor::error_level
-unit_test_monitor::execute_and_translate( test_case* target_test_case, function_to_monitor f, int timeout )
+unit_test_monitor_t::error_level
+unit_test_monitor_t::execute_and_translate( test_case const& tc )
 {
-    m_test_case         = target_test_case;
-    m_test_case_method  = f;
-
     try {
-        execute( s_catch_system_errors, timeout );
+        execute( callback0<int>( zero_return_wrapper( tc.test_func() ) ),
+                 runtime_config::catch_sys_errors(),
+                 tc.p_timeout );
     }
-    catch( execution_exception const& exex ) {
-        log_level loglevel =
-             exex.code() <= execution_exception::cpp_exception_error ? log_cpp_exception_errors :
-            (exex.code() <= execution_exception::timeout_error       ? log_system_errors :
-                                                                       log_fatal_errors);
-        unit_test_log.log_exception( loglevel, exex.what() );
-
-        unit_test_result::instance().caught_exception();
+    catch( execution_exception const& ex ) {
+        framework::exception_caught( ex );
+        framework::test_unit_aborted();
 
         // translate execution_exception::error_code to error_level
-        switch( exex.code() ) {
+        switch( ex.code() ) {
         case execution_exception::no_error:             return test_ok;
         case execution_exception::user_error:           return unexpected_exception;
         case execution_exception::cpp_exception_error:  return unexpected_exception;
@@ -72,31 +77,21 @@ unit_test_monitor::execute_and_translate( test_case* target_test_case, function_
 
 //____________________________________________________________________________//
 
-int
-unit_test_monitor::function()
-{
-    try {
-        (m_test_case->*m_test_case_method)();
-    }
-    catch( test_tools::tt_detail::test_tool_failed const& /*e*/ ) { // e not used; error already reported
-        // nothing to do
-    }
-
-    return 0;
-}
-
-//____________________________________________________________________________//
-
-} // namespace ut_detail
-
 } // namespace unit_test
 
 } // namespace boost
+
+//____________________________________________________________________________//
+
+#include <boost/test/detail/enable_warnings.hpp>
 
 // ***************************************************************************
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.3  2005/02/20 08:27:07  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.2  2005/02/01 06:40:07  rogeeff
 //  copyright update
 //  old log entries removed
@@ -122,4 +117,4 @@ unit_test_monitor::function()
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_MONITOR_IPP_012205GER
+#endif // BOOST_TEST_UNIT_TEST_MONITOR_IPP_012205GER

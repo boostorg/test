@@ -9,30 +9,35 @@
 //
 //  Version     : $Revision$
 //
-//  Description : included (vs. linked ) version of Unit Test Framework
+//  Description : included (vs. linked) version of Unit Test Framework
 // ***************************************************************************
 
 #ifndef BOOST_INCLUDED_UNIT_TEST_FRAMEWORK_HPP_071894GER
 #define BOOST_INCLUDED_UNIT_TEST_FRAMEWORK_HPP_071894GER
 
-#include <boost/test/impl/execution_monitor.ipp>
-
-#include <boost/test/impl/test_tools.ipp>
-
-#include <boost/test/impl/unit_test_result.ipp>
-#include <boost/test/impl/unit_test_suite.ipp>
-#include <boost/test/impl/unit_test_parameters.ipp>
-#include <boost/test/impl/unit_test_log.ipp>
-#include <boost/test/impl/unit_test_monitor.ipp>
 #include <boost/test/impl/compiler_log_formatter.ipp>
-#include <boost/test/impl/xml_log_formatter.ipp>
-
+#include <boost/test/impl/execution_monitor.ipp>
+#include <boost/test/impl/framework.ipp>
+#include <boost/test/impl/plain_report_formatter.ipp>
+#include <boost/test/impl/progress_monitor.ipp>
+#include <boost/test/impl/results_collector.ipp>
+#include <boost/test/impl/results_reporter.ipp>
+#include <boost/test/impl/test_tools.ipp>
+#include <boost/test/impl/unit_test_log.ipp>
 #include <boost/test/impl/unit_test_main.ipp>
+#include <boost/test/impl/unit_test_monitor.ipp>
+#include <boost/test/impl/unit_test_parameters.ipp>
+#include <boost/test/impl/unit_test_suite.ipp>
+#include <boost/test/impl/xml_log_formatter.ipp>
+#include <boost/test/impl/xml_report_formatter.ipp>
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.13  2005/02/20 08:27:08  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.12  2005/02/01 08:59:38  rogeeff
 //  supplied_log_formatters split
 //  change formatters interface to simplify result interface

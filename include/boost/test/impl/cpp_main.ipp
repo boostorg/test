@@ -13,44 +13,48 @@
 //  Description : main function implementation for Program Executon Monitor
 // ***************************************************************************
 
-#ifndef BOOST_CPP_MAIN_IPP_012205GER
-#define BOOST_CPP_MAIN_IPP_012205GER
+#ifndef BOOST_TEST_CPP_MAIN_IPP_012205GER
+#define BOOST_TEST_CPP_MAIN_IPP_012205GER
 
 // Boost.Test
 #include <boost/test/execution_monitor.hpp>
-#include <boost/test/detail/unit_test_config.hpp>
+#include <boost/test/detail/config.hpp>
+#include <boost/test/utils/basic_cstring/io.hpp>
 
 // Boost
-#include <boost/cstdlib.hpp>
-#include <boost/config.hpp>
+#include <boost/cstdlib.hpp>    // for exit codes
+#include <boost/config.hpp>     // for workarounds
 
 // STL
 #include <iostream>
-#include <cstring>
+#include <cstdlib>      // std::getenv
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
+#include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
+
 #ifdef BOOST_NO_STDC_NAMESPACE
-namespace std { using ::getenv; using ::strcmp; }
+namespace std { using ::getenv; }
 #endif
 
 int cpp_main( int argc, char* argv[] );  // prototype for user's cpp_main()
 
 namespace {
 
-class cpp_main_caller : public boost::execution_monitor {
-public:
-    cpp_main_caller( int argc, char** argv )
-    : m_argc( argc ), m_argv( argv )    {}
+struct cpp_main_caller {
+    cpp_main_caller( int argc, char** argv ) : m_argc( argc ), m_argv( argv ) {}
     
-    int         function()              { return cpp_main( m_argc, m_argv ); }
-    
+    int operator()() { return cpp_main( m_argc, m_argv ); }
+  
 private:
-    int         m_argc;
-    char**      m_argv;
+    // Data members    
+    int      m_argc;
+    char**   m_argv;
 };
 
-}
+} // local namespace
 
 // ************************************************************************** //
 // **************                   cpp main                   ************** //
@@ -58,29 +62,28 @@ private:
 
 int BOOST_TEST_CALL_DECL main( int argc, char* argv[] )
 {
-    cpp_main_caller caller( argc, argv );
-    
     int result;
 
     boost::unit_test::const_string p( std::getenv( "BOOST_TEST_CATCH_SYSTEM_ERRORS" ) );
     bool catch_system_errors = p != "no";
         
     try {
-        result = caller.execute( catch_system_errors );
+        ::boost::execution_monitor ex_mon;
+        result = ex_mon.execute( ::boost::unit_test::callback0<int>( cpp_main_caller( argc, argv ) ), catch_system_errors );
         
         if( result == 0 )
-            result = boost::exit_success;
-        else if( result != boost::exit_success ) {
+            result = ::boost::exit_success;
+        else if( result != ::boost::exit_success ) {
             std::cout << "\n**** error return code: " << result << std::endl;
-            result = boost::exit_failure;
+            result = ::boost::exit_failure;
         }
     }
-    catch( boost::execution_exception const& exex ) {
+    catch( ::boost::execution_exception const& exex ) {
         std::cout << "\n**** exception(" << exex.code() << "): " << exex.what() << std::endl;
-        result = boost::exit_exception_failure;
+        result = ::boost::exit_exception_failure;
     }
     
-    if( result != boost::exit_success ) {
+    if( result != ::boost::exit_success ) {
         std::cerr << "******** errors detected; see standard output for details ********" << std::endl;
     }
     else {
@@ -88,7 +91,7 @@ int BOOST_TEST_CALL_DECL main( int argc, char* argv[] )
         //  like the clutter.  Use an environment variable to avoid command
         //  line argument modifications; for use in production programs
         //  that's a no-no in some organizations.
-        boost::unit_test::const_string p( std::getenv( "BOOST_PRG_MON_CONFIRM" ) );
+        ::boost::unit_test::const_string p( std::getenv( "BOOST_PRG_MON_CONFIRM" ) );
         if( p != "no" ) { 
             std::cerr << std::flush << "no errors detected" << std::endl; 
         }
@@ -99,10 +102,15 @@ int BOOST_TEST_CALL_DECL main( int argc, char* argv[] )
 
 //____________________________________________________________________________//
 
+#include <boost/test/detail/enable_warnings.hpp>
+
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2005/02/20 08:27:07  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.4  2005/02/01 06:40:07  rogeeff
 //  copyright update
 //  old log entries removed
@@ -120,4 +128,4 @@ int BOOST_TEST_CALL_DECL main( int argc, char* argv[] )
 //
 // ***************************************************************************
 
-#endif // BOOST_CPP_MAIN_IPP_012205GER
+#endif // BOOST_TEST_CPP_MAIN_IPP_012205GER

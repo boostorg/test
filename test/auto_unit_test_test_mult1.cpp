@@ -16,7 +16,7 @@
 #define BOOST_AUTO_TEST_MAIN
 #include <boost/test/auto_unit_test.hpp>
 
-BOOST_AUTO_UNIT_TEST( test )
+BOOST_AUTO_TEST_CASE( test )
 {
     BOOST_CHECK( true );
 }
@@ -27,6 +27,9 @@ BOOST_AUTO_UNIT_TEST( test )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2005/02/20 08:28:34  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.5  2004/05/27 06:30:48  rogeeff
 //  no message
 //

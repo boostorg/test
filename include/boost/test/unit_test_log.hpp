@@ -14,13 +14,17 @@
 //  completely hidden with pimple idiom
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_LOG_HPP_071894GER
-#define BOOST_UNIT_TEST_LOG_HPP_071894GER
+#ifndef BOOST_TEST_UNIT_TEST_LOG_HPP_071894GER
+#define BOOST_TEST_UNIT_TEST_LOG_HPP_071894GER
 
 // Boost.Test
-#include <boost/test/detail/unit_test_config.hpp>
+#include <boost/test/test_observer.hpp>
+
+#include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/detail/log_level.hpp>
-#include <boost/test/fwd_decl.hpp>
+#include <boost/test/detail/fwd_decl.hpp>
+
+#include <boost/test/utils/trivial_singleton.hpp>
 
 // Boost
 #include <boost/utility.hpp>
@@ -29,6 +33,8 @@
 #include <iosfwd>   // for std::ostream&
 
 #include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
 
 namespace boost {
 
@@ -45,19 +51,19 @@ struct begin {};
 struct end {};
 
 struct line {
-    explicit    line( std::size_t ln_ ) : m_line_num( ln_ ) {}
+    explicit    line( std::size_t ln ) : m_line_num( ln ) {}
 
     std::size_t m_line_num;
 };
 
 struct file {
-    explicit    file( const_string fn_ ) : m_file_name( fn_ ) {}
+    explicit    file( const_string fn ) : m_file_name( fn ) {}
 
     const_string m_file_name;
 };
 
 struct checkpoint {
-    explicit    checkpoint( const_string message_ ) : m_message( message_ ) {}
+    explicit    checkpoint( const_string message ) : m_message( message ) {}
 
     const_string m_message;
 };
@@ -92,59 +98,56 @@ private:
 // **************                 unit_test_log                ************** //
 // ************************************************************************** //
 
-class unit_test_log_t : private boost::noncopyable {
+class unit_test_log_t : public test_observer, public singleton<unit_test_log_t> {
 public:
-    // instance access method;
-    static unit_test_log_t& instance();
+    // test_observer interface implementation
+    void                test_start( counter_t test_cases_amount );
+    void                test_finish();
+    void                test_aborted();
 
-    void                start( bool log_build_info = false );
-    void                header( counter_t );
-    void                finish( counter_t );
+    void                test_unit_start( test_unit const& );
+    void                test_unit_finish( test_unit const&, unsigned long elapsed );
+    void                test_unit_skipped( test_unit const& );
+    void                test_unit_aborted( test_unit const& );
+
+    void                assertion_result( bool passed );
+    void                exception_caught( execution_exception const& );
 
     // log configuration methods
     void                set_stream( std::ostream& );
     void                set_threshold_level( log_level );
-    void                set_threshold_level_by_name( const_string );
-    void                set_format( const_string );
+    void                set_format( output_format );
     void                set_formatter( unit_test_log_formatter* );
 
-    // test case scope tracking
-    void                test_case_enter( test_case const& );
-    void                test_case_exit( test_case const&, long testing_time_in_mks );
+    // entry logging
+    unit_test_log_t&    operator<<( log::begin const& );        // begin entry 
+    unit_test_log_t&    operator<<( log::end const& );          // end entry
+    unit_test_log_t&    operator<<( log::file const& );         // set entry file name
+    unit_test_log_t&    operator<<( log::line const& );         // set entry line number
+    unit_test_log_t&    operator<<( log::checkpoint const& );   // set checkpoint
+    unit_test_log_t&    operator<<( log_level );                // set entry level
+    unit_test_log_t&    operator<<( const_string );             // log entry value
 
-    // entry setup
-    unit_test_log_t&    operator<<( log::begin const& );         // begin entry 
-    unit_test_log_t&    operator<<( log::end const& );           // end entry
-    unit_test_log_t&    operator<<( log::file const& );          // set entry file name
-    unit_test_log_t&    operator<<( log::line const& );          // set entry line number
-    unit_test_log_t&    operator<<( log::checkpoint const& );    // set checkpoint
-    unit_test_log_t&    operator<<( log_level );                 // set entry level
-    ut_detail::entry_value_collector operator()( log_level );
-
-    // logging methods
-    unit_test_log_t&    operator<<( const_string );
-    void                log_progress();
-    void                log_exception( log_level, const_string );
+    ut_detail::entry_value_collector operator()( log_level );   // initiate entry collection
 
 private:
-    // Constructor
-    unit_test_log_t();
+    BOOST_TEST_SINGLETON_CONS( unit_test_log_t );
 }; // unit_test_log_t
 
-namespace {
-unit_test_log_t& unit_test_log = unit_test_log_t::instance();
-}
+BOOST_TEST_SINGLETON_INST( unit_test_log )
 
 // helper macros
-#define BOOST_UT_LOG_ENTRY                                                       \
-    (boost::unit_test::unit_test_log << boost::unit_test::log::begin()           \
-        << boost::unit_test::log::file( BOOST_TEST_STRING_LITERAL( __FILE__ ) )  \
-        << boost::unit_test::log::line( __LINE__ ))                              \
+#define BOOST_UT_LOG_ENTRY                                             \
+    (boost::unit_test::unit_test_log << boost::unit_test::log::begin() \
+        << boost::unit_test::log::file( BOOST_TEST_L( __FILE__ ) )     \
+        << boost::unit_test::log::line( __LINE__ ))                    \
 /**/
 
 } // namespace unit_test
 
 } // namespace boost
+
+//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 
@@ -152,6 +155,9 @@ unit_test_log_t& unit_test_log = unit_test_log_t::instance();
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.30  2005/02/20 08:27:06  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.29  2005/02/02 12:08:14  rogeeff
 //  namespace log added for log manipulators
 //
@@ -177,5 +183,5 @@ unit_test_log_t& unit_test_log = unit_test_log_t::instance();
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_LOG_HPP_071894GER
+#endif // BOOST_TEST_UNIT_TEST_LOG_HPP_071894GER
 

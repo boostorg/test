@@ -8,15 +8,19 @@
 // Boost.Test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
+#include <boost/test/parameterized_test.hpp>
 using boost::unit_test::test_suite;
 
 // BOOST
 #include <boost/functional.hpp>
 #include <boost/static_assert.hpp>
+#include <boost/mem_fn.hpp>
+#include <boost/bind.hpp>
 
 // STL
 #include <string>
 #include <algorithm>
+#include <functional>
 #include <iostream>
 #include <memory>
 #include <list>
@@ -147,24 +151,33 @@ struct massive_hash_function_test : test_suite {
         std::cout << "Enter test data in a format [string] -1 to check long string validation\n";
         std::cout << "Enter test data in a format [string] -2 to check invalid argument string validation\n";
 
+        std::list<hash_function_test_data> test_data_store;
+
         while( !std::cin.eof() ) {
             hash_function_test_data test_data;
             
             if( !(std::cin >> test_data) )
                 break;
 
-            m_test_data.push_back( test_data );
+            test_data_store.push_back( test_data );
         }
 
-        add( BOOST_PARAM_CLASS_TEST_CASE( &hash_function_tester::test, instance, m_test_data.begin(), m_test_data.end() ) );
-    }
+        boost::unit_test::callback1<hash_function_test_data> test_func( 
+            boost::bind( boost::mem_fn( &hash_function_tester::test ), instance ) );
 
-    std::list<hash_function_test_data> m_test_data;
+        add( boost::unit_test::make_test_case<hash_function_test_data>( 
+                test_func,
+                "massive_hash_function_test", 
+                test_data_store.begin(),
+                test_data_store.end() ) );
+    }
 };
+
+//____________________________________________________________________________//
 
 test_suite*
 init_unit_test_suite( int argc, char * argv[] ) {
-    std::auto_ptr<test_suite> test( BOOST_TEST_SUITE( "Unit test example 5" ) );
+    test_suite* test( BOOST_TEST_SUITE( "Unit test example 5" ) );
   
     try  {
         test->add( new massive_hash_function_test );
@@ -174,7 +187,9 @@ init_unit_test_suite( int argc, char * argv[] ) {
         return (test_suite*)0;
     }
 
-    return test.release(); 
+    return test; 
 }
+
+//____________________________________________________________________________//
 
 // EOF

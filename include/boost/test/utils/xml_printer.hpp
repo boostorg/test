@@ -19,6 +19,7 @@
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 #include <boost/test/utils/fixed_mapping.hpp>
 #include <boost/test/utils/custom_manip.hpp>
+#include <boost/test/utils/foreach.hpp>
 
 // Boost
 #include <boost/config.hpp>
@@ -27,6 +28,8 @@
 #include <iostream>
 
 #include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
 
 namespace boost {
 
@@ -49,13 +52,13 @@ print_escaped( std::ostream& where_to, const_string value )
         0
     );
 
-    for( const_string::iterator it = value.begin(); it != value.end(); ++it ) {
-        char const* ref = char_type[*it];
+    BOOST_TEST_FOREACH( char, c, value ) {
+        char const* ref = char_type[c];
 
         if( ref )
             where_to << '&' << ref << ';';
         else
-            where_to << *it;
+            where_to << c;
     }
 }
 
@@ -100,12 +103,17 @@ operator<<( custom_printer<pcdata> const& p, const_string value )
 
 } // namespace boost
 
+//____________________________________________________________________________//
+
 #include <boost/test/detail/enable_warnings.hpp>
 
 // ***************************************************************************
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.5  2005/02/20 08:27:08  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.4  2005/02/01 06:40:08  rogeeff
 //  copyright update
 //  old log entries removed

@@ -12,8 +12,8 @@
 //  Description : class basic_cstring comparisons implementation
 // ***************************************************************************
 
-#ifndef  BASIC_CSTRING_COMPARE_HPP_071894GER
-#define  BASIC_CSTRING_COMPARE_HPP_071894GER
+#ifndef  BOOST_TEST_BASIC_CSTRING_COMPARE_HPP_071894GER
+#define  BOOST_TEST_BASIC_CSTRING_COMPARE_HPP_071894GER
 
 // Boost.Test
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
@@ -21,6 +21,10 @@
 // STL
 #include <functional>
 #include <cctype>
+
+#include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
 
 # if defined(BOOST_NO_STDC_NAMESPACE) && !BOOST_WORKAROUND(__BORLANDC__, <= 0x570) && !BOOST_WORKAROUND(__GNUC__, < 3)
 namespace std { using ::toupper; }
@@ -104,10 +108,17 @@ operator <( boost::unit_test::basic_cstring<CharT> const& x,
 
 } // namespace boost
 
+//____________________________________________________________________________//
+
+#include <boost/test/detail/enable_warnings.hpp>
+
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2005/02/20 08:27:09  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.4  2005/02/01 06:40:08  rogeeff
 //  copyright update
 //  old log entries removed
@@ -125,4 +136,4 @@ operator <( boost::unit_test::basic_cstring<CharT> const& x,
 //
 // ***************************************************************************
 
-#endif // BASIC_CSTRING_COMPARE_HPP_071894GER
+#endif // BOOST_TEST_BASIC_CSTRING_COMPARE_HPP_071894GER

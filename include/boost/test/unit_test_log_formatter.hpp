@@ -12,19 +12,21 @@
 //  Description : 
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_LOG_FORMATTER_HPP_071894GER
-#define BOOST_UNIT_TEST_LOG_FORMATTER_HPP_071894GER
+#ifndef BOOST_TEST_UNIT_TEST_LOG_FORMATTER_HPP_071894GER
+#define BOOST_TEST_UNIT_TEST_LOG_FORMATTER_HPP_071894GER
 
 // Boost.Test
-#include <boost/test/detail/unit_test_config.hpp>
+#include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/detail/log_level.hpp>
-#include <boost/test/fwd_decl.hpp>
+#include <boost/test/detail/fwd_decl.hpp>
 
 // STL
 #include <iosfwd>
 #include <string> // for std::string
 
 #include <boost/test/detail/suppress_warnings.hpp>
+
+//____________________________________________________________________________//
 
 namespace boost {
 
@@ -81,24 +83,26 @@ public:
     virtual             ~unit_test_log_formatter() {}
 
     // Formatter interface
-    virtual void        start_log( std::ostream&, bool log_build_info ) = 0;
-    virtual void        log_header( std::ostream&, counter_t test_cases_amount ) = 0;
-    virtual void        finish_log( std::ostream& ) = 0;
+    virtual void        log_start( std::ostream&, counter_t test_cases_amount ) = 0;
+    virtual void        log_finish( std::ostream& ) = 0;
+    virtual void        log_build_info( std::ostream& ) = 0;
 
-    virtual void        start_test_case( test_case const& tc ) = 0;
-    virtual void        test_case_enter( std::ostream&, test_case const& tc ) = 0;
-    virtual void        test_case_exit( std::ostream&, test_case const& tc, long testing_time_in_mks ) = 0;
+    virtual void        test_unit_start( std::ostream&, test_unit const& tu ) = 0;
+    virtual void        test_unit_finish( std::ostream&, test_unit const& tu, unsigned long elapsed ) = 0;
+    virtual void        test_unit_skipped( std::ostream&, test_unit const& ) = 0;
 
     virtual void        log_exception( std::ostream&, log_checkpoint_data const&, const_string explanation ) = 0;
 
-    virtual void        begin_log_entry( std::ostream&, log_entry_data const&, log_entry_types let ) = 0;
+    virtual void        log_entry_start( std::ostream&, log_entry_data const&, log_entry_types let ) = 0;
     virtual void        log_entry_value( std::ostream&, const_string value ) = 0;
-    virtual void        end_log_entry( std::ostream& ) = 0;
+    virtual void        log_entry_finish( std::ostream& ) = 0;
 };
 
 } // namespace unit_test
 
 } // namespace boost
+
+//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 
@@ -106,6 +110,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.13  2005/02/20 08:27:06  rogeeff
+//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
+//
 //  Revision 1.12  2005/02/01 08:59:28  rogeeff
 //  supplied_log_formatters split
 //  change formatters interface to simplify result interface
@@ -133,5 +140,5 @@ public:
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_LOG_FORMATTER_HPP_071894GER
+#endif // BOOST_TEST_UNIT_TEST_LOG_FORMATTER_HPP_071894GER
 
