@@ -6,7 +6,7 @@
 //
 //  See http://www.boost.org for most recent version including documentation.
 
-// TEST LIB
+// Boost.Test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 using boost::unit_test_framework::test_suite;
@@ -124,8 +124,10 @@ public:
             BOOST_CHECK_THROW( m_function_under_test( test_data.orig_string ), std::length_error )
         else if( test_data.exp_value == (unsigned long)-2 )
             BOOST_CHECK_THROW( m_function_under_test( test_data.orig_string ), std::out_of_range )
-        else
+        else {
+            BOOST_MESSAGE( "Testing: " << test_data.orig_string );
             BOOST_CHECK_EQUAL( m_function_under_test( test_data.orig_string ), test_data.exp_value );
+        }
     }
 
 private:
@@ -136,10 +138,15 @@ private:
 
 struct massive_hash_function_test : test_suite {
     massive_hash_function_test() {
-        std::string alphabet; 
+        std::string alphabet;
+        std::cout << "Enter alphabet (4 characters without delimeters)\n";
         std::cin >> alphabet;
 
         boost::shared_ptr<hash_function_tester> instance( new hash_function_tester( alphabet ) );
+
+        std::cout << "\nEnter test data in a format [string] [value] to check correct calculation\n";
+        std::cout << "Enter test data in a format [string] -1 to check long string validation\n";
+        std::cout << "Enter test data in a format [string] -2 to check invalid argument string validation\n";
 
         while( !std::cin.eof() ) {
             hash_function_test_data test_data;
@@ -162,11 +169,10 @@ init_unit_test_suite( int argc, char * argv[] ) {
   
     try  {
         test->add( new massive_hash_function_test );
-    } catch( std::logic_error const& ) {
-        BOOST_UT_MESSAGE_BEGIN( report_messages )
-            "Test suite fail to create instance of hash function"
-        BOOST_UT_LOG_END
-        return NULL;
+    } catch( std::logic_error const& ex ) {
+        std::cout << "Test suite fail to create instance of hash function: " << ex.what() << std::endl;
+
+        return (test_suite*)0;
     }
 
     return test.release(); 
