@@ -35,13 +35,14 @@ namespace unit_test_framework {
 // ************************************************************************** //
 
 class unit_test_result {
+    friend struct unit_test_result_saver;
 public:
     // Destructor
     ~unit_test_result();
 
     // current test results access and management
     static unit_test_result& instance();
-    static void     test_case_start( char const* name_, unit_test_counter expected_failures_ = 0 );
+    static void     test_case_start( c_string_literal name_, unit_test_counter expected_failures_ = 0 );
     static void     test_case_end();
     
     // use to dynamically change amount of errors expected in current test case
@@ -49,8 +50,8 @@ public:
 
     // reporting
     void            confirmation_report( std::ostream& where_to_ );                 // shortest
-    void            short_report( std::ostream& where_to_, int indent_ = 0 );       // short
-    void            detailed_report( std::ostream& where_to_, int indent_ = 0 );    // long
+    void            short_report( std::ostream& where_to_, size_t indent_ = 0 );    // short
+    void            detailed_report( std::ostream& where_to_, size_t indent_ = 0 ); // long
     int             result_code();                                                  // to be returned from main
 
     // to be used by tool box implementation
@@ -61,18 +62,30 @@ public:
     void            caught_exception();
 
     // access method; to be used by unit_test_log
-    char const*     test_case_name();
+    c_string_literal     test_case_name();
 
     // used mostly by the Boost.Test unit testing
-    static void     reset_current_result_set();
     void            failures_details( unit_test_counter& num_of_failures, bool& exception_caught );
 
 private:
+    // used to temporarely introduce new results set without polluting current one
+    static void     reset_current_result_set();
+
     // Constructor
-    unit_test_result( unit_test_result* parent_, char const* test_case_name_, unit_test_counter expected_failures_ = 0 );
+    unit_test_result( unit_test_result* parent_, c_string_literal test_case_name_, unit_test_counter expected_failures_ = 0 );
    
     struct Impl;
     boost::shared_ptr<Impl> m_pimpl;
+};
+
+// ************************************************************************** //
+// **************            unit_test_result_saver            ************** //
+// ************************************************************************** //
+
+struct unit_test_result_saver
+{
+    unit_test_result_saver()  { unit_test_result::reset_current_result_set(); }
+    ~unit_test_result_saver() { unit_test_result::reset_current_result_set(); }
 };
 
 } // namespace unit_test_framework
@@ -83,6 +96,11 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.11  2002/12/08 17:47:31  rogeeff
+//  switched to use c_string_literal
+//  unit_test_result_saver introduced to properly managed reset_current_test_set calls
+//  in case of exceptions
+//
 //  Revision 1.10  2002/11/02 19:31:04  rogeeff
 //  merged into the main trank
 //
