@@ -65,7 +65,8 @@ struct unit_test_log::Impl {
     // helper functions
     std::ostream&   stream() { return *m_stream; }
 
-    void            clear_entry_data() {
+    void            clear_entry_data()
+    {
         m_entry_file            = NULL;
         m_entry_line            = 0;
         m_entry_level           = report_nothing;
@@ -73,7 +74,8 @@ struct unit_test_log::Impl {
         m_entry_has_value       = false;
     }
 
-    void            clear_checkpoint_data() {
+    void            clear_checkpoint_data()
+    {
         m_checkpoint_file       = NULL;
         m_checkpoint_line       = 0;
         m_checkpoint_message    = "";
@@ -89,7 +91,8 @@ struct unit_test_log::Impl {
 //____________________________________________________________________________//
 
 unit_test_log&
-unit_test_log::instance() {
+unit_test_log::instance()
+{
     static unit_test_log the_instance;
 
     return the_instance;
@@ -280,7 +283,10 @@ unit_test_log::set_log_threshold_level_by_name( char const* lev )
 unit_test_log&
 unit_test_log::operator<<( char const* value )
 {
-    if( m_pimpl->m_entry_in_progress && m_pimpl->m_entry_level >= m_pimpl->m_threshold_level ) {
+    if( value != NULL && value[0] != '\0' && 
+        m_pimpl->m_entry_in_progress && 
+        m_pimpl->m_entry_level >= m_pimpl->m_threshold_level )
+    {
         if( !m_pimpl->m_entry_has_value ) {
             switch( m_pimpl->m_entry_level ) {
             case report_successful_tests:
@@ -313,6 +319,7 @@ unit_test_log::operator<<( char const* value )
         m_pimpl->stream() << value;
         m_pimpl->m_entry_has_value = true;
     }
+
     return *this;
 }
 
@@ -363,6 +370,9 @@ unit_test_log::start( unit_test_counter test_cases_amount, bool print_build_info
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2002/08/20 22:10:30  rogeeff
+//  slightly modified failures report
+//
 //  Revision 1.6  2002/08/20 08:24:13  rogeeff
 //  cvs keywords added
 //

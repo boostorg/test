@@ -22,6 +22,7 @@
 
 // STL
 #include <fstream>
+#include <iostream>
 #include <algorithm>
 #include <cstring>
 #include <string>
@@ -409,6 +410,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2002/08/20 22:10:30  rogeeff
+//  slightly modified failures report
+//
 //  Revision 1.6  2002/08/20 08:24:13  rogeeff
 //  cvs keywords added
 //

@@ -212,11 +212,18 @@ unit_test_result::confirmation_report( std::ostream& where_to )
     bool case_suite = m_pimpl->m_test_cases_failed + m_pimpl->m_test_cases_passed <= 1;
 
     if( failed ) {
-        if( m_pimpl->m_assertions_failed > 0 )
+        if( m_pimpl->m_assertions_failed > 0 ) {
             where_to << "\n*** " << m_pimpl->m_assertions_failed 
-                     << ps_name( m_pimpl->m_assertions_failed != 1, " Failure" ) 
-                     << " in test " << cs_name( case_suite ) 
+                     << ps_name( m_pimpl->m_assertions_failed != 1, " failure" );
+
+            if( m_pimpl->m_expected_failures != 0 ) {
+            where_to << "(" << m_pimpl->m_expected_failures
+                     << ps_name( m_pimpl->m_expected_failures != 1, " failure" ) << " expected";
+            }
+
+            where_to << " in test " << cs_name( case_suite ) 
                      << quote( m_pimpl->m_test_case_name );
+        }
         if( m_pimpl->m_exception_caught )
             where_to << "\n*** Test " << cs_name( case_suite )
                      << quote( m_pimpl->m_test_case_name ) << "is aborted due to uncaught exception or fatal error";
@@ -306,6 +313,9 @@ unit_test_result::result_code()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2002/08/20 22:10:31  rogeeff
+//  slightly modified failures report
+//
 //  Revision 1.7  2002/08/20 08:24:13  rogeeff
 //  cvs keywords added
 //
