@@ -45,45 +45,46 @@ struct unit_test_log::Impl {
     Impl() : m_stream( &std::cout ) {}
 
     // log data
-    std::ostream*   m_stream;
-    report_level    m_threshold_level;
-    unit_test_counter m_expected_total_test_cases_amount;
+    std::ostream*       m_stream;
+    report_level        m_threshold_level;
+    unit_test_counter   m_expected_total_test_cases_amount;
     boost::scoped_ptr<boost::progress_display> m_progress_display;
 
     // entry data
-    char const*     m_entry_file;
-    unsigned int    m_entry_line;
-    report_level    m_entry_level;
-    bool            m_entry_in_progress;
-    bool            m_entry_has_value;
+    c_string_literal    m_entry_file;
+    unsigned int        m_entry_line;
+    report_level        m_entry_level;
+    bool                m_entry_in_progress;
+    bool                m_entry_has_value;
 
     // checkpoint data
-    char const*     m_checkpoint_file;
-    unsigned int    m_checkpoint_line;
-    std::string     m_checkpoint_message;
+    c_string_literal    m_checkpoint_file;
+    unsigned int        m_checkpoint_line;
+    std::string         m_checkpoint_message;
 
     // helper functions
-    std::ostream&   stream() { return *m_stream; }
+    std::ostream&       stream() { return *m_stream; }
 
-    void            clear_entry_data()
+    void                clear_entry_data()
     {
-        m_entry_file            = NULL;
+        m_entry_file            = c_string_literal();
         m_entry_line            = 0;
         m_entry_level           = report_nothing;
         m_entry_in_progress     = false;
         m_entry_has_value       = false;
     }
 
-    void            clear_checkpoint_data()
+    void                clear_checkpoint_data()
     {
-        m_checkpoint_file       = NULL;
+        m_checkpoint_file       = c_string_literal();
         m_checkpoint_line       = 0;
         m_checkpoint_message    = "";
     }
 
-    void            flush_entry()       { stream() << std::endl; }
+    void                flush_entry()       { stream() << std::endl; }
 
-    void            print_prefix() {
+    void                print_prefix()
+    {
         stream() << m_entry_file << '(' << m_entry_line << "): ";
     }
 };
@@ -238,7 +239,7 @@ unit_test_log::operator<<( report_exception const& re )
 unit_test_log&
 unit_test_log::operator<<( report_progress const& )
 {
-    if( m_pimpl->m_progress_display.get() != NULL )
+    if( m_pimpl->m_progress_display )
         ++(*m_pimpl->m_progress_display);
 
     return *this;
@@ -247,11 +248,11 @@ unit_test_log::operator<<( report_progress const& )
 //____________________________________________________________________________//
 
 void
-unit_test_log::set_log_threshold_level_by_name( char const* lev )
+unit_test_log::set_log_threshold_level_by_name( c_string_literal lev )
 {
     struct my_pair {
-        char const*     level_name;
-        report_level    named_level;
+        c_string_literal    level_name;
+        report_level        named_level;
     };
 
     static const my_pair named_level[] = {
@@ -281,9 +282,9 @@ unit_test_log::set_log_threshold_level_by_name( char const* lev )
 //____________________________________________________________________________//
 
 unit_test_log&
-unit_test_log::operator<<( char const* value )
+unit_test_log::operator<<( c_string_literal value )
 {
-    if( value != NULL && value[0] != '\0' && 
+    if( value && value[0] != '\0' && 
         m_pimpl->m_entry_in_progress && 
         m_pimpl->m_entry_level >= m_pimpl->m_threshold_level )
     {
@@ -342,22 +343,20 @@ unit_test_log::start( unit_test_counter test_cases_amount, bool print_build_info
         m_pimpl->stream() << "Running " << test_cases_amount << " test " 
                           << (test_cases_amount > 1 ? "cases" : "case") << "...\n";
 
-    if( print_build_info && m_pimpl->m_threshold_level <= report_test_suites ) {
-        if( m_pimpl->m_threshold_level <= report_test_suites ) {
-            m_pimpl->stream() << " Platform: " << BOOST_PLATFORM            << '\n'
-                              << " Compiler: " << BOOST_COMPILER            << '\n'
-                              << " STL     : " << BOOST_STDLIB              << '\n'
-                              << " Boost   : " << BOOST_VERSION/100000      << "." 
-                                               << BOOST_VERSION/100 % 1000  << "." 
-                                               << BOOST_VERSION % 100       << '\n';
-        }
-
-        
+    if( print_build_info ) {
+        m_pimpl->stream() << " Platform: " << BOOST_PLATFORM            << '\n'
+                          << " Compiler: " << BOOST_COMPILER            << '\n'
+                          << " STL     : " << BOOST_STDLIB              << '\n'
+                          << " Boost   : " << BOOST_VERSION/100000      << "." 
+                                           << BOOST_VERSION/100 % 1000  << "." 
+                                           << BOOST_VERSION % 100       << '\n';
     }
 
-    m_pimpl->m_progress_display.reset( m_pimpl->m_threshold_level == report_progress_only         ?
-        new boost::progress_display( m_pimpl->m_expected_total_test_cases_amount, m_pimpl->stream() ) :
-        NULL );
+    if( m_pimpl->m_threshold_level == report_progress_only )
+        m_pimpl->m_progress_display.reset( 
+            new boost::progress_display( m_pimpl->m_expected_total_test_cases_amount, m_pimpl->stream() ) );
+    else
+        m_pimpl->m_progress_display.reset();
 }
 
 //____________________________________________________________________________//
@@ -370,6 +369,11 @@ unit_test_log::start( unit_test_counter test_cases_amount, bool print_build_info
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10  2002/12/08 18:07:16  rogeeff
+//  switched to use c_string_literal
+//  all NULLs substituted with c_string_literal default constructors
+//  build info is printed independently of report level
+//
 //  Revision 1.9  2002/11/02 20:04:42  rogeeff
 //  release 1.29.0 merged into the main trank
 //
