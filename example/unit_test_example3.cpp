@@ -1,3 +1,4 @@
+//  (C) Copyright Gennadiy Rozental 2002-2003.
 //  (C) Copyright Gennadiy Rozental & Ullrich Koethe 2001.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
@@ -10,6 +11,8 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 using boost::unit_test_framework::test_suite;
+using boost::unit_test_framework::test_case;
+using boost::test_toolbox::close_at_tolerance;
 
 // BOOST
 #include <boost/lexical_cast.hpp>
@@ -119,9 +122,16 @@ struct account_test_suite : public test_suite {
         // add member function test cases to a test suite
         boost::shared_ptr<account_test> instance( new account_test( init_value ) );
 
-        add( BOOST_CLASS_TEST_CASE( &account_test::test_init, instance ), 4 );
-        add( BOOST_CLASS_TEST_CASE( &account_test::test_deposit, instance ), 1 );
-        add( BOOST_CLASS_TEST_CASE( &account_test::test_withdraw, instance ) );
+        test_case* init_test_case     = BOOST_CLASS_TEST_CASE( &account_test::test_init, instance );
+        test_case* deposit_test_case  = BOOST_CLASS_TEST_CASE( &account_test::test_deposit, instance );
+        test_case* withdraw_test_case = BOOST_CLASS_TEST_CASE( &account_test::test_withdraw, instance );
+
+        deposit_test_case->depends_on( init_test_case );
+        withdraw_test_case->depends_on( init_test_case );
+
+        add( init_test_case, 1 );
+        add( deposit_test_case, 1 );
+        add( withdraw_test_case );
     }
 };
 
