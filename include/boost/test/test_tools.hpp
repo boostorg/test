@@ -21,9 +21,6 @@
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/detail/class_properties.hpp>
 #include <boost/test/detail/grinning_ptr.hpp>
-#if defined __GNUC__
-#include <boost/test/floating_point_comparison.hpp>
-#endif
 
 // BOOST
 #include <boost/cstdlib.hpp> // for boost::exit_success;
@@ -449,6 +446,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2002/08/21 15:01:23  rogeeff
+//  gcc specific fix removed since general is provided
+//
 //  Revision 1.14  2002/08/20 22:24:53  rogeeff
 //  all formal arguments trailed with underscore
 //
