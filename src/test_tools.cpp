@@ -30,7 +30,7 @@
 #include <cwchar>
 
 # ifdef BOOST_NO_STDC_NAMESPACE
-namespace std { using ::strcmp; using ::wcscmp; using ::strlen; using ::isprint; }
+namespace std { using ::strcmp; using ::strlen; using ::isprint; }
 # endif
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -461,6 +461,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.38  2004/07/23 14:49:36  david_abrahams
+//  Re-fixed for VC
+//
 //  Revision 1.37  2004/07/23 11:59:31  david_abrahams
 //  Got tired of waiting for workarounds; fix for cygwin gcc2 and mingw-2.0.
 //
