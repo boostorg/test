@@ -119,8 +119,6 @@ public:
     basic_cstring&  assign( pointer s, size_type len );
     basic_cstring&  assign( pointer f, pointer l );
 
-    void            assign_to( std_string& target ) const;
-
     // swapping
     void            swap( self_type& s );
 
@@ -460,15 +458,6 @@ basic_cstring<CharT>::assign( pointer f, pointer l )
 
 template<typename CharT>
 inline void
-basic_cstring<CharT>::assign_to( std_string& target ) const
-{
-    target.assign( begin(), size() );
-}
-
-//____________________________________________________________________________//
-
-template<typename CharT>
-inline void
 basic_cstring<CharT>::swap( basic_cstring<CharT>& s )
 {
     // do not want to include alogrithm
@@ -714,6 +703,20 @@ last_char( basic_cstring<CharT> source )
 
 //____________________________________________________________________________//
 
+// ************************************************************************** //
+// **************                  assign_to                   ************** //
+// ************************************************************************** //
+
+template<typename CharT1, typename CharT2>
+inline void
+assign_to( std::basic_string<CharT1>& target, basic_cstring<CharT2> src )
+{
+    target.assign( src.begin(), src.size() );
+}
+
+//____________________________________________________________________________//
+
+
 } // namespace unit_test
 
 } // namespace boost
@@ -726,6 +729,9 @@ last_char( basic_cstring<CharT> source )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2005/03/22 07:00:56  rogeeff
+//  assign_to made free function
+//
 //  Revision 1.4  2005/02/20 08:27:08  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
