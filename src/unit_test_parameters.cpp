@@ -1,7 +1,7 @@
-//  (C) Copyright Gennadiy Rozental 2001-2003.
-//  Use, modification, and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
-//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  Distributed under the Boost Software License, Version 1.0.
+//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
@@ -86,6 +86,9 @@ retrieve_framework_parameter( const_string parameter_name, int* argc, char** arg
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2004/05/21 06:26:10  rogeeff
+//  licence update
+//
 //  Revision 1.14  2004/05/18 13:34:15  dgregor
 //  Needed to include <cstdlib> to get std::getenv.
 //

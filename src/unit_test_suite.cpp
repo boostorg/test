@@ -1,7 +1,7 @@
-//  (C) Copyright Gennadiy Rozental 2001-2003.
-//  Use, modification, and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
-//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  Distributed under the Boost Software License, Version 1.0.
+//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
@@ -221,7 +221,7 @@ test_suite::add( test_case* tc, unit_test_counter exp_fail, int timeout )
     m_pimpl->m_test_cases.push_back( tc );
     m_pimpl->m_cumulative_size += tc->size();
 
-    p_stages_amount.value = p_stages_amount.value+1;
+    p_stages_amount.value = p_stages_amount + 1;
 }
 
 //____________________________________________________________________________//
@@ -278,6 +278,9 @@ normalize_test_case_name( std::string& name_ )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2004/05/21 06:26:10  rogeeff
+//  licence update
+//
 //  Revision 1.14  2004/05/18 13:26:47  dgregor
 //  unit_test_suite.cpp: Try to work around an Intel 7.1 bug with conversions in a base class.
 //

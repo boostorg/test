@@ -1,7 +1,7 @@
-//  (C) Copyright Gennadiy Rozental 2001-2003.
-//  Use, modification, and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
-//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  Distributed under the Boost Software License, Version 1.0.
+//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
@@ -81,7 +81,7 @@ int
 test_main( int argc, char* argv[] ) 
 {
     bool match_or_save = retrieve_framework_parameter( SAVE_TEST_PATTERN, &argc, argv ) != "yes";
-    const_string pattern_file_name( argc > 1 ? argv[1] : "result_report_test.pattern" );
+    const_string pattern_file_name( argc > 1 ? argv[1] : "test_files/result_report_test.pattern" );
 
     output_test_stream output( pattern_file_name, match_or_save );
   
@@ -148,6 +148,9 @@ test_main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.14  2004/05/21 06:26:10  rogeeff
+//  licence update
+//
 //  Revision 1.13  2004/05/11 11:05:06  rogeeff
 //  basic_cstring introduced and used everywhere
 //  class properties reworked
