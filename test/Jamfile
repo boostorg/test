@@ -28,6 +28,7 @@ test-suite "test_exec_monitor_test"
 test-suite "unit_test_framework_test"
         : [ test-btl-lib run : errors_handling_test    : test_exec_monitor ]
           [ test-btl-lib run : online_test ]
+          [ test-btl-lib run : minimal_test ]
           [ test-btl-lib run : output_test_stream_test : unit_test_framework ]
           [ test-btl-lib run : result_report_test      : test_exec_monitor ]
           [ test-btl-lib run : test_tools_test         : unit_test_framework ]
