@@ -41,8 +41,8 @@ public:
     typedef function0<void> function_type;
 
     // Constructor
-    function_test_case_ex( function_type f_, c_string_literal name_ )
-    : test_case( name_, 1 ), m_function( f_ ) {}
+    function_test_case_ex( function_type f_, std::string const& name_ )
+    : test_case( name_, true, 1 ), m_function( f_ ) {}
 
 protected:
     // test case implementation
@@ -63,9 +63,9 @@ public:
     typedef function1<void,ParameterType> function_type;
 
     // Constructor
-    parametrized_function_test_case_ex( function_type f_, c_string_literal name_,
+    parametrized_function_test_case_ex( function_type f_, std::string const& name_,
                                         ParamIterator const& begin_, ParamIterator const& end_ )
-    : test_case( name_ ), m_first_parameter( begin_ ), m_last_parameter( end_ ), m_function( f_ )
+    : test_case( name_, true, 0 ), m_first_parameter( begin_ ), m_last_parameter( end_ ), m_function( f_ )
     {
         p_stages_amount.set( detail::distance( begin_, end_ ) );
     }
@@ -110,6 +110,9 @@ create_test_case( function1<void,ParameterType> const& fct_, std::string name_,
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.11  2003/02/13 08:23:56  rogeeff
+//  test case type: virtual method -> property
+//
 //  Revision 1.10  2002/12/08 17:52:25  rogeeff
 //  switched to use c_string_literal
 //
