@@ -216,17 +216,10 @@ test_BOOST_MESSAGE()
         output.is_equal( "struct A\n" )
     );
 
-#ifndef BOOST_NO_STD_LOCALE
+#if !defined(BOOST_NO_STD_LOCALE) && BOOST_WORKAROUND(BOOST_MSVC, >= 1310)
 
     CHECK_TOOL_USAGE(
         BOOST_MESSAGE( std::hex << std::showbase << 20 ),
-        output.is_equal( "0x14\n" )
-    );
-
-#else
-
-    CHECK_TOOL_USAGE(
-        BOOST_MESSAGE( std::hex << "0x" << 20 ),
         output.is_equal( "0x14\n" )
     );
 
@@ -281,7 +274,7 @@ test_BOOST_CHECKPOINT()
         output.is_equal(
             (boost::wrap_stringstream().ref()
                 << "Exception in " TEST_CASE_NAME ": C string: some error\n"
-                << normalize_file_name( __FILE__ ) << "(" << 277 << "): "
+                << normalize_file_name( __FILE__ ) << "(" << 270 << "): "
                 << "last checkpoint: Going to do a silly things\n").str()
         )
     );
@@ -718,6 +711,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.31  2004/05/27 06:30:48  rogeeff
+//  no message
+//
 //  Revision 1.30  2004/05/21 06:26:11  rogeeff
 //  licence update
 //

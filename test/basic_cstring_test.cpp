@@ -60,7 +60,8 @@ struct string_literal
     mutable_char buff[100];
 };
 
-#define LITERAL( s ) string_literal<CharT>( s, sizeof( s ) ).buff
+#define LITERAL( s ) ((CharT*)string_literal<CharT>( s, sizeof( s ) ).buff)
+#define TEST_STRING test_string<CharT>( (CharT*)0 )
 
 template<typename CharT>
 static CharT*
@@ -76,8 +77,6 @@ test_string( CharT* = 0 )
 template<typename CharT>
 void constructors_test( CharT* = 0 )
 {
-    typedef typename utf::basic_cstring<CharT>::traits_type traits;
-
     {
         utf::basic_cstring<CharT> bcs;
         BOOST_CHECK_EQUAL( bcs.size(), 0 );
@@ -97,26 +96,50 @@ void constructors_test( CharT* = 0 )
     }
 
     {
-        utf::basic_cstring<CharT> bcs( test_string<CharT>() );
-        BOOST_CHECK_EQUAL( traits::compare( bcs.begin(), test_string<CharT>(), bcs.size() ), 0 );
-        BOOST_CHECK_EQUAL( bcs.size(), traits::length( test_string<CharT>() ) );
+        typedef typename utf::basic_cstring<CharT>::traits_type traits;
+
+        utf::basic_cstring<CharT> bcs( TEST_STRING );
+        BOOST_CHECK_EQUAL( traits::compare( bcs.begin(), TEST_STRING, bcs.size() ), 0 );
+        BOOST_CHECK_EQUAL( bcs.size(), traits::length( TEST_STRING ) );
 
         utf::basic_cstring<CharT> bcs1( bcs );
-        BOOST_CHECK_EQUAL( traits::compare( bcs1.begin(), test_string<CharT>(), bcs1.size() ), 0 );
+        BOOST_CHECK_EQUAL( traits::compare( bcs1.begin(), TEST_STRING, bcs1.size() ), 0 );
     }
 
     {
-        utf::basic_cstring<CharT> bcs( test_string<CharT>(), 4 );
+        typedef typename utf::basic_cstring<CharT>::traits_type traits;
+
+        utf::basic_cstring<CharT> bcs( TEST_STRING, 4 );
         BOOST_CHECK_EQUAL( traits::compare( bcs.begin(), LITERAL( "test" ), bcs.size() ), 0 );
     }
 
     {
-        utf::basic_cstring<CharT> bcs( test_string<CharT>(), test_string<CharT>() + 6 );
+        typedef typename utf::basic_cstring<CharT>::traits_type traits;
+
+        utf::basic_cstring<CharT> bcs( TEST_STRING, TEST_STRING + 6 );
         BOOST_CHECK_EQUAL( traits::compare( bcs.begin(), LITERAL( "test_s" ), bcs.size() ), 0 );
     }
 }
 
 BOOST_META_FUNC_TEST_CASE( constructors_test );
+
+//____________________________________________________________________________//
+
+template<typename CharT>
+void constructors_const_test( CharT* = 0 )
+{
+    typedef typename utf::basic_cstring<CharT>::traits_type traits;
+
+    {
+        typename utf::basic_cstring<CharT>::std_string l( TEST_STRING );
+
+        utf::basic_cstring<CharT> bcs( l );
+        BOOST_CHECK_EQUAL( traits::compare( bcs.begin(), TEST_STRING, bcs.size() ), 0 );
+    }
+
+}
+
+BOOST_META_FUNC_TEST_CASE( constructors_const_test );
 
 //____________________________________________________________________________//
 
@@ -134,30 +157,12 @@ void array_construction_test()
 //____________________________________________________________________________//
 
 template<typename CharT>
-void constructors_const_test( CharT* = 0 )
-{
-    typedef typename utf::basic_cstring<CharT>::traits_type traits;
-
-    {
-        typename utf::basic_cstring<CharT>::std_string l( test_string<CharT>() );
-
-        utf::basic_cstring<CharT> bcs( l );
-        BOOST_CHECK_EQUAL( traits::compare( bcs.begin(), test_string<CharT>(), bcs.size() ), 0 );
-    }
-
-}
-
-BOOST_META_FUNC_TEST_CASE( constructors_const_test );
-
-//____________________________________________________________________________//
-
-template<typename CharT>
 void data_access_test( CharT* = 0 )
 {
     typedef typename utf::basic_cstring<CharT>::traits_type traits_type;
 
-    utf::basic_cstring<CharT> bcs1( test_string<CharT>() );
-    BOOST_CHECK_EQUAL( traits_type::compare( bcs1.begin(), test_string<CharT>(), bcs1.size() ), 0 );
+    utf::basic_cstring<CharT> bcs1( TEST_STRING );
+    BOOST_CHECK_EQUAL( traits_type::compare( bcs1.begin(), TEST_STRING, bcs1.size() ), 0 );
     BOOST_CHECK_EQUAL( traits_type::compare( bcs1.begin(), bcs1.begin(), bcs1.size() ), 0 );
 
     BOOST_CHECK_EQUAL( bcs1[0], 't' );
@@ -189,14 +194,14 @@ void size_test( CharT* = 0 )
     BOOST_CHECK_EQUAL( bcs1.size(), 0 );
     BOOST_CHECK( bcs1.is_empty() );
 
-    bcs1 = test_string<CharT>();
+    bcs1 = TEST_STRING;
     BOOST_CHECK_EQUAL( bcs1.size(), 11 );
 
     bcs1.clear();
     BOOST_CHECK_EQUAL( bcs1.size(), 0 );
     BOOST_CHECK( bcs1.is_empty() );
 
-    bcs1 = utf::basic_cstring<CharT>( test_string<CharT>(), 4 );
+    bcs1 = utf::basic_cstring<CharT>( TEST_STRING, 4 );
     BOOST_CHECK_EQUAL( bcs1.size(), 4 );
 
     bcs1.resize( 5 );
@@ -221,9 +226,9 @@ void asignment_test( CharT* = 0 )
     bcs1 = l.buff;
     BOOST_CHECK_EQUAL( traits_type::compare( bcs1.begin(), LITERAL( "test" ), bcs1.size() ), 0 );
 
-    utf::basic_cstring<CharT> bcs2( test_string<CharT>() );
+    utf::basic_cstring<CharT> bcs2( TEST_STRING );
     bcs1 = bcs2;
-    BOOST_CHECK_EQUAL( traits_type::compare( bcs1.begin(), test_string<CharT>(), bcs1.size() ), 0 );
+    BOOST_CHECK_EQUAL( traits_type::compare( bcs1.begin(), TEST_STRING, bcs1.size() ), 0 );
 
     bcs1.assign( l.buff );
     BOOST_CHECK_EQUAL( traits_type::compare( bcs1.begin(), LITERAL( "test" ), bcs1.size() ), 0 );
@@ -235,7 +240,7 @@ void asignment_test( CharT* = 0 )
     BOOST_CHECK_EQUAL( traits_type::compare( bcs1.begin(), LITERAL( "_st" ), bcs1.size() ), 0 );
 
     bcs1.swap( bcs2 );
-    BOOST_CHECK_EQUAL( traits_type::compare( bcs1.begin(), test_string<CharT>(), bcs1.size() ), 0 );
+    BOOST_CHECK_EQUAL( traits_type::compare( bcs1.begin(), TEST_STRING, bcs1.size() ), 0 );
     BOOST_CHECK_EQUAL( traits_type::compare( bcs2.begin(), LITERAL( "_st" ), bcs2.size() ), 0 );
 }
 
@@ -249,13 +254,13 @@ void asignment_const_test( CharT* = 0 )
     typedef typename utf::basic_cstring<CharT>::traits_type traits_type;
 
     utf::basic_cstring<CharT> bcs1;
-    typename utf::basic_cstring<CharT>::std_string l( test_string<CharT>() );
+    typename utf::basic_cstring<CharT>::std_string l( TEST_STRING );
 
     bcs1 = l;
-    BOOST_CHECK_EQUAL( traits_type::compare( bcs1.begin(), test_string<CharT>(), bcs1.size() ), 0 );
+    BOOST_CHECK_EQUAL( traits_type::compare( bcs1.begin(), TEST_STRING, bcs1.size() ), 0 );
 
     bcs1.assign( l );
-    BOOST_CHECK_EQUAL( traits_type::compare( bcs1.begin(), test_string<CharT>(), bcs1.size() ), 0 );
+    BOOST_CHECK_EQUAL( traits_type::compare( bcs1.begin(), TEST_STRING, bcs1.size() ), 0 );
 
     bcs1.assign( l, 1, 2 );
     BOOST_CHECK_EQUAL( traits_type::compare( bcs1.begin(), LITERAL( "es" ), bcs1.size() ), 0 );
@@ -268,19 +273,19 @@ BOOST_META_FUNC_TEST_CASE( asignment_const_test );
 template<typename CharT>
 void comparison_test( CharT* = 0 )
 {
-    utf::basic_cstring<CharT> bcs1( test_string<CharT>() );
-    utf::basic_cstring<CharT> bcs2( test_string<CharT>() );
+    utf::basic_cstring<CharT> bcs1( TEST_STRING );
+    utf::basic_cstring<CharT> bcs2( TEST_STRING );
 
-    BOOST_CHECK_EQUAL( bcs1, test_string<CharT>() );
-    BOOST_CHECK_EQUAL( test_string<CharT>(), bcs1 );
+    BOOST_CHECK_EQUAL( bcs1, TEST_STRING );
+    BOOST_CHECK_EQUAL( TEST_STRING, bcs1 );
     BOOST_CHECK_EQUAL( bcs1, bcs2 );
 
     bcs1.resize( 4 );
 
     BOOST_CHECK_EQUAL( bcs1, LITERAL( "test" ) );
 
-    BOOST_CHECK( bcs1 != test_string<CharT>() );
-    BOOST_CHECK( test_string<CharT>() != bcs1 );
+    BOOST_CHECK( bcs1 != TEST_STRING );
+    BOOST_CHECK( TEST_STRING != bcs1 );
     BOOST_CHECK( bcs1 != bcs2 );
 
     utf::basic_cstring<CharT> bcs3( LITERAL( "TeSt" ) );
@@ -294,18 +299,18 @@ BOOST_META_FUNC_TEST_CASE( comparison_test );
 template<typename CharT>
 void comparison_const_test( CharT* = 0 )
 {
-    utf::basic_cstring<CharT> bcs1( test_string<CharT>() );
-    typename utf::basic_cstring<CharT>::std_string l( test_string<CharT>() );
+    utf::basic_cstring<CharT> bcs1( TEST_STRING );
+    typename utf::basic_cstring<CharT>::std_string l( TEST_STRING );
 
     BOOST_CHECK( bcs1 == l );
-#if !defined(BOOST_MSVC) || MSVC_VER > 1200
+#if BOOST_WORKAROUND(BOOST_MSVC, > 1200)
     BOOST_CHECK( l == bcs1 );
 #endif
 
     bcs1.resize( 4 );
 
     BOOST_CHECK( bcs1 != l );
-#if !defined(BOOST_MSVC) || MSVC_VER > 1200
+#if BOOST_WORKAROUND(BOOST_MSVC, > 1200)
     BOOST_CHECK( l != bcs1 );
 #endif
 }
@@ -351,15 +356,15 @@ void trim_test( CharT* = 0 )
     bcs0.trim_left( 1 );
     BOOST_CHECK( bcs0.is_empty() );
 
-    bcs0 = test_string<CharT>();
+    bcs0 = TEST_STRING;
     bcs0.trim_left( 11 );
     BOOST_CHECK( bcs0.is_empty() );
 
-    bcs0 = test_string<CharT>();
+    bcs0 = TEST_STRING;
     bcs0.trim_right( 11 );
     BOOST_CHECK( bcs0.is_empty() );
 
-    bcs0 = test_string<CharT>();
+    bcs0 = TEST_STRING;
     bcs0.trim_right( bcs0.size() - bcs0.find( LITERAL( "t_s" ) ) - 3 );
     BOOST_CHECK_EQUAL( bcs0, LITERAL( "test_s" ) );
 
@@ -393,7 +398,7 @@ BOOST_META_FUNC_TEST_CASE( trim_test );
 template<typename CharT>
 void io_test( CharT* = 0 )
 {
-    utf::basic_cstring<CharT> bcs1( test_string<CharT>() );
+    utf::basic_cstring<CharT> bcs1( TEST_STRING );
     bcs1.trim_right( 7 );
 
     tt::output_test_stream ostr;
@@ -415,11 +420,11 @@ BOOST_META_FUNC_TEST_CASE( io_test );
 template<typename CharT>
 void find_test( CharT* = 0 )
 {
-    utf::basic_cstring<CharT> bcs1( test_string<CharT>() );
+    utf::basic_cstring<CharT> bcs1( TEST_STRING );
 
     BOOST_CHECK_EQUAL( bcs1.find( utf::basic_cstring<CharT>() ), utf::basic_cstring<CharT>::npos );
     BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "test" ) ), 0 );
-    BOOST_CHECK_EQUAL( bcs1.find( test_string<CharT>() ), 0 );
+    BOOST_CHECK_EQUAL( bcs1.find( TEST_STRING ), 0 );
     BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "test_string " ) ), utf::basic_cstring<CharT>::npos );
     BOOST_CHECK_EQUAL( bcs1.find( LITERAL( " test_string" ) ), utf::basic_cstring<CharT>::npos );
     BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "est" ) ), 1 );
@@ -429,7 +434,7 @@ void find_test( CharT* = 0 )
 
     BOOST_CHECK_EQUAL( bcs1.rfind( utf::basic_cstring<CharT>() ), utf::basic_cstring<CharT>::npos );
     BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "test" ) ), 0 );
-    BOOST_CHECK_EQUAL( bcs1.rfind( test_string<CharT>() ), 0 );
+    BOOST_CHECK_EQUAL( bcs1.rfind( TEST_STRING ), 0 );
     BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "test_string " ) ), utf::basic_cstring<CharT>::npos );
     BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( " test_string" ) ), utf::basic_cstring<CharT>::npos );
     BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "est" ) ), 1 );
@@ -458,19 +463,21 @@ void const_conversion()
 //____________________________________________________________________________//
 
 utf::test_suite*
-init_unit_test_suite( int argc, char* argv[] )
+init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 {
     utf::test_suite* test= BOOST_TEST_SUITE("Const string test");
 
     test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( constructors_test, char_types ) );
+#if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x551))
     test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( constructors_const_test, const_char_types ) );
+    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( asignment_const_test, const_char_types ) );
+    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( comparison_const_test, const_char_types ) );
+#endif
     test->add( BOOST_TEST_CASE( array_construction_test ) );
     test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( data_access_test, char_types ) );
     test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( size_test, char_types ) );
     test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( asignment_test, char_types ) );
-    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( asignment_const_test, const_char_types ) );
     test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( comparison_test, char_types ) );
-    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( comparison_const_test, const_char_types ) );
     test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( ordering_test, char_types ) );
     test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( trim_test, char_types ) );
     test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( io_test, io_test_types ) );
@@ -484,6 +491,9 @@ init_unit_test_suite( int argc, char* argv[] )
 // History :
 //
 // $Log$
+// Revision 1.3  2004/05/27 06:30:48  rogeeff
+// no message
+//
 // Revision 1.2  2004/05/21 06:26:10  rogeeff
 // licence update
 //

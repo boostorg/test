@@ -32,13 +32,15 @@ BOOST_AUTO_UNIT_TEST( test2 )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2004/05/27 06:30:48  rogeeff
+//  no message
+//
 //  Revision 1.7  2004/05/21 06:26:10  rogeeff
 //  licence update
 //
 //  Revision 1.6  2003/12/01 00:42:37  rogeeff
 //  prerelease cleaning
 //
-
 // ***************************************************************************
 
 // EOF

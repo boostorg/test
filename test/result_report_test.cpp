@@ -81,7 +81,7 @@ int
 test_main( int argc, char* argv[] ) 
 {
     bool match_or_save = retrieve_framework_parameter( SAVE_TEST_PATTERN, &argc, argv ) != "yes";
-    const_string pattern_file_name( argc > 1 ? argv[1] : "test_files/result_report_test.pattern" );
+    const_string pattern_file_name( argc > 1 ? argv[1] : "./test_files/result_report_test.pattern" );
 
     output_test_stream output( pattern_file_name, match_or_save );
   
@@ -148,6 +148,9 @@ test_main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2004/05/27 06:30:48  rogeeff
+//  no message
+//
 //  Revision 1.14  2004/05/21 06:26:10  rogeeff
 //  licence update
 //
