@@ -48,22 +48,26 @@ namespace {
 int main( int argc, char* argv[] ) {
     using namespace boost::unit_test_framework;
 
-    std::string         loglevel;
-    bool                no_result_code;
-    result_report_level report_level;
+    // set the log level
+    unit_test_log::instance().set_log_threshold_level_by_name( retrieve_framework_parameter( LOG_LEVEL, &argc, argv ) );
 
-    // 1. set the log level
-    unit_test_log::instance().set_log_threshold_level_by_name( retrieve_framework_parameter( LOGLEVEL, &argc, argv ).data() );
+    // set the report level
+    std::string reportlevel = retrieve_framework_parameter( REPORT_LEVEL, &argc, argv );
 
-    // 2. set the result code flag
-    no_result_code = retrieve_framework_parameter( NO_RESULT_CODE, &argc, argv ) == "no";
+    // set the log/report format
+    std::string output_format = retrieve_framework_parameter( OUTPUT_FORMAT, &argc, argv );
+    
+    if( output_format.empty() ) {
+        unit_test_log::instance().set_log_format( retrieve_framework_parameter( LOG_FORMAT, &argc, argv ) );
+        unit_test_result::set_report_format( retrieve_framework_parameter( REPORT_FORMAT, &argc, argv ) );
+    }
+    else {
+        unit_test_log::instance().set_log_format( output_format );
+        unit_test_result::set_report_format( output_format );
+    }
 
-    // 3. set the report level
-    std::string report_level_to_set = retrieve_framework_parameter( RESULT_REPORT, &argc, argv );
-
-    report_level = report_level_to_set == report_level_names[NO_REPORT] ? NO_REPORT : CONFIRMATION_REPORT;
-
-    unit_test_log::instance().set_log_threshold_level_by_name( loglevel.data() );
+    // set the result code flag
+    bool no_result_code = retrieve_framework_parameter( NO_RESULT_CODE, &argc, argv ) == "no";
 
     //  set up the test   
     argc_ = argc;
@@ -71,11 +75,12 @@ int main( int argc, char* argv[] ) {
     boost::scoped_ptr<test_case> test_main_tc( BOOST_TEST_CASE( &call_test_main ) );
 
     // start testing
+    unit_test_log::instance().start( retrieve_framework_parameter( BUILD_INFO, &argc, argv ) == "yes" );
     test_main_tc->run();
+    unit_test_log::instance().finish( 1 );
     
-    // report result
-    if( report_level == CONFIRMATION_REPORT )
-        unit_test_result::instance().confirmation_report( std::cout );
+    // report results
+    unit_test_result::instance().report( reportlevel, std::cout );
 
     // return code
     return no_result_code 
@@ -90,6 +95,10 @@ int main( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10  2003/02/13 08:35:45  rogeeff
+//  log/report format introduced
+//  other minot fixes
+//
 //  Revision 1.9  2002/11/02 20:04:41  rogeeff
 //  release 1.29.0 merged into the main trank
 //
