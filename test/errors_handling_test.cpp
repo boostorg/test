@@ -30,6 +30,10 @@ using namespace boost::test_tools;
 #include <iostream>
 #include <stdexcept>
 
+#if defined(__GNUC__) || defined(__SUNPRO_CC)
+#define LIMITED_TEST
+#endif
+
 namespace {
 
 struct this_test_log_formatter : public boost::unit_test::output::compiler_log_formatter
@@ -67,7 +71,7 @@ enum error_type_enum {
     et_warning,
     et_user,
     et_cpp_exception,
-#ifdef __GNUC__
+#ifdef LIMITED_TEST
     et_fatal_user,
 #else
     et_system,
@@ -114,7 +118,7 @@ void error_on_demand()
         BOOST_CHECKPOINT( "error_on_demand() throw runtime_error" );
         throw std::runtime_error( "test std::runtime error what() message" );
 
-#ifndef __GNUC__
+#ifndef LIMITED_TEST
     case et_system:
         BOOST_CHECKPOINT( "error_on_demand() divide by zero" );
         divide_by_zero = 1 / divide_by_zero;
@@ -148,7 +152,7 @@ test_main( int argc, char * argv[] )
         argc <= 1 ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./test_files/" PATTERN_FILE_NAME )
                   : argv[1] );
 
-#ifdef __GNUC__
+#ifdef LIMITED_TEST
     pattern_file_name += "2";
 #endif
 
@@ -193,6 +197,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.32  2005/03/23 21:06:39  rogeeff
+//  Sunpro CC 5.3 fixes
+//
 //  Revision 1.31  2005/03/22 07:14:44  rogeeff
 //  no message
 //

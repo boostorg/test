@@ -578,6 +578,8 @@ output_test_stream::sync()
 #ifdef BOOST_NO_STRINGSTREAM
     m_pimpl->m_synced_string.assign( str(), pcount() );
     freeze( false );
+#elif BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530) )
+    m_pimpl->m_synced_string.assign( str().c_str(), tellp() );
 #else
     m_pimpl->m_synced_string = str();
 #endif
@@ -597,6 +599,9 @@ output_test_stream::sync()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.7  2005/03/23 21:02:23  rogeeff
+//  Sunpro CC 5.3 fixes
+//
 //  Revision 1.6  2005/02/21 10:14:04  rogeeff
 //  CHECK_SMALL tool implemented
 //

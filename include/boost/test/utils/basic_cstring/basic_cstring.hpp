@@ -709,7 +709,11 @@ last_char( basic_cstring<CharT> source )
 
 template<typename CharT1, typename CharT2>
 inline void
+#if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530) )
+assign_to( std::basic_string<CharT1>& target, basic_cstring<CharT2> const& src )
+#else
 assign_to( std::basic_string<CharT1>& target, basic_cstring<CharT2> src )
+#endif
 {
     target.assign( src.begin(), src.size() );
 }
@@ -729,6 +733,9 @@ assign_to( std::basic_string<CharT1>& target, basic_cstring<CharT2> src )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2005/03/23 21:02:37  rogeeff
+//  Sunpro CC 5.3 fixes
+//
 //  Revision 1.6  2005/03/22 07:02:57  rogeeff
 //  assign_to made free function
 //

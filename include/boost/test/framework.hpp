@@ -47,12 +47,12 @@ void                reset_observers();
 // constant access methods
 test_suite const&   master_test_suite();
 test_case const&    current_test_case();
-test_unit const&    get( test_unit_id, test_unit_type );
 template<typename UnitType>
 UnitType const&     get( test_unit_id id )
 {
     return static_cast<UnitType const&>( get( id, (test_unit_type)UnitType::type ) );
 }
+test_unit const&    get( test_unit_id, test_unit_type );
 
 // test initiation
 void                run( test_unit_id = INV_TEST_UNIT_ID, bool continue_test = true );
@@ -77,6 +77,9 @@ void                test_unit_aborted();
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/03/23 21:02:10  rogeeff
+//  Sunpro CC 5.3 fixes
+//
 //  Revision 1.1  2005/02/20 08:27:05  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //

@@ -38,7 +38,6 @@ UTF_SOURCES =
   progress_monitor
   results_collector
   results_reporter
-  test_main
   test_tools
   unit_test_log
   unit_test_main

@@ -37,8 +37,7 @@ namespace boost {
 
 namespace test_tools {
 
-class output_test_stream : public wrap_stringstream::wrapped_stream
-{
+class output_test_stream : public wrap_stringstream::wrapped_stream {
     typedef unit_test::const_string const_string;
     typedef predicate_result        result_type;
 public:
@@ -79,6 +78,9 @@ private:
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.4  2005/03/23 21:02:15  rogeeff
+//  Sunpro CC 5.3 fixes
+//
 //  Revision 1.3  2005/02/20 08:27:06  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //

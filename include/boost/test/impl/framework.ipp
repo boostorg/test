@@ -209,7 +209,9 @@ register_test_unit( test_case* tc )
     if( new_id == MAX_TEST_CASE_ID )
         throw std::logic_error( "Too many test cases" );
 
-    s_frk_impl().m_test_units.insert( std::make_pair( new_id, tc ) );
+    typedef framework_impl::test_unit_store::value_type map_value_type;
+
+    s_frk_impl().m_test_units.insert( map_value_type( new_id, tc ) );
     s_frk_impl().m_next_test_case_id++;
 
     s_frk_impl().set_tu_id( *tc, new_id );
@@ -228,7 +230,8 @@ register_test_unit( test_suite* ts )
     if( new_id == MAX_TEST_SUITE_ID )
         throw std::logic_error( "Too many test suites" );
 
-    s_frk_impl().m_test_units.insert( std::make_pair( new_id, ts ) );
+    typedef framework_impl::test_unit_store::value_type map_value_type;
+    s_frk_impl().m_test_units.insert( map_value_type( new_id, ts ) );
     s_frk_impl().m_next_test_suite_id++;
 
     s_frk_impl().set_tu_id( *ts, new_id );
@@ -385,6 +388,9 @@ test_unit_aborted()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.3  2005/03/23 21:02:19  rogeeff
+//  Sunpro CC 5.3 fixes
+//
 //  Revision 1.2  2005/02/21 10:12:18  rogeeff
 //  Support for random order of test cases implemented
 //

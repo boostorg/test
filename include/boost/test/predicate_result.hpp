@@ -45,17 +45,10 @@ public:
     // Constructor
     predicate_result( bool pv_ ) 
     : p_predicate_value( pv_ )
-#if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530))
-    , m_message( 0 )
-#endif
     {}
 
     template<typename BoolConvertable>
     predicate_result( BoolConvertable const& pv_ ) : p_predicate_value( !!pv_ ) {}
-
-#if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530))
-    ~predicate_result() { delete m_message; }
-#endif
 
     bool                operator!() const           { return !p_predicate_value; }
     void                operator=( bool pv_ )       { p_predicate_value.value = pv_; }
@@ -68,24 +61,15 @@ public:
     wrap_stringstream&  message()
     {
         if( !m_message )
-#if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530))
-            m_message = new wrap_stringstream;
-#else
             m_message.reset( new wrap_stringstream );
-#endif
 
         return *m_message;
     }
     const_string        message() const                   { return !m_message ? const_string() : const_string( m_message->str() ); }
 
 private:
-#if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530))
-    // Data members
-    wrap_stringstream*  m_message;
-#else
     // Data members
     shared_ptr<wrap_stringstream> m_message;
-#endif
 };
 
 } // namespace test_tools
@@ -100,6 +84,9 @@ private:
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.6  2005/03/23 21:02:17  rogeeff
+//  Sunpro CC 5.3 fixes
+//
 //  Revision 1.5  2005/02/20 08:27:06  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
