@@ -34,6 +34,7 @@
 #include <stdexcept>          // for std exception hierarchy
 #include <cstring>            // for C string API
 #include <cassert>            // for assert
+#include <cstddef>            // for NULL
 
 #ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::strlen; using ::strncat; }
@@ -176,7 +177,16 @@ assert_reporting_function( int reportType, char* userMessage, int* retVal )
 // **************               execution_monitor              ************** //
 // ************************************************************************** //
 
-int execution_monitor::execute( bool catch_system_errors, int timeout )
+int
+execution_monitor::run_function()
+{
+	return m_custom_translators ? (*m_custom_translators)( *this ) : function();
+}
+
+//____________________________________________________________________________//
+
+int
+execution_monitor::execute( bool catch_system_errors, int timeout )
 {
     using unit_test_framework::c_string_literal;
 
@@ -307,7 +317,7 @@ private:
     bool                    m_set_timeout;
 };
 
-signal_handler* signal_handler::s_active_handler = NULL; // need to be placed in thread specific storage
+signal_handler* signal_handler::s_active_handler = NULL; //!! need to be placed in thread specific storage
 
 //____________________________________________________________________________//
 
@@ -388,7 +398,7 @@ int catch_signals( execution_monitor & exmon, bool catch_system_errors, int time
 
     volatile int sigtype = sigsetjmp( signal_handler::jump_buffer(), 1 );
     if( sigtype == 0 ) {
-        result = exmon.function();
+        result = exmon.run_function();
     }
     else {
         switch(sigtype) {
@@ -436,7 +446,7 @@ int catch_signals( execution_monitor & exmon, bool catch_system_errors, int )
     int result;
 
     if( catch_system_errors ) {
-        __try { result = exmon.function(); }
+        __try { result = exmon.run_function(); }
         
         __except (1)
         {
@@ -444,7 +454,7 @@ int catch_signals( execution_monitor & exmon, bool catch_system_errors, int )
         }
     }
     else {
-        result = exmon.function();
+        result = exmon.run_function();
     }
     return result;
 }
@@ -453,7 +463,7 @@ int catch_signals( execution_monitor & exmon, bool catch_system_errors, int )
 
 int catch_signals( execution_monitor& exmon, bool, int )
 {
-    return exmon.function();
+    return exmon.run_function();
 }
 
 #endif  // choose signal handler
@@ -571,6 +581,9 @@ static void report_error( execution_exception::error_code ec, c_string_literal m
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.27  2003/11/02 04:43:09  rogeeff
+//  custom exception translators support
+//
 //  Revision 1.26  2003/10/27 07:13:32  rogeeff
 //  licence update
 //
