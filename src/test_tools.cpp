@@ -192,7 +192,7 @@ is_defined_impl( c_string_literal symbol_name, c_string_literal symbol_value )
 void
 print_log_value<char>::operator()( std::ostream& ostr, char t )
 {
-    if( std::isprint( t ) )
+    if( (std::isprint)( t ) )
         ostr << '\'' << t << '\'';
     else
         ostr << std::hex 
@@ -477,6 +477,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.27  2004/03/10 09:39:45  tknapen
+//  parenthesis around std::isprint because it's a macro on mipspro
+//
 //  Revision 1.26  2004/02/26 18:27:01  eric_niebler
 //  remove minmax hack from win32.hpp and fix all places that could be affected by the minmax macros
 //
