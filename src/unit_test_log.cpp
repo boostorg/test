@@ -18,6 +18,7 @@
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/unit_test_suite.hpp>
+#include <boost/test/detail/unit_test_parameters.hpp>
 
 // BOOST
 #include <boost/scoped_ptr.hpp>
@@ -679,6 +680,9 @@ unit_test_log::set_log_format( std::string const& logformat )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.12  2003/02/15 22:25:42  rogeeff
+//  include parameters moved to source file
+//
 //  Revision 1.11  2003/02/13 08:36:54  rogeeff
 //  reworked to support multiply log formats
 //
