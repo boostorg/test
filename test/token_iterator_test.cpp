@@ -113,7 +113,7 @@ void test_range_token_iterator()
     char const* pattern = "a bc , cd";
     std::copy( pattern, pattern+9, std::back_inserter( l ) );
 
-#if !BOOST_WORKAROUND( BOOST_MSVC, <= 1200 ) && !BOOST_WORKAROUND( __GNUC__, < 3 )
+#if !BOOST_WORKAROUND( __GNUC__, < 3 )
     my_token_iterator tit( l.begin(), l.end() );
     char const* res[] = { "a", "bc", ",", "cd" };
 
@@ -161,7 +161,7 @@ void test_make_range_token_iterator()
 {
     char const* str = "Abc22sdf sd2fg ";
 
-#if !BOOST_WORKAROUND( BOOST_MSVC, <= 1200 ) && !BOOST_WORKAROUND( __BORLANDC__, <= 0x550 )
+#if !BOOST_WORKAROUND( BOOST_MSVC, <= 1300 ) && !BOOST_WORKAROUND( __BORLANDC__, <= 0x550 )
     foo( boost::make_transform_iterator( str, loo ),
          boost::make_transform_iterator( str+15, loo ) );
 #endif
@@ -193,6 +193,9 @@ init_unit_test_suite( int argc, char* argv[] )
 // History :
 //
 // $Log$
+// Revision 1.5.2.1  2004/10/30 11:33:38  agurtovoy
+// MSVC/Borland fixes
+//
 // Revision 1.5  2004/10/05 01:32:09  rogeeff
 // file/directory renaming for the sake of CD burning
 //

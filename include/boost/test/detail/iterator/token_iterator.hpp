@@ -91,9 +91,17 @@ public:
 
 template<typename TraversalTag>
 struct token_assigner {
+#if BOOST_WORKAROUND( BOOST_DINKUMWARE_STDLIB, < 306 )
+    template<typename Iterator, typename C, typename T>
+    static void assign( Iterator b, Iterator e, std::basic_string<C,T>& t )
+    { for( ; b != e; ++b ) t += *b; }
+    
+    template<typename Iterator, typename C>
+    static void assign( Iterator b, Iterator e, basic_cstring<C>& t )  { t.assign( b, e ); }
+#else
     template<typename Iterator, typename Token>
     static void assign( Iterator b, Iterator e, Token& t )  { t.assign( b, e ); }
-
+#endif
     template<typename Iterator, typename Token>
     static void append_move( Iterator& b, Token& )          { ++b; }
 
@@ -109,8 +117,9 @@ struct token_assigner<single_pass_traversal_tag> {
     template<typename Iterator, typename Token>
     static void append_move( Iterator& b, Token& t )        { t += *b; ++b; }
 
-#if (BOOST_WORKAROUND( BOOST_MSVC, <= 1200 ) || BOOST_WORKAROUND( __GNUC__, < 3 )) && \
-    !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+#if BOOST_WORKAROUND( BOOST_DINKUMWARE_STDLIB, < 306 ) \
+    || BOOST_WORKAROUND( __GNUC__, < 3 ) && !defined(__SGI_STL_PORT) \
+        && !defined(_STLPORT_VERSION)
     template<typename Token>
     static void clear( Token& t )                           { t.erase(); }
 #else
@@ -556,6 +565,9 @@ make_range_token_iterator( Iter begin, Iter end, M1 const& m1, M2 const& m2, M3 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7.2.1  2004/10/30 11:34:27  agurtovoy
+//  MSVC/Borland fixes
+//
 //  Revision 1.7  2004/10/01 10:50:40  rogeeff
 //  gcc 2.95 workarounds
 //
