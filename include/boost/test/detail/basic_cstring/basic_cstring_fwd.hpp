@@ -16,13 +16,20 @@
 #ifndef BASIC_CSTRING_FWD_HPP_071894GER
 #define BASIC_CSTRING_FWD_HPP_071894GER
 
+#include <boost/detail/workaround.hpp>
+
 namespace boost {
 
 namespace unit_test {
 
 template<class CharT> class         basic_cstring;
 typedef basic_cstring<char const>   const_string;
+#if BOOST_WORKAROUND(__DECCXX_VER, BOOST_TESTED_AT(60590041))
+typedef const_string                literal_string;
+#else
 typedef const_string const          literal_string;
+#endif
+
 typedef char const* const           c_literal_string;
 
 } // namespace unit_test
@@ -33,6 +40,9 @@ typedef char const* const           c_literal_string;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2004/08/18 05:28:57  rogeeff
+//  another tru64cxx65 workaround
+//
 //  Revision 1.4  2004/07/19 12:28:17  rogeeff
 //  guard rename
 //
