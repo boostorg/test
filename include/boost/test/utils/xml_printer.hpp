@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2004.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -104,8 +104,12 @@ operator<<( custom_printer<pcdata> const& p, const_string value )
 
 // ***************************************************************************
 //  Revision History :
-//  
+//
 //  $Log$
+//  Revision 1.3  2005/01/23 09:59:34  vawjr
+//  Changed - all the \r\r\n to \r\n in the windows flavor of the file
+//            because VC++ 8.0 complains and refuses to compile
+//
 //  Revision 1.2  2005/01/22 19:22:13  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
