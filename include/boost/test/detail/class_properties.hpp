@@ -31,7 +31,8 @@
     BOOST_WORKAROUND( __COMO__, <= 0x433 )       || \
     BOOST_WORKAROUND( __INTEL_COMPILER, <= 800 ) || \
     BOOST_WORKAROUND(__GNUC__, < 3)              || \
-    defined(__sgi) && _COMPILER_VERSION <= 730
+    defined(__sgi) && _COMPILER_VERSION <= 730   || \
+    defined(__DECCXX)
 #define BOOST_TEST_NO_PROTECTED_USING
 #endif
 
@@ -218,6 +219,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.25  2004/08/10 04:08:30  rogeeff
+//  first tru64cxx65 fix
+//
 //  Revision 1.24  2004/08/04 04:14:58  rogeeff
 //  irix6 fix
 //
