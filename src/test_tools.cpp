@@ -24,9 +24,10 @@
 #include <algorithm>
 #include <cstring>  
 #include <string>
+#include <cctype>
 
 # ifdef BOOST_NO_STDC_NAMESPACE
-namespace std { using ::strcmp; using ::strncmp; using ::strlen; }
+namespace std { using ::strcmp; using ::strncmp; using ::strlen; using ::isprint; }
 # endif
 
 namespace boost {
@@ -177,6 +178,29 @@ is_defined_impl( c_string_literal symbol_name, c_string_literal symbol_value )
 {
 //    return std::strncmp( symbol_name, symbol_value, std::strlen( symbol_name ) ) != 0;
     return std::strcmp( symbol_name, symbol_value + 2 ) != 0;
+}
+
+//____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************               log print helper               ************** //
+// ************************************************************************** //
+
+void
+print_log_value<char>::operator()( std::ostream& ostr, char t )
+{
+    if( std::isprint( t ) )
+        ostr << '\'' << t << '\'';
+    else
+        ostr << std::hex << std::showbase << (int)t;
+}
+
+//____________________________________________________________________________//
+
+void
+print_log_value<unsigned char>::operator()( std::ostream& ostr, unsigned char t )
+{
+    ostr << std::hex << std::showbase << (int)t;
 }
 
 //____________________________________________________________________________//
@@ -436,6 +460,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.22  2003/11/02 06:01:05  rogeeff
+//  custom char value log print procedues
+//
 //  Revision 1.21  2003/10/27 07:13:32  rogeeff
 //  licence update
 //
