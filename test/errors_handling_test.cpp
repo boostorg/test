@@ -1,7 +1,7 @@
 //  (C) Copyright Gennadiy Rozental 2001-2004.
 //  (C) Copyright Beman Dawes 2001.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 
@@ -26,7 +26,7 @@ using namespace boost::test_tools;
 // STL
 #include <iostream>
 
-struct this_test_log_formatter : public boost::unit_test::ut_detail::compiler_log_formatter 
+struct this_test_log_formatter : public boost::unit_test::ut_detail::compiler_log_formatter
 {
     void    print_prefix( std::ostream& output, boost::unit_test::const_string, std::size_t line )
     {
@@ -158,7 +158,7 @@ test_main( int argc, char * argv[] )
 
 #define PATTERN_FILE_NAME "errors_handling_test.pattern"
 
-    std::string pattern_file_name( argc == 1 
+    std::string pattern_file_name( argc == 1
                                      ? (match_or_save ? "./test_files/" PATTERN_FILE_NAME : PATTERN_FILE_NAME)
                                      : argv[1] );
 
@@ -228,7 +228,7 @@ test_main( int argc, char * argv[] )
                     continue;
                 }
 
-                { 
+                {
                     unit_test_result_saver saver;
                     unit_test_log.start();
                     unit_test_log.header( 1 );
@@ -255,6 +255,10 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.26  2005/01/23 10:13:22  vawjr
+//  Changed - \r\r\n to \r\n in the windows flavors of the files
+//            VC++ 8.0 complains and won't compile them
+//
 //  Revision 1.25  2005/01/18 08:30:08  rogeeff
 //  unit_test_log rework:
 //     eliminated need for ::instance()

@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2004.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -127,7 +127,7 @@ test_BOOST_CHECK_CLOSE( FPT = FPT() )
 
     BOOST_CHECK_CLOSE_SHOULD_PASS( 1     , 1.0001, 1.1e-2 );
     BOOST_CHECK_CLOSE_SHOULD_PASS( 1.0002, 1.0001, 1.1e-2 );
-    
+
     BOOST_CHECK_CLOSE_SHOULD_FAIL( 1     , 1.0002, 1.1e-2 );
 }
 
@@ -168,7 +168,7 @@ test_close_at_tolerance()
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK_PREDICATE( close_at_tolerance<double>( epsilon ), 2, ( fp1, fp2 ) ),
-        output.is_equal( CHECK_PATTERN( 
+        output.is_equal( CHECK_PATTERN(
                     "error in " TEST_CASE_NAME ": test close_at_tolerance<double>( epsilon )(fp1, fp2) "
                     "failed for (" << fp1 << ", " << fp2 << ")\n", 4 ) )
     );
@@ -192,8 +192,12 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 
 // ***************************************************************************
 //  Revision History :
-//  
+//
 //  $Log$
+//  Revision 1.15  2005/01/23 10:13:22  vawjr
+//  Changed - \r\r\n to \r\n in the windows flavors of the files
+//            VC++ 8.0 complains and won't compile them
+//
 //  Revision 1.14  2005/01/18 08:30:09  rogeeff
 //  unit_test_log rework:
 //     eliminated need for ::instance()

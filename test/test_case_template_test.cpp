@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2003-2004.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -72,12 +72,12 @@ BOOST_META_FUNC_TEST_CASE( test2 );
 
 //____________________________________________________________________________//
 
-int test_main( int, char* [] ) 
+int test_main( int, char* [] )
 {
     tf::unit_test_counter               num_of_failures;
     bool                                exception_caught;
     onullstream_type                    null_output;
-    boost::scoped_ptr<tf::test_case>    test;  
+    boost::scoped_ptr<tf::test_case>    test;
 
     tf::unit_test_log.set_stream( null_output );
 
@@ -152,8 +152,12 @@ int test_main( int, char* [] )
 
 // ***************************************************************************
 //  Revision History :
-//  
+//
 //  $Log$
+//  Revision 1.10  2005/01/23 10:13:22  vawjr
+//  Changed - \r\r\n to \r\n in the windows flavors of the files
+//            VC++ 8.0 complains and won't compile them
+//
 //  Revision 1.9  2005/01/18 08:30:09  rogeeff
 //  unit_test_log rework:
 //     eliminated need for ::instance()

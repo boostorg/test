@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2004.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -480,7 +480,7 @@ test_BOOST_REQUIRE_PREDICATE()
 
    CHECK_CRITICAL_TOOL_USAGE(
         BOOST_REQUIRE_PREDICATE( std::less_equal<int>(), 2, ( arg2, arg1 ) ),
-        false, output.is_equal( CHECK_PATTERN( 
+        false, output.is_equal( CHECK_PATTERN(
                     "fatal error in " TEST_CASE_NAME ": test std::less_equal<int>()(arg2, arg1) "
                     "failed for (" << arg2 << ", " << arg1 << ")\n", 4 ) )
     );
@@ -511,7 +511,7 @@ test_BOOST_ERROR()
 
 struct my_exception {
     explicit my_exception( int ec = 0 ) : m_error_code( ec ) {}
-    
+
     int m_error_code;
 };
 
@@ -577,7 +577,7 @@ test_BOOST_CHECK_NO_THROW()
     int i=0;
     CHECK_TOOL_USAGE(
         BOOST_CHECK_NO_THROW( i++ ),
-        output.is_empty() 
+        output.is_empty()
     );
 
     CHECK_TOOL_USAGE(
@@ -611,7 +611,7 @@ test_BOOST_CHECK_EQUAL_COLLECTIONS()
 #if !defined(__BORLANDC__)
     CHECK_TOOL_USAGE(
         BOOST_CHECK_EQUAL_COLLECTIONS( testlist.begin(), testlist.end(), pattern ),
-            output.is_equal( CHECK_PATTERN( 
+            output.is_equal( CHECK_PATTERN(
               "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed in a position 2 [4 != 3]\n"
               << normalize_file_name( __FILE__ ) << "(" << __LINE__ << "): "
               << "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed in a position 5 [7 != 6]\n"
@@ -620,7 +620,7 @@ test_BOOST_CHECK_EQUAL_COLLECTIONS()
 #else
     CHECK_TOOL_USAGE(
         BOOST_CHECK_EQUAL_COLLECTIONS( testlist.begin(), testlist.end(), pattern ),
-            output.is_equal( CHECK_PATTERN( 
+            output.is_equal( CHECK_PATTERN(
               "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed in a position 2 [4 != 3]\n"
               << normalize_file_name( __FILE__ ) << "(" << (__LINE__-6) << "): "
               << "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed in a position 5 [7 != 6]\n"
@@ -669,7 +669,7 @@ test_BOOST_BITWISE_EQUAL()
 
     CHECK_TOOL_USAGE(
         BOOST_BITWISE_EQUAL( (char)0x26, (char)0x04 ),
-        output.is_equal( 
+        output.is_equal(
         std::string( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test (char)0x26 =.= (char)0x04 in the position 1 failed\n", 4 ) )
             .append( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test (char)0x26 =.= (char)0x04 in the position 5 failed\n", 4 ) ) )
     );
@@ -709,8 +709,12 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 
 // ***************************************************************************
 //  Revision History :
-//  
+//
 //  $Log$
+//  Revision 1.36  2005/01/23 10:13:22  vawjr
+//  Changed - \r\r\n to \r\n in the windows flavors of the files
+//            VC++ 8.0 complains and won't compile them
+//
 //  Revision 1.35  2005/01/18 08:30:09  rogeeff
 //  unit_test_log rework:
 //     eliminated need for ::instance()
