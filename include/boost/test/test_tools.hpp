@@ -1,8 +1,10 @@
 //  (C) Copyright Gennadiy Rozental 2001-2003.
 //  (C) Copyright Ullrich Koethe 2001.
-//  See accompanying license for terms and conditions of use.
+//  Use, modification, and distribution are subject to the 
+//  Boost Software License, Version 1.0. (See accompanying file 
+//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-//  See http://www.boost.org for most recent version including documentation.
+//  See http://www.boost.org/libs/test for the library home page.
 //
 //  File        : $RCSfile$
 //
@@ -56,7 +58,7 @@
 
 #define BOOST_CHECK_CLOSE(left_, right_, tolerance) \
     boost::test_toolbox::detail::compare_and_continue_impl((left_), (right_), (tolerance),\
-        boost::wrap_stringstream().ref() << #left_ " ~= " #right_, __FILE__, __LINE__)
+														   #left_,  #right_, __FILE__, __LINE__)
 /**/
 
 #define BOOST_BITWISE_EQUAL(left_, right_) \
@@ -151,6 +153,12 @@
 #define BOOST_TEST(predicate)            BOOST_CHECK(predicate)
 #define BOOST_CRITICAL_TEST(predicate)   BOOST_REQUIRE(predicate)
 #define BOOST_CRITICAL_ERROR(message_)   BOOST_FAIL(message_)
+
+#ifdef BOOST_MSVC
+# pragma warning(push)
+# pragma warning(disable: 4511) // copy constructor could not be generated
+# pragma warning(disable: 4512) // assignment operator could not be generated
+#endif
 
 namespace boost {
 
@@ -450,10 +458,10 @@ equal_and_continue_impl( Left left_begin_, Left left_end_, Right right_begin_,
 
 // ************************************* //
 
-template<typename FPT>
+template<typename FPT, typename PersentType>
 inline bool
-compare_and_continue_impl( FPT left_, FPT right_, FPT tolerance_,
-                           wrap_stringstream& message_,
+compare_and_continue_impl( FPT left_, FPT right_, PersentType tolerance_,
+                           c_string_literal left_text_, c_string_literal right_text_,
                            c_string_literal file_name_, std::size_t line_num_,
                            unit_test_framework::log_level log_level_ = unit_test_framework::log_all_errors )
 {
@@ -461,13 +469,17 @@ compare_and_continue_impl( FPT left_, FPT right_, FPT tolerance_,
 
     if( !predicate ) {
         return test_and_continue_impl( predicate,
-            wrap_stringstream().ref() << "test " << message_
-                            << " failed [" << print_helper<FPT>( left_ ) << " !~= " << print_helper<FPT>( right_ )
-                            << " (+/-" << tolerance_ << ")]",
+            wrap_stringstream().ref() << "difference between " << left_text_ << "{" << print_helper<FPT>( left_ ) << "}" 
+                                      << " and " << right_text_ << "{" << print_helper<FPT>( right_ ) << "}" 
+                                      << " exceeds " << print_helper<PersentType>( tolerance_ ) << "%",
             file_name_, line_num_, false, log_level_ );
     }
 
-    return test_and_continue_impl( predicate, message_, file_name_, line_num_, true, log_level_ );
+    return test_and_continue_impl( predicate, 
+        wrap_stringstream().ref() << "difference between " << left_text_ << "{" << print_helper<FPT>( left_ ) << "}" 
+                                  << " and " << right_text_ << "{" << print_helper<FPT>( right_ ) << "}" 
+                                  << " does not exceeds " << print_helper<PersentType>( tolerance_ ) << "%",
+        file_name_, line_num_, true, log_level_ );
 }
 
 //____________________________________________________________________________//
@@ -557,10 +569,21 @@ private:
 
 } // namespace boost
 
+#ifdef BOOST_MSVC
+# pragma warning(default: 4511) // copy constructor could not be generated
+# pragma warning(default: 4512) // assignment operator could not be generated
+# pragma warning(pop)
+#endif
+
 // ***************************************************************************
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.34  2003/11/06 07:38:58  rogeeff
+//  Licence update
+//  Floating point check reworked (Is not backward compartible!!!)
+//  Some annoying MSVC wrnings suppressed
+//
 //  Revision 1.33  2003/11/02 06:19:55  rogeeff
 //  custom exception translator registration support
 //  added position for the collection comparison results error message

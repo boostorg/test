@@ -1,7 +1,9 @@
 //  (C) Copyright Gennadiy Rozental 2001-2003.
-//  See accompanying license for terms and conditions of use.
+//  Use, modification, and distribution are subject to the 
+//  Boost Software License, Version 1.0. (See accompanying file 
+//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-//  See http://www.boost.org for most recent version including documentation.
+//  See http://www.boost.org/libs/test for the library home page.
 //
 //  File        : $RCSfile$
 //
@@ -61,11 +63,11 @@ safe_fpt_division( FPT f1, FPT f2 )
 // **************             close_at_tolerance               ************** //
 // ************************************************************************** //
 
-template<typename FPT>
+template<typename FPT, typename PersentType = FPT >
 class close_at_tolerance {
 public:
-    explicit    close_at_tolerance( FPT tolerance, floating_point_comparison_type fpc_type = FPC_STRONG ) 
-    : p_tolerance( tolerance ), p_strong_or_weak( fpc_type ==  FPC_STRONG ) {}
+    explicit    close_at_tolerance( PersentType tolerance, floating_point_comparison_type fpc_type = FPC_STRONG ) 
+    : p_fraction_tolerance( static_cast<FPT>(0.01)*tolerance ), p_strong_or_weak( fpc_type ==  FPC_STRONG ) {}
 
     bool        operator()( FPT left, FPT right ) const
     {
@@ -73,15 +75,13 @@ public:
         FPT d1   = detail::safe_fpt_division( diff, detail::fpt_abs( right ) );
         FPT d2   = detail::safe_fpt_division( diff, detail::fpt_abs( left ) );
         
-        return p_strong_or_weak ? (d1 <= p_tolerance.get() && d2 <= p_tolerance.get()) 
-                                : (d1 <= p_tolerance.get() || d2 <= p_tolerance.get());
+        return p_strong_or_weak ? (d1 <= p_fraction_tolerance.get() && d2 <= p_fraction_tolerance.get()) 
+                                : (d1 <= p_fraction_tolerance.get() || d2 <= p_fraction_tolerance.get());
     }
 
     // Public properties
-    BOOST_READONLY_PROPERTY( FPT, 0, () )
-                p_tolerance;
-    BOOST_READONLY_PROPERTY( bool, 0, () )
-                p_strong_or_weak;
+    BOOST_READONLY_PROPERTY( FPT, 0, () )	p_fraction_tolerance;
+    BOOST_READONLY_PROPERTY( bool, 0, () )	p_strong_or_weak;
 };
 
 //____________________________________________________________________________//
@@ -90,11 +90,11 @@ public:
 // **************               check_is_closed                ************** //
 // ************************************************************************** //
 
-template<typename FPT>
+template<typename FPT, typename PersentType>
 bool
-check_is_closed( FPT left, FPT right, FPT tolerance, floating_point_comparison_type fpc_type = FPC_STRONG )
+check_is_closed( FPT left, FPT right, PersentType tolerance, floating_point_comparison_type fpc_type = FPC_STRONG )
 {
-    close_at_tolerance<FPT> pred( tolerance, fpc_type );
+    close_at_tolerance<FPT,PersentType> pred( tolerance, fpc_type );
 
     return pred( left, right );
 }
@@ -107,7 +107,7 @@ compute_tolerance( FPT tolerance )
 {
     close_at_tolerance<FPT> pred( tolerance );
 
-    return pred.p_tolerance.get();
+    return pred.p_fraction_tolerance.get();
 }
 
 //____________________________________________________________________________//
@@ -119,6 +119,11 @@ compute_tolerance( FPT tolerance )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.12  2003/11/06 07:38:57  rogeeff
+//  Licence update
+//  Floating point check reworked (Is not backward compartible!!!)
+//  Some annoying MSVC wrnings suppressed
+//
 //  Revision 1.11  2003/10/27 07:13:12  rogeeff
 //  licence update
 //
