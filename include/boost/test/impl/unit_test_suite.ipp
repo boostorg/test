@@ -13,8 +13,8 @@
 //  Extensions could be provided in separate files
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_MAIN_IPP_012205GER
-#define BOOST_UNIT_TEST_MAIN_IPP_012205GER
+#ifndef BOOST_UNIT_TEST_SUITE_IPP_012205GER
+#define BOOST_UNIT_TEST_SUITE_IPP_012205GER
 
 // Boost.Test
 #include <boost/test/unit_test_suite.hpp>
@@ -303,6 +303,9 @@ normalize_test_case_name( std::string& name_ )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/01/26 07:37:13  rogeeff
+//  typo in guard
+//
 //  Revision 1.1  2005/01/22 19:22:13  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
@@ -336,4 +339,4 @@ normalize_test_case_name( std::string& name_ )
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_MAIN_IPP_012205GER
+#endif // BOOST_UNIT_TEST_SUITE_IPP_012205GER
