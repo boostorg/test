@@ -28,10 +28,15 @@
 #include <cstring>  
 #include <string>
 #include <cctype>
+#include <cwchar>
 
 # ifdef BOOST_NO_STDC_NAMESPACE
-namespace std { using ::strcmp; using ::strncmp; using ::strlen; using ::isprint; }
+namespace std { using ::strcmp; using ::wcscmp; using ::strlen; using ::isprint; }
 # endif
+
+#if BOOST_WORKAROUND( __GNUC__, == 3 ) && BOOST_WORKAROUND( __GNUC_MINOR__,  == 3 )
+namespace std { using ::wcscmp; }
+#endif
 
 namespace boost {
 
@@ -177,10 +182,30 @@ equal_and_continue_impl( c_string_literal left, c_string_literal right, wrap_str
 //____________________________________________________________________________//
 
 bool
+equal_and_continue_impl( wchar_t const* left, wchar_t const* right, wrap_stringstream& message,
+                         const_string file_name, std::size_t line_num,
+                         unit_test::log_level loglevel )
+{
+    bool predicate = (left && right) ? std::wcscmp( left, right ) == 0 : (left == right);
+
+    left  = left  ? left  : L"null string";
+    right = right ? right : L"null string";
+
+    if( !predicate ) {
+        return test_and_continue_impl( false,
+            wrap_stringstream().ref() << "test " << message.str() << " failed",
+            file_name, line_num, false, loglevel );
+    }
+
+    return test_and_continue_impl( true, message, file_name, line_num, true, loglevel );
+}
+
+//____________________________________________________________________________//
+
+bool
 is_defined_impl( const_string symbol_name, const_string symbol_value )
 {
     symbol_value.trim_left( 2 );
-//    return std::strncmp( symbol_name, symbol_value, std::strlen( symbol_name ) ) != 0;
     return symbol_name != symbol_value;
 }
 
@@ -433,6 +458,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.30  2004/05/27 06:29:20  rogeeff
+//  support for wide C string comparizon
+//
 //  Revision 1.29  2004/05/21 06:26:09  rogeeff
 //  licence update
 //
