@@ -44,11 +44,13 @@ struct test_case_scope_tracker {
     explicit            test_case_scope_tracker( test_case const& tc ) 
     : m_tc( tc )
     {
-        unit_test_log.track_test_case_enter( m_tc );
+        unit_test_log.test_case_enter( m_tc );
+        unit_test_result::test_case_enter( m_tc.p_name.get(), m_tc.p_expected_failures );
     }
     ~test_case_scope_tracker()
     {
-        unit_test_log.track_test_case_exit( m_tc, (long)(m_timer.elapsed() * 1e6) );
+        unit_test_log.test_case_exit( m_tc, (long)(m_timer.elapsed() * 1e6) );
+        unit_test_result::test_case_exit();
     }
 
 private:
@@ -92,7 +94,7 @@ test_case::Impl::check_dependencies()
 
 //____________________________________________________________________________//
 
-test_case::test_case( const_string name_, bool type, unit_test_counter stages_amount_, bool monitor_run_ )
+test_case::test_case( const_string name_, bool type, counter_t stages_amount_, bool monitor_run_ )
 : p_timeout( 0 ), p_expected_failures( 0 ), p_type( type ),
   p_name( std::string( name_.begin(), name_.end() ) ),
   p_compound_stage( false ), p_stages_amount( stages_amount_ ),
@@ -102,7 +104,7 @@ test_case::test_case( const_string name_, bool type, unit_test_counter stages_am
 
 //____________________________________________________________________________//
 
-unit_test_counter
+counter_t
 test_case::size() const
 {
     return 1;
@@ -130,17 +132,16 @@ void
 test_case::run()
 {
     using ut_detail::unit_test_monitor;
-
-    test_case_scope_tracker scope_tracker( *this );
-    
+  
     // 0. Check if we allowed to run this test case
     if( !m_pimpl->check_dependencies() )
         return;
 
+    test_case_scope_tracker scope_tracker( *this );
+
     m_pimpl->s_abort_testing = false;
 
     // 1. Init test results
-    unit_test_result_tracker result_tracker( p_name.get(), p_expected_failures );
     m_pimpl->m_results_set = &unit_test_result::instance();
 
     // 2. Initialize test case
@@ -161,7 +162,7 @@ test_case::run()
     }
 
     // 3. Run test case (all stages)
-    for( unit_test_counter i=0; i != p_stages_amount; ++i ) {
+    for( counter_t i=0; i != p_stages_amount; ++i ) {
         p_compound_stage.value = false; // could be set by do_run to mark compound stage;
                                         // than no need to report progress here
 
@@ -207,7 +208,7 @@ test_case::run()
 struct test_suite::Impl {
     std::list<test_case*>           m_test_cases;
     std::list<test_case*>::iterator m_curr_test_case;
-    unit_test_counter               m_cumulative_size;
+    counter_t               m_cumulative_size;
 };
 
 //____________________________________________________________________________//
@@ -230,7 +231,7 @@ test_suite::~test_suite()
 //____________________________________________________________________________//
 
 void
-test_suite::add( test_case* tc, unit_test_counter exp_fail, int timeout )
+test_suite::add( test_case* tc, counter_t exp_fail, int timeout )
 {
     if( exp_fail != 0 ) {
         tc->p_expected_failures.value = exp_fail;
@@ -249,7 +250,7 @@ test_suite::add( test_case* tc, unit_test_counter exp_fail, int timeout )
 
 //____________________________________________________________________________//
 
-unit_test_counter
+counter_t
 test_suite::size() const
 {
     return m_pimpl->m_cumulative_size;
@@ -282,14 +283,15 @@ test_suite::do_run()
 
 namespace ut_detail {
 
-std::string const&
-normalize_test_case_name( std::string& name_ )
+std::string
+normalize_test_case_name( const_string name )
 {
-    if( name_[0] == '&' )
-        name_.erase( 0, 1 );
-
-    return name_;
+    return ( name[0] == '&'
+                ? std::string( name.begin()+1, name.size()-1 )
+                : std::string( name.begin(), name.size() ) );
 }
+
+//____________________________________________________________________________//
 
 } // namespace ut_detail
 
@@ -303,8 +305,9 @@ normalize_test_case_name( std::string& name_ )
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.2  2005/01/26 07:37:13  rogeeff
-//  typo in guard
+//  Revision 1.3  2005/01/30 01:52:47  rogeeff
+//  counter type renamed
+//  log interface functions shortened
 //
 //  Revision 1.1  2005/01/22 19:22:13  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
