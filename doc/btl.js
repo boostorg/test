@@ -16,14 +16,14 @@ function btl_header() {
     document.write( "</div>" );
 
     document.write( "<div class='screen-header'>" );
-    document.write( "<table width='100%' style='border-style: none; padding:0;' cellspacing=0;>" );
+    document.write( "<table width='100%' style='border-style: none; padding:0;' cellspacing=0; id='active_area'>" );
     document.write( "<tr>" );
 
     document.write( "<td align='left'>" );
     document.write( "<a name='TOP'><img border='0' src='../../../c++boost.gif' width='277' height='86'></a><br clear=left>" );
     document.write( "</td>" );
 
-    document.write( "<td align='right' width='70%' id='active_area''>" );
+    document.write( "<td align='right' width='70%'>" );
 
     document.write( "<div id='wipe-away-menu-holder'>" );
 
@@ -42,10 +42,7 @@ function btl_header() {
 }
 
 function hide_btl_menu( e ) {
-    if( viso_event_target( e ) == viso_get("active_area") &&
-        viso_event_to_target( e ) != btl_menu.menu        && 
-        viso_event_to_target( e ) != btl_menu.menu_parent && 
-        viso_event_to_target( e ) != btl_menu.menu_root )
+    if( viso_event_to_target( e ) == viso_get("body") )
         btl_menu.hide();
 }
 
@@ -104,5 +101,5 @@ function style_switch() {
 
     btl_style.store( { days:365 } );
 
-    window.location = document.location;
+    window.location.reload( false );
 }
