@@ -31,6 +31,8 @@ namespace unit_test_framework {
 // **************                   test_case                  ************** //
 // ************************************************************************** //
 
+detail::unit_test_monitor the_monitor;
+
 typedef unit_test_result const* unit_test_result_cptr;
 
 struct test_case::Impl {
@@ -97,7 +99,7 @@ test_case::has_passed() const
 void
 test_case::run()
 {
-    using detail::unit_test_monitor;
+	using detail::unit_test_monitor;
 
     test_case_scope_tracker scope_tracker( *this );
     
@@ -114,7 +116,7 @@ test_case::run()
     // 2. Initialize test case
     if( m_pimpl->m_monitor_run ) {
         error_level_type init_result =
-            unit_test_monitor( *this, &test_case::do_init ).execute_and_translate( p_timeout );
+            the_monitor.execute_and_translate( this, &test_case::do_init, p_timeout );
 
         if( init_result != unit_test_monitor::test_ok ) {
             m_pimpl->s_abort_testing  = unit_test_monitor::is_critical_error( init_result );
@@ -137,7 +139,7 @@ test_case::run()
 
         if( m_pimpl->m_monitor_run ) {
             error_level_type run_result =
-                unit_test_monitor( *this, &test_case::do_run ).execute_and_translate( p_timeout );
+                the_monitor.execute_and_translate( this, &test_case::do_run, p_timeout );
 
             if( unit_test_monitor::is_critical_error( run_result ) ) {
                 m_pimpl->s_abort_testing = true;
@@ -149,7 +151,6 @@ test_case::run()
 
             if( m_pimpl->s_abort_testing )
                 return;
-
         }
         else {
             do_run();
@@ -162,7 +163,7 @@ test_case::run()
     // 3. Finalize test case
     if( m_pimpl->m_monitor_run ) {
         error_level_type destroy_result =
-            unit_test_monitor( *this, &test_case::do_destroy ).execute_and_translate( p_timeout );
+            the_monitor.execute_and_translate( this, &test_case::do_destroy, p_timeout );
         
         m_pimpl->s_abort_testing = unit_test_monitor::is_critical_error( destroy_result );
     }
@@ -274,6 +275,9 @@ normalize_test_case_name( std::string& name_ )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10  2003/11/02 06:03:04  rogeeff
+//  use shared global unit_test_monitor
+//
 //  Revision 1.9  2003/10/27 07:13:32  rogeeff
 //  licence update
 //
