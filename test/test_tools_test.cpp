@@ -51,9 +51,16 @@ using namespace boost::unit_test_framework;
 
 //____________________________________________________________________________//
 
-#define CHECK_PATTERN( msg ) \
+#if !defined(__BORLANDC__)
+#define CHECK_PATTERN( msg, shift ) \
     (boost::test_toolbox::detail::wrapstrstream() << __FILE__ << "(" << __LINE__ << ") : " << msg).str()
 
+#else
+
+#define CHECK_PATTERN( msg, shift ) \
+    (boost::test_toolbox::detail::wrapstrstream() << __FILE__ << "(" << (__LINE__-shift) << ") : " << msg).str()
+
+#endif
 //____________________________________________________________________________//
 
 void
@@ -69,25 +76,25 @@ test_BOOST_CHECK() {
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK( false ),
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test false failed\n" ) )
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test false failed\n", 2 ) )
     );
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK( 1==2 ),
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test 1==2 failed\n" ) )
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test 1==2 failed\n", 2 ) )
     );
 
     int i=2;
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK( i==1 ),
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test i==1 failed\n" ) )
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test i==1 failed\n", 2 ) )
     );
 
     unit_test_log::instance().set_log_threshold_level( report_successful_tests );
     CHECK_TOOL_USAGE(
         BOOST_CHECK( i==2 ),
-        output.is_equal( CHECK_PATTERN( "info: test i==2 passed\n" ) )
+        output.is_equal( CHECK_PATTERN( "info: test i==2 passed\n", 2 ) )
     );
     unit_test_log::instance().set_log_threshold_level( report_all_errors );
 }
@@ -115,13 +122,13 @@ test_BOOST_REQUIRE() {
 
     CHECK_CRITICAL_TOOL_USAGE(
         BOOST_REQUIRE( j > 5 ),
-        false, output.is_equal( CHECK_PATTERN( "fatal error in " TEST_CASE_NAME ": test j > 5 failed\n" ) )
+        false, output.is_equal( CHECK_PATTERN( "fatal error in " TEST_CASE_NAME ": test j > 5 failed\n", 2 ) )
     );
 
     unit_test_log::instance().set_log_threshold_level( report_successful_tests );
     CHECK_CRITICAL_TOOL_USAGE(
         BOOST_REQUIRE( j < 5 ),
-        output.is_equal( CHECK_PATTERN( "info: test j < 5 passed\n" ) ) , false
+        output.is_equal( CHECK_PATTERN( "info: test j < 5 passed\n", 1 ) ) , false
     );
     unit_test_log::instance().set_log_threshold_level( report_all_errors );
 
@@ -152,7 +159,7 @@ test_BOOST_MESSAGE() {
 
     int i = 2;
     CHECK_TOOL_USAGE(
-        BOOST_MESSAGE( i << "+" << i << "=" << i+i ),
+        BOOST_MESSAGE( i << "+" << i << "=" << (i+i) ),
         output.is_equal( "2+2=4\n" )
     );
 
@@ -175,7 +182,7 @@ test_BOOST_WARN() {
     CHECK_TOOL_USAGE(
         BOOST_WARN( sizeof(int) == sizeof(short) ),
         output.is_equal( CHECK_PATTERN( "warning in " TEST_CASE_NAME
-                                        ": condition sizeof(int) == sizeof(short) is not satisfied\n" ) )
+                                        ": condition sizeof(int) == sizeof(short) is not satisfied\n", 3 ) )
     );
 }
 
@@ -204,7 +211,7 @@ test_BOOST_CHECKPOINT() {
         output.is_equal(
             (boost::test_toolbox::detail::wrapstrstream()
                 << "Exception in " TEST_CASE_NAME ": C string: some error\n"
-                << __FILE__ << "(" << __LINE__ - 10 << ") : "
+                << __FILE__ << "(" << (__LINE__ - 10) << ") : "
                 << "last checkpoint: Going to do a silly things\n").str()
         )
     );
@@ -221,7 +228,7 @@ test_BOOST_WARN_MESSAGE() {
 
     CHECK_TOOL_USAGE(
         BOOST_WARN_MESSAGE( sizeof(int) == sizeof(short), "memory won't be used efficiently" ),
-        output.is_equal( CHECK_PATTERN( "warning in " TEST_CASE_NAME ": memory won't be used efficiently\n" ) )
+        output.is_equal( CHECK_PATTERN( "warning in " TEST_CASE_NAME ": memory won't be used efficiently\n", 2 ) )
     );
 
     int obj_size = 33;
@@ -229,7 +236,7 @@ test_BOOST_WARN_MESSAGE() {
     CHECK_TOOL_USAGE(
         BOOST_WARN_MESSAGE( obj_size <= 8, "object size " << obj_size << " too big to be efficiently passed by value" ),
         output.is_equal( CHECK_PATTERN( "warning in " TEST_CASE_NAME
-                                        ": object size 33 too big to be efficiently passed by value\n" ) )
+                                        ": object size 33 too big to be efficiently passed by value\n", 3 ) )
     );
 
 }
@@ -246,7 +253,7 @@ test_BOOST_CHECK_MESSAGE() {
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK_MESSAGE( 2+2 == 5, "Well, may be that what I belive in" ),
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": Well, may be that what I belive in\n" ) )
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": Well, may be that what I belive in\n", 2 ) )
     );
 
 }
@@ -261,9 +268,9 @@ test_BOOST_REQUIRE_MESSAGE() {
     unit_test_log::instance().set_log_threshold_level( report_all_errors );
 
     CHECK_CRITICAL_TOOL_USAGE(
-        BOOST_REQUIRE_MESSAGE( false, "Here we should stop" << __LINE__ ),
+        BOOST_REQUIRE_MESSAGE( false, "Here we should stop" ),
         false, output.is_equal(
-            CHECK_PATTERN( "fatal error in " TEST_CASE_NAME ": Here we should stop" << __LINE__ << "\n" ) )
+            CHECK_PATTERN( "fatal error in " TEST_CASE_NAME ": Here we should stop" << "\n", 3 ) )
     );
 }
 
@@ -291,7 +298,7 @@ test_BOOST_CHECK_EQUAL() {
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK_EQUAL( i, j ),
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test i == j failed [1 != 2]\n" ) )
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test i == j failed [1 != 2]\n", 2 ) )
     );
 
     char const* str1 = "test1";
@@ -299,7 +306,7 @@ test_BOOST_CHECK_EQUAL() {
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK_EQUAL( str1, str2 ),
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test str1 == str2 failed [test1 != test12]\n" ) )
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test str1 == str2 failed [test1 != test12]\n", 2 ) )
     );
 
     B b1(1);
@@ -307,7 +314,7 @@ test_BOOST_CHECK_EQUAL() {
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK_EQUAL( b1, b2 ),
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test b1 == b2 failed [B(1) != B(2)]\n" ) )
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test b1 == b2 failed [B(1) != B(2)]\n", 2 ) )
     );
 }
 
@@ -315,7 +322,7 @@ test_BOOST_CHECK_EQUAL() {
 
 template<typename FPT>
 void
-test_BOOST_CHECK_CLOSE( FPT dummy = 0. ) {
+test_BOOST_CHECK_CLOSE( FPT ) {
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_CLOSE_all" << "\"" <<
     unit_test_log::instance().set_log_threshold_level( report_messages );
@@ -350,7 +357,7 @@ test_BOOST_CHECK_CLOSE( FPT dummy = 0. ) {
     CHECK_TOOL_USAGE(                                           \
         BOOST_CHECK_CLOSE( fp1, fp2, epsilon ),                 \
         output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test fp1 ~= fp2 failed [" \
-                                        << fp1 << " !~= " << fp2 << " (+/-" << epsilon << ")]\n" ) ) \
+                                        << fp1 << " !~= " << fp2 << " (+/-" << epsilon << ")]\n", 0 ) ) \
     )
 
 #define BOOST_CHECK_CLOSE_SHOULD_FAIL_N( first, second, num )   \
@@ -361,7 +368,7 @@ test_BOOST_CHECK_CLOSE( FPT dummy = 0. ) {
     CHECK_TOOL_USAGE(                                           \
         BOOST_CHECK_CLOSE( fp1, fp2, num ),                     \
         output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test fp1 ~= fp2 failed [" \
-                                        << fp1 << " !~= " << fp2 << " (+/-" << epsilon << ")]\n" ) ) \
+        << fp1 << " !~= " << fp2 << " (+/-" << epsilon << ")]\n", 0 ) ) \
     )
 
     FPT fp1, fp2, epsilon, tmp;
@@ -448,12 +455,12 @@ test_BOOST_CHECK_PREDICATE() {
     int i = 17;
     CHECK_TOOL_USAGE(
         BOOST_CHECK_PREDICATE( &is_even, 1, (i) ),
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test &is_even(i) failed for 17\n" ) )
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test &is_even(i) failed for 17\n", 2 ) )
     );
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK_PREDICATE( std::not_equal_to<int>(), 2, (i,17) ),
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test std::not_equal_to<int>()(i, 17) failed for (17, 17)\n" ) )
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test std::not_equal_to<int>()(i, 17) failed for (17, 17)\n", 2 ) )
     );
 
     CHECK_TOOL_USAGE(
@@ -473,7 +480,7 @@ test_BOOST_CHECK_PREDICATE() {
     CHECK_TOOL_USAGE(
         BOOST_CHECK_CLOSE( fp1, fp2, epsilon ),
         output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test fp1 ~= fp2 failed [" 
-                                        << fp1 << " !~= " << fp2 << " (+/-" << epsilon << ")]\n" ) )
+                                        << fp1 << " !~= " << fp2 << " (+/-" << epsilon << ")]\n", 3 ) )
     );
 }
 
@@ -501,7 +508,7 @@ test_BOOST_REQUIRE_PREDICATE() {
         BOOST_REQUIRE_PREDICATE( close_at_tolerance<double>( epsilon ), 2, ( fp1, fp2 ) ),
         false, output.is_equal( CHECK_PATTERN( 
                     "fatal error in " TEST_CASE_NAME ": test close_at_tolerance<double>( epsilon )(fp1, fp2) "
-                    "failed for (" << fp1 << ", " << fp2 << ")\n" ) )
+                    "failed for (" << fp1 << ", " << fp2 << ")\n", 4 ) )
     );
 }
 
@@ -516,12 +523,12 @@ test_BOOST_ERROR() {
 
     CHECK_TOOL_USAGE(
         BOOST_ERROR( "Fail to miss an error" ),
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": Fail to miss an error\n" ) )
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": Fail to miss an error\n", 2 ) )
     );
 
     CHECK_CRITICAL_TOOL_USAGE(
         BOOST_FAIL( "No! No! Show must go on." ),
-        false, output.is_equal( CHECK_PATTERN( "fatal error in " TEST_CASE_NAME ": No! No! Show must go on.\n" ) )
+        false, output.is_equal( CHECK_PATTERN( "fatal error in " TEST_CASE_NAME ": No! No! Show must go on.\n", 2 ) )
     );
 }
 
@@ -539,14 +546,14 @@ test_BOOST_CHECK_THROW() {
     int i=0;
     CHECK_TOOL_USAGE(
         BOOST_CHECK_THROW( i++, my_exception ),
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": exception my_exception is expected\n" ) )
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": exception my_exception is expected\n", 2 ) )
     );
 
     unit_test_log::instance().set_log_threshold_level( report_successful_tests );
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK_THROW( throw my_exception(), my_exception ),
-        output.is_equal( CHECK_PATTERN( "info: exception my_exception is caught\n" ) )
+        output.is_equal( CHECK_PATTERN( "info: exception my_exception is caught\n", 2 ) )
     );
 
     unit_test_log::instance().set_log_threshold_level( report_all_errors );
@@ -573,15 +580,25 @@ test_BOOST_CHECK_EQUAL_COLLECTIONS() {
     testlist.push_back( 7 ); // 6
     testlist.push_back( 7 );
 
+#if !defined(__BORLANDC__)
     CHECK_TOOL_USAGE(
         BOOST_CHECK_EQUAL_COLLECTIONS( testlist.begin(), testlist.end(), pattern ),
             output.is_equal( CHECK_PATTERN( 
               "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [4 != 3]\n"
               __FILE__ << "(" << __LINE__ << ") : " << 
               "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [7 != 6]\n"
-            )
-        )
+              , 6 ) )
     );
+#else
+    CHECK_TOOL_USAGE(
+        BOOST_CHECK_EQUAL_COLLECTIONS( testlist.begin(), testlist.end(), pattern ),
+            output.is_equal( CHECK_PATTERN( 
+              "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [4 != 3]\n"
+              __FILE__ << "(" << __LINE__-6 << ") : " << 
+              "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [7 != 6]\n"
+              , 6 ) )
+    );
+#endif
 
 }
 
@@ -618,7 +635,13 @@ init_unit_test_suite( int argc, char* argv[] ) {
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_MESSAGE ), 1 );
     test->add( BOOST_TEST_CASE( &test_BOOST_REQUIRE_MESSAGE ), 1 );
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_EQUAL ), 3 );
-    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_CLOSE_all ), 30 );
+    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_CLOSE_all ), 
+#if defined(__BORLANDC__) || defined(__GNUC__)
+        40
+#else
+        30
+#endif
+);
     test->add( BOOST_TEST_CASE( &test_BOOST_ERROR ), 2 );
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_THROW ), 1 );
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_EQUAL_COLLECTIONS ), 2 );
