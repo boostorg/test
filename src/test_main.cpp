@@ -14,7 +14,7 @@
 //  Description : implements main function for Test Execution Monitor. 
 // ***************************************************************************
 
-// LOCAL
+// Boost.Test
 #include <boost/test/unit_test.hpp>         // for unit test framework
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
@@ -90,6 +90,9 @@ int main( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8.2.2  2002/10/01 05:48:27  rogeeff
+//  coment clarified
+//
 //  Revision 1.8.2.1  2002/09/29 18:12:00  rogeeff
 //  move using declaraion into main to prevent global namespace polution in case of included components
 //

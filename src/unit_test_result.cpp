@@ -14,7 +14,7 @@
 //  implementation is hidden in this file using pimple idiom.
 // ***************************************************************************
 
-// LOCAL
+// Boost.Test
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/unit_test_suite.hpp>
 
@@ -313,6 +313,9 @@ unit_test_result::result_code()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10.2.1  2002/10/01 05:48:27  rogeeff
+//  coment clarified
+//
 //  Revision 1.10  2002/08/26 08:29:48  rogeeff
 //  *** empty log message ***
 //

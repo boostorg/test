@@ -14,7 +14,7 @@
 //  Description : main function implementation for Program Executon Monitor
 // ***************************************************************************
 
-// LOCAL
+// Boost.Test
 #include <boost/test/execution_monitor.hpp>
 
 // BOOST
@@ -88,6 +88,9 @@ int main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5.2.1  2002/10/01 05:48:27  rogeeff
+//  coment clarified
+//
 //  Revision 1.5  2002/08/20 08:24:13  rogeeff
 //  cvs keywords added
 //

@@ -13,7 +13,7 @@
 //  Description : supplies offline implemtation for the Test Tools
 // ***************************************************************************
 
-// LOCAL
+// Boost.Test
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_result.hpp>
 
@@ -408,6 +408,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9.2.1  2002/10/01 05:48:27  rogeeff
+//  coment clarified
+//
 //  Revision 1.9  2002/09/16 08:45:09  rogeeff
 //  STL includes normalized
 //

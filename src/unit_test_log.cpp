@@ -14,7 +14,7 @@
 //  are hidden in this file with use of pimpl idiom.
 // ***************************************************************************
 
-// LOCAL
+// Boost.Test
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/unit_test_suite.hpp>
@@ -370,6 +370,9 @@ unit_test_log::start( unit_test_counter test_cases_amount, bool print_build_info
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8.2.1  2002/10/01 05:48:27  rogeeff
+//  coment clarified
+//
 //  Revision 1.8  2002/09/04 07:27:08  rogeeff
 //  space before colon deleted
 //

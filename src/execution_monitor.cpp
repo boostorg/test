@@ -22,7 +22,7 @@
 //  boost libraries.
 // ***************************************************************************
 
-// LOCAL
+// Boost.Test
 #include <boost/test/execution_monitor.hpp>
 
 // BOOST
@@ -462,6 +462,9 @@ static void report_error( execution_exception::error_code ec, char const* msg1, 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.12.2.1  2002/10/01 05:48:27  rogeeff
+//  coment clarified
+//
 //  Revision 1.12  2002/09/16 10:37:57  rogeeff
 //  excessive boost:: removed. Fix for VACPP
 //

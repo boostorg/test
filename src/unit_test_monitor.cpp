@@ -15,7 +15,7 @@
 //  Test Framework to monitor test cases run.
 // ***************************************************************************
 
-// LOCAL
+// Boost.Test
 #include <boost/test/detail/unit_test_monitor.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/unit_test_result.hpp>
@@ -90,6 +90,9 @@ unit_test_monitor::function()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4.2.1  2002/10/01 05:48:27  rogeeff
+//  coment clarified
+//
 //  Revision 1.4  2002/08/20 08:24:13  rogeeff
 //  cvs keywords added
 //

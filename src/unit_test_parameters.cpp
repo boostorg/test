@@ -16,7 +16,7 @@
 //  facility
 // ***************************************************************************
 
-// LOCAL
+// Boost.Test
 #include <boost/test/detail/unit_test_parameters.hpp>
 
 //BOOST
@@ -90,6 +90,9 @@ retrieve_framework_parameter( char const* parameter_name, int* argc, char** argv
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4.2.1  2002/10/01 05:48:27  rogeeff
+//  coment clarified
+//
 //  Revision 1.4  2002/09/15 11:17:23  johnmaddock
 //  Added missing includes
 //
