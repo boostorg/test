@@ -729,6 +729,9 @@ assign_to( std::basic_string<CharT1>& target, basic_cstring<CharT2> src )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2005/03/22 07:02:57  rogeeff
+//  assign_to made free function
+//
 //  Revision 1.5  2005/03/22 07:00:56  rogeeff
 //  assign_to made free function
 //
