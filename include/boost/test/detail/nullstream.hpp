@@ -19,6 +19,7 @@
 
 #include <ostream>    // for std::basic_ostream
 #include <streambuf>  // for std::basic_streambuf
+#include <string>     // for std::char_traits
 
 #include <boost/utility/base_from_member.hpp>
 
@@ -53,7 +54,7 @@ protected:
 
     // The output virtual member functions need to be changed to
     // accept anything without any problems, instead of being at EOF.
-    virtual  ::std::streamsize  xsputn( const char_type *s, ::std::streamsize n )   { return n; } // "s" is unused
+    virtual  ::std::streamsize  xsputn( char_type const* /*s*/, ::std::streamsize n )   { return n; } // "s" is unused
     virtual  int_type           overflow( int_type c = traits_type::eof() )         { return traits_type::not_eof( c ); }
 };
 

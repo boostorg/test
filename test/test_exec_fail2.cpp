@@ -22,11 +22,13 @@ int test_main( int, char *[] )  // note the name
 {
     int v = 1;
 
-    BOOST_CHECK( v == 2 );
-    BOOST_ERROR( "sample BOOST_ERROR call" );
-    BOOST_REQUIRE( 2 == v );
+    if( v < 10 ) { // to eliminate unreachable return statement warning
+        BOOST_CHECK( v == 2 );
+        BOOST_ERROR( "sample BOOST_ERROR call" );
+        BOOST_REQUIRE( 2 == v );
 
-    throw "Opps! should never reach this point";
+        throw "Opps! should never reach this point";
+    }
 
     return 1;
 }
@@ -37,6 +39,9 @@ int test_main( int, char *[] )  // note the name
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2003/02/15 21:58:32  rogeeff
+//  borland warning fix
+//
 //  Revision 1.5  2002/11/02 20:04:43  rogeeff
 //  release 1.29.0 merged into the main trank
 //
