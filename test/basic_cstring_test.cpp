@@ -35,6 +35,7 @@ using utf::const_string;
 #include <iomanip>
 #include <iostream>
 #include <stdexcept>
+#include <typeinfo>
 
 namespace mpl = boost::mpl;
 
@@ -62,6 +63,11 @@ struct string_literal
 };
 
 #define LITERAL( s ) ((CharT*)string_literal<CharT>( s, sizeof( s ) ).buff)
+#define LOCAL_DEF( name, s )                                                \
+string_literal<CharT> BOOST_JOIN( sl, __LINE__)(s, sizeof( s ));            \
+utf::basic_cstring<CharT> name( (CharT*)(BOOST_JOIN( sl, __LINE__).buff) )  \
+/**/
+
 #define TEST_STRING test_string<CharT>( (CharT*)0 )
 
 template<typename CharT>
@@ -78,6 +84,8 @@ test_string( CharT* = 0 )
 template<typename CharT>
 void constructors_test( CharT* = 0 )
 {
+    BOOST_MESSAGE( "Let's run \"&constructors_test\"<" << typeid(CharT).name() << ">" );
+
     {
         utf::basic_cstring<CharT> bcs;
         BOOST_CHECK_EQUAL( bcs.size(), 0 );
@@ -289,7 +297,7 @@ void comparison_test( CharT* = 0 )
     BOOST_CHECK( TEST_STRING != bcs1 );
     BOOST_CHECK( bcs1 != bcs2 );
 
-    utf::basic_cstring<CharT> bcs3( LITERAL( "TeSt" ) );
+    LOCAL_DEF( bcs3, "TeSt" );
     BOOST_CHECK( utf::case_ins_eq( bcs1, bcs3 ) );
 }
 
@@ -323,16 +331,16 @@ BOOST_META_FUNC_TEST_CASE( comparison_std_string_test );
 template<typename CharT>
 void ordering_test( CharT* = 0 )
 {
-    utf::basic_cstring<CharT> bcs1( LITERAL( "aBcd" ) );
-    utf::basic_cstring<CharT> bcs2( LITERAL( "aBbdd" ) );
-    utf::basic_cstring<CharT> bcs3( LITERAL( "aBbde" ) );
+    LOCAL_DEF( bcs1, "aBcd" );
+    LOCAL_DEF( bcs2, "aBbdd" );
+    LOCAL_DEF( bcs3, "aBbde" );
+    LOCAL_DEF( bcs4, "abab" );
 
     BOOST_CHECK( bcs1 < bcs2 );
     BOOST_CHECK( bcs2 < bcs3 );
     BOOST_CHECK( bcs1 < bcs3 );
-
-    utf::basic_cstring<CharT> bcs4( LITERAL( "abab" ) );
     BOOST_CHECK( bcs1 < bcs4 );
+
     utf::case_ins_less<CharT> cil;
     BOOST_CHECK( cil( bcs4, bcs1 ) );
 }
@@ -344,7 +352,7 @@ BOOST_META_FUNC_TEST_CASE( ordering_test );
 template<typename CharT>
 void trim_test( CharT* = 0 )
 {
-    utf::basic_cstring<CharT> bcs0( LITERAL( "tes" ) );
+    LOCAL_DEF( bcs0, "tes" );
 
     bcs0.trim_right( 1 );
     BOOST_CHECK_EQUAL( bcs0.size(), 2 );
@@ -372,9 +380,9 @@ void trim_test( CharT* = 0 )
     bcs0.trim_left( bcs0.find( LITERAL( "t_s" ) ) );
     BOOST_CHECK_EQUAL( bcs0, LITERAL( "t_s" ) );
 
-    utf::basic_cstring<CharT> bcs1( LITERAL( "abcd   " ) );
-    utf::basic_cstring<CharT> bcs2( LITERAL( "     abcd" ) );
-    utf::basic_cstring<CharT> bcs3( LITERAL( "  abcd  " ) );
+    LOCAL_DEF( bcs1, "abcd   " );
+    LOCAL_DEF( bcs2, "     abcd" );
+    LOCAL_DEF( bcs3, "  abcd  " );
 
     bcs1.trim_right();
     BOOST_CHECK_EQUAL( bcs1, LITERAL( "abcd" ) );
@@ -492,6 +500,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 // History :
 //
 // $Log$
+// Revision 1.6  2004/07/19 12:07:26  rogeeff
+// *** empty log message ***
+//
 // Revision 1.5  2004/06/07 07:34:23  rogeeff
 // detail namespace renamed
 //

@@ -144,8 +144,9 @@ test_close_at_tolerance()
     double fp2     = 1.00000002;
     double epsilon = 1e-6;
 
+    close_at_tolerance<double> pred( epsilon, FPC_WEAK );
     CHECK_TOOL_USAGE(
-        BOOST_CHECK_PREDICATE( close_at_tolerance<double>( epsilon, FPC_WEAK ), 2, ( fp1, fp2 ) ),
+        BOOST_CHECK_PREDICATE( pred, 2, ( fp1, fp2 ) ),
         output.is_empty()
     );
 
@@ -192,6 +193,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.11  2004/07/19 12:07:26  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.10  2004/05/21 06:26:11  rogeeff
 //  licence update
 //
