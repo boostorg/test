@@ -1,7 +1,7 @@
 //  (C) Copyright Gennadiy Rozental 2003.
-//  Use, modification, and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
-//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+//  Distributed under the Boost Software License, Version 1.0.
+//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
@@ -78,6 +78,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2004/05/21 06:19:35  rogeeff
+//  licence update
+//
 //  Revision 1.5  2004/05/11 11:00:51  rogeeff
 //  basic_cstring introduced and used everywhere
 //  class properties reworked
@@ -85,7 +88,6 @@ private:
 //  Revision 1.4  2003/12/01 00:41:56  rogeeff
 //  prerelease cleaning
 //
-
 // ***************************************************************************
 
 #endif // BOOST_UNIT_TEST_LOG_FORMATTER_HPP

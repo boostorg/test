@@ -1,8 +1,8 @@
-//  (C) Copyright Gennadiy Rozental 2001-2003.
+//  (C) Copyright Gennadiy Rozental 2001-2004.
 //  (C) Copyright Beman Dawes 2001.
-//  Use, modification, and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
-//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+//  Distributed under the Boost Software License, Version 1.0.
+//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
@@ -210,6 +210,9 @@ execution_monitor::register_exception_translator( ExceptionTranslator const& tr,
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.16  2004/05/21 06:19:35  rogeeff
+//  licence update
+//
 //  Revision 1.15  2004/05/11 11:00:34  rogeeff
 //  basic_cstring introduced and used everywhere
 //  class properties reworked
@@ -217,7 +220,6 @@ execution_monitor::register_exception_translator( ExceptionTranslator const& tr,
 //  Revision 1.14  2003/12/01 00:41:56  rogeeff
 //  prerelease cleaning
 //
-
 // ***************************************************************************
 
 #endif

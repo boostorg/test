@@ -1,7 +1,7 @@
 //  (C) Copyright Gennadiy Rozental 2002-2003.
-//  Use, modification, and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
-//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+//  Distributed under the Boost Software License, Version 1.0.
+//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
@@ -148,6 +148,9 @@ int main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.13  2004/05/21 06:19:35  rogeeff
+//  licence update
+//
 //  Revision 1.12  2004/05/11 11:00:35  rogeeff
 //  basic_cstring introduced and used everywhere
 //  class properties reworked
@@ -155,7 +158,6 @@ int main( int argc, char* argv[] )
 //  Revision 1.11  2003/12/01 00:41:56  rogeeff
 //  prerelease cleaning
 //
-
 // ***************************************************************************
 
 

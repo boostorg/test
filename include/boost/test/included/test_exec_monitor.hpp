@@ -1,7 +1,7 @@
-//  (C) Copyright Gennadiy Rozental 2001-2003.
-//  Use, modification, and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
-//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  Distributed under the Boost Software License, Version 1.0.
+//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
@@ -33,10 +33,12 @@
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2004/05/21 06:19:35  rogeeff
+//  licence update
+//
 //  Revision 1.7  2003/12/01 00:41:56  rogeeff
 //  prerelease cleaning
 //
-
 // ***************************************************************************
 
 #endif // BOOST_INCLUDED_TEST_EXEC_MONITOR_HPP
