@@ -19,12 +19,11 @@
 
 // STL
 #ifdef BOOST_NO_STRINGSTREAM
-#include <strstream>        // for ostrstream
+#include <strstream>        // for std::ostrstream
 #else
-#include <sstream>          // for ostringstream
+#include <sstream>          // for std::ostringstream
 #endif // BOOST_NO_STRINGSTREAM
-#include <string>
-
+#include <string>           // std::string
 namespace boost {
 
 // ************************************************************************** //
