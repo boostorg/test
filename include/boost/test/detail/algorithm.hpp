@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : 
+//  Description : addition to STL algorithms
 // ***************************************************************************
 
 #ifndef BOOST_ALGORITHM_HPP
@@ -234,15 +234,8 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.3  2004/05/23 09:50:07  rogeeff
+//  Revision 1.4  2004/05/23 09:51:32  rogeeff
 //  more algorithms added
-//
-//  Revision 1.2  2004/05/21 06:19:35  rogeeff
-//  licence update
-//
-//  Revision 1.1  2004/05/11 11:00:53  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
 //
 // ***************************************************************************
 
