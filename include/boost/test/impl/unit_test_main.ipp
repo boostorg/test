@@ -34,7 +34,7 @@ extern boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[
 // **************                 unit test main               ************** //
 // ************************************************************************** //
 
-int
+int __cdecl
 main( int argc, char* argv[] )
 {
     using namespace boost::unit_test;
@@ -75,6 +75,9 @@ main( int argc, char* argv[] )
         return boost::exit_test_failure;
     }
 
+    if( retrieve_framework_parameter( DETECT_MEM_LEAKS, &argc, argv ) == "yes" )
+        boost::detect_memory_leaks();
+
     // start testing
     unit_test_log.start( print_build_info );
     unit_test_log.header( test->size() );
@@ -92,6 +95,9 @@ main( int argc, char* argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.3  2005/01/31 06:01:54  rogeeff
+//  __cdecl correctness fixes
+//
 //  Revision 1.2  2005/01/30 01:55:13  rogeeff
 //  eliminated dependency on log
 //

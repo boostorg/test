@@ -28,6 +28,8 @@
 #include <iostream>
 #include <cstring>
 
+#include <boost/test/detail/suppress_warnings.hpp>
+
 #ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::getenv; using ::strcmp; }
 #endif
@@ -54,7 +56,7 @@ private:
 // **************                   cpp main                   ************** //
 // ************************************************************************** //
 
-int main( int argc, char* argv[] )
+int __cdecl main( int argc, char* argv[] )
 {
     cpp_main_caller caller( argc, argv );
     
@@ -101,6 +103,9 @@ int main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/01/31 06:01:50  rogeeff
+//  __cdecl correctness fixes
+//
 //  Revision 1.1  2005/01/22 19:22:12  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //

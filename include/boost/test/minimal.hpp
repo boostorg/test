@@ -111,7 +111,7 @@ monitor* the_monitor;
 
 //____________________________________________________________________________//
 
-int main( int argc, char* argv[] )
+int __cdecl main( int argc, char* argv[] )
 {
     using boost::minimal_test::the_monitor;
 
@@ -148,6 +148,9 @@ int main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.16  2005/01/31 06:01:27  rogeeff
+//  __cdecl correctness fixes
+//
 //  Revision 1.15  2005/01/22 19:22:12  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
