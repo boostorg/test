@@ -13,8 +13,8 @@
 //                interface
 // ***************************************************************************
 
-#ifndef BASIC_CSTRING_FWD_HPP
-#define BASIC_CSTRING_FWD_HPP
+#ifndef BASIC_CSTRING_FWD_HPP_071894GER
+#define BASIC_CSTRING_FWD_HPP_071894GER
 
 namespace boost {
 
@@ -33,6 +33,9 @@ typedef char const* const           c_literal_string;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2004/07/19 12:28:17  rogeeff
+//  guard rename
+//
 //  Revision 1.3  2004/06/05 11:02:15  rogeeff
 //  std::traits usage reworked
 //
@@ -45,5 +48,5 @@ typedef char const* const           c_literal_string;
 //
 // ***************************************************************************
 
-#endif // BASIC_CSTRING_FWD_HPP
+#endif // BASIC_CSTRING_FWD_HPP_071894GER
 

@@ -13,8 +13,8 @@
 //  gathering test results and presenting this information to end-user
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_RESULT_HPP
-#define BOOST_UNIT_TEST_RESULT_HPP
+#ifndef BOOST_UNIT_TEST_RESULT_HPP_071894GER
+#define BOOST_UNIT_TEST_RESULT_HPP_071894GER
 
 // Boost.Test
 #include <boost/test/detail/unit_test_config.hpp>
@@ -127,6 +127,9 @@ struct unit_test_result_tracker {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.21  2004/07/19 12:16:41  rogeeff
+//  guard rename
+//
 //  Revision 1.20  2004/05/21 06:19:35  rogeeff
 //  licence update
 //
@@ -139,5 +142,5 @@ struct unit_test_result_tracker {
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_RESULT_HPP
+#endif // BOOST_UNIT_TEST_RESULT_HPP_071894GER
 

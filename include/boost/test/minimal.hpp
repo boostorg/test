@@ -12,8 +12,8 @@
 //  Description : simple minimal testing definitions and implementation
 // ***************************************************************************
 
-#ifndef BOOST_TEST_MINIMAL_HPP
-#define BOOST_TEST_MINIMAL_HPP
+#ifndef BOOST_TEST_MINIMAL_HPP_071894GER
+#define BOOST_TEST_MINIMAL_HPP_071894GER
 
 #define BOOST_CHECK(exp)       \
   ( (exp)                      \
@@ -148,6 +148,9 @@ int main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.14  2004/07/19 12:14:34  rogeeff
+//  guard rename
+//
 //  Revision 1.13  2004/05/21 06:19:35  rogeeff
 //  licence update
 //
@@ -161,4 +164,4 @@ int main( int argc, char* argv[] )
 // ***************************************************************************
 
 
-#endif // BOOST_TEST_MINIMAL_HPP
+#endif // BOOST_TEST_MINIMAL_HPP_071894GER

@@ -12,8 +12,8 @@
 //  Description : wrapper include . To be used by end-user
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_HPP
-#define BOOST_UNIT_TEST_HPP
+#ifndef BOOST_UNIT_TEST_HPP_071894GER
+#define BOOST_UNIT_TEST_HPP_071894GER
 
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
@@ -32,6 +32,9 @@
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.13  2004/07/19 12:15:06  rogeeff
+//  guard rename
+//
 //  Revision 1.12  2004/05/21 06:19:35  rogeeff
 //  licence update
 //
@@ -43,4 +46,4 @@
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_HPP
+#endif // BOOST_UNIT_TEST_HPP_071894GER

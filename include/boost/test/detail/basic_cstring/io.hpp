@@ -12,8 +12,8 @@
 //  Description : basic_cstring i/o implementation
 // ***************************************************************************
 
-#ifndef  BASIC_CSTRING_IO_HPP
-#define  BASIC_CSTRING_IO_HPP
+#ifndef  BASIC_CSTRING_IO_HPP_071894GER
+#define  BASIC_CSTRING_IO_HPP_071894GER
 
 // Boost.Test
 #include <boost/test/detail/basic_cstring/basic_cstring.hpp>
@@ -68,6 +68,9 @@ operator<<( std::basic_ostream<CharT1,Tr>& os, basic_cstring<CharT2> const& str 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2004/07/19 12:27:05  rogeeff
+//  guard rename
+//
 //  Revision 1.6  2004/06/30 07:52:56  rogeeff
 //  typo fix
 //
@@ -89,4 +92,4 @@ operator<<( std::basic_ostream<CharT1,Tr>& os, basic_cstring<CharT2> const& str 
 //
 // ***************************************************************************
 
-#endif // BASIC_CSTRING_IO_HPP
+#endif // BASIC_CSTRING_IO_HPP_071894GER

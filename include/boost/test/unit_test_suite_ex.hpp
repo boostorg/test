@@ -13,8 +13,8 @@
 //  boost::function as a test case base function.
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_SUITE_EX_HPP
-#define BOOST_UNIT_TEST_SUITE_EX_HPP
+#ifndef BOOST_UNIT_TEST_SUITE_EX_HPP_071894GER
+#define BOOST_UNIT_TEST_SUITE_EX_HPP_071894GER
 
 // Boost.Test
 #include <boost/test/unit_test_suite.hpp>
@@ -109,6 +109,9 @@ create_test_case( function1<void,ParameterType> const& fct_, std::string name_,
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.19  2004/07/19 12:16:41  rogeeff
+//  guard rename
+//
 //  Revision 1.18  2004/06/07 07:33:49  rogeeff
 //  detail namespace renamed
 //
@@ -124,4 +127,4 @@ create_test_case( function1<void,ParameterType> const& fct_, std::string name_,
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_SUITE_EX_HPP
+#endif // BOOST_UNIT_TEST_SUITE_EX_HPP_071894GER

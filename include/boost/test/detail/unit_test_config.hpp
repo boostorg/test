@@ -12,8 +12,8 @@
 //  Description : contains workarounds and works as a central place for configurable types
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_CONFIG_HPP
-#define BOOST_UNIT_TEST_CONFIG_HPP
+#ifndef BOOST_UNIT_TEST_CONFIG_HPP_071894GER
+#define BOOST_UNIT_TEST_CONFIG_HPP_071894GER
 
 // BOOST
 #include <boost/config.hpp> // compilers workarounds and std::ptrdiff_t
@@ -64,6 +64,9 @@ namespace unit_test_framework = unit_test;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.21  2004/07/19 12:23:28  rogeeff
+//  guard rename
+//
 //  Revision 1.20  2004/06/07 07:33:49  rogeeff
 //  detail namespace renamed
 //
@@ -82,4 +85,4 @@ namespace unit_test_framework = unit_test;
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_CONFIG_HPP
+#endif // BOOST_UNIT_TEST_CONFIG_HPP_071894GER

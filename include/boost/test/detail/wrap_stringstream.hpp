@@ -13,8 +13,8 @@
 //                to prodive the unified interface
 // ***************************************************************************
 
-#ifndef BOOST_WRAP_STRINGSTREAM_HPP
-#define BOOST_WRAP_STRINGSTREAM_HPP
+#ifndef BOOST_WRAP_STRINGSTREAM_HPP_071894GER
+#define BOOST_WRAP_STRINGSTREAM_HPP_071894GER
 
 // STL
 #ifdef BOOST_NO_STRINGSTREAM
@@ -171,6 +171,9 @@ typedef basic_wrap_stringstream<wchar_t>    wrap_wstringstream;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.13  2004/07/19 12:24:32  rogeeff
+//  guard rename
+//
 //  Revision 1.12  2004/05/27 06:23:22  rogeeff
 //  workaround for gcc 2.95 io
 //  workaround for msvc < 7.1 for manipulator usage
@@ -187,4 +190,4 @@ typedef basic_wrap_stringstream<wchar_t>    wrap_wstringstream;
 //
 // ***************************************************************************
 
-#endif  // BOOST_WRAP_STRINGSTREAM_HPP
+#endif  // BOOST_WRAP_STRINGSTREAM_HPP_071894GER

@@ -13,8 +13,8 @@
 //                sequence of test types
 // ***************************************************************************
 
-#ifndef BOOST_TEST_CASE_TEMPLATE_HPP
-#define BOOST_TEST_CASE_TEMPLATE_HPP
+#ifndef BOOST_TEST_CASE_TEMPLATE_HPP_071894GER
+#define BOOST_TEST_CASE_TEMPLATE_HPP_071894GER
 
 // Boost.Test
 #include <boost/test/unit_test_suite.hpp>
@@ -134,6 +134,9 @@ create_test_case_template( TestCaseTemplate, TestTypesList, std::string name_ )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2004/07/19 12:14:34  rogeeff
+//  guard rename
+//
 //  Revision 1.7  2004/06/07 07:33:49  rogeeff
 //  detail namespace renamed
 //
@@ -149,5 +152,5 @@ create_test_case_template( TestCaseTemplate, TestTypesList, std::string name_ )
 //
 // ***************************************************************************
 
-#endif // BOOST_TEST_CASE_TEMPLATE_HPP
+#endif // BOOST_TEST_CASE_TEMPLATE_HPP_071894GER
 

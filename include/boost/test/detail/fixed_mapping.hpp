@@ -12,8 +12,8 @@
 //  Description : 
 // ***************************************************************************
 
-#ifndef BOOST_ALGORITHM_HPP
-#define BOOST_ALGORITHM_HPP
+#ifndef BOOST_TEST_FIXED_MAPPING_HPP_071894GER
+#define BOOST_TEST_FIXED_MAPPING_HPP_071894GER
 
 // Boost
 #include <boost/preprocessor/repetition/repeat.hpp>
@@ -110,6 +110,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2004/07/19 12:21:08  rogeeff
+//  guard rename
+//
 //  Revision 1.2  2004/05/21 06:19:35  rogeeff
 //  licence update
 //
@@ -118,5 +121,5 @@ private:
 //
 // ***************************************************************************
 
-#endif // BOOST_ALGORITHM_HPP
+#endif // BOOST_TEST_FIXED_MAPPING_HPP_071894GER
 

@@ -12,8 +12,8 @@
 //  Description : included (vs. linked ) version of Unit Test Framework
 // ***************************************************************************
 
-#ifndef BOOST_INCLUDED_UNIT_TEST_FRAMEWORK_HPP
-#define BOOST_INCLUDED_UNIT_TEST_FRAMEWORK_HPP
+#ifndef BOOST_INCLUDED_UNIT_TEST_FRAMEWORK_HPP_071894GER
+#define BOOST_INCLUDED_UNIT_TEST_FRAMEWORK_HPP_071894GER
 
 #include <libs/test/src/execution_monitor.cpp>
 
@@ -32,6 +32,9 @@
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2004/07/19 12:30:49  rogeeff
+//  guard rename
+//
 //  Revision 1.8  2004/05/21 06:19:35  rogeeff
 //  licence update
 //
@@ -44,4 +47,4 @@
 //
 // ***************************************************************************
 
-#endif // BOOST_INCLUDED_UNIT_TEST_FRAMEWORK_HPP
+#endif // BOOST_INCLUDED_UNIT_TEST_FRAMEWORK_HPP_071894GER

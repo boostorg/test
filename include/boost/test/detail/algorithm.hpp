@@ -12,8 +12,8 @@
 //  Description : addition to STL algorithms
 // ***************************************************************************
 
-#ifndef BOOST_ALGORITHM_HPP_06232004
-#define BOOST_ALGORITHM_HPP_06232004
+#ifndef BOOST_ALGORITHM_HPP_071894GER_06232004
+#define BOOST_ALGORITHM_HPP_071894GER_06232004
 
 #include <utility>
 
@@ -217,6 +217,9 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2004/07/19 12:17:48  rogeeff
+//  guard rename
+//
 //  Revision 1.5  2004/06/29 04:32:25  rogeeff
 //  no message
 //
@@ -225,5 +228,5 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 //
 // ***************************************************************************
 
-#endif // BOOST_ALGORITHM_HPP_06232004
+#endif // BOOST_ALGORITHM_HPP_071894GER_06232004
 

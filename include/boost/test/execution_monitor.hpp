@@ -29,8 +29,8 @@
 //  design presented here.
 // ***************************************************************************
 
-#ifndef BOOST_EXECUTION_MONITOR_HPP
-#define BOOST_EXECUTION_MONITOR_HPP
+#ifndef BOOST_EXECUTION_MONITOR_HPP_071894GER
+#define BOOST_EXECUTION_MONITOR_HPP_071894GER
 
 // BOOST TEST
 #include <boost/test/detail/unit_test_config.hpp>
@@ -210,6 +210,9 @@ execution_monitor::register_exception_translator( ExceptionTranslator const& tr,
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.18  2004/07/19 12:13:25  rogeeff
+//  guard rename
+//
 //  Revision 1.17  2004/06/07 07:33:49  rogeeff
 //  detail namespace renamed
 //

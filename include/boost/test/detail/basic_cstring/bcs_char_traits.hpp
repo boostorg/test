@@ -12,8 +12,8 @@
 //  Description : generic char traits class; wraps std::char_traits
 // ***************************************************************************
 
-#ifndef BCS_CHAR_TRAITS_HPP
-#define BCS_CHAR_TRAITS_HPP
+#ifndef BCS_CHAR_TRAITS_HPP_071894GER
+#define BCS_CHAR_TRAITS_HPP_071894GER
 
 // Boost
 #include <boost/config.hpp>
@@ -127,6 +127,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2004/07/19 12:28:17  rogeeff
+//  guard rename
+//
 //  Revision 1.3  2004/06/07 07:33:19  rogeeff
 //  amother borland patch
 //  detail namespace renamed
@@ -139,4 +142,4 @@ public:
 //
 // ***************************************************************************
 
-#endif // BCS_CHAR_TRAITS_HPP
+#endif // BCS_CHAR_TRAITS_HPP_071894GER

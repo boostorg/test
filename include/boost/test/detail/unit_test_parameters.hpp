@@ -12,8 +12,8 @@
 //  Description : storage for unit test framework parameters information
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_PARAMETERS_HPP
-#define BOOST_UNIT_TEST_PARAMETERS_HPP
+#ifndef BOOST_UNIT_TEST_PARAMETERS_HPP_071894GER
+#define BOOST_UNIT_TEST_PARAMETERS_HPP_071894GER
 
 // STL
 #include <string>   // std::string
@@ -51,6 +51,9 @@ const_string retrieve_framework_parameter( const_string parameter_name_, int* ar
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2004/07/19 12:24:32  rogeeff
+//  guard rename
+//
 //  Revision 1.14  2004/05/21 06:19:35  rogeeff
 //  licence update
 //
@@ -63,4 +66,4 @@ const_string retrieve_framework_parameter( const_string parameter_name_, int* ar
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_CONFIG_HPP
+#endif // BOOST_UNIT_TEST_CONFIG_HPP_071894GER

@@ -13,8 +13,8 @@
 //                for simple function based test cases
 // ***************************************************************************
 
-#ifndef BOOST_AUTO_UNIT_TEST_HPP
-#define BOOST_AUTO_UNIT_TEST_HPP
+#ifndef BOOST_AUTO_UNIT_TEST_HPP_071894GER
+#define BOOST_AUTO_UNIT_TEST_HPP_071894GER
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
@@ -74,6 +74,9 @@ init_unit_test_suite( int /* argc */, char* /* argv */ [] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.11  2004/07/19 12:12:40  rogeeff
+//  guard rename
+//
 //  Revision 1.10  2004/06/07 07:33:42  rogeeff
 //  detail namespace renamed
 //
@@ -89,4 +92,4 @@ init_unit_test_suite( int /* argc */, char* /* argv */ [] ) {
 //
 // ***************************************************************************
 
-#endif // BOOST_AUTO_UNIT_TEST_HPP
+#endif // BOOST_AUTO_UNIT_TEST_HPP_071894GER

@@ -14,8 +14,8 @@
 //  for them.
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_SUITE_HPP
-#define BOOST_UNIT_TEST_SUITE_HPP
+#ifndef BOOST_UNIT_TEST_SUITE_HPP_071894GER
+#define BOOST_UNIT_TEST_SUITE_HPP_071894GER
 
 // Boost.Test
 #include <boost/test/detail/unit_test_monitor.hpp>
@@ -324,6 +324,9 @@ create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, bo
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.24  2004/07/19 12:16:41  rogeeff
+//  guard rename
+//
 //  Revision 1.23  2004/06/07 07:33:49  rogeeff
 //  detail namespace renamed
 //
@@ -345,5 +348,5 @@ create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, bo
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_SUITE_HPP
+#endif // BOOST_UNIT_TEST_SUITE_HPP_071894GER
 

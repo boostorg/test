@@ -13,8 +13,8 @@
 //  Description : simulate /dev/null stream
 // ***************************************************************************
 
-#ifndef BOOST_NULLSTREAM_HPP
-#define BOOST_NULLSTREAM_HPP
+#ifndef BOOST_NULLSTREAM_HPP_071894GER
+#define BOOST_NULLSTREAM_HPP_071894GER
 
 #include <ostream>    // for std::basic_ostream
 #include <streambuf>  // for std::basic_streambuf
@@ -84,6 +84,9 @@ typedef basic_onullstream<wchar_t>  wonullstream;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2004/07/19 12:21:08  rogeeff
+//  guard rename
+//
 //  Revision 1.8  2004/05/21 06:19:35  rogeeff
 //  licence update
 //
@@ -92,4 +95,4 @@ typedef basic_onullstream<wchar_t>  wonullstream;
 //
 // ***************************************************************************
 
-#endif  // BOOST_NULLSTREAM_HPP
+#endif  // BOOST_NULLSTREAM_HPP_071894GER
