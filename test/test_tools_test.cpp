@@ -8,8 +8,8 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
-#include <boost/test/detail/floating_point_comparison.hpp>
 #include <boost/test/unit_test.hpp>
+#include <boost/test/floating_point_comparison.hpp>
 
 using namespace boost::unit_test_framework;
 

@@ -98,15 +98,15 @@ SOURCE=..\src\test_tools.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\unit_test_config.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\src\unit_test_log.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\src\unit_test_monitor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\unit_test_parameters.cpp
 # End Source File
 # Begin Source File
 

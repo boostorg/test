@@ -54,7 +54,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name prog_exec_monitor
+    Project_Dep_Name prg_exec_monitor
     End Project Dependency
 }}}
 
@@ -69,7 +69,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name prog_exec_monitor
+    Project_Dep_Name prg_exec_monitor
     End Project Dependency
 }}}
 
@@ -84,7 +84,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name prog_exec_monitor
+    Project_Dep_Name prg_exec_monitor
     End Project Dependency
 }}}
 

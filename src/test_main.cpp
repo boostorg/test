@@ -10,6 +10,7 @@
 // LOCAL
 #include <boost/test/unit_test.hpp>         // for unit test framework
 #include <boost/test/unit_test_result.hpp>
+#include <boost/test/detail/unit_test_parameters.hpp>
 
 // STL
 #include <iostream>                         // for cout, cerr
@@ -42,8 +43,7 @@ int main( int argc, char* argv[] ) {
     result_report_level report_level;
 
     // 1. set the log level
-    unit_test_log::instance().set_log_threshold_level_by_name(
-        retrieve_framework_parameter( LOGLEVEL, &argc, argv ).data() );
+    unit_test_log::instance().set_log_threshold_level_by_name( retrieve_framework_parameter( LOGLEVEL, &argc, argv ).data() );
 
     // 2. set the result code flag
     no_result_code = retrieve_framework_parameter( NO_RESULT_CODE, &argc, argv ) == "no";

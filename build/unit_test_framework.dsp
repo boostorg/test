@@ -93,10 +93,6 @@ SOURCE=..\src\test_tools.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\unit_test_config.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\src\unit_test_log.cpp
 # End Source File
 # Begin Source File
@@ -106,6 +102,10 @@ SOURCE=..\src\unit_test_main.cpp
 # Begin Source File
 
 SOURCE=..\src\unit_test_monitor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\unit_test_parameters.cpp
 # End Source File
 # Begin Source File
 
@@ -158,6 +158,10 @@ SOURCE=..\..\..\boost\test\unit_test_log.hpp
 # Begin Source File
 
 SOURCE=..\..\..\boost\test\detail\unit_test_monitor.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\boost\test\detail\unit_test_parameters.hpp
 # End Source File
 # Begin Source File
 

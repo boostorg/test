@@ -1,4 +1,4 @@
-//  Boost result_report_test.cpp  --------------------------------------------//
+//  Boost online_test.cpp  ---------------------------------------------------//
 
 //  (C) Copyright Gennadiy Rozental 2001.
 //  Permission to copy, use, modify, sell and distribute this software is
@@ -22,7 +22,7 @@ test_main( int argc, char * argv[] )
 #include <libs/test/src/execution_monitor.cpp>
 #include <libs/test/src/test_main.cpp>
 #include <libs/test/src/test_tools.cpp>
-#include <libs/test/src/unit_test_config.cpp>
+#include <libs/test/src/unit_test_parameters.cpp>
 #include <libs/test/src/unit_test_log.cpp>
 #include <libs/test/src/unit_test_monitor.cpp>
 

@@ -10,6 +10,7 @@
 
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_result.hpp>
+#include <boost/test/detail/unit_test_parameters.hpp>
 
 using namespace boost::unit_test_framework;
 using namespace boost::test_toolbox;

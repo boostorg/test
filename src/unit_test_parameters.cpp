@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001.
+//  (C) Copyright Gennadiy Rozental 2002.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -7,7 +7,7 @@
 //  See http://www.boost.org for most recent version including documentation.
 
 // LOCAL
-#include <boost/test/detail/unit_test_config.hpp>
+#include <boost/test/detail/unit_test_parameters.hpp>
 
 //BOOST
 #include <boost/config.hpp>           // for broken compiler workarounds

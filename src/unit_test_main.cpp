@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001.
+//  (C) Copyright Gennadiy Rozental 2001-2002.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -9,7 +9,7 @@
 #include <boost/test/unit_test.hpp>   // for unit_test framework
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/unit_test_log.hpp>
-#include <boost/test/detail/unit_test_config.hpp>
+#include <boost/test/detail/unit_test_parameters.hpp>
 
 // BOOST
 #include <boost/scoped_ptr.hpp>

@@ -1,19 +1,12 @@
-//  boost/cpp_main.cpp (header or not, as you like it)  ----------------------//
+//  Boost Test Library cpp_main.cpp ------------------------------------------//
 
-//  (C) Copyright Beman Dawes 1995-2001. Permission to copy, use, modify, sell
-//  and distribute this software is granted provided this copyright notice
-//  appears in all copies. This software is provided "as is" without express or
-//  implied warranty, and with no claim as to its suitability for any purpose.
+//  (C) Copyright Beman Dawes 1995-2001. Gennadiy Rozental 2001-2202.
+//  Permission to copy, use, modify, sell and distribute this software is 
+//  granted provided this copyright notice appears in all copies. This software
+//  is provided "as is" without express or implied warranty, and with no 
+//  claim as to its suitability for any purpose.
 
 //  See http://www.boost.org for updates, documentation, and revision history.
-
-//  This file may be included as a header file, or may be compiled and placed
-//  in a library for traditional linking. It is unusual for non-template
-//  non-inline implementation code to be used as a header file, but the user
-//  may elect to do so because header-only implementation requires no library
-//  build support. (Suggested by Ed Brey)
-
-//  header dependencies are deliberately restricted to reduce coupling.
 
 // LOCAL
 #include <boost/test/execution_monitor.hpp>

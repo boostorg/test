@@ -1,6 +1,6 @@
 //  Boost execution_monitor header file  -------------------------------------//
 
-//  (C) Copyright Gennadiy Rozental & Beman Dawes 2001. 
+//  (C) Copyright Beman Dawes 2001, Gennadiy Rozental 2001-2002.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -12,10 +12,7 @@
 //  named catch_exceptions() which caught otherwise uncaught C++ exceptions.
 //  It was derived from an existing test framework by Beman Dawes.  The
 //  intent was to expand later to catch other detectable but platform dependent
-//  error events like Unix signals or Windows structured C exceptions, as done
-//  in a unit test framework by Ullrich Koethe.  It was intended to support
-//  both the original Boost Test Library, and to support a Boost unit
-//  test framework to be supplied later.  
+//  error events like Unix signals or Windows structured C exceptions.
 //
 //  Requests from early adopters of the Boost Test Library included
 //  configurable levels of error message detail, elimination of templates,

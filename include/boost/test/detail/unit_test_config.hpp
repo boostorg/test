@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001.
+//  (C) Copyright Gennadiy Rozental 2001-2002.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -12,28 +12,11 @@
 // BOOST
 #include <boost/config.hpp>
 
-// STL
-#include <string>
-
 namespace boost {
 
 namespace unit_test_framework {
 
 typedef unsigned long unit_test_counter;
-
-// framework parameters and there corresponding command-line arguments
-char const* const LOGLEVEL          = "BOOST_TEST_LOG_LEVEL";        // --log_level
-char const* const NO_RESULT_CODE    = "BOOST_TEST_RESULT_CODE";      // --result_code
-char const* const RESULT_REPORT     = "BOOST_TEST_REPORT_LEVEL";     // --result_report
-char const* const TESTS_TO_RUN      = "BOOST_TESTS_TO_RUN";          // --run_test
-char const* const SAVE_TEST_PATTERN = "BOOST_TEST_SAVE_PATTERN";     // --save_pattern
-char const* const BUILD_INFO        = "BOOST_TEST_BUILD_INFO";       // --build_info
-
-
-enum result_report_level                { CONFIRMATION_REPORT, SHORT_REPORT, DETAILED_REPORT, NO_REPORT };
-char const* const report_level_names[] = { "confirm"          , "short"     , "detailed"     , "no"      };
-
-std::string retrieve_framework_parameter( char const* parameter_name, int* argc = NULL, char ** argv = NULL );
 
 namespace detail {
 
@@ -58,6 +41,7 @@ using std::distance;
 } // namespace boost
 
 //  Revision History
+//   8 Aug 02  Parameters definition separated (Gennadiy Rozental)
 //   5 Oct 01  Initial version (Gennadiy Rozental)
 
 #endif // BOOST_UNIT_TEST_CONFIG_HPP

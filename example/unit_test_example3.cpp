@@ -8,7 +8,7 @@
 
 // TEST LIB
 #include <boost/test/unit_test.hpp>
-#include <boost/test/detail/floating_point_comparison.hpp>
+#include <boost/test/floating_point_comparison.hpp>
 using boost::unit_test_framework::test_suite;
 
 // BOOST

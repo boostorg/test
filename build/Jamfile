@@ -8,7 +8,7 @@ PRG_EXEC_MON_SOURCES =
 TEST_EXEC_MON_SOURCES =
   execution_monitor
   test_tools
-  unit_test_config
+  unit_test_parameters
   unit_test_log
   unit_test_monitor
   unit_test_result
@@ -19,7 +19,7 @@ TEST_EXEC_MON_SOURCES =
 UTF_SOURCES =
   execution_monitor
   test_tools
-  unit_test_config
+  unit_test_parameters
   unit_test_log
   unit_test_monitor
   unit_test_result
