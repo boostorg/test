@@ -19,6 +19,7 @@
 #include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/preprocessor/arithmetic/add.hpp>
 #include <boost/call_traits.hpp>
+#include <boost/detail/binary_search.hpp>
 
 // STL
 #include <vector>
@@ -81,7 +82,7 @@ public:
     // key -> value access
     value_ref_type  operator[]( key_param_type key ) const
     {
-        iterator it = std::lower_bound( m_map.begin(), m_map.end(), key, p1() );
+        iterator it = boost::detail::lower_bound( m_map.begin(), m_map.end(), key, p1() );
 
         return (it == m_map.end() || Compare()( key, it->first ) ) ? m_invalid_value : it->second;
     }
@@ -110,6 +111,11 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2004/07/26 05:35:53  david_abrahams
+//  Use boost::detail::lower_bound, which is actually guaranteed to work
+//  with heterogeneous comparisons.  C++98 binary searches are not, and
+//  VC++ 8.0 beta rejects the code using std::lower_bound.
+//
 //  Revision 1.3  2004/07/19 12:21:08  rogeeff
 //  guard rename
 //
