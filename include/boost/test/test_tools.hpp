@@ -14,7 +14,7 @@
 #include <boost/test/detail/class_properties.hpp>
 #include <boost/test/detail/grinning_ptr.hpp>
 #if defined __GNUC__
-#include <boost/test/detail/floating_point_comparison.hpp>
+#include <boost/test/floating_point_comparison.hpp>
 #endif
 
 // BOOST
