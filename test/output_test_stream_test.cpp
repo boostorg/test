@@ -129,14 +129,13 @@ test_is_equal()
 
     char const* literal_string = "asdfghjkl";
     std::string substr1( literal_string, 5 );
-    std::string substr2( literal_string+5, 5 );
+    std::string substr2( literal_string+5, 4 );
 
     output << substr1;
-    BOOST_CHECK( output.is_equal( literal_string, 5, false ) );
+    BOOST_CHECK( output.is_equal( literal_string, (size_t)5, false ) );
 
     output << substr2;
-    BOOST_CHECK( output.is_equal( literal_string, (size_t)10 ) );
-
+    BOOST_CHECK( output.is_equal( literal_string, (size_t)9 ) );
 }
 
 //____________________________________________________________________________//
