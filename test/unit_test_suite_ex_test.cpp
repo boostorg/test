@@ -55,7 +55,7 @@ struct sub_test_suite : public test_suite {
 
 #if !defined(BOOST_MSVC) && !defined(__SUNPRO_CC)
         for( std::list<int>::iterator it = masks_list.begin(); it != masks_list.end(); ++it ) {
-            function1<void,int> fct = bind( &test2, _2, *it );
+            function1<void,int> fct = bind( &test2, _1, *it );
             add( BOOST_PARAM_TEST_CASE( fct, parameters_list.begin(), parameters_list.end() ) );
         }
 #endif
@@ -77,11 +77,11 @@ init_unit_test_suite( int argc, char* argv[] ) {
     test->add( BOOST_TEST_CASE( fct1 ) );
 
 #if !defined(BOOST_MSVC) && !defined(__SUNPRO_CC)
-    function0<void> fct2 = bind( &test2, _1, 12345, _2, 0xcdf );
+    function0<void> fct2 = bind( &test2, 12345, 0xcdf );
     test->add( BOOST_TEST_CASE( fct2 ) );
 #endif
 
-    test->add( new sub_test_suite );
+    test->add( new sub_test_suite, 7 );
 
     return test;
 }
