@@ -60,7 +60,7 @@ Entering test case "Errors handling test"
 
 Entering test case "bad_function"
 (free function)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_function": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_function": error_on_demand() BOOST_ERROR
 Leaving  test case "bad_function"
 Leaving  test case "Errors handling test"
 
@@ -73,7 +73,7 @@ Entering test case "Errors handling test"
 
 Entering test case "bad_test::test"
 (user test case)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_test::test": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_test::test": error_on_demand() BOOST_ERROR
 Leaving  test case "bad_test::test"
 Leaving  test case "Errors handling test"
 
@@ -86,7 +86,7 @@ Entering test case "Errors handling test"
 
 Entering test case "bad_function_param"
 (parameterized free function)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_function_param": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_function_param": error_on_demand() BOOST_ERROR
 Leaving  test case "bad_function_param"
 Leaving  test case "Errors handling test"
 
@@ -99,7 +99,7 @@ Entering test case "Errors handling test"
 
 Entering test case "bad_test::test_param"
 (parameterized user test case)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_test::test_param": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_test::test_param": error_on_demand() BOOST_ERROR
 Leaving  test case "bad_test::test_param"
 Leaving  test case "Errors handling test"
 
@@ -113,7 +113,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_function"
 (free function)
 Exception in "bad_function": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 Leaving  test case "bad_function"
 Leaving  test case "Errors handling test"
 
@@ -127,7 +127,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_test::test"
 (user test case)
 Exception in "bad_test::test": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 Leaving  test case "bad_test::test"
 Leaving  test case "Errors handling test"
 
@@ -141,7 +141,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_function_param"
 (parameterized free function)
 Exception in "bad_function_param": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 Leaving  test case "bad_function_param"
 Leaving  test case "Errors handling test"
 
@@ -155,7 +155,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_test::test_param"
 (parameterized user test case)
 Exception in "bad_test::test_param": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 Leaving  test case "bad_test::test_param"
 Leaving  test case "Errors handling test"
 
@@ -169,7 +169,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_function"
 (free function)
 Exception in "bad_function": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 Leaving  test case "bad_function"
 Leaving  test case "Errors handling test"
 
@@ -183,7 +183,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_test::test"
 (user test case)
 Exception in "bad_test::test": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 Leaving  test case "bad_test::test"
 Leaving  test case "Errors handling test"
 
@@ -197,7 +197,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_function_param"
 (parameterized free function)
 Exception in "bad_function_param": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 Leaving  test case "bad_function_param"
 Leaving  test case "Errors handling test"
 
@@ -211,7 +211,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_test::test_param"
 (parameterized user test case)
 Exception in "bad_test::test_param": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 Leaving  test case "bad_test::test_param"
 Leaving  test case "Errors handling test"
 
@@ -224,7 +224,7 @@ Entering test case "Errors handling test"
 
 Entering test case "bad_function"
 (free function)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_function": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_function": error_on_demand() BOOST_CRITICAL_ERROR
 Leaving  test case "bad_function"
 Leaving  test case "Errors handling test"
 
@@ -237,7 +237,7 @@ Entering test case "Errors handling test"
 
 Entering test case "bad_test::test"
 (user test case)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_test::test": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_test::test": error_on_demand() BOOST_CRITICAL_ERROR
 Leaving  test case "bad_test::test"
 Leaving  test case "Errors handling test"
 
@@ -250,7 +250,7 @@ Entering test case "Errors handling test"
 
 Entering test case "bad_function_param"
 (parameterized free function)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_function_param": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_function_param": error_on_demand() BOOST_CRITICAL_ERROR
 Leaving  test case "bad_function_param"
 Leaving  test case "Errors handling test"
 
@@ -263,7 +263,7 @@ Entering test case "Errors handling test"
 
 Entering test case "bad_test::test_param"
 (parameterized user test case)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_test::test_param": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_test::test_param": error_on_demand() BOOST_CRITICAL_ERROR
 Leaving  test case "bad_test::test_param"
 Leaving  test case "Errors handling test"
 
@@ -277,7 +277,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_function"
 (free function)
 Exception in "bad_function": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_function": testing aborted
 Leaving  test case "bad_function"
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
@@ -293,7 +293,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_test::test"
 (user test case)
 Exception in "bad_test::test": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_test::test": testing aborted
 Leaving  test case "bad_test::test"
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
@@ -309,7 +309,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_function_param"
 (parameterized free function)
 Exception in "bad_function_param": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_function_param": testing aborted
 Leaving  test case "bad_function_param"
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
@@ -325,7 +325,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_test::test_param"
 (parameterized user test case)
 Exception in "bad_test::test_param": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_test::test_param": testing aborted
 Leaving  test case "bad_test::test_param"
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
@@ -392,7 +392,7 @@ Entering test case "Errors handling test"
 
 Entering test case "bad_function"
 (free function)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_function": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_function": error_on_demand() BOOST_ERROR
 Leaving  test case "bad_function"
 Leaving  test case "Errors handling test"
 
@@ -405,7 +405,7 @@ Entering test case "Errors handling test"
 
 Entering test case "bad_test::test"
 (user test case)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_test::test": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_test::test": error_on_demand() BOOST_ERROR
 Leaving  test case "bad_test::test"
 Leaving  test case "Errors handling test"
 
@@ -418,7 +418,7 @@ Entering test case "Errors handling test"
 
 Entering test case "bad_function_param"
 (parameterized free function)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_function_param": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_function_param": error_on_demand() BOOST_ERROR
 Leaving  test case "bad_function_param"
 Leaving  test case "Errors handling test"
 
@@ -431,7 +431,7 @@ Entering test case "Errors handling test"
 
 Entering test case "bad_test::test_param"
 (parameterized user test case)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_test::test_param": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_test::test_param": error_on_demand() BOOST_ERROR
 Leaving  test case "bad_test::test_param"
 Leaving  test case "Errors handling test"
 
@@ -445,7 +445,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_function"
 (free function)
 Exception in "bad_function": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 Leaving  test case "bad_function"
 Leaving  test case "Errors handling test"
 
@@ -459,7 +459,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_test::test"
 (user test case)
 Exception in "bad_test::test": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 Leaving  test case "bad_test::test"
 Leaving  test case "Errors handling test"
 
@@ -473,7 +473,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_function_param"
 (parameterized free function)
 Exception in "bad_function_param": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 Leaving  test case "bad_function_param"
 Leaving  test case "Errors handling test"
 
@@ -487,7 +487,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_test::test_param"
 (parameterized user test case)
 Exception in "bad_test::test_param": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 Leaving  test case "bad_test::test_param"
 Leaving  test case "Errors handling test"
 
@@ -501,7 +501,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_function"
 (free function)
 Exception in "bad_function": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 Leaving  test case "bad_function"
 Leaving  test case "Errors handling test"
 
@@ -515,7 +515,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_test::test"
 (user test case)
 Exception in "bad_test::test": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 Leaving  test case "bad_test::test"
 Leaving  test case "Errors handling test"
 
@@ -529,7 +529,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_function_param"
 (parameterized free function)
 Exception in "bad_function_param": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 Leaving  test case "bad_function_param"
 Leaving  test case "Errors handling test"
 
@@ -543,7 +543,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_test::test_param"
 (parameterized user test case)
 Exception in "bad_test::test_param": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 Leaving  test case "bad_test::test_param"
 Leaving  test case "Errors handling test"
 
@@ -556,7 +556,7 @@ Entering test case "Errors handling test"
 
 Entering test case "bad_function"
 (free function)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_function": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_function": error_on_demand() BOOST_CRITICAL_ERROR
 Leaving  test case "bad_function"
 Leaving  test case "Errors handling test"
 
@@ -569,7 +569,7 @@ Entering test case "Errors handling test"
 
 Entering test case "bad_test::test"
 (user test case)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_test::test": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_test::test": error_on_demand() BOOST_CRITICAL_ERROR
 Leaving  test case "bad_test::test"
 Leaving  test case "Errors handling test"
 
@@ -582,7 +582,7 @@ Entering test case "Errors handling test"
 
 Entering test case "bad_function_param"
 (parameterized free function)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_function_param": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_function_param": error_on_demand() BOOST_CRITICAL_ERROR
 Leaving  test case "bad_function_param"
 Leaving  test case "Errors handling test"
 
@@ -595,7 +595,7 @@ Entering test case "Errors handling test"
 
 Entering test case "bad_test::test_param"
 (parameterized user test case)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_test::test_param": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_test::test_param": error_on_demand() BOOST_CRITICAL_ERROR
 Leaving  test case "bad_test::test_param"
 Leaving  test case "Errors handling test"
 
@@ -609,7 +609,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_function"
 (free function)
 Exception in "bad_function": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_function": testing aborted
 Leaving  test case "bad_function"
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
@@ -625,7 +625,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_test::test"
 (user test case)
 Exception in "bad_test::test": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_test::test": testing aborted
 Leaving  test case "bad_test::test"
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
@@ -641,7 +641,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_function_param"
 (parameterized free function)
 Exception in "bad_function_param": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_function_param": testing aborted
 Leaving  test case "bad_function_param"
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
@@ -657,7 +657,7 @@ Entering test case "Errors handling test"
 Entering test case "bad_test::test_param"
 (parameterized user test case)
 Exception in "bad_test::test_param": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_test::test_param": testing aborted
 Leaving  test case "bad_test::test_param"
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
@@ -696,28 +696,28 @@ error_on_demand() BOOST_MESSAGE
 log level: 2; error type: user error; test case type: free function;
 Running 1 test case...
 (free function)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_function": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_function": error_on_demand() BOOST_ERROR
 
 ===========================
 
 log level: 2; error type: user error; test case type: user test case;
 Running 1 test case...
 (user test case)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_test::test": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_test::test": error_on_demand() BOOST_ERROR
 
 ===========================
 
 log level: 2; error type: user error; test case type: parameterized free function;
 Running 1 test case...
 (parameterized free function)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_function_param": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_function_param": error_on_demand() BOOST_ERROR
 
 ===========================
 
 log level: 2; error type: user error; test case type: parameterized user test case;
 Running 1 test case...
 (parameterized user test case)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_test::test_param": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_test::test_param": error_on_demand() BOOST_ERROR
 
 ===========================
 
@@ -725,7 +725,7 @@ log level: 2; error type: cpp exception; test case type: free function;
 Running 1 test case...
 (free function)
 Exception in "bad_function": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 
@@ -733,7 +733,7 @@ log level: 2; error type: cpp exception; test case type: user test case;
 Running 1 test case...
 (user test case)
 Exception in "bad_test::test": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 
@@ -741,7 +741,7 @@ log level: 2; error type: cpp exception; test case type: parameterized free func
 Running 1 test case...
 (parameterized free function)
 Exception in "bad_function_param": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 
@@ -749,7 +749,7 @@ log level: 2; error type: cpp exception; test case type: parameterized user test
 Running 1 test case...
 (parameterized user test case)
 Exception in "bad_test::test_param": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 
@@ -757,7 +757,7 @@ log level: 2; error type:  system error; test case type: free function;
 Running 1 test case...
 (free function)
 Exception in "bad_function": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
@@ -765,7 +765,7 @@ log level: 2; error type:  system error; test case type: user test case;
 Running 1 test case...
 (user test case)
 Exception in "bad_test::test": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
@@ -773,7 +773,7 @@ log level: 2; error type:  system error; test case type: parameterized free func
 Running 1 test case...
 (parameterized free function)
 Exception in "bad_function_param": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
@@ -781,35 +781,35 @@ log level: 2; error type:  system error; test case type: parameterized user test
 Running 1 test case...
 (parameterized user test case)
 Exception in "bad_test::test_param": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
 log level: 2; error type: fatal user error; test case type: free function;
 Running 1 test case...
 (free function)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_function": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_function": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 2; error type: fatal user error; test case type: user test case;
 Running 1 test case...
 (user test case)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_test::test": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_test::test": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 2; error type: fatal user error; test case type: parameterized free function;
 Running 1 test case...
 (parameterized free function)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_function_param": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_function_param": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 2; error type: fatal user error; test case type: parameterized user test case;
 Running 1 test case...
 (parameterized user test case)
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_test::test_param": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_test::test_param": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
@@ -817,7 +817,7 @@ log level: 2; error type: fatal system error; test case type: free function;
 Running 1 test case...
 (free function)
 Exception in "bad_function": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_function": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -827,7 +827,7 @@ log level: 2; error type: fatal system error; test case type: user test case;
 Running 1 test case...
 (user test case)
 Exception in "bad_test::test": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_test::test": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -837,7 +837,7 @@ log level: 2; error type: fatal system error; test case type: parameterized free
 Running 1 test case...
 (parameterized free function)
 Exception in "bad_function_param": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_function_param": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -847,7 +847,7 @@ log level: 2; error type: fatal system error; test case type: parameterized user
 Running 1 test case...
 (parameterized user test case)
 Exception in "bad_test::test_param": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_test::test_param": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -875,112 +875,112 @@ Running 1 test case...
 
 log level: 3; error type: user error; test case type: free function;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_function": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_function": error_on_demand() BOOST_ERROR
 
 ===========================
 
 log level: 3; error type: user error; test case type: user test case;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_test::test": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_test::test": error_on_demand() BOOST_ERROR
 
 ===========================
 
 log level: 3; error type: user error; test case type: parameterized free function;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_function_param": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_function_param": error_on_demand() BOOST_ERROR
 
 ===========================
 
 log level: 3; error type: user error; test case type: parameterized user test case;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_test::test_param": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_test::test_param": error_on_demand() BOOST_ERROR
 
 ===========================
 
 log level: 3; error type: cpp exception; test case type: free function;
 Running 1 test case...
 Exception in "bad_function": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 
 log level: 3; error type: cpp exception; test case type: user test case;
 Running 1 test case...
 Exception in "bad_test::test": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 
 log level: 3; error type: cpp exception; test case type: parameterized free function;
 Running 1 test case...
 Exception in "bad_function_param": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 
 log level: 3; error type: cpp exception; test case type: parameterized user test case;
 Running 1 test case...
 Exception in "bad_test::test_param": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 
 log level: 3; error type:  system error; test case type: free function;
 Running 1 test case...
 Exception in "bad_function": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
 log level: 3; error type:  system error; test case type: user test case;
 Running 1 test case...
 Exception in "bad_test::test": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
 log level: 3; error type:  system error; test case type: parameterized free function;
 Running 1 test case...
 Exception in "bad_function_param": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
 log level: 3; error type:  system error; test case type: parameterized user test case;
 Running 1 test case...
 Exception in "bad_test::test_param": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
 log level: 3; error type: fatal user error; test case type: free function;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_function": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_function": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 3; error type: fatal user error; test case type: user test case;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_test::test": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_test::test": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 3; error type: fatal user error; test case type: parameterized free function;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_function_param": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_function_param": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 3; error type: fatal user error; test case type: parameterized user test case;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_test::test_param": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_test::test_param": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 3; error type: fatal system error; test case type: free function;
 Running 1 test case...
 Exception in "bad_function": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_function": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -989,7 +989,7 @@ e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Err
 log level: 3; error type: fatal system error; test case type: user test case;
 Running 1 test case...
 Exception in "bad_test::test": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_test::test": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -998,7 +998,7 @@ e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Err
 log level: 3; error type: fatal system error; test case type: parameterized free function;
 Running 1 test case...
 Exception in "bad_function_param": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_function_param": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -1007,7 +1007,7 @@ e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Err
 log level: 3; error type: fatal system error; test case type: parameterized user test case;
 Running 1 test case...
 Exception in "bad_test::test_param": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_test::test_param": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -1035,112 +1035,112 @@ Running 1 test case...
 
 log level: 4; error type: user error; test case type: free function;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_function": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_function": error_on_demand() BOOST_ERROR
 
 ===========================
 
 log level: 4; error type: user error; test case type: user test case;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_test::test": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_test::test": error_on_demand() BOOST_ERROR
 
 ===========================
 
 log level: 4; error type: user error; test case type: parameterized free function;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_function_param": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_function_param": error_on_demand() BOOST_ERROR
 
 ===========================
 
 log level: 4; error type: user error; test case type: parameterized user test case;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(44) : error in "bad_test::test_param": error_on_demand() BOOST_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(45) : error in "bad_test::test_param": error_on_demand() BOOST_ERROR
 
 ===========================
 
 log level: 4; error type: cpp exception; test case type: free function;
 Running 1 test case...
 Exception in "bad_function": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 
 log level: 4; error type: cpp exception; test case type: user test case;
 Running 1 test case...
 Exception in "bad_test::test": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 
 log level: 4; error type: cpp exception; test case type: parameterized free function;
 Running 1 test case...
 Exception in "bad_function_param": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 
 log level: 4; error type: cpp exception; test case type: parameterized user test case;
 Running 1 test case...
 Exception in "bad_test::test_param": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 
 log level: 4; error type:  system error; test case type: free function;
 Running 1 test case...
 Exception in "bad_function": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
 log level: 4; error type:  system error; test case type: user test case;
 Running 1 test case...
 Exception in "bad_test::test": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
 log level: 4; error type:  system error; test case type: parameterized free function;
 Running 1 test case...
 Exception in "bad_function_param": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
 log level: 4; error type:  system error; test case type: parameterized user test case;
 Running 1 test case...
 Exception in "bad_test::test_param": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
 log level: 4; error type: fatal user error; test case type: free function;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_function": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_function": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 4; error type: fatal user error; test case type: user test case;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_test::test": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_test::test": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 4; error type: fatal user error; test case type: parameterized free function;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_function_param": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_function_param": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 4; error type: fatal user error; test case type: parameterized user test case;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_test::test_param": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_test::test_param": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 4; error type: fatal system error; test case type: free function;
 Running 1 test case...
 Exception in "bad_function": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_function": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -1149,7 +1149,7 @@ e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Err
 log level: 4; error type: fatal system error; test case type: user test case;
 Running 1 test case...
 Exception in "bad_test::test": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_test::test": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -1158,7 +1158,7 @@ e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Err
 log level: 4; error type: fatal system error; test case type: parameterized free function;
 Running 1 test case...
 Exception in "bad_function_param": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_function_param": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -1167,7 +1167,7 @@ e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Err
 log level: 4; error type: fatal system error; test case type: parameterized user test case;
 Running 1 test case...
 Exception in "bad_test::test_param": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_test::test_param": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -1216,87 +1216,87 @@ Running 1 test case...
 log level: 5; error type: cpp exception; test case type: free function;
 Running 1 test case...
 Exception in "bad_function": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 
 log level: 5; error type: cpp exception; test case type: user test case;
 Running 1 test case...
 Exception in "bad_test::test": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 
 log level: 5; error type: cpp exception; test case type: parameterized free function;
 Running 1 test case...
 Exception in "bad_function_param": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 
 log level: 5; error type: cpp exception; test case type: parameterized user test case;
 Running 1 test case...
 Exception in "bad_test::test_param": std::runtime_error: test std::runtime error what() message
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(55) : last checkpoint: error_on_demand() throw runtime_error
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(56) : last checkpoint: error_on_demand() throw runtime_error
 
 ===========================
 
 log level: 5; error type:  system error; test case type: free function;
 Running 1 test case...
 Exception in "bad_function": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
 log level: 5; error type:  system error; test case type: user test case;
 Running 1 test case...
 Exception in "bad_test::test": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
 log level: 5; error type:  system error; test case type: parameterized free function;
 Running 1 test case...
 Exception in "bad_function_param": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
 log level: 5; error type:  system error; test case type: parameterized user test case;
 Running 1 test case...
 Exception in "bad_test::test_param": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
 log level: 5; error type: fatal user error; test case type: free function;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_function": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_function": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 5; error type: fatal user error; test case type: user test case;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_test::test": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_test::test": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 5; error type: fatal user error; test case type: parameterized free function;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_function_param": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_function_param": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 5; error type: fatal user error; test case type: parameterized user test case;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_test::test_param": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_test::test_param": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 5; error type: fatal system error; test case type: free function;
 Running 1 test case...
 Exception in "bad_function": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_function": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -1305,7 +1305,7 @@ e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Err
 log level: 5; error type: fatal system error; test case type: user test case;
 Running 1 test case...
 Exception in "bad_test::test": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_test::test": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -1314,7 +1314,7 @@ e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Err
 log level: 5; error type: fatal system error; test case type: parameterized free function;
 Running 1 test case...
 Exception in "bad_function_param": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_function_param": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -1323,7 +1323,7 @@ e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Err
 log level: 5; error type: fatal system error; test case type: parameterized user test case;
 Running 1 test case...
 Exception in "bad_test::test_param": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_test::test_param": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -1392,59 +1392,59 @@ Running 1 test case...
 log level: 6; error type:  system error; test case type: free function;
 Running 1 test case...
 Exception in "bad_function": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
 log level: 6; error type:  system error; test case type: user test case;
 Running 1 test case...
 Exception in "bad_test::test": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
 log level: 6; error type:  system error; test case type: parameterized free function;
 Running 1 test case...
 Exception in "bad_function_param": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
 log level: 6; error type:  system error; test case type: parameterized user test case;
 Running 1 test case...
 Exception in "bad_test::test_param": integer divide by zero
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(60) : last checkpoint: error_on_demand() divide by zero
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(61) : last checkpoint: error_on_demand() divide by zero
 
 ===========================
 
 log level: 6; error type: fatal user error; test case type: free function;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_function": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_function": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 6; error type: fatal user error; test case type: user test case;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_test::test": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_test::test": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 6; error type: fatal user error; test case type: parameterized free function;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_function_param": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_function_param": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 6; error type: fatal user error; test case type: parameterized user test case;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_test::test_param": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_test::test_param": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 6; error type: fatal system error; test case type: free function;
 Running 1 test case...
 Exception in "bad_function": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_function": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -1453,7 +1453,7 @@ e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Err
 log level: 6; error type: fatal system error; test case type: user test case;
 Running 1 test case...
 Exception in "bad_test::test": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_test::test": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -1462,7 +1462,7 @@ e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Err
 log level: 6; error type: fatal system error; test case type: parameterized free function;
 Running 1 test case...
 Exception in "bad_function_param": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_function_param": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -1471,7 +1471,7 @@ e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Err
 log level: 6; error type: fatal system error; test case type: parameterized user test case;
 Running 1 test case...
 Exception in "bad_test::test_param": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_test::test_param": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -1559,32 +1559,32 @@ Running 1 test case...
 
 log level: 7; error type: fatal user error; test case type: free function;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_function": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_function": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 7; error type: fatal user error; test case type: user test case;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_test::test": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_test::test": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 7; error type: fatal user error; test case type: parameterized free function;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_function_param": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_function_param": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 7; error type: fatal user error; test case type: parameterized user test case;
 Running 1 test case...
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(49) : fatal error in "bad_test::test_param": error_on_demand() BOOST_CRITICAL_ERROR
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(50) : fatal error in "bad_test::test_param": error_on_demand() BOOST_CRITICAL_ERROR
 
 ===========================
 
 log level: 7; error type: fatal system error; test case type: free function;
 Running 1 test case...
 Exception in "bad_function": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_function": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -1593,7 +1593,7 @@ e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Err
 log level: 7; error type: fatal system error; test case type: user test case;
 Running 1 test case...
 Exception in "bad_test::test": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_test::test": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -1602,7 +1602,7 @@ e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Err
 log level: 7; error type: fatal system error; test case type: parameterized free function;
 Running 1 test case...
 Exception in "bad_function_param": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_function_param": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
@@ -1611,7 +1611,7 @@ e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Err
 log level: 7; error type: fatal system error; test case type: parameterized user test case;
 Running 1 test case...
 Exception in "bad_test::test_param": memory access violation
-e:\source code\boost\libs\test\test\errors_handling_test.cpp(65) : last checkpoint: error_on_demand() write to an invalid address
+e:\source code\boost\libs\test\test\errors_handling_test.cpp(66) : last checkpoint: error_on_demand() write to an invalid address
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "bad_test::test_param": testing aborted
 e:\source code\boost\libs\test\src\unit_test_suite.cpp(87) : fatal error in "Errors handling test": testing aborted
 
