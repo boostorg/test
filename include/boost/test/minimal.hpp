@@ -91,7 +91,7 @@ public:
     void        report_critical_error( const char* msg_, const char* file_, int line_, char const* func_name_, bool is_msg_ = false )
     {
         report_error( msg_, file_, line_, func_name_, is_msg_ );
-        throw boost::execution_exception( boost::execution_exception::user_fatal_error, msg_ );
+        throw boost::execution_exception( boost::execution_exception::no_error, "" );
     }
 
     // public properties
@@ -121,7 +121,9 @@ int main( int argc, char* argv[] )
 
         BOOST_CHECK( run_result == 0 || run_result == boost::exit_success );
     }
-    catch( boost::execution_exception const& ) {
+    catch( boost::execution_exception const& exex ) {
+        if( exex.code() != boost::execution_exception::no_error )
+            BOOST_ERROR( (std::string( "exception \"" ) + exex.what() + "\" caught").c_str() );
         std::cerr << "\n**** Testing aborted.";
     }
 
@@ -143,6 +145,9 @@ int main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2002/09/12 08:29:38  rogeeff
+//  caught exception handling fixed
+//
 //  Revision 1.3  2002/09/09 08:49:25  rogeeff
 //  cvs id and copyright header added
 //
