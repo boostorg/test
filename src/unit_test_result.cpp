@@ -479,27 +479,15 @@ unit_test_result::failures_details( unit_test_counter& num_of_failures, bool& ex
 void
 unit_test_result::report( std::string const& reportlevel, std::ostream& where_to_ )
 {
-    struct my_pair {
-        c_string_literal    level_name;
-        report_level        level_value;
-    };
+    static int const map_size = sizeof(report_level_names)/sizeof(c_string_literal);
 
-    static const my_pair name_value_map[] = {
-        { "confirm"     , CONFIRMATION_REPORT },
-        { "short"       , SHORT_REPORT },
-        { "detailed"    , DETAILED_REPORT },
-        { "no"          , NO_REPORT },
-    };
-
-    static int const map_size = sizeof(name_value_map)/sizeof(my_pair);
-
-    report_level rl;
+    report_level rl = UNDEF_REPORT;
     if( reportlevel.empty() )
         rl = CONFIRMATION_REPORT;
     else {
-        for( int i =0; i < map_size; i++ ) {
-            if( reportlevel == name_value_map[i].level_name ) {
-                rl = name_value_map[i].level_value;
+         for( int i = 0; i < map_size; i++ ) {
+            if( reportlevel == report_level_names[i] ) {
+                rl = (report_level)i;
                 break;
             }
         }
@@ -605,6 +593,9 @@ unit_test_result::has_passed() const
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.17  2003/06/10 03:35:38  rogeeff
+//  set report level algorithm patched
+//
 //  Revision 1.16  2003/06/09 09:18:19  rogeeff
 //  First failed assertion support
 //  dependency support
