@@ -36,6 +36,7 @@
 #include <exception>          // for exception, bad_exception
 #include <stdexcept>          // for std exception hierarchy
 #include <cstring>            // for C string API
+#include <cassert>            // for assert
 
 #ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::strlen; using ::strncat; }
@@ -50,11 +51,9 @@ namespace std { using ::strlen; using ::strncat; }
 #include <excpt.h>
 #include <eh.h> 
 
-#ifndef NDEBUG
-#ifndef __MWERKS__  // temporary
+#if !defined(NDEBUG) && !defined(__MWERKS__)  // __MWERKS__ does not seem to supply implementation of C runtime debug hooks, causing linking errors
 #define BOOST_MS_CRT_DEBUG_HOOK
 #include <crtdbg.h>
-#endif
 #endif
 
 #elif (defined(__BORLANDC__) && defined(_Windows))
@@ -63,7 +62,7 @@ namespace std { using ::strlen; using ::strncat; }
 
 #elif defined(BOOST_HAS_SIGACTION)
 
-#define BOOST_POSIX_STYLE_SIGNAL_HANDLING
+#define BOOST_SIGACTION_BASED_SIGNAL_HANDLING
 #include <unistd.h>
 #include <signal.h>
 #include <setjmp.h>
@@ -127,7 +126,7 @@ static void report_ms_se_error( unsigned int id );
 //____________________________________________________________________________//
 
 // Declarations for unix-style signal handling
-#elif defined(BOOST_POSIX_STYLE_SIGNAL_HANDLING)
+#elif defined(BOOST_SIGACTION_BASED_SIGNAL_HANDLING)
 
 class unix_signal_exception {
 public:
@@ -251,10 +250,10 @@ int execution_monitor::execute( bool catch_system_errors, int timeout )
 #if   defined(BOOST_MS_STRCTURED_EXCEPTION_HANDLING)
     catch( detail::ms_se_exception const& ex )
       { detail::report_ms_se_error( ex.id() ); }
-#elif defined(BOOST_POSIX_STYLE_SIGNAL_HANDLING)
+#elif defined(BOOST_SIGACTION_BASED_SIGNAL_HANDLING)
     catch( detail::unix_signal_exception const& ex )
       { detail::report_error( ex.error_code(), ex.error_message() ); }
-#endif  // BOOST_POSIX_STYLE_SIGNAL_HANDLING
+#endif  // BOOST_SIGACTION_BASED_SIGNAL_HANDLING
 
     catch( execution_exception const& ) { throw; }
 
@@ -268,17 +267,48 @@ int execution_monitor::execute( bool catch_system_errors, int timeout )
 
 namespace detail {
 
+#if defined(BOOST_SIGACTION_BASED_SIGNAL_HANDLING)
+
 // ************************************************************************** //
-// **************          boost::detail::catch_signals        ************** //
+// **************          boost::detail::signal_handler       ************** //
 // ************************************************************************** //
 
-#if defined(BOOST_POSIX_STYLE_SIGNAL_HANDLING)
+class signal_handler {
+public:
+    // Constructor
+    explicit signal_handler( bool catch_system_errors, int timeout );
 
-inline sigjmp_buf & execution_monitor_jump_buffer()
-{
-    static sigjmp_buf unit_test_jump_buffer_;
-    return unit_test_jump_buffer_;
-}
+    // Destructor
+    ~signal_handler();
+
+    // access methods
+    static sigjmp_buf&      jump_buffer()
+    {
+        assert( s_active_handler );
+
+        return s_active_handler->m_sigjmp_buf;
+    }
+
+private:
+    // Data members
+    struct sigaction        m_same_action_for_all_signals;
+    struct sigaction        m_old_SIGFPE_action;
+    struct sigaction        m_old_SIGTRAP_action;
+    struct sigaction        m_old_SIGSEGV_action;
+    struct sigaction        m_old_SIGBUS_action;
+    struct sigaction        m_old_SIGABRT_action;
+    struct sigaction        m_old_SIGALRM_action;
+
+    sigjmp_buf              m_sigjmp_buf;
+
+    signal_handler*         m_prev_handler;
+    static signal_handler*  s_active_handler;
+
+    bool                    m_catch_system_errors;
+    bool                    m_set_timeout;
+};
+
+signal_handler* signal_handler::s_active_handler = NULL; // need to be placed in thread specific storage
 
 //____________________________________________________________________________//
 
@@ -286,45 +316,78 @@ extern "C" {
 
 static void execution_monitor_signal_handler( int sig )
 {
-    siglongjmp( execution_monitor_jump_buffer(), sig );
+    siglongjmp( signal_handler::jump_buffer(), sig );
 }
 
 }
+
 //____________________________________________________________________________//
+
+signal_handler::signal_handler( bool catch_system_errors, int timeout )
+: m_prev_handler( s_active_handler ),
+  m_catch_system_errors( catch_system_errors ),
+  m_set_timeout( timeout > 0 )
+{
+    s_active_handler = this;
+    
+    if( m_catch_system_errors || m_set_timeout ) {
+        m_same_action_for_all_signals.sa_flags   = 0;
+        m_same_action_for_all_signals.sa_handler = &execution_monitor_signal_handler;
+        sigemptyset( &m_same_action_for_all_signals.sa_mask );
+    }
+    
+    if( m_catch_system_errors ) {
+        sigaction( SIGFPE , &m_same_action_for_all_signals, &m_old_SIGFPE_action  );
+        sigaction( SIGTRAP, &m_same_action_for_all_signals, &m_old_SIGTRAP_action );
+        sigaction( SIGSEGV, &m_same_action_for_all_signals, &m_old_SIGSEGV_action );
+        sigaction( SIGBUS , &m_same_action_for_all_signals, &m_old_SIGBUS_action  );
+        sigaction( SIGABRT, &m_same_action_for_all_signals, &m_old_SIGABRT_action  );
+    }
+    
+    if( m_set_timeout ) {
+        sigaction( SIGALRM , &m_same_action_for_all_signals, &m_old_SIGALRM_action );
+        alarm( timeout );
+    }
+}
+
+//____________________________________________________________________________//
+
+signal_handler::~signal_handler()
+{
+    typedef struct sigaction* sigaction_ptr;
+
+    assert( s_active_handler == this );
+
+    if( m_set_timeout ) {
+        alarm( 0 );
+        sigaction( SIGALRM, &m_old_SIGALRM_action, sigaction_ptr() );
+    }
+
+    if( m_catch_system_errors ) {
+        sigaction( SIGFPE , &m_old_SIGFPE_action , sigaction_ptr() );
+        sigaction( SIGTRAP, &m_old_SIGTRAP_action, sigaction_ptr() );
+        sigaction( SIGSEGV, &m_old_SIGSEGV_action, sigaction_ptr() );
+        sigaction( SIGBUS , &m_old_SIGBUS_action , sigaction_ptr() );
+        sigaction( SIGABRT, &m_old_SIGABRT_action, sigaction_ptr() );
+    }
+
+    s_active_handler = m_prev_handler;
+}
+
+//____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************          boost::detail::catch_signals        ************** //
+// ************************************************************************** //
 
 int catch_signals( execution_monitor & exmon, bool catch_system_errors, int timeout )
 {
-    typedef struct sigaction* sigaction_ptr;
-    static struct sigaction all_signals_action;
-    struct sigaction old_SIGFPE_action;
-    struct sigaction old_SIGTRAP_action;
-    struct sigaction old_SIGSEGV_action;
-    struct sigaction old_SIGBUS_action;
-    struct sigaction old_SIGABRT_action;
-    struct sigaction old_SIGALRM_action;
+    signal_handler                  local_signal_handler( catch_system_errors, timeout );
+    int                             result = 0;
+    execution_exception::error_code ec     = execution_exception::no_error;
+    c_string_literal                em     = c_string_literal();
 
-    if( catch_system_errors ) {
-        all_signals_action.sa_flags   = 0;
-        all_signals_action.sa_handler = &execution_monitor_signal_handler;
-        sigemptyset( &all_signals_action.sa_mask );
-
-        sigaction( SIGFPE , &all_signals_action, &old_SIGFPE_action  );
-        sigaction( SIGTRAP, &all_signals_action, &old_SIGTRAP_action );
-        sigaction( SIGSEGV, &all_signals_action, &old_SIGSEGV_action );
-        sigaction( SIGBUS , &all_signals_action, &old_SIGBUS_action  );
-        sigaction( SIGABRT, &all_signals_action, &old_SIGABRT_action  );
-    }
-
-    int                             result;
-    execution_exception::error_code ec = execution_exception::no_error;
-    c_string_literal                em;
-
-    if( timeout ) {
-        sigaction( SIGALRM , &all_signals_action, &old_SIGALRM_action );
-        alarm(timeout);
-    }
-
-    volatile int sigtype = sigsetjmp( execution_monitor_jump_buffer(), 1 );
+    volatile int sigtype = sigsetjmp( signal_handler::jump_buffer(), 1 );
     if( sigtype == 0 ) {
         result = exmon.function();
     }
@@ -355,17 +418,6 @@ int catch_signals( execution_monitor & exmon, bool catch_system_errors, int time
             ec = execution_exception::system_error;
             em = "signal: unrecognized signal";
         }
-    }
-    if( timeout ) {
-        alarm(0);
-        sigaction( SIGALRM, &old_SIGALRM_action, sigaction_ptr() );
-    }
-    if( catch_system_errors ) {
-        sigaction( SIGFPE , &old_SIGFPE_action , sigaction_ptr() );
-        sigaction( SIGTRAP, &old_SIGTRAP_action, sigaction_ptr() );
-        sigaction( SIGSEGV, &old_SIGSEGV_action, sigaction_ptr() );
-        sigaction( SIGBUS , &old_SIGBUS_action , sigaction_ptr() );
-        sigaction( SIGABRT, &old_SIGABRT_action, sigaction_ptr()  );
     }
 
     if( ec != execution_exception::no_error ) {
@@ -519,6 +571,9 @@ static void report_error( execution_exception::error_code ec, c_string_literal m
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.21  2003/02/17 10:04:21  rogeeff
+//  some exception safety and reentrance issues addressed
+//
 //  Revision 1.20  2003/02/15 21:56:14  rogeeff
 //  temporary cwpro fix for most of link problems
 //
