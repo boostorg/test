@@ -41,7 +41,7 @@ namespace mpl = boost::mpl;
 template<typename Number>
 void test0( Number* = 0 )
 {
-    BOOST_CHECK_EQUAL( 2, Number::value );
+    BOOST_CHECK_EQUAL( 2, (int const)Number::value );
 }
 
 BOOST_META_FUNC_TEST_CASE( test0 );
@@ -51,11 +51,11 @@ BOOST_META_FUNC_TEST_CASE( test0 );
 template<typename Number>
 void test1( Number* = 0 )
 {
-    BOOST_CHECK_EQUAL( 6, Number::value );
+    BOOST_CHECK_EQUAL( 6, (int const)Number::value );
 
-    BOOST_REQUIRE( 2 <= Number::value );
+    BOOST_REQUIRE( 2 <= (int const)Number::value );
 
-    BOOST_CHECK_EQUAL( 3, Number::value );
+    BOOST_CHECK_EQUAL( 3, (int const)Number::value );
 }
 
 BOOST_META_FUNC_TEST_CASE( test1 );
@@ -154,6 +154,9 @@ int test_main( int, char* [] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2004/10/05 04:23:54  rogeeff
+//  borland fix
+//
 //  Revision 1.7  2004/05/21 06:26:10  rogeeff
 //  licence update
 //
