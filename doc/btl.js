@@ -84,7 +84,7 @@ function put_examples_roller( roller_name ) {
 
     document.write( 
         "<a href='javascript: void " + roller_name + ".roll();'" +
-        "onMouseOver='window.status='Next example'; return true;'" +
+        "onMouseOver='window.status=\"Next example\"; return true;'" +
         "onMouseOut='window.status=window.defaultStatus; return true;' >" +
         "<img src='imgs/next_arrow.gif' style='border-style:none;' align='top' height='22' /></a>" );
 
