@@ -1,0 +1,104 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Boost Test Libraries</title>
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+
+<table border="1" bgcolor="#007F7F" cellpadding="2">
+  <tr>
+    <td bgcolor="#FFFFFF"><img src="../../../c++boost.gif" alt="c++boost.gif (8819 bytes)" width="277" height="86"></td>
+    <td><a href="../../../index.htm"><font face="Arial" color="#FFFFFF"><big>Home </big></font></a></td>
+    <td><a href="../../libraries.htm"><font face="Arial" color="#FFFFFF"><big>Libraries </big></font></a></td>
+    <td><a href="../../../people/people.htm"><font face="Arial" color="#FFFFFF"><big>People </big></font></a></td>
+    <td><a href="../../../more/faq.htm"><font face="Arial" color="#FFFFFF"><big>FAQ </big></font></a></td>
+    <td><a href="../../../more/index.htm"><font face="Arial" color="#FFFFFF"><big>More </big></font></a></td>
+  </tr>
+</table>
+
+<h1>Boost Test
+Library</h1>
+<p><a href="#Introduction">Introduction</a><br>
+<a href="#Components">Components<br>
+</a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="execution_tools.htm">Execution Tools</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; <a href="test_tools.htm">Test Tools</a><br>
+<a href="#Design">Design</a><br>
+<a href="#Open Issues">Open Issues</a><br>
+<a href="#Portability">Portability</a><br>
+<a href="#Acknowledgements">Acknowledgements</a></p>
+<h2><a name="Introduction">Introduction</a></h2>
+<p>A matched set of tools for writing test programs, and controlling their
+runtime execution.</p>
+<p>The execution tools are also useful in some production (non-test)
+environments.</p>
+<p>Near zero dependencies between the tools allow mix-and-match tool
+combinations without paying for features not used.</p>
+<h2><a name="Components">Components</a></h2>
+<ul>
+  <li><a href="execution_tools.htm"><b> Execution Tools</b></a> - Basic
+    exception and error detection and reporting for use in both production and
+    test programs.<br>
+    <br>
+    Used directly by production programs, the Execution Tools' replacement
+    main() function&nbsp; is also the default lowest layer for the Test Tools.</li>
+</ul>
+<ul>
+  <li><a href="test_tools.htm"><b> Test Tools</b></a> -&nbsp; Simple test facilities for simple test
+    program needs.<br>
+    <br>
+    Used directly by simple test programs, the Test Tools are also used as the
+    default lower layer for the Unit Test Tools.</li>
+</ul>
+<ul>
+  <li><b> Unit Test Tools</b> (To be supplied) - More complex test facilities for constructing
+    complete test suites and meeting other more advanced testing needs.<br>
+  </li>
+</ul>
+<h2><a name="Design">Design</a></h2>
+See <a href="test_lib_design.htm">Boost Test Library Design</a>.&nbsp;
+<h2><a name="Open Issues">Open Issues</a></h2>
+<ul>
+  <li>Better support for specific platforms.&nbsp; For both Unix and Windows, it is possible to write platform specific code that detects
+    and reports additional errors, such as an attempt to divide by zero or an
+    addressing exception.&nbsp; The current plan is to defer implementation
+    until after formal review and initial version acceptance.</li>
+</ul>
+<ul>
+  <li>More explicit exception messages on platforms where RTTI typeid is
+    meaningful.</li>
+</ul>
+<ul>
+  <li>Instructions for users wishing their own exception types be handled like
+    catch_exceptions().</li>
+</ul>
+<ul>
+  <li>A volunteer is needed to develop a Unit Test library for Boost.</li>
+</ul>
+<ul>
+  <li>It would be useful to be able to compare test output files to the expected
+    output files.&nbsp; A volunteer is needed.</li>
+</ul>
+<h2><a name="Portability">Portability</a></h2>
+<p>Because the Boost Test Library is critical for porting and testing Boost libraries, it has been written to be very conservative in
+its use of C++ features, and to keep dependencies to a bare minimum..</p>
+  <p>Tests have been run (and work) under numerous compilers.</p>
+<h2><a name="Acknowledgements">Acknowledgements</a></h2>
+<p>Ed Brey, Kevlin Henney, Ullrich Koethe, and Thomas Matelich provided very
+helpful comments during development. Dave Abrahams, Ed Brey, William Kempf, Jens
+Maurer, and Wilka suggested numerous improvements during the Formal
+Review.&nbsp; Jens Maurer was the review manager.&nbsp; Beman Dawes is the
+developer and maintainer.</p>
+<hr>
+<p>© Beman Dawes 2001</p>
+<p>Revised <!--webbot bot="Timestamp" S-Type="EDITED"
+S-Format="%d %B, %Y" startspan -->28 February, 2001<!--webbot bot="Timestamp" endspan i-checksum="40412" -->
+</p>
+
+</body>
+
+</html>
