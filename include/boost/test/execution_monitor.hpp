@@ -30,10 +30,43 @@
 #ifndef BOOST_EXECUTION_MONITOR_HPP
 #define BOOST_EXECUTION_MONITOR_HPP
 
+// BOOST TEST
 #include <boost/test/detail/unit_test_config.hpp>
 
+// BOOST
+#include <boost/scoped_ptr.hpp>
+#include <boost/type.hpp>
+
 namespace boost {
-    
+
+class execution_monitor;
+
+namespace detail {
+
+// ************************************************************************** //
+// **************       detail::translate_exception_base       ************** //
+// ************************************************************************** //
+
+class translate_exception_base {
+public:
+	// Constructor
+	explicit	translate_exception_base( boost::scoped_ptr<translate_exception_base>& next )
+	{
+		next.swap( m_next );
+	}
+
+	// Destructor
+	virtual		~translate_exception_base() {}
+
+	virtual int operator()( boost::execution_monitor& mon ) = 0;
+
+protected:
+	// Data members
+	boost::scoped_ptr<translate_exception_base> m_next;
+};
+
+}
+
 // ************************************************************************** //
 // **************              execution_exception             ************** //
 // ************************************************************************** //
@@ -83,7 +116,7 @@ private:
     // Data members
     error_code          m_error_code;
     c_string_literal    m_what;
-};
+}; // execution_exception
 
 // ************************************************************************** //
 // **************               execution_monitor              ************** //
@@ -103,7 +136,7 @@ public:
     //
     //  Returns:  Value returned by function().
     //
-    //  Effects:  Calls function() inside a try/catch block which also may
+    //  Effects:  Calls run_function() inside a try/catch block which also may
     //  include other unspecified platform dependent error detection code.
     //
     //  Throws: execution_exception on an uncaught C++ exception,
@@ -113,9 +146,60 @@ public:
     //  return a non-zero value.
     
     virtual int function() = 0;
-    //  user supplied function called by execute()
+    //  user supplied function called by run_function()
     
-}; // exception monitor
+	int			run_function();
+	// call function() and translate user exceptions with translators registered
+
+	template<typename Exception, typename ExceptionTranslator>
+	void		register_exception_translator( ExceptionTranslator const& tr, boost::type<Exception>* = 0 );
+
+private:
+	// Data members
+	boost::scoped_ptr<detail::translate_exception_base> m_custom_translators;
+
+}; // execution_monitor
+
+namespace detail {
+
+// ************************************************************************** //
+// **************         detail::translate_exception          ************** //
+// ************************************************************************** //
+
+template<typename Exception, typename ExceptionTranslator>
+class translate_exception : public translate_exception_base
+{
+	typedef boost::scoped_ptr<translate_exception_base> base_ptr;
+public:
+	explicit	translate_exception( ExceptionTranslator const& tr, base_ptr& next )
+	: translate_exception_base( next ), m_translator( tr ) {}
+
+	virtual int operator()( boost::execution_monitor& mon )
+	{
+		try {
+			return m_next ? (*m_next)( mon ) : mon.function();
+		}
+		catch( Exception const& e )
+		{
+			m_translator( e );
+			return true;
+		}
+	}
+
+private:
+	// Data members
+	ExceptionTranslator m_translator;
+};
+
+} // namespace detail
+
+template<typename Exception, typename ExceptionTranslator>
+void
+execution_monitor::register_exception_translator( ExceptionTranslator const& tr, boost::type<Exception>* )
+{
+	m_custom_translators.reset( 
+		new detail::translate_exception<Exception,ExceptionTranslator>( tr,m_custom_translators ) );
+}
 
 }  // namespace boost
 
@@ -123,6 +207,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.12  2003/11/02 06:16:56  rogeeff
+//  custom exception translator registration support
+//
 //  Revision 1.11  2003/10/27 07:13:12  rogeeff
 //  licence update
 //
