@@ -82,8 +82,8 @@ public:
 
 class hrf_report_formatter : public report_formatter {
 public:
-    void    start_result_report( std::ostream& where_to ) {}
-    void    finish_result_report( std::ostream& where_to ) {}
+    void    start_result_report( std::ostream& /* where_to */ ) {}
+    void    finish_result_report( std::ostream& /* where_to */ ) {}
 
     void    start_test_case_report( std::ostream& where_to, std::size_t indent,
                                     std::string const& test_case_name, bool case_suite, bool failed )
@@ -211,7 +211,7 @@ public:
     }
 
     void    finish_test_case_report( std::ostream& where_to, std::size_t indent, 
-                                     std::string const& test_case_name, bool case_suite, bool aborted )
+                                     std::string const& /* test_case_name */, bool case_suite, bool aborted )
     {
         if( aborted ) {
             where_to << std::setw( indent+2 ) << ""
@@ -596,6 +596,9 @@ unit_test_result::has_passed() const
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.19  2003/07/09 12:59:29  jmaurer
+//  avoid "unused parameter" warnings with gcc
+//
 //  Revision 1.18  2003/06/10 08:00:34  rogeeff
 //  has_failed conseder test_case_failed != 0 as an error
 //
