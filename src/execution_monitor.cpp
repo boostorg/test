@@ -35,6 +35,7 @@
 #include <typeinfo>           // for bad_cast, bad_typeid
 #include <exception>          // for exception, bad_exception
 #include <stdexcept>          // for std exception hierarchy
+#include <cstring>            // for std::strlen etc
 
 #ifdef BOOST_NO_STDC_NAMESPACE
     namespace std { using ::strlen; using ::strncat; }
@@ -461,6 +462,9 @@ static void report_error( execution_exception::error_code ec, char const* msg1, 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10  2002/09/15 11:17:23  johnmaddock
+//  Added missing includes
+//
 //  Revision 1.9  2002/09/04 07:27:08  rogeeff
 //  space before colon deleted
 //
@@ -484,3 +488,4 @@ static void report_error( execution_exception::error_code ec, char const* msg1, 
 // ***************************************************************************
 
 // EOF
+

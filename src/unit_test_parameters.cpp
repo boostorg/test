@@ -21,6 +21,9 @@
 
 //BOOST
 #include <boost/config.hpp>           // for broken compiler workarounds
+// for strcmp etc:
+#include <cstring>
+#include <cstdlib>
 
 # ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::getenv; using ::strncmp; using ::strcmp; }
@@ -87,6 +90,9 @@ retrieve_framework_parameter( char const* parameter_name, int* argc, char** argv
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2002/09/15 11:17:23  johnmaddock
+//  Added missing includes
+//
 //  Revision 1.3  2002/08/20 08:24:13  rogeeff
 //  cvs keywords added
 //
@@ -95,3 +101,4 @@ retrieve_framework_parameter( char const* parameter_name, int* argc, char** argv
 // ***************************************************************************
 
 // EOF
+
