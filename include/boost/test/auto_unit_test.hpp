@@ -1,7 +1,9 @@
 //  (C) Copyright Gennadiy Rozental 2001-2003.
-//  See accompanying license for terms and conditions of use.
+//  Use, modification, and distribution are subject to the 
+//  Boost Software License, Version 1.0. (See accompanying file 
+//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-//  See http://www.boost.org for most recent version including documentation.
+//  See http://www.boost.org/libs/test for the library home page.
 //
 //  File        : $RCSfile$
 //
@@ -28,9 +30,9 @@ namespace detail {
 inline boost::unit_test_framework::test_suite*
 auto_unit_test_suite()
 {
-	static boost::unit_test_framework::test_suite* inst = BOOST_TEST_SUITE( "Auto Unit Test" );
+    static boost::unit_test_framework::test_suite* inst = BOOST_TEST_SUITE( "Auto Unit Test" );
 
-	return inst;
+    return inst;
 }
 
 struct auto_unit_test_registrar
@@ -64,7 +66,7 @@ static void func_name()                                             \
 #ifdef BOOST_AUTO_TEST_MAIN
 boost::unit_test_framework::test_suite*
 init_unit_test_suite( int /* argc */, char* /* argv */ [] ) {
-	return boost::unit_test_framework::detail::auto_unit_test_suite();
+    return boost::unit_test_framework::detail::auto_unit_test_suite();
 }
 #endif
 
@@ -72,6 +74,9 @@ init_unit_test_suite( int /* argc */, char* /* argv */ [] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2003/11/06 07:39:36  rogeeff
+//  Licence update
+//
 //  Revision 1.5  2003/11/02 06:16:14  rogeeff
 //  fixed to support multi-module unit testing
 //

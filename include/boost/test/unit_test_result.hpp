@@ -1,7 +1,9 @@
 //  (C) Copyright Gennadiy Rozental 2001-2003.
-//  See accompanying license for terms and conditions of use.
+//  Use, modification, and distribution are subject to the 
+//  Boost Software License, Version 1.0. (See accompanying file 
+//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-//  See http://www.boost.org for most recent version including documentation.
+//  See http://www.boost.org/libs/test for the library home page.
 //
 //  File        : $RCSfile$
 //
@@ -125,6 +127,9 @@ struct unit_test_result_tracker {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.17  2003/11/06 07:39:36  rogeeff
+//  Licence update
+//
 //  Revision 1.16  2003/10/27 07:13:13  rogeeff
 //  licence update
 //

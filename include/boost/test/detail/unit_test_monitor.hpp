@@ -1,7 +1,9 @@
 //  (C) Copyright Gennadiy Rozental 2001-2003.
-//  See accompanying license for terms and conditions of use.
+//  Use, modification, and distribution are subject to the 
+//  Boost Software License, Version 1.0. (See accompanying file 
+//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-//  See http://www.boost.org for most recent version including documentation.
+//  See http://www.boost.org/libs/test for the library home page.
 //
 //  File        : $RCSfile$
 //
@@ -15,6 +17,12 @@
 #define BOOST_UNIT_TEST_MONITOR_HPP
 
 #include <boost/test/execution_monitor.hpp>
+
+#ifdef BOOST_MSVC
+# pragma warning(push)
+# pragma warning(disable: 4511) // copy constructor could not be generated
+# pragma warning(disable: 4512) // assignment operator could not be generated
+#endif
 
 namespace boost {
 
@@ -55,8 +63,8 @@ public:
 
 private:
     // Data members
-    test_case*			m_test_case;
     function_to_monitor	m_test_case_method;
+    test_case*			m_test_case;
     static bool			s_catch_system_errors;
 }; // unit_test_monitor
 
@@ -66,10 +74,19 @@ private:
 
 } // namespace boost
 
+#ifdef BOOST_MSVC
+# pragma warning(default: 4511) // copy constructor could not be generated
+# pragma warning(default: 4512) // assignment operator could not be generated
+# pragma warning(pop)
+#endif
+
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.12  2003/11/06 07:39:36  rogeeff
+//  Licence update
+//
 //  Revision 1.11  2003/11/02 06:21:33  rogeeff
 //  use shared global monitor for all test cases
 //
