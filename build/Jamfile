@@ -1,3 +1,11 @@
+#  (C) Copyright Gennadiy Rozental 2001-2003.
+#  Permission to copy, use, modify, sell and distribute this software
+#  is granted provided this copyright notice appears in all copies.
+#  This software is provided "as is" without express or implied warranty,
+#  and with no claim as to its suitability for any purpose.
+#
+#  See http://www.boost.org for most recent version including documentation.
+
 subproject libs/test/build ;
 
 PRG_EXEC_MON_SOURCES =
@@ -39,17 +47,20 @@ template boost_test_lib
 lib boost_prg_exec_monitor    : <template>boost_test_lib
                                 ../src/$(PRG_EXEC_MON_SOURCES).cpp ;
 
-dll boost_prg_exec_monitor    : <template>boost_test_lib
-                                ../src/$(PRG_EXEC_MON_SOURCES).cpp ;
-
 lib boost_test_exec_monitor   : <template>boost_test_lib
-                                ../src/$(TEST_EXEC_MON_SOURCES).cpp ; 
-
-dll boost_test_exec_monitor   : <template>boost_test_lib
                                 ../src/$(TEST_EXEC_MON_SOURCES).cpp ; 
 
 lib boost_unit_test_framework : <template>boost_test_lib
                                 ../src/$(UTF_SOURCES).cpp ; 
 
+if ! $(NT)
+{
+dll boost_prg_exec_monitor    : <template>boost_test_lib
+                                ../src/$(PRG_EXEC_MON_SOURCES).cpp ;
+
+dll boost_test_exec_monitor   : <template>boost_test_lib
+                                ../src/$(TEST_EXEC_MON_SOURCES).cpp ; 
+
 dll boost_unit_test_framework : <template>boost_test_lib
                                 ../src/$(UTF_SOURCES).cpp ; 
+}
