@@ -66,3 +66,14 @@ dll boost_test_exec_monitor   : <template>boost_test_lib
 dll boost_unit_test_framework : <template>boost_test_lib
                                 ../src/$(UTF_SOURCES).cpp ;
 }
+
+install test lib
+    :
+        [ unless $(NT) :
+            <dll>boost_prg_exec_monitor
+            <dll>boost_test_exec_monitor
+            <dll>boost_unit_test_framework ]
+        <lib>boost_prg_exec_monitor
+        <lib>boost_test_exec_monitor
+        <lib>boost_unit_test_framework
+    ;
