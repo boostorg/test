@@ -1,6 +1,6 @@
 //  Boost online_test.cpp  ---------------------------------------------------//
 
-//  (C) Copyright Gennadiy Rozental 2001.
+//  (C) Copyright Gennadiy Rozental 2001-2002.
 //  Permission to copy, use, modify, sell and distribute this software is
 //  granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
