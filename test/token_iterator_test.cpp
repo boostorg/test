@@ -44,10 +44,12 @@ void test_default_delim_policy()
 
 void test_wide()
 {
-    utf::wstring_token_iterator tit( L"Почему бы и нет" );
-    wchar_t const* res[4] = { L"Почему", L"бы", L"и", L"нет" };
-
+#if !defined(__GNUC__) || defined(__SGI_STL_PORT) || defined(_STLPORT_VERSION)
+    utf::wstring_token_iterator tit( L"\317\356\367\345\354\363 \341\373 \350 \355\345\362" );
+    wchar_t const* res[4] = { L"\317\356\367\345\354\363", L"\341\373", L"\350", L"\355\345\362" };
+    
     BOOST_CHECK_EQUAL_COLLECTIONS( tit, wsti_end, res );
+#endif
 }
 
 //____________________________________________________________________________//
@@ -113,11 +115,13 @@ void test_range_token_iterator()
     char const* pattern = "a bc , cd";
     std::copy( pattern, pattern+9, std::back_inserter( l ) );
 
+#if !BOOST_WORKAROUND( BOOST_MSVC, <= 1200 )
     my_token_iterator tit( l.begin(), l.end() );
     char const* res[] = { "a", "bc", ",", "cd" };
 
     my_token_iterator end;
     BOOST_CHECK_EQUAL_COLLECTIONS( tit, end, res );
+#endif
 }
 
 //____________________________________________________________________________//
@@ -159,8 +163,10 @@ void test_make_range_token_iterator()
 {
     char const* str = "Abc22sdf sd2fg ";
 
+#if !BOOST_WORKAROUND( BOOST_MSVC, <= 1200 )
     foo( boost::make_transform_iterator( str, loo ),
          boost::make_transform_iterator( str+15, loo ) );
+#endif
 }
 
 //____________________________________________________________________________//
@@ -189,6 +195,9 @@ init_unit_test_suite( int argc, char* argv[] )
 // History :
 //
 // $Log$
+// Revision 1.2  2004/09/27 08:39:21  rogeeff
+// msvc/gcc workarounds
+//
 // Revision 1.1  2004/06/05 11:04:50  rogeeff
 // no message
 //
