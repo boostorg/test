@@ -37,6 +37,8 @@ namespace std { using ::strcmp; using ::wcscmp; using ::strlen; using ::isprint;
 namespace std { using ::wcscmp; }
 #endif
 
+#include <boost/test/detail/suppress_warnings.hpp>
+
 namespace boost {
 
 namespace test_tools {
@@ -457,6 +459,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.34  2004/07/19 12:08:48  rogeeff
+//  suppress warnings
+//
 //  Revision 1.33  2004/06/23 04:49:48  eric_niebler
 //  remove std_min and std_max, update minmax coding guidelines
 //

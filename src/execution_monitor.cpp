@@ -76,6 +76,8 @@ namespace std { using ::strlen; using ::strncat; }
 
 #endif
 
+#include <boost/test/detail/suppress_warnings.hpp>
+
 namespace boost {
 
 namespace detail {
@@ -589,6 +591,9 @@ static void report_error( execution_exception::error_code ec, const_string msg1,
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.34  2004/07/19 12:08:12  rogeeff
+//  suppress warnings
+//
 //  Revision 1.33  2004/06/07 07:34:22  rogeeff
 //  detail namespace renamed
 //
