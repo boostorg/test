@@ -17,8 +17,8 @@
 
 int cpp_main( int, char *[] )  // note the name
 {
-  int div = 0;
-  return 10 / div;
+    int div = 0;
+    return 10 / div;
 }
 
 //____________________________________________________________________________//
@@ -27,6 +27,9 @@ int cpp_main( int, char *[] )  // note the name
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2002/12/09 05:16:50  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.5  2002/11/02 20:04:43  rogeeff
 //  release 1.29.0 merged into the main trank
 //
