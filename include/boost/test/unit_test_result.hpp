@@ -17,7 +17,7 @@
 #ifndef BOOST_UNIT_TEST_RESULT_HPP
 #define BOOST_UNIT_TEST_RESULT_HPP
 
-// LOCAL
+// Boost.Test
 #include <boost/test/detail/unit_test_config.hpp>
 
 // BOOST
@@ -48,10 +48,10 @@ public:
     void            increase_expected_failures( unit_test_counter amount = 1 );
 
     // reporting
-    void            confirmation_report( std::ostream& where_to_ );              // shortest
-    void            short_report( std::ostream& where_to_, int indent_ = 0 );     // short
-    void            detailed_report( std::ostream& where_to_, int indent_ = 0 );  // long
-    int             result_code();                                              // to be returned from main
+    void            confirmation_report( std::ostream& where_to_ );                 // shortest
+    void            short_report( std::ostream& where_to_, int indent_ = 0 );       // short
+    void            detailed_report( std::ostream& where_to_, int indent_ = 0 );    // long
+    int             result_code();                                                  // to be returned from main
 
     // to be used by tool box implementation
     void            inc_failed_assertions();
@@ -62,6 +62,10 @@ public:
 
     // access method; to be used by unit_test_log
     char const*     test_case_name();
+
+    // used mostly by the Boost.Test unit testing
+    static void     reset_current_result_set();
+    void            failures_details( unit_test_counter& num_of_failures, bool& exception_caught );
 
 private:
     // Constructor
@@ -79,6 +83,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8.2.1  2002/10/01 17:26:37  rogeeff
+//  reset current set feature introduces. Mostly for internal testing
+//
 //  Revision 1.8  2002/09/16 09:29:52  rogeeff
 //  since boost::smart_ptrs now support incomplete types on borland, no need in grinning_ptr any more
 //

@@ -18,7 +18,7 @@
 #ifndef BOOST_UNIT_TEST_SUITE_HPP
 #define BOOST_UNIT_TEST_SUITE_HPP
 
-// LOCAL
+// Boost.Test
 #include <boost/test/detail/unit_test_monitor.hpp>
 #include <boost/test/detail/unit_test_config.hpp>
 #include <boost/test/detail/class_properties.hpp>
@@ -308,6 +308,9 @@ create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, bo
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9.2.1  2002/10/01 17:26:37  rogeeff
+//  reset current set feature introduces. Mostly for internal testing
+//
 //  Revision 1.9  2002/09/16 09:29:52  rogeeff
 //  since boost::smart_ptrs now support incomplete types on borland, no need in grinning_ptr any more
 //
