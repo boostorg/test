@@ -236,7 +236,7 @@ Entering test case "bad_function"
 (free function)
 Exception in "bad_function": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_function": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_function": Testing aborted
 Leaving test case "bad_function"
 Leaving test suite "Errors handling test"
 
@@ -249,7 +249,7 @@ Entering test case "bad_test::test"
 (user test case)
 Exception in "bad_test::test": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_test::test": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_test::test": Testing aborted
 Leaving test case "bad_test::test"
 Leaving test suite "Errors handling test"
 
@@ -262,7 +262,7 @@ Entering test case "bad_function_param"
 (parameterized free function)
 Exception in "bad_function_param": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_function_param": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_function_param": Testing aborted
 Leaving test case "bad_function_param"
 Leaving test suite "Errors handling test"
 
@@ -275,7 +275,7 @@ Entering test case "bad_test::test_param"
 (parameterized user test case)
 Exception in "bad_test::test_param": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_test::test_param": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_test::test_param": Testing aborted
 Leaving test case "bad_test::test_param"
 Leaving test suite "Errors handling test"
 
@@ -516,7 +516,7 @@ Entering test case "bad_function"
 (free function)
 Exception in "bad_function": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_function": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_function": Testing aborted
 Leaving test case "bad_function"
 Leaving test suite "Errors handling test"
 
@@ -529,7 +529,7 @@ Entering test case "bad_test::test"
 (user test case)
 Exception in "bad_test::test": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_test::test": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_test::test": Testing aborted
 Leaving test case "bad_test::test"
 Leaving test suite "Errors handling test"
 
@@ -542,7 +542,7 @@ Entering test case "bad_function_param"
 (parameterized free function)
 Exception in "bad_function_param": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_function_param": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_function_param": Testing aborted
 Leaving test case "bad_function_param"
 Leaving test suite "Errors handling test"
 
@@ -555,7 +555,7 @@ Entering test case "bad_test::test_param"
 (parameterized user test case)
 Exception in "bad_test::test_param": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_test::test_param": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_test::test_param": Testing aborted
 Leaving test case "bad_test::test_param"
 Leaving test suite "Errors handling test"
 
@@ -714,7 +714,7 @@ Running 1 test case...
 (free function)
 Exception in "bad_function": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_function": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_function": Testing aborted
 
 ===========================
 
@@ -723,7 +723,7 @@ Running 1 test case...
 (user test case)
 Exception in "bad_test::test": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_test::test": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_test::test": Testing aborted
 
 ===========================
 
@@ -732,7 +732,7 @@ Running 1 test case...
 (parameterized free function)
 Exception in "bad_function_param": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_function_param": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_function_param": Testing aborted
 
 ===========================
 
@@ -741,7 +741,7 @@ Running 1 test case...
 (parameterized user test case)
 Exception in "bad_test::test_param": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_test::test_param": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_test::test_param": Testing aborted
 
 ===========================
 
@@ -873,7 +873,7 @@ log level: 3; error type: fatal system error; test case type: free function;
 Running 1 test case...
 Exception in "bad_function": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_function": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_function": Testing aborted
 
 ===========================
 
@@ -881,7 +881,7 @@ log level: 3; error type: fatal system error; test case type: user test case;
 Running 1 test case...
 Exception in "bad_test::test": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_test::test": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_test::test": Testing aborted
 
 ===========================
 
@@ -889,7 +889,7 @@ log level: 3; error type: fatal system error; test case type: parameterized free
 Running 1 test case...
 Exception in "bad_function_param": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_function_param": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_function_param": Testing aborted
 
 ===========================
 
@@ -897,7 +897,7 @@ log level: 3; error type: fatal system error; test case type: parameterized user
 Running 1 test case...
 Exception in "bad_test::test_param": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_test::test_param": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_test::test_param": Testing aborted
 
 ===========================
 
@@ -1029,7 +1029,7 @@ log level: 4; error type: fatal system error; test case type: free function;
 Running 1 test case...
 Exception in "bad_function": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_function": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_function": Testing aborted
 
 ===========================
 
@@ -1037,7 +1037,7 @@ log level: 4; error type: fatal system error; test case type: user test case;
 Running 1 test case...
 Exception in "bad_test::test": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_test::test": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_test::test": Testing aborted
 
 ===========================
 
@@ -1045,7 +1045,7 @@ log level: 4; error type: fatal system error; test case type: parameterized free
 Running 1 test case...
 Exception in "bad_function_param": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_function_param": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_function_param": Testing aborted
 
 ===========================
 
@@ -1053,7 +1053,7 @@ log level: 4; error type: fatal system error; test case type: parameterized user
 Running 1 test case...
 Exception in "bad_test::test_param": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_test::test_param": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_test::test_param": Testing aborted
 
 ===========================
 
@@ -1181,7 +1181,7 @@ log level: 5; error type: fatal system error; test case type: free function;
 Running 1 test case...
 Exception in "bad_function": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_function": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_function": Testing aborted
 
 ===========================
 
@@ -1189,7 +1189,7 @@ log level: 5; error type: fatal system error; test case type: user test case;
 Running 1 test case...
 Exception in "bad_test::test": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_test::test": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_test::test": Testing aborted
 
 ===========================
 
@@ -1197,7 +1197,7 @@ log level: 5; error type: fatal system error; test case type: parameterized free
 Running 1 test case...
 Exception in "bad_function_param": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_function_param": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_function_param": Testing aborted
 
 ===========================
 
@@ -1205,7 +1205,7 @@ log level: 5; error type: fatal system error; test case type: parameterized user
 Running 1 test case...
 Exception in "bad_test::test_param": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_test::test_param": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_test::test_param": Testing aborted
 
 ===========================
 
@@ -1325,7 +1325,7 @@ log level: 6; error type: fatal system error; test case type: free function;
 Running 1 test case...
 Exception in "bad_function": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_function": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_function": Testing aborted
 
 ===========================
 
@@ -1333,7 +1333,7 @@ log level: 6; error type: fatal system error; test case type: user test case;
 Running 1 test case...
 Exception in "bad_test::test": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_test::test": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_test::test": Testing aborted
 
 ===========================
 
@@ -1341,7 +1341,7 @@ log level: 6; error type: fatal system error; test case type: parameterized free
 Running 1 test case...
 Exception in "bad_function_param": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_function_param": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_function_param": Testing aborted
 
 ===========================
 
@@ -1349,7 +1349,7 @@ log level: 6; error type: fatal system error; test case type: parameterized user
 Running 1 test case...
 Exception in "bad_test::test_param": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_test::test_param": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_test::test_param": Testing aborted
 
 ===========================
 
@@ -1461,7 +1461,7 @@ log level: 7; error type: fatal system error; test case type: free function;
 Running 1 test case...
 Exception in "bad_function": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_function": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_function": Testing aborted
 
 ===========================
 
@@ -1469,7 +1469,7 @@ log level: 7; error type: fatal system error; test case type: user test case;
 Running 1 test case...
 Exception in "bad_test::test": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_test::test": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_test::test": Testing aborted
 
 ===========================
 
@@ -1477,7 +1477,7 @@ log level: 7; error type: fatal system error; test case type: parameterized free
 Running 1 test case...
 Exception in "bad_function_param": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_function_param": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_function_param": Testing aborted
 
 ===========================
 
@@ -1485,7 +1485,7 @@ log level: 7; error type: fatal system error; test case type: parameterized user
 Running 1 test case...
 Exception in "bad_test::test_param": memory access violation
 errors_handling_test.cpp(76) : last checkpoint: error_on_demand() write to an invalid address
-..\..\..\libs\test\build\../src\unit_test_suite.cpp(148): fatal error in "bad_test::test_param": Testing aborted
+../../../libs/test/build/../src/unit_test_suite.cpp(148): fatal error in "bad_test::test_param": Testing aborted
 
 ===========================
 
