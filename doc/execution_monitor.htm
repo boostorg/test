@@ -40,10 +40,10 @@ JS.include( "btl.js" );
 <p class="1-line-indented">
 The Boost Test Library's Execution Monitor calls a user-supplied function in a 
 controlled environment, relieving users from a messy error detection. To use the Execution Monitor 
-derive a class from the <b><a href="#Specifications:monitor">boost::execution_monitor</a></b> 
-and overwrite the virtual method int <b>execution_monitor::function</b>(). To start the monitored 
-function call the <b>execution_monitor<u>:</u>:execute</b>( timeout ) member 
-function. All symbols in the Execution Monitor implementation are located in the namespace boost.
+derive a class from the <a href="#Specifications:monitor">boost::execution_monitor</a> 
+and overwrite the virtual method int execution_monitor::function(). To start the monitored 
+function call the execution_monitor::execute( timeout ) member function. All 
+symbols in the Execution Monitor implementation are located in the namespace boost.
 <script language="Javascript">put_ref_to_top()</script>
 </p>
 
@@ -92,7 +92,7 @@ The integer value returned by the execution_monitor::function().
 </pre>
 
 <p>  Note 1: Only uncaught C++ exceptions are treated as errors.  If the application catches a C++ exception, it will never reach the
-<b><a href="#Specifications:monitor">boost::execution_monitor</a></b>.</p>
+<a href="#Specifications:monitor">boost::execution_monitor</a>.</p>
 <p>  Note 2: These errors include Unix signals and Windows structured  exceptions. They are often initiated by hardware traps.</p>
 <p class="1-line-indented">  The implementation decides what is a fatal_system_exception and what is  just a system_exception. Fatal errors are so likely to have corrupted  machine state (like a stack overflow or addressing exception) that it is 
 unreasonable to continue execution.
@@ -103,7 +103,7 @@ unreasonable to continue execution.
 project. It is also supplied as a part of all other Boost Test Library's components.</p>
 <h2><a name="Examples">Examples</a></h2>
 
-<p class="1-line-indented">For examples of usage of Execution Monitor see <a href="prg_exec_framework.htm">Program 
+<p class="1-line-indented">For examples of usage of Execution Monitor see <a href="prg_exec_monitor.htm">Program 
 Execution Monitor</a> or <a href="unit_test_framework.htm">Unit Test Framework.</a> </p>
 
 <h2><a name="Rationale">Rationale</a></h2>

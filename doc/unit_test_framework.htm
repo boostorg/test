@@ -77,7 +77,7 @@ Also see: <A href="test_tools.htm">Test Tools</A>
 facilities to simplify writing test cases using <A href="test_tools.htm">Test 
 Tools</A> and organizing them into test suites hierarchy. The framework relieves 
 users from messy a error detection, reporting duties and parameter processing. 
-It provided <B>main()</B> function that initialize the framework, setups parameters 
+It provided main() function that initialize the framework, setups parameters 
 based on command line arguments and/or environment variables, calls the user-supplied 
 function init_unit_test_suite(argc, argv) and than runs the provided test suite. 
 The framework keeps track of all passed/failed <A href="test_tools.htm"> Test 
@@ -118,7 +118,7 @@ based on a free function or a user's class method. There are four types of test
 cases: <A href="#function_test_case">function_test_case</A>, <A href="#class_test_case">class_test_case</A>, 
 <A href="#parameterized_function_test_case">parametrized_function_test_case</A>,
 <A href="#parameterized_class_test_case">parametrized_class_test_case</A>. 
-All of them implements test case interface defined in the abstract base class <B><A href="abstract_test_case">test_case</A></B>.</P>
+All of them implements test case interface defined in the abstract base class test_case.</P>
 
 <H4><A name="abstract_test_case"><U>Test case interface</U></A></H4>
 <H4>Definition</H4>
@@ -171,7 +171,7 @@ use the Test Tools instead of returing result code.
 
 <H4>Construction</H4>
 <P class="1-line-indented">To create a test case based on your test function use the following macro:</P>
-<P><B>BOOST_TEST_CASE</B>( &amp;free_function ).</P>
+<P><span class="new-term">BOOST_TEST_CASE</span>( &amp;free_function ).</P>
 <P class="1-line-indented">BOOST_TEST_CASE creates a new instance of the class function_test_case
 and returns a pointer to the base class test_case. In most cases you will use 
 it as an argument to the method <A href="#TestSuite">test_suite</A>::add(...).</P>
@@ -246,7 +246,7 @@ parameters to be constructed. As a general rule it is recommended to use the cla
 Due to usage of templates in an implementation of the class_test_case, a compilation can be longer would you use the function_test_case. 
 <H4>Construction</H4>
 <P class="1-line-indented">To create an instance of the class class_test_case use the following macro:</P>
-<P><B>BOOST_CLASS_TEST_CASE</B>( function, shared_test_case_instance ).</P>
+<P><span class="new-term">BOOST_CLASS_TEST_CASE</span>( function, shared_test_case_instance ).</P>
 
 <P class="1-line-indented">BOOST_CLASS_TEST_CASE creates a new instance of the class class_test_case and returns a pointer to the base class test_case. 
 In most cases you will use it as an argument to the method <A href="#TestSuite">test_suite</A>::add(...).</P>
@@ -307,7 +307,7 @@ defined in  <A href="../../../boost/test/unit_test_suite.hpp">unit_test_suite.hp
 
 <H4>Synopsis</H4>
 <PRE class="code"><SPAN class="reserv-word">template</SPAN> &lt;<SPAN class="reserv-word">typename</SPAN> ParamIterator, <SPAN class="reserv-word">typename</SPAN> ParameterType&gt;
-<SPAN class="reserv-word">class</SPAN> parametrized_function_test_case : <SPAN class="reserv-word">public</SPAN> test_case
+<SPAN class="reserv-word">class</SPAN> <span class="new-term">parametrized_function_test_case</span> : <SPAN class="reserv-word">public</SPAN> test_case
 {
     ... <SPAN class="comment">// Implementation</SPAN>
 };</PRE>
@@ -318,7 +318,7 @@ the framework for the supplied user's free function with the following specifica
 void (*fct)( ParameterType ). 
 <H4>Construction</H4>
 <P class="1-line-indented">To create an instance of the class parametrized_function_test_case use the following macro:</P>
-<P><B>BOOST_PARAM_TEST_CASE</B>( free_function, first_parameter, last_parameter ).</P>
+<P><span class="new-term">BOOST_PARAM_TEST_CASE</span>( free_function, first_parameter, last_parameter ).</P>
 <P class="1-line-indented">Here first_parameter and last_parameter are begin and end iterators for 
     the list of parameters accordingly. BOOST_PARAM_TEST_CASE creates a new 
     instance of the class parametrized_function_test_case and returns a 
@@ -363,31 +363,30 @@ defined in <A href="../../../boost/test/unit_test_suite.hpp">unit_test_suite.hpp
 <H4>Synopsis</H4>
 <PRE class="code"><SPAN class="reserv-word">template</SPAN>&lt;<SPAN class="reserv-word">class</SPAN> UserTestClass, <SPAN class="reserv-word">typename</SPAN> ParamIterator, <SPAN class="reserv-word">typename</SPAN> ParameterType&gt;
 
-<SPAN class="reserv-word">class</SPAN> parametrized_class_test_case : <SPAN class="reserv-word">public</SPAN> test_case
+<SPAN class="reserv-word">class</SPAN> <span class="new-term">parametrized_class_test_case</span> : <SPAN class="reserv-word">public</SPAN> test_case
 {
     ... // Implementation
 };</PRE>
 <H4>Description</H4>
-<P class="1-line-indented">Instances of the class <B>parametrized_class_test_case</B> are created by the 
+<P class="1-line-indented">Instances of the class parametrized_class_test_case are created by the 
 framework for the supplied method of the user's test class with the following 
-specification: void (UserTestClass::*fct)( ParameterType ). The <B>
-parametrized_class_test_case</B> is responsible for the creation and the 
+specification: void (UserTestClass::*fct)( ParameterType ). The parametrized_class_test_case is responsible for the creation and the 
 destroying of the user's test class instance.
 <H4>Construction</H4>
-<P class="1-line-indented">To create an instance of the class <B>
-class_test_case</B> use the following macro:
-<P><B>BOOST_PARAM_TEST_CASE</B>( test_class_method, first_parameter, 
+<P class="1-line-indented">To create an instance of the class
+parameterized_class_test_case use the following macro:
+<P><span class="new-term">BOOST_PARAM_TEST_CASE</span>( test_class_method, first_parameter, 
 last_parameter ).
 <P class="1-line-indented">Here first_parameter and last_parameter are begin and end iterators for the 
 list of parameters accordingly. BOOST_TEST_CASE creates a new instance of the 
-class <B>parametrized_class_test_case</B> and returns a pointer to the
+class parametrized_class_test_case and returns a pointer to the
 abstract class
-<B>test_case</B>. In most cases you will use it as an argument to the method <A href="#TestSuite"><B>
-test_suite</B></A>::add(...). Be aware that the <B>parametrized_class_test_case</B> 
+test_case. In most cases you will use it as an argument to the method <A href="#TestSuite">
+test_suite</A>::add(...). Be aware that the parametrized_class_test_case
 does not store list of parameters internally. The user should make sure 
 that parameters list will not be destroyed until the test case is run. That's 
-why it not recommended to create a parameters list as local variable in <B>
-<A href="#FrameworkIntegration">init_unit_test_suite</A></B>. For example, you 
+why it not recommended to create a parameters list as local variable in 
+<A href="#FrameworkIntegration">init_unit_test_suite</A>. For example, you 
 can place parameters list in file scope.
 <H4>Example:</H4>
 <PRE class="code"><SPAN class="reserv-word">class</SPAN> my_complex_test
@@ -423,7 +422,7 @@ defined in <A href="../../../boost/test/unit_test_suite.hpp">unit_test_suite.hpp
 <P class="1-line-indented">The Unit Test Framework provides an ability for the user to 
 combine created test cases into a test suite and create a hierarchy of test 
 suites of any depth. To add a test_case to the test_suite use 
-the method test_suite<B>::</B><I><B>add</B></I>(...). The first argument is a pointer to a new
+the method test_suite::<I>add</I>(...). The first argument is a pointer to a new
 test_case, second - expected_failured defines the amount of <A href="test_tools.htm">
 Test Tools</A> assertions that are expected to fail in the test case, and third
 - timeout defines the timeout value for the test case. Note that the expected 
@@ -435,9 +434,9 @@ values defined in the test_case are used.
 <SCRIPT language="Javascript">put_ref_to_top()</SCRIPT></P>
 <H4>Construction</H4>
 
-<P class="1-line-indented">To create instances of the class <B>test_suite</B> you can 
+<P class="1-line-indented">To create instances of the class test_suite you can 
 use the following macro:</P>
-<P><B>BOOST_TEST_SUITE</B>( test_suite_name ).</P>
+<P><span class="new-term">BOOST_TEST_SUITE</span>( test_suite_name ).</P>
 <P class="1-line-indented">BOOST_TEST_SUITE creates an instance of the class
 test_suite and returns a pointer to it. test_suite is a test_case, that allows to generate a multilevel hierarchy.</P>
 <H3><A name="TestResult">The Test result</A></H3>
@@ -461,19 +460,19 @@ Synopsis</H4>
 <P class="1-line-indented">The Unit Test Framework keeps testing results as the 
 instances of the class
 unit_test_result. Class unit_test_result provides three methods for the result reporting. Use the method
-unit_test_result::<B>confirmation_report</B>(...) 
+unit_test_result::<span class="new-term">confirmation_report</span>(...) 
 to report the success/failure confirmation massage only. Use the method
-unit_test_result::<B>short_report</B>(...) to report testing results for the 
+unit_test_result::<span class="new-term">short_report</span>(...) to report testing results for the 
 current test_case. The report includes an amount of passed and failed tests and 
 an amount of passed and failed <A href="test_tools.htm">Test Tools</A> 
-assertions. Use the method unit_test_result::<B>detailed_report</B>(...) to report testing results for the 
+assertions. Use the method unit_test_result::<span class="new-term">detailed_report</span>(...) to report testing results for the 
 current test_case and all test cases it consist of. In most cases you will not 
 need to use this interface directly. The framework provides a report for 
 overall testing results automatically.</P>
 <H4>Construction</H4>
 
 <P class="1-line-indented">To access instance of class unit_test_result holding results for the current test case use static 
-    method unit_test_result::<B>instance</B>(). 
+    method unit_test_result::<span class="new-term">instance</span>(). 
 <SCRIPT language="Javascript">put_ref_to_top()</SCRIPT></P>
 <H3><A name="TestLog">The Test log</A></H3>
 <H4>Definition</H4>
@@ -500,26 +499,32 @@ Framework parameters</A>.</P>
 <H4>Construction</H4>
 <P class="1-line-indented">To access the only instance of the class
 unit_test_log use method
-unit_test_log::<B>instance</B>(). <SCRIPT language="Javascript">put_ref_to_top()</SCRIPT></P>
+unit_test_log::<span class="new-term">instance</span>().
+<SCRIPT language="Javascript">put_ref_to_top()</SCRIPT></P>
+
 <H3> <A name="TestMonitor">The Test monitor</A></H3>
-    <P class="1-line-indented">To monitor a <B>test_case</B> run the Unit Test 
-    Framework uses a class <B>
-    unit_test_monitor</B>. The <B>unit_test_monitor</B> allows run <B>test_case</B> 
-    methods under control of a <B>execution_monitor </B>and extends the <A href="execution_monitor.htm">
-    Execution Monitor</A> functionality to translate
-    <B>execution_monitor</B> exceptions into designated error codes. For more 
-    details about the class <B>unit_test_monitor</B> see the <A href="test_lib_design.htm">
-    Boost Test Library Design</A>. In most cases you will not need to utilize <B>
-    unit_test_monitor</B> because the framework already monitor a test case run.</P>
+
+<P class="1-line-indented">To monitor a test_case run the Unit Test Framework 
+uses a class unit_test_monitor. The unit_test_monitor allows run test_case methods
+under control of a execution_monitor and extends the <A href="execution_monitor.htm">
+Execution Monitor</A> functionality to translate execution_monitor exceptions
+into designated error codes. For more details about the class unit_test_monitor
+see the <A href="test_lib_design.htm"> Boost Test Library Design</A>. In most 
+cases you will not need to utilize unit_test_monitor because the framework 
+already monitor a test case run.</P>
+
 <H2><A name="FrameworkIntegration">The Framework integration</A></H2>
+
 <H4>Description</H4>
 <P class="1-line-indented">As mentioned above Unit Test Framework is responsible 
 for supplying main function that initializing testing environment and taking care 
 about results reporting. The main function also includes a hook for the function 
 that should be supplied by the user. So, to integrate test program with the framework 
 you should provide this function with the following specification:</P>
-<P>boost::unit_test_framework::test_suite* <B>init_unit_test_suite</B>( int
-argc, char* argv[] )</P>
+
+<P>boost::unit_test_framework::test_suite* <span class="new-term">init_unit_test_suite</span>
+( int argc, char* argv[] )</P>
+
 <P class="1-line-indented">This function should create and initialize top level 
 instance of the class test_suite. The NULL pointer returned by the function is 
 treated as a non-initialized test_suite. In other case the framework runs provided 
@@ -529,31 +534,34 @@ guarantied not to have any framework-specific command line arguments.</P>
 <P class="1-line-indented">After test cases run the framework reports the results 
 and returns the result code. Here the list of values returned by the testing programs 
 integrated with the unit test framework:</P>
-<div align="center">
-<table class="2-column-table" cellspacing="0" >
+
+<DIV align="center">
+<TABLE class="2-column-table" cellspacing="0" >
 <thead>
-  <tr>
-    <td align="center"><font size="4">Value</font>  </td>
-    <td align="center"><font size="4">Meaning</font></td>
-  </tr>
+  <TR>
+    <TD align="center"><font size="4">Value</font>  </TD>
+    <TD align="center"><font size="4">Meaning</font></TD>
+  </TR>
 </thead>
-<tbody> 
-  <tr>
-    <td>boost::<SPAN class="new-term">exit_success</span></td>
-    <td>returned if no errors occured during test or success result code was explicetly requested with <A href="result-code">return 
-result code</A> framework parameter</td>
-  </tr>
-  <tr>
-    <td>boost::<SPAN class="new-term">exit_test_failure</SPAN></td>
-    <td>returned if non-fatal errors detected and no uncaught exceptions thrown</td>
-  </tr>
-  <tr>
-    <td>boost::<SPAN class="new-term">exit_exception_failure</SPAN></td>
-    <td>returned if fatal errors detected or uncaught exceptions thrown </td>
-  </tr>
-</tbody>  
-</table>
-</div>
+<TBODY> 
+  <TR>
+    <TD>boost::<SPAN class="new-term">exit_success</span></TD>
+    <TD>returned if no errors occured during test or success result code was 
+        explicetly requested with <A href="#result-code">return result code</A>
+        framework parameter
+    </TD>
+  </TR>
+  <TR>
+    <TD>boost::<SPAN class="new-term">exit_test_failure</SPAN></TD>
+    <TD>returned if non-fatal errors detected and no uncaught exceptions thrown</TD>
+  </TR>
+  <TR>
+    <TD>boost::<SPAN class="new-term">exit_exception_failure</SPAN></TD>
+    <TD>returned if fatal errors detected or uncaught exceptions thrown </TD>
+  </TR>
+</TBODY>  
+</TABLE>
+</DIV>
 
 <H4>Example</H4>
 <PRE class="code">test_suite*
@@ -639,8 +647,9 @@ command-line arguments) for each parameter is bolded.</P>
     </TD>
   </TR>
   <TR>
-    <TD width="25%" ><B>
-    Description:</B></TD>
+    <TD width="25%" >
+      <B>Description:</B>
+    </TD>
     <TD>
     Set a log level for the testing in a range from a complete log when 
     all successful tests are confirmed and all test suite messages are included 
@@ -668,8 +677,9 @@ command-line arguments) for each parameter is bolded.</P>
     </TD>
   </TR>
   <TR>
-    <TD width="25%" ><B>
-    Description:</B></TD>
+    <TD width="25%" >
+      <B>Description:</B>
+    </TD>
     <TD>
     If set to no enforce framework to return zero result code always. Could be 
     used for test programs integrated with GUI.</TD>
@@ -782,7 +792,7 @@ located in the Boost Test Library src directory, compose the framework:</P>
 <A href="../example/unit_test_example4.cpp">unit_test_example4.cpp</A><BR>
 <A href="../example/unit_test_example5.cpp">unit_test_example5.cpp</A><BR>
 <A href="../test/online_test.cpp">online_test.cpp</A><BR>
-<A href="../test/error_handling_test.cpp">error_handling_test.cpp</A><BR>
+<A href="../test/errors_handling_test.cpp">errors_handling_test.cpp</A><BR>
 <A href="../test/result_report_test.cpp">result_report_test.cpp</A>
 </P>
 <H2><A name="Rationale">Rationale</A></H2>
@@ -816,4 +826,5 @@ S-Format="%d %b %Y" startspan -->22 Aug 2002<!--webbot bot="Timestamp" endspan i
 </TABLE>
 </DIV>
 </BODY>
+
 </HTML>

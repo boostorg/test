@@ -14,6 +14,13 @@ JS.include( "btl.js" );
 
 <meta http-equiv="Content-Language" content="en-us" />
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<style>
+H4
+{
+    margin:     0px;
+}
+</style>
 </head>
 
 <body onload="btl_menu_init()">
@@ -74,89 +81,103 @@ To use the Test Tools you need to link with either the <a href="prg_exec_monitor
 error reporting mechanism.</p>
 
 <h2><a name="Specification">Specification</a></h2>
-<p><b><a name="BOOST_CHECKPOINT">BOOST_CHECKPOINT</a>( message )</b> - to be used to
-mark a test flow with a check points. The checkpoint can help to locate a source of
-a runtime exception.</p>
-<p>Example: test.cpp</p>
+
+<h3><a name="BOOST_CHECKPOINT">BOOST_CHECKPOINT</a>( message )</h3>
+
+<p class="1-line-indented">This tool is used to mark a test flow with a check 
+points. The checkpoint can help to locate a source of a runtime exception.</p>
+
+<h4>Example: test.cpp</h4>
 <pre class="code"><span class="cpp-type">int</span> test_main( <span class="cpp-type">int</span>, <span class="cpp-type">char</span>* [] ) {
     BOOST_CHECKPOINT( <span class="literal">&quot;Going to throw an exception&quot;</span> );
     <span class="reserv-word">throw</span> <span class="literal">&quot;some error&quot;</span>;
 
     <span class="reserv-word">return</span> <span class="literal">0</span>;
-}
-</pre>
-<p>Output:</p>
+}</pre>
+
+<h4>Output:</h4>
+
 <p class="test-output">
 Exception in test_main : C string:some_error<br>
 test.cpp(2) : last checkpoint: Going to throw an exception
 <script language="Javascript">put_ref_to_top()</script>
 </p>
 
-<p><b><a name="BOOST_WARN">BOOST_WARN</a>( predicate )</b> - to be used to
-perform a weak validation of the the predicate. If predicate is true, the tool produces
-a conformation message in other case it produces a warning message in
-a form &quot;warning in ...: condition &lt;predicate&gt; is not satisfied&quot;</p>
-<p>Example: test.cpp</p>
+<h3><a name="BOOST_WARN">BOOST_WARN</a>( predicate )</h3>
+<p class="1-line-indented">This tool is used to perform a weak validation of 
+the the predicate. If predicate is true, the tool produces a conformation 
+message in other case it produces a warning message in a form &quot;warning in 
+...: condition &lt;predicate&gt; is not satisfied&quot;</p>
+
+<h4>Example: test.cpp</h4>
+
 <pre class="code"><span class="cpp-type">int</span> test_main( <span class="cpp-type">int</span>, <span class="cpp-type">char</span>* [] ) {
     BOOST_WARN( <span class="reserv-word">sizeof</span>(<span class="cpp-type">int</span>) == <span class="reserv-word">sizeof</span>(<span class="cpp-type">short</span>) );
 
     <span class="reserv-word">return</span> <span class="literal">0</span>;
-}
-</pre>
+}</pre>
 
-<p>Output:</p>
+<h4>Output:</h4>
 <p class="test-output">test.cpp(2) : warning in test_main: condition sizeof(int) == sizeof(short) is not satisfied
 <script language="Javascript">put_ref_to_top()</script>
 </p>
 
-<p><b><a name="BOOST_CHECK">BOOST_CHECK</a>( predicate )</b> - to be used to validate
-the predicate value. If predicate is true, the tool produces a conformation message (note here
-and further: to manage what massages appear in the test output stream set the proper log level) 
-in other case it produces an error message in a form &quot;error in ...: test &lt;predicate&gt; fail&quot;</p>
+<h3><a name="BOOST_CHECK">BOOST_CHECK</a>( predicate )</h3>
 
-<p>Example: test.cpp</p>
+<p class="1-line-indented">This tool is used to validate the predicate value.
+If predicate is true, the tool produces a conformation message (note here and 
+further: to manage what massages appear in the test output stream set the proper 
+log level) in other case it produces an error message in a form &quot;error 
+in ...: test &lt;predicate&gt; fail&quot;</p>
+
+<h4>Example: test.cpp</h4>
 <pre class="code"><span class="cpp-type">int</span> test_main( <span class="cpp-type">int</span>, <span class="cpp-type">char</span>* [] ) {
     <span class="cpp-type">int</span> i=<span class="literal">2</span>;
     BOOST_CHECK( i == <span class="literal">1</span> );
 
     <span class="reserv-word">return</span> <span class="literal">0</span>;
-}
-</pre>
+}</pre>
 
-<p>Output:</p>
+<h4>Output:</h4>
 <p class="test-output">test.cpp(3) : error in test_main: test i==1 failed
 <script language="Javascript">put_ref_to_top()</script>
 </p>
 
-<p><b><a name="BOOST_CHECK_EQUAL">BOOST_CHECK_EQUAL</a>( left, right )</b> - the same as BOOST_CHECK( left == right ). The tools allows to see mismatched
-values.<br>
-<br>
-<p>Example: test.cpp</p>
+<h3><a name="BOOST_CHECK_EQUAL">BOOST_CHECK_EQUAL</a>( left, right )</h3>
+
+<p class="1-line-indented">The same as BOOST_CHECK( left == right ). The tools 
+allows to see mismatched values.
+</p>
+
+<h4>Example: test.cpp</h4>
+
 <pre class="code"><span class="cpp-type">int</span> test_main( <span class="cpp-type">int</span>, <span class="cpp-type">char</span>* [] ) {
     <span class="cpp-type">int</span> i = <span class="literal">2</span>;
     <span class="cpp-type">int</span> j = <span class="literal">1</span>;
     BOOST_CHECK_EQUAL( i, j );
 
     <span class="reserv-word">return</span> <span class="literal">0</span>;
-}
-</pre>
+}</pre>
 
-<p>Output:</p>
+<h4>Output:</h4>
+
 <p class="test-output"> test.cpp(4) : error in test_main: test i == j failed [2 != 1]
 <script language="Javascript">put_ref_to_top()</script>
 </p>
 
-<p><b><a name="BOOST_CHECK_CLOSE_tolerance">BOOST_CHECK_CLOSE</a>( left, right, tolerance_src )</b>
-- to be used to check for the strong relationship defined by the predicate
-<a href="floating_point_comparison.htm">close_at_tolerance</a>( tolerance_src )
-between <i>left</i> and <i>right</i>. To check for the weak relationship use
-<a href="#BOOST_CHECK_PREDICATE">BOOST_CHECK_PREDICATE</a>. Note that you need 
-to include <a href="../../../boost/test/detail/floating_point_comparison.hpp">
-detail/floating_point_comparison.hpp</a> yourself to use this tool since it 
-depend on this file that does not get included automatically to minimize code 
-dependency.<br>
-<br>
-<p>Example: test.cpp</p>
+<h3><a name="BOOST_CHECK_CLOSE_tolerance">BOOST_CHECK_CLOSE</a>( left, right, tolerance_src )</h3>
+
+<p class="1-line-indented">This tool is used to check for the strong relationship 
+defined by the predicate <a href="floating_point_comparison.htm">close_at_tolerance
+</a>( tolerance_src ) between <i>left</i> and <i>right</i>. To check for the 
+weak relationship use <a href="#BOOST_CHECK_PREDICATE">BOOST_CHECK_PREDICATE</a>.
+Note that you need to include <a href="../../../boost/test/floating_point_comparison.hpp">
+floating_point_comparison.hpp</a> yourself to use this tool since it depend on 
+this file that does not get included automatically to minimize code dependency.
+</p>
+
+<h4>Example: test.cpp</h4>
+
 <pre class="code"><span class="cpp-type">int</span> test_main( <span class="cpp-type">int</span>, <span class="cpp-type">char</span>* [] ) {
     <span class="cpp-type">double</span> v1 = <span class="literal">1.23456e-10</span>;
     <span class="cpp-type">double</span> v2 = <span class="literal">1.23457e-10</span>;
@@ -164,13 +185,14 @@ dependency.<br>
     BOOST_CHECK_CLOSE( v1, v2, <span class="literal">1e-6</span> ); <span class="comment">// should fail at tolerance supplied</span>
 
     <span class="reserv-word">return</span> <span class="literal">0</span>;
-}
-</pre>
-<p>Output:</p>
+}</pre>
+
+<h4>Output:</h4>
+
 <p class="test-output">test.cpp(4) : error in test_main: test v1 (==) v2 failed [1.23456e-10 != 1.23457e-10 (1e-06)]
 </p>
 
-<p>Example: test.cpp</p>
+<h4>Example: test.cpp</h4>
 <pre class="code"><span class="cpp-type">int</span> test_main( <span class="cpp-type">int</span>, <span class="cpp-type">char</span>* [] ) {
     <span class="cpp-type">double</span> v1 = <span class="literal">4.1;</span>
 
@@ -181,38 +203,42 @@ dependency.<br>
     // number of rounding errors; should pass</span>
 
     <span class="reserv-word">return</span> <span class="literal">0</span>;
-}
-</pre>
+}</pre>
 
-<p>Output:
+<h4>Output:
 <script language="Javascript">put_ref_to_top()</script>
-</p>
+</h4>
 
-<p><b><a name="BOOST_REQUIRE">BOOST_REQUIRE</a>( predicate )</b> - to be used to validate
-the predicate value. If predicate is <i>true</i>, the tool produces a conformation message in other case
-it produces an error message in a form &quot;fatal error in ...: test &lt;predicate&gt; fail&quot; 
-and then abort the current test case processing.</p>
+<h3><a name="BOOST_REQUIRE">BOOST_REQUIRE</a>( predicate )</h3>
+ <p class="1-line-indented">This tool is used to validate
+the predicate value. If predicate is <i>true</i>, the tool produces a 
+conformation message in other case it produces an error message in a form &quot;
+fatal error in ...: test &lt;predicate&gt; fail&quot; and then abort the 
+current test case processing.</p>
 
-<p>Example: test.cpp</p>
+<h4>Example: test.cpp</h4>
 <pre class="code"><span class="cpp-type">int</span> test_main( <span class="cpp-type">int</span>, <span class="cpp-type">char</span>* [] ) {
     <span class="cpp-type">int</span> i = <span class="literal">3</span>;
     BOOST_REQUIRE( i &gt; <span class="literal">5</span> );
     BOOST_CHECK( i == <span class="literal">6</span> ); <span class="comment">// will never reach this check</span>
 
     <span class="reserv-word">return</span> <span class="literal">0</span>;
-}
-</pre>
+}</pre>
 
-<p>Output:</p>
+<h4>Output:</h4>
+
 <p class="test-output">test.cpp(3) : fatal error in test_main: test i&gt;5 failed
 <script language="Javascript">put_ref_to_top()</script>
 </p>
 
-<p><b><a name="BOOST_MESSAGE">BOOST_MESSAGE</a>( message )</b> - to be used to
-print the message in the test output stream. The message argument can be of any type and can
-be a result of concatenations using the operator &lt;&lt;.</p>
+<h3><a name="BOOST_MESSAGE">BOOST_MESSAGE</a>( message )</h3>
 
-<p>Example: test.cpp</p>
+<p class="1-line-indented">This tool is used to print the message in the test 
+output stream. The message argument can be of any type and can be a result of 
+concatenations using the operator &lt;&lt;.</p>
+
+<h4>Example: test.cpp</h4>
+
 <pre class="code"><span class="reserv-word">struct</span> A {
     <span class="reserv-word">friend</span> <span class="cpp-type">std::ostream</span>&amp; <span class=keyword>operator</span>&lt;&lt;( <span class="cpp-type">std::ostream</span>&amp; str, A <span class=keyword>const</span>&amp; a ) {
         str &lt;&lt; <span class="literal">&quot;struct A&quot;</span>;
@@ -233,22 +259,25 @@ be a result of concatenations using the operator &lt;&lt;.</p>
     BOOST_MESSAGE( a &lt;&lt; <span class="literal">'.'</span> );
 
     <span class="reserv-word">return</span> <span class="literal">0</span>;
-}
-</pre>
+}</pre>
 
-<p>Output:</p>
+<h4>Output:</h4>
+
 <p class="test-output">Starting test</font><br>
 i=2<br>
 still testing...<br>
 struct A.
 <script language="Javascript">put_ref_to_top()</script></p>
 
-<p><b><a name="BOOST_CHECK_MESSAGE">BOOST_WARN_MESSAGE</a>( predicate, message )<br>
-BOOST_CHECK_MESSAGE( predicate, message )<br> <a name="BOOST_CHECK_MESSAGE">BOOST_REQUIRE_MESSAGE</a>( predicate, message )</b> -
-this group of tools works the same way as their non _MESSAGE form. The only difference is 
-test instead of generating of an error/confirm message these macros use the supplied one.</p>
+<h3><a name="BOOST_CHECK_MESSAGE">BOOST_WARN_MESSAGE</a>( predicate, message )<br>
+BOOST_CHECK_MESSAGE( predicate, message )<br> <a name="BOOST_CHECK_MESSAGE">BOOST_REQUIRE_MESSAGE</a>( predicate, message )</h3>
 
-<p>Example: test.cpp</p>
+<p class="1-line-indented">This group of tools works the same way as their non 
+_MESSAGE form. The only difference is test instead of generating of an error/confirm 
+message these macros use the supplied one.</p>
+
+<h4>Example: test.cpp</h4>
+
 <pre class="code"><span class="cpp-type">int</span> test.cpp( <span class="cpp-type">int</span>, <span class="cpp-type">char</span>* [] ) {
     <span class="cpp-type">double</span> res = sin( <span class="literal">45</span> );
 
@@ -258,18 +287,21 @@ test instead of generating of an error/confirm message these macros use the supp
 }
 </pre>
 
-<p>Output:</p>
+<h4>Output:</h4>
+
 <p class="test-output">test.cpp(3) : error in test_main: Why not?!?!
 <script language="Javascript">put_ref_to_top()</script>
 </p>
 
-<p><b><a name="BOOST_CHECK_PREDICATE">BOOST_CHECK_PREDICATE</a>( prediate, 
-number_of_arguments, arguments_list )</b> - to be used to validate the supplied 
-predicate. If predicate produces <i> true</i> value, the tool produces a conformation message in other case it produces an error message in
-a form &quot;error in ...: test &lt;predicate&gt;( arguments_list ) fail for 
-(arguments values)&quot;. Right now only unary and binary predicates are 
-supported.</p>
-<p>Example: test.cpp</p>
+<h3><a name="BOOST_CHECK_PREDICATE">BOOST_CHECK_PREDICATE</a>( prediate, number_of_arguments, arguments_list ) </h3>
+
+<p class="1-line-indented">This tool is used to validate the supplied predicate.
+If predicate produces <i>true</i> value, the tool produces a conformation 
+message in other case it produces an error message in a form &quot;error in ...: 
+test &lt;predicate&gt;( arguments_list ) fail for (arguments values)&quot;. 
+Right now only unary and binary predicates are supported.</p>
+
+<h4>Example: test.cpp</h4>
 
 <pre class="code"><span class="cpp-type">bool</span> is_even( <span class="cpp-type">int</span> i ) {
     <span class="reserv-word">return</span> i%<span class="literal">2</span> == <span class="literal">0</span>;
@@ -283,11 +315,13 @@ supported.</p>
 }
 </pre>
 
-<p>Output:</p>
+<h4>Output:</h4>
+
 <p class="test-output">test.cpp(3) : error in test_main: test &amp;is_even(i) failed for 17
 </p>
 
-<p>Example: test.cpp</p>
+<h4>Example: test.cpp</h4>
+
 <pre class="code"><span class="cpp-type">int</span> test.cpp( <span class="cpp-type">int</span>, <span class="cpp-type">char</span>* [] ) {
     <span class="cpp-type">int</span> i = <span class="literal">17</span>;
 
@@ -297,16 +331,22 @@ supported.</p>
 }
 </pre>
 
-<p>Output:</p>
+<h4>Output:</h4>
+
 <p class="test-output">test.cpp(3) : error in test_main: test std::not_equal_to&lt;int&gt;()(i, 17) failed for (17, 17)
 <script language="Javascript">put_ref_to_top()</script>
 </p>
 
-<p><b><a name="BOOST_REQUIRE_PREDICATE">BOOST_REQUIRE_PREDICATE</a>( prediate, number_of_arguments, arguments_list )</b> - to be used to validate the supplied 
-predicate. If predicate produces <i> true</i> value, the tool produces a conformation message in other case it produces an error message in
-a form &quot;error in ...: test &lt;predicate&gt;( arguments_list ) fail for (arguments values)&quot; and abort current test case processing. Right now only 
-unary and binary predicates are supported.</p>
-<p>Example: test.cpp</p>
+<h3><a name="BOOST_REQUIRE_PREDICATE">BOOST_REQUIRE_PREDICATE</a>( prediate, number_of_arguments, arguments_list ) </h3>
+
+<p class="1-line-indented">This tool is used to validate the supplied predicate.
+If predicate produces <i> true</i> value, the tool produces a conformation message
+in other case it produces an error message in a form &quot;error in ...: test
+&lt;predicate&gt;( arguments_list ) fail for (arguments values)&quot; and abort
+current test case processing. Right now only unary and binary predicates are 
+supported.</p>
+
+<h4>Example: test.cpp</h4>
 
 <pre class="code"><span class="cpp-type">int</span> test.cpp( <span class="cpp-type">int</span>, <span class="cpp-type">char</span>* [] ) {
     <span class="cpp-type">double</span> fp1     = <span class="literal">1.23456e-10</span>;
@@ -322,36 +362,40 @@ unary and binary predicates are supported.</p>
 </pre>
 
 <script language="Javascript">put_ref_to_top()</script>
-<p>Output:</p>
 
-<p><b><a name="BOOST_ERROR">BOOST_ERROR</a>( message ) </b>- the
-same as BOOST_CHECK_MESSAGE( false, message ); to be used for an unconditional
-error message<br>
-<b><a name="BOOST_FAIL">BOOST_FAIL</a>( message )</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- the same as BOOST_REQUIRE_MESSAGE( false, message ); to be used for
-an unconditional error message and the current test case aborting</p>
+<h4>Output:</h4>
 
-<p>Example: test.cpp</p>
+<h3><a name="BOOST_ERROR">BOOST_ERROR</a>( message )<br>
+    <a name="BOOST_FAIL">BOOST_FAIL</a>( message )</h3>
+
+<p class="1-line-indented">BOOST_ERROR is the same as BOOST_CHECK_MESSAGE( false, message ).
+This tool is used for an unconditional error message logging. BOOST_FAIL 
+is the same as BOOST_REQUIRE_MESSAGE( false, message ). This tool is used for
+an unconditional error message logging and the current test case aborting.</p>
+
+<h4>Example: test.cpp</h4>
+
 <pre class="code"><span class="cpp-type">int</span> test_main( <span class="cpp-type">int</span>, <span class="cpp-type">char</span>* [] ) {
      BOOST_ERROR( <span class="literal">&quot;Nothing to test&quot;</span> );
      BOOST_FAIL( <span class="literal">&quot;Test is not ready yet&quot;</span> );
 
     <span class="reserv-word">return</span> <span class="literal">0</span>;
-}
-</pre>
+}</pre>
 
-<p>Output:</p>
+<h4>Output:</h4>
 <p class="test-output">
 test.cpp(3) : error in test_main: Nothing to test<br>
 test.cpp(4) : fatal error in test_main: Test is not ready yet
 <script language="Javascript">put_ref_to_top()</script>
 </p>
 
-<p><b><a name="BOOST_CHECK_THROW">BOOST_CHECK_THROW</a>( statement, exception ) </b>-
-to be used to perform an error detection check The tool executes the supplied
-statement and check that it throw the supplied exception.
+<h3><a name="BOOST_CHECK_THROW">BOOST_CHECK_THROW</a>( statement, exception )</h3>
+
+<p class="1-line-indented">This tool is used to perform an error detection check.
+The tool executes the supplied statement and check that it throw the supplied exception.
 </p>
 
-<p>Example: test.cpp</p>
+<h4>Example: test.cpp</h4>
 
 <pre class="code"><span class="reserv-word">class</span> my_exception{};
 <span class="cpp-type">int</span> test_main( <span class="cpp-type">int</span>, <span class="cpp-type">char</span>* [] ) {
@@ -360,16 +404,20 @@ statement and check that it throw the supplied exception.
   
     <span class="reserv-word">return</span> <span class="literal">0</span>;
 }</pre>
-<p>Output:</p>
+
+<h4>Output:</h4>
+
 <p class="test-output">test.cpp(4) : error in test_main: exception my_exception expected
 <script language="Javascript">put_ref_to_top()</script>
 </p>
 
-<p><b><a name="BOOST_CHECK_EQUAL_COLLECTIONS">BOOST_CHECK_EQUAL</a>_COLLECTIONS( left_begin, left_end, right_begin )</b>
-- to be used to perform an element comparison of two collections
-</p>
+<h3><a name="BOOST_CHECK_EQUAL_COLLECTIONS">BOOST_CHECK_EQUAL</a>_COLLECTIONS( left_begin, left_end, right_begin )</h3>
 
-<p>Example: test.cpp</p>
+<p class="1-line-indented">This tool is used to perform an element comparison of 
+two collections</p>
+
+<h4>Example: test.cpp</h4>
+
 <pre class="code"><span class="cpp-type">int</span> test_main( <span class="cpp-type">int</span>, <span class="cpp-type">char</span>* [] ) {
     <span class="cpp-type">int</span> col1 [] = { <span class="literal">1</span>, <span class="literal">2</span>, <span class="literal">3</span>, <span class="literal">4</span>, <span class="literal">5</span>, <span class="literal">6</span>, <span class="literal">7</span> };
     <span class="cpp-type">int</span> col2 [] = { <span class="literal">1</span>, <span class="literal">2</span>, <span class="literal">4</span>, <span class="literal">4</span>, <span class="literal">5</span>, <span class="literal">7</span>, <span class="literal">7</span> };
@@ -379,28 +427,35 @@ statement and check that it throw the supplied exception.
     <span class="reserv-word">return</span> <span class="literal">0</span>;
 }</pre>
 
-<p>Output:</p>
+<h4>Output:</h4>
+
 <p class="test-output">test.cpp(4) : error in test_main: test {col1, col1+7} == {col2,...} failed [3 != 4]<br>
 test.cpp(4) : error in test_main: test {col1, col1+7} == {col2,...} failed [6 != 7]
 <script language="Javascript">put_ref_to_top()</script>
 </p>
 
-<p><b><a name="BOOST_IS_DEFINED">BOOST_IS_DEFINED</a>( symbol )</b> - to be used to check whether or not the supplied symbol is defined.</p>
+<h3><a name="BOOST_IS_DEFINED">BOOST_IS_DEFINED</a>( symbol )</h3>
 
-<p>Example: test.cpp</p>
+<p class="1-line-indented">This tool is used to check whether or not the supplied 
+symbol is defined.</p>
+
+<h4>Example: test.cpp</h4>
+
 <pre class="code"><span class="cpp-type">int</span> test_main( <span class="cpp-type">int</span>, <span class="cpp-type">char</span>* [] ) {
     BOOST_CHECK( BOOST_IS_DEFINED(SYMBOL1) );
     BOOST_CHECK( BOOST_IS_DEFINED(SYMBOL2(arg)) );
     
     <span class="reserv-word">return</span> <span class="literal">0</span>;
 }</pre>
-<p>Output:</p>
+
+<h4>Output:</h4>
+
 <p class="test-output">test.cpp(2) : error in test_main: test BOOST_IS_DEFINED(SYMBOL1) failed<br>
 test.cpp(3) : error in test_main: test BOOST_IS_DEFINED(SYMBOL2(arg)) failed
 <script language="Javascript">put_ref_to_top()</script>
 </p>
 
-<p><a name="Deprecated"><b>Depricated Boost.Test v1 test tools</b></a>
+<h3><a name="Deprecated">Depricated Boost.Test v1 test tools</a></h3>
 
 <p class="1-line-indented">Here is the list of  depricated test tools used in Boost.Test 
 version 1 and their new analogs:</p>
@@ -415,24 +470,24 @@ version 1 and their new analogs:</p>
 </thead>
 <tbody> 
   <tr>
-    <td><b>BOOST_TEST</b>( predicate ) </td>
-    <td><b>BOOST_CHECK</b>( predicate )</td>
+    <td><span class="new-term">BOOST_TEST</span>( predicate ) </td>
+    <td><span class="new-term">BOOST_CHECK</span>( predicate )</td>
   </tr>
   <tr>
-    <td><b>BOOST_CRITICAL_TEST</b>( predicate ) </td>
-    <td><b>BOOST_REQUIRE</b>( predicate )</td>
+    <td><span class="new-term">BOOST_CRITICAL_TEST</span>( predicate ) </td>
+    <td><span class="new-term">BOOST_REQUIRE</span>( predicate )</td>
   </tr>
   <tr>
-    <td><b>BOOST_CRITICAL_ERROR</b>( message )
+    <td><span class="new-term">BOOST_CRITICAL_ERROR</span>( message )
     </td>
-    <td><b>BOOST_FAIL</b>( message )</td>
+    <td><span class="new-term">BOOST_FAIL</span>( message )</td>
   </tr>
 </tbody>  
 </table>
 </div>
 <p>The main reasons for making these changes were conciseness and uniformity. Old 
 deprecated names are still accepted but may be excluded in a future releases. 
-Thanks for Ullrich Koethe, who originally proposed new names.<p>
+Thanks for Ullrich Koethe, who originally proposed new names.
 
 <h2><a name="Examples">Examples and Test Programs</a></h2>
 <p class="indented"><a href="../example/test_exec_example.cpp">test_exec_example.cpp</a><br>
@@ -454,7 +509,7 @@ document describes the relationship between Boost Test Library components.
 
 <p>Revised 
 <!--webbot bot="Timestamp" S-Type="EDITED"
-S-Format="%d %b %Y" startspan -->15 Aug 2002<!--webbot bot="Timestamp" endspan i-checksum="14763" -->
+S-Format="%d %b %Y" startspan -->30 Aug 2002<!--webbot bot="Timestamp" i-CheckSum="14755" endspan -->
 </p>
 
 </td>

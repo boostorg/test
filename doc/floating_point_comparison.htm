@@ -153,13 +153,13 @@ number of floating point constants and arithmetic involved) it is proposed to ca
 
 <h2>The <a name="Specification">close_at_tolerance</a> algorithm</h2>
 
-<p>The <b>
-<a name="Specification">close_at_tolerance</a></b> algorithm allows to check the 
+<p>The <span class="new-term">
+<a name="Specification">close_at_tolerance</a></span> algorithm allows to check the 
 relationship defines by inequations (<b><a href="#F.1">1</a></b>) or (<b><a href="#F.2">2</a></b>). 
 It is implemented as binary predicate.</p>
 
 <pre class="code"><span class="reserv-word">template</span><<span class="reserv-word">typename</span> FPT>
-<span class="reserv-word">class</span> close_at_tolerance
+<span class="reserv-word">class</span> <span class="new-term">close_at_tolerance</span>
 {
 <span class="reserv-word">public</span>:
     close_at_tolerance( FPT tolerance, <span class="cpp-type">bool</span> strong_or_weak = <span class="reserv-word">true</span> );
@@ -176,21 +176,20 @@ case a tolerance is computed using expression (<b><a href="#F.3">3</a></b>). The
 strong_or_weak switch allows to which relationship is checked. The default 
 behavior is to check strong relationship defined by inequations (<b><a href="#F.1">1</a></b>).<script language="Javascript">put_ref_to_top()</script></p>
 <h2><a name="Compilation">Compilation</a></h2>
-<p class="1-line-indented">The <b>
-<a name="Specification">close_at_tolerance</a></b> algorithm is implemented in 
-the header file
-<a href="../../../boost/test/detail/floating_point_comparison.hpp">
-detail/floating_point_comparison.hpp</a>. It is recommended to use test tools 
+<p class="1-line-indented">The <a name="Specification">close_at_tolerance</a> 
+algorithm is implemented in the header file
+<a href="../../../boost/test/floating_point_comparison.hpp">
+floating_point_comparison.hpp</a>. It is recommended to use test tools 
 wrappers located on <a href="../../../boost/test/test_tools.hpp">test_tools.hpp</a>. 
 Note that you still need to include
-<a href="../../../boost/test/detail/floating_point_comparison.hpp">
-detail/floating_point_comparison.hpp</a> yourself since it does not get included 
+<a href="../../../boost/test/floating_point_comparison.hpp">
+floating_point_comparison.hpp</a> yourself since it does not get included 
 automatically.</p>
 <h2><a name="Acknowledgement">Acknowledgement</a></h2>
 <p class="1-line-indented">Fernando Cacciola for very helpful discussion of floating point arithmetic in 
 the boost forum.</p>
 <h2><a name="References">References</a></h2>
-<p>[1] Knuth D.E. <i>The art of computer programming</i> (vol II)<b>.</b><br>
+<p>[1] Knuth D.E. <i>The art of computer programming</i> (vol II).<br>
 [2] David Goldberg
 <a href="http://docs.sun.com/htmlcoll/coll.648.2/iso-8859-1/NUMCOMPGD/ncg_goldberg.html">
 What Every Computer Scientist Should Know About Floating-Point Arithmetic</a>
@@ -205,7 +204,7 @@ Rounding Error Estimation to Automatic Correction with Automatic Differentiation
 <a href="http://www.cs.berkeley.edu/~wkahan/">home page</a><br>
 [4] Alberto Squassabia <a href="http://www.joopmag.com/html/from_pages/crarticle.asp?ID=396">Comparing
 Floats: How To Determine if Floating Quantities Are Close Enough Once a
-Tolerance Has Been Reached</a><b> </b>C++ Report March 2000.<br>
+Tolerance Has Been Reached</a> C++ Report March 2000.<br>
 [5] Pete Becker The Journeyman's Shop: Trap Handlers, Sticky Bits, and
 Floating-Point Comparisons C/C++ Users Journal December 2000.<script language="Javascript">put_ref_to_top()</script></p>
 <hr>

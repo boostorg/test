@@ -35,14 +35,14 @@ JS.include( "btl.js" );
 
 <h2><a name="Introduction">Introduction</a></h2>
 
-<p class="1-line-indented">The class <b>output_test_stream</b> is a simple tool for testing output
-operation with standard std::ostream facilities. The class output_test_stream
-comply to std::ostream interface so it can be used in place of any
-std::ostream argument. In addition it provide several methods to validate
-output content. Also it allows to match/save output content versus/into
-specified file. Working mode of the output_test_stream could 
-be defined by framework parameter &quot;<a href="unit_test_framework.htm#FrameworkParameters">Save 
-pattern</a>&quot;</p>
+<p class="1-line-indented">The class <span class="new-term">output_test_stream</span> 
+is a simple tool for testing output operation with standard std::ostream facilities.
+The class output_test_stream comply to std::ostream interface so it can be used in 
+place of any std::ostream argument. In addition it provide several methods to 
+validate output content. Also it allows to match/save output content versus/into
+specified file. Working mode of the output_test_stream could be defined by 
+framework parameter &quot;<a href="unit_test_framework.htm#FrameworkParameters">
+Save pattern</a>&quot;</p>
 
 <h2><a name="Benifits">Benefits</a></h2>
 
@@ -51,7 +51,7 @@ pattern</a>&quot;</p>
 
 <h2><a name="Specification">Specification</a></h2>
 
-<pre class="code"><span class="reserv-word">class</span> <b>output_test_stream</b> {
+<pre class="code"><span class="reserv-word">class</span> <span class="new-term">output_test_stream</span> {
 <span class="reserv-word">pubic</span>:
     <span class="reserv-word">explicit</span>  output_test_stream( <span class="cpp-type">char</span> <span class="reserv-word">const</span>* pattern_file = NULL,
                                   <span class="cpp-type">bool</span> match_or_save = <span class="reserv-word">true</span> );
@@ -71,26 +71,26 @@ pattern</a>&quot;</p>
 };
 </pre>
 
-      <p>explicit <b>  <a name="output_test_stream constructor">output_test_stream</a></b>( char const*
+      <p>explicit <span class="new-term"><a name="output_test_stream constructor">output_test_stream</a></span>( char const*
       pattern_file = NULL, bool match_or_save = true );</p>
 
       <p class="1-line-indented">The class output_test_stream  constructor accept pattern file
       name and boolean switch match_or_save that are used by <a href="#match_pattern">match_pattern</a>
       facility. If they are not present you can still use other testing mechanisms.</p>
 
-      <p>void <b>flush</b>();</p>
+      <p>void <span class="new-term">flush</span>();</p>
 
       <p class="1-line-indented">The method output_test_stream::flush() is used to clean the
       content of the output_test_stream instance.</p>
 
-      <p>bool <b>is_empty</b>( bool flush_stream = true );</p>
+      <p>bool <span class="new-term">is_empty</span>( bool flush_stream = true );</p>
 
       <p class="1-line-indented">The method output_test_stream::is_empty(...) is used to check
       that the content of the output_test_stream instance is empty. The
       flush_stream argument manage automatic call of the method output_test_stream::flush()
       after check is done.</p>
 
-      <p> bool <b>check_length</b>( std::size_t length, bool flush_stream = true );</p>
+      <p> bool <span class="new-term">check_length</span>( std::size_t length, bool flush_stream = true );</p>
 
       <p class="1-line-indented">The method output_test_stream::check_length(...) is used to
       check that the length of the content of the output_test_stream
@@ -98,9 +98,9 @@ pattern</a>&quot;</p>
       flush_stream argument manage automatic call of the method output_test_stream::flush()
       after check is done.</p>
 
-      <p> bool <b>is_equal</b>( char const* arg, bool flush_stream = true );<br>
-          bool <b>is_equal</b>( std::string const& arg, bool flush_stream = true );<br>
-          bool <b>is_equal</b>( char const* arg, std::size_t n, bool flush_stream = true );</p>
+      <p> bool <span class="new-term">is_equal</span>( char const* arg, bool flush_stream = true );<br>
+          bool <span class="new-term">is_equal</span>( std::string const& arg, bool flush_stream = true );<br>
+          bool <span class="new-term">is_equal</span>( char const* arg, std::size_t n, bool flush_stream = true );</p>
 
       <p class="1-line-indented">The overloaded method output_test_stream::is_equal(...) is used to check
       that the content of the output_test_stream instance is equal to supplied character string. 
@@ -109,7 +109,7 @@ pattern</a>&quot;</p>
       flush_stream argument manage automatic call of the method output_test_stream::flush()
       after check is done.</p>
 
-      <p>bool <b><a name="match_pattern">match_pattern</a></b>( bool flush_stream = true );</p>
+      <p>bool <span class="new-term"><a name="match_pattern">match_pattern</a></span>( bool flush_stream = true );</p>
 
       <p class="1-line-indented">The method output_test_stream::match_pattern(...) is used to
       match the content of the output_test_stream instance versus the
@@ -123,13 +123,12 @@ pattern</a>&quot;</p>
       after check is done.</p>
 
 <h2><a name="Tests">Examlpes and Tests</a></h2>
-
 <p class="indented">
   <a href="../test/output_test_stream_test.cpp">output_test_stream_test.cpp</a><br>
   <a href="../test/result_report_test.cpp">result_report_test.cpp</a><br>
   <a href="../test/test_tools_test.cpp">test_tools_test.cpp</a><br>
-  <a href="../test/unit_test_test1.cpp">unit_test_test1.cpp</a>
-  <script language="Javascript">put_ref_to_top()</script>      
+<script language="Javascript">put_ref_to_top()</script>
+  <a href="../test/errors_handling_test.cpp">errors_handling_test.cpp</a>
 </p>
 <hr>
 <p>© <script language="Javascript">contact_addess()</script>

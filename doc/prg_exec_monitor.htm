@@ -38,16 +38,18 @@ JS.include( "btl.js" );
 
 <h2><a name="Introduction">Introduction</a></h2>
 
-<p class="1-line-indented">The Boost Test Library's Program Execution Monitor provides a replacement <b>main()</b>
- function which calls a user-supplied <b>cpp_main()</b>   function within a try
-block. The  supplied <b>main()</b>   then catches and reports
-exceptions, relieving users from messy error detection and reporting duties.</p>
+<p class="1-line-indented">The Boost Test Library's Program Execution Monitor 
+provides a replacement main() function which calls a user-supplied 
+<span class="new-term">cpp_main()</span> function within a try block. The supplied
+main() then catches and reports exceptions, relieving users from messy error 
+detection and reporting duties.</p>
+
 <p>For use with the Program Execution Monitor, the traditional Hello World
 program becomes:</p>
 
 <pre class="code">#<span class="reserv-word">include</span> &lt;iostream&gt;
 
-<span class="cpp-type">int</span> cpp_main( <span class="cpp-type">int</span>, <span class="cpp-type">char</span> *[] ) <span class="comment">// note name</span>
+<span class="cpp-type">int</span> cpp_main( <span class="cpp-type">int</span>, <span class="cpp-type">char</span>* [] ) <span class="comment">// note name</span>
 {
     std::cout &lt;&lt; <span class="literal">&quot;Hello, world\n&quot;</span>;
 
@@ -56,7 +58,7 @@ program becomes:</p>
 </pre>
 
 <p class="1-line-indented">It really is that simple - just change the name of your initial function from
-main to <b>cpp_main()</b>. Do make sure the argc and arcv parameters are specified
+main to cpp_main(). Do make sure the argc and arcv parameters are specified
 (although you don't have to name them if you don't use them). Now you can
 compile it and link with the Program Execution Monitor library.</p>
 <p class="1-line-indented">When the above program executes, the output will be:</p>
@@ -87,7 +89,8 @@ standard output and error streams are directed to different devices or files.
 <h2><a name="Benefits">Benefits</a></h2>
 
 <p class="1-line-indented">More uniform reporting of errors, particularly exceptions.</p>
-<p><b>In production programs:</b></p>
+
+<h3>In production programs:</h3>
 
 <p class="1-line-indented">More uniform error reporting is particularly useful for programs running
 unattended under control of scripts or batch files. Some operating systems pop
@@ -96,11 +99,13 @@ intervention. By converting such exceptions to non-zero program return codes,
 the library makes the program a better citizen.</p>
 
 <p class="1-line-indented">More uniform reporting of errors isn't a benefit to some programs,
-particularly programs always run by hand by a knowledgeable person. So <b>
-cpp_main()</b> wouldn't be worth using in that environment.</p>
-<p><b>In test programs:</b></p>
+particularly programs always run by hand by a knowledgeable person. So cpp_main()
+wouldn't be worth using in that environment.</p>
+
+<h3>In test programs:</h3>
+
 <p class="1-line-indented">More uniform error reporting could be useful in test environments such as the boost
-regression tests. But in this case it is preferable to use the <a href="test_exec_framework.htm">Test Execution Monitor</a> 
+regression tests. But in this case it is preferable to use the <a href="test_exec_monitor.htm">Test Execution Monitor</a> 
 or <a href="unit_test_framework.htm">Unit Test Framework</a>, cause they allows 
 you to use Test Tools and generate more detailed error information.</p>
 
@@ -112,18 +117,18 @@ host environment.</p>
 <p>There are two intended uses:</p>
 <ul>
   <li>In production programs, which require no further action beyond naming the
-    top-level function <b>cpp_main()</b> instead of main().</li>
-  <li>In test frameworks, which supply <b>cpp_main()</b> to detect (or catch) test
+    top-level function cpp_main() instead of main().</li>
+  <li>In test frameworks, which supply cpp_main() to detect (or catch) test
     specific errors, report them, and then return a presumably non-zero value.</li>
 </ul>
 <p>Requires:</p>
-<p class="1-line-indented">A user-supplied <b>cpp_main()</b> function with same interface as main().</p>
+<p class="1-line-indented">A user-supplied cpp_main() function with same interface as main().</p>
 Effects:
-  <p class="1-line-indented">Call <b>cpp_main</b>( argc, argv ) in a try block.</p>
+  <p class="1-line-indented">Call cpp_main( argc, argv ) in a try block.</p>
   <p>Treat as errors:</p>
   <ul>
-    <li>Exceptions from <b>cpp_main()</b>.</li>
-    <li>Non-zero return from <b>cpp_main()</b>.</li>
+    <li>Exceptions from cpp_main().</li>
+    <li>Non-zero return from cpp_main().</li>
   </ul>
   <p class="1-line-indented">Report errors to both cout (with details) and cerr (summary). Rationale:
   Detail error reporting goes to cout so that it is properly interlaced with
