@@ -47,12 +47,21 @@ void                reset_observers();
 // constant access methods
 test_suite const&   master_test_suite();
 test_case const&    current_test_case();
+#if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530) )
 template<typename UnitType>
 UnitType const&     get( test_unit_id id )
 {
     return static_cast<UnitType const&>( get( id, (test_unit_type)UnitType::type ) );
 }
 test_unit const&    get( test_unit_id, test_unit_type );
+#else
+test_unit const&    get( test_unit_id, test_unit_type );
+template<typename UnitType>
+UnitType const&     get( test_unit_id id )
+{
+    return static_cast<UnitType const&>( get( id, (test_unit_type)UnitType::type ) );
+}
+#endif
 
 // test initiation
 void                run( test_unit_id = INV_TEST_UNIT_ID, bool continue_test = true );
@@ -77,6 +86,9 @@ void                test_unit_aborted();
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2005/03/24 04:02:32  rogeeff
+//  portability fixes
+//
 //  Revision 1.2  2005/03/23 21:02:10  rogeeff
 //  Sunpro CC 5.3 fixes
 //

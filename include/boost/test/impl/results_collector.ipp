@@ -194,8 +194,7 @@ results_collector_t::test_unit_finish( test_unit const& tu, unsigned long )
     else {
         test_results const& tr = s_rc_impl().m_results_store[tu.p_id];
         
-        BOOST_WARN_MESSAGE( tr.p_aborted || tr.p_assertions_failed >= tr.p_expected_failures,
-                            "Test case has less failures then expected" );
+        BOOST_WARN_MESSAGE( tr.p_aborted || tr.p_assertions_failed >= tr.p_expected_failures, "Test case has less failures then expected" );
     }
 }
 
@@ -271,6 +270,9 @@ results_collector_t::results( test_unit_id id ) const
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2005/03/24 04:02:33  rogeeff
+//  portability fixes
+//
 //  Revision 1.1  2005/02/20 08:27:07  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //

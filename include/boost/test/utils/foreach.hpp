@@ -144,7 +144,7 @@ template<typename C>
 inline static_any<BOOST_DEDUCED_TYPENAME C::const_iterator>
 begin( C const& t, mpl::true_ )
 {
-    return static_any<typename C::const_iterator>( t.begin() );
+    return static_any<BOOST_DEDUCED_TYPENAME C::const_iterator>( t.begin() );
 }
 
 #endif
@@ -362,6 +362,9 @@ for( ;                                                                          
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.4  2005/03/24 04:02:33  rogeeff
+//  portability fixes
+//
 //  Revision 1.3  2005/03/23 21:02:26  rogeeff
 //  Sunpro CC 5.3 fixes
 //
