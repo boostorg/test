@@ -51,8 +51,10 @@ namespace std { using ::strlen; using ::strncat; }
 #include <eh.h> 
 
 #ifndef NDEBUG
+#ifndef __MWERKS__  // temporary
 #define BOOST_MS_CRT_DEBUG_HOOK
 #include <crtdbg.h>
+#endif
 #endif
 
 #elif (defined(__BORLANDC__) && defined(_Windows))
@@ -517,6 +519,9 @@ static void report_error( execution_exception::error_code ec, c_string_literal m
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.20  2003/02/15 21:56:14  rogeeff
+//  temporary cwpro fix for most of link problems
+//
 //  Revision 1.19  2003/02/14 06:40:00  rogeeff
 //  use BOOST_HAS_SIGACTION for signal based algorithm selection
 //
