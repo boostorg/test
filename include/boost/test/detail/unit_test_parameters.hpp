@@ -45,6 +45,7 @@ bool                    catch_sys_errors();
 output_format           report_format();
 output_format           log_format();
 bool                    detect_memory_leaks();
+int                     random_seed();
 
 } // namespace runtime_config
 
@@ -60,6 +61,9 @@ bool                    detect_memory_leaks();
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.20  2005/02/21 10:18:30  rogeeff
+//  random cla support
+//
 //  Revision 1.19  2005/02/20 08:27:06  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
