@@ -18,11 +18,12 @@
 // Boost.Test
 #include <boost/test/test_tools.hpp>
 
-int test_main( int, char* [] )  // note the name
+int test_main( int argc, char* [] )  // note the name
 {
     BOOST_ERROR( "Msg" );
 
-    throw "Test error by throwing C-style string exception";
+    if( argc > 0 ) // to prevent the unreachable return warning
+        throw "Test error by throwing C-style string exception";
 
     return 0;
 }
@@ -33,6 +34,9 @@ int test_main( int, char* [] )  // note the name
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2003/02/15 21:49:58  rogeeff
+//  borland warning fix
+//
 //  Revision 1.6  2002/11/02 20:04:43  rogeeff
 //  release 1.29.0 merged into the main trank
 //

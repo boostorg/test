@@ -66,7 +66,6 @@ namespace {
         case et_cpp_exception:
             BOOST_CHECKPOINT( "error_on_demand() throw runtime_error" );
             throw std::runtime_error( "test std::runtime error what() message" );
-            break;
 
         case et_system:
             BOOST_CHECKPOINT( "error_on_demand() divide by zero" );
@@ -234,6 +233,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.11  2003/02/15 21:49:57  rogeeff
+//  borland warning fix
+//
 //  Revision 1.10  2003/02/13 08:47:05  rogeeff
 //  *** empty log message ***
 //

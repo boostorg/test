@@ -88,7 +88,7 @@ struct sub_test_suite : public test_suite {
 //____________________________________________________________________________//
 
 test_suite*
-init_unit_test_suite( int argc, char* argv[] ) {
+init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
     test_suite* test = BOOST_TEST_SUITE("unit_test_suite extensions test");
 
     function0<void> fct1 = &test0;
@@ -110,6 +110,9 @@ init_unit_test_suite( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2003/02/15 21:49:58  rogeeff
+//  borland warning fix
+//
 //  Revision 1.8  2002/11/02 20:04:43  rogeeff
 //  release 1.29.0 merged into the main trank
 //
