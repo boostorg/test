@@ -25,6 +25,12 @@
 #define BOOST_STANDARD_IOSTREAMS
 #endif
 
+#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x570)) || \
+    BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600))     || \
+    (defined __sgi && BOOST_WORKAROUND(_COMPILER_VERSION, BOOST_TESTED_AT(730)))
+#define BOOST_TEST_SHIFTED_LINE
+#endif
+
 // Boost.Test
 #include <boost/test/detail/basic_cstring/basic_cstring.hpp>
 #include <boost/test/detail/basic_cstring/io.hpp>
@@ -71,6 +77,9 @@ namespace unit_test_framework = unit_test;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.23  2004/10/01 10:52:11  rogeeff
+//  shared some workaround detection
+//
 //  Revision 1.22  2004/09/19 09:22:12  rogeeff
 //  ios fix for classic iostreams
 //
