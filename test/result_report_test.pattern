@@ -2,7 +2,7 @@
 *** No errors detected
 
 Test case "call_test_main" passed with:
-1 assertions out of 1 passed
+1 assertion out of 1 passed
 0 assertions out of 1 failed
 
 Test case "call_test_main" passed with:
@@ -55,15 +55,15 @@ Test suite "call_test_main" passed with:
 4 test cases out of 4 passed
 0 test cases out of 4 failed
 10 assertions out of 11 passed
- 1 assertions out of 11 failed
-while 1 failures expected
+ 1 assertion out of 11 failed
+while 1 failure expected
 
 Test suite "call_test_main" passed with:
 4 test cases out of 4 passed
 0 test cases out of 4 failed
 11 assertions out of 12 passed
- 1 assertions out of 12 failed
-while 1 failures expected
+ 1 assertion out of 12 failed
+while 1 failure expected
 
   Test case "0 test cases inside" passed with:
   0 assertions out of 0 passed
@@ -81,8 +81,8 @@ while 1 failures expected
   2 test cases out of 2 passed
   0 test cases out of 2 failed
   0 assertions out of 1 passed
-  1 assertions out of 1 failed
-  while 1 failures expected
+  1 assertion out of 1 failed
+  while 1 failure expected
 
     Test case "good_foo" passed with:
     0 assertions out of 0 passed
@@ -90,8 +90,8 @@ while 1 failures expected
 
     Test case "bad_foo" passed with:
     0 assertions out of 1 passed
-    1 assertions out of 1 failed
-    while 1 failures expected
+    1 assertion out of 1 failed
+    while 1 failure expected
 
 *** No errors detected
 
@@ -125,8 +125,8 @@ while 2 failures expected
   2 test cases out of 2 passed
   0 test cases out of 2 failed
   0 assertions out of 1 passed
-  1 assertions out of 1 failed
-  while 1 failures expected
+  1 assertion out of 1 failed
+  while 1 failure expected
 
     Test case "good_foo" passed with:
     0 assertions out of 0 passed
@@ -134,18 +134,18 @@ while 2 failures expected
 
     Test case "bad_foo" passed with:
     0 assertions out of 1 passed
-    1 assertions out of 1 failed
-    while 1 failures expected
+    1 assertion out of 1 failed
+    while 1 failure expected
 
   Test case "1 bad test cases inside" passed with:
   0 assertions out of 1 passed
-  1 assertions out of 1 failed
-  while 1 failures expected
+  1 assertion out of 1 failed
+  while 1 failure expected
 
     Test case "bad_foo" passed with:
     0 assertions out of 1 passed
-    1 assertions out of 1 failed
-    while 1 failures expected
+    1 assertion out of 1 failed
+    while 1 failure expected
 
 *** No errors detected
 
@@ -179,8 +179,8 @@ while 3 failures expected
   2 test cases out of 2 passed
   0 test cases out of 2 failed
   0 assertions out of 1 passed
-  1 assertions out of 1 failed
-  while 1 failures expected
+  1 assertion out of 1 failed
+  while 1 failure expected
 
     Test case "good_foo" passed with:
     0 assertions out of 0 passed
@@ -188,25 +188,25 @@ while 3 failures expected
 
     Test case "bad_foo" passed with:
     0 assertions out of 1 passed
-    1 assertions out of 1 failed
-    while 1 failures expected
+    1 assertion out of 1 failed
+    while 1 failure expected
 
   Test case "1 bad test cases inside" passed with:
   0 assertions out of 1 passed
-  1 assertions out of 1 failed
-  while 1 failures expected
+  1 assertion out of 1 failed
+  while 1 failure expected
 
     Test case "bad_foo" passed with:
     0 assertions out of 1 passed
-    1 assertions out of 1 failed
-    while 1 failures expected
+    1 assertion out of 1 failed
+    while 1 failure expected
 
   Test suite "3 test cases inside" passed with:
   3 test cases out of 3 passed
   0 test cases out of 3 failed
   0 assertions out of 1 passed
-  1 assertions out of 1 failed
-  while 1 failures expected
+  1 assertion out of 1 failed
+  while 1 failure expected
 
     Test case "good_foo" passed with:
     0 assertions out of 0 passed
@@ -218,8 +218,8 @@ while 3 failures expected
 
     Test case "bad_foo" passed with:
     0 assertions out of 1 passed
-    1 assertions out of 1 failed
-    while 1 failures expected
+    1 assertion out of 1 failed
+    while 1 failure expected
 
 *** No errors detected
 
@@ -253,8 +253,8 @@ while 5 failures expected
   2 test cases out of 2 passed
   0 test cases out of 2 failed
   0 assertions out of 1 passed
-  1 assertions out of 1 failed
-  while 1 failures expected
+  1 assertion out of 1 failed
+  while 1 failure expected
 
     Test case "good_foo" passed with:
     0 assertions out of 0 passed
@@ -262,25 +262,25 @@ while 5 failures expected
 
     Test case "bad_foo" passed with:
     0 assertions out of 1 passed
-    1 assertions out of 1 failed
-    while 1 failures expected
+    1 assertion out of 1 failed
+    while 1 failure expected
 
   Test case "1 bad test cases inside" passed with:
   0 assertions out of 1 passed
-  1 assertions out of 1 failed
-  while 1 failures expected
+  1 assertion out of 1 failed
+  while 1 failure expected
 
     Test case "bad_foo" passed with:
     0 assertions out of 1 passed
-    1 assertions out of 1 failed
-    while 1 failures expected
+    1 assertion out of 1 failed
+    while 1 failure expected
 
   Test suite "3 test cases inside" passed with:
   3 test cases out of 3 passed
   0 test cases out of 3 failed
   0 assertions out of 1 passed
-  1 assertions out of 1 failed
-  while 1 failures expected
+  1 assertion out of 1 failed
+  while 1 failure expected
 
     Test case "good_foo" passed with:
     0 assertions out of 0 passed
@@ -292,8 +292,8 @@ while 5 failures expected
 
     Test case "bad_foo" passed with:
     0 assertions out of 1 passed
-    1 assertions out of 1 failed
-    while 1 failures expected
+    1 assertion out of 1 failed
+    while 1 failure expected
 
   Test suite "Fake Test Suite Hierarchy" passed with:
   7 test cases out of 7 passed
@@ -318,8 +318,8 @@ while 5 failures expected
     2 test cases out of 2 passed
     0 test cases out of 2 failed
     0 assertions out of 1 passed
-    1 assertions out of 1 failed
-    while 1 failures expected
+    1 assertion out of 1 failed
+    while 1 failure expected
 
       Test case "good_foo" passed with:
       0 assertions out of 0 passed
@@ -327,15 +327,15 @@ while 5 failures expected
 
       Test case "bad_foo" passed with:
       0 assertions out of 1 passed
-      1 assertions out of 1 failed
-      while 1 failures expected
+      1 assertion out of 1 failed
+      while 1 failure expected
 
     Test suite "3 test cases inside" passed with:
     3 test cases out of 3 passed
     0 test cases out of 3 failed
     0 assertions out of 1 passed
-    1 assertions out of 1 failed
-    while 1 failures expected
+    1 assertion out of 1 failed
+    while 1 failure expected
 
       Test case "good_foo" passed with:
       0 assertions out of 0 passed
@@ -347,5 +347,5 @@ while 5 failures expected
 
       Test case "bad_foo" passed with:
       0 assertions out of 1 passed
-      1 assertions out of 1 failed
-      while 1 failures expected
+      1 assertion out of 1 failed
+      while 1 failure expected
