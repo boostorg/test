@@ -205,11 +205,12 @@ test_main( int argc, char * argv[] )
                     continue;
                 }
 
-                unit_test_result::reset_current_result_set();
-                unit_test_log::instance().start( 1 );
-                test.run();
-                unit_test_log::instance() << report_progress();
-                unit_test_result::reset_current_result_set();
+                { 
+                    unit_test_result_saver saver;
+                    unit_test_log::instance().start( 1 );
+                    test.run();
+                    unit_test_log::instance() << report_progress();
+                }
 
                 unit_test_log::instance().set_log_threshold_level( report_all_errors );
                 BOOST_CHECK( output.match_pattern() );
@@ -230,6 +231,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.9  2002/12/09 05:14:45  rogeeff
+//  switch to use unit_test_result_saver for internal testing
+//
 //  Revision 1.8  2002/11/02 20:04:43  rogeeff
 //  release 1.29.0 merged into the main trank
 //
