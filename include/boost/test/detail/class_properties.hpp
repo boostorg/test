@@ -13,8 +13,8 @@
 //  properties in C++ classes. Original idea by Henrik Ravn.
 // ***************************************************************************
 
-#ifndef BOOST_TEST_CLASS_PROPERTIES_HPP
-#define BOOST_TEST_CLASS_PROPERTIES_HPP
+#ifndef BOOST_TEST_CLASS_PROPERTIES_HPP_071894GER
+#define BOOST_TEST_CLASS_PROPERTIES_HPP_071894GER
 
 // BOOST
 #include <boost/preprocessor/repetition/repeat.hpp> 
@@ -26,6 +26,13 @@
 
 // STL
 #include <iosfwd>
+
+#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570)     || \
+    BOOST_WORKAROUND( __COMO__, <= 0x433 )       || \
+    BOOST_WORKAROUND( __INTEL_COMPILER, <= 800 ) || \
+    BOOST_WORKAROUND(__GNUC__, < 3)
+#define BOOST_TEST_NO_PROTECTED_USING
+#endif
 
 namespace boost {
 
@@ -54,31 +61,30 @@ public:
     address_res_t   operator&() const       { return &value; }
 
     // Data members
+#ifndef BOOST_TEST_NO_PROTECTED_USING
 protected:
+#endif
     PropertyType        value;
 };
 
 //____________________________________________________________________________//
 
-#if  BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+#if BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
 
 template<class PropertyType>
 inline std::ostream&
 operator<<( std::ostream& os, class_property<PropertyType> const& p )
-{
-    return os << p.get();
-}
 
 #else
 
 template<typename CharT1, typename Tr,class PropertyType>
 inline std::basic_ostream<CharT1,Tr>&
 operator<<( std::basic_ostream<CharT1,Tr>& os, class_property<PropertyType> const& p )
+
+#endif
 {
     return os << p.get();
 }
-
-#endif
 
 //____________________________________________________________________________//
 
@@ -186,23 +192,15 @@ class readwrite_property : public class_property<PropertyType> {
     typedef typename base::address_res_t                const_arrow_res_t;
     typedef typename base::write_param_t                write_param_t;
 public:
-#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570) || BOOST_WORKAROUND( __COMO__, <= 0x433 ) || BOOST_WORKAROUND( __INTEL_COMPILER, <= 800 )
-                    readwrite_property() : base(), value(base::value) {}
-    explicit        readwrite_property( write_param_t init_value ) : base( init_value ), value(base::value) {}
-                    readwrite_property( readwrite_property const& rhs ) : base( rhs ), value( base::value ) {}
-#else
                     readwrite_property() : base() {}
     explicit        readwrite_property( write_param_t init_value ) : base( init_value ) {}
-#endif
 
     // access methods
     void            set( write_param_t v )  { base::value = v; }
     arrow_res_t     operator->()            { return boost::addressof( base::value ); }
     const_arrow_res_t operator->() const    { return boost::addressof( base::value ); }
 
-#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570) || BOOST_WORKAROUND( __COMO__, <= 0x433 ) || BOOST_WORKAROUND( __INTEL_COMPILER, <= 800 )
-    PropertyType&   value;
-#else
+#ifndef BOOST_TEST_NO_PROTECTED_USING
     using           base::value;
 #endif
 };
@@ -213,10 +211,16 @@ public:
 
 } // namespace boost
 
+#undef BOOST_TEST_NO_PROTECTED_USING
+
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.23  2004/07/19 12:19:05  rogeeff
+//  guard rename
+//  no using workaroung reworked
+//
 //  Revision 1.22  2004/06/05 11:00:26  rogeeff
 //  proper IBM VA port
 //
@@ -252,4 +256,4 @@ public:
 //
 // ***************************************************************************
 
-#endif // BOOST_TEST_CLASS_PROPERTIES_HPP
+#endif // BOOST_TEST_CLASS_PROPERTIES_HPP_071894GER
