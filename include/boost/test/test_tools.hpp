@@ -313,8 +313,8 @@ test_and_continue_impl( extended_predicate_value const& v_, wrap_stringstream& m
 //____________________________________________________________________________//
 
 // Borland bug workaround
-#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x570))
-bool
+#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570)
+inline bool
 test_and_continue_impl( void* ptr, wrap_stringstream& message_,
                         c_string_literal file_name_, std::size_t line_num_,
                         bool add_fail_pass_ = true,
@@ -579,6 +579,9 @@ private:
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.36  2004/01/05 11:56:25  johnmaddock
+//  Borland specific workaround needs to be inline to prevent linker errors, and is unneeded for version 6 of the compiler.
+//
 //  Revision 1.35  2003/12/01 00:41:56  rogeeff
 //  prerelease cleaning
 //
