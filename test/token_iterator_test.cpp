@@ -115,7 +115,7 @@ void test_range_token_iterator()
     char const* pattern = "a bc , cd";
     std::copy( pattern, pattern+9, std::back_inserter( l ) );
 
-#if !BOOST_WORKAROUND( __GNUC__, < 3 )
+#if !defined( __GNUC__ ) ||  ( __GNUC__ == 3 && __GNUC_MINOR__ != 2 ) || ( __GNUC__ > 3 )
     my_token_iterator tit( l.begin(), l.end() );
     char const* res[] = { "a", "bc", ",", "cd" };
 
@@ -195,6 +195,9 @@ init_unit_test_suite( int argc, char* argv[] )
 // History :
 //
 // $Log$
+// Revision 1.8  2005/01/31 20:01:40  rogeeff
+// use BOOST_WORKAROUND
+//
 // Revision 1.7  2005/01/30 03:35:55  rogeeff
 // no message
 //

@@ -19,11 +19,12 @@
 #include <boost/test/test_case_template.hpp>
 #include <boost/test/unit_test_log.hpp>
 
-#if !defined ( __GNUC__ ) || __GNUC__ > 2
+#if BOOST_WORKAROUND(  __GNUC__, < 3 )
+#include <boost/test/output_test_stream.hpp>
+typedef boost::test_tools::output_test_stream onullstream_type;
+#else
 #include <boost/test/utils/nullstream.hpp>
 typedef boost::onullstream onullstream_type;
-#else
-typedef boost::test_tools::output_test_stream onullstream_type;
 #endif
 
 // BOOST
@@ -155,6 +156,9 @@ int test_main( int, char* [] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.12  2005/01/31 20:01:40  rogeeff
+//  use BOOST_WORKAROUND
+//
 //  Revision 1.11  2005/01/30 03:35:55  rogeeff
 //  no message
 //

@@ -20,9 +20,13 @@
 #include <boost/test/output_test_stream.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
-#if !defined ( __GNUC__ ) || __GNUC__ > 2
+#if BOOST_WORKAROUND(  __GNUC__, < 3 )
+typedef boost::test_tools::output_test_stream onullstream_type;
+#else
 #include <boost/test/utils/nullstream.hpp>
+typedef boost::onullstream onullstream_type;
 #endif
+
 using boost::test_tools::output_test_stream;
 using namespace boost::unit_test;
 
@@ -39,13 +43,8 @@ using namespace boost::unit_test;
 
 void good_foo() {}
 void bad_foo()  { 
-#if !defined ( __GNUC__ ) || __GNUC__ > 2
-    boost::onullstream null_stream;
-#else
-    output_test_stream null_stream;
-#endif
-
-    unit_test_log.set_stream( null_stream );
+    onullstream_type null_out;
+    unit_test_log.set_stream( null_out );
     BOOST_ERROR( "Sure" );
     unit_test_log.set_stream( std::cout );
 }
@@ -150,6 +149,9 @@ test_main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.19  2005/01/31 20:03:28  rogeeff
+//  use BOOST_WORKAROUND
+//
 //  Revision 1.18  2005/01/30 03:35:55  rogeeff
 //  no message
 //
@@ -171,9 +173,6 @@ test_main( int argc, char* argv[] )
 //  basic_cstring introduced and used everywhere
 //  class properties reworked
 //  namespace names shortened
-//
-//  Revision 1.12  2003/12/01 00:42:38  rogeeff
-//  prerelease cleaning
 //
 // ***************************************************************************
 

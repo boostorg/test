@@ -17,12 +17,12 @@
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_log.hpp>
-#if !defined ( __GNUC__ ) || __GNUC__ > 2
-#include <boost/test/utils/nullstream.hpp>
-typedef boost::onullstream onullstream_type;
-#else
+#if BOOST_WORKAROUND(  __GNUC__, < 3 )
 #include <boost/test/output_test_stream.hpp>
 typedef boost::test_tools::output_test_stream onullstream_type;
+#else
+#include <boost/test/utils/nullstream.hpp>
+typedef boost::onullstream onullstream_type;
 #endif
 
 namespace utf=boost::unit_test;
@@ -199,6 +199,9 @@ int test_main( int, char* [] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.18  2005/01/31 20:01:39  rogeeff
+//  use BOOST_WORKAROUND
+//
 //  Revision 1.17  2005/01/30 03:35:55  rogeeff
 //  no message
 //
