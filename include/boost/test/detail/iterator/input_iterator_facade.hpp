@@ -56,8 +56,6 @@ public:
     explicit            input_iterator_facade( ImplPolicy const& p = ImplPolicy() )
     : m_policy( p )
     {
-        m_valid = m_policy.initialize();
-        
         increment();
     }
 
@@ -126,6 +124,11 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2004/05/25 10:29:09  rogeeff
+//  use standard getline
+//  eliminate initialize
+//  proper handle \n in wide case
+//
 //  Revision 1.1  2004/05/21 06:30:10  rogeeff
 //  ifstream_line_iterator added
 //

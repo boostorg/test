@@ -36,57 +36,21 @@ namespace detail {
 template<typename CharT>
 class istream_line_iterator_impl {
 public:
-    typedef basic_cstring<CharT> value_type;
-    typedef basic_cstring<CharT> reference;
+    typedef basic_cstring<CharT const> value_type;
+    typedef basic_cstring<CharT const> reference;
 
-    explicit istream_line_iterator_impl( std::basic_istream<CharT>& input, CharT delimeter, std::size_t buffer_size )
-    : m_input_stream( &input ), m_buffer_size( buffer_size ), m_input_length( 0 ), m_delimeter( delimeter )
-    {
-    }
+                istream_line_iterator_impl( std::basic_istream<CharT>& input, CharT delimeter )
+    : m_input_stream( &input ), m_delimeter( delimeter )            {}
 
-    bool                initialize()
-    {
-        CharT c;
-        m_input_stream->get( c );
-        m_input_stream->unget();
-
-        if( m_input_stream->good() ) {
-            m_buffer.reset( new CharT[m_buffer_size] );
-
-            return true;
-        }
-
-        return false;
-    }
-
-    bool                get()
-    {
-        if( m_input_stream->eof() )
-            return false;
-
-        m_input_stream->getline( m_buffer.get(), m_buffer_size, m_delimeter );
-        m_input_length = m_input_stream->eof() 
-            ? m_input_stream->gcount() 
-            : (m_input_stream->gcount() ? m_input_stream->gcount()-1 : 0 );
-
-        return true;
-    }
-
-    reference           dereference( bool valid ) const
-    {
-        return valid ? basic_cstring<CharT>( m_buffer.get(), m_input_length ) : basic_cstring<CharT>();
-    }
-
-    bool                equal( istream_line_iterator_impl const& ) const { return false; }
+    bool        get()                                               { return getline( *m_input_stream, m_buffer, m_delimeter ); }
+    reference   dereference( bool valid ) const                     { return m_buffer; }
+    bool        equal( istream_line_iterator_impl const& ) const    { return false; }
 
 private:
     // Data members
-    std::basic_istream<CharT>* m_input_stream;
-
-    shared_array<CharT> m_buffer;
-    std::size_t         m_buffer_size;
-    std::size_t         m_input_length;
-    CharT               m_delimeter;
+    std::basic_istream<CharT>*  m_input_stream;
+    std::basic_string<CharT>    m_buffer;
+    CharT                       m_delimeter;
 };
 
 } // namespace detail
@@ -100,11 +64,11 @@ class basic_istream_line_iterator
     typedef input_iterator_facade<impl,basic_istream_line_iterator<CharT> > base;
 public:
     // Constructor
-    explicit basic_istream_line_iterator( std::basic_istream<CharT>& input,
-                                          CharT                      delimeter   = CharT( '\n' ),
-                                          std::size_t                buffer_size = 512 )
-    : base( impl( input, delimeter, buffer_size ) )
-    {}
+    basic_istream_line_iterator( std::basic_istream<CharT>& input, CharT delimeter )
+    : base( impl( input, delimeter ) ) {}
+
+    explicit basic_istream_line_iterator( std::basic_istream<CharT>& input )
+    : base( impl( input, input.widen( '\n' ) ) ) {}
 };
 
 typedef basic_istream_line_iterator<char>       istream_line_iterator;
@@ -118,6 +82,11 @@ typedef basic_istream_line_iterator<wchar_t>    wistream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2004/05/25 10:29:09  rogeeff
+//  use standard getline
+//  eliminate initialize
+//  proper handle \n in wide case
+//
 //  Revision 1.1  2004/05/21 06:30:10  rogeeff
 //  ifstream_line_iterator added
 //

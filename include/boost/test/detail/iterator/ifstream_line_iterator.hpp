@@ -60,13 +60,11 @@ template<typename CharT>
 class basic_ifstream_line_iterator : detail::ifstream_holder<CharT>, public basic_istream_line_iterator<CharT>
 {
 public:
-    explicit    basic_ifstream_line_iterator( basic_cstring<CharT>  file_name = basic_cstring<CharT>(),
-                                              CharT                 delimeter   = CharT( '\n' ),
-                                              std::size_t           buffer_size = 1024 )
-    : detail::ifstream_holder<CharT>( file_name ), 
-      basic_istream_line_iterator<CharT>( m_stream, delimeter, buffer_size )
-    {
-    }
+    basic_ifstream_line_iterator( basic_cstring<CharT> file_name, CharT delimeter )
+    : detail::ifstream_holder<CharT>( file_name ), basic_istream_line_iterator<CharT>( m_stream, delimeter ) {}
+
+    explicit basic_ifstream_line_iterator( basic_cstring<CharT> file_name = basic_cstring<CharT>() )
+    : detail::ifstream_holder<CharT>( file_name ), basic_istream_line_iterator<CharT>( m_stream ) {}
 };
 
 typedef basic_ifstream_line_iterator<char>      ifstream_line_iterator;
@@ -80,6 +78,11 @@ typedef basic_ifstream_line_iterator<wchar_t>   wifstream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2004/05/25 10:29:09  rogeeff
+//  use standard getline
+//  eliminate initialize
+//  proper handle \n in wide case
+//
 //  Revision 1.1  2004/05/21 06:30:10  rogeeff
 //  ifstream_line_iterator added
 //
