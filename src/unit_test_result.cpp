@@ -330,7 +330,7 @@ unit_test_result::~unit_test_result()
 unit_test_result&
 unit_test_result::instance()
 {
-    assert( Impl::m_head );
+    assert( !!Impl::m_head );
 
     return Impl::m_curr ? *Impl::m_curr : *Impl::m_head;
 }
@@ -355,7 +355,7 @@ unit_test_result::test_case_start( const_string name, unit_test_counter expected
 void
 unit_test_result::test_case_end()
 {
-    assert( Impl::m_curr );
+    assert( !!Impl::m_curr );
 
     Impl*                curr_impl  = Impl::m_curr->m_pimpl.get();
     unit_test_result_ptr parent     = curr_impl->m_parent;
@@ -458,7 +458,7 @@ unit_test_result::reset_current_result_set()
     static unit_test_result_ptr backup = unit_test_result_ptr();
     static boost::scoped_ptr<unit_test_result> temporary_substitute;
 
-    assert( Impl::m_curr );
+    assert( !!Impl::m_curr );
 
     if( backup ) {
         Impl::m_curr = backup;
@@ -523,7 +523,7 @@ unit_test_result::report( const_string reportlevel, std::ostream& where_to_ )
 void
 unit_test_result::confirmation_report( std::ostream& where_to )
 {
-    assert( this );
+    assert( !!this );
 
     m_pimpl->m_report_formatter->start_result_report( where_to );
 
@@ -544,7 +544,7 @@ unit_test_result::confirmation_report( std::ostream& where_to )
 void
 unit_test_result::report_result( std::ostream& where_to, std::size_t indent, bool detailed )
 {
-    assert( this );
+    assert( !!this );
 
     m_pimpl->m_report_formatter->start_test_case_report( where_to, indent, 
                                                          m_pimpl->m_test_case_name, m_pimpl->m_children.empty(),
@@ -600,6 +600,9 @@ unit_test_result::has_passed() const
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.30  2004/08/10 04:02:18  rogeeff
+//  first tru64cxx65 fix
+//
 //  Revision 1.29  2004/07/19 12:10:56  rogeeff
 //  added proper encoded of XML PCDATA
 //  min->max bug fix
