@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -8,7 +8,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : storage for unit test framework parameters information
 // ***************************************************************************
@@ -52,15 +52,8 @@ std::string retrieve_framework_parameter( c_string_literal parameter_name_, int*
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.7  2003/02/13 08:07:20  rogeeff
-//  report_format log_format and output_format introduced
-//
-//  Revision 1.6  2002/12/08 17:38:44  rogeeff
-//  catch_system_error framework cla parameter and envronment variable introduced
-//  switch to use c_string_literal
-//
-//  Revision 1.5  2002/11/02 19:31:05  rogeeff
-//  merged into the main trank
+//  Revision 1.8  2003/06/09 08:39:28  rogeeff
+//  1.30.beta1
 //
 
 // ***************************************************************************

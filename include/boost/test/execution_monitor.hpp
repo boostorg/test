@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  (C) Copyright Beman Dawes 2001.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
@@ -9,7 +9,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : defines abstract monitor interfaces and implements execution excepiton
 //  The original Boost Test Library included an implementation detail function
@@ -126,12 +126,8 @@ public:
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.8  2002/12/08 17:40:59  rogeeff
-//  catch_system_errors switch introduced
-//  switched to use c_string_literal
-//
-//  Revision 1.7  2002/11/02 19:31:04  rogeeff
-//  merged into the main trank
+//  Revision 1.9  2003/06/09 08:41:02  rogeeff
+//  1.30.beta1
 //
 
 // ***************************************************************************

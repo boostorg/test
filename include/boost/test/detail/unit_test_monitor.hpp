@@ -8,10 +8,10 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : defines specific version of execution monitor used to run unit 
-// test cases. Translates executioin exception into error level
+//  test cases. Translates executioin exception into error level
 // ***************************************************************************
 
 #ifndef BOOST_UNIT_TEST_MONITOR_HPP
@@ -77,11 +77,8 @@ private:
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.8  2002/12/08 17:36:32  rogeeff
-//  catch system errors switch introduced
-//
-//  Revision 1.7  2002/11/02 19:31:05  rogeeff
-//  merged into the main trank
+//  Revision 1.9  2003/06/09 08:39:28  rogeeff
+//  1.30.beta1
 //
 
 // ***************************************************************************

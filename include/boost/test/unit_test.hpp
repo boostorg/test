@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -8,7 +8,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : wrapper include . To be used by end-user
 // ***************************************************************************
@@ -23,8 +23,8 @@
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.6  2002/11/02 19:31:04  rogeeff
-//  merged into the main trank
+//  Revision 1.7  2003/06/09 08:41:42  rogeeff
+//  1.30.beta1
 //
 
 // ***************************************************************************

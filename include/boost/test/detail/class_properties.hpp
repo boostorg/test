@@ -62,17 +62,8 @@ private:                                                                        
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.9  2003/04/07 06:34:32  rogeeff
-//  cvs keyword changed
-//
-//  Revision 1.8  2003/02/13 08:04:49  rogeeff
-//  switch on using Boost.Preprocessor for friends declarations
-//
-//  Revision 1.7  2002/12/08 17:34:46  rogeeff
-//  guard name fixed
-//
-//  Revision 1.6  2002/11/02 19:31:05  rogeeff
-//  merged into the main trank
+//  Revision 1.10  2003/06/09 08:39:28  rogeeff
+//  1.30.beta1
 //
 
 // ***************************************************************************

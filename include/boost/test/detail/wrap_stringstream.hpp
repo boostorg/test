@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2002.
+//  (C) Copyright Gennadiy Rozental 2002-2003.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -8,7 +8,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : wraps strstream and stringstream (depends with one is present )
 //                to prodive the unified interface
@@ -52,7 +52,7 @@ private:
 //____________________________________________________________________________//
 
 template <class T>
-wrap_stringstream&
+inline wrap_stringstream&
 operator<<( wrap_stringstream& targ, T const& t )
 {
     targ.stream() << t;
@@ -103,5 +103,15 @@ wrap_stringstream::str()
 //____________________________________________________________________________//
 
 }  // namespace boost
+
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.3  2003/06/09 08:39:28  rogeeff
+//  1.30.beta1
+//
+
+// ***************************************************************************
 
 #endif  // BOOST_WRAP_STRINGSTREAM_HPP

@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -8,7 +8,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : included (vs. linked) version of Test Execution Monitor
 // ***************************************************************************
@@ -33,14 +33,8 @@
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.2  2002/11/02 19:31:05  rogeeff
-//  merged into the main trank
-//
-//  Revision 1.1.2.1  2002/10/01 17:25:29  rogeeff
-//  borland bug workaround
-//
-//  Revision 1.1  2002/08/26 09:09:00  rogeeff
-//  Initial commit
+//  Revision 1.3  2003/06/09 08:40:00  rogeeff
+//  1.30.beta1
 //
 
 // ***************************************************************************

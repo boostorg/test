@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -8,7 +8,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : support for automated test cases registration mechanism
 //                for simple function based test cases
@@ -61,11 +61,8 @@ static void func_name()                                             \
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.2  2003/02/13 08:11:34  rogeeff
-//  minor comment
-//
-//  Revision 1.1  2002/12/08 17:30:38  rogeeff
-//  Automatic registration of unit tests facility introduced
+//  Revision 1.3  2003/06/09 08:40:26  rogeeff
+//  1.30.beta1
 //
 
 // ***************************************************************************

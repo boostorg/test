@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -8,7 +8,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : included (vs. linked ) version of Unit Test Framework
 // ***************************************************************************
@@ -32,8 +32,8 @@
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.1  2002/08/26 09:09:00  rogeeff
-//  Initial commit
+//  Revision 1.2  2003/06/09 08:40:00  rogeeff
+//  1.30.beta1
 //
 
 // ***************************************************************************

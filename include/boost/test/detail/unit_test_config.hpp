@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -8,7 +8,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : contains workarounds and works as a central place for configurable types
 // ***************************************************************************
@@ -56,11 +56,8 @@ using std::distance;
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.12  2002/12/08 17:35:26  rogeeff
-//  c_string_literal introduced
-//
-//  Revision 1.11  2002/11/02 19:31:05  rogeeff
-//  merged into the main trank
+//  Revision 1.13  2003/06/09 08:39:28  rogeeff
+//  1.30.beta1
 //
 
 // ***************************************************************************
