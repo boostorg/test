@@ -63,6 +63,13 @@ using namespace boost::unit_test_framework;
 #endif
 //____________________________________________________________________________//
 
+class bool_convertible
+{
+    struct Tester {};
+public:
+    operator Tester*() { return static_cast<Tester*>( 0 ) + 1; }
+};
+
 void
 test_BOOST_CHECK() {
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK" << '\"' <<
@@ -71,6 +78,13 @@ test_BOOST_CHECK() {
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK( true ),
+        output.is_empty()
+    );
+
+    bool_convertible bc;
+
+    CHECK_TOOL_USAGE(
+        BOOST_CHECK( bc ),
         output.is_empty()
     );
 
@@ -594,7 +608,7 @@ test_BOOST_CHECK_EQUAL_COLLECTIONS() {
         BOOST_CHECK_EQUAL_COLLECTIONS( testlist.begin(), testlist.end(), pattern ),
             output.is_equal( CHECK_PATTERN( 
               "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [4 != 3]\n"
-              __FILE__ << "(" << __LINE__-6 << ") : " << 
+              __FILE__ << "(" << (__LINE__-6) << ") : " << 
               "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [7 != 6]\n"
               , 6 ) )
     );
@@ -638,6 +652,8 @@ init_unit_test_suite( int argc, char* argv[] ) {
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_CLOSE_all ), 
 #if defined(__BORLANDC__) || defined(__GNUC__)
         40
+#elif defined (_MSC_VER)
+        34
 #else
         30
 #endif
