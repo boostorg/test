@@ -43,6 +43,10 @@ namespace boost {
 
 namespace unit_test {
 
+#if !defined(BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP) && !BOOST_WORKAROUND(__BORLANDC__, < 0x564)
+using ut_detail::attr_value;
+#endif
+
 typedef unit_test_result* unit_test_result_ptr;
 
 // ************************************************************************** //
@@ -186,7 +190,7 @@ private:
 // **************             xml_report_formatter             ************** //
 // ************************************************************************** //
 
-class xml_report_formatter : public report_formatter, private ut_detail::xml_printer {
+class xml_report_formatter : public report_formatter {
 public:
     void    start_result_report( std::ostream& where_to )
     {
@@ -202,8 +206,8 @@ public:
     {
         where_to << std::setw( indent ) << ""
                  << "<" << ( case_suite ? "TestCase" : "TestSuite" ) 
-                 << " name";    print_attr_value( where_to, test_case_name )
-                 << " result";  print_attr_value( where_to, failed ? "failed" : "passed" ) << ">\n";
+                 << " name"     << attr_value() << test_case_name
+                 << " result"   << attr_value() << (failed ? "failed" : "passed") << ">\n";
     }
 
     void    start_confirmation_report( std::ostream& where_to,
@@ -211,12 +215,13 @@ public:
                                        unit_test_counter num_failed, unit_test_counter num_expected )
     {
         where_to << "<" << ( case_suite ? "TestCase" : "TestSuite" ) 
-                 << " name";    print_attr_value( where_to, test_case_name )
-                 << " result";  print_attr_value( where_to, failed ? "failed" : "passed" );
+                 << " name"     << attr_value() << test_case_name
+                 << " result"   << attr_value() << (failed ? "failed" : "passed");
 
-        if( failed )
-            where_to << " num_of_failures=" << num_failed
-                     << " expected_failures=" << num_expected;
+        if( failed ) {
+            where_to << " num_of_failures"      << attr_value() << num_failed
+                     << " expected_failures"    << attr_value() << num_expected;
+        }
 
         where_to << ">\n";
     }
@@ -227,7 +232,7 @@ public:
         if( aborted ) {
             where_to << std::setw( indent+2 ) << ""
                      << "<" << "aborted" 
-                     << " reason";  print_attr_value( where_to, "due to uncaught exception, user assert or system error" )
+                     << " reason" << attr_value() << "due to uncaught exception, user assert or system error"
                      << "/>\n";
         }
 
@@ -240,8 +245,8 @@ public:
     {
         where_to << std::setw( indent+2 ) << ""
                  << "<SubTestCases"
-                 << " passed";  print_attr_value( where_to, num_passed )
-                 << " failed";  print_attr_value( where_to, num_failed )
+                 << " passed" << attr_value() << num_passed
+                 << " failed" << attr_value() << num_failed
                  << "/>\n";
     }
 
@@ -252,9 +257,9 @@ public:
     {
         where_to << std::setw( indent+2 ) << ""
                  << "<Assertions"
-                 << " passed";              print_attr_value( where_to, num_passed )
-                 << " failed";              print_attr_value( where_to, num_failed )
-                 << " expected_failures";   print_attr_value( where_to, num_expected )
+                 << " passed"               << attr_value() << num_passed
+                 << " failed"               << attr_value() << num_failed
+                 << " expected_failures"    << attr_value() << num_expected
                  << "/>\n";
     }
 };
@@ -600,6 +605,9 @@ unit_test_result::has_passed() const
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.32  2005/01/21 07:26:41  rogeeff
+//  xml printing helpers reworked to employ generic custom manipulators
+//
 //  Revision 1.31  2004/09/17 12:34:13  rogeeff
 //  XML typo
 //
