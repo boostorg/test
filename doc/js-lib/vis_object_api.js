@@ -393,9 +393,10 @@ function viso_add_event_handler( event_id, handler, vis_obj ) {
     if( !(handler instanceof Callback ) )
         handler = new Callback( handler );
 
-    if( !vis_obj )
-        vis_obj = document;
-
+    if( !vis_obj ) {
+        vis_obj = event_id == "load" ? window : document;
+    }
+ 
     if( ie ) {
         event_id            = "on" + event_id;
         var wrapped_handler = function() { handler.run( window.event ); };
