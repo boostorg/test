@@ -251,7 +251,7 @@ public:
                                     unit_test_counter num_expected )
     {
         where_to << std::setw( indent+2 ) << ""
-                 << "<Asssertions"
+                 << "<Assertions"
                  << " passed";              print_attr_value( where_to, num_passed )
                  << " failed";              print_attr_value( where_to, num_failed )
                  << " expected_failures";   print_attr_value( where_to, num_expected )
@@ -600,6 +600,9 @@ unit_test_result::has_passed() const
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.31  2004/09/17 12:34:13  rogeeff
+//  XML typo
+//
 //  Revision 1.30  2004/08/10 04:02:18  rogeeff
 //  first tru64cxx65 fix
 //
