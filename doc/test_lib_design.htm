@@ -1,0 +1,190 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Program Execution, Test, and Unit Test Design Considerations</title>
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+
+<h1><img border="0" src="../../../c++boost.gif" width="277" height="86">Boost Test Library Design</h1>
+
+<p><a href="#Definitions">Definitions</a><br>
+<a href="#Requirements">Requirements</a><br>
+<a href="#Experience">Experience</a><br>
+<a href="#Layered Design">Layered Design</a><br>
+<a href="#Factored Design">Factored Design</a><br>
+<a href="#User-supplied">User-supplied Components</a><br>
+<a href="#Usage Patterns">Usage Patterns</a><br>
+<a href="#Paths Not">Paths Not Taken</a></p>
+<h2><a name="Definitions">Definitions</a></h2>
+<p><b><a href="execution_tools.htm"> Execution Tools</a></b> - Reports general errors
+from lower-level components, and unifies various general error notifications
+(return codes, exceptions, etc.) into the form appropriate for the host
+operating environment. Intended for use with both production and test programs.</p>
+<p><b><a href="test_tools.htm">Test Tools</a></b> - Execution Tools features,
+plus reports test errors from lower-level components, and unifies various test
+error notifications (test library specific return codes, exceptions, etc.) into
+the form appropriate for the caller.&nbsp; Functions or macros easing test case
+construction.&nbsp; Intended for use primarily in test programs.</p>
+<p><b>Unit Test Tools</b> - Provides a framework which facilitates the testing
+of C++ classes, and the organization of these tests into test-suites. Intended
+for use almost exclusively in test programs.</p>
+<h2><a name="Requirements">Requirements</a></h2>
+<table border="1" cellpadding="5">
+  <tr>
+    <td><b>Requirement</b></td>
+    <td><b>Execution<br>
+      Tools</b></td>
+    <td><b>Test<br>
+      Tools</b></td>
+    <td><b>Unit Test<br>
+      Tools</b></td>
+  </tr>
+  <tr>
+    <td>Report errors from lower-level components.</td>
+    <td>required</td>
+    <td>required</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>Unify error notifications (return codes, exceptions, etc.) into a form
+    appropriate for the host operating environment.</td>
+    <td>required</td>
+    <td>required</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>Virtually no changes required in existing user programs.&nbsp; Renaming main() allowed, but
+    that's about it.&nbsp; (Note that changing existing programs may be desirable
+      to take advantage of certain features. The point of this requirement is
+      that you don't have to if you don't want to.)</td>
+    <td>required</td>
+    <td>required</td>
+    <td>not required; most programs using unit test tools will be written from
+      scratch to do so.</td>
+  </tr>
+  <tr>
+    <td>Virtually no perceived coupling or dependency costs.</td>
+    <td>required</td>
+    <td>required</td>
+    <td>some cost acceptable</td>
+  </tr>
+  <tr>
+    <td>Maximum time required for an intermediate programmer to learn enough to
+      successfully use the tool.</td>
+    <td>10 seconds plus however long it takes to convince themselves renaming
+      main() is really all they have to do.</td>
+    <td>5-10 minutes</td>
+    <td>30-60 minutes&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Functions or macros available to ease test case construction.</td>
+    <td>not required or even desirable</td>
+    <td>required</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>Classes, functions or macros to ease test suite construction.</td>
+    <td>not required or even desirable</td>
+    <td>not required or even desirable</td>
+    <td>required</td>
+  </tr>
+</table>
+<h2><a name="Experience">Experience</a></h2>
+<p>Because the requirements for the other tools are almost a subset of the
+Unit Test Tools requirements, it is tempting to supply only the Unit Test Tools, perhaps with some convenience functions to ease use for simple test or
+execution error-detection.&nbsp; Likewise, since Test Tools supplies the
+functionality of Execution Tools, the Test Tools could be used Execution Toos.</p>
+<p>Both unified approaches have been rejected, however, because of past negative
+experience:</p>
+<ul>
+  <li>Programmers refuse, resist, or sabotage attempts to induce them to use a
+    unified set of all the tools if their need is for a simpler tool. Even though the
+    requirements are very similar, they are not the same, and that is enough to
+    make combining all unsatisfactory.</li>
+</ul>
+<ul>
+  <li>There are several possible implementations of each of the tools.&nbsp;
+    The need occasionally arises to support several of the
+    implementations.&nbsp; This can be problematic with a single tool approach..</li>
+</ul>
+<h2><a name="Layered Design">Layered Design</a></h2>
+<p>The Main concept is equivalent to the specifications for a C++ main()
+function as defined by the ISO C++ Standard.</p>
+<p>The <b> Execution Tools</b> provides a non-recursive
+program startup function which calls a user-supplied <b>cpp_main()</b> function
+which meets the Main concept requirements. The supplied default implementation
+for standard C++ environments uses main() for startup.&nbsp; A GUI
+implementation might supply a different start-up function, such as WinMain(),
+but all implementations require the user supply a <b>cpp_main()</b>
+function.&nbsp; Note that the <b>cpp_main()</b> function may be supplied by the <b>Test
+Tools</b> or by a user written program.</p>
+<p>The startup function (that is, the replacement main()) shall meet its notification and
+unification requirements above, including handling of all standard library
+exceptions, char * and string exceptions, and if possible, signals from the
+operating system or the hardware.</p>
+<p>The <b>Test Tools</b> provide a <b>cpp_main()</b> function which calls a
+user-supplied <b>test_main()</b> function, both of which meet the Main concept
+requirements. Note that the <b>test_main()</b> function may be supplied by the <b>Unit
+Test Tools</b> or by a user written program.</p>
+<p>The <b>Test Tools</b> also provide a (independent, no other header
+dependencies) header containing convenience macros and function
+declarations.</p>
+<p>The <b>cpp_main()</b> function for <b>Test Tools</b> shall meet its notification
+and unification requirements above.&nbsp; The <b>Test Tools</b> implementation
+supplies the definitions for the functions supplied by the test_tools header.</p>
+<p> <b>Unit Test Tools</b> shall provide a <b>test_main()</b> function which
+meets the Main concept requirements.</p>
+<p>A layered design is chosen as meeting all the requirements, being very
+flexible and easy to implement, eliminating coupling and dependencies between
+the libraries, allowing swapping of implementations, and allowing unit test
+libraries to be developed at a later date.</p>
+<p>The&nbsp; <b>Execution Tools</b> and <b>Test Tools</b> both offer an unusual choice of allowing the user to choose either a
+compile-time implementation by treating the implementation files as headers, or
+a link-time implementation by treating the same implementation files as
+separately compiled library source files.&nbsp; (This portion of the design was contributed by
+Ed Brey.)</p>
+<h2><a name="Factored Design">Factored Design</a></h2>
+<p>The code which catches exceptions has been factored out (see <a href="../../../boost/detail/catch_exceptions.hpp">boost/detail/catch_exceptions.hpp</a>).&nbsp;
+This is done to facilitate reuse - this capability may be useful in other test
+libraries or frameworks.&nbsp;&nbsp;</p>
+<h2><a name="User-supplied">User-supplied</a> Components</h2>
+<p>In addition to being concrete implementations, the libraries act as a set of
+specifications for their components.&nbsp; User-supplied components which meet
+those specifications may replace the library supplied components.</p>
+<h2><a name="Usage Patterns">Usage Patterns</a></h2>
+<p>The expected usage patterns include:</p>
+<ul>
+  <li>Use the <b>Execution Tools</b> alone in
+    production programs.</li>
+  <li>Use the <b> Execution Tools</b> alone in (very simple) test programs.</li>
+  <li>Use the <b>Test Tools</b> layered on top of the <b> Execution Tools</b> in test programs.</li>
+  <li>Use <b>Unit Test Tools</b> layered on top of the other two.</li>
+  <li>Use patterns as above, but with user supplied execution components for
+    interface with GUI platforms</li>
+</ul>
+<h2><a name="Paths Not">Paths Not</a> Taken</h2>
+<p>The Main concept is the one used by the C++ Standard, as inherited from the C
+language.&nbsp; More modern approaches were considered, including a generic
+programming design parameterized on a function object type, and an object-oriented
+design based on a common execution object.&nbsp; Both were rejected as maximal
+solutions to a minimal need, and as not meeting the &quot;virtually no change in
+user programs&quot; requirement.</p>
+<p>In the case of needing to make additional GUI arguments to startup functions
+available, the requirement that startup function be non-recursive was
+added.&nbsp; This makes it simple and safe for the startup function source file
+to store such arguments in its unnamed namespace, and supply an operating system
+dependent function in the same source file to access those arguments.</p>
+<hr>
+<p>© Beman Dawes 2001</p>
+<p>Revised: <!--webbot bot="Timestamp" S-Type="EDITED"
+S-Format="%d %B, %Y" startspan -->09 March, 2001<!--webbot bot="Timestamp" endspan i-checksum="28782" -->
+</p>
+
+</body>
+
+</html>
