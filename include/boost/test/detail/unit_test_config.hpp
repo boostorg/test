@@ -37,6 +37,10 @@
 #define BOOST_TEST_STRING_LITERAL( s ) boost::unit_test::literal_string( s, sizeof( s ) - 1 )
 #define BOOST_TEST_EMPTY_STRING BOOST_TEST_STRING_LITERAL( "" )
 
+#if defined(BOOST_HAS_SIGACTION)
+#define BOOST_TEST_SUPPORT_TIMEOUT
+#endif
+
 // STL
 #include <iterator>     // for std::distance
 #include <cstddef>      // for std::ptrdiff_t
@@ -77,6 +81,9 @@ namespace unit_test_framework = unit_test;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.24  2005/01/21 07:33:20  rogeeff
+//  BOOST_TEST_SUPPORT_TIMEOUT flag introduced to be used by used to switch code by timeout support
+//
 //  Revision 1.23  2004/10/01 10:52:11  rogeeff
 //  shared some workaround detection
 //
