@@ -60,12 +60,12 @@ using namespace boost::unit_test_framework;
 
 #if !defined(__BORLANDC__)
 #define CHECK_PATTERN( msg, shift ) \
-    (boost::test_toolbox::detail::wrapstrstream() << __FILE__ << "(" << __LINE__ << ") : " << msg).str()
+    (boost::test_toolbox::detail::wrapstrstream() << __FILE__ << "(" << __LINE__ << "): " << msg).str()
 
 #else
 
 #define CHECK_PATTERN( msg, shift ) \
-    (boost::test_toolbox::detail::wrapstrstream() << __FILE__ << "(" << (__LINE__-shift) << ") : " << msg).str()
+    (boost::test_toolbox::detail::wrapstrstream() << __FILE__ << "(" << (__LINE__-shift) << "): " << msg).str()
 
 #endif
 //____________________________________________________________________________//
@@ -606,7 +606,7 @@ test_BOOST_CHECK_EQUAL_COLLECTIONS() {
         BOOST_CHECK_EQUAL_COLLECTIONS( testlist.begin(), testlist.end(), pattern ),
             output.is_equal( CHECK_PATTERN( 
               "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [4 != 3]\n"
-              __FILE__ << "(" << __LINE__ << ") : " << 
+              __FILE__ << "(" << __LINE__ << "): " << 
               "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [7 != 6]\n"
               , 6 ) )
     );
@@ -615,7 +615,7 @@ test_BOOST_CHECK_EQUAL_COLLECTIONS() {
         BOOST_CHECK_EQUAL_COLLECTIONS( testlist.begin(), testlist.end(), pattern ),
             output.is_equal( CHECK_PATTERN( 
               "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [4 != 3]\n"
-              __FILE__ << "(" << (__LINE__-6) << ") : " << 
+              __FILE__ << "(" << (__LINE__-6) << "): " << 
               "error in " TEST_CASE_NAME ": test {testlist.begin(), testlist.end()} == {pattern, ...} failed [7 != 6]\n"
               , 6 ) )
     );
@@ -681,6 +681,9 @@ init_unit_test_suite( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.11  2002/09/16 08:40:55  rogeeff
+//  test fixed to follow latest changes
+//
 //  Revision 1.10  2002/08/26 09:08:06  rogeeff
 //  cvs kw added
 //
