@@ -39,9 +39,9 @@ class wrap_stringstream {
 public:
 
     // access methods
-    wrap_stringstream&          ref();
-    wrapped_stream&             stream();
-    std::string const&          str();
+    inline wrap_stringstream&   ref();
+    inline wrapped_stream&      stream();
+    inline std::string const&   str();
 
 private:
     // Data members
