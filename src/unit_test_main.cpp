@@ -17,6 +17,7 @@
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
+#include <boost/test/detail/unit_test_monitor.hpp>
 
 // BOOST
 #include <boost/scoped_ptr.hpp>
@@ -72,9 +73,12 @@ main( int argc, char* argv[] )
         return -999;
     }
 
+    // 4. set catch_system_error switch
+    detail::unit_test_monitor::catch_system_errors( retrieve_framework_parameter( CATCH_SYS_ERRORS, &argc, argv ) != "no" );
+
     // init master unit test suite
-    test_suite* test = init_unit_test_suite( argc, argv );
-    if( test == NULL ) {
+    boost::scoped_ptr<test_suite> test( init_unit_test_suite( argc, argv ) );
+    if( !test ) {
         std::cerr << "*** Fail to initialize test suite" << std::endl;
         return -999;
     }
@@ -103,8 +107,6 @@ main( int argc, char* argv[] )
         break;
     }
 
-    delete test;
-    
     // return code
     return no_result_code ? boost::exit_success : unit_test_result::instance().result_code();
 }
@@ -113,6 +115,10 @@ main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2002/12/08 18:11:39  rogeeff
+//  catch system errors switch added
+//  switch back to scoped_ptr instead of raw test_suite pointer
+//
 //  Revision 1.7  2002/11/02 20:04:42  rogeeff
 //  release 1.29.0 merged into the main trank
 //
