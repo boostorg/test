@@ -16,6 +16,7 @@ rule boost-test-example ( example-name : lib-name )
                           <borland><*><cxxflags>-w-8080 ;
 }
 
+boost-test-example exec_mon_example   : boost_prg_exec_monitor    ;
 boost-test-example prg_exec_example   : boost_prg_exec_monitor    ;
 boost-test-example test_exec_example  : boost_test_exec_monitor   ;
 boost-test-example unit_test_example1 : boost_unit_test_framework ;
