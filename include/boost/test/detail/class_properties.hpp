@@ -54,8 +54,13 @@ public:
     bool            operator!() const       { return !value; }
     address_res_t   operator&() const       { return &value; }
 
-protected:
     // Data members
+
+#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570)
+    // Borland can't deal with the using declaration in derived classes
+#else
+protected:
+#endif
     PropertyType        value;
 };
 
@@ -156,7 +161,6 @@ public:
     const_arrow_res_t operator->() const    { return boost::addressof( base::value ); }
 
 #if BOOST_WORKAROUND(__BORLANDC__, <= 0x570)
-    base::value;
 #else
     using           base::value;
 #endif
@@ -172,6 +176,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2004/05/18 13:10:49  dgregor
+//  class_properties.hpp: Borland C++ does not handle using declarations for data members properly; fixed the existing Borland workaround.
+//
 //  Revision 1.14  2004/05/11 11:00:53  rogeeff
 //  basic_cstring introduced and used everywhere
 //  class properties reworked
