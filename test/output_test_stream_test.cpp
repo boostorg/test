@@ -29,7 +29,7 @@ test_constructor()
         BOOST_CHECK( output.is_empty() );
     }
     {
-        output_test_stream output( NULL );
+        output_test_stream output( (char const*)0 );
         BOOST_CHECK( !output.match_pattern() );
         BOOST_CHECK( output.is_empty() );
     }
@@ -211,6 +211,9 @@ init_unit_test_suite( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2002/12/09 05:15:26  rogeeff
+//  NULL eliminated
+//
 //  Revision 1.7  2002/11/02 20:04:43  rogeeff
 //  release 1.29.0 merged into the main trank
 //
