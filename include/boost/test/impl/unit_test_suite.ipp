@@ -17,6 +17,7 @@
 #define BOOST_TEST_UNIT_TEST_SUITE_IPP_012205GER
 
 // Boost.Test
+#include <boost/detail/workaround.hpp>
 #include <boost/test/unit_test_suite.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/utils/foreach.hpp>
@@ -31,6 +32,12 @@
 #include <vector>
 
 #include <boost/test/detail/suppress_warnings.hpp>
+
+#if BOOST_WORKAROUND(__BORLANDC__, < 0x600) && \
+    BOOST_WORKAROUND(_STLPORT_VERSION, <= 0x450) \
+    /**/
+    using std::rand; // rand is in std and random_shuffle is in _STL
+#endif
 
 //____________________________________________________________________________//
 
@@ -157,8 +164,12 @@ void    traverse_test_tree( test_suite const& suite, test_tree_visitor& V )
         }
         else {
             std::vector<test_unit_id> members( suite.m_members );
+//#if !defined(__BORLANDC__) || !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
             std::random_shuffle( members.begin(), members.end() );
-
+//#else
+//    bool random_test_order_not_supported_on_borland = false;
+//    assert(random_test_order_not_supported_on_borland);
+//#endif
             BOOST_TEST_FOREACH( test_unit_id, id, members )
                 traverse_test_tree( id, V );
         }
@@ -215,6 +226,9 @@ normalize_test_case_name( const_string name )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.7  2005/02/25 21:27:44  turkanis
+//  fix for random_shuffle on Borland 5.x w/ STLPort
+//
 //  Revision 1.6  2005/02/21 10:12:24  rogeeff
 //  Support for random order of test cases implemented
 //
