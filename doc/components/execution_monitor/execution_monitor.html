@@ -1,0 +1,53 @@
+<HTML>
+<HEAD>
+<TITLE>boost::execution_monitor</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../style/btl.css" media="screen">
+<LINK rel="stylesheet" type="text/css" href="../../style/btl-print.css" media="print">
+<META http-equiv="Content-Language" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</HEAD>
+<BODY>
+<DIV class="header"> <A href="../../index.html">Boost.Test</A> > <A href="../index.html">Components</A> > <A href="index.html">The 
+  Execution Monitor</A> > <SPAN class="current_article">boost::execution_monitor</SPAN> </DIV>
+<DIV class="body"> <IMG src='../../btl.gif' width='252' height='43' alt="Boost Test logo"> 
+  <H1 class="subtitle">boost::execution_monitor</H1>
+  <P class="first_line_indented">boost::execution_monitor uniformly detects and reports the occurrence of several types of 
+    signals and exceptions, reducing various errors to a uniform <A href="execution_exception.html">boost::execution_exception</A> 
+    which is returned to a caller.</P>
+  <PRE class="code"><SPAN class="reserv-word">class</SPAN> <SPAN class="new-term">execution_monitor</SPAN> {
+public:
+    virtual     ~execution_monitor();
+    
+    int         execute( bool catch_system_errors = true, int timeout = 0 );
+    
+    virtual int function() = 0;
+    
+}; // exception monitor
+</PRE>
+  <H3>execution_monitor::~execution_monitor()</H3>
+  <P class="indented">Supplied cause this class intended to be used polymorphically.</P>	
+  <H3>execution_monitor::execute( bool catch_system_errors, int timeout )</H3>
+  <P>Effects:</P>
+  <P class="indented"> Calls the execution_monitor::function() inside a try/catch block which may also include other unspecified 
+    platform dependent error detection code. Throws <A href="execution_exception.html">boost::execution_exception</A> on an 
+    uncaught C++ exception, timeout alarm and, if catch_system_errors flag is true, a hardware or software signal, trap, or 
+    other exception. If catch_system_errors flag is false program will crash in case of system level error occur. execution_monitor::execute() 
+    <SPAN style="text-decoration: underline">doesn't</SPAN> consider it an error for the execution_monitor::function() to 
+    return a non-zero value. </P>
+  <P>Returns: 
+  <P> 
+  <P class="indented"> The integer value returned by the execution_monitor::function(). </P>
+  <H3>execution_monitor::function()</H3>
+  <P class="indented">User supplied function to monitor.</P>
+</DIV>
+<DIV class="footer"> 
+  <DIV class="footer-body"> 
+    <P>Copyright &copy <A href='mailto:rogeeff@emailaccount.com'>Gennadiy Rozental</A> 2001-2003.<BR>
+      Permission to copy, use, modify, sell and distribute this document is granted provided this copyright notice appears 
+      in all copies. This document is provided "as is" without express or implied warranty and with no claim as to its suitability 
+      for any purpose.</P>
+    <P>Revised: 9 June, 2003</P>
+  </DIV>
+</DIV>
+</BODY>
+</HTML>
