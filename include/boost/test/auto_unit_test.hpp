@@ -29,15 +29,37 @@
 
 namespace boost {
 namespace unit_test {
-namespace ut_detail {
 
-inline boost::unit_test::test_suite*
-auto_unit_test_suite()
+struct auto_unit_test_suite_t : boost::unit_test::test_suite {
+    auto_unit_test_suite_t()
+    : boost::unit_test::test_suite( "Master Test Suite" )
+    , argc( 0 )
+    , argv( 0 )
+    {}
+    
+    // Data members    
+    int      argc;
+    char**   argv;
+};
+
+//____________________________________________________________________________//
+
+inline auto_unit_test_suite_t*
+auto_unit_test_suite( int argc = 0, char** argv = 0 )
 {
-    static boost::unit_test::test_suite* inst = BOOST_TEST_SUITE( "Auto Unit Test" );
+    static auto_unit_test_suite_t* inst = new auto_unit_test_suite_t;
+
+    if( argc != 0 ) {
+        inst->argc = argc;
+        inst->argv = argv;
+    }
 
     return inst;
 }
+
+//____________________________________________________________________________//
+
+namespace ut_detail {
 
 struct auto_unit_test_registrar
 {
@@ -51,6 +73,8 @@ struct auto_unit_test_registrar
         auto_unit_test_suite()->add( tc_gen );
     }
 };
+
+//____________________________________________________________________________//
 
 } // namespace ut_detail
 
@@ -100,11 +124,10 @@ void BOOST_JOIN( name, _impl )( boost::type<type_name>* )       \
 
 #ifdef BOOST_AUTO_TEST_MAIN
 boost::unit_test::test_suite*
-init_unit_test_suite( int /* argc */, char* /* argv */ [] ) {
-    return boost::unit_test::ut_detail::auto_unit_test_suite();
+init_unit_test_suite( int argc, char* argv[] ) {
+    return boost::unit_test::auto_unit_test_suite( argc, argv );
 }
 #endif
-
 
 // deprecated
 #define BOOST_AUTO_UNIT_TEST( f ) BOOST_AUTO_TEST_CASE( f )
@@ -118,6 +141,9 @@ init_unit_test_suite( int /* argc */, char* /* argv */ [] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.14  2005/03/22 06:56:13  rogeeff
+//  provided access to argc/argv in auto facilities
+//
 //  Revision 1.13  2005/02/20 08:27:05  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
