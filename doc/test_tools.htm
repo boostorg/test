@@ -14,6 +14,7 @@
 <script language="JavaScript">
 include ( "btl.js" );
 </script>
+
 </head>
 
 <body onload="btl_menu_init()">
@@ -22,7 +23,7 @@ include ( "btl.js" );
 <tr>
 <td>
 
-<script language="Javascript">btl_header()</script>
+<script language="Javascript">btl_header();</script>
 
 <h1 align="center">Boost Test Library: Test Tools</h1>
 <p class="page-toc">
@@ -46,8 +47,9 @@ include ( "btl.js" );
   <a href="#BOOST_FAIL">BOOST_FAIL</a><br>
   <a href="#BOOST_CHECK_THROW">BOOST_CHECK_THROW</a><br>
   <a href="#BOOST_CHECK_EQUAL_COLLECTIONS">BOOST_CHECK_EQUAL_COLLECTIONS</a><br>
-  <a href="#BOOST_IS_DEFINED">BOOST_IS_DEFINED<br></a>
-  <a href="output_test_stream.htm">output_test_stream</a>
+  <a href="#BOOST_IS_DEFINED">BOOST_IS_DEFINED</a><br>
+  <a href="output_test_stream.htm">output_test_stream</a><br>
+  <a href="#Deprecated">Depricated Boost.Test v1 test tools</a>
 </p>
 <p class="page-toc">
 <a href="#Examples">Example and Test Programs</a><br>
@@ -399,6 +401,40 @@ test.cpp(3) : error in test_main: test BOOST_IS_DEFINED(SYMBOL2(arg)) failed
 <script language="Javascript">put_ref_to_top()</script>
 </p>
 
+<p><a name="Deprecated"><b>Depricated Boost.Test v1 test tools</b></a>
+
+<p class="1-line-indented">Here is the list of  depricated test tools used in Boost.Test 
+version 1 and their new analogs:</p>
+
+<div align="center">
+<table class="depreciated-tools-list" cellspacing="0" >
+<thead>
+  <tr>
+    <td align="center"><font size="4">Old tool </font>  </td>
+    <td align="center"><font size="4">New analog tool</font></td>
+  </tr>
+</thead>
+<tbody> 
+  <tr>
+    <td><b>BOOST_TEST</b>( predicate ) </td>
+    <td><b>BOOST_CHECK</b>( predicate )</td>
+  </tr>
+  <tr>
+    <td><b>BOOST_CRITICAL_TEST</b>( predicate ) </td>
+    <td><b>BOOST_REQUIRE</b>( predicate )</td>
+  </tr>
+  <tr>
+    <td><b>BOOST_CRITICAL_ERROR</b>( message )
+    </td>
+    <td><b>BOOST_FAIL</b>( message )</td>
+  </tr>
+</tbody>  
+</table>
+</div>
+<p>The main reasons for making these changes were conciseness and uniformity. Old 
+deprecated names are still accepted but may be excluded in a future releases. 
+Thanks for Ullrich Koethe, who originally proposed new names.<p>
+
 <h2><a name="Examples">Examples and Test Programs</a></h2>
 <p class="indented"><a href="../example/test_exec_example.cpp">test_exec_example.cpp</a><br>
 <a href="../test/test_exec_fail2.cpp">test_exec_fail2.cpp</a><br>
@@ -419,7 +455,7 @@ document describes the relationship between Boost Test Library components.
 
 <p>Revised 
 <!--webbot bot="Timestamp" S-Type="EDITED"
-S-Format="%d %b %Y" startspan -->09 Aug 2002<!--webbot bot="Timestamp" i-CheckSum="14770" endspan -->
+S-Format="%d %b %Y" startspan -->15 Aug 2002<!--webbot bot="Timestamp" endspan i-checksum="14763" -->
 </p>
 
 </td>

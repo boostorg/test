@@ -194,3 +194,28 @@ DIV.print-header
 {
     border-style:none;
 }
+
+table.depreciated-tools-list
+{
+    width: 90%;
+    padding: 0;
+    border: 1px solid black;
+}
+
+table.depreciated-tools-list thead td
+{
+    background: #B4B4CA;   
+    border: 1px solid black;
+    color:  white;
+    font-weight: bold
+    width: 50%;
+}
+
+table.depreciated-tools-list tbody td
+{
+    background: #F0F0F0;
+    border: 1px solid black;
+    color:  black;
+    width: 50%;
+    
+}

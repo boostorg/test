@@ -148,11 +148,41 @@ SPAN.new-term
 {
      font-weight: bold;
 }
-DIV.ref-to-top
+
+DIV.screen-header
 {
     display: none;
 }
-DIV.screen-header
+
+table.depreciated-tools-list
+{
+    width: 100%;
+    padding: 0;
+    border: 1px solid black;
+}
+
+table.depreciated-tools-list thead td
+{
+    border: 1px solid black;
+    color:  black;
+    font-weight: bold
+    width: 50%;
+    padding: 0;
+}
+
+table.depreciated-tools-list tbody td
+{
+    border: 1px solid black;
+    color:  black;
+    width: 50%;
+}
+
+span.ref-to-top
+{
+    display: none;
+}
+
+span.example_roller
 {
     display: none;
 }

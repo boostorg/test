@@ -67,7 +67,7 @@ function btl_menu_init() {
 }
 
 function put_ref_to_top() {
-    document.write( "<div class='ref-to-top'>" );
+    document.write( "<span class='ref-to-top'>" );
     var str = "<a href='#TOP'>" +
       "<img border='0' src='imgs/uarrow.gif' align='right' width='30'" +
       "onMouseDown='this.src=\"imgs/uarrow_pressed.gif\"; return true;'; " + 
@@ -75,15 +75,18 @@ function put_ref_to_top() {
       "onMouseOver='window.status=\"Jump to beggining\"; return true;' ></a>";
     document.write( str );
 
-    document.write( "</div>" );
+    document.write( "</span>" );
 }
 
 
 function put_examples_roller( roller_name ) {
+    document.write( "<span class='example_roller'>" );
+
     document.write( 
         "<a href='javascript: void " + roller_name + ".roll();'" +
         "onMouseOver='window.status='Next example'; return true;'" +
         "onMouseOut='window.status=window.defaultStatus; return true;' >" +
         "<img src='imgs/next_arrow.gif' style='border-style:none;' align='top' height='22' /></a>" );
 
+    document.write( "</span>" );
 }

@@ -1,5 +1,29 @@
 @import "btl.css";
 
+table.depreciated-tools-list
+{
+    width: 90%;
+    padding: 0;
+    border: 1px solid black;
+}
+
+table.depreciated-tools-list thead td
+{
+    background: white;
+    border: 1px solid black;
+    color:  black;
+    font-weight: bold
+    width: 50%;
+}
+
+table.depreciated-tools-list tbody td
+{
+    background: white;
+    border: 1px solid black;
+    color:  black;
+    width: 50%;   
+}
+
 BODY
 {
     background: white;
@@ -14,4 +38,42 @@ table.body-table td
 {
     color:      black;
     background: white;
+}
+
+SPAN.literal
+{
+    color: black;
+    font-weight: normal;
+    font-style: normal;
+}
+
+SPAN.reserv-word 
+{
+    color: black;
+    font-weight: normal;
+    font-style: normal;
+}
+
+SPAN.cpp-type 
+{
+    color: black;
+    font-weight: normal;
+    font-style: normal;
+}
+
+SPAN.comment 
+{
+    color: black;
+    font-weight: normal;
+    font-style: normal;
+}
+
+span.ref-to-top
+{
+    display: none;
+}
+
+span.example_roller
+{
+    display: none;
 }
