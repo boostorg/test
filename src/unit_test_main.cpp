@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
@@ -8,7 +8,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Id$
+//  Version     : $Revision$
 //
 //  Description : main function implementation for Unit Test Framework
 // ***************************************************************************
@@ -36,6 +36,7 @@ int
 main( int argc, char* argv[] )
 {
     using namespace boost::unit_test_framework;
+    using namespace boost::unit_test_framework::detail;
 
     bool    no_result_code;
     bool    print_build_info;
@@ -60,13 +61,16 @@ main( int argc, char* argv[] )
     print_build_info  = retrieve_framework_parameter( BUILD_INFO, &argc, argv ) == "yes";
 
     // set catch_system_error switch
-    detail::unit_test_monitor::catch_system_errors( retrieve_framework_parameter( CATCH_SYS_ERRORS, &argc, argv ) != "no" );
+    unit_test_monitor::catch_system_errors( retrieve_framework_parameter( CATCH_SYS_ERRORS, &argc, argv ) != "no" );
+
+    // save report level for future reporting
+    std::string report_level = retrieve_framework_parameter( REPORT_LEVEL, &argc, argv );
 
     // init master unit test suite
     boost::scoped_ptr<test_suite> test( init_unit_test_suite( argc, argv ) );
     if( !test ) {
         std::cerr << "*** Fail to initialize test suite" << std::endl;
-        return -999;
+        return boost::exit_test_failure;
     }
 
     // start testing
@@ -76,7 +80,7 @@ main( int argc, char* argv[] )
     unit_test_log::instance().finish( test->size() );
 
     // report results
-    unit_test_result::instance().report( retrieve_framework_parameter( REPORT_LEVEL, &argc, argv ), std::cerr );
+    unit_test_result::instance().report( report_level, std::cerr );
 
     // return code
     return no_result_code ? boost::exit_success : unit_test_result::instance().result_code();
@@ -86,17 +90,9 @@ main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.9  2003/02/13 08:43:01  rogeeff
-//  log/report format option accepted,
-//  report selection logic moved in class method
-//  log/report separated into different stream stdout/stderr
-//
-//  Revision 1.8  2002/12/08 18:11:39  rogeeff
-//  catch system errors switch added
-//  switch back to scoped_ptr instead of raw test_suite pointer
-//
-//  Revision 1.7  2002/11/02 20:04:42  rogeeff
-//  release 1.29.0 merged into the main trank
+//  Revision 1.10  2003/06/09 09:16:19  rogeeff
+//  extract report level before passing cla to the user
+//  straiten result code in case of failed initialization
 //
 
 // ***************************************************************************
