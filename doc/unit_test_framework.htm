@@ -365,12 +365,12 @@ defined in <a href="../../../boost/test/unit_test_suite.hpp">unit_test_suite.hpp
 
 <span class="reserv-word">class</span> parametrized_class_test_case : <span class="reserv-word">public</span> test_case
 {
-&nbsp;&nbsp;&nbsp; ... // Implementation
+    ... // Implementation
 };</pre>
 <h4>Description</h4>
 <p class="1-line-indented">Instances of the class <b>parametrized_class_test_case</b> are created by the 
-framework for the supplied method of the user's&nbsp;test class with the following 
-specification: <span class="cpp-type">void</span> (UserTestClass::*fct)( ParameterType ). The <b>
+framework for the supplied method of the user's test class with the following 
+specification: void (UserTestClass::*fct)( ParameterType ). The <b>
 parametrized_class_test_case</b> is responsible for the creation and the 
 destroying of the user's test class instance.
 <h4>Construction</h4>
@@ -380,13 +380,13 @@ class_test_case</b> use the following macro:
 last_parameter ).
 <p class="1-line-indented">Here first_parameter and last_parameter are begin and end iterators for the 
 list of parameters accordingly. BOOST_TEST_CASE creates a new instance of the 
-class <b>parametrized_class_test_case</b> and returns a pointer to the&nbsp; 
+class <b>parametrized_class_test_case</b> and returns a pointer to the
 abstract class
 <b>test_case</b>. In most cases you will use it as an argument to the method <a href="#TestSuite"><b>
 test_suite</b></a>::add(...). Be aware that the <b>parametrized_class_test_case</b> 
-does&nbsp; not store list of parameters internally. The user should make sure 
+does not store list of parameters internally. The user should make sure 
 that parameters list will not be destroyed until the test case is run. That's 
-why it not recommended to create a parameters list as local variable in&nbsp; <b>
+why it not recommended to create a parameters list as local variable in <b>
 <a href="#FrameworkIntegration">init_unit_test_suite</a></b>. For example, you 
 can place parameters list in file scope.
 <h4>Example:</h4>
@@ -422,7 +422,7 @@ defined in <a href="../../../boost/test/unit_test_suite.hpp">unit_test_suite.hpp
 <h4>Description</h4>
 <p class="1-line-indented">The Unit Test Framework provides an ability for the user to 
 combine created test cases into a test suite and create a hierarchy of test 
-suites of any depth.&nbsp;To add a test_case to the test_suite use 
+suites of any depth. To add a test_case to the test_suite use 
 the method test_suite<b>::</b><i><b>add</b></i>(...). The first argument is a pointer to a new
 test_case, second - expected_failured defines the amount of <a href="test_tools.htm">
 Test Tools</a> assertions that are expected to fail in the test case, and third
@@ -471,8 +471,9 @@ unit_test_result::<b>confirmation_report</b>(...)
     current
     test_case and all test cases it consist of. In most cases you will not 
     need to use this interface directly. The framework provides a report for 
-    overall testing results automatically.&nbsp; </p>
-    <h4>Construction</h4>
+    overall testing results automatically.</p>
+<h4>Construction</h4>
+
 <p class="1-line-indented">To access instance of class unit_test_result holding results for the current test case use static 
     method unit_test_result::<b>instance</b>(). 
 <script language="Javascript">put_ref_to_top()</script></p>
@@ -493,13 +494,13 @@ unit_test_result::<b>confirmation_report</b>(...)
 uses a singleton class
 unit_test_log. To change the test output stream use method
 unit_test_log::set_log_stream(...). The default stream is std::cout. To set 
-a log level&nbsp; use the method unit_test_log::set_log_level_by_name(...). 
+a log level use the method unit_test_log::set_log_level_by_name(...). 
 In most cases you will not need to use this interface directly. The framework 
 provides a simple way to set the log level from out of the test program. For 
 more details and for the list of acceptable values see <a href="#FrameworkParameters">
 Framework parameters</a>.</p>
 <h4>Construction</h4>
-<p class="1-line-indented">To access the only instance of&nbsp; the class
+<p class="1-line-indented">To access the only instance of the class
 unit_test_log use method
 unit_test_log::<b>instance</b>(). <script language="Javascript">put_ref_to_top()</script></p>
 <h3> <a name="TestMonitor">The Test monitor</a></h3>
