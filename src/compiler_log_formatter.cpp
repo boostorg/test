@@ -12,14 +12,15 @@
 //  Description : forwarding source
 // ***************************************************************************
 
-#include <boost/test/impl/supplied_log_formatters.ipp>
+#include <boost/test/impl/compiler_log_formatter.ipp>
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.16  2005/01/22 19:26:37  rogeeff
-//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
+//  Revision 1.1  2005/02/01 09:01:00  rogeeff
+//  supplied_log_formatters split
+//  change formatters interface to simplify result interface
 //
 // ***************************************************************************
 

@@ -12,14 +12,15 @@
 //  Description : contains forward eclarations for Boost.Test data types
 // ***************************************************************************
 
-#ifndef BOOST_FWD_DECL_HPP_011605GER
-#define BOOST_FWD_DECL_HPP_011605GER
+#ifndef BOOST_TEST_FWD_DECL_HPP_011605GER
+#define BOOST_TEST_FWD_DECL_HPP_011605GER
 
 namespace boost {
 
+class  execution_monitor;
+
 namespace unit_test {
 
-class  execution_monitor;
 class  test_case;
 class  unit_test_log_formatter;
 struct log_entry_data;
@@ -34,6 +35,10 @@ class  unit_test_log_t;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2005/02/01 08:59:28  rogeeff
+//  supplied_log_formatters split
+//  change formatters interface to simplify result interface
+//
 //  Revision 1.2  2005/02/01 06:40:06  rogeeff
 //  copyright update
 //  old log entries removed
@@ -50,5 +55,5 @@ class  unit_test_log_t;
 //
 // ***************************************************************************
 
-#endif // BOOST_FWD_DECL_HPP_011605GER
+#endif // BOOST_TEST_FWD_DECL_HPP_011605GER
 

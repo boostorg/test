@@ -25,7 +25,8 @@
 #include <boost/test/impl/unit_test_parameters.ipp>
 #include <boost/test/impl/unit_test_log.ipp>
 #include <boost/test/impl/unit_test_monitor.ipp>
-#include <boost/test/impl/supplied_log_formatters.ipp>
+#include <boost/test/impl/compiler_log_formatter.ipp>
+#include <boost/test/impl/xml_log_formatter.ipp>
 
 #include <boost/test/impl/test_main.ipp>
 
@@ -33,6 +34,10 @@
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.12  2005/02/01 08:59:38  rogeeff
+//  supplied_log_formatters split
+//  change formatters interface to simplify result interface
+//
 //  Revision 1.11  2005/02/01 06:40:07  rogeeff
 //  copyright update
 //  old log entries removed

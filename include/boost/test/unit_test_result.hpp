@@ -76,9 +76,6 @@ public:
     // to be used by monitor to notify that test case thrown exception
     void            caught_exception();
 
-    // access method; to be used by unit_test_log
-    const_string    test_case_name();
-
     // used mostly by the Boost.Test unit testing
     void            failures_details( counter_t& num_of_failures_, bool& exception_caught_ );
 
@@ -115,6 +112,10 @@ struct unit_test_result_saver
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.25  2005/02/01 08:59:29  rogeeff
+//  supplied_log_formatters split
+//  change formatters interface to simplify result interface
+//
 //  Revision 1.24  2005/02/01 06:40:06  rogeeff
 //  copyright update
 //  old log entries removed

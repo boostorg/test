@@ -34,6 +34,7 @@
 
 // Boost.Test
 #include <boost/test/detail/unit_test_config.hpp>
+#include <boost/test/fwd_decl.hpp>
 
 // Boost
 #include <boost/scoped_ptr.hpp>
@@ -215,6 +216,10 @@ void    detect_memory_leaks();
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.21  2005/02/01 08:59:28  rogeeff
+//  supplied_log_formatters split
+//  change formatters interface to simplify result interface
+//
 //  Revision 1.20  2005/02/01 06:40:06  rogeeff
 //  copyright update
 //  old log entries removed

@@ -388,8 +388,7 @@ unit_test_result::test_case_exit()
 
 struct report_format_name_map : std::map<const_string,output_format>
 {
-    report_format_name_map() {
-    }
+    report_format_name_map() {}
 };
 
 void
@@ -448,14 +447,6 @@ unit_test_result::caught_exception()
 
 //____________________________________________________________________________//
 
-const_string
-unit_test_result::test_case_name()
-{
-    return m_pimpl->m_test_case_name;
-}
-
-//____________________________________________________________________________//
-
 void
 unit_test_result::reset_current_result_set()
 {
@@ -471,7 +462,7 @@ unit_test_result::reset_current_result_set()
     }
     else {
         backup = Impl::m_curr;
-        Impl::m_curr = new unit_test_result( NULL, Impl::m_curr->test_case_name(), 0 );
+        Impl::m_curr = new unit_test_result( NULL, Impl::m_curr->m_pimpl->m_test_case_name, 0 );
         temporary_substitute.reset( Impl::m_curr );
     }
 }
@@ -604,6 +595,10 @@ unit_test_result::has_passed() const
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2005/02/01 08:59:38  rogeeff
+//  supplied_log_formatters split
+//  change formatters interface to simplify result interface
+//
 //  Revision 1.3  2005/02/01 06:40:07  rogeeff
 //  copyright update
 //  old log entries removed

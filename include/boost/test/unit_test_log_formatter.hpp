@@ -85,11 +85,11 @@ public:
     virtual void        log_header( std::ostream&, counter_t test_cases_amount ) = 0;
     virtual void        finish_log( std::ostream& ) = 0;
 
+    virtual void        start_test_case( test_case const& tc ) = 0;
     virtual void        test_case_enter( std::ostream&, test_case const& tc ) = 0;
     virtual void        test_case_exit( std::ostream&, test_case const& tc, long testing_time_in_mks ) = 0;
 
-    virtual void        log_exception( std::ostream&, log_checkpoint_data const&, 
-                                       const_string test_case_name, const_string explanation ) = 0;
+    virtual void        log_exception( std::ostream&, log_checkpoint_data const&, const_string explanation ) = 0;
 
     virtual void        begin_log_entry( std::ostream&, log_entry_data const&, log_entry_types let ) = 0;
     virtual void        log_entry_value( std::ostream&, const_string value ) = 0;
@@ -106,6 +106,10 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.12  2005/02/01 08:59:28  rogeeff
+//  supplied_log_formatters split
+//  change formatters interface to simplify result interface
+//
 //  Revision 1.11  2005/02/01 06:40:06  rogeeff
 //  copyright update
 //  old log entries removed

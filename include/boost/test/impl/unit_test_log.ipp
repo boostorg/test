@@ -19,11 +19,15 @@
 // Boost.Test
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/unit_test_log_formatter.hpp>
-#include <boost/test/detail/supplied_log_formatters.hpp>
-#include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/test/unit_test_result.hpp>
+
+#include <boost/test/detail/unit_test_parameters.hpp>
+
 #include <boost/test/utils/basic_cstring/compare.hpp>
 #include <boost/test/utils/fixed_mapping.hpp>
+
+#include <boost/test/output/compiler_log_formatter.hpp>
+#include <boost/test/output/xml_log_formatter.hpp>
 
 // Boost
 #include <boost/scoped_ptr.hpp>
@@ -135,7 +139,7 @@ unit_test_log_t::unit_test_log_t()
 {
     s_impl().m_threshold_level = log_all_errors;
 
-    s_impl().m_log_formatter.reset( new ut_detail::compiler_log_formatter );
+    s_impl().m_log_formatter.reset( new output::compiler_log_formatter );
 
     s_impl().clear_entry_data();
     s_impl().clear_checkpoint();
@@ -205,6 +209,8 @@ unit_test_log_t::set_threshold_level_by_name( const_string lev )
 void
 unit_test_log_t::test_case_enter( test_case const& tc )
 {
+    s_impl().m_log_formatter->start_test_case( tc );
+
     if( s_impl().m_threshold_level > log_test_suites )
         return;
 
@@ -339,8 +345,7 @@ unit_test_log_t::log_exception( log_level l, const_string what )
     *this << begin();
 
     if( l >= s_impl().m_threshold_level ) {
-        s_impl().m_log_formatter->log_exception( s_impl().stream(), s_impl().m_checkpoint_data, 
-                                                 unit_test_result::instance().test_case_name(), what );
+        s_impl().m_log_formatter->log_exception( s_impl().stream(), s_impl().m_checkpoint_data, what );
         s_impl().m_entry_has_value = true;
     }
 
@@ -455,9 +460,9 @@ unit_test_log_t::set_format( const_string log_format_name )
         );
 
     if( log_format[log_format_name] == HRF )
-        set_formatter( new ut_detail::compiler_log_formatter );
+        set_formatter( new output::compiler_log_formatter );
     else
-        set_formatter( new ut_detail::xml_log_formatter );
+        set_formatter( new output::xml_log_formatter );
 }
 
 //____________________________________________________________________________//
@@ -478,6 +483,10 @@ unit_test_log_t::set_formatter( unit_test_log_formatter* the_formatter )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.4  2005/02/01 08:59:38  rogeeff
+//  supplied_log_formatters split
+//  change formatters interface to simplify result interface
+//
 //  Revision 1.3  2005/02/01 06:40:07  rogeeff
 //  copyright update
 //  old log entries removed
