@@ -91,9 +91,10 @@ public:
 
 template<class CharT>
 inline bool
-operator <( basic_cstring<CharT> x, basic_cstring<CharT> y )
+operator <( boost::unit_test::basic_cstring<CharT> const& x,
+            boost::unit_test::basic_cstring<CharT> const& y )
 {
-    typedef typename basic_cstring<CharT>::traits_type traits_type;
+    typedef typename boost::unit_test::basic_cstring<CharT>::traits_type traits_type;
     return x.size() != y.size() 
             ? x.size() < y.size() 
             : traits_type::compare( x.begin(), y.begin(), x.size() ) < 0;
@@ -107,35 +108,14 @@ operator <( basic_cstring<CharT> x, basic_cstring<CharT> y )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2005/01/31 20:07:21  rogeeff
+//  Sunpro CC 5.3 workarounds
+//
 //  Revision 1.2  2005/01/22 19:22:13  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
 //  Revision 1.1  2005/01/22 18:21:40  rogeeff
 //  moved sharable staff into utils
-//
-//  Revision 1.7  2004/08/11 03:18:49  rogeeff
-//  second tru64cxx65 fix
-//
-//  Revision 1.6  2004/07/19 12:26:41  rogeeff
-//  guard rename
-//  portability fix
-//
-//  Revision 1.5  2004/06/29 04:32:25  rogeeff
-//  no message
-//
-//  Revision 1.4  2004/06/07 07:33:19  rogeeff
-//  amother borland patch
-//  detail namespace renamed
-//
-//  Revision 1.3  2004/06/05 11:02:15  rogeeff
-//  std::traits usage reworked
-//
-//  Revision 1.2  2004/05/21 06:19:35  rogeeff
-//  licence update
-//
-//  Revision 1.1  2004/05/11 11:00:55  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
 //
 // ***************************************************************************
 
