@@ -421,7 +421,7 @@ ms_se_trans_func( unsigned int id, _EXCEPTION_POINTERS* /* exps */ )
 //____________________________________________________________________________//
 
 void
-ms_se_forward_func( unsigned int id, _EXCEPTION_POINTERS* /* exps */ )
+ms_se_forward_func( unsigned int /* id */, _EXCEPTION_POINTERS* /* exps */ )
 {
     throw;
 }
@@ -518,6 +518,9 @@ static void report_error( execution_exception::error_code ec, c_string_literal m
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.17  2002/12/18 17:04:18  beman_dawes
+//  quiet unused parameter warning
+//
 //  Revision 1.16  2002/12/17 22:01:09  beman_dawes
 //  Add :space to std::string to prevent garbled msg
 //
