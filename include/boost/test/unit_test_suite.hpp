@@ -127,11 +127,12 @@ public:
     void        add( test_unit* tu, counter_t expected_failures = 0, unsigned timeout = 0 );
     void        add( test_unit_generator const& gen, unsigned timeout = 0 );
 
-private:
+protected:
     friend void traverse_test_tree( test_suite const&, test_tree_visitor& );
     friend class framework_impl;
-    ~test_suite() {}
+    virtual     ~test_suite() {}
 
+private:
     // Data members
     std::vector<test_unit_id> m_members;
 };
@@ -249,6 +250,9 @@ make_test_case( void (UserTestCase::*test_method )(),
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.30  2005/03/22 06:57:29  rogeeff
+//  allow to inherit test_suite
+//
 //  Revision 1.29  2005/02/21 10:25:54  rogeeff
 //  use std::vector so we could employ random_shuffle
 //
