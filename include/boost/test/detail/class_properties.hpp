@@ -1,7 +1,7 @@
-//  (C) Copyright Gennadiy Rozental 2001-2003.
-//  Use, modification, and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
-//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  Distributed under the Boost Software License, Version 1.0.
+//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
@@ -36,8 +36,7 @@ namespace unit_test {
 // ************************************************************************** //
 
 template<class PropertyType>
-class class_property
-{
+class class_property {
 protected:
     typedef typename call_traits<PropertyType>::const_reference read_access_t;
     typedef typename call_traits<PropertyType>::param_type      write_param_t;
@@ -55,12 +54,7 @@ public:
     address_res_t   operator&() const       { return &value; }
 
     // Data members
-
-#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570)
-    // Borland can't deal with the using declaration in derived classes
-#else
 protected:
-#endif
     PropertyType        value;
 };
 
@@ -107,8 +101,7 @@ DEFINE_PROPERTY_FREE_BINARY_OPERATOR( != )
 // ************************************************************************** //
 
 template<class PropertyType>
-class readonly_property : public class_property<PropertyType>
-{
+class readonly_property : public class_property<PropertyType> {
     typedef class_property<PropertyType>    base;
     typedef typename base::address_res_t    arrow_res_t;
 protected:
@@ -128,8 +121,7 @@ public:
 
 #define BOOST_READONLY_PROPERTY( property_type, friends )                           \
 class BOOST_JOIN( readonly_property, __LINE__ )                                     \
-: public boost::unit_test::readonly_property<property_type >                        \
-{                                                                                   \
+: public boost::unit_test::readonly_property<property_type > {                      \
     typedef boost::unit_test::readonly_property<property_type > base;               \
     BOOST_PP_SEQ_FOR_EACH( DECLARE_FRIEND, ' ', friends )                           \
     typedef base::write_param_t  write_param_t;                                     \
@@ -145,22 +137,28 @@ public:                                                                         
 // ************************************************************************** //
 
 template<class PropertyType>
-class readwrite_property : public class_property<PropertyType>
-{
+class readwrite_property : public class_property<PropertyType> {
     typedef class_property<PropertyType>                base;
     typedef typename add_pointer<PropertyType>::type    arrow_res_t;
     typedef typename base::address_res_t                const_arrow_res_t;
     typedef typename base::write_param_t                write_param_t;
 public:
+#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570) || BOOST_WORKAROUND( __COMO__, <= 0x433 )
+                    readwrite_property() : base(), value(base::value) {}
+    explicit        readwrite_property( write_param_t init_value ) : base( init_value ), value(base::value) {}
+                    readwrite_property( readwrite_property const& rhs ) : base( rhs ), value( base::value ) {}
+#else
                     readwrite_property() : base() {}
     explicit        readwrite_property( write_param_t init_value ) : base( init_value ) {}
+#endif
 
     // access methods
-    void            set( write_param_t v )  { value = v; }
+    void            set( write_param_t v )  { base::value = v; }
     arrow_res_t     operator->()            { return boost::addressof( base::value ); }
     const_arrow_res_t operator->() const    { return boost::addressof( base::value ); }
 
-#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570)
+#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570) || BOOST_WORKAROUND( __COMO__, <= 0x433 )
+    PropertyType&   value;
 #else
     using           base::value;
 #endif
@@ -176,6 +174,10 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.17  2004/05/21 06:19:11  rogeeff
+//  hack for non-using version of readwrite properties
+//  licence update
+//
 //  Revision 1.16  2004/05/18 13:39:32  dgregor
 //  class_properties.hpp: Make the empty character constant into a single space (which isn't used), because the Sun compiler is very eager to spit out an error here.
 //
@@ -189,7 +191,6 @@ public:
 //  Revision 1.13  2003/12/01 00:41:56  rogeeff
 //  prerelease cleaning
 //
-
 // ***************************************************************************
 
 #endif // BOOST_TEST_CLASS_PROPERTIES_HPP
