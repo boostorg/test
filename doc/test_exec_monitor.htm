@@ -84,14 +84,18 @@
   <P class="1-line-indented">The Test Execution Monitor is supplied as an offline library 
     and should be compiled and linked with a test program. Following files, that are 
     located in the Boost Test Library src directory, compose the component:</P>
-  <P class="indented"> <A href="../src/execution_monitor.cpp">execution_monitor.cpp</A><BR>
-    <A href="../src/test_tools.cpp">test_tools.cpp</A><BR>
-    <A href="../src/unit_test_log.cpp">unit_test_log.cpp</A><BR>
-    <A href="../src/unit_test_parameters.cpp">unit_test_parameters.cpp</A><BR>
-    <A href="../src/unit_test_monitor.cpp">unit_test_monitor.cpp</A><BR>
-    <A href="../src/unit_test_result.cpp">unit_test_result.cpp</A><BR>
-    <A href="../src/unit_test_suite.cpp">unit_test_suite.cpp</A><BR>
-    <A href="../src/test_main.cpp">test_main.cpp</A></P>
+        <P class="indented"> <A href="../src/execution_monitor.cpp">execution_monitor.cpp</A><BR>
+          <A href="../src/test_tools.cpp">test_tools.cpp</A><BR>
+          <A href="../src/unit_test_log.cpp">unit_test_log.cpp</A><BR>
+          <A href="../src/unit_test_parameters.cpp">unit_test_parameters.cpp</A><BR>
+          <A href="../src/unit_test_monitor.cpp">unit_test_monitor.cpp</A><BR>
+          <A href="../src/unit_test_result.cpp">unit_test_result.cpp</A><BR>
+          <A href="../src/unit_test_suite.cpp">unit_test_suite.cpp</A><BR>
+          <A href="../src/test_main.cpp">test_main.cpp</A></P>
+        <P class="1-line-indented">You also have a choice to include all files 
+          constituting the Test Execution Monitor directly into your test module. 
+          Use <a href="../../../boost/test/included/test_exec_monitor.hpp">&lt;boost/test/included/test_exec_monitor.hpp&gt;</a> 
+          for this porpose.</P>
   <P></P>
   <H2><A name="Tests">Example and Test</A> Programs</H2>
   <P class="indented"> <A href="../example/test_exec_example.cpp">test_exec_example.cpp</A><BR>
@@ -99,8 +103,8 @@
     <A href="../test/test_exec_fail2.cpp">test_exec_fail2.cpp</A><BR>
     <A href="../test/test_exec_fail3.cpp">test_exec_fail3.cpp</A><BR>
     <A href="../test/test_exec_fail4.cpp">test_exec_fail4.cpp</A> </P>
-    
-  <H2><A name="Rationale">Rationale</A><SPAN class="ref-to-top"><A href="#TOP"><IMG src="imgs/uarrow.gif" alt="reference to the top"></A></SPAN> </H2>
+<SPAN class="ref-to-top"><A href="#TOP"><IMG src="imgs/uarrow.gif" alt="reference to the top"></A></SPAN>    
+  <H2><A name="Rationale">Rationale</A></H2>
   
   <P class="1-line-indented">How should a test program report errors? Displaying an 
     error message is an obvious possibility:</P>
@@ -134,13 +138,9 @@
     <SPAN class="ref-to-top"><A href="#TOP"><IMG src="imgs/uarrow.gif" alt="reference to the top"></A></SPAN></P>
   <BR>
   <DIV class="footer"> 
-    <P>© Beman Dawes 2000, <A href='mailto:rogeeff@emailaccount.com'>Gennadiy Rozental</A> 
+    <P>&copy Beman Dawes 2000, <A href='mailto:rogeeff@emailaccount.com'>Gennadiy Rozental</A> 
       2001-2002 </P>
-    <P>Revised 
-      <!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%d %b %Y" startspan -->
-      09 September, 2002
-      <!--webbot bot="Timestamp" endspan i-checksum="14998" -->
-    </P>
+    <P>Revised: 29 September, 2002</P>
   </DIV>
   </TD>
   </TR>
