@@ -1,4 +1,4 @@
-//  boost Program Execution Monitor program  --------------------------------//
+//  boost Program Execution Monitor example program  -------------------------//
 int add( int i, int j ) { return i+j; }
 
 int cpp_main( int, char *[] )  // note the name!

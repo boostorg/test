@@ -16,7 +16,6 @@
 // Boost.Test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_result.hpp>
-#include <boost/test/floating_point_comparison.hpp>
 using namespace boost::unit_test_framework;
 
 // BOOST
@@ -86,7 +85,7 @@ void
 test_BOOST_CHECK() {
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( report_all_errors );
+    unit_test_log::instance().set_log_threshold_level( log_all_errors );
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK( true ),
@@ -117,12 +116,12 @@ test_BOOST_CHECK() {
         output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test i==1 failed\n", 2 ) )
     );
 
-    unit_test_log::instance().set_log_threshold_level( report_successful_tests );
+    unit_test_log::instance().set_log_threshold_level( log_successful_tests );
     CHECK_TOOL_USAGE(
         BOOST_CHECK( i==2 ),
         output.is_equal( CHECK_PATTERN( "info: test i==2 passed\n", 2 ) )
     );
-    unit_test_log::instance().set_log_threshold_level( report_all_errors );
+    unit_test_log::instance().set_log_threshold_level( log_all_errors );
 }
 
 //____________________________________________________________________________//
@@ -132,7 +131,7 @@ test_BOOST_REQUIRE() {
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_REQUIRE" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( report_all_errors );
+    unit_test_log::instance().set_log_threshold_level( log_all_errors );
 
     CHECK_CRITICAL_TOOL_USAGE(
         BOOST_REQUIRE( true ),
@@ -151,13 +150,12 @@ test_BOOST_REQUIRE() {
         false, output.is_equal( CHECK_PATTERN( "fatal error in " TEST_CASE_NAME ": test j > 5 failed\n", 2 ) )
     );
 
-    unit_test_log::instance().set_log_threshold_level( report_successful_tests );
+    unit_test_log::instance().set_log_threshold_level( log_successful_tests );
     CHECK_CRITICAL_TOOL_USAGE(
         BOOST_REQUIRE( j < 5 ),
         output.is_equal( CHECK_PATTERN( "info: test j < 5 passed\n", 1 ) ) , false
     );
-    unit_test_log::instance().set_log_threshold_level( report_all_errors );
-
+    unit_test_log::instance().set_log_threshold_level( log_all_errors );
 }
 
 //____________________________________________________________________________//
@@ -171,7 +169,7 @@ test_BOOST_MESSAGE() {
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_REQUIRE" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( report_messages );
+    unit_test_log::instance().set_log_threshold_level( log_messages );
 
     CHECK_TOOL_USAGE(
         BOOST_MESSAGE( "still testing" ),
@@ -203,7 +201,7 @@ test_BOOST_WARN() {
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_WARN" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( report_warnings );
+    unit_test_log::instance().set_log_threshold_level( log_warnings );
 
     CHECK_TOOL_USAGE(
         BOOST_WARN( sizeof(int) == sizeof(short) ),
@@ -217,7 +215,7 @@ test_BOOST_WARN() {
 class bad_func_container : public test_case
 {
 public:
-    bad_func_container() : test_case( "test_BOOST_CHECKPOINT", 1 ) {}
+    bad_func_container() : test_case( "test_BOOST_CHECKPOINT", true, 1 ) {}
     void do_run() {
         throw "some error";
     }
@@ -228,7 +226,7 @@ test_BOOST_CHECKPOINT() {
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECKPOINT" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( report_all_errors );
+    unit_test_log::instance().set_log_threshold_level( log_all_errors );
 
     BOOST_CHECKPOINT( "Going to do a silly things" );
 
@@ -250,7 +248,7 @@ test_BOOST_WARN_MESSAGE() {
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_WARN_MESSAGE" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( report_warnings );
+    unit_test_log::instance().set_log_threshold_level( log_warnings );
 
     CHECK_TOOL_USAGE(
         BOOST_WARN_MESSAGE( sizeof(int) == sizeof(short), "memory won't be used efficiently" ),
@@ -274,7 +272,7 @@ test_BOOST_CHECK_MESSAGE() {
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_MESSAGE" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( report_all_errors );
+    unit_test_log::instance().set_log_threshold_level( log_all_errors );
 
 
     CHECK_TOOL_USAGE(
@@ -291,7 +289,7 @@ test_BOOST_REQUIRE_MESSAGE() {
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_REQUIRE_MESSAGE" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( report_all_errors );
+    unit_test_log::instance().set_log_threshold_level( log_all_errors );
 
     CHECK_CRITICAL_TOOL_USAGE(
         BOOST_REQUIRE_MESSAGE( false, "Here we should stop" ),
@@ -317,7 +315,7 @@ test_BOOST_CHECK_EQUAL() {
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_EQUAL" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( report_all_errors );
+    unit_test_log::instance().set_log_threshold_level( log_all_errors );
 
     int i=1;
     int j=2;
@@ -362,119 +360,6 @@ test_BOOST_CHECK_EQUAL() {
 
 //____________________________________________________________________________//
 
-template<typename FPT>
-void
-test_BOOST_CHECK_CLOSE( FPT ) {
-#undef  TEST_CASE_NAME
-#define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_CLOSE_all" << "\"" <<
-    unit_test_log::instance().set_log_threshold_level( report_messages );
-
-    BOOST_MESSAGE( "testing BOOST_CHECK_CLOSE for " << typeid(FPT).name() );
-
-
-#define BOOST_CHECK_CLOSE_SHOULD_PASS( first, second, e )       \
-    fp1     = static_cast<FPT>(first);                          \
-    fp2     = static_cast<FPT>(second);                         \
-    epsilon = static_cast<FPT>(e);                              \
-                                                                \
-    CHECK_TOOL_USAGE(                                           \
-        BOOST_CHECK_CLOSE( fp1, fp2, epsilon ),                 \
-        output.is_empty()                                       \
-    )
-
-#define BOOST_CHECK_CLOSE_SHOULD_PASS_N( first, second, num )   \
-    fp1     = static_cast<FPT>(first);                          \
-    fp2     = static_cast<FPT>(second);                         \
-                                                                \
-    CHECK_TOOL_USAGE(                                           \
-        BOOST_CHECK_CLOSE( fp1, fp2, (num) ),                   \
-        output.is_empty()                                       \
-    )
-
-#define BOOST_CHECK_CLOSE_SHOULD_FAIL( first, second, e )       \
-    fp1     = static_cast<FPT>(first);                          \
-    fp2     = static_cast<FPT>(second);                         \
-    epsilon = static_cast<FPT>(e);                              \
-                                                                \
-    CHECK_TOOL_USAGE(                                           \
-        BOOST_CHECK_CLOSE( fp1, fp2, epsilon ),                 \
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test fp1 ~= fp2 failed [" \
-                                        << fp1 << " !~= " << fp2 << " (+/-" << epsilon << ")]\n", 0 ) ) \
-    )
-
-#define BOOST_CHECK_CLOSE_SHOULD_FAIL_N( first, second, num )   \
-    fp1     = static_cast<FPT>(first);                          \
-    fp2     = static_cast<FPT>(second);                         \
-    epsilon = num * std::numeric_limits<FPT>::epsilon()/2;      \
-                                                                \
-    CHECK_TOOL_USAGE(                                           \
-        BOOST_CHECK_CLOSE( fp1, fp2, num ),                     \
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test fp1 ~= fp2 failed [" \
-        << fp1 << " !~= " << fp2 << " (+/-" << epsilon << ")]\n", 0 ) ) \
-    )
-
-    FPT fp1, fp2, epsilon, tmp;
-
-    BOOST_CHECK_CLOSE_SHOULD_PASS( 1, 1, 0 );
-
-    BOOST_CHECK_CLOSE_SHOULD_FAIL( 0, 1e-20, 1e-7 );
-    BOOST_CHECK_CLOSE_SHOULD_FAIL( 0, 1e-30, 1e-7 );
-    BOOST_CHECK_CLOSE_SHOULD_FAIL( 0, -1e-10, 1e-3 );
-    BOOST_CHECK_CLOSE_SHOULD_FAIL( 0.123456, 0.123457, 1e-6 );
-
-    BOOST_CHECK_CLOSE_SHOULD_PASS( 0.123456, 0.123457, 1e-5 );
-
-    BOOST_CHECK_CLOSE_SHOULD_FAIL( 0.123456, -0.123457, 1e-5 );
-
-    BOOST_CHECK_CLOSE_SHOULD_PASS( 1.23456e28, 1.23457e28, 1e-5 );
-
-    BOOST_CHECK_CLOSE_SHOULD_FAIL( 1.23456e-10, 1.23457e-11, 1e-5 );
-    BOOST_CHECK_CLOSE_SHOULD_FAIL( 1.111e-10, 1.112e-10, 0.0008999 );
-    BOOST_CHECK_CLOSE_SHOULD_FAIL( 1.112e-10, 1.111e-10, 0.0008999 );
-
-    BOOST_CHECK_CLOSE_SHOULD_PASS( 1     , 1.0001, 1.1e-4 );
-    BOOST_CHECK_CLOSE_SHOULD_PASS( 1.0002, 1.0001, 1.1e-4 );
-    
-    BOOST_CHECK_CLOSE_SHOULD_FAIL( 1     , 1.0002, 1.1e-4 );
-
-    BOOST_CHECK_CLOSE_SHOULD_PASS_N( 1, 1+std::numeric_limits<FPT>::epsilon() / 2, 1 );
-    
-    tmp = static_cast<FPT>(1e-10);
-    BOOST_CHECK_CLOSE_SHOULD_PASS_N( tmp+tmp, 2e-10, 1+2 );
-
-    tmp = static_cast<FPT>(3.1);
-    BOOST_CHECK_CLOSE_SHOULD_PASS_N( tmp*tmp, 9.61, 1+2 );
-
-    tmp = 11;
-    tmp /= 10;
-    BOOST_CHECK_CLOSE_SHOULD_PASS_N( (tmp*tmp-tmp), 11./100, 1+3 );
-    BOOST_CHECK_CLOSE_SHOULD_FAIL_N( 100*(tmp*tmp-tmp), 11, 3 );
-
-    tmp = static_cast<FPT>(1e15+1e-10);
-    BOOST_CHECK_CLOSE_SHOULD_PASS_N( tmp*tmp+tmp*tmp, 2e30+2e-20+4e5, 3+5 );
-
-    fp1     = static_cast<FPT>(1.0001);
-    fp2     = static_cast<FPT>(1001.1001);
-    tmp     = static_cast<FPT>(1.0001);
-
-    for( int i=0; i < 1000; i++ )
-        fp1 = fp1 + tmp;
-
-    CHECK_TOOL_USAGE(
-        BOOST_CHECK_CLOSE( fp1, fp2, 1000 ),
-        output.is_empty()
-    );
-}
-
-void
-test_BOOST_CHECK_CLOSE_all() {
-    test_BOOST_CHECK_CLOSE<float>( (float)0 );
-    test_BOOST_CHECK_CLOSE<double>( (double)0 );
-    test_BOOST_CHECK_CLOSE<long double>( (long double)0 );
-}
-
-//____________________________________________________________________________//
-
 bool is_even( int i ) {
     return i%2 == 0;
 }
@@ -509,21 +394,6 @@ test_BOOST_CHECK_PREDICATE() {
         BOOST_CHECK_PREDICATE( boost::compose_f_gxy( std::ptr_fun( &is_even ), std::ptr_fun( &foo ) ), 2, (i,15) ),
         output.is_empty()
     );
-
-    double fp1     = 1.00000001;
-    double fp2     = 1.00000002;
-    double epsilon = 1e-8;
-
-    CHECK_TOOL_USAGE(
-        BOOST_CHECK_PREDICATE( close_at_tolerance<double>( epsilon, false ), 2, ( fp1, fp2 ) ),
-        output.is_empty()
-    );
-
-    CHECK_TOOL_USAGE(
-        BOOST_CHECK_CLOSE( fp1, fp2, epsilon ),
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test fp1 ~= fp2 failed [" 
-                                        << fp1 << " !~= " << fp2 << " (+/-" << epsilon << ")]\n", 3 ) )
-    );
 }
 
 //____________________________________________________________________________//
@@ -533,24 +403,19 @@ test_BOOST_REQUIRE_PREDICATE() {
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_REQUIRE_PREDICATE" << '\"' <<
 
-    double fp1;
-    double fp2;
-    double epsilon;
-
-    fp1     = 1.23456e-10;
-    fp2     = 1.23457e-10;
-    epsilon = 8.1e-6;
+    int arg1 = 1;
+    int arg2 = 2;
 
     CHECK_CRITICAL_TOOL_USAGE(
-        BOOST_REQUIRE_PREDICATE( close_at_tolerance<double>( epsilon, false ), 2, ( fp1, fp2 ) ),
+        BOOST_REQUIRE_PREDICATE( std::less_equal<int>(), 2, ( arg1, arg2 ) ),
         output.is_empty(), false
     );
 
    CHECK_CRITICAL_TOOL_USAGE(
-        BOOST_REQUIRE_PREDICATE( close_at_tolerance<double>( epsilon ), 2, ( fp1, fp2 ) ),
+        BOOST_REQUIRE_PREDICATE( std::less_equal<int>(), 2, ( arg2, arg1 ) ),
         false, output.is_equal( CHECK_PATTERN( 
-                    "fatal error in " TEST_CASE_NAME ": test close_at_tolerance<double>( epsilon )(fp1, fp2) "
-                    "failed for (" << fp1 << ", " << fp2 << ")\n", 4 ) )
+                    "fatal error in " TEST_CASE_NAME ": test std::less_equal<int>()(arg2, arg1) "
+                    "failed for (" << arg2 << ", " << arg1 << ")\n", 4 ) )
     );
 }
 
@@ -561,7 +426,7 @@ test_BOOST_ERROR() {
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_ERROR" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( report_all_errors );
+    unit_test_log::instance().set_log_threshold_level( log_all_errors );
 
     CHECK_TOOL_USAGE(
         BOOST_ERROR( "Fail to miss an error" ),
@@ -583,7 +448,7 @@ test_BOOST_CHECK_THROW() {
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_THROW" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( report_all_errors );
+    unit_test_log::instance().set_log_threshold_level( log_all_errors );
 
     int i=0;
     CHECK_TOOL_USAGE(
@@ -591,14 +456,33 @@ test_BOOST_CHECK_THROW() {
         output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": exception my_exception is expected\n", 2 ) )
     );
 
-    unit_test_log::instance().set_log_threshold_level( report_successful_tests );
+    unit_test_log::instance().set_log_threshold_level( log_successful_tests );
 
     CHECK_TOOL_USAGE(
         BOOST_CHECK_THROW( throw my_exception(), my_exception ),
         output.is_equal( CHECK_PATTERN( "info: exception my_exception is caught\n", 2 ) )
     );
 
-    unit_test_log::instance().set_log_threshold_level( report_all_errors );
+    unit_test_log::instance().set_log_threshold_level( log_all_errors );
+}
+
+//____________________________________________________________________________//
+
+void
+test_BOOST_CHECK_NO_THROW() {
+#undef  TEST_CASE_NAME
+#define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_NO_THROW" << '\"' <<
+
+    int i=0;
+    CHECK_TOOL_USAGE(
+        BOOST_CHECK_NO_THROW( i++ ),
+        output.is_empty() 
+    );
+
+    CHECK_TOOL_USAGE(
+        BOOST_CHECK_NO_THROW( throw my_exception() ),
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": exception was thrown by throw my_exception()\n", 2 ) )
+    );
 }
 
 //____________________________________________________________________________//
@@ -608,7 +492,7 @@ test_BOOST_CHECK_EQUAL_COLLECTIONS() {
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_EQUAL_COLLECTIONS" << '\"' <<
 
-    unit_test_log::instance().set_log_threshold_level( report_all_errors );
+    unit_test_log::instance().set_log_threshold_level( log_all_errors );
 
     int pattern [] = { 1, 2, 3, 4, 5, 6, 7 };
 
@@ -664,8 +548,34 @@ test_BOOST_IS_DEFINED() {
 
 //____________________________________________________________________________//
 
+void
+test_BOOST_BITWISE_EQUAL() {
+#undef  TEST_CASE_NAME
+#define TEST_CASE_NAME << '\"' << "test_BOOST_BITWISE_EQUAL" << '\"' <<
+
+    CHECK_TOOL_USAGE(
+        BOOST_BITWISE_EQUAL( 0x16, 0x16 ),
+        output.is_empty()
+    );
+
+    CHECK_TOOL_USAGE(
+        BOOST_BITWISE_EQUAL( (char)0x06, (char)0x16 ),
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test (char)0x06 =.= (char)0x16 in the position 4 failed\n", 2 ) )
+    );
+
+    CHECK_TOOL_USAGE(
+        BOOST_BITWISE_EQUAL( (char)0x26, (char)0x04 ),
+        output.is_equal( 
+        std::string( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test (char)0x26 =.= (char)0x04 in the position 1 failed\n", 4 ) )
+            .append( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test (char)0x26 =.= (char)0x04 in the position 5 failed\n", 4 ) ) )
+    );
+}
+
+//____________________________________________________________________________//
+
+
 test_suite*
-init_unit_test_suite( int argc, char* argv[] ) {
+init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
     test_suite* test = BOOST_TEST_SUITE("Test Tools test");
 
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK ) );
@@ -677,21 +587,14 @@ init_unit_test_suite( int argc, char* argv[] ) {
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_MESSAGE ) );
     test->add( BOOST_TEST_CASE( &test_BOOST_REQUIRE_MESSAGE ) );
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_EQUAL ) );
-    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_CLOSE_all ), 
-#if defined(__BORLANDC__) || defined(__GNUC__)
-        6
-#elif defined (_MSC_VER)
-        2
-#else
-        0
-#endif
-);
     test->add( BOOST_TEST_CASE( &test_BOOST_ERROR ) );
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_THROW ) );
+    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_NO_THROW ) );
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_EQUAL_COLLECTIONS ) );
     test->add( BOOST_TEST_CASE( &test_BOOST_IS_DEFINED ) );
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_PREDICATE ) );
     test->add( BOOST_TEST_CASE( &test_BOOST_REQUIRE_PREDICATE ) );
+    test->add( BOOST_TEST_CASE( &test_BOOST_BITWISE_EQUAL ) );
 
     return test;
 }
@@ -702,6 +605,9 @@ init_unit_test_suite( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2003/02/13 08:47:12  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.14  2002/12/09 05:18:34  rogeeff
 //  switched to use unit_test_result_saver for internal testing
 //  switched to wrap_stringstream

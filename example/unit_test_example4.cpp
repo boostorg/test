@@ -25,7 +25,7 @@ namespace {
 }
 
 test_suite*
-init_unit_test_suite( int argc, char * argv[] ) {
+init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
     test_suite* test= BOOST_TEST_SUITE( "Unit test example 4" );
 
     test->add( BOOST_PARAM_TEST_CASE( &check_string, (std::string const*)params, params+3 ), 1 );

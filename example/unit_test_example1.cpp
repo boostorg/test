@@ -21,7 +21,7 @@ test_suite*
 init_unit_test_suite( int argc, char * argv[] ) {
     test_suite* test= BOOST_TEST_SUITE( "Unit test example 1" );
 
-    // this example will pass cause we now ahead of time number of expected failures
+    // this example will pass cause we know ahead of time number of expected failures
     test->add( BOOST_TEST_CASE( &free_test_function ), 1 /* expected one error */ );
 
     return test;

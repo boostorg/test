@@ -147,16 +147,18 @@ test_main( int argc, char * argv[] )
 {
     bool match_or_save = retrieve_framework_parameter( SAVE_TEST_PATTERN, &argc, argv ) != "yes";
 
-    output_test_stream output( "error_handling_test.pattern", match_or_save );
+    std::string pattern_file_name( argc > 1 ? argv[1] : "errors_handling_test.pattern" );
+
+    output_test_stream output( pattern_file_name, match_or_save );
 
     unit_test_log::instance().set_log_stream( output );
 
     boost::shared_ptr<bad_test> bad_test_instance( new bad_test );
 
     // for each log level
-    for( report_level level = report_successful_tests;
-         level             <= report_nothing;
-         level              = static_cast<report_level>(level+1) )
+    for( log_level level = log_successful_tests;
+         level           <= log_nothing;
+         level           = static_cast<log_level>(level+1) )
     {
         unit_test_log::instance().set_log_threshold_level( level );
 
@@ -207,12 +209,13 @@ test_main( int argc, char * argv[] )
 
                 { 
                     unit_test_result_saver saver;
-                    unit_test_log::instance().start( 1 );
+                    unit_test_log::instance().start();
+                    unit_test_log::instance().header( 1 );
                     test.run();
-                    unit_test_log::instance() << report_progress();
+                    unit_test_log::instance().finish( 1 );
                 }
 
-                unit_test_log::instance().set_log_threshold_level( report_all_errors );
+                unit_test_log::instance().set_log_threshold_level( log_all_errors );
                 BOOST_CHECK( output.match_pattern() );
                 unit_test_log::instance().set_log_threshold_level( level );
             }
@@ -231,6 +234,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.10  2003/02/13 08:47:05  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.9  2002/12/09 05:14:45  rogeeff
 //  switch to use unit_test_result_saver for internal testing
 //

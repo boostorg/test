@@ -17,7 +17,7 @@
 // Boost.Test
 #include <boost/test/test_tools.hpp>
 
-int test_main( int, char *[] )  // note the name
+int test_main( int, char*[] )  // note the name
 {
     int v = 1;
 
@@ -33,6 +33,9 @@ int test_main( int, char *[] )  // note the name
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2003/02/13 08:47:10  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.5  2002/11/02 20:04:43  rogeeff
 //  release 1.29.0 merged into the main trank
 //

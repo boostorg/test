@@ -44,26 +44,41 @@ void bad_foo()  {
 
 //____________________________________________________________________________//
 
-void check( output_test_stream& output )
+void check( output_test_stream& output, std::string const& report_format )
 {
+    unit_test_result::instance().set_report_format( report_format );
+
     unit_test_result::instance().confirmation_report( output );
+    output << "*************************************************************************\n\n";
     BOOST_CHECK( output.match_pattern() );
 
     unit_test_result::instance().short_report( output );
+    output << "*************************************************************************\n\n";
     BOOST_CHECK( output.match_pattern() );
 
     unit_test_result::instance().detailed_report( output );
+    output << "*************************************************************************\n\n";
     BOOST_CHECK( output.match_pattern() );
 }
 
 //____________________________________________________________________________//
 
+void check( output_test_stream& output )
+{
+    check( output, "HRF" );
+    check( output, "XML" );
+}
+
+//____________________________________________________________________________//
+
 int 
-test_main( int argc, char * argv[] ) 
+test_main( int argc, char* argv[] ) 
 {
     bool match_or_save = retrieve_framework_parameter( SAVE_TEST_PATTERN, &argc, argv ) != "yes";
-    output_test_stream output( "result_report_test.pattern", match_or_save );
-    
+    std::string pattern_file_name( argc > 1 ? argv[1] : "result_report_test.pattern" );
+
+    output_test_stream output( pattern_file_name, match_or_save );
+  
     test_suite* ts_0 = BOOST_TEST_SUITE( "0 test cases inside" );
     
     test_suite* ts_1 = BOOST_TEST_SUITE( "1 test cases inside" );
@@ -112,6 +127,12 @@ test_main( int argc, char * argv[] )
 
     check( output );
 
+    std::string output_format = retrieve_framework_parameter( OUTPUT_FORMAT, &argc, argv );
+    
+    if( output_format.empty() ) {
+        unit_test_result::set_report_format( retrieve_framework_parameter( REPORT_FORMAT, &argc, argv ) );
+    }
+
     return 0;
 }
 
@@ -121,6 +142,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2003/02/13 08:47:07  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.6  2002/11/02 20:04:43  rogeeff
 //  release 1.29.0 merged into the main trank
 //
