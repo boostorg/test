@@ -17,6 +17,13 @@
 
 // BOOST
 #include <boost/config.hpp> // compilers workarounds and std::ptrdiff_t
+#include <boost/detail/workaround.hpp>
+
+#if BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+#define BOOST_CLASSIC_IOSTREAMS
+#else
+#define BOOST_STANDARD_IOSTREAMS
+#endif
 
 // Boost.Test
 #include <boost/test/detail/basic_cstring/basic_cstring.hpp>
@@ -64,6 +71,9 @@ namespace unit_test_framework = unit_test;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.22  2004/09/19 09:22:12  rogeeff
+//  ios fix for classic iostreams
+//
 //  Revision 1.21  2004/07/19 12:23:28  rogeeff
 //  guard rename
 //

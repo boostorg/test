@@ -28,7 +28,9 @@
 #include <string>
 #include <cctype>
 #include <cwchar>
+#ifdef BOOST_STANDARD_IOSTREAMS
 #include <ios>
+#endif
 
 # ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::strcmp; using ::strlen; using ::isprint; }
@@ -461,6 +463,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.41  2004/09/19 09:21:58  rogeeff
+//  ios fix for classic iostreams
+//
 //  Revision 1.40  2004/09/18 05:44:21  rogeeff
 //  RW STL 6.0 fix
 //

@@ -49,7 +49,7 @@ public:
     }
 
 protected:
-#if BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+#ifdef BOOST_CLASSIC_IOSTREAMS
     typedef std::ifstream                                       stream_t;
 #else
     typedef std::basic_ifstream<CharT,std::char_traits<CharT> > stream_t;
@@ -87,6 +87,9 @@ typedef basic_ifstream_line_iterator<wchar_t>   wifstream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2004/09/19 09:22:13  rogeeff
+//  ios fix for classic iostreams
+//
 //  Revision 1.7  2004/07/19 12:29:57  rogeeff
 //  guard rename
 //  mingw port

@@ -71,7 +71,7 @@ protected:
 
 //____________________________________________________________________________//
 
-#if BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+#ifdef BOOST_CLASSIC_IOSTREAMS
 
 template<class PropertyType>
 inline std::ostream&
@@ -219,6 +219,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.26  2004/09/19 09:22:12  rogeeff
+//  ios fix for classic iostreams
+//
 //  Revision 1.25  2004/08/10 04:08:30  rogeeff
 //  first tru64cxx65 fix
 //

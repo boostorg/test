@@ -28,7 +28,7 @@ namespace boost {
 
 namespace unit_test {
 
-#if BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+#ifdef BOOST_CLASSIC_IOSTREAMS
 
 template<typename CharT>
 inline std::ostream&
@@ -68,6 +68,9 @@ operator<<( std::basic_ostream<CharT1,Tr>& os, basic_cstring<CharT2> const& str 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2004/09/19 09:22:13  rogeeff
+//  ios fix for classic iostreams
+//
 //  Revision 1.8  2004/07/21 16:28:09  dgregor
 //  io.hpp: Eliminate useless "const" qualifiers on an rvalue
 //

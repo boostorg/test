@@ -37,7 +37,7 @@ namespace boost {
 
 template<typename CharT>
 class basic_wrap_stringstream {
-#if  BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+#ifdef BOOST_CLASSIC_IOSTREAMS
     typedef std::ostringstream               wrapped_stream;
 #else 
 #ifdef BOOST_NO_STRINGSTREAM
@@ -49,8 +49,7 @@ class basic_wrap_stringstream {
 #endif // WORKAROUND
 
 public:
-
-    // access methods
+    // Access methods
     basic_wrap_stringstream&        ref();
     wrapped_stream&                 stream();
     std::basic_string<CharT> const& str();
@@ -171,6 +170,9 @@ typedef basic_wrap_stringstream<wchar_t>    wrap_wstringstream;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.14  2004/09/19 09:22:12  rogeeff
+//  ios fix for classic iostreams
+//
 //  Revision 1.13  2004/07/19 12:24:32  rogeeff
 //  guard rename
 //

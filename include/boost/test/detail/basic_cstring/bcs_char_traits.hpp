@@ -98,7 +98,7 @@ struct bcs_char_traits_impl
     }
 };
 
-#if  BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+#ifdef BOOST_CLASSIC_IOSTREAMS
 template<> struct bcs_char_traits_impl<char> : std::string_char_traits<char> {};
 template<> struct bcs_char_traits_impl<wchar_t> : std::string_char_traits<wchar_t> {};
 #else
@@ -110,7 +110,7 @@ template<typename CharT>
 class bcs_char_traits : public bcs_char_traits_impl<CharT> {
     typedef typename ut_detail::bcs_base_char<CharT>::type                              the_base_char;
 public:
-#if  BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+#ifdef BOOST_CLASSIC_IOSTREAMS
     typedef std::basic_string<the_base_char, std::string_char_traits<the_base_char> >   std_string;
 #else
     typedef std::basic_string<the_base_char, std::char_traits<the_base_char> >          std_string;
@@ -127,6 +127,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2004/09/19 09:22:13  rogeeff
+//  ios fix for classic iostreams
+//
 //  Revision 1.4  2004/07/19 12:28:17  rogeeff
 //  guard rename
 //

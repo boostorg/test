@@ -40,7 +40,7 @@ class basic_istream_line_iterator
     typedef input_iterator_facade<basic_istream_line_iterator<CharT>,
                                   std::basic_string<CharT>,
                                   basic_cstring<CharT const> > base;
-#if BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+#ifdef BOOST_CLASSIC_IOSTREAMS
     typedef std::istream              istream_type;
 #else
     typedef std::basic_istream<CharT> istream_type;
@@ -89,6 +89,9 @@ typedef basic_istream_line_iterator<wchar_t>    wistream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2004/09/19 09:22:13  rogeeff
+//  ios fix for classic iostreams
+//
 //  Revision 1.6  2004/07/19 12:29:57  rogeeff
 //  guard rename
 //  mingw port

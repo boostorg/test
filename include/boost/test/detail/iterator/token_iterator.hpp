@@ -122,7 +122,7 @@ class default_char_compare {
 public:
     bool operator()( CharT c1, CharT c2 )
     {
-#if  BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+#ifdef BOOST_CLASSIC_IOSTREAMS
         return std::string_char_traits<CharT>::eq( c1, c2 );
 #else
         return std::char_traits<CharT>::eq( c1, c2 );
@@ -550,6 +550,9 @@ make_range_token_iterator( Iter begin, Iter end, M1 const& m1, M2 const& m2, M3 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2004/09/19 09:22:13  rogeeff
+//  ios fix for classic iostreams
+//
 //  Revision 1.4  2004/07/20 12:46:39  vladimir_prus
 //  Add "this->", since gcc 3.4 has two-phase lookup.
 //
