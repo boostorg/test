@@ -246,9 +246,15 @@ deref( static_any_t cur, C const&, ::boost::type<RefType>, mpl::true_ )
         BOOST_TEST_FE_IS_CONST( COL ) )     \
 /**/
 
-#define BOOST_TEST_FE_CUR_VAR   BOOST_JOIN( _fe_cur_, __LINE__ )
-#define BOOST_TEST_FE_END_VAR   BOOST_JOIN( _fe_end_, __LINE__ )
-#define BOOST_TEST_FE_CON_VAR   BOOST_JOIN( _fe_con_, __LINE__ )
+#if BOOST_WORKAROUND( BOOST_MSVC, == 1310 )
+#define BOOST_TEST_LINE_NUM
+#else
+#define BOOST_TEST_LINE_NUM     __LINE__
+#endif
+
+#define BOOST_TEST_FE_CUR_VAR   BOOST_JOIN( _fe_cur_, BOOST_TEST_LINE_NUM )
+#define BOOST_TEST_FE_END_VAR   BOOST_JOIN( _fe_end_, BOOST_TEST_LINE_NUM )
+#define BOOST_TEST_FE_CON_VAR   BOOST_JOIN( _fe_con_, BOOST_TEST_LINE_NUM )
 
 #ifndef BOOST_TEST_FE_MULTISTATEMENT
 
@@ -298,6 +304,9 @@ for( ;                                                                          
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2005/02/21 10:15:45  rogeeff
+//  vc 7.1 workaround
+//
 //  Revision 1.1  2005/02/20 08:27:08  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
