@@ -26,6 +26,7 @@ using namespace boost::unit_test_framework;
 #include <iostream>
 #include <list>
 #include <typeinfo>
+#include <cassert>
 
 //____________________________________________________________________________//
 
@@ -34,10 +35,9 @@ using namespace boost::unit_test_framework;
     boost::test_toolbox::output_test_stream output;         \
                                                             \
     unit_test_log::instance().set_log_stream( output );     \
-    unit_test_result::reset_current_result_set();           \
-    tool_usage;                                             \
-                                                            \
-    unit_test_result::reset_current_result_set();           \
+    { unit_test_result_saver saver;                         \
+      tool_usage;                                           \
+    }                                                       \
     unit_test_log::instance().set_log_stream( std::cout );  \
     BOOST_CHECK( check );                                   \
 }
@@ -49,15 +49,14 @@ using namespace boost::unit_test_framework;
     boost::test_toolbox::output_test_stream output;                         \
                                                                             \
     unit_test_log::instance().set_log_stream( output );                     \
-    unit_test_result::reset_current_result_set();                           \
     try {                                                                   \
-        tool_usage;                                                         \
+        {   unit_test_result_saver saver;                                   \
+            tool_usage;                                                     \
+        }                                                                   \
         unit_test_log::instance().set_log_stream( std::cout );              \
-        unit_test_result::reset_current_result_set();                       \
         BOOST_CHECK( nothrow_check );                                       \
     } catch( boost::test_toolbox::detail::test_tool_failed const&) {        \
         unit_test_log::instance().set_log_stream( std::cout );              \
-        unit_test_result::reset_current_result_set();                       \
         BOOST_CHECK( throw_check );                                         \
     }                                                                       \
 }
@@ -66,12 +65,12 @@ using namespace boost::unit_test_framework;
 
 #if !defined(__BORLANDC__)
 #define CHECK_PATTERN( msg, shift ) \
-    (boost::test_toolbox::detail::wrapstrstream().ref() << __FILE__ << "(" << __LINE__ << "): " << msg).str()
+    (boost::wrap_stringstream().ref() << __FILE__ << "(" << __LINE__ << "): " << msg).str()
 
 #else
 
 #define CHECK_PATTERN( msg, shift ) \
-    (boost::test_toolbox::detail::wrapstrstream().ref() << __FILE__ << "(" << (__LINE__-shift) << "): " << msg).str()
+    (boost::wrap_stringstream().ref() << __FILE__ << "(" << (__LINE__-shift) << "): " << msg).str()
 
 #endif
 //____________________________________________________________________________//
@@ -236,7 +235,7 @@ test_BOOST_CHECKPOINT() {
     CHECK_TOOL_USAGE(
         bad.run(),
         output.is_equal(
-            (boost::test_toolbox::detail::wrapstrstream().ref()
+            (boost::wrap_stringstream().ref()
                 << "Exception in " TEST_CASE_NAME ": C string: some error\n"
                 << __FILE__ << "(" << (__LINE__ - 10) << ") : "
                 << "last checkpoint: Going to do a silly things\n").str()
@@ -334,6 +333,22 @@ test_BOOST_CHECK_EQUAL() {
     CHECK_TOOL_USAGE(
         BOOST_CHECK_EQUAL( str1, str2 ),
         output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test str1 == str2 failed [test1 != test12]\n", 2 ) )
+    );
+
+    str1 = NULL;
+    str2 = NULL;
+
+    CHECK_TOOL_USAGE(
+        BOOST_CHECK_EQUAL( str1, str2 ),
+        output.is_empty()
+    );
+
+    str1 = "test";
+    str2 = NULL;
+
+    CHECK_TOOL_USAGE(
+        BOOST_CHECK_EQUAL( str1, str2 ),
+        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test str1 == str2 failed [test != null string]\n", 2 ) )
     );
 
     B b1(1);
@@ -687,6 +702,11 @@ init_unit_test_suite( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.14  2002/12/09 05:18:34  rogeeff
+//  switched to use unit_test_result_saver for internal testing
+//  switched to wrap_stringstream
+//  test cases added for the NULL char strings comparisons
+//
 //  Revision 1.13  2002/11/02 20:23:24  rogeeff
 //  wrapstream copy constructor isuue fix reworked
 //
