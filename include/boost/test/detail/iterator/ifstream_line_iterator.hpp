@@ -35,7 +35,7 @@ template<typename CharT>
 class ifstream_holder {
 public:
     // Constructor
-    explicit    ifstream_holder( basic_cstring<CharT> file_name )
+    explicit    ifstream_holder( basic_cstring<CharT const> file_name )
     {
         if( file_name.is_empty() )
             return;
@@ -60,10 +60,10 @@ template<typename CharT>
 class basic_ifstream_line_iterator : detail::ifstream_holder<CharT>, public basic_istream_line_iterator<CharT>
 {
 public:
-    basic_ifstream_line_iterator( basic_cstring<CharT> file_name, CharT delimeter )
+    basic_ifstream_line_iterator( basic_cstring<CharT const> file_name, CharT delimeter )
     : detail::ifstream_holder<CharT>( file_name ), basic_istream_line_iterator<CharT>( this->m_stream, delimeter ) {}
 
-    explicit basic_ifstream_line_iterator( basic_cstring<CharT> file_name = basic_cstring<CharT>() )
+    explicit basic_ifstream_line_iterator( basic_cstring<CharT const> file_name = basic_cstring<CharT const>() )
     : detail::ifstream_holder<CharT>( file_name ), basic_istream_line_iterator<CharT>( this->m_stream ) {}
 };
 
@@ -78,6 +78,10 @@ typedef basic_ifstream_line_iterator<wchar_t>   wifstream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2004/06/05 11:03:12  rogeeff
+//  input_iterator_adaptor simplified
+//  token_iterator added
+//
 //  Revision 1.3  2004/05/27 07:01:49  rogeeff
 //  portability workarounds
 //

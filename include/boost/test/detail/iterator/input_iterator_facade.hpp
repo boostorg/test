@@ -17,79 +17,49 @@
 
 // Boost
 #include <boost/iterator/iterator_facade.hpp>
-#include <boost/mpl/void.hpp>
-#include <boost/mpl/if.hpp>
 
 namespace boost {
 
 namespace unit_test {
 
-namespace detail {
+// ************************************************************************** //
+// **************          input_iterator_core_access          ************** //
+// ************************************************************************** //
 
-template<typename T>
-struct value_type_ident 
+class input_iterator_core_access
 {
-    typedef T value_type;
-};
+#if defined(BOOST_NO_MEMBER_TEMPLATE_FRIENDS) || BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x551))
+public:
+#else
+    template <class I, class V, class R, class TC> friend class input_iterator_facade;
+#endif
 
-template<typename T>
-struct ref_type_ident 
-{
-    typedef T reference;
-};
+    template <class Facade>
+    static bool get( Facade& f )
+    {
+        return f.get();
+    }
 
-} // namespace detail
+private:
+    // objects of this class are useless
+    input_iterator_core_access(); //undefined
+};
 
 // ************************************************************************** //
 // **************            input_iterator_facade             ************** //
 // ************************************************************************** //
 
-template<typename ImplPolicy,typename Derived = mpl::void_,typename ValueType = mpl::void_,typename Reference = mpl::void_>
-class input_iterator_facade : public iterator_facade<
-    typename mpl::if_<mpl::is_void_<Derived>,input_iterator_facade<ImplPolicy>,Derived>::type,
-    typename mpl::if_<mpl::is_void_<ValueType>,ImplPolicy,detail::value_type_ident<ValueType> >::type::value_type,
-    forward_traversal_tag,
-    typename mpl::if_<mpl::is_void_<Reference>,ImplPolicy,detail::ref_type_ident<Reference> >::type::reference>
+template<typename Derived,
+         typename ValueType,
+         typename Reference = ValueType const&,
+         typename Traversal = single_pass_traversal_tag>
+class input_iterator_facade : public iterator_facade<Derived,ValueType,Traversal,Reference>
 {
 public:
     // Constructor
-    explicit            input_iterator_facade( ImplPolicy const& p = ImplPolicy() )
-    : m_policy( p )
-    {
-        increment();
-    }
+    input_iterator_facade() : m_valid( false ), m_value() {}
 
-    //!! copy constructor/assigment  - should we make rhs invalid after copy??
-    // input_iterator_facade( input_iterator_facade const& rhs )
-    // : m_policy( rhs.m_policy ), m_valid( rhs.m_valid )
-    // {
-    //     const_cast<input_iterator_adaptor&>( rhs ).m_valid = false;
-    // }
-    // 
-    // void             operator=( input_iterator_facade const& rhs )
-    // {
-    //      m_policies = rhs.p_policies;
-    //      m_valid    = rhs.m_valid;
-    //
-    //     const_cast<input_iterator_adaptor&>( rhs ).m_valid = false;
-    // }
-
-    //!! do we need reset method?
-    // void             reset()
-    // {
-    //     m_valid = m_policy.intialize();
-    // 
-    //     increment();
-    // }
-
-protected: // provide access to the derived
-    // Data members
-    ImplPolicy          m_policy;
-
-private:
-    typedef typename mpl::if_<mpl::is_void_<ValueType>,detail::value_type_ident<ValueType>,ImplPolicy>::type::value_type value_type;
-    typedef typename mpl::if_<mpl::is_void_<Reference>,ImplPolicy,detail::ref_type_ident<Reference> >::type::reference   reference;
-
+protected:
     friend class iterator_core_access;
 
     // iterator facade interface implementation
@@ -97,23 +67,31 @@ private:
     {
         // we make post-end incrementation indefinetly safe 
         if( m_valid )
-            m_valid = m_policy.get();
+            m_valid = input_iterator_core_access::get( *static_cast<Derived*>(this) );
     }
-    bool                equal( input_iterator_facade const& rhs ) const
+    Reference dereference() const
     {
-        // two invalid iterator equals, two valid need to be compared, invalid never equal to valid
-        return !m_valid && !rhs.m_valid || m_valid && rhs.m_valid && m_policy.equal( rhs.m_policy );
+        return m_value;
     }
-    reference           dereference() const
-    {
-        //!! should we call some kind of assert( m_valid ) here instead or do nothing???
 
-        // we pass m_valid inside the policy to decide what to do on attempt to dereference invalid iterator
-        return m_policy.dereference( m_valid );
+protected: // provide access to the Derived
+    void                init()
+    {
+        m_valid = true;
+        increment();
     }
 
     // Data members
     bool                m_valid;
+    ValueType           m_value;
+
+private:
+    // iterator facade interface implementation
+    bool                equal( input_iterator_facade const& rhs ) const
+    {
+        // two invalid iterator equals, inequal otherwise
+        return !m_valid && !rhs.m_valid;
+    }
 };
 
 } // namespace unit_test
@@ -124,6 +102,10 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2004/06/05 11:03:12  rogeeff
+//  input_iterator_adaptor simplified
+//  token_iterator added
+//
 //  Revision 1.2  2004/05/25 10:29:09  rogeeff
 //  use standard getline
 //  eliminate initialize

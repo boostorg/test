@@ -18,7 +18,6 @@
 // Boost
 #include <boost/test/detail/basic_cstring/basic_cstring.hpp>
 #include <boost/test/detail/iterator/input_iterator_facade.hpp>
-#include <boost/shared_array.hpp>
 
 // STL
 #include <iosfwd>
@@ -31,44 +30,42 @@ namespace unit_test {
 // **************         basic_istream_line_iterator          ************** //
 // ************************************************************************** //
 
-namespace detail {
-
-template<typename CharT>
-class istream_line_iterator_impl {
-public:
-    typedef basic_cstring<CharT const> value_type;
-    typedef basic_cstring<CharT const> reference;
-
-                istream_line_iterator_impl( std::basic_istream<CharT>& input, CharT delimeter )
-    : m_input_stream( &input ), m_delimeter( delimeter )            {}
-
-    bool        get()                                               { return std::getline( *m_input_stream, m_buffer, m_delimeter ); }
-    reference   dereference( bool valid ) const                     { return m_buffer; }
-    bool        equal( istream_line_iterator_impl const& ) const    { return false; }
-
-private:
-    // Data members
-    std::basic_istream<CharT>*  m_input_stream;
-    std::basic_string<CharT>    m_buffer;
-    CharT                       m_delimeter;
-};
-
-} // namespace detail
-
 //!! Should we support policy based delimitation
 
 template<typename CharT>
 class basic_istream_line_iterator
-: public input_iterator_facade<detail::istream_line_iterator_impl<CharT>,basic_istream_line_iterator<CharT> > {
-    typedef detail::istream_line_iterator_impl<CharT>                       impl;
-    typedef input_iterator_facade<impl,basic_istream_line_iterator<CharT> > base;
+: public input_iterator_facade<basic_istream_line_iterator<CharT>,
+                               std::basic_string<CharT>,
+                               basic_cstring<CharT const> > {
+    typedef input_iterator_facade<basic_istream_line_iterator<CharT>,
+                                  std::basic_string<CharT>,
+                                  basic_cstring<CharT const> > base;
 public:
-    // Constructor
+    // Constructors
+    basic_istream_line_iterator() {}
     basic_istream_line_iterator( std::basic_istream<CharT>& input, CharT delimeter )
-    : base( impl( input, delimeter ) ) {}
-
+    : m_input_stream( &input ), m_delimeter( delimeter )
+    {
+        init();
+    }
     explicit basic_istream_line_iterator( std::basic_istream<CharT>& input )
-    : base( impl( input, input.widen( '\n' ) ) ) {}
+    : m_input_stream( &input ), m_delimeter( input.widen( '\n' ) )
+    {
+        init();
+    }
+
+private:
+    friend class input_iterator_core_access;
+
+    // increment implementation
+    bool                     get()
+    {
+        return std::getline( *m_input_stream, m_value, m_delimeter );
+    }
+
+    // Data members
+    std::basic_istream<CharT>*  m_input_stream;
+    CharT                       m_delimeter;
 };
 
 typedef basic_istream_line_iterator<char>       istream_line_iterator;
@@ -82,6 +79,10 @@ typedef basic_istream_line_iterator<wchar_t>    wistream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2004/06/05 11:03:12  rogeeff
+//  input_iterator_adaptor simplified
+//  token_iterator added
+//
 //  Revision 1.3  2004/05/27 07:01:49  rogeeff
 //  portability workarounds
 //
