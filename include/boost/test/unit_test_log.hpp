@@ -20,7 +20,6 @@
 
 // Boost.Test
 #include <boost/test/detail/unit_test_config.hpp>
-#include <boost/test/detail/unit_test_parameters.hpp>
 
 // BOOST
 #include <boost/utility.hpp>
@@ -161,6 +160,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2003/02/15 22:26:00  rogeeff
+//  excessive include parameters moved to source file
+//
 //  Revision 1.14  2003/02/13 08:20:56  rogeeff
 //  report_level->log_level
 //  log format config methods added
