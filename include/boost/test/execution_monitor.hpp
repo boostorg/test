@@ -11,7 +11,7 @@
 //
 //  Version     : $Id$
 //
-//  Description :
+//  Description : defines abstract monitor interfaces and implements execution excepiton
 //  The original Boost Test Library included an implementation detail function
 //  named catch_exceptions() which caught otherwise uncaught C++ exceptions.
 //  It was derived from an existing test framework by Beman Dawes.  The
@@ -120,6 +120,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2002/09/09 09:07:02  rogeeff
+//  descriptions added
+//
 //  Revision 1.5  2002/08/20 22:24:53  rogeeff
 //  all formal arguments trailed with underscore
 //

@@ -10,7 +10,9 @@
 //
 //  Version     : $Id$
 //
-//  Description :
+//  Description : defines singleton class unit_test_log and all manipulators.
+//  unit_test_log has output stream like interface. It's implementation is completely 
+//  hidden with pimple idiom
 // ***************************************************************************
 
 #ifndef BOOST_UNIT_TEST_LOG_HPP
@@ -155,6 +157,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2002/09/09 09:07:03  rogeeff
+//  descriptions added
+//
 //  Revision 1.7  2002/08/20 22:24:53  rogeeff
 //  all formal arguments trailed with underscore
 //

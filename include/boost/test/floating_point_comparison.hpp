@@ -10,7 +10,7 @@
 //
 //  Version     : $Id$
 //
-//  Description :
+//  Description : defines algoirthms for comparing 2 floating point values
 // ***************************************************************************
 
 #ifndef BOOST_FLOATING_POINT_COMPARISON_HPP
@@ -97,6 +97,9 @@ compute_tolerance( ToleranceSource tolerance, FPT /* unfortunately we need to pa
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2002/09/09 09:07:02  rogeeff
+//  descriptions added
+//
 //  Revision 1.4  2002/08/20 22:24:53  rogeeff
 //  all formal arguments trailed with underscore
 //

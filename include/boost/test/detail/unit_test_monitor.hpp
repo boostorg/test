@@ -10,7 +10,8 @@
 //
 //  Version     : $Id$
 //
-//  Description :
+//  Description : defines specific version of execution monitor used to run unit 
+// test cases. Translates executioin exception into error level
 // ***************************************************************************
 
 #ifndef BOOST_UNIT_TEST_MONITOR_HPP
@@ -72,6 +73,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2002/09/09 09:07:03  rogeeff
+//  descriptions added
+//
 //  Revision 1.5  2002/09/04 07:28:11  rogeeff
 //  comment typo
 //

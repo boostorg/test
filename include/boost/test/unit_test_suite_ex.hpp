@@ -10,7 +10,8 @@
 //
 //  Version     : $Id$
 //
-//  Description :
+//  Description : provides extention for unit test framework that allows usage
+//  boost::function as a test case base function.
 // ***************************************************************************
 
 #ifndef BOOST_UNIT_TEST_SUITE_EX_HPP
@@ -106,6 +107,9 @@ create_test_case( function1<void,ParameterType> const& fct_, std::string name_,
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2002/09/09 09:07:03  rogeeff
+//  descriptions added
+//
 //  Revision 1.5  2002/08/20 22:24:53  rogeeff
 //  all formal arguments trailed with underscore
 //

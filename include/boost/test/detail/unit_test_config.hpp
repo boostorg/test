@@ -10,7 +10,7 @@
 //
 //  Version     : $Id$
 //
-//  Description :
+//  Description : contains workarounds and works as a central place for configurable types
 // ***************************************************************************
 
 #ifndef BOOST_UNIT_TEST_CONFIG_HPP
@@ -54,6 +54,9 @@ using std::distance;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2002/09/09 09:07:03  rogeeff
+//  descriptions added
+//
 //  Revision 1.8  2002/08/20 22:24:53  rogeeff
 //  all formal arguments trailed with underscore
 //

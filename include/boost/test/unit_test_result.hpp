@@ -10,7 +10,8 @@
 //
 //  Version     : $Id$
 //
-//  Description :
+//  Description : defines class unit_test_result that is responsible for 
+//  gathering test results and presenting this information to end-user
 // ***************************************************************************
 
 #ifndef BOOST_UNIT_TEST_RESULT_HPP
@@ -76,6 +77,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2002/09/09 09:07:03  rogeeff
+//  descriptions added
+//
 //  Revision 1.5  2002/08/20 22:24:53  rogeeff
 //  all formal arguments trailed with underscore
 //

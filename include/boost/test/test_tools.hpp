@@ -11,7 +11,7 @@
 //
 //  Version     : $Id$
 //
-//  Description :
+//  Description : contains definition for all test tools in test toolbox
 // ***************************************************************************
 
 #ifndef BOOST_TEST_TOOLS_HPP
@@ -460,6 +460,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.17  2002/09/09 09:07:02  rogeeff
+//  descriptions added
+//
 //  Revision 1.16  2002/08/26 08:31:28  rogeeff
 //  Borlan overloading bug workaround
 //

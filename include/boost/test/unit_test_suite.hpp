@@ -11,7 +11,8 @@
 //
 //  Version     : $Id$
 //
-//  Description :
+//  Description : defines all classes in test_case hierarchy and object generators
+//  for them.
 // ***************************************************************************
 
 #ifndef BOOST_UNIT_TEST_SUITE_HPP
@@ -310,6 +311,9 @@ create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, bo
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2002/09/09 09:07:03  rogeeff
+//  descriptions added
+//
 //  Revision 1.6  2002/08/20 22:24:53  rogeeff
 //  all formal arguments trailed with underscore
 //

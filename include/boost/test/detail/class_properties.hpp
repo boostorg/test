@@ -10,8 +10,8 @@
 //
 //  Version     : $Id$
 //
-//  Description :
-//  Original idea Henrik Ravn.
+//  Description : simple facility that mimmic notion of read-only read-write 
+//  properties in C++ classes. Original idea by Henrik Ravn.
 // ***************************************************************************
 
 #ifndef CLASS_PROPERTY_HPP
@@ -62,6 +62,9 @@ private:                                                                        
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2002/09/09 09:07:03  rogeeff
+//  descriptions added
+//
 //  Revision 1.4  2002/08/20 08:52:41  rogeeff
 //  cvs keywords added
 //
