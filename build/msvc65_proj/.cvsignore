@@ -4,4 +4,4 @@
 *.ncb
 Debug
 Release
-bin
+pattern.*

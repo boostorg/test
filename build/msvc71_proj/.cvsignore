@@ -2,3 +2,4 @@
 *.suo
 debug
 release
+pattern.*
