@@ -7,7 +7,7 @@ include testing.jam ;
 rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file ? )
 {
    return [ $(test-rule) $(test-name).cpp <lib>../build/$(lib-name)
-            : --save_pattern=yes
+            : #args
             : $(pattern_file)
             : <stlport-iostream>on <borland><*><cxxflags>-w-8080 # requirements
           ] ;
