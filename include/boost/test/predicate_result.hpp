@@ -39,7 +39,13 @@ class predicate_result {
     typedef boost::unit_test::const_string      const_string;
 public:
     // Constructor
-    predicate_result( bool pv_ ) : p_predicate_value( pv_ ) {}
+    predicate_result( bool pv_ ) 
+    : p_predicate_value( pv_ )
+#if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530))
+    , m_message( 0 )
+#endif
+    {}
+
     template<typename BoolConvertable>
     predicate_result( BoolConvertable const& pv_ ) : p_predicate_value( !!pv_ ) {}
 
@@ -88,6 +94,9 @@ private:
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.4  2005/02/03 20:39:12  rogeeff
+//  m_message zero init for sunpro
+//
 //  Revision 1.3  2005/02/01 06:40:06  rogeeff
 //  copyright update
 //  old log entries removed
