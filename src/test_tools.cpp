@@ -33,7 +33,7 @@
 namespace std { using ::strcmp; using ::wcscmp; using ::strlen; using ::isprint; }
 # endif
 
-#if BOOST_WORKAROUND( __GNUC__, == 3 ) && BOOST_WORKAROUND( __GNUC_MINOR__,  == 3 )
+#if defined( __GNUC__ ) && defined( BOOST_NO_CWCHAR )
 namespace std { using ::wcscmp; }
 #endif
 
@@ -459,6 +459,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.36  2004/07/22 09:59:20  rogeeff
+//  preper wide char workaround
+//
 //  Revision 1.35  2004/07/20 17:03:55  dgregor
 //  Documentation update from Jon T. Pedant
 //
