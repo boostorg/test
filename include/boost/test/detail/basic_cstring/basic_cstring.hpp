@@ -39,7 +39,11 @@ class basic_cstring {
     typedef typename boost::remove_const<CharT>::type   mutable_char;
 public:
     // Subtypes
+#if  BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+    typedef std::string_char_traits<mutable_char>       traits_type;
+#else
     typedef std::char_traits<mutable_char>              traits_type;
+#endif
     typedef std::basic_string<mutable_char, traits_type> std_string;
 
     typedef CharT                                       value_type;
@@ -559,7 +563,7 @@ template<typename CharT>
 inline basic_cstring<CharT>
 basic_cstring<CharT>::default_trim_ex()
 {
-    static CharT ws[] = { CharT(' '), CharT('\t'), CharT('\n') };
+    static mutable_char ws[3] = { mutable_char(' '), mutable_char('\t'), mutable_char('\n') };
 
     return self_type( ws, 3 );
 }
@@ -701,6 +705,10 @@ last_char( basic_cstring<CharT> source )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2004/05/27 06:24:28  rogeeff
+//  workaround for gcc 2.95 io
+//  workaround for cwpro array definition
+//
 //  Revision 1.3  2004/05/25 11:01:25  rogeeff
 //  make npos to have a named type
 //
