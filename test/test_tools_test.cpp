@@ -66,12 +66,12 @@ using namespace boost::unit_test_framework;
 
 #if !defined(__BORLANDC__)
 #define CHECK_PATTERN( msg, shift ) \
-    (boost::test_toolbox::detail::wrapstrstream() << __FILE__ << "(" << __LINE__ << "): " << msg).str()
+    (boost::test_toolbox::detail::wrapstrstream().ref() << __FILE__ << "(" << __LINE__ << "): " << msg).str()
 
 #else
 
 #define CHECK_PATTERN( msg, shift ) \
-    (boost::test_toolbox::detail::wrapstrstream() << __FILE__ << "(" << (__LINE__-shift) << "): " << msg).str()
+    (boost::test_toolbox::detail::wrapstrstream().ref() << __FILE__ << "(" << (__LINE__-shift) << "): " << msg).str()
 
 #endif
 //____________________________________________________________________________//
@@ -236,7 +236,7 @@ test_BOOST_CHECKPOINT() {
     CHECK_TOOL_USAGE(
         bad.run(),
         output.is_equal(
-            (boost::test_toolbox::detail::wrapstrstream()
+            (boost::test_toolbox::detail::wrapstrstream().ref()
                 << "Exception in " TEST_CASE_NAME ": C string: some error\n"
                 << __FILE__ << "(" << (__LINE__ - 10) << ") : "
                 << "last checkpoint: Going to do a silly things\n").str()
@@ -687,6 +687,9 @@ init_unit_test_suite( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.13  2002/11/02 20:23:24  rogeeff
+//  wrapstream copy constructor isuue fix reworked
+//
 //  Revision 1.12  2002/11/02 20:04:43  rogeeff
 //  release 1.29.0 merged into the main trank
 //
