@@ -19,7 +19,7 @@ using namespace boost::unit_test_framework;
 // STL
 #include <iostream>
 #include <list>
-#include <typeinfo.h>
+#include <typeinfo>
 
 #define CHECK_TOOL_USAGE( tool_usage, check )               \
 {                                                           \

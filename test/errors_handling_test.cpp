@@ -179,6 +179,8 @@ test_main( int argc, char * argv[] ) {
                 case tct_param_user_test_case:
                     test.add( BOOST_PARAM_CLASS_TEST_CASE( &bad_test::test_param, bad_test_instance, (int*)params, params+1 ) );
                     break;
+                default:
+                    continue;
                 }
 
                 unit_test_log::instance().start( 1 );
