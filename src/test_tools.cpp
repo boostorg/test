@@ -31,6 +31,9 @@
 
 # ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::strcmp; using ::strlen; using ::isprint; }
+#if !defined( BOOST_NO_CWCHAR )
+namespace std { using ::wcscmp; }
+#endif
 # endif
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -178,18 +181,13 @@ equal_and_continue_impl( char const* left, char const* right, wrap_stringstream&
 
 //____________________________________________________________________________//
 
+#if !defined( BOOST_NO_CWCHAR )
 bool
 equal_and_continue_impl( wchar_t const* left, wchar_t const* right, wrap_stringstream& message,
                          const_string file_name, std::size_t line_num,
                          unit_test::log_level loglevel )
 {
-    bool predicate = (left == right);
-    
-    if (left && right)
-    {
-        using namespace std;
-        predicate = wcscmp( left, right ) == 0;
-    }
+    bool predicate = (left && right) ? std::wcscmp( left, right ) == 0 : (left == right);
 
     left  = left  ? left  : L"null string";
     right = right ? right : L"null string";
@@ -202,6 +200,7 @@ equal_and_continue_impl( wchar_t const* left, wchar_t const* right, wrap_strings
 
     return test_and_continue_impl( true, message, file_name, line_num, true, loglevel );
 }
+#endif // !defined( BOOST_NO_CWCHAR )
 
 //____________________________________________________________________________//
 
@@ -461,11 +460,8 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.38  2004/07/23 14:49:36  david_abrahams
-//  Re-fixed for VC
-//
-//  Revision 1.37  2004/07/23 11:59:31  david_abrahams
-//  Got tired of waiting for workarounds; fix for cygwin gcc2 and mingw-2.0.
+//  Revision 1.39  2004/07/25 08:49:15  rogeeff
+//  don't use wchar if BOOST_NO_CWCHAR is defined
 //
 //  Revision 1.36  2004/07/22 09:59:20  rogeeff
 //  preper wide char workaround
