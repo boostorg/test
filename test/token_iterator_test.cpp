@@ -44,12 +44,10 @@ void test_default_delim_policy()
 
 void test_wide()
 {
-#if !defined(__GNUC__) || defined(__SGI_STL_PORT) || defined(_STLPORT_VERSION)
     utf::wstring_token_iterator tit( L"\317\356\367\345\354\363 \341\373 \350 \355\345\362" );
     wchar_t const* res[4] = { L"\317\356\367\345\354\363", L"\341\373", L"\350", L"\355\345\362" };
     
     BOOST_CHECK_EQUAL_COLLECTIONS( tit, wsti_end, res );
-#endif
 }
 
 //____________________________________________________________________________//
@@ -195,6 +193,9 @@ init_unit_test_suite( int argc, char* argv[] )
 // History :
 //
 // $Log$
+// Revision 1.3  2004/09/28 17:27:25  rogeeff
+// unnesseary check removed
+//
 // Revision 1.2  2004/09/27 08:39:21  rogeeff
 // msvc/gcc workarounds
 //
