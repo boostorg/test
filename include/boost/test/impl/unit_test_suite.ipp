@@ -21,12 +21,14 @@
 #include <boost/test/framework.hpp>
 #include <boost/test/utils/foreach.hpp>
 #include <boost/test/results_collector.hpp>
+#include <boost/test/detail/unit_test_parameters.hpp>
 
 // Boost
 #include <boost/timer.hpp>
 
 // STL
 #include <algorithm>
+#include <vector>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -79,7 +81,10 @@ test_case::test_case( const_string name, callback0<> const& test_func )
 : test_unit( name, (test_unit_type)type )
 , m_test_func( test_func )
 {
-    0; // !! weirdest MSVC BUG; try to remove this statement; looks like it eats first token of next statement
+    // !! weirdest MSVC BUG; try to remove this statement; looks like it eats first token of next statement
+#if BOOST_WORKAROUND(BOOST_MSVC,<=1200)
+    0;
+#endif
 
     framework::register_test_unit( this );
 }
@@ -122,7 +127,7 @@ void
 test_suite::add( test_unit_generator const& gen, unsigned timeout )
 {
     test_unit* tu;
-    while( tu = gen.next() )
+    while((tu = gen.next(), tu))
         add( tu, 0, timeout );
 }
 
@@ -146,9 +151,18 @@ void    traverse_test_tree( test_suite const& suite, test_tree_visitor& V )
         return;
 
     try {
-        // !!!! random
-        BOOST_TEST_FOREACH( test_unit_id, id, suite.m_members )
-            traverse_test_tree( id, V );
+        if( runtime_config::random_seed() == 0 ) {
+            BOOST_TEST_FOREACH( test_unit_id, id, suite.m_members )
+                traverse_test_tree( id, V );
+        }
+        else {
+            std::vector<test_unit_id> members( suite.m_members );
+            std::random_shuffle( members.begin(), members.end() );
+
+            BOOST_TEST_FOREACH( test_unit_id, id, members )
+                traverse_test_tree( id, V );
+        }
+        
     } catch( test_aborted const& ) {
         V.test_suite_finish( suite );
 
@@ -201,6 +215,9 @@ normalize_test_case_name( const_string name )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.6  2005/02/21 10:12:24  rogeeff
+//  Support for random order of test cases implemented
+//
 //  Revision 1.5  2005/02/20 08:27:07  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //

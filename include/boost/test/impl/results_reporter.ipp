@@ -154,6 +154,8 @@ make_report( report_level l, test_unit_id id )
     case DETAILED_REPORT:
         traverse_test_tree( id, s_rr_impl() );
         break;
+    default:
+        break;
     }
 
     s_rr_impl().m_formatter->results_report_finish( *s_rr_impl().m_output );
@@ -176,6 +178,9 @@ make_report( report_level l, test_unit_id id )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2005/02/21 10:12:20  rogeeff
+//  Support for random order of test cases implemented
+//
 //  Revision 1.1  2005/02/20 08:27:07  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //

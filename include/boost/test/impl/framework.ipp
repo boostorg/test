@@ -24,6 +24,7 @@
 #include <boost/test/results_collector.hpp>
 #include <boost/test/progress_monitor.hpp>
 #include <boost/test/results_reporter.hpp>
+#include <boost/test/test_tools.hpp>
 
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/test/detail/global_typedef.hpp>
@@ -36,6 +37,12 @@
 // STL
 #include <map>
 #include <stdexcept>
+#include <cstdlib>
+#include <ctime>
+
+#ifdef BOOST_NO_STDC_NAMESPACE
+namespace std { using ::time; using ::srand; }
+#endif
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -296,6 +303,19 @@ run( test_unit_id id, bool continue_test )
             to->test_start( tcc.m_count );
     }
 
+    switch( runtime_config::random_seed() ) {
+    case 0:
+        break;
+    case 1: {
+        unsigned int seed = std::time( 0 );
+        BOOST_MESSAGE( "Test cases order is shuffled using seed: " << seed );
+        std::srand( seed );
+        break;
+    }
+    default:
+        BOOST_MESSAGE( "Test cases order is shuffled using seed: " << runtime_config::random_seed() );
+        std::srand( runtime_config::random_seed() );
+    }
 
     try {
         traverse_test_tree( id, s_frk_impl() );
@@ -365,6 +385,9 @@ test_unit_aborted()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2005/02/21 10:12:18  rogeeff
+//  Support for random order of test cases implemented
+//
 //  Revision 1.1  2005/02/20 08:27:07  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //

@@ -22,10 +22,14 @@
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 #include <boost/test/utils/basic_cstring/compare.hpp>
+#include <boost/test/utils/basic_cstring/io.hpp>
 #include <boost/test/utils/fixed_mapping.hpp>
 
-//BOOST
-#include <boost/config.hpp>           // for broken compiler workarounds
+// Boost
+#include <boost/config.hpp>
+#include <boost/lexical_cast.hpp>
+
+// STL
 #include <map>
 #include <cstdlib>
 
@@ -56,6 +60,7 @@ literal_string REPORT_FORMAT     = "BOOST_TEST_REPORT_FORMAT";
 literal_string LOG_FORMAT        = "BOOST_TEST_LOG_FORMAT";
 literal_string OUTPUT_FORMAT     = "BOOST_TEST_OUTPUT_FORMAT";
 literal_string DETECT_MEM_LEAKS  = "BOOST_TEST_DETECT_MEMORY_LEAKS";
+literal_string RANDOM_SEED       = "BOOST_TEST_RANDOM";
 
 unit_test::log_level     s_log_level;
 bool                     s_no_result_code;
@@ -68,6 +73,7 @@ bool                     s_catch_sys_errors;
 output_format            s_report_format;
 output_format            s_log_format;
 bool                     s_detect_mem_leaks;
+unsigned int             s_random_seed;
 
 // ************************************************************************** //
 // **************                 runtime_config               ************** //
@@ -89,7 +95,8 @@ retrieve_framework_parameter( const_string parameter_name, int* argc, char** arg
         LOG_FORMAT        , "--log_format",
         OUTPUT_FORMAT     , "--output_format",
         DETECT_MEM_LEAKS  , "--detect_memory_leaks",
-
+        RANDOM_SEED       , "--random",
+        
         ""
     );
 
@@ -165,7 +172,13 @@ init( int* argc, char** argv )
     s_show_progress     = retrieve_framework_parameter( SHOW_PROGRESS, argc, argv ) == "yes";
     s_catch_sys_errors  = retrieve_framework_parameter( CATCH_SYS_ERRORS, argc, argv ) != "no";
     s_tests_to_run      = retrieve_framework_parameter( TESTS_TO_RUN, argc, argv );
-
+    const_string rs_str = retrieve_framework_parameter( RANDOM_SEED, argc, argv );
+    
+    if( rs_str.empty() )
+        s_random_seed = 0;
+    else
+        s_random_seed   = boost::lexical_cast<unsigned int>( rs_str );
+    
     s_log_level         = log_level_name[retrieve_framework_parameter( LOG_LEVEL, argc, argv )];
     s_report_level      = report_level_name[retrieve_framework_parameter( REPORT_LEVEL, argc, argv )];
 
@@ -271,6 +284,12 @@ detect_memory_leaks()
 
 //____________________________________________________________________________//
 
+int
+random_seed()
+{
+    return s_random_seed;
+}
+
 } // namespace runtime_config
 
 } // namespace unit_test
@@ -285,6 +304,9 @@ detect_memory_leaks()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.5  2005/02/21 10:12:22  rogeeff
+//  Support for random order of test cases implemented
+//
 //  Revision 1.4  2005/02/20 08:27:07  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
