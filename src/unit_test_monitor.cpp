@@ -32,11 +32,13 @@ namespace detail {
 // **************               unit_test_monitor              ************** //
 // ************************************************************************** //
 
+bool unit_test_monitor::s_catch_system_errors = true;
+
 unit_test_monitor::error_level
 unit_test_monitor::execute_and_translate( int timeout ) 
 {
     try {
-        execute(timeout);
+        execute( s_catch_system_errors, timeout );
     }
     catch( execution_exception const& exex ) {
         report_level report_level =
@@ -51,6 +53,7 @@ unit_test_monitor::execute_and_translate( int timeout )
         // translate execution_exception::error_code to detail::error_level
         switch( exex.code() ) {
         case execution_exception::no_error:             return test_ok;
+        case execution_exception::user_error:           return unexpected_exception;
         case execution_exception::cpp_exception_error:  return unexpected_exception;
         case execution_exception::system_error:         return os_exception;
         case execution_exception::timeout_error:        return os_timeout;
@@ -90,6 +93,9 @@ unit_test_monitor::function()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2002/12/08 18:19:06  rogeeff
+//  catch system errors switch introduced
+//
 //  Revision 1.5  2002/11/02 20:04:42  rogeeff
 //  release 1.29.0 merged into the main trank
 //
