@@ -50,7 +50,7 @@ namespace ut_detail {
 entry_value_collector
 entry_value_collector::operator<<( const_string v )
 {
-    unit_test_log.log_value( v );
+    unit_test_log << v;
 
     m_last = false;
 
@@ -203,14 +203,14 @@ unit_test_log_t::set_threshold_level_by_name( const_string lev )
 //____________________________________________________________________________//
 
 void
-unit_test_log_t::track_test_case_enter( test_case const& tc )
+unit_test_log_t::test_case_enter( test_case const& tc )
 {
     if( s_impl().m_threshold_level > log_test_suites )
         return;
 
     *this << begin();
 
-    s_impl().m_log_formatter->track_test_case_enter( s_impl().stream(), tc );
+    s_impl().m_log_formatter->test_case_enter( s_impl().stream(), tc );
     s_impl().m_entry_has_value = true;
 
     *this << end();
@@ -219,7 +219,7 @@ unit_test_log_t::track_test_case_enter( test_case const& tc )
 //____________________________________________________________________________//
 
 void
-unit_test_log_t::track_test_case_exit( test_case const& tc, long testing_time_in_mks )
+unit_test_log_t::test_case_exit( test_case const& tc, long testing_time_in_mks )
 {
     if( s_impl().m_threshold_level > log_test_suites )
         return;
@@ -228,7 +228,7 @@ unit_test_log_t::track_test_case_exit( test_case const& tc, long testing_time_in
 
     *this << begin();
 
-    s_impl().m_log_formatter->track_test_case_exit( s_impl().stream(), tc, testing_time_in_mks );
+    s_impl().m_log_formatter->test_case_exit( s_impl().stream(), tc, testing_time_in_mks );
     s_impl().m_entry_has_value = true;
 
     *this << end();
@@ -309,13 +309,23 @@ unit_test_log_t::operator<<( checkpoint const& cp )
 
 //____________________________________________________________________________//
 
+unit_test_log_t&
+unit_test_log_t::operator<<( log_level l )
+{
+    s_impl().m_entry_data.m_level = l;
+
+    return *this;
+}
+
+//____________________________________________________________________________//
+
 ut_detail::entry_value_collector
-unit_test_log_t::operator()( log_level const& l )
+unit_test_log_t::operator()( log_level l )
 {
     if( !s_impl().m_entry_in_progress )
         *this << begin();
 
-    s_impl().m_entry_data.m_level = l;
+    *this << l;
 
     ut_detail::entry_value_collector res;
     return res;
@@ -330,7 +340,7 @@ unit_test_log_t::log_exception( log_level l, const_string what )
 
     if( l >= s_impl().m_threshold_level ) {
         s_impl().m_log_formatter->log_exception( s_impl().stream(), s_impl().m_checkpoint_data, 
-                                               unit_test_result::instance().test_case_name(), what );
+                                                 unit_test_result::instance().test_case_name(), what );
         s_impl().m_entry_has_value = true;
     }
 
@@ -352,8 +362,8 @@ unit_test_log_t::log_progress()
 
 //____________________________________________________________________________//
 
-void
-unit_test_log_t::log_value( const_string value )
+unit_test_log_t&
+unit_test_log_t::operator<<( const_string value )
 {
     if( s_impl().m_entry_in_progress && s_impl().m_entry_data.m_level >= s_impl().m_threshold_level && !value.empty() ) {
         if( !s_impl().m_entry_has_value ) {
@@ -384,13 +394,15 @@ unit_test_log_t::log_value( const_string value )
             case log_nothing:
             case log_test_suites:
             case invalid_log_level:
-                return;
+                return *this;
             }
         }
 
         s_impl().m_log_formatter->log_entry_value( s_impl().stream(), value );
         s_impl().m_entry_has_value = true;
     }
+    
+    return *this;
 }
 
 //____________________________________________________________________________//
@@ -404,7 +416,7 @@ unit_test_log_t::start( bool log_build_info )
 //____________________________________________________________________________//
 
 void
-unit_test_log_t::header( unit_test_counter test_cases_amount )
+unit_test_log_t::header( counter_t test_cases_amount )
 {
     if( s_impl().m_threshold_level != log_nothing && test_cases_amount > 0 )
         s_impl().m_log_formatter->log_header( s_impl().stream(), test_cases_amount );
@@ -419,7 +431,7 @@ unit_test_log_t::header( unit_test_counter test_cases_amount )
 //____________________________________________________________________________//
 
 void
-unit_test_log_t::finish( unit_test_counter test_cases_amount )
+unit_test_log_t::finish( counter_t test_cases_amount )
 {
     if( test_cases_amount == 1 )
         log_progress();
@@ -466,6 +478,9 @@ unit_test_log_t::set_formatter( unit_test_log_formatter* the_formatter )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2005/01/30 01:59:36  rogeeff
+//  counter type renamed
+//
 //  Revision 1.1  2005/01/22 19:22:13  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //

@@ -65,18 +65,18 @@ public:
 
     virtual void    start_confirmation_report( std::ostream& where_to,
                                                const_string test_case_name, bool case_suite, bool failed,
-                                               unit_test_counter num_failed, unit_test_counter num_expected ) = 0;
+                                               counter_t num_failed, counter_t num_expected ) = 0;
 
     virtual void    finish_test_case_report( std::ostream& where_to, std::size_t indent, 
                                              const_string test_case_name, bool case_suite, bool aborted ) = 0;
 
     virtual void    report_sub_test_cases_stat( std::ostream& where_to, std::size_t indent,
-                                                unit_test_counter num_passed, unit_test_counter num_failed ) = 0;
+                                                counter_t num_passed, counter_t num_failed ) = 0;
 
     virtual void    report_assertions_stat( std::ostream& where_to, std::size_t indent,
-                                            unit_test_counter num_passed, 
-                                            unit_test_counter num_failed,
-                                            unit_test_counter num_expected ) = 0;
+                                            counter_t num_passed, 
+                                            counter_t num_failed,
+                                            counter_t num_expected ) = 0;
 
 };
 
@@ -112,7 +112,7 @@ public:
 
     void    start_confirmation_report( std::ostream& where_to,
                                        const_string test_case_name, bool case_suite, bool failed,
-                                       unit_test_counter num_failed, unit_test_counter num_expected )
+                                       counter_t num_failed, counter_t num_expected )
     {
         if( failed ) {
             if( num_failed == 0 ) {
@@ -144,9 +144,9 @@ public:
     }
 
     void    report_sub_test_cases_stat( std::ostream& where_to, std::size_t indent, 
-                                        unit_test_counter num_passed, unit_test_counter num_failed )
+                                        counter_t num_passed, counter_t num_failed )
     {
-        unit_test_counter total_test_cases = num_passed + num_failed;
+        counter_t total_test_cases = num_passed + num_failed;
         std::size_t       width = static_cast<std::size_t>( std::log10( (float)(std::max)( num_passed, num_failed ) ) ) + 1;
 
         where_to << std::setw( indent ) << "" << std::setw( width ) << num_passed
@@ -157,9 +157,9 @@ public:
     }
 
     void    report_assertions_stat( std::ostream& where_to, std::size_t indent,
-                                    unit_test_counter num_passed, unit_test_counter num_failed, unit_test_counter num_expected )
+                                    counter_t num_passed, counter_t num_failed, counter_t num_expected )
     {
-        unit_test_counter total_assertions = num_passed + num_failed;
+        counter_t total_assertions = num_passed + num_failed;
         std::size_t       width            = total_assertions > 0 
                                                ? static_cast<std::size_t>( std::log10( (float)(std::max)( num_passed, num_failed ) ) ) + 1
                                                : 1;
@@ -211,7 +211,7 @@ public:
 
     void    start_confirmation_report( std::ostream& where_to,
                                        const_string test_case_name, bool case_suite, bool failed,
-                                       unit_test_counter num_failed, unit_test_counter num_expected )
+                                       counter_t num_failed, counter_t num_expected )
     {
         where_to << "<" << ( case_suite ? "TestCase" : "TestSuite" ) 
                  << " name"     << attr_value() << test_case_name
@@ -240,7 +240,7 @@ public:
     }
 
     void    report_sub_test_cases_stat( std::ostream& where_to, std::size_t indent,
-                                        unit_test_counter num_passed, unit_test_counter num_failed )
+                                        counter_t num_passed, counter_t num_failed )
     {
         where_to << std::setw( indent+2 ) << ""
                  << "<SubTestCases"
@@ -250,9 +250,9 @@ public:
     }
 
     void    report_assertions_stat( std::ostream& where_to, std::size_t indent,
-                                    unit_test_counter num_passed, 
-                                    unit_test_counter num_failed,
-                                    unit_test_counter num_expected )
+                                    counter_t num_passed, 
+                                    counter_t num_failed,
+                                    counter_t num_expected )
     {
         where_to << std::setw( indent+2 ) << ""
                  << "<Assertions"
@@ -270,11 +270,11 @@ public:
 struct unit_test_result::Impl {
     unit_test_result_ptr            m_parent;
     std::list<unit_test_result_ptr> m_children;
-    unit_test_counter               m_assertions_passed;
-    unit_test_counter               m_assertions_failed;
-    unit_test_counter               m_expected_failures;
-    unit_test_counter               m_test_cases_passed;
-    unit_test_counter               m_test_cases_failed;
+    counter_t                       m_assertions_passed;
+    counter_t                       m_assertions_failed;
+    counter_t                       m_expected_failures;
+    counter_t                       m_test_cases_passed;
+    counter_t                       m_test_cases_failed;
     bool                            m_exception_caught;
     std::string                     m_test_case_name;
 
@@ -302,7 +302,7 @@ boost::scoped_ptr<report_formatter> unit_test_result::Impl::m_report_formatter( 
 
 //____________________________________________________________________________//
 
-unit_test_result::unit_test_result( unit_test_result_ptr parent, const_string test_case_name, unit_test_counter exp_fail )
+unit_test_result::unit_test_result( unit_test_result_ptr parent, const_string test_case_name, counter_t exp_fail )
 : m_pimpl( new Impl )
 {
     m_pimpl->m_parent            = parent;
@@ -342,7 +342,7 @@ unit_test_result::instance()
 //____________________________________________________________________________//
 
 void
-unit_test_result::test_case_start( const_string name, unit_test_counter expected_failures )
+unit_test_result::test_case_enter( const_string name, counter_t expected_failures )
 {
     unit_test_result_ptr new_test_case_result_inst = new unit_test_result( Impl::m_curr, name, expected_failures );
 
@@ -357,7 +357,7 @@ unit_test_result::test_case_start( const_string name, unit_test_counter expected
 //____________________________________________________________________________//
 
 void
-unit_test_result::test_case_end()
+unit_test_result::test_case_exit()
 {
     assert( !!Impl::m_curr );
 
@@ -411,7 +411,7 @@ unit_test_result::set_report_format( const_string report_format_name )
 //____________________________________________________________________________//
 
 void
-unit_test_result::increase_expected_failures( unit_test_counter amount ) 
+unit_test_result::increase_expected_failures( counter_t amount ) 
 {
     m_pimpl->m_expected_failures += amount;
 
@@ -479,7 +479,7 @@ unit_test_result::reset_current_result_set()
 //____________________________________________________________________________//
 
 void
-unit_test_result::failures_details( unit_test_counter& num_of_failures, bool& exception_caught )
+unit_test_result::failures_details( counter_t& num_of_failures, bool& exception_caught )
 {
     num_of_failures  = m_pimpl->m_assertions_failed;
     exception_caught = m_pimpl->m_exception_caught;
@@ -604,6 +604,9 @@ unit_test_result::has_passed() const
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/01/30 01:56:10  rogeeff
+//  counter type renamed
+//
 //  Revision 1.1  2005/01/22 19:22:13  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
 //
