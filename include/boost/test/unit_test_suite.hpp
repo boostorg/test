@@ -176,7 +176,8 @@ public:
                                      ParamIterator const& par_begin_, ParamIterator const& par_end_ )
     : test_case( name_ ), m_first_parameter( par_begin_ ), m_last_parameter( par_end_ ), m_function( f_ )
     {
-       p_stages_amount.set( detail::distance( par_begin_, par_end_ ) );
+       // the typecasts are here to keep Borland C++ Builder 5 happy, for other compilers they have no effect:
+       p_stages_amount.set( detail::distance( (ParamIterator)par_begin_, (ParamIterator)par_end_ ) );
     }
 
     // test case implementation
@@ -207,7 +208,8 @@ public:
     : test_case( name_ ), m_first_parameter( par_begin_ ), m_last_parameter( par_end_ ),
       m_user_test_case( user_test_case_ ), m_function( f_ )
     {
-       p_stages_amount.set( detail::distance( par_begin_, par_end_ ) );
+       // the typecasts are here to keep Borland C++ Builder 5 happy, for other compilers they have no effect:
+       p_stages_amount.set( detail::distance( (ParamIterator)par_begin_, (ParamIterator)par_end_ ) );
     }
 
     // test case implementation
@@ -308,6 +310,9 @@ create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, bo
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9.2.2  2002/10/05 11:09:11  johnmaddock
+//  Minor fix for Borland C++ 5.51
+//
 //  Revision 1.9.2.1  2002/10/01 17:26:37  rogeeff
 //  reset current set feature introduces. Mostly for internal testing
 //
@@ -332,3 +337,4 @@ create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, bo
 // ***************************************************************************
 
 #endif // BOOST_UNIT_TEST_SUITE_HPP
+
