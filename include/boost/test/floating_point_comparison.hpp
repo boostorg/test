@@ -3,8 +3,15 @@
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
 //  and with no claim as to its suitability for any purpose.
-//
+
 //  See http://www.boost.org for most recent version including documentation.
+//
+//  File        : $RCSfile$
+//
+//  Version     : $Id$
+//
+//  Description :
+// ***************************************************************************
 
 #ifndef BOOST_FLOATING_POINT_COMPARISON_HPP
 #define BOOST_FLOATING_POINT_COMPARISON_HPP
@@ -62,7 +69,15 @@ private:
     bool        m_strong_or_weak;
 };
 
-//  Revision History
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.3  2002/08/20 08:52:40  rogeeff
+//  cvs keywords added
+//
 //   9 Dec 01  Initial version (Gennadiy Rozental)
+
+// ***************************************************************************
 
 #endif // BOOST_FLOATING_POINT_COMAPARISON_HPP

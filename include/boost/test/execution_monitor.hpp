@@ -1,13 +1,17 @@
-//  Boost execution_monitor header file  -------------------------------------//
-
-//  (C) Copyright Beman Dawes 2001, Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Beman Dawes 2001.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
 //  and with no claim as to its suitability for any purpose.
 
-//  See http://www.boost.org for updates, documentation, and revision history.
-
+//  See http://www.boost.org for most recent version including documentation.
+//
+//  File        : $RCSfile$
+//
+//  Version     : $Id$
+//
+//  Description :
 //  The original Boost Test Library included an implementation detail function
 //  named catch_exceptions() which caught otherwise uncaught C++ exceptions.
 //  It was derived from an existing test framework by Beman Dawes.  The
@@ -24,6 +28,7 @@
 //
 //  All those issues have been addressed by introducing the class-based
 //  design presented here.
+// ***************************************************************************
 
 #ifndef BOOST_EXECUTION_MONITOR_HPP
 #define BOOST_EXECUTION_MONITOR_HPP
@@ -111,8 +116,17 @@ public:
 
 }  // namespace boost
 
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.4  2002/08/20 08:52:40  rogeeff
+//  cvs keywords added
+//
+//   5 Oct 01  Slightly reformatted to fit Boost.Test V2 (Gennadiy Rozental)
+//   4 Jun 01  Initial version (Beman Dawes)
+
+// ***************************************************************************
+
 #endif
 
-//  Revision History
-//   5 Oct 01  Slightly reformatted to fit unit test library (Gennadiy Rozental)
-//   4 Jun 01  Initial version (Beman Dawes)

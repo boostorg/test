@@ -1,10 +1,18 @@
-//  (C) Copyright Ullrich Koethe 2001, Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Ullrich Koethe 2001.
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
 //  and with no claim as to its suitability for any purpose.
-//
+
 //  See http://www.boost.org for most recent version including documentation.
+//
+//  File        : $RCSfile$
+//
+//  Version     : $Id$
+//
+//  Description :
+// ***************************************************************************
 
 #ifndef BOOST_UNIT_TEST_SUITE_HPP
 #define BOOST_UNIT_TEST_SUITE_HPP
@@ -298,8 +306,16 @@ create_test_case( void (UserTestCase::*fct)( ParamType ), std::string name, boos
 
 } // namespace boost
 
-//  Revision History
-//   ? ??? 01  Initial version (Ullrich Koethe)
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.5  2002/08/20 08:52:41  rogeeff
+//  cvs keywords added
+//
 //   5 Oct 01  New design (Gennadiy Rozental)
+//   ? ??? 01  Initial version (Ullrich Koethe)
+
+// ***************************************************************************
 
 #endif // BOOST_UNIT_TEST_SUITE_HPP

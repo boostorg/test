@@ -3,8 +3,15 @@
 //  is granted provided this copyright notice appears in all copies.
 //  This software is provided "as is" without express or implied warranty,
 //  and with no claim as to its suitability for any purpose.
-//
+
 //  See http://www.boost.org for most recent version including documentation.
+//
+//  File        : $RCSfile$
+//
+//  Version     : $Id$
+//
+//  Description :
+// ***************************************************************************
 
 #ifndef BOOST_UNIT_TEST_LOG_HPP
 #define BOOST_UNIT_TEST_LOG_HPP
@@ -144,8 +151,16 @@ private:
 
 } // namespace boost
 
-//  Revision History
+// ***************************************************************************
+//  Revision History :
+//  
+//  $Log$
+//  Revision 1.6  2002/08/20 08:52:40  rogeeff
+//  cvs keywords added
+//
 //   5 Oct 01  Initial version (Gennadiy Rozental)
+
+// ***************************************************************************
 
 #endif // BOOST_UNIT_TEST_LOG_HPP
 
