@@ -10,7 +10,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : supplies offline implemtation for the Test Tools
+//  Description : supplies offline implementation for the Test Tools
 // ***************************************************************************
 
 // Boost.Test
@@ -459,6 +459,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.35  2004/07/20 17:03:55  dgregor
+//  Documentation update from Jon T. Pedant
+//
 //  Revision 1.34  2004/07/19 12:08:48  rogeeff
 //  suppress warnings
 //

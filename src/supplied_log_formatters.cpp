@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : implemets Unit Test Log formatters
+//  Description : implements Unit Test Log formatters
 // ***************************************************************************
 
 // Boost.Test
@@ -315,6 +315,9 @@ xml_log_formatter::print_indent( std::ostream& output )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.12  2004/07/20 17:03:55  dgregor
+//  Documentation update from Jon T. Pedant
+//
 //  Revision 1.11  2004/07/19 12:09:25  rogeeff
 //  added proper encoded of XML PCDATA
 //
