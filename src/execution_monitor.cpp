@@ -50,8 +50,10 @@ namespace std { using ::strlen; using ::strncat; }
 #include <excpt.h>
 #include <eh.h> 
 
+#if !defined(__MWERKS__)
 #define BOOST_MS_CRT_DEBUG_HOOK
 #include <crtdbg.h>
+#endif
 
 #elif (defined(__BORLANDC__) && defined(_Windows))
 #define BOOST_MS_STRCTURED_EXCEPTION_HANDLING
@@ -516,6 +518,9 @@ static void report_error( execution_exception::error_code ec, c_string_literal m
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2002/12/10 21:09:49  beman_dawes
+//  Metrowerks fix
+//
 //  Revision 1.14  2002/12/08 18:02:14  rogeeff
 //  MS C runtime debug hooks added
 //  switched to csignal and csetjmp
