@@ -166,7 +166,7 @@ test_main( int argc, char * argv[] )
                                      : argv[1] );
 
 #ifdef __GNUC__
-    pattern_file_name.append( "_gcc" );
+    pattern_file_name.append( "2" );
 #endif
 
     output_test_stream output( pattern_file_name, match_or_save );
@@ -259,6 +259,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.24  2004/10/05 04:27:09  rogeeff
+//  31 length fix
+//
 //  Revision 1.23  2004/10/05 01:32:09  rogeeff
 //  file/directory renaming for the sake of CD burning
 //
