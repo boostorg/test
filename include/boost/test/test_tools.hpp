@@ -53,8 +53,8 @@
     boost::test_toolbox::detail::equal_and_continue_impl((left_), (right_), \
         boost::wrap_stringstream().ref() << #left_ " == " #right_, __FILE__, __LINE__)
 
-#define BOOST_CHECK_CLOSE(left_, right_, tolerance_src) \
-    boost::test_toolbox::detail::compare_and_continue_impl((left_), (right_), (tolerance_src),\
+#define BOOST_CHECK_CLOSE(left_, right_, tolerance) \
+    boost::test_toolbox::detail::compare_and_continue_impl((left_), (right_), (tolerance),\
         boost::wrap_stringstream().ref() << #left_ " ~= " #right_, __FILE__, __LINE__)
 
 #define BOOST_BITWISE_EQUAL(left_, right_) \
@@ -412,20 +412,20 @@ equal_and_continue_impl( Left left_begin_, Left left_end_, Right right_begin_,
 
 // ************************************* //
 
-template<typename FPT, typename ToleranceSource>
+template<typename FPT>
 inline bool
-compare_and_continue_impl( FPT left_, FPT right_, ToleranceSource tolerance_src,
+compare_and_continue_impl( FPT left_, FPT right_, FPT tolerance_,
                            wrap_stringstream& message_,
                            c_string_literal file_name_, std::size_t line_num_,
                            unit_test_framework::log_level log_level_ = unit_test_framework::log_all_errors )
 {
-    extended_predicate_value predicate( check_is_closed( left_, right_, tolerance_src ) );
+    extended_predicate_value predicate( check_is_closed( left_, right_, tolerance_ ) );
 
     if( !predicate ) {
         return test_and_continue_impl( predicate,
             wrap_stringstream().ref() << "test " << message_
                             << " failed [" << print_helper<FPT>( left_ ) << " !~= " << print_helper<FPT>( right_ )
-                            << " (+/-" << compute_tolerance( tolerance_src, left_ ) << ")]",
+                            << " (+/-" << tolerance_ << ")]",
             file_name_, line_num_, false, log_level_ );
     }
 
@@ -523,6 +523,9 @@ private:
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.31  2003/07/15 09:00:46  rogeeff
+//  eliminate tolerance definition by number of rounding errors
+//
 //  Revision 1.30  2003/06/20 10:56:26  rogeeff
 //  printing posponed differently
 //  extended predicate value allowed to reset the value

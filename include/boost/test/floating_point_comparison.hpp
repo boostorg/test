@@ -68,11 +68,7 @@ template<typename FPT>
 class close_at_tolerance {
 public:
     explicit    close_at_tolerance( FPT tolerance, floating_point_comparison_type fpc_type = FPC_STRONG ) 
-    : p_tolerance( tolerance ), m_strong_or_weak( fpc_type ==  FPC_STRONG ) {}
-
-    explicit    close_at_tolerance( int number_of_rounding_errors, floating_point_comparison_type fpc_type = FPC_STRONG ) 
-    : p_tolerance( std::numeric_limits<FPT>::epsilon() * number_of_rounding_errors/2 ), 
-      m_strong_or_weak( fpc_type ==  FPC_STRONG ) {}
+    : p_tolerance( tolerance ), p_strong_or_weak( fpc_type ==  FPC_STRONG ) {}
 
     bool        operator()( FPT left, FPT right ) const
     {
@@ -80,15 +76,15 @@ public:
         FPT d1   = detail::safe_fpt_division( diff, detail::fpt_abs( right ) );
         FPT d2   = detail::safe_fpt_division( diff, detail::fpt_abs( left ) );
         
-        return m_strong_or_weak ? (d1 <= p_tolerance.get() && d2 <= p_tolerance.get()) 
+        return p_strong_or_weak ? (d1 <= p_tolerance.get() && d2 <= p_tolerance.get()) 
                                 : (d1 <= p_tolerance.get() || d2 <= p_tolerance.get());
     }
 
-    // Data members
+    // Public properties
     BOOST_READONLY_PROPERTY( FPT, 0, () )
                 p_tolerance;
-private:
-    bool        m_strong_or_weak;
+    BOOST_READONLY_PROPERTY( bool, 0, () )
+                p_strong_or_weak;
 };
 
 //____________________________________________________________________________//
@@ -97,9 +93,9 @@ private:
 // **************               check_is_closed                ************** //
 // ************************************************************************** //
 
-template<typename FPT, typename ToleranceSource>
+template<typename FPT>
 bool
-check_is_closed( FPT left, FPT right, ToleranceSource tolerance, floating_point_comparison_type fpc_type = FPC_STRONG )
+check_is_closed( FPT left, FPT right, FPT tolerance, floating_point_comparison_type fpc_type = FPC_STRONG )
 {
     close_at_tolerance<FPT> pred( tolerance, fpc_type );
 
@@ -108,9 +104,9 @@ check_is_closed( FPT left, FPT right, ToleranceSource tolerance, floating_point_
 
 //____________________________________________________________________________//
 
-template<typename FPT, typename ToleranceSource>
+template<typename FPT>
 FPT
-compute_tolerance( ToleranceSource tolerance, FPT /* unfortunately we need to pass type information this way*/ )
+compute_tolerance( FPT tolerance )
 {
     close_at_tolerance<FPT> pred( tolerance );
 
@@ -126,6 +122,9 @@ compute_tolerance( ToleranceSource tolerance, FPT /* unfortunately we need to pa
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10  2003/07/15 09:00:46  rogeeff
+//  eliminate tolerance definition by number of rounding errors
+//
 //  Revision 1.9  2003/07/02 09:15:57  rogeeff
 //  move log formatter in public interface
 //

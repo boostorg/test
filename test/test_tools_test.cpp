@@ -102,7 +102,8 @@ public:
 };
 
 void
-test_BOOST_CHECK() {
+test_BOOST_CHECK()
+{
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK" << '\"' <<
 
     unit_test_log::instance().set_log_threshold_level( log_all_errors );
@@ -147,7 +148,8 @@ test_BOOST_CHECK() {
 //____________________________________________________________________________//
 
 void
-test_BOOST_REQUIRE() {
+test_BOOST_REQUIRE()
+{
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_REQUIRE" << '\"' <<
 
@@ -185,7 +187,8 @@ struct A {
 };
 
 void
-test_BOOST_MESSAGE() {
+test_BOOST_MESSAGE()
+{
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_REQUIRE" << '\"' <<
 
@@ -217,7 +220,8 @@ test_BOOST_MESSAGE() {
 //____________________________________________________________________________//
 
 void
-test_BOOST_WARN() {
+test_BOOST_WARN()
+{
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_WARN" << '\"' <<
 
@@ -242,7 +246,8 @@ public:
 } bad;
 
 void
-test_BOOST_CHECKPOINT() {
+test_BOOST_CHECKPOINT()
+{
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECKPOINT" << '\"' <<
 
@@ -255,7 +260,7 @@ test_BOOST_CHECKPOINT() {
         output.is_equal(
             (boost::wrap_stringstream().ref()
                 << "Exception in " TEST_CASE_NAME ": C string: some error\n"
-                << normalize_file_name( __FILE__ ) << "(" << 251 << "): "
+                << normalize_file_name( __FILE__ ) << "(" << 256 << "): "
                 << "last checkpoint: Going to do a silly things\n").str()
         )
     );
@@ -264,7 +269,8 @@ test_BOOST_CHECKPOINT() {
 //____________________________________________________________________________//
 
 void
-test_BOOST_WARN_MESSAGE() {
+test_BOOST_WARN_MESSAGE()
+{
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_WARN_MESSAGE" << '\"' <<
 
@@ -288,7 +294,8 @@ test_BOOST_WARN_MESSAGE() {
 //____________________________________________________________________________//
 
 void
-test_BOOST_CHECK_MESSAGE() {
+test_BOOST_CHECK_MESSAGE()
+{
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_MESSAGE" << '\"' <<
 
@@ -305,7 +312,8 @@ test_BOOST_CHECK_MESSAGE() {
 //____________________________________________________________________________//
 
 void
-test_BOOST_REQUIRE_MESSAGE() {
+test_BOOST_REQUIRE_MESSAGE()
+{
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_REQUIRE_MESSAGE" << '\"' <<
 
@@ -320,8 +328,7 @@ test_BOOST_REQUIRE_MESSAGE() {
 
 //____________________________________________________________________________//
 
-struct B
-{
+struct B {
     B( int i ) : m_i( i ) {}
 
     friend bool operator==( B const& b1, B const& b2 ) { return b1.m_i == b2.m_i; }
@@ -331,7 +338,8 @@ struct B
 };
 
 void
-test_BOOST_CHECK_EQUAL() {
+test_BOOST_CHECK_EQUAL()
+{
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_EQUAL" << '\"' <<
 
@@ -380,14 +388,8 @@ test_BOOST_CHECK_EQUAL() {
 
 //____________________________________________________________________________//
 
-bool is_even( int i ) {
-    return i%2 == 0;
-}
-
-int foo( int arg, int mod ) 
-{
-    return arg % mod;
-}
+bool is_even( int i )        { return i%2 == 0;  }
+int  foo( int arg, int mod ) { return arg % mod; }
 
 BOOST_TEST_DONT_PRINT_LOG_VALUE( std::list<int> )
 
@@ -408,7 +410,8 @@ compare_lists( std::list<int> const& l1, std::list<int> const& l2 )
 }
 
 void
-test_BOOST_CHECK_PREDICATE() {
+test_BOOST_CHECK_PREDICATE()
+{
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_PREDICATE" << '\"' <<
 
@@ -448,7 +451,8 @@ test_BOOST_CHECK_PREDICATE() {
 //____________________________________________________________________________//
 
 void
-test_BOOST_REQUIRE_PREDICATE() {
+test_BOOST_REQUIRE_PREDICATE()
+{
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_REQUIRE_PREDICATE" << '\"' <<
 
@@ -471,7 +475,8 @@ test_BOOST_REQUIRE_PREDICATE() {
 //____________________________________________________________________________//
 
 void
-test_BOOST_ERROR() {
+test_BOOST_ERROR()
+{
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_ERROR" << '\"' <<
 
@@ -499,7 +504,8 @@ struct my_exception {
 bool is_critical( my_exception const& ex ) { return ex.m_error_code < 0; }
 
 void
-test_BOOST_CHECK_THROW() {
+test_BOOST_CHECK_THROW()
+{
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_THROW" << '\"' <<
 
@@ -524,7 +530,8 @@ test_BOOST_CHECK_THROW() {
 //____________________________________________________________________________//
 
 void
-test_BOOST_CHECK_EXCEPTION() {
+test_BOOST_CHECK_EXCEPTION()
+{
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_EXCEPTION" << '\"' <<
 
@@ -548,7 +555,8 @@ test_BOOST_CHECK_EXCEPTION() {
 //____________________________________________________________________________//
 
 void
-test_BOOST_CHECK_NO_THROW() {
+test_BOOST_CHECK_NO_THROW()
+{
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_NO_THROW" << '\"' <<
 
@@ -567,7 +575,8 @@ test_BOOST_CHECK_NO_THROW() {
 //____________________________________________________________________________//
 
 void
-test_BOOST_CHECK_EQUAL_COLLECTIONS() {
+test_BOOST_CHECK_EQUAL_COLLECTIONS()
+{
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_EQUAL_COLLECTIONS" << '\"' <<
 
@@ -610,7 +619,8 @@ test_BOOST_CHECK_EQUAL_COLLECTIONS() {
 //____________________________________________________________________________//
 
 void
-test_BOOST_IS_DEFINED() {
+test_BOOST_IS_DEFINED()
+{
 #define SYMBOL1
 #define SYMBOL2 std::cout
 #define ONE_ARG( arg ) arg
@@ -628,7 +638,8 @@ test_BOOST_IS_DEFINED() {
 //____________________________________________________________________________//
 
 void
-test_BOOST_BITWISE_EQUAL() {
+test_BOOST_BITWISE_EQUAL()
+{
 #undef  TEST_CASE_NAME
 #define TEST_CASE_NAME << '\"' << "test_BOOST_BITWISE_EQUAL" << '\"' <<
 
@@ -654,7 +665,8 @@ test_BOOST_BITWISE_EQUAL() {
 
 
 test_suite*
-init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
+init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
+{
     test_suite* test = BOOST_TEST_SUITE("Test Tools test");
 
     test->add( BOOST_TEST_CASE( &test_BOOST_CHECK ) );
@@ -685,6 +697,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.21  2003/07/15 09:01:36  rogeeff
+//  eliminate tolerance definition by number of rounding errors
+//
 //  Revision 1.20  2003/07/02 09:14:22  rogeeff
 //  move log formatter in public interface
 //

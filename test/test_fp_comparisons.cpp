@@ -17,8 +17,12 @@
 #include <boost/test/floating_point_comparison.hpp>
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_result.hpp>
+#include <boost/test/test_case_template.hpp>
 using namespace boost::unit_test_framework;
 using namespace boost::test_toolbox;
+
+// Boost
+#include <boost/mpl/list.hpp>
 
 // STL
 #include <iostream>
@@ -71,9 +75,10 @@ normalize_file_name( char const* f )
 
 template<typename FPT>
 void
-test_BOOST_CHECK_CLOSE( FPT ) {
+test_BOOST_CHECK_CLOSE( FPT = FPT() )
+{
 #undef  TEST_CASE_NAME
-#define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_CLOSE_all" << "\"" <<
+#define TEST_CASE_NAME << '\"' << "test_BOOST_CHECK_CLOSE" << "\"" <<
     unit_test_log::instance().set_log_threshold_level( log_messages );
 
     BOOST_MESSAGE( "testing BOOST_CHECK_CLOSE for " << typeid(FPT).name() );
@@ -87,16 +92,8 @@ test_BOOST_CHECK_CLOSE( FPT ) {
     CHECK_TOOL_USAGE(                                           \
         BOOST_CHECK_CLOSE( fp1, fp2, epsilon ),                 \
         output.is_empty()                                       \
-    )
-
-#define BOOST_CHECK_CLOSE_SHOULD_PASS_N( first, second, num )   \
-    fp1     = static_cast<FPT>(first);                          \
-    fp2     = static_cast<FPT>(second);                         \
-                                                                \
-    CHECK_TOOL_USAGE(                                           \
-        BOOST_CHECK_CLOSE( fp1, fp2, (num) ),                   \
-        output.is_empty()                                       \
-    )
+    )                                                           \
+/**/
 
 #define BOOST_CHECK_CLOSE_SHOULD_FAIL( first, second, e )       \
     fp1     = static_cast<FPT>(first);                          \
@@ -107,20 +104,9 @@ test_BOOST_CHECK_CLOSE( FPT ) {
         BOOST_CHECK_CLOSE( fp1, fp2, epsilon ),                 \
         output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test fp1 ~= fp2 failed [" \
                                         << fp1 << " !~= " << fp2 << " (+/-" << epsilon << ")]\n", 0 ) ) \
-    )
-
-#define BOOST_CHECK_CLOSE_SHOULD_FAIL_N( first, second, num )   \
-    fp1     = static_cast<FPT>(first);                          \
-    fp2     = static_cast<FPT>(second);                         \
-    epsilon = num * std::numeric_limits<FPT>::epsilon()/2;      \
-                                                                \
-    CHECK_TOOL_USAGE(                                           \
-        BOOST_CHECK_CLOSE( fp1, fp2, num ),                     \
-        output.is_equal( CHECK_PATTERN( "error in " TEST_CASE_NAME ": test fp1 ~= fp2 failed [" \
-        << fp1 << " !~= " << fp2 << " (+/-" << epsilon << ")]\n", 0 ) ) \
-    )
-
-    FPT fp1, fp2, epsilon, tmp;
+    )                                                           \
+/**/
+    FPT fp1, fp2, epsilon;
 
     BOOST_CHECK_CLOSE_SHOULD_PASS( 1, 1, 0 );
 
@@ -143,41 +129,17 @@ test_BOOST_CHECK_CLOSE( FPT ) {
     BOOST_CHECK_CLOSE_SHOULD_PASS( 1.0002, 1.0001, 1.1e-4 );
     
     BOOST_CHECK_CLOSE_SHOULD_FAIL( 1     , 1.0002, 1.1e-4 );
-
-    BOOST_CHECK_CLOSE_SHOULD_PASS_N( 1, 1+std::numeric_limits<FPT>::epsilon() / 2, 1 );
-    
-    tmp = static_cast<FPT>(1e-10);
-    BOOST_CHECK_CLOSE_SHOULD_PASS_N( tmp+tmp, 2e-10, 1+2 );
-
-    tmp = static_cast<FPT>(3.1);
-    BOOST_CHECK_CLOSE_SHOULD_PASS_N( tmp*tmp, 9.61, 1+2 );
-
-    tmp = 11;
-    tmp /= 10;
-    BOOST_CHECK_CLOSE_SHOULD_PASS_N( (tmp*tmp-tmp), 11./100, 1+3 );
-    BOOST_CHECK_CLOSE_SHOULD_FAIL_N( 100*(tmp*tmp-tmp), 11, 3 );
-
-    tmp = static_cast<FPT>(1e15+1e-10);
-    BOOST_CHECK_CLOSE_SHOULD_PASS_N( tmp*tmp+tmp*tmp, 2e30+2e-20+4e5, 3+5 );
-
-    fp1     = static_cast<FPT>(1.0001);
-    fp2     = static_cast<FPT>(1001.1001);
-    tmp     = static_cast<FPT>(1.0001);
-
-    for( int i=0; i < 1000; i++ )
-        fp1 = fp1 + tmp;
-
-    CHECK_TOOL_USAGE(
-        BOOST_CHECK_CLOSE( fp1, fp2, 1000 ),
-        output.is_empty()
-    );
 }
 
+BOOST_META_FUNC_TEST_CASE( test_BOOST_CHECK_CLOSE );
+
+//____________________________________________________________________________//
+
 void
-test_BOOST_CHECK_CLOSE_all() {
-    test_BOOST_CHECK_CLOSE<float>( (float)0 );
-    test_BOOST_CHECK_CLOSE<double>( (double)0 );
-    test_BOOST_CHECK_CLOSE<long double>( (long double)0 );
+test_close_at_tolerance()
+{
+#undef  TEST_CASE_NAME
+#define TEST_CASE_NAME << '\"' << "test_close_at_tolerance" << "\"" <<
 
     double fp1     = 1.00000001;
     double fp2     = 1.00000002;
@@ -217,7 +179,10 @@ test_suite*
 init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
     test_suite* test = BOOST_TEST_SUITE("FP compare test");
 
-    test->add( BOOST_TEST_CASE( &test_BOOST_CHECK_CLOSE_all ) );
+    typedef boost::mpl::list<float,double,long double> FPTs;
+
+    test->add( BOOST_FUNC_TEMPLATE_TEST_CASE( test_BOOST_CHECK_CLOSE, FPTs  ) );
+    test->add( BOOST_TEST_CASE( &test_close_at_tolerance ) );
 
     return test;
 }
@@ -228,6 +193,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2003/07/15 09:01:36  rogeeff
+//  eliminate tolerance definition by number of rounding errors
+//
 //  Revision 1.4  2003/07/02 09:14:22  rogeeff
 //  move log formatter in public interface
 //
@@ -236,10 +204,6 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //
 //  Revision 1.2  2003/02/15 21:53:39  rogeeff
 //  cwpro8 fix
-//
-//  Revision 1.1  2003/02/13 08:47:11  rogeeff
-//  *** empty log message ***
-//
 
 // ***************************************************************************
 
