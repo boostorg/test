@@ -9,7 +9,7 @@
 
 //  Revision History
 //   26 Feb 01  Numerous changes suggested during formal review. (Beman)
-//    7 Feb 01  #include <boost/test_main.cpp> if requested. (Beman)
+//    7 Feb 01  #include <boost/test/test_main.cpp> if requested. (Beman)
 //   22 Jan 01  Remove all header dependencies. (Beman)
 //    3 Dec 00  Remove function definitions. (Ed Brey)
 //    5 Nov 00  Initial boost version (Beman Dawes)
