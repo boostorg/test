@@ -316,6 +316,7 @@ unit_test_log::operator<<( const_string value )
             case log_progress_only:
             case log_nothing:
             case log_test_suites:
+            case invalid_log_level:
                 return *this;
             }
         }
@@ -416,6 +417,9 @@ unit_test_log::checkpoint_data() const
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.23  2004/05/27 06:29:59  rogeeff
+//  eliminate  warnings
+//
 //  Revision 1.22  2004/05/21 06:26:09  rogeeff
 //  licence update
 //
