@@ -15,11 +15,14 @@
 #ifndef BCS_CHAR_TRAITS_HPP
 #define BCS_CHAR_TRAITS_HPP
 
+// Boost
 #include <boost/config.hpp>
 #include <boost/detail/workaround.hpp>
+#include <boost/type_traits/add_const.hpp>
 
 // STL
-#include <string>
+#include <string>                       // std::char_traits
+#include <cstddef>                      // std::size_t
 
 namespace boost {
 
@@ -44,16 +47,17 @@ template<> struct bcs_base_char<wchar_t const>          { typedef wchar_t type; 
 template<typename CharT>
 struct bcs_char_traits_impl
 {
-    static bool eq( CharT const& c1, CharT const& c2 )
+    typedef typename boost::add_const<CharT>::type const_char;
+    static bool eq( CharT c1, CharT c2 )
     {
         return c1 == c2;
     }
-    static bool lt( CharT const& c1, CharT const& c2 )
+    static bool lt( CharT c1, CharT c2 )
     {
         return c1 < c2;
     }
 
-    static int compare( CharT const* cstr1, CharT const* cstr2, std::size_t n )
+    static int compare( const_char* cstr1, const_char* cstr2, std::size_t n )
     {
         while( n > 0 ) {
             if( !eq( *cstr1, *cstr2 ) )
@@ -66,18 +70,18 @@ struct bcs_char_traits_impl
         return 0;
     }
 
-    static std::size_t length( CharT const* cstr )
+    static std::size_t length( const_char* cstr )
     {
-        CharT const null_char = CharT();
+        const_char null_char = CharT();
 
-        CharT const* ptr = cstr;
+        const_char* ptr = cstr;
         while( !eq( *ptr, null_char ) )
             ++ptr;
 
         return ptr - cstr;
     }
 
-    static CharT const* find( CharT const* s, std::size_t n, CharT c )
+    static const_char* find( const_char* s, std::size_t n, CharT c )
     {
         while( n > 0 ) {
             if( eq( *s, c ) )
@@ -119,6 +123,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2004/06/06 05:50:09  rogeeff
+//  borland and como fix
+//
 //  Revision 1.1  2004/06/05 11:02:15  rogeeff
 //  std::traits usage reworked
 //
