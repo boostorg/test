@@ -343,46 +343,6 @@ output_test_stream::match_pattern( bool flush_stream )
     }
     else {
         if( m_pimpl->m_match_or_save ) {
-/*
-// some older libraries don't implement operator-() on iterators, so this code was rewritten (see below)
-            std::string::const_iterator it = m_pimpl->m_synced_string.begin();
-
-            while( it != m_pimpl->m_synced_string.end() ) {
-                char c = m_pimpl->get_char();
-
-                result = !m_pimpl->m_pattern_to_match_or_save.fail() && 
-                         !m_pimpl->m_pattern_to_match_or_save.eof() && 
-                         (*it == c);
-
-                if( !result ) {
-                  std::size_t suffix_size  = std::min( m_pimpl->m_synced_string.end() - it, static_cast<std::ptrdiff_t>(5) );
-                    std::size_t pos          = it - m_pimpl->m_synced_string.begin();
-
-                    // try to log area around the mismatch 
-                    *(result.p_message) << "Mismatch in a position " << pos << '\n'
-                        << "..." << m_pimpl->m_synced_string.substr( pos, suffix_size ) << "..." << '\n'
-                        << "..." << c;
-
-                    std::size_t counter = suffix_size;
-                    while( --counter ) {
-                        char c = m_pimpl->get_char();
-
-                        if( m_pimpl->m_pattern_to_match_or_save.fail() || 
-                            m_pimpl->m_pattern_to_match_or_save.eof() )
-                            break;
-
-                        *(result.p_message) << c;
-                    }
-
-                    *(result.p_message) << "...";
-
-                    // skip rest of the bytes. May help for further matching
-                    m_pimpl->m_pattern_to_match_or_save.ignore( m_pimpl->m_synced_string.end() - it - suffix_size);
-                    break;
-                }
-                ++it;
-            }
-*/
             for ( std::string::size_type i = 0; i < m_pimpl->m_synced_string.length(); ++i ) {
                 char c = m_pimpl->get_char();
 
@@ -478,6 +438,9 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.20  2003/07/02 09:11:24  rogeeff
+//  move log formatter in public interface
+//
 //  Revision 1.19  2003/06/23 22:37:13  beman_dawes
 //  workaround broken std libraries
 //

@@ -16,66 +16,25 @@
 
 // Boost.Test
 #include <boost/test/unit_test_log.hpp>
-#include <boost/test/unit_test_result.hpp>
-#include <boost/test/unit_test_suite.hpp>
+#include <boost/test/unit_test_log_formatter.hpp>
+#include <boost/test/detail/supplied_log_formatters.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
+#include <boost/test/unit_test_result.hpp>
 
 // BOOST
 #include <boost/scoped_ptr.hpp>
 #include <boost/progress.hpp>
-#include <boost/version.hpp>
 
 // STL
-#include <iostream>
-#include <iomanip>
-#include <cstring>
-#include <string>
+#include <algorithm>
 
 # ifdef BOOST_NO_STDC_NAMESPACE
-namespace std { using :: strcmp; }
+namespace std { using ::strcmp; }
 # endif
 
 namespace boost {
 
 namespace unit_test_framework {
-
-// ************************************************************************** //
-// **************            unit_test_log_formatter           ************** //
-// ************************************************************************** //
-
-class unit_test_log_formatter {
-public:
-    enum log_entry_types { BOOST_UTL_ET_INFO, 
-                           BOOST_UTL_ET_MESSAGE,
-                           BOOST_UTL_ET_WARNING,
-                           BOOST_UTL_ET_ERROR,
-                           BOOST_UTL_ET_FATAL_ERROR };
-
-    // Constructor
-    explicit unit_test_log_formatter( unit_test_log const& log )
-    : m_log_impl( log.m_pimpl ) {}
-
-    // Destructor
-    virtual             ~unit_test_log_formatter() {}
-
-    // formatter interface
-    virtual void        start_log( std::ostream& output, bool log_build_info ) = 0;
-    virtual void        log_header( std::ostream& output, unit_test_counter test_cases_amount ) = 0;
-    virtual void        finish_log( std::ostream& output ) = 0;
-
-    virtual void        track_test_case_scope( std::ostream& output, test_case const& tc, bool in_out ) = 0;
-    virtual void        log_exception( std::ostream& output, std::string const& test_case_name, c_string_literal explanation ) = 0;
-
-    // different value logging functions
-    virtual void        begin_log_entry( std::ostream& output, log_entry_types let ) = 0;
-    virtual void        log_entry_value( std::ostream& output, std::string const& value ) = 0;
-    virtual void        end_log_entry( std::ostream& output ) = 0;
-
-protected:
-    unit_test_log::Impl const* m_log_impl;
-};
-
-class msvc65_like_log_formatter;
 
 // ************************************************************************** //
 // **************                 unit_test_log                ************** //
@@ -92,42 +51,42 @@ struct unit_test_log::Impl {
     boost::scoped_ptr<unit_test_log_formatter> m_log_formatter;
 
     // entry data
-    log_level           m_entry_level;
     bool                m_entry_in_progress;
     bool                m_entry_has_value;
-    std::string         m_entry_file;
-    std::size_t         m_entry_line;
+    log_entry_data      m_entry_data;
 
     // checkpoint data
-    std::string         m_checkpoint_file;
-    std::size_t         m_checkpoint_line;
-    std::string         m_checkpoint_message;
+    log_checkpoint_data m_checkpoint_data;
 
     // helper functions
     std::ostream&       stream()            { return *m_stream; }
     void                flush_entry()       { stream() << std::endl; }
     void                clear_entry_data()
     {
-        m_entry_level           = log_nothing;
-        m_entry_in_progress     = false;
-        m_entry_has_value       = false;
-        m_entry_file            = std::string();
-        m_entry_line            = 0;
+        m_entry_data.clear();
+        m_entry_in_progress = false;
+        m_entry_has_value   = false;
     }
     void                set_checkpoint( checkpoint const& cp )
     {
-        m_checkpoint_message   = cp.m_message;
-        m_checkpoint_file      = m_entry_file;
-        m_checkpoint_line      = m_entry_line;
+        m_checkpoint_data.m_message = cp.m_message;
+        m_checkpoint_data.m_file    = m_entry_data.m_file;
+        m_checkpoint_data.m_line    = m_entry_data.m_line;
     }
-    void                clear_checkpoint()
-    {
-        m_checkpoint_file       = std::string();
-        m_checkpoint_line       = 0;
-        m_checkpoint_message    = std::string();
-    }
-
+    void                clear_checkpoint()  { m_checkpoint_data.clear(); }
 };
+
+//____________________________________________________________________________//
+
+unit_test_log::unit_test_log() : m_pimpl( new Impl() )
+{
+    m_pimpl->m_threshold_level = log_all_errors;
+
+    m_pimpl->m_log_formatter.reset( new detail::msvc65_like_log_formatter( *this ) );
+
+    m_pimpl->clear_entry_data();
+    m_pimpl->clear_checkpoint();
+}
 
 //____________________________________________________________________________//
 
@@ -272,11 +231,11 @@ unit_test_log&
 unit_test_log::operator<<( file const& f )
 {
     if( m_pimpl->m_entry_in_progress ) {
-        m_pimpl->m_entry_file = f.m_file_name;
+        m_pimpl->m_entry_data.m_file = f.m_file_name;
 
         // normalize file name
-        std::transform( m_pimpl->m_entry_file.begin(), m_pimpl->m_entry_file.end(), 
-                        m_pimpl->m_entry_file.begin(),
+        std::transform( m_pimpl->m_entry_data.m_file.begin(), m_pimpl->m_entry_data.m_file.end(), 
+                        m_pimpl->m_entry_data.m_file.begin(),
                         &set_unix_slash );
     }
 
@@ -289,7 +248,7 @@ unit_test_log&
 unit_test_log::operator<<( line const& l )
 {
     if( m_pimpl->m_entry_in_progress )
-        m_pimpl->m_entry_line = l.m_line_num;
+        m_pimpl->m_entry_data.m_line = l.m_line_num;
 
     return *this;
 }
@@ -300,7 +259,7 @@ unit_test_log&
 unit_test_log::operator<<( level const& lev )
 {
     if( m_pimpl->m_entry_in_progress )
-        m_pimpl->m_entry_level = lev.m_level;
+        m_pimpl->m_entry_data.m_level = lev.m_level;
 
     return *this;
 }
@@ -321,7 +280,7 @@ unit_test_log::operator<<( checkpoint const& cp )
 unit_test_log&
 unit_test_log::operator<<( log_exception const& re )
 {
-    if( m_pimpl->m_entry_in_progress && m_pimpl->m_entry_level >= m_pimpl->m_threshold_level ) {
+    if( m_pimpl->m_entry_in_progress && m_pimpl->m_entry_data.m_level >= m_pimpl->m_threshold_level ) {
         m_pimpl->m_log_formatter->log_exception( m_pimpl->stream(), unit_test_result::instance().test_case_name(), re.m_what );
         m_pimpl->m_entry_has_value = true;
     }
@@ -345,9 +304,9 @@ unit_test_log::operator<<( log_progress const& )
 unit_test_log&
 unit_test_log::operator<<( std::string const& value )
 {
-    if( m_pimpl->m_entry_in_progress && m_pimpl->m_entry_level >= m_pimpl->m_threshold_level && !value.empty() ) {
+    if( m_pimpl->m_entry_in_progress && m_pimpl->m_entry_data.m_level >= m_pimpl->m_threshold_level && !value.empty() ) {
         if( !m_pimpl->m_entry_has_value ) {
-            switch( m_pimpl->m_entry_level ) {
+            switch( m_pimpl->m_entry_data.m_level ) {
             case log_successful_tests:
                 m_pimpl->m_log_formatter->begin_log_entry( m_pimpl->stream(), unit_test_log_formatter::BOOST_UTL_ET_INFO );
                 break;
@@ -423,234 +382,6 @@ unit_test_log::finish( unit_test_counter test_cases_amount )
 
 //____________________________________________________________________________//
 
-// ************************************************************************** //
-// **************           msvc65_like_log_formatter          ************** //
-// ************************************************************************** //
-
-class msvc65_like_log_formatter : public unit_test_log_formatter {
-public:
-    explicit msvc65_like_log_formatter( unit_test_log const& log ) 
-    : unit_test_log_formatter( log ) {}
-
-    void    start_log( std::ostream& output, bool log_build_info )
-    {
-        if( log_build_info )
-            output  << "Platform: " << BOOST_PLATFORM            << '\n'
-                    << "Compiler: " << BOOST_COMPILER            << '\n'
-                    << "STL     : " << BOOST_STDLIB              << '\n'
-                    << "Boost   : " << BOOST_VERSION/100000      << "."
-                                    << BOOST_VERSION/100 % 1000  << "."
-                                    << BOOST_VERSION % 100       << '\n';
-    }
-    void    log_header( std::ostream& output, unit_test_counter test_cases_amount )
-    {
-        output  << "Running " << test_cases_amount << " test "
-                << (test_cases_amount > 1 ? "cases" : "case") << "...\n";
-    }
-
-    void    finish_log( std::ostream& output ) {}
-
-    void    track_test_case_scope( std::ostream& output, test_case const& tc, bool in_out )
-    {
-        output << (in_out ? "Entering" : "Leaving")
-               << " test " << ( tc.p_type ? "case" : "suite" )
-               << " \"" << tc.p_name.get() << "\"";
-    }
-
-    void    log_exception( std::ostream& output, std::string const& test_case_name, c_string_literal explanation )
-    {
-        output << "Exception in \"" << test_case_name << "\": " << explanation;
-
-        if( !m_log_impl->m_checkpoint_message.empty() ) {
-            output << '\n' << m_log_impl->m_checkpoint_file << '(' << m_log_impl->m_checkpoint_line << ") : "
-                << "last checkpoint: " << m_log_impl->m_checkpoint_message;
-        }
-    }
-
-    void    begin_log_entry( std::ostream& output, log_entry_types let )
-    {
-        switch( let ) {
-        case BOOST_UTL_ET_INFO:
-            print_prefix( output );
-            output << "info: ";
-            break;
-        case BOOST_UTL_ET_MESSAGE:
-            break;
-        case BOOST_UTL_ET_WARNING:
-            print_prefix( output );
-            output << "warning in \"" << unit_test_result::instance().test_case_name() << "\": ";
-            break;
-        case BOOST_UTL_ET_ERROR:
-            print_prefix( output );
-            output << "error in \"" << unit_test_result::instance().test_case_name() << "\": ";
-            break;
-        case BOOST_UTL_ET_FATAL_ERROR:
-            print_prefix( output );
-            output << "fatal error in \"" << unit_test_result::instance().test_case_name() << "\": ";
-            break;
-        }
-    }
-
-    void    log_entry_value( std::ostream& output, std::string const& value )
-    {
-        output << value;
-    }
-
-    void    end_log_entry( std::ostream& output ) {}
-
-protected:
-    virtual void    print_prefix( std::ostream& output )
-    {
-        output << m_log_impl->m_entry_file << '(' << m_log_impl->m_entry_line << "): ";
-    }
-
-};
-
-// ************************************************************************** //
-// **************               xml_log_formatter              ************** //
-// ************************************************************************** //
-
-class xml_log_formatter : public unit_test_log_formatter {
-public:
-    // Constructor
-    explicit xml_log_formatter( unit_test_log const& log ) 
-    : unit_test_log_formatter( log ), m_indent( 0 ), m_curr_tag( c_string_literal() ) {}
-
-    void    start_log( std::ostream& output, bool log_build_info )
-    {
-        output  << "<TestLog";
-
-        if( log_build_info )
-            output  << " platform=\"" << BOOST_PLATFORM            << '\"'
-                    << " compiler=\"" << BOOST_COMPILER            << '\"'
-                    << " stl=\""      << BOOST_STDLIB              << '\"'
-                    << " boost=\""    << BOOST_VERSION/100000      << "."
-                                      << BOOST_VERSION/100 % 1000  << "."
-                                      << BOOST_VERSION % 100       << '\"';
-
-        output  << ">\n";
-    }
-    void    log_header( std::ostream& output, unit_test_counter test_cases_amount ) {}
-    void    finish_log( std::ostream& output )
-    {
-        output  << "</TestLog>\n";
-    }
-
-    void    track_test_case_scope( std::ostream& output, test_case const& tc, bool in_out )
-    {
-        if( !in_out )
-            m_indent -= 2;
-
-        print_indent( output );
-
-        output << (in_out ? "<" : "</")
-               << ( tc.p_type ? "TestCase" : "TestSuite" );
-
-        if( in_out )
-            output << " name=\"" << tc.p_name.get() << "\"";
-
-        output << ">";
-
-        if( in_out )
-            m_indent += 2;
-    }
-
-    void    log_exception( std::ostream& output, std::string const& test_case_name, c_string_literal explanation )
-    {
-        print_indent( output );
-
-        output << "<Exception name=\"" << test_case_name << "\">\n";
-
-        m_indent += 2;
-        print_indent( output );
-
-        output << explanation << '\n';
-        print_indent( output );
-
-        if( !m_log_impl->m_checkpoint_message.empty() ) {
-            output << "<LastCheckpoint file=\"" << m_log_impl->m_checkpoint_file << "\""
-                   << " line=\"" << m_log_impl->m_checkpoint_line << "\">\n";
-
-            m_indent += 2;
-            print_indent( output );
-
-            output << m_log_impl->m_checkpoint_message << "\n";
-
-            m_indent -= 2;
-            print_indent( output );
-
-            output << "</LastCheckpoint>\n";
-
-            m_indent -= 2;
-            print_indent( output );
-        }
-
-        output << "</Exception>";
-    }
-
-    void    begin_log_entry( std::ostream& output, log_entry_types let )
-    {
-        static c_string_literal const xml_tags[] = { "Info", "Message", "Warning", "Error", "FatalError" };
-
-        print_indent( output );
-        
-        m_curr_tag = xml_tags[let];
-        output << '<' << m_curr_tag
-               << " file=\"" << m_log_impl->m_entry_file << '\"'
-               << " line=\"" << m_log_impl->m_entry_line << '\"'
-               << ">\n";
-
-        m_indent += 2;
-        print_indent( output );
-    }
-
-    void    log_entry_value( std::ostream& output, std::string const& value )
-    {
-        output << value;
-    }
-
-    void    end_log_entry( std::ostream& output )
-    {
-        if( !m_curr_tag )
-            return;
-
-        output << '\n';
-
-        m_indent -= 2;
-        print_indent( output );
-
-        output << "</" << m_curr_tag << ">";
-
-        m_curr_tag = c_string_literal();
-    }
-
-private:
-    void    print_indent( std::ostream& output )
-    {
-        output << std::setw( m_indent ) << "";
-    }
-
-    // Data members
-    std::size_t      m_indent;
-    c_string_literal m_curr_tag;
-};
-
-// ************************************************************************** //
-// **************                 unit_test_log                ************** //
-// ************************************************************************** //
-
-unit_test_log::unit_test_log() : m_pimpl( new Impl() )
-{
-    m_pimpl->m_threshold_level = log_all_errors;
-
-    m_pimpl->m_log_formatter.reset( new msvc65_like_log_formatter( *this ) );
-
-    m_pimpl->clear_entry_data();
-    m_pimpl->clear_checkpoint();
-}
-
-//____________________________________________________________________________//
-
 void
 unit_test_log::set_log_format( std::string const& logformat )
 {
@@ -678,9 +409,33 @@ unit_test_log::set_log_format( std::string const& logformat )
     }
 
     if( of == HRF )
-        m_pimpl->m_log_formatter.reset( new msvc65_like_log_formatter( *this ) );
+        set_log_formatter( new detail::msvc65_like_log_formatter( *this ) );
     else
-        m_pimpl->m_log_formatter.reset( new xml_log_formatter( *this ) );
+        set_log_formatter( new detail::xml_log_formatter( *this ) );
+}
+
+//____________________________________________________________________________//
+
+void
+unit_test_log::set_log_formatter( unit_test_log_formatter* the_formatter )
+{
+    m_pimpl->m_log_formatter.reset( the_formatter );
+}
+
+//____________________________________________________________________________//
+
+log_entry_data const&
+unit_test_log::entry_data() const
+{
+    return m_pimpl->m_entry_data;
+}
+
+//____________________________________________________________________________//
+
+log_checkpoint_data const&
+unit_test_log::checkpoint_data() const
+{
+    return m_pimpl->m_checkpoint_data;
 }
 
 //____________________________________________________________________________//
@@ -693,6 +448,9 @@ unit_test_log::set_log_format( std::string const& logformat )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.16  2003/07/02 09:11:25  rogeeff
+//  move log formatter in public interface
+//
 //  Revision 1.15  2003/06/11 04:34:22  rogeeff
 //  minor fix
 //

@@ -19,11 +19,23 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
+#include <boost/test/detail/supplied_log_formatters.hpp>
 using namespace boost::unit_test_framework;
 using namespace boost::test_toolbox;
 
 // STL
 #include <iostream>
+
+struct this_test_log_formatter : public boost::unit_test_framework::detail::msvc65_like_log_formatter 
+{
+    explicit this_test_log_formatter( unit_test_log const& log )
+    : boost::unit_test_framework::detail::msvc65_like_log_formatter( log ) {}
+
+    void    print_prefix( std::ostream& output, std::string const&, std::size_t line )
+    {
+        output << line << ": ";
+    }
+};
 
 //____________________________________________________________________________//
 
@@ -144,6 +156,7 @@ namespace {
 int
 test_main( int argc, char * argv[] )
 {
+
     bool match_or_save = retrieve_framework_parameter( SAVE_TEST_PATTERN, &argc, argv ) != "yes";
 
     std::string pattern_file_name( argc > 1 ? argv[1] : "errors_handling_test.pattern" );
@@ -151,6 +164,7 @@ test_main( int argc, char * argv[] )
     output_test_stream output( pattern_file_name, match_or_save );
 
     unit_test_log::instance().set_log_stream( output );
+    unit_test_log::instance().set_log_formatter( new this_test_log_formatter( unit_test_log::instance() ) );
 
     boost::shared_ptr<bad_test> bad_test_instance( new bad_test );
 
@@ -233,6 +247,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.13  2003/07/02 09:14:22  rogeeff
+//  move log formatter in public interface
+//
 //  Revision 1.12  2003/06/09 09:23:03  rogeeff
 //  1.30.beta1
 //

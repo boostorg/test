@@ -140,6 +140,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\src\supplied_log_formatters.cpp">
+			</File>
+			<File
 				RelativePath="..\..\src\test_main.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

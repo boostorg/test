@@ -39,14 +39,32 @@ using namespace boost::test_toolbox;
 
 //____________________________________________________________________________//
 
+char
+set_unix_slash( char in )
+{
+    return in == '\\' ? '/' : in;
+}
+
+static std::string const&
+normalize_file_name( char const* f )
+{
+    static std::string buffer;
+
+    buffer = f;
+
+    std::transform( buffer.begin(), buffer.end(), buffer.begin(), &set_unix_slash );
+
+    return buffer;
+}
+
 #if !defined(__BORLANDC__)
 #define CHECK_PATTERN( msg, shift ) \
-    (boost::wrap_stringstream().ref() << __FILE__ << "(" << __LINE__ << "): " << msg).str()
+    (boost::wrap_stringstream().ref() << normalize_file_name( __FILE__ ) << "(" << __LINE__ << "): " << msg).str()
 
 #else
 
 #define CHECK_PATTERN( msg, shift ) \
-    (boost::wrap_stringstream().ref() << __FILE__ << "(" << (__LINE__-shift) << "): " << msg).str()
+    (boost::wrap_stringstream().ref() << normalize_file_name( __FILE__ ) << "(" << (__LINE__-shift) << "): " << msg).str()
 
 #endif
 //____________________________________________________________________________//
@@ -210,6 +228,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2003/07/02 09:14:22  rogeeff
+//  move log formatter in public interface
+//
 //  Revision 1.3  2003/06/09 09:25:24  rogeeff
 //  1.30.beta1
 //

@@ -48,6 +48,42 @@ enum            log_level {
 };
 
 // ************************************************************************** //
+// **************                log_entry_data                ************** //
+// ************************************************************************** //
+
+struct log_entry_data
+{
+    std::string     m_file;
+    std::size_t     m_line;
+    log_level       m_level;
+
+    void clear()
+    {
+        m_file    = std::string();
+        m_line    = 0;
+        m_level   = log_nothing;
+    }
+};
+
+// ************************************************************************** //
+// **************                checkpoint_data               ************** //
+// ************************************************************************** //
+
+struct log_checkpoint_data
+{
+    std::string     m_file;
+    std::size_t     m_line;
+    std::string     m_message;
+
+    void clear()
+    {
+        m_file    = std::string();
+        m_line    = 0;
+        m_message = std::string();
+    }
+};
+
+// ************************************************************************** //
 // **************                log manipulators              ************** //
 // ************************************************************************** //
 
@@ -95,6 +131,7 @@ struct log_progress {
 // ************************************************************************** //
 
 class test_case;
+class unit_test_log_formatter;
 
 class unit_test_log : private boost::noncopyable { //!! Singleton
 public:
@@ -114,6 +151,7 @@ public:
     void            set_log_threshold_level( log_level lev_ );
     void            set_log_threshold_level_by_name( std::string const& lev_ );
     void            set_log_format( std::string const& of );
+    void            set_log_formatter( unit_test_log_formatter* the_formatter );
     void            clear_checkpoint();
 
     // test case scope tracking
@@ -134,9 +172,14 @@ public:
     unit_test_log&  operator<<( std::string const& value_ );
 
 private:
+    // formatters interface
+    friend class unit_test_log_formatter;
+    log_entry_data      const& entry_data() const;
+    log_checkpoint_data const& checkpoint_data() const;
+
+private:
     // Constructor
     unit_test_log();
-    friend class unit_test_log_formatter;
 
     struct          Impl;
     Impl*           m_pimpl;
@@ -173,6 +216,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.17  2003/07/02 09:15:57  rogeeff
+//  move log formatter in public interface
+//
 //  Revision 1.16  2003/06/09 08:56:15  rogeeff
 //  test_case_csope_tracker introduced for correct exception unwinding handling
 //

@@ -21,6 +21,7 @@ TEST_EXEC_MON_SOURCES =
   unit_test_monitor
   unit_test_result
   unit_test_suite
+  supplied_log_formatters
   test_main
   ;
 
@@ -33,6 +34,7 @@ UTF_SOURCES =
   unit_test_result
   unit_test_suite
   unit_test_main
+  supplied_log_formatters
   ;
 
 template boost_test_lib 

@@ -255,7 +255,7 @@ test_BOOST_CHECKPOINT() {
         output.is_equal(
             (boost::wrap_stringstream().ref()
                 << "Exception in " TEST_CASE_NAME ": C string: some error\n"
-                << normalize_file_name( __FILE__ ) << "(" << 251 << ") : "
+                << normalize_file_name( __FILE__ ) << "(" << 251 << "): "
                 << "last checkpoint: Going to do a silly things\n").str()
         )
     );
@@ -685,6 +685,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.20  2003/07/02 09:14:22  rogeeff
+//  move log formatter in public interface
+//
 //  Revision 1.19  2003/06/20 11:01:57  rogeeff
 //  no message
 //

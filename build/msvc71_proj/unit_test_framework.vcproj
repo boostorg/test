@@ -146,6 +146,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\src\supplied_log_formatters.cpp">
+			</File>
+			<File
 				RelativePath="..\..\src\test_tools.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -315,6 +318,9 @@
 				RelativePath="..\..\..\..\boost\test\unit_test_log.hpp">
 			</File>
 			<File
+				RelativePath="..\..\..\..\boost\test\unit_test_log_formatter.hpp">
+			</File>
+			<File
 				RelativePath="..\..\..\..\boost\test\unit_test_result.hpp">
 			</File>
 			<File
@@ -328,6 +334,9 @@
 				</File>
 				<File
 					RelativePath="..\..\..\..\boost\test\detail\nullstream.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\test\detail\supplied_log_formatters.hpp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\boost\test\detail\unit_test_config.hpp">

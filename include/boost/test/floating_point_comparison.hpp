@@ -16,7 +16,7 @@
 #ifndef BOOST_FLOATING_POINT_COMPARISON_HPP
 #define BOOST_FLOATING_POINT_COMPARISON_HPP
 
-#include <boost/limits.hpp>  // for std::numareic_limits
+#include <boost/limits.hpp>  // for std::numeric_limits
 
 #include <boost/test/detail/class_properties.hpp>
 
@@ -126,6 +126,9 @@ compute_tolerance( ToleranceSource tolerance, FPT /* unfortunately we need to pa
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2003/07/02 09:15:57  rogeeff
+//  move log formatter in public interface
+//
 //  Revision 1.8  2003/06/09 08:43:47  rogeeff
 //  added comparison type and algorithm constructor accepting it
 //
