@@ -12,8 +12,8 @@
 //  Description : 
 // ***************************************************************************
 
-#ifndef BOOST_UNIT_TEST_LOG_FORMATTER_HPP
-#define BOOST_UNIT_TEST_LOG_FORMATTER_HPP
+#ifndef BOOST_UNIT_TEST_LOG_FORMATTER_HPP_071894GER
+#define BOOST_UNIT_TEST_LOG_FORMATTER_HPP_071894GER
 
 // Boost.Test
 #include <boost/test/detail/unit_test_config.hpp>
@@ -24,6 +24,8 @@
 // STL
 #include <iosfwd>
 #include <string> // need only forward decl
+
+#include <boost/test/detail/suppress_warnings.hpp>
 
 namespace boost {
 
@@ -74,10 +76,16 @@ private:
 
 } // namespace boost
 
+#include <boost/test/detail/enable_warnings.hpp>
+
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2004/07/19 12:16:23  rogeeff
+//  guard rename
+//  warning suppressed
+//
 //  Revision 1.6  2004/05/21 06:19:35  rogeeff
 //  licence update
 //
@@ -90,5 +98,5 @@ private:
 //
 // ***************************************************************************
 
-#endif // BOOST_UNIT_TEST_LOG_FORMATTER_HPP
+#endif // BOOST_UNIT_TEST_LOG_FORMATTER_HPP_071894GER
 
