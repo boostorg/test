@@ -43,7 +43,7 @@ namespace std { using ::strlen; using ::strncat; }
 #endif
 
 // Microsoft + other compatible compilers such as Intel
-#if defined(_MSC_VER) || (defined(__INTEL__) && defined(__MWERKS__) && __MWERKS__ >= 0x3000)
+#if (defined(_MSC_VER) && !defined(__COMO__)) || (defined(__INTEL__) && defined(__MWERKS__) && __MWERKS__ >= 0x3000)
 
 #define BOOST_MS_STRCTURED_EXCEPTION_HANDLING
 #include <wtypes.h>
@@ -571,6 +571,9 @@ static void report_error( execution_exception::error_code ec, c_string_literal m
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.22  2003/05/02 17:57:40  beman_dawes
+//  como can't do structured exceptions
+//
 //  Revision 1.21  2003/02/17 10:04:21  rogeeff
 //  some exception safety and reentrance issues addressed
 //
