@@ -48,4 +48,5 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : test_tools_test         : boost_unit_test_framework ]
           [ test-btl-lib run : auto_unit_test_test     : boost_unit_test_framework ]
           [ test-btl-lib run : unit_test_suite_ex_test : boost_unit_test_framework ]
+          [ test-btl-lib run : test_case_template_test : boost_test_exec_monitor ]
         ;

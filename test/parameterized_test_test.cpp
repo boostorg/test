@@ -19,9 +19,12 @@
 #include <boost/test/test_tools.hpp>
 #if !defined ( __GNUC__ ) || __GNUC__ > 2
 #include <boost/test/detail/nullstream.hpp>
+typedef boost::onullstream onullstream_type;
+#else
+typedef boost::test_toolbox::output_test_stream onullstream_type;
 #endif
 
-using namespace boost::unit_test_framework;
+namespace utf=boost::unit_test_framework;
 
 #include <list>
 #include <iostream>
@@ -39,7 +42,9 @@ void test0( int i )
 void test1( int i )
 {
     BOOST_CHECK( i%2 == 0 );
-    BOOST_REQUIRE( i%3 != 0 );
+    if( i%3 == 0 ) {
+        throw 124;
+    }
 }
 
 //____________________________________________________________________________//
@@ -53,110 +58,133 @@ void test1( int i )
 #endif
 
 int test_main( int, char* [] ) {
-    unit_test_counter               num_of_failures;
-    bool                            exception_caught;
-#if !defined ( __GNUC__ ) || __GNUC__ > 2
-    boost::onullstream              null_output;
-#else
-    boost::test_toolbox::output_test_stream null_output;
-#endif
-    boost::scoped_ptr<test_case>    test;  
+    utf::unit_test_counter              num_of_failures;
+    bool                                exception_caught;
+    bool                                passed;
+    onullstream_type                    null_output;
+    boost::scoped_ptr<utf::test_case>   test;  
 
+    utf::unit_test_log::instance().set_log_stream( null_output );
     {
-    unit_test_result_saver saver;
-    unit_test_log::instance().set_log_stream( null_output );
-
-    {
+    utf::unit_test_result_saver saver;
     int test_data[] = { 2, 2, 2 };
     test.reset( BOOST_PARAM_TEST_CASE__( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
     test->run();
 
-    unit_test_result::instance().failures_details( num_of_failures, exception_caught );
-    BOOST_CHECK( num_of_failures == 0 );
-    BOOST_CHECK( !exception_caught );
+    utf::unit_test_result::instance().failures_details( num_of_failures, exception_caught );
     }
 
+    utf::unit_test_log::instance().set_log_stream( std::cout );
+    BOOST_CHECK( num_of_failures == 0 );
+    BOOST_CHECK( !exception_caught );
+
+    utf::unit_test_log::instance().set_log_stream( null_output );
     {
+    utf::unit_test_result_saver saver;
     int test_data[] = { 1, 2, 2 };    
     test.reset( BOOST_PARAM_TEST_CASE__( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
+
     test->run();
 
-    unit_test_result::instance().failures_details( num_of_failures, exception_caught );
-    BOOST_CHECK( num_of_failures == 1 );
-    BOOST_CHECK( !exception_caught );
+    utf::unit_test_result::instance().failures_details( num_of_failures, exception_caught );
     }
 
+    utf::unit_test_log::instance().set_log_stream( std::cout );
+    BOOST_CHECK( num_of_failures == 1 );
+    BOOST_CHECK( !exception_caught );
+
+    utf::unit_test_log::instance().set_log_stream( null_output );
     {
+    utf::unit_test_result_saver saver;
     int test_data[] = { 1, 1, 2 };    
     test.reset( BOOST_PARAM_TEST_CASE__( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
+
     test->run();
 
-    unit_test_result::instance().failures_details( num_of_failures, exception_caught );
-    BOOST_CHECK( num_of_failures == 3 );
-    BOOST_CHECK( !exception_caught );
+    utf::unit_test_result::instance().failures_details( num_of_failures, exception_caught );
     }
 
+    utf::unit_test_log::instance().set_log_stream( std::cout );
+    BOOST_CHECK_EQUAL( num_of_failures, 2 );
+    BOOST_CHECK( !exception_caught );
+
+    utf::unit_test_log::instance().set_log_stream( null_output );
     {
+    utf::unit_test_result_saver saver;
     int test_data[] = { 1, 1, 1 };    
     test.reset( BOOST_PARAM_TEST_CASE__( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
+
     test->run();
 
-    unit_test_result::instance().failures_details( num_of_failures, exception_caught );
-    BOOST_CHECK( num_of_failures == 6 );
+    utf::unit_test_result::instance().failures_details( num_of_failures, exception_caught );
+    }
+
+    utf::unit_test_log::instance().set_log_stream( std::cout );
+    BOOST_CHECK_EQUAL( num_of_failures, 3 );
     BOOST_CHECK( !exception_caught );
-    }
 
-    }
+    utf::unit_test_log::instance().set_log_stream( null_output );
     {
-    unit_test_result_saver saver;
-
-    {
+    utf::unit_test_result_saver saver;
     int test_data[] = { 6, 6, 6 };    
     test.reset( BOOST_PARAM_TEST_CASE__( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
+
     test->run();
 
-    unit_test_result::instance().failures_details( num_of_failures, exception_caught );
-    BOOST_CHECK( num_of_failures == 0 );
+    utf::unit_test_result::instance().failures_details( num_of_failures, exception_caught );
+    passed = utf::unit_test_result::instance().has_passed();
+    }
+
+    utf::unit_test_log::instance().set_log_stream( std::cout );
+    BOOST_CHECK_EQUAL( num_of_failures, 0 );
     BOOST_CHECK( !exception_caught );
-    }
+    BOOST_CHECK( !passed );
 
-    }
+    utf::unit_test_log::instance().set_log_stream( null_output );
     {
-    unit_test_result_saver saver;
-
-    {
+    utf::unit_test_result_saver saver;
     int test_data[] = { 0, 3, 9 };    
     test.reset( BOOST_PARAM_TEST_CASE__( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
+
     test->run();
 
-    unit_test_result::instance().failures_details( num_of_failures, exception_caught );
-    BOOST_CHECK( num_of_failures == 2 );
-    BOOST_CHECK( !exception_caught );
+    utf::unit_test_result::instance().failures_details( num_of_failures, exception_caught );
     }
 
+    utf::unit_test_log::instance().set_log_stream( std::cout );
+    BOOST_CHECK_EQUAL( num_of_failures, 2 );
+    BOOST_CHECK( !exception_caught );
+
+    utf::unit_test_log::instance().set_log_stream( null_output );
     {
+    utf::unit_test_result_saver saver;
     int test_data[] = { 2, 3, 9 };
     test.reset( BOOST_PARAM_TEST_CASE__( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
+
     test->run();
 
-    unit_test_result::instance().failures_details( num_of_failures, exception_caught );
-    BOOST_CHECK( num_of_failures == 2 );
-    BOOST_CHECK( exception_caught );
+    utf::unit_test_result::instance().failures_details( num_of_failures, exception_caught );
     }
 
+    utf::unit_test_log::instance().set_log_stream( std::cout );
+    BOOST_CHECK_EQUAL( num_of_failures, 2 );
+    BOOST_CHECK( !exception_caught );
+
+    utf::unit_test_log::instance().set_log_stream( null_output );
     {
+    utf::unit_test_result_saver saver;
     int test_data[] = { 3, 2, 6 };    
     test.reset( BOOST_PARAM_TEST_CASE__( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
+
     test->run();
 
-    unit_test_result::instance().failures_details( num_of_failures, exception_caught );
-    BOOST_CHECK( num_of_failures == 1 );
-    BOOST_CHECK( exception_caught );
+    utf::unit_test_result::instance().failures_details( num_of_failures, exception_caught );
     }
 
-    }
-    unit_test_log::instance().set_log_stream( std::cout );
+    utf::unit_test_log::instance().set_log_stream( std::cout );
+    BOOST_CHECK_EQUAL( num_of_failures, 1 );
+    BOOST_CHECK( !exception_caught );
 
     return 0;
 }
@@ -167,6 +195,10 @@ int test_main( int, char* [] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2003/06/10 07:57:33  rogeeff
+//  test_case_template_test added
+//  parameterized test updated
+//
 //  Revision 1.5  2003/06/09 09:25:24  rogeeff
 //  1.30.beta1
 //
@@ -174,7 +206,7 @@ int test_main( int, char* [] ) {
 //  mingw ostream fix
 //
 //  Revision 1.3  2002/12/09 05:16:10  rogeeff
-//  switched to use unit_test_result_saver for internal testing
+//  switched to use utf::unit_test_result_saver for internal testing
 //
 //  Revision 1.2  2002/11/02 20:04:43  rogeeff
 //  release 1.29.0 merged into the main trank
