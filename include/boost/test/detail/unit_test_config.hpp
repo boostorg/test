@@ -31,6 +31,12 @@
 #define BOOST_TEST_SHIFTED_LINE
 #endif
 
+#if defined(BOOST_MSVC) || (defined(__BORLANDC__) && !defined(BOOST_DISABLE_WIN32))
+#   define BOOST_TEST_CALL_DECL __cdecl
+#else
+#   define BOOST_TEST_CALL_DECL /**/
+#endif
+
 // Boost.Test
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
@@ -92,6 +98,9 @@ namespace unit_test_framework = unit_test;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.27  2005/01/31 07:50:06  rogeeff
+//  cdecl portability fix
+//
 //  Revision 1.26  2005/01/30 01:48:24  rogeeff
 //  BOOST_TEST_STRINGIZE introduced
 //  counter type renamed

@@ -113,7 +113,7 @@ operator<<( basic_wrap_stringstream<CharT>& targ, basic_wrap_stringstream<CharT>
 
 template <typename CharT>
 inline basic_wrap_stringstream<CharT>&
-operator<<( basic_wrap_stringstream<CharT>& targ, std::ios_base& (__cdecl *man)(std::ios_base&) )
+operator<<( basic_wrap_stringstream<CharT>& targ, std::ios_base& (BOOST_TEST_CALL_DECL *man)(std::ios_base&) )
 {
     targ.stream() << man;
     return targ;
@@ -123,7 +123,7 @@ operator<<( basic_wrap_stringstream<CharT>& targ, std::ios_base& (__cdecl *man)(
 
 template<typename CharT,typename Elem,typename Tr>
 inline basic_wrap_stringstream<CharT>&
-operator<<( basic_wrap_stringstream<CharT>& targ, std::basic_ostream<Elem,Tr>& (__cdecl *man)(std::basic_ostream<Elem, Tr>&) )
+operator<<( basic_wrap_stringstream<CharT>& targ, std::basic_ostream<Elem,Tr>& (BOOST_TEST_CALL_DECL *man)(std::basic_ostream<Elem, Tr>&) )
 {
     targ.stream() << man;
     return targ;
@@ -133,7 +133,7 @@ operator<<( basic_wrap_stringstream<CharT>& targ, std::basic_ostream<Elem,Tr>& (
 
 template<typename CharT,typename Elem,typename Tr>
 inline basic_wrap_stringstream<CharT>&
-operator<<( basic_wrap_stringstream<CharT>& targ, std::basic_ios<Elem, Tr>& (__cdecl *man)(std::basic_ios<Elem, Tr>&) )
+operator<<( basic_wrap_stringstream<CharT>& targ, std::basic_ios<Elem, Tr>& (BOOST_TEST_CALL_DECL *man)(std::basic_ios<Elem, Tr>&) )
 {
     targ.stream() << man;
     return targ;
@@ -158,8 +158,11 @@ typedef basic_wrap_stringstream<wchar_t>    wrap_wstringstream;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2005/01/31 07:50:06  rogeeff
+//  cdecl portability fix
+//
 //  Revision 1.3  2005/01/31 06:02:15  rogeeff
-//  __cdecl correctness fixes
+//  BOOST_TEST_CALL_DECL correctness fixes
 //
 //  Revision 1.2  2005/01/30 01:43:57  rogeeff
 //  warnings suppressed

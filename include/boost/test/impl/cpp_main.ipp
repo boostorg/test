@@ -56,7 +56,7 @@ private:
 // **************                   cpp main                   ************** //
 // ************************************************************************** //
 
-int __cdecl main( int argc, char* argv[] )
+int BOOST_TEST_CALL_DECL main( int argc, char* argv[] )
 {
     cpp_main_caller caller( argc, argv );
     
@@ -103,8 +103,11 @@ int __cdecl main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2005/01/31 07:50:06  rogeeff
+//  cdecl portability fix
+//
 //  Revision 1.2  2005/01/31 06:01:50  rogeeff
-//  __cdecl correctness fixes
+//  BOOST_TEST_CALL_DECL correctness fixes
 //
 //  Revision 1.1  2005/01/22 19:22:12  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory

@@ -132,8 +132,8 @@ private:
 
 //____________________________________________________________________________//
 
-void __cdecl ms_se_trans_func( unsigned int id, _EXCEPTION_POINTERS* exps );
-void __cdecl ms_se_forward_func( unsigned int id, _EXCEPTION_POINTERS* exps );
+void BOOST_TEST_CALL_DECL ms_se_trans_func( unsigned int id, _EXCEPTION_POINTERS* exps );
+void BOOST_TEST_CALL_DECL ms_se_forward_func( unsigned int id, _EXCEPTION_POINTERS* exps );
 static void report_ms_se_error( unsigned int id );
 
 //____________________________________________________________________________//
@@ -166,7 +166,7 @@ private:
 
 #if defined(BOOST_MS_CRT_DEBUG_HOOKS)
 
-int __cdecl
+int BOOST_TEST_CALL_DECL
 assert_reporting_function( int reportType, char* userMessage, int* retVal )
 {
     switch( reportType ) {
@@ -491,7 +491,7 @@ int catch_signals( execution_monitor& exmon, bool, int )
 
 #if defined(BOOST_MS_STRCTURED_EXCEPTION_HANDLING)
 
-void __cdecl
+void BOOST_TEST_CALL_DECL
 ms_se_trans_func( unsigned int id, _EXCEPTION_POINTERS* /* exps */ )
 {
     throw ms_se_exception( id );
@@ -499,7 +499,7 @@ ms_se_trans_func( unsigned int id, _EXCEPTION_POINTERS* /* exps */ )
 
 //____________________________________________________________________________//
 
-void __cdecl 
+void BOOST_TEST_CALL_DECL 
 ms_se_forward_func( unsigned int /* id */, _EXCEPTION_POINTERS* /* exps */ )
 {
     throw;
@@ -617,6 +617,9 @@ detect_memory_leaks()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.3  2005/01/31 07:50:06  rogeeff
+//  cdecl portability fix
+//
 //  Revision 1.2  2005/01/31 05:58:03  rogeeff
 //  detect_memory_leaks feature added
 //
