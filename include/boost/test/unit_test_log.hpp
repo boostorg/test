@@ -17,6 +17,7 @@
 
 // STL
 #include <iosfwd>
+#include <string> //!! need only forward
 
 namespace boost {
 
@@ -66,9 +67,9 @@ struct file {
 };
 
 struct checkpoint {
-    explicit    checkpoint( char const* message ) : m_message( message ) {}
+    explicit    checkpoint( std::string const& message ) : m_message( message ) {}
 
-    char const* m_message;
+    std::string const& m_message;
 };
 
 struct report_exception {
@@ -111,6 +112,7 @@ public:
     unit_test_log&  operator<<( report_progress const& );
     unit_test_log&  operator<<( report_exception const& );
     unit_test_log&  operator<<( char const* value );
+    unit_test_log&  operator<<( std::string const& value );
 
 private:
     // Constructor

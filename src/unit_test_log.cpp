@@ -310,6 +310,14 @@ unit_test_log::operator<<( char const* value )
 
 //____________________________________________________________________________//
 
+unit_test_log&
+unit_test_log::operator<<( std::string const& value ) 
+{
+    return *this << value.c_str();
+}
+
+//____________________________________________________________________________//
+
 void
 unit_test_log::start( unit_test_counter test_cases_amount, bool print_build_info )
 {

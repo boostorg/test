@@ -36,14 +36,17 @@ namespace detail {
 // **************                 wrapstrstream                ************** //
 // ************************************************************************** //
 
-char const*
-wrapstrstream::str() const
-{
-    buf << char();
-    char const* res = buf.str();
-    buf.freeze( false );
+std::string&
+wrapstrstream::str() const {
 
-    return res;
+#ifdef BOOST_NO_STRINGSTREAM
+    m_str.assign( m_buf.str(), m_buf.pcount() );
+    m_buf.freeze( false );
+#else
+    m_str = m_buf.str();
+#endif
+
+    return m_str;
 }
 
 //____________________________________________________________________________//
@@ -198,8 +201,9 @@ is_defined_impl( char const* symbol_name, char const* symbol_value )
 
 struct output_test_stream::Impl
 {
-    std::fstream m_pattern_to_match_or_save;
-    bool         m_match_or_save;
+    std::fstream    m_pattern_to_match_or_save;
+    bool            m_match_or_save;
+    std::string     m_synced_string;
 };
 
 //____________________________________________________________________________//
@@ -213,21 +217,19 @@ output_test_stream::output_test_stream( char const* pattern_file, bool match_or_
 
 //____________________________________________________________________________//
 
-output_test_stream::~output_test_stream()
-{
+output_test_stream::~output_test_stream() {
 }
 
 //____________________________________________________________________________//
 
 detail::extended_predicate_value
-output_test_stream::is_empty( bool flush_stream )
-{
-    result_type res( length() == 0 );
+output_test_stream::is_empty( bool flush_stream ) {
+    sync();
+
+    result_type res( m_pimpl->m_synced_string.empty() );
 
     if( !res.p_predicate_value.get() ) {
-        *(res.p_message) << ". Output content: \"" << std::string( str(), length() ) << '\"';
-
-        freeze( false );
+        *(res.p_message) << ". Output content: \"" << m_pimpl->m_synced_string << '\"';
 
         if( flush_stream )
             flush();
@@ -241,10 +243,12 @@ output_test_stream::is_empty( bool flush_stream )
 detail::extended_predicate_value
 output_test_stream::check_length( std::size_t length_, bool flush_stream )
 {
-    result_type res( length() == length_ );
+    sync();
+
+    result_type res( m_pimpl->m_synced_string.length() == length_ );
 
     if( !res.p_predicate_value.get() )
-        *(res.p_message) << ". Output length is " << length();
+        *(res.p_message) << ". Output length is " << m_pimpl->m_synced_string.length();
 
     if( flush_stream )
         flush();
@@ -257,12 +261,12 @@ output_test_stream::check_length( std::size_t length_, bool flush_stream )
 detail::extended_predicate_value
 output_test_stream::is_equal( char const* arg, bool flush_stream )
 {
-    result_type res( (length() == std::strlen( arg )) && (std::strncmp( str(), arg, length() ) == 0) );
+    sync();
+
+    result_type res( m_pimpl->m_synced_string == arg );
 
     if( !res.p_predicate_value.get() )
-        *(res.p_message) << ". Output content: \"" << std::string( str(), length() ) << '\"';
-
-    freeze( false );
+        *(res.p_message) << ". Output content: \"" << m_pimpl->m_synced_string << '\"';
 
     if( flush_stream )
         flush();
@@ -273,14 +277,22 @@ output_test_stream::is_equal( char const* arg, bool flush_stream )
 //____________________________________________________________________________//
 
 detail::extended_predicate_value
+output_test_stream::is_equal( std::string const& arg, bool flush_stream )
+{
+    return is_equal( arg.c_str(), arg.length(), flush_stream );
+}
+
+//____________________________________________________________________________//
+
+detail::extended_predicate_value
 output_test_stream::is_equal( char const* arg, std::size_t n, bool flush_stream )
 {
-    result_type res( (length() == n) && (std::strncmp( str(), arg, n ) == 0) );
+    sync();
+
+    result_type res( m_pimpl->m_synced_string == std::string( arg, n ) );
 
     if( !res.p_predicate_value.get() )
-        *(res.p_message) << ". Output content: \"" << std::string( str(), length() ) << '\"';
-
-    freeze( false );
+        *(res.p_message) << ". Output content: \"" << m_pimpl->m_synced_string << '\"';
 
     if( flush_stream )
         flush();
@@ -293,15 +305,17 @@ output_test_stream::is_equal( char const* arg, std::size_t n, bool flush_stream 
 bool
 output_test_stream::match_pattern( bool flush_stream )
 {
+    sync();
+
     bool result = true;
 
     if( !m_pimpl->m_pattern_to_match_or_save.is_open() )
         result = false;
     else {
         if( m_pimpl->m_match_or_save ) {
-            char* ptr = str();
+            char const* ptr = m_pimpl->m_synced_string.c_str();
 
-            for( std::size_t i = 0; i != length(); i++, ptr++ ) {
+            for( std::size_t i = 0; i != m_pimpl->m_synced_string.length(); i++, ptr++ ) {
                 char c;
                 m_pimpl->m_pattern_to_match_or_save.get( c );
 
@@ -316,11 +330,9 @@ output_test_stream::match_pattern( bool flush_stream )
                     result = false;
                 }
             }
-            freeze( false );
         }
         else {
-            m_pimpl->m_pattern_to_match_or_save.write( str(), length() );
-            freeze( false );
+            m_pimpl->m_pattern_to_match_or_save.write( m_pimpl->m_synced_string.c_str(), m_pimpl->m_synced_string.length() );
             m_pimpl->m_pattern_to_match_or_save.flush();
         }
     }
@@ -334,8 +346,15 @@ output_test_stream::match_pattern( bool flush_stream )
 //____________________________________________________________________________//
 
 void
-output_test_stream::flush() {
+output_test_stream::flush()
+{
+    m_pimpl->m_synced_string.erase();
+
     seekp( 0, std::ios::beg );
+
+#ifndef BOOST_NO_STRINGSTREAM
+    str( std::string() );
+#endif
 }
 
 //____________________________________________________________________________//
@@ -343,7 +362,22 @@ output_test_stream::flush() {
 std::size_t
 output_test_stream::length()
 {
-  return static_cast<std::size_t>( pcount() );
+    sync();
+
+    return m_pimpl->m_synced_string.length();
+}
+
+//____________________________________________________________________________//
+
+void
+output_test_stream::sync()
+{
+#ifdef BOOST_NO_STRINGSTREAM
+    m_pimpl->m_synced_string.assign( str(), pcount() );
+    freeze( false );
+#else
+    m_pimpl->m_synced_string = str();
+#endif
 }
 
 //____________________________________________________________________________//

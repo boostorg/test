@@ -61,6 +61,7 @@ pattern</a>&quot;</p>
     <span class="cpp-type">bool</span>      is_empty( <span class="cpp-type">bool</span> flush_stream = <span class="reserv-word">true</span> );
     <span class="cpp-type">bool</span>      check_length( std::size_t length, <span class="cpp-type">bool</span> flush_stream = <span class="reserv-word">true</span> );
     <span class="cpp-type">bool</span>      is_equal( <span class="cpp-type">char</span> <span class="reserv-word">const</span>* arg, <span class="cpp-type">bool</span> flush_stream = <span class="reserv-word">true</span> );
+    <span class="cpp-type">bool</span>      is_equal( <span class="cpp-type">std::string</span> <span class="reserv-word">const</span>& arg, <span class="cpp-type">bool</span> flush_stream = <span class="reserv-word">true</span> );
     <span class="cpp-type">bool</span>      is_equal( <span class="cpp-type">char</span> <span class="reserv-word">const</span>* arg, <span class="cpp-type">std::size_t</span> n,
                         <span class="cpp-type">bool</span> flush_stream = <span class="reserv-word">true</span> );
 
@@ -98,12 +99,13 @@ pattern</a>&quot;</p>
       after check is done.</p>
 
       <p> bool <b>is_equal</b>( char const* arg, bool flush_stream = true );<br>
+          bool <b>is_equal</b>( std::string const& arg, bool flush_stream = true );<br>
           bool <b>is_equal</b>( char const* arg, std::size_t n, bool flush_stream = true );</p>
 
-      <p class="1-line-indented">The method output_test_stream::is_equal(...) is used to check
-      that the content of the output_test_stream instance is equal to
-      supplied character string. The first compare to zero-terminated
-      string. The second version allows to specify pattern string length. The
+      <p class="1-line-indented">The overloaded method output_test_stream::is_equal(...) is used to check
+      that the content of the output_test_stream instance is equal to supplied character string. 
+      The first version compare with null-terminated string. The second compare with a reference to std::string object.
+      And finnaly the third version compare with probably not null-terminated string defined by pointer to the string begin and the string length. The
       flush_stream argument manage automatic call of the method output_test_stream::flush()
       after check is done.</p>
 

@@ -22,7 +22,12 @@
 #include <boost/config.hpp>
 
 // STL
-#include <strstream> //!!
+#ifdef BOOST_NO_STRINGSTREAM
+#include <strstream>
+#else
+#include <sstream>
+#endif // BOOST_NO_STRINGSTREAM
+
 #include <cstdlib>
 #include <stdexcept>
 #include <memory>
@@ -120,14 +125,21 @@ namespace test_toolbox {
 
 namespace detail {
 
+#ifdef BOOST_NO_STRINGSTREAM
+typedef std::ostrstream     out_stringstream;
+#else
+typedef std::ostringstream  out_stringstream;
+#endif // BOOST_NO_STRINGSTREAM
+
 // ************************************************************************** //
 // **************                 wrapstrstream                ************** //
 // ************************************************************************** //
 
 struct wrapstrstream {
-    mutable std::ostrstream buf;
+    mutable out_stringstream    m_buf;
+    mutable std::string         m_str;
 
-    char const* str() const;
+    std::string&                str() const;
 };
 
 //____________________________________________________________________________//
@@ -136,7 +148,7 @@ template <class T>
 inline wrapstrstream const&
 operator<<( wrapstrstream const& targ, T const& t )
 { 
-    targ.buf << t;
+    targ.m_buf << t;
     return targ;
 }
 
@@ -181,7 +193,7 @@ struct test_tool_failed : public std::exception {
     virtual char const* what() const throw()            { return m_what.c_str(); }
 
 private:
-    std::string m_what;
+    std::string         m_what;
 };
 
 // ************************************************************************** //
@@ -357,7 +369,8 @@ compare_and_continue_impl( FPT left, FPT right, ToleranceSource tolerance_src,
     if( !predicate ) {
         return test_and_continue_impl( predicate,
                                        wrapstrstream() << "test " << message 
-                                                       << " failed [" << left << " !~= " << right << " (+/-" << pred.p_tolerance.get() << ")]",
+                                                       << " failed [" << left << " !~= " << right 
+                                                       << " (+/-" << pred.p_tolerance.get() << ")]",
                                        file_name, line_num, false, loglevel );
     }
 
@@ -381,7 +394,7 @@ is_defined_impl( char const* symbol_name, char const* symbol_value );
 
 // class to be used to simplify testing of ostream print functions
 
-class output_test_stream : public std::ostrstream {
+class output_test_stream : public detail::out_stringstream {
     typedef detail::extended_predicate_value result_type;
 public:
     // Constructor
@@ -394,6 +407,7 @@ public:
     result_type     is_empty( bool flush_stream = true );
     result_type     check_length( std::size_t length, bool flush_stream = true );
     result_type     is_equal( char const* arg, bool flush_stream = true );
+    result_type     is_equal( std::string const& arg, bool flush_stream = true );
     result_type     is_equal( char const* arg, std::size_t n, bool flush_stream = true );
     bool            match_pattern( bool flush_stream = true );
 
@@ -402,6 +416,8 @@ public:
     std::size_t     length();
 
 private:
+    void            sync();
+
     struct Impl;
     unit_test_framework::detail::grinning_ptr<Impl> m_pimpl;
 };

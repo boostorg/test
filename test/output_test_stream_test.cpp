@@ -61,7 +61,7 @@ test_is_empty()
     output_test_stream output;
     BOOST_CHECK( output.is_empty() );
 
-    output << 1;
+    output << 12345;
     BOOST_CHECK( !output.is_empty() );
     BOOST_CHECK( output.is_empty() );
 
