@@ -24,13 +24,13 @@
 // ************************************************************************** //
 
 namespace boost {
-namespace unit_test_framework {
+namespace unit_test {
 namespace detail {
 
-inline boost::unit_test_framework::test_suite*
+inline boost::unit_test::test_suite*
 auto_unit_test_suite()
 {
-    static boost::unit_test_framework::test_suite* inst = BOOST_TEST_SUITE( "Auto Unit Test" );
+    static boost::unit_test::test_suite* inst = BOOST_TEST_SUITE( "Auto Unit Test" );
 
     return inst;
 }
@@ -43,7 +43,7 @@ struct auto_unit_test_registrar
 
 } // detail
 
-} // unit_test_framework
+} // unit_test
 
 } // namespace boost
 
@@ -53,20 +53,20 @@ struct auto_unit_test_registrar
 
 #define BOOST_AUTO_UNIT_TEST( func_name )                           \
 static void func_name();                                            \
-static boost::unit_test_framework::detail::auto_unit_test_registrar \
+static boost::unit_test::detail::auto_unit_test_registrar \
     BOOST_JOIN( test_registrar, __LINE__)                           \
         ( BOOST_TEST_CASE( func_name ) );                           \
 static void func_name()                                             \
 /**/
 
 // ************************************************************************** //
-// **************             BOOST_AUTO_UNIT_TEST             ************** //
+// **************             BOOST_AUTO_TEST_MAIN             ************** //
 // ************************************************************************** //
 
 #ifdef BOOST_AUTO_TEST_MAIN
-boost::unit_test_framework::test_suite*
+boost::unit_test::test_suite*
 init_unit_test_suite( int /* argc */, char* /* argv */ [] ) {
-    return boost::unit_test_framework::detail::auto_unit_test_suite();
+    return boost::unit_test::detail::auto_unit_test_suite();
 }
 #endif
 
@@ -74,6 +74,10 @@ init_unit_test_suite( int /* argc */, char* /* argv */ [] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2004/05/11 11:00:33  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//
 //  Revision 1.7  2003/12/01 00:41:56  rogeeff
 //  prerelease cleaning
 //

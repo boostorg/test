@@ -38,6 +38,7 @@
 // BOOST
 #include <boost/scoped_ptr.hpp>
 #include <boost/type.hpp>
+#include <boost/cstdlib.hpp>
 
 namespace boost {
 
@@ -76,7 +77,7 @@ protected:
 //  design rationale: fear of being out (or nearly out) of memory.
     
 class execution_exception {
-    typedef unit_test_framework::c_string_literal c_string_literal;
+    typedef boost::unit_test::const_string const_string;
 public:
     enum error_code {
         //  These values are sometimes used as program return codes.
@@ -107,17 +108,17 @@ public:
     };
     
     // Constructor
-    execution_exception( error_code ec_, c_string_literal what_msg_ ) // max length 256 inc '\0'
+    execution_exception( error_code ec_, const_string what_msg_ ) // max length 256 inc '\0'
     : m_error_code( ec_ ), m_what( what_msg_ ) {}
 
     // access methods
-    error_code          code() const { return m_error_code; }
-    c_string_literal    what() const { return m_what; }
+    error_code      code() const { return m_error_code; }
+    const_string    what() const { return m_what; }
 
 private:
     // Data members
-    error_code          m_error_code;
-    c_string_literal    m_what;
+    error_code      m_error_code;
+    const_string    m_what;
 }; // execution_exception
 
 // ************************************************************************** //
@@ -184,7 +185,7 @@ public:
         catch( Exception const& e )
         {
             m_translator( e );
-            return true;
+            return boost::exit_exception_failure;
         }
     }
 
@@ -209,6 +210,10 @@ execution_monitor::register_exception_translator( ExceptionTranslator const& tr,
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2004/05/11 11:00:34  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//
 //  Revision 1.14  2003/12/01 00:41:56  rogeeff
 //  prerelease cleaning
 //

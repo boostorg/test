@@ -29,7 +29,7 @@
 
 namespace boost {
 
-namespace unit_test_framework {
+namespace unit_test {
 
 // ************************************************************************** //
 // **************            boost_function_test_case             ************** //
@@ -40,7 +40,7 @@ public:
     typedef function0<void> function_type;
 
     // Constructor
-    boost_function_test_case( function_type f_, std::string const& name_ )
+    boost_function_test_case( function_type f_, const_string name_ )
     : test_case( name_, true, 1 ), m_function( f_ ) {}
 
 protected:
@@ -62,7 +62,7 @@ public:
     typedef function1<void,ParameterType> function_type;
 
     // Constructor
-    parametrized_boost_function_test_case( function_type f_, std::string const& name_,
+    parametrized_boost_function_test_case( function_type f_, const_string name_,
                                         ParamIterator const& begin_, ParamIterator const& end_ )
     : test_case( name_, true, 0 ), m_first_parameter( begin_ ), m_last_parameter( end_ ), m_function( f_ )
     {
@@ -101,7 +101,7 @@ create_test_case( function1<void,ParameterType> const& fct_, std::string name_,
                     fct_, detail::normalize_test_case_name( name_ ), begin_, end_ );
 }
 
-} // unit_test_framework
+} // unit_test
 
 } // namespace boost
 
@@ -109,6 +109,10 @@ create_test_case( function1<void,ParameterType> const& fct_, std::string name_,
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.16  2004/05/11 11:00:51  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//
 //  Revision 1.15  2003/12/01 00:41:56  rogeeff
 //  prerelease cleaning
 //

@@ -28,7 +28,7 @@
 #include <cstddef>                      // std::size_t
 namespace boost {
 
-namespace unit_test_framework {
+namespace unit_test {
 
 class test_case;
 
@@ -52,17 +52,17 @@ public:
 
     // current test results access and management
     static unit_test_result& instance();
-    static void     test_case_start( std::string const& name_, unit_test_counter expected_failures_ = 0 );
+    static void     test_case_start( const_string name_, unit_test_counter expected_failures_ = 0 );
     static void     test_case_end();
     
     // report format configuration
-    static void     set_report_format( std::string const& reportformat );
+    static void     set_report_format( const_string reportformat );
 
     // use to dynamically change amount of errors expected in current test case
     void            increase_expected_failures( unit_test_counter amount = 1 );
 
     // reporting
-    void            report( std::string const& reportlevel, std::ostream& where_to_ );              // report by level
+    void            report( const_string reportlevel, std::ostream& where_to_ );                    // report by level
     void            confirmation_report( std::ostream& where_to_ );                                 // shortest
     void            short_report( std::ostream& where_to_ )    { report( "short", where_to_ ); }    // short
     void            detailed_report( std::ostream& where_to_ ) { report( "detailed", where_to_ ); } // long
@@ -79,7 +79,7 @@ public:
     void            caught_exception();
 
     // access method; to be used by unit_test_log
-    std::string const& test_case_name();
+    const_string    test_case_name();
 
     // used mostly by the Boost.Test unit testing
     void            failures_details( unit_test_counter& num_of_failures_, bool& exception_caught_ );
@@ -92,7 +92,7 @@ private:
     static void     reset_current_result_set();
 
     // Constructor
-    unit_test_result( unit_test_result* parent_, std::string const& test_case_name_, unit_test_counter expected_failures_ = 0 );
+    unit_test_result( unit_test_result* parent_, const_string test_case_name_, unit_test_counter expected_failures_ = 0 );
    
     // Data members
     struct Impl;
@@ -114,12 +114,12 @@ struct unit_test_result_saver
 // ************************************************************************** //
 
 struct unit_test_result_tracker {
-    explicit            unit_test_result_tracker( std::string const& name_, unit_test_counter expected_failures_ ) 
+    explicit            unit_test_result_tracker( const_string name_, unit_test_counter expected_failures_ ) 
                                                     { unit_test_result::test_case_start( name_, expected_failures_ ); }
                         ~unit_test_result_tracker() { unit_test_result::test_case_end(); }
 };
 
-} // namespace unit_test_framework
+} // namespace unit_test
 
 } // namespace boost
 
@@ -127,6 +127,10 @@ struct unit_test_result_tracker {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.19  2004/05/11 11:00:51  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//
 //  Revision 1.18  2003/12/01 00:41:56  rogeeff
 //  prerelease cleaning
 //

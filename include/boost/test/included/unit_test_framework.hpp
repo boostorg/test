@@ -32,6 +32,10 @@
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2004/05/11 11:00:55  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//
 //  Revision 1.6  2003/12/01 00:41:56  rogeeff
 //  prerelease cleaning
 //

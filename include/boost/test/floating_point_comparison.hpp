@@ -21,7 +21,9 @@
 
 namespace boost {
 
-namespace test_toolbox {
+namespace test_tools {
+
+using unit_test::readonly_property;
 
 // ************************************************************************** //
 // **************        floating_point_comparison_type        ************** //
@@ -80,8 +82,8 @@ public:
     }
 
     // Public properties
-    BOOST_READONLY_PROPERTY( FPT, 0, () )   p_fraction_tolerance;
-    BOOST_READONLY_PROPERTY( bool, 0, () )  p_strong_or_weak;
+    readonly_property<FPT>  p_fraction_tolerance;
+    readonly_property<bool> p_strong_or_weak;
 };
 
 //____________________________________________________________________________//
@@ -112,13 +114,17 @@ compute_tolerance( FPT tolerance )
 
 //____________________________________________________________________________//
 
-} // namespace test_toolbox
+} // namespace test_tools
 } // namespace boost
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2004/05/11 11:00:34  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//
 //  Revision 1.14  2004/02/26 18:26:57  eric_niebler
 //  remove minmax hack from win32.hpp and fix all places that could be affected by the minmax macros
 //

@@ -18,13 +18,19 @@
 // BOOST
 #include <boost/config.hpp> // compilers workarounds and std::ptrdiff_t
 
+// Boost.Test
+#include <boost/test/detail/basic_cstring/basic_cstring.hpp>
+#include <boost/test/detail/basic_cstring/io.hpp>
+#define BOOST_TEST_STRING_LITERAL( s ) boost::unit_test::literal_string( s, sizeof( s ) - 1 )
+#define BOOST_TEST_EMPTY_STRING BOOST_TEST_STRING_LITERAL( "" )
+
 // STL
 #include <iterator>     // for std::distance
 #include <cstddef>      // for std::ptrdiff_t
 
 namespace boost {
 
-namespace unit_test_framework {
+namespace unit_test {
 
 typedef unsigned long   unit_test_counter;
 typedef char const*     c_string_literal;
@@ -45,9 +51,13 @@ std::ptrdiff_t distance( T const& x_, T const& y_ )
 using std::distance;
 #endif
 
+#define BOOST_TEST_L( s ) const_string( s, sizeof(s) )
+
 } // namespace detail
 
-} // namespace unit_test_framework
+} // namespace unit_test
+
+namespace unit_test_framework = unit_test;
 
 } // namespace boost
 
@@ -55,6 +65,10 @@ using std::distance;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.17  2004/05/11 11:00:53  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//
 //  Revision 1.16  2003/12/01 00:41:56  rogeeff
 //  prerelease cleaning
 //

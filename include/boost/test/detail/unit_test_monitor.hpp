@@ -26,7 +26,7 @@
 
 namespace boost {
 
-namespace unit_test_framework {
+namespace unit_test {
 
 class test_case;
 
@@ -70,7 +70,7 @@ private:
 
 } // namespace detail
 
-} // namespace unit_test_framework
+} // namespace unit_test
 
 } // namespace boost
 
@@ -84,6 +84,10 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.14  2004/05/11 11:00:53  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//
 //  Revision 1.13  2003/12/01 00:41:56  rogeeff
 //  prerelease cleaning
 //

@@ -59,8 +59,9 @@ int test_main( int argc, char* argv[] );  // prototype for user's test_main()
 namespace boost {
 namespace minimal_test {
 
+typedef boost::unit_test::const_string const_string;
+
 class monitor : public boost::execution_monitor {
-    typedef unit_test_framework::c_string_literal c_string_literal;
 public:
     // constructor
     monitor( int argc, char** argv )
@@ -72,7 +73,7 @@ public:
         return test_main( m_argc, m_argv );
     }
 
-    void        report_error( const char* msg_, const char* file_, int line_, c_string_literal func_name_, bool is_msg_ = false )
+    void        report_error( const char* msg_, const char* file_, int line_, const_string func_name_, bool is_msg_ = false )
     {
         ++p_errors_counter.value;
         std::cerr << file_ << "(" << line_ << "): ";
@@ -82,20 +83,20 @@ public:
         else
             std::cerr << "test " << msg_ << " failed";
 
-        if( std::string( func_name_ ) != "(unknown)" )
+        if( func_name_ != "(unknown)" )
             std::cerr << " in function: '" << func_name_ << "'";
         
         std::cerr << std::endl;
     }
 
-    void        report_critical_error( const char* msg_, const char* file_, int line_, c_string_literal func_name_, bool is_msg_ = false )
+    void        report_critical_error( const char* msg_, const char* file_, int line_, const_string func_name_, bool is_msg_ = false )
     {
         report_error( msg_, file_, line_, func_name_, is_msg_ );
         throw boost::execution_exception( boost::execution_exception::no_error, "" );
     }
 
     // public properties
-    BOOST_READONLY_PROPERTY( int, 1, ( monitor ) ) p_errors_counter;
+    BOOST_READONLY_PROPERTY( int, ( monitor ) ) p_errors_counter;
 
 private:
     // Data members
@@ -123,7 +124,9 @@ int main( int argc, char* argv[] )
     }
     catch( boost::execution_exception const& exex ) {
         if( exex.code() != boost::execution_exception::no_error )
-            BOOST_ERROR( (std::string( "exception \"" ) + exex.what() + "\" caught").c_str() );
+            BOOST_ERROR( (std::string( "exception \"" ).
+                            append( exex.what().begin(), exex.what().end() ).
+                            append( "\" caught" ) ).c_str() );
         std::cerr << "\n**** Testing aborted.";
     }
 
@@ -145,6 +148,10 @@ int main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.12  2004/05/11 11:00:35  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//
 //  Revision 1.11  2003/12/01 00:41:56  rogeeff
 //  prerelease cleaning
 //

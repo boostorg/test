@@ -26,7 +26,7 @@
 
 namespace boost {
 
-namespace unit_test_framework {
+namespace unit_test {
 
 namespace detail {
 
@@ -43,14 +43,14 @@ public:
     void    finish_log( std::ostream& output );
 
     void    track_test_case_scope( std::ostream& output, test_case const& tc, bool in_out );
-    void    log_exception( std::ostream& output, std::string const& test_case_name, c_string_literal explanation );
+    void    log_exception( std::ostream& output, const_string test_case_name, const_string explanation );
     void    begin_log_entry( std::ostream& output, log_entry_types let );
 
-    void    log_entry_value( std::ostream& output, std::string const& value );
+    void    log_entry_value( std::ostream& output, const_string value );
     void    end_log_entry( std::ostream& output );
 
 protected:
-    virtual void    print_prefix( std::ostream& output, std::string const& file, std::size_t line );
+    virtual void    print_prefix( std::ostream& output, const_string file, std::size_t line );
 };
 
 // ************************************************************************** //
@@ -66,23 +66,23 @@ public:
     void    finish_log( std::ostream& output );
 
     void    track_test_case_scope( std::ostream& output, test_case const& tc, bool in_out );
-    void    log_exception( std::ostream& output, std::string const& test_case_name, c_string_literal explanation );
+    void    log_exception( std::ostream& output, const_string test_case_name, const_string explanation );
     void    begin_log_entry( std::ostream& output, log_entry_types let );
 
-    void    log_entry_value( std::ostream& output, std::string const& value );
+    void    log_entry_value( std::ostream& output, const_string value );
     void    end_log_entry( std::ostream& output );
 
 private:
     void    print_indent( std::ostream& output );
 
     // Data members
-    std::size_t      m_indent;
-    c_string_literal m_curr_tag;
+    std::size_t     m_indent;
+    const_string    m_curr_tag;
 };
 
 } // namespace detail
 
-} // namespace unit_test_framework
+} // namespace unit_test
 
 } // namespace boost
 
@@ -90,6 +90,10 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2004/05/11 11:00:53  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
+//
 //  Revision 1.4  2003/12/01 00:41:56  rogeeff
 //  prerelease cleaning
 //
