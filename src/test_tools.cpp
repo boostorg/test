@@ -44,7 +44,7 @@ namespace detail {
 void
 checkpoint_impl( wrap_stringstream& message, c_string_literal file_name, int line_num )
 {
-    BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::report_test_suites )
+    BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::log_test_suites )
         unit_test_framework::checkpoint( message.str() )
     BOOST_UT_LOG_END
 }
@@ -54,7 +54,7 @@ checkpoint_impl( wrap_stringstream& message, c_string_literal file_name, int lin
 void
 message_impl( wrap_stringstream& message, c_string_literal file_name, int line_num )
 {
-    BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::report_messages )
+    BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::log_messages )
         message.str()
     BOOST_UT_LOG_END
 }
@@ -66,12 +66,12 @@ warn_and_continue_impl( bool predicate, wrap_stringstream& message,
                         c_string_literal file_name, int line_num, bool add_fail_pass )
 {
     if( !predicate ) {
-        BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::report_warnings )
+        BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::log_warnings )
             (add_fail_pass ? "condition " : "") << message.str() << (add_fail_pass ? " is not satisfied" : "" )
         BOOST_UT_LOG_END
     }
     else {
-        BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::report_successful_tests )
+        BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::log_successful_tests )
             "condition " << message.str() << " is satisfied"
         BOOST_UT_LOG_END
     }
@@ -84,7 +84,7 @@ warn_and_continue_impl( extended_predicate_value const& v, wrap_stringstream& me
                         bool add_fail_pass )
 {
     warn_and_continue_impl( !!v,
-        message << (add_fail_pass && !v ? " is not satisfied" : "" ) << *(v.p_message),
+        message << (add_fail_pass && !v ? " is not satisfied. " : "" ) << *(v.p_message),
         file_name, line_num, false );
 }
 
@@ -93,7 +93,7 @@ warn_and_continue_impl( extended_predicate_value const& v, wrap_stringstream& me
 bool
 test_and_continue_impl( bool predicate, wrap_stringstream& message,
                         c_string_literal file_name, int line_num,
-                        bool add_fail_pass, unit_test_framework::report_level loglevel )
+                        bool add_fail_pass, unit_test_framework::log_level loglevel )
 {
     if( !predicate ) {
         unit_test_framework::unit_test_result::instance().inc_failed_assertions();
@@ -107,7 +107,7 @@ test_and_continue_impl( bool predicate, wrap_stringstream& message,
     else {
         unit_test_framework::unit_test_result::instance().inc_passed_assertions();
 
-        BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::report_successful_tests )
+        BOOST_UT_LOG_BEGIN( file_name, line_num, unit_test_framework::log_successful_tests )
             (add_fail_pass ? "test " : "") << message.str() << (add_fail_pass ? " passed" : "")
         BOOST_UT_LOG_END
 
@@ -120,10 +120,10 @@ test_and_continue_impl( bool predicate, wrap_stringstream& message,
 bool
 test_and_continue_impl( extended_predicate_value const& v, wrap_stringstream& message,
                         c_string_literal file_name, int line_num,
-                        bool add_fail_pass, unit_test_framework::report_level loglevel )
+                        bool add_fail_pass, unit_test_framework::log_level loglevel )
 {
     return test_and_continue_impl( !!v,
-        message << (add_fail_pass ? (!v ? " failed" : " passed") : "") << *(v.p_message),
+        message << (add_fail_pass ? (!v ? " failed. " : " passed. ") : "") << *(v.p_message),
         file_name, line_num, false, loglevel );
 }
 
@@ -132,10 +132,10 @@ test_and_continue_impl( extended_predicate_value const& v, wrap_stringstream& me
 void
 test_and_throw_impl( bool predicate, wrap_stringstream& message,
                      c_string_literal file_name, int line_num,
-                     bool add_fail_pass, unit_test_framework::report_level loglevel )
+                     bool add_fail_pass, unit_test_framework::log_level loglevel )
 {
     if( test_and_continue_impl( predicate, message, file_name, line_num, add_fail_pass, loglevel ) ) {
-        throw test_tool_failed( "" ); // error already reported by test_and_continue_impl
+        throw test_tool_failed(); // error already reported by test_and_continue_impl
     }
 }
 
@@ -144,10 +144,10 @@ test_and_throw_impl( bool predicate, wrap_stringstream& message,
 void
 test_and_throw_impl( extended_predicate_value const& v, wrap_stringstream& message,
                      c_string_literal file_name, int line_num,
-                     bool add_fail_pass, unit_test_framework::report_level loglevel )
+                     bool add_fail_pass, unit_test_framework::log_level loglevel )
 {
     if( test_and_continue_impl( v, message, file_name, line_num, add_fail_pass, loglevel ) ) {
-        throw test_tool_failed( "" ); // error already reported by test_and_continue_impl
+        throw test_tool_failed(); // error already reported by test_and_continue_impl
     }
 }
 
@@ -156,7 +156,7 @@ test_and_throw_impl( extended_predicate_value const& v, wrap_stringstream& messa
 bool
 equal_and_continue_impl( c_string_literal left, c_string_literal right, wrap_stringstream& message,
                          c_string_literal file_name, int line_num,
-                         unit_test_framework::report_level loglevel )
+                         unit_test_framework::log_level loglevel )
 {
     bool predicate = (left && right) ? std::strcmp( left, right ) == 0 : (left == right);
 
@@ -164,12 +164,12 @@ equal_and_continue_impl( c_string_literal left, c_string_literal right, wrap_str
     right = right ? right : "null string";
 
     if( !predicate ) {
-        return test_and_continue_impl( predicate,
+        return test_and_continue_impl( false,
             wrap_stringstream().ref() << "test " << message.str() << " failed [" << left << " != " << right << "]",
             file_name, line_num, false, loglevel );
     }
 
-    return test_and_continue_impl( predicate, message, file_name, line_num, true, loglevel );
+    return test_and_continue_impl( true, message, file_name, line_num, true, loglevel );
 }
 
 //____________________________________________________________________________//
@@ -197,17 +197,29 @@ struct output_test_stream::Impl
     void            check_and_fill( detail::extended_predicate_value& res )
     {
         if( !res.p_predicate_value.get() )
-            *(res.p_message) << ". Output content: \"" << m_synced_string << '\"';
+            *(res.p_message) << "Output content: \"" << m_synced_string << '\"';
     }
 };
 
 //____________________________________________________________________________//
 
-output_test_stream::output_test_stream( c_string_literal pattern_file, bool match_or_save )
+output_test_stream::output_test_stream( std::string const& pattern_file_name, bool match_or_save )
 : m_pimpl( new Impl )
 {
-    if( pattern_file && pattern_file[0] != '\0' )
-        m_pimpl->m_pattern_to_match_or_save.open( pattern_file, match_or_save ? std::ios::in : std::ios::out );
+    if( !pattern_file_name.empty() )
+        m_pimpl->m_pattern_to_match_or_save.open( pattern_file_name.c_str(), match_or_save ? std::ios::in : std::ios::out );
+
+    m_pimpl->m_match_or_save = match_or_save;
+}
+
+//____________________________________________________________________________//
+
+output_test_stream::output_test_stream( c_string_literal pattern_file_name, bool match_or_save )
+: m_pimpl( new Impl )
+{
+    if( pattern_file_name && pattern_file_name[0] != '\0' )
+        m_pimpl->m_pattern_to_match_or_save.open( pattern_file_name, match_or_save ? std::ios::in : std::ios::out );
+
     m_pimpl->m_match_or_save = match_or_save;
 }
 
@@ -393,6 +405,13 @@ output_test_stream::sync()
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.13  2003/02/13 08:15:25  rogeeff
+//  BOOST_BITWIZE_EQUAL introduced
+//  BOOST_CHECK_NO_THROW introduced
+//  C string literals eliminated
+//  report_level -> log_level
+//  other minor fixes
+//
 //  Revision 1.12  2002/12/08 18:20:30  rogeeff
 //  wrapstratream separated in standalone file and renamed
 //  switched to use c_string_literal
