@@ -18,14 +18,13 @@
 #ifndef BOOST_UNIT_TEST_SUITE_HPP
 #define BOOST_UNIT_TEST_SUITE_HPP
 
-// BOOST
-#include <boost/shared_ptr.hpp>
-
 // LOCAL
 #include <boost/test/detail/unit_test_monitor.hpp>
 #include <boost/test/detail/unit_test_config.hpp>
 #include <boost/test/detail/class_properties.hpp>
-#include <boost/test/detail/grinning_ptr.hpp>
+
+// BOOST
+#include <boost/shared_ptr.hpp>
 
 // STL
 #include <string>  // for std::string
@@ -251,7 +250,7 @@ public:
 private:
     // Data members
     struct Impl;
-    unit_test_framework::detail::grinning_ptr<Impl> m_pimpl;
+    boost::shared_ptr<Impl> m_pimpl;
 };
 
 // ************************************************************************** //
@@ -309,6 +308,9 @@ create_test_case( void (UserTestCase::*fct_)( ParamType ), std::string name_, bo
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2002/09/16 09:29:52  rogeeff
+//  since boost::smart_ptrs now support incomplete types on borland, no need in grinning_ptr any more
+//
 //  Revision 1.8  2002/09/16 08:47:29  rogeeff
 //  STL includes normalized
 //

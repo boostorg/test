@@ -19,6 +19,9 @@
 #include <boost/test/unit_test_result.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
 
+// BOOST
+#include <boost/scoped_ptr.hpp>
+
 // STL
 #include <iostream>                         // for cout, cerr
 
@@ -65,7 +68,7 @@ int main( int argc, char* argv[] ) {
     //  set up the test   
     argc_ = argc;
     argv_ = argv;
-    boost::unit_test_framework::detail::grinning_ptr<test_case> test_main_tc( BOOST_TEST_CASE( &call_test_main ) );
+    boost::scoped_ptr<test_case> test_main_tc( BOOST_TEST_CASE( &call_test_main ) );
 
     // start testing
     test_main_tc->run();
@@ -87,6 +90,9 @@ int main( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2002/09/16 09:29:21  rogeeff
+//  since boost::smart_ptrs now support incomplete types on borland, no need in grinning_ptr any more
+//
 //  Revision 1.7  2002/09/04 07:27:08  rogeeff
 //  space before colon deleted
 //

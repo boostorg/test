@@ -20,11 +20,11 @@
 // LOCAL
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/detail/class_properties.hpp>
-#include <boost/test/detail/grinning_ptr.hpp>
 
 // BOOST
 #include <boost/cstdlib.hpp> // for boost::exit_success;
 #include <boost/config.hpp>  // compilers workarounds
+#include <boost/shared_ptr.hpp>
 
 // STL
 #ifdef BOOST_NO_STRINGSTREAM
@@ -450,7 +450,7 @@ private:
     void            sync();
 
     struct Impl;
-    unit_test_framework::detail::grinning_ptr<Impl> m_pimpl;
+    boost::shared_ptr<Impl> m_pimpl;
 };
 
 } // namespace test_toolbox
@@ -461,6 +461,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.20  2002/09/16 09:29:52  rogeeff
+//  since boost::smart_ptrs now support incomplete types on borland, no need in grinning_ptr any more
+//
 //  Revision 1.19  2002/09/16 08:47:29  rogeeff
 //  STL includes normalized
 //

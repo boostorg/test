@@ -19,7 +19,9 @@
 
 // LOCAL
 #include <boost/test/detail/unit_test_config.hpp>
-#include <boost/test/detail/grinning_ptr.hpp>
+
+// BOOST
+#include <boost/shared_ptr.hpp>
 
 // STL
 #include <iosfwd>   // for std::ostream&
@@ -66,7 +68,7 @@ private:
     unit_test_result( unit_test_result* parent_, char const* test_case_name_, unit_test_counter expected_failures_ = 0 );
    
     struct Impl;
-    detail::grinning_ptr<Impl> m_pimpl;
+    boost::shared_ptr<Impl> m_pimpl;
 };
 
 } // namespace unit_test_framework
@@ -77,6 +79,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2002/09/16 09:29:52  rogeeff
+//  since boost::smart_ptrs now support incomplete types on borland, no need in grinning_ptr any more
+//
 //  Revision 1.7  2002/09/16 08:47:29  rogeeff
 //  STL includes normalized
 //
