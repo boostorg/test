@@ -90,7 +90,9 @@ class callback0 {
 public:
     // Constructors
     callback0() {}
+#if BOOST_WORKAROUND(BOOST_MSVC, < 1300) // VC6 doesn't generate a copy ctor
     callback0( callback0 const& rhs ) : m_impl( rhs.m_impl ) {}
+#endif
 
     template<typename Functor>
     callback0( Functor f )
@@ -142,7 +144,9 @@ class callback1 {
 public:
     // Constructors
     callback1() {}
+#if BOOST_WORKAROUND(BOOST_MSVC, < 1300) // VC6 doesn't generate a copy ctor
     callback1( callback1 const& rhs ) : m_impl( rhs.m_impl ) {}
+#endif
 
     template<typename Functor>
     callback1( Functor f )
@@ -194,7 +198,9 @@ class callback2 {
 public:
     // Constructors
     callback2() {}
+#if BOOST_WORKAROUND(BOOST_MSVC, < 1300) // VC6 doesn't generate a copy ctor
     callback2( callback2 const& rhs ) : m_impl( rhs.m_impl ) {}
+#endif
 
     template<typename Functor>
                 callback2( Functor f ) : m_impl( new ut_detail::callback2_impl_t<R,T1,T2,Functor>( f ) ) {}
@@ -245,7 +251,9 @@ class callback3 {
 public:
     // Constructors
     callback3() {}
+#if BOOST_WORKAROUND(BOOST_MSVC, < 1300) // VC6 doesn't generate a copy ctor
     callback3( callback3 const& rhs ) : m_impl( rhs.m_impl ) {}
+#endif
 
     template<typename Functor>
     callback3( Functor f )
@@ -277,6 +285,9 @@ private:
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.2  2005/02/24 19:28:17  turkanis
+//   removed redundant copy ctors, except for VC6
+//
 //   Revision 1.1  2005/02/20 08:27:08  rogeeff
 //   This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
