@@ -13,8 +13,12 @@
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/detail/class_properties.hpp>
 #include <boost/test/detail/grinning_ptr.hpp>
+#if defined __GNUC__
+#include <boost/test/detail/floating_point_comparison.hpp>
+#endif
 
 // BOOST
+#include <boost/cstdlib.hpp> // for boost::exit_success; people expecting it
 #include <boost/config.hpp>
 
 // STL
@@ -45,7 +49,7 @@
 
 #define BOOST_CHECK_CLOSE(left, right, tolerance_src) \
     boost::test_toolbox::detail::compare_and_continue_impl((left), (right), (tolerance_src),\
-        boost::test_toolbox::detail::wrapstrstream() << #left " (==) " #right, __FILE__, __LINE__)
+        boost::test_toolbox::detail::wrapstrstream() << #left " ~= " #right, __FILE__, __LINE__)
 
 #define BOOST_REQUIRE(predicate) \
     boost::test_toolbox::detail::test_and_throw_impl((predicate), \
@@ -353,7 +357,7 @@ compare_and_continue_impl( FPT left, FPT right, ToleranceSource tolerance_src,
     if( !predicate ) {
         return test_and_continue_impl( predicate,
                                        wrapstrstream() << "test " << message 
-                                                       << " failed [" << left << " (!=) " << right << " (" << pred.p_tolerance.get() << ")]",
+                                                       << " failed [" << left << " !~= " << right << " (+/-" << pred.p_tolerance.get() << ")]",
                                        file_name, line_num, false, loglevel );
     }
 

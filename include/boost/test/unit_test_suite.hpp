@@ -9,15 +9,15 @@
 #ifndef BOOST_UNIT_TEST_SUITE_HPP
 #define BOOST_UNIT_TEST_SUITE_HPP
 
+// BOOST
+#include <boost/config.hpp> // for distance workaround
+#include <boost/shared_ptr.hpp>
+
 // LOCAL
 #include <boost/test/detail/unit_test_monitor.hpp>
 #include <boost/test/detail/unit_test_config.hpp>
 #include <boost/test/detail/class_properties.hpp>
 #include <boost/test/detail/grinning_ptr.hpp>
-
-// BOOST
-#include <boost/config.hpp> // for distance workaround
-#include <boost/shared_ptr.hpp>
 
 // STL
 #include <stdexcept>
@@ -149,7 +149,7 @@ public:
 private:
     // test case implementation
     void                do_run()        { ((*m_user_test_case).*m_function)(); }
-    void                do_destroy()    { m_user_test_case = NULL; }
+    void                do_destroy()    { m_user_test_case.reset(); }
 
     // Data members
     boost::shared_ptr<UserTestCase> m_user_test_case;
@@ -167,10 +167,10 @@ public:
 
     // Constructor
     parametrized_function_test_case( function_type f, char const* name,
-                                     ParamIterator const& begin, ParamIterator const& end )
-    : test_case( name ), m_first_parameter( begin ), m_last_parameter( end ), m_function( f )
+                                     ParamIterator const& par_begin, ParamIterator const& par_end )
+    : test_case( name ), m_first_parameter( par_begin ), m_last_parameter( par_end ), m_function( f )
     {
-       p_stages_amount.set( detail::distance( begin, end ) );
+       p_stages_amount.set( detail::distance( par_begin, par_end ) );
     }
 
     // test case implementation
@@ -197,17 +197,17 @@ public:
 
     // Constructor
     parametrized_class_test_case( function_type f, char const* name, boost::shared_ptr<UserTestCase>& user_test_case,
-                                  ParamIterator const& begin, ParamIterator const& end )
-    : test_case( name ), m_first_parameter( begin ), m_last_parameter( end ),
+                                  ParamIterator const& par_begin, ParamIterator const& par_end )
+    : test_case( name ), m_first_parameter( par_begin ), m_last_parameter( par_end ),
       m_user_test_case( user_test_case ), m_function( f )
     {
-       p_stages_amount.set( detail::distance( begin, end ) );
+       p_stages_amount.set( detail::distance( par_begin, par_end ) );
     }
 
     // test case implementation
     void                do_init()       { m_curr_parameter = m_first_parameter; }
     void                do_run()        { ((*m_user_test_case).*m_function)( *m_curr_parameter ); ++m_curr_parameter; }
-    void                do_destroy()    { m_user_test_case = NULL; }
+    void                do_destroy()    { m_user_test_case.reset(); }
 
 private:
     // Data members
@@ -279,19 +279,19 @@ create_test_case( void (UserTestCase::*fct)(), std::string name, boost::shared_p
 
 template<typename ParamIterator, typename ParamType>
 inline test_case*
-create_test_case( void (*fct)( ParamType ), std::string name, ParamIterator const& begin, ParamIterator const& end )
+create_test_case( void (*fct)( ParamType ), std::string name, ParamIterator const& par_begin, ParamIterator const& par_end )
 {
     return new parametrized_function_test_case<ParamIterator,ParamType>(
-        fct, detail::normalize_test_case_name( name ), begin, end );
+        fct, detail::normalize_test_case_name( name ), par_begin, par_end );
 }
 
 template<class UserTestCase, typename ParamIterator, typename ParamType>
 inline test_case*
 create_test_case( void (UserTestCase::*fct)( ParamType ), std::string name, boost::shared_ptr<UserTestCase>& user_test_case,
-                  ParamIterator const& begin, ParamIterator const& end )
+                  ParamIterator const& par_begin, ParamIterator const& par_end )
 {
     return new parametrized_class_test_case<UserTestCase,ParamIterator,ParamType>(
-        fct, detail::normalize_test_case_name( name ), user_test_case, begin, end );
+        fct, detail::normalize_test_case_name( name ), user_test_case, par_begin, par_end );
 }
 
 } // unit_test_framework

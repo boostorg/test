@@ -6,8 +6,8 @@
 //
 //  See http://www.boost.org for most recent version including documentation.
 
-#ifndef BOOST_FLOATING_POINT_COMAPARISON_HPP
-#define BOOST_FLOATING_POINT_COMAPARISON_HPP
+#ifndef BOOST_FLOATING_POINT_COMPARISON_HPP
+#define BOOST_FLOATING_POINT_COMPARISON_HPP
 
 #include <boost/limits.hpp>
 
