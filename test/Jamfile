@@ -49,16 +49,15 @@ test-suite "test_exec_monitor_test"
         ;
 
 test-suite "unit_test_framework_test"
-        :
-
-          [ test-btl-lib run : errors_handling_test : boost_test_exec_monitor : $(test-dir)/test_files/errors_handling_test.pattern ]
+        : [ test-btl-lib run : errors_handling_test : boost_test_exec_monitor : $(test-dir)/test_files/errors_handling_test.pattern ]
           [ test-btl-lib run : online_test ]
           [ test-btl-lib run-fail : minimal_test ]
+          [ test-btl-lib run : foreach_test ]
           [ test-btl-lib run : output_test_stream_test  : boost_unit_test_framework ]
           [ test-btl-lib run : result_report_test       : boost_test_exec_monitor : $(test-dir)test_files/result_report_test.pattern ]
           [ test-btl-lib run : parameterized_test_test  : boost_test_exec_monitor ]
           [ test-btl-lib run : test_fp_comparisons      : boost_unit_test_framework ]
-          [ test-btl-lib run : test_tools_test          : boost_unit_test_framework ]
+          [ test-btl-lib run : test_tools_test          : boost_unit_test_framework : $(test-dir)test_files/test_tools_test.pattern ]
           [ test-btl-lib run : auto_unit_test_test      : boost_unit_test_framework ]
           [ test-btl-lib run : auto_unit_test_test_mult : boost_unit_test_framework : : auto_unit_test_test_mult1.cpp auto_unit_test_test_mult2.cpp ]
           [ test-btl-lib run : test_case_template_test  : boost_test_exec_monitor ]
@@ -68,4 +67,13 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : algorithms_test : boost_unit_test_framework ]
           [ test-btl-lib run : token_iterator_test : boost_unit_test_framework ]
           [ test-btl-lib run : boost_check_equal_str    : boost_test_exec_monitor ]
+          [ test-btl-lib run : config_file_iterator_test : boost_unit_test_framework ]
+          [ test-btl-lib run : config_file_test         : boost_unit_test_framework ]
+
         ;
+
+# test-suite "runtime_param_test"
+#         : [ test-btl-lib run : config_file_iterator_test : boost_unit_test_framework ]
+#           [ test-btl-lib run : config_file_test         : boost_unit_test_framework ]
+#
+#        ;
