@@ -22,7 +22,7 @@ namespace boost {
 
 namespace unit_test {
 
-template<class CharT> class         basic_cstring;
+template<typename CharT> class      basic_cstring;
 typedef basic_cstring<char const>   const_string;
 #if BOOST_WORKAROUND(__DECCXX_VER, BOOST_TESTED_AT(60590041))
 typedef const_string                literal_string;
@@ -40,6 +40,9 @@ typedef char const* const           c_literal_string;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2005/04/12 06:49:05  rogeeff
+//  assign_to -> assign_op
+//
 //  Revision 1.3  2005/02/20 08:27:09  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //

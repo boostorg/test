@@ -704,22 +704,21 @@ last_char( basic_cstring<CharT> source )
 //____________________________________________________________________________//
 
 // ************************************************************************** //
-// **************                  assign_to                   ************** //
+// **************                  assign_op                   ************** //
 // ************************************************************************** //
 
 template<typename CharT1, typename CharT2>
 inline void
 #if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530) )
-assign_to( std::basic_string<CharT1>& target, basic_cstring<CharT2> const& src )
+assign_op( std::basic_string<CharT1>& target, basic_cstring<CharT2> const& src, int )
 #else
-assign_to( std::basic_string<CharT1>& target, basic_cstring<CharT2> src )
+assign_op( std::basic_string<CharT1>& target, basic_cstring<CharT2> src, int )
 #endif
 {
     target.assign( src.begin(), src.size() );
 }
 
 //____________________________________________________________________________//
-
 
 } // namespace unit_test
 
@@ -733,6 +732,9 @@ assign_to( std::basic_string<CharT1>& target, basic_cstring<CharT2> src )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2005/04/12 06:49:05  rogeeff
+//  assign_to -> assign_op
+//
 //  Revision 1.7  2005/03/23 21:02:37  rogeeff
 //  Sunpro CC 5.3 fixes
 //

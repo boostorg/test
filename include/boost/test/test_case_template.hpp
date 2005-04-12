@@ -90,7 +90,7 @@ struct generate_test_case_4_type {
     void        operator()( mpl::identity<TestType> )
     {
         std::string full_name;
-        assign_to( full_name, m_test_case_name );
+        assign_op( full_name, m_test_case_name );
         full_name += '<';
         full_name += typeid(TestType).name();
         if( boost::is_const<TestType>::value )
@@ -154,6 +154,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.13  2005/04/12 06:50:46  rogeeff
+//  assign_to -> assign_op
+//
 //  Revision 1.12  2005/03/22 06:58:47  rogeeff
 //  assign_to made free function
 //

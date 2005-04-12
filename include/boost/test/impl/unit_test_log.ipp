@@ -117,7 +117,7 @@ struct unit_test_log_impl {
     std::ostream&       stream()            { return *m_stream; }
     void                set_checkpoint( log::checkpoint const& cp )
     {
-        assign_to( m_checkpoint_data.m_message, cp.m_message );
+        assign_op( m_checkpoint_data.m_message, cp.m_message, 0 );
         m_checkpoint_data.m_file    = m_entry_data.m_file;
         m_checkpoint_data.m_line    = m_entry_data.m_line;
     }
@@ -271,7 +271,7 @@ set_unix_slash( char in )
 unit_test_log_t&
 unit_test_log_t::operator<<( log::file const& f )
 {
-    assign_to( s_log_impl().m_entry_data.m_file, f.m_file_name );
+    assign_op( s_log_impl().m_entry_data.m_file, f.m_file_name, 0 );
 
     // normalize file name
     std::transform( s_log_impl().m_entry_data.m_file.begin(), s_log_impl().m_entry_data.m_file.end(),
@@ -425,6 +425,9 @@ unit_test_log_t::set_formatter( unit_test_log_formatter* the_formatter )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.8  2005/04/12 06:50:46  rogeeff
+//  assign_to -> assign_op
+//
 //  Revision 1.7  2005/03/22 07:06:58  rogeeff
 //  assign_to made free function
 //
