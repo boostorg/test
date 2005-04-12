@@ -198,11 +198,7 @@ struct callback2_impl_t : callback2_impl<R,T1,T2> {
     // Constructor
     explicit callback2_impl_t( Functor f ) : m_f( f ) {}
 
-#if BOOST_WORKAROUND( BOOST_MSVC, == 1310 )
     virtual R invoke( T1 t1, T2 t2 ) { return invoker<R>().template invoke<Functor,T1,T2>( m_f, t1, t2 ); }
-#else
-    virtual R invoke( T1 t1, T2 t2 ) { return invoker<R>().invoke( m_f, t1, t2 ); }
-#endif
 
 private:
     // Data members
@@ -309,6 +305,9 @@ private:
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.4  2005/04/12 06:50:06  rogeeff
+//   suppress warnings
+//
 //   Revision 1.3  2005/03/22 07:05:18  rogeeff
 //   minor vc7.1 workaround
 //

@@ -134,7 +134,7 @@ find_last_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
         return last1;
 
     BidirectionalIterator1 it1 = last1;
-    while( --it1 != first1 && std::find( first2, last2, *it1 ) == last2 );
+    while( --it1 != first1 && std::find( first2, last2, *it1 ) == last2 ) {}
 
     return it1 == first1 && std::find( first2, last2, *it1 ) == last2 ? last1 : it1;
 }
@@ -159,7 +159,7 @@ find_last_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
         return last1;
 
     BidirectionalIterator1 it1 = last1;
-    while( --it1 != first1 && std::find_if( first2, last2, std::bind1st( pred, *it1 ) ) == last2 );
+    while( --it1 != first1 && std::find_if( first2, last2, std::bind1st( pred, *it1 ) ) == last2 ) {}
 
     return it1 == first1 && std::find_if( first2, last2, std::bind1st( pred, *it1 ) ) == last2 ? last1 : it1;
 }
@@ -181,7 +181,7 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
         return last1;
 
     BidirectionalIterator1 it1 = last1;
-    while( --it1 != first1 && std::find( first2, last2, *it1 ) != last2 );
+    while( --it1 != first1 && std::find( first2, last2, *it1 ) != last2 ) {}
 
     return it1 == first1 && std::find( first2, last2, *it1 ) != last2 ? last1 : it1;
 }
@@ -206,7 +206,7 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
         return last1;
 
     BidirectionalIterator1 it1 = last1;
-    while( --it1 != first1 && std::find_if( first2, last2, std::bind1st( pred, *it1 ) ) != last2 );
+    while( --it1 != first1 && std::find_if( first2, last2, std::bind1st( pred, *it1 ) ) != last2 ) {}
 
     return it1 == first1 && std::find_if( first2, last2, std::bind1st( pred, *it1 ) ) == last2 ? last1 : it1;
 }
@@ -225,6 +225,9 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2005/04/12 06:50:06  rogeeff
+//  suppress warnings
+//
 //  Revision 1.4  2005/02/20 08:27:08  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
