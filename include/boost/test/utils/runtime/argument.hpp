@@ -24,8 +24,8 @@
 #include <boost/test/utils/class_properties.hpp>
 #include <boost/test/utils/rtti.hpp>
 
-// Boost
-#include <boost/polymorphic_downcast.hpp>
+// STL
+#include <cassert>
 
 namespace boost {
 
@@ -78,7 +78,9 @@ template<typename T>
 inline T const&
 arg_value( argument const& arg )
 {
-    return polymorphic_downcast<typed_argument<T> const&>( arg ).p_value.value;
+    assert( arg.p_value_type == rtti::type_id<T>() ); // detect logic error
+
+    return static_cast<typed_argument<T> const&>( arg ).p_value.value;
 }
 
 //____________________________________________________________________________//
@@ -87,7 +89,9 @@ template<typename T>
 inline T&
 arg_value( argument& arg )
 {
-    return polymorphic_downcast<typed_argument<T>&>( arg ).p_value.value;
+    assert( arg.p_value_type == rtti::type_id<T>() ); // detect logic error
+
+    return static_cast<typed_argument<T>&>( arg ).p_value.value;
 }
 
 //____________________________________________________________________________//
@@ -100,6 +104,9 @@ arg_value( argument& arg )
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.2  2005/04/12 07:01:35  rogeeff
+//   exclude polymorphic_downcast
+//
 //   Revision 1.1  2005/04/12 06:42:42  rogeeff
 //   Runtime.Param library initial commit
 //

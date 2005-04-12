@@ -43,7 +43,7 @@ BOOST_RT_PARAM_INLINE bool
 char_name_policy::conflict_with( identification_policy const& id ) const
 {
     return id.p_type_id == p_type_id && 
-           m_name == polymorphic_downcast<char_name_policy const&>( id ).m_name;
+           m_name == static_cast<char_name_policy const&>( id ).m_name;
 }
 
 //____________________________________________________________________________//
@@ -58,6 +58,9 @@ char_name_policy::conflict_with( identification_policy const& id ) const
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.2  2005/04/12 07:01:36  rogeeff
+//   exclude polymorphic_downcast
+//
 //   Revision 1.1  2005/04/12 06:42:43  rogeeff
 //   Runtime.Param library initial commit
 //

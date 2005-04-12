@@ -60,7 +60,7 @@ BOOST_RT_PARAM_INLINE bool
 string_name_policy::conflict_with( identification_policy const& id ) const
 {
     if( id.p_type_id == p_type_id ) {
-        string_name_policy const& snp = polymorphic_downcast<string_name_policy const&>( id );
+        string_name_policy const& snp = static_cast<string_name_policy const&>( id );
 
         if( m_name.empty() || snp.m_name.empty() )
             return false;
@@ -74,7 +74,7 @@ string_name_policy::conflict_with( identification_policy const& id ) const
     }
     
     if( id.p_type_id == rtti::type_id<char_name_policy>() ) {
-        char_name_policy const& cnp = polymorphic_downcast<char_name_policy const&>( id );
+        char_name_policy const& cnp = static_cast<char_name_policy const&>( id );
     
         return m_guess_name && unit_test::first_char( cstring( m_name ) ) == unit_test::first_char( cnp.id_2_report() );
     }
@@ -117,6 +117,9 @@ string_name_policy::match_name( argv_traverser& tr ) const
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.2  2005/04/12 07:01:36  rogeeff
+//   exclude polymorphic_downcast
+//
 //   Revision 1.1  2005/04/12 06:42:43  rogeeff
 //   Runtime.Param library initial commit
 //
