@@ -71,7 +71,7 @@ protected: // provide access to the Derived
     }
 
     // Data members
-    bool                m_valid;
+    mutable bool        m_valid;
     ValueType           m_value;
 
 private:
@@ -84,7 +84,7 @@ private:
         if( m_valid )
             m_valid = input_iterator_core_access::get( *static_cast<Derived*>(this) );
     }
-    Reference dereference() const
+    Reference           dereference() const
     {
         return m_value;
     }
@@ -109,6 +109,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2005/04/12 06:47:46  rogeeff
+//  help iterator copying
+//
 //  Revision 1.3  2005/02/20 08:27:09  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
