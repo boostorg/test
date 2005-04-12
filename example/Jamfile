@@ -7,6 +7,8 @@
 
 subproject libs/test/example ;
 
+DEPENDS test : all ;
+
 rule boost-test-example ( example-name : lib-name )
 {
     exe $(example-name) : $(example-name).cpp <lib>../build/$(lib-name)
@@ -24,4 +26,5 @@ boost-test-example unit_test_example3 : boost_unit_test_framework ;
 boost-test-example unit_test_example4 : boost_unit_test_framework ;
 boost-test-example unit_test_example5 : boost_unit_test_framework ;
 boost-test-example test_case_template_example : boost_unit_test_framework ;
+boost-test-example named_param_example : boost_unit_test_framework ;
 

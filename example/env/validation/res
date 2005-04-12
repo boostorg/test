@@ -1,0 +1,18 @@
+
+D:\Source Code\boost\libs\test\example\env\validation>rem msvc msvc-stlport gcc gcc-stlport borland cwpro8 vc7.1-stlport borland-5.6.4 intel-win32-8_1 mingw 
+
+D:\Source Code\boost\libs\test\example\env\validation>set target=all 
+
+D:\Source Code\boost\libs\test\example\env\validation>if "all" == "" (set target=test  ) 
+
+D:\Source Code\boost\libs\test\example\env\validation>bjam "-sTOOLS=intel-win32-8_1" "-sSTLPORT_VERSION=4.6.2" "-sBCC_564_ROOT=C:\Compilers\Borland\CBuilder6" "-sMSVC_ROOT=C:\Compilers\Microsoft Visual Studio\VC98" "-sSTLPORT_ROOT=D:\Source Code\STLport-4.6.2" "-sSTLPORT_PATH=D:\Source Code" "-sCW_ROOT=C:\Compilers\Metrowerks\CodeWarrior" "-sMINGW_ROOT_DIRECTORY=C:\Compilers\MinGW" "-sVC71_ROOT=C:\Compilers\Microsoft Visual Studio .NET 2003\Vc7" "-sINTEL_PATH=C:\Compilers\Intel\CPP\Compiler80\Ia32" "-sINTEL_BASE_MSVC_TOOLSET=vc-7_1" all 
+...found 309 targets...
+...updating 6 targets...
+MkDir1 ..\..\..\..\..\bin\boost\libs\test\example\env\validation\need_typed_access.exe\intel-win32-8_1
+MkDir1 ..\..\..\..\..\bin\boost\libs\test\example\env\validation\need_typed_access.exe\intel-win32-8_1\debug
+MkDir1 ..\..\..\..\..\bin\boost\libs\test\example\env\validation\need_typed_access.exe\intel-win32-8_1\debug\threading-multi
+vc-C++ ..\..\..\..\..\bin\boost\libs\test\example\env\validation\need_typed_access.exe\intel-win32-8_1\debug\threading-multi\need_typed_access.obj
+need_typed_access.cpp
+vc-Link ..\..\..\..\..\bin\boost\libs\test\example\env\validation\need_typed_access.exe\intel-win32-8_1\debug\threading-multi\need_typed_access.exe
+xilink: executing 'link'
+...updated 6 targets...
