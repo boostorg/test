@@ -46,9 +46,9 @@ namespace unit_test {
 template<class PropertyType>
 class class_property {
 protected:
-    typedef typename call_traits<PropertyType>::const_reference read_access_t;
-    typedef typename call_traits<PropertyType>::param_type      write_param_t;
-    typedef typename add_pointer<PropertyType const>::type      address_res_t;
+    typedef typename call_traits<PropertyType>::const_reference     read_access_t;
+    typedef typename call_traits<PropertyType>::param_type          write_param_t;
+    typedef typename add_pointer<typename add_const<PropertyType>::type>::type address_res_t;
 
 public:
     // Constructor
@@ -223,6 +223,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2005/04/12 06:46:17  rogeeff
+//  use add_const
+//
 //  Revision 1.5  2005/02/21 10:17:27  rogeeff
 //  base reference renamed (borland bug fix)
 //
