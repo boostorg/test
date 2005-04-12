@@ -21,6 +21,8 @@
 
 #include <boost/test/utils/iterator/input_iterator_facade.hpp>
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
+#include <boost/test/utils/named_params.hpp>
+#include <boost/test/utils/foreach.hpp>
 
 // STL
 #include <iosfwd>
@@ -42,9 +44,31 @@ namespace unit_test {
 // **************               ti_delimeter_type              ************** //
 // ************************************************************************** //
 
-enum ti_delimeter_type { use_delim, use_ispunct, use_isspace };
+enum ti_delimeter_type { 
+    dt_char,        // character is delimeter if it among explicit list of some characters
+    dt_ispunct,     // character is delimeter if it satisfies ispunct functor
+    dt_isspace,     // character is delimeter if it satisfies isspace functor
+    dt_none         // no character is delimeter
+};
 
 namespace ut_detail {
+
+// ************************************************************************** //
+// **************             default_char_compare             ************** //
+// ************************************************************************** //
+
+template<typename CharT>
+class default_char_compare {
+public:
+    bool operator()( CharT c1, CharT c2 )
+    {
+#ifdef BOOST_CLASSIC_IOSTREAMS
+        return std::string_char_traits<CharT>::eq( c1, c2 );
+#else
+        return std::char_traits<CharT>::eq( c1, c2 );
+#endif
+    }
+};
 
 // ************************************************************************** //
 // **************                 delim_policy                 ************** //
@@ -55,35 +79,43 @@ class delim_policy {
     typedef basic_cstring<CharT const> cstring;
 public:
     // Constructor
-    explicit    delim_policy( ti_delimeter_type t = use_delim ) : m_type( t ) {}
-    explicit    delim_policy( cstring d, ti_delimeter_type t )
+    explicit    delim_policy( ti_delimeter_type t = dt_char, cstring d = cstring() )
+    : m_type( t )
     {
-        use_delimeters( d, t );
+        set_delimeters( d );
     }
 
-    void        use_delimeters( cstring d, ti_delimeter_type t )
+    void        set_delimeters( ti_delimeter_type t ) { m_type = t; }
+    template<typename Src>
+    void        set_delimeters( Src d )
     {
-        m_delimeters = d;
-        m_type       = d.is_empty() ? t : use_delim;
+        nfp::optionally_assign( m_delimeters, d );
+        
+        if( !m_delimeters.is_empty() )
+            m_type = dt_char;
     }
 
     bool        operator()( CharT c )
     {
         switch( m_type ) {
-        case use_delim: {
-            typename cstring::iterator it = m_delimeters.begin();
-            for( ; it != m_delimeters.end(); ++it )
-                if( CharCompare()( *it, c ) )
-                    break;
-            return it != m_delimeters.end();
-        }
-        case use_ispunct:   return (std::ispunct)( c ) != 0;
-        case use_isspace:   return (std::isspace)( c ) != 0;
+        case dt_char:
+            BOOST_TEST_FOREACH( CharT, delim, m_delimeters )
+                if( CharCompare()( delim, c ) )
+                    return true;
+
+            return false;
+        case dt_ispunct:
+            return (std::ispunct)( c ) != 0;
+        case dt_isspace:
+            return (std::isspace)( c ) != 0;
+        case dt_none:
+            return false;
         }
 
         return false;
     }
 
+private:
     // Data members
     cstring             m_delimeters;
     ti_delimeter_type   m_type;
@@ -108,9 +140,6 @@ struct token_assigner {
 #endif
     template<typename Iterator, typename Token>
     static void append_move( Iterator& b, Token& )          { ++b; }
-
-    template<typename Token>
-    static void clear( Token& )                             {}
 };
 
 template<>
@@ -120,172 +149,20 @@ struct token_assigner<single_pass_traversal_tag> {
 
     template<typename Iterator, typename Token>
     static void append_move( Iterator& b, Token& t )        { t += *b; ++b; }
-
-#if BOOST_WORKAROUND( BOOST_DINKUMWARE_STDLIB, < 306 ) \
-    || BOOST_WORKAROUND( __GNUC__, < 3 ) && !defined(__SGI_STL_PORT) \
-        && !defined(_STLPORT_VERSION)
-    template<typename Token>
-    static void clear( Token& t )                           { t.erase(); }
-#else
-    template<typename Token>
-    static void clear( Token& t )                           { t.clear(); }
-#endif
-};
-
-// ************************************************************************** //
-// **************             default_char_compare             ************** //
-// ************************************************************************** //
-
-template<typename CharT>
-class default_char_compare {
-public:
-    bool operator()( CharT c1, CharT c2 )
-    {
-#ifdef BOOST_CLASSIC_IOSTREAMS
-        return std::string_char_traits<CharT>::eq( c1, c2 );
-#else
-        return std::char_traits<CharT>::eq( c1, c2 );
-#endif
-    }
-};
-
-// ************************************************************************** //
-// **************             dropped_delimeters_m             ************** //
-// ************************************************************************** //
-
-template<typename CharT>
-struct dropped_delimeters_m
-{
-    explicit dropped_delimeters_m( basic_cstring<CharT const> delims )
-    : m_delims( delims ) {}
-
-    template<typename CharCompare>
-    void apply( delim_policy<CharT,CharCompare>& is_drop, delim_policy<CharT,CharCompare>&, bool ) const
-    {
-        is_drop.use_delimeters( m_delims, use_isspace );
-    }
-
-    basic_cstring<CharT const> m_delims;
-};
-
-//____________________________________________________________________________//
-
-template<>
-struct dropped_delimeters_m<ti_delimeter_type>
-{
-    explicit dropped_delimeters_m( ti_delimeter_type type )
-    : m_type( type ) {}
-
-    template<typename CharT, typename CharCompare>
-    void apply( delim_policy<CharT,CharCompare>& is_drop, delim_policy<CharT,CharCompare>&, bool ) const
-    {
-        is_drop.use_delimeters( "", m_type );
-    }
-
-    ti_delimeter_type m_type;
-};
-
-//____________________________________________________________________________//
-
-// ************************************************************************** //
-// **************               kept_delimeters_m              ************** //
-// ************************************************************************** //
-
-template<typename CharT>
-struct kept_delimeters_m
-{
-    explicit kept_delimeters_m( basic_cstring<CharT const> delims, ti_delimeter_type type = use_ispunct )
-    : m_delims( delims ), m_type( type ) {}
-
-    template<typename CharCompare>
-    void apply( delim_policy<CharT,CharCompare>&, delim_policy<CharT,CharCompare>& is_kept, bool ) const
-    {
-        is_kept.use_delimeters( m_delims, m_type );
-    }
-
-    basic_cstring<CharT const>  m_delims;
-    ti_delimeter_type           m_type;
-};
-
-//____________________________________________________________________________//
-
-template<>
-struct kept_delimeters_m<ti_delimeter_type>
-{
-    explicit kept_delimeters_m( ti_delimeter_type type )
-    : m_type( type ) {}
-
-    template<typename CharT, typename CharCompare>
-    void apply( delim_policy<CharT,CharCompare>&, delim_policy<CharT,CharCompare>& is_kept, bool ) const
-    {
-        is_kept.use_delimeters( "", m_type );
-    }
-
-    ti_delimeter_type m_type;
-};
-
-//____________________________________________________________________________//
-
-// ************************************************************************** //
-// **************              keep_empty_tokens_m             ************** //
-// ************************************************************************** //
-
-struct keep_empty_tokens_m
-{
-    explicit keep_empty_tokens_m( bool v )
-    : m_keep_empty_tokens( v ) {}
-
-    template<typename CharT,typename CharCompare>
-    void apply( delim_policy<CharT,CharCompare>&, delim_policy<CharT,CharCompare>&, bool& keep_empty_tokens ) const
-    {
-        keep_empty_tokens = m_keep_empty_tokens;
-    }
-
-    bool m_keep_empty_tokens;
 };
 
 } // namespace ut_detail
 
 // ************************************************************************** //
-// **************              modifiers generators            ************** //
+// **************                  modifiers                   ************** //
 // ************************************************************************** //
 
-static struct dropped_delimeters_generator {
-    template<typename CharT>
-    ut_detail::dropped_delimeters_m<CharT>
-    operator=( basic_cstring<CharT const> d ) { return ut_detail::dropped_delimeters_m<CharT>( d ); }
-    template<typename CharT>
-    ut_detail::dropped_delimeters_m<CharT>
-    operator=( CharT const* d ) { return ut_detail::dropped_delimeters_m<CharT>( basic_cstring<CharT const>( d ) ); }
-
-    ut_detail::dropped_delimeters_m<ti_delimeter_type>
-    operator=( ti_delimeter_type t ) { return ut_detail::dropped_delimeters_m<ti_delimeter_type>( t ); }
-} dropped_delimeters;
-
-//____________________________________________________________________________//
-
-static struct kept_delimeters_generator {
-    template<typename CharT>
-    ut_detail::kept_delimeters_m<CharT>
-    operator=( basic_cstring<CharT const> d ) { return ut_detail::kept_delimeters_m<CharT>( d ); }
-    template<typename CharT>
-    ut_detail::kept_delimeters_m<CharT>
-    operator=( CharT const* d ) { return ut_detail::kept_delimeters_m<CharT>( basic_cstring<CharT const>( d ) ); }
-
-    ut_detail::kept_delimeters_m<ti_delimeter_type>
-    operator=( ti_delimeter_type t ) { return ut_detail::kept_delimeters_m<ti_delimeter_type>( t ); }
-} kept_delimeters;
-
-//____________________________________________________________________________//
-
-static struct keep_empty_tokens_generator : ut_detail::keep_empty_tokens_m {
-    keep_empty_tokens_generator() : ut_detail::keep_empty_tokens_m( true ) {}
-
-    ut_detail::keep_empty_tokens_m
-    operator=( bool v ) { return ut_detail::keep_empty_tokens_m( v ); }
-} keep_empty_tokens;
-
-//____________________________________________________________________________//
+namespace {
+nfp::keyword<struct dropped_delimeters_t > dropped_delimeters;
+nfp::keyword<struct kept_delimeters_t > kept_delimeters;
+nfp::typed_keyword<bool,struct keep_empty_tokens_t > keep_empty_tokens;
+nfp::typed_keyword<std::size_t,struct max_tokens_t > max_tokens;
+}
 
 // ************************************************************************** //
 // **************             token_iterator_base              ************** //
@@ -303,23 +180,31 @@ class token_iterator_base
     typedef ut_detail::delim_policy<CharT,CharCompare>                      delim_policy;
     typedef input_iterator_facade<Derived,ValueType,Reference,Traversal>    base;
 
-public:
+protected:
     // Constructor
     explicit    token_iterator_base()
-    : m_is_dropped( use_isspace )
-    , m_is_kept( use_ispunct )
+    : m_is_dropped( dt_isspace )
+    , m_is_kept( dt_ispunct )
     , m_keep_empty_tokens( false )
     , m_token_produced( false )
+    , m_tokens_left( (std::size_t)-1 )
     {
     }
 
-protected:
     template<typename Modifier>
-    token_iterator_base&
-    use( Modifier const& m )
+    void
+    apply_modifier( Modifier const& m )
     {
-        m.apply( m_is_dropped, m_is_kept, m_keep_empty_tokens );
-        return *this;
+        if( m.has( dropped_delimeters ) )
+            m_is_dropped.set_delimeters( m[dropped_delimeters] );
+
+        if( m.has( kept_delimeters ) )
+            m_is_kept.set_delimeters( m[kept_delimeters] );
+
+        if( m.has( keep_empty_tokens ) )
+            m_keep_empty_tokens = true;
+
+        nfp::optionally_assign( m_tokens_left, m, max_tokens );
     }
 
     template<typename Iter> 
@@ -328,7 +213,12 @@ protected:
         typedef ut_detail::token_assigner<BOOST_DEDUCED_TYPENAME iterator_traversal<Iter>::type> Assigner;
         Iter checkpoint;
 
-        Assigner::clear( this->m_value );
+#if BOOST_WORKAROUND( BOOST_DINKUMWARE_STDLIB, < 306 ) \
+    || BOOST_WORKAROUND( __GNUC__, < 3 ) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
+    this->m_value.erase();
+#else
+    this->m_value.clear();
+#endif
 
         if( !m_keep_empty_tokens ) {
             while( begin != end && m_is_dropped( *begin ) )
@@ -339,13 +229,18 @@ protected:
 
             checkpoint = begin;
 
-            if( m_is_kept( *begin ) )
+            if( m_tokens_left == 1 )
+                while( begin != end )
+                    Assigner::append_move( begin, this->m_value );
+            else if( m_is_kept( *begin ) )
                 Assigner::append_move( begin, this->m_value );
             else
                 while( begin != end && !m_is_dropped( *begin ) && !m_is_kept( *begin ) )
                     Assigner::append_move( begin, this->m_value );
+
+            --m_tokens_left;
         } 
-        else { // m_keep_empty_tokens ia true
+        else { // m_keep_empty_tokens is true
             checkpoint = begin;
 
             if( begin == end ) {
@@ -354,7 +249,7 @@ protected:
 
                 m_token_produced = true;
             }
-            else if( m_is_kept( *begin ) ) {
+            if( m_is_kept( *begin ) ) {
                 if( m_token_produced ) 
                     Assigner::append_move( begin, this->m_value );
 
@@ -383,6 +278,7 @@ private:
     delim_policy            m_is_dropped;
     delim_policy            m_is_kept;
     bool                    m_keep_empty_tokens;
+    std::size_t             m_tokens_left;
     bool                    m_token_produced;
 };
 
@@ -404,32 +300,11 @@ public:
         this->init();
     }
 
-    template<typename Src, typename M1>
-    basic_string_token_iterator( Src src, M1 const& m1 )
+    template<typename Src, typename Modifier>
+    basic_string_token_iterator( Src src, Modifier const& m )
     : m_src( src )
     {
-        this->use( m1 );
-
-        this->init();
-    }
-
-    template<typename Src, typename M1, typename M2>
-    basic_string_token_iterator( Src src, M1 const& m1, M2 const& m2 )
-    : m_src( src )
-    {
-        this->use( m1 );
-        this->use( m2 );
-
-        this->init();
-    }
-
-    template<typename Src, typename M1, typename M2, typename M3>
-    basic_string_token_iterator( Src src, M1 const& m1, M2 const& m2, M3 const& m3 )
-    : m_src( src )
-    {
-        this->use( m1 );
-        this->use( m2 );
-        this->use( m3 );
+        this->apply_modifier( m );
 
         this->init();
     }
@@ -477,32 +352,11 @@ public:
         this->init();
     }
 
-    template<typename M1>
-    range_token_iterator( Iter begin, Iter end, M1 const& m1 )
+    template<typename Modifier>
+    range_token_iterator( Iter begin, Iter end, Modifier const& m )
     : m_begin( begin ), m_end( end )
     {
-        this->use( m1 );
-
-        this->init();
-    }
-
-    template<typename M1,typename M2>
-    range_token_iterator( Iter begin, Iter end, M1 const& m1, M2 const& m2 )
-    : m_begin( begin ), m_end( end )
-    {
-        this->use( m1 );
-        this->use( m2 );
-
-        this->init();
-    }
-
-    template<typename M1,typename M2,typename M3>
-    range_token_iterator( Iter begin, Iter end, M1 const& m1, M2 const& m2, M3 const& m3 )
-    : m_begin( begin ), m_end( end )
-    {
-        this->use( m1 );
-        this->use( m2 );
-        this->use( m3 );
+        this->apply_modifier( m );
 
         this->init();
     }
@@ -534,29 +388,11 @@ make_range_token_iterator( Iter begin, Iter end = Iter() )
 
 //____________________________________________________________________________//
 
-template<typename Iter,typename M1>
+template<typename Iter,typename Modifier>
 inline range_token_iterator<Iter>
-make_range_token_iterator( Iter begin, Iter end, M1 const& m1 )
+make_range_token_iterator( Iter begin, Iter end, Modifier const& m )
 {
-    return range_token_iterator<Iter>( begin, end, m1 );
-}
-
-//____________________________________________________________________________//
-
-template<typename Iter, typename M1, typename M2>
-inline range_token_iterator<Iter>
-make_range_token_iterator( Iter begin, Iter end, M1 const& m1, M2 const& m2 )
-{
-    return range_token_iterator<Iter>( begin, end, m1, m2 );
-}
-
-//____________________________________________________________________________//
-
-template<typename Iter,typename M1, typename M2, typename M3>
-inline range_token_iterator<Iter>
-make_range_token_iterator( Iter begin, Iter end, M1 const& m1, M2 const& m2, M3 const& m3 )
-{
-    return range_token_iterator<Iter>( begin, end, m1, m2, m3 );
+    return range_token_iterator<Iter>( begin, end, m );
 }
 
 //____________________________________________________________________________//
@@ -573,14 +409,17 @@ make_range_token_iterator( Iter begin, Iter end, M1 const& m1, M2 const& m2, M3 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2005/04/12 06:46:42  rogeeff
+//  use named_param facilites
+//
 //  Revision 1.4  2005/02/20 08:27:09  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
 //  Revision 1.3  2005/02/01 06:40:08  rogeeff
 //  copyright update
 //  old log entries removed
-//  minor stilistic changes
-//  depricated tools removed
+//  minor stylitic changes
+//  deprecated tools removed
 //
 //  Revision 1.2  2005/01/22 19:22:14  rogeeff
 //  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
