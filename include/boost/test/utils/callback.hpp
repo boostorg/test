@@ -22,6 +22,10 @@
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
+#if BOOST_WORKAROUND(BOOST_MSVC, < 1300) || BOOST_WORKAROUND(BOOST_INTEL, <= 700)
+#  define BOOST_CALLBACK_EXPLICIT_COPY_CONSTRUCTOR
+#endif
+
 //____________________________________________________________________________//
 
 namespace boost {
@@ -98,7 +102,7 @@ class callback0 {
 public:
     // Constructors
     callback0() {}
-#if BOOST_WORKAROUND(BOOST_MSVC, < 1300) // VC6 doesn't generate a copy ctor
+#ifdef BOOST_CALLBACK_EXPLICIT_COPY_CONSTRUCTOR
     callback0( callback0 const& rhs ) : m_impl( rhs.m_impl ) {}
 #endif
 
@@ -156,7 +160,7 @@ class callback1 {
 public:
     // Constructors
     callback1() {}
-#if BOOST_WORKAROUND(BOOST_MSVC, < 1300) // VC6 doesn't generate a copy ctor
+#ifdef BOOST_CALLBACK_EXPLICIT_COPY_CONSTRUCTOR
     callback1( callback1 const& rhs ) : m_impl( rhs.m_impl ) {}
 #endif
 
@@ -214,7 +218,7 @@ class callback2 {
 public:
     // Constructors
     callback2() {}
-#if BOOST_WORKAROUND(BOOST_MSVC, < 1300) // VC6 doesn't generate a copy ctor
+#ifdef BOOST_CALLBACK_EXPLICIT_COPY_CONSTRUCTOR
     callback2( callback2 const& rhs ) : m_impl( rhs.m_impl ) {}
 #endif
 
@@ -271,7 +275,7 @@ class callback3 {
 public:
     // Constructors
     callback3() {}
-#if BOOST_WORKAROUND(BOOST_MSVC, < 1300) // VC6 doesn't generate a copy ctor
+#ifdef BOOST_CALLBACK_EXPLICIT_COPY_CONSTRUCTOR
     callback3( callback3 const& rhs ) : m_impl( rhs.m_impl ) {}
 #endif
 
@@ -297,6 +301,8 @@ private:
 
 } // namespace boost
 
+#undef BOOST_CALLBACK_EXPLICIT_COPY_CONSTRUCTOR
+
 //____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
@@ -305,6 +311,9 @@ private:
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.5  2005/04/13 05:09:00  rogeeff
+//   Intel 7.1 bug fix
+//
 //   Revision 1.4  2005/04/12 06:50:06  rogeeff
 //   suppress warnings
 //
