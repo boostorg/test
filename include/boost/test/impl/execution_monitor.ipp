@@ -50,9 +50,9 @@ namespace std { using ::strlen; using ::strncat; }
 #if !defined(BOOST_DISABLE_WIN32) &&                                        \
     !defined(__BORLANDC__) &&                                               \
     (defined(_MSC_VER) && !defined(__COMO__)) ||                            \
-    (defined(__INTEL__) && BOOST_WORKAROUND(__MWERKS__, >= 0x3000))
+    (BOOST_WORKAROUND(__MWERKS__, >= 0x3000) && defined(__INTEL__))
 
-#  define BOOST_MS_STRCTURED_EXCEPTION_HANDLING
+#  define BOOST_MS_STRUCTURED_EXCEPTION_HANDLING
 
 #  ifndef _WIN32_WINNT
 #    ifdef _WINBASE_
@@ -637,6 +637,9 @@ detect_memory_leak( long mem_leak_alloc_num )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.7  2005/04/13 05:32:03  rogeeff
+//  typo fix
+//
 //  Revision 1.6  2005/04/05 06:11:37  rogeeff
 //  memory leak allocation point detection\nextra help with _WIN32_WINNT
 //
