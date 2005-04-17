@@ -5,6 +5,7 @@ namespace utf = boost::unit_test;
 
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/file/config_file.hpp>
+#include <boost/test/utils/runtime/validation.hpp>
 
 namespace rt  = boost::runtime;
 namespace rtf = boost::runtime::file;
@@ -243,6 +244,9 @@ test_multipart_value()
 // History :
 //
 // $Log$
+// Revision 1.2  2005/04/17 15:49:17  rogeeff
+// *** empty log message ***
+//
 // Revision 1.1  2005/04/12 06:19:23  rogeeff
 // runtime.param tests added
 //

@@ -195,7 +195,7 @@ test_pred1()
 
 TEST_CASE( test_BOOST_CHECK_MESSAGE )
 {
-    BOOST_CHECK_MESSAGE( 2+2 == 5, "Well, may be that what I belive in" );
+    BOOST_CHECK_MESSAGE( 2+2 == 5, "Well, may be that what I believe in" );
 
     BOOST_CHECK_MESSAGE( test_pred1(), "Checking predicate failed" );
 
@@ -510,6 +510,9 @@ TEST_CASE( test_BOOST_IS_DEFINED )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.42  2005/04/17 15:49:17  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.41  2005/03/22 07:14:44  rogeeff
 //  no message
 //

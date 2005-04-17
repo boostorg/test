@@ -27,9 +27,44 @@ using namespace boost::test_tools;
 
 // STL
 #include <iostream>
+#include <stdio.h>
 
 // Boost
 #include <boost/mpl/list.hpp>
+
+namespace boost { namespace test_tools { namespace tt_detail {      
+template<>                                                          
+struct print_log_value<float> {                                     
+    void operator()( std::ostream& ostr, float t )
+    {
+        ostr.precision( 6 ); 
+
+        ostr << t;
+    }
+};                                                                  
+}}}                                                                 
+
+namespace boost { namespace test_tools { namespace tt_detail {      
+template<>                                                          
+struct print_log_value<double> {                                     
+    void operator()( std::ostream& ostr, double t )
+    {
+        ostr.precision( 10 ); 
+        ostr << t;
+    }
+};                                                                  
+}}}                                                                 
+
+namespace boost { namespace test_tools { namespace tt_detail {      
+template<>                                                          
+struct print_log_value<long double> {                                     
+    void operator()( std::ostream& ostr, long double t )
+    {
+        ostr.precision( 10 ); 
+        ostr << t;
+    }
+};                                                                  
+}}}                                                                 
 
 //____________________________________________________________________________//
 
@@ -197,6 +232,9 @@ TEST_CASE( test_close_at_tolerance )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.20  2005/04/17 15:49:17  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.19  2005/03/22 07:14:44  rogeeff
 //  no message
 //

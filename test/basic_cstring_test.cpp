@@ -40,15 +40,15 @@ using utf::const_string;
 namespace mpl = boost::mpl;
 
 #if BOOST_WORKAROUND(__GNUC__, < 3)
-typedef mpl::list<char const>                                               base_const_char_types;
-typedef mpl::list<char,unsigned char>                                       mutable_char_types;
+typedef mpl::list1<char const>                                              base_const_char_types;
+typedef mpl::list2<char,unsigned char>                                      mutable_char_types;
 #else
-typedef mpl::list<char const,wchar_t const>                                 base_const_char_types;
-typedef mpl::list<char,unsigned char,wchar_t>                               mutable_char_types;
+typedef mpl::list2<char const,wchar_t const>                                base_const_char_types;
+typedef mpl::list3<char,unsigned char,wchar_t>                              mutable_char_types;
 #endif
 typedef mpl::transform<mutable_char_types,boost::add_const<mpl::_1> >::type const_char_types;
 typedef mpl::joint_view<const_char_types,mutable_char_types>                char_types;
-typedef mpl::list<char,const char>                                          io_test_types;
+typedef mpl::list2<char,const char>                                         io_test_types;
 
 //____________________________________________________________________________//
 
@@ -469,6 +469,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 // History :
 //
 // $Log$
+// Revision 1.11  2005/04/17 15:49:17  rogeeff
+// *** empty log message ***
+//
 // Revision 1.10  2005/02/20 08:28:34  rogeeff
 // This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //

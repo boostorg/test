@@ -10,7 +10,7 @@
 167: info: check j < 5 passed
 167: error in "test_BOOST_REQUIRE": not aborted
 181: info: check 'object size 33 is too small' passed
-198: error in "test_BOOST_CHECK_MESSAGE": Well, may be that what I belive in
+198: error in "test_BOOST_CHECK_MESSAGE": Well, may be that what I believe in
 200: error in "test_BOOST_CHECK_MESSAGE": Checking predicate failed. Some explanation
 203: info: check 'Could it fail?' passed
 210: fatal error in "test_BOOST_REQUIRE_MESSAGE": Here we should stop
