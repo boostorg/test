@@ -70,7 +70,7 @@ namespace ut_detail {
 template<typename TestCaseTemplate,typename TestType>
 class test_case_template_invoker {
 public:
-    void    operator()()    { TestCaseTemplate::template run<TestType>(); }
+    void    operator()()    { TestCaseTemplate::run( (boost::type<TestType>*)0 ); }
 };
 
 //____________________________________________________________________________//
@@ -154,6 +154,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2005/04/17 15:50:37  rogeeff
+//  portability fixes
+//
 //  Revision 1.14  2005/04/13 04:35:18  rogeeff
 //  forgot zero
 //

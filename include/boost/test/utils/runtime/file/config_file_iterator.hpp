@@ -115,7 +115,7 @@ public:
         m.apply_to( *this );
         load( file_name );
     }
-    explicit        config_file_iterator( config_file_iterator const& rhs )
+    config_file_iterator( config_file_iterator const& rhs )
     : base( rhs )
     , m_pimpl( rhs.m_pimpl )
     {
@@ -167,6 +167,9 @@ private:
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.2  2005/04/17 15:50:38  rogeeff
+//   portability fixes
+//
 //   Revision 1.1  2005/04/12 06:42:44  rogeeff
 //   Runtime.Param library initial commit
 //
