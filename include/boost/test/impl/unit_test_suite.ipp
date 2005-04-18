@@ -50,10 +50,10 @@ namespace unit_test {
 // ************************************************************************** //
 
 test_unit::test_unit( const_string name, test_unit_type t )
-: p_name( std::string( name.begin(), name.size() ) )
-, p_type( t )
+: p_type( t )
 , p_type_name( t == tut_case ? "case" : "suite" )
 , p_id( INV_TEST_UNIT_ID )
+, p_name( std::string( name.begin(), name.size() ) )
 {
 }
 
@@ -230,6 +230,9 @@ normalize_test_case_name( const_string name )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.10  2005/04/18 04:55:36  rogeeff
+//  test unit name made read/write
+//
 //  Revision 1.9  2005/03/23 21:02:25  rogeeff
 //  Sunpro CC 5.3 fixes
 //

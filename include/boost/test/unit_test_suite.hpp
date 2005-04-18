@@ -63,12 +63,12 @@ public:
 
     // Public r/o properties
     typedef BOOST_READONLY_PROPERTY(test_unit_id,(framework_impl)) id_t;
-    readonly_property<std::string>      p_name;                 // name for this test unit
     readonly_property<test_unit_type>   p_type;                 // type for this test unit
     readonly_property<const_string>     p_type_name;            // "case"/"suite"
     id_t                                p_id;                   // unique id for this test unit
 
     // Public r/w properties
+    readwrite_property<std::string>     p_name;                 // name for this test unit
     readwrite_property<unsigned>        p_timeout;              // timeout for the test unit execution 
     readwrite_property<counter_t>       p_expected_failures;    // number of expected failured in this test unit
 
@@ -250,6 +250,9 @@ make_test_case( void (UserTestCase::*test_method )(),
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.31  2005/04/18 04:55:30  rogeeff
+//  test unit name made read/write
+//
 //  Revision 1.30  2005/03/22 06:57:29  rogeeff
 //  allow to inherit test_suite
 //
