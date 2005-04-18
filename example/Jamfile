@@ -18,13 +18,25 @@ rule boost-test-example ( example-name : lib-name )
 }
 
 boost-test-example exec_mon_example   : boost_prg_exec_monitor    ;
+
 boost-test-example prg_exec_example   : boost_prg_exec_monitor    ;
+
 boost-test-example test_exec_example  : boost_test_exec_monitor   ;
+
 boost-test-example unit_test_example1 : boost_unit_test_framework ;
 boost-test-example unit_test_example2 : boost_unit_test_framework ;
 boost-test-example unit_test_example3 : boost_unit_test_framework ;
 boost-test-example unit_test_example4 : boost_unit_test_framework ;
 boost-test-example unit_test_example5 : boost_unit_test_framework ;
+
 boost-test-example test_case_template_example : boost_unit_test_framework ;
+
 boost-test-example named_param_example : boost_unit_test_framework ;
+
+boost-test-example auto_unit_test_example1 : boost_unit_test_framework ;
+boost-test-example auto_unit_test_example2 : boost_unit_test_framework ;
+boost-test-example auto_unit_test_example3 : boost_unit_test_framework ;
+boost-test-example auto_unit_test_example4 : boost_unit_test_framework ;
+boost-test-example auto_unit_test_example5 : boost_unit_test_framework ;
+boost-test-example auto_unit_test_example6 : boost_unit_test_framework ;
 
