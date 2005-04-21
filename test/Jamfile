@@ -56,7 +56,7 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : output_test_stream_test  : boost_unit_test_framework ]
           [ test-btl-lib run : result_report_test       : boost_test_exec_monitor : $(test-dir)test_files/result_report_test.pattern ]
           [ test-btl-lib run : parameterized_test_test  : boost_test_exec_monitor ]
-          [ test-btl-lib run : test_fp_comparisons      : boost_unit_test_framework ]
+          [ test-btl-lib run : test_fp_comparisons      : boost_unit_test_framework : $(test-dir)test_files/test_fp_comparisons.pattern ]
           [ test-btl-lib run : test_tools_test          : boost_unit_test_framework : $(test-dir)test_files/test_tools_test.pattern ]
           [ test-btl-lib run : auto_unit_test_test      : boost_unit_test_framework ]
           [ test-btl-lib run : auto_unit_test_test_mult : boost_unit_test_framework : : auto_unit_test_test_mult1.cpp auto_unit_test_test_mult2.cpp ]
