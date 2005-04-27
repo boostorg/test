@@ -97,7 +97,9 @@ sys_write_var( cstring var_name, format_stream& var_value )
 
     fs << var_name << '=' << var_value.str();
 
-    std::BOOST_RT_PARAM_PUTENV( fs.str().c_str() );
+    // !! this may actually fail. What should we do?
+    // const_cast is used to satisfy legacy interface
+    std::BOOST_RT_PARAM_PUTENV( const_cast<char_type*>( fs.str().c_str() ) );
 }
 
 //____________________________________________________________________________//
@@ -128,6 +130,9 @@ var( cstring var_name )
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.2  2005/04/27 03:29:52  rogeeff
+//   portability fix
+//
 //   Revision 1.1  2005/04/12 06:42:43  rogeeff
 //   Runtime.Param library initial commit
 //
