@@ -64,25 +64,34 @@ print_escaped( std::ostream& where_to, const_string value )
 
 //____________________________________________________________________________//
 
-typedef custom_manip<struct attr_value_t> attr_value;
-
-inline std::ostream&
-operator<<( custom_printer<attr_value> const& p, const_string value )
+inline void
+print_escaped( std::ostream& where_to, std::string const& value )
 {
-    *p << "=\"";
-    print_escaped( *p, value );
-    *p << '"';
-
-    return *p;
+	print_escaped( where_to, const_string( value ) );
 }
 
 //____________________________________________________________________________//
 
 template<typename T>
+inline void
+print_escaped( std::ostream& where_to, T const& value )
+{
+	where_to << value;
+}
+
+//____________________________________________________________________________//
+
+typedef custom_manip<struct attr_value_t> attr_value;
+
+template<typename T>
 inline std::ostream&
 operator<<( custom_printer<attr_value> const& p, T const& value )
 {
-    return *p<< "=\"" << value << '"';
+	*p << "=\"";
+	print_escaped( *p, value );
+	*p << '"';
+
+	return *p;
 }
 
 //____________________________________________________________________________//
@@ -111,6 +120,9 @@ operator<<( custom_printer<pcdata> const& p, const_string value )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.6  2005/04/29 06:31:18  rogeeff
+//  bug fix for incorrect XML output
+//
 //  Revision 1.5  2005/02/20 08:27:08  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
