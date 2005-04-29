@@ -25,6 +25,15 @@
 
 // Boost
 #include <boost/scoped_ptr.hpp>
+#if defined(BOOST_STANDARD_IOSTREAMS)
+#include <boost/io/ios_state.hpp>
+typedef ::boost::io::ios_base_all_saver io_saver_type;
+#else
+struct io_saver_type {
+    explicit io_saver_type( std::ostream& ) {}
+    void     restore() {}
+};
+#endif
 
 // STL
 #include <iostream>
@@ -48,7 +57,8 @@ namespace {
 struct results_reporter_impl : test_tree_visitor {
     // Constructor
     results_reporter_impl()
-    : m_output( &std::cout )
+    : m_output( &std::cerr )
+    , m_stream_state_saver( new io_saver_type( std::cerr ) )
     , m_report_level( CONFIRMATION_REPORT )
     , m_formatter( new output::plain_report_formatter )
     {}
@@ -74,7 +84,11 @@ struct results_reporter_impl : test_tree_visitor {
         m_formatter->test_unit_report_finish( ts, *m_output );
     }
 
+    typedef scoped_ptr<io_saver_type> saver_ptr;
+
+    // Data members
     std::ostream*       m_output;
+    saver_ptr           m_stream_state_saver;
     report_level        m_report_level;
     scoped_ptr<format>  m_formatter;
 };
@@ -100,6 +114,7 @@ void
 set_stream( std::ostream& ostr )
 {
     s_rr_impl().m_output = &ostr;
+    s_rr_impl().m_stream_state_saver.reset( new io_saver_type( ostr ) );
 }
 
 //____________________________________________________________________________//
@@ -109,18 +124,21 @@ set_format( output_format rf )
 {
     switch( rf ) {
     case CLF:
-        s_rr_impl().m_formatter.reset( new output::plain_report_formatter );
+        set_format( new output::plain_report_formatter );
         break;
     case XML:
-        s_rr_impl().m_formatter.reset( new output::xml_report_formatter );
+        set_format( new output::xml_report_formatter );
         break;
     }
 }
 
 //____________________________________________________________________________//
 
-void set_format( results_reporter::format* )
+void
+set_format( results_reporter::format* f )
 {
+    if( f )
+        s_rr_impl().m_formatter.reset( f );
 }
 
 //____________________________________________________________________________//
@@ -140,6 +158,8 @@ make_report( report_level l, test_unit_id id )
 
     if( id == INV_TEST_UNIT_ID )
         id = framework::master_test_suite().p_id;
+
+    s_rr_impl().m_stream_state_saver->restore();
 
     report_level bkup = s_rr_impl().m_report_level;
     s_rr_impl().m_report_level = l;
@@ -178,6 +198,11 @@ make_report( report_level l, test_unit_id id )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.3  2005/04/29 06:27:45  rogeeff
+//  bug fix for manipulator nandling
+//  bug fix for invalid output stream
+//  bug fix for set_format function implementation
+//
 //  Revision 1.2  2005/02/21 10:12:20  rogeeff
 //  Support for random order of test cases implemented
 //
