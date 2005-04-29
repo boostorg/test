@@ -67,7 +67,7 @@ xml_report_formatter::test_unit_report_start( test_unit const& tu, std::ostream&
         descr = "failed";
 
     ostr << '<' << ( tu.p_type == tut_case ? "TestCase" : "TestSuite" ) 
-         << " name"     << attr_value() << tu.p_name
+         << " name"     << attr_value() << tu.p_name.get()
          << " result"   << attr_value() << descr
          << " assertions_passed"        << attr_value() << tr.p_assertions_passed
          << " assertions_failed"        << attr_value() << tr.p_assertions_failed
@@ -115,6 +115,9 @@ xml_report_formatter::do_confirmation_report( test_unit const& tu, std::ostream&
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2005/04/29 06:30:07  rogeeff
+//  bug fix for incorect XML output
+//
 //  Revision 1.1  2005/02/20 08:27:07  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //

@@ -82,7 +82,7 @@ xml_log_formatter::log_build_info( std::ostream& ostr )
 void
 xml_log_formatter::test_unit_start( std::ostream& ostr, test_unit const& tu )
 {
-    ostr << "<" << tu_type_name( tu ) << " name" << attr_value() << tu.p_name << ">";
+    ostr << "<" << tu_type_name( tu ) << " name" << attr_value() << tu.p_name.get() << ">";
 }
 
 //____________________________________________________________________________//
@@ -102,7 +102,7 @@ void
 xml_log_formatter::test_unit_skipped( std::ostream& ostr, test_unit const& tu )
 {
     ostr << "<" << tu_type_name( tu )
-         << " name"    << attr_value() << tu.p_name 
+         << " name"    << attr_value() << tu.p_name.get()
          << " skipped" << attr_value() << "yes"
          << "/>";
 }
@@ -112,7 +112,7 @@ xml_log_formatter::test_unit_skipped( std::ostream& ostr, test_unit const& tu )
 void
 xml_log_formatter::log_exception( std::ostream& ostr, log_checkpoint_data const& checkpoint_data, const_string explanation )
 {
-    ostr << "<Exception name" << attr_value() << framework::current_test_case().p_name << ">"
+    ostr << "<Exception name" << attr_value() << framework::current_test_case().p_name.get() << ">"
            << pcdata() << explanation;
 
     if( !checkpoint_data.m_message.empty() ) {
@@ -174,6 +174,9 @@ xml_log_formatter::log_entry_finish( std::ostream& ostr )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.3  2005/04/29 06:29:35  rogeeff
+//  bug fix for incorect XML output
+//
 //  Revision 1.2  2005/02/20 08:27:07  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
