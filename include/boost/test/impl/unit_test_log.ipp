@@ -30,6 +30,15 @@
 
 // Boost
 #include <boost/scoped_ptr.hpp>
+#if defined(BOOST_STANDARD_IOSTREAMS)
+#include <boost/io/ios_state.hpp>
+typedef ::boost::io::ios_base_all_saver io_saver_type;
+#else
+struct io_saver_type {
+    explicit io_saver_type( std::ostream& ) {}
+    void     restore() {}
+};
+#endif
 
 // STL
 #include <iostream>
@@ -94,6 +103,7 @@ struct unit_test_log_impl {
     // Constructor
     unit_test_log_impl()
     : m_stream( &std::cout )
+    , m_stream_state_saver( new io_saver_type( std::cout ) )
     , m_threshold_level( log_all_errors )
     , m_log_formatter( new output::compiler_log_formatter )
     {
@@ -101,7 +111,10 @@ struct unit_test_log_impl {
 
     // log data
     typedef scoped_ptr<unit_test_log_formatter> formatter_ptr;
+    typedef scoped_ptr<io_saver_type>           saver_ptr;
+
     std::ostream*       m_stream;
+    saver_ptr           m_stream_state_saver;
     log_level           m_threshold_level;
     formatter_ptr       m_log_formatter;
 
@@ -242,6 +255,8 @@ unit_test_log_t::operator<<( log::begin const& )
     if( s_log_impl().m_entry_in_progress )
         *this << log::end();
 
+    s_log_impl().m_stream_state_saver->restore();
+
     s_log_impl().m_entry_data.clear();
 
     return *this;
@@ -376,6 +391,7 @@ unit_test_log_t::set_stream( std::ostream& str )
         return;
 
     s_log_impl().m_stream = &str;
+    s_log_impl().m_stream_state_saver.reset( new io_saver_type( str ) );
 }
 
 //____________________________________________________________________________//
@@ -425,6 +441,9 @@ unit_test_log_t::set_formatter( unit_test_log_formatter* the_formatter )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.9  2005/04/29 06:28:35  rogeeff
+//  bug fix for manipulator handling
+//
 //  Revision 1.8  2005/04/12 06:50:46  rogeeff
 //  assign_to -> assign_op
 //
