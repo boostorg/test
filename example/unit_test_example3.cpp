@@ -19,7 +19,9 @@ using boost::test_tools::close_at_tolerance;
 // STL
 #include <functional>
 #include <iostream>
+#include <iomanip>
 #include <memory>
+#include <stdexcept>
 
 struct account {
     account()
@@ -31,7 +33,7 @@ struct account {
     {
         if(amount > m_amount)
         {
-            throw std::runtime_error("You don't have that much money!");
+            throw std::logic_error("You don't have that much money!");
         }
         m_amount -= amount;
     }
@@ -71,6 +73,10 @@ struct account_test {
 
     void test_deposit()
     {
+        // these 2 statements just to show that usage manipulators doesn't hurt Boost.Test output
+        std::cout << "Current balance: " << std::hex << (int)m_account.balance() << std::endl;
+        std::cerr << "Current balance: " << std::hex << (int)m_account.balance() << std::endl;
+
         float curr_ballance = (float)m_account.balance();
         float deposit_value;
 
@@ -113,6 +119,7 @@ struct account_test {
 
         // reports 'error in "account_test::test_withdraw": exception std::runtime_error is expected' on error
         BOOST_CHECK_THROW( m_account.withdraw( m_account.balance() + 1 ), std::runtime_error );
+
     }
 };
 
@@ -136,7 +143,7 @@ struct account_test_suite : public test_suite {
 
 test_suite*
 init_unit_test_suite( int argc, char * argv[] ) {
-    test_suite* test( BOOST_TEST_SUITE( "Unit test example 3" ) );
+    test_suite* test = BOOST_TEST_SUITE( "Unit test example 3" );
 
     try {
         if( argc < 2 )
