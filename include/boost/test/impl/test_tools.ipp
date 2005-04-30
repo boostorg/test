@@ -34,14 +34,16 @@
 #ifdef BOOST_STANDARD_IOSTREAMS
 #include <ios>
 #endif
-#include <cstdarg>
+
+// !! should we use #include <cstdarg>
+#include <stdarg.h>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
 
 # ifdef BOOST_NO_STDC_NAMESPACE
-namespace std { using ::strcmp; using ::strlen; using ::isprint; using ::va_list; }
+namespace std { using ::strcmp; using ::strlen; using ::isprint; }
 #if !defined( BOOST_NO_CWCHAR )
 namespace std { using ::wcscmp; }
 #endif
@@ -133,7 +135,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         unit_test_log << log::file( file_name ) << log::line( line_num ) << log::checkpoint( check_descr.str() );
         break;
     case CHECK_EQUAL: {
-        std::va_list args;
+        va_list args;
 
         va_start( args, num_of_args );
         char const* arg1_descr  = va_arg( args, char const* );
@@ -156,7 +158,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         break;
     }
     case CHECK_CLOSE: {
-        std::va_list args;
+        va_list args;
 
         va_start( args, num_of_args );
         char const* arg1_descr  = va_arg( args, char const* );
@@ -182,7 +184,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         break;
     }
     case CHECK_SMALL: {
-        std::va_list args;
+        va_list args;
 
         va_start( args, num_of_args );
         char const* arg1_descr  = va_arg( args, char const* );
@@ -210,7 +212,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
 
         // print predicate call description
         {
-            std::va_list args;
+            va_list args;
             va_start( args, num_of_args );
 
             unit_test_log << "( ";
@@ -226,7 +228,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         }
                         
         if( tl != PASS ) {
-            std::va_list args;
+            va_list args;
             va_start( args, num_of_args );
 
             unit_test_log << " for ( ";
@@ -248,7 +250,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         break;
     }
     case CHECK_EQUAL_COLL: {
-        std::va_list args;
+        va_list args;
 
         va_start( args, num_of_args );
         char const* left_begin_descr    = va_arg( args, char const* );
@@ -271,7 +273,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         break;
     }
     case CHECK_BITWISE_EQUAL: {
-        std::va_list args;
+        va_list args;
 
         va_start( args, num_of_args );
         char const* left_descr    = va_arg( args, char const* );
@@ -599,6 +601,9 @@ output_test_stream::sync()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.8  2005/04/30 17:56:31  rogeeff
+//  switch to stdarg.h to workarround como issues
+//
 //  Revision 1.7  2005/03/23 21:02:23  rogeeff
 //  Sunpro CC 5.3 fixes
 //
