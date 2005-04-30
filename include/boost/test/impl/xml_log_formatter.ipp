@@ -49,7 +49,7 @@ static const_string tu_type_name( test_unit const& tu )
 // ************************************************************************** //
 
 void
-xml_log_formatter::log_start( std::ostream& ostr, counter_t test_cases_amount )
+xml_log_formatter::log_start( std::ostream& ostr, counter_t )
 {
     ostr  << "<TestLog>";
 }
@@ -174,6 +174,9 @@ xml_log_formatter::log_entry_finish( std::ostream& ostr )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.4  2005/04/30 16:47:14  rogeeff
+//  warning supressed
+//
 //  Revision 1.3  2005/04/29 06:29:35  rogeeff
 //  bug fix for incorect XML output
 //
