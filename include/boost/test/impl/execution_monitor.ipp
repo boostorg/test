@@ -26,6 +26,7 @@
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
+#include <boost/test/detail/workaround.hpp>
 #include <boost/test/execution_monitor.hpp>
 
 // Boost
@@ -639,6 +640,9 @@ detect_memory_leak( long mem_leak_alloc_num )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.9  2005/04/30 17:07:22  rogeeff
+//  ignore_warning included
+//
 //  Revision 1.8  2005/04/30 16:46:50  rogeeff
 //  warning suppressed
 //
