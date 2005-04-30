@@ -23,17 +23,10 @@
 #include <boost/test/output/plain_report_formatter.hpp>
 #include <boost/test/output/xml_report_formatter.hpp>
 
+#include <boost/test/detail/wrap_io_saver.hpp>
+
 // Boost
 #include <boost/scoped_ptr.hpp>
-#if defined(BOOST_STANDARD_IOSTREAMS)
-#include <boost/io/ios_state.hpp>
-typedef ::boost::io::ios_base_all_saver io_saver_type;
-#else
-struct io_saver_type {
-    explicit io_saver_type( std::ostream& ) {}
-    void     restore() {}
-};
-#endif
 
 // STL
 #include <iostream>
@@ -198,6 +191,9 @@ make_report( report_level l, test_unit_id id )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.4  2005/04/30 16:48:51  rogeeff
+//  io saver warkaround for classic io is shared
+//
 //  Revision 1.3  2005/04/29 06:27:45  rogeeff
 //  bug fix for manipulator nandling
 //  bug fix for invalid output stream

@@ -22,6 +22,7 @@
 #include <boost/test/execution_monitor.hpp>
 
 #include <boost/test/detail/unit_test_parameters.hpp>
+#include <boost/test/detail/wrap_io_saver.hpp>
 
 #include <boost/test/utils/basic_cstring/compare.hpp>
 
@@ -30,15 +31,6 @@
 
 // Boost
 #include <boost/scoped_ptr.hpp>
-#if defined(BOOST_STANDARD_IOSTREAMS)
-#include <boost/io/ios_state.hpp>
-typedef ::boost::io::ios_base_all_saver io_saver_type;
-#else
-struct io_saver_type {
-    explicit io_saver_type( std::ostream& ) {}
-    void     restore() {}
-};
-#endif
 
 // STL
 #include <iostream>
@@ -441,6 +433,9 @@ unit_test_log_t::set_formatter( unit_test_log_formatter* the_formatter )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.10  2005/04/30 16:48:51  rogeeff
+//  io saver warkaround for classic io is shared
+//
 //  Revision 1.9  2005/04/29 06:28:35  rogeeff
 //  bug fix for manipulator handling
 //
