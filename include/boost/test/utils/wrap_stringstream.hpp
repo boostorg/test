@@ -114,7 +114,9 @@ operator<<( basic_wrap_stringstream<CharT>& targ, basic_wrap_stringstream<CharT>
 
 //____________________________________________________________________________//
 
-#if !defined(BOOST_NO_STD_LOCALE) && ( !defined(BOOST_MSVC) || BOOST_WORKAROUND(BOOST_MSVC, >= 1310))
+#if !defined(BOOST_NO_STD_LOCALE) &&                                    \
+    (!defined(BOOST_MSVC) || BOOST_WORKAROUND(BOOST_MSVC, >= 1310))  && \
+    !defined(__MWERKS__)
 
 template <typename CharT>
 inline basic_wrap_stringstream<CharT>&
@@ -165,6 +167,9 @@ typedef basic_wrap_stringstream<wchar_t>    wrap_wstringstream;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2005/04/30 17:55:15  rogeeff
+//  disable manipulator output for cw
+//
 //  Revision 1.6  2005/02/20 08:27:08  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
