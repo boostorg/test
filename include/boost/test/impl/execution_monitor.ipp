@@ -617,6 +617,8 @@ static void report_error( execution_exception::error_code ec, const_string msg1,
 void
 detect_memory_leak( long mem_leak_alloc_num )
 {
+    unit_test::ut_detail::ignore_unused_variable_warning( mem_leak_alloc_num );
+
 #ifdef BOOST_MS_CRT_DEBUG_HOOKS
     _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
     _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);
@@ -637,6 +639,9 @@ detect_memory_leak( long mem_leak_alloc_num )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.8  2005/04/30 16:46:50  rogeeff
+//  warning suppressed
+//
 //  Revision 1.7  2005/04/13 05:32:03  rogeeff
 //  typo fix
 //
