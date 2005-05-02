@@ -212,8 +212,6 @@ struct user_tc_method_invoker {
     test_method              m_test_method;
 };
 
-//____________________________________________________________________________//
-
 } // namespace ut_detail
 
 //____________________________________________________________________________//
@@ -250,6 +248,9 @@ make_test_case( void (UserTestCase::*test_method )(),
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.32  2005/05/02 06:00:10  rogeeff
+//  restore a parameterized user case method based testing
+//
 //  Revision 1.31  2005/04/18 04:55:30  rogeeff
 //  test unit name made read/write
 //

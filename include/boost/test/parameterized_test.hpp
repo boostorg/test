@@ -33,6 +33,13 @@ boost::unit_test::make_test_case( function,                                \
                                   (begin), (end) )                         \
 /**/
 
+#define BOOST_PARAM_CLASS_TEST_CASE( function, tc_instance, begin, end )   \
+boost::unit_test::make_test_case( function,                                \
+                                  BOOST_TEST_STRINGIZE( function ),        \
+                                  (tc_instance),                           \
+                                  (begin), (end) )                         \
+/**/
+
 namespace boost {
 
 namespace unit_test {
@@ -101,6 +108,23 @@ private:
 
 //____________________________________________________________________________//
 
+template<typename UserTestCase,typename ParamType>
+struct user_param_tc_method_invoker {
+    typedef void (UserTestCase::*test_method)( ParamType );
+
+    // Constructor
+    user_param_tc_method_invoker( shared_ptr<UserTestCase> inst, test_method tm )
+    : m_inst( inst ), m_test_method( tm ) {}
+
+    void operator()( ParamType p ) { ((*m_inst).*m_test_method)( p ); }
+
+    // Data members
+    shared_ptr<UserTestCase> m_inst;
+    test_method              m_test_method;
+};
+
+//____________________________________________________________________________//
+
 } // namespace ut_detail
 
 template<typename ParamType, typename ParamIter>
@@ -129,6 +153,25 @@ make_test_case( void (*test_func)( ParamType ),
 
 //____________________________________________________________________________//
 
+template<typename UserTestCase,typename ParamType, typename ParamIter>
+inline ut_detail::param_test_case_generator<
+    BOOST_DEDUCED_TYPENAME remove_const<BOOST_DEDUCED_TYPENAME remove_reference<ParamType>::type>::type,ParamIter>
+make_test_case( void (UserTestCase::*test_method )( ParamType ),
+                const_string                           tc_name,
+                boost::shared_ptr<UserTestCase> const& user_test_case,
+                ParamIter                              par_begin,
+                ParamIter                              par_end )
+{
+    typedef BOOST_DEDUCED_TYPENAME remove_const<BOOST_DEDUCED_TYPENAME remove_reference<ParamType>::type>::type param_value_type;
+    return ut_detail::param_test_case_generator<param_value_type,ParamIter>( 
+               ut_detail::user_param_tc_method_invoker<UserTestCase,ParamType>( user_test_case, test_method ), 
+               tc_name,
+               par_begin,
+               par_end );
+}
+
+//____________________________________________________________________________//
+
 } // unit_test
 
 } // namespace boost
@@ -141,6 +184,9 @@ make_test_case( void (*test_func)( ParamType ),
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2005/05/02 06:00:10  rogeeff
+//  restore a parameterized user case method based testing
+//
 //  Revision 1.3  2005/03/21 15:32:31  rogeeff
 //  check reworked
 //
