@@ -19,6 +19,7 @@ using boost::unit_test::test_suite;
 
 // STL
 #include <string>
+#include <stdexcept>
 #include <algorithm>
 #include <functional>
 #include <iostream>
@@ -48,7 +49,7 @@ public:
     : m_alphabet( alphabet )
     {
         if( m_alphabet.size() != AlphabetSize )
-            throw std::length_error( "Wrong alphabet size" );
+            throw std::runtime_error( "Wrong alphabet size" );
 
         std::sort( m_alphabet.begin(), m_alphabet.end() );
 
@@ -61,7 +62,7 @@ public:
         m_result = 0;
 
         if( arg.length() > 8 )
-            throw std::length_error( "Wrong argument size" );
+            throw std::runtime_error( "Wrong argument size" );
 
         std::string::const_iterator it = std::find_if( arg.begin(), arg.end(), 
                                                        std::bind1st( boost::mem_fun( &hash_function::helper_ ), this ) );
@@ -124,7 +125,7 @@ public:
     void            test( hash_function_test_data const& test_data )
     {
         if( test_data.exp_value == (unsigned long)-1 )
-            BOOST_CHECK_THROW( m_function_under_test( test_data.orig_string ), std::length_error )
+            BOOST_CHECK_THROW( m_function_under_test( test_data.orig_string ), std::runtime_error )
         else if( test_data.exp_value == (unsigned long)-2 )
             BOOST_CHECK_THROW( m_function_under_test( test_data.orig_string ), std::out_of_range )
         else {
@@ -162,14 +163,7 @@ struct massive_hash_function_test : test_suite {
             test_data_store.push_back( test_data );
         }
 
-        boost::unit_test::callback1<hash_function_test_data> test_func( 
-            boost::bind( boost::mem_fn( &hash_function_tester::test ), instance ) );
-
-        add( boost::unit_test::make_test_case<hash_function_test_data>( 
-                test_func,
-                "massive_hash_function_test", 
-                test_data_store.begin(),
-                test_data_store.end() ) );
+        add( BOOST_PARAM_CLASS_TEST_CASE( &hash_function_tester::test, instance, test_data_store.begin(), test_data_store.end() ) );
     }
 };
 
