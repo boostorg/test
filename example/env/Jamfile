@@ -5,7 +5,7 @@
 #
 #  See http://www.boost.org/libs/test for the library home page.
 
-subproject libs/test/example/cla ;
+subproject libs/test/example/env ;
 
 # bring in the rules for testing
 import testing ;
