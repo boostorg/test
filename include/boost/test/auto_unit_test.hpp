@@ -131,6 +131,7 @@ BOOST_AUTO_TC_REGISTRAR( BOOST_JOIN( end_suite, __LINE__ ) )( 1 )       \
 
 #define BOOST_AUTO_TEST_CASE( test_name )                               \
 struct BOOST_AUTO_TC_UNIQUE_ID( test_name ) {};                         \
+                                                                        \
 static void test_name();                                                \
 BOOST_AUTO_TC_REGISTRAR( test_name )( BOOST_TEST_CASE( test_name ),     \
     boost::unit_test::ut_detail::auto_tc_exp_fail<                      \
@@ -167,9 +168,13 @@ void BOOST_AUTO_TC_INVOKER( test_name )()                               \
     t.test_method();                                                    \
 }                                                                       \
                                                                         \
+struct BOOST_AUTO_TC_UNIQUE_ID( test_name ) {};                         \
+                                                                        \
 BOOST_AUTO_TC_REGISTRAR( test_name )(                                   \
     boost::unit_test::make_test_case(                                   \
-        &BOOST_AUTO_TC_INVOKER( test_name ), #test_name ) );            \
+        &BOOST_AUTO_TC_INVOKER( test_name ), #test_name ),              \
+    boost::unit_test::ut_detail::auto_tc_exp_fail<                      \
+        BOOST_AUTO_TC_UNIQUE_ID( test_name )>::value  );                \
                                                                         \
 void test_name::test_method()                                           \
 /**/
@@ -193,7 +198,7 @@ struct BOOST_AUTO_TC_INVOKER( test_name ) {                             \
 BOOST_AUTO_TC_REGISTRAR( test_nase )(                                   \
     boost::unit_test::ut_detail::template_test_case_gen<                \
         BOOST_AUTO_TC_INVOKER( test_name ),TL >(                        \
-          BOOST_TEST_STRINGIZE( test_name ) ) );                        \
+          BOOST_STRINGIZE( test_name ) ) );                             \
                                                                         \
 template<typename type_name>                                            \
 void test_name( boost::type<type_name>* )                               \
@@ -233,6 +238,9 @@ init_unit_test_suite( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.16  2005/05/03 03:38:35  rogeeff
+//  bug in fixure test cases fixed
+//
 //  Revision 1.15  2005/04/18 04:54:36  rogeeff
 //  Major rework in auto unit test facilities\n1. auto test suite ability introduced\n2.fixures abilities introduced\n3. Expected failures support\n4. Master test suite renaming support
 //
