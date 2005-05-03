@@ -63,7 +63,7 @@ report_access_to_invalid_parameter()
 struct nil {
     template<typename T>
     operator T() const
-    { report_access_to_invalid_parameter(); return *(T*)0; }
+    { report_access_to_invalid_parameter(); static T* v = 0; return *v; }
 
     template<typename Arg1>
     nil operator()( Arg1 const& )
@@ -307,6 +307,9 @@ optionally_assign( T& target, Params const& p, Keyword k )
 //   Revision History:
 //  
 //  $Log$
+//  Revision 1.2  2005/05/03 05:02:49  rogeeff
+//  como fixes
+//
 //  Revision 1.1  2005/04/12 06:48:12  rogeeff
 //  Runtime.Param library initial commit
 //

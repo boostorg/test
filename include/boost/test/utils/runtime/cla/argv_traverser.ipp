@@ -23,6 +23,10 @@
 // STL
 #include <memory>
 
+#ifdef BOOST_NO_STDC_NAMESPACE
+namespace std { using ::memcpy; }
+#endif
+
 namespace boost {
 
 namespace BOOST_RT_PARAM_NAMESPACE {
@@ -205,6 +209,9 @@ argv_traverser::handle_mismatch()
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.2  2005/05/03 05:02:49  rogeeff
+//   como fixes
+//
 //   Revision 1.1  2005/04/12 06:42:43  rogeeff
 //   Runtime.Param library initial commit
 //

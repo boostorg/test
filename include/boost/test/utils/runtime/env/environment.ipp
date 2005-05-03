@@ -30,12 +30,6 @@
 #include <list>
 #include <cstdlib>
 
-# define BOOST_NO_STDC_NAMESPACE
-
-# ifdef BOOST_NO_STDC_NAMESPACE
-namespace std { using ::BOOST_RT_PARAM_GETENV; using ::BOOST_RT_PARAM_PUTENV; }
-# endif
-
 namespace boost {
 
 namespace BOOST_RT_PARAM_NAMESPACE {
@@ -85,7 +79,8 @@ find_var_record( cstring var_name )
 BOOST_RT_PARAM_INLINE cstring
 sys_read_var( cstring var_name )
 {
-    return std::BOOST_RT_PARAM_GETENV( var_name.begin() );
+    using namespace std;
+    return BOOST_RT_PARAM_GETENV( var_name.begin() );
 }
 
 //____________________________________________________________________________//
@@ -99,7 +94,8 @@ sys_write_var( cstring var_name, format_stream& var_value )
 
     // !! this may actually fail. What should we do?
     // const_cast is used to satisfy legacy interface
-    std::BOOST_RT_PARAM_PUTENV( const_cast<char_type*>( fs.str().c_str() ) );
+    using namespace std;
+    BOOST_RT_PARAM_PUTENV( const_cast<char_type*>( fs.str().c_str() ) );
 }
 
 //____________________________________________________________________________//
@@ -130,6 +126,9 @@ var( cstring var_name )
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.3  2005/05/03 05:02:50  rogeeff
+//   como fixes
+//
 //   Revision 1.2  2005/04/27 03:29:52  rogeeff
 //   portability fix
 //
