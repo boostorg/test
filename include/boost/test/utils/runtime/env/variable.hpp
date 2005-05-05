@@ -40,7 +40,7 @@ namespace rt_env_detail {
 
 struct variable_data : public runtime::parameter {
     cstring         m_var_name;
-    dstring      m_global_id;
+    dstring         m_global_id;
     argument_ptr    m_value;
 };
 
@@ -214,6 +214,9 @@ variable<T>::variable( cstring var_name, Modifiers const& m )
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.2  2005/05/05 05:55:45  rogeeff
+//   portability fixes
+//
 //   Revision 1.1  2005/04/12 06:42:43  rogeeff
 //   Runtime.Param library initial commit
 //

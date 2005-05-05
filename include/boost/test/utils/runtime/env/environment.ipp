@@ -88,14 +88,7 @@ sys_read_var( cstring var_name )
 BOOST_RT_PARAM_INLINE void
 sys_write_var( cstring var_name, format_stream& var_value )
 {
-    format_stream fs;
-
-    fs << var_name << '=' << var_value.str();
-
-    // !! this may actually fail. What should we do?
-    // const_cast is used to satisfy legacy interface
-    using namespace std;
-    BOOST_RT_PARAM_PUTENV( const_cast<char_type*>( fs.str().c_str() ) );
+    BOOST_RT_PARAM_PUTENV( var_name, cstring( var_value.str() ) );
 }
 
 //____________________________________________________________________________//
@@ -126,6 +119,9 @@ var( cstring var_name )
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.4  2005/05/05 05:55:45  rogeeff
+//   portability fixes
+//
 //   Revision 1.3  2005/05/03 05:02:50  rogeeff
 //   como fixes
 //

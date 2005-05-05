@@ -61,10 +61,33 @@ typedef std::ostream                                            out_stream;
 typedef std::basic_ostream<char_type>                           out_stream;
 #endif
 
+#if defined(__COMO__)
+inline void
+putenv_impl( cstring name, cstring value )
+{
+    using namespace std;
+    // !! this may actually fail. What should we do?
+    setenv( name.begin(), value.begin(), 1 );
+}
+#else
+inline void
+putenv_impl( cstring name, cstring value )
+{
+    format_stream fs;
+
+    fs << name << '=' << value;
+
+    // !! this may actually fail. What should we do?
+    // const_cast is used to satisfy putenv interface
+    using namespace std;
+    putenv( const_cast<char*>( fs.str().c_str() ) );
+}
+#endif
+
 #define BOOST_RT_PARAM_LITERAL( l ) l
 #define BOOST_RT_PARAM_CSTRING_LITERAL( l ) cstring( l, sizeof( l ) - 1 )
 #define BOOST_RT_PARAM_GETENV getenv
-#define BOOST_RT_PARAM_PUTENV putenv
+#define BOOST_RT_PARAM_PUTENV putenv_impl
 #define BOOST_RT_PARAM_EXCEPTION_INHERIT_STD
 
 //____________________________________________________________________________//
@@ -78,10 +101,23 @@ typedef const unit_test::basic_cstring<wchar_t const>           literal_cstring;
 typedef wrap_wstringstream                                      format_stream;
 typedef std::wostream                                           out_stream;
 
+inline void
+putenv_impl( cstring name, cstring value )
+{
+    format_stream fs;
+
+    fs << name << '=' << value;
+
+    // !! this may actually fail. What should we do?
+    // const_cast is used to satisfy putenv interface
+    using namespace std;
+    wputenv( const_cast<wchar_t*>( fs.str().c_str() ) );
+}
+
 #define BOOST_RT_PARAM_LITERAL( l ) L ## l
 #define BOOST_RT_PARAM_CSTRING_LITERAL( l ) cstring( L ## l, sizeof( L ## l )/sizeof(wchar_t) - 1 )
 #define BOOST_RT_PARAM_GETENV wgetenv
-#define BOOST_RT_PARAM_PUTENV wputenv
+#define BOOST_RT_PARAM_PUTENV putenv_impl
 
 #  endif
 #endif
@@ -102,6 +138,9 @@ typedef std::wostream                                           out_stream;
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.2  2005/05/05 05:55:31  rogeeff
+//   portability fixes
+//
 //   Revision 1.1  2005/04/12 06:42:42  rogeeff
 //   Runtime.Param library initial commit
 //

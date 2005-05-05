@@ -22,6 +22,7 @@
 
 // STL
 #include <memory>
+#include <cstring>
 
 #ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::memcpy; }
@@ -209,6 +210,9 @@ argv_traverser::handle_mismatch()
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.3  2005/05/05 05:55:45  rogeeff
+//   portability fixes
+//
 //   Revision 1.2  2005/05/03 05:02:49  rogeeff
 //   como fixes
 //
