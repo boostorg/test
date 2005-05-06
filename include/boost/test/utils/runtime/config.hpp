@@ -31,6 +31,7 @@
 
 // STL
 #include <string>
+#include <cstdlib>
 
 //____________________________________________________________________________//
 
@@ -138,6 +139,9 @@ putenv_impl( cstring name, cstring value )
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.3  2005/05/06 04:02:52  rogeeff
+//   include ctdlib for setenv
+//
 //   Revision 1.2  2005/05/05 05:55:31  rogeeff
 //   portability fixes
 //
