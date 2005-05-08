@@ -12,20 +12,20 @@
 BOOST_AUTO_TEST_SUITE( suite );
 
 struct F {
-    F() : i( 0 ) { BOOST_MESSAGE( "setup fixure" ); }
-    ~F()         { BOOST_MESSAGE( "teardown fixure" ); }
+    F() : i( 0 ) { BOOST_MESSAGE( "setup fixture" ); }
+    ~F()         { BOOST_MESSAGE( "teardown fixture" ); }
    
     int i;
 };
 
-BOOST_FIXURE_TEST_CASE( test1, F )
+BOOST_FIXTURE_TEST_CASE( test1, F )
 {
     BOOST_CHECK( i == 1 );
 }
 
 //____________________________________________________________________________//
 
-BOOST_FIXURE_TEST_CASE( test2, F )
+BOOST_FIXTURE_TEST_CASE( test2, F )
 {
     BOOST_CHECK_EQUAL( i, 2 );
 
