@@ -9,8 +9,8 @@
 //
 //  Version     : $Revision$
 //
-//  Description : wraps strstream and stringstream (depends with one is present )
-//                to prodive the unified interface
+//  Description : wraps strstream and stringstream (depends with one is present)
+//                to provide the unified interface
 // ***************************************************************************
 
 #ifndef BOOST_WRAP_STRINGSTREAM_HPP_071894GER
@@ -167,6 +167,9 @@ typedef basic_wrap_stringstream<wchar_t>    wrap_wstringstream;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2005/05/08 08:55:09  rogeeff
+//  typos and missing descriptions fixed
+//
 //  Revision 1.7  2005/04/30 17:55:15  rogeeff
 //  disable manipulator output for cw
 //

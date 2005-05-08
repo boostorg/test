@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : 
+//  Description : Input iterator facade 
 // ***************************************************************************
 
 #ifndef BOOST_INPUT_ITERATOR_FACADE_HPP_071894GER
@@ -109,6 +109,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2005/05/08 08:55:09  rogeeff
+//  typos and missing descriptions fixed
+//
 //  Revision 1.4  2005/04/12 06:47:46  rogeeff
 //  help iterator copying
 //

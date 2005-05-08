@@ -156,10 +156,10 @@ struct auto_tc_exp_fail<BOOST_AUTO_TC_UNIQUE_ID( test_name ) > {        \
 /**/
 
 // ************************************************************************** //
-// **************            BOOST_FIXURE_TEST_CASE            ************** //
+// **************            BOOST_FIXTURE_TEST_CASE           ************** //
 // ************************************************************************** //
 
-#define BOOST_FIXURE_TEST_CASE( test_name, F )                          \
+#define BOOST_FIXTURE_TEST_CASE( test_name, F )                         \
 struct test_name : public F { void test_method(); };                    \
                                                                         \
 void BOOST_AUTO_TC_INVOKER( test_name )()                               \
@@ -238,11 +238,14 @@ init_unit_test_suite( int argc, char* argv[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.17  2005/05/08 08:55:00  rogeeff
+//  typos and missing descriptions fixed
+//
 //  Revision 1.16  2005/05/03 03:38:35  rogeeff
-//  bug in fixure test cases fixed
+//  bug in fixture test cases fixed
 //
 //  Revision 1.15  2005/04/18 04:54:36  rogeeff
-//  Major rework in auto unit test facilities\n1. auto test suite ability introduced\n2.fixures abilities introduced\n3. Expected failures support\n4. Master test suite renaming support
+//  Major rework in auto unit test facilities\n1. auto test suite ability introduced\n2.fixtures abilities introduced\n3. Expected failures support\n4. Master test suite renaming support
 //
 //  Revision 1.14  2005/03/22 06:56:13  rogeeff
 //  provided access to argc/argv in auto facilities

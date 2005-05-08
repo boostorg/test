@@ -185,7 +185,7 @@ init( int argc, char* argv[] )
     if( runtime_config::show_progress() )
         register_observer( progress_monitor );
 
-    if( runtime_config::detect_memory_leak() >= 0 )
+    if( runtime_config::detect_memory_leak() > 0 )
         detect_memory_leak( runtime_config::detect_memory_leak() );
 
     // init master unit test suite
@@ -388,6 +388,9 @@ test_unit_aborted()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.6  2005/05/08 08:55:09  rogeeff
+//  typos and missing descriptions fixed
+//
 //  Revision 1.5  2005/04/05 07:23:20  rogeeff
 //  restore default
 //

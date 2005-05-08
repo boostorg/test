@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : 
+//  Description : fixed sized mapping with specified invalid value
 // ***************************************************************************
 
 #ifndef BOOST_TEST_FIXED_MAPPING_HPP_071894GER
@@ -122,6 +122,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2005/05/08 08:55:09  rogeeff
+//  typos and missing descriptions fixed
+//
 //  Revision 1.4  2005/02/20 08:27:08  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //

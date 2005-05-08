@@ -211,7 +211,7 @@ init( int* argc, char** argv )
     }
 
     const_string ml_str = retrieve_framework_parameter( DETECT_MEM_LEAK, argc, argv );
-    s_detect_mem_leaks  =  ml_str.is_empty() ? 0 : interpret_long( ml_str );
+    s_detect_mem_leaks  =  ml_str.is_empty() ? 1 : interpret_long( ml_str );
 }
 
 //____________________________________________________________________________//
@@ -324,6 +324,9 @@ random_seed()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.8  2005/05/08 08:55:09  rogeeff
+//  typos and missing descriptions fixed
+//
 //  Revision 1.7  2005/04/05 07:23:21  rogeeff
 //  restore default
 //
