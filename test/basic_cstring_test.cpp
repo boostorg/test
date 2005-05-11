@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -469,6 +469,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 // History :
 //
 // $Log$
+// Revision 1.12  2005/05/11 05:07:56  rogeeff
+// licence update
+//
 // Revision 1.11  2005/04/17 15:49:17  rogeeff
 // *** empty log message ***
 //
@@ -478,31 +481,31 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 // Revision 1.9  2005/01/30 03:35:55  rogeeff
 // no message
 //
-// Revision 1.8  2004/11/28 04:28:56  agurtovoy
+// Revision 1.8  2005/11/28 04:28:56  agurtovoy
 // merge RC_1_32_0 fixes
 //
-// Revision 1.7.2.1  2004/10/30 11:33:38  agurtovoy
+// Revision 1.7.2.1  2005/10/30 11:33:38  agurtovoy
 // MSVC/Borland fixes
 //
-// Revision 1.7  2004/10/01 10:55:43  rogeeff
+// Revision 1.7  2005/10/01 10:55:43  rogeeff
 // some test errors workarrounds
 //
-// Revision 1.6  2004/07/19 12:07:26  rogeeff
+// Revision 1.6  2005/07/19 12:07:26  rogeeff
 // *** empty log message ***
 //
-// Revision 1.5  2004/06/07 07:34:23  rogeeff
+// Revision 1.5  2005/06/07 07:34:23  rogeeff
 // detail namespace renamed
 //
-// Revision 1.4  2004/06/05 11:04:17  rogeeff
+// Revision 1.4  2005/06/05 11:04:17  rogeeff
 // no message
 //
-// Revision 1.3  2004/05/27 06:30:48  rogeeff
+// Revision 1.3  2005/05/27 06:30:48  rogeeff
 // no message
 //
-// Revision 1.2  2004/05/21 06:26:10  rogeeff
+// Revision 1.2  2005/05/21 06:26:10  rogeeff
 // licence update
 //
-// Revision 1.1  2004/05/11 11:05:46  rogeeff
+// Revision 1.1  2005/05/11 11:05:46  rogeeff
 // basic_cstring introduced and used everywhere
 // class properties reworked
 // namespace names shortened

@@ -1,3 +1,17 @@
+//  (C) Copyright Gennadiy Rozental 2001-2005.
+//  Distributed under the Boost Software License, Version 1.0.
+//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  http://www.boost.org/LICENSE_1_0.txt)
+
+//  See http://www.boost.org/libs/test for the library home page.
+//
+//  File        : $RCSfile$
+//
+//  Version     : $Revision$
+//
+//  Description : basic_cstring unit test
+// *****************************************************************************
+
 // Boost.Test
 #define BOOST_AUTO_TEST_MAIN
 #include <boost/test/auto_unit_test.hpp>
@@ -301,6 +315,9 @@ BOOST_AUTO_TEST_CASE( test_ifdef )
 // History :
 //
 // $Log$
+// Revision 1.2  2005/05/11 05:07:56  rogeeff
+// licence update
+//
 // Revision 1.1  2005/04/12 06:19:23  rogeeff
 // runtime.param tests added
 //

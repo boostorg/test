@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2003-2004.
+//  (C) Copyright Gennadiy Rozental 2003-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -131,16 +131,19 @@ init_unit_test_suite( int /* argc */, char* /* argv */ [] )
 // History :
 //
 // $Log$
+// Revision 1.5  2005/05/11 05:07:56  rogeeff
+// licence update
+//
 // Revision 1.4  2005/02/20 08:28:34  rogeeff
 // This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
 // Revision 1.3  2005/01/30 03:35:55  rogeeff
 // no message
 //
-// Revision 1.2  2004/06/29 04:32:50  rogeeff
+// Revision 1.2  2005/06/29 04:32:50  rogeeff
 // no message
 //
-// Revision 1.1  2004/05/23 09:49:39  rogeeff
+// Revision 1.1  2005/05/23 09:49:39  rogeeff
 // algorithms test added
 //
 // *****************************************************************************

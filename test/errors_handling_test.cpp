@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2004.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  (C) Copyright Beman Dawes 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
@@ -197,6 +197,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.33  2005/05/11 05:07:56  rogeeff
+//  licence update
+//
 //  Revision 1.32  2005/03/23 21:06:39  rogeeff
 //  Sunpro CC 5.3 fixes
 //

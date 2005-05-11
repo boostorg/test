@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2003-2004.
+//  (C) Copyright Gennadiy Rozental 2003-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -196,6 +196,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2005/05/11 05:07:56  rogeeff
+//  licence update
+//
 //  Revision 1.5  2005/01/30 03:35:55  rogeeff
 //  no message
 //
@@ -207,10 +210,10 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //     change compiler like formatter name
 //     minimized unit_test_log interface and reworked to use explicit calls
 //
-//  Revision 1.2  2004/05/21 06:26:10  rogeeff
+//  Revision 1.2  2005/05/21 06:26:10  rogeeff
 //  licence update
 //
-//  Revision 1.1  2004/05/11 11:05:46  rogeeff
+//  Revision 1.1  2005/05/11 11:05:46  rogeeff
 //  basic_cstring introduced and used everywhere
 //  class properties reworked
 //  namespace names shortened
