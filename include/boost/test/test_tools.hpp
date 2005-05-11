@@ -62,26 +62,26 @@
 // CT - check type
 // ARGS - arguments list
 
-#define BOOST_CHECK_IMPL_BASE( P, check_descr, TL, CT )     \
-    boost::test_tools::tt_detail::check_impl(               \
-        P,                                                  \
-        boost::wrap_stringstream().ref() << check_descr,    \
-        BOOST_TEST_L(__FILE__),                             \
-        (std::size_t)__LINE__,                              \
-        boost::test_tools::tt_detail::TL,                   \
-        boost::test_tools::tt_detail::CT                    \
+#define BOOST_TEST_TOOL_IMPL( func, P, check_descr, TL, CT ) \
+    boost::test_tools::tt_detail::func(                      \
+        P,                                                   \
+        boost::wrap_stringstream().ref() << check_descr,     \
+        BOOST_TEST_L(__FILE__),                              \
+        (std::size_t)__LINE__,                               \
+        boost::test_tools::tt_detail::TL,                    \
+        boost::test_tools::tt_detail::CT                     \
 /**/
 
 //____________________________________________________________________________//
 
-#define BOOST_CHECK_IMPL( P, check_descr, TL, CT )  BOOST_CHECK_IMPL_BASE( P, check_descr, TL, CT ), 0 )
+#define BOOST_CHECK_IMPL( P, check_descr, TL, CT )  BOOST_TEST_TOOL_IMPL( check_impl, P, check_descr, TL, CT ), 0 )
 
 //____________________________________________________________________________//
 
 #define BOOST_TEST_PASS_ARG_INFO( r, data, arg ) , arg, BOOST_STRINGIZE( arg )
 
 #define BOOST_CHECK_WITH_ARGS_IMPL( P, check_descr, TL, CT, ARGS )  \
-    BOOST_CHECK_IMPL_BASE( P, check_descr, TL, CT )                 \
+    BOOST_TEST_TOOL_IMPL( check_frwd, P, check_descr, TL, CT )      \
     BOOST_PP_SEQ_FOR_EACH( BOOST_TEST_PASS_ARG_INFO, '_', ARGS ) )  \
 /**/
 
@@ -192,7 +192,7 @@
 //____________________________________________________________________________//
 
 #define BOOST_EQUAL_COLLECTIONS_IMPL( L_begin, L_end, R_begin, R_end, TL )      \
-    BOOST_CHECK_IMPL_BASE( boost::test_tools::tt_detail::equal_coll_impl(       \
+    BOOST_TEST_TOOL_IMPL( check_impl, boost::test_tools::tt_detail::equal_coll_impl( \
         (L_begin), (L_end), (R_begin), (R_end) ), "", TL, CHECK_EQUAL_COLL ),   \
     4,                                                                          \
     BOOST_STRINGIZE( L_begin ), BOOST_STRINGIZE( L_end ),                       \
@@ -209,8 +209,9 @@
 //____________________________________________________________________________//
 
 #define BOOST_BITWISE_EQUAL_IMPL( L, R, TL )                                    \
-    BOOST_CHECK_IMPL_BASE( boost::test_tools::tt_detail::bitwise_equal_impl(    \
-        (L), (R) ), "", TL, CHECK_BITWISE_EQUAL ),                              \
+    BOOST_TEST_TOOL_IMPL( check_impl,                                           \
+      boost::test_tools::tt_detail::bitwise_equal_impl( (L), (R) ),             \
+      "", TL, CHECK_BITWISE_EQUAL ),                                            \
     2, BOOST_STRINGIZE( L ), BOOST_STRINGIZE( R ) )                             \
 /**/
 
@@ -381,7 +382,7 @@ void check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
 template<typename Pred                                                              \
          BOOST_PP_REPEAT_ ## z( BOOST_PP_ADD( n, 1 ), TEMPL_PARAMS, _ )>            \
 inline void                                                                         \
-check_impl( Pred P, wrap_stringstream& check_descr,                                 \
+check_frwd( Pred P, wrap_stringstream& check_descr,                                 \
             const_string file_name, std::size_t line_num,                           \
             tool_level tool_level, check_type ct                                    \
             BOOST_PP_REPEAT_ ## z( BOOST_PP_ADD( n, 1 ), FUNC_PARAMS, _ )           \
@@ -549,6 +550,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.53  2005/05/11 04:51:14  rogeeff
+//  borlard portability fix
+//
 //  Revision 1.52  2005/03/22 07:08:47  rogeeff
 //  string comparisons streamlined
 //  precision settings made portable
