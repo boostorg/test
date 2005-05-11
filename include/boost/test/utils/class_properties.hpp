@@ -48,8 +48,11 @@ class class_property {
 protected:
     typedef typename call_traits<PropertyType>::const_reference     read_access_t;
     typedef typename call_traits<PropertyType>::param_type          write_param_t;
+#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x570))
+    typedef typename add_pointer<PropertyType const>::type address_res_t;
+#else
     typedef typename add_pointer<typename add_const<PropertyType>::type>::type address_res_t;
-
+#endif
 public:
     // Constructor
                     class_property() : value( PropertyType() ) {}
@@ -223,6 +226,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2005/05/11 05:04:58  rogeeff
+//  borland portability fix
+//
 //  Revision 1.6  2005/04/12 06:46:17  rogeeff
 //  use add_const
 //
