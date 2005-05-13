@@ -116,7 +116,7 @@ operator<<( basic_wrap_stringstream<CharT>& targ, basic_wrap_stringstream<CharT>
 
 #if !defined(BOOST_NO_STD_LOCALE) &&                                    \
     (!defined(BOOST_MSVC) || BOOST_WORKAROUND(BOOST_MSVC, >= 1310))  && \
-    !defined(__MWERKS__)
+    !defined(__MWERKS__) && !BOOST_WORKAROUND(__GNUC__, < 3)
 
 template <typename CharT>
 inline basic_wrap_stringstream<CharT>&
@@ -167,6 +167,9 @@ typedef basic_wrap_stringstream<wchar_t>    wrap_wstringstream;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2005/05/13 05:55:46  rogeeff
+//  gcc 2.95 fix
+//
 //  Revision 1.8  2005/05/08 08:55:09  rogeeff
 //  typos and missing descriptions fixed
 //
