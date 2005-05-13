@@ -39,7 +39,7 @@ using utf::const_string;
 
 namespace mpl = boost::mpl;
 
-#if BOOST_WORKAROUND(__GNUC__, < 3)
+#if defined(BOOST_NO_STD_WSTRING)
 typedef mpl::list1<char const>                                              base_const_char_types;
 typedef mpl::list2<char,unsigned char>                                      mutable_char_types;
 #else
@@ -469,6 +469,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 // History :
 //
 // $Log$
+// Revision 1.13  2005/05/13 06:00:14  rogeeff
+// *** empty log message ***
+//
 // Revision 1.12  2005/05/11 05:07:56  rogeeff
 // licence update
 //
