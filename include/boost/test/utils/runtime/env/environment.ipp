@@ -28,7 +28,6 @@
 // STL
 #include <map>
 #include <list>
-#include <cstdlib>
 
 namespace boost {
 
@@ -119,6 +118,9 @@ var( cstring var_name )
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.5  2005/05/14 05:41:10  rogeeff
+//   *** empty log message ***
+//
 //   Revision 1.4  2005/05/05 05:55:45  rogeeff
 //   portability fixes
 //

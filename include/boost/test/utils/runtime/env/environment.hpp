@@ -144,7 +144,8 @@ namespace environment {
     inline void
     get( cstring var_name, boost::optional<T>& res )
     {
-        environment::var<T>( var_name ).value( res );
+        variable<T> const& v = environment::var<T>( var_name );
+        v.value( res );
     }
 
     //________________________________________________________________________//
@@ -168,6 +169,9 @@ namespace env = environment;
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.3  2005/05/14 05:41:10  rogeeff
+//   *** empty log message ***
+//
 //   Revision 1.2  2005/05/14 05:34:57  rogeeff
 //   *** empty log message ***
 //
