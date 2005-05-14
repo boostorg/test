@@ -55,9 +55,10 @@ init_new_var( cstring var_name, Modifiers m = nfp::no_params )
         try {
             boost::optional<T> value;
 
-            m.has( interpreter ) 
-                ? m[interpreter]( str_value, value )
-                : interpret_argument_value( str_value, value, 0 );
+            if( m.has( interpreter ) )
+                m[interpreter]( str_value, value );
+            else
+                interpret_argument_value( str_value, value, 0 );
 
             if( !!value ) {
                 new_vd.m_value.reset( new typed_argument<T>( new_vd ) );
@@ -167,6 +168,9 @@ namespace env = environment;
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.2  2005/05/14 05:34:57  rogeeff
+//   *** empty log message ***
+//
 //   Revision 1.1  2005/04/12 06:42:43  rogeeff
 //   Runtime.Param library initial commit
 //
