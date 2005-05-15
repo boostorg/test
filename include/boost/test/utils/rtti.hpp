@@ -52,8 +52,8 @@ type_id()
 
 //____________________________________________________________________________//
 
-#define BOOST_RTTI_SWITCH( type_id_ ) if( boost::rtti::policy::id_t switch_by_id = type_id_ )
-#define BOOST_RTTI_CASE( type ) if( switch_by_id == boost::rtti::policy::type_id<type>() )
+#define BOOST_RTTI_SWITCH( type_id_ ) if( ::boost::rtti::id_t switch_by_id = type_id_ )
+#define BOOST_RTTI_CASE( type )       if( switch_by_id == ::boost::rtti::type_id<type>() )
 
 //____________________________________________________________________________//
 
@@ -65,6 +65,9 @@ type_id()
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.2  2005/05/15 06:45:32  rogeeff
+//   *** empty log message ***
+//
 //   Revision 1.1  2005/04/12 06:48:12  rogeeff
 //   Runtime.Param library initial commit
 //
