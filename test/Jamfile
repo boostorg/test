@@ -67,8 +67,9 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : algorithms_test : boost_unit_test_framework ]
           [ test-btl-lib run : token_iterator_test : boost_unit_test_framework ]
           [ test-btl-lib run : boost_check_equal_str    : boost_test_exec_monitor ]
-          [ compile config_file_iterator_test.cpp  ]
-          [ compile config_file_test.cpp ]
+
+#          [ compile config_file_iterator_test.cpp  ]
+#          [ compile config_file_test.cpp ]
 
         ;
 
