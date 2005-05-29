@@ -71,6 +71,10 @@ safe_fpt_division( FPT f1, FPT f2 )
 template<typename FPT, typename PersentType = FPT >
 class close_at_tolerance {
 public:
+    // Public typedefs
+    typedef bool result_type;
+
+    // Constructor
     explicit    close_at_tolerance( PersentType percentage_tolerance, floating_point_comparison_type fpc_type = FPC_STRONG ) 
     : p_fraction_tolerance( static_cast<FPT>(0.01)*percentage_tolerance ), p_strong_or_weak( fpc_type ==  FPC_STRONG ) {}
 
@@ -96,6 +100,9 @@ public:
 // ************************************************************************** //
 
 struct check_is_close_t {
+    // Public typedefs
+    typedef bool result_type;
+
     template<typename FPT, typename PersentType>
     bool
     operator()( FPT left, FPT right, PersentType percentage_tolerance, floating_point_comparison_type fpc_type = FPC_STRONG )
@@ -117,6 +124,9 @@ check_is_close_t check_is_close;
 // ************************************************************************** //
 
 struct check_is_small_t {
+    // Public typedefs
+    typedef bool result_type;
+
     template<typename FPT>
     bool
     operator()( FPT fpv, FPT tolerance )
@@ -143,6 +153,9 @@ check_is_small_t check_is_small;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.23  2005/05/29 08:54:57  rogeeff
+//  allow bind usage
+//
 //  Revision 1.22  2005/02/21 10:21:40  rogeeff
 //  check_is_small implemented
 //  check functions implemented as function objects
