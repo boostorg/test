@@ -11,18 +11,174 @@
     Notes</SPAN> </DIV> 
 <DIV class="body"> <IMG src='btl1.gif' width='252' height='43' alt="Boost Test logo"> 
   <H1 class="subtitle">Release Notes</H1> 
+  <P class="page-toc"><A href="#v1_33_0">Boost release 1.33.0</A></P>
   <P class="page-toc"><A href="#v1_32_0">Boost release 1.32.0</A></P>
   <P class="page-toc"><A href="#v1_31_0">Boost release 1.31.0</A> </P>
   <P class="page-toc"><A href="#v1_30_0">Boost release 1.30.0</A><BR> 
     <A href="#Migration">Migration guide from Boost Test v1</A> </P>
-    <H2><A name="v1_32_0">Boost release 1.32.0</A></H2>
+    <H2><A name="v1_33_0">Boost release 1.33.0</A></H2>
+    <p class="first-line-indented"><u>In this release Most of Boost.Test 
+  components undergo a major or significant change in both design and 
+  implementation</u>. 
+  I've strived to keep an interface unchanged as much as 
+  possible. The primary goals for this update were:  </p>
+    <ul>
+      <li>Make a unit test framework better suited for different 'runners'</li>
+      <li>Make unit test framework simpler internally by eliminating test cases 
+        hierarchy</li>
+      <li>Make test tools more uniform</li>
+      <li>Make auto unit test framework as usable as possible</li>
+    </ul>
+    <p class="first-line-indented">Following are details of what updated/changed specifically in each area of 
+    Boost.Test:</p>
+    <ol type="I">
+      <li>
+        <h3> Execution Monitor</h3>
+      </li>
+    </ol>
+    <p class="first-line-indented">The execution monitor design changes from inheritance to delegation. If 
+        previously one needed to inherit from the boost::execution monitor to do a 
+        monitored run of a function, now one need to employ an instance of the 
+        boost::execution_monitor</p>
+
+  <p class="first-line-indented">In addition following features implemented:</p>
+    <ul>
+      <li>Debugger presence detected, in which case catching system errors (SEH) is 
+      disabled unless explicitly enabled. For now only works for msvc family</li>
+      <li> Automatic detection of memory leaks introduced. For now only works for 
+        msvc family.
+      Unit test framework turns this feature on by default.</li>
+    </ul>
+      <ol start="2">
+        <li type="I">
+          <h3>Unit test framework (UTF)</h3>
+        </li>
+      </ol>
+      <p class="first-line-indented">This component of Boost.Test undergo a most dramatic changes in both 
+      design and implementation. </p>
+      <ul>
+        <li> UTF doesn't employ test cases hierarchy anymore. There is single class 
+          test_case that model one testing unit and class test_suite that model a 
+          collection of test units. Previously UTF employed compound test cases (for 
+          example parameterized test case) which went through it's components (simple 
+          subtests) during testing run time. Now compound test present itself as test 
+          case generator which produce a collection if test_case instances during test 
+          tree construction time. One consequence of this is that user doesn't need to 
+          keep track of compound test case parameters is it used be. test_case now 
+          employs a polymorphic callback to a actual test function. As a result of 
+          this one could supply any zero arity function as an argument of 
+          BOOST_TEST_CASE. So no extra support needed to be able to create 
+          boost::function or boost::bind based tests cases.   </li>
+        <li>Introduced generic mechanism to traverse the test tree. Anyone willing 
+            to do so just need to implement test_tree_visitor interface and employ 
+            traverse_test_tree. This allows to implement any pre/post processing over 
+            test tree.   </li>
+        <li>Introduced a notion of framework. The framework is responsible for:
+          <ul>
+            <li>initializing and providing access to master test suite</li>
+            <li>providing access to current test case</li>
+            <li> running testing from given test tree node (simple or compound). By default it runs from 
+			     root - master test suite. Supports both sequential and random order.</li>
+            <li>one may register any test observer agent (implements test_observer 
+                 interface) and framework notifies it of all test events</li>
+            <li>provides access to any test case based to unique test unit id</li>
+            <li>Using the framework one could implement different test runners. UTF library 
+                supplies one console runner (unit_test_main.cpp). But it's possible to do 
+                one winmain based or anything else. For example GUI program that build test 
+                tree and then run tests by request from any point in test tree.</li>
+          </ul>
+        </li>
+        <li>Unit test log interface changed to single line (used to be begin/end 
+            macros). Unit test log formatter interface changed. How it much simpler and 
+            straightforward. Two supplied implementation are separated.   </li>
+        <li> Notion of unit test result that was responsible for result collection 
+             and reporting eliminated. Instead introduced independent notions: 
+             results_collector and results_reporter. Results reporting formatter 
+             interface made public. Also results_reporter now allows to change an output 
+             stream.</li>
+        <li> Progress monitor functionality (which used to be activated in log 
+             level log_progress) now is an independent test observer and implemented by 
+             class progress_monitor.</li>
+        <li> Test case template interface changed. Now user doesn't need to 
+             explicitly register meta class.</li>
+        <li>In addition couple more features implemented:
+          <ul>
+            <li>Added support for test case timing</li>
+            <li>UTF made __cdecl - safe</li>
+            <li> Result report include skipped tests</li>
+            <li> io saver facilities employed to guard against undesirable modification 
+                 in output streams formatting</li>
+            <li> template test case automatically generate name that includes type name</li>
+            <li> --detect_memory_leak and --random command line arguments added</li>
+          </ul>
+        </li>
+      </ul>
+      <ol start="3">
+        <li type="I">
+          <h3> Test Tools</h3>
+        </li>
+      </ol>
+      <ul>
+        <li> Test Tools interfaces now provide 3 version for each tool:
+          <ul>
+            <li>CHECK- reports an error if assertion failed</li>
+            <li>WARN - reports a warning if assertion failed</li>
+            <li>REQUIRE - reports an error if assertion failed and aborts test case execution</li>
+          </ul>
+        </li>
+        <li>Implementation completely reworked. All tools implemented now through single vararg function</li>
+        <li>In addition following modifications made:
+          <ul>
+            <li>CHECK_COLLECTION interface changed: it now expect 4 arguments</li>
+            <li>BITWISE_EQUAL renamed to CHECK_BITWISE_EQUAL; old name still provided, 
+                but is deprecated</li>
+            <li>CHECK_COLLECTION interface changed to use PP_SEQ and as a result 
+                support arbitrary(actually maximum is fixed but configurable) number of 
+                predicate arguments</li>
+            <li>most of templates eliminated speeding up test modules compilation</li>
+            <li> floating-point precision set to include all significant digits 
+                 (actually the formula may require some rework since it obviously doesn't do 
+                 a good job sometimes)</li>
+            <li>BOOST_CHECK/WARN/REQUIRE_SMALL test tool added</li>
+            <li>deprecated test tools names are removed </li>
+          </ul>
+        </li>
+      </ul>
+      <ol start="4" type="I">
+        <li type="I">
+          <h3>Auto unit test framework</h3>
+        </li>
+      </ol>
+      <ul>
+        <li>BOOST_AUTO_UNIT_TEST renamed to BOOST_AUTO_TEST_CASE. Old name still 
+              provided but deprecated</li>
+        <li>BOOST_AUTO_TEST_CASE_TEMPLATE provides an ability to write a 
+              self-registering test case template</li>
+        <li>BOOST_FIXTURE_TEST_CASE provides an ability to write a self-registering 
+              test case with fixture</li>
+        <li>BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES provides an ability to specify a 
+              number of expected failures in any self-registering test case</li>
+        <li>BOOST_AUTO_TEST_SUITE and BOOST_AUTO_TEST_SUITE_END provide an ability 
+              to structure test cases into self-registering test suites</li>
+      </ul>
+      <ol start="5" type="I">
+        <li>
+          <h3> Included components</h3>
+        </li>
+      </ol>
+      <ul>
+        <li>Implementation moved from source files (.cpp) under lib/test/src into 
+            implementation files (.ipp) under boost/test/impl to eliminate dependency of 
+            included/minimal components on lib/test/src directory. </li>
+      </ul>
+      <H2><A name="v1_32_0">Boost release 1.32.0</A></H2>
     <UL>
-    <LI>Licence updated to use common Boost sotfware licence</LI>
+    <LI>Licence updated to use common Boost software licence</LI>
     <LI>basic_cstring introduced and used in most places instead of std::string
       and char const*</LI>
     <LI>namespace names gets shorten; old one still supported till next release</LI>
     <LI>numerous portability workaround for several new supported configurations</LI>
-    <LI>class properties facilities reworked to be more powerfull</LI>
+    <LI>class properties facilities reworked to be more powerful</LI>
     <LI>added proper encoding of XML PCDATA</LI>
     <LI>support for wide string comparison implemented</LI>
     </UL>
@@ -185,7 +341,7 @@ BOOST_AUTO_UNIT_TEST( test2 )
       (See accompanying file <A href="../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or
       copy at <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P> 
     <P>Revised:
-      <!-- #BeginDate format:Sw1 -->28 October, 2004<!-- #EndDate --> 
+      <!-- #BeginDate format:Sw1 -->31 May, 2005<!-- #EndDate --> 
     </P> 
   </DIV> 
 </DIV> 
