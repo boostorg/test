@@ -36,13 +36,15 @@
     cases and test suites, and controlling their runtime execution. The <A href="./components/prg_exec_monitor/index.html"> Program
     Execution Monitor</A> is also useful in some production (non-test) environments. </P> 
   <H2><A name="ReleaseNotes">Release notes</A></H2> 
-  <UL> 
-    <LI>namespace names gets shorten; old one still supported till next release</LI>
-    <LI>added proper encoding of XML PCDATA</LI>
-    <LI>support for wide string comparison implemented</LI>
-    </UL> 
-  <P>For more details see complete <A href="release_notes.html#v1_32_0">release
-      notes</A>.</P> 
+  <p class="first-line-indented"><u>In this release Most of Boost.Test components undergo a major or significant change in both design and implementation</u>. I've strived to keep an interface unchanged as much as possible. The primary goals for this update were: </p>
+  <ul>
+    <li>Make a unit test framework better suited for different 'runners'</li>
+    <li>Make unit test framework simpler internally by eliminating test cases hierarchy</li>
+    <li>Make test tools more uniform</li>
+    <li>Make auto unit test framework as usable as possible</li>
+  </ul>
+  <P>For more details see complete <A href="release_notes.html#v1_33_0">release
+      notes</A>. I may not be able  to make all necessary changes in documentation within bounds of this release. In case of any discrepancies either consult library code or ask for support in users list. </P> 
 </DIV> 
 <DIV class="footer"> 
   <DIV class="footer-body"> 
@@ -52,7 +54,7 @@
       (See accompanying file <A href="../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or
       copy at <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P> 
     <P>Revised:
-      <!-- #BeginDate format:Sw1 -->28 October, 2004<!-- #EndDate --> 
+      <!-- #BeginDate format:Sw1 -->31 May, 2005<!-- #EndDate --> 
     </P> 
   </DIV> 
 </DIV> 

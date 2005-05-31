@@ -12,14 +12,20 @@
 <DIV class="body"> <IMG src='btl1.gif' width='252' height='43' alt="Boost Test logo"> 
   <H1 class="subtitle">Open Issues</H1> 
   <UL> 
-    <LI>What dependencies will we tolerate in Boost Test Library? Also we need
-      means to overcome this restriction for extensions.</LI> 
+    <LI> Finish update for CLA support </LI> 
+    <LI> Selective test cases run by name</LI>
+    <LI>Boost.Test </strong> thread safety need to be achieved at least if BOOST </strong>_ TEST </strong>_THREAD_SAFE is defined. This one will require separate discussion</LI>
+    <LI>Some performance </strong>test </strong>ing tools (aka profiler). Unless somebody else will come up with something like this</LI>
+    <LI> Build info feature needs to be updated: there are at least two different "build infos": library build and test </strong> module build </LI>
+    <LI> Auto linking for Boost.Test</LI>
+    <LI>More tutorial documentation. </LI>
+    <LI>Two projects that could be very interesting. But I may not be able to do it by myself:
+      <ul>
+        <li> I would like to write an add-on for Visual Studio to automate test </strong> case/ test </strong> modules generation</li>
+        <li>It may be convenient to have an external test </strong> runner: utility that load some libraries dynamically initialize test </strong> it contains and execute all/some of them. </li>
+      </ul>
+    </LI>
     <LI>Memory usage test tools.</LI> 
-    <LI>Performance test tools.</LI> 
-    <LI>How to implement compilability checks.</LI> 
-    <LI>Selective test cases run: ways to define by user and notify the framework.</LI> 
-    <LI>Support for the testing of multithreaded programs.</LI> 
-    <LI>Make BOOST_TEST_CLOSE print values properly</LI> 
     <LI>Time-out implementation on Win32 platform.</LI> 
   </UL> 
 </DIV> 
@@ -31,7 +37,7 @@
       (See accompanying file <A href="../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or
       copy at <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P> 
     <P>Revised:
-      <!-- #BeginDate format:Sw1 -->18 January, 2004<!-- #EndDate --> 
+      <!-- #BeginDate format:Sw1 -->31 May, 2005<!-- #EndDate --> 
     </P> 
   </DIV> 
 </DIV> 
