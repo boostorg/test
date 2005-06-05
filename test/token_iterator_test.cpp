@@ -141,7 +141,7 @@ BOOST_AUTO_TEST_CASE( test_range_token_iterator )
 template<typename Iter>
 void moo( Iter b )
 {
-    char const* res[] = { "ABC", "SDF", " ", "SD", "FG", " " };
+    char const* res[6] = { "ABC", "SDF", " ", "SD", "FG", " " };
 
     Iter end;
     BOOST_CHECK_EQUAL_COLLECTIONS( b, end, res, res+sizeof(res)/sizeof(char const*) );
@@ -191,6 +191,10 @@ BOOST_AUTO_TEST_CASE( test_istream_token_iterator )
 // History :
 //
 // $Log$
+// Revision 1.11  2005/06/05 18:10:59  grafik
+// named_param.hpp; Work around CW not handling operator, using declaration, by using a real operator,().
+// token_iterator_test.cpp; Work around CW-8 confused with array initialization.
+//
 // Revision 1.10  2005/05/11 05:07:57  rogeeff
 // licence update
 //

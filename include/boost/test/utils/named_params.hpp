@@ -116,6 +116,7 @@ struct unknown_id_helper {
 template<typename NP, typename Rest = nil>
 struct named_parameter_combine : Rest, named_parameter_base<named_parameter_combine<NP,Rest> > {
     typedef typename NP::ref_type  res_type;
+    typedef named_parameter_combine<NP,Rest> self_type;
 
     // Constructor
     named_parameter_combine( NP const& np, Rest const& r )
@@ -129,7 +130,13 @@ struct named_parameter_combine : Rest, named_parameter_base<named_parameter_comb
     bool        has( keyword<typename NP::id,false> ) const             { return true; }
     using       Rest::has;
 
+    #if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3206))
+    template<typename NP>
+    named_parameter_combine<NP,self_type> operator,( NP const& np ) const
+    { return named_parameter_combine<NP,self_type>( np, *this ); }
+    #else
     using       named_parameter_base<named_parameter_combine<NP,Rest> >::operator,;
+    #endif
 
     // Visitation support
     template<typename Visitor>
@@ -307,6 +314,10 @@ optionally_assign( T& target, Params const& p, Keyword k )
 //   Revision History:
 //  
 //  $Log$
+//  Revision 1.3  2005/06/05 18:10:59  grafik
+//  named_param.hpp; Work around CW not handling operator, using declaration, by using a real operator,().
+//  token_iterator_test.cpp; Work around CW-8 confused with array initialization.
+//
 //  Revision 1.2  2005/05/03 05:02:49  rogeeff
 //  como fixes
 //
