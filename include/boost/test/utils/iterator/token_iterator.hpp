@@ -16,6 +16,9 @@
 #define BOOST_TOKEN_ITERATOR_HPP_071894GER
 
 // Boost
+#include <boost/config.hpp>
+#include <boost/detail/workaround.hpp>
+
 #include <boost/iterator/iterator_categories.hpp>
 #include <boost/iterator/iterator_traits.hpp>
 
@@ -97,6 +100,28 @@ public:
 
     bool        operator()( CharT c )
     {
+        #if BOOST_WORKAROUND(__MWERKS__, <= 0x3003)
+        if ( dt_char == m_type )
+        {
+            BOOST_TEST_FOREACH( CharT, delim, m_delimeters )
+                if( CharCompare()( delim, c ) )
+                    return true;
+
+            return false;
+        }
+        if ( dt_ispunct == m_type )
+        {
+            return (std::ispunct)( c ) != 0;
+        }
+        if ( dt_isspace == m_type )
+        {
+            return (std::isspace)( c ) != 0;
+        }
+        if ( dt_none == m_type )
+        {
+            return false;
+        }
+        #else
         switch( m_type ) {
         case dt_char:
             BOOST_TEST_FOREACH( CharT, delim, m_delimeters )
@@ -111,6 +136,7 @@ public:
         case dt_none:
             return false;
         }
+        #endif
 
         return false;
     }
@@ -409,6 +435,9 @@ make_range_token_iterator( Iter begin, Iter end, Modifier const& m )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2005/06/05 16:07:51  grafik
+//  Work around CW-8 problem parsing the switch statement.
+//
 //  Revision 1.5  2005/04/12 06:46:42  rogeeff
 //  use named_param facilites
 //
