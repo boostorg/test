@@ -296,6 +296,18 @@ struct print_log_value<the_type > {                                 \
 
 //____________________________________________________________________________//
 
+#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
+template<typename T, std::size_t N >
+struct print_log_value< T[N] > {
+    void    operator()( std::ostream& ostr, T const* t )
+    {   
+        ostr << t;
+    }
+};
+#endif
+
+//____________________________________________________________________________//
+
 template<>
 struct print_log_value<char> {
     void    operator()( std::ostream& ostr, char t );
@@ -330,6 +342,18 @@ struct print_helper_t {
 
     T const&    m_t;
 };
+
+//____________________________________________________________________________//
+
+#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
+// Borland suffers premature pointer decay passing arrays by reference
+template<typename T, std::size_t N >
+struct print_helper_t< T[N] > {
+    explicit    print_helper_t( T const * t ) : m_t( t ) {}
+
+    T const *   m_t;
+};
+#endif
 
 //____________________________________________________________________________//
 
@@ -550,6 +574,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.54  2005/06/07 04:38:20  rogeeff
+//  borland fix
+//
 //  Revision 1.53  2005/05/11 04:51:14  rogeeff
 //  borlard portability fix
 //
