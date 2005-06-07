@@ -46,6 +46,9 @@ public:
 
         m_stream.open( file_name.begin(), std::ios::in );
     }
+#if defined(__GNUC__) && ( __GNUC__ == 3 && __GNUC_MINOR__ >= 4 )
+    ifstream_holder( ifstream_holder const& ) { BOOST_ASSERT( false ); }
+#endif
 
     bool is_valid()
     {
@@ -104,6 +107,9 @@ typedef basic_ifstream_line_iterator<wchar_t>   wifstream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2005/06/07 05:08:03  rogeeff
+//  gcc fix
+//
 //  Revision 1.5  2005/02/20 08:27:09  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
