@@ -15,9 +15,7 @@
 // Boost.Test
 #define BOOST_AUTO_TEST_MAIN
 #include <boost/test/auto_unit_test.hpp>
-
 #include <boost/test/utils/iterator/token_iterator.hpp>
-namespace utf = boost::unit_test;
 
 // BOOST
 #include <boost/iterator/transform_iterator.hpp>
@@ -30,6 +28,8 @@ namespace utf = boost::unit_test;
 #ifdef BOOST_NO_STDC_NAMESPACE
 namespace std{ using ::toupper; using ::tolower; }
 #endif
+
+namespace utf = boost::unit_test;
 
 //____________________________________________________________________________//
 
@@ -191,6 +191,9 @@ BOOST_AUTO_TEST_CASE( test_istream_token_iterator )
 // History :
 //
 // $Log$
+// Revision 1.12  2005/06/11 19:20:58  rogeeff
+// *** empty log message ***
+//
 // Revision 1.11  2005/06/05 18:10:59  grafik
 // named_param.hpp; Work around CW not handling operator, using declaration, by using a real operator,().
 // token_iterator_test.cpp; Work around CW-8 confused with array initialization.

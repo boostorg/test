@@ -23,12 +23,13 @@
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/test/output/compiler_log_formatter.hpp>
 #include <boost/test/results_reporter.hpp>
-using namespace boost::unit_test;
-using namespace boost::test_tools;
 
 // STL
 #include <iostream>
 #include <stdexcept>
+
+using namespace boost::unit_test;
+using namespace boost::test_tools;
 
 #if defined(__GNUC__) || defined(__SUNPRO_CC)
 #define LIMITED_TEST
@@ -197,6 +198,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.34  2005/06/11 19:20:58  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.33  2005/05/11 05:07:56  rogeeff
 //  licence update
 //

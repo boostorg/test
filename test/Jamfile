@@ -63,7 +63,7 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : test_case_template_test  : boost_test_exec_monitor ]
           [ test-btl-lib run : custom_exception_test    : boost_unit_test_framework ]
           [ test-btl-lib run : fixed_mapping_test       : boost_unit_test_framework ]
-          [ test-btl-lib run : ifstream_line_iterator_test : boost_unit_test_framework : $(test-dir)test_files/ifstream_line_iterator.tst1 $(test-dir)test_files/ifstream_line_iterator.tst2 ]
+          [ test-btl-lib run : ifstream_line_iterator_test : boost_unit_test_framework : $(test-dir)test_files$(SLASH)ifstream_line_iterator.tst1 $(test-dir)test_files$(SLASH)ifstream_line_iterator.tst2 ]
           [ test-btl-lib run : algorithms_test : boost_unit_test_framework ]
           [ test-btl-lib run : token_iterator_test : boost_unit_test_framework ]
           [ test-btl-lib run : boost_check_equal_str    : boost_test_exec_monitor ]

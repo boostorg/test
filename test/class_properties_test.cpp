@@ -15,10 +15,11 @@
 // Boost.Test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/utils/class_properties.hpp>
-using namespace boost::unit_test;
 
 // STL
 #include <vector>
+
+using namespace boost::unit_test;
 
 //____________________________________________________________________________//
 
@@ -196,6 +197,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2005/06/11 19:20:58  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.6  2005/05/11 05:07:56  rogeeff
 //  licence update
 //
