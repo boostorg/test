@@ -20,6 +20,8 @@
 
 namespace utf = boost::unit_test;
 
+static utf::ifstream_line_iterator eoi;
+
 //____________________________________________________________________________//
 
 BOOST_AUTO_TEST_CASE( test_default_delimeter )
@@ -28,7 +30,7 @@ BOOST_AUTO_TEST_CASE( test_default_delimeter )
                                         ? "./test_files/ifstream_line_iterator.tst1"
                                         : utf::auto_unit_test_suite()->argv[1] );
 
-    BOOST_CHECK( it != utf::ifstream_line_iterator() ); 
+    BOOST_CHECK( it != eoi ); 
 
     BOOST_CHECK_EQUAL( *it, "acv ffg" ); 
     ++it;
@@ -42,7 +44,7 @@ BOOST_AUTO_TEST_CASE( test_default_delimeter )
     BOOST_CHECK_EQUAL( *it, "1" ); 
     ++it;
 
-    BOOST_CHECK( it == utf::ifstream_line_iterator() ); 
+    BOOST_CHECK( it == eoi ); 
 }
 
 //____________________________________________________________________________//
@@ -53,7 +55,7 @@ BOOST_AUTO_TEST_CASE( test_custom_delimeter )
                                         ? "./test_files/ifstream_line_iterator.tst2"
                                         : utf::auto_unit_test_suite()->argv[2], '}' );
 
-    BOOST_CHECK( it != utf::ifstream_line_iterator() ); 
+    BOOST_CHECK( it != eoi ); 
 
     BOOST_CHECK_EQUAL( *it, "{ abc d " ); 
     ++it;
@@ -64,7 +66,7 @@ BOOST_AUTO_TEST_CASE( test_custom_delimeter )
     BOOST_CHECK_EQUAL( *it, "\n" ); 
     ++it;
 
-    BOOST_CHECK( it == utf::ifstream_line_iterator() ); 
+    BOOST_CHECK( it == eoi ); 
 }
 
 
@@ -74,6 +76,9 @@ BOOST_AUTO_TEST_CASE( test_custom_delimeter )
 // History :
 //
 // $Log$
+// Revision 1.7  2005/06/11 07:20:45  rogeeff
+// portability fix
+//
 // Revision 1.6  2005/05/11 05:07:57  rogeeff
 // licence update
 //
