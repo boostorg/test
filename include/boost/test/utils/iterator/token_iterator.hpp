@@ -100,35 +100,14 @@ public:
 
     bool        operator()( CharT c )
     {
-        #if BOOST_WORKAROUND(__MWERKS__, <= 0x3003)
-        if ( dt_char == m_type )
-        {
-            BOOST_TEST_FOREACH( CharT, delim, m_delimeters )
-                if( CharCompare()( delim, c ) )
-                    return true;
-
-            return false;
-        }
-        if ( dt_ispunct == m_type )
-        {
-            return (std::ispunct)( c ) != 0;
-        }
-        if ( dt_isspace == m_type )
-        {
-            return (std::isspace)( c ) != 0;
-        }
-        if ( dt_none == m_type )
-        {
-            return false;
-        }
-        #else
         switch( m_type ) {
-        case dt_char:
+        case dt_char: {
             BOOST_TEST_FOREACH( CharT, delim, m_delimeters )
                 if( CharCompare()( delim, c ) )
                     return true;
 
             return false;
+        }
         case dt_ispunct:
             return (std::ispunct)( c ) != 0;
         case dt_isspace:
@@ -136,7 +115,6 @@ public:
         case dt_none:
             return false;
         }
-        #endif
 
         return false;
     }
@@ -167,6 +145,8 @@ struct token_assigner {
     template<typename Iterator, typename Token>
     static void append_move( Iterator& b, Token& )          { ++b; }
 };
+
+//____________________________________________________________________________//
 
 template<>
 struct token_assigner<single_pass_traversal_tag> {
@@ -212,8 +192,8 @@ protected:
     : m_is_dropped( dt_isspace )
     , m_is_kept( dt_ispunct )
     , m_keep_empty_tokens( false )
-    , m_token_produced( false )
     , m_tokens_left( (std::size_t)-1 )
+    , m_token_produced( false )
     {
     }
 
@@ -239,12 +219,7 @@ protected:
         typedef ut_detail::token_assigner<BOOST_DEDUCED_TYPENAME iterator_traversal<Iter>::type> Assigner;
         Iter checkpoint;
 
-#if BOOST_WORKAROUND( BOOST_DINKUMWARE_STDLIB, < 306 ) \
-    || BOOST_WORKAROUND( __GNUC__, < 3 ) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
-    this->m_value.erase();
-#else
-    this->m_value.clear();
-#endif
+        this->m_value.clear();
 
         if( !m_keep_empty_tokens ) {
             while( begin != end && m_is_dropped( *begin ) )
@@ -435,6 +410,11 @@ make_range_token_iterator( Iter begin, Iter end, Modifier const& m )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2005/06/11 19:23:28  rogeeff
+//  1. Always use clear
+//  reorder field in constructor to eliminate warning
+//  remove cw workaround - doesn't seems to be needed
+//
 //  Revision 1.6  2005/06/05 16:07:51  grafik
 //  Work around CW-8 problem parsing the switch statement.
 //
