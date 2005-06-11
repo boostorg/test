@@ -46,9 +46,6 @@ public:
 
         m_stream.open( file_name.begin(), std::ios::in );
     }
-#if defined(__GNUC__) && ( __GNUC__ == 3 && __GNUC_MINOR__ >= 4 )
-    ifstream_holder( ifstream_holder const& ) { BOOST_ASSERT( false ); }
-#endif
 
     bool is_valid()
     {
@@ -107,6 +104,9 @@ typedef basic_ifstream_line_iterator<wchar_t>   wifstream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2005/06/11 07:21:23  rogeeff
+//  reverse prev fix
+//
 //  Revision 1.6  2005/06/07 05:08:03  rogeeff
 //  gcc fix
 //
