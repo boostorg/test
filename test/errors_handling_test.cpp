@@ -31,7 +31,7 @@
 using namespace boost::unit_test;
 using namespace boost::test_tools;
 
-#if defined(__GNUC__) || defined(__SUNPRO_CC)
+#if defined(__GNUC__) || defined(__SUNPRO_CC) || defined(__DECCXX_VER)
 #define LIMITED_TEST
 #endif
 
@@ -198,6 +198,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.35  2005/06/13 11:46:26  schoepflin
+//  Use limited tests with Tru64/CXX.
+//
 //  Revision 1.34  2005/06/11 19:20:58  rogeeff
 //  *** empty log message ***
 //
