@@ -283,7 +283,8 @@ optionally_assign( T&, nfp_detail::nil )
 
 template<typename T, typename Source>
 inline void
-#if BOOST_WORKAROUND( __MWERKS__, BOOST_TESTED_AT( 0x3003 ) )
+#if BOOST_WORKAROUND( __MWERKS__, BOOST_TESTED_AT( 0x3003 ) ) \
+    || BOOST_WORKAROUND( __DECCXX_VER, BOOST_TESTED_AT(60590042) )
 optionally_assign( T& target, Source src )
 #else
 optionally_assign( T& target, Source const& src )
@@ -314,6 +315,9 @@ optionally_assign( T& target, Params const& p, Keyword k )
 //   Revision History:
 //  
 //  $Log$
+//  Revision 1.4  2005/06/13 10:35:08  schoepflin
+//  Enable optionally_assign() overload workaround for Tru64/CXX-6.5 as well.
+//
 //  Revision 1.3  2005/06/05 18:10:59  grafik
 //  named_param.hpp; Work around CW not handling operator, using declaration, by using a real operator,().
 //  token_iterator_test.cpp; Work around CW-8 confused with array initialization.
