@@ -45,8 +45,18 @@ friend class boost::unit_test::singleton<type>; \
 type() {}                                       \
 /**/
 
+#if BOOST_WORKAROUND(__DECCXX_VER, BOOST_TESTED_AT(60590042))
+
+#define BOOST_TEST_SINGLETON_INST( inst ) \
+template class unit_test::singleton< BOOST_JOIN( inst, _t ) > ; \
+namespace { BOOST_JOIN( inst, _t)& inst = BOOST_JOIN( inst, _t)::instance(); }
+
+#else
+
 #define BOOST_TEST_SINGLETON_INST( inst ) \
 namespace { BOOST_JOIN( inst, _t)& inst = BOOST_JOIN( inst, _t)::instance(); }
+
+#endif
 
 } // namespace boost
 
@@ -58,6 +68,10 @@ namespace { BOOST_JOIN( inst, _t)& inst = BOOST_JOIN( inst, _t)::instance(); }
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/06/15 07:21:51  schoepflin
+//  Tru64 needs an explicit instantiation of the singleton template. Otherwise we
+//  end up with multiple singleton instances.
+//
 //  Revision 1.1  2005/02/20 08:27:08  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
