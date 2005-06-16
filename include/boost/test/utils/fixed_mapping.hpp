@@ -67,6 +67,11 @@ class fixed_mapping
     typedef typename call_traits<Value>::param_type         value_param_type;
     typedef typename call_traits<Value>::const_reference    value_ref_type;
 
+#if BOOST_WORKAROUND(__DECCXX_VER, BOOST_TESTED_AT(60590042))
+    struct p1; friend struct p1;
+    struct p2; friend struct p2;
+#endif
+
     // bind( Compare(), bind(select1st<elem_type>(), _1),  bind(identity<Key>(), _2) )
     struct p1 : public std::binary_function<elem_type,Key,bool>
     {
@@ -122,6 +127,10 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2005/06/16 14:33:42  schoepflin
+//  Added workaround for Tru64/CXX which enables boost.test to compile in strict
+//  ansi mode on that compiler.
+//
 //  Revision 1.5  2005/05/08 08:55:09  rogeeff
 //  typos and missing descriptions fixed
 //
