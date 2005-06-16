@@ -352,6 +352,14 @@ public:
     {
         this->init();
     }
+    range_token_iterator( range_token_iterator const& rhs )
+    : base( rhs )
+    {
+        if( this->m_valid ) {
+            m_begin = rhs.m_begin;
+            m_end   = rhs.m_end;
+        }
+    }
 
     template<typename Modifier>
     range_token_iterator( Iter begin, Iter end, Modifier const& m )
@@ -410,6 +418,9 @@ make_range_token_iterator( Iter begin, Iter end, Modifier const& m )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2005/06/16 05:58:26  rogeeff
+//  make default constructed range token iterator copyable according ot standard
+//
 //  Revision 1.7  2005/06/11 19:23:28  rogeeff
 //  1. Always use clear
 //  reorder field in constructor to eliminate warning
