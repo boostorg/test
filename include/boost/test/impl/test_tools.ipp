@@ -106,16 +106,16 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
 
     switch( ct ) {
     case CHECK_PRED:
-        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) 
+        unit_test_log << unit_test::log::begin() << unit_test::log::file( file_name ) << unit_test::log::line( line_num ) 
                       << ll << prefix << check_descr.str() << suffix;
         
         if( !pr.has_empty_message() )
             unit_test_log << ". " << pr.message();
         
-        unit_test_log << log::end();
+        unit_test_log << unit_test::log::end();
         break;
     case CHECK_MSG:
-        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) << ll;
+        unit_test_log << unit_test::log::begin() << unit_test::log::file( file_name ) << unit_test::log::line( line_num ) << ll;
         
         if( tl == PASS )
             unit_test_log << prefix << "'" << check_descr.str() << "'" << suffix;
@@ -125,14 +125,14 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         if( !pr.has_empty_message() )
             unit_test_log << ". " << pr.message();
 
-        unit_test_log << log::end();
+        unit_test_log << unit_test::log::end();
         break;
     case MSG_ONLY:
-        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) 
-                      << log_messages << check_descr.str() << log::end();
+        unit_test_log << unit_test::log::begin() << unit_test::log::file( file_name ) << unit_test::log::line( line_num ) 
+                      << log_messages << check_descr.str() << unit_test::log::end();
         break;
     case SET_CHECKPOINT:
-        unit_test_log << log::file( file_name ) << log::line( line_num ) << log::checkpoint( check_descr.str() );
+        unit_test_log << unit_test::log::file( file_name ) << unit_test::log::line( line_num ) << unit_test::log::checkpoint( check_descr.str() );
         break;
     case CHECK_EQUAL: {
         va_list args;
@@ -143,7 +143,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         char const* arg2_descr  = va_arg( args, char const* );
         char const* arg2_val    = va_arg( args, char const* );
 
-        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) 
+        unit_test_log << unit_test::log::begin() << unit_test::log::file( file_name ) << unit_test::log::line( line_num ) 
                       << ll << prefix << arg1_descr << " == " << arg2_descr << suffix;
 
         if( tl != PASS )
@@ -154,7 +154,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         if( !pr.has_empty_message() )
             unit_test_log << ". " << pr.message();
 
-        unit_test_log << log::end();
+        unit_test_log << unit_test::log::end();
         break;
     }
     case CHECK_CLOSE: {
@@ -168,7 +168,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         /* toler_descr = */       va_arg( args, char const* );
         char const* toler_val   = va_arg( args, char const* );
 
-        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) << ll;
+        unit_test_log << unit_test::log::begin() << unit_test::log::file( file_name ) << unit_test::log::line( line_num ) << ll;
 
         unit_test_log << "difference between " << arg1_descr << "{" << arg1_val << "}" 
                       << " and "               << arg2_descr << "{" << arg2_val << "}"
@@ -180,7 +180,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         if( !pr.has_empty_message() )
             unit_test_log << ". " << pr.message();
 
-        unit_test_log << log::end();
+        unit_test_log << unit_test::log::end();
         break;
     }
     case CHECK_SMALL: {
@@ -192,7 +192,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         /* toler_descr = */       va_arg( args, char const* );
         char const* toler_val   = va_arg( args, char const* );
 
-        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) << ll;
+        unit_test_log << unit_test::log::begin() << unit_test::log::file( file_name ) << unit_test::log::line( line_num ) << ll;
 
         unit_test_log << "absolute value of " << arg1_descr << "{" << arg1_val << "}" 
                       << ( tl == PASS ? " doesn't exceed " : " exceeds " )
@@ -203,11 +203,11 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         if( !pr.has_empty_message() )
             unit_test_log << ". " << pr.message();
 
-        unit_test_log << log::end();
+        unit_test_log << unit_test::log::end();
         break;
     }
     case CHECK_PRED_WITH_ARGS: {
-        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) 
+        unit_test_log << unit_test::log::begin() << unit_test::log::file( file_name ) << unit_test::log::line( line_num ) 
                       << ll << prefix << check_descr.str();
 
         // print predicate call description
@@ -246,7 +246,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         if( !pr.has_empty_message() )
             unit_test_log << ". " << pr.message();
 
-        unit_test_log << log::end();
+        unit_test_log << unit_test::log::end();
         break;
     }
     case CHECK_EQUAL_COLL: {
@@ -258,7 +258,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         char const* right_begin_descr   = va_arg( args, char const* );
         char const* right_end_descr     = va_arg( args, char const* );
 
-        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num ) 
+        unit_test_log << unit_test::log::begin() << unit_test::log::file( file_name ) << unit_test::log::line( line_num ) 
                       << ll << prefix 
                       << "{ " << left_begin_descr  << ", " << left_end_descr  << " } == { " 
                               << right_begin_descr << ", " << right_end_descr << " }"
@@ -269,7 +269,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         if( !pr.has_empty_message() )
             unit_test_log << ". " << pr.message();
 
-        unit_test_log << log::end();
+        unit_test_log << unit_test::log::end();
         break;
     }
     case CHECK_BITWISE_EQUAL: {
@@ -279,7 +279,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         char const* left_descr    = va_arg( args, char const* );
         char const* right_descr   = va_arg( args, char const* );
 
-        unit_test_log << log::begin() << log::file( file_name ) << log::line( line_num )
+        unit_test_log << unit_test::log::begin() << unit_test::log::file( file_name ) << unit_test::log::line( line_num )
                       << ll << prefix << left_descr  << " =.= " << right_descr << suffix;
 
         va_end( args );
@@ -287,7 +287,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         if( !pr.has_empty_message() )
             unit_test_log << ". " << pr.message();
 
-        unit_test_log << log::end();
+        unit_test_log << unit_test::log::end();
         break;
     }
     }
@@ -601,6 +601,9 @@ output_test_stream::sync()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.9  2005/06/22 22:03:05  dgregor
+//  More explicit scoping needed for GCC 2.95.3
+//
 //  Revision 1.8  2005/04/30 17:56:31  rogeeff
 //  switch to stdarg.h to workarround como issues
 //
