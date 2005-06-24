@@ -19,6 +19,9 @@
 #include <boost/test/test_observer.hpp>
 #include <boost/test/utils/trivial_singleton.hpp>
 
+// STL
+#include <iosfwd>   // for std::ostream&
+
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
@@ -67,6 +70,9 @@ BOOST_TEST_SINGLETON_INST( progress_monitor )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/06/24 04:09:34  rogeeff
+//  added missing iosfwd
+//
 //  Revision 1.1  2005/02/20 08:27:06  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
