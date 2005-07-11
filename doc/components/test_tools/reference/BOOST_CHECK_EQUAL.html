@@ -14,19 +14,19 @@ H4
 </HEAD>
 <BODY>
 <DIV class="body"> 
-  <H3>BOOST_CHECK_EQUAL( left, right )</H3>
-  <P class="first-line-indented">The same as <A href="BOOST_CHECK.html">BOOST_CHECK</A>( <I>left</I> == 
-    <I>right</I> ). Use this tool to see mismatched values. Note that it most probably bad idea to use 
-    this tool to compare floating point values. Use <A href="BOOST_CHECK_CLOSE.html">BOOST_CHECK_CLOSE</A> 
-    tool instead.</P>
-  <P class="first-line-indented"> If comparison is successful, the tool produces a confirmation message 
-    (note: to manage what messages appear in the test output stream set the proper log level) in other 
-    case it produces an error message in a form &quot;error in &lt;test case name&gt;: test &lt;<I>left</I> 
-    argument name&gt; == &lt;<I>right</I> argument name&gt; failed [ &lt;<I>left</I> argument value&gt; 
-    != &lt;<I>right</I> argument value&gt;]&quot;.</P>
-  <P class="first-line-indented">The tool's first parameter is the <I>left</I> compared value. Second 
-    parameter is the <I>right</I> compared value. Parameters are not required to be of the same type. 
-    But there should exist comparison operator for <I>left</I> and <I>right</I> type (this may involve 
+  <H3>BOOST_WARN_EQUAL( left, right )<BR>
+  BOOST_CHECK_EQUAL( left, right )<BR>
+  BOOST_REQUIRE_EQUAL( left, right )</H3>
+  <P class="first-line-indented">Check performed by these tools is the same as
+    the one performed by <A href="BOOST_CHECK.html"> BOOST_&lt;level&gt;</A>( <I>left</I> == 
+    <I>right</I> ). Use these tools if you want to  see the mismatched runtime
+    values. Note that it most probably bad idea to use these tools to compare
+    floating point values. Use <A href="BOOST_CHECK_CLOSE.html">BOOST_&lt;level&gt;_CLOSE</A> 
+    tools instead.</P>
+  <P class="first-line-indented"> The first parameter is the <I>left</I> compared
+    value. The second  parameter is the <I>right</I> compared value. Parameters
+    are not required to be of the same type. But there should exist comparison
+    operator for <I>left</I> and <I>right</I> type (this may involve 
     implicit conversions).</P>
   <H4>Example: test.cpp</H4>
 <PRE class="code"><SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
@@ -46,6 +46,6 @@ H4
 </DIV>
 </BODY>
 </HTML>
-<!-- Copyright Gennadiy Rozental 2001-2004. 
+<!-- Copyright Gennadiy Rozental 2001-2005. 
 Distributed under the Boost Software License, Version 1.0. 
 (See accompanying file LICENSE_1_0.txt or copy at www.boost.org/LICENSE_1_0.txt) -->

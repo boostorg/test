@@ -14,7 +14,9 @@
   <H1 class="subtitle">Floating-point comparison algorithms</H1>
   <P class="page-toc"> <A href="#Introduction">Introduction</A><BR>
     <A href="#tolerance">How to choose a tolerance</A><BR>
-    <A href="#Specification">The close_at_tolerance algorithm</A><BR>
+    <A href="#close_at_tolerance">The close_at_tolerance algorithm</A><BR>
+    <A href="#check_is_close">The check_is_close algorithm</A><BR>
+    <A href="#check_is_small">The check_is_small algorithm</A><BR>
     <A href="#Implementation">Implementation</A><BR>
     <A href="#Acknowledgements">Acknowledgements</A><BR>
     <A href="#References">References</A> </P>
@@ -100,21 +102,21 @@
   All in all there is no generic rules on how to select the tolerance and users need to apply common sense and 
   domain/problem specific knowledge to decide on tolerance value. </P>
   <P class="first-line-indented">To simplify things in most usage cases latest version of algorithm below opted 
-    to use percentage values for tolerance specification (instead of fractions of releated values). In other words 
+    to use percentage values for tolerance specification (instead of fractions of related values). In other words 
     now you use it to check that difference between two values does not exceed x percent. </P>
   <P class="first-line-indented">For more reading about floating-point comparison see references at the 
     end.</P>
-  <H2>The <A name="Specification">close_at_tolerance</A> algorithm</H2>
+  <H2>The <A name="close_at_tolerance">close_at_tolerance</A> algorithm</H2>
   <P>The <SPAN class="new-term"> close_at_tolerance</SPAN> algorithm allows to check the relationship 
     defines by inequations (<B><A href="#F.1">1</A></B>) or (<B><A href="#F.2">2</A></B>). It is implemented 
     as binary predicate.</P>
   <PRE class="code"><SPAN class="reserv-word">enum</SPAN> floating_point_comparison_type { FPC_STRONG, FPC_WEAK };
 
-<SPAN class="reserv-word">template</SPAN><<SPAN class="reserv-word">typename</SPAN> FPT>
+<SPAN class="reserv-word">template</SPAN><<SPAN class="reserv-word">typename</SPAN> FPT, <SPAN class="reserv-word">typename</SPAN> PersentType = FPT>
 <SPAN class="reserv-word">class</SPAN> <SPAN class="new-term">close_at_tolerance</SPAN>
 {
 <SPAN class="reserv-word">public</SPAN>:
-    <SPAN class="reserv-word">explicit</SPAN> close_at_tolerance( FPT percentage_tolerance, floating_point_comparison_type fpc_type = FPC_STRONG );
+    <SPAN class="reserv-word">explicit</SPAN> close_at_tolerance( PersentType percentage_tolerance, floating_point_comparison_type fpc_type = FPC_STRONG );
 
     <SPAN class="cpp-type">bool</SPAN> <SPAN class="reserv-word">operator</SPAN>()( FPT left, FPT right ) <SPAN class="reserv-word">const</SPAN>;
 };</PRE>
@@ -123,8 +125,35 @@
      comparison type. The default behavior is to check strong relationship defined
     by inequations  (<B><A href="#F.1">1</A></B>). Use FPC_WEAK to check weak
     relationship defined by inequations  (<B><A href="#F.2">2</A></B>)</P>
+  <H2>The <A name="check_is_close">check_is_close</A> algorithm</H2>
+  <P>The <SPAN class="new-term">check_is_close</SPAN> algorithm present an alternative interface for the close_at_tolerance algorithm.<SPAN class="new-term">check_is_close</SPAN> is defined as predicate with four arguments </P>
+  <PRE class="code"><span class="reserv-word">struct</span> check_is_close_t {
+    <SPAN class="reserv-word">typedef</span> <SPAN class="cpp-type">bool</span> result_type;
+
+    template&lt;<SPAN class="reserv-word">typename</span> FPT, <SPAN class="reserv-word">typename</span> PersentType&gt;
+    <SPAN class="cpp-type">bool</span>
+    operator()( FPT left, FPT right, PersentType percentage_tolerance, floating_point_comparison_type fpc_type = FPC_STRONG );
+};
+
+<SPAN class="reserv-word">namespace</span> {
+check_is_close_t check_is_close;
+}</PRE>
+  <H2>The <A name="check_is_small">check_is_small</A> algorithm</H2>
+  <P>The <SPAN class="new-term">check_is_small</SPAN> algorithm checks that absolute value of the argument is small enough. Absolute value of the tolerance is supplied as a second argument. check_is_small is defined as binary predicate.</P>
+  <PRE class="code"><span class="reserv-word">struct</span> check_is_close_t {
+    <SPAN class="reserv-word">typedef</span> <SPAN class="cpp-type">bool</span> result_type;
+
+    template&lt;<SPAN class="reserv-word">typename</span> FPT&gt;
+    <SPAN class="cpp-type">bool</span>
+    operator()( FPT fpv, FPT tolerance );
+};
+
+<SPAN class="reserv-word">namespace</span> {
+check_is_small_t check_is_small;
+}</PRE>
+  <span class="first-line-indented">In spite of the fact that it's not recommended to use absolute values for floating point values comparisons the need for simple &quot;is it small&quot; checks is arousing from time to time. This is an algorithms to fill this niche.</span>
   <H2><A name="Implementation">Implementation</A></H2>
-  <P class="first-line-indented">The close_at_tolerance algorithm is implemented in the header file <A href="../../../../../boost/test/floating_point_comparison.hpp"> 
+  <P class="first-line-indented">The all algorithms are implemented in the header file <A href="../../../../../boost/test/floating_point_comparison.hpp"> 
     floating_point_comparison.hpp</A>. It is recommended to use test tools wrappers located on <A href="../../../../../boost/test/test_tools.hpp">test_tools.hpp</A>. 
     Note that you still need to include <A href="../../../../../boost/test/floating_point_comparison.hpp"> floating_point_comparison.hpp</A> 
     yourself since it does not get included automatically.</P>
@@ -148,11 +177,11 @@
 </DIV>
 <DIV class="footer"> 
   <DIV class="footer-body"> 
-    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy Rozental</A> 2001-2003. <BR>
+    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy Rozental</A> 2001-2005. <BR>
       Distributed under the Boost Software License, Version 1.0.
       (See accompanying file <A href="../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>
-    <P>Revised:        <!-- #BeginDate format:Sw1 -->17 July, 2004<!-- #EndDate -->     </P>
+    <P>Revised:        <!-- #BeginDate format:Sw1 -->10 July, 2005<!-- #EndDate -->     </P>
   </DIV>
 </DIV>
 </BODY>

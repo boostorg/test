@@ -14,17 +14,21 @@ H4
 </HEAD>
 <BODY>
 <DIV class="body"> 
-  <H3>BOOST_CHECK_NO_THROW( statement )</H3>
-  <P class="first-line-indented">This tool is used to perform an no throw check. The tool executes the 
-    supplied statement and check that it does not throw any exceptions. Error would be reported by the 
-    framework even if test statement appear directly in test case body and throw any exception. But this 
-    tool allows to proceed further with test case in this case.</P>
-  <P class="first-line-indented">If check is successful, the tool produces a confirmation message (note: 
-    to manage what messages appear in the test output stream set the proper log level), in other case 
-    it produces an error message in a form &quot;error in &lt;test case name&gt;: exception was thrown 
+  <H3>BOOST_WARN_NO_THROW( statement )<BR>
+  BOOST_CHECK_NO_THROW( statement )<BR>
+  BOOST_REQUIRE_NO_THROW( statement )</H3>
+  <P class="first-line-indented">These tools are used to perform a &quot;no throw&quot;
+    check. Ttool execute the supplied statement and check that it does not
+    throw any exceptions. Error would be reported by the framework even if test
+    statement appear directly in test case body and throw any exception. But
+    these tools allow to proceed further with test case in case of failure.</P>
+  <P class="first-line-indented">If check is successful, the tool produces a
+    confirmation message, in other case it produces an error message in a form &quot;error
+    in &lt;test case name&gt;: exception was thrown 
     by &lt;statement&gt;.</P>
-  <P class="first-line-indented">The only tool's parameter is the statement to execute while checking 
-    for exception. Use block statement if you want to execute more than one statement.</P>
+  <P class="first-line-indented">The only parameter is the statement to execute
+    while checking for exception. Use block statement if you want to execute
+    more than one statement.</P>
   <H4>Example: test.cpp</H4>
   <PRE class="code"><SPAN class="reserv-word">class</SPAN> my_exception{};
 <SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
@@ -41,6 +45,6 @@ H4
 </DIV>
 </BODY>
 </HTML>
-<!-- Copyright Gennadiy Rozental 2001-2004. 
+<!-- Copyright Gennadiy Rozental 2001-2005. 
 Distributed under the Boost Software License, Version 1.0. 
 (See accompanying file LICENSE_1_0.txt or copy at www.boost.org/LICENSE_1_0.txt) -->

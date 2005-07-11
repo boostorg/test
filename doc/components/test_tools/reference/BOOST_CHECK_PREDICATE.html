@@ -14,32 +14,37 @@ H4
 </HEAD>
 <BODY>
 <DIV class="body"> 
-  <H3>BOOST_CHECK_PREDICATE( predicate, predicate_arity, arguments_list ) </H3>
-  <P class="first-line-indented">This tool is used to validate the supplied predicate functor. This test 
-    tool is generic. It allows to validate arbitrary one or two arity predicate. To validate zero or more 
-    then two arity predicate use <A href="BOOST_CHECK.html" target="descr">BOOST_CHECK</A> tool. The advantage 
-    of this tool is that shows arguments values in case of predicate failure.</P>
-  <P class="first-line-indented">If predicate produces <I>true</I> value, the tool produces a confirmation 
-    message (note: to manage what messages appear in the test output stream set the proper log level), 
-    in other case it produces an error message in a form &quot;error in ...: test &lt;predicate&gt;( arguments 
-    list ) fail for (arguments values)&quot;.</P>
-  <P class="first-line-indented">The tools first parameter is the predicate itself. The tools second parameter 
-    the predicate arity. The last third argument is wrapped in round brackets, comma separated list of 
-    predicate arguments.</P>
+  <H3>BOOST_WARN_PREDICATE( predicate, arguments_list )<BR>
+  BOOST_CHECK_PREDICATE( predicate, arguments_list )<BR>
+  BOOST_REQUIRE_PREDICATE( predicate, arguments_list )</H3>
+  <P class="first-line-indented">These are generic tools used to validate
+    an arbitrary supplied predicate functor (there is a compile time limit
+    on predicate arity defined by the configurable macro BOOST_TEST_MAX_PREDICATE_ARITY).
+    To validate zero arity predicate use <A href="BOOST_CHECK.html" target="descr">BOOST_&lt;level&gt;</A> tools.
+    In other cases prefer theses tools. The advantage of these tools is that
+    they show arguments runtime values in case of predicate failure.</P>
+  <P class="first-line-indented">The first parameter is the predicate itself.
+    The second parameter is
+    the list of predicate arguments each wrapped in round brackets (BOOST_PP
+    sequence format).</P>
   <H4>Example: test.cpp</H4>
-<PRE class="code"><SPAN class="cpp-type">bool</SPAN> is_even( <SPAN class="cpp-type">int</SPAN> i ) {
-    <SPAN class="reserv-word">return</SPAN> i%<SPAN class="literal">2</SPAN> == <SPAN class="literal">0</SPAN>;
-}
+<PRE class="code"><SPAN class="cpp-type">bool</SPAN> moo( <SPAN class="cpp-type">int</SPAN> arg1, <SPAN class="cpp-type">int</SPAN> arg2, <SPAN class="cpp-type">int</SPAN> mod ) { <SPAN class="reserv-word">return</SPAN> ((arg1+arg2) % mod) == 0; }
 
-<SPAN class="cpp-type">int</SPAN> test.cpp( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
+<SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
     <SPAN class="cpp-type">int</SPAN> i = <SPAN class="literal">17</SPAN>;
-    BOOST_CHECK_PREDICATE( &amp;is_even, <SPAN class="literal">1</SPAN>, (i) );
+    <SPAN class="cpp-type">int</SPAN> j = <SPAN class="literal">15</SPAN>;
+    unit_test_log.set_threshold_level( log_warnings );
+    BOOST_WARN( moo( 12,i,j ) );
+    BOOST_WARN_PREDICATE( moo, (12)(i)(j) );
 
     <SPAN class="reserv-word">return</SPAN> <SPAN class="literal">0</SPAN>;
 }
 </PRE>
   <H4>Output:</H4>
-  <P class="test-output">test.cpp(3) : error in test_main: test &amp;is_even(i) failed for 17 </P>
+  <P class="test-output">test.cpp(7) : warning in &quot;test_main&quot;: condition
+    moo( 12, i, j ) is not satisfied<BR>
+    test.cpp(8) : warning in &quot;test_main&quot;:
+  condition moo( 12, i, j ) is not satisfied for ( 12, 17, 15 )</P>
   <H4>Example: test.cpp</H4>
   <PRE class="code"><SPAN class="cpp-type">int</SPAN> test.cpp( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
     <SPAN class="cpp-type">int</SPAN> i = <SPAN class="literal">17</SPAN>;
@@ -59,6 +64,6 @@ H4
 </DIV>
 </BODY>
 </HTML>
-<!-- Copyright Gennadiy Rozental 2001-2004. 
+<!-- Copyright Gennadiy Rozental 2001-2005. 
 Distributed under the Boost Software License, Version 1.0. 
 (See accompanying file LICENSE_1_0.txt or copy at www.boost.org/LICENSE_1_0.txt) -->

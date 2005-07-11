@@ -25,16 +25,60 @@
     once, so it's safe to pass complex expressions in their place. All macros
     provide an error location: a file name and a line number. Boost Test Library's
     Test Tools are intended for test code rather than library or production code,
-    where throwing exceptions, using assert(), <A href="../../../../../libs/concept_check/index.html">boost::concept_check</A> or <A href="../../../../../libs/static_assert/static_assert.htm">BOOST_STATIC_ASSERT</A>()
+    where throwing exceptions, using assert(), <A href="../../../../../libs/concept_check/index.html">boost::concept_check</A> or 
+	<A href="../../../../../libs/static_assert/static_assert.htm">BOOST_STATIC_ASSERT</A>()
     may be more suitable ways to detect and report errors. To use the Test Tools
     you need to link with either the <A href="../test_exec_monitor/index.html">Test
-    Execution Monitor</A> or the <A href="../utf/index.html">Unit
-    Test Framework</A>. For list of all supplied Test Tools and usage examples
-    see the <A href="reference/index.html">reference</A>.</P> 
+    Execution Monitor</A> or the <A href="../utf/index.html">Unit Test Framework</A>.
+    For list of all supplied Test Tools and usage examples see the <A href="reference/index.html">reference</A>.</P>
+  <P class="first-line-indented">Most of the tools supplied comes in three variations(levels):
+    WARN, CHECK and REQUIRE ( for example BOOST_WARN_EQUAL, BOOST_CHECK_EQUAL,
+    BOOST_REQUIRE_EQUAL). If an assertion designated by the tool passes, confirmation
+    message could be printed in log output (note: 
+    to manage what messages appear in the test log stream set the proper log
+    level). If an assertion designated by the tool failed, depending on the level
+    following will happened (in some cases log message could be slightly different
+    to reflect failed tool specifics):</P>
+      <TABLE border="0" cellpadding="10" cellspacing="0">
+        <TR>
+          <TH style="border-bottom: solid 2px black; border-right: solid 1px black;">Level</TH>
+          <TH style="border-bottom: solid 2px black; border-right: solid 1px black;">Output log content </TH>
+          <TH style="border-bottom: solid 2px black; border-right: solid 1px black;">Errors counter </TH>
+          <TH style="border-bottom: solid 2px black">Test execution </TH>
+        </TR>
+        <TR>
+          <TD style="border-right: solid 1px black;">WARN</TD>
+          <TD style="border-right: solid 1px black;">warning in &lt;test case
+            name&gt;:
+          condition &lt;assertion description&gt; is not satisfied</TD>
+          <TD style="border-right: solid 1px black;">not affected</TD>
+          <TD>continues</TD>
+        </TR>
+        <TR>
+          <TD style="border-right: solid 1px black;">CHECK</TD>
+          <TD style="border-right: solid 1px black;">error in &lt;test case name&gt;:
+          test &lt;assertion description&gt; failed</TD>
+          <TD style="border-right: solid 1px black;">increased</TD>
+          <TD>continues</TD>
+        </TR>
+        <TR>
+          <TD style="border-right: solid 1px black;">REQUIRE</TD>
+          <TD style="border-right: solid 1px black;">fatal error in &lt;test case
+          name&gt;: critical test &lt;assertion description&gt; failed</TD>
+          <TD style="border-right: solid 1px black;">increased</TD>
+          <TD>aborts</TD>
+        </TR>
+  </TABLE>
+  <P class="first-line-indented">Regularly you should use CHECK level tools to
+    implement your assertions.You could use WARN level tools to validate aspects
+    less important then correctness: performance, portability, usability etc.
+    You should use REQUIRE level tools only if continuation of the test doesn't
+    make sense if this assertions fails.</P>
   <P class="first-line-indented">Among many tools in supplied toolbox, there
-    is the BOOST_CHECK_CLOSE tool that perform floating point comparison of values.
-    See <A href="floating_point_comparison.html">floating point comparison</A> page
-    for detailed description of used algorithms.</P> 
+    are the BOOST_&lt;level&gt;_CLOSE
+    tools that perform floating point comparison of values. See <A href="floating_point_comparison.html">floating
+    point comparison</A> page
+    for detailed description of used algorithms.</P>
   <P class="first-line-indented">In addition to toolbox, the Test Tools also
     contains separate ostream_test_stream tool. This is class designed to significantly
     simplify correctness testing of the ostream based output procedures. For
@@ -76,14 +120,14 @@
     <A href="../../tests/test_fp_comparisons.html">test_fp_comparisons</A> </P> 
 </DIV> 
 <DIV class="footer"> 
-  <DIV class="footer-body"> 
+  <DIV class="footer-body">
     <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy
-        Rozental</A> 2001-2004. <BR> 
-      Distributed under the Boost Software License, Version 1.0.
-      (See accompanying file <A href="../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at
-      <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P> 
+        Rozental</A> 2001-2005. <BR> 
+      Distributed under the Boost Software License, Version 1.0. (See accompanying
+      file <A href="../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy
+      at <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P> 
     <P>Revised:
-      <!-- #BeginDate format:Sw1 -->17 July, 2004<!-- #EndDate --> 
+      <!-- #BeginDate format:Sw1 -->11 July, 2005<!-- #EndDate --> 
     </P> 
   </DIV> 
 </DIV> 

@@ -14,25 +14,20 @@ H4
 </HEAD>
 <BODY>
 <DIV class="body"> 
-  <H3>BOOST_CHECK_CLOSE( left, right, tolerance_src )</H3>
-  <P class="first-line-indented">This tool is used to check <I>left</I> and <I>right</I> values on closeness 
-    using strong relationship defined by the predicate <A href="../floating_point_comparison.html" target="_top">close_at_tolerance 
-    </A>( tolerance_src ). To check for the weak relationship use <A href="BOOST_CHECK_PREDICATE.html">BOOST_CHECK_PREDICATE</A> 
-    tool. Note that to use this tool you need to include additional header<A href="../../../../../../boost/test/floating_point_comparison.hpp"> 
-    floating_point_comparison.hpp</A>, since tools implementation depends on this file that does not get 
-    included automatically to minimize code dependency. </P>
-  <P class="first-line-indented">If comparison is successful, the tool produces a confirmation message 
-    (note: to manage what messages appear in the test output stream set the proper log level) in other 
-    case it produces an error message in a form &quot;error in &lt;test case name&gt;: test &lt;<I>left</I> 
-    argument name&gt; (==) &lt;<I>right</I> argument name&gt; failed [ &lt;<I>left</I> argument value&gt; 
-    != &lt;<I>right</I> argument value&gt; (&lt;real predicate value&gt;)]&quot;.</P>
-  <P class="first-line-indented"></P>
-  <P class="first-line-indented">The tool's first parameter is the <I>left</I> compared value. The tool's 
-    second parameter is the <I>right</I> compared value. Last third parameter defines the tolerance for 
+  <H3>BOOST_WARN_CLOSE( left, right, tolerance )<BR>
+  BOOST_CHECK_CLOSE( left, right, tolerance )<BR>
+  BOOST_REQUIRE_CLOSE( left, right, tolerance )</H3>
+  <P class="first-line-indented">These tools are used to check <I>left</I> and <I>right</I> values
+    on closeness  using strong relationship defined by the predicate <A href="../floating_point_comparison.html" target="_top">close_at_tolerance 
+    </A>( tolerance_src ). To check for the weak relationship use <A href="BOOST_CHECK_PREDICATE.html">BOOST_&lt;level&gt;_PREDICATE</A> 
+    tools. Note that to use these tools you need to include additional header<A href="../../../../../../boost/test/floating_point_comparison.hpp"> 
+    floating_point_comparison.hpp</A>. </P>
+  <P class="first-line-indented">The first parameter is the <I>left</I> compared
+    value. The second parameter is the <I>right</I> compared value. Last third parameter defines the tolerance for 
     the comparison in percentage units. For more details how to treat this value 
     see <A href="../floating_point_comparison.html" target="_top">close_at_tolerance </A>description. 
     Note that it required for <I>left</I> and <I>right</I> parameters to be of the same floating point 
-    type. You need to explicitly resolve any type mismatch to select which type to use for comparison.</P>
+  type. You need to explicitly resolve any type mismatch to select which type to use for comparison.</P>
   <H4>Example: test.cpp</H4>
   <PRE class="code"><SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
     <SPAN class="cpp-type">double</SPAN> v1 = <SPAN class="literal">1.23456e-10</SPAN>;
@@ -53,7 +48,7 @@ H4
     <SPAN class="cpp-type">double</SPAN> v1 = <SPAN class="literal">1.23456e28;</SPAN>
     <SPAN class="cpp-type">double</SPAN> v2 = <SPAN class="literal">1.23457e28;</SPAN>
 
-    BOOST_CHECK_CLOSE( v1, v2, <SPAN class="literal">0.001</SPAN> );
+    BOOST_REQUIRE_CLOSE( v1, v2, <SPAN class="literal">0.001</SPAN> );
     <SPAN class="comment">// Absolute value of difference between these two values is 1e+23.
     // But we are interested only that it does not exeed 0.001% of a values compared
     // And this test will pass.</SPAN>
@@ -70,6 +65,6 @@ H4
 </DIV>
 </BODY>
 </HTML>
-<!-- Copyright Gennadiy Rozental 2001-2004. 
+<!-- Copyright Gennadiy Rozental 2001-2005. 
 Distributed under the Boost Software License, Version 1.0. 
 (See accompanying file LICENSE_1_0.txt or copy at www.boost.org/LICENSE_1_0.txt) -->
