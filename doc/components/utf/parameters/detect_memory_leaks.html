@@ -1,6 +1,6 @@
 <HTML>
 <HEAD>
-<TITLE>The 'output format' parameter</TITLE>
+<TITLE>The 'detect memory leaks' parameter</TITLE>
 <LINK rel="stylesheet" type="text/css" href="../../../style/btl.css" media="screen">
 <LINK rel="stylesheet" type="text/css" href="../../../style/btl-print.css" media="print">
 <META http-equiv="Content-Language" content="en-us">
@@ -8,41 +8,39 @@
 </HEAD>
 <BODY>
 <DIV class="header"> <A href="../../../index.html">Boost.Test</A> > <A href="../../index.html">Components</A> 
-  > <A href="../index.html">The Unit Test Framework</A> > > <A href="index.html">Parameters</A> > <SPAN class="current_article">Output
-  format</SPAN></DIV>
-<DIV class="body"> <IMG src='../../../btl1.gif' width='252' height='43' alt="Boost Test reporto"> 
-  <H1 class="subtitle">The 'output format' parameter</H1>
+  > <A href="../index.html">The Unit Test Framework</A> > > <A href="index.html">Parameters</A>
+  > <SPAN class="current_article">Detect memory leaks </SPAN></DIV>
+<DIV class="body"> <IMG src='../../../btl1.gif' width='252' height='43' alt="Boost Test logo"> 
+  <H1 class="subtitle">The 'build info' parameter</H1>
   <TABLE class="parameter-table" cellspacing="0">
     <TR> 
       <TD class="name"><B>Parameter Name:</B></TD>
-      <TD><I>The unit test framework output format</I></TD>
+      <TD><EM>detect memory leaks </EM></TD>
     </TR>
     <TR> 
       <TD class="name"><B>Environment variable name:</B></TD>
-      <TD>BOOST_TEST_OUTPUT_FORMAT</TD>
+      <TD>BOOST_TEST_DETECT_MEMORY_LEAK</TD>
     </TR>
     <TR> 
       <TD class="name"><B>Command line argument name:</B></TD>
-      <TD>output_format</TD>
+      <TD>detect_memory_leak</TD>
     </TR>
     <TR> 
       <TD class="name"><B>Acceptable Values:</B></TD>
-      <TD> 
-        <TABLE class="parameter-values-table" cellspacing="0">
-          <TR> 
-            <TD>HRF</TD>
-            <TD>- human readable format</TD>
-          </TR>
-          <TR> 
-            <TD>XML</TD>
-            <TD>- XML format for automated output processing</TD>
-          </TR>
-        </TABLE>
-      </TD>
+      <TD>0<BR>
+        <STRONG>1</STRONG><BR>
+      integer value &gt; 1 </TD>
     </TR>
     <TR> 
-      <TD class="name"> <B>Description:</B> </TD>
-      <TD> combines an effest of <A href="report_format.html">report_format</A> and <A href="log_format.html">log_format</A> parameters. Has more priority than either of them if specified.</TD>
+      <TD class="name"><B>Description:</B></TD>
+      <TD>positive value tells the framework to detect the memory leaks (if any).
+        Any value greater then 1 in addition is treated as leak allocation number
+        and setup runtime breakpoint. In other words setting this parameter to
+        the positive value N greater than 1 causes the framework to set a breakpoint
+at Nth memory allocation (don't do that from the command line - only when you
+        are under debugger). Note: if your test program produce memory leaks
+        notifications, they are combined with allocation number values you could
+        use to set a breakpoint. Currently only applies to MS family of compilers</TD>
     </TR>
   </TABLE>
 </DIV>

@@ -1,0 +1,49 @@
+<HTML>
+<HEAD>
+<TITLE>The Test Tools</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../../style/btl.css" media="screen">
+<LINK rel="stylesheet" type="text/css" href="../../../style/btl-print.css" media="print">
+<META http-equiv="Content-Language" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<STYLE type="text/css">
+H4
+{
+    margin:     0px;
+}
+</STYLE>
+</HEAD>
+<BODY>
+<DIV class="body"> 
+  <H3>BOOST_WARN_SMALL( val, tolerance )<BR>
+  BOOST_CHECK_CLOSE( val, tolerance )<BR>
+  BOOST_REQUIRE_CLOSE( val, tolerance )</H3>
+  <P class="first-line-indented">These tools are used to check that supplied
+    values is small enough. The &quot;smallness&quot; is defined by absolute
+    value of the tolerance supplied as a second argument. Note that to use these
+    tools you need to include additional header<A href="../../../../../../boost/test/floating_point_comparison.hpp"> 
+    floating_point_comparison.hpp</A>. Use these tools with caution. To compare
+    to values on closeness it's preferable to use <A href="BOOST_CHECK_CLOSE.html">BOOST_&lt;level&gt;_CLOSE</A> tools. </P>
+  <P class="first-line-indented">The first parameter is the value to check. The
+    second parameter is the tolerance .</P>
+  <H4>Example: test.cpp</H4>
+  <PRE class="code"><SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
+    <SPAN class="cpp-type">double</SPAN> v = -<SPAN class="literal">1.23456e-3</SPAN>;
+
+    BOOST_CHECK_SMALL( v, <SPAN class="literal">0.000001</SPAN> );
+    <SPAN class="reserv-word">return</SPAN> <SPAN class="literal">0</SPAN>;
+}</PRE>
+  <H4>Output:</H4>
+  <P class="test-output">test.cpp(4) : error in test_main: absolute value of
+    v{1.23456e-3}  exeeds 1e-06</P>
+  <DIV class="see_also"> 
+    <H4>See Also</H4>
+    <P class="see-also-content"><A href="BOOST_CHECK_CLOSE.html" target="descr">BOOST_CHECK_CLOSE</A>, 
+      <A href="../floating_point_comparison.html" target="_top">Floating point
+      comparison algorithms</A></P>
+  </DIV>
+</DIV>
+</BODY>
+</HTML>
+<!-- Copyright Gennadiy Rozental 2001-2005. 
+Distributed under the Boost Software License, Version 1.0. 
+(See accompanying file LICENSE_1_0.txt or copy at www.boost.org/LICENSE_1_0.txt) -->
