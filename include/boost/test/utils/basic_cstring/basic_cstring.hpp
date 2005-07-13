@@ -596,7 +596,11 @@ template<typename CharT1,typename CharT2>
 inline bool
 operator==( basic_cstring<CharT1> const& s1, CharT2* s2 )
 {
+#if !defined(__DMC__)
     return s1 == basic_cstring<CharT2>( s2 );
+#else
+    return s1 == basic_cstring<CharT2 const>( s2 );
+#endif
 }
 
 //____________________________________________________________________________//
@@ -732,6 +736,9 @@ assign_op( std::basic_string<CharT1>& target, basic_cstring<CharT2> src, int )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2005/07/13 21:49:46  danieljames
+//  Boost.Test workarounds for Digital Mars bugs.
+//
 //  Revision 1.8  2005/04/12 06:49:05  rogeeff
 //  assign_to -> assign_op
 //

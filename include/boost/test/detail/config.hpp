@@ -55,7 +55,8 @@
     BOOST_WORKAROUND(__GNUC__, < 3)                    || \
     defined(__sgi) && _COMPILER_VERSION <= 730         || \
     BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600)) || \
-    defined(__DECCXX)
+    defined(__DECCXX) || \
+    defined(__DMC__)
 #define BOOST_TEST_NO_PROTECTED_USING
 #endif
 
@@ -69,6 +70,9 @@
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/07/13 21:49:46  danieljames
+//  Boost.Test workarounds for Digital Mars bugs.
+//
 //  Revision 1.1  2005/02/20 08:27:06  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
