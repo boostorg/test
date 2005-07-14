@@ -67,7 +67,7 @@ print_escaped( std::ostream& where_to, const_string value )
 inline void
 print_escaped( std::ostream& where_to, std::string const& value )
 {
-	print_escaped( where_to, const_string( value ) );
+        print_escaped( where_to, const_string( value ) );
 }
 
 //____________________________________________________________________________//
@@ -76,7 +76,7 @@ template<typename T>
 inline void
 print_escaped( std::ostream& where_to, T const& value )
 {
-	where_to << value;
+        where_to << value;
 }
 
 //____________________________________________________________________________//
@@ -87,11 +87,11 @@ template<typename T>
 inline std::ostream&
 operator<<( custom_printer<attr_value> const& p, T const& value )
 {
-	*p << "=\"";
-	print_escaped( *p, value );
-	*p << '"';
+        *p << "=\"";
+        print_escaped( *p, value );
+        *p << '"';
 
-	return *p;
+        return *p;
 }
 
 //____________________________________________________________________________//
@@ -120,6 +120,9 @@ operator<<( custom_printer<pcdata> const& p, const_string value )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.7  2005/07/14 15:50:28  dgregor
+//  Untabify
+//
 //  Revision 1.6  2005/04/29 06:31:18  rogeeff
 //  bug fix for incorrect XML output
 //
