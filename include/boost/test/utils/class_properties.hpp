@@ -120,7 +120,7 @@ DEFINE_PROPERTY_FREE_BINARY_OPERATOR( != )
 
 #undef DEFINE_PROPERTY_FREE_BINARY_OPERATOR
 
-#if BOOST_WORKAROUND(BOOST_MSVC, <= 1200)
+#if BOOST_WORKAROUND(BOOST_MSVC, < 1300)
 
 #define DEFINE_PROPERTY_LOGICAL_OPERATOR( op )                                  \
 template<class PropertyType>                                                    \
@@ -226,6 +226,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2005/08/25 16:27:26  johnmaddock
+//  Large patch from Ulrich Eckhardt to fix support for EVC++ 4.
+//
 //  Revision 1.7  2005/05/11 05:04:58  rogeeff
 //  borland portability fix
 //
