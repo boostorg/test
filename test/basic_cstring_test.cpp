@@ -76,7 +76,7 @@ utf::basic_cstring<CharT> name( (CharT*)(BOOST_JOIN( sl, __LINE__).buff) )  \
 #define TEST_STRING test_string<CharT>( (CharT*)0 )
 
 template<typename CharT>
-static CharT*
+CharT*
 test_string( CharT* = 0 )
 {
     static string_literal<CharT> l( "test_string", 11 );
@@ -469,6 +469,12 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 // History :
 //
 // $Log$
+// Revision 1.13.2.1  2005/09/07 08:16:45  schoepflin
+// Merged fix for dependent name lookup problem to RC branch.
+//
+// Revision 1.14  2005/08/12 14:15:13  schoepflin
+// Fixed dependent name lookup issue.
+//
 // Revision 1.13  2005/05/13 06:00:14  rogeeff
 // *** empty log message ***
 //
