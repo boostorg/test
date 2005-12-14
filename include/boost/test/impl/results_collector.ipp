@@ -16,7 +16,7 @@
 #define BOOST_TEST_RESULTS_COLLECTOR_IPP_021105GER
 
 // Boost.Test
-#include <boost/test/unit_test_suite.hpp>
+#include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/test_tools.hpp>
 #include <boost/test/results_collector.hpp>
 #include <boost/test/framework.hpp>
@@ -76,6 +76,7 @@ test_results::operator+=( test_results const& tr )
     p_test_cases_passed.value   += tr.p_test_cases_passed;
     p_test_cases_failed.value   += tr.p_test_cases_failed;
     p_test_cases_skipped.value  += tr.p_test_cases_skipped;
+    p_test_cases_aborted.value  += tr.p_test_cases_aborted;
 }
 
 //____________________________________________________________________________//
@@ -89,6 +90,7 @@ test_results::clear()
     p_test_cases_passed.value    = 0;
     p_test_cases_failed.value    = 0;
     p_test_cases_skipped.value   = 0;
+    p_test_cases_aborted.value   = 0;
     p_aborted.value              = false;
     p_skipped.value              = true;
 }
@@ -162,8 +164,11 @@ public:
             m_tr.p_test_cases_passed.value++;
         else if( tr.p_skipped )
             m_tr.p_test_cases_skipped.value++;
-        else
+        else {
+            if( tr.p_aborted )
+                m_tr.p_test_cases_aborted.value++;
             m_tr.p_test_cases_failed.value++;
+        }
     }
     bool    test_suite_start( test_suite const& ts )
     {
@@ -270,6 +275,9 @@ results_collector_t::results( test_unit_id id ) const
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.3  2005/12/14 05:53:22  rogeeff
+//  collect amount of aborted test cases
+//
 //  Revision 1.2  2005/03/24 04:02:33  rogeeff
 //  portability fixes
 //
