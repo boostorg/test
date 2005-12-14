@@ -18,7 +18,7 @@
 // Boost.Test
 #include <boost/test/framework.hpp>
 #include <boost/test/results_collector.hpp>
-#include <boost/test/unit_test_suite.hpp>
+#include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/results_reporter.hpp>
 
 #include <boost/test/detail/unit_test_parameters.hpp>
@@ -38,13 +38,31 @@
 // **************                 unit test main               ************** //
 // ************************************************************************** //
 
+#ifdef BOOST_TEST_DYN_LINK
+
+namespace boost {
+
+namespace unit_test {
+
+int BOOST_TEST_DECL
+dll_main( bool (*init_unit_test_func)(), int argc, char* argv[] )
+
+#else
+
 int BOOST_TEST_CALL_DECL
 main( int argc, char* argv[] )
+
+#endif
 {
     using namespace boost::unit_test;
    
     try {
         framework::init( argc, argv );
+
+#ifdef BOOST_TEST_DYN_LINK
+    if( !(*init_unit_test_func)() )
+        throw std::logic_error( "Test failed to initialize" );
+#endif
 
         framework::run();
 
@@ -55,7 +73,7 @@ main( int argc, char* argv[] )
                     : results_collector.results( framework::master_test_suite().p_id ).result_code();
     }
     catch( std::logic_error const& ex ) {
-        std::cerr << "Boost.Test internal framework error: " << ex.what() << std::endl;
+        std::cerr << "Boost.Test framework error: " << ex.what() << std::endl;
         
         return boost::exit_exception_failure;
     }
@@ -66,6 +84,14 @@ main( int argc, char* argv[] )
     }
 }
 
+#ifdef BOOST_TEST_DYN_LINK
+
+} // namespace unit_test
+
+} // namespace boost
+
+#endif
+
 //____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
@@ -74,6 +100,10 @@ main( int argc, char* argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.7  2005/12/14 05:35:57  rogeeff
+//  DLL support implemented
+//  Alternative init API introduced
+//
 //  Revision 1.6  2005/02/20 08:27:07  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
