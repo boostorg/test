@@ -38,6 +38,7 @@ unit_test::log_level    log_level();
 bool                    no_result_code();
 unit_test::report_level report_level();
 const_string            test_to_run();
+const_string            break_exec_path();
 bool                    save_pattern();
 bool                    show_build_info();
 bool                    show_progress();
@@ -61,6 +62,9 @@ int                     random_seed();
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.22  2005/12/14 04:58:30  rogeeff
+//  new parameter --break_exec_path introduced
+//
 //  Revision 1.21  2005/04/05 06:11:37  rogeeff
 //  memory leak allocation point detection\nextra help with _WIN32_WINNT
 //
