@@ -18,7 +18,7 @@
 
 // Boost.Test
 #include <boost/test/unit_test_monitor.hpp>
-#include <boost/test/unit_test_suite.hpp>
+#include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/test_tools.hpp>
 #include <boost/test/framework.hpp>
 
@@ -33,13 +33,22 @@ namespace boost {
 namespace unit_test {
 
 namespace {
-struct zero_return_wrapper {
-    explicit zero_return_wrapper( callback0<> const& f ) : m_f( f ) {}
+
+template<typename F>
+struct zero_return_wrapper_t {
+    explicit zero_return_wrapper_t( F const& f ) : m_f( f ) {}
     
     int operator()() { m_f(); return 0; }
     
-    callback0<> const& m_f;
+    F const& m_f;
 };
+
+template<typename F>
+zero_return_wrapper_t<F>
+zero_return_wrapper( F const& f )
+{
+    return zero_return_wrapper_t<F>( f );
+}
 
 }
 
@@ -57,7 +66,7 @@ unit_test_monitor_t::execute_and_translate( test_case const& tc )
     }
     catch( execution_exception const& ex ) {
         framework::exception_caught( ex );
-        framework::test_unit_aborted();
+        framework::test_unit_aborted( framework::current_test_case() );
 
         // translate execution_exception::error_code to error_level
         switch( ex.code() ) {
@@ -89,6 +98,10 @@ unit_test_monitor_t::execute_and_translate( test_case const& tc )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.4  2005/12/14 05:37:52  rogeeff
+//  zero_return_wrapper made to template
+//  comply to test_unit_aborted() modification
+//
 //  Revision 1.3  2005/02/20 08:27:07  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
