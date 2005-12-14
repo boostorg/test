@@ -13,7 +13,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory=".\Debug"
-			IntermediateDirectory="c:\temp\boost_test_library\Debug"
+			IntermediateDirectory=".\Debug\$(ProjectName)\"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -25,11 +25,8 @@
 				PreprocessorDefinitions="_CONSOLE;WIN32;_DEBUG"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile="c:\temp\boost_test_library\Debug/parameterized_test_test.pch"
-				AssemblerListingLocation="c:\temp\boost_test_library\Debug/"
-				ObjectFile="c:\temp\boost_test_library\Debug/"
-				ProgramDataBaseFileName="c:\temp\boost_test_library\Debug/"
+				UsePrecompiledHeader="0"
+				PrecompiledHeaderFile="$(IntDir)\parameterized_test_test.pch"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="4"
@@ -38,18 +35,17 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="test_exec_monitor.lib"
-				OutputFile=".\Debug/parameterized_test_test.exe"
+				AdditionalDependencies=""
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="Debug"
+				AdditionalLibraryDirectories="../../../../stage/lib"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\Debug/parameterized_test_test.pdb"
+				ProgramDatabaseFile="$(IntDir)/$(ProjectName).pdb"
 				SubSystem="1"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				TypeLibraryName=".\Debug/parameterized_test_test.tlb"
+				TypeLibraryName="$(IntDir)/parameterized_test_test.tlb"
 				HeaderFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"

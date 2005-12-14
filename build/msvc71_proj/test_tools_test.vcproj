@@ -71,7 +71,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory=".\Debug"
-			IntermediateDirectory="c:\temp\boost_test_library\Debug"
+			IntermediateDirectory=".\Debug\$(ProjectName)\"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -80,14 +80,11 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\..\.."
-				PreprocessorDefinitions="_CONSOLE;WIN32;_DEBUG,BOOST_TEST_NO_AUTO_LINK"
+				PreprocessorDefinitions="_CONSOLE;WIN32;_DEBUG"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile="c:\temp\boost_test_library\Debug/test_tools_test.pch"
-				AssemblerListingLocation="c:\temp\boost_test_library\Debug/"
-				ObjectFile="c:\temp\boost_test_library\Debug/"
-				ProgramDataBaseFileName="c:\temp\boost_test_library\Debug/"
+				UsePrecompiledHeader="0"
+				PrecompiledHeaderFile="$(IntDir)\test_tools_test.pch"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="4"
@@ -96,18 +93,17 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="unit_test_framework.lib"
-				OutputFile=".\Debug/test_tools_test.exe"
+				AdditionalDependencies=""
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="Debug"
+				AdditionalLibraryDirectories="../../../../stage/lib"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\Debug/test_tools_test.pdb"
+				ProgramDatabaseFile="$(IntDir)/$(ProjectName).pdb"
 				SubSystem="1"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				TypeLibraryName=".\Debug/test_tools_test.tlb"
+				TypeLibraryName="$(IntDir)/test_tools_test.tlb"
 				HeaderFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"

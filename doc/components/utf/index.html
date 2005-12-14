@@ -56,7 +56,8 @@
     Execution Monitor</A> could be used. This was one of the design rationale to make the library implemented 
     off-line vs. an inline implementation to allows us to speed up a compilation at an expense of a runtime 
     efficiency. The Unit Test Framework should be preferred over <A href="../test_exec_monitor/index.html">Test 
-    Execution Monitor</A> while working on creating new test programs. </P>
+    Execution Monitor</A> while working on creating new test programs. The Unit Test Framework consists of several 
+    cooperating components. All components are located in the namespace boost::unit_test.</P>
   <H2><A name="Usage">Usage</A></H2>
   <P class="first-line-indented">As mentioned above the Unit Test Framework is responsible for supplying 
     function main() that initializing testing environment and taking care about results reporting. The 
@@ -64,16 +65,17 @@
     test program with the framework you should provide the function with the following specification:</P>
   <P>boost::unit_test::test_suite* <SPAN class="new-term">init_unit_test_suite</SPAN> ( int 
     argc, char* argv[] )</P>
-  <P class="first-line-indented">This function should create and initialize top 
-    level instance of the class test_suite. The NULL pointer returned by the function 
-    is treated as a non-initialized test_suite - testing aborted and boost::<SPAN class="new-term">exit_test_failure</SPAN> 
-    is returned. In other case the framework runs created instance of the class 
-    test_suite. The framework forwards command line argument specified during 
-    test invocation. It's guarantied that any framework-specific command line 
-    arguments are excluded. The framework is responsible for the lifetime of this 
-    instance of class test_suite. It gets destroyed at the end of test execution. 
-    If you are not using regular mechanisms of test suite creation, make sure 
-    that this instance is allocated dynamically.</P>
+  <P class="first-line-indented">This function primary responsibility is to create and initialize test tree, that 
+    consists of test suites and test cases. In result it should return to the framework the top
+    level instance of the class test_suite - master test suite. As an arguments to the init_unit_test_suite function 
+    the Unit Test Framework forwards command line arguments specified during test module invocation. 
+    It's guarantied that any framework-specific command line arguments are excluded. The NULL pointer returned 
+    by the function is treated as a non-initialized test tree - testing is not performed and a result code 
+    boost::<SPAN class="new-term">exit_test_failure</SPAN> is returned  by a test module. In the other case 
+    the framework starts testing from the master test suite level. The framework is 
+    responsible for the lifetime of master test suite. It gets destroyed at the end of test execution. 
+    If you are not using framework supplied mechanisms of test suite creation, make sure 
+    that the master test suite is allocated dynamically.</P>
   <P class="first-line-indented">If you are using only zero arity free function 
     based test cases, you could employ automatic registration facility, that allows 
     to eliminate need in init_unit_test_suite and test cases registration. For 
@@ -133,7 +135,7 @@ init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-t
     <A href="../../examples/unit_test_example3.html">unit_test_example3</A><BR>
     <A href="../../examples/unit_test_example4.html">unit_test_example4</A><BR>
     <A href="../../examples/unit_test_example5.html">unit_test_example5</A><BR>
-	<A href="../../examples/test_case_template_example.html">test_case_template_example</A></P>
+    <A href="../../examples/test_case_template_example.html">test_case_template_example</A></P>
   <P class="indented"><BR>
     <A href="../../tests/online_test.html">online_test</A><BR>
     <A href="../../tests/errors_handling_test.html">errors_handling_test</A><BR>
@@ -141,18 +143,18 @@ init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-t
     <A href="../../tests/auto_unit_test_test.html">auto_unit_test_test</A><BR>
     <A href="../../tests/auto_unit_test_test_mult.html">auto_unit_test_test_mult</A><BR>
     <A href="../../tests/custom_exception_test.html">custom_exception_test</A><BR>
-    <A href="../../tests/test_case_template_test.html">test_case_template_test</A><BR>	
+    <A href="../../tests/test_case_template_test.html">test_case_template_test</A><BR>  
     <A href="../../tests/result_report_test.html">result_report_test</A></P>
   <P class="indented"></P>
 </DIV>
 <DIV class="footer"> 
   <DIV class="footer-body"> 
-    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy Rozental</A> 2001-2005. <BR>
+    <P> &copy; <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy Rozental</A> 2001-2005. <BR>
       Distributed under the Boost Software License, Version 1.0.
       (See accompanying file <A href="../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>
     <P>Revised: 
-      <!-- #BeginDate format:Sw1 -->18 January, 2004<!-- #EndDate -->
+      <!-- #BeginDate format:Sw1 -->25 Oct, 2005<!-- #EndDate -->
     </P>
   </DIV>
 </DIV>

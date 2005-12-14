@@ -13,7 +13,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory=".\Debug"
-			IntermediateDirectory="c:\temp\boost_test_library\Debug"
+			IntermediateDirectory=".\Debug\$(ProjectName)\"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -26,10 +26,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile="c:\temp\boost_test_library\Debug/boost_check_equal_str.pch"
-				AssemblerListingLocation="c:\temp\boost_test_library\Debug/"
-				ObjectFile="c:\temp\boost_test_library\Debug/"
-				ProgramDataBaseFileName="c:\temp\boost_test_library\Debug/"
+				PrecompiledHeaderFile="$(IntDir)\boost_check_equal_str.pch"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="4"
@@ -38,18 +35,17 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="test_exec_monitor.lib"
-				OutputFile=".\Debug/boost_check_equal_str.exe"
+				AdditionalDependencies=""
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="Debug"
+				AdditionalLibraryDirectories="../../../../stage/lib"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\Debug/boost_check_equal_str.pdb"
+				ProgramDatabaseFile="$(IntDir)/$(ProjectName).pdb"
 				SubSystem="1"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				TypeLibraryName=".\Debug/boost_check_equal_str.tlb"
+				TypeLibraryName="$(IntDir)/boost_check_equal_str.tlb"
 				HeaderFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"

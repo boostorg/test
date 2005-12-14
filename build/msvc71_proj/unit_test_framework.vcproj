@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="unit_test_framework"
+	RootNamespace="unit_test_framework"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
@@ -12,8 +13,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\Debug"
-			IntermediateDirectory="c:\temp\boost_test_library\Debug"
+			OutputDirectory="..\..\..\..\stage\lib"
+			IntermediateDirectory=".\Debug\$(ProjectName)\"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -23,26 +24,26 @@
 				AdditionalOptions="/EHa"
 				Optimization="0"
 				AdditionalIncludeDirectories="../../../../"
-				PreprocessorDefinitions="_LIB;WIN32;_DEBUG,BOOST_TEST_NO_AUTO_LINK"
+				PreprocessorDefinitions="_LIB;WIN32;_DEBUG"
+				StringPooling="TRUE"
+				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile="c:\temp\boost_test_library\Debug/unit_test_framework.pch"
-				AssemblerListingLocation="c:\temp\boost_test_library\Debug/"
-				ObjectFile="c:\temp\boost_test_library\Debug/"
-				ProgramDataBaseFileName="c:\temp\boost_test_library\Debug/"
+				BufferSecurityCheck="TRUE"
+				EnableFunctionLevelLinking="TRUE"
+				UsePrecompiledHeader="0"
+				PrecompiledHeaderFile=""
 				BrowseInformation="1"
-				BrowseInformationFile="c:\temp\boost_test_library\Debug/"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="4"
-				CompileAs="0"/>
+				CallingConvention="0"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile=".\Debug\unit_test_framework.lib"
+				OutputFile="$(OutDir)/libboost_unit_test_framework-vc71-mt-gd-1_34.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"/>
@@ -128,10 +129,19 @@
 				RelativePath="..\..\src\compiler_log_formatter.cpp">
 			</File>
 			<File
+				RelativePath="..\..\src\exception_safety.cpp">
+			</File>
+			<File
 				RelativePath="..\..\src\execution_monitor.cpp">
 			</File>
 			<File
 				RelativePath="..\..\src\framework.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\interaction_based.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\logged_expectations.cpp">
 			</File>
 			<File
 				RelativePath="..\..\src\plain_report_formatter.cpp">
@@ -174,7 +184,7 @@
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl">
 			<File
-				RelativePath="..\..\..\..\boost\test\auto_unit_test.hpp">
+				RelativePath="..\..\..\..\boost\test\exception_safety.hpp">
 			</File>
 			<File
 				RelativePath="..\..\..\..\boost\test\execution_monitor.hpp">
@@ -186,7 +196,16 @@
 				RelativePath="..\..\..\..\boost\test\framework.hpp">
 			</File>
 			<File
+				RelativePath="..\..\..\..\boost\test\interaction_based.hpp">
+			</File>
+			<File
+				RelativePath="..\..\..\..\boost\test\logged_expectations.hpp">
+			</File>
+			<File
 				RelativePath="..\..\..\..\boost\test\minimal.hpp">
+			</File>
+			<File
+				RelativePath="..\..\..\..\boost\test\mock_object.hpp">
 			</File>
 			<File
 				RelativePath="..\..\..\..\boost\test\output_test_stream.hpp">
@@ -231,7 +250,7 @@
 				RelativePath="..\..\..\..\boost\test\unit_test_suite.hpp">
 			</File>
 			<File
-				RelativePath="..\..\..\..\boost\test\unit_test_suite_ex.hpp">
+				RelativePath="..\..\..\..\boost\test\unit_test_suite_impl.hpp">
 			</File>
 			<Filter
 				Name="detail"
@@ -281,10 +300,19 @@
 					RelativePath="..\..\..\..\boost\test\impl\compiler_log_formatter.ipp">
 				</File>
 				<File
+					RelativePath="..\..\..\..\boost\test\impl\exception_safety.ipp">
+				</File>
+				<File
 					RelativePath="..\..\..\..\boost\test\impl\execution_monitor.ipp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\boost\test\impl\framework.ipp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\test\impl\interaction_based.ipp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\test\impl\logged_expectations.ipp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\boost\test\impl\plain_report_formatter.ipp">

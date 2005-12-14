@@ -21,7 +21,7 @@
     <A href="#Acknowledgements">Acknowledgements</A><BR>
     <A href="#References">References</A> </P>
   <H2><A name="Introduction">Introduction</A></H2>
-  <P class="first-line-indented">In most cases it is unreasonable to use an operator=(...) for a floating-point 
+  <P class="first-line-indented">In most cases it is unreasonable to use an operator==(...) for a floating-point 
     values equality check The simple solution like abs(f1-f2) &lt;= e does not work for very small or 
     very big values. This floating-point comparison algorithm is based on the more confident solution 
     presented by Knuth in [1]. For a given floating point values <I>u</I> and <I>v</I> and a tolerance 
@@ -29,7 +29,7 @@
   <TABLE class="2fields">
     <TR> 
       <TD> 
-        <P style="text-indent: -20"> |<I> u </I>-<I> v </I>| &lt;= <I>e * |u|</I> and |<I> u </I>-<I> 
+        <P> |<I> u </I>-<I> v </I>| &lt;= <I>e * |u|</I> and |<I> u </I>-<I> 
           v </I>| &lt;= <I>e * |v|<BR>
           </I>defines a &quot;very close with tolerance <I>e</I>&quot; relationship between <I>u</I> and 
           <I>v</I> 
@@ -38,7 +38,7 @@
     </TR>
     <TR> 
       <TD> 
-        <P style="text-indent: -20"> |<I> u </I>-<I> v </I>| &lt;= <I>e * |u|</I> or&nbsp;&nbsp; |<I> 
+        <P> |<I> u </I>-<I> v </I>| &lt;= <I>e * |u|</I> or&nbsp;&nbsp; |<I> 
           u </I>-<I> v </I>| &lt;= <I>e * |v|<BR>
           </I>defines a &quot;close enough with tolerance <I>e</I>&quot; relationship between <I>u</I> 
           and <I>v</I> 
@@ -55,7 +55,7 @@
   <TABLE class="2fields">
     <TR> 
       <TD> 
-        <P style="margin-left: -20"> |<I> u </I>-<I> v </I>| / <I> |u| </I>&lt;= <I>e</I> and |<I> u </I>-<I> 
+        <P> |<I> u </I>-<I> v </I>| / <I> |u| </I>&lt;= <I>e</I> and |<I> u </I>-<I> 
           v </I>| / <I> |v| </I>&lt;= <I>e<BR>
           </I>|<I> u </I>-<I> v </I>| / <I> |u| </I> &lt;= <I>e</I> or&nbsp;&nbsp; |<I> u </I>-<I> v </I>| 
           / <I> |v| </I> &lt;= <I>e</I> 
@@ -177,7 +177,7 @@ check_is_small_t check_is_small;
 </DIV>
 <DIV class="footer"> 
   <DIV class="footer-body"> 
-    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy Rozental</A> 2001-2005. <BR>
+    <P> &copy; <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy Rozental</A> 2001-2005. <BR>
       Distributed under the Boost Software License, Version 1.0.
       (See accompanying file <A href="../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>

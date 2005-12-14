@@ -33,8 +33,8 @@
   <P class="first-line-indented">To use automatic registration facility you need
     to define a test case as a zero arity free function, but instead of usual 
     void tc_name(), use following statement</P>
-  <P><SPAN class="new-term">BOOST_AUTO_UNIT_TEST</SPAN>( tc_name )</P>
-  <P class="first-line-indented">BOOST_TEST_CASE hides all the machinery used 
+  <P><SPAN class="new-term">BOOST_AUTO_TEST_CASE</SPAN>( tc_name )</P>
+  <P class="first-line-indented">BOOST_AUTO_TEST_CASE hides all the machinery used 
     to implement <a href="function_tc.html"></a>automatic registration. 
     The only requirements are that test case names are unique within compilation 
     unit and no two test case definition are located on the same line.</P>
@@ -44,14 +44,14 @@
 
 // _____________________________________
 
-<SPAN class="new-term">BOOST_AUTO_UNIT_TEST</span>( test1 )
+<SPAN class="new-term">BOOST_AUTO_TEST_CASE</span>( test1 )
 {
     ...
 }
 
 // _____________________________________
 
-<span class="new-term">BOOST_AUTO_UNIT_TEST</span>( test2 )
+<span class="new-term">BOOST_AUTO_TEST_CASE</span>( test2 )
 {
     ...
 }
@@ -60,7 +60,7 @@
 </DIV>
 <DIV class="footer"> 
   <DIV class="footer-body"> 
-    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy Rozental</A> 2001-2005. <BR>
+    <P> &copy; <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy Rozental</A> 2001-2005. <BR>
       Distributed under the Boost Software License, Version 1.0.
       (See accompanying file <A href="../../../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>

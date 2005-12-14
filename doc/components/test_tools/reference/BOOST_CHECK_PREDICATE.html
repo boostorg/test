@@ -49,7 +49,7 @@ H4
   <PRE class="code"><SPAN class="cpp-type">int</SPAN> test.cpp( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
     <SPAN class="cpp-type">int</SPAN> i = <SPAN class="literal">17</SPAN>;
 
-    BOOST_CHECK_PREDICATE( std::not_equal_to&lt;<SPAN class="cpp-type">int</SPAN>&gt;(), <SPAN class="literal">2</SPAN>, (i,<SPAN class="literal">17</SPAN>) );
+    BOOST_CHECK_PREDICATE( std::not_equal_to&lt;<SPAN class="cpp-type">int</SPAN>&gt;(), (i)(<SPAN class="literal">17</SPAN>) );
 
     <SPAN class="reserv-word">return</SPAN> <SPAN class="literal">0</SPAN>;
 }

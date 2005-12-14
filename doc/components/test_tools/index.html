@@ -26,7 +26,7 @@
     provide an error location: a file name and a line number. Boost Test Library's
     Test Tools are intended for test code rather than library or production code,
     where throwing exceptions, using assert(), <A href="../../../../../libs/concept_check/index.html">boost::concept_check</A> or 
-	<A href="../../../../../libs/static_assert/static_assert.htm">BOOST_STATIC_ASSERT</A>()
+    <A href="../../../../../libs/static_assert/static_assert.htm">BOOST_STATIC_ASSERT</A>()
     may be more suitable ways to detect and report errors. To use the Test Tools
     you need to link with either the <A href="../test_exec_monitor/index.html">Test
     Execution Monitor</A> or the <A href="../utf/index.html">Unit Test Framework</A>.
@@ -83,6 +83,9 @@
     contains separate ostream_test_stream tool. This is class designed to significantly
     simplify correctness testing of the ostream based output procedures. For
     detailed description of it's interface and usage see the <A href="output_test_stream.html">ostream_test_stream</A> page.</P> 
+  <P class="first-line-indented">The Test Tools are implemented in namespace boost::test_tools. But in majority of the cases 
+    you don't need to know about that, since in the tools usage is through convinience macros that fully qualify 
+    implementation functions access.</P> 
   <P class="first-line-indented">Most of test tools direct values of their arguments
     to the output stream in some form of log statement. If arguments type does
     not support operator&lt;&lt;(...) interface you will get a compilation error.
@@ -121,13 +124,13 @@
 </DIV> 
 <DIV class="footer"> 
   <DIV class="footer-body">
-    <P> &copy <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy
+    <P> &copy; <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy
         Rozental</A> 2001-2005. <BR> 
       Distributed under the Boost Software License, Version 1.0. (See accompanying
       file <A href="../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy
       at <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P> 
     <P>Revised:
-      <!-- #BeginDate format:Sw1 -->11 July, 2005<!-- #EndDate --> 
+      <!-- #BeginDate format:Sw1 -->25 Oct, 2005<!-- #EndDate --> 
     </P> 
   </DIV> 
 </DIV> 

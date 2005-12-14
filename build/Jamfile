@@ -15,6 +15,7 @@ TEST_EXEC_MON_SOURCES =
   compiler_log_formatter
   execution_monitor
   framework
+  logged_expectations
   plain_report_formatter
   progress_monitor
   results_collector
@@ -32,8 +33,11 @@ TEST_EXEC_MON_SOURCES =
 
 UTF_SOURCES =
   compiler_log_formatter
+  exception_safety
   execution_monitor
   framework
+  interaction_based
+  logged_expectations
   plain_report_formatter
   progress_monitor
   results_collector
@@ -48,13 +52,35 @@ UTF_SOURCES =
   xml_report_formatter
   ;
 
+    
+
+template boost_test_dll
+     ## sources ##
+     : 
+     ## requirements ##
+     : <borland><*><cxxflags>-w-8080
+      # the "common-variant-tag" rule ensures that the library will
+      # be named according to the rules used by the install
+      # and auto-link features:
+      common-variant-tag 
+      # tell our source that we're building (and maybe using) dll's:
+      <define>BOOST_ALL_DYN_LINK=1
+      # only build this for dynamic runtimes:
+      <runtime-link>dynamic
+      # set include path for Boost headers:
+      <sysinclude>$(BOOST_ROOT)
+     ## default build ##
+     : debug release
+     ;
+
 template boost_test_lib 
      ## sources ##
      : 
      ## requirements ##
-     : <sysinclude>$(BOOST_ROOT) <borland><*><cxxflags>-w-8080 <define>BOOST_TEST_NO_AUTO_LINK=1
+     : <sysinclude>$(BOOST_ROOT) <borland><*><cxxflags>-w-8080 
+       common-variant-tag       
      ## default build ##
-     : <threading>single/multi <runtime-link>static/dynamic
+     : debug release <runtime-link>static/dynamic
      ;
 
 lib boost_prg_exec_monitor    : <template>boost_test_lib
@@ -66,30 +92,16 @@ lib boost_test_exec_monitor   : <template>boost_test_lib
 lib boost_unit_test_framework : <template>boost_test_lib
                                 ../src/$(UTF_SOURCES).cpp ; 
 
-local TEST_DLLs ;
-if ! $(NT) && ( ! $(UNIX) || $(OS) != CYGWIN )
-{
-    TEST_DLLs = TRUE ;
-}
+dll boost_unit_test_framework : <template>boost_test_dll
+                                ../src/$(UTF_SOURCES).cpp ;
 
-if $(TEST_DLLs)
-{
 dll boost_prg_exec_monitor    : <template>boost_test_lib
                                 ../src/$(PRG_EXEC_MON_SOURCES).cpp ;
 
-dll boost_test_exec_monitor   : <template>boost_test_lib
-                                ../src/$(TEST_EXEC_MON_SOURCES).cpp ; 
-
-dll boost_unit_test_framework : <template>boost_test_lib
-                                ../src/$(UTF_SOURCES).cpp ;
-}
-
 install test lib
     :
-        [ cond $(TEST_DLLs) :
-            <dll>boost_prg_exec_monitor
-            <dll>boost_test_exec_monitor
-            <dll>boost_unit_test_framework ]
+        <dll>boost_prg_exec_monitor
+        <dll>boost_unit_test_framework
         <lib>boost_prg_exec_monitor
         <lib>boost_test_exec_monitor
         <lib>boost_unit_test_framework
@@ -97,10 +109,8 @@ install test lib
 
 stage stage/lib 
     : 
-        [ cond $(TEST_DLLs) :
-            <dll>boost_prg_exec_monitor
-            <dll>boost_test_exec_monitor
-            <dll>boost_unit_test_framework ]
+        <dll>boost_prg_exec_monitor
+        <dll>boost_unit_test_framework
         <lib>boost_prg_exec_monitor
         <lib>boost_test_exec_monitor
         <lib>boost_unit_test_framework

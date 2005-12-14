@@ -62,8 +62,8 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\Debug"
-			IntermediateDirectory="c:\temp\boost_test_library\Debug"
+			OutputDirectory="..\..\..\..\stage\lib"
+			IntermediateDirectory=".\Debug\$(ProjectName)\"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -77,11 +77,7 @@
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile="c:\temp\boost_test_library\Debug/test_exec_monitor.pch"
-				AssemblerListingLocation="c:\temp\boost_test_library\Debug/"
-				ObjectFile="c:\temp\boost_test_library\Debug/"
-				ProgramDataBaseFileName="c:\temp\boost_test_library\Debug/"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="4"
@@ -90,7 +86,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile=".\Debug\test_exec_monitor.lib"
+				OutputFile="$(OutDir)/libboost_test_exec_monitor-vc71-mt-gd-1_34.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"/>
@@ -124,10 +120,19 @@
 				RelativePath="..\..\src\compiler_log_formatter.cpp">
 			</File>
 			<File
+				RelativePath="..\..\src\exception_safety.cpp">
+			</File>
+			<File
 				RelativePath="..\..\src\execution_monitor.cpp">
 			</File>
 			<File
 				RelativePath="..\..\src\framework.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\interaction_based.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\logged_expectations.cpp">
 			</File>
 			<File
 				RelativePath="..\..\src\plain_report_formatter.cpp">
@@ -206,13 +211,13 @@
 				RelativePath="..\..\..\..\boost\test\test_case_template.hpp">
 			</File>
 			<File
+				RelativePath="..\..\..\..\boost\test\test_exec_monitor.hpp">
+			</File>
+			<File
 				RelativePath="..\..\..\..\boost\test\test_observer.hpp">
 			</File>
 			<File
 				RelativePath="..\..\..\..\boost\test\test_tools.hpp">
-			</File>
-			<File
-				RelativePath="..\..\..\..\boost\test\unit_test.hpp">
 			</File>
 			<File
 				RelativePath="..\..\..\..\boost\test\unit_test_log.hpp">
