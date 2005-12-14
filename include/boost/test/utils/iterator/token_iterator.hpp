@@ -164,8 +164,8 @@ struct token_assigner<single_pass_traversal_tag> {
 // ************************************************************************** //
 
 namespace {
-nfp::keyword<struct dropped_delimeters_t > dropped_delimeters;
-nfp::keyword<struct kept_delimeters_t > kept_delimeters;
+nfp::keyword<struct dropped_delimeters_t >           dropped_delimeters;
+nfp::keyword<struct kept_delimeters_t >              kept_delimeters;
 nfp::typed_keyword<bool,struct keep_empty_tokens_t > keep_empty_tokens;
 nfp::typed_keyword<std::size_t,struct max_tokens_t > max_tokens;
 }
@@ -217,7 +217,7 @@ protected:
     bool                    get( Iter& begin, Iter end )
     {
         typedef ut_detail::token_assigner<BOOST_DEDUCED_TYPENAME iterator_traversal<Iter>::type> Assigner;
-        Iter checkpoint;
+        Iter check_point;
 
         this->m_value.clear();
 
@@ -228,7 +228,7 @@ protected:
             if( begin == end )
                 return false;
 
-            checkpoint = begin;
+            check_point = begin;
 
             if( m_tokens_left == 1 )
                 while( begin != end )
@@ -242,7 +242,7 @@ protected:
             --m_tokens_left;
         } 
         else { // m_keep_empty_tokens is true
-            checkpoint = begin;
+            check_point = begin;
 
             if( begin == end ) {
                 if( m_token_produced ) 
@@ -260,7 +260,7 @@ protected:
                 m_token_produced = true;
             else {
                 if( m_is_dropped( *begin ) )
-                    checkpoint = ++begin;
+                    check_point = ++begin;
 
                 while( begin != end && !m_is_dropped( *begin ) && !m_is_kept( *begin ) )
                     Assigner::append_move( begin, this->m_value );
@@ -269,7 +269,7 @@ protected:
             }
         }
 
-        Assigner::assign( checkpoint, begin, this->m_value );
+        Assigner::assign( check_point, begin, this->m_value );
 
         return true;
     }
@@ -418,6 +418,9 @@ make_range_token_iterator( Iter begin, Iter end, Modifier const& m )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2005/12/14 05:01:13  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.8  2005/06/16 05:58:26  rogeeff
 //  make default constructed range token iterator copyable according ot standard
 //

@@ -23,6 +23,8 @@
 #include <boost/test/utils/rtti.hpp>
 #include <boost/test/utils/assign_op.hpp>
 
+#include <boost/test/detail/suppress_warnings.hpp>
+
 //____________________________________________________________________________//
 
 namespace boost {
@@ -130,13 +132,13 @@ struct named_parameter_combine : Rest, named_parameter_base<named_parameter_comb
     bool        has( keyword<typename NP::id,false> ) const             { return true; }
     using       Rest::has;
 
-    #if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3206))
+#if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3206))
     template<typename NP>
     named_parameter_combine<NP,self_type> operator,( NP const& np ) const
     { return named_parameter_combine<NP,self_type>( np, *this ); }
-    #else
+#else
     using       named_parameter_base<named_parameter_combine<NP,Rest> >::operator,;
-    #endif
+#endif
 
     // Visitation support
     template<typename Visitor>
@@ -311,10 +313,15 @@ optionally_assign( T& target, Params const& p, Keyword k )
 
 } // namespace boost
 
+#include <boost/test/detail/enable_warnings.hpp>
+
 // ***************************************************************************
 //   Revision History:
 //  
 //  $Log$
+//  Revision 1.5  2005/12/14 05:01:13  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.4  2005/06/13 10:35:08  schoepflin
 //  Enable optionally_assign() overload workaround for Tru64/CXX-6.5 as well.
 //

@@ -50,7 +50,7 @@ template<typename CharT1, typename Tr,typename CharT2>
 inline std::basic_ostream<CharT1,Tr>&
 operator<<( std::basic_ostream<CharT1,Tr>& os, basic_cstring<CharT2> const& str )
 {
-    CharT1 const* const beg = reinterpret_cast<CharT1 const*>( str.begin() ); //!!
+    CharT1 const* const beg = reinterpret_cast<CharT1 const*>( str.begin() ); // !!
     CharT1 const* const end = reinterpret_cast<CharT1 const*>( str.end() );
     os << std::basic_string<CharT1,Tr>( beg, end - beg );
 
@@ -74,6 +74,9 @@ operator<<( std::basic_ostream<CharT1,Tr>& os, basic_cstring<CharT2> const& str 
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2005/12/14 05:01:13  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.4  2005/02/20 08:27:09  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //

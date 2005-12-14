@@ -54,7 +54,7 @@ public:
     typedef value_type const*                           const_iterator;
     typedef value_type*                                 iterator;
 
-    //!! should also present reverse_iterator, const_reverse_iterator
+    // !! should also present reverse_iterator, const_reverse_iterator
 
 #if !BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600))
     enum npos_type { npos = (size_type)-1 };
@@ -83,7 +83,7 @@ public:
     void            clear();
     void            resize( size_type new_len );
 
-    //!! only for STL container conformance use is_empty instead
+    // !! only for STL container conformance use is_empty instead
     bool            empty() const; 
 
     // Trimming
@@ -128,7 +128,7 @@ public:
     iterator        end();
     const_iterator  end() const;
 
-    //!! should have rbegin, rend
+    // !! should have rbegin, rend
 
     // substring search operation
     size_type       find( basic_cstring ) const;
@@ -570,7 +570,7 @@ template<typename CharT>
 inline basic_cstring<CharT>
 basic_cstring<CharT>::default_trim_ex()
 {
-    static CharT ws[3] = { CharT(' '), CharT('\t'), CharT('\n') }; //!! wide case
+    static CharT ws[3] = { CharT(' '), CharT('\t'), CharT('\n') }; // !! wide case
 
     return self_type( ws, 3 );
 }
@@ -736,6 +736,9 @@ assign_op( std::basic_string<CharT1>& target, basic_cstring<CharT2> src, int )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.10  2005/12/14 05:01:13  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.9  2005/07/13 21:49:46  danieljames
 //  Boost.Test workarounds for Digital Mars bugs.
 //

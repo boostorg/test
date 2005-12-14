@@ -25,6 +25,7 @@ namespace unit_test {
 class  test_unit;
 class  test_case;
 class  test_suite;
+class  master_test_suite_t;
 
 class  test_tree_visitor;
 class  test_observer;
@@ -46,6 +47,9 @@ struct log_checkpoint_data;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/12/14 04:59:11  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.1  2005/02/20 08:27:06  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //

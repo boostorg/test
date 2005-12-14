@@ -34,7 +34,7 @@ namespace unit_test {
 // **************         basic_istream_line_iterator          ************** //
 // ************************************************************************** //
 
-//!! Should we support policy based delimitation
+// !! Should we support policy based delimitation
 
 template<typename CharT>
 class basic_istream_line_iterator
@@ -97,6 +97,9 @@ typedef basic_istream_line_iterator<wchar_t>    wistream_line_iterator;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2005/12/14 05:01:13  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.4  2005/02/20 08:27:09  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
