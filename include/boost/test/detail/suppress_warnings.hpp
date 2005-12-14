@@ -20,12 +20,18 @@
 # pragma warning(disable: 4996) // <symbol> was declared deprecated 
 # pragma warning(disable: 4355) // 'this' : used in base member initializer list
 # pragma warning(disable: 4706) // assignment within conditional expression
+# pragma warning(disable: 4251) // class 'A<T>' needs to have dll-interface to be used by clients of class 'B'
+# pragma warning(disable: 4127) // conditional expression is constant
+# pragma warning(disable: 4290) // C++ exception specification ignored except to ...
 #endif
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2005/12/14 04:57:50  rogeeff
+//  extra warnings suppressed
+//
 //  Revision 1.4  2005/02/20 08:27:06  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
