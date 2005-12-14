@@ -9,29 +9,71 @@
 //
 //  Version     : $Revision$
 //
-//  Description : wrapper include . To be used by end-user
+//  Description : Entry point for the end user into the Unit Test Framework.
 // ***************************************************************************
 
 #ifndef BOOST_TEST_UNIT_TEST_HPP_071894GER
 #define BOOST_TEST_UNIT_TEST_HPP_071894GER
 
+// Boost.Test
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
 
-#if 0
-#ifndef BOOST_TEST_NO_AUTO_LINK
+//____________________________________________________________________________//
 
-#define BOOST_LIB_NAME unix_test_framework
-#define BOOST_LIB_DIAGNOSTIC yes
-#include <boost/config/auto_link.hpp>
+// ************************************************************************** //
+// **************                 Auto Linking                 ************** //
+// ************************************************************************** //
 
-#endif
-#endif
+#if !defined(BOOST_ALL_NO_LIB) && !defined(BOOST_TEST_NO_LIB) && !defined(BOOST_TEST_SOURCE)
+#  define BOOST_LIB_NAME boost_unit_test_framework
+
+#  if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_TEST_DYN_LINK)
+#    define BOOST_DYN_LINK
+#  endif
+
+#  include <boost/config/auto_link.hpp>
+
+#endif  // auto-linking disabled
+
+#ifdef BOOST_TEST_DYN_LINK
+
+// ************************************************************************** //
+// **************                     dll_main                 ************** //
+// ************************************************************************** //
+
+namespace boost { namespace unit_test {
+
+int BOOST_TEST_DECL dll_main( bool (*init_unit_test_func)(), int argc, char* argv[] );
+
+}}
+
+#if defined(BOOST_TEST_MAIN) || defined(BOOST_AUTO_TEST_MAIN)
+
+// ************************************************************************** //
+// **************        main function for tests using dll     ************** //
+// ************************************************************************** //
+
+int BOOST_TEST_CALL_DECL
+main( int argc, char* argv[] )
+{
+    return ::boost::unit_test::dll_main( &init_unit_test, argc, argv );
+}
+
+//____________________________________________________________________________//
+
+#endif // BOOST_TEST_MAIN
+
+#endif // BOOST_TEST_DYN_LINK
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.16  2005/12/14 05:21:36  rogeeff
+//  dll support introduced
+//  auto linking support introduced
+//
 //  Revision 1.15  2005/02/20 08:27:06  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
