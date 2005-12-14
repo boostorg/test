@@ -17,7 +17,7 @@
 
 // Boost.Test
 #include <boost/test/output/compiler_log_formatter.hpp>
-#include <boost/test/unit_test_suite.hpp>
+#include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
 
@@ -118,10 +118,12 @@ compiler_log_formatter::log_exception( std::ostream& output, log_checkpoint_data
         output << "uncaught exception, system error or abort requested";
 
 
-    if( !checkpoint_data.m_message.empty() ) {
+    if( !checkpoint_data.m_file_name.is_empty() ) {
         output << '\n';
-        print_prefix( output, checkpoint_data.m_file, checkpoint_data.m_line );
-        output << "last checkpoint: " << checkpoint_data.m_message;
+        print_prefix( output, checkpoint_data.m_file_name, checkpoint_data.m_line_num );
+        output << "last checkpoint";
+        if( !checkpoint_data.m_message.empty() )
+            output << ": " << checkpoint_data.m_message;
     }
     
     output << std::endl;
@@ -134,21 +136,21 @@ compiler_log_formatter::log_entry_start( std::ostream& output, log_entry_data co
 {
     switch( let ) {
         case BOOST_UTL_ET_INFO:
-            print_prefix( output, entry_data.m_file, entry_data.m_line );
+            print_prefix( output, entry_data.m_file_name, entry_data.m_line_num );
             output << "info: ";
             break;
         case BOOST_UTL_ET_MESSAGE:
             break;
         case BOOST_UTL_ET_WARNING:
-            print_prefix( output, entry_data.m_file, entry_data.m_line );
+            print_prefix( output, entry_data.m_file_name, entry_data.m_line_num );
             output << "warning in \"" << framework::current_test_case().p_name << "\": ";
             break;
         case BOOST_UTL_ET_ERROR:
-            print_prefix( output, entry_data.m_file, entry_data.m_line );
+            print_prefix( output, entry_data.m_file_name, entry_data.m_line_num );
             output << "error in \"" << framework::current_test_case().p_name << "\": ";
             break;
         case BOOST_UTL_ET_FATAL_ERROR:
-            print_prefix( output, entry_data.m_file, entry_data.m_line );
+            print_prefix( output, entry_data.m_file_name, entry_data.m_line_num );
             output << "fatal error in \"" << framework::current_test_case().p_name << "\": ";
             break;
     }
@@ -194,6 +196,9 @@ compiler_log_formatter::print_prefix( std::ostream& output, const_string file, s
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.4  2005/12/14 05:26:32  rogeeff
+//  report aborted test units
+//
 //  Revision 1.3  2005/02/21 10:09:26  rogeeff
 //  exception logging changes so that it produce a string recognizable by compiler as an error
 //
