@@ -36,16 +36,21 @@ namespace unit_test {
 // **************                log_entry_data                ************** //
 // ************************************************************************** //
 
-struct log_entry_data {
-    std::string     m_file;
-    std::size_t     m_line;
+struct BOOST_TEST_DECL log_entry_data {
+    log_entry_data()
+    {
+        m_file_name.reserve( 200 );
+    }
+
+    std::string     m_file_name;
+    std::size_t     m_line_num;
     log_level       m_level;
 
     void clear()
     {
-        m_file    = std::string();
-        m_line    = 0;
-        m_level   = log_nothing;
+        m_file_name.erase();
+        m_line_num      = 0;
+        m_level     = log_nothing;
     }
 };
 
@@ -53,16 +58,16 @@ struct log_entry_data {
 // **************                checkpoint_data               ************** //
 // ************************************************************************** //
 
-struct log_checkpoint_data
+struct BOOST_TEST_DECL log_checkpoint_data
 {
-    std::string     m_file;
-    std::size_t     m_line;
+    const_string    m_file_name;
+    std::size_t     m_line_num;
     std::string     m_message;
 
     void clear()
     {
-        m_file    = std::string();
-        m_line    = 0;
+        m_file_name.clear();
+        m_line_num    = 0;
         m_message = std::string();
     }
 };
@@ -71,7 +76,7 @@ struct log_checkpoint_data
 // **************            unit_test_log_formatter           ************** //
 // ************************************************************************** //
 
-class unit_test_log_formatter {
+class BOOST_TEST_DECL unit_test_log_formatter {
 public:
     enum log_entry_types { BOOST_UTL_ET_INFO, 
                            BOOST_UTL_ET_MESSAGE,
@@ -110,6 +115,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.14  2005/12/14 05:52:16  rogeeff
+//  log API simplified
+//
 //  Revision 1.13  2005/02/20 08:27:06  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
