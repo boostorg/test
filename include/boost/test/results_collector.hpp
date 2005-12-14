@@ -45,7 +45,7 @@ inline void first_failed_assertion() {}
 // **************                 test_results                 ************** //
 // ************************************************************************** //
 
-class test_results {
+class BOOST_TEST_DECL test_results {
 public:
     test_results();
 
@@ -58,6 +58,7 @@ public:
     counter_prop    p_test_cases_passed;
     counter_prop    p_test_cases_failed;
     counter_prop    p_test_cases_skipped;
+    counter_prop    p_test_cases_aborted;
     bool_prop       p_aborted;
     bool_prop       p_skipped;
 
@@ -75,7 +76,7 @@ public:
 // **************               results_collector              ************** //
 // ************************************************************************** //
 
-class results_collector_t : public test_observer, public singleton<results_collector_t> {
+class BOOST_TEST_DECL results_collector_t : public test_observer, public singleton<results_collector_t> {
 public:
     // test_observer interface implementation
     void                test_start( counter_t test_cases_amount );
@@ -111,6 +112,11 @@ BOOST_TEST_SINGLETON_INST( results_collector )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/12/14 05:12:24  rogeeff
+//  dll support introduced
+//  amount of aborted test cases in now computed. If test case is aborted - the whole
+//  test subtree is marked as aborted
+//
 //  Revision 1.1  2005/02/20 08:27:06  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
