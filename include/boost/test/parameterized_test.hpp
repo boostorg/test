@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005.
+//  (C) Copyright Gennadiy Rozental 2001-2005.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -184,6 +184,9 @@ make_test_case( void (UserTestCase::*test_method )( ParamType ),
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2005/12/14 05:16:49  rogeeff
+//  dll support introduced
+//
 //  Revision 1.4  2005/05/02 06:00:10  rogeeff
 //  restore a parameterized user case method based testing
 //

@@ -37,7 +37,7 @@ namespace results_reporter {
 // **************              formatter interface             ************** //
 // ************************************************************************** //
 
-class format {
+class BOOST_TEST_DECL format {
 public:
     // Destructor
     virtual ~format() {}
@@ -55,19 +55,22 @@ public:
 // **************              report configuration            ************** //
 // ************************************************************************** //
 
-void set_level( report_level );
-void set_stream( std::ostream& );
-void set_format( output_format );
-void set_format( results_reporter::format* );
+BOOST_TEST_DECL void    set_level( report_level );
+BOOST_TEST_DECL void    set_stream( std::ostream& );
+BOOST_TEST_DECL void    set_format( output_format );
+BOOST_TEST_DECL void    set_format( results_reporter::format* );
 
 // ************************************************************************** //
 // **************               report initiation              ************** //
 // ************************************************************************** //
 
-void        make_report( report_level l = INV_REPORT_LEVEL, test_unit_id = INV_TEST_UNIT_ID );
-inline void confirmation_report( test_unit_id id = INV_TEST_UNIT_ID )   { make_report( CONFIRMATION_REPORT, id ); }
-inline void short_report( test_unit_id id = INV_TEST_UNIT_ID )          { make_report( SHORT_REPORT, id ); }
-inline void detailed_report( test_unit_id id = INV_TEST_UNIT_ID )       { make_report( DETAILED_REPORT, id ); }
+BOOST_TEST_DECL void    make_report( report_level l = INV_REPORT_LEVEL, test_unit_id = INV_TEST_UNIT_ID );
+inline void             confirmation_report( test_unit_id id = INV_TEST_UNIT_ID )   
+{ make_report( CONFIRMATION_REPORT, id ); }
+inline void             short_report( test_unit_id id = INV_TEST_UNIT_ID )
+{ make_report( SHORT_REPORT, id ); }
+inline void             detailed_report( test_unit_id id = INV_TEST_UNIT_ID )
+{ make_report( DETAILED_REPORT, id ); }
 
 } // namespace results_reporter
 
@@ -83,6 +86,9 @@ inline void detailed_report( test_unit_id id = INV_TEST_UNIT_ID )       { make_r
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/12/14 05:13:18  rogeeff
+//  dll support introduced
+//
 //  Revision 1.1  2005/02/20 08:27:06  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //

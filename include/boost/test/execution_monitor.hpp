@@ -54,7 +54,7 @@ namespace detail {
 // **************       detail::translate_exception_base       ************** //
 // ************************************************************************** //
 
-class translate_exception_base {
+class BOOST_TEST_DECL translate_exception_base {
 public:
     // Constructor
     explicit    translate_exception_base( boost::scoped_ptr<translate_exception_base>& next )
@@ -80,7 +80,7 @@ protected:
     
 //  design rationale: fear of being out (or nearly out) of memory.
     
-class execution_exception {
+class BOOST_TEST_DECL execution_exception {
     typedef boost::unit_test::const_string const_string;
 public:
     enum error_code {
@@ -129,7 +129,7 @@ private:
 // **************               execution_monitor              ************** //
 // ************************************************************************** //
 
-class execution_monitor {
+class BOOST_TEST_DECL execution_monitor {
 public:
     int execute( unit_test::callback0<int> const& F, bool catch_system_errors = true, int timeout = 0 ); 
     //  The catch_system_errors parameter specifies whether the monitor should 
@@ -204,13 +204,13 @@ execution_monitor::register_exception_translator( ExceptionTranslator const& tr,
 // ************************************************************************** //
 
 // turn on system memory leak detection
-void    detect_memory_leak( long mem_leak_alloc_num = 0 );
+void BOOST_TEST_DECL detect_memory_leak( long mem_leak_alloc_num = 0 );
 
 // ************************************************************************** //
 // **************               execution_aborted              ************** //
 // ************************************************************************** //
 
-struct execution_aborted {};
+struct BOOST_TEST_DECL execution_aborted {};
 
 }  // namespace boost
 
@@ -222,6 +222,9 @@ struct execution_aborted {};
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.24  2005/12/14 05:05:58  rogeeff
+//  dll support introduced
+//
 //  Revision 1.23  2005/04/05 06:11:37  rogeeff
 //  memory leak allocation point detection\nextra help with _WIN32_WINNT
 //

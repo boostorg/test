@@ -39,7 +39,7 @@ namespace test_tools {
 // **************                predicate_result              ************** //
 // ************************************************************************** //
 
-class predicate_result {
+class BOOST_TEST_DECL predicate_result {
     typedef unit_test::const_string      const_string;
 public:
     // Constructor
@@ -84,6 +84,9 @@ private:
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.7  2005/12/14 05:16:49  rogeeff
+//  dll support introduced
+//
 //  Revision 1.6  2005/03/23 21:02:17  rogeeff
 //  Sunpro CC 5.3 fixes
 //
