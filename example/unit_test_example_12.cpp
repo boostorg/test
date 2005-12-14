@@ -9,7 +9,7 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 #include <boost/test/parameterized_test.hpp>
-using boost::unit_test::test_suite;
+using namespace boost::unit_test;
 
 // BOOST
 #include <boost/functional.hpp>
@@ -29,12 +29,12 @@ using boost::unit_test::test_suite;
 //____________________________________________________________________________//
 
 template<int n>
-struct pow10 {
-    BOOST_STATIC_CONSTANT( unsigned long, value = 10*pow10<n-1>::value );
+struct power_of_10 {
+    BOOST_STATIC_CONSTANT( unsigned long, value = 10*power_of_10<n-1>::value );
 };
 
 template<>
-struct pow10<0> {
+struct power_of_10<0> {
     BOOST_STATIC_CONSTANT( unsigned long, value = 1 );
 };
 
@@ -81,18 +81,18 @@ private:
         if( it == m_alphabet.end() )
             return true;
 
-        m_result += pow10_( it - m_alphabet.begin() );
+        m_result += power_of_10_( it - m_alphabet.begin() );
 
         return false;
     }
 
-    unsigned long   pow10_( int i ) {
+    unsigned long   power_of_10_( int i ) {
         switch( i ) {
-        case 0: return pow10<0>::value;
-        case 1: return pow10<1>::value;
-        case 2: return pow10<2>::value;
-        case 3: return pow10<3>::value;
-        case 4: return pow10<4>::value;
+        case 0: return power_of_10<0>::value;
+        case 1: return power_of_10<1>::value;
+        case 2: return power_of_10<2>::value;
+        case 3: return power_of_10<3>::value;
+        case 4: return power_of_10<4>::value;
         default: return 0;
         }
     }
@@ -129,7 +129,7 @@ public:
         else if( test_data.exp_value == (unsigned long)-2 )
             BOOST_CHECK_THROW( m_function_under_test( test_data.orig_string ), std::out_of_range )
         else {
-            BOOST_MESSAGE( "Testing: " << test_data.orig_string );
+            BOOST_TEST_MESSAGE( "Testing: " << test_data.orig_string );
             BOOST_CHECK_EQUAL( m_function_under_test( test_data.orig_string ), test_data.exp_value );
         }
     }
@@ -141,7 +141,7 @@ private:
 //____________________________________________________________________________//
 
 struct massive_hash_function_test : test_suite {
-    massive_hash_function_test() {
+    massive_hash_function_test() : test_suite( "massive_hash_function_test" ) {
         std::string alphabet;
         std::cout << "Enter alphabet (4 characters without delimeters)\n";
         std::cin >> alphabet;
@@ -170,18 +170,12 @@ struct massive_hash_function_test : test_suite {
 //____________________________________________________________________________//
 
 test_suite*
-init_unit_test_suite( int argc, char * argv[] ) {
-    test_suite* test( BOOST_TEST_SUITE( "Unit test example 5" ) );
+init_unit_test_suite( int, char* [] ) {
+    framework::master_test_suite().p_name.value = "Unit test example 12";
   
-    try  {
-        test->add( new massive_hash_function_test );
-    } catch( std::logic_error const& ex ) {
-        std::cout << "Test suite fail to create instance of hash function: " << ex.what() << std::endl;
+    framework::master_test_suite().add( new massive_hash_function_test );
 
-        return (test_suite*)0;
-    }
-
-    return test; 
+    return 0; 
 }
 
 //____________________________________________________________________________//

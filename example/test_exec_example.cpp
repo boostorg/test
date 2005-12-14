@@ -6,7 +6,7 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 // Boost.Test
-#include <boost/test/test_tools.hpp>
+#include <boost/test/test_exec_monitor.hpp>
 
 int add( int i, int j ) { return i+j; }
 

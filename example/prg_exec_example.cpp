@@ -5,6 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 
+#include <boost/test/prg_exec_monitor.hpp>
+
 int add( int i, int j ) { return i+j; }
 
 int cpp_main( int, char *[] )  // note the name!

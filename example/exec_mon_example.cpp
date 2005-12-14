@@ -5,6 +5,7 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 
+#include <boost/test/prg_exec_monitor.hpp>
 #include <boost/test/execution_monitor.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
 
@@ -61,7 +62,7 @@ void translate_my_exception2( my_exception2 const& ex )
 } // local_namespace
 
 int
-main( int argc , char *[] )
+cpp_main( int argc , char *[] )
 { 
     ::boost::execution_monitor ex_mon;
 

@@ -6,9 +6,12 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 // Boost.Test
-#define BOOST_AUTO_TEST_MAIN
-#include <boost/test/auto_unit_test.hpp>
+#define BOOST_TEST_MAIN
+#include <boost/test/unit_test.hpp>
 
+//____________________________________________________________________________//
+
+// this way we could specify a number of expected failures in automatically registered test case
 BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES( test1, 1 )
 
 BOOST_AUTO_TEST_CASE( test1 )

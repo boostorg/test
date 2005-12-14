@@ -13,37 +13,49 @@ import testing ;
 # Make tests run by default.
 DEPENDS all : test ;
 
-rule boost-test-example ( example-name : lib-name )
+rule boost-test-example ( example-name : test-rule : lib-name ? : source_files * : use-dll ? )
 {
-   return [ compile $(example-name).cpp <lib>../build/$(lib-name) 
-            : <stlport-iostream>on <borland><*><cxxflags>-w-8080 
+   source_files ?= $(example-name).cpp ;
+   local library = [ cond $(use-dll) : <dll>../build/$(lib-name) : <lib>../build/$(lib-name) ] ;
+
+   return [ $(test-rule) $(source_files) [ cond $(lib-name) : $(library) ]
+            : #args
+            : #input-files
+            : #requirements
+              <stlport-iostream>on
+              <borland><*><cxxflags>-w-8080
+              [ cond $(use-dll) : <define>BOOST_TEST_DYN_LINK=1 ]
             : $(example-name)
           ] ;
 }
 
 test-suite "boost_test_examples"
-: [ boost-test-example exec_mon_example   : boost_prg_exec_monitor    ]
-  [ boost-test-example prg_exec_example   : boost_prg_exec_monitor    ]
+: [ boost-test-example exec_mon_example     : run       : boost_prg_exec_monitor    ]
+  [ boost-test-example prg_exec_example     : run       : boost_prg_exec_monitor    ]
 
-  [ boost-test-example test_exec_example  : boost_test_exec_monitor   ]
+  [ boost-test-example test_exec_example    : run       : boost_test_exec_monitor   ]
 
-  [ boost-test-example unit_test_example1 : boost_unit_test_framework ]
-  [ boost-test-example unit_test_example2 : boost_unit_test_framework ]
-  [ boost-test-example unit_test_example3 : boost_unit_test_framework ]
-  [ boost-test-example unit_test_example4 : boost_unit_test_framework ]
-  [ boost-test-example unit_test_example5 : boost_unit_test_framework ]
+  [ boost-test-example test_case_template_example : run : boost_unit_test_framework ]
 
-  [ boost-test-example test_case_template_example : boost_unit_test_framework ]
+  [ boost-test-example unit_test_example_01 : run-fail  : boost_unit_test_framework ]
+  [ boost-test-example unit_test_example_02 : run       : boost_unit_test_framework ]
+  [ boost-test-example unit_test_example_03 : run       : boost_unit_test_framework ]
+  [ boost-test-example unit_test_example_04 : run-fail  : boost_unit_test_framework ]
+  [ boost-test-example unit_test_example_05 : run-fail  : boost_unit_test_framework ]
+  [ boost-test-example unit_test_example_06 : run-fail  : boost_unit_test_framework ]
+  [ boost-test-example unit_test_example_07 : run       : boost_unit_test_framework ]
+  [ boost-test-example unit_test_example_08 : run       : boost_unit_test_framework ]
+  [ boost-test-example unit_test_example_09 : run       : boost_unit_test_framework : unit_test_example_09_1.cpp unit_test_example_09_2.cpp ]
+  [ boost-test-example unit_test_example_10 : run-fail  : boost_unit_test_framework ]
+  [ boost-test-example unit_test_example_11 : run-fail  : boost_unit_test_framework ]
+#   [ boost-test-example unit_test_example_12 : run       : boost_unit_test_framework ]
 
-  [ boost-test-example named_param_example : boost_unit_test_framework ]
+  [ boost-test-example est_example1         : run       : boost_unit_test_framework ]
+  [ boost-test-example est_example2         : run       : boost_unit_test_framework ]
+  [ boost-test-example logged_exp_example   : run       : boost_unit_test_framework ]
 
-  [ boost-test-example auto_unit_test_example1 : boost_unit_test_framework ]
-  [ boost-test-example auto_unit_test_example2 : boost_unit_test_framework ]
-  [ boost-test-example auto_unit_test_example3 : boost_unit_test_framework ]
-  [ boost-test-example auto_unit_test_example4 : boost_unit_test_framework ]
-  [ boost-test-example auto_unit_test_example5 : boost_unit_test_framework ]
-  [ boost-test-example auto_unit_test_example6 : boost_unit_test_framework ]
+  [ boost-test-example named_param_example  : run ]
+
+  [ boost-test-example unit_test_example_01_dll : run-fail : boost_unit_test_framework : unit_test_example_01.cpp : 1 ]
 
 ;
-
-

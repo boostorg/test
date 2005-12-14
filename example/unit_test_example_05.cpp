@@ -6,25 +6,32 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 // Boost.Test
-#define BOOST_AUTO_TEST_MAIN
-#include <boost/test/auto_unit_test.hpp>
+#define BOOST_TEST_MAIN
+#include <boost/test/unit_test.hpp>
+
+//____________________________________________________________________________//
 
 BOOST_AUTO_TEST_SUITE( suite );
 
 struct F {
-    F() : i( 0 ) { BOOST_MESSAGE( "setup fixture" ); }
-    ~F()         { BOOST_MESSAGE( "teardown fixture" ); }
+    F() : i( 0 ) { BOOST_TEST_MESSAGE( "setup fixture" ); }
+    ~F()         { BOOST_TEST_MESSAGE( "teardown fixture" ); }
    
     int i;
 };
 
+//____________________________________________________________________________//
+
+// this test case will use struct F as fixture
 BOOST_FIXTURE_TEST_CASE( test1, F )
 {
+    // you have direct access to non-private members of fixture structure
     BOOST_CHECK( i == 1 );
 }
 
 //____________________________________________________________________________//
 
+// you could have any number of test cases with the same fixture
 BOOST_FIXTURE_TEST_CASE( test2, F )
 {
     BOOST_CHECK_EQUAL( i, 2 );
@@ -34,6 +41,6 @@ BOOST_FIXTURE_TEST_CASE( test2, F )
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_SUITE_END();
+BOOST_AUTO_TEST_SUITE_END()
 
 // EOF

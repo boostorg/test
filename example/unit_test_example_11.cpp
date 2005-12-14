@@ -9,27 +9,36 @@
 // Boost.Test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/parameterized_test.hpp>
-using boost::unit_test::test_suite;
+using namespace boost::unit_test;
 
 // STL
 #include <vector>
 #include <string>
 
+//____________________________________________________________________________//
+
+// this free function is invoked with all parameters specified in a list
 void check_string( std::string const& s )
 {
     // reports 'error in "check_string": test s.substr( 0, 3 ) == "hdr" failed [actual_value != hdr]'
     BOOST_CHECK_EQUAL( s.substr( 0, 3 ), "hdr" );
 }
 
+//____________________________________________________________________________//
+
 test_suite*
 init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
-    test_suite* test= BOOST_TEST_SUITE( "Unit test example 4" );
+    framework::master_test_suite().p_name.value = "Unit test example 11";
 
+    // parameters have no requirements to stay alive beyong the next statement
     std::string const params[] = { "hdr1 ", "hdr2", "3  " };
 
-    test->add( BOOST_PARAM_TEST_CASE( &check_string, (std::string const*)params, params+3 ) );
+    framework::master_test_suite().add( 
+        BOOST_PARAM_TEST_CASE( &check_string, (std::string const*)params, params+3 ) );
 
-    return test; 
+    return 0; 
 }
+
+//____________________________________________________________________________//
 
 // EOF

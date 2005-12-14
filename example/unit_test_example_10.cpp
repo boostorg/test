@@ -9,9 +9,9 @@
 // Boost.Test
 #include <boost/test/floating_point_comparison.hpp>
 #include <boost/test/unit_test.hpp>
-using boost::unit_test::test_suite;
-using boost::unit_test::test_case;
+using namespace boost::unit_test;
 using boost::test_tools::close_at_tolerance;
+using boost::test_tools::percent_tolerance;
 
 // BOOST
 #include <boost/lexical_cast.hpp>
@@ -22,6 +22,8 @@ using boost::test_tools::close_at_tolerance;
 #include <iomanip>
 #include <memory>
 #include <stdexcept>
+
+//____________________________________________________________________________//
 
 struct account {
     account()
@@ -42,6 +44,8 @@ struct account {
 private:
     double m_amount;
 };
+
+//____________________________________________________________________________//
 
 struct account_test {
     account_test( double init_value ) { m_account.deposit( init_value ); }
@@ -104,7 +108,8 @@ struct account_test {
 
         // reports 'fatal error in "account_test::test_deposit": test close_at_tolerance<double>( 1e-9 )( m_account.balance(), 605.5)
         //          failed for (actual_value, 605.5)
-        BOOST_REQUIRE_PREDICATE( close_at_tolerance<double>( 1e-9 ), (m_account.balance())(605.5) );
+        BOOST_REQUIRE_PREDICATE( close_at_tolerance<double>( percent_tolerance( 1e-9 ) ),
+                                 (m_account.balance())(605.5) );
     }
 
     void test_withdraw()
@@ -122,6 +127,8 @@ struct account_test {
 
     }
 };
+
+//____________________________________________________________________________//
 
 struct account_test_suite : public test_suite {
     account_test_suite( double init_value ) : test_suite("account_test_suite") {
@@ -141,21 +148,25 @@ struct account_test_suite : public test_suite {
     }
 };
 
+//____________________________________________________________________________//
+
 test_suite*
 init_unit_test_suite( int argc, char * argv[] ) {
-    test_suite* test = BOOST_TEST_SUITE( "Unit test example 3" );
+    framework::master_test_suite().p_name.value = "Unit test example 10";
 
     try {
         if( argc < 2 )
-            return (test_suite*)0;
+            throw std::logic_error( "Initial deposit expected" );
 
-        test->add( new account_test_suite( boost::lexical_cast<double>( argv[1] ) ) );
+        framework::master_test_suite().add( new account_test_suite( boost::lexical_cast<double>( argv[1] ) ) );
     }
-    catch( boost::bad_lexical_cast& ) {
-        return (test_suite*)0;
+    catch( boost::bad_lexical_cast const& ) {
+         throw std::logic_error( "Initial deposit value should match format of double" );
     }
 
-    return test;
+    return 0;
 }
+
+//____________________________________________________________________________//
 
 // EOF
