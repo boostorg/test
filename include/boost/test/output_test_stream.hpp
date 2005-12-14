@@ -37,13 +37,14 @@ namespace boost {
 
 namespace test_tools {
 
-class output_test_stream : public wrap_stringstream::wrapped_stream {
+class BOOST_TEST_DECL output_test_stream : public wrap_stringstream::wrapped_stream {
     typedef unit_test::const_string const_string;
     typedef predicate_result        result_type;
 public:
     // Constructor
     explicit        output_test_stream( const_string    pattern_file_name = const_string(),
-                                        bool            match_or_save     = true );
+                                        bool            match_or_save     = true,
+                                        bool            text_or_binary    = true );
 
     // Destructor
     ~output_test_stream();
@@ -78,6 +79,10 @@ private:
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.5  2005/12/14 05:10:34  rogeeff
+//  dll support introduced
+//  introduced an ability to match agains binary openned file
+//
 //  Revision 1.4  2005/03/23 21:02:15  rogeeff
 //  Sunpro CC 5.3 fixes
 //
