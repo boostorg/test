@@ -13,8 +13,8 @@
 // *****************************************************************************
 
 // Boost.Test
-#define BOOST_AUTO_TEST_MAIN
-#include <boost/test/auto_unit_test.hpp>
+#define BOOST_TEST_MAIN
+#include <boost/test/unit_test.hpp>
 
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 #include <boost/test/utils/basic_cstring/compare.hpp>
@@ -82,6 +82,9 @@ BOOST_AUTO_TEST_CASE( test_custom_compare )
 // History :
 //
 // $Log$
+// Revision 1.8  2005/12/14 06:01:02  rogeeff
+// *** empty log message ***
+//
 // Revision 1.7  2005/05/11 05:07:56  rogeeff
 // licence update
 //

@@ -12,7 +12,7 @@
 //  Description : basic_cstring unit test
 // *****************************************************************************
 
-#include <boost/test/test_tools.hpp>
+#include <boost/test/test_exec_monitor.hpp>
 
 int test_main( int, char *[] )
 {

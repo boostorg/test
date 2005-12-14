@@ -13,11 +13,9 @@
 // ***************************************************************************
 
 // Boost.Test
-#define BOOST_AUTO_TEST_MAIN
-#include <boost/test/auto_unit_test.hpp>
-#include <boost/test/test_tools.hpp>
+#define BOOST_TEST_MAIN
+#include <boost/test/unit_test.hpp>
 #include <boost/test/test_case_template.hpp>
-#include <boost/test/framework.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/results_collector.hpp>
 
@@ -148,6 +146,9 @@ BOOST_AUTO_TEST_CASE( test2_one_to_three )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2005/12/14 06:01:02  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.14  2005/05/11 05:07:57  rogeeff
 //  licence update
 //

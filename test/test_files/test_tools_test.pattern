@@ -1,55 +1,55 @@
 129: warning in "test_BOOST_WARN": condition sizeof(int) == sizeof(short) is not satisfied
 132: info: check sizeof(unsigned char) == sizeof(char) passed
-146: error in "test_BOOST_CHECK": check false failed
-147: error in "test_BOOST_CHECK": check 1==2 failed
-148: error in "test_BOOST_CHECK": check i==1 failed
-151: info: check i==2 passed
-158: error in "test_BOOST_REQUIRE": not aborted
-160: fatal error in "test_BOOST_REQUIRE": critical test false failed
-164: fatal error in "test_BOOST_REQUIRE": critical test j > 5 failed
-167: info: check j < 5 passed
-167: error in "test_BOOST_REQUIRE": not aborted
-181: info: check 'object size 33 is too small' passed
-198: error in "test_BOOST_CHECK_MESSAGE": Well, may be that what I believe in
-200: error in "test_BOOST_CHECK_MESSAGE": Checking predicate failed. Some explanation
-203: info: check 'Could it fail?' passed
-210: fatal error in "test_BOOST_REQUIRE_MESSAGE": Here we should stop
-213: info: check 'That's OK' passed
-213: error in "test_BOOST_REQUIRE_MESSAGE": not aborted
-220: error in "test_BOOST_ERROR": Fail to miss an error
-227: fatal error in "test_BOOST_FAIL": No! No! Show must go on.
-243: error in "test_BOOST_CHECK_THROW": exception my_exception is expected
-246: warning in "test_BOOST_CHECK_THROW": exception my_exception is expected
-249: fatal error in "test_BOOST_CHECK_THROW": exception my_exception is expected
-252: info: check 'exception my_exception is caught' passed
-259: error in "test_BOOST_CHECK_EXCEPTION": incorrect exception my_exception is caught
-262: info: check 'incorrect exception my_exception is caught' passed
-272: error in "test_BOOST_CHECK_NO_THROW": exception thrown by throw my_exception()
-318: error in "test_BOOST_CHECK_EQUAL": check i == j failed [1 != 2]
-324: error in "test_BOOST_CHECK_EQUAL": check str1 == str2 failed [test1 != test12]
-327: error in "test_BOOST_CHECK_EQUAL": check i+1 == j failed [4 != 2]
-330: info: check str1 == str3+1 passed
-339: fatal error in "test_BOOST_CHECK_EQUAL": critical test str1 == str2 failed [test != null string]
-345: warning in "test_BOOST_CHECK_EQUAL": condition b1 == b2 is not satisfied [B(1) != B(2)]
-351: error in "test_BOOST_CHECK_EQUAL": check c1 == c3 failed [C(0,100) != C(1,102)]. Index mismatch
-352: error in "test_BOOST_CHECK_EQUAL": check c1 == c2 failed [C(0,100) != C(0,101)]. Id mismatch
-382: error in "test_BOOST_CHECK_PREDICATE": check is_even( i ) failed for ( 17 )
-385: error in "test_BOOST_CHECK_PREDICATE": check not_equal_to<int>()( i, 17 ) failed for ( 17, 17 )
-391: warning in "test_BOOST_CHECK_PREDICATE": condition moo( 12, i, j ) is not satisfied for ( 12, 17, 15 )
-399: error in "test_BOOST_CHECK_PREDICATE": check compare_lists( l1, l2 ) failed for ( ,  ). Different sizes [2!=0]
-410: error in "test_BOOST_REQUIRE_PREDICATE": not aborted
-412: fatal error in "test_BOOST_REQUIRE_PREDICATE": critical test less_equal<int>()( arg2, arg1 ) failed for ( 2, 1 )
-433: error in "test_BOOST_CHECK_EQUAL_COLLECTIONS": check { testlist.begin(), testlist.end() } == { pattern, pattern+7 } failed. 
+154: error in "test_BOOST_CHECK": check false failed
+155: error in "test_BOOST_CHECK": check 1==2 failed
+156: error in "test_BOOST_CHECK": check i==1 failed
+159: info: check i==2 passed
+166: error in "test_BOOST_REQUIRE": not aborted
+168: fatal error in "test_BOOST_REQUIRE": critical test false failed
+172: fatal error in "test_BOOST_REQUIRE": critical test j > 5 failed
+175: info: check j < 5 passed
+175: error in "test_BOOST_REQUIRE": not aborted
+189: info: check 'object size 33 is too small' passed
+206: error in "test_BOOST_CHECK_MESSAGE": Well, may be that what I believe in
+208: error in "test_BOOST_CHECK_MESSAGE": Checking predicate failed. Some explanation
+211: info: check 'Could it fail?' passed
+218: fatal error in "test_BOOST_REQUIRE_MESSAGE": Here we should stop
+221: info: check 'That's OK' passed
+221: error in "test_BOOST_REQUIRE_MESSAGE": not aborted
+228: error in "test_BOOST_ERROR": Fail to miss an error
+235: fatal error in "test_BOOST_FAIL": No! No! Show must go on.
+251: error in "test_BOOST_CHECK_THROW": exception my_exception is expected
+254: warning in "test_BOOST_CHECK_THROW": exception my_exception is expected
+257: fatal error in "test_BOOST_CHECK_THROW": exception my_exception is expected
+260: info: check 'exception my_exception is caught' passed
+267: error in "test_BOOST_CHECK_EXCEPTION": incorrect exception my_exception is caught
+270: info: check 'incorrect exception my_exception is caught' passed
+280: error in "test_BOOST_CHECK_NO_THROW": exception thrown by throw my_exception()
+326: error in "test_BOOST_CHECK_EQUAL": check i == j failed [1 != 2]
+332: error in "test_BOOST_CHECK_EQUAL": check str1 == str2 failed [test1 != test12]
+335: error in "test_BOOST_CHECK_EQUAL": check i+1 == j failed [4 != 2]
+338: info: check str1 == str3+1 passed
+347: fatal error in "test_BOOST_CHECK_EQUAL": critical test str1 == str2 failed [test != null string]
+353: warning in "test_BOOST_CHECK_EQUAL": condition b1 == b2 is not satisfied [B(1) != B(2)]
+359: error in "test_BOOST_CHECK_EQUAL": check c1 == c3 failed [C(0,100) != C(1,102)]. Index mismatch
+360: error in "test_BOOST_CHECK_EQUAL": check c1 == c2 failed [C(0,100) != C(0,101)]. Id mismatch
+390: error in "test_BOOST_CHECK_PREDICATE": check is_even( i ) failed for ( 17 )
+393: error in "test_BOOST_CHECK_PREDICATE": check not_equal_to<int>()( i, 17 ) failed for ( 17, 17 )
+399: warning in "test_BOOST_CHECK_PREDICATE": condition moo( 12, i, j ) is not satisfied for ( 12, 17, 15 )
+407: error in "test_BOOST_CHECK_PREDICATE": check compare_lists( l1, l2 ) failed for ( ,  ). Different sizes [2!=0]
+418: error in "test_BOOST_REQUIRE_PREDICATE": not aborted
+420: fatal error in "test_BOOST_REQUIRE_PREDICATE": critical test less_equal<int>()( arg2, arg1 ) failed for ( 2, 1 )
+441: error in "test_BOOST_CHECK_EQUAL_COLLECTIONS": check { testlist.begin(), testlist.end() } == { pattern, pattern+7 } failed. 
 Mismatch in a position 2: 4 != 3
 Mismatch in a position 5: 7 != 6
-434: error in "test_BOOST_CHECK_EQUAL_COLLECTIONS": check { testlist.begin(), testlist.end() } == { pattern, pattern+2 } failed. 
+442: error in "test_BOOST_CHECK_EQUAL_COLLECTIONS": check { testlist.begin(), testlist.end() } == { pattern, pattern+2 } failed. 
 Collections size mismatch: 7 != 2
-443: error in "test_BOOST_CHECK_BITWISE_EQUAL": check (char)0x06 =.= (char)0x16 failed. 
+451: error in "test_BOOST_CHECK_BITWISE_EQUAL": check (char)0x06 =.= (char)0x16 failed. 
 Mismatch in a position 4
-446: warning in "test_BOOST_CHECK_BITWISE_EQUAL": condition (char)0x26 =.= (char)0x04 is not satisfied. 
+454: warning in "test_BOOST_CHECK_BITWISE_EQUAL": condition (char)0x26 =.= (char)0x04 is not satisfied. 
 Mismatch in a position 1
 Mismatch in a position 5
-449: fatal error in "test_BOOST_CHECK_BITWISE_EQUAL": critical test (char)0x26 =.= (int)0x26 failed. 
+457: fatal error in "test_BOOST_CHECK_BITWISE_EQUAL": critical test (char)0x26 =.= (int)0x26 failed. 
 Operands bit sizes mismatch: 8 != 32
 still testing
 1+1=2
@@ -57,5 +57,7 @@ still testing
 struct A
 0x14
   20
-0: fatal error in "test_BOOST_CHECKPOINT": C string: some error
-484: last checkpoint: Going to do a silly things
+0: fatal error in "test_BOOST_TEST_CHECKPOINT": C string: some error
+492: last checkpoint: Going to do a silly things
+0: fatal error in "test_BOOST_TEST_PASSPOINT": memory access violation
+502: last checkpoint

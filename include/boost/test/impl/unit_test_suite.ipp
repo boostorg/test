@@ -18,7 +18,7 @@
 
 // Boost.Test
 #include <boost/detail/workaround.hpp>
-#include <boost/test/unit_test_suite.hpp>
+#include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/utils/foreach.hpp>
 #include <boost/test/results_collector.hpp>
@@ -130,6 +130,7 @@ test_suite::add( test_unit* tu, counter_t expected_failures, unsigned timeout )
         tu->p_timeout.value = timeout;
 
     m_members.push_back( tu->p_id );
+    tu->p_parent_id.value = p_id;
 }
 
 //____________________________________________________________________________//
@@ -156,7 +157,8 @@ traverse_test_tree( test_case const& tc, test_tree_visitor& V )
 
 //____________________________________________________________________________//
 
-void    traverse_test_tree( test_suite const& suite, test_tree_visitor& V )
+void
+traverse_test_tree( test_suite const& suite, test_tree_visitor& V )
 {
     if( !V.test_suite_start( suite ) )
         return;
@@ -168,18 +170,14 @@ void    traverse_test_tree( test_suite const& suite, test_tree_visitor& V )
         }
         else {
             std::vector<test_unit_id> members( suite.m_members );
-//#if !defined(__BORLANDC__) || !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
             std::random_shuffle( members.begin(), members.end() );
-//#else
-//    bool random_test_order_not_supported_on_borland = false;
-//    assert(random_test_order_not_supported_on_borland);
-//#endif
             BOOST_TEST_FOREACH( test_unit_id, id, members )
                 traverse_test_tree( id, V );
         }
         
-    } catch( test_aborted const& ) {
+    } catch( test_being_aborted const& ) {
         V.test_suite_finish( suite );
+        framework::test_unit_aborted( suite );
 
         throw;
     }
@@ -230,6 +228,9 @@ normalize_test_case_name( const_string name )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.11  2005/12/14 05:54:41  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.10  2005/04/18 04:55:36  rogeeff
 //  test unit name made read/write
 //

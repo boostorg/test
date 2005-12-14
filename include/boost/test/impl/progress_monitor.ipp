@@ -17,7 +17,7 @@
 
 // Boost.Test
 #include <boost/test/progress_monitor.hpp>
-#include <boost/test/unit_test_suite.hpp>
+#include <boost/test/unit_test_suite_impl.hpp>
 
 // Boost
 #include <boost/progress.hpp>
@@ -109,6 +109,9 @@ progress_monitor_t::set_stream( std::ostream& ostr )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2005/12/14 05:52:49  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.1  2005/02/20 08:27:07  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //

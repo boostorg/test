@@ -42,7 +42,7 @@ void throw_my_exception1()
 
 void my_exception1_translator( my_exception1 )
 {
-    BOOST_MESSAGE( "Caught my_exception1" );
+    BOOST_TEST_MESSAGE( "Caught my_exception1" );
 }
 
 //____________________________________________________________________________//
@@ -54,7 +54,7 @@ void throw_my_exception2()
 
 void my_exception2_translator( my_exception2 )
 {
-    BOOST_MESSAGE( "Caught my_exception2" );
+    BOOST_TEST_MESSAGE( "Caught my_exception2" );
 }
 
 //____________________________________________________________________________//
@@ -78,6 +78,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.8  2005/12/14 06:01:02  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.7  2005/05/11 05:07:56  rogeeff
 //  licence update
 //

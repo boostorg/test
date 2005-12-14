@@ -17,7 +17,7 @@
 
 // Boost.Test
 #include <boost/test/results_reporter.hpp>
-#include <boost/test/unit_test_suite.hpp>
+#include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/results_collector.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/output/plain_report_formatter.hpp>
@@ -191,6 +191,9 @@ make_report( report_level l, test_unit_id id )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.5  2005/12/14 05:57:32  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.4  2005/04/30 16:48:51  rogeeff
 //  io saver warkaround for classic io is shared
 //

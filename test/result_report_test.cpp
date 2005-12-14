@@ -14,11 +14,11 @@
 // ***************************************************************************
 
 // Boost.Test
-#include <boost/test/test_tools.hpp>
+#include <boost/test/test_exec_monitor.hpp>
 #include <boost/test/results_reporter.hpp>
-#include <boost/test/unit_test_suite.hpp>
 #include <boost/test/output_test_stream.hpp>
 #include <boost/test/unit_test_log.hpp>
+#include <boost/test/unit_test_suite.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
 #if BOOST_WORKAROUND(  __GNUC__, < 3 )
@@ -120,7 +120,7 @@ test_main( int argc, char* argv[] )
     test_suite* ts_1 = BOOST_TEST_SUITE( "1 test cases inside" );
         ts_1->add( BOOST_TEST_CASE( good_foo ) );
 
-    test_suite* ts_1b = BOOST_TEST_SUITE( "1 bad test cases inside" );
+    test_suite* ts_1b = BOOST_TEST_SUITE( "1 bad test case inside" );
         ts_1b->add( BOOST_TEST_CASE( bad_foo ), 1 );
 
     test_suite* ts_2 = BOOST_TEST_SUITE( "2 test cases inside" );
@@ -140,9 +140,6 @@ test_main( int argc, char* argv[] )
         ts_main->add( ts_1 );
         ts_main->add( ts_2 );
         ts_main->add( ts_3 );
-
-    framework::run( ts_0 );
-    check( test_output, ts_0->p_id );
 
     framework::run( ts_1 );
     check( test_output, ts_1->p_id );
@@ -172,6 +169,9 @@ test_main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.23  2005/12/14 06:01:02  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.22  2005/05/11 05:07:57  rogeeff
 //  licence update
 //

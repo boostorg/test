@@ -15,7 +15,7 @@
 // ***************************************************************************
 
 // Boost.Test
-#include <boost/test/test_tools.hpp>
+#include <boost/test/test_exec_monitor.hpp>
 
 int test_main( int argc, char* [] )  // note the name
 {
@@ -33,16 +33,9 @@ int test_main( int argc, char* [] )  // note the name
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.14  2005/05/11 05:07:57  rogeeff
-//  licence update
+//  Revision 1.15  2005/12/14 06:01:02  rogeeff
+//  *** empty log message ***
 //
-//  Revision 1.13  2005/05/21 06:26:11  rogeeff
-//  licence update
-//
-//  Revision 1.12  2003/12/01 00:42:38  rogeeff
-//  prerelease cleaning
-//
-
 // ***************************************************************************
 
 // EOF

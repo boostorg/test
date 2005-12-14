@@ -21,16 +21,17 @@ rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file * : source
 
    return [ $(test-rule) $(source_files) <lib>../build/$(lib-name)
             : #args
-            : $(pattern_file)
-            : <stlport-iostream>on <borland><*><cxxflags>-w-8080 
-              <define>BOOST_TEST_NO_AUTO_LINK=1 # requirements
+            : #input files
+              $(pattern_file)
+            : # requirements
+              <stlport-iostream>on <borland><*><cxxflags>-w-8080 
             : $(test-name)
           ] ;
 }
 
 test-suite "basics_test"
         :
-          [ test-btl-lib run : class_properties_test    : boost_unit_test_framework ]
+          [ test-btl-lib run : class_properties_test : boost_unit_test_framework ]
           [ test-btl-lib run : basic_cstring_test    : boost_unit_test_framework ]
         ;
 
@@ -55,12 +56,10 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : foreach_test ]
           [ test-btl-lib run : output_test_stream_test  : boost_unit_test_framework ]
           [ test-btl-lib run : result_report_test       : boost_test_exec_monitor : $(test-dir)test_files/result_report_test.pattern ]
-          [ test-btl-lib run : parameterized_test_test  : boost_test_exec_monitor ]
+          [ test-btl-lib run : parameterized_test_test  : boost_unit_test_framework ]
           [ test-btl-lib run : test_fp_comparisons      : boost_unit_test_framework : $(test-dir)test_files/test_fp_comparisons.pattern ]
           [ test-btl-lib run : test_tools_test          : boost_unit_test_framework : $(test-dir)test_files/test_tools_test.pattern ]
-          [ test-btl-lib run : auto_unit_test_test      : boost_unit_test_framework ]
-          [ test-btl-lib run : auto_unit_test_test_mult : boost_unit_test_framework : : auto_unit_test_test_mult1.cpp auto_unit_test_test_mult2.cpp ]
-          [ test-btl-lib run : test_case_template_test  : boost_test_exec_monitor ]
+          [ test-btl-lib run : test_case_template_test  : boost_unit_test_framework ]
           [ test-btl-lib run : custom_exception_test    : boost_unit_test_framework ]
           [ test-btl-lib run : fixed_mapping_test       : boost_unit_test_framework ]
           [ test-btl-lib run : ifstream_line_iterator_test : boost_unit_test_framework : $(test-dir)test_files$(SLASH)ifstream_line_iterator.tst1 $(test-dir)test_files$(SLASH)ifstream_line_iterator.tst2 ]

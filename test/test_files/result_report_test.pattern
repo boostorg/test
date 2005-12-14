@@ -2,20 +2,6 @@
 *** No errors detected
 *************************************************************************
 
-Test suite "0 test cases inside" passed
-
-*************************************************************************
-
-Test suite "0 test cases inside" passed
-
-*************************************************************************
-<TestResult><TestSuite name="0 test cases inside" result="passed" assertions_passed="0" assertions_failed="0" expected_failures="0" test_cases_passed="0" test_cases_failed="0" test_cases_skipped="0"></TestSuite></TestResult>*************************************************************************
-<TestResult><TestSuite name="0 test cases inside" result="passed" assertions_passed="0" assertions_failed="0" expected_failures="0" test_cases_passed="0" test_cases_failed="0" test_cases_skipped="0"></TestSuite></TestResult>*************************************************************************
-<TestResult><TestSuite name="0 test cases inside" result="passed" assertions_passed="0" assertions_failed="0" expected_failures="0" test_cases_passed="0" test_cases_failed="0" test_cases_skipped="0"></TestSuite></TestResult>*************************************************************************
-
-*** No errors detected
-*************************************************************************
-
 Test suite "1 test cases inside" passed with:
   1 assertion out of 1 passed
   1 test case out of 1 passed
@@ -30,14 +16,14 @@ Test suite "1 test cases inside" passed with:
     1 assertion out of 1 passed
 
 *************************************************************************
-<TestResult><TestSuite name="1 test cases inside" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0"></TestSuite></TestResult>*************************************************************************
-<TestResult><TestSuite name="1 test cases inside" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0"></TestSuite></TestResult>*************************************************************************
-<TestResult><TestSuite name="1 test cases inside" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0"><TestCase name="good_foo" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0"></TestCase></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="1 test cases inside" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0" test_cases_aborted="0"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="1 test cases inside" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0" test_cases_aborted="0"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="1 test cases inside" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0" test_cases_aborted="0"><TestCase name="good_foo" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0"></TestCase></TestSuite></TestResult>*************************************************************************
 
 *** No errors detected
 *************************************************************************
 
-Test suite "1 bad test cases inside" passed with:
+Test suite "1 bad test case inside" passed with:
   1 assertion out of 2 passed
   1 assertion out of 2 failed
   1 failure expected
@@ -45,7 +31,7 @@ Test suite "1 bad test cases inside" passed with:
 
 *************************************************************************
 
-Test suite "1 bad test cases inside" passed with:
+Test suite "1 bad test case inside" passed with:
   1 assertion out of 2 passed
   1 assertion out of 2 failed
   1 failure expected
@@ -57,9 +43,9 @@ Test suite "1 bad test cases inside" passed with:
     1 failure expected
 
 *************************************************************************
-<TestResult><TestSuite name="1 bad test cases inside" result="passed" assertions_passed="1" assertions_failed="1" expected_failures="1" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0"></TestSuite></TestResult>*************************************************************************
-<TestResult><TestSuite name="1 bad test cases inside" result="passed" assertions_passed="1" assertions_failed="1" expected_failures="1" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0"></TestSuite></TestResult>*************************************************************************
-<TestResult><TestSuite name="1 bad test cases inside" result="passed" assertions_passed="1" assertions_failed="1" expected_failures="1" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0"><TestCase name="bad_foo" result="passed" assertions_passed="1" assertions_failed="1" expected_failures="1"></TestCase></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="1 bad test case inside" result="passed" assertions_passed="1" assertions_failed="1" expected_failures="1" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0" test_cases_aborted="0"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="1 bad test case inside" result="passed" assertions_passed="1" assertions_failed="1" expected_failures="1" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0" test_cases_aborted="0"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="1 bad test case inside" result="passed" assertions_passed="1" assertions_failed="1" expected_failures="1" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0" test_cases_aborted="0"><TestCase name="bad_foo" result="passed" assertions_passed="1" assertions_failed="1" expected_failures="1"></TestCase></TestSuite></TestResult>*************************************************************************
 
 *** No errors detected
 *************************************************************************
@@ -87,11 +73,11 @@ Test suite "2 test cases inside" passed with:
     1 failure expected
 
 *************************************************************************
-<TestResult><TestSuite name="2 test cases inside" result="passed" assertions_passed="2" assertions_failed="1" expected_failures="1" test_cases_passed="2" test_cases_failed="0" test_cases_skipped="0"></TestSuite></TestResult>*************************************************************************
-<TestResult><TestSuite name="2 test cases inside" result="passed" assertions_passed="2" assertions_failed="1" expected_failures="1" test_cases_passed="2" test_cases_failed="0" test_cases_skipped="0"></TestSuite></TestResult>*************************************************************************
-<TestResult><TestSuite name="2 test cases inside" result="passed" assertions_passed="2" assertions_failed="1" expected_failures="1" test_cases_passed="2" test_cases_failed="0" test_cases_skipped="0"><TestCase name="good_foo" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0"></TestCase><TestCase name="bad_foo" result="passed" assertions_passed="1" assertions_failed="1" expected_failures="1"></TestCase></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="2 test cases inside" result="passed" assertions_passed="2" assertions_failed="1" expected_failures="1" test_cases_passed="2" test_cases_failed="0" test_cases_skipped="0" test_cases_aborted="0"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="2 test cases inside" result="passed" assertions_passed="2" assertions_failed="1" expected_failures="1" test_cases_passed="2" test_cases_failed="0" test_cases_skipped="0" test_cases_aborted="0"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="2 test cases inside" result="passed" assertions_passed="2" assertions_failed="1" expected_failures="1" test_cases_passed="2" test_cases_failed="0" test_cases_skipped="0" test_cases_aborted="0"><TestCase name="good_foo" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0"></TestCase><TestCase name="bad_foo" result="passed" assertions_passed="1" assertions_failed="1" expected_failures="1"></TestCase></TestSuite></TestResult>*************************************************************************
 
-*** 2 failures detected in test suite "3 test cases inside"
+*** 3 failures detected in test suite "3 test cases inside"
 *************************************************************************
 
 Test suite "3 test cases inside" failed with:
@@ -99,6 +85,7 @@ Test suite "3 test cases inside" failed with:
   2 assertions out of 4 failed
   2 test cases out of 3 failed
   1 test case out of 3 skipped
+  1 test case out of 3 aborted
 
 *************************************************************************
 
@@ -107,6 +94,7 @@ Test suite "3 test cases inside" failed with:
   2 assertions out of 4 failed
   2 test cases out of 3 failed
   1 test case out of 3 skipped
+  1 test case out of 3 aborted
 
   Test case "bad_foo" failed with:
     1 assertion out of 2 passed
@@ -116,11 +104,11 @@ Test suite "3 test cases inside" failed with:
     1 assertion out of 2 passed
     1 assertion out of 2 failed
 
-  Test case "bad_foo" skipped
+  Test case "bad_foo" skipped due to failed dependancy
 *************************************************************************
-<TestResult><TestSuite name="3 test cases inside" result="failed" assertions_passed="2" assertions_failed="2" expected_failures="0" test_cases_passed="0" test_cases_failed="2" test_cases_skipped="1"></TestSuite></TestResult>*************************************************************************
-<TestResult><TestSuite name="3 test cases inside" result="failed" assertions_passed="2" assertions_failed="2" expected_failures="0" test_cases_passed="0" test_cases_failed="2" test_cases_skipped="1"></TestSuite></TestResult>*************************************************************************
-<TestResult><TestSuite name="3 test cases inside" result="failed" assertions_passed="2" assertions_failed="2" expected_failures="0" test_cases_passed="0" test_cases_failed="2" test_cases_skipped="1"><TestCase name="bad_foo" result="failed" assertions_passed="1" assertions_failed="1" expected_failures="0"></TestCase><TestCase name="very_bad_foo" result="aborted" assertions_passed="1" assertions_failed="1" expected_failures="0"></TestCase><TestCase name="bad_foo" result="skipped" assertions_passed="0" assertions_failed="0" expected_failures="0"></TestCase></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="3 test cases inside" result="failed" assertions_passed="2" assertions_failed="2" expected_failures="0" test_cases_passed="0" test_cases_failed="2" test_cases_skipped="1" test_cases_aborted="1"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="3 test cases inside" result="failed" assertions_passed="2" assertions_failed="2" expected_failures="0" test_cases_passed="0" test_cases_failed="2" test_cases_skipped="1" test_cases_aborted="1"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="3 test cases inside" result="failed" assertions_passed="2" assertions_failed="2" expected_failures="0" test_cases_passed="0" test_cases_failed="2" test_cases_skipped="1" test_cases_aborted="1"><TestCase name="bad_foo" result="failed" assertions_passed="1" assertions_failed="1" expected_failures="0"></TestCase><TestCase name="very_bad_foo" result="aborted" assertions_passed="1" assertions_failed="1" expected_failures="0"></TestCase><TestCase name="bad_foo" result="skipped" assertions_passed="0" assertions_failed="0" expected_failures="0"></TestCase></TestSuite></TestResult>*************************************************************************
 
 *** No errors detected
 *************************************************************************
@@ -164,8 +152,8 @@ Test suite "Fake Test Suite Hierarchy" passed with:
       1 assertion out of 2 failed
       1 failure expected
 
-  Test suite "3 test cases inside" skipped
+  Test suite "3 test cases inside" skipped due to failed dependancy
 *************************************************************************
-<TestResult><TestSuite name="Fake Test Suite Hierarchy" result="passed" assertions_passed="3" assertions_failed="1" expected_failures="1" test_cases_passed="3" test_cases_failed="0" test_cases_skipped="3"></TestSuite></TestResult>*************************************************************************
-<TestResult><TestSuite name="Fake Test Suite Hierarchy" result="passed" assertions_passed="3" assertions_failed="1" expected_failures="1" test_cases_passed="3" test_cases_failed="0" test_cases_skipped="3"></TestSuite></TestResult>*************************************************************************
-<TestResult><TestSuite name="Fake Test Suite Hierarchy" result="passed" assertions_passed="3" assertions_failed="1" expected_failures="1" test_cases_passed="3" test_cases_failed="0" test_cases_skipped="3"><TestSuite name="0 test cases inside" result="passed" assertions_passed="0" assertions_failed="0" expected_failures="0" test_cases_passed="0" test_cases_failed="0" test_cases_skipped="0"></TestSuite><TestSuite name="1 test cases inside" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0"><TestCase name="good_foo" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0"></TestCase></TestSuite><TestSuite name="2 test cases inside" result="passed" assertions_passed="2" assertions_failed="1" expected_failures="1" test_cases_passed="2" test_cases_failed="0" test_cases_skipped="0"><TestCase name="good_foo" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0"></TestCase><TestCase name="bad_foo" result="passed" assertions_passed="1" assertions_failed="1" expected_failures="1"></TestCase></TestSuite><TestSuite name="3 test cases inside" result="skipped" assertions_passed="0" assertions_failed="0" expected_failures="0" test_cases_passed="0" test_cases_failed="0" test_cases_skipped="3"></TestSuite></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="Fake Test Suite Hierarchy" result="passed" assertions_passed="3" assertions_failed="1" expected_failures="1" test_cases_passed="3" test_cases_failed="0" test_cases_skipped="3" test_cases_aborted="0"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="Fake Test Suite Hierarchy" result="passed" assertions_passed="3" assertions_failed="1" expected_failures="1" test_cases_passed="3" test_cases_failed="0" test_cases_skipped="3" test_cases_aborted="0"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="Fake Test Suite Hierarchy" result="passed" assertions_passed="3" assertions_failed="1" expected_failures="1" test_cases_passed="3" test_cases_failed="0" test_cases_skipped="3" test_cases_aborted="0"><TestSuite name="0 test cases inside" result="passed" assertions_passed="0" assertions_failed="0" expected_failures="0" test_cases_passed="0" test_cases_failed="0" test_cases_skipped="0" test_cases_aborted="0"></TestSuite><TestSuite name="1 test cases inside" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0" test_cases_passed="1" test_cases_failed="0" test_cases_skipped="0" test_cases_aborted="0"><TestCase name="good_foo" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0"></TestCase></TestSuite><TestSuite name="2 test cases inside" result="passed" assertions_passed="2" assertions_failed="1" expected_failures="1" test_cases_passed="2" test_cases_failed="0" test_cases_skipped="0" test_cases_aborted="0"><TestCase name="good_foo" result="passed" assertions_passed="1" assertions_failed="0" expected_failures="0"></TestCase><TestCase name="bad_foo" result="passed" assertions_passed="1" assertions_failed="1" expected_failures="1"></TestCase></TestSuite><TestSuite name="3 test cases inside" result="skipped" assertions_passed="0" assertions_failed="0" expected_failures="0" test_cases_passed="0" test_cases_failed="0" test_cases_skipped="3" test_cases_aborted="0"></TestSuite></TestSuite></TestResult>*************************************************************************

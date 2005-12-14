@@ -13,18 +13,17 @@
 // ***************************************************************************
 
 // Boost.Test
+#define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 #include <boost/test/output_test_stream.hpp>
 using boost::test_tools::output_test_stream;
-using boost::unit_test::test_suite;
 
 // STL
 #include <iomanip>
 
 //____________________________________________________________________________//
 
-void
-test_constructor()
+BOOST_AUTO_TEST_CASE( test_constructor )
 {
     {
         output_test_stream output;
@@ -65,8 +64,7 @@ test_constructor()
 
 //____________________________________________________________________________//
 
-void
-test_is_empty()
+BOOST_AUTO_TEST_CASE( test_is_empty )
 {
     output_test_stream output;
     BOOST_CHECK( output.is_empty() );
@@ -85,8 +83,7 @@ test_is_empty()
 
 //____________________________________________________________________________//
 
-void
-test_check_length()
+BOOST_AUTO_TEST_CASE( test_check_length )
 {
     output_test_stream output;
     BOOST_CHECK( output.check_length( 0 ) );
@@ -111,8 +108,7 @@ test_check_length()
 
 //____________________________________________________________________________//
 
-void
-test_is_equal()
+BOOST_AUTO_TEST_CASE( test_is_equal )
 {
     output_test_stream output;
     BOOST_CHECK( output.is_equal( "" ) );
@@ -150,11 +146,10 @@ test_is_equal()
 
 //____________________________________________________________________________//
 
-void
-test_match_pattern()
+BOOST_AUTO_TEST_CASE( test_match_pattern )
 {
-    {
-        output_test_stream output( "pattern.test", false );
+    for( int i1 = 0; i1 < 2; i1++ ) {
+        output_test_stream output( "pattern.test", i1 == 1 );
         
         output << "text1\n";
         BOOST_CHECK( output.match_pattern() );
@@ -163,19 +158,10 @@ test_match_pattern()
         output << "text3\n";
         BOOST_CHECK( output.match_pattern() );
     }
+
     {
         output_test_stream output( "pattern.test" );
-        
-        output << "text1\n";
-        BOOST_CHECK( output.match_pattern() );
-        output << "text2\n";
-        BOOST_CHECK( output.match_pattern() );
-        output << "text3\n";
-        BOOST_CHECK( output.match_pattern() );
-    }
-    {
-        output_test_stream output( "pattern.test" );
-        
+
         output << "text4\n";
         BOOST_CHECK( !output.match_pattern() );
         output << "text2\n";
@@ -185,7 +171,7 @@ test_match_pattern()
     }
     {
         output_test_stream output( "pattern.test" );
-        
+
         output << "text\n";
         BOOST_CHECK( !output.match_pattern() );
         output << "text2\n";
@@ -193,21 +179,13 @@ test_match_pattern()
         output << "text3\n";
         BOOST_CHECK( !output.match_pattern() );
     }
-}
 
-//____________________________________________________________________________//
+    for( int i2 = 0; i2 < 2; i2++ ) {
+        output_test_stream output( "pattern.test", i2 == 1, false );
 
-test_suite*
-init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
-    test_suite* test = BOOST_TEST_SUITE("ostream_test_stream test");
-
-    test->add( BOOST_TEST_CASE( &test_constructor ) );
-    test->add( BOOST_TEST_CASE( &test_is_empty ) );
-    test->add( BOOST_TEST_CASE( &test_check_length ) );
-    test->add( BOOST_TEST_CASE( &test_is_equal ) );
-    test->add( BOOST_TEST_CASE( &test_match_pattern ) );
-
-    return test;
+        output << "text\rmore text\n";
+        BOOST_CHECK( output.match_pattern() );
+    }
 }
 
 //____________________________________________________________________________//
@@ -216,30 +194,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.20  2005/05/11 05:07:57  rogeeff
-//  licence update
+//  Revision 1.21  2005/12/14 06:01:02  rogeeff
+//  *** empty log message ***
 //
-//  Revision 1.19  2005/01/30 03:35:55  rogeeff
-//  no message
-//
-//  Revision 1.18  2005/06/05 11:04:17  rogeeff
-//  no message
-//
-//  Revision 1.17  2005/05/27 06:30:48  rogeeff
-//  no message
-//
-//  Revision 1.16  2005/05/21 06:26:10  rogeeff
-//  licence update
-//
-//  Revision 1.15  2005/05/11 11:05:06  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//  namespace names shortened
-//
-//  Revision 1.14  2003/12/01 00:42:37  rogeeff
-//  prerelease cleaning
-//
-
 // ***************************************************************************
 
 // EOF

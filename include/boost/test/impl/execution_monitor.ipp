@@ -230,8 +230,6 @@ execution_monitor::execute( unit_test::callback0<int> const& F, bool catch_syste
     //  required.  Programmers ask for const anyhow, so we supply it.  That's
     //  easier than answering questions about non-const usage.
 
-    catch( execution_aborted const& )
-      { return 0; }
     catch( char const* ex )
       { detail::report_error( execution_exception::cpp_exception_error, "C string: ", ex ); }
     catch( std::string const& ex )
@@ -285,7 +283,11 @@ execution_monitor::execute( unit_test::callback0<int> const& F, bool catch_syste
       { detail::report_error( ex.error_code(), ex.error_message() ); }
 #endif  // BOOST_SIGACTION_BASED_SIGNAL_HANDLING
 
-    catch( execution_exception const& ) { throw; }
+    catch( execution_aborted const& )
+      { return 0; }
+
+    catch( execution_exception const& ) 
+      { throw; }
 
     catch( ... )
       { detail::report_error( execution_exception::cpp_exception_error, "unknown type" ); }
@@ -338,7 +340,7 @@ private:
     bool                    m_set_timeout;
 };
 
-signal_handler* signal_handler::s_active_handler = NULL; //!! need to be placed in thread specific storage
+signal_handler* signal_handler::s_active_handler = NULL; // !! need to be placed in thread specific storage
 
 //____________________________________________________________________________//
 
@@ -640,6 +642,9 @@ detect_memory_leak( long mem_leak_alloc_num )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.10  2005/12/14 05:52:49  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.9  2005/04/30 17:07:22  rogeeff
 //  ignore_warning included
 //

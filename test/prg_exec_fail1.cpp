@@ -26,6 +26,8 @@
 #include <cstddef> //Metrowerks linker needs at least one standard library
 #endif
 
+#include <boost/test/prg_exec_monitor.hpp>
+
 int
 cpp_main( int argc, char *[] )  // note the name
 {
@@ -41,6 +43,9 @@ cpp_main( int argc, char *[] )  // note the name
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2005/12/14 06:01:02  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.14  2005/05/11 05:07:57  rogeeff
 //  licence update
 //

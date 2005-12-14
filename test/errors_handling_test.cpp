@@ -16,9 +16,10 @@
 // ***************************************************************************
 
 // Boost.Test
-#include <boost/test/unit_test.hpp>
+#include <boost/test/test_exec_monitor.hpp>
 #include <boost/test/output_test_stream.hpp>
 #include <boost/test/unit_test_log.hpp>
+#include <boost/test/unit_test_suite.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/test/output/compiler_log_formatter.hpp>
@@ -98,7 +99,7 @@ void error_on_demand()
         break;
 
     case et_message:
-        BOOST_MESSAGE( "message" );
+        BOOST_TEST_MESSAGE( "message" );
         break;
 
     case et_warning:
@@ -116,17 +117,17 @@ void error_on_demand()
         break;
 
     case et_cpp_exception:
-        BOOST_CHECKPOINT( "error_on_demand() throw runtime_error" );
+        BOOST_TEST_CHECKPOINT( "error_on_demand() throw runtime_error" );
         throw std::runtime_error( "test std::runtime error what() message" );
 
 #ifndef LIMITED_TEST
     case et_system:
-        BOOST_CHECKPOINT( "error_on_demand() divide by zero" );
+        BOOST_TEST_CHECKPOINT( "error_on_demand() divide by zero" );
         divide_by_zero = 1 / divide_by_zero;
         break;
 
     case et_fatal_system:
-        BOOST_CHECKPOINT( "write to an invalid address" );
+        BOOST_TEST_CHECKPOINT( "write to an invalid address" );
         {
             int* p = 0;
             *p = 0;
@@ -198,6 +199,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.36  2005/12/14 06:01:02  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.35  2005/06/13 11:46:26  schoepflin
 //  Use limited tests with Tru64/CXX.
 //

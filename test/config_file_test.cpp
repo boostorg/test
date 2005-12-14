@@ -13,8 +13,8 @@
 // *****************************************************************************
 
 // Boost.Test
-#define BOOST_AUTO_TEST_MAIN
-#include <boost/test/auto_unit_test.hpp>
+#define BOOST_TEST_MAIN
+#include <boost/test/unit_test.hpp>
 namespace utf = boost::unit_test;
 
 // Boost.Runtime.Parameter
@@ -258,6 +258,9 @@ test_multipart_value()
 // History :
 //
 // $Log$
+// Revision 1.4  2005/12/14 06:01:02  rogeeff
+// *** empty log message ***
+//
 // Revision 1.3  2005/05/11 05:07:56  rogeeff
 // licence update
 //
