@@ -19,7 +19,7 @@
 #include <boost/test/output/plain_report_formatter.hpp>
 #include <boost/test/utils/custom_manip.hpp>
 #include <boost/test/results_collector.hpp>
-#include <boost/test/unit_test_suite.hpp>
+#include <boost/test/unit_test_suite_impl.hpp>
 
 #include <boost/test/utils/basic_cstring/io.hpp>
 
@@ -116,7 +116,7 @@ plain_report_formatter::test_unit_report_start( test_unit const& tu, std::ostrea
          << "Test " << (tu.p_type == tut_case ? "case " : "suite " ) << quote() << tu.p_name << ' ' << descr;
 
     if( tr.p_skipped ) {
-        ostr << '\n';
+        ostr << " due to " << (tu.check_dependencies() ? "test aborting\n" : "failed dependancy\n" );
         m_indent += 2;
         return;
     }
@@ -136,6 +136,7 @@ plain_report_formatter::test_unit_report_start( test_unit const& tu, std::ostrea
     print_stat_value( ostr, tr.p_test_cases_passed, m_indent, total_tc        , "test case", "passed" );
     print_stat_value( ostr, tr.p_test_cases_failed, m_indent, total_tc        , "test case", "failed" );
     print_stat_value( ostr, tr.p_test_cases_skipped, m_indent, total_tc       , "test case", "skipped" );
+    print_stat_value( ostr, tr.p_test_cases_aborted, m_indent, total_tc       , "test case", "aborted" );
     
     ostr << '\n';
 }
@@ -161,7 +162,8 @@ plain_report_formatter::do_confirmation_report( test_unit const& tu, std::ostrea
     }
         
     if( tr.p_skipped ) {
-        ostr << "*** Test " << tu.p_type_name << " skipped \n";
+        ostr << "*** Test " << tu.p_type_name << " skipped due to " 
+             << (tu.check_dependencies() ? "test aborting\n" : "failed dependancy\n" );
         return;
     }
 
@@ -171,8 +173,12 @@ plain_report_formatter::do_confirmation_report( test_unit const& tu, std::ostrea
         return;
     }
 
-
-    ostr << "*** " << tr.p_assertions_failed << " failure" << ( tr.p_assertions_failed != 1 ? "s" : "" ) << " detected";
+    counter_t num_failures = tr.p_assertions_failed + tr.p_test_cases_aborted;
+    
+    if( !tr.p_test_cases_aborted && tr.p_aborted )
+        ++num_failures;
+    
+    ostr << "*** " << num_failures << " failure" << ( num_failures != 1 ? "s" : "" ) << " detected";
     
     if( tr.p_expected_failures > 0 )
         ostr << " (" << tr.p_expected_failures << " failure" << ( tr.p_expected_failures != 1 ? "s" : "" ) << " expected)";
@@ -196,6 +202,9 @@ plain_report_formatter::do_confirmation_report( test_unit const& tu, std::ostrea
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.3  2005/12/14 05:31:06  rogeeff
+//  report all aborted test units
+//
 //  Revision 1.2  2005/12/08 03:19:01  dgregor
 //  Merged from Version_1_33_1
 //
