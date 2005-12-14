@@ -33,7 +33,7 @@ using unit_test::readonly_property;
 // **************        floating_point_comparison_type        ************** //
 // ************************************************************************** //
 
-enum floating_point_comparison_type { FPC_STRONG, FPC_WEAK };
+enum BOOST_TEST_DECL floating_point_comparison_type { FPC_STRONG, FPC_WEAK };
 
 // ************************************************************************** //
 // **************                    details                   ************** //
@@ -65,18 +65,82 @@ safe_fpt_division( FPT f1, FPT f2 )
 } // namespace tt_detail
 
 // ************************************************************************** //
+// **************         tolerance presentation types         ************** //
+// ************************************************************************** //
+
+template<typename FPT>
+struct percent_tolerance_t {
+    explicit    percent_tolerance_t( FPT v ) : m_value( v ) {}
+
+    FPT m_value;
+};
+
+//____________________________________________________________________________//
+
+template<typename Out,typename FPT>
+Out& operator<<( Out& out, percent_tolerance_t<FPT> t )
+{
+    return out << t.m_value;
+}
+
+//____________________________________________________________________________//
+
+template<typename FPT>
+inline percent_tolerance_t<FPT>
+percent_tolerance( FPT v )
+{
+    return percent_tolerance_t<FPT>( v );
+}
+
+//____________________________________________________________________________//
+
+template<typename FPT>
+struct fraction_tolerance_t {
+    explicit fraction_tolerance_t( FPT v ) : m_value( v ) {}
+
+    FPT m_value;
+};
+
+//____________________________________________________________________________//
+
+template<typename Out,typename FPT>
+Out& operator<<( Out& out, fraction_tolerance_t<FPT> t )
+{
+    return out << t.m_value;
+}
+
+//____________________________________________________________________________//
+
+template<typename FPT>
+inline fraction_tolerance_t<FPT>
+fraction_tolerance( FPT v )
+{
+    return fraction_tolerance_t<FPT>( v );
+}
+
+//____________________________________________________________________________//
+
+// ************************************************************************** //
 // **************             close_at_tolerance               ************** //
 // ************************************************************************** //
 
-template<typename FPT, typename PersentType = FPT >
+template<typename FPT, typename ToleranceBaseType = FPT >
 class close_at_tolerance {
 public:
     // Public typedefs
     typedef bool result_type;
 
     // Constructor
-    explicit    close_at_tolerance( PersentType percentage_tolerance, floating_point_comparison_type fpc_type = FPC_STRONG ) 
-    : p_fraction_tolerance( static_cast<FPT>(0.01)*percentage_tolerance ), p_strong_or_weak( fpc_type ==  FPC_STRONG ) {}
+    explicit    close_at_tolerance( percent_tolerance_t<ToleranceBaseType>  tolerance, 
+                                    floating_point_comparison_type          fpc_type = FPC_STRONG ) 
+    : p_fraction_tolerance_t( static_cast<FPT>(0.01)*tolerance.m_value )
+    , p_strong_or_weak( fpc_type ==  FPC_STRONG )
+    {}
+    explicit    close_at_tolerance( fraction_tolerance_t<ToleranceBaseType> tolerance, 
+                                    floating_point_comparison_type          fpc_type = FPC_STRONG ) 
+    : p_fraction_tolerance_t( tolerance.m_value )
+    , p_strong_or_weak( fpc_type ==  FPC_STRONG )
+    {}
 
     bool        operator()( FPT left, FPT right ) const
     {
@@ -84,12 +148,12 @@ public:
         FPT d1   = tt_detail::safe_fpt_division( diff, tt_detail::fpt_abs( right ) );
         FPT d2   = tt_detail::safe_fpt_division( diff, tt_detail::fpt_abs( left ) );
         
-        return p_strong_or_weak ? (d1 <= p_fraction_tolerance.get() && d2 <= p_fraction_tolerance.get()) 
-                                : (d1 <= p_fraction_tolerance.get() || d2 <= p_fraction_tolerance.get());
+        return p_strong_or_weak ? (d1 <= p_fraction_tolerance_t.get() && d2 <= p_fraction_tolerance_t.get()) 
+                                : (d1 <= p_fraction_tolerance_t.get() || d2 <= p_fraction_tolerance_t.get());
     }
 
     // Public properties
-    readonly_property<FPT>  p_fraction_tolerance;
+    readonly_property<FPT>  p_fraction_tolerance_t;
     readonly_property<bool> p_strong_or_weak;
 };
 
@@ -99,15 +163,25 @@ public:
 // **************               check_is_close                 ************** //
 // ************************************************************************** //
 
-struct check_is_close_t {
+struct BOOST_TEST_DECL check_is_close_t {
     // Public typedefs
     typedef bool result_type;
 
-    template<typename FPT, typename PersentType>
+    template<typename FPT, typename ToleranceBaseType>
     bool
-    operator()( FPT left, FPT right, PersentType percentage_tolerance, floating_point_comparison_type fpc_type = FPC_STRONG )
+    operator()( FPT left, FPT right, percent_tolerance_t<ToleranceBaseType> tolerance, 
+                floating_point_comparison_type fpc_type = FPC_STRONG )
     {
-        close_at_tolerance<FPT,PersentType> pred( percentage_tolerance, fpc_type );
+        close_at_tolerance<FPT,ToleranceBaseType> pred( tolerance, fpc_type );
+
+        return pred( left, right );
+    }
+    template<typename FPT, typename ToleranceBaseType>
+    bool
+    operator()( FPT left, FPT right, fraction_tolerance_t<ToleranceBaseType> tolerance, 
+                floating_point_comparison_type fpc_type = FPC_STRONG )
+    {
+        close_at_tolerance<FPT,ToleranceBaseType> pred( tolerance, fpc_type );
 
         return pred( left, right );
     }
@@ -123,7 +197,7 @@ check_is_close_t check_is_close;
 // **************               check_is_small                 ************** //
 // ************************************************************************** //
 
-struct check_is_small_t {
+struct BOOST_TEST_DECL check_is_small_t {
     // Public typedefs
     typedef bool result_type;
 
@@ -153,6 +227,9 @@ check_is_small_t check_is_small;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.24  2005/12/14 05:07:28  rogeeff
+//  introduced an ability to test on closeness based on either percentage dirven tolerance or fraction driven one
+//
 //  Revision 1.23  2005/05/29 08:54:57  rogeeff
 //  allow bind usage
 //
