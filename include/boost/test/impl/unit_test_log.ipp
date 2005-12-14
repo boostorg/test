@@ -18,7 +18,7 @@
 // Boost.Test
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/unit_test_log_formatter.hpp>
-#include <boost/test/unit_test_suite.hpp>
+#include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/execution_monitor.hpp>
 
 #include <boost/test/detail/unit_test_parameters.hpp>
@@ -53,19 +53,6 @@ entry_value_collector
 entry_value_collector::operator<<( const_string v )
 {
     unit_test_log << v;
-
-    m_last = false;
-
-    entry_value_collector res;
-    return res;
-}
-
-//____________________________________________________________________________//
-
-entry_value_collector
-entry_value_collector::operator<<( log::checkpoint const& cp )
-{
-    unit_test_log << cp;
 
     m_last = false;
 
@@ -115,16 +102,16 @@ struct unit_test_log_impl {
     bool                m_entry_started;
     log_entry_data      m_entry_data;
 
-    // checkpoint data
+    // check point data
     log_checkpoint_data m_checkpoint_data;
 
     // helper functions
     std::ostream&       stream()            { return *m_stream; }
-    void                set_checkpoint( log::checkpoint const& cp )
+    void                set_checkpoint( const_string file, std::size_t line_num, const_string msg )
     {
-        assign_op( m_checkpoint_data.m_message, cp.m_message, 0 );
-        m_checkpoint_data.m_file    = m_entry_data.m_file;
-        m_checkpoint_data.m_line    = m_entry_data.m_line;
+        assign_op( m_checkpoint_data.m_message, msg, 0 );
+        m_checkpoint_data.m_file_name    = file;
+        m_checkpoint_data.m_line_num    = line_num;
     }
 };
 
@@ -158,7 +145,7 @@ unit_test_log_t::test_finish()
 void
 unit_test_log_t::test_aborted()
 {
-    BOOST_UT_LOG_ENTRY( log_messages ) << "Test is aborted";
+    BOOST_TEST_LOG_ENTRY( log_messages ) << "Test is aborted";
 }
 
 //____________________________________________________________________________//
@@ -241,8 +228,22 @@ unit_test_log_t::exception_caught( execution_exception const& ex )
 
 //____________________________________________________________________________//
 
+void
+unit_test_log_t::set_checkpoint( const_string file, std::size_t line_num, const_string msg )
+{
+    s_log_impl().set_checkpoint( file, line_num, msg );
+}
+
+//____________________________________________________________________________//
+
+char
+set_unix_slash( char in )
+{
+    return in == '\\' ? '/' : in;
+}
+    
 unit_test_log_t&
-unit_test_log_t::operator<<( log::begin const& )
+unit_test_log_t::operator<<( log::begin const& b )
 {
     if( s_log_impl().m_entry_in_progress )
         *this << log::end();
@@ -250,6 +251,15 @@ unit_test_log_t::operator<<( log::begin const& )
     s_log_impl().m_stream_state_saver->restore();
 
     s_log_impl().m_entry_data.clear();
+
+    assign_op( s_log_impl().m_entry_data.m_file_name, b.m_file_name, 0 );
+
+    // normalize file name
+    std::transform( s_log_impl().m_entry_data.m_file_name.begin(), s_log_impl().m_entry_data.m_file_name.end(),
+                    s_log_impl().m_entry_data.m_file_name.begin(),
+                    &set_unix_slash );
+
+    s_log_impl().m_entry_data.m_line_num = b.m_line_num;
 
     return *this;
 }
@@ -263,47 +273,6 @@ unit_test_log_t::operator<<( log::end const& )
         s_log_impl().m_log_formatter->log_entry_finish( s_log_impl().stream() );
 
     s_log_impl().m_entry_in_progress = false;
-
-    return *this;
-}
-
-//____________________________________________________________________________//
-
-char
-set_unix_slash( char in )
-{
-    return in == '\\' ? '/' : in;
-}
-
-unit_test_log_t&
-unit_test_log_t::operator<<( log::file const& f )
-{
-    assign_op( s_log_impl().m_entry_data.m_file, f.m_file_name, 0 );
-
-    // normalize file name
-    std::transform( s_log_impl().m_entry_data.m_file.begin(), s_log_impl().m_entry_data.m_file.end(),
-                    s_log_impl().m_entry_data.m_file.begin(),
-                    &set_unix_slash );
-
-    return *this;
-}
-
-//____________________________________________________________________________//
-
-unit_test_log_t&
-unit_test_log_t::operator<<( log::line const& l )
-{
-    s_log_impl().m_entry_data.m_line = l.m_line_num;
-
-    return *this;
-}
-
-//____________________________________________________________________________//
-
-unit_test_log_t&
-unit_test_log_t::operator<<( log::checkpoint const& cp )
-{
-    s_log_impl().set_checkpoint( cp );
 
     return *this;
 }
@@ -433,6 +402,9 @@ unit_test_log_t::set_formatter( unit_test_log_formatter* the_formatter )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.11  2005/12/14 05:34:21  rogeeff
+//  log API simplified
+//
 //  Revision 1.10  2005/04/30 16:48:51  rogeeff
 //  io saver warkaround for classic io is shared
 //
