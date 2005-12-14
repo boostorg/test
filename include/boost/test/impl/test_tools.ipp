@@ -21,6 +21,7 @@
 #include <boost/test/output_test_stream.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/execution_monitor.hpp> // execution_aborted
+#include <boost/test/unit_test_suite_impl.hpp>
 
 // Boost
 #include <boost/config.hpp>
@@ -73,12 +74,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
     log_level    ll;
     char const*  prefix;
     char const*  suffix;
-
-    if( tl == PASS )
-        framework::assertion_result( true );
-    else if( tl != WARN )
-        framework::assertion_result( false );    
-        
+       
     switch( tl ) {
     case PASS:
         ll      = log_successful_tests;
@@ -106,7 +102,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
 
     switch( ct ) {
     case CHECK_PRED:
-        unit_test_log << unit_test::log::begin() << unit_test::log::file( file_name ) << unit_test::log::line( line_num ) 
+        unit_test_log << unit_test::log::begin( file_name, line_num ) 
                       << ll << prefix << check_descr.str() << suffix;
         
         if( !pr.has_empty_message() )
@@ -114,8 +110,9 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         
         unit_test_log << unit_test::log::end();
         break;
+
     case CHECK_MSG:
-        unit_test_log << unit_test::log::begin() << unit_test::log::file( file_name ) << unit_test::log::line( line_num ) << ll;
+        unit_test_log << unit_test::log::begin( file_name, line_num ) << ll;
         
         if( tl == PASS )
             unit_test_log << prefix << "'" << check_descr.str() << "'" << suffix;
@@ -127,13 +124,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
 
         unit_test_log << unit_test::log::end();
         break;
-    case MSG_ONLY:
-        unit_test_log << unit_test::log::begin() << unit_test::log::file( file_name ) << unit_test::log::line( line_num ) 
-                      << log_messages << check_descr.str() << unit_test::log::end();
-        break;
-    case SET_CHECKPOINT:
-        unit_test_log << unit_test::log::file( file_name ) << unit_test::log::line( line_num ) << unit_test::log::checkpoint( check_descr.str() );
-        break;
+
     case CHECK_EQUAL: {
         va_list args;
 
@@ -143,7 +134,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         char const* arg2_descr  = va_arg( args, char const* );
         char const* arg2_val    = va_arg( args, char const* );
 
-        unit_test_log << unit_test::log::begin() << unit_test::log::file( file_name ) << unit_test::log::line( line_num ) 
+        unit_test_log << unit_test::log::begin( file_name, line_num ) 
                       << ll << prefix << arg1_descr << " == " << arg2_descr << suffix;
 
         if( tl != PASS )
@@ -157,7 +148,9 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         unit_test_log << unit_test::log::end();
         break;
     }
-    case CHECK_CLOSE: {
+
+    case CHECK_CLOSE:
+    case CHECK_CLOSE_FRACTION: {
         va_list args;
 
         va_start( args, num_of_args );
@@ -168,12 +161,14 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         /* toler_descr = */       va_arg( args, char const* );
         char const* toler_val   = va_arg( args, char const* );
 
-        unit_test_log << unit_test::log::begin() << unit_test::log::file( file_name ) << unit_test::log::line( line_num ) << ll;
+        unit_test_log << unit_test::log::begin( file_name, line_num ) << ll;
 
         unit_test_log << "difference between " << arg1_descr << "{" << arg1_val << "}" 
                       << " and "               << arg2_descr << "{" << arg2_val << "}"
                       << ( tl == PASS ? " doesn't exceed " : " exceeds " )
-                      << toler_val << "%",
+                      << toler_val;
+        if( ct == CHECK_CLOSE )
+            unit_test_log << "%";
 
         va_end( args );
         
@@ -192,11 +187,11 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         /* toler_descr = */       va_arg( args, char const* );
         char const* toler_val   = va_arg( args, char const* );
 
-        unit_test_log << unit_test::log::begin() << unit_test::log::file( file_name ) << unit_test::log::line( line_num ) << ll;
+        unit_test_log << unit_test::log::begin( file_name, line_num ) << ll;
 
         unit_test_log << "absolute value of " << arg1_descr << "{" << arg1_val << "}" 
                       << ( tl == PASS ? " doesn't exceed " : " exceeds " )
-                      << toler_val,
+                      << toler_val;
 
         va_end( args );
         
@@ -206,8 +201,9 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         unit_test_log << unit_test::log::end();
         break;
     }
+
     case CHECK_PRED_WITH_ARGS: {
-        unit_test_log << unit_test::log::begin() << unit_test::log::file( file_name ) << unit_test::log::line( line_num ) 
+        unit_test_log << unit_test::log::begin( file_name, line_num ) 
                       << ll << prefix << check_descr.str();
 
         // print predicate call description
@@ -249,6 +245,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         unit_test_log << unit_test::log::end();
         break;
     }
+
     case CHECK_EQUAL_COLL: {
         va_list args;
 
@@ -258,7 +255,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         char const* right_begin_descr   = va_arg( args, char const* );
         char const* right_end_descr     = va_arg( args, char const* );
 
-        unit_test_log << unit_test::log::begin() << unit_test::log::file( file_name ) << unit_test::log::line( line_num ) 
+        unit_test_log << unit_test::log::begin( file_name, line_num ) 
                       << ll << prefix 
                       << "{ " << left_begin_descr  << ", " << left_end_descr  << " } == { " 
                               << right_begin_descr << ", " << right_end_descr << " }"
@@ -272,6 +269,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         unit_test_log << unit_test::log::end();
         break;
     }
+
     case CHECK_BITWISE_EQUAL: {
         va_list args;
 
@@ -279,7 +277,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         char const* left_descr    = va_arg( args, char const* );
         char const* right_descr   = va_arg( args, char const* );
 
-        unit_test_log << unit_test::log::begin() << unit_test::log::file( file_name ) << unit_test::log::line( line_num )
+        unit_test_log << unit_test::log::begin( file_name, line_num )
                       << ll << prefix << left_descr  << " =.= " << right_descr << suffix;
 
         va_end( args );
@@ -292,8 +290,22 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
     }
     }
 
-    if( tl == REQUIRE ) {
-        framework::test_unit_aborted();
+    switch( tl ) {
+    case PASS:
+        framework::assertion_result( true );
+        break;
+
+    case WARN:
+        break;
+
+    case CHECK:
+        framework::assertion_result( false );
+        break;
+        
+    case REQUIRE:
+        framework::assertion_result( false );
+
+        framework::test_unit_aborted( framework::current_test_case() );
 
         throw execution_aborted();
     }
@@ -393,6 +405,7 @@ struct output_test_stream::Impl
 {
     std::fstream    m_pattern;
     bool            m_match_or_save;
+    bool            m_text_or_binary;
     std::string     m_synced_string;
 
     char            get_char()
@@ -400,7 +413,7 @@ struct output_test_stream::Impl
         char res;
         do {
             m_pattern.get( res );
-        } while( res == '\r' && !m_pattern.fail() && !m_pattern.eof() );
+        } while( m_text_or_binary && res == '\r' && !m_pattern.fail() && !m_pattern.eof() );
 
         return res;
     }
@@ -414,18 +427,23 @@ struct output_test_stream::Impl
 
 //____________________________________________________________________________//
 
-output_test_stream::output_test_stream( const_string pattern_file_name, bool match_or_save )
+output_test_stream::output_test_stream( const_string pattern_file_name, bool match_or_save, bool text_or_binary )
 : m_pimpl( new Impl )
 {
     if( !pattern_file_name.is_empty() ) {
-        m_pimpl->m_pattern.open( pattern_file_name.begin(), match_or_save ? std::ios::in : std::ios::out );
+        std::ios::openmode m = match_or_save ? std::ios::in : std::ios::out;
+        if( !text_or_binary )
+            m |= std::ios::binary;
+
+        m_pimpl->m_pattern.open( pattern_file_name.begin(), m );
 
         BOOST_WARN_MESSAGE( m_pimpl->m_pattern.is_open(),
                              "Couldn't open pattern file " << pattern_file_name
                                 << " for " << ( m_pimpl->m_match_or_save ? "reading" : "writing") );
     }
 
-    m_pimpl->m_match_or_save = match_or_save;
+    m_pimpl->m_match_or_save    = match_or_save;
+    m_pimpl->m_text_or_binary   = text_or_binary;
 }
 
 //____________________________________________________________________________//
@@ -497,7 +515,7 @@ output_test_stream::match_pattern( bool flush_stream )
 
     if( !m_pimpl->m_pattern.is_open() ) {
         result = false;
-        result.message() << "I/O failure";
+        result.message() << "Pattern file could not be not open!";
     }
     else {
         if( m_pimpl->m_match_or_save ) {
@@ -530,7 +548,8 @@ output_test_stream::match_pattern( bool flush_stream )
                     result.message() << "...";
 
                     // skip rest of the bytes. May help for further matching
-                    m_pimpl->m_pattern.ignore( m_pimpl->m_synced_string.length() - i - suffix_size );
+                    m_pimpl->m_pattern.ignore( 
+                        static_cast<std::streamsize>( m_pimpl->m_synced_string.length() - i - suffix_size) );
                     break;
                 }
             }
@@ -601,6 +620,11 @@ output_test_stream::sync()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.10  2005/12/14 05:33:47  rogeeff
+//  use simplified log API
+//  assertion_result call moved pass log statement
+//  Binary output test stream support implemented
+//
 //  Revision 1.9  2005/06/22 22:03:05  dgregor
 //  More explicit scoping needed for GCC 2.95.3
 //
