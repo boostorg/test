@@ -17,7 +17,7 @@
 
 // Boost.Test
 #include <boost/test/results_collector.hpp>
-#include <boost/test/unit_test_suite.hpp>
+#include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/output/xml_report_formatter.hpp>
 
 #include <boost/test/utils/xml_printer.hpp>
@@ -76,7 +76,8 @@ xml_report_formatter::test_unit_report_start( test_unit const& tu, std::ostream&
     if( tu.p_type == tut_suite )
         ostr << " test_cases_passed"    << attr_value() << tr.p_test_cases_passed
              << " test_cases_failed"    << attr_value() << tr.p_test_cases_failed
-             << " test_cases_skipped"   << attr_value() << tr.p_test_cases_skipped;
+             << " test_cases_skipped"   << attr_value() << tr.p_test_cases_skipped
+             << " test_cases_aborted"   << attr_value() << tr.p_test_cases_aborted;
              
     
     ostr << '>';
@@ -115,6 +116,9 @@ xml_report_formatter::do_confirmation_report( test_unit const& tu, std::ostream&
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.3  2005/12/14 05:39:43  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.2  2005/04/29 06:30:07  rogeeff
 //  bug fix for incorect XML output
 //

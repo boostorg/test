@@ -17,7 +17,7 @@
 
 // Boost.Test
 #include <boost/test/output/xml_log_formatter.hpp>
-#include <boost/test/unit_test_suite.hpp>
+#include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
 
@@ -115,9 +115,9 @@ xml_log_formatter::log_exception( std::ostream& ostr, log_checkpoint_data const&
     ostr << "<Exception name" << attr_value() << framework::current_test_case().p_name.get() << ">"
            << pcdata() << explanation;
 
-    if( !checkpoint_data.m_message.empty() ) {
-        ostr << "<LastCheckpoint file" << attr_value() << checkpoint_data.m_file
-             << " line"                << attr_value() << checkpoint_data.m_line
+    if( !checkpoint_data.m_file_name.is_empty() ) {
+        ostr << "<LastCheckpoint file" << attr_value() << checkpoint_data.m_file_name
+             << " line"                << attr_value() << checkpoint_data.m_line_num
              << ">"
              << pcdata() << checkpoint_data.m_message
              << "</LastCheckpoint>";
@@ -135,8 +135,8 @@ xml_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& en
 
     m_curr_tag = xml_tags[let];
     ostr << '<' << m_curr_tag
-         << " file" << attr_value() << entry_data.m_file
-         << " line" << attr_value() << entry_data.m_line
+         << " file" << attr_value() << entry_data.m_file_name
+         << " line" << attr_value() << entry_data.m_line_num
          << ">";
 }
 
@@ -174,6 +174,9 @@ xml_log_formatter::log_entry_finish( std::ostream& ostr )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.5  2005/12/14 05:39:43  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.4  2005/04/30 16:47:14  rogeeff
 //  warning supressed
 //
