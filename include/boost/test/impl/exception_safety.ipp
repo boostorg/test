@@ -449,7 +449,7 @@ format_execution_path( wrap_stringstream& formatter, ExecPathIt it, ExecPathIt e
                           << ", " << it->m_alloc.size << " bytes long: <";
 
                 unsigned i;
-                for( i = 0; i < (std::min)( it->m_alloc.size, (unsigned)8 ); i++ ) {
+                for( i = 0; i < std::min<std::size_t>( it->m_alloc.size, 8 ); i++ ) {
                     unsigned char c = ((unsigned char*)it->m_alloc.ptr)[i];
                     if( std::isprint( c ) )
                         formatter << c;
@@ -459,7 +459,7 @@ format_execution_path( wrap_stringstream& formatter, ExecPathIt it, ExecPathIt e
 
                 formatter << "> ";
 
-                for( i = 0; i < (std::min)( it->m_alloc.size, (unsigned)8 ); i++ ) {
+                for( i = 0; i < std::min<std::size_t>( it->m_alloc.size, 8 ); i++ ) {
                     unsigned c = ((unsigned char*)it->m_alloc.ptr)[i];
                     formatter << std::hex << std::uppercase << c << ' ';
                 }
@@ -645,6 +645,9 @@ operator delete[]( void* p, std::nothrow_t const& ) throw()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2005/12/16 02:33:17  rogeeff
+//  portability fix
+//
 //  Revision 1.1  2005/12/14 05:56:09  rogeeff
 //  exception safety testing introduced
 //
