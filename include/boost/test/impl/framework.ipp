@@ -25,7 +25,6 @@
 #include <boost/test/progress_monitor.hpp>
 #include <boost/test/results_reporter.hpp>
 #include <boost/test/test_tools.hpp>
-#include <boost/test/auto_unit_test.hpp>
 
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/test/detail/global_typedef.hpp>
@@ -423,6 +422,9 @@ test_unit_aborted( test_unit const& tu )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.8  2005/12/17 02:34:11  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.7  2005/12/14 05:35:57  rogeeff
 //  DLL support implemented
 //  Alternative init API introduced
