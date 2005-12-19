@@ -37,6 +37,7 @@
 
 #include <boost/type_traits/is_array.hpp>
 #include <boost/type_traits/is_function.hpp>
+#include <boost/type_traits/is_abstract.hpp>
 
 #include <boost/mpl/or.hpp>
 
@@ -284,7 +285,7 @@ template<typename T>
 struct print_log_value {
     void    operator()( std::ostream& ostr, T const& t )
     {
-        typedef typename mpl::or_<is_array<T>,is_function<T> >::type couldnt_use_nl;
+        typedef typename mpl::or_<is_array<T>,is_function<T>,is_abstract<T> >::type couldnt_use_nl;
 
         set_precision( ostr, couldnt_use_nl() );
 
@@ -592,6 +593,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.56  2005/12/19 03:08:30  rogeeff
+//  added is_abstract to guard numeric_limits instantiation
+//
 //  Revision 1.55  2005/12/14 05:20:41  rogeeff
 //  dll support introduced
 //  BOOST_TEST_PASSPOINT() introduced
