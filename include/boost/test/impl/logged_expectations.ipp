@@ -93,7 +93,8 @@ expectations_logger::expectations_logger( const_string log_file_name, bool test_
         
         std::getline( m_log_file, line, LINE_SEP );
         
-        string_token_iterator tit( const_string( line ), (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
+        const_string cline( line );
+        string_token_iterator tit( cline, (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
 
         BOOST_CHECK_EQUAL( *tit, FILE_SIG ); 
         ++tit;
@@ -114,7 +115,8 @@ expectations_logger::decision_point( const_string, std::size_t )
         
         std::getline( m_log_file, line, LINE_SEP );
         
-        string_token_iterator tit( const_string( line ), (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
+        const_string cline( line );
+        string_token_iterator tit( cline, (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
         
         BOOST_CHECK_EQUAL( *tit, DP_SIG ); ++tit;
         return lexical_cast<bool>( *tit );
@@ -136,7 +138,8 @@ expectations_logger::enter_scope( const_string, std::size_t, const_string scope_
         
         std::getline( m_log_file, line, LINE_SEP );
         
-        string_token_iterator tit( const_string( line ), (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
+        const_string cline( line );
+        string_token_iterator tit( cline, (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
         
         BOOST_CHECK_EQUAL( *tit, SCOPE_SIG ); ++tit;
         BOOST_CHECK_EQUAL( *tit, scope_name );
@@ -158,7 +161,8 @@ expectations_logger::allocated( const_string, std::size_t, void*, std::size_t s 
         
         std::getline( m_log_file, line, LINE_SEP );
         
-        string_token_iterator tit( const_string( line ), (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
+        const_string cline( line );
+        string_token_iterator tit( cline, (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
         
         BOOST_CHECK_EQUAL( *tit, ALLOC_SIG ); ++tit;
         BOOST_CHECK_EQUAL( lexical_cast<std::size_t>( *tit ), s );
@@ -178,7 +182,8 @@ expectations_logger::data_flow( const_string d )
         
         std::getline( m_log_file, line, LINE_SEP );
         
-        string_token_iterator tit( const_string( line ), (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
+        const_string cline( line );
+        string_token_iterator tit( cline, (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
         
         BOOST_CHECK_EQUAL( *tit, DATA_SIG ); ++tit;
         BOOST_CHECK_EQUAL( *tit, d );
@@ -198,7 +203,8 @@ expectations_logger::return_value( const_string default_value )
         
         std::getline( m_log_file, line, LINE_SEP );
         
-        string_token_iterator tit( const_string( line ), (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
+        const_string cline( line );
+        string_token_iterator tit( cline, (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
         
         BOOST_CHECK_EQUAL( *tit, RETURN_SIG ); ++tit;
         
@@ -241,6 +247,9 @@ logged_expectations( callback0<> const& F, const_string log_file_name, bool test
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2005/12/19 00:08:34  rogeeff
+//  gcc port
+//
 //  Revision 1.1  2005/12/14 05:56:56  rogeeff
 //  Interraction based / logged expectation testing is introduced
 //
