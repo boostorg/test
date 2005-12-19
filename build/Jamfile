@@ -16,6 +16,7 @@ TEST_EXEC_MON_SOURCES =
   execution_monitor
   framework
   logged_expectations
+  interaction_based
   plain_report_formatter
   progress_monitor
   results_collector
