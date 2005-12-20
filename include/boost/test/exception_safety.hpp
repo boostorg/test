@@ -18,7 +18,6 @@
 // Boost.Test
 #include <boost/test/detail/config.hpp>
 #include <boost/test/utils/callback.hpp>
-#include <boost/test/unit_test.hpp>
 
 // STL
 #include <memory>
@@ -75,6 +74,9 @@ void    BOOST_TEST_DECL exception_safety( unit_test::callback0<> const& F,
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/12/20 23:50:13  rogeeff
+//  unit_test.hpp removed
+//
 //  Revision 1.1  2005/12/14 05:03:46  rogeeff
 //  exception safety automatic testing facilties
 //

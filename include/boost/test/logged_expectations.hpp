@@ -19,7 +19,6 @@
 #include <boost/test/detail/config.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/test/utils/callback.hpp>
-#include <boost/test/unit_test.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -76,6 +75,9 @@ logged_expectations( unit_test::callback0<> const&  F,
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2005/12/20 23:50:13  rogeeff
+//  unit_test.hpp removed
+//
 //  Revision 1.1  2005/12/14 05:09:21  rogeeff
 //  interraction based testing is introdused
 //
