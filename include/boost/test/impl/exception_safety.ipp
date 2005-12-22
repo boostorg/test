@@ -18,7 +18,10 @@
 // Boost.Test
 #include <boost/test/detail/config.hpp>
 
-#if !BOOST_WORKAROUND(__GNUC__, < 3) && !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) && !BOOST_WORKAROUND(BOOST_MSVC, <1300)
+#if !BOOST_WORKAROUND(__GNUC__, < 3) && \
+    !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) && \
+    !BOOST_WORKAROUND(BOOST_MSVC, <1300) && \
+    !BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530))
 
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
@@ -542,7 +545,7 @@ exception_safety( callback0<> const& F, const_string test_name )
 void* BOOST_TEST_DECL
 operator new( std::size_t s ) throw(std::bad_alloc)
 {
-    void* res = std::malloc( s );
+    void* res = std::malloc(s ? s : 1);
 
     if( res )
         ::boost::itest::manager::instance().allocated( 0, 0, res, s );
@@ -557,7 +560,7 @@ operator new( std::size_t s ) throw(std::bad_alloc)
 void* BOOST_TEST_DECL
 operator new( std::size_t s, std::nothrow_t const& ) throw()
 {
-    void* res = std::malloc( s );
+    void* res = std::malloc(s ? s : 1);
 
     if( res )
         ::boost::itest::manager::instance().allocated( 0, 0, res, s );
@@ -570,7 +573,7 @@ operator new( std::size_t s, std::nothrow_t const& ) throw()
 void* BOOST_TEST_DECL
 operator new[]( std::size_t s ) throw(std::bad_alloc)
 {
-    void* res = std::malloc( s );
+    void* res = std::malloc(s ? s : 1);
 
     if( res )
         ::boost::itest::manager::instance().allocated( 0, 0, res, s );
@@ -585,7 +588,7 @@ operator new[]( std::size_t s ) throw(std::bad_alloc)
 void* BOOST_TEST_DECL
 operator new[]( std::size_t s, std::nothrow_t const& ) throw()
 {
-    void* res = std::malloc( s );
+    void* res = std::malloc(s ? s : 1);
 
     if( res )
         ::boost::itest::manager::instance().allocated( 0, 0, res, s );
@@ -645,6 +648,10 @@ operator delete[]( void* p, std::nothrow_t const& ) throw()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.3  2005/12/22 15:49:32  rogeeff
+//  sunpro port
+//  made operator new conformant
+//
 //  Revision 1.2  2005/12/16 02:33:17  rogeeff
 //  portability fix
 //

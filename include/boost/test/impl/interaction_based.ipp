@@ -98,7 +98,7 @@ mock_object<> simple_mock;
 void*
 operator new( std::size_t s, ::boost::itest::location const& l )
 {
-    void* res = std::malloc( s );
+    void* res = std::malloc(s ? s : 1);
 
     if( res )
         ::boost::itest::manager::instance().allocated( l.m_file_name, l.m_line_num, res, s );
@@ -113,7 +113,7 @@ operator new( std::size_t s, ::boost::itest::location const& l )
 void*
 operator new[]( std::size_t s, ::boost::itest::location const& l )
 {
-    void* res = std::malloc( s );
+    void* res = std::malloc(s ? s : 1);
 
     if( res )
         ::boost::itest::manager::instance().allocated( l.m_file_name, l.m_line_num, res, s );
@@ -152,6 +152,10 @@ operator delete[]( void* p, ::boost::itest::location const& )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2005/12/22 15:49:32  rogeeff
+//  sunpro port
+//  made operator new conformant
+//
 //  Revision 1.1  2005/12/14 05:56:56  rogeeff
 //  Interraction based / logged expectation testing is introduced
 //
