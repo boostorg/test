@@ -68,12 +68,18 @@ void    BOOST_TEST_DECL exception_safety( unit_test::callback0<> const& F,
 
 } // namespace boost
 
+//____________________________________________________________________________//
+
 #include <boost/test/detail/enable_warnings.hpp>
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2006/01/15 11:14:38  rogeeff
+//  simpl_mock -> mock_object<>::prototype()
+//  operator new need to be rethinked
+//
 //  Revision 1.2  2005/12/20 23:50:13  rogeeff
 //  unit_test.hpp removed
 //

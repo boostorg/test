@@ -77,12 +77,6 @@ manager::instance_ptr( bool reset, manager* new_ptr )
     return ptr;
 }
     
-// ************************************************************************** //
-// **************                  mock_object                 ************** //
-// ************************************************************************** //
-
-mock_object<> simple_mock;
-
 }  // namespace itest
 
 }  // namespace boost
@@ -152,6 +146,10 @@ operator delete[]( void* p, ::boost::itest::location const& )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.3  2006/01/15 11:14:39  rogeeff
+//  simpl_mock -> mock_object<>::prototype()
+//  operator new need to be rethinked
+//
 //  Revision 1.2  2005/12/22 15:49:32  rogeeff
 //  sunpro port
 //  made operator new conformant

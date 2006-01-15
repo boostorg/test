@@ -80,10 +80,10 @@
 // **************              BOOST_ITEST_MOCK_FUNC           ************** //
 // ************************************************************************** //
 
-#define BOOST_ITEST_MOCK_FUNC( function_name )  \
-    BOOST_ITEST_SCOPE( function_name );         \
-    BOOST_ITEST_EPOINT( 0 );                    \
-    return ::boost::itest::simple_mock;         \
+#define BOOST_ITEST_MOCK_FUNC( function_name )          \
+    BOOST_ITEST_SCOPE( function_name );                 \
+    BOOST_ITEST_EPOINT( 0 );                            \
+    return ::boost::itest::mock_object<>::prototype();  \
 /**/
 
 namespace boost {
@@ -196,11 +196,11 @@ struct location {
 
 #if !defined(BOOST_ITEST_NO_NEW_OVERLOADS) && !BOOST_WORKAROUND(BOOST_MSVC, <1300)
 
-void* operator new( std::size_t s, ::boost::itest::location const& );
-void* operator new[]( std::size_t s, ::boost::itest::location const& );
+BOOST_TEST_DECL void* operator new( std::size_t s, ::boost::itest::location const& );
+BOOST_TEST_DECL void* operator new[]( std::size_t s, ::boost::itest::location const& );
 
-void operator delete( void* p, ::boost::itest::location const& );
-void operator delete[]( void* p, ::boost::itest::location const& );
+BOOST_TEST_DECL void  operator delete( void* p, ::boost::itest::location const& );
+BOOST_TEST_DECL void  operator delete[]( void* p, ::boost::itest::location const& );
 
 #endif
 
@@ -210,6 +210,10 @@ void operator delete[]( void* p, ::boost::itest::location const& );
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2006/01/15 11:14:38  rogeeff
+//  simpl_mock -> mock_object<>::prototype()
+//  operator new need to be rethinked
+//
 //  Revision 1.1  2005/12/14 05:09:21  rogeeff
 //  interraction based testing is introdused
 //

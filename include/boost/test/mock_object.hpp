@@ -67,7 +67,7 @@ public:
 #define MO_UNARY_OP( op, descr )                            \
 self_type const& operator op() const                        \
 {                                                           \
-    MO_OP_IMPL( op, descr, simple_mock );                   \
+    MO_OP_IMPL( op, descr, prototype() );                   \
 }                                                           \
 /**/
 
@@ -133,8 +133,6 @@ operator op( T const&, mock_object<i,Base> const& )         \
 template<int i = 0, typename Base=mock_object_base>
 class mock_object;
 
-extern mock_object<0,mock_object_base> simple_mock;
-
 template<int i, typename Base>
 class mock_object : public Base {
     // Private typeefs
@@ -142,7 +140,16 @@ class mock_object : public Base {
     struct dummy { void nonnull() {}; };
     typedef void (dummy::*safe_bool)();
 
+    // prototype constructor
+    mock_object( dummy* ) {}
+
 public:
+    static mock_object& prototype()
+    {
+        static mock_object p( (dummy*)0 ); 
+        return p;
+    }
+
     // Constructors
     mock_object()
     {
@@ -199,13 +206,13 @@ public:
     // assignment
     self_type const&    operator =( mock_object const& ) const
     {
-        MO_OP_IMPL( =, "Copy assignment", simple_mock );
+        MO_OP_IMPL( =, "Copy assignment", prototype() );
     }
 
     template <typename T>
     self_type const&    operator =( T const& ) const
     {
-        MO_OP_IMPL( =, "Copy assignment", simple_mock );
+        MO_OP_IMPL( =, "Copy assignment", prototype() );
     }
 
     // Unary operators
@@ -220,11 +227,11 @@ public:
     MO_UNARY_OP( --, "Prefix decrement" )
     self_type const&    operator ++(int) const
     {
-        MO_OP_IMPL( ++, "Postfix increment", simple_mock );
+        MO_OP_IMPL( ++, "Postfix increment", prototype() );
     }
     self_type const&    operator --(int) const
     {
-        MO_OP_IMPL( --, "Postfix decrement", simple_mock );
+        MO_OP_IMPL( --, "Postfix decrement", prototype() );
     }
 
     // Bool context convertion
@@ -237,39 +244,39 @@ public:
     // Function-call operators
     self_type const&    operator ()() const
     {
-        MO_OP_IMPL( (), "0-arity function-call", simple_mock );
+        MO_OP_IMPL( (), "0-arity function-call", prototype() );
     }
     template<typename T1>
     self_type const&    operator ()( T1 const& arg1 ) const
     {
-        MO_OP_IMPL( (), "1-arity function-call", simple_mock );
+        MO_OP_IMPL( (), "1-arity function-call", prototype() );
     }
     template<typename T1, typename T2>
     self_type const&    operator ()( T1 const&, T2 const& ) const
     {
-        MO_OP_IMPL( (), "2-arity function-call", simple_mock );
+        MO_OP_IMPL( (), "2-arity function-call", prototype() );
     }
     template<typename T1, typename T2, typename T3>
     self_type const&    operator ()( T1 const&, T2 const&, T3 const& ) const
     {
-        MO_OP_IMPL( (), "3-arity function-call", simple_mock );
+        MO_OP_IMPL( (), "3-arity function-call", prototype() );
     }
     template<typename T1, typename T2, typename T3, typename T4>
     self_type const&    operator ()( T1 const&, T2 const&, T3 const&, T4 const& ) const
     {
-        MO_OP_IMPL( (), "4-arity function-call", simple_mock );
+        MO_OP_IMPL( (), "4-arity function-call", prototype() );
     }
     template<typename T1, typename T2, typename T3, typename T4, typename T5>
     self_type const&    operator ()( T1 const&, T2 const&, T3 const&, T4 const&, T5 const& ) const
     {
-        MO_OP_IMPL( (), "5-arity function-call", simple_mock );
+        MO_OP_IMPL( (), "5-arity function-call", prototype() );
     }
 
     // Substripting
     template<typename T>
     self_type const&    operator []( T const& ) const
     {
-        MO_OP_IMPL( [], "Substripting", simple_mock );
+        MO_OP_IMPL( [], "Substripting", prototype() );
     }
 
     // Class member access
@@ -322,6 +329,10 @@ MO_BINARY_OP( >>, "Right shift" )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.2  2006/01/15 11:14:39  rogeeff
+//  simpl_mock -> mock_object<>::prototype()
+//  operator new need to be rethinked
+//
 //  Revision 1.1  2005/12/14 05:09:21  rogeeff
 //  interraction based testing is introdused
 //

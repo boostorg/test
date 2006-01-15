@@ -542,7 +542,7 @@ exception_safety( callback0<> const& F, const_string test_name )
 
 #ifndef BOOST_ITEST_NO_NEW_OVERLOADS
 
-void* BOOST_TEST_DECL
+void*
 operator new( std::size_t s ) throw(std::bad_alloc)
 {
     void* res = std::malloc(s ? s : 1);
@@ -557,7 +557,7 @@ operator new( std::size_t s ) throw(std::bad_alloc)
 
 //____________________________________________________________________________//
 
-void* BOOST_TEST_DECL
+void*
 operator new( std::size_t s, std::nothrow_t const& ) throw()
 {
     void* res = std::malloc(s ? s : 1);
@@ -570,7 +570,7 @@ operator new( std::size_t s, std::nothrow_t const& ) throw()
 
 //____________________________________________________________________________//
 
-void* BOOST_TEST_DECL
+void*
 operator new[]( std::size_t s ) throw(std::bad_alloc)
 {
     void* res = std::malloc(s ? s : 1);
@@ -585,7 +585,7 @@ operator new[]( std::size_t s ) throw(std::bad_alloc)
 
 //____________________________________________________________________________//
 
-void* BOOST_TEST_DECL
+void*
 operator new[]( std::size_t s, std::nothrow_t const& ) throw()
 {
     void* res = std::malloc(s ? s : 1);
@@ -598,7 +598,7 @@ operator new[]( std::size_t s, std::nothrow_t const& ) throw()
 
 //____________________________________________________________________________//
 
-void BOOST_TEST_DECL
+void
 operator delete( void* p ) throw()
 {
     ::boost::itest::manager::instance().freed( p );
@@ -608,7 +608,7 @@ operator delete( void* p ) throw()
 
 //____________________________________________________________________________//
 
-void BOOST_TEST_DECL
+void
 operator delete( void* p, std::nothrow_t const& ) throw()
 {
     ::boost::itest::manager::instance().freed( p );
@@ -618,7 +618,7 @@ operator delete( void* p, std::nothrow_t const& ) throw()
 
 //____________________________________________________________________________//
 
-void BOOST_TEST_DECL
+void
 operator delete[]( void* p ) throw()
 {
     ::boost::itest::manager::instance().freed( p );
@@ -628,7 +628,7 @@ operator delete[]( void* p ) throw()
 
 //____________________________________________________________________________//
 
-void BOOST_TEST_DECL
+void
 operator delete[]( void* p, std::nothrow_t const& ) throw()
 {
     ::boost::itest::manager::instance().freed( p );
@@ -648,6 +648,10 @@ operator delete[]( void* p, std::nothrow_t const& ) throw()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.4  2006/01/15 11:14:39  rogeeff
+//  simpl_mock -> mock_object<>::prototype()
+//  operator new need to be rethinked
+//
 //  Revision 1.3  2005/12/22 15:49:32  rogeeff
 //  sunpro port
 //  made operator new conformant
