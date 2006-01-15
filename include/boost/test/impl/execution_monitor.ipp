@@ -450,11 +450,11 @@ execution_monitor::catch_signals( unit_test::callback0<int> const& F, bool catch
         case SIGSEGV:
         case SIGBUS:
             ec = execution_exception::system_fatal_error;
-            em = BOOST_TEST_L( "signal: memory access violation" );
+            em = BOOST_TEST_L( "memory access violation" );
             break;
         default:
             ec = execution_exception::system_error;
-            em = BOOST_TEST_L( "signal: unrecognized signal" );
+            em = BOOST_TEST_L( "unrecognized signal" );
         }
     }
 
@@ -642,6 +642,9 @@ detect_memory_leak( long mem_leak_alloc_num )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.11  2006/01/15 09:47:43  rogeeff
+//  make common message
+//
 //  Revision 1.10  2005/12/14 05:52:49  rogeeff
 //  *** empty log message ***
 //
