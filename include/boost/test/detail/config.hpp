@@ -70,23 +70,22 @@
 
 //____________________________________________________________________________//
 
-#ifdef BOOST_HAS_DECLSPEC // defined in config system
+#if defined(BOOST_ALL_DYN_LINK) && !defined(BOOST_TEST_DYN_LINK)
+#  define BOOST_TEST_DYN_LINK
+#endif
 
-#  if defined(BOOST_ALL_DYN_LINK) && !defined(BOOST_TEST_DYN_LINK)
-#     define BOOST_TEST_DYN_LINK
-#  endif
+#if defined(BOOST_TEST_DYN_LINK)
+#  define BOOST_TEST_ALTERNATIVE_INIT_API
 
-#  if defined(BOOST_TEST_DYN_LINK)
-#    define BOOST_TEST_ALTERNATIVE_INIT_API
-
+#  if defined(BOOST_HAS_DECLSPEC) && defined(BOOST_TEST_DYN_LINK)
 #    ifdef BOOST_TEST_SOURCE
 #      define BOOST_TEST_DECL __declspec(dllexport)
 #    else
 #      define BOOST_TEST_DECL __declspec(dllimport)
 #    endif  // BOOST_TEST_SOURCE
-#  endif  // BOOST_TEST_DYN_LINK
+#  endif  // BOOST_HAS_DECLSPEC
+#endif  // BOOST_TEST_DYN_LINK
 
-#endif  // BOOST_HAS_DECLSPEC
 
 #ifndef BOOST_TEST_DECL
 #  define BOOST_TEST_DECL
@@ -96,6 +95,9 @@
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2006/01/15 06:17:18  rogeeff
+//  make config working properly for non-windows dll
+//
 //  Revision 1.3  2005/12/14 04:56:31  rogeeff
 //  dll support introduced
 //
