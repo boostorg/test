@@ -496,10 +496,11 @@ TEST_CASE( test_BOOST_TEST_CHECKPOINT )
 
 //____________________________________________________________________________//
 
+bool foo() { throw 1; return true; }
+
 TEST_CASE( test_BOOST_TEST_PASSPOINT )
 {
-    int* p = 0;
-    BOOST_CHECK( *p == 0 );
+    BOOST_CHECK( foo() );
 }
 
 //____________________________________________________________________________//
@@ -528,6 +529,9 @@ TEST_CASE( test_BOOST_IS_DEFINED )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.45  2006/01/21 07:09:25  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.44  2005/12/14 06:01:02  rogeeff
 //  *** empty log message ***
 //
