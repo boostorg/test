@@ -22,6 +22,7 @@
 # pragma warning(default: 4251) // class 'A<T>' needs to have dll-interface to be used by clients of class 'B'
 # pragma warning(default: 4127) // conditional expression is constant
 # pragma warning(default: 4290) // C++ exception specification ignored except to ...
+# pragma warning(default: 4180) // qualifier applied to function type has no meaning; ignored
 # pragma warning(pop)
 #endif
 
@@ -29,6 +30,9 @@
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2006/01/28 07:09:08  rogeeff
+//  4180 suppressed
+//
 //  Revision 1.5  2005/12/14 04:57:50  rogeeff
 //  extra warnings suppressed
 //
