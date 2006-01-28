@@ -17,6 +17,7 @@
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
+
 #include <boost/test/utils/callback.hpp>
 
 // STL
@@ -68,6 +69,116 @@ void    BOOST_TEST_DECL exception_safety( unit_test::callback0<> const& F,
 
 } // namespace boost
 
+// ************************************************************************** //
+// **************     global operator new/delete overloads     ************** //
+// ************************************************************************** //
+
+#ifndef BOOST_ITEST_NO_NEW_OVERLOADS
+
+#include <boost/test/interaction_based.hpp>
+
+# ifdef BOOST_NO_STDC_NAMESPACE
+namespace std { using ::isprint; using ::malloc; using ::free; }
+# endif
+
+inline void*
+operator new( std::size_t s ) throw(std::bad_alloc)
+{
+    void* res = std::malloc(s ? s : 1);
+
+    if( res )
+        ::boost::itest::manager::instance().allocated( 0, 0, res, s );
+    else
+        throw std::bad_alloc();
+
+    return res;
+}
+
+//____________________________________________________________________________//
+
+inline void*
+operator new( std::size_t s, std::nothrow_t const& ) throw()
+{
+    void* res = std::malloc(s ? s : 1);
+
+    if( res )
+        ::boost::itest::manager::instance().allocated( 0, 0, res, s );
+
+    return res;
+}
+
+//____________________________________________________________________________//
+
+inline void*
+operator new[]( std::size_t s ) throw(std::bad_alloc)
+{
+    void* res = std::malloc(s ? s : 1);
+
+    if( res )
+        ::boost::itest::manager::instance().allocated( 0, 0, res, s );
+    else
+        throw std::bad_alloc();
+
+    return res;
+}
+
+//____________________________________________________________________________//
+
+inline void*
+operator new[]( std::size_t s, std::nothrow_t const& ) throw()
+{
+    void* res = std::malloc(s ? s : 1);
+
+    if( res )
+        ::boost::itest::manager::instance().allocated( 0, 0, res, s );
+
+    return res;
+}
+
+//____________________________________________________________________________//
+
+inline void
+operator delete( void* p ) throw()
+{
+    ::boost::itest::manager::instance().freed( p );
+
+    std::free( p );
+}
+
+//____________________________________________________________________________//
+
+inline void
+operator delete( void* p, std::nothrow_t const& ) throw()
+{
+    ::boost::itest::manager::instance().freed( p );
+
+    std::free( p );
+}
+
+//____________________________________________________________________________//
+
+inline void
+operator delete[]( void* p ) throw()
+{
+    ::boost::itest::manager::instance().freed( p );
+
+    std::free( p );
+}
+
+//____________________________________________________________________________//
+
+inline void
+operator delete[]( void* p, std::nothrow_t const& ) throw()
+{
+    ::boost::itest::manager::instance().freed( p );
+
+    std::free( p );
+}
+
+//____________________________________________________________________________//
+
+#endif // BOOST_ITEST_NO_NEW_OVERLOADS
+
 //____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
@@ -76,6 +187,11 @@ void    BOOST_TEST_DECL exception_safety( unit_test::callback0<> const& F,
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2006/01/28 08:52:35  rogeeff
+//  operator new overloads made inline to:
+//  1. prevent issues with export them from DLL
+//  2. release link issue fixed
+//
 //  Revision 1.3  2006/01/15 11:14:38  rogeeff
 //  simpl_mock -> mock_object<>::prototype()
 //  operator new need to be rethinked

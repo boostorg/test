@@ -26,11 +26,6 @@
 // STL
 #include <stdexcept>
 #include <string>
-#include <cstdlib>
-
-# ifdef BOOST_NO_STDC_NAMESPACE
-namespace std { using ::malloc; using ::free; }
-# endif
 
 //____________________________________________________________________________//
 
@@ -83,69 +78,17 @@ manager::instance_ptr( bool reset, manager* new_ptr )
 
 //____________________________________________________________________________//
 
-// ************************************************************************** //
-// **************              operator new overload           ************** //
-// ************************************************************************** //
-
-#if !defined(BOOST_ITEST_NO_NEW_OVERLOADS) && !BOOST_WORKAROUND(BOOST_MSVC, <1300)
-
-void*
-operator new( std::size_t s, ::boost::itest::location const& l )
-{
-    void* res = std::malloc(s ? s : 1);
-
-    if( res )
-        ::boost::itest::manager::instance().allocated( l.m_file_name, l.m_line_num, res, s );
-    else
-        throw std::bad_alloc();
-        
-    return res;
-}
-
-//____________________________________________________________________________//
-
-void*
-operator new[]( std::size_t s, ::boost::itest::location const& l )
-{
-    void* res = std::malloc(s ? s : 1);
-
-    if( res )
-        ::boost::itest::manager::instance().allocated( l.m_file_name, l.m_line_num, res, s );
-    else
-        throw std::bad_alloc();
-        
-    return res;
-}
-
-//____________________________________________________________________________//
-
-void operator delete( void* p, ::boost::itest::location const& )
-{
-    ::boost::itest::manager::instance().freed( p );
-
-    std::free( p );
-}
-
-//____________________________________________________________________________//
-
-void
-operator delete[]( void* p, ::boost::itest::location const& )
-{
-    ::boost::itest::manager::instance().freed( p );
-
-    std::free( p );
-}
-
-//____________________________________________________________________________//
-
-#endif
-
 #include <boost/test/detail/enable_warnings.hpp>
 
 // ***************************************************************************
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.4  2006/01/28 08:52:35  rogeeff
+//  operator new overloads made inline to:
+//  1. prevent issues with export them from DLL
+//  2. release link issue fixed
+//
 //  Revision 1.3  2006/01/15 11:14:39  rogeeff
 //  simpl_mock -> mock_object<>::prototype()
 //  operator new need to be rethinked

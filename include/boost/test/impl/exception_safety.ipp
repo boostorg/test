@@ -20,7 +20,6 @@
 
 #if !BOOST_WORKAROUND(__GNUC__, < 3) && \
     !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) && \
-    !BOOST_WORKAROUND(BOOST_MSVC, <1300) && \
     !BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530))
 
 #include <boost/test/detail/global_typedef.hpp>
@@ -48,10 +47,6 @@
 #include <iomanip>
 #include <cctype>
 #include <boost/limits.hpp>
-
-# ifdef BOOST_NO_STDC_NAMESPACE
-namespace std { using ::isprint; using ::malloc; using ::free; }
-# endif
 
 //____________________________________________________________________________//
 
@@ -536,110 +531,6 @@ exception_safety( callback0<> const& F, const_string test_name )
 
 //____________________________________________________________________________//
 
-// ************************************************************************** //
-// **************     global operator new/delete overloads     ************** //
-// ************************************************************************** //
-
-#ifndef BOOST_ITEST_NO_NEW_OVERLOADS
-
-void*
-operator new( std::size_t s ) throw(std::bad_alloc)
-{
-    void* res = std::malloc(s ? s : 1);
-
-    if( res )
-        ::boost::itest::manager::instance().allocated( 0, 0, res, s );
-    else
-        throw std::bad_alloc();
-
-    return res;
-}
-
-//____________________________________________________________________________//
-
-void*
-operator new( std::size_t s, std::nothrow_t const& ) throw()
-{
-    void* res = std::malloc(s ? s : 1);
-
-    if( res )
-        ::boost::itest::manager::instance().allocated( 0, 0, res, s );
-
-    return res;
-}
-
-//____________________________________________________________________________//
-
-void*
-operator new[]( std::size_t s ) throw(std::bad_alloc)
-{
-    void* res = std::malloc(s ? s : 1);
-
-    if( res )
-        ::boost::itest::manager::instance().allocated( 0, 0, res, s );
-    else
-        throw std::bad_alloc();
-
-    return res;
-}
-
-//____________________________________________________________________________//
-
-void*
-operator new[]( std::size_t s, std::nothrow_t const& ) throw()
-{
-    void* res = std::malloc(s ? s : 1);
-
-    if( res )
-        ::boost::itest::manager::instance().allocated( 0, 0, res, s );
-
-    return res;
-}
-
-//____________________________________________________________________________//
-
-void
-operator delete( void* p ) throw()
-{
-    ::boost::itest::manager::instance().freed( p );
-
-    std::free( p );
-}
-
-//____________________________________________________________________________//
-
-void
-operator delete( void* p, std::nothrow_t const& ) throw()
-{
-    ::boost::itest::manager::instance().freed( p );
-
-    std::free( p );
-}
-
-//____________________________________________________________________________//
-
-void
-operator delete[]( void* p ) throw()
-{
-    ::boost::itest::manager::instance().freed( p );
-
-    std::free( p );
-}
-
-//____________________________________________________________________________//
-
-void
-operator delete[]( void* p, std::nothrow_t const& ) throw()
-{
-    ::boost::itest::manager::instance().freed( p );
-
-    std::free( p );
-}
-
-//____________________________________________________________________________//
-
-#endif // BOOST_ITEST_NO_NEW_OVERLOADS
-
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // non-ancient compiler
@@ -648,6 +539,11 @@ operator delete[]( void* p, std::nothrow_t const& ) throw()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.5  2006/01/28 08:52:35  rogeeff
+//  operator new overloads made inline to:
+//  1. prevent issues with export them from DLL
+//  2. release link issue fixed
+//
 //  Revision 1.4  2006/01/15 11:14:39  rogeeff
 //  simpl_mock -> mock_object<>::prototype()
 //  operator new need to be rethinked
