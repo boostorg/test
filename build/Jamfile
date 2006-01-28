@@ -65,9 +65,7 @@ template boost_test_dll
       # and auto-link features:
       common-variant-tag 
       # tell our source that we're building (and maybe using) dll's:
-      <define>BOOST_ALL_DYN_LINK=1
-      # only build this for dynamic runtimes:
-      <runtime-link>dynamic
+      <define>BOOST_TEST_DYN_LINK=1
       # set include path for Boost headers:
       <sysinclude>$(BOOST_ROOT)
      ## default build ##
@@ -96,7 +94,7 @@ lib boost_unit_test_framework : <template>boost_test_lib
 dll boost_unit_test_framework : <template>boost_test_dll
                                 ../src/$(UTF_SOURCES).cpp ;
 
-dll boost_prg_exec_monitor    : <template>boost_test_lib
+dll boost_prg_exec_monitor    : <template>boost_test_dll
                                 ../src/$(PRG_EXEC_MON_SOURCES).cpp ;
 
 install test lib
