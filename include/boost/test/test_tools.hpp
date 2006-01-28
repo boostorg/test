@@ -363,7 +363,7 @@ struct print_helper_t {
 
 //____________________________________________________________________________//
 
-#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
+#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) 
 // Borland suffers premature pointer decay passing arrays by reference
 template<typename T, std::size_t N >
 struct print_helper_t< T[N] > {
@@ -380,6 +380,14 @@ inline print_helper_t<T> print_helper( T const& t )
 {
     return print_helper_t<T>( t );
 }
+
+#if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530)) 
+template<typename T, std::size_t N>
+inline print_helper_t<T*> print_helper( T (&t)[N] )
+{
+    return print_helper_t<T*>( &t[0] );
+}
+#endif
 
 //____________________________________________________________________________//
 
@@ -593,6 +601,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.57  2006/01/28 07:00:47  rogeeff
+//  sunpro port
+//
 //  Revision 1.56  2005/12/19 03:08:30  rogeeff
 //  added is_abstract to guard numeric_limits instantiation
 //
