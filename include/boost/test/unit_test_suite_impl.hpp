@@ -217,8 +217,8 @@ template<typename UserTestCase>
 struct user_tc_method_invoker {
     typedef void (UserTestCase::*test_method )();
 
-    user_tc_method_invoker( shared_ptr<UserTestCase> inst, test_method tm )
-    : m_inst( inst ), m_test_method( tm ) {}
+    user_tc_method_invoker( shared_ptr<UserTestCase> inst, test_method test_method )
+    : m_inst( inst ), m_test_method( test_method ) {}
 
     void operator()() { ((*m_inst).*m_test_method)(); }
 
@@ -340,6 +340,9 @@ private:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2006/01/28 07:09:34  rogeeff
+//  tm->test_method
+//
 //  Revision 1.1  2005/12/14 05:24:55  rogeeff
 //  dll support introduced
 //  split into 2 files

@@ -113,8 +113,8 @@ struct user_param_tc_method_invoker {
     typedef void (UserTestCase::*test_method)( ParamType );
 
     // Constructor
-    user_param_tc_method_invoker( shared_ptr<UserTestCase> inst, test_method tm )
-    : m_inst( inst ), m_test_method( tm ) {}
+    user_param_tc_method_invoker( shared_ptr<UserTestCase> inst, test_method test_method )
+    : m_inst( inst ), m_test_method( test_method ) {}
 
     void operator()( ParamType p ) { ((*m_inst).*m_test_method)( p ); }
 
@@ -184,6 +184,9 @@ make_test_case( void (UserTestCase::*test_method )( ParamType ),
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.6  2006/01/28 07:10:20  rogeeff
+//  tm->test_method
+//
 //  Revision 1.5  2005/12/14 05:16:49  rogeeff
 //  dll support introduced
 //
