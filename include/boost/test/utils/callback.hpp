@@ -22,7 +22,7 @@
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
-#if BOOST_WORKAROUND(BOOST_MSVC, < 1300) || BOOST_WORKAROUND(BOOST_INTEL, <= 700)
+#if BOOST_WORKAROUND(BOOST_INTEL, <= 700)
 #  define BOOST_CALLBACK_EXPLICIT_COPY_CONSTRUCTOR
 #endif
 
@@ -311,6 +311,9 @@ private:
 //   Revision History:
 //
 //   $Log$
+//   Revision 1.6  2006/01/28 08:57:03  rogeeff
+//   VC6.0 workaround removed
+//
 //   Revision 1.5  2005/04/13 05:09:00  rogeeff
 //   Intel 7.1 bug fix
 //

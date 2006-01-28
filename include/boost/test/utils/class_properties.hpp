@@ -120,28 +120,6 @@ DEFINE_PROPERTY_FREE_BINARY_OPERATOR( != )
 
 #undef DEFINE_PROPERTY_FREE_BINARY_OPERATOR
 
-#if BOOST_WORKAROUND(BOOST_MSVC, < 1300)
-
-#define DEFINE_PROPERTY_LOGICAL_OPERATOR( op )                                  \
-template<class PropertyType>                                                    \
-inline bool                                                                     \
-operator op( bool b, class_property<PropertyType> const& p )                    \
-{                                                                               \
-    return b op p.get();                                                        \
-}                                                                               \
-template<class PropertyType>                                                    \
-inline bool                                                                     \
-operator op( class_property<PropertyType> const& p, bool b )                    \
-{                                                                               \
-    return b op p.get();                                                        \
-}                                                                               \
-/**/
-
-DEFINE_PROPERTY_LOGICAL_OPERATOR( && )
-DEFINE_PROPERTY_LOGICAL_OPERATOR( || )
-
-#endif
-
 // ************************************************************************** //
 // **************               readonly_property              ************** //
 // ************************************************************************** //
@@ -226,6 +204,9 @@ public:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.9  2006/01/28 08:57:05  rogeeff
+//  VC6.0 workaround removed
+//
 //  Revision 1.8  2005/08/25 16:27:26  johnmaddock
 //  Large patch from Ulrich Eckhardt to fix support for EVC++ 4.
 //

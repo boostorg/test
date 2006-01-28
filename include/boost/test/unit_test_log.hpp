@@ -24,6 +24,7 @@
 #include <boost/test/detail/log_level.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
 
+#include <boost/test/utils/wrap_stringstream.hpp>
 #include <boost/test/utils/trivial_singleton.hpp>
 
 // Boost
@@ -171,6 +172,9 @@ BOOST_TEST_SINGLETON_INST( unit_test_log )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.32  2006/01/28 08:57:02  rogeeff
+//  VC6.0 workaround removed
+//
 //  Revision 1.31  2005/12/14 05:23:21  rogeeff
 //  dll support introduced
 //  Minor interface simplifications

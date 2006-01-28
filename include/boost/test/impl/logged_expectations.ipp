@@ -20,7 +20,6 @@
 
 #if !BOOST_WORKAROUND(__GNUC__, < 3) && \
     !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) && \
-    !BOOST_WORKAROUND(BOOST_MSVC, <1300) && \
     !BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530))
 
 #include <boost/test/detail/global_typedef.hpp>
@@ -250,6 +249,9 @@ logged_expectations( callback0<> const& F, const_string log_file_name, bool test
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.4  2006/01/28 08:55:31  rogeeff
+//  VC6.0 workaround removed
+//
 //  Revision 1.3  2005/12/22 15:49:32  rogeeff
 //  sunpro port
 //  made operator new conformant

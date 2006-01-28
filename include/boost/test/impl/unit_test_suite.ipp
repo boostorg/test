@@ -92,11 +92,6 @@ test_case::test_case( const_string name, callback0<> const& test_func )
 : test_unit( name, (test_unit_type)type )
 , m_test_func( test_func )
 {
-    // !! weirdest MSVC BUG; try to remove this statement; looks like it eats first token of next statement
-#if BOOST_WORKAROUND(BOOST_MSVC,<1300)
-    0;
-#endif
-
     framework::register_test_unit( this );
 }
 
@@ -228,6 +223,9 @@ normalize_test_case_name( const_string name )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.12  2006/01/28 08:53:57  rogeeff
+//  VC6.0 workaround removed
+//
 //  Revision 1.11  2005/12/14 05:54:41  rogeeff
 //  *** empty log message ***
 //
