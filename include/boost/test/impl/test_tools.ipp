@@ -515,7 +515,7 @@ output_test_stream::match_pattern( bool flush_stream )
 
     if( !m_pimpl->m_pattern.is_open() ) {
         result = false;
-        result.message() << "Pattern file could not be not open!";
+        result.message() << "Pattern file could not be open!";
     }
     else {
         if( m_pimpl->m_match_or_save ) {
@@ -620,6 +620,9 @@ output_test_stream::sync()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.11  2006/01/28 07:01:25  rogeeff
+//  message error fixed
+//
 //  Revision 1.10  2005/12/14 05:33:47  rogeeff
 //  use simplified log API
 //  assertion_result call moved pass log statement
