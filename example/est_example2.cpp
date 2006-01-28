@@ -65,7 +65,7 @@ BOOST_TEST_EXCEPTION_SAFETY( test_stack_push )
 
     for( unsigned i = 0; i < 3; ++i ) {
         try {
-            st.push( simple_mock );
+            st.push( mock_object<>::prototype() );
         }
         catch( ... ) {
             // this invariant checks that in case of failed push number of elements doesn't change

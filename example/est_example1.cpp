@@ -26,7 +26,7 @@ validate_and_return_salary( Employee const& e, Ostr& os )
     if( e.Title() == "CEO" || e.Salary() > 100000 )
         os << e.First() << " " << e.Last() << " is overpaid";
 
-	return e.First() + " " + e.Last();
+    return e.First() + " " + e.Last();
 }
 
 //____________________________________________________________________________//
@@ -48,7 +48,7 @@ struct EmpMock : mock_object<> {
 
 BOOST_TEST_EXCEPTION_SAFETY( test_all_exec_path )
 {
-   validate_and_return_salary( EmpMock(), simple_mock );
+   validate_and_return_salary( EmpMock(), mock_object<>::prototype() );
 }
 
 //____________________________________________________________________________//

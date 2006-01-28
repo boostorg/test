@@ -52,6 +52,7 @@ test-suite "boost_test_examples"
 
   [ boost-test-example est_example1         : run       : boost_unit_test_framework ]
   [ boost-test-example est_example2         : run       : boost_unit_test_framework ]
+  [ boost-test-example est_example2_dll     : run       : boost_unit_test_framework : est_example2.cpp : 1 ]
   [ boost-test-example logged_exp_example   : run       : boost_unit_test_framework ]
 
   [ boost-test-example named_param_example  : run ]
