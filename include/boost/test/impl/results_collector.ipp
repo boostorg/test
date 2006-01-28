@@ -17,7 +17,7 @@
 
 // Boost.Test
 #include <boost/test/unit_test_suite_impl.hpp>
-#include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test_log.hpp>
 #include <boost/test/results_collector.hpp>
 #include <boost/test/framework.hpp>
 
@@ -199,7 +199,9 @@ results_collector_t::test_unit_finish( test_unit const& tu, unsigned long )
     else {
         test_results const& tr = s_rc_impl().m_results_store[tu.p_id];
         
-        BOOST_WARN_MESSAGE( tr.p_aborted || tr.p_assertions_failed >= tr.p_expected_failures, "Test case has less failures then expected" );
+        bool num_failures_match = tr.p_aborted || tr.p_assertions_failed >= tr.p_expected_failures;
+        if( !num_failures_match )
+            BOOST_TEST_MESSAGE( "Test case has less failures then expected" );
     }
 }
 
@@ -242,7 +244,9 @@ results_collector_t::assertion_result( bool passed )
 void
 results_collector_t::exception_caught( execution_exception const& )
 {
-    // do nothing
+    test_results& tr = s_rc_impl().m_results_store[framework::current_test_case().p_id];
+
+    tr.p_assertions_failed.value++;
 }
 
 //____________________________________________________________________________//
@@ -275,6 +279,9 @@ results_collector_t::results( test_unit_id id ) const
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.4  2006/01/28 08:55:52  rogeeff
+//  results collection bug fixed
+//
 //  Revision 1.3  2005/12/14 05:53:22  rogeeff
 //  collect amount of aborted test cases
 //

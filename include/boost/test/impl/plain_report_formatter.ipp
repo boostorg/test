@@ -173,10 +173,7 @@ plain_report_formatter::do_confirmation_report( test_unit const& tu, std::ostrea
         return;
     }
 
-    counter_t num_failures = tr.p_assertions_failed + tr.p_test_cases_aborted;
-    
-    if( !tr.p_test_cases_aborted && tr.p_aborted )
-        ++num_failures;
+    counter_t num_failures = tr.p_assertions_failed;
     
     ostr << "*** " << num_failures << " failure" << ( num_failures != 1 ? "s" : "" ) << " detected";
     
@@ -202,6 +199,9 @@ plain_report_formatter::do_confirmation_report( test_unit const& tu, std::ostrea
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.4  2006/01/28 08:55:52  rogeeff
+//  results collection bug fixed
+//
 //  Revision 1.3  2005/12/14 05:31:06  rogeeff
 //  report all aborted test units
 //
