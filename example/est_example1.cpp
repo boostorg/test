@@ -31,7 +31,7 @@ validate_and_return_salary( Employee const& e, Ostr& os )
 
 //____________________________________________________________________________//
 
-// Mock pbject we are going to use for this test
+// Mock object we are going to use for this test
 
 struct EmpMock : mock_object<> {
      typedef mock_object<>    mo_type;
