@@ -144,7 +144,7 @@ void test_name<type_name>::test_method()                                \
 // ************************************************************************** //
 
 #define BOOST_GLOBAL_FIXTURE( F ) \
-static boost::unit_test::ut_detail::global_fixture_impl<F> gf; \
+static boost::unit_test::ut_detail::global_fixture_impl<F> BOOST_JOIN( gf_, F ) ; \
 /**/
 
 // ************************************************************************** //
@@ -192,6 +192,9 @@ init_unit_test_suite( int, char* [] )   { return 0; }
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.34  2006/01/28 07:02:57  rogeeff
+//  allow multiple global fixtures
+//
 //  Revision 1.33  2005/12/14 05:24:55  rogeeff
 //  dll support introduced
 //  split into 2 files
