@@ -22,6 +22,8 @@
 #include <boost/test/output/compiler_log_formatter.hpp>
 #include <boost/test/framework.hpp>
 
+#include <boost/test/detail/suppress_warnings.hpp>
+
 // Boost
 #include <boost/bind.hpp>
 
@@ -257,17 +259,17 @@ TEST_CASE( test_BOOST_CHECK_THROW )
     CHECK_CRITICAL_TOOL_USAGE( BOOST_REQUIRE_THROW( i++, my_exception ) );
 
     unit_test_log.set_threshold_level( log_successful_tests );
-    BOOST_CHECK_THROW( throw my_exception(), my_exception );
+    BOOST_CHECK_THROW( throw my_exception(), my_exception ); // unreachable code warning is expected
 }
 
 //____________________________________________________________________________//
 
 TEST_CASE( test_BOOST_CHECK_EXCEPTION )
 {
-    BOOST_CHECK_EXCEPTION( throw my_exception( 1 ), my_exception, is_critical );
+    BOOST_CHECK_EXCEPTION( throw my_exception( 1 ), my_exception, is_critical ); // unreachable code warning is expected
 
     unit_test_log.set_threshold_level( log_successful_tests );
-    BOOST_CHECK_EXCEPTION( throw my_exception( -1 ), my_exception, is_critical );
+    BOOST_CHECK_EXCEPTION( throw my_exception( -1 ), my_exception, is_critical ); // unreachable code warning is expected
 }
 
 //____________________________________________________________________________//
@@ -277,7 +279,7 @@ TEST_CASE( test_BOOST_CHECK_NO_THROW )
     int i=0;
     BOOST_CHECK_NO_THROW( i++ );
 
-    BOOST_CHECK_NO_THROW( throw my_exception() );
+    BOOST_CHECK_NO_THROW( throw my_exception() ); // unreachable code warning is expected
 }
 
 //____________________________________________________________________________//
@@ -529,6 +531,9 @@ TEST_CASE( test_BOOST_IS_DEFINED )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.46  2006/01/28 07:05:27  rogeeff
+//  mark unreachable intentionally statements
+//
 //  Revision 1.45  2006/01/21 07:09:25  rogeeff
 //  *** empty log message ***
 //
