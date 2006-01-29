@@ -135,7 +135,7 @@ BOOST_AUTO_TEST_CASE( test2_one_to_three )
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
     ut::unit_test_log.set_stream( std::cout );
-    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)0 );
+    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)2 );
     BOOST_CHECK( !tr.p_aborted );
     BOOST_CHECK( !tr.passed() );
 }
@@ -146,6 +146,9 @@ BOOST_AUTO_TEST_CASE( test2_one_to_three )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.16  2006/01/29 20:22:59  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.15  2005/12/14 06:01:02  rogeeff
 //  *** empty log message ***
 //
