@@ -45,7 +45,7 @@ bool                    show_progress();
 bool                    catch_sys_errors();
 output_format           report_format();
 output_format           log_format();
-long                    detect_memory_leak();
+long                    detect_memory_leaks();
 int                     random_seed();
 
 } // namespace runtime_config
@@ -62,6 +62,9 @@ int                     random_seed();
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.23  2006/01/30 07:29:49  rogeeff
+//  split memory leaks detection API in two to get more functions with better defined roles
+//
 //  Revision 1.22  2005/12/14 04:58:30  rogeeff
 //  new parameter --break_exec_path introduced
 //

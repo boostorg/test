@@ -614,21 +614,38 @@ static void report_error( execution_exception::error_code ec, const_string msg1,
 } // namespace detail
 
 // ************************************************************************** //
-// **************             detect_memory_leak              ************** //
+// **************              detect_memory_leaks             ************** //
 // ************************************************************************** //
 
 void
-detect_memory_leak( long mem_leak_alloc_num )
+detect_memory_leaks( bool on_off )
 {
-    unit_test::ut_detail::ignore_unused_variable_warning( mem_leak_alloc_num );
+    unit_test::ut_detail::ignore_unused_variable_warning( on_off );
 
 #ifdef BOOST_MS_CRT_DEBUG_HOOKS
-    _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
-    _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);
-    _CrtSetReportFile(_CRT_WARN, _CRTDBG_FILE_STDOUT);
-    
-    if( mem_leak_alloc_num > 1 )
-        _CrtSetBreakAlloc( mem_leak_alloc_num );
+    int flags = _CrtSetDbgFlag( _CRTDBG_REPORT_FLAG );
+
+    if( !on_off )
+        flags &= ~_CRTDBG_LEAK_CHECK_DF;
+    else  {
+        flags |= _CRTDBG_LEAK_CHECK_DF;
+        _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);
+        _CrtSetReportFile(_CRT_WARN, _CRTDBG_FILE_STDOUT);
+    }
+
+    _CrtSetDbgFlag ( flags );
+#endif // BOOST_MS_CRT_DEBUG_HOOKS
+}
+
+//____________________________________________________________________________//
+
+void
+break_memory_alloc( long mem_alloc_order_num )
+{
+    unit_test::ut_detail::ignore_unused_variable_warning( mem_alloc_order_num );
+
+#ifdef BOOST_MS_CRT_DEBUG_HOOKS
+    _CrtSetBreakAlloc( mem_alloc_order_num );
 #endif // BOOST_MS_CRT_DEBUG_HOOKS
 }
 
@@ -642,6 +659,9 @@ detect_memory_leak( long mem_leak_alloc_num )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.12  2006/01/30 07:29:49  rogeeff
+//  split memory leaks detection API in two to get more functions with better defined roles
+//
 //  Revision 1.11  2006/01/15 09:47:43  rogeeff
 //  make common message
 //

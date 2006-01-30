@@ -199,8 +199,10 @@ init( int argc, char* argv[] )
     if( runtime_config::show_progress() )
         register_observer( progress_monitor );
 
-    if( runtime_config::detect_memory_leak() > 0 )
-        detect_memory_leak( runtime_config::detect_memory_leak() );
+    if( runtime_config::detect_memory_leaks() > 0 ) {
+        detect_memory_leaks( true );
+        break_memory_alloc( runtime_config::detect_memory_leaks() );
+    }
 
     // init master unit test suite
     master_test_suite().argc = argc;
@@ -422,6 +424,9 @@ test_unit_aborted( test_unit const& tu )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.9  2006/01/30 07:29:49  rogeeff
+//  split memory leaks detection API in two to get more functions with better defined roles
+//
 //  Revision 1.8  2005/12/17 02:34:11  rogeeff
 //  *** empty log message ***
 //

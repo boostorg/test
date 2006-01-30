@@ -98,7 +98,7 @@ retrieve_framework_parameter( const_string parameter_name, int* argc, char** arg
         REPORT_FORMAT     , "--report_format",
         LOG_FORMAT        , "--log_format",
         OUTPUT_FORMAT     , "--output_format",
-        DETECT_MEM_LEAK   , "--detect_memory_leak",
+        DETECT_MEM_LEAK   , "--detect_memory_leaks",
         RANDOM_SEED       , "--random",
         BREAK_EXEC_PATH   , "--break_exec_path",
         
@@ -311,7 +311,7 @@ log_format()
 //____________________________________________________________________________//
 
 long
-detect_memory_leak()
+detect_memory_leaks()
 {
     return s_detect_mem_leaks;
 }
@@ -340,6 +340,9 @@ random_seed()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.10  2006/01/30 07:29:49  rogeeff
+//  split memory leaks detection API in two to get more functions with better defined roles
+//
 //  Revision 1.9  2005/12/14 05:38:47  rogeeff
 //  new parameter break_exec_path() is introduced
 //

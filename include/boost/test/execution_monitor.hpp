@@ -200,11 +200,13 @@ execution_monitor::register_exception_translator( ExceptionTranslator const& tr,
 }
 
 // ************************************************************************** //
-// **************              detect_memory_leak              ************** //
+// **************              detect_memory_leaks             ************** //
 // ************************************************************************** //
 
 // turn on system memory leak detection
-void BOOST_TEST_DECL detect_memory_leak( long mem_leak_alloc_num = 0 );
+void BOOST_TEST_DECL detect_memory_leaks( bool on_off );
+// break program execution on mem_alloc_order_num's allocation
+void BOOST_TEST_DECL break_memory_alloc( long mem_alloc_order_num );
 
 // ************************************************************************** //
 // **************               execution_aborted              ************** //
@@ -222,6 +224,9 @@ struct BOOST_TEST_DECL execution_aborted {};
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.25  2006/01/30 07:29:49  rogeeff
+//  split memory leaks detection API in two to get more functions with better defined roles
+//
 //  Revision 1.24  2005/12/14 05:05:58  rogeeff
 //  dll support introduced
 //
