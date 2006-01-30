@@ -11,11 +11,12 @@
 <DIV class="body"> <IMG src='../../btl1.gif' width='252' height='43' alt="Boost Test logo"> 
   <H1>Boost Test Library: The Execution Monitor</H1> 
   <P class="page-toc"> <A href="#Introduction">Introduction</A><BR> 
-    <A href="#Usage">Usage</A><BR> 
-    <A href="#Implementation">Implementation</A></P> 
+    <A href="#Usage">Usage</A></P>
+  <P class="page-toc"><A href="#MemLeaks">Memory leaks detection </A><BR> 
+    <A href="#Implementation">Implementation</A></P>
   <P class="page-toc-indented"> <A href="execution_monitor.html">boost::execution_monitor</A><BR> 
     <A href="execution_exception.html">boost::execution_exception</A><BR> 
-    <a href="execution_aborted.html">boost::execution_aborted</a> </P> 
+    <A href="execution_aborted.html">boost::execution_aborted</A> </P> 
   <P class="page-toc"> <A href="compilation.html">Compilation</A><BR> 
     <A href="#Examples">Examples</A><BR> 
     <A href="#Rationale">Design rationale</A></P> 
@@ -27,24 +28,59 @@
   <OL> 
     <LI> Include &lt;<A href="../../../../../boost/test/execution_monitor.hpp">boost/test/execution_monitor.hpp</A>&gt; </LI> 
     <LI> Make an instance of <A href="execution_monitor.html">boost::execution_monitor</A></LI> 
-    <LI> Optionally register custom exception translators for exception classes you want special processing</LI> 
+    <LI> Custom exception translators can be optionally registered with exception
+      classes for
+which you want to apply a special processing.</LI> 
   </OL> 
   <P class="first-line-indented">To start the monitored function, call the method <EM>execution_monitor::execute( function_to_monitor, catch_system_exception, timeout )</EM>. If call succeeds, it returns the integer value returned by the monitored function. If any of the following events occurs:
   <UL> 
     <LI> Uncaught C++ exception</LI> 
-    <LI>hardware or software signal, trap, or other exception</LI> 
+    <LI>Hardware or software signal, trap, or other exception</LI> 
     <LI>Timeout reached</LI> 
-    <LI>debug assert event occurred (under Microsoft Visual C++ or compatible compiler) </LI> 
+    <LI>Debug assert event occurred (under Microsoft Visual C++ or compatible
+    compiler) </LI> 
   </UL> 
-  the method execution_monitor::execute( ... ) throws the <A href="execution_exception.html">boost::execution_exception</A>. The method execution_monitor::execute( ... ) has two optional arguments. The second argument <EM><A name="catch_system_errors">catch_system_exception</A></EM> is a boolean argument specifying whether or not execution monitor should catch system and fatal exceptions (second category in above list). Default value is true. You may want to set this value to false, for example, in case if you willing to force core file creation. High level Boost Test components provide a runtime parameter managing this behavior. The third argument <EM>timeout</EM> is a time-out value that specifies seconds that elapse before a timeout error occurs. Note though, that in current implementation timeout support is limited and it may be ignored on some platforms. By default there is no time-out for the call. Use this parameter to monitor code with possible deadlocks or indefinite loops.
-  <P class="first-line-indented"><A name="caught_exception"></A>In majority of the cases you don't need to throw the <A href="execution_exception.html">boost::execution_exception</A> in the monitored function to be able to report an error to the Execution Monitor. If you want your error message to be propagated to the execution_exception's error message, use one of the following C++ types as an exception:</P> 
+  <P>the method execution_monitor::execute( ... ) throws the <A href="execution_exception.html">boost::execution_exception</A>.
+    The method execution_monitor::execute( ... ) has two optional parameters
+    allowing to modify it's behavior. <SPAN class="indented">One
+  is boolean flag  specifying whether or not execution monitor should trap system
+  level exceptions (second category in above list). </SPAN><SPAN class="indented">You
+  may want to set this value to false, for example, in case if you are willing
+  to force core file creation. High level Boost Test components provide a runtime
+  parameter managing this behavior in monitored unit tests. Second is integer
+  timeout for monitored function execution. Use this parameter to monitor code
+  with possible deadlocks or indefinite loops.</SPAN>
+For more detailed see <SPAN class="first-line-indented"><A href="execution_monitor.html">execution
+monitor</A></SPAN> specification. </P>
+  <P class="first-line-indented"><A name="caught_exception"></A>In majority of
+    the cases the monitored function doesn't need to throw the <A href="execution_exception.html">boost::execution_exception</A> to
+     report an error in the Execution Monitor. If you want custom error
+    message to be included into the execution_exception's error message, use
+    one of the following C++ types as an exception:</P> 
   <UL> 
     <LI>C string</LI> 
     <LI>std:string</LI> 
     <LI>any exception class in std::exception hierarchy</LI> 
   </UL> 
-  <P class="first-line-indented">If you need to abort the monitored function without the Execution Monitor to report any errors, you could throw the <a href="execution_aborted.html">boost::execution_aborted</a>. In case if you prefer or forced to use your own exception types and don't like &quot;unknown exception caught&quot; message, the execution monitor allows you to register the translator for any exception types. You could register as many independent translators as you like. See <A href="execution_monitor.html">execution monitor</A> specification for requirements on translator function. Also see below for usage example. </P> 
-  <H2><A name="Implementation">Implementation</A></H2> 
+  <P class="first-line-indented">If you need to abort the monitored function without the Execution Monitor to report any errors, you could throw the <A href="execution_aborted.html">boost::execution_aborted</A>. In case if you prefer or forced to use your own exception types and don't like &quot;unknown exception caught&quot; message, the execution monitor allows you to register the translator for any exception types. You could register as many independent translators as you like. See <A href="execution_monitor.html">execution monitor</A> specification for requirements on translator function. Also see below for usage example. </P> 
+  <H2><A name="Usage">Memory leaks detection </A></H2>
+  <P class="first-line-indented">The Executiom Monitor facility provides
+    a limited ability to detect memory leaks during program execution and break
+    program execution on specific memory allocation ordernumber (1 - first allocation
+    of memory in program, 2 - second and so on). Unfortunately this feature at
+    the moment implemented only for Microsoft family of compilers (and Intel
+    if it employs Microsoft C Runtime Library). Also it could not ne tuned per
+    instance of the monitor and only trggerred globally and reported after the
+    whole program execution is done. In a future this ought be amended. An interface
+    is composed from two free functions residing in namespace boost:</P>
+  <PRE class="code"><SPAN class="cpp-type">void</SPAN> <SPAN class="new-term">detect_memory_leak</SPAN>( <SPAN class="cpp-type">bool</SPAN> on_off );
+<SPAN class="cpp-type">void</SPAN> <SPAN class="new-term">break_memory_alloc</SPAN>( <SPAN class="cpp-type">long</SPAN> mem_alloc_order_num );</PRE> 
+<P class="first-line-indented">Use function detect_memory_leaks to trigger memory
+  leaks detection feature on/off. Use break_memory_alloc to break a program execution
+  at allocation specified by <EM>mem_alloc_order_num </EM>argument. <SPAN class="indented">High
+  level Boost Test components provide a runtime parameter allowing to manage
+  this feature in monitored unit tests.</SPAN></P>
+  <H2><A name="Implementation">Implementation</A></H2>
   <P class="first-line-indented">The Execution Monitor is implemented in two modules: one header file and one source file.</P> 
   <H4> <A href="../../../../../boost/test/execution_monitor.hpp">boost/test/execution_monitor.hpp</A>:</H4> 
   <P class="first-line-indented">defines abstract <A href="execution_monitor.html">execution monitor</A> interfaces and implements <A href="execution_exception.html">execution exception</A>.</P> 
@@ -53,16 +89,20 @@
   <P class="first-line-indented">Check <A href="compilation.html">compilation</A> instruction to see how to build standalone library for this component.</P> 
   <H2><A name="Examples">Examples</A></H2> 
   <P class="first-line-indented"><SPAN class="indented"><A href="../../examples/exec_mon_example.html">exec_mon_example</A></SPAN></P> 
-  <P class="first-line-indented">For more examples of usage of Execution Monitor see <A href="../prg_exec_monitor/index.html">Program Execution Monitor</A> or <A href="../utf/index.html">Unit Test Framework.</A></P> 
+  <P class="first-line-indented">For more examples of the Execution Monitor usage
+    see <A href="../prg_exec_monitor/index.html">Program
+      Execution Monitor</A> or <A href="../utf/index.html">Unit Test Framework.</A></P> 
   <H2><A name="Rationale">Design Rationale</A></H2> 
-  <P class="first-line-indented"> While designing we should be aware that we can be in a situation with no (or almost no) memory available. The Execution Monitor intended to be portable to as many platforms as possible.</P> 
+  <P class="first-line-indented"> While designing we were aware that it can be
+    a situation of no (or almost no) memory available. Also the Execution Monitor
+    intended to be portable to as many platforms as possible.</P> 
 </DIV> 
 <DIV class="footer"> 
   <DIV class="footer-body"> 
     <P> &copy; <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy Rozental</A> 2001-2005. <BR> 
       Distributed under the Boost Software License, Version 1.0. (See accompanying file <A href="../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P> 
     <P>Revised:
-      <!-- #BeginDate format:Sw1 -->10 July, 2005<!-- #EndDate --> 
+      <!-- #BeginDate format:Sw1 -->30 January, 2006<!-- #EndDate --> 
     </P> 
   </DIV> 
 </DIV> 
