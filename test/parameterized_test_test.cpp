@@ -143,7 +143,7 @@ BOOST_AUTO_TEST_CASE( test_case5 )
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
     ut::unit_test_log.set_stream( std::cout );
-    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)0 );
+    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)3 );
     BOOST_CHECK( !tr.p_aborted );
     BOOST_CHECK( !tr.passed() );
 }
@@ -163,7 +163,7 @@ BOOST_AUTO_TEST_CASE( test_case6 )
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
     ut::unit_test_log.set_stream( std::cout );
-    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)2 );
+    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)5 );
     BOOST_CHECK( !tr.p_aborted );
 }
 
@@ -182,7 +182,7 @@ BOOST_AUTO_TEST_CASE( test_case7 )
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
     ut::unit_test_log.set_stream( std::cout );
-    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)2 );
+    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)4 );
     BOOST_CHECK( !tr.p_aborted );
 }
 
@@ -201,7 +201,7 @@ BOOST_AUTO_TEST_CASE( test_case8 )
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
     ut::unit_test_log.set_stream( std::cout );
-    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)1 );
+    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)3 );
     BOOST_CHECK( !tr.p_aborted );
 }
 
@@ -211,6 +211,9 @@ BOOST_AUTO_TEST_CASE( test_case8 )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.22  2006/02/01 08:00:15  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.21  2005/12/14 06:01:02  rogeeff
 //  *** empty log message ***
 //

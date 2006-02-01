@@ -12,9 +12,10 @@
 //  Description : basic_cstring unit test
 // *****************************************************************************
 
-#include <boost/test/test_exec_monitor.hpp>
+#define BOOST_TEST_MAIN
+#include <boost/test/unit_test.hpp>
 
-int test_main( int, char *[] )
+BOOST_AUTO_TEST_CASE( check_string_compare )
 {
     char const* buf_ptr_cch     = "abc";
     char const  buf_array_cch[] = "abc";
@@ -51,8 +52,6 @@ int test_main( int, char *[] )
     BOOST_CHECK_EQUAL(buf_str, buf_ptr_ch);
     BOOST_CHECK_EQUAL(buf_str, buf_array_ch);
     BOOST_CHECK_EQUAL(buf_str, buf_str);
-
-    return 0;
 }
 
 // EOF

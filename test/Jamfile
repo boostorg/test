@@ -30,8 +30,7 @@ rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file * : source
 }
 
 test-suite "basics_test"
-        :
-          [ test-btl-lib run : class_properties_test : boost_unit_test_framework ]
+        : [ test-btl-lib run : class_properties_test : boost_unit_test_framework ]
           [ test-btl-lib run : basic_cstring_test    : boost_unit_test_framework ]
         ;
 
@@ -50,12 +49,12 @@ test-suite "test_exec_monitor_test"
         ;
 
 test-suite "unit_test_framework_test"
-        : [ test-btl-lib run : errors_handling_test : boost_test_exec_monitor : $(test-dir)/test_files/errors_handling_test.pattern ]
+        : [ test-btl-lib run : errors_handling_test     : boost_unit_test_framework : $(test-dir)/test_files/errors_handling_test.pattern ]
           [ test-btl-lib run : online_test ]
           [ test-btl-lib run-fail : minimal_test ]
           [ test-btl-lib run : foreach_test ]
           [ test-btl-lib run : output_test_stream_test  : boost_unit_test_framework ]
-          [ test-btl-lib run : result_report_test       : boost_test_exec_monitor : $(test-dir)test_files/result_report_test.pattern ]
+          [ test-btl-lib run : result_report_test       : boost_unit_test_framework : $(test-dir)test_files/result_report_test.pattern ]
           [ test-btl-lib run : parameterized_test_test  : boost_unit_test_framework ]
           [ test-btl-lib run : test_fp_comparisons      : boost_unit_test_framework : $(test-dir)test_files/test_fp_comparisons.pattern ]
           [ test-btl-lib run : test_tools_test          : boost_unit_test_framework : $(test-dir)test_files/test_tools_test.pattern ]
@@ -63,9 +62,9 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : custom_exception_test    : boost_unit_test_framework ]
           [ test-btl-lib run : fixed_mapping_test       : boost_unit_test_framework ]
           [ test-btl-lib run : ifstream_line_iterator_test : boost_unit_test_framework : $(test-dir)test_files$(SLASH)ifstream_line_iterator.tst1 $(test-dir)test_files$(SLASH)ifstream_line_iterator.tst2 ]
-          [ test-btl-lib run : algorithms_test : boost_unit_test_framework ]
-          [ test-btl-lib run : token_iterator_test : boost_unit_test_framework ]
-          [ test-btl-lib run : boost_check_equal_str    : boost_test_exec_monitor ]
+          [ test-btl-lib run : algorithms_test          : boost_unit_test_framework ]
+          [ test-btl-lib run : token_iterator_test      : boost_unit_test_framework ]
+          [ test-btl-lib run : boost_check_equal_str    : boost_unit_test_framework ]
 
 #          [ compile config_file_iterator_test.cpp  ]
 #          [ compile config_file_test.cpp ]

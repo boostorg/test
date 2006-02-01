@@ -4,7 +4,6 @@ log level: log_successful_tests; error type: no error;
 
 Entering test case "error_on_demand"
 98: info: check 'no error' passed
-202: info: check 'Test case has less failures then expected' passed
 Leaving test case "error_on_demand"
 
 ===========================
@@ -12,7 +11,6 @@ log level: log_successful_tests; error type: user message;
 
 Entering test case "error_on_demand"
 message
-202: info: check 'Test case has less failures then expected' passed
 Leaving test case "error_on_demand"
 
 ===========================
@@ -20,7 +18,6 @@ log level: log_successful_tests; error type: user warning;
 
 Entering test case "error_on_demand"
 106: warning in "error_on_demand": warning
-202: info: check 'Test case has less failures then expected' passed
 Leaving test case "error_on_demand"
 
 ===========================
@@ -28,7 +25,6 @@ log level: log_successful_tests; error type: user non-fatal error;
 
 Entering test case "error_on_demand"
 110: error in "error_on_demand": non-fatal error
-202: info: check 'Test case has less failures then expected' passed
 Leaving test case "error_on_demand"
 
 ===========================
@@ -37,7 +33,6 @@ log level: log_successful_tests; error type: cpp exception;
 Entering test case "error_on_demand"
 0: fatal error in "error_on_demand": std::runtime_error: test std::runtime error what() message
 120: last checkpoint: error_on_demand() throw runtime_error
-202: info: check 'Test case has less failures then expected' passed
 Leaving test case "error_on_demand"
 
 ===========================
@@ -45,7 +40,6 @@ log level: log_successful_tests; error type:  system error;
 
 Entering test case "error_on_demand"
 114: fatal error in "error_on_demand": fatal error
-202: info: check 'Test case has less failures then expected' passed
 Leaving test case "error_on_demand"
 
 ===========================

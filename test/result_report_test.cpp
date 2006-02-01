@@ -14,7 +14,8 @@
 // ***************************************************************************
 
 // Boost.Test
-#include <boost/test/test_exec_monitor.hpp>
+#define BOOST_TEST_MAIN
+#include <boost/test/unit_test.hpp>
 #include <boost/test/results_reporter.hpp>
 #include <boost/test/output_test_stream.hpp>
 #include <boost/test/unit_test_log.hpp>
@@ -101,16 +102,16 @@ struct guard {
 
 //____________________________________________________________________________//
 
-int 
-test_main( int argc, char* argv[] ) 
+BOOST_AUTO_TEST_CASE( test_result_reports ) 
 {
     guard G;
 
 #define PATTERN_FILE_NAME "result_report_test.pattern"
 
     std::string pattern_file_name(
-        argc == 1 ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./test_files/" PATTERN_FILE_NAME )
-        : argv[1] );
+        framework::master_test_suite().argc == 1 
+            ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./test_files/" PATTERN_FILE_NAME )
+            : framework::master_test_suite().argv[1] );
 
     output_test_stream test_output( pattern_file_name, !runtime_config::save_pattern() );
     results_reporter::set_stream( test_output );
@@ -159,8 +160,6 @@ test_main( int argc, char* argv[] )
     check( test_output, ts_main->p_id );
 
     results_reporter::set_stream( std::cout );
-
-    return 0;
 }
 
 //____________________________________________________________________________//
@@ -169,6 +168,9 @@ test_main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.24  2006/02/01 08:00:15  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.23  2005/12/14 06:01:02  rogeeff
 //  *** empty log message ***
 //

@@ -16,7 +16,8 @@
 // ***************************************************************************
 
 // Boost.Test
-#include <boost/test/test_exec_monitor.hpp>
+#define BOOST_TEST_MAIN
+#include <boost/test/unit_test.hpp>
 #include <boost/test/output_test_stream.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/unit_test_suite.hpp>
@@ -146,13 +147,13 @@ void error_on_demand()
 
 //____________________________________________________________________________//
 
-int
-test_main( int argc, char * argv[] )
+BOOST_AUTO_TEST_CASE( test_errors_handling )
 {
 #define PATTERN_FILE_NAME "errors_handling_test.pattern"
     std::string pattern_file_name(
-        argc <= 1 ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./test_files/" PATTERN_FILE_NAME )
-                  : argv[1] );
+        framework::master_test_suite().argc <= 1 
+            ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./test_files/" PATTERN_FILE_NAME)
+            : framework::master_test_suite().argv[1] );
 
 #ifdef LIMITED_TEST
     pattern_file_name += "2";
@@ -189,9 +190,7 @@ test_main( int argc, char * argv[] )
             BOOST_CHECK( test_output.match_pattern() );
         }
     }
-
-    return 0;
-} // main
+}
 
 //____________________________________________________________________________//
 
@@ -199,6 +198,9 @@ test_main( int argc, char * argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.37  2006/02/01 08:00:15  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.36  2005/12/14 06:01:02  rogeeff
 //  *** empty log message ***
 //

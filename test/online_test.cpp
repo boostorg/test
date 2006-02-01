@@ -13,12 +13,11 @@
 // ***************************************************************************
 
 // Boost.Test
-#include <boost/test/included/test_exec_monitor.hpp>
+#define BOOST_TEST_MAIN
+#include <boost/test/included/unit_test_framework.hpp>
 
-int 
-test_main( int /*argc*/, char* /*argv*/[] ) 
+BOOST_AUTO_TEST_CASE( test ) 
 {
-    return 0;
 }
 
 //____________________________________________________________________________//
@@ -27,16 +26,9 @@ test_main( int /*argc*/, char* /*argv*/[] )
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.14  2005/05/11 05:07:57  rogeeff
-//  licence update
+//  Revision 1.15  2006/02/01 08:00:15  rogeeff
+//  *** empty log message ***
 //
-//  Revision 1.13  2005/05/21 06:26:10  rogeeff
-//  licence update
-//
-//  Revision 1.12  2003/12/01 00:42:37  rogeeff
-//  prerelease cleaning
-//
-
 // ***************************************************************************
 
 // EOF
