@@ -32,10 +32,16 @@
 #include <boost/test/impl/xml_log_formatter.ipp>
 #include <boost/test/impl/xml_report_formatter.ipp>
 
+#define BOOST_TEST_NO_LIB
+#include <boost/test/test_exec_monitor.hpp>
+
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.14  2006/02/01 07:57:49  rogeeff
+//  included components entry points
+//
 //  Revision 1.13  2005/02/20 08:27:08  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
