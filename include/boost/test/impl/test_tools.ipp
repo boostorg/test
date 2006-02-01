@@ -93,7 +93,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         break;
     case REQUIRE:
         ll      = log_fatal_errors;
-        prefix  = "critical test ";
+        prefix  = "critical check ";
         suffix  = " failed";
         break;
     default:
@@ -439,7 +439,7 @@ output_test_stream::output_test_stream( const_string pattern_file_name, bool mat
 
         BOOST_WARN_MESSAGE( m_pimpl->m_pattern.is_open(),
                              "Couldn't open pattern file " << pattern_file_name
-                                << " for " << ( m_pimpl->m_match_or_save ? "reading" : "writing") );
+                                << " for " << (m_pimpl->m_match_or_save ? "reading" : "writing") );
     }
 
     m_pimpl->m_match_or_save    = match_or_save;
@@ -620,6 +620,9 @@ output_test_stream::sync()
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.12  2006/02/01 07:58:25  rogeeff
+//  critical message made more consistent with rest
+//
 //  Revision 1.11  2006/01/28 07:01:25  rogeeff
 //  message error fixed
 //
