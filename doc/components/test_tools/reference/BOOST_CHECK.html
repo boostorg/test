@@ -21,21 +21,22 @@ H4
     be evaluated and converted to boolean value. The  expression gets evaluated
     only once, so it's safe to pass complex expression for validation.</P>
   <H4>Example: test.cpp</H4>
-<PRE class="code"><SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
+<PRE class="code">#<SPAN class="reserv-word">define</SPAN> BOOST_TEST_MAIN<BR>#<SPAN class="reserv-word">include</SPAN> &lt;<SPAN class="literal">boost/test/unit_test.hpp</SPAN>&gt;<BR>
+BOOST_AUTO_TEST_CASE( test )
+{
     <SPAN class="cpp-type">int</SPAN> i=<SPAN class="literal">2</SPAN>;
     BOOST_WARN( <SPAN class="reserv-word">sizeof</SPAN>(<SPAN class="cpp-type">int</SPAN>) == <SPAN class="reserv-word">sizeof</SPAN>(<SPAN class="cpp-type">short</SPAN>) );
     BOOST_CHECK( i == <SPAN class="literal">1</SPAN> );
     BOOST_REQUIRE( i &gt; <SPAN class="literal">5</SPAN> );
     BOOST_CHECK( i == <SPAN class="literal">6</SPAN> ); <SPAN class="comment">// will never reach this check</SPAN>
-
-    <SPAN class="reserv-word">return</SPAN> <SPAN class="literal">0</SPAN>;
 }</PRE>
   <H4>Output:</H4>
-  <P class="test-output">test.cpp(3) : warning in test_main: condition sizeof(int)
-    == sizeof(short) is not satisfied<BR>
-    test.cpp(4) : error in test_main: test i==1 failed<BR>
-    test.cpp(5) : fatal error
-    in test_main: test i&gt;5 failed</P>
+  <P class="test-output">Running 1 test case...<BR>
+    test.cpp(7): warning in &quot;test&quot;: condition sizeof(int) == sizeof(short)
+    is not satisfied<BR>
+    test.cpp(8): error in &quot;test&quot;: check i == 1 failed<BR>
+    test.cpp(9): fatal error in &quot;test&quot;: critical check i &gt; 5 failed<BR><BR>
+    *** 2 failures detected in test suite &quot;Master Test Suite&quot;</P>
   <DIV class="see_also"> 
     <H4>See Also</H4>
     <P class="see-also-content"><A href="BOOST_CHECK_MESSAGE.html" target="descr">BOOST_CHECK_MESSAGE</A></P>
@@ -43,6 +44,6 @@ H4
 </DIV>
 </BODY>
 </HTML>
-<!-- Copyright Gennadiy Rozental 2001-2005. 
+<!-- Copyright Gennadiy Rozental 2001-2006. 
 Distributed under the Boost Software License, Version 1.0. 
 (See accompanying file LICENSE_1_0.txt or copy at www.boost.org/LICENSE_1_0.txt) -->

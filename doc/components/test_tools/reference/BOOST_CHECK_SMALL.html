@@ -26,24 +26,30 @@ H4
   <P class="first-line-indented">The first parameter is the value to check. The
     second parameter is the tolerance .</P>
   <H4>Example: test.cpp</H4>
-  <PRE class="code"><SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
+  <PRE class="code">#<SPAN class="reserv-word">define</SPAN> BOOST_TEST_MAIN<BR>#<SPAN class="reserv-word">include</SPAN> &lt;<SPAN class="literal">boost/test/unit_test.hpp</SPAN>&gt;<BR>#<SPAN class="reserv-word">include</SPAN> &lt;<SPAN class="literal">boost/test/floating_point_comparison.hpp</SPAN>&gt;
+
+BOOST_AUTO_TEST_CASE( test )
+{
     <SPAN class="cpp-type">double</SPAN> v = -<SPAN class="literal">1.23456e-3</SPAN>;
 
     BOOST_CHECK_SMALL( v, <SPAN class="literal">0.000001</SPAN> );
-    <SPAN class="reserv-word">return</SPAN> <SPAN class="literal">0</SPAN>;
 }</PRE>
   <H4>Output:</H4>
-  <P class="test-output">test.cpp(4) : error in test_main: absolute value of
-    v{1.23456e-3}  exeeds 1e-06</P>
+  <P class="test-output">Running 1 test case...<BR>
+    test.cpp(9): error in &quot;test&quot;: absolute value of v{-0.00123456}
+  exceeds 1e-06<BR>
+  <BR>
+  *** 1 failure detected in test suite &quot;Master
+  Test Suite&quot;</P>
   <DIV class="see_also"> 
     <H4>See Also</H4>
-    <P class="see-also-content"><A href="BOOST_CHECK_CLOSE.html" target="descr">BOOST_CHECK_CLOSE</A>, 
-      <A href="../floating_point_comparison.html" target="_top">Floating point
-      comparison algorithms</A></P>
+    <P class="see-also-content"><A href="BOOST_CHECK_CLOSE.html" target="descr">BOOST_CHECK_CLOSE</A>,
+	<A href="BOOST_CHECK_CLOSE_FRACTION.html" target="descr">BOOST_CHECK_CLOSE_FRACTION</A>,
+	<A href="../floating_point_comparison.html" target="_top">Floating point comparison algorithms</A></P>
   </DIV>
 </DIV>
 </BODY>
 </HTML>
-<!-- Copyright Gennadiy Rozental 2001-2005. 
+<!-- Copyright Gennadiy Rozental 2001-2006. 
 Distributed under the Boost Software License, Version 1.0. 
 (See accompanying file LICENSE_1_0.txt or copy at www.boost.org/LICENSE_1_0.txt) -->

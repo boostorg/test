@@ -39,15 +39,14 @@
   <H3 class="first-line-indented">Explicit output checks</H3>
   <PRE class="code"><SPAN class="reserv-word">using</SPAN> boost::test_tools::output_test_stream;
     
-<SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
+BOOST_AUTO_TEST_CASE( test )
+{
     output_test_stream output;
     <SPAN class="cpp-type">int</SPAN> i=<SPAN class="literal">2</SPAN>;
     output &lt;&lt; <SPAN class="literal">&quot;i=&quot;</SPAN> &lt;&lt; i;
     BOOST_CHECK( !output.is_empty(<SPAN class="reserv-word"> false</SPAN> ) );
     BOOST_CHECK( output.check_length(<SPAN class="reserv-word"> </SPAN><SPAN class="literal">3</SPAN>, <SPAN class="reserv-word">false</SPAN> ) );
     BOOST_CHECK( output.is_equal( <SPAN class="literal">&quot;i=2&quot;</SPAN> ) );
-
-    <SPAN class="reserv-word">return</SPAN> <SPAN class="literal">0</SPAN>;
 }</PRE>
   <P class="first-line-indented">As simple as that: just use instance of output_test_stream as an output 
     stream and then check output content using supplied tool's methods. Note use of <I>false</I> to prevent 
@@ -59,18 +58,15 @@
   <H3 class="first-line-indented">Pattern file matching</H3>
   <PRE class="code"><SPAN class="reserv-word">using</SPAN> boost::test_tools::output_test_stream;
     
-<SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-type">char</SPAN>* [] ) {
-    output_test_stream output( <SPAN class="literal">&quot;pattern_file&quot;, </SPAN>argc == <SPAN class="literal">1</SPAN>);
+BOOST_AUTO_TEST_CASE( test )
+{
+    output_test_stream output( <SPAN class="literal">&quot;pattern_file&quot;</SPAN>, <SPAN class="reserv-word">true</SPAN> );
     <SPAN class="cpp-type">int</SPAN> i=<SPAN class="literal">2</SPAN>;
     output &lt;&lt; <SPAN class="literal">&quot;i=&quot;</SPAN> &lt;&lt; i;
     BOOST_CHECK( output.match_pattern() );
 
     output &lt;&lt; <SPAN class="literal">&quot;File: &quot;</SPAN> &lt;&lt; __FILE__ &lt;&lt; <SPAN class="literal">&quot; Line: &quot;</SPAN> &lt;&lt; __LINE__;
     BOOST_CHECK( output.match_pattern() );
-
-    ...
-
-    <SPAN class="reserv-word">return</SPAN> <SPAN class="literal">0</SPAN>;
 }</PRE>
   <P class="first-line-indented">Even more simpler: no need to generate expected patterns. Though you 
     need to keep the pattern file all the time somewhere around. Your testing will look like a serious 
@@ -84,11 +80,11 @@
 </DIV>
 <DIV class="footer"> 
   <DIV class="footer-body"> 
-    <P> &copy; <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy Rozental</A> 2001-2005. <BR>
+    <P> &copy; <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy Rozental</A> 2001-2006. <BR>
       Distributed under the Boost Software License, Version 1.0.
       (See accompanying file <A href="../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>
-        <P>Revised:        <!-- #BeginDate format:Sw1 -->10 July, 2005<!-- #EndDate -->     </P>
+        <P>Revised:        <!-- #BeginDate format:Sw1 -->31 January, 2006<!-- #EndDate -->     </P>
   </DIV>
 </DIV>
 </BODY>

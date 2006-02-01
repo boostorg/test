@@ -29,7 +29,10 @@ H4
     Note that it required for <I>left</I> and <I>right</I> parameters to be of the same floating point 
   type. You need to explicitly resolve any type mismatch to select which type to use for comparison.</P>
   <H4>Example: test.cpp</H4>
-  <PRE class="code"><SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
+  <PRE class="code">#<SPAN class="reserv-word">define</SPAN> BOOST_TEST_MAIN<BR>#<SPAN class="reserv-word">include</SPAN> &lt;<SPAN class="literal">boost/test/unit_test.hpp</SPAN>&gt;
+#<SPAN class="reserv-word">include</SPAN> &lt;<SPAN class="literal">boost/test/floating_point_comparison.hpp</SPAN>&gt;<BR>
+BOOST_AUTO_TEST_CASE( test )
+{
     <SPAN class="cpp-type">double</SPAN> v1 = <SPAN class="literal">1.23456e-10</SPAN>;
     <SPAN class="cpp-type">double</SPAN> v2 = <SPAN class="literal">1.23457e-10</SPAN>;
 
@@ -37,14 +40,18 @@ H4
     <SPAN class="comment">// Absolute value of difference between these two values is 1e-15. They seems 
     // to be very close. But we want to checks that these values differ no more then 0.0001%
     // of their value. And this test will fail at tolerance supplied</SPAN>.
-
-    <SPAN class="reserv-word">return</SPAN> <SPAN class="literal">0</SPAN>;
 }</PRE>
   <H4>Output:</H4>
-  <P class="test-output">test.cpp(4) : error in test_main: difference between
-    v1{1.23456e-10} and v2{1.23457e-10} exeeds 1e-04%</P>
+  <P class="test-output">Running 1 test case...<BR>
+test.cpp(10): error in &quot;test&quot;: difference between v1{1.23456e-10} and
+v2{1.234571e-10} exceeds 0.0001%<BR>
+  <BR>
+*** 1 failure detected in test suite &quot;Master Test Suite&quot;</P>
   <H4>Example: test.cpp</H4>
-  <PRE class="code"><SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
+  <PRE class="code">#<SPAN class="reserv-word">define</SPAN> BOOST_TEST_MAIN<BR>#<SPAN class="reserv-word">include</SPAN> &lt;<SPAN class="literal">boost/test/unit_test.hpp</SPAN>&gt;
+#<SPAN class="reserv-word">include</SPAN> &lt;<SPAN class="literal">boost/test/floating_point_comparison.hpp</SPAN>&gt;<BR>
+BOOST_AUTO_TEST_CASE( test )
+{
     <SPAN class="cpp-type">double</SPAN> v1 = <SPAN class="literal">1.23456e28;</SPAN>
     <SPAN class="cpp-type">double</SPAN> v2 = <SPAN class="literal">1.23457e28;</SPAN>
 
@@ -52,19 +59,20 @@ H4
     <SPAN class="comment">// Absolute value of difference between these two values is 1e+23.
     // But we are interested only that it does not exeed 0.001% of a values compared
     // And this test will pass.</SPAN>
-
-    <SPAN class="reserv-word">return</SPAN> <SPAN class="literal">0</SPAN>;
 }</PRE>
   <H4>Output:</H4>
   <P class="test-output">&nbsp;</P>
   <DIV class="see_also"> 
     <H4>See Also</H4>
-    <P class="see-also-content"><A href="BOOST_CHECK_EQUAL.html" target="descr">BOOST_CHECK_EQUAL</A>, 
-      <A href="../floating_point_comparison.html" target="_top">Floating point comparison algorithms</A></P>
+    <P class="see-also-content">
+	 <A href="BOOST_CHECK_EQUAL.html" target="descr">BOOST_CHECK_EQUAL</A>,
+	 <A href="BOOST_CHECK_CLOSE_FRACTION.html" target="descr">BOOST_CHECK_CLOSE_FRACTION</A>,
+	 <A href="BOOST_CHECK_SMALL.html" target="descr">BOOST_CHECK_SMALL</A>, 
+     <A href="../floating_point_comparison.html" target="_top">Floating point comparison algorithms</A></P>
   </DIV>
 </DIV>
 </BODY>
 </HTML>
-<!-- Copyright Gennadiy Rozental 2001-2005. 
+<!-- Copyright Gennadiy Rozental 2001-2006. 
 Distributed under the Boost Software License, Version 1.0. 
 (See accompanying file LICENSE_1_0.txt or copy at www.boost.org/LICENSE_1_0.txt) -->

@@ -23,17 +23,20 @@ H4
   <P class="first-line-indented">The only tool's argument is a preprocessor symbol that gets validated. 
   </P>
   <H4>Example: test.cpp</H4>
-  <PRE class="code"><SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
+  <PRE class="code">#<SPAN class="reserv-word">define</SPAN> BOOST_TEST_MAIN<BR>#<SPAN class="reserv-word">include</SPAN> &lt;<SPAN class="literal">boost/test/unit_test.hpp</SPAN>&gt;<BR>
+BOOST_AUTO_TEST_CASE( test )
+{
     BOOST_CHECK( BOOST_IS_DEFINED(SYMBOL1) );
     BOOST_CHECK( BOOST_IS_DEFINED(SYMBOL2(arg)) );
-    
-    <SPAN class="reserv-word">return</SPAN> <SPAN class="literal">0</SPAN>;
 }</PRE>
   <H4>Output:</H4>
-  <P class="test-output">test.cpp(2) : error in test_main: test BOOST_IS_DEFINED(SYMBOL1) 
-    failed<BR>
-    test.cpp(3) : error in test_main: test BOOST_IS_DEFINED(SYMBOL2(arg)) failed  
-  </P>
+  <P class="test-output">test.cpp(6): error in &quot;test&quot;: check ::boost::test_tools::tt_detail::is_defined_impl( &quot;SYMBOL1&quot;, &quot;=
+    SYMBOL1&quot; ) failed<BR>
+    test.cpp(7): error in &quot;test&quot;: check ::boost::test_tools::tt_detail::is_defined_impl( &quot;SYMBOL2(arg)&quot;, &quot;=
+  SYMBOL2(arg)&quot; ) failed<BR>
+  <BR>
+  *** 2 failures detected in test suite &quot;Master
+  Test Suite&quot;</P>
   <DIV class="see_also"> 
     <H4>See Also</H4>
     <P class="see-also-content"><A href="BOOST_CHECK.html" target="descr">BOOST_CHECK</A></P>
@@ -41,6 +44,6 @@ H4
 </DIV>
 </BODY>
 </HTML>
-<!-- Copyright Gennadiy Rozental 2001-2005. 
+<!-- Copyright Gennadiy Rozental 2001-2006. 
 Distributed under the Boost Software License, Version 1.0. 
 (See accompanying file LICENSE_1_0.txt or copy at www.boost.org/LICENSE_1_0.txt) -->

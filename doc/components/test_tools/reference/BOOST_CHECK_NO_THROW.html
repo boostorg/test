@@ -30,14 +30,19 @@ H4
     while checking for exception. Use block statement if you want to execute
     more than one statement.</P>
   <H4>Example: test.cpp</H4>
-  <PRE class="code"><SPAN class="reserv-word">class</SPAN> my_exception{};
-<SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
+  <PRE class="code">#<SPAN class="reserv-word">define</SPAN> BOOST_TEST_MAIN<BR>#<SPAN class="reserv-word">include</SPAN> &lt;<SPAN class="literal">boost/test/unit_test.hpp</SPAN>&gt;<BR>
+<SPAN class="reserv-word">class</SPAN> my_exception{};
+
+BOOST_AUTO_TEST_CASE( test )
+{
     BOOST_CHECK_NO_THROW( <SPAN class="reserv-word">throw</SPAN> my_exception() );
-  
-    <SPAN class="reserv-word">return</SPAN> <SPAN class="literal">0</SPAN>;
 }</PRE>
   <H4>Output:</H4>
-  <P class="test-output">test.cpp(4) : error in test_main: exception was thrown by throw my_exception()</P>
+  <P class="test-output">Running 1 test case...<BR>
+  test.cpp(8): error in &quot;test&quot;: exception thrown by throw my_exception()<BR>
+  <BR>
+  ***
+  1 failure detected in test suite &quot;Master Test Suite&quot;</P>
   <DIV class="see_also"> 
     <H4>See Also</H4>
     <P class="see-also-content"><A href="BOOST_CHECK_THROW.html" target="descr">BOOST_CHECK_THROW</A></P>
@@ -45,6 +50,6 @@ H4
 </DIV>
 </BODY>
 </HTML>
-<!-- Copyright Gennadiy Rozental 2001-2005. 
+<!-- Copyright Gennadiy Rozental 2001-2006. 
 Distributed under the Boost Software License, Version 1.0. 
 (See accompanying file LICENSE_1_0.txt or copy at www.boost.org/LICENSE_1_0.txt) -->

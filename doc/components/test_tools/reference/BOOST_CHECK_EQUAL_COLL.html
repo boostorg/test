@@ -20,27 +20,32 @@ H4
   )<BR>
   BOOST_REQUIRE_EQUAL_COLLECTIONS( left_begin, left_end, right_begin, right_end
   )</H3>
-  <P class="first-line-indented">These tools are used to perform by element comparison
-    of two (left and right)  collections. They show all mismatched elements
-    in a collections (if any) and check that the collections have the same size.</P>
+  <P class="first-line-indented">These tools are used to perform an element by
+    element comparison of two collections. They print all mismatched
+    positions, collection elements at these positions and check that
+    the collections have the same size.</P>
   <P class="first-line-indented">The first two parameters designate begin
-      and end of the left collection. The second two parameters designate begin
-      and end of the right collection. </P>
+      and end of the first collection. The next two parameters designate begin
+      and end of the second collection. </P>
   <H4>Example: test.cpp</H4>
-<PRE class="code"><SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
+<PRE class="code">#<SPAN class="reserv-word">define</SPAN> BOOST_TEST_MAIN<BR>#<SPAN class="reserv-word">include</SPAN> &lt;<SPAN class="literal">boost/test/unit_test.hpp</SPAN>&gt;<BR>
+BOOST_AUTO_TEST_CASE( test )
+{
     <SPAN class="cpp-type">int</SPAN> col1 [] = { <SPAN class="literal">1</SPAN>, <SPAN class="literal">2</SPAN>, <SPAN class="literal">3</SPAN>, <SPAN class="literal">4</SPAN>, <SPAN class="literal">5</SPAN>, <SPAN class="literal">6</SPAN>, <SPAN class="literal">7</SPAN> };
     <SPAN class="cpp-type">int</SPAN> col2 [] = { <SPAN class="literal">1</SPAN>, <SPAN class="literal">2</SPAN>, <SPAN class="literal">4</SPAN>, <SPAN class="literal">4</SPAN>, <SPAN class="literal">5</SPAN>, <SPAN class="literal">7</SPAN>, <SPAN class="literal">7</SPAN> };
 
     BOOST_CHECK_EQUAL_COLLECTIONS( col1, col1+<SPAN class="literal">7</SPAN>, col2, col2+7 );
-    
-    <SPAN class="reserv-word">return</SPAN> <SPAN class="literal">0</SPAN>;
 }</PRE>
   <H4>Output:</H4>
-  <P class="test-output">test.cpp(4) : error in test_main: check {col1, col1+7}
-    == {col2,col2+77} failed<BR>
-    Mismatch in a position 2: 4 != 3<BR>
-    Mismatch in a position 5: 7 != 6    <BR>
-    </P>
+  <P class="test-output">Running 1 test case...<BR>
+    test.cpp(9): error in &quot;test&quot;: check { col1, col1+7 } == { col2,
+    col2+7 } failed.<BR>
+    Mismatch in a position 2: 3 != 4<BR>
+  Mismatch in a position 5: 6 != 7<BR>
+  <BR>
+  *** 1 failure detected in test suite &quot;Master
+  Test Suite&quot;
+  </P>
   <DIV class="see_also"> 
     <H4>See Also</H4>
     <P class="see-also-content"><A href="BOOST_CHECK_EQUAL.html" target="descr">BOOST_CHECK_EQUAL</A></P>
@@ -48,6 +53,6 @@ H4
 </DIV>
 </BODY>
 </HTML>
-<!-- Copyright Gennadiy Rozental 2001-2005. 
+<!-- Copyright Gennadiy Rozental 2001-2006. 
 Distributed under the Boost Software License, Version 1.0. 
 (See accompanying file LICENSE_1_0.txt or copy at www.boost.org/LICENSE_1_0.txt) -->

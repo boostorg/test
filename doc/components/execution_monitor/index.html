@@ -63,7 +63,7 @@ monitor</A></SPAN> specification. </P>
     <LI>any exception class in std::exception hierarchy</LI> 
   </UL> 
   <P class="first-line-indented">If you need to abort the monitored function without the Execution Monitor to report any errors, you could throw the <A href="execution_aborted.html">boost::execution_aborted</A>. In case if you prefer or forced to use your own exception types and don't like &quot;unknown exception caught&quot; message, the execution monitor allows you to register the translator for any exception types. You could register as many independent translators as you like. See <A href="execution_monitor.html">execution monitor</A> specification for requirements on translator function. Also see below for usage example. </P> 
-  <H2><A name="Usage">Memory leaks detection </A></H2>
+  <H2><A name="MemLeaks">Memory leaks detection </A></H2>
   <P class="first-line-indented">The Executiom Monitor facility provides
     a limited ability to detect memory leaks during program execution and break
     program execution on specific memory allocation ordernumber (1 - first allocation
@@ -99,10 +99,10 @@ monitor</A></SPAN> specification. </P>
 </DIV> 
 <DIV class="footer"> 
   <DIV class="footer-body"> 
-    <P> &copy; <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy Rozental</A> 2001-2005. <BR> 
+    <P> &copy; <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy Rozental</A> 2001-2006. <BR> 
       Distributed under the Boost Software License, Version 1.0. (See accompanying file <A href="../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P> 
     <P>Revised:
-      <!-- #BeginDate format:Sw1 -->30 January, 2006<!-- #EndDate --> 
+      <!-- #BeginDate format:Sw1 -->31 January, 2006<!-- #EndDate --> 
     </P> 
   </DIV> 
 </DIV> 

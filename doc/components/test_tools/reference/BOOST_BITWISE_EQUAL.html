@@ -25,24 +25,24 @@ H4
     are not required to be of the same type,  but warning is issued if their
     types size does not coincide.</P>
   <H4>Example: test.cpp</H4>
-  <PRE class="code"><SPAN class="cpp-type">int</SPAN> test_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
+  <PRE class="code">#<SPAN class="reserv-word">define</SPAN> BOOST_TEST_MAIN<BR>#<SPAN class="reserv-word">include</SPAN> &lt;<SPAN class="literal">boost/test/unit_test.hpp</SPAN>&gt;<BR>
+BOOST_AUTO_TEST_CASE( test )
+{
     BOOST_CHECK BITWISE_EQUAL( (<SPAN class="cpp-type">char</SPAN>)<SPAN class="literal">0x26</SPAN>, (<SPAN class="cpp-type">char</SPAN>)<SPAN class="literal">0x04</SPAN> );
-
-    <SPAN class="reserv-word">return</SPAN> <SPAN class="literal">0</SPAN>;
 }</PRE>
   <H4>Output:</H4>
-  <P class="test-output">test.cpp(3) : error in test_main: check (char)0x26 =.=
-    (char)0x04 failed <BR>
+  <P class="test-output">Running 1 test case...<BR>
+    test.cpp(6): error in &quot;test&quot;: check (char)0x26 =.= (char)0x04 failed.<BR>
     Mismatch in a position 1<BR>
-    Mismatch in a position 4 <BR> 
-  </P>
-  <DIV class="see_also"> 
+    Mismatch in a position 5<BR><BR>
+    *** 1 failure detected in test suite &quot;Master Test Suite&quot;
+  </P><DIV class="see_also"> 
     <H4>See Also</H4>
     <P class="see-also-content"><A href="BOOST_CHECK_EQUAL.html" target="descr">BOOST_CHECK_EQUAL</A></P>
   </DIV>
 </DIV>
 </BODY>
 </HTML>
-<!-- Copyright Gennadiy Rozental 2001-2005. 
+<!-- Copyright Gennadiy Rozental 2001-2006. 
 Distributed under the Boost Software License, Version 1.0. 
 (See accompanying file LICENSE_1_0.txt or copy at www.boost.org/LICENSE_1_0.txt) -->
