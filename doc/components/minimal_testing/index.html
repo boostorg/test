@@ -18,16 +18,16 @@
     <A href="#Implementation">Implementation</A><BR>
     <A href="#Test">Tests</A></P>
   <H2><A name="Introduction">Introduction</A></H2>
-  <P class="first-line-indented">Boost Test minimal testing facility provides the functionality provided 
-    before by the original version of Boost Test. The same as the <A href="../test_exec_monitor/index.html">Test 
-    Execution Monitor</A> it causes the test program to run in a monitored environment. In addition it 
-    defines several simple test tools that behave similarly to ones defined in <A href="../test_tools/index.html">Test 
-    Tools</A>. Minimal testing facility does not require linking with external components, so could be 
-    a component of choice for simple and quick testing needs. Unlike original Boost Test version macro 
-    BOOST_INCLUDE_MAIN is not used. The function main() is included unconditionally. One consequence is 
-    that minimal testing could not be used for multiunit testing. You will need to use other Boost Test 
-    components for that purpose.</P>
-  <P class="first-line-indented"></P>
+  <P class="first-line-indented">Boost Test minimal testing facility provides
+    the functionality provided  previosly by the original version of Boost Test.
+    
+    As the name sujest it provides only minimal basic facilities
+    for test creation. It does not have any configuration parameters (either
+    command line arguments or environment variables ) and it supply very limited
+    set of test tools that behave similarly to ones defined in the <A href="../test_tools/index.html">Test
+     Tools</A>.  Minimal testing facility supply it's own fhe function main()
+     (so could not be used for multiunit testing) and execute the test
+     program in a monitored environment.</P>
   <H2><A name="Usage">Usage</A></H2>
   <P class="first-line-indented">The only change (other then include <A href="../../../../../boost/test/minimal.hpp">boost/test/minimal.hpp</A>) 
     you need to make, to integrate your test module with Minimal testing facility is the signature of your function main(). 
@@ -77,8 +77,8 @@
     BOOST_REQUIRE( predicate )<BR>
     BOOST_ERROR( message )<BR>
     BOOST_FAIL( message )</A></P>
-  <P class="first-line-indented">Their behavior is similar to ones defined in Test Tools component. Follows the links to see 
-    more detailed descriptions. Old Boost Test tools names are supported either, but will be deprecated in a future.</P>
+  <P class="first-line-indented">Their behavior is similar to ones defined in
+    Test Tools component. Follow the links to see  more detailed descriptions.    </P>
   <H2><A name="Implementation">Implementation</A></H2>
     
   <P class="indented">The minimal testing component implemented inline in one header <A href="../../../../../boost/test/minimal.hpp">boost/test/minimal.hpp</A>. 
@@ -92,7 +92,7 @@
       Distributed under the Boost Software License, Version 1.0.
       (See accompanying file <A href="../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>
-        <P>Revised:        <!-- #BeginDate format:Sw1 -->6 January, 2004<!-- #EndDate -->     </P>
+        <P>Revised:        <!-- #BeginDate format:Sw1 -->2 February, 2006<!-- #EndDate -->     </P>
   </DIV>
 </DIV>
 </BODY>
