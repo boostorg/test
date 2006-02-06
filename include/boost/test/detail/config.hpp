@@ -74,6 +74,10 @@
 #  define BOOST_TEST_DYN_LINK
 #endif
 
+#if defined(BOOST_TEST_INCLUDED)
+#  undef BOOST_TEST_DYN_LINK
+#endif
+
 #if defined(BOOST_TEST_DYN_LINK)
 #  define BOOST_TEST_ALTERNATIVE_INIT_API
 
@@ -91,10 +95,21 @@
 #  define BOOST_TEST_DECL
 #endif
 
+#if !defined(BOOST_TEST_MAIN) && defined(BOOST_AUTO_TEST_MAIN)
+#define BOOST_TEST_MAIN BOOST_AUTO_TEST_MAIN
+#endif
+
+#if !defined(BOOST_TEST_MAIN) && defined(BOOST_TEST_MODULE)
+#define BOOST_TEST_MAIN BOOST_TEST_MODULE
+#endif
+
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2006/02/06 10:03:54  rogeeff
+//  BOOST_TEST_MODULE - master test suite name
+//
 //  Revision 1.4  2006/01/15 06:17:18  rogeeff
 //  make config working properly for non-windows dll
 //

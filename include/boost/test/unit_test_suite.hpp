@@ -175,13 +175,27 @@ static boost::unit_test::ut_detail::auto_test_unit_registrar BOOST_JOIN( test_na
 // **************                BOOST_TEST_MAIN               ************** //
 // ************************************************************************** //
 
-#if defined(BOOST_TEST_MAIN) || defined(BOOST_AUTO_TEST_MAIN)
+#if defined(BOOST_TEST_MAIN)
 
 #ifdef BOOST_TEST_ALTERNATIVE_INIT_API
-bool init_unit_test()                   { return true; }
+bool init_unit_test()                   {
 #else
-boost::unit_test::test_suite*
-init_unit_test_suite( int, char* [] )   { return 0; }
+::boost::unit_test::test_suite*
+init_unit_test_suite( int, char* [] )   {
+#endif
+
+#ifdef BOOST_TEST_MODULE
+    using namespace ::boost::unit_test;
+    assign_op( framework::master_test_suite().p_name.value, BOOST_TEST_STRINGIZE( BOOST_TEST_MODULE ).trim( "\"" ), 0 );
+    
+#endif
+
+#ifdef BOOST_TEST_ALTERNATIVE_INIT_API
+    return true;
+}
+#else
+    return 0;
+}
 #endif
 
 #endif
@@ -192,6 +206,9 @@ init_unit_test_suite( int, char* [] )   { return 0; }
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.35  2006/02/06 10:04:55  rogeeff
+//  BOOST_TEST_MODULE - master test suite name
+//
 //  Revision 1.34  2006/01/28 07:02:57  rogeeff
 //  allow multiple global fixtures
 //

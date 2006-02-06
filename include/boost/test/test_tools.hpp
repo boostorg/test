@@ -138,10 +138,6 @@ do {                                                                \
 
 //____________________________________________________________________________//
 
-#define BOOST_IGNORE_CHECK( e )             true
-
-//____________________________________________________________________________//
-
 #define BOOST_CHECK_NO_THROW_IMPL( S, TL )                                                          \
     try {                                                                                           \
         S;                                                                                          \
@@ -239,8 +235,6 @@ do {                                                                \
 //____________________________________________________________________________//
 
 #define BOOST_IS_DEFINED( symb )            ::boost::test_tools::tt_detail::is_defined_impl( #symb, BOOST_STRINGIZE(= symb) )
-#define BOOST_MESSAGE( M )                  BOOST_TEST_MESSAGE( M )
-#define BOOST_CHECKPOINT( M )               BOOST_TEST_CHECKPOINT( M )
 
 //____________________________________________________________________________//
 
@@ -248,6 +242,8 @@ do {                                                                \
 // deprecated interface
 
 #define BOOST_BITWISE_EQUAL( L, R )         BOOST_CHECK_BITWISE_EQUAL( L, R )
+#define BOOST_MESSAGE( M )                  BOOST_TEST_MESSAGE( M )
+#define BOOST_CHECKPOINT( M )               BOOST_TEST_CHECKPOINT( M )
 
 namespace boost {
 
@@ -601,6 +597,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.58  2006/02/06 10:04:55  rogeeff
+//  BOOST_TEST_MODULE - master test suite name
+//
 //  Revision 1.57  2006/01/28 07:00:47  rogeeff
 //  sunpro port
 //

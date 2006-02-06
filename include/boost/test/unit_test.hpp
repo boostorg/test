@@ -25,7 +25,7 @@
 // **************                 Auto Linking                 ************** //
 // ************************************************************************** //
 
-#if !defined(BOOST_ALL_NO_LIB) && !defined(BOOST_TEST_NO_LIB) && !defined(BOOST_TEST_SOURCE)
+#if !defined(BOOST_ALL_NO_LIB) && !defined(BOOST_TEST_NO_LIB) && !defined(BOOST_TEST_SOURCE) && !defined(BOOST_TEST_INCLUDED)
 #  define BOOST_LIB_NAME boost_unit_test_framework
 
 #  if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_TEST_DYN_LINK)
@@ -48,7 +48,7 @@ int BOOST_TEST_DECL dll_main( bool (*init_unit_test_func)(), int argc, char* arg
 
 }}
 
-#if defined(BOOST_TEST_MAIN) || defined(BOOST_AUTO_TEST_MAIN)
+#if defined(BOOST_TEST_MAIN)
 
 // ************************************************************************** //
 // **************        main function for tests using dll     ************** //
@@ -70,6 +70,9 @@ main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.17  2006/02/06 10:04:55  rogeeff
+//  BOOST_TEST_MODULE - master test suite name
+//
 //  Revision 1.16  2005/12/14 05:21:36  rogeeff
 //  dll support introduced
 //  auto linking support introduced
