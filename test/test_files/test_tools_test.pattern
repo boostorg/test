@@ -5,8 +5,8 @@
 158: error in "test_BOOST_CHECK": check i==1 failed
 161: info: check i==2 passed
 168: error in "test_BOOST_REQUIRE": not aborted
-170: fatal error in "test_BOOST_REQUIRE": critical test false failed
-174: fatal error in "test_BOOST_REQUIRE": critical test j > 5 failed
+170: fatal error in "test_BOOST_REQUIRE": critical check false failed
+174: fatal error in "test_BOOST_REQUIRE": critical check j > 5 failed
 177: info: check j < 5 passed
 177: error in "test_BOOST_REQUIRE": not aborted
 191: info: check 'object size 33 is too small' passed
@@ -29,7 +29,7 @@
 334: error in "test_BOOST_CHECK_EQUAL": check str1 == str2 failed [test1 != test12]
 337: error in "test_BOOST_CHECK_EQUAL": check i+1 == j failed [4 != 2]
 340: info: check str1 == str3+1 passed
-349: fatal error in "test_BOOST_CHECK_EQUAL": critical test str1 == str2 failed [test != null string]
+349: fatal error in "test_BOOST_CHECK_EQUAL": critical check str1 == str2 failed [test != null string]
 355: warning in "test_BOOST_CHECK_EQUAL": condition b1 == b2 is not satisfied [B(1) != B(2)]
 361: error in "test_BOOST_CHECK_EQUAL": check c1 == c3 failed [C(0,100) != C(1,102)]. Index mismatch
 362: error in "test_BOOST_CHECK_EQUAL": check c1 == c2 failed [C(0,100) != C(0,101)]. Id mismatch
@@ -38,7 +38,7 @@
 401: warning in "test_BOOST_CHECK_PREDICATE": condition moo( 12, i, j ) is not satisfied for ( 12, 17, 15 )
 409: error in "test_BOOST_CHECK_PREDICATE": check compare_lists( l1, l2 ) failed for ( ,  ). Different sizes [2!=0]
 420: error in "test_BOOST_REQUIRE_PREDICATE": not aborted
-422: fatal error in "test_BOOST_REQUIRE_PREDICATE": critical test less_equal<int>()( arg2, arg1 ) failed for ( 2, 1 )
+422: fatal error in "test_BOOST_REQUIRE_PREDICATE": critical check less_equal<int>()( arg2, arg1 ) failed for ( 2, 1 )
 443: error in "test_BOOST_CHECK_EQUAL_COLLECTIONS": check { testlist.begin(), testlist.end() } == { pattern, pattern+7 } failed. 
 Mismatch in a position 2: 4 != 3
 Mismatch in a position 5: 7 != 6
@@ -49,7 +49,7 @@ Mismatch in a position 4
 456: warning in "test_BOOST_CHECK_BITWISE_EQUAL": condition (char)0x26 =.= (char)0x04 is not satisfied. 
 Mismatch in a position 1
 Mismatch in a position 5
-459: fatal error in "test_BOOST_CHECK_BITWISE_EQUAL": critical test (char)0x26 =.= (int)0x26 failed. 
+459: fatal error in "test_BOOST_CHECK_BITWISE_EQUAL": critical check (char)0x26 =.= (int)0x26 failed. 
 Operands bit sizes mismatch: 8 != 32
 still testing
 1+1=2
