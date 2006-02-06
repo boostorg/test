@@ -21,7 +21,10 @@
     <A href="#Examples">Examples</A><BR> 
     <A href="#Rationale">Design rationale</A></P> 
   <H2><A name="Introduction">Introduction</A></H2> 
-  <P class="first-line-indented">Sometimes we need to call a function and make sure that no user or system originated exception are being thrown by it. Also uniform exception reporting would be convenient. That's the purpose the Boost Test's Execution Monitor component serves to.</P> 
+  <P class="first-line-indented">Sometimes we need to call a function and make
+    sure that no user- or system-originated exception are being thrown by it.
+    Uniform exception reporting  would be convenient also. That's the purpose
+    the Boost Test's Execution Monitor serves to.</P> 
   <P class="first-line-indented">The Execution Monitor is a lower level component of Boost Test Library. It's used as a base for implementing all other Boost Test components but also could be used standalone to get a benefit of controlled execution of error prone functions with a uniform error notification. The Execution Monitor calls a user-supplied function in a controlled environment, relieving users from a messy error detection. All symbols in the Execution Monitor implementation are located in the namespace boost. </P> 
   <H2><A name="Usage">Usage</A></H2> 
   <P class="first-line-indented">To use the Execution Monitor you need:
@@ -102,7 +105,7 @@ monitor</A></SPAN> specification. </P>
     <P> &copy; <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy Rozental</A> 2001-2006. <BR> 
       Distributed under the Boost Software License, Version 1.0. (See accompanying file <A href="../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P> 
     <P>Revised:
-      <!-- #BeginDate format:Sw1 -->31 January, 2006<!-- #EndDate --> 
+      <!-- #BeginDate format:Sw1 -->4 February, 2006<!-- #EndDate --> 
     </P> 
   </DIV> 
 </DIV> 

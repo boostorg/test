@@ -13,7 +13,7 @@
   <H1 class="subtitle">boost::execution_monitor</H1> 
   <P class="first-line-indented">boost::execution_monitor uniformly detects and
     reports the occurrence of several types of signals and exceptions, reducing
-    various errors to a uniform <A href="execution_exception.html">boost::execution_exception</A> which
+    various errors to a uniform <A href="execution_exception.html">boost::execution_exception</A> that
     is returned to a caller.</P> 
   <PRE class="code"><SPAN class="reserv-word">class</SPAN> <SPAN class="new-term">execution_monitor</SPAN> {
 <SPAN class="reserv-word">public</SPAN>:
@@ -52,26 +52,27 @@
       <TD valign="top">-</TD> 
       <TD>a time-out value that specifies seconds that elapse before a timeout
         error occurs. Note though, that in current implementation timeout support
-        is limited and it may be ignored on some platforms. By default there
-        is no time-out for the monitored call.</TD> 
+        is limited and  may be ignored on some platforms. By default there
+        is no timeout for the monitored call.</TD> 
     </TR> 
   </TABLE> 
   </P> 
   <P class="first-line-indented">Returns:</P> 
   <P class="indented"> The integer value returned by the function F or boost::exit_exception_failure
-    in case of caught exception.</P> 
+    in the case of caught exception.</P> 
   <H3>execution_monitor::<SPAN class="code">register_exception_translator&lt;Exception&gt;</SPAN><A name="register_exception_translator"></A>(
     ExceptionTranslator const&amp; tr )</H3> 
   <P class="first-line-indented"> Effects:</P> 
   <P class="indented">Registers translator function <EM>tr</EM> for an exception
     of type <EM>Exception</EM>.
-    Translators gets chained, so you could register as many as you want. <EM>Exception</EM> type
-    need to be specified explicitly as member function template argument. 
-    The translator function gets called when an exception of type <EM>Exception</EM> is
+    Translators gets chained, so you can register as many as you want. The
+    <EM>Exception</EM> type
+    needs to be specified explicitly as the member function template argument.
+     The translator function gets called when an exception of type <EM>Exception</EM> is
     thrown from within the monitored function. The translator recieves
-    a thrown exception object as a first argument. Result value of translator
-    is ignored and no exception gets reported if this function exits normally.
-    But you could always rethrow an exception or throw a different one.</P>
+    a thrown exception object as its first argument. Result value of translator
+    is ignored and no exception is reported if this function exits normally.
+    But you could always rethrow the exception or throw a different one.</P>
   <P class="first-line-indented">Arguments:</P>
   <P class="indented"> 
   <TABLE border="0">
@@ -97,7 +98,7 @@ the_monitor.register_exception_translator&lt;my_exception1&gt;( translate_my_exc
       file <A href="../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy
       at <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P> 
     <P>Revised:
-      <!-- #BeginDate format:Sw1 -->31 January, 2006<!-- #EndDate --> 
+      <!-- #BeginDate format:Sw1 -->4 February, 2006<!-- #EndDate --> 
     </P> 
   </DIV> 
 </DIV> 
