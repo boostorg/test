@@ -32,13 +32,16 @@
 #include <boost/test/impl/xml_log_formatter.ipp>
 #include <boost/test/impl/xml_report_formatter.ipp>
 
-#define BOOST_TEST_NO_LIB
+#define BOOST_TEST_INCLUDED
 #include <boost/test/test_exec_monitor.hpp>
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15  2006/02/06 10:01:55  rogeeff
+//  m,ake name similar to the primary header name
+//
 //  Revision 1.14  2006/02/01 07:57:49  rogeeff
 //  included components entry points
 //
