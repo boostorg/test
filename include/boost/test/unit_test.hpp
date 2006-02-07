@@ -25,7 +25,8 @@
 // **************                 Auto Linking                 ************** //
 // ************************************************************************** //
 
-#if !defined(BOOST_ALL_NO_LIB) && !defined(BOOST_TEST_NO_LIB) && !defined(BOOST_TEST_SOURCE) && !defined(BOOST_TEST_INCLUDED)
+#if !defined(BOOST_ALL_NO_LIB) && !defined(BOOST_TEST_NO_LIB) && \
+    !defined(BOOST_TEST_SOURCE) && !defined(BOOST_TEST_INCLUDED)
 #  define BOOST_LIB_NAME boost_unit_test_framework
 
 #  if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_TEST_DYN_LINK)
@@ -70,6 +71,9 @@ main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.18  2006/02/07 16:15:20  rogeeff
+//  BOOST_TEST_INCLUDED guard were missing
+//
 //  Revision 1.17  2006/02/06 10:04:55  rogeeff
 //  BOOST_TEST_MODULE - master test suite name
 //

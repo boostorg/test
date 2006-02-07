@@ -25,7 +25,8 @@
 // ************************************************************************** //
 
 // Automatically link to the correct build variant where possible. 
-#if !defined(BOOST_ALL_NO_LIB) && !defined(BOOST_TEST_NO_LIB) && !defined(BOOST_TEST_SOURCE)
+#if !defined(BOOST_ALL_NO_LIB) && !defined(BOOST_TEST_NO_LIB) && \
+    !defined(BOOST_TEST_SOURCE) && !defined(BOOST_TEST_INCLUDED)
 // If we're importing code from a dll, then tell auto_link.hpp about it:
 #  if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_TEST_DYN_LINK)
 #    define BOOST_DYN_LINK
@@ -94,6 +95,9 @@ main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2  2006/02/07 16:15:20  rogeeff
+//  BOOST_TEST_INCLUDED guard were missing
+//
 //  Revision 1.1  2005/12/14 05:42:08  rogeeff
 //  components primary headers
 //
