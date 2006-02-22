@@ -418,14 +418,16 @@ int
 execution_monitor::catch_signals( unit_test::callback0<int> const& F, bool catch_system_errors, int timeout )
 {
     using namespace detail;
-    typedef execution_exception::error_code ec_type;
 
     signal_handler local_signal_handler( catch_system_errors, timeout );
+
+    volatile int   sigtype = sigsetjmp( signal_handler::jump_buffer(), 1 );
+
+    typedef execution_exception::error_code ec_type;
     int            result = 0;
     ec_type        ec     = execution_exception::no_error;
     const_string   em;
 
-    volatile int   sigtype = sigsetjmp( signal_handler::jump_buffer(), 1 );
     if( sigtype == 0 ) {
         result = m_custom_translators ? (*m_custom_translators)( F ) : F();
     }
@@ -659,6 +661,9 @@ break_memory_alloc( long mem_alloc_order_num )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.13  2006/02/22 16:14:45  rogeeff
+//  reagance to eliminate warning
+//
 //  Revision 1.12  2006/01/30 07:29:49  rogeeff
 //  split memory leaks detection API in two to get more functions with better defined roles
 //
