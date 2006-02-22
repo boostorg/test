@@ -33,8 +33,6 @@ test-suite "boost_test_examples"
 : [ boost-test-example exec_mon_example     : run       : boost_prg_exec_monitor    ]
   [ boost-test-example prg_exec_example     : run       : boost_prg_exec_monitor    ]
 
-  [ boost-test-example test_exec_example    : run       : boost_test_exec_monitor   ]
-
   [ boost-test-example test_case_template_example : run : boost_unit_test_framework ]
 
   [ boost-test-example unit_test_example_01 : run-fail  : boost_unit_test_framework ]
