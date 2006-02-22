@@ -46,7 +46,7 @@ public:
     void    test_unit_skipped( test_unit const& );
     void    test_unit_aborted( test_unit const& ) {}
 
-    void    assertion_result( bool passed ) {}
+    void    assertion_result( bool ) {}
     void    exception_caught( execution_exception const& ) {}
 
     // configuration
@@ -70,6 +70,9 @@ BOOST_TEST_SINGLETON_INST( progress_monitor )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2006/02/22 16:22:37  rogeeff
+//  eliminate warning
+//
 //  Revision 1.3  2005/12/14 05:11:07  rogeeff
 //  dll support introduced
 //
