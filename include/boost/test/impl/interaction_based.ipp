@@ -9,11 +9,19 @@
 //
 //  Version     : $Revision$
 //
-//  Description : 
+//  Description : Facilities to perform interaction-based testing
 // ***************************************************************************
 
 #ifndef BOOST_TEST_INTERACTION_BASED_IPP_112105GER
 #define BOOST_TEST_INTERACTION_BASED_IPP_112105GER
+
+// Boost.Test
+#include <boost/test/detail/config.hpp>
+
+#if !BOOST_WORKAROUND(__GNUC__, < 3) && \
+    !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) && \
+    !BOOST_WORKAROUND(BOOST_MSVC, <1300) && \
+    !BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530))
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
@@ -80,10 +88,15 @@ manager::instance_ptr( bool reset, manager* new_ptr )
 
 #include <boost/test/detail/enable_warnings.hpp>
 
+#endif // not ancient compiler
+
 // ***************************************************************************
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.5  2006/02/22 16:13:34  rogeeff
+//  ifdef out for non supported compilers
+//
 //  Revision 1.4  2006/01/28 08:52:35  rogeeff
 //  operator new overloads made inline to:
 //  1. prevent issues with export them from DLL
