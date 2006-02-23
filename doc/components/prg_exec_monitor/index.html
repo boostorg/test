@@ -7,9 +7,9 @@
 <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </HEAD>
 <BODY> 
-<DIV class="header"> <A href="../../index.html">Boost.Test</A> > <A href="../index.html">Components</A> > <SPAN class="current_article">The
+<DIV class="header"> <A href="../../index.html">Boost.Test</A> &gt; <A href="../index.html">Components</A> &gt; <SPAN class="current_article">The
     Program Execution Monitor</SPAN> </DIV> 
-<DIV class="body"> <IMG src='../../btl1.gif' width='252' height='43' alt="Boost Test logo"> 
+<DIV class="body"> <IMG src="../../btl1.gif" width="252" height="43" alt="Boost Test logo"> 
   <H1>Boost Test Library: The Program Execution Monitor</H1> 
   <P class="page-toc"> <A href="#Introduction">Introduction</A><BR> 
     <A href="#Usage">Usage</A><BR> 
@@ -43,17 +43,17 @@
     programs always run by hand by a knowledgeable person. So the Program Execution
     Monitor wouldn't be worth using in that environment.</P> 
   <P class="first-line-indented">Uniform error reporting could be also useful
-    in test environments such as the boost regression tests. But in such case
-    it is preferable to use the <A href="../utf/index.html">Unit Test Framework</A>,
-    cause it allows one to use the <A href="../test_tools/index.html">Test Tools</A> and
-    produces more detailed errors information.</P> 
+    in test environments such as the Boost regression tests. Be aware though
+    in such case it might be preferable to use the <A href="../utf/index.html">Unit Test Framework</A>,
+    cause they allows one to use the <A href="../test_tools/index.html">Test Tools</A> and
+    generate more detailed error information.</P> 
   <H2><A name="Usage">Usage</A></H2> 
   <P>Using the Program Execution Monitor, the traditional Hello World program
     becomes:</P> 
   <PRE class="code">#<SPAN class="reserv-word">include</SPAN> &lt;<SPAN class="literal">iostream</SPAN>&gt;
 #<SPAN class="reserv-word">include</SPAN> &lt;<SPAN class="literal">boost/test/included/prg_exec_monitor.hpp</SPAN>&gt; 
 
-<SPAN class="cpp-type">int</SPAN> cpp_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) <SPAN class="comment">// note the name</SPAN>
+<SPAN class="cpp-type">int</SPAN> cpp_main( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) <SPAN class="comment">// note name cpp_main, not main.</SPAN>
 {
     std::cout &lt;&lt; <SPAN class="literal">&quot;Hello, world\n&quot;</SPAN>;
 
@@ -175,13 +175,13 @@
 </DIV> 
 <DIV class="footer"> 
   <DIV class="footer-body"> 
-    <P> &copy; <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy
+    <P> &copy; <A name="Copyright">Copyright</A> <A href="mailto:boost-test%20at%20emailaccount%20dot%20com%20%28please%20unobscure%29">Gennadiy
         Rozental</A> 2001-2006. <BR> 
       Distributed under the Boost Software License, Version 1.0. (See accompanying
       file <A href="../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy
       at <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P> 
     <P>Revised:
-      <!-- #BeginDate format:Sw1 -->6 February, 2006<!-- #EndDate --> 
+      <!-- #BeginDate format:Sw1 -->18 February, 2006<!-- #EndDate --> 
     </P> 
   </DIV> 
 </DIV> 

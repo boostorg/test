@@ -7,10 +7,10 @@
 <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </HEAD>
 <BODY>
-<DIV class="header"> <A href="../../index.html">Boost.Test</A> > <A href="../index.html">Components</A> 
-  > <A href="index.html">The Test Tools</A> > <SPAN class="current_article">Floating point comparison 
+<DIV class="header"> <A href="../../index.html">Boost.Test</A> &gt; <A href="../index.html">Components</A> 
+  &gt; <A href="index.html">The Test Tools</A> &gt; <SPAN class="current_article">Floating point comparison 
   algorithms</SPAN> </DIV>
-<DIV class="body"> <IMG src='../../btl1.gif' width='252' height='43' alt="Boost Test logo"> 
+<DIV class="body"> <IMG src="../../btl1.gif" width="252" height="43" alt="Boost Test logo"> 
   <H1 class="subtitle">Floating-point comparison algorithms</H1>
   <P class="page-toc"> <A href="#Introduction">Introduction</A><BR>
     <A href="#tolerance">How to choose a tolerance</A><BR>
@@ -127,31 +127,31 @@
     relationship defined by inequations  (<B><A href="#F.2">2</A></B>)</P>
   <H2>The <A name="check_is_close">check_is_close</A> algorithm</H2>
   <P>The <SPAN class="new-term">check_is_close</SPAN> algorithm present an alternative interface for the close_at_tolerance algorithm.<SPAN class="new-term">check_is_close</SPAN> is defined as predicate with four arguments </P>
-  <PRE class="code"><span class="reserv-word">struct</span> check_is_close_t {
-    <SPAN class="reserv-word">typedef</span> <SPAN class="cpp-type">bool</span> result_type;
+  <PRE class="code"><SPAN class="reserv-word">struct</SPAN> check_is_close_t {
+    <SPAN class="reserv-word">typedef</SPAN> <SPAN class="cpp-type">bool</SPAN> result_type;
 
-    template&lt;<SPAN class="reserv-word">typename</span> FPT, <SPAN class="reserv-word">typename</span> PersentType&gt;
-    <SPAN class="cpp-type">bool</span>
+    template&lt;<SPAN class="reserv-word">typename</SPAN> FPT, <SPAN class="reserv-word">typename</SPAN> PersentType&gt;
+    <SPAN class="cpp-type">bool</SPAN>
     operator()( FPT left, FPT right, PersentType percentage_tolerance, floating_point_comparison_type fpc_type = FPC_STRONG );
 };
 
-<SPAN class="reserv-word">namespace</span> {
+<SPAN class="reserv-word">namespace</SPAN> {
 check_is_close_t check_is_close;
 }</PRE>
   <H2>The <A name="check_is_small">check_is_small</A> algorithm</H2>
   <P>The <SPAN class="new-term">check_is_small</SPAN> algorithm checks that absolute value of the argument is small enough. Absolute value of the tolerance is supplied as a second argument. check_is_small is defined as binary predicate.</P>
-  <PRE class="code"><span class="reserv-word">struct</span> check_is_close_t {
-    <SPAN class="reserv-word">typedef</span> <SPAN class="cpp-type">bool</span> result_type;
+  <PRE class="code"><SPAN class="reserv-word">struct</SPAN> check_is_close_t {
+    <SPAN class="reserv-word">typedef</SPAN> <SPAN class="cpp-type">bool</SPAN> result_type;
 
-    template&lt;<SPAN class="reserv-word">typename</span> FPT&gt;
-    <SPAN class="cpp-type">bool</span>
+    template&lt;<SPAN class="reserv-word">typename</SPAN> FPT&gt;
+    <SPAN class="cpp-type">bool</SPAN>
     operator()( FPT fpv, FPT tolerance );
 };
 
-<SPAN class="reserv-word">namespace</span> {
+<SPAN class="reserv-word">namespace</SPAN> {
 check_is_small_t check_is_small;
 }</PRE>
-  <span class="first-line-indented">In spite of the fact that it's not recommended to use absolute values for floating point values comparisons the need for simple &quot;is it small&quot; checks is arousing from time to time. This is an algorithms to fill this niche.</span>
+  <SPAN class="first-line-indented">In spite of the fact that it's not recommended to use absolute values for floating point values comparisons the need for simple &quot;is it small&quot; checks is arousing from time to time. This is an algorithms to fill this niche.</SPAN>
   <H2><A name="Implementation">Implementation</A></H2>
   <P class="first-line-indented">The all algorithms are implemented in the header file <A href="../../../../../boost/test/floating_point_comparison.hpp"> 
     floating_point_comparison.hpp</A>. It is recommended to use test tools wrappers located on <A href="../../../../../boost/test/test_tools.hpp">test_tools.hpp</A>. 
@@ -177,11 +177,11 @@ check_is_small_t check_is_small;
 </DIV>
 <DIV class="footer"> 
   <DIV class="footer-body"> 
-    <P> &copy; <A name="Copyright">Copyright</A> <A href='mailto:boost-test at emailaccount dot com (please unobscure)'>Gennadiy Rozental</A> 2001-2006. <BR>
+    <P> &copy; <A name="Copyright">Copyright</A> <A href="mailto:boost-test%20at%20emailaccount%20dot%20com%20%28please%20unobscure%29">Gennadiy Rozental</A> 2001-2006. <BR>
       Distributed under the Boost Software License, Version 1.0.
       (See accompanying file <A href="../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>
-    <P>Revised:        <!-- #BeginDate format:Sw1 -->10 July, 2005<!-- #EndDate -->     </P>
+    <P>Revised:        <!-- #BeginDate format:Sw1 -->18 February, 2006<!-- #EndDate -->     </P>
   </DIV>
 </DIV>
 </BODY>
