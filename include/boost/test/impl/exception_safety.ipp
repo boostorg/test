@@ -20,7 +20,7 @@
 
 #if !BOOST_WORKAROUND(__GNUC__, < 3) && \
     !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) && \
-    !BOOST_WORKAROUND(BOOST_MSVC, <1300) && \
+    !BOOST_WORKAROUND(BOOST_MSVC, <1310) && \
     !BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530))
 
 #include <boost/test/detail/global_typedef.hpp>
@@ -540,6 +540,9 @@ exception_safety( callback0<> const& F, const_string test_name )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.7  2006/02/23 15:10:00  rogeeff
+//  vc70 out
+//
 //  Revision 1.6  2006/02/06 10:06:56  rogeeff
 //  MSVC restored for now
 //

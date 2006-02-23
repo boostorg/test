@@ -20,7 +20,7 @@
 
 #if !BOOST_WORKAROUND(__GNUC__, < 3) && \
     !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) && \
-    !BOOST_WORKAROUND(BOOST_MSVC, <1300) && \
+    !BOOST_WORKAROUND(BOOST_MSVC, <1310) && \
     !BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530))
 
 // Boost.Test
@@ -94,6 +94,9 @@ manager::instance_ptr( bool reset, manager* new_ptr )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.6  2006/02/23 15:10:00  rogeeff
+//  vc70 out
+//
 //  Revision 1.5  2006/02/22 16:13:34  rogeeff
 //  ifdef out for non supported compilers
 //
