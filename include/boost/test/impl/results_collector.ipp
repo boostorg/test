@@ -101,6 +101,8 @@ test_results::clear()
 // **************               results_collector              ************** //
 // ************************************************************************** //
 
+#if !BOOST_WORKAROUND(BOOST_MSVC, <1300)
+
 namespace {
 
 struct results_collector_impl {
@@ -110,6 +112,16 @@ struct results_collector_impl {
 results_collector_impl& s_rc_impl() { static results_collector_impl the_inst; return the_inst; }
 
 } // local namespace
+
+#else
+
+struct results_collector_impl {
+    std::map<test_unit_id,test_results> m_results_store;
+};
+
+static results_collector_impl& s_rc_impl() { static results_collector_impl the_inst; return the_inst; }
+
+#endif
 
 //____________________________________________________________________________//
 
@@ -279,6 +291,9 @@ results_collector_t::results( test_unit_id id ) const
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.5  2006/02/26 15:24:00  rogeeff
+//  vc65 workaround
+//
 //  Revision 1.4  2006/01/28 08:55:52  rogeeff
 //  results collection bug fixed
 //
