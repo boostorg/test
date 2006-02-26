@@ -20,17 +20,11 @@
     <LI>The <A href="prg_exec_monitor/index.html">Program Execution Monitor</A> - a simple helper facility to be used to monitor 
       a program execution. The Program Execution Monitor provides the function main() and uses the Execution Monitor to control 
       a program execution. It should be used in production environment to produce uniform error reports. To control programs 
-      working in test environment, use the Test Execution Monitor instead.</LI>
+      working in test environment, use the Unit Test Framework instead.</LI>
   </UL>
   <UL>
     <LI>The <A href="test_tools/index.html">Test Tools</A> - a toolbox for various testing needs. Test Tools are used by test 
-      programs working under control of the Test Execution Monitor or the Unit Test Framework. </LI>
-  </UL>
-  <UL>
-    <LI>The <A href="test_exec_monitor/index.html">Test Execution Monitor</A> - causes a test program to run in a monitored 
-      environment. The Test Execution Monitor provides the main() function to control a simple test program execution and 
-      allows to use the Test Tools to implement test logic. It is intended to be used in test environment. To control production 
-      code execution use the Program Execution Monitor.</LI>
+      programs working under control of the Unit Test Framework. </LI>
   </UL>
   <UL>
     <LI>The <A href="utf/index.html">Unit Test Framework</A> - a framework that simplifies writing and organizing 
@@ -39,10 +33,10 @@
       to manage a log report level and a result report level.</LI>
   </UL>
   <UL>
-    <LI>The <A href="minimal_testing/index.html">minimal testing facility</A> - simple facility designed to provide the functionality 
-      presented by the original version of Boost Test. The same as the Test Execution Monitor it causes the test program to 
+    <LI>The <A href="minimal_testing/index.html">Minimal Testing Facility</A> - simple facility designed to provide the functionality 
+      presented by the original version of Boost Test. It causes the test program to 
       run in a monitored environment. In addition it defines several simple test tools that behave similarly to ones defined 
-      in Test Tools. Minimal testing facility does not require linking with external components, so could be a component of 
+      in the Unit Test Framework  test tools. Minimal testing facility does not require linking with external components, so could be a component of 
       choice for simple and quick testing needs.</LI>
   </UL>
 </DIV>
@@ -52,7 +46,7 @@
       Distributed under the Boost Software License, Version 1.0.
       (See accompanying file <A href="../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>
-        <P>Revised:        <!-- #BeginDate format:Sw1 -->4 October, 2004<!-- #EndDate -->     </P>
+        <P>Revised:        <!-- #BeginDate format:Sw1 -->22 February, 2006<!-- #EndDate -->     </P>
   </DIV>
 </DIV>
 </BODY>

@@ -13,7 +13,6 @@
   <H1 class="subtitle"><SPAN class="first-line-indented">Generic</SPAN> usage
     recommendations</H1> 
   <UL> 
-    <LI><A href="#t2">Prefer the unit test framework to the test execution monitor</A></LI> 
     <LI><A href="#t3">Prefer offline compiled libraries to the inline included
         components</A> </LI> 
     <LI><A href="#t4">If you use only free function based test cases advance
@@ -24,32 +23,6 @@
         template parameter use test case template facility</A></LI> 
     <LI><A href="#t6">Prefer BOOST_CHECK_EQUAL to BOOST_CHECK</A></LI> 
   </UL> 
-  <H5>Prefer the unit test framework to the test execution monitor<A name="t2"></A> </H5> 
-  <P class="first-line-indented">In most cases when you start working on unit
-    test you have a choice to use either one of the components provided by the
-    Boost.Test. Even though in simple cases test cases based solution would be
-    couple lines longer in a long term I would opt to use unit test framework.
-    At some point you will anyway end up with code like this:</P> 
-  <PRE class="code"><SPAN class="cpp-type">void</SPAN> test_feature1()
-{
-    ...
-
-}
-
-
-<SPAN class="cpp-type">int</SPAN> test_main()
-
-{
-
-    test_feature1();
-    test_feature1();
-    ...
-    test_featureN();            
-}</PRE> 
-  <P class="first-line-indented">Why then not switch to test cases? In code like
-    above if any exception occurred in test_feature1() rest of test is skipped.
-    While with test cases each separate feature test is executed and monitored
-    separately and you are getting more from your test. </P> 
   <H5>Prefer offline compiled libraries to the inline included components <A name="t3"></A></H5> 
   <P class="first-line-indented">If you are just want to write quick simple test
     in environment where you never used Boost.Test before - yes, use included
@@ -117,7 +90,7 @@ specific_type_test( TestType* = <SPAN class="literal">0</SPAN> )
       (See accompanying file <A href="../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or
       copy at <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P> 
     <P>Revised:
-      <!-- #BeginDate format:Sw1 -->26 January, 2004<!-- #EndDate --> 
+      <!-- #BeginDate format:Sw1 -->22 February, 2006<!-- #EndDate --> 
     </P> 
   </DIV> 
 </DIV> 

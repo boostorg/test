@@ -37,25 +37,25 @@
   <P class="first-line-indented">You can send a request to <A href="mailto:boost-test%20at%20emailaccount%20dot%20com%20%28please%20unobscure%29">Gennadiy
       Rozental</A>.</P> 
   <H2><A name="Item_4">How to create test case?</A></H2> 
-  <P class="first-line-indented">To create a test case use the macro BOOST_TEST_CASE(
+  <P class="first-line-indented">To create a test case use the macro BOOST_AUTO_TEST_CASE(
     test_function ). For more details see the <A href="components/utf/components/test_case/index.html">Unit
     Test Framework</A> documentation.</P> 
   <H2><A name="Item_5">How to create test suite?</A></H2> 
-  <P class="first-line-indented">To create a test suite use the macro BOOST_TEST_SUITE(
+  <P class="first-line-indented">To create a test suite use the macro BOOST_AUTO_TEST_SUITE(
     suite_name ). For more details see the <A href="components/utf/components/test_suite/index.html">Unit
     Test Framework</A> documentation.</P> 
   <H2><A name="Item_6">Why did I get a linker error when compiling my test program?</A></H2> 
-  <P class="first-line-indented">Boost Test Library is implemented off-line.
+  <P class="first-line-indented">Boost Test Library is intended to be used off-line.
     To create a test program you should link with the one of the precompiled
     library components or use "included" version of the component located in
-    a boost/test/included directory. For example, to use Test Execution Monitor
-    you may either include the &lt;boost/test/test_tools.hpp&gt; and link with
-    libtest_exec_monitor.lib or you could include &lt;boost/test/included/test_exec_monitor.hpp&gt; in
+    a boost/test/included directory. For example, to use Unit Test Framework 
+    you may either include the &lt;boost/test/unit_test.hpp&gt; and link with
+    libunit_test_framework.lib or you could include &lt;boost/test/included/unit_test.hpp&gt; in
     which case you would not need to link with any precompiled component. Note
     also that you should strictly follow specification on integration function
     in other case some compilers may produce linker error like this:
-  <P>  
-  <P>Unresolved external init_unit_test_suite(int, char**).</P> 
+  <P>Unresolved external init_unit_test_suite(int, char**).
+  
   <P>The reasons for this error is that in your implementation you should specify
     second argument of init_unit_test_suite exactly as in a specification, i.e.:
     char* [].</P> 
@@ -81,7 +81,7 @@
       (See accompanying file <A href="../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or
       copy at <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P> 
     <P>Revised:
-      <!-- #BeginDate format:Sw1 -->17 July, 2004<!-- #EndDate --> 
+      <!-- #BeginDate format:Sw1 -->22 February, 2006<!-- #EndDate --> 
     </P> 
   </DIV> 
 </DIV> 
