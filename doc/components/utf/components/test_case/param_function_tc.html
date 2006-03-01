@@ -8,13 +8,14 @@
 <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </HEAD>
 <BODY>
-<DIV class="header"> <A href="../../../../index.html">Boost.Test</A> &gt; <A href="../../../index.html">Components</A> 
-  > <A href="../../index.html">The Unit Test Framework</A> &gt; <A href="../index.html">Components</A> > 
-  <A href="index.html">The Test Case</A> &gt; <SPAN class="current_article">The parameterized function test case</SPAN> </DIV>
+<DIV class="header"> <A href="../../../../index.html">Boost.Test</A> &gt; <A href="../../../index.html">Components</A> &gt; <A href="../../index.html">The
+    Unit Test Framework</A> &gt; <A href="../index.html">Components</A> &gt; <A href="index.html">The
+    Test Case</A> &gt; <SPAN class="current_article">The
+  parameterized function test case</SPAN> </DIV>
 <DIV class="body"> <IMG src="../../../btl1.gif" width="252" height="43" alt="Boost Test logo"> 
   <H1 class="subtitle">The parameterized free function based test case</H1>
   <H5>Definition</H5>
-  <P class="first-line-indented"> defined in <A href="../../../../../../../boost/test/unit_test_suite.hpp">unit_test_suite.hpp</A>
+  <P class="first-line-indented"> defined in <A href="../../../../../../../boost/test/unit_test_suite.hpp">unit_test_suite.hpp</A></P>
   <H5>Synopsis</H5>
   <PRE class="code"><SPAN class="reserv-word">template</SPAN> &lt;<SPAN class="reserv-word">typename</SPAN> ParamIterator, <SPAN class="reserv-word">typename</SPAN> ParameterType&gt;
 <SPAN class="reserv-word">class</SPAN> <SPAN class="new-term">parametrized_function_test_case</SPAN> : <SPAN class="reserv-word">public</SPAN> test_case
@@ -24,7 +25,7 @@
   <H5>Description</H5>
   <P class="first-line-indented">Instances of the class parametrized_function_test_case
     are created by the framework for the supplied user's free function with the following
-    specification: void (*fct)( ParameterType ).
+    specification: void (*fct)( ParameterType ).</P>
   <H5>Construction</H5>
   <P class="first-line-indented">To create an instance of the class parametrized_function_test_case
     use the following macro:</P>
@@ -38,7 +39,7 @@
     does not store list of parameters internally. The user should make sure that parameters list will 
     not be destroyed until the test case is run. That's why it not recommended to create a parameters 
     list as local variable in <A href="../../index.html">init_unit_test_suite</A>. A simple way to handle 
-    a parameters list lifetime is to place it into a user defined test suite class. 
+    a parameters list lifetime is to place it into a user defined test suite class. </P>
   <H5>Example</H5>
   <PRE class="code"><SPAN class="cpp-type">void</SPAN> test_file_reader( <SPAN class="cpp-type">std::string</SPAN> <SPAN class="reserv-word">const</SPAN>&amp; file_name )
 {
@@ -69,7 +70,7 @@ ts-&gt;add( <SPAN class="reserv-word">new</SPAN> reader_testing );</PRE>
       Distributed under the Boost Software License, Version 1.0.
       (See accompanying file <A href="../../../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>
-        <P>Revised:        <!-- #BeginDate format:Sw1 -->6 January, 2004<!-- #EndDate -->     </P>
+        <P>Revised:        <!-- #BeginDate format:Sw1 -->28 February, 2006<!-- #EndDate -->     </P>
   </DIV>
 </DIV>
 </BODY>

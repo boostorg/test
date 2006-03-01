@@ -8,15 +8,15 @@
 <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </HEAD>
 <BODY>
-<DIV class="header"> <A href="../../../../index.html">Boost.Test</A> &gt; <A href="../../../index.html">Components</A> 
-  > <A href="../../index.html">The Unit Test Framework</A> &gt; <A href="../index.html">Components</A> > 
-  <A href="index.html">The Test Case</A> &gt; <SPAN class="current_article">The parameterized boost::function based test 
-  case</SPAN> </DIV>
+<DIV class="header"> <A href="../../../../index.html">Boost.Test</A> &gt; <A href="../../../index.html">Components</A> &gt; <A href="../../index.html">The
+    Unit Test Framework</A> &gt; <A href="../index.html">Components</A> &gt; <A href="index.html">The
+    Test Case</A> &gt; <SPAN class="current_article">The
+  parameterized boost::function based test  case</SPAN> </DIV>
 <DIV class="body"> <IMG src="../../../btl1.gif" width="252" height="43" alt="Boost Test logo"> 
   <H1 class="subtitle">The parameterized boost::function based test case</H1>
  <H5>Definition</H5>
   <P class="first-line-indented"> defined in
-  <A href="../../../../../../../boost/test/unit_test_suite_ex.hpp">unit_test_suite_ex.hpp</A>
+  <A href="../../../../../../../boost/test/unit_test_suite_ex.hpp">unit_test_suite_ex.hpp</A></P>
   <H5>Synopsis</H5>
   <PRE class="code"><SPAN class="reserv-word">template</SPAN>&lt;<SPAN class="reserv-word">typename</SPAN> ParamIterator, <SPAN class="reserv-word">typename</SPAN> ParameterType&gt;
 <SPAN class="reserv-word">class</SPAN> <SPAN class="new-term">parameterized_boost_function_test_case</SPAN> : <SPAN class="reserv-word">public</SPAN> test_case
@@ -60,7 +60,7 @@
 
 <SPAN class="cpp-type">void</SPAN> test_mask( <SPAN class="cpp-type">int</SPAN> arg, <SPAN class="cpp-type">int</SPAN> mask )
 {
-    BOOST_MESSAGE( arg &lt;&lt; <SPAN class="literal">" "</SPAN> &lt;&lt; mask );
+    BOOST_MESSAGE( arg &lt;&lt; <SPAN class="literal">&quot; &quot;</SPAN> &lt;&lt; mask );
 
 
     BOOST_CHECK( (arg &amp; mask) != <SPAN class="literal">0</SPAN> );
@@ -99,7 +99,7 @@ init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-t
       Distributed under the Boost Software License, Version 1.0.
       (See accompanying file <A href="../../../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>
-        <P>Revised:        <!-- #BeginDate format:Sw1 -->17 July, 2004<!-- #EndDate -->     </P>
+        <P>Revised:        <!-- #BeginDate format:Sw1 -->28 February, 2006<!-- #EndDate -->     </P>
   </DIV>
 </DIV>
 </BODY>

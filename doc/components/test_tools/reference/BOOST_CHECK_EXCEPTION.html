@@ -46,7 +46,7 @@ H4
     <SPAN class="cpp-type">int</SPAN> m_error_code;
 };
 
-<SPAN class="cpp-type">bool</SPAN> is_critical( my_exception <SPAN class="reserv-word">const</SPAN>& ex ) { <SPAN class="reserv-word">return </SPAN>ex.m_error_code < <SPAN class="literal">0</SPAN>; }
+<SPAN class="cpp-type">bool</SPAN> is_critical( my_exception <SPAN class="reserv-word">const</SPAN>&amp; ex ) { <SPAN class="reserv-word">return </SPAN>ex.m_error_code &lt; <SPAN class="literal">0</SPAN>; }
 <SPAN class="reserv-word">
 </SPAN>BOOST_AUTO_TEST_CASE( test )
 {

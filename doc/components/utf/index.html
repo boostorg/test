@@ -79,11 +79,11 @@
   <P class="first-line-indented">If you are using only zero arity free function 
     based test cases, you could employ automatic registration facility, that allows 
     to eliminate need in init_unit_test_suite and test cases registration. For 
-    more details see <a href="components/test_case/auto_register_facility.html">here</a>. </P>
-  <P class="first-line-indented">In case if your test cases may throw custom  exceptions (see <a href="../execution_monitor/index.html#caught_exception">here</a> for list of exceptions translated by default), you could register  translator specific for that exception. For more details on translator specification you could see <a href="../execution_monitor/execution_monitor.html">excecution_monitor</a> description. To register translator in test case monitor use following template function defined in the framework:</P>
-  <P>template&lt;typename Exception, typename ExceptionTranslator&gt;<br>
-    void <br>
-    boost::unit_test::<SPAN class="new-term">register_exception_translator</span>( ExceptionTranslator const&amp; tr, boost::type&lt;Exception&gt;* d = 0 )
+    more details see <A href="components/test_case/auto_register_facility.html">here</A>. </P>
+  <P class="first-line-indented">In case if your test cases may throw custom  exceptions (see <A href="../execution_monitor/index.html#caught_exception">here</A> for list of exceptions translated by default), you could register  translator specific for that exception. For more details on translator specification you could see <A href="../execution_monitor/execution_monitor.html">excecution_monitor</A> description. To register translator in test case monitor use following template function defined in the framework:</P>
+  <P>template&lt;typename Exception, typename ExceptionTranslator&gt;<BR>
+    void <BR>
+    boost::unit_test::<SPAN class="new-term">register_exception_translator</SPAN>( ExceptionTranslator const&amp; tr, boost::type&lt;Exception&gt;* d = 0 )
   </P>
   <P class="first-line-indented">Once testing is finished, the framework reports the results and returns 
     the result code. Here the list of values returned by the test programs integrated with the unit test 
@@ -123,7 +123,7 @@ my_test_function()
 test_suite*
 init_unit_test_suite( <SPAN class="cpp-type">int</SPAN> argc, <SPAN class="cpp-type">char</SPAN>* argv[] )
 {
-    test_suite* test = BOOST_TEST_SUITE( <SPAN class="literal">"Master test suite"</SPAN> );
+    test_suite* test = BOOST_TEST_SUITE( <SPAN class="literal">&quot;Master test suite&quot;</SPAN> );
 
     test-&gt;add( BOOST_TEST_CASE( &amp;my_test_function ) );
 

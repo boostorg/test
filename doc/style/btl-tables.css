@@ -7,6 +7,7 @@ TABLE.parameter-table
 {
     width:          90%
 }
+
 TABLE.parameter-table TD
 {
     margin-top:     0px;
@@ -86,3 +87,7 @@ TABLE.test-example-summary TD.title
     font-style:     italic
 }
 
+TABLE.indented
+{
+    margin-left:    20px; 
+}

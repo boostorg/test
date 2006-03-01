@@ -9,13 +9,13 @@
 </HEAD>
 <BODY>
 <DIV class="header"> <A href="../../../../index.html">Boost.Test</A> &gt; <A href="../../../index.html">Components</A> 
-  > <A href="../../index.html">The Unit Test Framework</A> &gt; <A href="../index.html">Components</A> > 
+  &gt; <A href="../../index.html">The Unit Test Framework</A> &gt; <A href="../index.html">Components</A> &gt; 
   <A href="index.html">The Test Case</A> &gt; <SPAN class="current_article">The
   free function template based test  case</SPAN> </DIV>
 <DIV class="body"> <IMG src="../../../btl1.gif" width="252" height="43" alt="Boost Test logo"> 
   <H1 class="subtitle">The free function template based test case</H1>
   <H5>Definition</H5>
-  <P class="first-line-indented"> defined in <A href="../../../../../../../boost/test/test_case_template.hpp">test_case_template.hpp</A>
+  <P class="first-line-indented"> defined in <A href="../../../../../../../boost/test/test_case_template.hpp">test_case_template.hpp</A></P>
   <H5>Synopsis</H5>
   <PRE class="code"><SPAN class="reserv-word">template</SPAN>&lt;<SPAN class="reserv-word">typename</SPAN> TestCaseTemplate,<SPAN class="reserv-word">typename</SPAN> TestTypesList&gt;
 class <SPAN class="new-term">tc_template</SPAN> : <SPAN class="reserv-word">public</SPAN> test_case
@@ -25,7 +25,7 @@ class <SPAN class="new-term">tc_template</SPAN> : <SPAN class="reserv-word">publ
   <H5>Description</H5>
   <P class="first-line-indented">This form of test cases is most useful for testing
     generic template based components/algorithms with different set of template
-    parameters 
+    parameters </P>
   <H5>Construction</H5>
   <P class="first-line-indented">To create a test case based on your test function
     use the following macro on file level:</P>
@@ -54,7 +54,7 @@ BOOST_META_FUNC_TEST_CASE( free_test_function );
 
 test_suite*
 init_unit_test_suite( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">char</SPAN>* [] ) {
-    test_suite* test= BOOST_TEST_SUITE(<SPAN class="literal"> "Test case template example"</SPAN> );
+    test_suite* test= BOOST_TEST_SUITE(<SPAN class="literal"> &quot;Test case template example&quot;</SPAN> );
 
     typedef boost::mpl::range_c&lt;<SPAN class="cpp-type">int</SPAN>,<SPAN class="literal">0</SPAN>,<SPAN class="literal">10</SPAN>&gt; numbers;
     test-&gt;add( BOOST_FUNC_TEMPLATE_TEST_CASE( free_test_function, numbers ) );
@@ -68,7 +68,7 @@ init_unit_test_suite( <SPAN class="cpp-type">int</SPAN>, <SPAN class="cpp-type">
       Distributed under the Boost Software License, Version 1.0.
       (See accompanying file <A href="../../../../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy at 
       <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>
-        <P>Revised:        <!-- #BeginDate format:Sw1 -->17 July, 2004<!-- #EndDate -->     </P>
+        <P>Revised:        <!-- #BeginDate format:Sw1 -->28 February, 2006<!-- #EndDate -->     </P>
   </DIV>
 </DIV>
 </BODY>

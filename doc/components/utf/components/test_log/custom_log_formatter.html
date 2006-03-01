@@ -37,27 +37,27 @@
                            BOOST_UTL_ET_FATAL_ERROR };
 
     <SPAN class="comment">// Constructor</SPAN>
-    <SPAN class="reserv-word">explicit</SPAN> unit_test_log_formatter( unit_test_log <SPAN class="reserv-word">return</SPAN>& log );
+    <SPAN class="reserv-word">explicit</SPAN> unit_test_log_formatter( unit_test_log <SPAN class="reserv-word">return</SPAN>&amp; log );
 
     <SPAN class="comment">// Destructor</SPAN>
     <SPAN class="reserv-word">virtual</SPAN>             ~unit_test_log_formatter() {}
 
     // Formatter interface
-    <SPAN class="reserv-word">virtual</SPAN> <SPAN class="cpp-type">void</SPAN>        start_log( <SPAN class="cpp-type">std::ostream</SPAN>& output, <SPAN class="cpp-type">void</SPAN> log_build_info ) = 0;
-    <SPAN class="reserv-word">virtual</SPAN> <SPAN class="cpp-type">void</SPAN>        log_header( <SPAN class="cpp-type">std::ostream</SPAN>& output, unit_test_counter test_cases_amount ) = 0;
-    <SPAN class="reserv-word">virtual</SPAN> <SPAN class="cpp-type">void</SPAN>        finish_log( <SPAN class="cpp-type">std::ostream</SPAN>& output ) = 0;
+    <SPAN class="reserv-word">virtual</SPAN> <SPAN class="cpp-type">void</SPAN>        start_log( <SPAN class="cpp-type">std::ostream</SPAN>&amp; output, <SPAN class="cpp-type">void</SPAN> log_build_info ) = 0;
+    <SPAN class="reserv-word">virtual</SPAN> <SPAN class="cpp-type">void</SPAN>        log_header( <SPAN class="cpp-type">std::ostream</SPAN>&amp; output, unit_test_counter test_cases_amount ) = 0;
+    <SPAN class="reserv-word">virtual</SPAN> <SPAN class="cpp-type">void</SPAN>        finish_log( <SPAN class="cpp-type">std::ostream</SPAN>&amp; output ) = 0;
 
-    <SPAN class="reserv-word">virtual</SPAN> <SPAN class="cpp-type">void</SPAN>        track_test_case_scope( <SPAN class="cpp-type">std::ostream</SPAN>& output, test_case <SPAN class="reserv-word">const</SPAN>& tc, <SPAN class="cpp-type">void</SPAN> in_out ) = 0;
-    <SPAN class="reserv-word">virtual</SPAN> <SPAN class="cpp-type">void</SPAN>        log_exception( <SPAN class="cpp-type">std::ostream</SPAN>& output, <SPAN class="cpp-type">std::string</SPAN> <SPAN class="reserv-word">const</SPAN>& test_case_name, c_string_literal explanation ) = 0;
+    <SPAN class="reserv-word">virtual</SPAN> <SPAN class="cpp-type">void</SPAN>        track_test_case_scope( <SPAN class="cpp-type">std::ostream</SPAN>&amp; output, test_case <SPAN class="reserv-word">const</SPAN>&amp; tc, <SPAN class="cpp-type">void</SPAN> in_out ) = 0;
+    <SPAN class="reserv-word">virtual</SPAN> <SPAN class="cpp-type">void</SPAN>        log_exception( <SPAN class="cpp-type">std::ostream</SPAN>&amp; output, <SPAN class="cpp-type">std::string</SPAN> <SPAN class="reserv-word">const</SPAN>&amp; test_case_name, c_string_literal explanation ) = 0;
 
-    <SPAN class="reserv-word">virtual</SPAN> <SPAN class="cpp-type">void</SPAN>        begin_log_entry( <SPAN class="cpp-type">std::ostream</SPAN>& output, log_entry_types let ) = 0;
-    <SPAN class="reserv-word">virtual</SPAN> <SPAN class="cpp-type">void</SPAN>        log_entry_value( <SPAN class="cpp-type">std::ostream</SPAN>& output, <SPAN class="cpp-type">std::string</SPAN> <SPAN class="reserv-word">const</SPAN>& value ) = 0;
-    <SPAN class="reserv-word">virtual</SPAN> <SPAN class="cpp-type">void</SPAN>        end_log_entry( <SPAN class="cpp-type">std::ostream</SPAN>& output ) = 0;
+    <SPAN class="reserv-word">virtual</SPAN> <SPAN class="cpp-type">void</SPAN>        begin_log_entry( <SPAN class="cpp-type">std::ostream</SPAN>&amp; output, log_entry_types let ) = 0;
+    <SPAN class="reserv-word">virtual</SPAN> <SPAN class="cpp-type">void</SPAN>        log_entry_value( <SPAN class="cpp-type">std::ostream</SPAN>&amp; output, <SPAN class="cpp-type">std::string</SPAN> <SPAN class="reserv-word">const</SPAN>&amp; value ) = 0;
+    <SPAN class="reserv-word">virtual</SPAN> <SPAN class="cpp-type">void</SPAN>        end_log_entry( <SPAN class="cpp-type">std::ostream</SPAN>&amp; output ) = 0;
 
 <SPAN class="reserv-word">protected</SPAN>:
     <SPAN class="comment">// Implementation interface
-</SPAN>    log_entry_data      <SPAN class="reserv-word">const</SPAN>& entry_data() <SPAN class="reserv-word">const</SPAN>;
-    log_checkpoint_data <SPAN class="reserv-word">const</SPAN>& checkpoint_data() <SPAN class="reserv-word">const</SPAN>;</PRE> 
+</SPAN>    log_entry_data      <SPAN class="reserv-word">const</SPAN>&amp; entry_data() <SPAN class="reserv-word">const</SPAN>;
+    log_checkpoint_data <SPAN class="reserv-word">const</SPAN>&amp; checkpoint_data() <SPAN class="reserv-word">const</SPAN>;</PRE> 
   <H5>Description</H5> 
   <P class="first-line-indented">To create custom log formatter you need to implement
     unit_test_log_formatter interface above. You could inherit either directly

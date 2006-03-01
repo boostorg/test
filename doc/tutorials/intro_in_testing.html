@@ -19,7 +19,7 @@ and usage recommendations</A> &gt; <SPAN class="current_article"> Introduction i
 
 <SPAN class="cpp-type">int</SPAN> main()
 {
-    std::cout << <SPAN class="literal">"Hello World\n"</SPAN>;
+    std::cout &lt;&lt; <SPAN class="literal">&quot;Hello World\n&quot;</SPAN>;
 }
 </PRE>
   <P>This is a good introduction for several reasons. One is that the program
@@ -29,14 +29,15 @@ and usage recommendations</A> &gt; <SPAN class="current_article"> Introduction i
     would be no need to test anything before using it. In programming as a new
     student experiences it, testing is pointless and adds unneeded complexity.</P>
   <P class="first-line-indented">However, no actual programs are as simple as
-    an introductory lesson makes "Hello World" seem. Not even "Hello World." In
+    an introductory lesson makes &quot;Hello World&quot; seem. Not even &quot;Hello
+    World&quot;. In
     all real programs, there are decisions to be made and multiple paths of execution
     based on these decisions. These decisions could be based on user input, streaming
     data, resource availability and dozens of other factors. The programmer strives
     to control the inputs, and results of these decisions, but no one can keep
     all of them clearly in mind once the size of the project exceeds just a few
-    hundred lines. Even "Hello World" hides complexities of this sort in the
-    simple seeming call to std::cout.</P>
+    hundred lines. Even &quot;Hello World&quot; hides complexities of this sort in
+    the simple seeming call to std::cout.</P>
   <P class="first-line-indented">Since the individual programmer can no longer
     determine the correctness of the program, there is a need for a different
     approach. An obvious possibility is testing the program after construction.
@@ -77,7 +78,7 @@ and usage recommendations</A> &gt; <SPAN class="current_article"> Introduction i
   <PRE class="code"><SPAN class="cpp-type">double</SPAN> find_root( <SPAN class="cpp-type">double</SPAN>             (*f)(<SPAN class="cpp-type">double</SPAN>), 
                   <SPAN class="cpp-type">double</SPAN>               low_guess, 
                   <SPAN class="cpp-type">double</SPAN>               high_guess, 
-                  std::<SPAN class="cpp-type">vector</SPAN><<SPAN class="cpp-type">double</SPAN>>& steps, 
+                  std::<SPAN class="cpp-type">vector</SPAN>&lt;<SPAN class="cpp-type">double</SPAN>&gt;&amp; steps, 
                   <SPAN class="cpp-type">double</SPAN>               tolerance )
 {
     <SPAN class="cpp-type">double</SPAN> solution;
@@ -91,7 +92,7 @@ and usage recommendations</A> &gt; <SPAN class="current_article"> Introduction i
         <SPAN class="cpp-type">double</SPAN> f_temp = f(temp);
         <SPAN class="cpp-type">double</SPAN> f_low = f(low_guess);
         
-        <SPAN class="reserv-word">if</SPAN>(abs(f_temp) < tolerance)
+        <SPAN class="reserv-word">if</SPAN>(abs(f_temp) &lt; tolerance)
         {
             solution  = temp;
             converged = true;
@@ -186,7 +187,7 @@ and usage recommendations</A> &gt; <SPAN class="current_article"> Introduction i
       file <A href="../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or copy
       at <A href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</A>)</P>
     <P>Revised:
-      <!-- #BeginDate format:Sw1 -->26 February, 2006<!-- #EndDate -->
+      <!-- #BeginDate format:Sw1 -->28 February, 2006<!-- #EndDate -->
     </P>
   </DIV>
 </DIV>
