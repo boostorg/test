@@ -116,6 +116,7 @@ do {                                                                \
 
 #define BOOST_CHECK_THROW_IMPL( S, E, P, prefix, TL )                                                   \
     try {                                                                                               \
+        BOOST_TEST_PASSPOINT();                                                                         \
         S;                                                                                              \
         BOOST_CHECK_IMPL( false, "exception " BOOST_STRINGIZE( E ) " is expected", TL, CHECK_MSG ); }   \
     catch( E const& ex ) {                                                                              \
@@ -597,6 +598,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.59  2006/03/03 17:39:46  rogeeff
+//  paaspoint added to check throw
+//
 //  Revision 1.58  2006/02/06 10:04:55  rogeeff
 //  BOOST_TEST_MODULE - master test suite name
 //
