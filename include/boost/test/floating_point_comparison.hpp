@@ -33,7 +33,11 @@ using unit_test::readonly_property;
 // **************        floating_point_comparison_type        ************** //
 // ************************************************************************** //
 
-enum BOOST_TEST_DECL floating_point_comparison_type { FPC_STRONG, FPC_WEAK };
+enum BOOST_TEST_DECL floating_point_comparison_type {
+    FPC_STRONG, // "Very close"   - equation 1' in docs, the default
+    FPC_WEAK    // "Close enough" - equation 2' in docs.
+
+};
 
 // ************************************************************************** //
 // **************                    details                   ************** //
@@ -41,11 +45,13 @@ enum BOOST_TEST_DECL floating_point_comparison_type { FPC_STRONG, FPC_WEAK };
 
 namespace tt_detail {
 
+// FPT is Floating-Point type, float, double, long double or User-Defined.
+
 template<typename FPT>
 inline FPT
 fpt_abs( FPT arg ) 
 {
-    return arg < 0 ? -arg : arg;
+    return arg < static_cast<FPT>(0) ? -arg : arg;
 }
 
 //____________________________________________________________________________//
@@ -55,9 +61,16 @@ template<typename FPT>
 inline FPT 
 safe_fpt_division( FPT f1, FPT f2 )
 {
-    return  (f2 < 1 && f1 > f2 * (std::numeric_limits<FPT>::max)())               ? (std::numeric_limits<FPT>::max)()
-            : ((f2 > 1 && f1 < f2 * (std::numeric_limits<FPT>::min)() || f1 == 0) ? 0
-                                                                                  : f1/f2 );
+    // Avoid overflow.
+    if( f2 < static_cast<FPT>(1)  && f1 > f2 * std::numeric_limits<FPT>::max() )
+        return std::numeric_limits<FPT>::max();
+
+    // Avoid underflow.
+    if( f1 == static_cast<FPT>(0) || 
+        f2 > static_cast<FPT>(1) && f1 < f2 * std::numeric_limits<FPT>::min() )
+        return static_cast<FPT>(0);
+
+    return f1/f2;
 }
 
 //____________________________________________________________________________//
@@ -124,21 +137,23 @@ fraction_tolerance( FPT v )
 // **************             close_at_tolerance               ************** //
 // ************************************************************************** //
 
-template<typename FPT, typename ToleranceBaseType = FPT >
+template<typename FPT>
 class close_at_tolerance {
 public:
     // Public typedefs
     typedef bool result_type;
 
     // Constructor
+    template<typename ToleranceBaseType>
     explicit    close_at_tolerance( percent_tolerance_t<ToleranceBaseType>  tolerance, 
                                     floating_point_comparison_type          fpc_type = FPC_STRONG ) 
-    : p_fraction_tolerance_t( static_cast<FPT>(0.01)*tolerance.m_value )
+    : p_fraction_tolerance( tt_detail::fpt_abs( static_cast<FPT>(0.01)*tolerance.m_value ) )
     , p_strong_or_weak( fpc_type ==  FPC_STRONG )
     {}
+    template<typename ToleranceBaseType>
     explicit    close_at_tolerance( fraction_tolerance_t<ToleranceBaseType> tolerance, 
                                     floating_point_comparison_type          fpc_type = FPC_STRONG ) 
-    : p_fraction_tolerance_t( tolerance.m_value )
+    : p_fraction_tolerance( tt_detail::fpt_abs( tolerance.m_value ) )
     , p_strong_or_weak( fpc_type ==  FPC_STRONG )
     {}
 
@@ -148,12 +163,13 @@ public:
         FPT d1   = tt_detail::safe_fpt_division( diff, tt_detail::fpt_abs( right ) );
         FPT d2   = tt_detail::safe_fpt_division( diff, tt_detail::fpt_abs( left ) );
         
-        return p_strong_or_weak ? (d1 <= p_fraction_tolerance_t.get() && d2 <= p_fraction_tolerance_t.get()) 
-                                : (d1 <= p_fraction_tolerance_t.get() || d2 <= p_fraction_tolerance_t.get());
+        return p_strong_or_weak 
+                   ? (d1 <= p_fraction_tolerance && d2 <= p_fraction_tolerance) 
+                   : (d1 <= p_fraction_tolerance || d2 <= p_fraction_tolerance);
     }
 
     // Public properties
-    readonly_property<FPT>  p_fraction_tolerance_t;
+    readonly_property<FPT>  p_fraction_tolerance;
     readonly_property<bool> p_strong_or_weak;
 };
 
@@ -172,7 +188,7 @@ struct BOOST_TEST_DECL check_is_close_t {
     operator()( FPT left, FPT right, percent_tolerance_t<ToleranceBaseType> tolerance, 
                 floating_point_comparison_type fpc_type = FPC_STRONG )
     {
-        close_at_tolerance<FPT,ToleranceBaseType> pred( tolerance, fpc_type );
+        close_at_tolerance<FPT> pred( tolerance, fpc_type );
 
         return pred( left, right );
     }
@@ -181,7 +197,7 @@ struct BOOST_TEST_DECL check_is_close_t {
     operator()( FPT left, FPT right, fraction_tolerance_t<ToleranceBaseType> tolerance, 
                 floating_point_comparison_type fpc_type = FPC_STRONG )
     {
-        close_at_tolerance<FPT,ToleranceBaseType> pred( tolerance, fpc_type );
+        close_at_tolerance<FPT> pred( tolerance, fpc_type );
 
         return pred( left, right );
     }
@@ -205,7 +221,7 @@ struct BOOST_TEST_DECL check_is_small_t {
     bool
     operator()( FPT fpv, FPT tolerance )
     {
-        return tt_detail::fpt_abs( fpv ) < tolerance;
+        return tt_detail::fpt_abs( fpv ) < tt_detail::fpt_abs( tolerance );
     }
 };
 
@@ -227,6 +243,9 @@ check_is_small_t check_is_small;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.25  2006/03/13 18:28:25  rogeeff
+//  warnings eliminated
+//
 //  Revision 1.24  2005/12/14 05:07:28  rogeeff
 //  introduced an ability to test on closeness based on either percentage dirven tolerance or fraction driven one
 //

@@ -35,16 +35,16 @@ namespace unit_test {
 class BOOST_TEST_DECL test_observer {
 public:
     // test observer interface
-    virtual void    test_start( counter_t test_cases_amount ) {}
+    virtual void    test_start( counter_t /* test_cases_amount */ ) {}
     virtual void    test_finish() {}
     virtual void    test_aborted() {}
 
     virtual void    test_unit_start( test_unit const& ) {}
-    virtual void    test_unit_finish( test_unit const&, unsigned long elapsed ) {}
+    virtual void    test_unit_finish( test_unit const&, unsigned long /* elapsed */ ) {}
     virtual void    test_unit_skipped( test_unit const& ) {}
     virtual void    test_unit_aborted( test_unit const& ) {}
 
-    virtual void    assertion_result( bool passed ) {}
+    virtual void    assertion_result( bool /* passed */ ) {}
     virtual void    exception_caught( execution_exception const& ) {}
 
     virtual int     priority() { return 0; }
@@ -65,6 +65,9 @@ protected:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2006/03/13 18:28:26  rogeeff
+//  warnings eliminated
+//
 //  Revision 1.2  2005/12/14 05:15:34  rogeeff
 //  dll support introduced
 //  priority interface added
