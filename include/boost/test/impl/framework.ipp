@@ -17,6 +17,7 @@
 
 // Boost.Test
 #include <boost/test/framework.hpp>
+#include <boost/test/execution_monitor.hpp>
 #include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/unit_test_monitor.hpp>
@@ -37,7 +38,6 @@
 // STL
 #include <map>
 #include <set>
-#include <stdexcept>
 #include <cstdlib>
 #include <ctime>
 
@@ -63,6 +63,32 @@ extern boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[
 namespace boost {
 
 namespace unit_test {
+
+// ************************************************************************** //
+// **************            test_start calls wrapper          ************** //
+// ************************************************************************** //
+
+namespace ut_detail {
+
+struct test_start_caller {
+    test_start_caller( test_observer* to, counter_t tc_amount )
+    : m_to( to )
+    , m_tc_amount( tc_amount )
+    {}
+
+    int operator()()
+    {
+        m_to->test_start( m_tc_amount );
+        return 0;
+    }
+
+private:
+    // Data members
+    test_observer*  m_to;
+    counter_t       m_tc_amount;
+};
+
+}
 
 // ************************************************************************** //
 // **************                   framework                  ************** //
@@ -212,7 +238,7 @@ init( int argc, char* argv[] )
 
 #ifdef BOOST_TEST_ALTERNATIVE_INIT_API
     if( !init_unit_test() )
-        throw std::logic_error( "Test failed to initialize" );
+        throw setup_error( BOOST_TEST_L("test tree initialization error" ) );
 #else
     test_suite* s = init_unit_test_suite( argc, argv );
     if( s )
@@ -229,12 +255,12 @@ void
 register_test_unit( test_case* tc )
 {
     if( tc->p_id != INV_TEST_UNIT_ID )
-        throw std::logic_error( "Test case already registered" );
+        throw setup_error( BOOST_TEST_L( "test case already registered" ) );
 
     test_unit_id new_id = s_frk_impl().m_next_test_case_id;
 
     if( new_id == MAX_TEST_CASE_ID )
-        throw std::logic_error( "Too many test cases" );
+        throw setup_error( BOOST_TEST_L( "too many test cases" ) );
 
     typedef framework_impl::test_unit_store::value_type map_value_type;
 
@@ -250,12 +276,12 @@ void
 register_test_unit( test_suite* ts )
 {
     if( ts->p_id != INV_TEST_UNIT_ID )
-        throw std::logic_error( "Test suite already registered" );
+        throw setup_error( BOOST_TEST_L( "test suite already registered" ) );
 
     test_unit_id new_id = s_frk_impl().m_next_test_suite_id;
 
     if( new_id == MAX_TEST_SUITE_ID )
-        throw std::logic_error( "Too many test suites" );
+        throw setup_error( BOOST_TEST_L( "too many test suites" ) );
 
     typedef framework_impl::test_unit_store::value_type map_value_type;
     s_frk_impl().m_test_units.insert( map_value_type( new_id, ts ) );
@@ -315,7 +341,7 @@ get( test_unit_id id, test_unit_type t )
     test_unit const* res = s_frk_impl().m_test_units[id];
 
     if( (res->p_type & t) == 0 )
-        throw std::logic_error( "Invalid test unit type" );
+        throw internal_error( "Invalid test unit type" );
 
     return *res;
 }
@@ -332,16 +358,24 @@ run( test_unit_id id, bool continue_test )
     traverse_test_tree( id, tcc );
 
     if( tcc.m_count == 0 )
-        throw std::logic_error( "Test is not initialized" );
+        throw setup_error( BOOST_TEST_L( "test tree is empty" ) );
 
-    bool            call_start_finish   = !continue_test || !s_frk_impl().m_test_in_progress;
-    bool            was_in_progress     = s_frk_impl().m_test_in_progress;
+    bool    call_start_finish   = !continue_test || !s_frk_impl().m_test_in_progress;
+    bool    was_in_progress     = s_frk_impl().m_test_in_progress;
 
     s_frk_impl().m_test_in_progress = true;
 
     if( call_start_finish ) {
-        BOOST_TEST_FOREACH( test_observer*, to, s_frk_impl().m_observers )
-            to->test_start( tcc.m_count );
+        BOOST_TEST_FOREACH( test_observer*, to, s_frk_impl().m_observers ) {
+            boost::execution_monitor em;
+
+            try {
+                em.execute( ut_detail::test_start_caller( to, tcc.m_count ) );
+            }
+            catch( execution_exception const& ex )  {
+                throw setup_error( ex.what() );
+            }
+        }
     }
 
     switch( runtime_config::random_seed() ) {
@@ -424,6 +458,9 @@ test_unit_aborted( test_unit const& tu )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.10  2006/03/19 07:27:52  rogeeff
+//  streamline test setup error message
+//
 //  Revision 1.9  2006/01/30 07:29:49  rogeeff
 //  split memory leaks detection API in two to get more functions with better defined roles
 //

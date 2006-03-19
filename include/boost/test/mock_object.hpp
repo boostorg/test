@@ -298,7 +298,7 @@ MO_BINARY_OP( *, "Multiplication" )
 MO_BINARY_OP( *=, "Multiplication/assignment" )
 MO_BINARY_OP( +, "Addition" )
 MO_BINARY_OP( +=, "Addition/assignment" )
-//MO_BINARY_OP( –, "Subtraction" )
+//MO_BINARY_OP( -, "Subtraction" )
 MO_BINARY_OP( -=, "Subtraction/assignment" )
 MO_BINARY_OP( ->*, "Pointer-to-member selection" )
 MO_BINARY_OP( /, "Division" )
@@ -329,6 +329,9 @@ MO_BINARY_OP( >>, "Right shift" )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.3  2006/03/19 07:27:52  rogeeff
+//  streamline test setup error message
+//
 //  Revision 1.2  2006/01/15 11:14:39  rogeeff
 //  simpl_mock -> mock_object<>::prototype()
 //  operator new need to be rethinked

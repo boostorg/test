@@ -61,7 +61,7 @@ main( int argc, char* argv[] )
 
 #ifdef BOOST_TEST_DYN_LINK
     if( !(*init_unit_test_func)() )
-        throw std::logic_error( "Test failed to initialize" );
+        throw setup_error( BOOST_TEST_L( "test tree initialization error" ) );
 #endif
 
         framework::run();
@@ -72,13 +72,18 @@ main( int argc, char* argv[] )
                     ? boost::exit_success 
                     : results_collector.results( framework::master_test_suite().p_id ).result_code();
     }
-    catch( std::logic_error const& ex ) {
-        std::cerr << "Boost.Test framework error: " << ex.what() << std::endl;
+    catch( framework::internal_error const& ex ) {
+        std::cerr << "Boost.Test framework internal error: " << ex.what() << std::endl;
+        
+        return boost::exit_exception_failure;
+    }
+    catch( framework::setup_error const& ex ) {
+        std::cerr << "Test setup error: " << ex.what() << std::endl;
         
         return boost::exit_exception_failure;
     }
     catch( ... ) {
-        std::cerr << "Boost.Test internal framework error: unknown reason" << std::endl;
+        std::cerr << "Boost.Test framework internal error: unknown reason" << std::endl;
         
         return boost::exit_exception_failure;
     }
@@ -100,6 +105,9 @@ main( int argc, char* argv[] )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.8  2006/03/19 07:27:52  rogeeff
+//  streamline test setup error message
+//
 //  Revision 1.7  2005/12/14 05:35:57  rogeeff
 //  DLL support implemented
 //  Alternative init API introduced

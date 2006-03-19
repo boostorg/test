@@ -22,6 +22,9 @@
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
+// STL
+#include <stdexcept>
+
 //____________________________________________________________________________//
 
 namespace boost {
@@ -74,6 +77,18 @@ BOOST_TEST_DECL void    assertion_result( bool passed );
 BOOST_TEST_DECL void    exception_caught( execution_exception const& );
 BOOST_TEST_DECL void    test_unit_aborted( test_unit const& );
 
+// ************************************************************************** //
+// **************                framework errors              ************** //
+// ************************************************************************** //
+
+struct internal_error : std::runtime_error {
+    internal_error( const_string m ) : std::runtime_error( std::string( m.begin(), m.size() ) ) {}
+};
+
+struct setup_error : std::runtime_error {
+    setup_error( const_string m ) : std::runtime_error( std::string( m.begin(), m.size() ) ) {}
+};
+
 } // namespace framework
 
 } // unit_test
@@ -88,6 +103,9 @@ BOOST_TEST_DECL void    test_unit_aborted( test_unit const& );
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.5  2006/03/19 07:27:52  rogeeff
+//  streamline test setup error message
+//
 //  Revision 1.4  2005/12/14 05:08:44  rogeeff
 //  dll support introduced
 //

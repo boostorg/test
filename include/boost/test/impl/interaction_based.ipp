@@ -28,6 +28,7 @@
 #include <boost/test/utils/callback.hpp>
 #include <boost/test/interaction_based.hpp>
 #include <boost/test/mock_object.hpp>
+#include <boost/test/framework.hpp>     // for setup_error
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -69,7 +70,7 @@ manager::instance_ptr( bool reset, manager* new_ptr )
     if( reset ) {
         if( new_ptr ) {
             if( ptr != &dummy )
-                throw std::logic_error( std::string( "Couldn't run two interation based test the same time" ) );
+                throw unit_test::framework::setup_error( BOOST_TEST_L( "Couldn't run two interation based test the same time" ) );
                 
             ptr = new_ptr;
         }
@@ -94,6 +95,9 @@ manager::instance_ptr( bool reset, manager* new_ptr )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.7  2006/03/19 07:27:52  rogeeff
+//  streamline test setup error message
+//
 //  Revision 1.6  2006/02/23 15:10:00  rogeeff
 //  vc70 out
 //
