@@ -71,7 +71,7 @@ int main( int argc, char* argv[] )
         if( P["init"] )
             assign_op( init_func_name, P.get( "init" ), 0 );
 
-        bool res = ::boost::unit_test::dll_main( &load_test_lib, argc, argv );
+        bool res = ::boost::unit_test::unit_test_main( &load_test_lib, argc, argv );
 
 #ifdef USE_WIN32_API
         if( test_lib_handle )
