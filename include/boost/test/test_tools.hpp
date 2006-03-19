@@ -80,7 +80,7 @@
 do {                                                                \
     BOOST_TEST_PASSPOINT();                                         \
     BOOST_TEST_TOOL_IMPL( check_impl, P, check_descr, TL, CT ), 0 );\
-} while( false )                                                    \
+} while( ::boost::test_tools::dummy_cond )                          \
 /**/
 
 //____________________________________________________________________________//
@@ -92,7 +92,7 @@ do {                                                                \
     BOOST_TEST_PASSPOINT();                                         \
     BOOST_TEST_TOOL_IMPL( check_frwd, P, check_descr, TL, CT )      \
     BOOST_PP_SEQ_FOR_EACH( BOOST_TEST_PASS_ARG_INFO, '_', ARGS ) ); \
-} while( false )                                                    \
+} while( ::boost::test_tools::dummy_cond )                          \
 /**/
 
 //____________________________________________________________________________//
@@ -251,6 +251,8 @@ namespace boost {
 namespace test_tools {
 
 typedef unit_test::const_string      const_string;
+
+namespace { bool dummy_cond = false; }
 
 namespace tt_detail {
 
@@ -598,6 +600,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.60  2006/03/19 07:27:11  rogeeff
+//  avoid warning
+//
 //  Revision 1.59  2006/03/03 17:39:46  rogeeff
 //  paaspoint added to check throw
 //
