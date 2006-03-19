@@ -51,7 +51,7 @@ BOOST_AUTO_TC_REGISTRAR( suite_name )( BOOST_TEST_SUITE(                \
 // ************************************************************************** //
 
 #define BOOST_FIXTURE_TEST_SUITE( suite_name, F )                       \
-BOOST_AUTO_TEST_SUITE( suite_name );                                    \
+BOOST_AUTO_TEST_SUITE( suite_name )                                     \
 typedef F BOOST_AUTO_TEST_CASE_FIXTURE;                                 \
 /**/
 
@@ -206,6 +206,9 @@ init_unit_test_suite( int, char* [] )   {
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.36  2006/03/19 12:23:21  rogeeff
+//  eliminate warning
+//
 //  Revision 1.35  2006/02/06 10:04:55  rogeeff
 //  BOOST_TEST_MODULE - master test suite name
 //
