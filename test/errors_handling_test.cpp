@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2005.
+//  (C) Copyright Gennadiy Rozental 2001-2006.
 //  (C) Copyright Beman Dawes 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
@@ -198,6 +198,9 @@ BOOST_AUTO_TEST_CASE( test_errors_handling )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.38  2006/03/19 11:49:04  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.37  2006/02/01 08:00:15  rogeeff
 //  *** empty log message ***
 //

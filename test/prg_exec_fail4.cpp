@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2003-2005.
+//  (C) Copyright Gennadiy Rozental 2003-2006.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -24,6 +24,9 @@ int cpp_main( int, char* [] )  // note the name
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2006/03/19 11:49:04  rogeeff
+//  *** empty log message ***
+//
 //  Revision 1.6  2005/05/11 05:07:57  rogeeff
 //  licence update
 //
