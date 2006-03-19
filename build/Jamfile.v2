@@ -37,8 +37,11 @@ TEST_EXEC_MON_SOURCES =
 
 UTF_SOURCES =
   compiler_log_formatter
+  exception_safety
   execution_monitor
   framework
+  interaction_based
+  logged_expectations
   plain_report_formatter
   progress_monitor
   results_collector

@@ -15,8 +15,6 @@ TEST_EXEC_MON_SOURCES =
   compiler_log_formatter
   execution_monitor
   framework
-  logged_expectations
-  interaction_based
   plain_report_formatter
   progress_monitor
   results_collector
