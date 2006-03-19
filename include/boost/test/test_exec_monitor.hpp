@@ -27,74 +27,19 @@
 // Automatically link to the correct build variant where possible. 
 #if !defined(BOOST_ALL_NO_LIB) && !defined(BOOST_TEST_NO_LIB) && \
     !defined(BOOST_TEST_SOURCE) && !defined(BOOST_TEST_INCLUDED)
-// If we're importing code from a dll, then tell auto_link.hpp about it:
-#  if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_TEST_DYN_LINK)
-#    define BOOST_DYN_LINK
-#  endif
 
-#  ifndef BOOST_DYN_LINK
-#    define BOOST_LIB_NAME boost_test_exec_monitor
-#  else
-#    define BOOST_LIB_NAME boost_unit_test_framework
-#  endif
-
+#  define BOOST_LIB_NAME boost_test_exec_monitor
 #  include <boost/config/auto_link.hpp>
 
 #endif  // auto-linking disabled
-
-#ifdef BOOST_TEST_DYN_LINK
-
-#include <boost/bind.hpp>
-#include <boost/test/framework.hpp>
-#include <boost/test/unit_test_suite.hpp>
-
-// ************************************************************************** //
-// **************                     dll_main                 ************** //
-// ************************************************************************** //
-
-namespace boost { namespace unit_test {
-
-int BOOST_TEST_DECL dll_main( bool (*init_unit_test_func)(), int argc, char* argv[] );
-
-}}
-
-// ************************************************************************** //
-// **************        main function for tests using dll     ************** //
-// ************************************************************************** //
-
-int test_main( int argc, char* argv[] );    // prototype for user's test_main()
-
-namespace {
-
-bool
-init_test_program()
-{
-    using namespace ::boost::unit_test::framework;
-
-    master_test_suite().p_name.value = "Test Program";
-
-    master_test_suite().add( 
-        BOOST_TEST_CASE( boost::bind( &test_main, master_test_suite().argc, master_test_suite().argv ) ) );
-
-    return true;
-}
-
-} // local namespace
-
-int BOOST_TEST_CALL_DECL
-main( int argc, char* argv[] )
-{
-    return ::boost::unit_test::dll_main( &init_test_program, argc, argv );
-}
-
-//____________________________________________________________________________//
-
-#endif // BOOST_TEST_DYN_LINK
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2006/03/19 11:45:26  rogeeff
+//  main function renamed for consistancy
+//
 //  Revision 1.2  2006/02/07 16:15:20  rogeeff
 //  BOOST_TEST_INCLUDED guard were missing
 //

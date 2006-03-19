@@ -59,24 +59,13 @@ private:
 } // local namespace
 
 // ************************************************************************** //
-// **************                   cpp main                   ************** //
+// **************             prg_exec_monitor_main            ************** //
 // ************************************************************************** //
-
-#ifdef BOOST_TEST_DYN_LINK
 
 namespace boost {
 
 int BOOST_TEST_DECL
-dll_main( int (*cpp_main)( int argc, char* argv[] ), int argc, char* argv[] )
-
-#else
-
-int cpp_main( int argc, char* argv[] );  // prototype for user's cpp_main()
-
-int BOOST_TEST_CALL_DECL
-main( int argc, char* argv[] )
-
-#endif
+prg_exec_monitor_main( int (*cpp_main)( int argc, char* argv[] ), int argc, char* argv[] )
 {
     int result;
 
@@ -117,11 +106,25 @@ main( int argc, char* argv[] )
     return result;
 }
 
-#ifdef BOOST_TEST_DYN_LINK
-
 } // namespace boost
 
-#endif
+#if !defined(BOOST_TEST_DYN_LINK) && !defined(BOOST_TEST_NO_MAIN)
+
+// ************************************************************************** //
+// **************        main function for tests using lib     ************** //
+// ************************************************************************** //
+
+int cpp_main( int argc, char* argv[] );  // prototype for user's cpp_main()
+
+int BOOST_TEST_CALL_DECL
+main( int argc, char* argv[] )
+{
+    return ::boost::prg_exec_monitor_main( &cpp_main, argc, argv );
+}
+
+//____________________________________________________________________________//
+
+#endif // !BOOST_TEST_DYN_LINK && !BOOST_TEST_NO_MAIN
 
 //____________________________________________________________________________//
 
@@ -131,6 +134,9 @@ main( int argc, char* argv[] )
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7  2006/03/19 11:45:26  rogeeff
+//  main function renamed for consistancy
+//
 //  Revision 1.6  2005/12/14 05:27:21  rogeeff
 //  cpp_main API modified for DLL
 //

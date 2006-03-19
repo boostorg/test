@@ -37,17 +37,17 @@
 
 #endif  // auto-linking disabled
 
-#ifdef BOOST_TEST_DYN_LINK
-
 // ************************************************************************** //
-// **************                     dll_main                 ************** //
+// **************               prg_exec_monitor_main          ************** //
 // ************************************************************************** //
 
 namespace boost { 
 
-int BOOST_TEST_DECL dll_main( int (*cpp_main)( int argc, char* argv[] ), int argc, char* argv[] );
+int BOOST_TEST_DECL prg_exec_monitor_main( int (*cpp_main)( int argc, char* argv[] ), int argc, char* argv[] );
 
 }
+
+#if defined(BOOST_TEST_DYN_LINK) && !defined(BOOST_TEST_NO_MAIN)
 
 // ************************************************************************** //
 // **************        main function for tests using dll     ************** //
@@ -58,17 +58,20 @@ int cpp_main( int argc, char* argv[] );  // prototype for user's cpp_main()
 int BOOST_TEST_CALL_DECL
 main( int argc, char* argv[] )
 {
-    return ::boost::dll_main( &cpp_main, argc, argv );
+    return ::boost::prg_exec_monitor_main( &cpp_main, argc, argv );
 }
 
 //____________________________________________________________________________//
 
-#endif // BOOST_TEST_DYN_LINK
+#endif // BOOST_TEST_DYN_LINK && !BOOST_TEST_NO_MAIN
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.3  2006/03/19 11:45:26  rogeeff
+//  main function renamed for consistancy
+//
 //  Revision 1.2  2006/02/07 16:15:20  rogeeff
 //  BOOST_TEST_INCLUDED guard were missing
 //

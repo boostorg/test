@@ -37,19 +37,25 @@
 
 #endif  // auto-linking disabled
 
-#ifdef BOOST_TEST_DYN_LINK
-
 // ************************************************************************** //
-// **************                     dll_main                 ************** //
+// **************                  unit_test_main              ************** //
 // ************************************************************************** //
 
 namespace boost { namespace unit_test {
 
-int BOOST_TEST_DECL dll_main( bool (*init_unit_test_func)(), int argc, char* argv[] );
+#if defined(BOOST_TEST_DYN_LINK) 
+
+int BOOST_TEST_DECL unit_test_main( bool (*init_unit_test_func)(), int argc, char* argv[] );
+
+#else
+
+int BOOST_TEST_DECL unit_test_main( int argc, char* argv[] );
+
+#endif
 
 }}
 
-#if defined(BOOST_TEST_MAIN)
+#if defined(BOOST_TEST_DYN_LINK) && defined(BOOST_TEST_MAIN) && !defined(BOOST_TEST_NO_MAIN)
 
 // ************************************************************************** //
 // **************        main function for tests using dll     ************** //
@@ -58,19 +64,20 @@ int BOOST_TEST_DECL dll_main( bool (*init_unit_test_func)(), int argc, char* arg
 int BOOST_TEST_CALL_DECL
 main( int argc, char* argv[] )
 {
-    return ::boost::unit_test::dll_main( &init_unit_test, argc, argv );
+    return ::boost::unit_test::unit_test_main( &init_unit_test, argc, argv );
 }
 
 //____________________________________________________________________________//
 
-#endif // BOOST_TEST_MAIN
-
-#endif // BOOST_TEST_DYN_LINK
+#endif // BOOST_TEST_DYN_LINK && BOOST_TEST_MAIN && !BOOST_TEST_NO_MAIN
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.19  2006/03/19 11:45:26  rogeeff
+//  main function renamed for consistancy
+//
 //  Revision 1.18  2006/02/07 16:15:20  rogeeff
 //  BOOST_TEST_INCLUDED guard were missing
 //
