@@ -1,4 +1,4 @@
-#  (C) Copyright Gennadiy Rozental 2001-2005.
+#  (C) Copyright Gennadiy Rozental 2001-2006.
 #  Use, modification, and distribution are subject to the 
 #  Boost Software License, Version 1.0. (See accompanying file 
 #  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -35,7 +35,7 @@ test-suite "boost_test_examples"
 
   [ boost-test-example test_case_template_example : run : boost_unit_test_framework ]
 
-  [ boost-test-example unit_test_example_01 : run-fail  : boost_unit_test_framework ]
+  [ boost-test-example unit_test_example_01 : run-fail ]
   [ boost-test-example unit_test_example_02 : run       : boost_unit_test_framework ]
   [ boost-test-example unit_test_example_03 : run       : boost_unit_test_framework ]
   [ boost-test-example unit_test_example_04 : run-fail  : boost_unit_test_framework ]
@@ -55,6 +55,6 @@ test-suite "boost_test_examples"
 
   [ boost-test-example named_param_example  : run ]
 
-  [ boost-test-example unit_test_example_01_dll : run-fail : boost_unit_test_framework : unit_test_example_01.cpp : 1 ]
+  [ boost-test-example unit_test_example_04_dll : run-fail : boost_unit_test_framework : unit_test_example_04.cpp : 1 ]
 
 ;

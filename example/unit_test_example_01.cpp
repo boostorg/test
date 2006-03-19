@@ -1,39 +1,52 @@
-//  (C) Copyright Gennadiy Rozental 2005.
-//  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
-//  http://www.boost.org/LICENSE_1_0.txt)
+#include <iostream>
 
-//  See http://www.boost.org/libs/test for the library home page.
+namespace ieee_754 {
 
-// Boost.Test
+template<typename T>
+struct decoded {
+    typedef long long mantissa_holder_type;
+    typedef short     exponent_holder_type;
 
-// each test module could contain no more then one 'main' file with init function defined
-// alternatively you could define init function yourself
-#define BOOST_TEST_MAIN
-#include <boost/test/unit_test.hpp>
+    bool                  p_sign;
+    mantissa_holder_type  p_mantissa;
+    exponent_holder_type  p_exponent;
+};
 
-//____________________________________________________________________________//
+//___________________________________________________________________________//
 
-// most frequently you implement test cases as a free functions with automatic registration
-BOOST_AUTO_TEST_CASE( test1 )
+void decode( double v, decoded<double>& d )
 {
-    // reports 'error in "test1": test 2 == 1 failed'
-    BOOST_CHECK( 2 == 1 );
+    union {
+        double v;
+        long long m;
+    } tmp;
+
+    tmp.v = v;
+
+    d.p_sign     = !(tmp.m & 0x8000000000000000LL);
+    d.p_mantissa = tmp.m & 0x000FFFFFFFFFFFFFLL;
+    d.p_exponent = (short)((tmp.m & 0x7FF0000000000000LL) >> 52) - 1075;
+
+    if( d.p_exponent != 0 )
+        d.p_mantissa |= 0x0010000000000000LL;
 }
 
-//____________________________________________________________________________//
+//___________________________________________________________________________//
 
-// each test file may contain any number of test cases; each test case has to have unique name
-BOOST_AUTO_TEST_CASE( test2 )
+} // namespace ieee_754
+
+using namespace ieee_754;
+
+int
+main()
 {
-    int i = 0;
+    double d = 0.2;
+    decoded<double> dec;
 
-    // reports 'error in "test2": check i == 2 failed [0 != 2]'
-    BOOST_CHECK_EQUAL( i, 2 );
+    decode( d, dec );
 
-    BOOST_CHECK_EQUAL( i, 0 );
+    std::cout << "orig = "           << std::hex << *(long long*)&d << std::endl;
+    std::cout << "dec.p_sign = "     << (dec.p_sign ? '+' : '-') << std::endl;
+    std::cout << "dec.p_mantissa = " << std::hex << dec.p_mantissa << std::endl;
+    std::cout << "dec.p_exponent = " << std::dec << dec.p_exponent << std::endl;
 }
-
-//____________________________________________________________________________//
-
-// EOF
