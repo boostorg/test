@@ -63,7 +63,7 @@ safe_fpt_division( FPT f1, FPT f2 )
 {
     // Avoid overflow.
     if( f2 < static_cast<FPT>(1)  && f1 > f2 * (std::numeric_limits<FPT>::max)() )
-        return std::numeric_limits<FPT>::max();
+        return (std::numeric_limits<FPT>::max)();
 
     // Avoid underflow.
     if( f1 == static_cast<FPT>(0) || 
@@ -243,6 +243,9 @@ check_is_small_t check_is_small;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.26.2.1  2006/05/22 17:39:12  johnmaddock
+//  Fix min/max guidelines violation.
+//
 //  Revision 1.26  2006/03/16 07:31:06  vladimir_prus
 //  Fix compile error on MSVC due to max and min being defined as macros.
 //
@@ -274,3 +277,4 @@ check_is_small_t check_is_small;
 // ***************************************************************************
 
 #endif // BOOST_FLOATING_POINT_COMAPARISON_HPP_071894GER
+
