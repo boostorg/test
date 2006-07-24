@@ -380,7 +380,7 @@ inline print_helper_t<T> print_helper( T const& t )
     return print_helper_t<T>( t );
 }
 
-#if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530)) 
+#if BOOST_WORKAROUND(__SUNPRO_CC, < 0x580) 
 template<typename T, std::size_t N>
 inline print_helper_t<T*> print_helper( T (&t)[N] )
 {
@@ -600,6 +600,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.60.2.1  2006/07/24 00:43:17  gennaro_prota
+//  Tentative fix for Sun C++ 5.8 (don't add more specialized print_helper function template)
+//
 //  Revision 1.60  2006/03/19 07:27:11  rogeeff
 //  avoid warning
 //
