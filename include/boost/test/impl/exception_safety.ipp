@@ -126,7 +126,7 @@ struct exception_safety_tester : itest::manager, test_observer {
 
     // test observer interface
     virtual void        assertion_result( bool passed );
-    virtual int         priority() { return std::numeric_limits<int>::max(); } // we want this observer to run the last
+    virtual int         priority() { return (std::numeric_limits<int>::max)(); } // we want this observer to run the last
 
 private:
     void                failure_point();
@@ -540,6 +540,9 @@ exception_safety( callback0<> const& F, const_string test_name )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.7.2.1  2006/07/27 11:48:49  gennaro_prota
+//  boost guidelines (mainly from inspect tool: tabs, license reference text, etc.); more to do...
+//
 //  Revision 1.7  2006/02/23 15:10:00  rogeeff
 //  vc70 out
 //
