@@ -15,6 +15,9 @@
 #ifndef BOOST_TEST_TRIVIAL_SIGNLETON_HPP_020505GER
 #define BOOST_TEST_TRIVIAL_SIGNLETON_HPP_020505GER
 
+#include <boost/config.hpp>
+#include <boost/detail/workaround.hpp>
+
 #include <boost/noncopyable.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -72,6 +75,9 @@ namespace { BOOST_JOIN( inst, _t)& inst = BOOST_JOIN( inst, _t)::instance(); }
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.4  2006/07/28 14:54:51  rogeeff
+//  include missing headers
+//
 //  Revision 1.3  2006/01/01 17:29:38  dgregor
 //  Work around anonymous namespace bug in Apple GCC 3.3
 //
