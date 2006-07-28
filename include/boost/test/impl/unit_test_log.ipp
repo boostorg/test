@@ -138,6 +138,8 @@ void
 unit_test_log_t::test_finish()
 {
     s_log_impl().m_log_formatter->log_finish( s_log_impl().stream() );
+
+    s_log_impl().stream().flush();
 }
 
 //____________________________________________________________________________//
@@ -402,6 +404,9 @@ unit_test_log_t::set_formatter( unit_test_log_formatter* the_formatter )
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.12  2006/07/28 15:03:13  rogeeff
+//  flush log strema on exit
+//
 //  Revision 1.11  2005/12/14 05:34:21  rogeeff
 //  log API simplified
 //
