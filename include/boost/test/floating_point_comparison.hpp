@@ -61,14 +61,16 @@ template<typename FPT>
 inline FPT 
 safe_fpt_division( FPT f1, FPT f2 )
 {
-    // Avoid overflow.
-    if( f2 < static_cast<FPT>(1)  && f1 > f2 * (std::numeric_limits<FPT>::max)() )
-        return (std::numeric_limits<FPT>::max)();
+    if( std::numeric_limits<FPT>::is_specialized ) {
+        // Avoid overflow.
+        if( f2 < static_cast<FPT>(1)  && f1 > f2 * (std::numeric_limits<FPT>::max)() )
+            return (std::numeric_limits<FPT>::max)();
 
-    // Avoid underflow.
-    if( f1 == static_cast<FPT>(0) || 
-        f2 > static_cast<FPT>(1) && f1 < f2 * (std::numeric_limits<FPT>::min)() )
-        return static_cast<FPT>(0);
+        // Avoid underflow.
+        if( f1 == static_cast<FPT>(0) || 
+            f2 > static_cast<FPT>(1) && f1 < f2 * (std::numeric_limits<FPT>::min)() )
+            return static_cast<FPT>(0);
+    }
 
     return f1/f2;
 }
@@ -243,6 +245,9 @@ check_is_small_t check_is_small;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.28  2006/07/28 15:01:01  rogeeff
+//  guard numeric_limits access with is_specialized
+//
 //  Revision 1.27  2006/05/22 17:39:43  johnmaddock
 //  Fix min/max guidelines violation.
 //
