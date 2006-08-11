@@ -45,8 +45,7 @@ enum BOOST_TEST_DECL floating_point_comparison_type {
 
 namespace tt_detail {
 
-// FPT is Floating-Point type, float, double, long double or User-Defined.
-
+// FPT is Floating-Point Type: float, double, long double or User-Defined.
 template<typename FPT>
 inline FPT
 fpt_abs( FPT arg ) 
@@ -56,21 +55,37 @@ fpt_abs( FPT arg )
 
 //____________________________________________________________________________//
 
+template<typename FPT>
+struct fpt_limits {
+    static FPT    min_value()
+    {
+        return std::numeric_limits<FPT>::is_specialized
+                    ? (std::numeric_limits<FPT>::min)()
+                    : 0;
+    }
+    static FPT    max_value()
+    {
+        return std::numeric_limits<FPT>::is_specialized
+                    ? (std::numeric_limits<FPT>::max)()
+                    : static_cast<FPT>(1000000); // for the our purpuses it doesn't really matter what value is returned here
+    }
+};
+
+//____________________________________________________________________________//
+
 // both f1 and f2 are unsigned here
 template<typename FPT>
-inline FPT 
+inline FPT
 safe_fpt_division( FPT f1, FPT f2 )
 {
-    if( std::numeric_limits<FPT>::is_specialized ) {
-        // Avoid overflow.
-        if( f2 < static_cast<FPT>(1)  && f1 > f2 * (std::numeric_limits<FPT>::max)() )
-            return (std::numeric_limits<FPT>::max)();
+    // Avoid overflow.
+    if( f2 < static_cast<FPT>(1)  && f1 > f2*fpt_limits<FPT>::max_value() )
+        return fpt_limits<FPT>::max_value();
 
-        // Avoid underflow.
-        if( f1 == static_cast<FPT>(0) || 
-            f2 > static_cast<FPT>(1) && f1 < f2 * (std::numeric_limits<FPT>::min)() )
-            return static_cast<FPT>(0);
-    }
+    // Avoid underflow.
+    if( f1 == static_cast<FPT>(0) ||
+        f2 > static_cast<FPT>(1) && f1 < f2*fpt_limits<FPT>::min_value() )
+        return static_cast<FPT>(0);
 
     return f1/f2;
 }
@@ -245,6 +260,9 @@ check_is_small_t check_is_small;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.29  2006/08/11 17:32:42  rogeeff
+//  numeric_limits access guard reworked
+//
 //  Revision 1.28  2006/07/28 15:01:01  rogeeff
 //  guard numeric_limits access with is_specialized
 //
