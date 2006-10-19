@@ -88,7 +88,7 @@ public:
             return (test_unit*)0;
 
         test_func_with_bound_param<ParamType> bound_test_func( m_test_func, *m_par_begin );
-        test_unit* res = new test_case( m_tc_name, bound_test_func );
+        ::boost::unit_test::test_unit* res = new test_case( m_tc_name, bound_test_func );
 
         ++m_par_begin;
 
@@ -181,6 +181,9 @@ make_test_case( void (UserTestCase::*test_method )( ParamType ),
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.7.2.1  2006/10/19 09:23:04  johnmaddock
+//  Fix for VC6.
+//
 //  Revision 1.7  2006/01/28 08:57:02  rogeeff
 //  VC6.0 workaround removed
 //
