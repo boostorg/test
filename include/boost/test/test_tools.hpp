@@ -481,8 +481,10 @@ inline predicate_result equal_impl( wchar_t* left, wchar_t* right )       { retu
 #endif
 
 //____________________________________________________________________________//
-
-struct BOOST_TEST_DECL equal_impl_frwd {
+//
+// Declaring this class as exported causes linker errors when building
+// the serialisation tests with VC6, disable this for now. (JM 2006/10/30)
+struct /*BOOST_TEST_DECL*/ equal_impl_frwd {
     template <typename Left, typename Right>
     inline predicate_result
     call_impl( Left const& left, Right const& right, mpl::false_ ) const
@@ -600,6 +602,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.60.2.2  2006/10/30 18:37:36  johnmaddock
+//  Patch for serialisation test failures.
+//
 //  Revision 1.60.2.1  2006/07/24 00:43:17  gennaro_prota
 //  Tentative fix for Sun C++ 5.8 (don't add more specialized print_helper function template)
 //
@@ -661,3 +666,4 @@ namespace test_toolbox = test_tools;
 // ***************************************************************************
 
 #endif // BOOST_TEST_TEST_TOOLS_HPP_012705GER
+
