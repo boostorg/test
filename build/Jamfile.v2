@@ -6,10 +6,17 @@
 
 project boost/test 
     : source-location ../src
-    : requirements <define>BOOST_TEST_NO_AUTO_LINK=1
-                   <os>NT:<link>static
+    : requirements <link>shared:<define>BOOST_TEST_DYN_LINK=1
                    <toolset>msvc:<asynch-exceptions>on
                    <toolset>borland:<cxxflags>-w-8080
+		   # Disable Warning about boost::noncopyable not being exported
+		   <link>shared,<toolset>msvc:<cxxflags>-wd4275
+    : usage-requirements 
+                   <define>BOOST_TEST_NO_AUTO_LINK=1
+                   <link>shared:<define>BOOST_TEST_DYN_LINK=1
+    
+                   # Disable Warning about boost::noncopyable not being exported
+                   <link>shared,<toolset>msvc:<cxxflags>-wd4275
     ;
 
 PRG_EXEC_MON_SOURCES =
@@ -59,7 +66,7 @@ UTF_SOURCES =
 
 lib boost_prg_exec_monitor : $(PRG_EXEC_MON_SOURCES).cpp ;
 
-lib boost_test_exec_monitor : $(TEST_EXEC_MON_SOURCES).cpp ;
+lib boost_test_exec_monitor : $(TEST_EXEC_MON_SOURCES).cpp : <link>static ;
 
 lib boost_unit_test_framework : $(UTF_SOURCES).cpp ;
      

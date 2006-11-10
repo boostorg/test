@@ -22,15 +22,15 @@ rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file * : source
 
 test-suite "basics_test"
         :
-          [ test-btl-lib run : class_properties_test    : boost_unit_test_framework ]
-          [ test-btl-lib run : basic_cstring_test    : boost_unit_test_framework ]
+          [ test-btl-lib run : class_properties_test    : boost_unit_test_framework/<link>static ]
+          [ test-btl-lib run : basic_cstring_test    : boost_unit_test_framework/<link>static ]
         ;
 
 test-suite "prg_exec_monitor_test"
         : [ test-btl-lib run-fail : prg_exec_fail1 : boost_prg_exec_monitor ]
-          [ test-btl-lib run-fail : prg_exec_fail2 : boost_prg_exec_monitor ]
-          [ test-btl-lib run-fail : prg_exec_fail3 : boost_prg_exec_monitor ]
-          [ test-btl-lib run-fail : prg_exec_fail4 : boost_prg_exec_monitor ]
+          [ test-btl-lib run-fail : prg_exec_fail2 : boost_prg_exec_monitor/<link>static ]
+          [ test-btl-lib run-fail : prg_exec_fail3 : boost_prg_exec_monitor/<link>static ]
+          [ test-btl-lib run-fail : prg_exec_fail4 : boost_prg_exec_monitor/<link>static ]
         ;
 
 test-suite "unit_test_framework_test"
@@ -48,10 +48,10 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : test_fp_comparisons      : boost_unit_test_framework ]
           [ test-btl-lib run : test_tools_test          : boost_unit_test_framework : test_files/test_tools_test.pattern ]
           [ test-btl-lib run : test_case_template_test  : boost_unit_test_framework ]
-          [ test-btl-lib run : custom_exception_test    : boost_unit_test_framework ]
+          [ test-btl-lib run : custom_exception_test    : boost_unit_test_framework/<link>static ]
           [ test-btl-lib run : fixed_mapping_test       : boost_unit_test_framework ]
           [ test-btl-lib run : ifstream_line_iterator_test : boost_unit_test_framework : test_files/ifstream_line_iterator.tst1 test_files/ifstream_line_iterator.tst2 ]
-          [ test-btl-lib run : algorithms_test : boost_unit_test_framework ]
+          [ test-btl-lib run : algorithms_test : boost_unit_test_framework/<link>static ]
           [ test-btl-lib run : token_iterator_test : boost_unit_test_framework ]
           [ test-btl-lib run : boost_check_equal_str    : boost_unit_test_framework ]
             ;
