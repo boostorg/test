@@ -281,7 +281,7 @@ enum tool_level {
 // ************************************************************************** //
 
 template<typename T>
-struct print_log_value {
+struct BOOST_TEST_DECL print_log_value {
     void    operator()( std::ostream& ostr, T const& t )
     {
         typedef typename mpl::or_<is_array<T>,is_function<T>,is_abstract<T> >::type couldnt_use_nl;
@@ -461,17 +461,17 @@ BOOST_PP_REPEAT( BOOST_TEST_MAX_PREDICATE_ARITY, IMPL_FRWD, _ )
 //____________________________________________________________________________//
 
 template <class Left, class Right>
-predicate_result    equal_impl( Left const& left, Right const& right )
+predicate_result BOOST_TEST_DECL equal_impl( Left const& left, Right const& right )
 {
     return left == right;
 }
 
 //____________________________________________________________________________//
 
-predicate_result        equal_impl( char const* left, char const* right );
-inline predicate_result equal_impl( char* left, char const* right ) { return equal_impl( (char const*)left, (char const*)right ); }
-inline predicate_result equal_impl( char const* left, char* right ) { return equal_impl( (char const*)left, (char const*)right ); }
-inline predicate_result equal_impl( char* left, char* right )       { return equal_impl( (char const*)left, (char const*)right ); }
+predicate_result        BOOST_TEST_DECL equal_impl( char const* left, char const* right );
+inline predicate_result BOOST_TEST_DECL equal_impl( char* left, char const* right ) { return equal_impl( (char const*)left, (char const*)right ); }
+inline predicate_result BOOST_TEST_DECL equal_impl( char const* left, char* right ) { return equal_impl( (char const*)left, (char const*)right ); }
+inline predicate_result BOOST_TEST_DECL equal_impl( char* left, char* right )       { return equal_impl( (char const*)left, (char const*)right ); }
 
 #if !defined( BOOST_NO_CWCHAR )
 predicate_result        equal_impl( wchar_t const* left, wchar_t const* right );
@@ -582,7 +582,7 @@ bitwise_equal_impl( Left const& left, Right const& right )
 
 //____________________________________________________________________________//
 
-bool is_defined_impl( const_string symbol_name, const_string symbol_value );
+bool BOOST_TEST_DECL is_defined_impl( const_string symbol_name, const_string symbol_value );
 
 //____________________________________________________________________________//
 
@@ -602,6 +602,10 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.60.2.3  2006/11/13 20:06:57  jhunold
+//  Merge from HEAD:
+//  Added missing export declarations.
+//
 //  Revision 1.60.2.2  2006/10/30 18:37:36  johnmaddock
 //  Patch for serialisation test failures.
 //

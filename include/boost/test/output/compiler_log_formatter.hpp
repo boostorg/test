@@ -33,7 +33,7 @@ namespace output {
 // **************             compiler_log_formatter           ************** //
 // ************************************************************************** //
 
-class compiler_log_formatter : public unit_test_log_formatter {
+class BOOST_TEST_DECL compiler_log_formatter : public unit_test_log_formatter {
 public:
     // Formatter interface
     void    log_start( std::ostream&, counter_t test_cases_amount );
@@ -68,6 +68,10 @@ protected:
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.2.6.1  2006/11/13 20:06:57  jhunold
+//  Merge from HEAD:
+//  Added missing export declarations.
+//
 //  Revision 1.2  2005/02/20 08:27:08  rogeeff
 //  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
 //
