@@ -32,21 +32,21 @@ namespace unit_test {
 
 namespace runtime_config {
 
-void                    init( int* argc, char** argv );
+void                    BOOST_TEST_DECL init( int* argc, char** argv );
 
-unit_test::log_level    log_level();
-bool                    no_result_code();
-unit_test::report_level report_level();
-const_string            test_to_run();
-const_string            break_exec_path();
-bool                    save_pattern();
-bool                    show_build_info();
-bool                    show_progress();
-bool                    catch_sys_errors();
-output_format           report_format();
-output_format           log_format();
-long                    detect_memory_leaks();
-int                     random_seed();
+unit_test::log_level    BOOST_TEST_DECL log_level();
+bool                    BOOST_TEST_DECL no_result_code();
+unit_test::report_level BOOST_TEST_DECL report_level();
+const_string            BOOST_TEST_DECL test_to_run();
+const_string            BOOST_TEST_DECL break_exec_path();
+bool                    BOOST_TEST_DECL save_pattern();
+bool                    BOOST_TEST_DECL show_build_info();
+bool                    BOOST_TEST_DECL show_progress();
+bool                    BOOST_TEST_DECL catch_sys_errors();
+output_format           BOOST_TEST_DECL report_format();
+output_format           BOOST_TEST_DECL log_format();
+long                    BOOST_TEST_DECL detect_memory_leaks();
+int                     BOOST_TEST_DECL random_seed();
 
 } // namespace runtime_config
 
@@ -62,6 +62,9 @@ int                     random_seed();
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.24  2006/11/13 20:03:48  jhunold
+//  Added missing export declarations.
+//
 //  Revision 1.23  2006/01/30 07:29:49  rogeeff
 //  split memory leaks detection API in two to get more functions with better defined roles
 //
