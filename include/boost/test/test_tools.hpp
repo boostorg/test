@@ -317,7 +317,7 @@ struct print_log_value<the_type > {                                 \
 template<typename T, std::size_t N >
 struct print_log_value< T[N] > {
     void    operator()( std::ostream& ostr, T const* t )
-    {   
+    {
         ostr << t;
     }
 };
@@ -326,28 +326,28 @@ struct print_log_value< T[N] > {
 //____________________________________________________________________________//
 
 template<>
-struct print_log_value<char> {
+struct BOOST_TEST_DECL print_log_value<char> {
     void    operator()( std::ostream& ostr, char t );
 };
 
 //____________________________________________________________________________//
 
 template<>
-struct print_log_value<unsigned char> {
+struct BOOST_TEST_DECL print_log_value<unsigned char> {
     void    operator()( std::ostream& ostr, unsigned char t );
 };
 
 //____________________________________________________________________________//
 
 template<>
-struct print_log_value<char const*> {
+struct BOOST_TEST_DECL print_log_value<char const*> {
     void    operator()( std::ostream& ostr, char const* t );
 };
 
 //____________________________________________________________________________//
 
 template<>
-struct print_log_value<wchar_t const*> {
+struct BOOST_TEST_DECL print_log_value<wchar_t const*> {
     void    operator()( std::ostream& ostr, wchar_t const* t );
 };
 
@@ -602,6 +602,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.60.2.5  2006/11/14 21:33:26  jhunold
+//  Merge from HEAD: Add missing export macros for print_log_value<>
+//
 //  Revision 1.60.2.4  2006/11/14 07:35:43  jhunold
 //  Merge from HEAD: Removed wrong export declarations.
 //
