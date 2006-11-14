@@ -281,7 +281,7 @@ enum tool_level {
 // ************************************************************************** //
 
 template<typename T>
-struct BOOST_TEST_DECL print_log_value {
+struct print_log_value {
     void    operator()( std::ostream& ostr, T const& t )
     {
         typedef typename mpl::or_<is_array<T>,is_function<T>,is_abstract<T> >::type couldnt_use_nl;
@@ -461,7 +461,7 @@ BOOST_PP_REPEAT( BOOST_TEST_MAX_PREDICATE_ARITY, IMPL_FRWD, _ )
 //____________________________________________________________________________//
 
 template <class Left, class Right>
-predicate_result BOOST_TEST_DECL equal_impl( Left const& left, Right const& right )
+predicate_result equal_impl( Left const& left, Right const& right )
 {
     return left == right;
 }
@@ -602,6 +602,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.60.2.4  2006/11/14 07:35:43  jhunold
+//  Merge from HEAD: Removed wrong export declarations.
+//
 //  Revision 1.60.2.3  2006/11/13 20:06:57  jhunold
 //  Merge from HEAD:
 //  Added missing export declarations.
