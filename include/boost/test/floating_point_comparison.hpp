@@ -33,7 +33,7 @@ using unit_test::readonly_property;
 // **************        floating_point_comparison_type        ************** //
 // ************************************************************************** //
 
-enum BOOST_TEST_DECL floating_point_comparison_type {
+enum floating_point_comparison_type {
     FPC_STRONG, // "Very close"   - equation 1' in docs, the default
     FPC_WEAK    // "Close enough" - equation 2' in docs.
 
@@ -243,6 +243,9 @@ check_is_small_t check_is_small;
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.26.2.2  2006/11/30 14:41:21  jhunold
+//  Merge from HEAD: Remove unnecessary export makro.
+//
 //  Revision 1.26.2.1  2006/05/22 17:39:12  johnmaddock
 //  Fix min/max guidelines violation.
 //
