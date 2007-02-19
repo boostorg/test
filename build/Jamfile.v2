@@ -68,7 +68,11 @@ lib boost_prg_exec_monitor : $(PRG_EXEC_MON_SOURCES).cpp ;
 
 lib boost_test_exec_monitor : $(TEST_EXEC_MON_SOURCES).cpp : <link>static ;
 
-lib boost_unit_test_framework : $(UTF_SOURCES).cpp : <toolset>msvc-6.5:<link>static ;
+lib boost_unit_test_framework 
+    : $(UTF_SOURCES).cpp 
+    : <toolset>msvc-6.5:<link>static 
+      <toolset-msvc:version>6.5_stlport4:<link>static
+    ;
      
 
 alias minimal : : : :
