@@ -156,7 +156,7 @@ do {                                                                \
 
 // The argument version of the following macros are causing "Internal Compiler Errors"
 // on MSVC 6.5 when inlining is turned on (i.e. usually in release builds)
-#if BOOST_WORKAROUND(BOOST_MSVC, <=1200)
+#if BOOST_WORKAROUND(BOOST_MSVC, <=1200) && defined(NDEBUG)
 #define BOOST_WARN_EQUAL( L, R ) BOOST_WARN( (L) == (R) )
 #define BOOST_CHECK_EQUAL( L, R ) BOOST_CHECK( (L) == (R) )
 #define BOOST_REQUIRE_EQUAL( L, R ) BOOST_REQUIRE( (L) == (R) )
@@ -609,6 +609,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.60.2.7  2007/02/22 17:57:29  speedsnail
+//  Make the msvc-6.5 hack even more specific, i.e. apply only in release builds.
+//
 //  Revision 1.60.2.6  2006/12/16 15:02:16  speedsnail
 //  Merged from HEAD
 //
