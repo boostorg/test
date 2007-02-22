@@ -154,20 +154,12 @@ do {                                                                \
 
 //____________________________________________________________________________//
 
-// The argument version of the following macros are causing "Internal Compiler Errors"
-// on MSVC 6.5 when inlining is turned on (i.e. usually in release builds)
-#if BOOST_WORKAROUND(BOOST_MSVC, <=1200)
-#define BOOST_WARN_EQUAL( L, R ) BOOST_WARN( (L) == (R) )
-#define BOOST_CHECK_EQUAL( L, R ) BOOST_CHECK( (L) == (R) )
-#define BOOST_REQUIRE_EQUAL( L, R ) BOOST_REQUIRE( (L) == (R) )
-#else
 #define BOOST_WARN_EQUAL( L, R ) \
     BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::equal_impl_frwd(), "", WARN, CHECK_EQUAL, (L)(R) )
 #define BOOST_CHECK_EQUAL( L, R ) \
     BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::equal_impl_frwd(), "", CHECK, CHECK_EQUAL, (L)(R) )
 #define BOOST_REQUIRE_EQUAL( L, R ) \
     BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::equal_impl_frwd(), "", REQUIRE, CHECK_EQUAL, (L)(R) )
-#endif
 //____________________________________________________________________________//
 
 #define BOOST_WARN_CLOSE( L, R, T ) \
@@ -607,6 +599,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.65  2007/02/22 18:00:39  speedsnail
+//  Removed the msvc-6.5 hack from HEAD again. Gennadiy Rozental didn't like it anyways...
+//
 //  Revision 1.64  2006/12/16 14:36:23  speedsnail
 //  Workaround for msvc-6.5: *_EQUAL macros give Internal Compiler Errors, when inlining is turned on.
 //
