@@ -44,6 +44,7 @@
 // STL
 #include <cstddef>          // for std::size_t
 #include <iosfwd>
+#include <climits>          // for CHAR_BIT
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -599,6 +600,9 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
+//  Revision 1.66  2007/04/05 14:46:47  dgregor
+//  Add include of climits
+//
 //  Revision 1.65  2007/02/22 18:00:39  speedsnail
 //  Removed the msvc-6.5 hack from HEAD again. Gennadiy Rozental didn't like it anyways...
 //
