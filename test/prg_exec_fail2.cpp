@@ -26,6 +26,10 @@
 #include <cstddef> //Metrowerks linker needs at least one standard library
 #endif
 
+#if defined(__IBMCPP__)
+#pragma options check=divzero
+#endif
+
 
 int cpp_main( int, char *[] )  // note the name
 {
@@ -39,6 +43,9 @@ int cpp_main( int, char *[] )  // note the name
 //  Revision History :
 //  
 //  $Log$
+//  Revision 1.15.2.1  2007/06/01 16:41:06  witt
+//  Patch from Trac #583.
+//
 //  Revision 1.15  2006/03/19 11:49:04  rogeeff
 //  *** empty log message ***
 //
