@@ -60,6 +60,8 @@ BOOST_TEST_DECL void    set_stream( std::ostream& );
 BOOST_TEST_DECL void    set_format( output_format );
 BOOST_TEST_DECL void    set_format( results_reporter::format* );
 
+BOOST_TEST_DECL std::ostream& get_stream();
+
 // ************************************************************************** //
 // **************               report initiation              ************** //
 // ************************************************************************** //
