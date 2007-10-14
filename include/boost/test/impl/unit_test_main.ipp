@@ -34,13 +34,13 @@
 
 //____________________________________________________________________________//
 
-// ************************************************************************** //
-// **************                  unit_test_main              ************** //
-// ************************************************************************** //
-
 namespace boost {
 
 namespace unit_test {
+
+// ************************************************************************** //
+// **************                  unit_test_main              ************** //
+// ************************************************************************** //
 
 int BOOST_TEST_DECL
 
@@ -67,17 +67,17 @@ unit_test_main(                                int argc, char* argv[] )
                     : results_collector.results( framework::master_test_suite().p_id ).result_code();
     }
     catch( framework::internal_error const& ex ) {
-        std::cerr << "Boost.Test framework internal error: " << ex.what() << std::endl;
+        results_reporter::get_stream() << "Boost.Test framework internal error: " << ex.what() << std::endl;
         
         return boost::exit_exception_failure;
     }
     catch( framework::setup_error const& ex ) {
-        std::cerr << "Test setup error: " << ex.what() << std::endl;
+        results_reporter::get_stream() << "Test setup error: " << ex.what() << std::endl;
         
         return boost::exit_exception_failure;
     }
     catch( ... ) {
-        std::cerr << "Boost.Test framework internal error: unknown reason" << std::endl;
+        results_reporter::get_stream() << "Boost.Test framework internal error: unknown reason" << std::endl;
         
         return boost::exit_exception_failure;
     }
