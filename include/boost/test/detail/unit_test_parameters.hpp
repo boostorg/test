@@ -43,6 +43,8 @@ bool                    BOOST_TEST_DECL save_pattern();
 bool                    BOOST_TEST_DECL show_build_info();
 bool                    BOOST_TEST_DECL show_progress();
 bool                    BOOST_TEST_DECL catch_sys_errors();
+bool                    BOOST_TEST_DECL auto_start_dbg();
+bool                    BOOST_TEST_DECL use_alt_stack();
 output_format           BOOST_TEST_DECL report_format();
 output_format           BOOST_TEST_DECL log_format();
 long                    BOOST_TEST_DECL detect_memory_leaks();
@@ -62,24 +64,6 @@ int                     BOOST_TEST_DECL random_seed();
 //  Revision History :
 //  
 //  $Log$
-//  Revision 1.24  2006/11/13 20:03:48  jhunold
-//  Added missing export declarations.
-//
-//  Revision 1.23  2006/01/30 07:29:49  rogeeff
-//  split memory leaks detection API in two to get more functions with better defined roles
-//
-//  Revision 1.22  2005/12/14 04:58:30  rogeeff
-//  new parameter --break_exec_path introduced
-//
-//  Revision 1.21  2005/04/05 06:11:37  rogeeff
-//  memory leak allocation point detection\nextra help with _WIN32_WINNT
-//
-//  Revision 1.20  2005/02/21 10:18:30  rogeeff
-//  random cla support
-//
-//  Revision 1.19  2005/02/20 08:27:06  rogeeff
-//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
-//
 // ***************************************************************************
 
 #endif // BOOST_TEST_UNIT_TEST_PARAMETERS_HPP_071894GER
