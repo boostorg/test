@@ -211,11 +211,11 @@ init( int argc, char* argv[] )
 {
     runtime_config::init( &argc, argv );
 
-    // set the log level nad format
+    // set the log level and format
     unit_test_log.set_threshold_level( runtime_config::log_level() );
     unit_test_log.set_format( runtime_config::log_format() );
 
-    // set the report level nad format
+    // set the report level and format
     results_reporter::set_level( runtime_config::report_level() );
     results_reporter::set_format( runtime_config::report_format() );
 
