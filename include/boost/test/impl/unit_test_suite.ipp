@@ -84,6 +84,17 @@ test_unit::check_dependencies() const
 
 //____________________________________________________________________________//
 
+void
+test_unit::increase_exp_fail( unsigned num )
+{
+    p_expected_failures.value += num;
+
+    if( p_parent_id != 0 )
+        framework::get<test_suite>( p_parent_id ).increase_exp_fail( num );
+}
+
+//____________________________________________________________________________//
+
 // ************************************************************************** //
 // **************                   test_case                  ************** //
 // ************************************************************************** //
@@ -115,21 +126,17 @@ test_suite::test_suite( const_string name )
 
 //____________________________________________________________________________//
 
-// !! need to prevent modifing test unit once it is added to tree
-
 void
 test_suite::add( test_unit* tu, counter_t expected_failures, unsigned timeout )
 {
-    if( expected_failures != 0 )
-        tu->p_expected_failures.value = expected_failures;
-
-    p_expected_failures.value += tu->p_expected_failures;
-
     if( timeout != 0 )
         tu->p_timeout.value = timeout;
 
     m_members.push_back( tu->p_id );
     tu->p_parent_id.value = p_id;
+
+    if( expected_failures != 0 )
+        tu->increase_exp_fail( expected_failures );
 }
 
 //____________________________________________________________________________//
@@ -140,6 +147,19 @@ test_suite::add( test_unit_generator const& gen, unsigned timeout )
     test_unit* tu;
     while((tu = gen.next(), tu))
         add( tu, 0, timeout );
+}
+
+//____________________________________________________________________________//
+
+test_unit_id
+test_suite::get( const_string tu_name ) const
+{
+    BOOST_TEST_FOREACH( test_unit_id, id, m_members ) {
+        if( framework::get( id, test_id_2_unit_type( id ) ).p_name == tu_name )
+            return id;
+    }
+
+    return INV_TEST_UNIT_ID;
 }
 
 //____________________________________________________________________________//
@@ -213,7 +233,75 @@ normalize_test_case_name( const_string name )
 
 //____________________________________________________________________________//
 
+// ************************************************************************** //
+// **************           auto_test_unit_registrar           ************** //
+// ************************************************************************** //
+
+auto_test_unit_registrar::auto_test_unit_registrar( test_case* tc, counter_t exp_fail )
+{
+    curr_ts_store().back()->add( tc, exp_fail );
+}
+
+//____________________________________________________________________________//
+
+auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name )
+{
+    test_unit_id id = curr_ts_store().back()->get( ts_name );
+
+    test_suite* ts;
+
+    if( id != INV_TEST_UNIT_ID ) {
+        ts = &framework::get<test_suite>( id ); // !! test for invalid tu type
+        BOOST_ASSERT( ts->p_parent_id == curr_ts_store().back()->p_id );
+    }
+    else {
+        ts = new test_suite( ts_name );
+        curr_ts_store().back()->add( ts );
+    }
+
+    curr_ts_store().push_back( ts );
+}
+
+//____________________________________________________________________________//
+
+auto_test_unit_registrar::auto_test_unit_registrar( test_unit_generator const& tc_gen )
+{
+    curr_ts_store().back()->add( tc_gen );
+}
+
+//____________________________________________________________________________//
+
+auto_test_unit_registrar::auto_test_unit_registrar( int )
+{
+    if( curr_ts_store().size() == 0 )
+        return; // report error?
+
+    curr_ts_store().pop_back();
+}
+
+//____________________________________________________________________________//
+
+std::list<test_suite*>&
+auto_test_unit_registrar::curr_ts_store()
+{
+    static std::list<test_suite*> inst( 1, &framework::master_test_suite() );
+    return inst;
+}
+
+//____________________________________________________________________________//
+
 } // namespace ut_detail
+
+// ************************************************************************** //
+// **************                global_fixture                ************** //
+// ************************************************************************** //
+
+global_fixture::global_fixture()
+{
+    framework::register_observer( *this );
+} 
+
+//____________________________________________________________________________//
 
 } // namespace unit_test
 

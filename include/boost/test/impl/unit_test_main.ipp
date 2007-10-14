@@ -57,6 +57,9 @@ unit_test_main(                                int argc, char* argv[] )
     if( !(*init_unit_test_func)() )
         throw framework::setup_error( BOOST_TEST_L( "test tree initialization error" ) );
 #endif
+// !! ??       if( !runtime_config.test_to_run().is_empty() ) {
+//
+//        }
 
         framework::run();
 
