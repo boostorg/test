@@ -182,7 +182,7 @@ compiler_log_formatter::print_prefix( std::ostream& output, const_string file, s
 
 //____________________________________________________________________________//
 
-} // namespace ouptut
+} // namespace output
 
 } // namespace unit_test
 
