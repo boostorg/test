@@ -439,7 +439,7 @@ output_test_stream::output_test_stream( const_string pattern_file_name, bool mat
 
         BOOST_WARN_MESSAGE( m_pimpl->m_pattern.is_open(),
                              "Couldn't open pattern file " << pattern_file_name
-                                << " for " << (m_pimpl->m_match_or_save ? "reading" : "writing") );
+                                << " for " << (match_or_save ? "reading" : "writing") );
     }
 
     m_pimpl->m_match_or_save    = match_or_save;
