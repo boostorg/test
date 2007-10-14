@@ -124,6 +124,9 @@ unit_test_log_impl& s_log_impl() { static unit_test_log_impl the_inst; return th
 void
 unit_test_log_t::test_start( counter_t test_cases_amount )
 {
+    if( s_log_impl().m_threshold_level == log_nothing )
+        return;
+
     s_log_impl().m_log_formatter->log_start( s_log_impl().stream(), test_cases_amount );
 
     if( runtime_config::show_build_info() )
@@ -137,6 +140,9 @@ unit_test_log_t::test_start( counter_t test_cases_amount )
 void
 unit_test_log_t::test_finish()
 {
+    if( s_log_impl().m_threshold_level == log_nothing )
+        return;
+
     s_log_impl().m_log_formatter->log_finish( s_log_impl().stream() );
 
     s_log_impl().stream().flush();
