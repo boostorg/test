@@ -170,7 +170,8 @@ init( int* argc, char** argv )
     fixed_mapping<const_string,unit_test::log_level,case_ins_less<char const> > log_level_name(
         "all"           , log_successful_tests,
         "success"       , log_successful_tests,
-        "test_suite"    , log_test_suites,
+        "test_suite"    , log_test_units,
+        "unit_scope"    , log_test_units,
         "message"       , log_messages,
         "warning"       , log_warnings,
         "error"         , log_all_errors,

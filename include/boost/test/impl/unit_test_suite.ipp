@@ -227,33 +227,6 @@ normalize_test_case_name( const_string name )
 //  Revision History :
 //
 //  $Log$
-//  Revision 1.13  2006/02/23 15:33:15  rogeeff
-//  workaround restored
-//
-//  Revision 1.12  2006/01/28 08:53:57  rogeeff
-//  VC6.0 workaround removed
-//
-//  Revision 1.11  2005/12/14 05:54:41  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.10  2005/04/18 04:55:36  rogeeff
-//  test unit name made read/write
-//
-//  Revision 1.9  2005/03/23 21:02:25  rogeeff
-//  Sunpro CC 5.3 fixes
-//
-//  Revision 1.8  2005/03/21 15:33:15  rogeeff
-//  check reworked
-//
-//  Revision 1.7  2005/02/25 21:27:44  turkanis
-//  fix for random_shuffle on Borland 5.x w/ STLPort
-//
-//  Revision 1.6  2005/02/21 10:12:24  rogeeff
-//  Support for random order of test cases implemented
-//
-//  Revision 1.5  2005/02/20 08:27:07  rogeeff
-//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
-//
 // ***************************************************************************
 
 #endif // BOOST_TEST_UNIT_TEST_SUITE_IPP_012205GER

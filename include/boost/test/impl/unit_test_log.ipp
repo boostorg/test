@@ -161,7 +161,7 @@ unit_test_log_t::test_aborted()
 void
 unit_test_log_t::test_unit_start( test_unit const& tu )
 {
-    if( s_log_impl().m_threshold_level > log_test_suites )
+    if( s_log_impl().m_threshold_level > log_test_units )
         return;
 
     if( s_log_impl().m_entry_in_progress )
@@ -175,7 +175,7 @@ unit_test_log_t::test_unit_start( test_unit const& tu )
 void
 unit_test_log_t::test_unit_finish( test_unit const& tu, unsigned long elapsed )
 {
-    if( s_log_impl().m_threshold_level > log_test_suites )
+    if( s_log_impl().m_threshold_level > log_test_units )
         return;
 
     s_log_impl().m_checkpoint_data.clear();
@@ -191,7 +191,7 @@ unit_test_log_t::test_unit_finish( test_unit const& tu, unsigned long elapsed )
 void
 unit_test_log_t::test_unit_skipped( test_unit const& tu )
 {
-    if( s_log_impl().m_threshold_level > log_test_suites )
+    if( s_log_impl().m_threshold_level > log_test_units )
         return;
 
     if( s_log_impl().m_entry_in_progress )
@@ -339,7 +339,7 @@ unit_test_log_t::operator<<( const_string value )
                                                                unit_test_log_formatter::BOOST_UTL_ET_FATAL_ERROR );
                 break;
             case log_nothing:
-            case log_test_suites:
+            case log_test_units:
             case invalid_log_level:
                 return *this;
             }
