@@ -22,7 +22,6 @@
 #include <boost/test/execution_monitor.hpp>
 
 #include <boost/test/detail/unit_test_parameters.hpp>
-#include <boost/test/detail/wrap_io_saver.hpp>
 
 #include <boost/test/utils/basic_cstring/compare.hpp>
 
@@ -31,6 +30,8 @@
 
 // Boost
 #include <boost/scoped_ptr.hpp>
+#include <boost/io/ios_state.hpp>
+typedef ::boost::io::ios_base_all_saver io_saver_type;
 
 // STL
 #include <iostream>
