@@ -238,8 +238,8 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
         register_observer( progress_monitor );
 
     if( runtime_config::detect_memory_leaks() > 0 ) {
-        detect_memory_leaks( true );
-        break_memory_alloc( runtime_config::detect_memory_leaks() );
+//        detect_memory_leaks( true );
+//        break_memory_alloc( runtime_config::detect_memory_leaks() );
     }
 
     // init master unit test suite
