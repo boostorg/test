@@ -277,7 +277,9 @@ private:
 
 template<typename T>
 struct auto_tc_exp_fail {
-    explicit    auto_tc_exp_fail( unsigned v = 0 )
+    auto_tc_exp_fail() : m_value( 0 ) {}
+
+    explicit    auto_tc_exp_fail( unsigned v )
     : m_value( v )
     {
         instance() = this;
