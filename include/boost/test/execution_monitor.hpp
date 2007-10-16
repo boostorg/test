@@ -36,9 +36,11 @@
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
 #include <boost/test/utils/callback.hpp>
+#include <boost/test/utils/class_properties.hpp>
 
 // Boost
 #include <boost/scoped_ptr.hpp>
+#include <boost/scoped_array.hpp>
 #include <boost/type.hpp>
 #include <boost/cstdlib.hpp>
 
@@ -131,14 +133,32 @@ private:
 
 class BOOST_TEST_DECL execution_monitor {
 public:
-    int execute( unit_test::callback0<int> const& F, bool catch_system_errors = true, int timeout = 0 ); 
-    //  The catch_system_errors parameter specifies whether the monitor should 
+    // Constructor
+    execution_monitor()
+    : p_catch_system_errors( true )
+    , p_auto_start_dbg( false )
+    , p_timeout( 0 )
+    {}
+
+    // Public properties
+    
+    //  The p_catch_system_errors parameter specifies whether the monitor should 
     //  try to catch system errors/exceptions that would cause program to crash 
     //  in regular case
-    //  The timeout argument specifies the seconds that elapse before
+    unit_test::readwrite_property<bool> p_catch_system_errors; 
+    //  The p_auto_start_dbg parameter specifies whether the monitor should 
+    //  try to attach debugger in case of caught system error
+    unit_test::readwrite_property<bool> p_auto_start_dbg;
+    //  The p_timeout parameter specifies the seconds that elapse before
     //  a timer_error occurs.  May be ignored on some platforms.
-    //
-    //  Returns:  Value returned by function().
+    unit_test::readwrite_property<int>  p_timeout;
+    //  The p_use_alt_stack parameter specifies whether the monitor should
+    //  use alternative stack for the signal catching
+    unit_test::readwrite_property<int>  p_use_alt_stack;
+
+
+    int         execute( unit_test::callback0<int> const& F ); 
+    //  Returns:  Value returned by function call F().
     //
     //  Effects:  Calls executes supplied function F inside a try/catch block which also may
     //  include other unspecified platform dependent error detection code.
@@ -154,10 +174,11 @@ public:
 
 private:
     // implementation helpers
-    int         catch_signals( unit_test::callback0<int> const& F, bool catch_system_errors, int timeout );
+    int         catch_signals( unit_test::callback0<int> const& F );
 
     // Data members
     boost::scoped_ptr<detail::translate_exception_base> m_custom_translators;
+    boost::scoped_array<char>                           m_alt_stack;
 }; // execution_monitor
 
 namespace detail {
@@ -200,19 +221,24 @@ execution_monitor::register_exception_translator( ExceptionTranslator const& tr,
 }
 
 // ************************************************************************** //
-// **************              detect_memory_leaks             ************** //
-// ************************************************************************** //
-
-// turn on system memory leak detection
-void BOOST_TEST_DECL detect_memory_leaks( bool on_off );
-// break program execution on mem_alloc_order_num's allocation
-void BOOST_TEST_DECL break_memory_alloc( long mem_alloc_order_num );
-
-// ************************************************************************** //
 // **************               execution_aborted              ************** //
 // ************************************************************************** //
 
-struct BOOST_TEST_DECL execution_aborted {};
+struct execution_aborted {};
+
+// ************************************************************************** //
+// **************                  system_error                ************** //
+// ************************************************************************** //
+
+class system_error {
+public:
+    // Constructor
+    system_error();
+
+    unit_test::readonly_property<long> p_errno; 
+};
+
+#define BOOST_TEST_SYS_ASSERT( exp ) if( (exp) ) ; else throw ::boost::system_error()
 
 }  // namespace boost
 

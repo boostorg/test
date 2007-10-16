@@ -69,13 +69,14 @@ prg_exec_monitor_main( int (*cpp_main)( int argc, char* argv[] ), int argc, char
 {
     int result = 0;
 
-    boost::unit_test::const_string p( std::getenv( "BOOST_TEST_CATCH_SYSTEM_ERRORS" ) );
-    bool catch_system_errors = p != "no";
-        
     try {
+        boost::unit_test::const_string p( std::getenv( "BOOST_TEST_CATCH_SYSTEM_ERRORS" ) );
         ::boost::execution_monitor ex_mon;
+
+        ex_mon.p_catch_system_errors.value = p != "no";
+        
         result = ex_mon.execute( 
-            ::boost::unit_test::callback0<int>( cpp_main_caller( cpp_main, argc, argv ) ), catch_system_errors );
+            ::boost::unit_test::callback0<int>( cpp_main_caller( cpp_main, argc, argv ) ) );
         
         if( result == 0 )
             result = ::boost::exit_success;
