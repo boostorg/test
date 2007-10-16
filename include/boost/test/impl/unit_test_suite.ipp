@@ -155,7 +155,7 @@ test_unit_id
 test_suite::get( const_string tu_name ) const
 {
     BOOST_TEST_FOREACH( test_unit_id, id, m_members ) {
-        if( framework::get( id, test_id_2_unit_type( id ) ).p_name == tu_name )
+        if( tu_name == framework::get( id, test_id_2_unit_type( id ) ).p_name.get() )
             return id;
     }
 
