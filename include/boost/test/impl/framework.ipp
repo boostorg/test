@@ -88,6 +88,20 @@ private:
     counter_t       m_tc_amount;
 };
 
+//____________________________________________________________________________//
+
+struct test_init_caller {
+    test_init_caller() : m_manual_test_units( 0 ) {}
+    int operator()()
+    {
+        m_manual_test_units = init_unit_test_suite( framework::master_test_suite().argc, framework::master_test_suite().argv );
+        return 0;
+    }
+
+    // Data members
+    test_suite* m_manual_test_units;
+};
+
 }
 
 // ************************************************************************** //
@@ -240,9 +254,19 @@ init( int argc, char* argv[] )
     if( !init_unit_test() )
         throw setup_error( BOOST_TEST_L("test tree initialization error" ) );
 #else
-    test_suite* s = init_unit_test_suite( argc, argv );
-    if( s )
-        master_test_suite().add( s );
+    try {
+        boost::execution_monitor em;
+
+        ut_detail::test_init_caller tic;
+
+        em.execute( tic );
+
+        if( tic.m_manual_test_units )
+            master_test_suite().add( tic.m_manual_test_units );
+    }
+    catch( execution_exception const& ex )  {
+        throw setup_error( ex.what() );
+    }
 #endif
 
 #endif
