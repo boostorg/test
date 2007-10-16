@@ -115,8 +115,8 @@ public:
                                    std::size_t /*line_num*/, 
                                    void* /*p*/, std::size_t /*s*/ )         {}
     virtual void        freed( void* /*p*/ )                                {}
-    virtual void        data_flow( const_string d )                         {}
-    virtual std::string return_value( const_string default_value )          { return ""; }
+    virtual void        data_flow( const_string /*d*/ )                     {}
+    virtual std::string return_value( const_string /*default_value */ )     { return ""; }
 
     template<typename T>
     void                generic_data_flow( T const& t )
