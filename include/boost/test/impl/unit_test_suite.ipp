@@ -54,7 +54,6 @@ test_unit::test_unit( const_string name, test_unit_type t )
 , p_type_name( t == tut_case ? "case" : "suite" )
 , p_id( INV_TEST_UNIT_ID )
 , p_name( std::string( name.begin(), name.size() ) )
-, p_enabled( true )
 {
 }
 
@@ -156,7 +155,7 @@ test_unit_id
 test_suite::get( const_string tu_name ) const
 {
     BOOST_TEST_FOREACH( test_unit_id, id, m_members ) {
-        if( tu_name == framework::get( id, test_id_2_unit_type( id ) ).p_name.get() )
+        if( framework::get( id, test_id_2_unit_type( id ) ).p_name == tu_name )
             return id;
     }
 
@@ -172,7 +171,6 @@ test_suite::get( const_string tu_name ) const
 void
 traverse_test_tree( test_case const& tc, test_tree_visitor& V )
 {
-    if( tc.p_enabled )
     V.visit( tc );
 }
 
@@ -181,7 +179,7 @@ traverse_test_tree( test_case const& tc, test_tree_visitor& V )
 void
 traverse_test_tree( test_suite const& suite, test_tree_visitor& V )
 {
-    if( !suite.p_enabled || !V.test_suite_start( suite ) )
+    if( !V.test_suite_start( suite ) )
         return;
 
     try {

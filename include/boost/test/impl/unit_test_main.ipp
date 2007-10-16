@@ -43,11 +43,20 @@ namespace unit_test {
 // ************************************************************************** //
 
 int BOOST_TEST_DECL
-unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
+
+#if defined(BOOST_TEST_DYN_LINK)
+unit_test_main( bool (*init_unit_test_func)(), int argc, char* argv[] )
+#else
+unit_test_main(                                int argc, char* argv[] )
+#endif
 {
     try {
-        framework::init( init_func, argc, argv );
+        framework::init( argc, argv );
 
+#ifdef BOOST_TEST_DYN_LINK
+    if( !(*init_unit_test_func)() )
+        throw framework::setup_error( BOOST_TEST_L( "test tree initialization error" ) );
+#endif
 // !! ??       if( !runtime_config.test_to_run().is_empty() ) {
 //
 //        }
@@ -90,18 +99,7 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
 int BOOST_TEST_CALL_DECL
 main( int argc, char* argv[] )
 {
-    // prototype for user's unit test init function
-#ifdef BOOST_TEST_ALTERNATIVE_INIT_API
-    extern bool init_unit_test();
-
-    boost::unit_test::init_unit_test_func init_func = &init_unit_test;
-#else
-    extern ::boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] );
-
-    boost::unit_test::init_unit_test_func init_func = &init_unit_test_suite;
-#endif
-
-    return ::boost::unit_test::unit_test_main( init_func, argc, argv );
+    return ::boost::unit_test::unit_test_main( argc, argv );
 }
 
 #endif // !BOOST_TEST_DYN_LINK && !BOOST_TEST_NO_MAIN

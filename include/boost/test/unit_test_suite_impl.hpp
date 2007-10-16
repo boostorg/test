@@ -67,7 +67,6 @@ public:
     readwrite_property<std::string>     p_name;                 // name for this test unit
     readwrite_property<unsigned>        p_timeout;              // timeout for the test unit execution 
     readwrite_property<counter_t>       p_expected_failures;    // number of expected failures in this test unit
-    mutable readwrite_property<bool>    p_enabled;              // enabled status for this unit
 
     void                                increase_exp_fail( unsigned num );
 
@@ -199,7 +198,7 @@ traverse_test_tree( test_unit const& tu, test_tree_visitor& V )
 struct test_case_counter : test_tree_visitor {
     test_case_counter() : m_count( 0 ) {}
 
-    virtual void    visit( test_case const& ) { m_count++; }
+    void        visit( test_case const& ) { m_count++; }
 
     counter_t   m_count;
 };
@@ -277,9 +276,7 @@ private:
 
 template<typename T>
 struct auto_tc_exp_fail {
-    auto_tc_exp_fail() : m_value( 0 ) {}
-
-    explicit    auto_tc_exp_fail( unsigned v )
+    explicit    auto_tc_exp_fail( unsigned v = 0 )
     : m_value( v )
     {
         instance() = this;

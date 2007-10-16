@@ -43,7 +43,15 @@
 
 namespace boost { namespace unit_test {
 
-int BOOST_TEST_DECL unit_test_main( init_unit_test_func init_func, int argc, char* argv[] );
+#if defined(BOOST_TEST_DYN_LINK) 
+
+int BOOST_TEST_DECL unit_test_main( bool (*init_unit_test_func)(), int argc, char* argv[] );
+
+#else
+
+int BOOST_TEST_DECL unit_test_main( int argc, char* argv[] );
+
+#endif
 
 }}
 

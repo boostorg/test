@@ -23,10 +23,10 @@
 #include <boost/test/output/plain_report_formatter.hpp>
 #include <boost/test/output/xml_report_formatter.hpp>
 
+#include <boost/test/detail/wrap_io_saver.hpp>
+
 // Boost
 #include <boost/scoped_ptr.hpp>
-#include <boost/io/ios_state.hpp>
-typedef ::boost::io::ios_base_all_saver io_saver_type;
 
 // STL
 #include <iostream>
