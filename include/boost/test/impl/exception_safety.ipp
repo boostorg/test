@@ -126,7 +126,7 @@ struct exception_safety_tester : itest::manager, test_observer {
 
     // test observer interface
     virtual void        assertion_result( bool passed );
-    virtual int         priority() { return (std::numeric_limits<int>::max)(); } // we want this observer to run the last
+    virtual int         priority() { return std::numeric_limits<int>::max(); } // we want this observer to run the last
 
 private:
     void                failure_point();
@@ -493,7 +493,7 @@ exception_safety_tester::report_error()
         if( m_invairant_failed )
             formatter << " and ";
 
-        formatter << (unsigned int)m_memory_in_use.size() << " memory leak";
+        formatter << m_memory_in_use.size() << " memory leak";
         if( m_memory_in_use.size() > 1 )
             formatter << 's';
     }

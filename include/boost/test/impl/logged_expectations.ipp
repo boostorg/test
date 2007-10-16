@@ -7,7 +7,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Revision$
+//  ELOG_VER     : $Revision$
 //
 //  Description : Facilities to perform interaction based testng of logged expectations
 // ***************************************************************************

@@ -26,7 +26,7 @@ namespace unit_test {
 enum            log_level {
     invalid_log_level        = -1,
     log_successful_tests     = 0,
-    log_test_units           = 1,
+    log_test_suites          = 1,
     log_messages             = 2,
     log_warnings             = 3,
     log_all_errors           = 4, // reported by unit test macros

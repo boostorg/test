@@ -179,7 +179,7 @@ public:
         }
     };
 
-    typedef std::map<test_unit_id,test_unit*>       test_unit_store;
+    typedef std::map<test_unit_id,test_unit const*> test_unit_store;
     typedef std::set<test_observer*,priority_order> observer_store;
 
     master_test_suite_t* m_master_test_suite;
@@ -211,11 +211,11 @@ init( int argc, char* argv[] )
 {
     runtime_config::init( &argc, argv );
 
-    // set the log level and format
+    // set the log level nad format
     unit_test_log.set_threshold_level( runtime_config::log_level() );
     unit_test_log.set_format( runtime_config::log_format() );
 
-    // set the report level and format
+    // set the report level nad format
     results_reporter::set_level( runtime_config::report_level() );
     results_reporter::set_format( runtime_config::report_format() );
 
@@ -335,10 +335,10 @@ current_test_case()
 
 //____________________________________________________________________________//
 
-test_unit&
+test_unit const&
 get( test_unit_id id, test_unit_type t )
 {
-    test_unit* res = s_frk_impl().m_test_units[id];
+    test_unit const* res = s_frk_impl().m_test_units[id];
 
     if( (res->p_type & t) == 0 )
         throw internal_error( "Invalid test unit type" );

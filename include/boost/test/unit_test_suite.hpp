@@ -17,7 +17,6 @@
 
 // Boost.Test
 #include <boost/test/unit_test_suite_impl.hpp>
-#include <boost/test/framework.hpp>
 
 //____________________________________________________________________________//
 
@@ -43,7 +42,8 @@ boost::unit_test::make_test_case((function), BOOST_TEST_STRINGIZE( function ), t
 
 #define BOOST_AUTO_TEST_SUITE( suite_name )                             \
 namespace suite_name {                                                  \
-BOOST_AUTO_TC_REGISTRAR( suite_name )( BOOST_STRINGIZE( suite_name ) ); \
+BOOST_AUTO_TC_REGISTRAR( suite_name )( BOOST_TEST_SUITE(                \
+    BOOST_STRINGIZE( suite_name ) ) );                                  \
 /**/
 
 // ************************************************************************** //
@@ -70,17 +70,14 @@ BOOST_AUTO_TC_REGISTRAR( BOOST_JOIN( end_suite, __LINE__ ) )( 1 );      \
 
 #define BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES( test_name, n )          \
 struct BOOST_AUTO_TC_UNIQUE_ID( test_name );                            \
+namespace boost { namespace unit_test { namespace ut_detail {           \
                                                                         \
-static struct BOOST_JOIN( test_name, _exp_fail_num_spec )               \
-: boost::unit_test::ut_detail::                                         \
-  auto_tc_exp_fail<BOOST_AUTO_TC_UNIQUE_ID( test_name ) >               \
-{                                                                       \
-    BOOST_JOIN( test_name, _exp_fail_num_spec )()                       \
-    : boost::unit_test::ut_detail::                                     \
-      auto_tc_exp_fail<BOOST_AUTO_TC_UNIQUE_ID( test_name ) >( n )      \
-    {}                                                                  \
-} BOOST_JOIN( test_name, _exp_fail_num_spec_inst );                     \
+template<>                                                              \
+struct auto_tc_exp_fail<BOOST_AUTO_TC_UNIQUE_ID( test_name ) > {        \
+    enum { value = n };                                                 \
+};                                                                      \
                                                                         \
+}}}                                                                     \
 /**/
 
 // ************************************************************************** //
@@ -102,7 +99,7 @@ BOOST_AUTO_TC_REGISTRAR( test_name )(                                   \
     boost::unit_test::make_test_case(                                   \
         &BOOST_AUTO_TC_INVOKER( test_name ), #test_name ),              \
     boost::unit_test::ut_detail::auto_tc_exp_fail<                      \
-        BOOST_AUTO_TC_UNIQUE_ID( test_name )>::instance()->value() );   \
+        BOOST_AUTO_TC_UNIQUE_ID( test_name )>::value );                 \
                                                                         \
 void test_name::test_method()                                           \
 /**/

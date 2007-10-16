@@ -67,7 +67,7 @@ namespace boost {
 int BOOST_TEST_DECL
 prg_exec_monitor_main( int (*cpp_main)( int argc, char* argv[] ), int argc, char* argv[] )
 {
-    int result = 0;
+    int result;
 
     boost::unit_test::const_string p( std::getenv( "BOOST_TEST_CATCH_SYSTEM_ERRORS" ) );
     bool catch_system_errors = p != "no";

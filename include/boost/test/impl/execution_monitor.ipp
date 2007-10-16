@@ -57,7 +57,7 @@ namespace std { using ::strlen; using ::strncat; }
 
 #  ifndef _WIN32_WINNT
 #    ifdef _WINBASE_
-#      pragma message("Warning: Debugger check disabled. Either define _WIN32_WINNT or include Boost.Test header in front of winbase.h") 
+#      warning Debugger check disabled. Either define _WIN32_WINNT or include Boost.Test header in front of winbase.h
 #    else
 #      define BOOST_TEST_DEBUGGER_CHECK
 #      define _WIN32_WINNT 0x0400

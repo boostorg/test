@@ -124,9 +124,6 @@ unit_test_log_impl& s_log_impl() { static unit_test_log_impl the_inst; return th
 void
 unit_test_log_t::test_start( counter_t test_cases_amount )
 {
-    if( s_log_impl().m_threshold_level == log_nothing )
-        return;
-
     s_log_impl().m_log_formatter->log_start( s_log_impl().stream(), test_cases_amount );
 
     if( runtime_config::show_build_info() )
@@ -140,9 +137,6 @@ unit_test_log_t::test_start( counter_t test_cases_amount )
 void
 unit_test_log_t::test_finish()
 {
-    if( s_log_impl().m_threshold_level == log_nothing )
-        return;
-
     s_log_impl().m_log_formatter->log_finish( s_log_impl().stream() );
 
     s_log_impl().stream().flush();
@@ -161,7 +155,7 @@ unit_test_log_t::test_aborted()
 void
 unit_test_log_t::test_unit_start( test_unit const& tu )
 {
-    if( s_log_impl().m_threshold_level > log_test_units )
+    if( s_log_impl().m_threshold_level > log_test_suites )
         return;
 
     if( s_log_impl().m_entry_in_progress )
@@ -175,7 +169,7 @@ unit_test_log_t::test_unit_start( test_unit const& tu )
 void
 unit_test_log_t::test_unit_finish( test_unit const& tu, unsigned long elapsed )
 {
-    if( s_log_impl().m_threshold_level > log_test_units )
+    if( s_log_impl().m_threshold_level > log_test_suites )
         return;
 
     s_log_impl().m_checkpoint_data.clear();
@@ -191,7 +185,7 @@ unit_test_log_t::test_unit_finish( test_unit const& tu, unsigned long elapsed )
 void
 unit_test_log_t::test_unit_skipped( test_unit const& tu )
 {
-    if( s_log_impl().m_threshold_level > log_test_units )
+    if( s_log_impl().m_threshold_level > log_test_suites )
         return;
 
     if( s_log_impl().m_entry_in_progress )
@@ -339,7 +333,7 @@ unit_test_log_t::operator<<( const_string value )
                                                                unit_test_log_formatter::BOOST_UTL_ET_FATAL_ERROR );
                 break;
             case log_nothing:
-            case log_test_units:
+            case log_test_suites:
             case invalid_log_level:
                 return *this;
             }
