@@ -54,6 +54,7 @@ test_unit::test_unit( const_string name, test_unit_type t )
 , p_type_name( t == tut_case ? "case" : "suite" )
 , p_id( INV_TEST_UNIT_ID )
 , p_name( std::string( name.begin(), name.size() ) )
+, p_enabled( true )
 {
 }
 
@@ -171,6 +172,7 @@ test_suite::get( const_string tu_name ) const
 void
 traverse_test_tree( test_case const& tc, test_tree_visitor& V )
 {
+    if( tc.p_enabled )
     V.visit( tc );
 }
 
@@ -179,7 +181,7 @@ traverse_test_tree( test_case const& tc, test_tree_visitor& V )
 void
 traverse_test_tree( test_suite const& suite, test_tree_visitor& V )
 {
-    if( !V.test_suite_start( suite ) )
+    if( !suite.p_enabled || !V.test_suite_start( suite ) )
         return;
 
     try {

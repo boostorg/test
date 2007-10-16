@@ -32,13 +32,23 @@ namespace boost {
 namespace unit_test {
 
 // ************************************************************************** //
+// **************              init_unit_test_func             ************** //
+// ************************************************************************** //
+
+#ifdef BOOST_TEST_ALTERNATIVE_INIT_API
+typedef bool        (*init_unit_test_func)();
+#else
+typedef test_suite* (*init_unit_test_func)( int, char* [] );
+#endif
+
+// ************************************************************************** //
 // **************                   framework                  ************** //
 // ************************************************************************** //
 
 namespace framework {
 
 // initialization
-BOOST_TEST_DECL void    init( int argc, char* argv[] );
+BOOST_TEST_DECL void    init( init_unit_test_func init_func, int argc, char* argv[] );
 
 // mutation access methods
 BOOST_TEST_DECL void    register_test_unit( test_case* tc );

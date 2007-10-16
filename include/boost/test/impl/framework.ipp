@@ -49,17 +49,6 @@ namespace std { using ::time; using ::srand; }
 
 //____________________________________________________________________________//
 
-#ifndef BOOST_TEST_DYN_LINK
-
-// prototype for user's unit test init function
-#ifdef BOOST_TEST_ALTERNATIVE_INIT_API
-extern bool init_unit_test();
-#else
-extern boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] );
-#endif
-
-#endif
-
 namespace boost {
 
 namespace unit_test {
@@ -91,15 +80,24 @@ private:
 //____________________________________________________________________________//
 
 struct test_init_caller {
-    test_init_caller() : m_manual_test_units( 0 ) {}
-    int operator()()
+    explicit    test_init_caller( init_unit_test_func init_func ) 
+    : m_manual_test_units( 0 )
+    , m_init_func( init_func )
+    {}
+    int         operator()()
     {
-        m_manual_test_units = init_unit_test_suite( framework::master_test_suite().argc, framework::master_test_suite().argv );
+#ifdef BOOST_TEST_ALTERNATIVE_INIT_API
+        if( !(*m_init_func)() )
+            throw std::runtime_error( "test module initialization failed" );
+#else
+        m_manual_test_units = (*m_init_func)( framework::master_test_suite().argc, framework::master_test_suite().argv );
+#endif
         return 0;
     }
 
     // Data members
-    test_suite* m_manual_test_units;
+    test_suite*         m_manual_test_units;
+    init_unit_test_func m_init_func;
 };
 
 }
@@ -221,7 +219,7 @@ framework_impl& s_frk_impl() { static framework_impl the_inst; return the_inst; 
 namespace framework {
 
 void
-init( int argc, char* argv[] )
+init( init_unit_test_func init_func, int argc, char* argv[] )
 {
     runtime_config::init( &argc, argv );
 
@@ -248,16 +246,10 @@ init( int argc, char* argv[] )
     master_test_suite().argc = argc;
     master_test_suite().argv = argv;
 
-#ifndef BOOST_TEST_DYN_LINK
-
-#ifdef BOOST_TEST_ALTERNATIVE_INIT_API
-    if( !init_unit_test() )
-        throw setup_error( BOOST_TEST_L("test tree initialization error" ) );
-#else
     try {
         boost::execution_monitor em;
 
-        ut_detail::test_init_caller tic;
+        ut_detail::test_init_caller tic( init_func );
 
         em.execute( tic );
 
@@ -267,10 +259,6 @@ init( int argc, char* argv[] )
     catch( execution_exception const& ex )  {
         throw setup_error( ex.what() );
     }
-#endif
-
-#endif
-
 }
 
 //____________________________________________________________________________//
@@ -477,42 +465,5 @@ test_unit_aborted( test_unit const& tu )
 //____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
-
-// ***************************************************************************
-//  Revision History :
-//
-//  $Log$
-//  Revision 1.10  2006/03/19 07:27:52  rogeeff
-//  streamline test setup error message
-//
-//  Revision 1.9  2006/01/30 07:29:49  rogeeff
-//  split memory leaks detection API in two to get more functions with better defined roles
-//
-//  Revision 1.8  2005/12/17 02:34:11  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.7  2005/12/14 05:35:57  rogeeff
-//  DLL support implemented
-//  Alternative init API introduced
-//
-//  Revision 1.6  2005/05/08 08:55:09  rogeeff
-//  typos and missing descriptions fixed
-//
-//  Revision 1.5  2005/04/05 07:23:20  rogeeff
-//  restore default
-//
-//  Revision 1.4  2005/04/05 06:11:37  rogeeff
-//  memory leak allocation point detection\nextra help with _WIN32_WINNT
-//
-//  Revision 1.3  2005/03/23 21:02:19  rogeeff
-//  Sunpro CC 5.3 fixes
-//
-//  Revision 1.2  2005/02/21 10:12:18  rogeeff
-//  Support for random order of test cases implemented
-//
-//  Revision 1.1  2005/02/20 08:27:07  rogeeff
-//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
-//
-// ***************************************************************************
 
 #endif // BOOST_TEST_FRAMEWORK_IPP_021005GER
