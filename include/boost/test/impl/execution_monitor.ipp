@@ -632,7 +632,7 @@ static void execution_monitor_jumping_signal_handler( int sig, siginfo_t* info, 
 {
     signal_handler::sys_sig()( info, context );
 
-    ::siglongjmp( signal_handler::jump_buffer(), sig );
+    siglongjmp( signal_handler::jump_buffer(), sig );
 }
 
 //____________________________________________________________________________//
