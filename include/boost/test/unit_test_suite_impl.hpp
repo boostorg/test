@@ -23,7 +23,6 @@
 #include <boost/test/detail/fwd_decl.hpp>
 #include <boost/test/detail/workaround.hpp>
 #include <boost/test/test_observer.hpp>
-#include <boost/test/framework.hpp>
 
 // Boost
 #include <boost/shared_ptr.hpp>
@@ -67,7 +66,10 @@ public:
     // Public r/w properties
     readwrite_property<std::string>     p_name;                 // name for this test unit
     readwrite_property<unsigned>        p_timeout;              // timeout for the test unit execution 
-    readwrite_property<counter_t>       p_expected_failures;    // number of expected failured in this test unit
+    readwrite_property<counter_t>       p_expected_failures;    // number of expected failures in this test unit
+    mutable readwrite_property<bool>    p_enabled;              // enabled status for this unit
+
+    void                                increase_exp_fail( unsigned num );
 
 private:
     // Data members
@@ -120,16 +122,19 @@ public:
     // Constructor
     explicit    test_suite( const_string ts_name );
 
-    // test case list management
+    // test unit list management
     void        add( test_unit* tu, counter_t expected_failures = 0, unsigned timeout = 0 );
     void        add( test_unit_generator const& gen, unsigned timeout = 0 );
 
+    // access methods
+    test_unit_id                get( const_string tu_name ) const;
+
 protected:
-    friend BOOST_TEST_DECL void traverse_test_tree( test_suite const&, test_tree_visitor& );
+    friend BOOST_TEST_DECL 
+    void        traverse_test_tree( test_suite const&, test_tree_visitor& );
     friend class framework_impl;
     virtual     ~test_suite() {}
 
-private:
     // Data members
     std::vector<test_unit_id> m_members;
 };
@@ -172,7 +177,7 @@ protected:
 
 BOOST_TEST_DECL void    traverse_test_tree( test_case const&, test_tree_visitor& );
 BOOST_TEST_DECL void    traverse_test_tree( test_suite const&, test_tree_visitor& );
-BOOST_TEST_DECL void    traverse_test_tree( test_unit_id id, test_tree_visitor& );
+BOOST_TEST_DECL void    traverse_test_tree( test_unit_id     , test_tree_visitor& );
 
 //____________________________________________________________________________//
 
@@ -194,7 +199,7 @@ traverse_test_tree( test_unit const& tu, test_tree_visitor& V )
 struct test_case_counter : test_tree_visitor {
     test_case_counter() : m_count( 0 ) {}
 
-    void        visit( test_case const& ) { m_count++; }
+    virtual void    visit( test_case const& ) { m_count++; }
 
     counter_t   m_count;
 };
@@ -258,41 +263,41 @@ namespace ut_detail {
 
 struct BOOST_TEST_DECL auto_test_unit_registrar
 {
-    // Constructor
-    explicit    auto_test_unit_registrar( test_case* tc, counter_t exp_fail )
-    {
-        curr_ts_store().back()->add( tc, exp_fail );
-    }
-    explicit    auto_test_unit_registrar( test_suite* ts )
-    {
-        curr_ts_store().back()->add( ts );
-
-        curr_ts_store().push_back( ts );
-    }
-    explicit    auto_test_unit_registrar( test_unit_generator const& tc_gen )
-    {
-        curr_ts_store().back()->add( tc_gen );
-    }
-    explicit    auto_test_unit_registrar( int )
-    {
-        if( curr_ts_store().size() > 1 )
-            curr_ts_store().pop_back();
-        // else report error
-    }
+    // Constructors
+                auto_test_unit_registrar( test_case* tc, counter_t exp_fail );
+    explicit    auto_test_unit_registrar( const_string ts_name );
+    explicit    auto_test_unit_registrar( test_unit_generator const& tc_gen );
+    explicit    auto_test_unit_registrar( int );
 
 private:
-    static std::list<test_suite*>& curr_ts_store()
-    {
-        static std::list<test_suite*> inst( 1, &framework::master_test_suite() );
-        return inst;
-    }
+    static std::list<test_suite*>& curr_ts_store();
 };
 
 //____________________________________________________________________________//
 
 template<typename T>
 struct auto_tc_exp_fail {
-    enum { value = 0 };
+    auto_tc_exp_fail() : m_value( 0 ) {}
+
+    explicit    auto_tc_exp_fail( unsigned v )
+    : m_value( v )
+    {
+        instance() = this;
+    }
+
+    static auto_tc_exp_fail*& instance() 
+    {
+        static auto_tc_exp_fail     inst; 
+        static auto_tc_exp_fail*    inst_ptr = &inst; 
+
+        return inst_ptr;
+    }
+
+    unsigned    value() const { return m_value; }
+
+private:
+    // Data members
+    unsigned    m_value;
 };
 
 //____________________________________________________________________________//
@@ -306,7 +311,7 @@ struct auto_tc_exp_fail {
 class BOOST_TEST_DECL global_fixture : public test_observer { 
 public: 
     // Constructor
-    global_fixture() { framework::register_observer( *this ); } 
+    global_fixture();
 }; 
 
 //____________________________________________________________________________//

@@ -161,6 +161,7 @@ do {                                                                \
     BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::equal_impl_frwd(), "", CHECK, CHECK_EQUAL, (L)(R) )
 #define BOOST_REQUIRE_EQUAL( L, R ) \
     BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::equal_impl_frwd(), "", REQUIRE, CHECK_EQUAL, (L)(R) )
+
 //____________________________________________________________________________//
 
 #define BOOST_WARN_CLOSE( L, R, T ) \
@@ -469,12 +470,12 @@ predicate_result equal_impl( Left const& left, Right const& right )
 //____________________________________________________________________________//
 
 predicate_result        BOOST_TEST_DECL equal_impl( char const* left, char const* right );
-inline predicate_result BOOST_TEST_DECL equal_impl( char* left, char const* right ) { return equal_impl( (char const*)left, (char const*)right ); }
-inline predicate_result BOOST_TEST_DECL equal_impl( char const* left, char* right ) { return equal_impl( (char const*)left, (char const*)right ); }
-inline predicate_result BOOST_TEST_DECL equal_impl( char* left, char* right )       { return equal_impl( (char const*)left, (char const*)right ); }
+inline predicate_result equal_impl( char* left, char const* right ) { return equal_impl( (char const*)left, (char const*)right ); }
+inline predicate_result equal_impl( char const* left, char* right ) { return equal_impl( (char const*)left, (char const*)right ); }
+inline predicate_result equal_impl( char* left, char* right )       { return equal_impl( (char const*)left, (char const*)right ); }
 
 #if !defined( BOOST_NO_CWCHAR )
-predicate_result        equal_impl( wchar_t const* left, wchar_t const* right );
+predicate_result        BOOST_TEST_DECL equal_impl( wchar_t const* left, wchar_t const* right );
 inline predicate_result equal_impl( wchar_t* left, wchar_t const* right ) { return equal_impl( (wchar_t const*)left, (wchar_t const*)right ); }
 inline predicate_result equal_impl( wchar_t const* left, wchar_t* right ) { return equal_impl( (wchar_t const*)left, (wchar_t const*)right ); }
 inline predicate_result equal_impl( wchar_t* left, wchar_t* right )       { return equal_impl( (wchar_t const*)left, (wchar_t const*)right ); }
@@ -600,78 +601,6 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log$
-//  Revision 1.66  2007/04/05 14:46:47  dgregor
-//  Add include of climits
-//
-//  Revision 1.65  2007/02/22 18:00:39  speedsnail
-//  Removed the msvc-6.5 hack from HEAD again. Gennadiy Rozental didn't like it anyways...
-//
-//  Revision 1.64  2006/12/16 14:36:23  speedsnail
-//  Workaround for msvc-6.5: *_EQUAL macros give Internal Compiler Errors, when inlining is turned on.
-//
-//  Revision 1.63  2006/11/14 21:33:01  jhunold
-//  Add missing export macros for print_log_value<>
-//
-//  Revision 1.62  2006/11/14 07:34:30  jhunold
-//  Removed wrong export declarations.
-//
-//  Revision 1.61  2006/11/13 20:03:48  jhunold
-//  Added missing export declarations.
-//
-//  Revision 1.60  2006/03/19 07:27:11  rogeeff
-//  avoid warning
-//
-//  Revision 1.59  2006/03/03 17:39:46  rogeeff
-//  paaspoint added to check throw
-//
-//  Revision 1.58  2006/02/06 10:04:55  rogeeff
-//  BOOST_TEST_MODULE - master test suite name
-//
-//  Revision 1.57  2006/01/28 07:00:47  rogeeff
-//  sunpro port
-//
-//  Revision 1.56  2005/12/19 03:08:30  rogeeff
-//  added is_abstract to guard numeric_limits instantiation
-//
-//  Revision 1.55  2005/12/14 05:20:41  rogeeff
-//  dll support introduced
-//  BOOST_TEST_PASSPOINT() introduced
-//  BOOST_MESSAGE depricated. Use BOOST_TEST_MESSAGE instead
-//  BOOST_CHECKPOINT is depricated. Use BOOST_TEST_CHECKPOINT intead
-//
-//  Revision 1.54  2005/06/07 04:38:20  rogeeff
-//  borland fix
-//
-//  Revision 1.53  2005/05/11 04:51:14  rogeeff
-//  borlard portability fix
-//
-//  Revision 1.52  2005/03/22 07:08:47  rogeeff
-//  string comparisons streamlined
-//  precision settings made portable
-//
-//  Revision 1.51  2005/02/21 10:23:54  rogeeff
-//  major issue with TT redesign causing TT to reevaluate it's arguments fixed
-//  FP precision extended
-//
-//  Revision 1.50  2005/02/20 08:27:06  rogeeff
-//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
-//
-//  Revision 1.49  2005/02/01 06:40:06  rogeeff
-//  copyright update
-//  old log entries removed
-//  minor stylistic changes
-//  deprecated tools removed
-//
-//  Revision 1.48  2005/01/30 03:32:57  rogeeff
-//  Test Tools completely reworked:
-//    interfaces streamlined to provide 3 version for each tool
-//    implementation reworked to use single vararg formatter function
-//    CHECK_COLLECTION now expect 4 arguments
-//    BITWISE_EQUAL renamed to CHECK_BITWISE_EQUAL but still provided as deprecated
-//    CHECK_COLLECTION interface changed to use PP_SEQ and as a result support arbitrary number of predicate arguments
-//    most of templates eliminated
-//    deprecated tools removed
-//    print_helper object generator added
 //
 // ***************************************************************************
 

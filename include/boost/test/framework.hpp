@@ -32,13 +32,23 @@ namespace boost {
 namespace unit_test {
 
 // ************************************************************************** //
+// **************              init_unit_test_func             ************** //
+// ************************************************************************** //
+
+#ifdef BOOST_TEST_ALTERNATIVE_INIT_API
+typedef bool        (*init_unit_test_func)();
+#else
+typedef test_suite* (*init_unit_test_func)( int, char* [] );
+#endif
+
+// ************************************************************************** //
 // **************                   framework                  ************** //
 // ************************************************************************** //
 
 namespace framework {
 
 // initialization
-BOOST_TEST_DECL void    init( int argc, char* argv[] );
+BOOST_TEST_DECL void    init( init_unit_test_func init_func, int argc, char* argv[] );
 
 // mutation access methods
 BOOST_TEST_DECL void    register_test_unit( test_case* tc );
@@ -54,17 +64,17 @@ BOOST_TEST_DECL master_test_suite_t& master_test_suite();
 BOOST_TEST_DECL test_case const&    current_test_case();
 #if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530) )
 template<typename UnitType>
-UnitType const&         get( test_unit_id id )
+UnitType&               get( test_unit_id id )
 {
-    return static_cast<UnitType const&>( get( id, (test_unit_type)UnitType::type ) );
+    return static_cast<UnitType&>( get( id, (test_unit_type)UnitType::type ) );
 }
-test_unit const&        get( test_unit_id, test_unit_type );
+test_unit&              get( test_unit_id, test_unit_type );
 #else
-test_unit const&        get( test_unit_id, test_unit_type );
+test_unit&              get( test_unit_id, test_unit_type );
 template<typename UnitType>
-UnitType const&         get( test_unit_id id )
+UnitType&               get( test_unit_id id )
 {
-    return static_cast<UnitType const&>( get( id, (test_unit_type)UnitType::type ) );
+    return static_cast<UnitType&>( get( id, (test_unit_type)UnitType::type ) );
 }
 #endif
 
