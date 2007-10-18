@@ -138,6 +138,8 @@ public:
     : p_catch_system_errors( true )
     , p_auto_start_dbg( false )
     , p_timeout( 0 )
+    , p_use_alt_stack( true )
+    , p_detect_fp_exceptions( false )
     {}
 
     // Public properties
@@ -154,8 +156,10 @@ public:
     unit_test::readwrite_property<int>  p_timeout;
     //  The p_use_alt_stack parameter specifies whether the monitor should
     //  use alternative stack for the signal catching
-    unit_test::readwrite_property<int>  p_use_alt_stack;
-
+    unit_test::readwrite_property<bool> p_use_alt_stack;
+    //  The p_detect_fp_exceptions parameter specifies whether the monitor should
+    //  try to detect hardware floating point exceptions
+    unit_test::readwrite_property<bool> p_detect_fp_exceptions;
 
     int         execute( unit_test::callback0<int> const& F ); 
     //  Returns:  Value returned by function call F().

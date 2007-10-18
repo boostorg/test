@@ -926,7 +926,8 @@ execution_monitor::catch_signals( unit_test::callback0<int> const& F )
     if( !p_catch_system_errors )
         _set_se_translator( &detail::system_signal_exception::seh_catch_preventer );
     else {
-        detail::switch_fp_exceptions( true );
+        if( !!p_detect_fp_exceptions )
+            detail::switch_fp_exceptions( true );
 
 #ifdef BOOST_TEST_USE_DEBUG_MS_CRT
        _CrtSetReportHook( &detail::assert_reporting_function );
@@ -948,10 +949,10 @@ execution_monitor::catch_signals( unit_test::callback0<int> const& F )
     }
     __finally {
         if( !!p_catch_system_errors ) {
-            detail::switch_fp_exceptions( false );
+            if( !!p_detect_fp_exceptions )
+                detail::switch_fp_exceptions( false );
 
            _set_invalid_parameter_handler( old_iph );
-
         }
     }
 

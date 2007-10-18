@@ -38,7 +38,7 @@ namespace unit_test {
 // configurable maximum fixed sized mapping size supported by this header.
 // You could redefine it before inclusion of this file.
 #ifndef MAX_MAP_SIZE
-#define MAX_MAP_SIZE 16
+#define MAX_MAP_SIZE 20
 #endif
 
 #define CONSTR_DECL_MID( z, i, dummy1 ) key_param_type key##i, value_param_type v##i,

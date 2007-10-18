@@ -60,6 +60,7 @@ literal_string SHOW_PROGRESS     = "BOOST_TEST_SHOW_PROGRESS";
 literal_string CATCH_SYS_ERRORS  = "BOOST_TEST_CATCH_SYSTEM_ERRORS";
 literal_string AUTO_START_DBG    = "BOOST_TEST_AUTO_START_DBG";
 literal_string USE_ALT_STACK     = "BOOST_TEST_USE_ALT_STACK";
+literal_string DETECT_FP_EXCEPT  = "BOOST_TEST_DETECT_FP_EXCEPTIONS";
 literal_string REPORT_FORMAT     = "BOOST_TEST_REPORT_FORMAT";
 literal_string LOG_FORMAT        = "BOOST_TEST_LOG_FORMAT";
 literal_string OUTPUT_FORMAT     = "BOOST_TEST_OUTPUT_FORMAT";
@@ -67,21 +68,22 @@ literal_string DETECT_MEM_LEAK   = "BOOST_TEST_DETECT_MEMORY_LEAK";
 literal_string RANDOM_SEED       = "BOOST_TEST_RANDOM";
 literal_string BREAK_EXEC_PATH   = "BOOST_TEST_BREAK_EXEC_PATH";
 
-unit_test::log_level     s_log_level;
-bool                     s_no_result_code;
-unit_test::report_level  s_report_level;
-const_string             s_tests_to_run;
-const_string             s_exec_path_to_break;
-bool                     s_save_pattern;
-bool                     s_show_build_info;
-bool                     s_show_progress;
-bool                     s_catch_sys_errors;
-bool                     s_auto_start_dbg;
-bool                     s_use_alt_stack;
-output_format            s_report_format;
-output_format            s_log_format;
-long                     s_detect_mem_leaks;
-unsigned int             s_random_seed;
+unit_test::log_level    s_log_level;
+bool                    s_no_result_code;
+unit_test::report_level s_report_level;
+const_string            s_tests_to_run;
+const_string            s_exec_path_to_break;
+bool                    s_save_pattern;
+bool                    s_show_build_info;
+bool                    s_show_progress;
+bool                    s_catch_sys_errors;
+bool                    s_auto_start_dbg;
+bool                    s_use_alt_stack;
+bool                    s_detect_fp_except;
+output_format           s_report_format;
+output_format           s_log_format;
+long                    s_detect_mem_leaks;
+unsigned int            s_random_seed;
 
 // ************************************************************************** //
 // **************                 runtime_config               ************** //
@@ -101,6 +103,7 @@ retrieve_framework_parameter( const_string parameter_name, int* argc, char** arg
         CATCH_SYS_ERRORS  , "--catch_system_errors",
         AUTO_START_DBG    , "--auto_start_dbg",
         USE_ALT_STACK     , "--use_alt_stack",        
+        DETECT_FP_EXCEPT  , "--detect_fp_exceptions",        
         REPORT_FORMAT     , "--report_format",
         LOG_FORMAT        , "--log_format",
         OUTPUT_FORMAT     , "--output_format",
@@ -206,6 +209,7 @@ init( int* argc, char** argv )
     s_show_progress     = retrieve_framework_parameter( SHOW_PROGRESS, argc, argv ) == "yes";
     s_catch_sys_errors  = retrieve_framework_parameter( CATCH_SYS_ERRORS, argc, argv ) != "no";
     s_use_alt_stack     = retrieve_framework_parameter( USE_ALT_STACK, argc, argv ) != "no";
+    s_detect_fp_except  = retrieve_framework_parameter( DETECT_FP_EXCEPT, argc, argv ) == "yes";
     s_tests_to_run      = retrieve_framework_parameter( TESTS_TO_RUN, argc, argv );
     s_exec_path_to_break= retrieve_framework_parameter( BREAK_EXEC_PATH, argc, argv );
 
@@ -322,6 +326,14 @@ bool
 use_alt_stack()
 {
     return s_use_alt_stack;
+}
+
+//____________________________________________________________________________//
+
+bool
+detect_fp_exceptions()
+{
+    return s_detect_fp_except;
 }
 
 //____________________________________________________________________________//

@@ -45,6 +45,7 @@ bool                    BOOST_TEST_DECL show_progress();
 bool                    BOOST_TEST_DECL catch_sys_errors();
 bool                    BOOST_TEST_DECL auto_start_dbg();
 bool                    BOOST_TEST_DECL use_alt_stack();
+bool                    BOOST_TEST_DECL detect_fp_exceptions();
 output_format           BOOST_TEST_DECL report_format();
 output_format           BOOST_TEST_DECL log_format();
 long                    BOOST_TEST_DECL detect_memory_leaks();
