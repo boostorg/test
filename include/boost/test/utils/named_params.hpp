@@ -319,22 +319,6 @@ optionally_assign( T& target, Params const& p, Keyword k )
 //   Revision History:
 //  
 //  $Log$
-//  Revision 1.5  2005/12/14 05:01:13  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.4  2005/06/13 10:35:08  schoepflin
-//  Enable optionally_assign() overload workaround for Tru64/CXX-6.5 as well.
-//
-//  Revision 1.3  2005/06/05 18:10:59  grafik
-//  named_param.hpp; Work around CW not handling operator, using declaration, by using a real operator,().
-//  token_iterator_test.cpp; Work around CW-8 confused with array initialization.
-//
-//  Revision 1.2  2005/05/03 05:02:49  rogeeff
-//  como fixes
-//
-//  Revision 1.1  2005/04/12 06:48:12  rogeeff
-//  Runtime.Param library initial commit
-//
 // ***************************************************************************
 
 #endif // BOOST_TEST_NAMED_PARAM_022505GER
