@@ -46,7 +46,7 @@
 #include <cstdarg>              // for varargs
 
 #ifdef BOOST_NO_STDC_NAMESPACE
-namespace std { using ::strlen; using ::strncat; }
+namespace std { using ::strerror; using ::strlen; using ::strncat; }
 #endif
 
 #if defined(_WIN32) && !defined(BOOST_DISABLE_WIN32) &&                  \
@@ -61,6 +61,10 @@ namespace std { using ::strlen; using ::strncat; }
 #    include <cstdint>
 
 using std::uintptr_t;
+#  endif
+
+#  if BOOST_WORKAROUND(BOOST_MSVC,  < 1300 )
+typedef void* uintptr_t;
 #  endif
 
 // for the FP control routines
