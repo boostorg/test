@@ -101,7 +101,7 @@ typedef void* uintptr_t;
 #    include <crtdbg.h>
 #  endif
 
-#  if !BOOST_WORKAROUND(BOOST_MSVC,  >= 1400 )
+#  if !BOOST_WORKAROUND(_MSC_VER,  >= 1400 )
 
 typedef void* _invalid_parameter_handler;
 
