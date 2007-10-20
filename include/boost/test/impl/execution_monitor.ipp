@@ -56,19 +56,45 @@ namespace std { using ::strerror; using ::strlen; using ::strncat; }
 #  define BOOST_SEH_BASED_SIGNAL_HANDLING
 
 #  include <windows.h>
+
 #  if defined(__MWERKS__)
 #    include <eh.h>
-#    include <cstdint>
-
-using std::uintptr_t;
 #  endif
 
-#  if BOOST_WORKAROUND(BOOST_MSVC,  < 1300 )
+#  if defined(__BORLANDC__) || defined(__MWERKS__)
+#    include <stdint.h>
+#endif
+
+#  if BOOST_WORKAROUND(BOOST_MSVC,  < 1300 ) 
 typedef void* uintptr_t;
 #  endif
 
 // for the FP control routines
 #include <float.h>
+
+#ifndef EM_INVALID
+#define EM_INVALID _EM_INVALID
+#endif
+
+#ifndef EM_DENORMAL
+#define EM_DENORMAL _EM_DENORMAL
+#endif
+
+#ifndef EM_ZERODIVIDE
+#define EM_ZERODIVIDE _EM_ZERODIVIDE
+#endif
+
+#ifndef EM_OVERFLOW
+#define EM_OVERFLOW _EM_OVERFLOW
+#endif
+
+#ifndef EM_UNDERFLOW
+#define EM_UNDERFLOW _EM_UNDERFLOW
+#endif
+
+#ifndef MCW_EM
+#define MCW_EM _MCW_EM
+#endif
 
 #  if !defined(NDEBUG) && defined(_MSC_VER)
 #    define BOOST_TEST_USE_DEBUG_MS_CRT
@@ -900,7 +926,7 @@ switch_fp_exceptions( bool on_off )
 
     int cw = ::_controlfp( 0, 0 );
 
-    int exceptions_mask = _EM_INVALID|_EM_DENORMAL|_EM_ZERODIVIDE|_EM_OVERFLOW|_EM_UNDERFLOW;
+    int exceptions_mask = EM_INVALID|EM_DENORMAL|EM_ZERODIVIDE|EM_OVERFLOW|EM_UNDERFLOW;
 
     if( on_off )
         cw &= ~exceptions_mask; // Set the exception masks on, turn exceptions off
@@ -911,7 +937,7 @@ switch_fp_exceptions( bool on_off )
         _clearfp();
         
     // Set the control word
-    ::_controlfp( cw, _MCW_EM );
+    ::_controlfp( cw, MCW_EM );
 }
 
 //____________________________________________________________________________//
