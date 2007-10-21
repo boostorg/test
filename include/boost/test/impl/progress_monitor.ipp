@@ -84,7 +84,7 @@ progress_monitor_t::test_unit_skipped( test_unit const& tu )
     test_case_counter tcc;
     traverse_test_tree( tu, tcc );
     
-    (*s_pm_impl().m_progress_display) += tcc.m_count;
+    (*s_pm_impl().m_progress_display) += tcc.p_count;
 }
 
 //____________________________________________________________________________//

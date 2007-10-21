@@ -231,7 +231,7 @@ results_collector_t::test_unit_skipped( test_unit const& tu )
         tr.clear();
     
         tr.p_skipped.value              = true;
-        tr.p_test_cases_skipped.value   = tcc.m_count;
+        tr.p_test_cases_skipped.value   = tcc.p_count;
     }
 }
 

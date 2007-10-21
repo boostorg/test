@@ -164,6 +164,51 @@ do {                                                                \
 
 //____________________________________________________________________________//
 
+#define BOOST_WARN_NE( L, R ) \
+    BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::ne_impl(), "", WARN, CHECK_NE, (L)(R) )
+#define BOOST_CHECK_NE( L, R ) \
+    BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::ne_impl(), "", CHECK, CHECK_NE, (L)(R) )
+#define BOOST_REQUIRE_NE( L, R ) \
+    BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::ne_impl(), "", REQUIRE, CHECK_NE, (L)(R) )
+
+//____________________________________________________________________________//
+
+#define BOOST_WARN_LT( L, R ) \
+    BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::lt_impl(), "", WARN, CHECK_LT, (L)(R) )
+#define BOOST_CHECK_LT( L, R ) \
+    BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::lt_impl(), "", CHECK, CHECK_LT, (L)(R) )
+#define BOOST_REQUIRE_LT( L, R ) \
+    BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::lt_impl(), "", REQUIRE, CHECK_LT, (L)(R) )
+
+//____________________________________________________________________________//
+
+#define BOOST_WARN_LE( L, R ) \
+    BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::le_impl(), "", WARN, CHECK_LE, (L)(R) )
+#define BOOST_CHECK_LE( L, R ) \
+    BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::le_impl(), "", CHECK, CHECK_LE, (L)(R) )
+#define BOOST_REQUIRE_LE( L, R ) \
+    BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::le_impl(), "", REQUIRE, CHECK_LE, (L)(R) )
+
+//____________________________________________________________________________//
+
+#define BOOST_WARN_GT( L, R ) \
+    BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::gt_impl(), "", WARN, CHECK_GT, (L)(R) )
+#define BOOST_CHECK_GT( L, R ) \
+    BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::gt_impl(), "", CHECK, CHECK_GT, (L)(R) )
+#define BOOST_REQUIRE_GT( L, R ) \
+    BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::gt_impl(), "", REQUIRE, CHECK_GT, (L)(R) )
+
+//____________________________________________________________________________//
+
+#define BOOST_WARN_GE( L, R ) \
+    BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::ge_impl(), "", WARN, CHECK_GE, (L)(R) )
+#define BOOST_CHECK_GE( L, R ) \
+    BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::ge_impl(), "", CHECK, CHECK_GE, (L)(R) )
+#define BOOST_REQUIRE_GE( L, R ) \
+    BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::ge_impl(), "", REQUIRE, CHECK_GE, (L)(R) )
+
+//____________________________________________________________________________//
+
 #define BOOST_WARN_CLOSE( L, R, T ) \
     BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::check_is_close, "", WARN, CHECK_CLOSE, \
         (L)(R)(::boost::test_tools::percent_tolerance(T)) )
@@ -265,6 +310,11 @@ enum check_type {
     CHECK_PRED, 
     CHECK_MSG,
     CHECK_EQUAL,
+    CHECK_NE,
+    CHECK_LT,
+    CHECK_LE,
+    CHECK_GT,
+    CHECK_GE,
     CHECK_CLOSE,
     CHECK_CLOSE_FRACTION,
     CHECK_SMALL,
@@ -483,7 +533,7 @@ inline predicate_result equal_impl( wchar_t* left, wchar_t* right )       { retu
 
 //____________________________________________________________________________//
 
-struct BOOST_TEST_DECL equal_impl_frwd {
+struct equal_impl_frwd {
     template <typename Left, typename Right>
     inline predicate_result
     call_impl( Left const& left, Right const& right, mpl::false_ ) const
@@ -504,6 +554,56 @@ struct BOOST_TEST_DECL equal_impl_frwd {
     {
         typedef typename is_array<Left>::type left_is_array;
         return call_impl( left, right, left_is_array() );
+    }
+};
+
+//____________________________________________________________________________//
+
+struct ne_impl {
+    template <class Left, class Right>
+    predicate_result operator()( Left const& left, Right const& right )
+    {
+        return !equal_impl_frwd()( left, right );
+    }
+};
+
+//____________________________________________________________________________//
+
+struct lt_impl {
+    template <class Left, class Right>
+    predicate_result operator()( Left const& left, Right const& right )
+    {
+        return left < right;
+    }
+};
+
+//____________________________________________________________________________//
+
+struct le_impl {
+    template <class Left, class Right>
+    predicate_result operator()( Left const& left, Right const& right )
+    {
+        return left <= right;
+    }
+};
+
+//____________________________________________________________________________//
+
+struct gt_impl {
+    template <class Left, class Right>
+    predicate_result operator()( Left const& left, Right const& right )
+    {
+        return left > right;
+    }
+};
+
+//____________________________________________________________________________//
+
+struct ge_impl {
+    template <class Left, class Right>
+    predicate_result operator()( Left const& left, Right const& right )
+    {
+        return left >= right;
     }
 };
 

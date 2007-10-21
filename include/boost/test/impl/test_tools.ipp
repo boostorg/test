@@ -125,7 +125,15 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         unit_test_log << unit_test::log::end();
         break;
 
-    case CHECK_EQUAL: {
+    case CHECK_EQUAL: 
+    case CHECK_NE: 
+    case CHECK_LT: 
+    case CHECK_LE: 
+    case CHECK_GT: 
+    case CHECK_GE: {
+        static char const* check_str [] = { " == ", " != ", " < " , " <= ", " > " , " >= " };
+        static char const* rever_str [] = { " != ", " == ", " >= ", " > " , " <= ", " < "  };
+
         va_list args;
 
         va_start( args, num_of_args );
@@ -135,10 +143,10 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         char const* arg2_val    = va_arg( args, char const* );
 
         unit_test_log << unit_test::log::begin( file_name, line_num ) 
-                      << ll << prefix << arg1_descr << " == " << arg2_descr << suffix;
+                      << ll << prefix << arg1_descr << check_str[ct-CHECK_EQUAL] << arg2_descr << suffix;
 
         if( tl != PASS )
-            unit_test_log << " [" << arg1_val << " != " << arg2_val << "]" ;
+            unit_test_log << " [" << arg1_val << rever_str[ct-CHECK_EQUAL] << arg2_val << "]" ;
 
         va_end( args );
         

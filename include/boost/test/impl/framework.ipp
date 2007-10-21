@@ -367,8 +367,10 @@ run( test_unit_id id, bool continue_test )
     test_case_counter tcc;
     traverse_test_tree( id, tcc );
 
-    if( tcc.m_count == 0 )
-        throw setup_error( BOOST_TEST_L( "test tree is empty" ) );
+    if( tcc.p_count == 0 )
+        throw setup_error( runtime_config::test_to_run().is_empty() 
+                                ? BOOST_TEST_L( "test tree is empty" ) 
+                                : BOOST_TEST_L( "no test cases matching filter" ) );
 
     bool    call_start_finish   = !continue_test || !s_frk_impl().m_test_in_progress;
     bool    was_in_progress     = s_frk_impl().m_test_in_progress;
@@ -380,7 +382,7 @@ run( test_unit_id id, bool continue_test )
             boost::execution_monitor em;
 
             try {
-                em.execute( ut_detail::test_start_caller( to, tcc.m_count ) );
+                em.execute( ut_detail::test_start_caller( to, tcc.p_count ) );
             }
             catch( execution_exception const& ex )  {
                 throw setup_error( ex.what() );

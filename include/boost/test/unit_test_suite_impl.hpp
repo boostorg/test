@@ -196,12 +196,16 @@ traverse_test_tree( test_unit const& tu, test_tree_visitor& V )
 // **************                test_case_counter             ************** //
 // ************************************************************************** //
 
-struct test_case_counter : test_tree_visitor {
-    test_case_counter() : m_count( 0 ) {}
+class test_case_counter : public test_tree_visitor {
+public:
+    // Constructor
+    test_case_counter() : p_count( 0 ) {}
 
-    virtual void    visit( test_case const& ) { m_count++; }
-
-    counter_t   m_count;
+    BOOST_READONLY_PROPERTY( counter_t, (test_case_counter)) p_count;
+private:
+    // test tree visitor interface
+    virtual void    visit( test_case const& );
+    virtual bool    test_suite_start( test_suite const& ts )    { return ts.p_enabled; }
 };
 
 // ************************************************************************** //
