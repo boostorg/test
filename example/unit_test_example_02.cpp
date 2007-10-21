@@ -21,7 +21,7 @@ void free_test_function()
 
     // reports 'unknown location(0): fatal error in "free_test_function": memory access violation
     //          d:\source code\boost\libs\test\example\unit_test_example_02.cpp(25): last checkpoint'
-    int* p = (int*)0;
+    int* p = (int*)0x01;
     BOOST_CHECK( *p == 0 );
 }
 

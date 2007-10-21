@@ -364,6 +364,33 @@ TEST_CASE( test_BOOST_CHECK_EQUAL )
 
 //____________________________________________________________________________//
 
+TEST_CASE( test_BOOST_CHECK_LOGICAL_EXPR )
+{
+    int i=1;
+    int j=2;
+    BOOST_CHECK_NE( i, j );
+
+    BOOST_CHECK_NE( ++i, j );
+
+    BOOST_CHECK_LT( i, j );
+    BOOST_CHECK_GT( i, j );
+
+    BOOST_CHECK_LE( i, j );
+    BOOST_CHECK_GE( i, j );
+
+    ++i;
+
+    BOOST_CHECK_LE( i, j );
+    BOOST_CHECK_GE( j, i );
+
+    char const* str1 = "test1";
+    char const* str2 = "test1";
+
+    BOOST_CHECK_NE( str1, str2 );
+}
+
+//____________________________________________________________________________//
+
 bool is_even( int i )        { return i%2 == 0;  }
 int  foo( int arg, int mod ) { return arg % mod; }
 bool moo( int arg1, int arg2, int mod ) { return ((arg1+arg2) % mod) == 0; }

@@ -11,7 +11,7 @@
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_SUITE( my_suite );
+BOOST_AUTO_TEST_SUITE( my_suite )
 
 struct F {
     F() : i( 0 ) { BOOST_TEST_MESSAGE( "setup fixture" ); }
