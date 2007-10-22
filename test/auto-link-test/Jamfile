@@ -10,14 +10,14 @@ subproject libs/test/test/auto-link-test ;
 import testing ;
 
 run 
-     ../auto_non_auto_mix_test.cpp
+     ../algorithms_test.cpp
    :    # args
    :    # input files
    :    # requirements
       <library-path>../../../../stage/lib
       <define>BOOST_LIB_DIAGNOSTIC=1
    :    # program name
-      auto_non_auto_mix_test
+      algorithms_test
    ;
 
 
