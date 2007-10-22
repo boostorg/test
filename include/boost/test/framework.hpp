@@ -68,9 +68,9 @@ UnitType&               get( test_unit_id id )
 {
     return static_cast<UnitType&>( get( id, (test_unit_type)UnitType::type ) );
 }
-test_unit&              get( test_unit_id, test_unit_type );
+BOOST_TEST_DECL test_unit&  get( test_unit_id, test_unit_type );
 #else
-test_unit&              get( test_unit_id, test_unit_type );
+BOOST_TEST_DECL test_unit&  get( test_unit_id, test_unit_type );
 template<typename UnitType>
 UnitType&               get( test_unit_id id )
 {
@@ -108,27 +108,6 @@ struct setup_error : std::runtime_error {
 //____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
-
-// ***************************************************************************
-//  Revision History :
-//  
-//  $Log$
-//  Revision 1.5  2006/03/19 07:27:52  rogeeff
-//  streamline test setup error message
-//
-//  Revision 1.4  2005/12/14 05:08:44  rogeeff
-//  dll support introduced
-//
-//  Revision 1.3  2005/03/24 04:02:32  rogeeff
-//  portability fixes
-//
-//  Revision 1.2  2005/03/23 21:02:10  rogeeff
-//  Sunpro CC 5.3 fixes
-//
-//  Revision 1.1  2005/02/20 08:27:05  rogeeff
-//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
-//
-// ***************************************************************************
 
 #endif // BOOST_TEST_FRAMEWORK_HPP_020805GER
 

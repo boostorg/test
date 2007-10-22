@@ -25,10 +25,10 @@
 // **************    Non-auto (explicit) test case interface   ************** //
 // ************************************************************************** //
 
-#define BOOST_TEST_CASE( function ) \
-boost::unit_test::make_test_case( boost::unit_test::callback0<>(function), BOOST_TEST_STRINGIZE( function ) )
-#define BOOST_CLASS_TEST_CASE( function, tc_instance ) \
-boost::unit_test::make_test_case((function), BOOST_TEST_STRINGIZE( function ), tc_instance )
+#define BOOST_TEST_CASE( test_function ) \
+boost::unit_test::make_test_case( boost::unit_test::callback0<>(test_function), BOOST_TEST_STRINGIZE( test_function ) )
+#define BOOST_CLASS_TEST_CASE( test_function, tc_instance ) \
+boost::unit_test::make_test_case((test_function), BOOST_TEST_STRINGIZE( test_function ), tc_instance )
 
 // ************************************************************************** //
 // **************               BOOST_TEST_SUITE               ************** //
@@ -43,7 +43,7 @@ boost::unit_test::make_test_case((function), BOOST_TEST_STRINGIZE( function ), t
 
 #define BOOST_AUTO_TEST_SUITE( suite_name )                             \
 namespace suite_name {                                                  \
-BOOST_AUTO_TC_REGISTRAR( suite_name )( BOOST_STRINGIZE( suite_name ) ); \
+BOOST_AUTO_TU_REGISTRAR( suite_name )( BOOST_STRINGIZE( suite_name ) ); \
 /**/
 
 // ************************************************************************** //
@@ -60,7 +60,7 @@ typedef F BOOST_AUTO_TEST_CASE_FIXTURE;                                 \
 // ************************************************************************** //
 
 #define BOOST_AUTO_TEST_SUITE_END()                                     \
-BOOST_AUTO_TC_REGISTRAR( BOOST_JOIN( end_suite, __LINE__ ) )( 1 );      \
+BOOST_AUTO_TU_REGISTRAR( BOOST_JOIN( end_suite, __LINE__ ) )( 1 );      \
 }                                                                       \
 /**/
 
@@ -98,7 +98,7 @@ static void BOOST_AUTO_TC_INVOKER( test_name )()                        \
                                                                         \
 struct BOOST_AUTO_TC_UNIQUE_ID( test_name ) {};                         \
                                                                         \
-BOOST_AUTO_TC_REGISTRAR( test_name )(                                   \
+BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     boost::unit_test::make_test_case(                                   \
         &BOOST_AUTO_TC_INVOKER( test_name ), #test_name ),              \
     boost::unit_test::ut_detail::auto_tc_exp_fail<                      \
@@ -133,7 +133,7 @@ struct BOOST_AUTO_TC_INVOKER( test_name ) {                             \
     }                                                                   \
 };                                                                      \
                                                                         \
-BOOST_AUTO_TC_REGISTRAR( test_name )(                                   \
+BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     boost::unit_test::ut_detail::template_test_case_gen<                \
         BOOST_AUTO_TC_INVOKER( test_name ),TL >(                        \
           BOOST_STRINGIZE( test_name ) ) );                             \
@@ -169,8 +169,8 @@ typedef ::boost::unit_test::ut_detail::nil_t BOOST_AUTO_TEST_CASE_FIXTURE;
 // **************   Auto registration facility helper macros   ************** //
 // ************************************************************************** //
 
-#define BOOST_AUTO_TC_REGISTRAR( test_name )    \
-static boost::unit_test::ut_detail::auto_test_unit_registrar BOOST_JOIN( test_name, _registrar )
+#define BOOST_AUTO_TU_REGISTRAR( test_name )    \
+static boost::unit_test::ut_detail::auto_test_unit_registrar BOOST_JOIN( BOOST_JOIN( test_name, _registrar ), __LINE__ )
 #define BOOST_AUTO_TC_INVOKER( test_name )      BOOST_JOIN( test_name, _invoker )
 #define BOOST_AUTO_TC_UNIQUE_ID( test_name )    BOOST_JOIN( test_name, _id )
 
@@ -204,25 +204,6 @@ init_unit_test_suite( int, char* [] )   {
 #endif
 
 //____________________________________________________________________________//
-
-// ***************************************************************************
-//  Revision History :
-//  
-//  $Log$
-//  Revision 1.36  2006/03/19 12:23:21  rogeeff
-//  eliminate warning
-//
-//  Revision 1.35  2006/02/06 10:04:55  rogeeff
-//  BOOST_TEST_MODULE - master test suite name
-//
-//  Revision 1.34  2006/01/28 07:02:57  rogeeff
-//  allow multiple global fixtures
-//
-//  Revision 1.33  2005/12/14 05:24:55  rogeeff
-//  dll support introduced
-//  split into 2 files
-//
-// ***************************************************************************
 
 #endif // BOOST_TEST_UNIT_TEST_SUITE_HPP_071894GER
 

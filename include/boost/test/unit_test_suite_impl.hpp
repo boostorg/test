@@ -120,14 +120,15 @@ public:
     enum { type = tut_suite };
 
     // Constructor
-    explicit    test_suite( const_string ts_name );
+    explicit        test_suite( const_string ts_name );
 
     // test unit list management
-    void        add( test_unit* tu, counter_t expected_failures = 0, unsigned timeout = 0 );
-    void        add( test_unit_generator const& gen, unsigned timeout = 0 );
+    void            add( test_unit* tu, counter_t expected_failures = 0, unsigned timeout = 0 );
+    void            add( test_unit_generator const& gen, unsigned timeout = 0 );
 
     // access methods
-    test_unit_id                get( const_string tu_name ) const;
+    test_unit_id    get( const_string tu_name ) const;
+    size_t          size() const { return m_members.size(); }
 
 protected:
     friend BOOST_TEST_DECL 
