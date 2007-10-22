@@ -125,10 +125,11 @@ public:
     // test unit list management
     void            add( test_unit* tu, counter_t expected_failures = 0, unsigned timeout = 0 );
     void            add( test_unit_generator const& gen, unsigned timeout = 0 );
+    void            remove( test_unit_id id );
 
     // access methods
     test_unit_id    get( const_string tu_name ) const;
-    size_t          size() const { return m_members.size(); }
+    std::size_t     size() const { return m_members.size(); }
 
 protected:
     friend BOOST_TEST_DECL 

@@ -32,6 +32,7 @@
 #include <cstring>
 #include <cctype>
 #include <cwchar>
+#include <stdexcept>
 #ifdef BOOST_STANDARD_IOSTREAMS
 #include <ios>
 #endif
@@ -67,6 +68,9 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
             std::size_t num_of_args, ... )
 {
     using namespace unit_test;
+
+    if( !framework::is_initialized() )
+        throw std::runtime_error( "can't use testing tools before framework is initialized" );
 
     if( !!pr )
         tl = PASS;

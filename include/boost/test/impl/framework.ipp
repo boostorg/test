@@ -114,6 +114,7 @@ public:
     , m_curr_test_case( INV_TEST_UNIT_ID )
     , m_next_test_case_id( MIN_TEST_CASE_ID )
     , m_next_test_suite_id( MIN_TEST_SUITE_ID )
+    , m_is_initialized( false )
     , m_test_in_progress( false )
     {}
 
@@ -202,6 +203,7 @@ public:
     test_unit_id    m_next_test_case_id;
     test_unit_id    m_next_test_suite_id;
 
+    bool            m_is_initialized;
     bool            m_test_in_progress;
 
     observer_store  m_observers;
@@ -257,6 +259,16 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     catch( execution_exception const& ex )  {
         throw setup_error( ex.what() );
     }
+
+    s_frk_impl().m_is_initialized = true;
+}
+
+//____________________________________________________________________________//
+
+bool
+is_initialized()
+{
+    return  s_frk_impl().m_is_initialized;
 }
 
 //____________________________________________________________________________//

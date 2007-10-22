@@ -155,6 +155,17 @@ test_suite::add( test_unit_generator const& gen, unsigned timeout )
 
 //____________________________________________________________________________//
 
+void
+test_suite::remove( test_unit_id id )
+{
+    std::vector<test_unit_id>::iterator it = std::find( m_members.begin(), m_members.begin(), id );
+
+    if( it != m_members.end() )
+        m_members.erase( it );
+}
+
+//____________________________________________________________________________//
+
 test_unit_id
 test_suite::get( const_string tu_name ) const
 {

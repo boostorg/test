@@ -213,7 +213,11 @@ results_collector_t::test_unit_finish( test_unit const& tu, unsigned long )
         
         bool num_failures_match = tr.p_aborted || tr.p_assertions_failed >= tr.p_expected_failures;
         if( !num_failures_match )
-            BOOST_TEST_MESSAGE( "Test case has less failures then expected" );
+            BOOST_TEST_MESSAGE( "Test case " << tu.p_name << " has fewer failures than expected" );
+
+        bool has_any_assertions = tr.p_aborted || (tr.p_assertions_failed != 0) || (tr.p_assertions_passed != 0);
+        if( !has_any_assertions )
+            BOOST_TEST_MESSAGE( "Test case " << tu.p_name << " doesn't include any assertions" );
     }
 }
 
