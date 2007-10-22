@@ -139,6 +139,11 @@ BOOST_AUTO_TEST_CASE( manual_test_unit_registration )
     BOOST_CHECK_EQUAL( ts1->get( "empty2" ), tc2->p_id );
     BOOST_CHECK_EQUAL( ts1->get( "TestSuite2" ), ts2->p_id );
     BOOST_CHECK_EQUAL( ts1->get( "another name" ), INV_TEST_UNIT_ID );
+
+    ts1->remove( tc1->p_id );
+    BOOST_CHECK_EQUAL( ts1->size(), 2U );
+    BOOST_CHECK_EQUAL( ts1->get( "empty1" ), INV_TEST_UNIT_ID );
+
 }
 
 //____________________________________________________________________________//
