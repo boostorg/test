@@ -65,7 +65,7 @@ namespace std { using ::strerror; using ::strlen; using ::strncat; }
 #    include <stdint.h>
 #endif
 
-#  if BOOST_WORKAROUND(BOOST_MSVC,  < 1300 ) 
+#  if BOOST_WORKAROUND(_MSC_VER,  < 1300 ) 
 typedef void* uintptr_t;
 #  endif
 
