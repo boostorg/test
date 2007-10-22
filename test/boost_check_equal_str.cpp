@@ -54,4 +54,6 @@ BOOST_AUTO_TEST_CASE( check_string_compare )
     BOOST_CHECK_EQUAL(buf_str, buf_str);
 }
 
+//____________________________________________________________________________//
+
 // EOF

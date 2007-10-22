@@ -193,41 +193,4 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 
 //____________________________________________________________________________//
 
-// ***************************************************************************
-//  Revision History :
-//  
-//  $Log$
-//  Revision 1.8  2006/03/19 11:49:04  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.7  2005/06/11 19:20:58  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.6  2005/05/11 05:07:56  rogeeff
-//  licence update
-//
-//  Revision 1.5  2005/01/30 03:35:55  rogeeff
-//  no message
-//
-//  Revision 1.3  2005/01/18 08:30:08  rogeeff
-//  unit_test_log rework:
-//     eliminated need for ::instance()
-//     eliminated need for << end and ...END macro
-//     straitend interface between log and formatters
-//     change compiler like formatter name
-//     minimized unit_test_log interface and reworked to use explicit calls
-//
-//  Revision 1.2  2005/05/21 06:26:10  rogeeff
-//  licence update
-//
-//  Revision 1.1  2005/05/11 11:05:46  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//  namespace names shortened
-//
-//  Revision 1.3  2003/12/01 00:42:37  rogeeff
-//  prerelease cleaning
-//
-// ***************************************************************************
-
 // EOF

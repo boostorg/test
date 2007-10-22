@@ -55,6 +55,7 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : algorithms_test : boost_unit_test_framework/<link>static ]
           [ test-btl-lib run : token_iterator_test : boost_unit_test_framework ]
           [ test-btl-lib run : boost_check_equal_str    : boost_unit_test_framework ]
+          [ test-btl-lib run : test_tree_management_test : boost_unit_test_framework ]
             ;
 
  
