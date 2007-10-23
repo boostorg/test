@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2003-2006.
+//  (C) Copyright Gennadiy Rozental 2003-2007.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -73,35 +73,5 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
 }
 
 //____________________________________________________________________________//
-
-// ***************************************************************************
-//  Revision History :
-//  
-//  $Log$
-//  Revision 1.9  2006/03/19 11:49:04  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.8  2005/12/14 06:01:02  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.7  2005/05/11 05:07:56  rogeeff
-//  licence update
-//
-//  Revision 1.6  2005/02/20 08:28:34  rogeeff
-//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
-//
-//  Revision 1.5  2005/05/21 06:26:10  rogeeff
-//  licence update
-//
-//  Revision 1.4  2005/05/11 11:05:05  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//  namespace names shortened
-//
-//  Revision 1.3  2003/12/01 00:42:37  rogeeff
-//  prerelease cleaning
-//
-
-// ***************************************************************************
 
 // EOF

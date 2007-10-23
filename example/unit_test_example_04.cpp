@@ -55,6 +55,20 @@ BOOST_AUTO_TEST_CASE( my_test4 )
     BOOST_CHECK_EQUAL( i, 1 );
 }
 
+BOOST_AUTO_TEST_SUITE( internal_suite )
+
+// this test case belongs to my_suite2:internal_suite test suite
+
+BOOST_AUTO_TEST_CASE( my_test5 )
+{
+    int i = 0;
+
+    BOOST_CHECK_EQUAL( i, 1 );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
 BOOST_AUTO_TEST_SUITE_END()
 
 //____________________________________________________________________________//
