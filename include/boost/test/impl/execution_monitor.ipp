@@ -131,6 +131,10 @@ namespace { void _set_se_translator( void* ) {} }
 #   define BOOST_TEST_USE_ALT_STACK
 #  endif
 
+#  if !defined(__CYGWIN__)
+#   define BOOST_TEST_CATCH_SIGPOLL
+#  endif
+
 #  ifdef BOOST_TEST_USE_ALT_STACK
 #    define BOOST_TEST_ALT_STACK_SIZE SIGSTKSZ
 #  endif
@@ -421,7 +425,7 @@ system_signal_exception::report() const
             }
             break;
 
-#if !defined(__CYGWIN__)
+#if defined(BOOST_TEST_CATCH_SIGPOLL)
 
         case SIGPOLL:
             switch( m_sig_info->si_code ) {
@@ -581,7 +585,9 @@ private:
     signal_action           m_SEGV_action;
     signal_action           m_BUS_action;
     signal_action           m_CHLD_action;
+#ifdef BOOST_TEST_CATCH_SIGPOLL
     signal_action           m_POLL_action;
+#endif
     signal_action           m_ABRT_action;
     signal_action           m_ALRM_action;
 
@@ -605,7 +611,9 @@ signal_handler::signal_handler( bool catch_system_errors, int timeout, bool atta
 , m_SEGV_action( SIGSEGV, catch_system_errors, attach_dbg, alt_stack )
 , m_BUS_action ( SIGBUS , catch_system_errors, attach_dbg, alt_stack )
 , m_CHLD_action( SIGCHLD, catch_system_errors, attach_dbg, alt_stack )
+#ifdef BOOST_TEST_CATCH_SIGPOLL
 , m_POLL_action( SIGPOLL, catch_system_errors, attach_dbg, alt_stack )
+#endif
 , m_ABRT_action( SIGABRT, catch_system_errors, attach_dbg, alt_stack )
 , m_ALRM_action( SIGALRM, timeout > 0        , attach_dbg, alt_stack )
 {
