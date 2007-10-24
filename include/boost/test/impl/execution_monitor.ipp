@@ -162,7 +162,8 @@ namespace detail {
 #ifdef __BORLANDC__
 #  define BOOST_TEST_VSNPRINTF( a1, a2, a3, a4 ) std::vsnprintf( (a1), (a2), (a3), (a4) )
 #elif BOOST_WORKAROUND(_MSC_VER, <= 1310) || \
-      BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3000))
+      BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3000)) || \
+      defined(UNDER_CE)
 #  define BOOST_TEST_VSNPRINTF( a1, a2, a3, a4 ) _vsnprintf( (a1), (a2), (a3), (a4) )
 #else
 #  define BOOST_TEST_VSNPRINTF( a1, a2, a3, a4 ) vsnprintf( (a1), (a2), (a3), (a4) )
@@ -744,12 +745,6 @@ public:
     , m_dir( false )
     {}
 
-    // access methods
-    static void         seh_catch_preventer( unsigned int /* id */, _EXCEPTION_POINTERS* /* exps */ )
-    {
-        throw;
-    }
-
     void                report() const;
     int                 operator()( unsigned int id, _EXCEPTION_POINTERS* exps );
 
@@ -761,6 +756,12 @@ private:
     void*               m_fault_address;
     bool                m_dir;
 };
+
+static void
+seh_catch_preventer( unsigned int /* id */, _EXCEPTION_POINTERS* /* exps */ )
+{
+        throw;
+}
 
 //____________________________________________________________________________//
 
@@ -962,7 +963,7 @@ execution_monitor::catch_signals( unit_test::callback0<int> const& F )
     _invalid_parameter_handler old_iph;
 
     if( !p_catch_system_errors )
-        _set_se_translator( &detail::system_signal_exception::seh_catch_preventer );
+        _set_se_translator( &detail::seh_catch_preventer );
     else {
         if( !!p_detect_fp_exceptions )
             detail::switch_fp_exceptions( true );

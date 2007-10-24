@@ -28,9 +28,7 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/test/detail/workaround.hpp>
 
-#if !BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530) )
 #include <boost/type_traits/is_const.hpp>
-#endif
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -80,38 +78,12 @@ static_any_cast( static_any_t a, Iter* = 0 )
 // **************                   is_const                   ************** //
 // ************************************************************************** //
 
-#if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530) )
-
-template<typename C>
-inline mpl::false_
-is_const_coll( C& )
-{
-    return mpl::false_();
-}
-
-//____________________________________________________________________________//
-
-template<typename C>
-inline mpl::true_
-is_const_coll( C const& )
-{
-    return mpl::true_();
-}
-
-//____________________________________________________________________________//
-
-#else
-
 template<typename C>
 inline is_const<C>
 is_const_coll( C& )
 {
     return is_const<C>();
 }
-
-//____________________________________________________________________________//
-
-#endif
 
 //____________________________________________________________________________//
 
@@ -128,26 +100,12 @@ begin( C& t, mpl::false_ )
 
 //____________________________________________________________________________//
 
-#if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530) )
-
-template<typename C>
-inline static_any<BOOST_DEDUCED_TYPENAME C::iterator>
-begin( C const& t, mpl::true_ )
-{
-    typedef typename C::iterator it;
-    return static_any<it>( const_cast<it>( t.begin() ) );
-}
-
-#else
-
 template<typename C>
 inline static_any<BOOST_DEDUCED_TYPENAME C::const_iterator>
 begin( C const& t, mpl::true_ )
 {
     return static_any<BOOST_DEDUCED_TYPENAME C::const_iterator>( t.begin() );
 }
-
-#endif
 
 //____________________________________________________________________________//
 
@@ -164,26 +122,12 @@ end( C& t, mpl::false_ )
 
 //____________________________________________________________________________//
 
-#if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530) )
-
-template<typename C>
-inline static_any<BOOST_DEDUCED_TYPENAME C::iterator>
-end( C const& t, mpl::true_ )
-{
-    typedef typename C::iterator it;
-    return static_any<it>( const_cast<it>( t.end() ) );
-}
-
-#else
-
 template<typename C>
 inline static_any<BOOST_DEDUCED_TYPENAME C::const_iterator>
 end( C const& t, mpl::true_ )
 {
     return static_any<BOOST_DEDUCED_TYPENAME C::const_iterator>( t.end() );
 }
-
-#endif
 
 //____________________________________________________________________________//
 

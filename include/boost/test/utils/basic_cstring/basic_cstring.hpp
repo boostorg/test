@@ -713,11 +713,7 @@ last_char( basic_cstring<CharT> source )
 
 template<typename CharT1, typename CharT2>
 inline void
-#if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530) )
-assign_op( std::basic_string<CharT1>& target, basic_cstring<CharT2> const& src, int )
-#else
 assign_op( std::basic_string<CharT1>& target, basic_cstring<CharT2> src, int )
-#endif
 {
     target.assign( src.begin(), src.size() );
 }

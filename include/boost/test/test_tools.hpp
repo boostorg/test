@@ -431,14 +431,6 @@ inline print_helper_t<T> print_helper( T const& t )
     return print_helper_t<T>( t );
 }
 
-#if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530)) 
-template<typename T, std::size_t N>
-inline print_helper_t<T*> print_helper( T (&t)[N] )
-{
-    return print_helper_t<T*>( &t[0] );
-}
-#endif
-
 //____________________________________________________________________________//
 
 template<typename T>

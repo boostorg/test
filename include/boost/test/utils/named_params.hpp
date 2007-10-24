@@ -97,20 +97,6 @@ struct named_parameter_base {
 
 //____________________________________________________________________________//
 
-#if BOOST_WORKAROUND( __SUNPRO_CC, == 0x530 )
-
-struct unknown_id_helper {
-    template<typename UnknownId>
-    nil     operator[]( keyword<UnknownId,false> kw ) const { return nil(); }
-
-    template<typename UnknownId>
-    bool    has( keyword<UnknownId,false> ) const           { return false; }
-};
-
-#endif
-
-//____________________________________________________________________________//
-
 // ************************************************************************** //
 // **************             named_parameter_combine          ************** //
 // ************************************************************************** //
@@ -162,9 +148,6 @@ private:
 template<typename T, typename unique_id,typename ReferenceType=T&>
 struct named_parameter
 : nfp_detail::named_parameter_base<named_parameter<T, unique_id,ReferenceType> >
-#if BOOST_WORKAROUND( __SUNPRO_CC, == 0x530 )
-, nfp_detail::unknown_id_helper
-#endif
 {
     typedef T               data_type;
     typedef ReferenceType   ref_type;
@@ -176,20 +159,12 @@ struct named_parameter
     // Access methods
     ref_type        operator[]( keyword<unique_id,true> ) const     { return m_value; }
     ref_type        operator[]( keyword<unique_id,false> ) const    { return m_value; }
-#if BOOST_WORKAROUND( __SUNPRO_CC, == 0x530 )
-    using           nfp_detail::unknown_id_helper::operator[];
-#else
     template<typename UnknownId>
     nfp_detail::nil  operator[]( keyword<UnknownId,false> ) const   { return nfp_detail::nil(); }
-#endif
 
     bool            has( keyword<unique_id,false> ) const           { return true; }
-#if BOOST_WORKAROUND( __SUNPRO_CC, == 0x530 )
-    using           nfp_detail::unknown_id_helper::has;
-#else
     template<typename UnknownId>
     bool            has( keyword<UnknownId,false> ) const           { return false; }
-#endif
 
     // Visitation support
     template<typename Visitor>

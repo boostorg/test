@@ -91,11 +91,8 @@ public:
     // key -> value access
     value_ref_type  operator[]( key_param_type key ) const
     {
-#if BOOST_WORKAROUND(__SUNPRO_CC,BOOST_TESTED_AT(0x530))
-        iterator it = std::lower_bound( m_map.begin(), m_map.end(), key, p1() );
-#else
         iterator it = boost::detail::lower_bound( m_map.begin(), m_map.end(), key, p1() );
-#endif
+
         return (it == m_map.end() || Compare()( key, it->first ) ) ? m_invalid_value : it->second;
     }
 

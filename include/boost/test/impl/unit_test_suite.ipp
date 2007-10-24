@@ -71,11 +71,7 @@ test_unit::depends_on( test_unit* tu )
 bool
 test_unit::check_dependencies() const
 {
-#if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530) )
-    BOOST_TEST_FOREACH( test_unit_id, tu_id, const_cast<test_unit*>(this)->m_dependencies ) {
-#else
     BOOST_TEST_FOREACH( test_unit_id, tu_id, m_dependencies ) {
-#endif
         if( !unit_test::results_collector.results( tu_id ).passed() )
             return false;
     }

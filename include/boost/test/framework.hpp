@@ -63,21 +63,13 @@ BOOST_TEST_DECL master_test_suite_t& master_test_suite();
 
 // constant access methods
 BOOST_TEST_DECL test_case const&    current_test_case();
-#if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530) )
-template<typename UnitType>
-UnitType&               get( test_unit_id id )
-{
-    return static_cast<UnitType&>( get( id, (test_unit_type)UnitType::type ) );
-}
-BOOST_TEST_DECL test_unit&  get( test_unit_id, test_unit_type );
-#else
+
 BOOST_TEST_DECL test_unit&  get( test_unit_id, test_unit_type );
 template<typename UnitType>
 UnitType&               get( test_unit_id id )
 {
     return static_cast<UnitType&>( get( id, (test_unit_type)UnitType::type ) );
 }
-#endif
 
 // test initiation
 BOOST_TEST_DECL void    run( test_unit_id = INV_TEST_UNIT_ID, bool continue_test = true );
