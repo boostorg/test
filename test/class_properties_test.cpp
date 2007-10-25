@@ -13,6 +13,7 @@
 // ***************************************************************************
 
 // Boost.Test
+#define BOOST_TEST_MODULE Class Properties test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/utils/class_properties.hpp>
 
@@ -63,7 +64,7 @@ public:
     }
 };
 
-void test_readonly_property()
+BOOST_AUTO_TEST_CASE( test_readonly_property )
 {
     readonly_property<int> p_zero;
     readonly_property<int> p_one( 1 );
@@ -149,7 +150,7 @@ void test_readonly_property()
 
 //____________________________________________________________________________//
 
-void test_readwrite_property()
+BOOST_AUTO_TEST_CASE( test_readwrite_property )
 {
     readwrite_property<int> p_int;
 
@@ -177,18 +178,6 @@ void test_readwrite_property()
 
     BOOST_CHECK_EQUAL( p_bb2->foo(), 1 );
 
-}
-
-//____________________________________________________________________________//
-
-test_suite*
-init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
-    test_suite* test= BOOST_TEST_SUITE("Class Properties test");
-
-    test->add( BOOST_TEST_CASE( &test_readonly_property ) );
-    test->add( BOOST_TEST_CASE( &test_readwrite_property ) );
-
-    return test;
 }
 
 //____________________________________________________________________________//

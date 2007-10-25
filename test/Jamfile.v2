@@ -16,6 +16,7 @@ rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file * : source
             : #<stlport-iostream>on 
               <toolset>borland:<cxxflags>-w-8080
               <toolset>msvc-6.5:<link>static
+              <toolset>msvc-8.0:<define>_SCL_SECURE_NO_DEPRECATE
               <define>BOOST_TEST_NO_AUTO_LINK=1 # requirements
             : $(test-name)
           ] ;
@@ -23,7 +24,7 @@ rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file * : source
 
 test-suite "basics_test"
         :
-          [ test-btl-lib run : class_properties_test : boost_unit_test_framework/<link>static ]
+          [ test-btl-lib run : class_properties_test : boost_unit_test_framework ]
           [ test-btl-lib run : basic_cstring_test    : boost_unit_test_framework/<link>static ]
         ;
 
@@ -54,6 +55,13 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : boost_check_equal_str       : boost_unit_test_framework ]
           [ test-btl-lib run : test_tree_management_test   : boost_unit_test_framework ]
             ;
+
+install common_location
+           : output_test_stream_test
+           : <install-dependencies>on 
+             <install-type>LIB
+             <location>$(BOOST_ROOT)/stage
+           ;
 
 # A target that runs all the tests 
 alias test : basics_test prg_exec_monitor_test unit_test_framework_test ; 
