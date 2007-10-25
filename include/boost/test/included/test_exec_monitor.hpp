@@ -16,6 +16,7 @@
 #define BOOST_INCLUDED_TEST_EXEC_MONITOR_HPP_071894GER
 
 #include <boost/test/impl/compiler_log_formatter.ipp>
+#include <boost/test/impl/debug.ipp>
 #include <boost/test/impl/execution_monitor.ipp>
 #include <boost/test/impl/framework.ipp>
 #include <boost/test/impl/plain_report_formatter.ipp>
