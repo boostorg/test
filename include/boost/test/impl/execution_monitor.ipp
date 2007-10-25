@@ -49,6 +49,12 @@
 namespace std { using ::strerror; using ::strlen; using ::strncat; }
 #endif
 
+// to use vsnprintf
+#if defined(__SUNPRO_CC) && defined(__SunOS)
+#  include <stdio.h>
+using std::va_list;
+#endif
+
 #if defined(_WIN32) && !defined(BOOST_DISABLE_WIN32) &&                  \
     (!defined(__COMO__) && !defined(__MWERKS__) && !defined(__GNUC__) || \
      BOOST_WORKAROUND(__MWERKS__, >= 0x3000))
@@ -65,7 +71,7 @@ namespace std { using ::strerror; using ::strlen; using ::strncat; }
 #    include <stdint.h>
 #endif
 
-#  if BOOST_WORKAROUND(_MSC_VER,  < 1300 ) || defined(UNDER_CE)
+#  if BOOST_WORKAROUND(BOOST_MSVC,  < 1300 ) || defined(UNDER_CE)
 typedef void* uintptr_t;
 #  endif
 
@@ -531,7 +537,7 @@ signal_action::signal_action( int sig, bool install, bool attach_dbg, char* alt_
     m_new_action.sa_flags     |= SA_SIGINFO;
     m_new_action.sa_sigaction  = attach_dbg ? &execution_monitor_attaching_signal_handler
                                             : &execution_monitor_jumping_signal_handler;
-    BOOST_TEST_SYS_ASSERT( sigemptyset( &m_new_action.sa_mask ) != -1 );
+    BOOST_TEST_SYS_ASSERT( ::sigemptyset( &m_new_action.sa_mask ) != -1 );
 
 #ifdef BOOST_TEST_USE_ALT_STACK
     if( alt_stack )
