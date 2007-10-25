@@ -65,7 +65,7 @@ namespace std { using ::strerror; using ::strlen; using ::strncat; }
 #    include <stdint.h>
 #endif
 
-#  if BOOST_WORKAROUND(_MSC_VER,  < 1300 ) 
+#  if BOOST_WORKAROUND(_MSC_VER,  < 1300 ) || defined(UNDER_CE)
 typedef void* uintptr_t;
 #  endif
 
@@ -96,12 +96,12 @@ typedef void* uintptr_t;
 #define MCW_EM _MCW_EM
 #endif
 
-#  if !defined(NDEBUG) && defined(_MSC_VER)
+#  if !defined(NDEBUG) && defined(_MSC_VER) && !defined(UNDER_CE)
 #    define BOOST_TEST_USE_DEBUG_MS_CRT
 #    include <crtdbg.h>
 #  endif
 
-#  if !BOOST_WORKAROUND(_MSC_VER,  >= 1400 )
+#  if !BOOST_WORKAROUND(_MSC_VER,  >= 1400 ) || defined(UNDER_CE)
 
 typedef void* _invalid_parameter_handler;
 
@@ -113,7 +113,7 @@ _set_invalid_parameter_handler( _invalid_parameter_handler arg )
 
 #  endif
 
-#  if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x0564))
+#  if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x0564)) || defined(UNDER_CE)
 
 namespace { void _set_se_translator( void* ) {} }
 
@@ -145,7 +145,9 @@ namespace { void _set_se_translator( void* ) {} }
 
 #endif
 
+#ifndef UNDER_CE
 #include <errno.h>
+#endif
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -977,10 +979,12 @@ execution_monitor::catch_signals( unit_test::callback0<int> const& F )
     }
 
     detail::system_signal_exception SSE( this );
+    
+    int ret_val = 0;
 
     __try {
         __try {
-            return detail::do_invoke( m_custom_translators , F );
+            ret_val = detail::do_invoke( m_custom_translators , F );
         }
         __except( SSE( GetExceptionCode(), GetExceptionInformation() ) ) {
             throw SSE;
@@ -995,7 +999,7 @@ execution_monitor::catch_signals( unit_test::callback0<int> const& F )
         }
     }
 
-    return 0;
+    return ret_val;
 }
 
 //____________________________________________________________________________//
@@ -1103,8 +1107,13 @@ execution_monitor::execute( unit_test::callback0<int> const& F )
 // ************************************************************************** //
 
 system_error::system_error()
+#ifdef UNDER_CE
+: p_errno( GetLastError() )
+#else
 : p_errno( errno )
+#endif
 {}
+
 
 //____________________________________________________________________________//
 
