@@ -15,16 +15,4 @@
 #define BOOST_TEST_SOURCE
 #include <boost/test/impl/unit_test_log.ipp>
 
-// ***************************************************************************
-//  Revision History :
-//  
-//  $Log$
-//  Revision 1.29  2005/03/22 07:18:50  rogeeff
-//  no message
-//
-//  Revision 1.28  2005/01/22 19:26:37  rogeeff
-//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
-//
-// ***************************************************************************
-
 // EOF

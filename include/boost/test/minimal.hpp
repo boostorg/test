@@ -35,6 +35,7 @@
 // Boost.Test
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/impl/execution_monitor.ipp>
+#include <boost/test/impl/debug.ipp>
 #include <boost/test/utils/class_properties.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
 

@@ -35,6 +35,7 @@
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/test_observer.hpp>
+#include <boost/test/debug.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -390,7 +391,7 @@ void
 exception_safety_tester::failure_point()
 {
     if( m_exec_path_counter == m_break_exec_path )
-        BOOST_ASSERT( false );
+        debug::debugger_break();
     
     throw unique_exception();
 }

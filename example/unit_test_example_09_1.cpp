@@ -19,7 +19,7 @@ struct MyConfig {
     ~MyConfig() { std::cout << "global teardown part1\n"; } 
 };
 
-// structure MyConfig is used as a global fixture - it's invoked pre and post any testing is perfrmed
+// structure MyConfig is used as a global fixture - it's invoked pre and post any testing is performed
 BOOST_GLOBAL_FIXTURE( MyConfig )
 
 //____________________________________________________________________________//

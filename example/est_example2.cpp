@@ -17,7 +17,7 @@ using namespace boost::itest;
 
 //____________________________________________________________________________//
 
-// Here is an exampt from simple (incorrect) stack implementation
+// Here is an example of simple (incorrect) stack implementation
 
 template<class T>
 class stack {

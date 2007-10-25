@@ -25,6 +25,7 @@ PRG_EXEC_MON_SOURCES =
 
 TEST_EXEC_MON_SOURCES =
   compiler_log_formatter
+  debug
   execution_monitor
   framework
   plain_report_formatter
@@ -44,6 +45,7 @@ TEST_EXEC_MON_SOURCES =
 
 UTF_SOURCES =
   compiler_log_formatter
+  debug
   exception_safety
   execution_monitor
   framework

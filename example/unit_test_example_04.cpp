@@ -11,7 +11,7 @@
 
 //____________________________________________________________________________//
 
-// automatically registerred test cases could be organized in test suites
+// automatically registered test cases could be organized in test suites
 BOOST_AUTO_TEST_SUITE( my_suite1 )
 
 BOOST_AUTO_TEST_CASE( my_test1 )

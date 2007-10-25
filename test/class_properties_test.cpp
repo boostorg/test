@@ -177,7 +177,6 @@ BOOST_AUTO_TEST_CASE( test_readwrite_property )
     readwrite_property<B> const p_bb2;
 
     BOOST_CHECK_EQUAL( p_bb2->foo(), 1 );
-
 }
 
 //____________________________________________________________________________//

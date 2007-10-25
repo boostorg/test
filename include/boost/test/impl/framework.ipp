@@ -18,6 +18,7 @@
 // Boost.Test
 #include <boost/test/framework.hpp>
 #include <boost/test/execution_monitor.hpp>
+#include <boost/test/debug.hpp>
 #include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/unit_test_monitor.hpp>
@@ -241,8 +242,8 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
         register_observer( progress_monitor );
 
     if( runtime_config::detect_memory_leaks() > 0 ) {
-//        detect_memory_leaks( true );
-//        break_memory_alloc( runtime_config::detect_memory_leaks() );
+        debug::detect_memory_leaks( true );
+        debug::break_memory_alloc( runtime_config::detect_memory_leaks() );
     }
 
     // init master unit test suite

@@ -28,6 +28,7 @@
 #include <boost/test/detail/config.hpp>
 #include <boost/test/detail/workaround.hpp>
 #include <boost/test/execution_monitor.hpp>
+#include <boost/test/debug.hpp>
 
 // Boost
 #include <boost/cstdlib.hpp>    // for exit codes
@@ -687,7 +688,11 @@ static void execution_monitor_jumping_signal_handler( int sig, siginfo_t* info, 
 
 static void execution_monitor_attaching_signal_handler( int sig, siginfo_t* info, void* context )
 {
+    if( !debug::attach_debugger( false ) )
     execution_monitor_jumping_signal_handler( sig, info, context );
+
+    // debugger attached; it will handle the signal
+    BOOST_TEST_SYS_ASSERT( ::signal( sig, SIG_DFL ) != SIG_ERR );
 }
 
 //____________________________________________________________________________//
@@ -780,6 +785,13 @@ system_signal_exception::operator()( unsigned int id, _EXCEPTION_POINTERS* exps 
 
     if( !m_em->p_catch_system_errors || (id == MSFT_CPP_EXCEPT) )
         return EXCEPTION_CONTINUE_SEARCH;
+
+    if( !!m_em->p_auto_start_dbg && debug::attach_debugger( false ) ) {
+        m_em->p_catch_system_errors.value = false;
+        _set_se_translator( &seh_catch_preventer );
+
+        return EXCEPTION_CONTINUE_EXECUTION;
+    }
 
     m_se_id = id;
     if( m_se_id == EXCEPTION_ACCESS_VIOLATION && exps->ExceptionRecord->NumberParameters == 2 ) {
@@ -1038,6 +1050,9 @@ execution_monitor::catch_signals( unit_test::callback0<int> const& F )
 int
 execution_monitor::execute( unit_test::callback0<int> const& F )
 {
+    if( debug::under_debugger() )
+        p_catch_system_errors.value = false;
+
     try {
         return catch_signals( F );
     }

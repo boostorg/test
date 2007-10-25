@@ -17,7 +17,7 @@ using namespace boost::itest;
 
 //____________________________________________________________________________//
 
-// Callaborators interfaces
+// Collaborators interfaces
 class Stove {
 public:
     virtual void    light() = 0;
@@ -41,7 +41,7 @@ public:
 
 //____________________________________________________________________________//
 
-// Callaborators mocks
+// Collaborators mocks
 class MockStove : public ::boost::itest::mock_object<0,Stove> {
 public:
     virtual void    light()

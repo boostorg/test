@@ -24,6 +24,7 @@
 #include <boost/test/utils/basic_cstring/compare.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
 #include <boost/test/utils/fixed_mapping.hpp>
+#include <boost/test/debug.hpp>
 
 // Boost
 #include <boost/config.hpp>
@@ -235,8 +236,11 @@ init( int* argc, char** argv )
 
     if( dbg.is_empty() || dbg == "no" )
         s_auto_start_dbg = false;
-	else {
+    else {
         s_auto_start_dbg = true;
+
+        if( dbg != "yes" )
+            debug::set_debugger( dbg );
     }
 }
 

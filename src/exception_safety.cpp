@@ -15,13 +15,5 @@
 #define BOOST_TEST_SOURCE
 #include <boost/test/impl/exception_safety.ipp>
 
-// ***************************************************************************
-//  Revision History :
-//  
-//  $Log$
-//  Revision 1.1  2005/12/14 06:18:50  rogeeff
-//  *** empty log message ***
-//
-// ***************************************************************************
-
 // EOF
+
