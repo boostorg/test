@@ -79,3 +79,9 @@ alias minimal : : : :
 alias included : : : :
                    <toolset>msvc:<asynch-exceptions>on
        ;
+
+
+boost-install boost_prg_exec_monitor 
+              boost_test_exec_monitor
+	      boost_unit_test_framework ;
+	      
