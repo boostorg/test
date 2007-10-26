@@ -56,13 +56,6 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : test_tree_management_test   : boost_unit_test_framework ]
             ;
 
-install common_location
-           : output_test_stream_test
-           : <install-dependencies>on 
-             <install-type>LIB
-             <location>$(BOOST_ROOT)/stage
-           ;
-
 # A target that runs all the tests 
 alias test : basics_test prg_exec_monitor_test unit_test_framework_test ; 
   
