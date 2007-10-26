@@ -451,7 +451,7 @@ format_execution_path( wrap_stringstream& formatter, ExecPathIt it, ExecPathIt e
                 unsigned i;
                 for( i = 0; i < std::min<std::size_t>( it->m_alloc.size, 8 ); i++ ) {
                     unsigned char c = ((unsigned char*)it->m_alloc.ptr)[i];
-                    if( std::isprint( c ) )
+                    if( (std::isprint)( c ) )
                         formatter << c;
                     else
                         formatter << '.';

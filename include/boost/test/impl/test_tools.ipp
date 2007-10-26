@@ -361,7 +361,7 @@ is_defined_impl( const_string symbol_name, const_string symbol_value )
 void
 print_log_value<char>::operator()( std::ostream& ostr, char t )
 {
-    if( (std::isprint)( t ) )
+    if( (std::isprint)( (unsigned char)t ) )
         ostr << '\'' << t << '\'';
     else
         ostr << std::hex

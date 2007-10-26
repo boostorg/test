@@ -124,10 +124,10 @@ template<typename T>
 inline void
 dyn_symbol( T& res, char const* module_name, char const* symbol_name )
 {
-    HMODULE m = ::GetModuleHandle( module_name );
+    HMODULE m = ::GetModuleHandleA( module_name );
 
     if( !m )
-        m = ::LoadLibrary( module_name );
+        m = ::LoadLibraryA( module_name );
 
     res = reinterpret_cast<T>( ::GetProcAddress( m, symbol_name ) );
 }
@@ -136,8 +136,8 @@ dyn_symbol( T& res, char const* module_name, char const* symbol_name )
 
 static struct info_t {
     typedef BOOL (WINAPI* IsDebuggerPresentT)();
-    typedef LONG (WINAPI* RegQueryValueExT)( HKEY, LPTSTR, LPDWORD, LPDWORD, LPBYTE, LPDWORD );
-    typedef LONG (WINAPI* RegOpenKeyT)( HKEY, LPCTSTR, PHKEY );
+    typedef LONG (WINAPI* RegQueryValueExT)( HKEY, char const* /*LPTSTR*/, LPDWORD, LPDWORD, LPBYTE, LPDWORD );
+    typedef LONG (WINAPI* RegOpenKeyT)( HKEY, char const* /*LPCTSTR*/, PHKEY );
     typedef LONG (WINAPI* RegCloseKeyT)( HKEY );
 
     info_t();
@@ -829,7 +829,7 @@ attach_debugger( bool break_or_continue )
     // debugger process s_info
     PROCESS_INFORMATION debugger_info;
 
-    bool created = !!::CreateProcess(
+    bool created = !!::CreateProcessA(
         NULL,           // pointer to name of executable module; NULL - use the one in command line
         cmd_line,       // pointer to command line string
         NULL,           // pointer to process security attributes; NULL - debugger's handle couldn't be inherited
