@@ -538,7 +538,7 @@ signal_action::signal_action( int sig, bool install, bool attach_dbg, char* alt_
     m_new_action.sa_flags     |= SA_SIGINFO;
     m_new_action.sa_sigaction  = attach_dbg ? &execution_monitor_attaching_signal_handler
                                             : &execution_monitor_jumping_signal_handler;
-    BOOST_TEST_SYS_ASSERT( ::sigemptyset( &m_new_action.sa_mask ) != -1 );
+    BOOST_TEST_SYS_ASSERT( sigemptyset( &m_new_action.sa_mask ) != -1 );
 
 #ifdef BOOST_TEST_USE_ALT_STACK
     if( alt_stack )
