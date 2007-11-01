@@ -67,6 +67,8 @@ namespace std { using ::memset; using ::sprintf; }
 #  include <sys/types.h>
 #  include <sys/stat.h>
 #  include <sys/wait.h>
+#  include <sys/time.h>
+#  include <stdio.h>
 
 #  if defined(sun) || defined(__sun)
 
