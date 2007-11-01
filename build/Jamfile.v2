@@ -20,6 +20,7 @@ project boost/test
 
 PRG_EXEC_MON_SOURCES =
   execution_monitor
+  debug
   cpp_main
   ;
 
