@@ -60,4 +60,4 @@ test-suite "unit_test_framework_test"
 alias test : basics_test prg_exec_monitor_test unit_test_framework_test ; 
   
 # Only run tests when explicitly requested 
-explicit test basics_test prg_exec_monitor_test unit_test_framework_test ; 
+# explicit test basics_test prg_exec_monitor_test unit_test_framework_test ; 
