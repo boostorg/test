@@ -73,7 +73,7 @@ using std::va_list;
 #    include <stdint.h>
 #endif
 
-#  if BOOST_WORKAROUND(BOOST_MSVC,  < 1300 ) || defined(UNDER_CE)
+#  if BOOST_WORKAROUND(_MSC_VER,  < 1300 ) || defined(UNDER_CE)
 typedef void* uintptr_t;
 #  endif
 
