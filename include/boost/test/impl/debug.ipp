@@ -56,6 +56,7 @@ namespace std { using ::memset; using ::sprintf; }
 #include <boost/test/utils/algorithm.hpp>
 
 // STL
+#include <cstring>
 #include <map>
 #include <stdarg.h> // !! ?? cstdarg
 
