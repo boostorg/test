@@ -360,6 +360,10 @@ TEST_CASE( test_BOOST_CHECK_EQUAL )
     C c3( 1, 102 );
     BOOST_CHECK_EQUAL( c1, c3 );
     BOOST_CHECK_EQUAL( c1, c2 );
+
+    char ch1 = -2;
+    char ch2 = -3;
+    BOOST_CHECK_EQUAL(ch1, ch2);
 }
 
 //____________________________________________________________________________//
