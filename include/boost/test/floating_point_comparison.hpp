@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2005.
+//  (C) Copyright Gennadiy Rozental 2001-2007.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -255,51 +255,5 @@ check_is_small_t check_is_small;
 //____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
-
-// ***************************************************************************
-//  Revision History :
-//  
-//  $Log$
-//  Revision 1.30  2006/11/30 14:38:40  jhunold
-//  Remove unnecessary export makro.
-//
-//  Revision 1.29  2006/08/11 17:32:42  rogeeff
-//  numeric_limits access guard reworked
-//
-//  Revision 1.28  2006/07/28 15:01:01  rogeeff
-//  guard numeric_limits access with is_specialized
-//
-//  Revision 1.27  2006/05/22 17:39:43  johnmaddock
-//  Fix min/max guidelines violation.
-//
-//  Revision 1.26  2006/03/16 07:31:06  vladimir_prus
-//  Fix compile error on MSVC due to max and min being defined as macros.
-//
-//  Revision 1.25  2006/03/13 18:28:25  rogeeff
-//  warnings eliminated
-//
-//  Revision 1.24  2005/12/14 05:07:28  rogeeff
-//  introduced an ability to test on closeness based on either percentage dirven tolerance or fraction driven one
-//
-//  Revision 1.23  2005/05/29 08:54:57  rogeeff
-//  allow bind usage
-//
-//  Revision 1.22  2005/02/21 10:21:40  rogeeff
-//  check_is_small implemented
-//  check functions implemented as function objects
-//
-//  Revision 1.21  2005/02/20 08:27:05  rogeeff
-//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
-//
-//  Revision 1.20  2005/02/01 06:40:06  rogeeff
-//  copyright update
-//  old log entries removed
-//  minor stilistic changes
-//  depricated tools removed
-//
-//  Revision 1.19  2005/01/22 19:22:12  rogeeff
-//  implementation moved into headers section to eliminate dependency of included/minimal component on src directory
-//
-// ***************************************************************************
 
 #endif // BOOST_FLOATING_POINT_COMAPARISON_HPP_071894GER

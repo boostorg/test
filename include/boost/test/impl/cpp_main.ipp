@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2005.
+//  (C) Copyright Gennadiy Rozental 2001-2007.
 //  (C) Copyright Beman Dawes 1995-2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
@@ -130,17 +130,5 @@ main( int argc, char* argv[] )
 //____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
-
-// ***************************************************************************
-//  Revision History :
-//  
-//  $Log$
-//  Revision 1.7  2006/03/19 11:45:26  rogeeff
-//  main function renamed for consistancy
-//
-//  Revision 1.6  2005/12/14 05:27:21  rogeeff
-//  cpp_main API modified for DLL
-//
-// ***************************************************************************
 
 #endif // BOOST_TEST_CPP_MAIN_IPP_012205GER

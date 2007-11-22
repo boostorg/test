@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005.
+//  (C) Copyright Gennadiy Rozental 2005-2007.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -406,32 +406,5 @@ unit_test_log_t::set_formatter( unit_test_log_formatter* the_formatter )
 //____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
-
-// ***************************************************************************
-//  Revision History :
-//
-//  $Log$
-//  Revision 1.12  2006/07/28 15:03:13  rogeeff
-//  flush log strema on exit
-//
-//  Revision 1.11  2005/12/14 05:34:21  rogeeff
-//  log API simplified
-//
-//  Revision 1.10  2005/04/30 16:48:51  rogeeff
-//  io saver warkaround for classic io is shared
-//
-//  Revision 1.9  2005/04/29 06:28:35  rogeeff
-//  bug fix for manipulator handling
-//
-//  Revision 1.8  2005/04/12 06:50:46  rogeeff
-//  assign_to -> assign_op
-//
-//  Revision 1.7  2005/03/22 07:06:58  rogeeff
-//  assign_to made free function
-//
-//  Revision 1.6  2005/02/20 08:27:07  rogeeff
-//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
-//
-// ***************************************************************************
 
 #endif // BOOST_TEST_UNIT_TEST_LOG_IPP_012205GER

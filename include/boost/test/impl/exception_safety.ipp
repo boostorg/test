@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005.
+//  (C) Copyright Gennadiy Rozental 2005-2007.
 //  Use, modification, and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -536,36 +536,5 @@ exception_safety( callback0<> const& F, const_string test_name )
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // non-ancient compiler
-
-// ***************************************************************************
-//  Revision History :
-//
-//  $Log$
-//  Revision 1.7  2006/02/23 15:10:00  rogeeff
-//  vc70 out
-//
-//  Revision 1.6  2006/02/06 10:06:56  rogeeff
-//  MSVC restored for now
-//
-//  Revision 1.5  2006/01/28 08:52:35  rogeeff
-//  operator new overloads made inline to:
-//  1. prevent issues with export them from DLL
-//  2. release link issue fixed
-//
-//  Revision 1.4  2006/01/15 11:14:39  rogeeff
-//  simpl_mock -> mock_object<>::prototype()
-//  operator new need to be rethinked
-//
-//  Revision 1.3  2005/12/22 15:49:32  rogeeff
-//  sunpro port
-//  made operator new conformant
-//
-//  Revision 1.2  2005/12/16 02:33:17  rogeeff
-//  portability fix
-//
-//  Revision 1.1  2005/12/14 05:56:09  rogeeff
-//  exception safety testing introduced
-//
-// ***************************************************************************
 
 #endif // BOOST_TEST_EXECUTION_SAFETY_IPP_112005GER

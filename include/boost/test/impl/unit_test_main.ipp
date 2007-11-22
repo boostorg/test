@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2005.
+//  (C) Copyright Gennadiy Rozental 2001-2007.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -231,24 +231,5 @@ main( int argc, char* argv[] )
 //____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
-
-// ***************************************************************************
-//  Revision History :
-//
-//  $Log$
-//  Revision 1.9  2006/03/19 11:45:26  rogeeff
-//  main function renamed for consistancy
-//
-//  Revision 1.8  2006/03/19 07:27:52  rogeeff
-//  streamline test setup error message
-//
-//  Revision 1.7  2005/12/14 05:35:57  rogeeff
-//  DLL support implemented
-//  Alternative init API introduced
-//
-//  Revision 1.6  2005/02/20 08:27:07  rogeeff
-//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
-//
-// ***************************************************************************
 
 #endif // BOOST_TEST_UNIT_TEST_MAIN_IPP_012205GER

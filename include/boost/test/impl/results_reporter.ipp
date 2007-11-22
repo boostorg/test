@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005.
+//  (C) Copyright Gennadiy Rozental 2005-2007.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -194,28 +194,5 @@ make_report( report_level l, test_unit_id id )
 //____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
-
-// ***************************************************************************
-//  Revision History :
-//
-//  $Log$
-//  Revision 1.5  2005/12/14 05:57:32  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.4  2005/04/30 16:48:51  rogeeff
-//  io saver warkaround for classic io is shared
-//
-//  Revision 1.3  2005/04/29 06:27:45  rogeeff
-//  bug fix for manipulator nandling
-//  bug fix for invalid output stream
-//  bug fix for set_format function implementation
-//
-//  Revision 1.2  2005/02/21 10:12:20  rogeeff
-//  Support for random order of test cases implemented
-//
-//  Revision 1.1  2005/02/20 08:27:07  rogeeff
-//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
-//
-// ***************************************************************************
 
 #endif // BOOST_TEST_RESULTS_REPORTER_IPP_020105GER

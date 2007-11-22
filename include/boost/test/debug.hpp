@@ -98,10 +98,4 @@ void BOOST_TEST_DECL break_memory_alloc( long mem_alloc_order_num );
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-// ***************************************************************************
-//  Revision History :
-//  
-//  $Log$
-// ***************************************************************************
-
 #endif

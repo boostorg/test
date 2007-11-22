@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005.
+//  (C) Copyright Gennadiy Rozental 2005-2007.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -290,26 +290,5 @@ results_collector_t::results( test_unit_id id ) const
 //____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
-
-// ***************************************************************************
-//  Revision History :
-//
-//  $Log$
-//  Revision 1.5  2006/02/26 15:24:00  rogeeff
-//  vc65 workaround
-//
-//  Revision 1.4  2006/01/28 08:55:52  rogeeff
-//  results collection bug fixed
-//
-//  Revision 1.3  2005/12/14 05:53:22  rogeeff
-//  collect amount of aborted test cases
-//
-//  Revision 1.2  2005/03/24 04:02:33  rogeeff
-//  portability fixes
-//
-//  Revision 1.1  2005/02/20 08:27:07  rogeeff
-//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
-//
-// ***************************************************************************
 
 #endif // BOOST_TEST_RESULTS_COLLECTOR_IPP_021105GER

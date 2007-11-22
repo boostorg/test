@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005.
+//  (C) Copyright Gennadiy Rozental 2005-2007.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -42,18 +42,6 @@ struct log_checkpoint_data;
 } // namespace unit_test
 
 } // namespace boost
-
-// ***************************************************************************
-//  Revision History :
-//  
-//  $Log$
-//  Revision 1.2  2005/12/14 04:59:11  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.1  2005/02/20 08:27:06  rogeeff
-//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
-//
-// ***************************************************************************
 
 #endif // BOOST_TEST_FWD_DECL_HPP_011605GER
 

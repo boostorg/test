@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2005.
+//  (C) Copyright Gennadiy Rozental 2001-2007.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -119,34 +119,6 @@ private:
 #undef CONSTR_BODY_MID
 #undef CONSTR_DECL
 #undef CONTRUCTORS
-
-// ***************************************************************************
-//  Revision History :
-//  
-//  $Log$
-//  Revision 1.6  2005/06/16 14:33:42  schoepflin
-//  Added workaround for Tru64/CXX which enables boost.test to compile in strict
-//  ansi mode on that compiler.
-//
-//  Revision 1.5  2005/05/08 08:55:09  rogeeff
-//  typos and missing descriptions fixed
-//
-//  Revision 1.4  2005/02/20 08:27:08  rogeeff
-//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
-//
-//  Revision 1.3  2005/02/01 06:40:07  rogeeff
-//  copyright update
-//  old log entries removed
-//  minor stilistic changes
-//  depricated tools removed
-//
-//  Revision 1.2  2005/01/31 20:07:19  rogeeff
-//  Sunpro CC 5.3 workarounds
-//
-//  Revision 1.1  2005/01/22 18:21:39  rogeeff
-//  moved sharable staff into utils
-//
-// ***************************************************************************
 
 #endif // BOOST_TEST_FIXED_MAPPING_HPP_071894GER
 

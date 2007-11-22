@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2006.
+//  (C) Copyright Gennadiy Rozental 2006-2007.
 //  Use, modification, and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -962,12 +962,5 @@ break_memory_alloc( long mem_alloc_order_num )
 //____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
-
-
-// ***************************************************************************
-//  Revision History :
-//
-//  $Log$
-// ***************************************************************************
 
 #endif // BOOST_TEST_DEBUG_API_IPP_112006GER

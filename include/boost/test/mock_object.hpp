@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005.
+//  (C) Copyright Gennadiy Rozental 2005-2007.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -324,21 +324,5 @@ MO_BINARY_OP( >>, "Right shift" )
 } // namespace boost
 
 #include <boost/test/detail/enable_warnings.hpp>
-
-// ***************************************************************************
-//  Revision History :
-//
-//  $Log$
-//  Revision 1.3  2006/03/19 07:27:52  rogeeff
-//  streamline test setup error message
-//
-//  Revision 1.2  2006/01/15 11:14:39  rogeeff
-//  simpl_mock -> mock_object<>::prototype()
-//  operator new need to be rethinked
-//
-//  Revision 1.1  2005/12/14 05:09:21  rogeeff
-//  interraction based testing is introdused
-//
-// ***************************************************************************
 
 #endif // BOOST_TEST_MOCK_OBJECT_HPP_112205GER

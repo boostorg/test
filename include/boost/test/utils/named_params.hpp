@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005.
+//  (C) Copyright Gennadiy Rozental 2005-2007.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -289,12 +289,6 @@ optionally_assign( T& target, Params const& p, Keyword k )
 } // namespace boost
 
 #include <boost/test/detail/enable_warnings.hpp>
-
-// ***************************************************************************
-//   Revision History:
-//  
-//  $Log$
-// ***************************************************************************
 
 #endif // BOOST_TEST_NAMED_PARAM_022505GER
 
