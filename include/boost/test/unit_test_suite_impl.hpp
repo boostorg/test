@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2005.
+//  (C) Copyright Gennadiy Rozental 2001-2007.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -224,16 +224,16 @@ namespace ut_detail {
 
 BOOST_TEST_DECL std::string normalize_test_case_name( const_string tu_name );
 
-template<typename UserTestCase>
+template<typename InstanceType,typename UserTestCase>
 struct user_tc_method_invoker {
     typedef void (UserTestCase::*test_method )();
 
-    user_tc_method_invoker( shared_ptr<UserTestCase> inst, test_method test_method )
+    user_tc_method_invoker( shared_ptr<InstanceType> inst, test_method test_method )
     : m_inst( inst ), m_test_method( test_method ) {}
 
     void operator()() { ((*m_inst).*m_test_method)(); }
 
-    shared_ptr<UserTestCase> m_inst;
+    shared_ptr<InstanceType> m_inst;
     test_method              m_test_method;
 };
 
@@ -249,14 +249,14 @@ make_test_case( callback0<> const& test_func, const_string tc_name )
 
 //____________________________________________________________________________//
 
-template<typename UserTestCase>
+template<typename UserTestCase, typename InstanceType>
 inline test_case*
-make_test_case( void (UserTestCase::*test_method )(),
-                  const_string tc_name,
-                  boost::shared_ptr<UserTestCase> const& user_test_case )
+make_test_case( void (UserTestCase::*           test_method )(),
+                const_string                    tc_name,
+                boost::shared_ptr<InstanceType> user_test_case )
 {
     return new test_case( ut_detail::normalize_test_case_name( tc_name ), 
-                          ut_detail::user_tc_method_invoker<UserTestCase>( user_test_case, test_method ) );
+                          ut_detail::user_tc_method_invoker<InstanceType,UserTestCase>( user_test_case, test_method ) );
 }
 
 //____________________________________________________________________________//
@@ -346,19 +346,6 @@ private:
 } // namespace boost
 
 #include <boost/test/detail/enable_warnings.hpp>
-
-// ***************************************************************************
-//  Revision History :
-//  
-//  $Log$
-//  Revision 1.2  2006/01/28 07:09:34  rogeeff
-//  tm->test_method
-//
-//  Revision 1.1  2005/12/14 05:24:55  rogeeff
-//  dll support introduced
-//  split into 2 files
-//
-// ***************************************************************************
 
 #endif // BOOST_TEST_UNIT_TEST_SUITE_IMPL_HPP_071894GER
 
