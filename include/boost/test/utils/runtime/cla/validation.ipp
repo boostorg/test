@@ -20,6 +20,7 @@
 
 #include <boost/test/utils/runtime/cla/argv_traverser.hpp>
 #include <boost/test/utils/runtime/cla/validation.hpp>
+#include <boost/test/utils/runtime/validation.hpp> // BOOST_RT_PARAM_NAMESPACE::logic_error
 
 // Boost
 #include <boost/test/utils/basic_cstring/io.hpp>

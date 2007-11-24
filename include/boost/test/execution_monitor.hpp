@@ -237,12 +237,13 @@ struct execution_aborted {};
 class system_error {
 public:
     // Constructor
-    system_error();
+    explicit    system_error( char const* exp );
 
-    unit_test::readonly_property<long> p_errno; 
+    unit_test::readonly_property<long>          p_errno; 
+    unit_test::readonly_property<char const*>   p_failed_exp; 
 };
 
-#define BOOST_TEST_SYS_ASSERT( exp ) if( (exp) ) ; else throw ::boost::system_error()
+#define BOOST_TEST_SYS_ASSERT( exp ) if( (exp) ) ; else throw ::boost::system_error( BOOST_STRINGIZE( exp ) )
 
 }  // namespace boost
 

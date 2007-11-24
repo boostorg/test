@@ -28,15 +28,14 @@
 // STL
 #include <iostream>
 #include <cstdlib>      // std::getenv
-
-#include <boost/test/detail/suppress_warnings.hpp>
+#include <cstring>      // std::strerror
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
 
 #ifdef BOOST_NO_STDC_NAMESPACE
-namespace std { using ::getenv; }
+namespace std { using ::getenv; using ::strerror; }
 #endif
 
 namespace {
@@ -89,7 +88,13 @@ prg_exec_monitor_main( int (*cpp_main)( int argc, char* argv[] ), int argc, char
         std::cout << "\n**** exception(" << exex.code() << "): " << exex.what() << std::endl;
         result = ::boost::exit_exception_failure;
     }
-    
+    catch( ::boost::system_error const& ex ) {
+        std::cout << "\n**** failed to initialize execution monitor."
+                  << "\n**** expression at fault: " << ex.p_failed_exp 
+                  << "\n**** error(" << ex.p_errno << "): " << std::strerror( ex.p_errno ) << std::endl;
+        result = ::boost::exit_exception_failure;
+    }
+
     if( result != ::boost::exit_success ) {
         std::cerr << "******** errors detected; see standard output for details ********" << std::endl;
     }

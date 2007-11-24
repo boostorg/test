@@ -315,7 +315,7 @@ prepare_window_title( dbg_startup_info const& dsi )
     else
         ++it;
 
-    ::snprintf( title_str, sizeof(title_str), "%*s %ld", dsi.binary_path.end()-it, it, dsi.pid );
+    ::snprintf( title_str, sizeof(title_str), "%*s %ld", (int)(dsi.binary_path.end()-it), it, dsi.pid );
 
     return title_str;
 }

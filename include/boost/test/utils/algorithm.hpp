@@ -16,6 +16,8 @@
 #define BOOST_ALGORITHM_HPP_062304GER
 
 #include <utility>
+#include <algorithm> // std::find
+#include <functional> // std::bind1st
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -222,4 +224,5 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_ALGORITHM_HPP_062304GER
+
 

@@ -19,7 +19,7 @@
 #include <boost/test/detail/config.hpp>
 
 #include <boost/test/utils/callback.hpp>
-#include <boost/test/utils/basic_cstring/basic_cstring_fwd.hpp>
+#include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 
 // STL
 #include <memory>

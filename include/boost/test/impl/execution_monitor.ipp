@@ -1108,7 +1108,9 @@ execution_monitor::execute( unit_test::callback0<int> const& F )
     catch( std::exception const& ex )
       { detail::report_error( execution_exception::cpp_exception_error, "std::exception: %s", ex.what() ); }
     catch( system_error const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, "system_error: %s", std::strerror( ex.p_errno ) ); }
+      { detail::report_error( execution_exception::cpp_exception_error, "system_error produced by: %s: %s", 
+                              ex.p_failed_exp.get(), 
+                              std::strerror( ex.p_errno ) ); }
     catch( detail::system_signal_exception const& ex )
       { ex.report(); }
     catch( execution_aborted const& )
@@ -1128,12 +1130,13 @@ execution_monitor::execute( unit_test::callback0<int> const& F )
 // **************                  system_error                ************** //
 // ************************************************************************** //
 
-system_error::system_error()
+system_error::system_error( char const* exp )
 #ifdef UNDER_CE
 : p_errno( GetLastError() )
 #else
 : p_errno( errno )
 #endif
+, p_failed_exp( exp )
 {}
 
 
