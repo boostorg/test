@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005.
+//  (C) Copyright Gennadiy Rozental 2005-2007.
 //  Use, modification, and distribution are subject to the 
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -149,17 +149,5 @@ private:
 #  include <boost/test/utils/runtime/cla/parser.ipp>
 
 #endif
-
-// ************************************************************************** //
-//   Revision History:
-//
-//   $Log$
-//   Revision 1.2  2005/12/14 05:01:14  rogeeff
-//   *** empty log message ***
-//
-//   Revision 1.1  2005/04/12 06:42:43  rogeeff
-//   Runtime.Param library initial commit
-//
-// ************************************************************************** //
 
 #endif // BOOST_RT_CLA_PARSER_HPP_062604GER
