@@ -6,6 +6,10 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 // Boost.Test
+#ifdef BOOST_MSVC
+# pragma warning(disable: C4345)
+#endif
+
 #include <boost/test/test_tools.hpp>
 #include <boost/test/test_case_template.hpp>
 using boost::unit_test::test_suite;

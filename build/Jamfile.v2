@@ -9,23 +9,24 @@ project boost/test
     : requirements <link>shared:<define>BOOST_TEST_DYN_LINK=1
                    <toolset>msvc:<asynch-exceptions>on
                    <toolset>borland:<cxxflags>-w-8080
-		   # Disable Warning about boost::noncopyable not being exported
-		   <link>shared,<toolset>msvc:<cxxflags>-wd4275
-    : usage-requirements 
+           # Disable Warning about boost::noncopyable not being exported
+           <link>shared,<toolset>msvc:<cxxflags>-wd4275
+    : usage-requirements
                    <define>BOOST_TEST_NO_AUTO_LINK=1
                    <link>shared:<define>BOOST_TEST_DYN_LINK=1
-    
                    # Disable Warning about boost::noncopyable not being exported
                    <link>shared,<toolset>msvc:<cxxflags>-wd4275
     ;
 
 PRG_EXEC_MON_SOURCES =
   execution_monitor
+  debug
   cpp_main
   ;
 
 TEST_EXEC_MON_SOURCES =
   compiler_log_formatter
+  debug
   execution_monitor
   framework
   plain_report_formatter
@@ -45,6 +46,7 @@ TEST_EXEC_MON_SOURCES =
 
 UTF_SOURCES =
   compiler_log_formatter
+  debug
   exception_safety
   execution_monitor
   framework
@@ -68,13 +70,19 @@ lib boost_prg_exec_monitor : $(PRG_EXEC_MON_SOURCES).cpp ;
 
 lib boost_test_exec_monitor : $(TEST_EXEC_MON_SOURCES).cpp : <link>static ;
 
-lib boost_unit_test_framework 
-    : $(UTF_SOURCES).cpp 
-    : <toolset>msvc-6.5:<link>static 
-      <toolset-msvc:version>6.5_stlport4:<link>static
-    ;
+lib boost_unit_test_framework : $(UTF_SOURCES).cpp ;
      
 
 alias minimal : : : :
                    <toolset>msvc:<asynch-exceptions>on
        ;
+
+alias included : : : :
+                   <toolset>msvc:<asynch-exceptions>on
+       ;
+
+
+boost-install boost_prg_exec_monitor 
+              boost_test_exec_monitor
+	      boost_unit_test_framework ;
+	      

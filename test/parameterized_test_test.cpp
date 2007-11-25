@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2002-2006.
+//  (C) Copyright Gennadiy Rozental 2002-2007.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -206,26 +206,5 @@ BOOST_AUTO_TEST_CASE( test_case8 )
 }
 
 //____________________________________________________________________________//
-
-// ***************************************************************************
-//  Revision History :
-//  
-//  $Log$
-//  Revision 1.23  2006/03/19 11:49:04  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.22  2006/02/01 08:00:15  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.21  2005/12/14 06:01:02  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.20  2005/05/11 05:07:57  rogeeff
-//  licence update
-//
-//  Revision 1.19  2005/02/20 08:28:34  rogeeff
-//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
-//
-// ***************************************************************************
 
 // EOF

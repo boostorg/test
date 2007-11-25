@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2003-2006.
+//  (C) Copyright Gennadiy Rozental 2003-2007.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -13,6 +13,7 @@
 // ***************************************************************************
 
 // Boost.Test
+#define BOOST_TEST_MODULE Class Properties test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/utils/class_properties.hpp>
 
@@ -63,7 +64,7 @@ public:
     }
 };
 
-void test_readonly_property()
+BOOST_AUTO_TEST_CASE( test_readonly_property )
 {
     readonly_property<int> p_zero;
     readonly_property<int> p_one( 1 );
@@ -149,7 +150,7 @@ void test_readonly_property()
 
 //____________________________________________________________________________//
 
-void test_readwrite_property()
+BOOST_AUTO_TEST_CASE( test_readwrite_property )
 {
     readwrite_property<int> p_int;
 
@@ -176,58 +177,8 @@ void test_readwrite_property()
     readwrite_property<B> const p_bb2;
 
     BOOST_CHECK_EQUAL( p_bb2->foo(), 1 );
-
 }
 
 //____________________________________________________________________________//
-
-test_suite*
-init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
-    test_suite* test= BOOST_TEST_SUITE("Class Properties test");
-
-    test->add( BOOST_TEST_CASE( &test_readonly_property ) );
-    test->add( BOOST_TEST_CASE( &test_readwrite_property ) );
-
-    return test;
-}
-
-//____________________________________________________________________________//
-
-// ***************************************************************************
-//  Revision History :
-//  
-//  $Log$
-//  Revision 1.8  2006/03/19 11:49:04  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.7  2005/06/11 19:20:58  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.6  2005/05/11 05:07:56  rogeeff
-//  licence update
-//
-//  Revision 1.5  2005/01/30 03:35:55  rogeeff
-//  no message
-//
-//  Revision 1.3  2005/01/18 08:30:08  rogeeff
-//  unit_test_log rework:
-//     eliminated need for ::instance()
-//     eliminated need for << end and ...END macro
-//     straitend interface between log and formatters
-//     change compiler like formatter name
-//     minimized unit_test_log interface and reworked to use explicit calls
-//
-//  Revision 1.2  2005/05/21 06:26:10  rogeeff
-//  licence update
-//
-//  Revision 1.1  2005/05/11 11:05:46  rogeeff
-//  basic_cstring introduced and used everywhere
-//  class properties reworked
-//  namespace names shortened
-//
-//  Revision 1.3  2003/12/01 00:42:37  rogeeff
-//  prerelease cleaning
-//
-// ***************************************************************************
 
 // EOF

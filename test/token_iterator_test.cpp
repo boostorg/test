@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2006.
+//  (C) Copyright Gennadiy Rozental 2001-2007.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -186,30 +186,5 @@ BOOST_AUTO_TEST_CASE( test_istream_token_iterator )
 #endif
 
 //____________________________________________________________________________//
-
-// *****************************************************************************
-// History :
-//
-// $Log$
-// Revision 1.14  2006/03/19 11:49:04  rogeeff
-// *** empty log message ***
-//
-// Revision 1.13  2005/12/14 06:01:02  rogeeff
-// *** empty log message ***
-//
-// Revision 1.12  2005/06/11 19:20:58  rogeeff
-// *** empty log message ***
-//
-// Revision 1.11  2005/06/05 18:10:59  grafik
-// named_param.hpp; Work around CW not handling operator, using declaration, by using a real operator,().
-// token_iterator_test.cpp; Work around CW-8 confused with array initialization.
-//
-// Revision 1.10  2005/05/11 05:07:57  rogeeff
-// licence update
-//
-// Revision 1.9  2005/04/13 05:09:16  rogeeff
-// *** empty log message ***
-//
-// *****************************************************************************
 
 // EOF

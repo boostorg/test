@@ -11,8 +11,8 @@
 
 //____________________________________________________________________________//
 
-// automatically registerred test cases could be organized in test suites
-BOOST_AUTO_TEST_SUITE( my_suite1 );
+// automatically registered test cases could be organized in test suites
+BOOST_AUTO_TEST_SUITE( my_suite1 )
 
 BOOST_AUTO_TEST_CASE( my_test1 )
 {
@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_CASE( my_test2 )
     BOOST_CHECK_EQUAL( i, 0 );
 }
 
-BOOST_AUTO_TEST_SUITE_END();
+BOOST_AUTO_TEST_SUITE_END()
 
 //____________________________________________________________________________//
 
@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE( my_test3 )
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_SUITE( my_suite2 );
+BOOST_AUTO_TEST_SUITE( my_suite2 )
 
 // this test case belongs to suite2 test suite
 BOOST_AUTO_TEST_CASE( my_test4 )
@@ -55,7 +55,21 @@ BOOST_AUTO_TEST_CASE( my_test4 )
     BOOST_CHECK_EQUAL( i, 1 );
 }
 
-BOOST_AUTO_TEST_SUITE_END();
+BOOST_AUTO_TEST_SUITE( internal_suite )
+
+// this test case belongs to my_suite2:internal_suite test suite
+
+BOOST_AUTO_TEST_CASE( my_test5 )
+{
+    int i = 0;
+
+    BOOST_CHECK_EQUAL( i, 1 );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+BOOST_AUTO_TEST_SUITE_END()
 
 //____________________________________________________________________________//
 

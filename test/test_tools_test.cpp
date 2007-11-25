@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2006.
+//  (C) Copyright Gennadiy Rozental 2001-2007.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -360,6 +360,37 @@ TEST_CASE( test_BOOST_CHECK_EQUAL )
     C c3( 1, 102 );
     BOOST_CHECK_EQUAL( c1, c3 );
     BOOST_CHECK_EQUAL( c1, c2 );
+
+    char ch1 = -2;
+    char ch2 = -3;
+    BOOST_CHECK_EQUAL(ch1, ch2);
+}
+
+//____________________________________________________________________________//
+
+TEST_CASE( test_BOOST_CHECK_LOGICAL_EXPR )
+{
+    int i=1;
+    int j=2;
+    BOOST_CHECK_NE( i, j );
+
+    BOOST_CHECK_NE( ++i, j );
+
+    BOOST_CHECK_LT( i, j );
+    BOOST_CHECK_GT( i, j );
+
+    BOOST_CHECK_LE( i, j );
+    BOOST_CHECK_GE( i, j );
+
+    ++i;
+
+    BOOST_CHECK_LE( i, j );
+    BOOST_CHECK_GE( j, i );
+
+    char const* str1 = "test1";
+    char const* str2 = "test1";
+
+    BOOST_CHECK_NE( str1, str2 );
 }
 
 //____________________________________________________________________________//
@@ -526,38 +557,5 @@ TEST_CASE( test_BOOST_IS_DEFINED )
 //____________________________________________________________________________//
 
 // !! CHECK_SMALL
-
-// ***************************************************************************
-//  Revision History :
-//
-//  $Log$
-//  Revision 1.47  2006/03/19 11:49:04  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.46  2006/01/28 07:05:27  rogeeff
-//  mark unreachable intentionally statements
-//
-//  Revision 1.45  2006/01/21 07:09:25  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.44  2005/12/14 06:01:02  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.43  2005/05/11 05:07:57  rogeeff
-//  licence update
-//
-//  Revision 1.42  2005/04/17 15:49:17  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.41  2005/03/22 07:14:44  rogeeff
-//  no message
-//
-//  Revision 1.40  2005/02/21 10:29:06  rogeeff
-//  no message
-//
-//  Revision 1.39  2005/02/20 08:28:34  rogeeff
-//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
-//
-// ***************************************************************************
 
 // EOF

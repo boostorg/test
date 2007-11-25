@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2006.
+//  (C) Copyright Gennadiy Rozental 2001-2007.
 //  (C) Copyright Beman Dawes 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
@@ -193,42 +193,6 @@ BOOST_AUTO_TEST_CASE( test_errors_handling )
 }
 
 //____________________________________________________________________________//
-
-// ***************************************************************************
-//  Revision History :
-//
-//  $Log$
-//  Revision 1.38  2006/03/19 11:49:04  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.37  2006/02/01 08:00:15  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.36  2005/12/14 06:01:02  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.35  2005/06/13 11:46:26  schoepflin
-//  Use limited tests with Tru64/CXX.
-//
-//  Revision 1.34  2005/06/11 19:20:58  rogeeff
-//  *** empty log message ***
-//
-//  Revision 1.33  2005/05/11 05:07:56  rogeeff
-//  licence update
-//
-//  Revision 1.32  2005/03/23 21:06:39  rogeeff
-//  Sunpro CC 5.3 fixes
-//
-//  Revision 1.31  2005/03/22 07:14:44  rogeeff
-//  no message
-//
-//  Revision 1.30  2005/02/23 06:36:01  vawjr
-//  Deleted - extraneous \r characters in the file
-//
-//  Revision 1.29  2005/02/20 08:28:34  rogeeff
-//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
-//
-// ***************************************************************************
 
 // EOF
 

@@ -26,7 +26,7 @@ BOOST_FIXTURE_TEST_SUITE( s, F )
 
 typedef boost::mpl::list<char,int,float,double> test_types;
 // this test case template produce a separate test case for each type listed in test_types
-// each produced test case uses strct F as a fixture
+// each produced test case uses struct F as a fixture
 BOOST_AUTO_TEST_CASE_TEMPLATE( my_test, T, test_types )
 {
     T t = i;
