@@ -527,7 +527,7 @@ output_test_stream::match_pattern( bool flush_stream )
 
     if( !m_pimpl->m_pattern.is_open() ) {
         result = false;
-        result.message() << "Pattern file could not be open!";
+        result.message() << "Pattern file could not be opened!";
     }
     else {
         if( m_pimpl->m_match_or_save ) {
