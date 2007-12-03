@@ -51,7 +51,7 @@ namespace std { using ::strerror; using ::strlen; using ::strncat; }
 #endif
 
 // to use vsnprintf
-#if defined(__SUNPRO_CC) && defined(__SunOS)
+#if defined(__SUNPRO_CC) || defined(__SunOS)
 #  include <stdio.h>
 #  include <stdarg.h>
 using std::va_list;
