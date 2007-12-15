@@ -651,13 +651,13 @@ bitwise_equal_impl( Left const& left, Right const& right )
     std::size_t left_bit_size  = sizeof(Left)*CHAR_BIT;
     std::size_t right_bit_size = sizeof(Right)*CHAR_BIT;
 
-    static Left const  L1( 1 );
-    static Right const R1( 1 );
+    static Left const leftOne( 1 );
+    static Right const rightOne( 1 );
 
     std::size_t total_bits = left_bit_size < right_bit_size ? left_bit_size : right_bit_size;
 
     for( std::size_t counter = 0; counter < total_bits; ++counter ) {
-        if( ( left & ( L1 << counter ) ) != ( right & ( R1 << counter ) ) ) {
+        if( ( left & ( leftOne << counter ) ) != ( right & ( rightOne << counter ) ) ) {
             res = false;
             res.message() << "\nMismatch in a position " << counter;
         }
