@@ -58,6 +58,7 @@ namespace std { using ::memset; using ::sprintf; }
 // STL
 #include <cstring>
 #include <map>
+#include <cstdio>
 #include <stdarg.h> // !! ?? cstdarg
 
 // SYSTEM API
