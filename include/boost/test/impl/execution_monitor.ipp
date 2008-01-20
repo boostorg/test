@@ -65,7 +65,7 @@ using std::va_list;
 
 #  include <windows.h>
 
-#  if defined(__MWERKS__)
+#  if defined(__MWERKS__) || defined(BOOST_MSVC)
 #    include <eh.h>
 #  endif
 
@@ -1149,3 +1149,4 @@ system_error::system_error( char const* exp )
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_EXECUTION_MONITOR_IPP_012205GER
+
