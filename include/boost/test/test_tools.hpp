@@ -377,6 +377,16 @@ struct print_log_value< T[N] > {
 //____________________________________________________________________________//
 
 template<>
+struct BOOST_TEST_DECL print_log_value<bool> {
+    void    operator()( std::ostream& ostr, bool t )
+    {
+         ostr << std::boolalpha << t;
+    }
+};
+
+//____________________________________________________________________________//
+
+template<>
 struct BOOST_TEST_DECL print_log_value<char> {
     void    operator()( std::ostream& ostr, char t );
 };
