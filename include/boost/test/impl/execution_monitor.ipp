@@ -65,7 +65,7 @@ using std::va_list;
 
 #  include <windows.h>
 
-#  if defined(__MWERKS__) || defined(BOOST_MSVC)
+#  if defined(__MWERKS__) || (defined(BOOST_MSVC) && !defined(UNDER_CE))
 #    include <eh.h>
 #  endif
 
