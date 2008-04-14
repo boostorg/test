@@ -65,7 +65,7 @@ using std::va_list;
 
 #  include <windows.h>
 
-#  if defined(__MWERKS__) || (defined(BOOST_MSVC) && !defined(UNDER_CE))
+#  if defined(__MWERKS__) || (BOOST_WORKAROUND(_MSC_VER,  < 1410 ) && !defined(UNDER_CE))
 #    include <eh.h>
 #  endif
 
@@ -680,6 +680,9 @@ extern "C" {
 
 static void execution_monitor_jumping_signal_handler( int sig, siginfo_t* info, void* context )
 {
+    if( info->si_signo == SIGCHLD && info->si_code == CLD_EXITED && (int)info->si_status == 0 )
+        return;
+
     signal_handler::sys_sig()( info, context );
 
     siglongjmp( signal_handler::jump_buffer(), sig );
@@ -689,6 +692,9 @@ static void execution_monitor_jumping_signal_handler( int sig, siginfo_t* info, 
 
 static void execution_monitor_attaching_signal_handler( int sig, siginfo_t* info, void* context )
 {
+    if( info->si_signo == SIGCHLD && info->si_code == CLD_EXITED && (int)info->si_status == 0 )
+        return;
+
     if( !debug::attach_debugger( false ) )
     execution_monitor_jumping_signal_handler( sig, info, context );
 
