@@ -638,6 +638,7 @@ signal_handler::signal_handler( bool catch_system_errors, int timeout, bool atta
 #ifdef BOOST_TEST_USE_ALT_STACK
     if( alt_stack ) {
         stack_t sigstk;
+        std::memset( &sigstk, 0, sizeof(stack_t) );
 
         BOOST_TEST_SYS_ASSERT( ::sigaltstack( 0, &sigstk ) != -1 );
 
