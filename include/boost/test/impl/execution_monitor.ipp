@@ -143,7 +143,7 @@ namespace { void _set_se_translator( void* ) {} }
 #   define BOOST_TEST_USE_ALT_STACK
 #  endif
 
-#  if !defined(__CYGWIN__) && \
+#  if defined(SIGPOLL) && !defined(__CYGWIN__) && \
       !(defined(macintosh) || defined(__APPLE__) || defined(__APPLE_CC__)) && \
       !defined(__NetBSD__)
 #    define BOOST_TEST_CATCH_SIGPOLL
