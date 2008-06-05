@@ -299,7 +299,7 @@ namespace test_tools {
 
 typedef unit_test::const_string      const_string;
 
-namespace { bool dummy_cond = false; }
+namespace { bool const dummy_cond = false; }
 
 namespace tt_detail {
 
