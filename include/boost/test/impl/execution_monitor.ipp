@@ -667,7 +667,7 @@ signal_handler::~signal_handler()
         ::alarm( 0 );
 
 #ifdef BOOST_TEST_USE_ALT_STACK
-    stack_t sigstk;
+    stack_t sigstk = {};
 
     sigstk.ss_flags = SS_DISABLE;
     BOOST_TEST_SYS_ASSERT( ::sigaltstack( &sigstk, 0 ) != -1 );
