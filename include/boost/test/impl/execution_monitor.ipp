@@ -65,7 +65,7 @@ using std::va_list;
 
 #  include <windows.h>
 
-#  if defined(__MWERKS__) || (BOOST_WORKAROUND(_MSC_VER,  < 1410 ) && !defined(UNDER_CE))
+#  if defined(__MWERKS__) || (defined(_MSC_VER) && !defined(UNDER_CE))
 #    include <eh.h>
 #  endif
 
