@@ -24,5 +24,6 @@
 # pragma warning(disable: 4127) // conditional expression is constant
 # pragma warning(disable: 4290) // C++ exception specification ignored except to ...
 # pragma warning(disable: 4180) // qualifier applied to function type has no meaning; ignored
+# pragma warning(disable: 4275) // non dll-interface class ... used as base for dll-interface class ...
 #endif
 

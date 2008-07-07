@@ -856,6 +856,11 @@ attach_debugger( bool break_or_continue )
     if( !created )
         return false;
 
+    if( break_or_continue )
+        debugger_break();
+
+    return true;
+
 #elif defined(BOOST_UNIX_BASED_DEBUG) // ********************** UNIX
 
     char init_done_lock_fn[] = "/tmp/btl_dbg_init_done_XXXXXX";
@@ -902,16 +907,16 @@ attach_debugger( bool break_or_continue )
 //    char dummy;
 //    while( ::read( init_done_lock_fd, &dummy, sizeof(char) ) == 0 );
 
+    if( break_or_continue )
+        debugger_break();
+
+    return true;
+
 #else // ****************************************************** default
 
     return false;
 
 #endif
-
-    if( break_or_continue )
-        debugger_break();
-
-    return true;
 }
 
 //____________________________________________________________________________//
