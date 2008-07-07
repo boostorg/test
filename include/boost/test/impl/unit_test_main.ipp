@@ -113,10 +113,10 @@ public:
 
             ++tit;           
         }
+    }
 #else
     explicit        test_case_filter( const_string ) : m_depth( 0 ) {}
 #endif
-    }
     
     void            filter_unit( test_unit const& tu )
     {
