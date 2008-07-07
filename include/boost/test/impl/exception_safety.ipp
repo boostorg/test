@@ -401,7 +401,7 @@ exception_safety_tester::failure_point()
 namespace {
 
 inline void
-format_location( wrap_stringstream& formatter, execution_path_point const& p, unsigned indent )
+format_location( wrap_stringstream& formatter, execution_path_point const& /*p*/, unsigned indent )
 {
     if( indent )
         formatter << std::left << std::setw( indent ) << "";

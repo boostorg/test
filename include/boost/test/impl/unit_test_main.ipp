@@ -100,10 +100,10 @@ public:
         const_string    m_value;
     };
     // Constructor
+#if !defined(__BORLANDC__) && BOOST_WORKAROUND( BOOST_MSVC, >= 1300 )
     explicit        test_case_filter( const_string tc_to_tun ) 
     : m_depth( 0 )
     {
-#if !defined(__BORLANDC__) && BOOST_WORKAROUND( BOOST_MSVC, >= 1300 )
         string_token_iterator tit( tc_to_tun, (dropped_delimeters = "/", kept_delimeters = dt_none) );
 
         while( tit != string_token_iterator() ) {
@@ -113,6 +113,8 @@ public:
 
             ++tit;           
         }
+#else
+    explicit        test_case_filter( const_string ) : m_depth( 0 ) {}
 #endif
     }
     

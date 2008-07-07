@@ -57,7 +57,7 @@ namespace std { using ::memset; using ::sprintf; }
 #include <boost/test/utils/algorithm.hpp>
 
 // STL
-#include <cstring>
+#include <cstring>  // std::memcpy
 #include <map>
 #include <cstdio>
 #include <stdarg.h> // !! ?? cstdarg
@@ -497,7 +497,7 @@ start_gdb_in_emacs( dbg_startup_info const& dsi )
 //____________________________________________________________________________//
 
 static void
-start_gdb_in_xemacs( dbg_startup_info const& dsi )
+start_gdb_in_xemacs( dbg_startup_info const& )
 {
     // !! ??
 }
@@ -552,7 +552,7 @@ start_dbx_in_xterm( dbg_startup_info const& dsi )
 //____________________________________________________________________________//
 
 static void
-start_dbx_in_emacs( dbg_startup_info const& dsi )
+start_dbx_in_emacs( dbg_startup_info const& /*dsi*/ )
 {
 //    char dbg_cmd_buff[500]; // !! ??
 //
@@ -564,7 +564,7 @@ start_dbx_in_emacs( dbg_startup_info const& dsi )
 //____________________________________________________________________________//
 
 static void
-start_dbx_in_xemacs( dbg_startup_info const& dsi )
+start_dbx_in_xemacs( dbg_startup_info const& )
 {
     // !! ??
 }

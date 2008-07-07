@@ -74,7 +74,7 @@ private:
     // increment implementation
     bool                     get()
     {
-        return std::getline( *m_input_stream, this->m_value, m_delimeter );
+        return std::getline( *m_input_stream, this->m_value, m_delimeter ) != (void*)0;
     }
 
     // Data members
