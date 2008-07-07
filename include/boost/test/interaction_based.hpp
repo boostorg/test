@@ -201,6 +201,9 @@ struct location {
 # ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::malloc; using ::free; }
 # endif
+# ifdef _CRTDBG_MAP_ALLOC
+namespace std { using ::_malloc_dbg; using ::_free_dbg; }
+# endif
 
 inline void*
 operator new( std::size_t s, ::boost::itest::location const& l )
