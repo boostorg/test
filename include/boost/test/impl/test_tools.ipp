@@ -61,7 +61,7 @@ namespace tt_detail {
 // **************            TOOL BOX Implementation           ************** //
 // ************************************************************************** //
 
-void
+bool
 check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
             const_string file_name, std::size_t line_num,
             tool_level tl, check_type ct,
@@ -101,7 +101,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         suffix  = " failed";
         break;
     default:
-        return;
+        return true;
     }
 
     switch( ct ) {
@@ -305,14 +305,14 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
     switch( tl ) {
     case PASS:
         framework::assertion_result( true );
-        break;
+        return true;
 
     case WARN:
-        break;
+        return false;
 
     case CHECK:
         framework::assertion_result( false );
-        break;
+        return false;
         
     case REQUIRE:
         framework::assertion_result( false );
@@ -321,6 +321,8 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
 
         throw execution_aborted();
     }
+
+    return true;
 }
 
 //____________________________________________________________________________//

@@ -78,17 +78,39 @@
 
 //____________________________________________________________________________//
 
+#if defined(__GNUC__)
+#  define BOOST_TEST_TOOLS_RETURN_VALUE
+#endif
+
+#ifdef BOOST_TEST_TOOLS_RETURN_VALUE
+#define BOOST_CHECK_IMPL( P, check_descr, TL, CT )                  \
+({                                                                  \
+    BOOST_TEST_PASSPOINT();                                         \
+    BOOST_TEST_TOOL_IMPL( check_impl, P, check_descr, TL, CT ), 0 );\
+})                                                                  \
+/**/
+#else
 #define BOOST_CHECK_IMPL( P, check_descr, TL, CT )                  \
 do {                                                                \
     BOOST_TEST_PASSPOINT();                                         \
     BOOST_TEST_TOOL_IMPL( check_impl, P, check_descr, TL, CT ), 0 );\
 } while( ::boost::test_tools::dummy_cond )                          \
 /**/
+#endif
 
 //____________________________________________________________________________//
 
 #define BOOST_TEST_PASS_ARG_INFO( r, data, arg ) , arg, BOOST_STRINGIZE( arg )
 
+#ifdef BOOST_TEST_TOOLS_RETURN_VALUE
+#define BOOST_CHECK_WITH_ARGS_IMPL( P, check_descr, TL, CT, ARGS )  \
+({                                                                  \
+    BOOST_TEST_PASSPOINT();                                         \
+    BOOST_TEST_TOOL_IMPL( check_frwd, P, check_descr, TL, CT )      \
+    BOOST_PP_SEQ_FOR_EACH( BOOST_TEST_PASS_ARG_INFO, '_', ARGS ) ); \
+})                                                                  \
+/**/
+#else
 #define BOOST_CHECK_WITH_ARGS_IMPL( P, check_descr, TL, CT, ARGS )  \
 do {                                                                \
     BOOST_TEST_PASSPOINT();                                         \
@@ -96,6 +118,7 @@ do {                                                                \
     BOOST_PP_SEQ_FOR_EACH( BOOST_TEST_PASS_ARG_INFO, '_', ARGS ) ); \
 } while( ::boost::test_tools::dummy_cond )                          \
 /**/
+#endif
 
 //____________________________________________________________________________//
 
@@ -460,7 +483,7 @@ operator<<( std::ostream& ostr, print_helper_t<T> const& ph )
 // ************************************************************************** //
 
 BOOST_TEST_DECL 
-void check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
+bool check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
                  const_string file_name, std::size_t line_num,
                  tool_level tl, check_type ct,
                  std::size_t num_args, ... );
@@ -485,13 +508,14 @@ void check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
 #define IMPL_FRWD( z, n, dummy )                                                    \
 template<typename Pred                                                              \
          BOOST_PP_REPEAT_ ## z( BOOST_PP_ADD( n, 1 ), TEMPL_PARAMS, _ )>            \
-inline void                                                                         \
+inline bool                                                                         \
 check_frwd( Pred P, wrap_stringstream& check_descr,                                 \
             const_string file_name, std::size_t line_num,                           \
             tool_level tl, check_type ct                                            \
             BOOST_PP_REPEAT_ ## z( BOOST_PP_ADD( n, 1 ), FUNC_PARAMS, _ )           \
 )                                                                                   \
 {                                                                                   \
+    return                                                                          \
     check_impl( P( BOOST_PP_REPEAT_ ## z( BOOST_PP_ADD( n, 1 ), PRED_PARAMS, _ ) ), \
                 check_descr, file_name, line_num, tl, ct,                           \
                 BOOST_PP_ADD( n, 1 )                                                \
