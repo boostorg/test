@@ -135,6 +135,11 @@ public:
     // test tree visitor interface
     virtual void    visit( test_case const& tc )
     {
+        if( m_depth < m_filters.size() ) {
+            tc.p_enabled.value = false;
+            return;
+        }
+
         filter_unit( tc );
 
         --m_depth;
