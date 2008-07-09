@@ -100,6 +100,7 @@ public:
 
     virtual void        log_entry_start( std::ostream&, log_entry_data const&, log_entry_types let ) = 0;
     virtual void        log_entry_value( std::ostream&, const_string value ) = 0;
+    virtual void        log_entry_value( std::ostream&, lazy_ostream const& value ); // there is a default impl
     virtual void        log_entry_finish( std::ostream& ) = 0;
 };
 

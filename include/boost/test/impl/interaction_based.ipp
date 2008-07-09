@@ -18,10 +18,7 @@
 // Boost.Test
 #include <boost/test/detail/config.hpp>
 
-#if !BOOST_WORKAROUND(__GNUC__, < 3) && \
-    !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) && \
-    !BOOST_WORKAROUND(BOOST_MSVC, <1310) && \
-    !BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530))
+#if BOOST_TEST_SUPPORT_INTERACTION_TESTING
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>

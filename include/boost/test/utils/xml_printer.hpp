@@ -67,7 +67,7 @@ print_escaped( std::ostream& where_to, const_string value )
 inline void
 print_escaped( std::ostream& where_to, std::string const& value )
 {
-        print_escaped( where_to, const_string( value ) );
+    print_escaped( where_to, const_string( value ) );
 }
 
 //____________________________________________________________________________//
@@ -76,7 +76,7 @@ template<typename T>
 inline void
 print_escaped( std::ostream& where_to, T const& value )
 {
-        where_to << value;
+    where_to << value;
 }
 
 //____________________________________________________________________________//
@@ -87,11 +87,11 @@ template<typename T>
 inline std::ostream&
 operator<<( custom_printer<attr_value> const& p, T const& value )
 {
-        *p << "=\"";
-        print_escaped( *p, value );
-        *p << '"';
+    *p << "=\"";
+    print_escaped( *p, value );
+    *p << '"';
 
-        return *p;
+    return *p;
 }
 
 //____________________________________________________________________________//

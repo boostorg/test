@@ -114,9 +114,7 @@ operator<<( basic_wrap_stringstream<CharT>& targ, basic_wrap_stringstream<CharT>
 
 //____________________________________________________________________________//
 
-#if !defined(BOOST_NO_STD_LOCALE) &&                                    \
-    (!defined(BOOST_MSVC) || BOOST_WORKAROUND(BOOST_MSVC, >= 1310))  && \
-    !defined(__MWERKS__) && !BOOST_WORKAROUND(__GNUC__, < 3)
+#if BOOST_TEST_USE_STD_LOCALE 
 
 template <typename CharT>
 inline basic_wrap_stringstream<CharT>&

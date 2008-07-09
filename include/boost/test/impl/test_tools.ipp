@@ -33,9 +33,7 @@
 #include <cctype>
 #include <cwchar>
 #include <stdexcept>
-#ifdef BOOST_STANDARD_IOSTREAMS
 #include <ios>
-#endif
 
 // !! should we use #include <cstdarg>
 #include <stdarg.h>
@@ -62,7 +60,7 @@ namespace tt_detail {
 // ************************************************************************** //
 
 bool
-check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
+check_impl( predicate_result const& pr, ::boost::unit_test::lazy_ostream const& check_descr,
             const_string file_name, std::size_t line_num,
             tool_level tl, check_type ct,
             std::size_t num_of_args, ... )
@@ -107,7 +105,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
     switch( ct ) {
     case CHECK_PRED:
         unit_test_log << unit_test::log::begin( file_name, line_num ) 
-                      << ll << prefix << check_descr.str() << suffix;
+                      << ll << prefix << check_descr << suffix;
         
         if( !pr.has_empty_message() )
             unit_test_log << ". " << pr.message();
@@ -119,9 +117,9 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
         unit_test_log << unit_test::log::begin( file_name, line_num ) << ll;
         
         if( tl == PASS )
-            unit_test_log << prefix << "'" << check_descr.str() << "'" << suffix;
+            unit_test_log << prefix << "'" << check_descr << "'" << suffix;
         else
-            unit_test_log << check_descr.str();
+            unit_test_log << check_descr;
         
         if( !pr.has_empty_message() )
             unit_test_log << ". " << pr.message();
@@ -216,7 +214,7 @@ check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
 
     case CHECK_PRED_WITH_ARGS: {
         unit_test_log << unit_test::log::begin( file_name, line_num ) 
-                      << ll << prefix << check_descr.str();
+                      << ll << prefix << check_descr;
 
         // print predicate call description
         {
@@ -367,8 +365,7 @@ print_log_value<char>::operator()( std::ostream& ostr, char t )
         ostr << '\'' << t << '\'';
     else
         ostr << std::hex
-        // showbase is only available for new style streams:
-#ifndef BOOST_NO_STD_LOCALE
+#if BOOST_TEST_USE_STD_LOCALE
         << std::showbase
 #else
         << "0x"
@@ -383,12 +380,12 @@ print_log_value<unsigned char>::operator()( std::ostream& ostr, unsigned char t 
 {
     ostr << std::hex
         // showbase is only available for new style streams:
-#ifndef BOOST_NO_STD_LOCALE
+#if BOOST_TEST_USE_STD_LOCALE
         << std::showbase
 #else
         << "0x"
 #endif
-       << (int)t;
+        << (int)t;
 }
 
 //____________________________________________________________________________//

@@ -19,12 +19,6 @@
 #include <boost/config.hpp> // compilers workarounds
 #include <boost/detail/workaround.hpp>
 
-#if BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
-#  define BOOST_CLASSIC_IOSTREAMS
-#else
-#  define BOOST_STANDARD_IOSTREAMS
-#endif
-
 //____________________________________________________________________________//
 
 #if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x570)) || \
@@ -43,19 +37,20 @@
 
 //____________________________________________________________________________//
 
-#if defined(BOOST_HAS_SIGACTION)
-#  define BOOST_TEST_SUPPORT_TIMEOUT
+#if !defined(BOOST_NO_STD_LOCALE) &&            \
+    !BOOST_WORKAROUND(BOOST_MSVC, < 1310)  &&   \
+    !defined(__MWERKS__) 
+#  define BOOST_TEST_USE_STD_LOCALE 1
 #endif
 
 //____________________________________________________________________________//
 
-#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570)           || \
-    BOOST_WORKAROUND( __COMO__, <= 0x433 )             || \
-    BOOST_WORKAROUND( __INTEL_COMPILER, <= 800 )       || \
-    BOOST_WORKAROUND(__GNUC__, < 3)                    || \
-    defined(__sgi) && _COMPILER_VERSION <= 730         || \
-    BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600)) || \
-    defined(__DECCXX) || \
+#if BOOST_WORKAROUND(__BORLANDC__, <= 0x570)            || \
+    BOOST_WORKAROUND( __COMO__, <= 0x433 )              || \
+    BOOST_WORKAROUND( __INTEL_COMPILER, <= 800 )        || \
+    defined(__sgi) && _COMPILER_VERSION <= 730          || \
+    BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600))  || \
+    defined(__DECCXX)                                   || \
     defined(__DMC__)
 #  define BOOST_TEST_NO_PROTECTED_USING
 #endif
@@ -66,6 +61,14 @@
 #define BOOST_TEST_PROTECTED_VIRTUAL virtual
 #else
 #define BOOST_TEST_PROTECTED_VIRTUAL
+#endif
+
+//____________________________________________________________________________//
+
+#if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) && \
+    !BOOST_WORKAROUND(BOOST_MSVC, <1310) && \
+    !BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530))
+#  define BOOST_TEST_SUPPORT_INTERACTION_TESTING 1
 #endif
 
 //____________________________________________________________________________//

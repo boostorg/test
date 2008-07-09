@@ -20,6 +20,7 @@
 #include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
+#include <boost/test/utils/lazy_ostream.hpp>
 
 // Boost
 #include <boost/version.hpp>
@@ -160,6 +161,14 @@ compiler_log_formatter::log_entry_start( std::ostream& output, log_entry_data co
 
 void
 compiler_log_formatter::log_entry_value( std::ostream& output, const_string value )
+{
+    output << value;
+}
+
+//____________________________________________________________________________//
+
+void
+compiler_log_formatter::log_entry_value( std::ostream& output, lazy_ostream const& value )
 {
     output << value;
 }

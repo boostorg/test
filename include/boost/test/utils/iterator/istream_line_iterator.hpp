@@ -59,11 +59,7 @@ public:
     }
     explicit basic_istream_line_iterator( istream_type& input )
     : m_input_stream( &input ) 
-#if BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
-    , m_delimeter( '\n' )
-#else
     , m_delimeter( input.widen( '\n' ) )
-#endif
     {
         this->init();
     }

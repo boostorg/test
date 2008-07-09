@@ -724,19 +724,11 @@ debugger_break()
 // **************            console debugger setup            ************** //
 // ************************************************************************** //
 
-#if BOOST_WORKAROUND( BOOST_MSVC, <1300)
-std::string
-set_debugger( unit_test::const_string dbg_id )
-{
-    dbg_starter s;
-#else
+#if defined(BOOST_UNIX_BASED_DEBUG) // ************************ UNIX
+
 std::string
 set_debugger( unit_test::const_string dbg_id, dbg_starter s )
 {
-#endif
-
-#if defined(BOOST_UNIX_BASED_DEBUG) // ************************ UNIX
-
     std::string old = s_info.p_dbg;
 
     assign_op( s_info.p_dbg.value, dbg_id, 0 );
@@ -745,13 +737,17 @@ set_debugger( unit_test::const_string dbg_id, dbg_starter s )
         s_info.m_dbg_starter_reg[s_info.p_dbg] = s;
 
     return old;
+}
 
 #else  // ***************************************************** default
 
+std::string
+set_debugger( unit_test::const_string, dbg_starter )
+{
     return std::string();
+}
 
 #endif
-}
 
 //____________________________________________________________________________//
 

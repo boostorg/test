@@ -48,6 +48,7 @@ public:
 
     void    log_entry_start( std::ostream&, log_entry_data const&, log_entry_types let );
     void    log_entry_value( std::ostream&, const_string value );
+    void    log_entry_value( std::ostream&, lazy_ostream const& value );
     void    log_entry_finish( std::ostream& );
 
 protected:

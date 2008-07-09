@@ -38,6 +38,7 @@ class  unit_test_log_formatter;
 struct log_entry_data;
 struct log_checkpoint_data;
 
+class lazy_ostream;
 
 } // namespace unit_test
 

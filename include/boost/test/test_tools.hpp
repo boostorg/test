@@ -25,6 +25,7 @@
 
 #include <boost/test/utils/wrap_stringstream.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
+#include <boost/test/utils/lazy_ostream.hpp>
 
 // Boost
 #include <boost/preprocessor/seq/for_each.hpp>
@@ -70,51 +71,29 @@
 // CT - check type
 // ARGS - arguments list
 
-#define BOOST_TEST_TOOL_IMPL( func, P, check_descr, TL, CT ) \
-    ::boost::test_tools::tt_detail::func(                    \
-        P,                                                   \
-        ::boost::wrap_stringstream().ref() << check_descr,   \
-        BOOST_TEST_L(__FILE__),                              \
-        (std::size_t)__LINE__,                               \
-        ::boost::test_tools::tt_detail::TL,                  \
-        ::boost::test_tools::tt_detail::CT                   \
+#define BOOST_TEST_TOOL_IMPL( func, P, check_descr, TL, CT )            \
+    ::boost::test_tools::tt_detail::func(                               \
+        P,                                                              \
+        ::boost::unit_test::lazy_ostream::instance() << check_descr,    \
+        BOOST_TEST_L(__FILE__),                                         \
+        (std::size_t)__LINE__,                                          \
+        ::boost::test_tools::tt_detail::TL,                             \
+        ::boost::test_tools::tt_detail::CT                              \
 /**/
 
 //____________________________________________________________________________//
 
-#if defined(__GNUC__)
-#  define BOOST_TEST_TOOLS_RETURN_VALUE
-#endif
-
-#ifdef BOOST_TEST_TOOLS_RETURN_VALUE
-#define BOOST_CHECK_IMPL( P, check_descr, TL, CT )                  \
-({                                                                  \
-    BOOST_TEST_PASSPOINT();                                         \
-    BOOST_TEST_TOOL_IMPL( check_impl, P, check_descr, TL, CT ), 0 );\
-})                                                                  \
-/**/
-#else
 #define BOOST_CHECK_IMPL( P, check_descr, TL, CT )                  \
 do {                                                                \
     BOOST_TEST_PASSPOINT();                                         \
     BOOST_TEST_TOOL_IMPL( check_impl, P, check_descr, TL, CT ), 0 );\
 } while( ::boost::test_tools::dummy_cond )                          \
 /**/
-#endif
 
 //____________________________________________________________________________//
 
 #define BOOST_TEST_PASS_ARG_INFO( r, data, arg ) , arg, BOOST_STRINGIZE( arg )
 
-#ifdef BOOST_TEST_TOOLS_RETURN_VALUE
-#define BOOST_CHECK_WITH_ARGS_IMPL( P, check_descr, TL, CT, ARGS )  \
-({                                                                  \
-    BOOST_TEST_PASSPOINT();                                         \
-    BOOST_TEST_TOOL_IMPL( check_frwd, P, check_descr, TL, CT )      \
-    BOOST_PP_SEQ_FOR_EACH( BOOST_TEST_PASS_ARG_INFO, '_', ARGS ) ); \
-})                                                                  \
-/**/
-#else
 #define BOOST_CHECK_WITH_ARGS_IMPL( P, check_descr, TL, CT, ARGS )  \
 do {                                                                \
     BOOST_TEST_PASSPOINT();                                         \
@@ -122,7 +101,6 @@ do {                                                                \
     BOOST_PP_SEQ_FOR_EACH( BOOST_TEST_PASS_ARG_INFO, '_', ARGS ) ); \
 } while( ::boost::test_tools::dummy_cond )                          \
 /**/
-#endif
 
 //____________________________________________________________________________//
 
@@ -490,7 +468,7 @@ operator<<( std::ostream& ostr, print_helper_t<T> const& ph )
 // ************************************************************************** //
 
 BOOST_TEST_DECL 
-bool check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
+bool check_impl( predicate_result const& pr, ::boost::unit_test::lazy_ostream const& check_descr,
                  const_string file_name, std::size_t line_num,
                  tool_level tl, check_type ct,
                  std::size_t num_args, ... );
@@ -516,7 +494,7 @@ bool check_impl( predicate_result const& pr, wrap_stringstream& check_descr,
 template<typename Pred                                                              \
          BOOST_PP_REPEAT_ ## z( BOOST_PP_ADD( n, 1 ), TEMPL_PARAMS, _ )>            \
 inline bool                                                                         \
-check_frwd( Pred P, wrap_stringstream& check_descr,                                 \
+check_frwd( Pred P, unit_test::lazy_ostream const& check_descr,                     \
             const_string file_name, std::size_t line_num,                           \
             tool_level tl, check_type ct                                            \
             BOOST_PP_REPEAT_ ## z( BOOST_PP_ADD( n, 1 ), FUNC_PARAMS, _ )           \
