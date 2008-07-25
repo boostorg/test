@@ -306,35 +306,8 @@ typedef unit_test::const_string      const_string;
 
 namespace { bool const dummy_cond = false; }
 
-namespace tt_detail {
-
 // ************************************************************************** //
-// **************              tools classification            ************** //
-// ************************************************************************** //
-
-enum check_type {
-    CHECK_PRED, 
-    CHECK_MSG,
-    CHECK_EQUAL,
-    CHECK_NE,
-    CHECK_LT,
-    CHECK_LE,
-    CHECK_GT,
-    CHECK_GE,
-    CHECK_CLOSE,
-    CHECK_CLOSE_FRACTION,
-    CHECK_SMALL,
-    CHECK_BITWISE_EQUAL,
-    CHECK_PRED_WITH_ARGS,
-    CHECK_EQUAL_COLL
-};
-
-enum tool_level {
-    WARN, CHECK, REQUIRE, PASS
-};
-
-// ************************************************************************** //
-// **************               log print helper               ************** //
+// **************                print_log_value               ************** //
 // ************************************************************************** //
 
 template<typename T>
@@ -362,13 +335,13 @@ struct print_log_value {
 
 //____________________________________________________________________________//
 
-#define BOOST_TEST_DONT_PRINT_LOG_VALUE( the_type )                 \
-namespace boost { namespace test_tools { namespace tt_detail {      \
-template<>                                                          \
-struct print_log_value<the_type > {                                 \
-    void operator()( std::ostream&, the_type const& ) {}            \
-};                                                                  \
-}}}                                                                 \
+#define BOOST_TEST_DONT_PRINT_LOG_VALUE( the_type )         \
+namespace boost { namespace test_tools {                    \
+template<>                                                  \
+struct print_log_value<the_type > {                         \
+    void operator()( std::ostream&, the_type const& ) {}    \
+};                                                          \
+}}                                                          \
 /**/
 
 //____________________________________________________________________________//
@@ -422,6 +395,39 @@ struct BOOST_TEST_DECL print_log_value<wchar_t const*> {
 };
 
 //____________________________________________________________________________//
+
+namespace tt_detail {
+
+// ************************************************************************** //
+// **************              tools classification            ************** //
+// ************************************************************************** //
+
+enum check_type {
+    CHECK_PRED, 
+    CHECK_MSG,
+    CHECK_EQUAL,
+    CHECK_NE,
+    CHECK_LT,
+    CHECK_LE,
+    CHECK_GT,
+    CHECK_GE,
+    CHECK_CLOSE,
+    CHECK_CLOSE_FRACTION,
+    CHECK_SMALL,
+    CHECK_BITWISE_EQUAL,
+    CHECK_PRED_WITH_ARGS,
+    CHECK_EQUAL_COLL
+};
+
+enum tool_level {
+    WARN, CHECK, REQUIRE, PASS
+};
+
+// ************************************************************************** //
+// **************                 print_helper                 ************** //
+// ************************************************************************** //
+// Adds level of indirection to the output operation, allowing us to customize 
+// it for types that do not support operator << directly or for any other reason
 
 template<typename T>
 struct print_helper_t {

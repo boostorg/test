@@ -53,6 +53,58 @@ namespace boost {
 
 namespace test_tools {
 
+// ************************************************************************** //
+// **************                print_log_value               ************** //
+// ************************************************************************** //
+
+void
+print_log_value<char>::operator()( std::ostream& ostr, char t )
+{
+    if( (std::isprint)( (unsigned char)t ) )
+        ostr << '\'' << t << '\'';
+    else
+        ostr << std::hex
+#if BOOST_TEST_USE_STD_LOCALE
+        << std::showbase
+#else
+        << "0x"
+#endif
+        << (int)t;
+}
+
+//____________________________________________________________________________//
+
+void
+print_log_value<unsigned char>::operator()( std::ostream& ostr, unsigned char t )
+{
+    ostr << std::hex
+        // showbase is only available for new style streams:
+#if BOOST_TEST_USE_STD_LOCALE
+        << std::showbase
+#else
+        << "0x"
+#endif
+        << (int)t;
+}
+
+//____________________________________________________________________________//
+
+void
+print_log_value<char const*>::operator()( std::ostream& ostr, char const* t )
+{
+    ostr << ( t ? t : "null string" );
+}
+
+//____________________________________________________________________________//
+
+void
+print_log_value<wchar_t const*>::operator()( std::ostream& ostr, wchar_t const* t )
+{
+    ostr << ( t ? t : L"null string" );
+}
+
+//____________________________________________________________________________//
+
 namespace tt_detail {
 
 // ************************************************************************** //
@@ -350,58 +402,6 @@ is_defined_impl( const_string symbol_name, const_string symbol_value )
 {
     symbol_value.trim_left( 2 );
     return symbol_name != symbol_value;
-}
-
-//____________________________________________________________________________//
-
-// ************************************************************************** //
-// **************               log print helper               ************** //
-// ************************************************************************** //
-
-void
-print_log_value<char>::operator()( std::ostream& ostr, char t )
-{
-    if( (std::isprint)( (unsigned char)t ) )
-        ostr << '\'' << t << '\'';
-    else
-        ostr << std::hex
-#if BOOST_TEST_USE_STD_LOCALE
-        << std::showbase
-#else
-        << "0x"
-#endif
-        << (int)t;
-}
-
-//____________________________________________________________________________//
-
-void
-print_log_value<unsigned char>::operator()( std::ostream& ostr, unsigned char t )
-{
-    ostr << std::hex
-        // showbase is only available for new style streams:
-#if BOOST_TEST_USE_STD_LOCALE
-        << std::showbase
-#else
-        << "0x"
-#endif
-        << (int)t;
-}
-
-//____________________________________________________________________________//
-
-void
-print_log_value<char const*>::operator()( std::ostream& ostr, char const* t )
-{
-    ostr << ( t ? t : "null string" );
-}
-
-//____________________________________________________________________________//
-
-void
-print_log_value<wchar_t const*>::operator()( std::ostream& ostr, wchar_t const* t )
-{
-    ostr << ( t ? t : L"null string" );
 }
 
 //____________________________________________________________________________//
