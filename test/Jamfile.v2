@@ -6,11 +6,11 @@
 #  See http://www.boost.org/libs/test for the library home page.
 
 
-rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file * : source_files * )
+rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file * : source_files * : extra-libs ? )
 {
    source_files ?= $(test-name).cpp ;
 
-   return [ $(test-rule) $(source_files) ../build//$(lib-name)
+   return [ $(test-rule) $(source_files) ../build//$(lib-name) $(extra-libs)
             : #args
             : $(pattern_file)
             : #<stlport-iostream>on 
@@ -54,6 +54,8 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : token_iterator_test         : boost_unit_test_framework ]
           [ test-btl-lib run : boost_check_equal_str       : boost_unit_test_framework ]
           [ test-btl-lib run : test_tree_management_test   : boost_unit_test_framework ]
+          [ test-btl-lib run : sync_access_test            : boost_unit_test_framework/<link>static : : : /boost/thread//boost_thread ]
+
             ;
 
 # A target that runs all the tests 
