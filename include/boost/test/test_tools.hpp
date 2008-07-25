@@ -18,6 +18,7 @@
 // Boost.Test
 #include <boost/test/predicate_result.hpp>
 #include <boost/test/unit_test_log.hpp>
+#include <boost/test/floating_point_comparison.hpp>
 
 #include <boost/test/detail/config.hpp>
 #include <boost/test/detail/global_typedef.hpp>
@@ -34,6 +35,7 @@
 #include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/preprocessor/punctuation/comma_if.hpp>
 #include <boost/preprocessor/arithmetic/add.hpp>
+
 #include <boost/limits.hpp>
 
 #include <boost/type_traits/is_array.hpp>

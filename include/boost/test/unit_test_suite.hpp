@@ -17,6 +17,7 @@
 
 // Boost.Test
 #include <boost/test/unit_test_suite_impl.hpp>
+#include <boost/test/test_case_template.hpp>
 #include <boost/test/framework.hpp>
 
 //____________________________________________________________________________//
