@@ -87,7 +87,7 @@ public:
     bool            responds_to( cstring name ) const           { return m_id_policy.responds_to( name ); }
     bool            conflict_with( parameter const& p ) const
     {
-        return id_2_report() == p.id_2_report() && !id_2_report().is_empty()    ||
+        return (id_2_report() == p.id_2_report() && !id_2_report().is_empty())  ||
                m_id_policy.conflict_with( p.m_id_policy )                       || 
                p.m_id_policy.conflict_with( m_id_policy );
     }

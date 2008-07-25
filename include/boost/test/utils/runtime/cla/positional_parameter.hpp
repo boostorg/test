@@ -38,17 +38,17 @@ public:
     BOOST_RT_PARAM_UNNEEDED_VIRTUAL ~trivial_id_policy() {}
 
     virtual bool    responds_to( cstring name ) const                       { return m_name == name; }
-    virtual bool    conflict_with( identification_policy const& id ) const  { return false; }
+    virtual bool    conflict_with( identification_policy const& ) const     { return false; }
     virtual cstring id_2_report() const                                     { return m_name; }
     virtual void    usage_info( format_stream& fs ) const
     { 
         if( !m_name.empty() )
             fs << BOOST_RT_PARAM_LITERAL( '<' ) << m_name << BOOST_RT_PARAM_LITERAL( '>' );
         else
-            fs << BOOST_RT_PARAM_CSTRING_LITERAL( "<value>" );;
+            fs << BOOST_RT_PARAM_CSTRING_LITERAL( "<value>" );
     }
 
-    virtual bool    matching( parameter const& p, argv_traverser& tr, bool primary ) const
+    virtual bool    matching( parameter const& p, argv_traverser&, bool primary ) const
     {
         return primary && ( !p.has_argument() || p.p_multiplicable );
     }
