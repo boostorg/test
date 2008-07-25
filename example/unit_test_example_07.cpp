@@ -29,7 +29,7 @@ typedef boost::mpl::list<char,int,float,double> test_types;
 // each produced test case uses struct F as a fixture
 BOOST_AUTO_TEST_CASE_TEMPLATE( my_test, T, test_types )
 {
-    T t = i;
+    T t = static_cast<T>(i);
 
     // usually it's a bad idea to use BOOST_CHECK_EQUAL for checking equality values of 
     // floating point types. This check may or may not produce an error report
