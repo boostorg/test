@@ -111,8 +111,10 @@ namespace tt_detail {
 // **************            TOOL BOX Implementation           ************** //
 // ************************************************************************** //
 
+using ::boost::unit_test::lazy_ostream;
+
 bool
-check_impl( predicate_result const& pr, ::boost::unit_test::lazy_ostream const& check_descr,
+check_impl( predicate_result const& pr, lazy_ostream const& check_descr,
             const_string file_name, std::size_t line_num,
             tool_level tl, check_type ct,
             std::size_t num_of_args, ... )
@@ -191,16 +193,16 @@ check_impl( predicate_result const& pr, ::boost::unit_test::lazy_ostream const& 
         va_list args;
 
         va_start( args, num_of_args );
-        char const* arg1_descr  = va_arg( args, char const* );
-        char const* arg1_val    = va_arg( args, char const* );
-        char const* arg2_descr  = va_arg( args, char const* );
-        char const* arg2_val    = va_arg( args, char const* );
+        char const*         arg1_descr  = va_arg( args, char const* );
+        lazy_ostream const* arg1_val    = va_arg( args, lazy_ostream const* );
+        char const*         arg2_descr  = va_arg( args, char const* );
+        lazy_ostream const* arg2_val    = va_arg( args, lazy_ostream const* );
 
         unit_test_log << unit_test::log::begin( file_name, line_num ) 
                       << ll << prefix << arg1_descr << check_str[ct-CHECK_EQUAL] << arg2_descr << suffix;
 
         if( tl != PASS )
-            unit_test_log << " [" << arg1_val << rever_str[ct-CHECK_EQUAL] << arg2_val << "]" ;
+            unit_test_log << " [" << *arg1_val << rever_str[ct-CHECK_EQUAL] << *arg2_val << "]" ;
 
         va_end( args );
         
@@ -216,19 +218,19 @@ check_impl( predicate_result const& pr, ::boost::unit_test::lazy_ostream const& 
         va_list args;
 
         va_start( args, num_of_args );
-        char const* arg1_descr  = va_arg( args, char const* );
-        char const* arg1_val    = va_arg( args, char const* );
-        char const* arg2_descr  = va_arg( args, char const* );
-        char const* arg2_val    = va_arg( args, char const* );
-        /* toler_descr = */       va_arg( args, char const* );
-        char const* toler_val   = va_arg( args, char const* );
+        char const*         arg1_descr  = va_arg( args, char const* );
+        lazy_ostream const* arg1_val    = va_arg( args, lazy_ostream const* );
+        char const*         arg2_descr  = va_arg( args, char const* );
+        lazy_ostream const* arg2_val    = va_arg( args, lazy_ostream const* );
+        /* toler_descr = */               va_arg( args, char const* );
+        lazy_ostream const* toler_val   = va_arg( args, lazy_ostream const* );
 
         unit_test_log << unit_test::log::begin( file_name, line_num ) << ll;
 
-        unit_test_log << "difference between " << arg1_descr << "{" << arg1_val << "}" 
-                      << " and "               << arg2_descr << "{" << arg2_val << "}"
+        unit_test_log << "difference between " << arg1_descr << "{" << *arg1_val << "}" 
+                      << " and "               << arg2_descr << "{" << *arg2_val << "}"
                       << ( tl == PASS ? " doesn't exceed " : " exceeds " )
-                      << toler_val;
+                      << *toler_val;
         if( ct == CHECK_CLOSE )
             unit_test_log << "%";
 
@@ -244,16 +246,16 @@ check_impl( predicate_result const& pr, ::boost::unit_test::lazy_ostream const& 
         va_list args;
 
         va_start( args, num_of_args );
-        char const* arg1_descr  = va_arg( args, char const* );
-        char const* arg1_val    = va_arg( args, char const* );
-        /* toler_descr = */       va_arg( args, char const* );
-        char const* toler_val   = va_arg( args, char const* );
+        char const*         arg1_descr  = va_arg( args, char const* );
+        lazy_ostream const* arg1_val    = va_arg( args, lazy_ostream const* );
+        /* toler_descr = */               va_arg( args, char const* );
+        lazy_ostream const* toler_val   = va_arg( args, lazy_ostream const* );
 
         unit_test_log << unit_test::log::begin( file_name, line_num ) << ll;
 
-        unit_test_log << "absolute value of " << arg1_descr << "{" << arg1_val << "}" 
+        unit_test_log << "absolute value of " << arg1_descr << "{" << *arg1_val << "}" 
                       << ( tl == PASS ? " doesn't exceed " : " exceeds " )
-                      << toler_val;
+                      << *toler_val;
 
         va_end( args );
         
@@ -276,7 +278,7 @@ check_impl( predicate_result const& pr, ::boost::unit_test::lazy_ostream const& 
             unit_test_log << "( ";
             for( std::size_t i = 0; i < num_of_args; ++i ) {
                 unit_test_log << va_arg( args, char const* );
-                va_arg( args, char const* ); // skip argument value;
+                va_arg( args, lazy_ostream const* ); // skip argument value;
                 
                 if( i != num_of_args-1 )
                     unit_test_log << ", ";
@@ -292,7 +294,7 @@ check_impl( predicate_result const& pr, ::boost::unit_test::lazy_ostream const& 
             unit_test_log << " for ( ";
             for( std::size_t i = 0; i < num_of_args; ++i ) {
                 va_arg( args, char const* ); // skip argument description;            
-                unit_test_log << va_arg( args, char const* );
+                unit_test_log << *va_arg( args, lazy_ostream const* );
                 
                 if( i != num_of_args-1 )
                     unit_test_log << ", ";

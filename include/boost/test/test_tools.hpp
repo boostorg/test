@@ -491,9 +491,8 @@ bool check_impl( predicate_result const& pr, ::boost::unit_test::lazy_ostream co
 
 #define ARG_INFO( z, m, dummy )                                                     \
     , BOOST_JOIN( BOOST_JOIN( arg, m ), _descr )                                    \
-    , (boost::wrap_stringstream().ref()                                             \
-        << ::boost::test_tools::tt_detail::                                         \
-            print_helper( BOOST_JOIN( arg, m ) )).str().c_str()                     \
+    , &(const unit_test::lazy_ostream&)(unit_test::lazy_ostream::instance()         \
+        << ::boost::test_tools::tt_detail::print_helper( BOOST_JOIN( arg, m ) ))    \
 /**/
 
 #define IMPL_FRWD( z, n, dummy )                                                    \
