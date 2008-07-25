@@ -14,6 +14,11 @@ rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file * : source
             : #args
             : $(pattern_file)
             : #<stlport-iostream>on 
+              # Activating -pedantic finds more gotchas
+              # Unfortunately, this warns about the use of "long long" in gcc's own stdlib
+              # So deactivate those warnings again
+              <toolset>gcc:<cxxflags>-pedantic
+              <toolset>gcc:<cxxflags>-Wno-long-long
               <toolset>borland:<cxxflags>-w-8080
               <toolset>msvc-6.5:<link>static
               <toolset>msvc-8.0:<define>_SCL_SECURE_NO_DEPRECATE
