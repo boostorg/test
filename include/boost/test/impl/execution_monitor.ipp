@@ -669,6 +669,7 @@ signal_handler::~signal_handler()
 #ifdef BOOST_TEST_USE_ALT_STACK
     stack_t sigstk = {};
 
+    sigstk.ss_size  = MINSIGSTKSZ;
     sigstk.ss_flags = SS_DISABLE;
     BOOST_TEST_SYS_ASSERT( ::sigaltstack( &sigstk, 0 ) != -1 );
 #endif
