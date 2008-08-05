@@ -404,28 +404,29 @@ BOOST_TEST_CASE_TEMPLATE_FUNCTION( io_test, CharT )
 
 BOOST_TEST_CASE_TEMPLATE_FUNCTION( find_test, CharT )
 {
+    typedef typename utf::basic_cstring<CharT>::size_type size;
     utf::basic_cstring<CharT> bcs1( TEST_STRING );
 
-    utf::basic_cstring<CharT>::size_type not_found = (utf::basic_cstring<CharT>::size_type)utf::basic_cstring<CharT>::npos;
+    size not_found = (size)utf::basic_cstring<CharT>::npos;
 
     BOOST_CHECK_EQUAL( bcs1.find( utf::basic_cstring<CharT>() ), not_found );
-    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "test" ) ), (utf::basic_cstring<CharT>::size_type)0 );
-    BOOST_CHECK_EQUAL( bcs1.find( TEST_STRING ), (utf::basic_cstring<CharT>::size_type)0 );
+    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "test" ) ), (size)0 );
+    BOOST_CHECK_EQUAL( bcs1.find( TEST_STRING ), (size)0 );
     BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "test_string " ) ), not_found );
     BOOST_CHECK_EQUAL( bcs1.find( LITERAL( " test_string" ) ), not_found );
-    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "est" ) ), (utf::basic_cstring<CharT>::size_type)1 );
-    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "t_st" ) ), (utf::basic_cstring<CharT>::size_type)3 );
-    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "ing" ) ), (utf::basic_cstring<CharT>::size_type)8 );
+    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "est" ) ), (size)1 );
+    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "t_st" ) ), (size)3 );
+    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "ing" ) ), (size)8 );
     BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "tst" ) ), not_found );
 
     BOOST_CHECK_EQUAL( bcs1.rfind( utf::basic_cstring<CharT>() ), not_found );
-    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "test" ) ), (utf::basic_cstring<CharT>::size_type)0 );
-    BOOST_CHECK_EQUAL( bcs1.rfind( TEST_STRING ), (utf::basic_cstring<CharT>::size_type)0 );
+    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "test" ) ), (size)0 );
+    BOOST_CHECK_EQUAL( bcs1.rfind( TEST_STRING ), (size)0 );
     BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "test_string " ) ), not_found );
     BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( " test_string" ) ), not_found );
-    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "est" ) ), (utf::basic_cstring<CharT>::size_type)1 );
-    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "t_st" ) ), (utf::basic_cstring<CharT>::size_type)3 );
-    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "ing" ) ), (utf::basic_cstring<CharT>::size_type)8 );
+    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "est" ) ), (size)1 );
+    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "t_st" ) ), (size)3 );
+    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "ing" ) ), (size)8 );
     BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "tst" ) ), not_found );
 }
 
