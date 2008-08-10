@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2007.
+//  (C) Copyright Gennadiy Rozental 2001-2008.
 //  (C) Copyright Beman Dawes 2001. 
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
@@ -29,8 +29,13 @@
 
 int cpp_main( int, char *[] )  // note the name
 {
+#if defined(APPLE) && defined(ppc)
+    printf("The ppc doesn't throw on divice-by-zero. No check.\n"); 
+    return 1;
+#else 
     int div = 0;
     return 10 / div;
+#endif
 }
 
 //____________________________________________________________________________//

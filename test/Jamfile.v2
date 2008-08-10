@@ -6,14 +6,19 @@
 #  See http://www.boost.org/libs/test for the library home page.
 
 
-rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file * : source_files * )
+rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file * : source_files * : extra-libs ? )
 {
    source_files ?= $(test-name).cpp ;
 
-   return [ $(test-rule) $(source_files) ../build//$(lib-name)
+   return [ $(test-rule) $(source_files) ../build//$(lib-name) $(extra-libs)
             : #args
             : $(pattern_file)
             : #<stlport-iostream>on 
+              # Activating -pedantic finds more gotchas
+              # Unfortunately, this warns about the use of "long long" in gcc's own stdlib
+              # So deactivate those warnings again
+              <toolset>gcc:<cxxflags>-pedantic
+              <toolset>gcc:<cxxflags>-Wno-long-long
               <toolset>borland:<cxxflags>-w-8080
               <toolset>msvc-6.5:<link>static
               <toolset>msvc-8.0:<define>_SCL_SECURE_NO_DEPRECATE
@@ -54,6 +59,8 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : token_iterator_test         : boost_unit_test_framework ]
           [ test-btl-lib run : boost_check_equal_str       : boost_unit_test_framework ]
           [ test-btl-lib run : test_tree_management_test   : boost_unit_test_framework ]
+          [ test-btl-lib run : sync_access_test            : boost_unit_test_framework/<link>static : : : /boost/thread//boost_thread ]
+
             ;
 
 # A target that runs all the tests 

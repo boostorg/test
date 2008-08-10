@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2007.
+//  (C) Copyright Gennadiy Rozental 2001-2008.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -11,6 +11,10 @@
 //
 //  Description : basic_cstring unit test
 // *****************************************************************************
+
+#ifdef _MSC_VER
+#pragma warning(disable: 4996)
+#endif
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
@@ -90,19 +94,19 @@ BOOST_TEST_CASE_TEMPLATE_FUNCTION( constructors_test, CharT )
 {
     {
         utf::basic_cstring<CharT> bcs;
-        BOOST_CHECK_EQUAL( bcs.size(), 0 );
+        BOOST_CHECK_EQUAL( bcs.size(), (unsigned)0 );
         BOOST_CHECK( bcs.is_empty() );
     }
 
     {
         utf::basic_cstring<CharT> bcs( utf::basic_cstring<CharT>::null_str() );
-        BOOST_CHECK_EQUAL( bcs.size(), 0 );
+        BOOST_CHECK_EQUAL( bcs.size(), (unsigned)0 );
         BOOST_CHECK( bcs.is_empty() );
     }
 
     {
         utf::basic_cstring<CharT> bcs( 0 );
-        BOOST_CHECK_EQUAL( bcs.size(), 0 );
+        BOOST_CHECK_EQUAL( bcs.size(), (unsigned)0 );
         BOOST_CHECK( bcs.is_empty() );
     }
 
@@ -195,24 +199,24 @@ BOOST_TEST_CASE_TEMPLATE_FUNCTION( size_test, CharT )
 {
     utf::basic_cstring<CharT> bcs1;
 
-    BOOST_CHECK_EQUAL( bcs1.size(), 0 );
+    BOOST_CHECK_EQUAL( bcs1.size(), (unsigned)0 );
     BOOST_CHECK( bcs1.is_empty() );
 
     bcs1 = TEST_STRING;
-    BOOST_CHECK_EQUAL( bcs1.size(), 11 );
+    BOOST_CHECK_EQUAL( bcs1.size(), (unsigned)11 );
 
     bcs1.clear();
-    BOOST_CHECK_EQUAL( bcs1.size(), 0 );
+    BOOST_CHECK_EQUAL( bcs1.size(), (unsigned)0 );
     BOOST_CHECK( bcs1.is_empty() );
 
     bcs1 = utf::basic_cstring<CharT>( TEST_STRING, 4 );
-    BOOST_CHECK_EQUAL( bcs1.size(), 4 );
+    BOOST_CHECK_EQUAL( bcs1.size(), (unsigned)4 );
 
     bcs1.resize( 5 );
-    BOOST_CHECK_EQUAL( bcs1.size(), 4 );
+    BOOST_CHECK_EQUAL( bcs1.size(), (unsigned)4 );
 
     bcs1.resize( 3 );
-    BOOST_CHECK_EQUAL( bcs1.size(), 3 );
+    BOOST_CHECK_EQUAL( bcs1.size(), (unsigned)3 );
 }
 
 //____________________________________________________________________________//
@@ -332,11 +336,11 @@ BOOST_TEST_CASE_TEMPLATE_FUNCTION( trim_test, CharT )
     LOCAL_DEF( bcs0, "tes" );
 
     bcs0.trim_right( 1 );
-    BOOST_CHECK_EQUAL( bcs0.size(), 2 );
+    BOOST_CHECK_EQUAL( bcs0.size(), (unsigned)2 );
     BOOST_CHECK_EQUAL( bcs0[0], 't' );
 
     bcs0.trim_left( 1 );
-    BOOST_CHECK_EQUAL( bcs0.size(), 1 );
+    BOOST_CHECK_EQUAL( bcs0.size(), (unsigned)1 );
     BOOST_CHECK_EQUAL( bcs0[0], 'e' );
 
     bcs0.trim_left( 1 );
@@ -400,27 +404,30 @@ BOOST_TEST_CASE_TEMPLATE_FUNCTION( io_test, CharT )
 
 BOOST_TEST_CASE_TEMPLATE_FUNCTION( find_test, CharT )
 {
+    typedef typename utf::basic_cstring<CharT>::size_type size;
     utf::basic_cstring<CharT> bcs1( TEST_STRING );
 
-    BOOST_CHECK_EQUAL( bcs1.find( utf::basic_cstring<CharT>() ), utf::basic_cstring<CharT>::npos );
-    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "test" ) ), 0 );
-    BOOST_CHECK_EQUAL( bcs1.find( TEST_STRING ), 0 );
-    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "test_string " ) ), utf::basic_cstring<CharT>::npos );
-    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( " test_string" ) ), utf::basic_cstring<CharT>::npos );
-    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "est" ) ), 1 );
-    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "t_st" ) ), 3 );
-    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "ing" ) ), 8 );
-    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "tst" ) ), utf::basic_cstring<CharT>::npos );
+    size not_found = (size)utf::basic_cstring<CharT>::npos;
 
-    BOOST_CHECK_EQUAL( bcs1.rfind( utf::basic_cstring<CharT>() ), utf::basic_cstring<CharT>::npos );
-    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "test" ) ), 0 );
-    BOOST_CHECK_EQUAL( bcs1.rfind( TEST_STRING ), 0 );
-    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "test_string " ) ), utf::basic_cstring<CharT>::npos );
-    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( " test_string" ) ), utf::basic_cstring<CharT>::npos );
-    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "est" ) ), 1 );
-    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "t_st" ) ), 3 );
-    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "ing" ) ), 8 );
-    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "tst" ) ), utf::basic_cstring<CharT>::npos );
+    BOOST_CHECK_EQUAL( bcs1.find( utf::basic_cstring<CharT>() ), not_found );
+    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "test" ) ), (size)0 );
+    BOOST_CHECK_EQUAL( bcs1.find( TEST_STRING ), (size)0 );
+    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "test_string " ) ), not_found );
+    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( " test_string" ) ), not_found );
+    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "est" ) ), (size)1 );
+    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "t_st" ) ), (size)3 );
+    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "ing" ) ), (size)8 );
+    BOOST_CHECK_EQUAL( bcs1.find( LITERAL( "tst" ) ), not_found );
+
+    BOOST_CHECK_EQUAL( bcs1.rfind( utf::basic_cstring<CharT>() ), not_found );
+    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "test" ) ), (size)0 );
+    BOOST_CHECK_EQUAL( bcs1.rfind( TEST_STRING ), (size)0 );
+    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "test_string " ) ), not_found );
+    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( " test_string" ) ), not_found );
+    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "est" ) ), (size)1 );
+    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "t_st" ) ), (size)3 );
+    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "ing" ) ), (size)8 );
+    BOOST_CHECK_EQUAL( bcs1.rfind( LITERAL( "tst" ) ), not_found );
 }
 
 //____________________________________________________________________________//
