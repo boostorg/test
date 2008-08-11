@@ -22,7 +22,7 @@ using namespace boost::unit_test;
 
 BOOST_AUTO_TEST_SUITE( S1 )
 
-BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES( tc1, 1 )
+BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES( tc1, 1 );
 
 BOOST_AUTO_TEST_CASE( tc1 ) { BOOST_ERROR(""); }
 BOOST_AUTO_TEST_CASE( tc2 ) {}
@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE( tc2 ) {}
 
 BOOST_AUTO_TEST_SUITE( S21 )
 
-BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES( tc1, 1 )
+BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES( tc1, 1 );
 
 BOOST_AUTO_TEST_CASE( tc1 ) { BOOST_ERROR( "" ); }
 
@@ -152,7 +152,7 @@ BOOST_AUTO_TEST_CASE( automated_test_units_registration )
 {
     test_suite& mts = framework::master_test_suite();
 
-    BOOST_CHECK_EQUAL( mts.size(), 8U );
+    BOOST_CHECK_EQUAL( mts.size(), 7U );
     BOOST_CHECK_EQUAL( mts.p_expected_failures, 2U );
 
     BOOST_CHECK_EQUAL( framework::get<test_case>( mts.get( "automated_test_units_registration" ) ).p_expected_failures, 0U );
@@ -176,81 +176,6 @@ BOOST_AUTO_TEST_CASE( automated_test_units_registration )
 
     BOOST_CHECK_EQUAL( S21.size(), 1U );
     BOOST_CHECK_EQUAL( S1.p_expected_failures, 1U );
-}
-
-//____________________________________________________________________________//
-
-struct A {
-    A() : i(0){}
-    void test_methodA1() { i++; }
-    void test_methodA2() { i++; }
-
-    int i;
-};
-
-struct B : public A {
-    void test_methodB() { i--; }
-};
-
-struct C {
-    C() : i( 0 ) {}
-
-    void virtual test_method() = 0;
-
-    int i; 
-};
-
-struct D : public C {
-    void virtual test_method() { i++; }
-};
-
-struct E : public C {
-    void virtual test_method() { i+=2; }
-};
-
-BOOST_AUTO_TEST_CASE( user_class_test_case )
-{
-    boost::shared_ptr<A> instA( new A );
-    test_case* tc1 = BOOST_CLASS_TEST_CASE( &A::test_methodA1, instA );
-    test_case* tc2 = BOOST_CLASS_TEST_CASE( &A::test_methodA2, instA );
-
-    BOOST_CHECK_EQUAL( tc1->p_name, const_string( "A::test_methodA1" ) );
-    BOOST_CHECK_EQUAL( tc2->p_name, const_string( "A::test_methodA2" ) );
-
-    BOOST_CHECK_EQUAL( instA->i, 0 );
-    tc1->test_func()();
-    BOOST_CHECK_EQUAL( instA->i, 1 );
-    tc2->test_func()();
-    BOOST_CHECK_EQUAL( instA->i, 2 );
-
-    boost::shared_ptr<B> instB( new B );
-    test_case* tc3 = BOOST_CLASS_TEST_CASE( &A::test_methodA1, instB );
-    test_case* tc4 = BOOST_CLASS_TEST_CASE( &B::test_methodB, instB );
-
-    BOOST_CHECK_EQUAL( tc3->p_name, const_string( "A::test_methodA1" ) );
-    BOOST_CHECK_EQUAL( tc4->p_name, const_string( "B::test_methodB" ) );
-
-    BOOST_CHECK_EQUAL( instB->i, 0 );
-    tc3->test_func()();
-    BOOST_CHECK_EQUAL( instB->i, 1 );
-    tc4->test_func()();
-    BOOST_CHECK_EQUAL( instB->i, 0 );
-
-    boost::shared_ptr<C> instC1( new D );
-    test_case* tc5 = BOOST_CLASS_TEST_CASE( &C::test_method, instC1 );
-
-    BOOST_CHECK_EQUAL( tc5->p_name, const_string( "C::test_method" ) );
-
-    tc5->test_func()();
-    BOOST_CHECK_EQUAL( instC1->i, 1 );
-
-    boost::shared_ptr<C> instC2( new E );
-    test_case* tc6 = BOOST_CLASS_TEST_CASE( &C::test_method, instC2 );
-
-    BOOST_CHECK_EQUAL( tc6->p_name, const_string( "C::test_method" ) );
-
-    tc6->test_func()();
-    BOOST_CHECK_EQUAL( instC2->i, 2 );
 }
 
 //____________________________________________________________________________//

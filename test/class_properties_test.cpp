@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2003-2008.
+//  (C) Copyright Gennadiy Rozental 2003-2007.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -130,6 +130,7 @@ BOOST_AUTO_TEST_CASE( test_readonly_property )
     BOOST_CHECK( p_str == s );
     BOOST_CHECK( s == p_str );
     BOOST_CHECK( p_str2 != p_str );
+
 
     BOOST_CHECK_EQUAL( p_b->foo(), 1 );
 
