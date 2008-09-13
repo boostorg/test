@@ -16,9 +16,6 @@
 #ifndef BOOST_TEST_TEST_CASE_TEMPLATE_HPP_071894GER
 #define BOOST_TEST_TEST_CASE_TEMPLATE_HPP_071894GER
 
-// Boost.Test
-#include <boost/test/unit_test_suite.hpp>
-
 // Boost
 #include <boost/mpl/for_each.hpp>
 #include <boost/mpl/identity.hpp>

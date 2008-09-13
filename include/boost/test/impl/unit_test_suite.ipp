@@ -60,6 +60,13 @@ test_unit::test_unit( const_string name, test_unit_type t )
 
 //____________________________________________________________________________//
 
+test_unit::~test_unit()
+{
+    framework::deregister_test_unit( this );
+}
+
+//____________________________________________________________________________//
+
 void
 test_unit::depends_on( test_unit* tu )
 {

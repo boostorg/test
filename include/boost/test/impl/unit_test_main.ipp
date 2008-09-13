@@ -131,7 +131,7 @@ public:
         std::vector<single_filter> const& filters = m_filters[m_depth-2];
 
         tu.p_enabled.value =
-            std::find_if( filters.begin(), filters.end(), bind( &single_filter::pass, _1, tu ) ) != filters.end();
+            std::find_if( filters.begin(), filters.end(), bind( &single_filter::pass, _1, boost::ref(tu) ) ) != filters.end();
     }
 
     // test tree visitor interface

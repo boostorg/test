@@ -71,6 +71,9 @@ public:
 
     void                                increase_exp_fail( unsigned num );
 
+protected:
+    ~test_unit();
+
 private:
     // Data members
     std::list<test_unit_id>             m_dependencies;

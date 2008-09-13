@@ -112,8 +112,7 @@ xml_log_formatter::test_unit_skipped( std::ostream& ostr, test_unit const& tu )
 void
 xml_log_formatter::log_exception( std::ostream& ostr, log_checkpoint_data const& checkpoint_data, const_string explanation )
 {
-    ostr << "<Exception name" << attr_value() << framework::current_test_case().p_name.get() << ">"
-           << pcdata() << explanation;
+    ostr << "<Exception>" << pcdata() << explanation;
 
     if( !checkpoint_data.m_file_name.is_empty() ) {
         ostr << "<LastCheckpoint file" << attr_value() << checkpoint_data.m_file_name
