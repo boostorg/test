@@ -229,15 +229,15 @@ BOOST_TEST_DECL std::string normalize_test_case_name( const_string tu_name );
 
 template<typename InstanceType,typename UserTestCase>
 struct user_tc_method_invoker {
-    typedef void (UserTestCase::*test_method )();
+    typedef void (UserTestCase::*TestMethod )();
 
-    user_tc_method_invoker( shared_ptr<InstanceType> inst, test_method test_method )
+    user_tc_method_invoker( shared_ptr<InstanceType> inst, TestMethod test_method )
     : m_inst( inst ), m_test_method( test_method ) {}
 
     void operator()() { ((*m_inst).*m_test_method)(); }
 
     shared_ptr<InstanceType> m_inst;
-    test_method              m_test_method;
+    TestMethod               m_test_method;
 };
 
 } // namespace ut_detail

@@ -511,16 +511,16 @@ basic_cstring<CharT>::end() const
 
 template<typename CharT>
 inline typename basic_cstring<CharT>::size_type
-basic_cstring<CharT>::find( basic_cstring<CharT> substr ) const
+basic_cstring<CharT>::find( basic_cstring<CharT> str ) const
 {
-    if( substr.is_empty() || substr.size() > size() )
+    if( str.is_empty() || str.size() > size() )
         return (size_type)npos;
 
     const_iterator it   = begin();
-    const_iterator last = end() - substr.size() + 1;
+    const_iterator last = end() - str.size() + 1;
 
     while( it != last ) {
-        if( traits_type::compare( it, substr.begin(), substr.size() ) == 0 )
+        if( traits_type::compare( it, str.begin(), str.size() ) == 0 )
             break;
 
         ++it;
@@ -533,16 +533,16 @@ basic_cstring<CharT>::find( basic_cstring<CharT> substr ) const
 
 template<typename CharT>
 inline typename basic_cstring<CharT>::size_type
-basic_cstring<CharT>::rfind( basic_cstring<CharT> substr ) const
+basic_cstring<CharT>::rfind( basic_cstring<CharT> str ) const
 {
-    if( substr.is_empty() || substr.size() > size() )
+    if( str.is_empty() || str.size() > size() )
         return (size_type)npos;
 
-    const_iterator it   = end() - substr.size();
+    const_iterator it   = end() - str.size();
     const_iterator last = begin()-1;
 
     while( it != last ) {
-        if( traits_type::compare( it, substr.begin(), substr.size() ) == 0 )
+        if( traits_type::compare( it, str.begin(), str.size() ) == 0 )
             break;
 
         --it;
