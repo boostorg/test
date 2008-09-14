@@ -57,6 +57,11 @@ namespace std { using ::strerror; using ::strlen; using ::strncat; }
 using std::va_list;
 #endif
 
+// to use vsnprintf 
+#if defined(__QNXNTO__) 
+#  include <stdio.h> 
+#endif
+
 #if defined(_WIN32) && !defined(BOOST_DISABLE_WIN32) &&                  \
     (!defined(__COMO__) && !defined(__MWERKS__) && !defined(__GNUC__) || \
      BOOST_WORKAROUND(__MWERKS__, >= 0x3000))
@@ -139,13 +144,14 @@ namespace { void _set_se_translator( void* ) {} }
 #  include <signal.h>
 #  include <setjmp.h>
 
-#  if !defined(__CYGWIN__)
+#  if !defined(__CYGWIN__) && !defined(__QNXNTO__)
 #   define BOOST_TEST_USE_ALT_STACK
 #  endif
 
-#  if defined(SIGPOLL) && !defined(__CYGWIN__) && \
-      !(defined(macintosh) || defined(__APPLE__) || defined(__APPLE_CC__)) && \
-      !defined(__NetBSD__)
+#  if defined(SIGPOLL) && !defined(__CYGWIN__)                              && \
+      !(defined(macintosh) || defined(__APPLE__) || defined(__APPLE_CC__))  && \
+      !defined(__NetBSD__)                                                  && \
+      !defined(__QNXNTO__)
 #    define BOOST_TEST_CATCH_SIGPOLL
 #  endif
 
