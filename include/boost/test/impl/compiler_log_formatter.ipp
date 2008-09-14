@@ -186,7 +186,13 @@ compiler_log_formatter::log_entry_finish( std::ostream& output )
 void
 compiler_log_formatter::print_prefix( std::ostream& output, const_string file, std::size_t line )
 {
+#ifdef __APPLE_CC__
+    // Xcode-compatible logging format, idea by Richard Dingwall at 
+    // <http://richarddingwall.name/2008/06/01/using-the-boost-unit-test-framework-with-xcode-3/>. 
+    output << file << ':' << line << ": ";
+#else
     output << file << '(' << line << "): ";
+#endif
 }
 
 //____________________________________________________________________________//
