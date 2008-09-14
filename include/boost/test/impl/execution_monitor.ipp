@@ -477,11 +477,13 @@ system_signal_exception::report() const
                           "high priority input available; band event %d",
                           (int)m_sig_info->si_band );
             break;
+#if defined(POLL_ERR) && defined(POLL_HUP) && (POLL_ERR - POLL_HUP)
         case POLL_HUP:
             report_error( execution_exception::system_error,
                           "device disconnected; band event %d",
                           (int)m_sig_info->si_band );
             break;
+#endif
         }
         break;
 
