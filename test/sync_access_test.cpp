@@ -20,6 +20,8 @@ static void thread_function(boost::barrier& b)
     BOOST_CHECK_EQUAL(1,0); /// produce the fault
 }
 
+BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES( test_multiple_assertion_faults, 100 );
+
 /// test function which creates threads
 BOOST_AUTO_TEST_CASE( test_multiple_assertion_faults )
 {
