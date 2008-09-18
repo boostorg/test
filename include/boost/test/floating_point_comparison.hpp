@@ -181,8 +181,8 @@ public:
         FPT d2   = tt_detail::safe_fpt_division( diff, tt_detail::fpt_abs( left ) );
         
         return p_strong_or_weak 
-                   ? (d1 <= p_fraction_tolerance && d2 <= p_fraction_tolerance) 
-                   : (d1 <= p_fraction_tolerance || d2 <= p_fraction_tolerance);
+                   ? (d1 <= p_fraction_tolerance.get() && d2 <= p_fraction_tolerance.get()) 
+                   : (d1 <= p_fraction_tolerance.get() || d2 <= p_fraction_tolerance.get());
     }
 
     // Public properties
