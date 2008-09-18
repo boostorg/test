@@ -55,6 +55,7 @@ BOOST_TEST_DECL bool    is_initialized();
 BOOST_TEST_DECL void    register_test_unit( test_case* tc );
 BOOST_TEST_DECL void    register_test_unit( test_suite* ts );
 BOOST_TEST_DECL void    deregister_test_unit( test_unit* tu );
+BOOST_TEST_DECL void    clear();
 
 BOOST_TEST_DECL void    register_observer( test_observer& );
 BOOST_TEST_DECL void    deregister_observer( test_observer& );

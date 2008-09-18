@@ -119,7 +119,9 @@ public:
     , m_test_in_progress( false )
     {}
 
-    ~framework_impl()
+    ~framework_impl() { clear(); }
+
+    void            clear()
     {
         while( !m_test_units.empty() ) {
             test_unit_store::value_type const& tu = *m_test_units.begin();
@@ -322,6 +324,14 @@ void
 deregister_test_unit( test_unit* tu )
 {
     s_frk_impl().m_test_units.erase( tu->p_id );
+}
+
+//____________________________________________________________________________//
+
+void
+clear()
+{
+    s_frk_impl().clear();
 }
 
 //____________________________________________________________________________//
