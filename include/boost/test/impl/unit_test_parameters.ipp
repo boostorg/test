@@ -208,7 +208,11 @@ init( int* argc, char** argv )
     s_save_pattern      = retrieve_framework_parameter( SAVE_TEST_PATTERN, argc, argv ) == "yes";
     s_show_build_info   = retrieve_framework_parameter( BUILD_INFO, argc, argv ) == "yes";
     s_show_progress     = retrieve_framework_parameter( SHOW_PROGRESS, argc, argv ) == "yes";
+#ifdef BOOST_TEST_DEFAULTS_TO_CORE_DUMP
+    s_catch_sys_errors  = retrieve_framework_parameter( CATCH_SYS_ERRORS, argc, argv ) == "yes";
+#else
     s_catch_sys_errors  = retrieve_framework_parameter( CATCH_SYS_ERRORS, argc, argv ) != "no";
+#endif
     s_use_alt_stack     = retrieve_framework_parameter( USE_ALT_STACK, argc, argv ) != "no";
     s_detect_fp_except  = retrieve_framework_parameter( DETECT_FP_EXCEPT, argc, argv ) == "yes";
     s_tests_to_run      = retrieve_framework_parameter( TESTS_TO_RUN, argc, argv );
