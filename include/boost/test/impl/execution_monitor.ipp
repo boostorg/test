@@ -418,32 +418,32 @@ system_signal_exception::report() const
         case CLD_EXITED:
             report_error( execution_exception::system_error,
                           "child has exited; pid: %d; uid: %d; exit value: %d",
-                          (int)m_sig_info->si_uid, (int)m_sig_info->si_pid, (int)m_sig_info->si_status );
+                          (int)m_sig_info->si_pid, (int)m_sig_info->si_uid, (int)m_sig_info->si_status );
             break;
         case CLD_KILLED:
             report_error( execution_exception::system_error,
                           "child was killed; pid: %d; uid: %d; exit value: %d",
-                          (int)m_sig_info->si_uid, (int)m_sig_info->si_pid, (int)m_sig_info->si_status );
+                          (int)m_sig_info->si_pid, (int)m_sig_info->si_uid, (int)m_sig_info->si_status );
             break;
         case CLD_DUMPED:
             report_error( execution_exception::system_error,
                           "child terminated abnormally; pid: %d; uid: %d; exit value: %d",
-                          (int)m_sig_info->si_uid, (int)m_sig_info->si_pid, (int)m_sig_info->si_status );
+                          (int)m_sig_info->si_pid, (int)m_sig_info->si_uid, (int)m_sig_info->si_status );
             break;
         case CLD_TRAPPED:
             report_error( execution_exception::system_error,
                           "traced child has trapped; pid: %d; uid: %d; exit value: %d",
-                          (int)m_sig_info->si_uid, (int)m_sig_info->si_pid, (int)m_sig_info->si_status );
+                          (int)m_sig_info->si_pid, (int)m_sig_info->si_uid, (int)m_sig_info->si_status );
             break;
         case CLD_STOPPED:
             report_error( execution_exception::system_error,
                           "child has stopped; pid: %d; uid: %d; exit value: %d",
-                          (int)m_sig_info->si_uid, (int)m_sig_info->si_pid, (int)m_sig_info->si_status );
+                          (int)m_sig_info->si_pid, (int)m_sig_info->si_uid, (int)m_sig_info->si_status );
             break;
         case CLD_CONTINUED:
             report_error( execution_exception::system_error,
                           "stopped child had continued; pid: %d; uid: %d; exit value: %d",
-                          (int)m_sig_info->si_uid, (int)m_sig_info->si_pid, (int)m_sig_info->si_status );
+                          (int)m_sig_info->si_pid, (int)m_sig_info->si_uid, (int)m_sig_info->si_status );
             break;
         }
         break;
