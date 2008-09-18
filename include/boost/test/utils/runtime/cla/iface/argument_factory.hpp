@@ -38,6 +38,8 @@ public:
     virtual argument_ptr produce_using( parameter& p, argv_traverser& tr ) = 0;  /// produce argument based on input
     virtual argument_ptr produce_using( parameter& p, parser const& )      = 0;  /// produce argument based on internal generator and/or values of other parameters
     virtual void         argument_usage_info( format_stream& fs )          = 0;  /// argument value format information
+protected:
+    BOOST_TEST_PROTECTED_VIRTUAL ~argument_factory() {}
 };
 
 } // namespace boost

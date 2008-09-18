@@ -52,6 +52,7 @@ protected:
     explicit        identification_policy( rtti::id_t const& dyn_type )
     : p_type_id( dyn_type )
     {}
+    BOOST_TEST_PROTECTED_VIRTUAL ~identification_policy() {}
 };
 
 } // namespace cla
