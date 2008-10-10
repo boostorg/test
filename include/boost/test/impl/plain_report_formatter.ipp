@@ -25,7 +25,7 @@
 
 // STL
 #include <iomanip>
-#include <cmath>
+#include <boost/config/no_tr1/cmath.hpp>
 #include <iostream>
 
 #include <boost/test/detail/suppress_warnings.hpp>
