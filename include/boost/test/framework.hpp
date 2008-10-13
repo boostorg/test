@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2007.
+//  (C) Copyright Gennadiy Rozental 2005-2008.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -54,6 +54,8 @@ BOOST_TEST_DECL bool    is_initialized();
 // mutation access methods
 BOOST_TEST_DECL void    register_test_unit( test_case* tc );
 BOOST_TEST_DECL void    register_test_unit( test_suite* ts );
+BOOST_TEST_DECL void    deregister_test_unit( test_unit* tu );
+BOOST_TEST_DECL void    clear();
 
 BOOST_TEST_DECL void    register_observer( test_observer& );
 BOOST_TEST_DECL void    deregister_observer( test_observer& );

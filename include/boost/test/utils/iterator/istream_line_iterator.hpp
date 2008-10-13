@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2004-2007.
+//  (C) Copyright Gennadiy Rozental 2004-2008.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -59,11 +59,7 @@ public:
     }
     explicit basic_istream_line_iterator( istream_type& input )
     : m_input_stream( &input ) 
-#if BOOST_WORKAROUND(__GNUC__, < 3) && !defined(__SGI_STL_PORT) && !defined(_STLPORT_VERSION)
-    , m_delimeter( '\n' )
-#else
     , m_delimeter( input.widen( '\n' ) )
-#endif
     {
         this->init();
     }
@@ -74,7 +70,7 @@ private:
     // increment implementation
     bool                     get()
     {
-        return std::getline( *m_input_stream, this->m_value, m_delimeter );
+        return !!std::getline( *m_input_stream, this->m_value, m_delimeter );
     }
 
     // Data members

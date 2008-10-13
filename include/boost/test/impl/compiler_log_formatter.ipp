@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2007.
+//  (C) Copyright Gennadiy Rozental 2005-2008.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -20,6 +20,7 @@
 #include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
+#include <boost/test/utils/lazy_ostream.hpp>
 
 // Boost
 #include <boost/version.hpp>
@@ -167,6 +168,14 @@ compiler_log_formatter::log_entry_value( std::ostream& output, const_string valu
 //____________________________________________________________________________//
 
 void
+compiler_log_formatter::log_entry_value( std::ostream& output, lazy_ostream const& value )
+{
+    output << value;
+}
+
+//____________________________________________________________________________//
+
+void
 compiler_log_formatter::log_entry_finish( std::ostream& output )
 {
     output << std::endl;
@@ -177,7 +186,13 @@ compiler_log_formatter::log_entry_finish( std::ostream& output )
 void
 compiler_log_formatter::print_prefix( std::ostream& output, const_string file, std::size_t line )
 {
+#ifdef __APPLE_CC__
+    // Xcode-compatible logging format, idea by Richard Dingwall at 
+    // <http://richarddingwall.name/2008/06/01/using-the-boost-unit-test-framework-with-xcode-3/>. 
+    output << file << ':' << line << ": ";
+#else
     output << file << '(' << line << "): ";
+#endif
 }
 
 //____________________________________________________________________________//

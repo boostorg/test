@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2007.
+//  (C) Copyright Gennadiy Rozental 2001-2008.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -70,6 +70,9 @@ public:
     mutable readwrite_property<bool>    p_enabled;              // enabled status for this unit
 
     void                                increase_exp_fail( unsigned num );
+
+protected:
+    ~test_unit();
 
 private:
     // Data members
@@ -226,15 +229,15 @@ BOOST_TEST_DECL std::string normalize_test_case_name( const_string tu_name );
 
 template<typename InstanceType,typename UserTestCase>
 struct user_tc_method_invoker {
-    typedef void (UserTestCase::*test_method )();
+    typedef void (UserTestCase::*TestMethod )();
 
-    user_tc_method_invoker( shared_ptr<InstanceType> inst, test_method test_method )
+    user_tc_method_invoker( shared_ptr<InstanceType> inst, TestMethod test_method )
     : m_inst( inst ), m_test_method( test_method ) {}
 
     void operator()() { ((*m_inst).*m_test_method)(); }
 
     shared_ptr<InstanceType> m_inst;
-    test_method              m_test_method;
+    TestMethod               m_test_method;
 };
 
 } // namespace ut_detail

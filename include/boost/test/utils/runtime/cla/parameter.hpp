@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2007.
+//  (C) Copyright Gennadiy Rozental 2005-2008.
 //  Use, modification, and distribution are subject to the 
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -87,7 +87,7 @@ public:
     bool            responds_to( cstring name ) const           { return m_id_policy.responds_to( name ); }
     bool            conflict_with( parameter const& p ) const
     {
-        return id_2_report() == p.id_2_report() && !id_2_report().is_empty()    ||
+        return (id_2_report() == p.id_2_report() && !id_2_report().is_empty())  ||
                m_id_policy.conflict_with( p.m_id_policy )                       || 
                p.m_id_policy.conflict_with( m_id_policy );
     }

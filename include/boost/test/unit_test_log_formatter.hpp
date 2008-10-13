@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2003-2007.
+//  (C) Copyright Gennadiy Rozental 2003-2008.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -100,6 +100,7 @@ public:
 
     virtual void        log_entry_start( std::ostream&, log_entry_data const&, log_entry_types let ) = 0;
     virtual void        log_entry_value( std::ostream&, const_string value ) = 0;
+    virtual void        log_entry_value( std::ostream&, lazy_ostream const& value ); // there is a default impl
     virtual void        log_entry_finish( std::ostream& ) = 0;
 };
 

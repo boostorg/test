@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2007.
+//  (C) Copyright Gennadiy Rozental 2005-2008.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -119,9 +119,14 @@ public:
     , m_test_in_progress( false )
     {}
 
-    ~framework_impl()
+    ~framework_impl() { clear(); }
+
+    void            clear()
     {
-        BOOST_TEST_FOREACH( test_unit_store::value_type const&, tu, m_test_units ) {
+        while( !m_test_units.empty() ) {
+            test_unit_store::value_type const& tu = *m_test_units.begin();
+
+            // the delete will erase this element from map
             if( test_id_2_unit_type( tu.second->p_id ) == tut_suite )
                 delete  (test_suite const*)tu.second;
             else
@@ -190,7 +195,7 @@ public:
     struct priority_order {
         bool operator()( test_observer* lhs, test_observer* rhs ) const
         {
-            return (lhs->priority() < rhs->priority()) || (lhs->priority() == rhs->priority()) && (lhs < rhs);
+            return (lhs->priority() < rhs->priority()) || ((lhs->priority() == rhs->priority()) && (lhs < rhs));
         }
     };
 
@@ -311,6 +316,22 @@ register_test_unit( test_suite* ts )
     s_frk_impl().m_next_test_suite_id++;
 
     s_frk_impl().set_tu_id( *ts, new_id );
+}
+
+//____________________________________________________________________________//
+
+void
+deregister_test_unit( test_unit* tu )
+{
+    s_frk_impl().m_test_units.erase( tu->p_id );
+}
+
+//____________________________________________________________________________//
+
+void
+clear()
+{
+    s_frk_impl().clear();
 }
 
 //____________________________________________________________________________//
