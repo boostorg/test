@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2007.
+//  (C) Copyright Gennadiy Rozental 2001-2008.
 //  (C) Copyright Beman Dawes 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
@@ -46,7 +46,7 @@ struct this_test_log_formatter : public boost::unit_test::output::compiler_log_f
         output << line << ": ";
     }
 
-    void test_unit_finish( std::ostream& output, test_unit const& tu, unsigned long elapsed )
+    void test_unit_finish( std::ostream& output, test_unit const& tu, unsigned long )
     {
         output << "Leaving test " << tu.p_type_name << " \"" << tu.p_name << "\"" << std::endl;
     }

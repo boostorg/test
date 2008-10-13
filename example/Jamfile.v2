@@ -11,6 +11,8 @@ import testing ;
 
 # Project
 project libs/test/example 
+    : 
+    : requirements <toolset>msvc-6.5:<link>static 
     ;
 
 # Define aliases for the needed libs to get shorter names
@@ -55,4 +57,6 @@ test-suite boost_test_examples
     [ run-fail logged_exp_example.cpp unit_test_framework ]
 
     [ run      named_param_example.cpp ]
+
+    [ run      const_string_test.cpp ]
 ;

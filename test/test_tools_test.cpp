@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2007.
+//  (C) Copyright Gennadiy Rozental 2001-2008.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -211,6 +211,11 @@ TEST_CASE( test_BOOST_CHECK_MESSAGE )
 
     unit_test_log.set_threshold_level( log_successful_tests );
     BOOST_CHECK_MESSAGE( 2+2 == 4, "Could it fail?" );
+
+    int i = 1;
+    int j = 2;
+    std::string msg = "some explanation";
+    BOOST_CHECK_MESSAGE( i > j, "Comparing " << i << " and " << j << ": " << msg );
 }
 
 //____________________________________________________________________________//
@@ -509,7 +514,7 @@ TEST_CASE( test_BOOST_TEST_MESSAGE )
     A a = A();
     BOOST_TEST_MESSAGE( a );
 
-#if !defined(BOOST_NO_STD_LOCALE) && ( !defined(BOOST_MSVC) || BOOST_WORKAROUND(BOOST_MSVC, >= 1310))
+#if BOOST_TEST_USE_STD_LOCALE
     BOOST_TEST_MESSAGE( std::hex << std::showbase << 20 );
 #else
     BOOST_TEST_MESSAGE( "0x14" );
