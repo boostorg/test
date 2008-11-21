@@ -173,7 +173,7 @@ test_unit_id
 test_suite::get( const_string tu_name ) const
 {
     BOOST_TEST_FOREACH( test_unit_id, id, m_members ) {
-        if( tu_name == framework::get( id, test_id_2_unit_type( id ) ).p_name.get() )
+        if( tu_name == framework::get( id, ut_detail::test_id_2_unit_type( id ) ).p_name.get() )
             return id;
     }
 
@@ -228,7 +228,7 @@ traverse_test_tree( test_suite const& suite, test_tree_visitor& V )
 void
 traverse_test_tree( test_unit_id id, test_tree_visitor& V )
 {
-    if( test_id_2_unit_type( id ) == tut_case )
+    if( ut_detail::test_id_2_unit_type( id ) == tut_case )
         traverse_test_tree( framework::get<test_case>( id ), V );
     else
         traverse_test_tree( framework::get<test_suite>( id ), V );

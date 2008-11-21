@@ -82,7 +82,7 @@ public:
     , m_par_end( par_end )
     {}
 
-    test_unit* next() const
+    virtual test_unit* next() const
     {
         if( m_par_begin == m_par_end )
             return (test_unit*)0;

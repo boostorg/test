@@ -17,6 +17,8 @@
 
 #include <boost/limits.hpp>  // for std::numeric_limits
 
+// Boost.Test
+#include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/utils/class_properties.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -79,12 +81,12 @@ inline FPT
 safe_fpt_division( FPT f1, FPT f2 )
 {
     // Avoid overflow.
-    if( f2 < static_cast<FPT>(1)  && f1 > f2*fpt_limits<FPT>::max_value() )
+    if( (f2 < static_cast<FPT>(1))  && (f1 > f2*fpt_limits<FPT>::max_value()) )
         return fpt_limits<FPT>::max_value();
 
     // Avoid underflow.
-    if( f1 == static_cast<FPT>(0) ||
-        f2 > static_cast<FPT>(1) && f1 < f2*fpt_limits<FPT>::min_value() )
+    if( (f1 == static_cast<FPT>(0)) ||
+        (f2 > static_cast<FPT>(1)) && (f1 < f2*fpt_limits<FPT>::min_value()) )
         return static_cast<FPT>(0);
 
     return f1/f2;
@@ -221,7 +223,7 @@ struct BOOST_TEST_DECL check_is_close_t {
 };
 
 namespace {
-check_is_close_t check_is_close;
+check_is_close_t const& check_is_close = unit_test::ut_detail::static_constant<check_is_close_t>::value;
 }
 
 //____________________________________________________________________________//
@@ -243,7 +245,7 @@ struct BOOST_TEST_DECL check_is_small_t {
 };
 
 namespace {
-check_is_small_t check_is_small;
+check_is_small_t const& check_is_small = unit_test::ut_detail::static_constant<check_is_small_t>::value;
 }
 
 //____________________________________________________________________________//
