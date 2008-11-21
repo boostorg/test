@@ -14,7 +14,7 @@ boost_library_project(
   #  DOCDIRS 
   DESCRIPTION  "Support for simple program testing, full unit testing, and for program execution monitoring."
   MODULARIZED 
-  AUTHORS  "Gennadiy Rozental <gennadiy.rozental -at- thomson.com>"
+  AUTHORS  "Gennadiy Rozental <gennadiy.rozental -at- gmail.com>"
   #  MAINTAINERS 
 )
 
