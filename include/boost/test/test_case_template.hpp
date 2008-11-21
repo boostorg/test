@@ -16,6 +16,10 @@
 #ifndef BOOST_TEST_TEST_CASE_TEMPLATE_HPP_071894GER
 #define BOOST_TEST_TEST_CASE_TEMPLATE_HPP_071894GER
 
+// Boost.Test
+#include <boost/test/detail/config.hpp>
+#include <boost/test/utils/basic_cstring/basic_cstring.hpp>
+
 // Boost
 #include <boost/mpl/for_each.hpp>
 #include <boost/mpl/identity.hpp>
@@ -24,6 +28,7 @@
 
 // STL
 #include <typeinfo>
+#include <list>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -107,6 +112,8 @@ private:
 // ************************************************************************** //
 // **************              test_case_template              ************** //
 // ************************************************************************** //
+
+class test_unit;
 
 template<typename TestCaseTemplate,typename TestTypesList>
 class template_test_case_gen : public test_unit_generator {
