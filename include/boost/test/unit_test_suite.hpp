@@ -17,7 +17,6 @@
 
 // Boost.Test
 #include <boost/test/unit_test_suite_impl.hpp>
-#include <boost/test/test_case_template.hpp>
 #include <boost/test/framework.hpp>
 
 //____________________________________________________________________________//
@@ -141,6 +140,35 @@ BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
                                                                         \
 template<typename type_name>                                            \
 void test_name<type_name>::test_method()                                \
+/**/
+
+// ************************************************************************** //
+// **************           BOOST_TEST_CASE_TEMPLATE           ************** //
+// ************************************************************************** //
+
+#define BOOST_TEST_CASE_TEMPLATE( name, typelist )                          \
+    boost::unit_test::ut_detail::template_test_case_gen<name,typelist >(    \
+        BOOST_TEST_STRINGIZE( name ) )                                      \
+/**/
+
+// ************************************************************************** //
+// **************      BOOST_TEST_CASE_TEMPLATE_FUNCTION       ************** //
+// ************************************************************************** //
+
+#define BOOST_TEST_CASE_TEMPLATE_FUNCTION( name, type_name )    \
+template<typename type_name>                                    \
+void BOOST_JOIN( name, _impl )( boost::type<type_name>* );      \
+                                                                \
+struct name {                                                   \
+    template<typename TestType>                                 \
+    static void run( boost::type<TestType>* frwrd = 0 )         \
+    {                                                           \
+       BOOST_JOIN( name, _impl )( frwrd );                      \
+    }                                                           \
+};                                                              \
+                                                                \
+template<typename type_name>                                    \
+void BOOST_JOIN( name, _impl )( boost::type<type_name>* )       \
 /**/
 
 // ************************************************************************** //
