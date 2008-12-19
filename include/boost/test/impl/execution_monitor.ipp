@@ -200,7 +200,9 @@ report_error( execution_exception::error_code ec, char const* format, ... )
     va_list args;
     va_start( args, format );
 
-    BOOST_TEST_VSNPRINTF( buf, sizeof(buf), format, args );
+    BOOST_TEST_VSNPRINTF( buf, sizeof(buf)-1, format, args ); 
+    buf[sizeof(buf)-1] = 0;
+
     va_end( args );
 
     throw execution_exception( ec, buf );
