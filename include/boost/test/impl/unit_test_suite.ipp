@@ -161,7 +161,7 @@ test_suite::add( test_unit_generator const& gen, unsigned timeout )
 void
 test_suite::remove( test_unit_id id )
 {
-    std::vector<test_unit_id>::iterator it = std::find( m_members.begin(), m_members.begin(), id );
+    std::vector<test_unit_id>::iterator it = std::find( m_members.begin(), m_members.end(), id );
 
     if( it != m_members.end() )
         m_members.erase( it );
