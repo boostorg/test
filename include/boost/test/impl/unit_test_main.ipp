@@ -103,10 +103,10 @@ public:
 #if defined(__BORLANDC__) || BOOST_WORKAROUND( BOOST_MSVC, < 1300 )
     explicit        test_case_filter( const_string ) : m_depth( 0 ) {}
 #else
-    explicit        test_case_filter( const_string tc_to_tun ) 
+    explicit        test_case_filter( const_string tc_to_run ) 
     : m_depth( 0 )
     {
-        string_token_iterator tit( tc_to_tun, (dropped_delimeters = "/", kept_delimeters = dt_none) );
+        string_token_iterator tit( tc_to_run, (dropped_delimeters = "/", kept_delimeters = dt_none) );
 
         while( tit != string_token_iterator() ) {
             m_filters.push_back( 
