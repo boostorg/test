@@ -154,7 +154,7 @@ bool load_test_lib()
     init_func =  dyn_lib::locate_symbol<init_func_ptr>( test_lib_handle, init_func_name );
     
     if( !init_func )
-        throw std::logic_error( std::string("Couldn't locate test initilization function ")
+        throw std::logic_error( std::string("Can't locate test initilization function ")
                                     .append( init_func_name )
                                     .append( ": " )
                                     .append( dyn_lib::error() ) );
