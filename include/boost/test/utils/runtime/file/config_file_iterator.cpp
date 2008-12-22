@@ -155,7 +155,7 @@ include_level::include_level( cstring file_name, cstring path_separators, includ
         }
     }
 
-    BOOST_RT_PARAM_VALIDATE_LOGIC( m_stream.is_open(), BOOST_RT_PARAM_LITERAL( "couldn't open file " ) << file_name );
+    BOOST_RT_PARAM_VALIDATE_LOGIC( m_stream.is_open(), BOOST_RT_PARAM_LITERAL( "can't open file " ) << file_name );
 }
 
 //____________________________________________________________________________//

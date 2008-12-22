@@ -83,8 +83,7 @@ BOOST_RT_PARAM_INLINE parser&
 parser::operator<<( parameter_ptr new_param )
 {
     BOOST_TEST_FOREACH( parameter_ptr, old_param, m_parameters ) {
-        BOOST_RT_PARAM_VALIDATE_LOGIC( !old_param->conflict_with( *new_param ) && 
-                                       !new_param->conflict_with( *old_param ),
+        BOOST_RT_PARAM_VALIDATE_LOGIC( !old_param->conflict_with( *new_param ),
             BOOST_RT_PARAM_LITERAL( "Definition of parameter " )                << new_param->id_2_report() << 
             BOOST_RT_PARAM_LITERAL( " conflicts with defintion of parameter " ) << old_param->id_2_report() );
     }

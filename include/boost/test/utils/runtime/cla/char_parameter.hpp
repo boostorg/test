@@ -47,7 +47,7 @@ public:
     {
         basic_naming_policy::accept_modifier( m );
 
-        BOOST_RT_PARAM_VALIDATE_LOGIC( m_name.size() <= 1, "Invalid parameter name "  << m_name );
+        BOOST_RT_PARAM_VALIDATE_LOGIC( p_name->size() <= 1, "Invalid parameter name "  << p_name );
     }
 };
 
