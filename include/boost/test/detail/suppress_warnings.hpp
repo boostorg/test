@@ -14,8 +14,8 @@
 
 #ifdef BOOST_MSVC
 # pragma warning(push)
-# pragma warning(disable: 4511) // copy constructor could not be generated
-# pragma warning(disable: 4512) // assignment operator could not be generated
+# pragma warning(disable: 4511) // copy constructor can't not be generated
+# pragma warning(disable: 4512) // assignment operator can't not be generated
 # pragma warning(disable: 4100) // unreferenced formal parameter 
 # pragma warning(disable: 4996) // <symbol> was declared deprecated 
 # pragma warning(disable: 4355) // 'this' : used in base member initializer list
