@@ -32,11 +32,11 @@ typedef unsigned long   counter_t;
 
 //____________________________________________________________________________//
 
-enum report_level  { CONFIRMATION_REPORT, SHORT_REPORT, DETAILED_REPORT, NO_REPORT, INV_REPORT_LEVEL };
+enum report_level  { INV_REPORT_LEVEL, CONFIRMATION_REPORT, SHORT_REPORT, DETAILED_REPORT, NO_REPORT };
 
 //____________________________________________________________________________//
 
-enum output_format { CLF /* compiler log format */, XML /* XML */ };
+enum output_format { INV_OF, CLF /* compiler log format */, XML /* XML */ };
 
 //____________________________________________________________________________//
 

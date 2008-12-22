@@ -94,6 +94,10 @@ struct setup_error : std::runtime_error {
     setup_error( const_string m ) : std::runtime_error( std::string( m.begin(), m.size() ) ) {}
 };
 
+#define BOOST_TEST_SETUP_ASSERT( cond, msg ) if( cond ) {} else throw unit_test::framework::setup_error( msg )
+
+struct nothing_to_test {}; // not really an error
+
 } // namespace framework
 
 } // unit_test

@@ -32,7 +32,7 @@ namespace unit_test {
 
 namespace runtime_config {
 
-void                    BOOST_TEST_DECL init( int* argc, char** argv );
+void                    BOOST_TEST_DECL init( int& argc, char** argv );
 
 unit_test::log_level    BOOST_TEST_DECL log_level();
 bool                    BOOST_TEST_DECL no_result_code();

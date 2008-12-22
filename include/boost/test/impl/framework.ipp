@@ -230,7 +230,7 @@ namespace framework {
 void
 init( init_unit_test_func init_func, int argc, char* argv[] )
 {
-    runtime_config::init( &argc, argv );
+    runtime_config::init( argc, argv );
 
     // set the log level and format
     unit_test_log.set_threshold_level( runtime_config::log_level() );
@@ -282,13 +282,11 @@ is_initialized()
 void
 register_test_unit( test_case* tc )
 {
-    if( tc->p_id != INV_TEST_UNIT_ID )
-        throw setup_error( BOOST_TEST_L( "test case already registered" ) );
+    BOOST_TEST_SETUP_ASSERT( tc->p_id == INV_TEST_UNIT_ID, BOOST_TEST_L( "test case already registered" ) );
 
     test_unit_id new_id = s_frk_impl().m_next_test_case_id;
 
-    if( new_id == MAX_TEST_CASE_ID )
-        throw setup_error( BOOST_TEST_L( "too many test cases" ) );
+    BOOST_TEST_SETUP_ASSERT( new_id != MAX_TEST_CASE_ID, BOOST_TEST_L( "too many test cases" ) );
 
     typedef framework_impl::test_unit_store::value_type map_value_type;
 
@@ -303,13 +301,11 @@ register_test_unit( test_case* tc )
 void
 register_test_unit( test_suite* ts )
 {
-    if( ts->p_id != INV_TEST_UNIT_ID )
-        throw setup_error( BOOST_TEST_L( "test suite already registered" ) );
+    BOOST_TEST_SETUP_ASSERT( ts->p_id == INV_TEST_UNIT_ID, BOOST_TEST_L( "test suite already registered" ) );
 
     test_unit_id new_id = s_frk_impl().m_next_test_suite_id;
 
-    if( new_id == MAX_TEST_SUITE_ID )
-        throw setup_error( BOOST_TEST_L( "too many test suites" ) );
+    BOOST_TEST_SETUP_ASSERT( new_id != MAX_TEST_SUITE_ID, BOOST_TEST_L( "too many test suites" ) );
 
     typedef framework_impl::test_unit_store::value_type map_value_type;
     s_frk_impl().m_test_units.insert( map_value_type( new_id, ts ) );
@@ -401,10 +397,9 @@ run( test_unit_id id, bool continue_test )
     test_case_counter tcc;
     traverse_test_tree( id, tcc );
 
-    if( tcc.p_count == 0 )
-        throw setup_error( runtime_config::test_to_run().is_empty() 
-                                ? BOOST_TEST_L( "test tree is empty" ) 
-                                : BOOST_TEST_L( "no test cases matching filter" ) );
+    BOOST_TEST_SETUP_ASSERT( tcc.p_count != 0 , runtime_config::test_to_run().is_empty() 
+        ? BOOST_TEST_L( "test tree is empty" ) 
+        : BOOST_TEST_L( "no test cases matching filter" ) );
 
     bool    call_start_finish   = !continue_test || !s_frk_impl().m_test_in_progress;
     bool    was_in_progress     = s_frk_impl().m_test_in_progress;
