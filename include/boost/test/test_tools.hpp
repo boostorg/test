@@ -319,9 +319,9 @@ struct print_log_value {
         // avoid warning: 'boost::test_tools::<unnamed>::dummy_cond' defined but not used 
         if (::boost::test_tools::dummy_cond) {}
 
-        typedef typename mpl::or_<is_array<T>,is_function<T>,is_abstract<T> >::type couldnt_use_nl;
+        typedef typename mpl::or_<is_array<T>,is_function<T>,is_abstract<T> >::type cant_use_nl;
 
-        set_precision( ostr, couldnt_use_nl() );
+        set_precision( ostr, cant_use_nl() );
 
         ostr << t; // by default print the value
     }

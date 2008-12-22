@@ -9,8 +9,8 @@
 //
 //  Version     : $Revision$
 //
-//  Description : privide core implementation for Unit Test Framework.
-//  Extensions could be provided in separate files
+//  Description : privides core implementation for Unit Test Framework.
+//                Extensions can be provided in separate files
 // ***************************************************************************
 
 #ifndef BOOST_TEST_UNIT_TEST_SUITE_IPP_012205GER
