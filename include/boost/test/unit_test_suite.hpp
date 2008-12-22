@@ -191,7 +191,7 @@ struct nil_t {};
 } // unit_test
 } // namespace boost
 
-// Intentionally is in global namespace, so that FIXURE_TEST_SUITE could reset it in user code.
+// Intentionally is in global namespace, so that FIXURE_TEST_SUITE can reset it in user code.
 typedef ::boost::unit_test::ut_detail::nil_t BOOST_AUTO_TEST_CASE_FIXTURE;
 
 // ************************************************************************** //
