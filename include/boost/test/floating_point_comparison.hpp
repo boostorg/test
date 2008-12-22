@@ -15,11 +15,15 @@
 #ifndef BOOST_TEST_FLOATING_POINT_COMPARISON_HPP_071894GER
 #define BOOST_TEST_FLOATING_POINT_COMPARISON_HPP_071894GER
 
-#include <boost/limits.hpp>  // for std::numeric_limits
-
 // Boost.Test
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/utils/class_properties.hpp>
+#include <boost/test/predicate_result.hpp>
+
+// Boost
+#include <boost/limits.hpp>  // for std::numeric_limits
+#include <boost/numeric/conversion/conversion_traits.hpp> // for numeric::conversion_traits
+#include <boost/static_assert.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -168,28 +172,38 @@ public:
                                     floating_point_comparison_type          fpc_type = FPC_STRONG ) 
     : p_fraction_tolerance( tt_detail::fpt_abs( static_cast<FPT>(0.01)*tolerance.m_value ) )
     , p_strong_or_weak( fpc_type ==  FPC_STRONG )
+    , m_report_modifier( 100. )
     {}
     template<typename ToleranceBaseType>
     explicit    close_at_tolerance( fraction_tolerance_t<ToleranceBaseType> tolerance, 
                                     floating_point_comparison_type          fpc_type = FPC_STRONG ) 
     : p_fraction_tolerance( tt_detail::fpt_abs( tolerance.m_value ) )
     , p_strong_or_weak( fpc_type ==  FPC_STRONG )
+    , m_report_modifier( 1. )
     {}
 
-    bool        operator()( FPT left, FPT right ) const
+    predicate_result        operator()( FPT left, FPT right ) const
     {
         FPT diff = tt_detail::fpt_abs( left - right );
         FPT d1   = tt_detail::safe_fpt_division( diff, tt_detail::fpt_abs( right ) );
         FPT d2   = tt_detail::safe_fpt_division( diff, tt_detail::fpt_abs( left ) );
         
-        return p_strong_or_weak 
-                   ? (d1 <= p_fraction_tolerance.get() && d2 <= p_fraction_tolerance.get()) 
-                   : (d1 <= p_fraction_tolerance.get() || d2 <= p_fraction_tolerance.get());
+        predicate_result res( p_strong_or_weak 
+            ? (d1 <= p_fraction_tolerance.get() && d2 <= p_fraction_tolerance.get()) 
+            : (d1 <= p_fraction_tolerance.get() || d2 <= p_fraction_tolerance.get()) );
+
+        if( !res )
+            res.message() << (( d1 <= p_fraction_tolerance.get() ? d2 : d1 ) * m_report_modifier);
+
+        return res;
     }
 
     // Public properties
     readonly_property<FPT>  p_fraction_tolerance;
     readonly_property<bool> p_strong_or_weak;
+private:
+    // Data members
+    FPT                     m_report_modifier;
 };
 
 //____________________________________________________________________________//
@@ -202,20 +216,26 @@ struct BOOST_TEST_DECL check_is_close_t {
     // Public typedefs
     typedef bool result_type;
 
-    template<typename FPT, typename ToleranceBaseType>
-    bool
-    operator()( FPT left, FPT right, percent_tolerance_t<ToleranceBaseType> tolerance, 
+    template<typename FPT1, typename FPT2, typename ToleranceBaseType>
+    predicate_result
+    operator()( FPT1 left, FPT2 right, percent_tolerance_t<ToleranceBaseType> tolerance, 
                 floating_point_comparison_type fpc_type = FPC_STRONG )
     {
+        typedef typename numeric::conversion_traits<FPT1,FPT2>::supertype FPT;
+        BOOST_STATIC_ASSERT( !is_integral<FPT>::value );
+
         close_at_tolerance<FPT> pred( tolerance, fpc_type );
 
         return pred( left, right );
     }
-    template<typename FPT, typename ToleranceBaseType>
-    bool
-    operator()( FPT left, FPT right, fraction_tolerance_t<ToleranceBaseType> tolerance, 
+    template<typename FPT1, typename FPT2, typename ToleranceBaseType>
+    predicate_result
+    operator()( FPT1 left, FPT2 right, fraction_tolerance_t<ToleranceBaseType> tolerance, 
                 floating_point_comparison_type fpc_type = FPC_STRONG )
     {
+        typedef typename numeric::conversion_traits<FPT1,FPT2>::supertype FPT;
+        BOOST_STATIC_ASSERT( !is_integral<FPT>::value );
+
         close_at_tolerance<FPT> pred( tolerance, fpc_type );
 
         return pred( left, right );

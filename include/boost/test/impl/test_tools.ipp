@@ -227,18 +227,16 @@ check_impl( predicate_result const& pr, lazy_ostream const& check_descr,
 
         unit_test_log << unit_test::log::begin( file_name, line_num ) << ll;
 
-        unit_test_log << "difference between " << arg1_descr << "{" << *arg1_val << "}" 
-                      << " and "               << arg2_descr << "{" << *arg2_val << "}"
-                      << ( tl == PASS ? " doesn't exceed " : " exceeds " )
+        unit_test_log << "difference{" << pr.message() << (ct == CHECK_CLOSE ? "%" : "")
+                      << "} between " << arg1_descr << "{" << *arg1_val
+                      << "} and "               << arg2_descr << "{" << *arg2_val
+                      << ( tl == PASS ? "} doesn't exceed " : "} exceeds " )
                       << *toler_val;
         if( ct == CHECK_CLOSE )
             unit_test_log << "%";
 
         va_end( args );
         
-        if( !pr.has_empty_message() )
-            unit_test_log << ". " << pr.message();
-
         unit_test_log << unit_test::log::end();
         break;
     }
@@ -451,7 +449,7 @@ output_test_stream::output_test_stream( const_string pattern_file_name, bool mat
         m_pimpl->m_pattern.open( pattern_file_name.begin(), m );
 
         BOOST_WARN_MESSAGE( m_pimpl->m_pattern.is_open(),
-                             "Couldn't open pattern file " << pattern_file_name
+                             "Can't open pattern file " << pattern_file_name
                                 << " for " << (match_or_save ? "reading" : "writing") );
     }
 
@@ -528,7 +526,7 @@ output_test_stream::match_pattern( bool flush_stream )
 
     if( !m_pimpl->m_pattern.is_open() ) {
         result = false;
-        result.message() << "Pattern file could not be opened!";
+        result.message() << "Pattern file can't be opened!";
     }
     else {
         if( m_pimpl->m_match_or_save ) {
