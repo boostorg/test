@@ -49,7 +49,6 @@ namespace env = rt::env;
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
-#include <Windows.h>
 //____________________________________________________________________________//
 
 # ifdef BOOST_NO_STDC_NAMESPACE
