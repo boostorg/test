@@ -10,8 +10,7 @@
 # pragma warning(disable: C4345)
 #endif
 
-#include <boost/test/test_tools.hpp>
-#include <boost/test/test_case_template.hpp>
+#include <boost/test/unit_test.hpp>
 using boost::unit_test::test_suite;
 
 // Boost.MPL

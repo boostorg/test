@@ -133,6 +133,15 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( test_CHECK_CLOSE_FRACTION, FPT, test_types )
 
 //____________________________________________________________________________//
 
+BOOST_AUTO_TEST_CASE( test_type_mismatch )
+{
+    BOOST_CHECK_CLOSE( 2, 2.1, 6 );
+    BOOST_CHECK_CLOSE( 2.1, 2, 6 );
+    BOOST_CHECK_CLOSE( 2.1, 2.f, 6 );
+}
+
+//____________________________________________________________________________//
+
 BOOST_AUTO_TEST_CASE( test_CHECK_SMALL )
 {
     BOOST_CHECK_SMALL( 1e-6, 1e-5 );
