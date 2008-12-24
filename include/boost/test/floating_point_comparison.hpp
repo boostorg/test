@@ -221,6 +221,10 @@ struct BOOST_TEST_DECL check_is_close_t {
     operator()( FPT1 left, FPT2 right, percent_tolerance_t<ToleranceBaseType> tolerance, 
                 floating_point_comparison_type fpc_type = FPC_STRONG )
     {
+        // deduce "better" type from types of arguments being compared
+        // if one type is floating and the second integral we use floating type and 
+        // value of integral type is promoted to the floating. The same for float and double
+        // But we don't want to compare two values of integral types using this tool.
         typedef typename numeric::conversion_traits<FPT1,FPT2>::supertype FPT;
         BOOST_STATIC_ASSERT( !is_integral<FPT>::value );
 
@@ -233,6 +237,7 @@ struct BOOST_TEST_DECL check_is_close_t {
     operator()( FPT1 left, FPT2 right, fraction_tolerance_t<ToleranceBaseType> tolerance, 
                 floating_point_comparison_type fpc_type = FPC_STRONG )
     {
+        // same as in a comment above
         typedef typename numeric::conversion_traits<FPT1,FPT2>::supertype FPT;
         BOOST_STATIC_ASSERT( !is_integral<FPT>::value );
 
