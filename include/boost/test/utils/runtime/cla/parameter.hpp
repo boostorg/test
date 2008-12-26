@@ -89,7 +89,7 @@ public:
     {
         return (id_2_report() == p.id_2_report() && !id_2_report().is_empty())  ||
                m_id_policy.conflict_with( p.m_id_policy )                       || 
-               (m_id_policy.p_type_id != p.m_id_policy.p_type_id) && p.m_id_policy.conflict_with( m_id_policy );
+               ((m_id_policy.p_type_id != p.m_id_policy.p_type_id) && p.m_id_policy.conflict_with( m_id_policy ));
     }
     cstring         id_2_report() const                         { return m_id_policy.id_2_report(); }
     void            usage_info( format_stream& fs ) const

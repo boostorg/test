@@ -90,7 +90,7 @@ safe_fpt_division( FPT f1, FPT f2 )
 
     // Avoid underflow.
     if( (f1 == static_cast<FPT>(0)) ||
-        (f2 > static_cast<FPT>(1)) && (f1 < f2*fpt_limits<FPT>::min_value()) )
+        ((f2 > static_cast<FPT>(1)) && (f1 < f2*fpt_limits<FPT>::min_value())) )
         return static_cast<FPT>(0);
 
     return f1/f2;
@@ -219,7 +219,7 @@ struct BOOST_TEST_DECL check_is_close_t {
     template<typename FPT1, typename FPT2, typename ToleranceBaseType>
     predicate_result
     operator()( FPT1 left, FPT2 right, percent_tolerance_t<ToleranceBaseType> tolerance, 
-                floating_point_comparison_type fpc_type = FPC_STRONG )
+                floating_point_comparison_type fpc_type = FPC_STRONG ) const
     {
         // deduce "better" type from types of arguments being compared
         // if one type is floating and the second integral we use floating type and 
@@ -235,7 +235,7 @@ struct BOOST_TEST_DECL check_is_close_t {
     template<typename FPT1, typename FPT2, typename ToleranceBaseType>
     predicate_result
     operator()( FPT1 left, FPT2 right, fraction_tolerance_t<ToleranceBaseType> tolerance, 
-                floating_point_comparison_type fpc_type = FPC_STRONG )
+                floating_point_comparison_type fpc_type = FPC_STRONG ) const
     {
         // same as in a comment above
         typedef typename numeric::conversion_traits<FPT1,FPT2>::supertype FPT;
@@ -263,7 +263,7 @@ struct BOOST_TEST_DECL check_is_small_t {
 
     template<typename FPT>
     bool
-    operator()( FPT fpv, FPT tolerance )
+    operator()( FPT fpv, FPT tolerance ) const
     {
         return tt_detail::fpt_abs( fpv ) < tt_detail::fpt_abs( tolerance );
     }
