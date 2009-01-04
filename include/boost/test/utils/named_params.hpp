@@ -66,7 +66,11 @@ report_access_to_invalid_parameter()
 
 struct nil {
     template<typename T>
+#if defined(__GNUC__)
     operator T() const
+#else
+    operator T const&() const
+#endif
     { report_access_to_invalid_parameter(); static T* v = 0; return *v; }
 
     template<typename T>

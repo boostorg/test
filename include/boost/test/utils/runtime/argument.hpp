@@ -38,7 +38,7 @@ namespace BOOST_RT_PARAM_NAMESPACE {
 class argument {
 public:
     // Constructor
-    argument( parameter const& p, rtti::id_t value_type )
+    argument( parameter const& p, call_traits<rtti::id_t>::param_type value_type )
     : p_formal_parameter( p )
     , p_value_type( value_type )
     {}
