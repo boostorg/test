@@ -175,9 +175,7 @@ parser::operator[]( cstring string_id ) const
         }
     }
 
-    BOOST_RT_PARAM_VALIDATE_LOGIC( found_param, BOOST_RT_PARAM_LITERAL( "Unknown parameter: " ) << string_id );
-
-    return found_param->actual_argument();
+    return found_param ? found_param->actual_argument() : const_argument_ptr();
 }
 
 //____________________________________________________________________________//

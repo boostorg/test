@@ -219,7 +219,11 @@ public:
 
 namespace {
 
+#if defined(__CYGWIN__)
+framework_impl& s_frk_impl() { static framework_impl* the_inst = 0; if(!the_inst) the_inst = new framework_impl; return *the_inst; }
+#else
 framework_impl& s_frk_impl() { static framework_impl the_inst; return the_inst; }
+#endif
 
 } // local namespace
 
