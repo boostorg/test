@@ -102,7 +102,7 @@ parser::parse( int& argc, char_type** argv )
         m_program_name.assign( argv[0] );
         dstring::size_type pos = m_program_name.find_last_of( BOOST_RT_PARAM_LITERAL( "/\\" ) );
 
-        if( pos != cstring::npos )
+        if( pos != (dstring::size_type)cstring::npos )
             m_program_name.erase( 0, pos+1 );
     }
 
@@ -175,7 +175,7 @@ parser::operator[]( cstring string_id ) const
         }
     }
 
-    return found_param ? found_param->actual_argument() : const_argument_ptr();
+    return found_param ? found_param->actual_argument() : argument_ptr();
 }
 
 //____________________________________________________________________________//

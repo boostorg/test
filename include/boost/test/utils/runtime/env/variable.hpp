@@ -100,7 +100,13 @@ public:
     // access methods
     T const&    value() const                               { return variable_base::value<T>(); }
 
+#if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3206)) || \
+    BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x0593))
+    template<typename T>
+    void        value( boost::optional<T>& res ) const      { variable_base::value( res ); }
+#else
     using       variable_base::value;
+#endif
 
     // Value assignment
     template<typename V>

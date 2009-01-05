@@ -89,7 +89,7 @@ putenv_impl( cstring name, cstring value )
 #define BOOST_RT_PARAM_LITERAL( l ) l
 #define BOOST_RT_PARAM_CSTRING_LITERAL( l ) cstring( l, sizeof( l ) - 1 )
 #define BOOST_RT_PARAM_GETENV getenv
-#define BOOST_RT_PARAM_PUTENV putenv_impl
+#define BOOST_RT_PARAM_PUTENV ::boost::BOOST_RT_PARAM_NAMESPACE::putenv_impl
 #define BOOST_RT_PARAM_EXCEPTION_INHERIT_STD
 
 //____________________________________________________________________________//

@@ -226,11 +226,13 @@ retrieve_parameter( const_string parameter_name, cla::parser const& s_cla_parser
 void
 init( int& argc, char** argv )
 {
+    using namespace cla;
+
     try {
         s_cla_parser - cla::ignore_mismatch
           << cla::dual_name_parameter<bool>( AUTO_START_DBG + "|d" )
             - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,
-               cla::description = "Automatically starts debugger if system level error (signal) occurs" )
+               cla::description = "Automatically starts debugger if system level error (signal) occurs")
           << cla::named_parameter<std::string>( BREAK_EXEC_PATH )
             - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,
                cla::description = "For the exception safety testing allows to break at specific execution path")
