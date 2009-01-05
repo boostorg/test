@@ -139,7 +139,8 @@ struct named_parameter_combine
     void        erase( keyword<typename NP::id,false> kw ) const        { m_param.erase( kw ); }
     using       Rest::erase;
 
-#if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3206))
+#if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3206)) || \
+    BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x0610))
     template<typename NP>
     named_parameter_combine<NP,self_type> operator,( NP const& np ) const
     { return named_parameter_combine<NP,self_type>( np, *this ); }
