@@ -66,7 +66,7 @@ report_access_to_invalid_parameter()
 
 struct nil {
     template<typename T>
-#if defined(__GNUC__)
+#if defined(__GNUC__) || defined(__HP_aCC)
     operator T() const
 #else
     operator T const&() const
