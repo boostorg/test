@@ -63,6 +63,7 @@ typedef std::ostream                                            out_stream;
 typedef std::basic_ostream<char_type>                           out_stream;
 #endif
 
+#ifndef UNDER_CE
 #if defined(__COMO__)
 inline void
 putenv_impl( cstring name, cstring value )
@@ -85,6 +86,7 @@ putenv_impl( cstring name, cstring value )
     putenv( const_cast<char*>( fs.str().c_str() ) );
 }
 #endif
+#endif
 
 #define BOOST_RT_PARAM_LITERAL( l ) l
 #define BOOST_RT_PARAM_CSTRING_LITERAL( l ) cstring( l, sizeof( l ) - 1 )
@@ -103,6 +105,7 @@ typedef const unit_test::basic_cstring<wchar_t const>           literal_cstring;
 typedef wrap_wstringstream                                      format_stream;
 typedef std::wostream                                           out_stream;
 
+#ifndef UNDER_CE
 inline void
 putenv_impl( cstring name, cstring value )
 {
@@ -115,6 +118,7 @@ putenv_impl( cstring name, cstring value )
     using namespace std;
     wputenv( const_cast<wchar_t*>( fs.str().c_str() ) );
 }
+#endif
 
 #define BOOST_RT_PARAM_LITERAL( l ) L ## l
 #define BOOST_RT_PARAM_CSTRING_LITERAL( l ) cstring( L ## l, sizeof( L ## l )/sizeof(wchar_t) - 1 )

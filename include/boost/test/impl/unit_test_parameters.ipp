@@ -30,11 +30,17 @@
 // Boost.Runtime.Param
 #include <boost/test/utils/runtime/cla/dual_name_parameter.hpp>
 #include <boost/test/utils/runtime/cla/parser.hpp>
-#include <boost/test/utils/runtime/env/variable.hpp>
 
 namespace rt  = boost::runtime;
 namespace cla = rt::cla;
+
+
+#ifndef UNDER_CE
+#include <boost/test/utils/runtime/env/variable.hpp>
+
 namespace env = rt::env;
+#endif
+
 
 // Boost
 #include <boost/config.hpp>
@@ -214,7 +220,9 @@ retrieve_parameter( const_string parameter_name, cla::parser const& s_cla_parser
 
     boost::optional<T> v;
 
+	#ifndef UNDER_CE
     env::get( parameter_2_env_var[parameter_name], v );
+	#endif
 
     return v? *v : default_value;
 }
