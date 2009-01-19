@@ -35,6 +35,11 @@ namespace BOOST_RT_PARAM_NAMESPACE {
 // **************              runtime::argument               ************** //
 // ************************************************************************** //
 
+#ifdef BOOST_MSVC
+#  pragma warning(push)
+#  pragma warning(disable:4244)
+#endif
+
 class argument {
 public:
     // Constructor
@@ -93,6 +98,10 @@ arg_value( argument& arg )
 
     return static_cast<typed_argument<T>&>( arg ).p_value.value;
 }
+
+#ifdef BOOST_MSVC
+#  pragma warning(pop)
+#endif
 
 //____________________________________________________________________________//
 

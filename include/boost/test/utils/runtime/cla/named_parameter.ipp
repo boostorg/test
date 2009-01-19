@@ -56,6 +56,11 @@ string_name_policy::responds_to( cstring name ) const
 
 //____________________________________________________________________________//
 
+#ifdef BOOST_MSVC
+#  pragma warning(push)
+#  pragma warning(disable:4244)
+#endif
+
 BOOST_RT_PARAM_INLINE bool
 string_name_policy::conflict_with( identification_policy const& id ) const
 {
@@ -86,6 +91,10 @@ string_name_policy::conflict_with( identification_policy const& id ) const
     
     return false;    
 }
+
+#ifdef BOOST_MSVC
+#  pragma warning(pop)
+#endif
 
 //____________________________________________________________________________//
 

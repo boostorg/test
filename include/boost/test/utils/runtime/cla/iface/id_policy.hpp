@@ -34,6 +34,11 @@ namespace cla {
 // **************             identification_policy            ************** //
 // ************************************************************************** //
 
+#ifdef BOOST_MSVC
+#  pragma warning(push)
+#  pragma warning(disable:4244)
+#endif
+
 class identification_policy {
 public:
     // Public properties
@@ -54,6 +59,10 @@ protected:
     {}
     BOOST_TEST_PROTECTED_VIRTUAL ~identification_policy() {}
 };
+
+#ifdef BOOST_MSVC
+#  pragma warning(pop)
+#endif
 
 } // namespace cla
 
