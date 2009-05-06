@@ -1,1 +1,1 @@
-boost_module(test DEPENDS smart_ptr timer io bind)
+boost_module(test DEPENDS smart_ptr timer io bind numeric)
