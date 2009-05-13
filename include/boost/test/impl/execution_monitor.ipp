@@ -636,7 +636,9 @@ signal_handler::signal_handler( bool catch_system_errors, int timeout, bool atta
 , m_FPE_action ( SIGFPE , catch_system_errors, attach_dbg, alt_stack )
 , m_SEGV_action( SIGSEGV, catch_system_errors, attach_dbg, alt_stack )
 , m_BUS_action ( SIGBUS , catch_system_errors, attach_dbg, alt_stack )
+#ifndef BOOST_TEST_IGNORE_SIGCHLD
 , m_CHLD_action( SIGCHLD, catch_system_errors, attach_dbg, alt_stack )
+#endif
 #ifdef BOOST_TEST_CATCH_SIGPOLL
 , m_POLL_action( SIGPOLL, catch_system_errors, attach_dbg, alt_stack )
 #endif
