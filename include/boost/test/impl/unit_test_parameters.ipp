@@ -350,7 +350,9 @@ report_level()
 const_string
 test_to_run()
 {
-    return retrieve_parameter( TESTS_TO_RUN, s_cla_parser, s_empty );
+    static std::string s_test_to_run = retrieve_parameter( TESTS_TO_RUN, s_cla_parser, s_empty );
+
+    return s_test_to_run;
 }
 
 //____________________________________________________________________________//
@@ -358,7 +360,9 @@ test_to_run()
 const_string
 break_exec_path()
 {
-    return retrieve_parameter( BREAK_EXEC_PATH, s_cla_parser, s_empty );
+    static std::string s_break_exec_path = retrieve_parameter( BREAK_EXEC_PATH, s_cla_parser, s_empty );
+
+    return s_break_exec_path;
 }
 
 //____________________________________________________________________________//
