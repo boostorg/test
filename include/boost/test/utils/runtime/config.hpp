@@ -44,6 +44,10 @@
 #  endif
 #endif
 
+#ifdef __SUNPRO_CC
+extern int putenv(char*);
+#endif
+
 namespace boost {
 
 namespace BOOST_RT_PARAM_NAMESPACE {
@@ -64,7 +68,7 @@ typedef std::basic_ostream<char_type>                           out_stream;
 #endif
 
 #ifndef UNDER_CE
-#if defined(__COMO__)
+#if defined(__COMO__) && 0
 inline void
 putenv_impl( cstring name, cstring value )
 {
