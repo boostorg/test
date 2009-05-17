@@ -522,7 +522,8 @@ class signal_action {
     typedef struct sigaction* sigaction_ptr;
 public:
     //Constructor
-    explicit            signal_action( int sig, bool install, bool attach_dbg, char* alt_stack );
+    signal_action();
+    signal_action( int sig, bool install, bool attach_dbg, char* alt_stack );
     ~signal_action();
 
 private:
@@ -532,6 +533,12 @@ private:
     struct sigaction    m_new_action;
     struct sigaction    m_old_action;
 };
+
+//____________________________________________________________________________//
+
+signal_action::signal_action()
+: m_installed( false )
+{}
 
 //____________________________________________________________________________//
 
@@ -611,9 +618,7 @@ private:
     signal_action           m_SEGV_action;
     signal_action           m_BUS_action;
     signal_action           m_CHLD_action;
-#ifdef BOOST_TEST_CATCH_SIGPOLL
     signal_action           m_POLL_action;
-#endif
     signal_action           m_ABRT_action;
     signal_action           m_ALRM_action;
 
