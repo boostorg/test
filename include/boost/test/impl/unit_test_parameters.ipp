@@ -220,9 +220,9 @@ retrieve_parameter( const_string parameter_name, cla::parser const& s_cla_parser
 
     boost::optional<T> v;
 
-	#ifndef UNDER_CE
+    #ifndef UNDER_CE
     env::get( parameter_2_env_var[parameter_name], v );
-	#endif
+    #endif
 
     return v? *v : default_value;
 }
