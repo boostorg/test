@@ -450,7 +450,7 @@ log_format()
 long
 detect_memory_leaks()
 {
-    return retrieve_parameter( DETECT_MEM_LEAKS, s_cla_parser, (long)1 );
+    return retrieve_parameter( DETECT_MEM_LEAKS, s_cla_parser, static_cast<long>(1) );
 }
 
 //____________________________________________________________________________//

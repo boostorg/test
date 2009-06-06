@@ -104,7 +104,7 @@ test_unit::increase_exp_fail( unsigned num )
 // ************************************************************************** //
 
 test_case::test_case( const_string name, callback0<> const& test_func )
-: test_unit( name, (test_unit_type)type )
+: test_unit( name, static_cast<test_unit_type>(type) )
 , m_test_func( test_func )
 {
      // !! weirdest MSVC BUG; try to remove this statement; looks like it eats first token of next statement   
@@ -123,7 +123,7 @@ test_case::test_case( const_string name, callback0<> const& test_func )
 //____________________________________________________________________________//
 
 test_suite::test_suite( const_string name )
-: test_unit( name, (test_unit_type)type )
+: test_unit( name, static_cast<test_unit_type>(type) )
 {
     framework::register_test_unit( this );
 }

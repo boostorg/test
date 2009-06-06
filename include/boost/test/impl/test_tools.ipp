@@ -60,7 +60,7 @@ namespace test_tools {
 void
 print_log_value<char>::operator()( std::ostream& ostr, char t )
 {
-    if( (std::isprint)( (unsigned char)t ) )
+    if( (std::isprint)( static_cast<unsigned char>(t) ) )
         ostr << '\'' << t << '\'';
     else
         ostr << std::hex
@@ -69,7 +69,7 @@ print_log_value<char>::operator()( std::ostream& ostr, char t )
 #else
         << "0x"
 #endif
-        << (int)t;
+        << static_cast<int>(t);
 }
 
 //____________________________________________________________________________//
@@ -84,7 +84,7 @@ print_log_value<unsigned char>::operator()( std::ostream& ostr, unsigned char t 
 #else
         << "0x"
 #endif
-        << (int)t;
+        << static_cast<int>(t);
 }
 
 //____________________________________________________________________________//

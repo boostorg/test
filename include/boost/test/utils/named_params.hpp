@@ -304,7 +304,7 @@ optionally_assign( T& target, Source const& src )
 {
     using namespace unit_test;
 
-    assign_op( target, src, (int)0 );
+    assign_op( target, src, static_cast<int>(0) );
 }
 
 //____________________________________________________________________________//

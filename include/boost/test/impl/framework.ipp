@@ -128,9 +128,9 @@ public:
 
             // the delete will erase this element from map
             if( ut_detail::test_id_2_unit_type( tu.second->p_id ) == tut_suite )
-                delete  (test_suite const*)tu.second;
+                delete  static_cast<test_suite const*>(tu.second);
             else
-                delete  (test_case const*)tu.second;
+                delete  static_cast<test_case const*>(tu.second);
         }
     }
 
@@ -427,7 +427,7 @@ run( test_unit_id id, bool continue_test )
     case 0:
         break;
     case 1: {
-        unsigned int seed = (unsigned int)std::time( 0 );
+        unsigned int seed = static_cast<unsigned int>( std::time( 0 ) );
         BOOST_TEST_MESSAGE( "Test cases order is shuffled using seed: " << seed );
         std::srand( seed );
         break;
