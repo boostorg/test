@@ -59,4 +59,8 @@ test-suite boost_test_examples
     [ run      named_param_example.cpp ]
 
     [ run      const_string_test.cpp ]
+
+    [ run-fail external_main_example_1.cpp unit_test_framework ]
+    [ run-fail external_main_example_2.cpp unit_test_framework ]
+    [ run-fail external_main_example_3.cpp ]
 ;
