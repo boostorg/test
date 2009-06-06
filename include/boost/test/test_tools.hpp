@@ -306,7 +306,7 @@ namespace test_tools {
 
 typedef unit_test::const_string      const_string;
 
-namespace { bool const dummy_cond = false; }
+namespace { bool dummy_cond = false; }
 
 // ************************************************************************** //
 // **************                print_log_value               ************** //
