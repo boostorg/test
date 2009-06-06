@@ -25,7 +25,7 @@ init_function()
         add( BOOST_TEST_CASE( boost::bind( &free_test_function, 2, 1 ) ) );
 
     // do your own initialization here
-    // if it succesfull return true
+    // if it successful return true
 
     // But, you CAN'T use testing tools here
 

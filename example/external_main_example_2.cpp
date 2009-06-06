@@ -23,7 +23,7 @@ bool
 init_function()
 {
     // do your own initialization here
-    // if it succesfull return true
+    // if it successful return true
 
     // But, you CAN'T use testing tools here
     return true;
