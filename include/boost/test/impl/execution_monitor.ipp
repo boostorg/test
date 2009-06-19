@@ -114,8 +114,16 @@ typedef void* uintptr_t;
 #endif
 
 #  if !defined(NDEBUG) && defined(_MSC_VER) && !defined(UNDER_CE)
-#    define BOOST_TEST_USE_DEBUG_MS_CRT
 #    include <crtdbg.h>
+#    define BOOST_TEST_CRT_HOOK_TYPE    _CRT_REPORT_HOOK
+#    define BOOST_TEST_CRT_ASSERT       _CRT_ASSERT
+#    define BOOST_TEST_CRT_ERROR        _CRT_ERROR
+#    define BOOST_TEST_CRT_SET_HOOK(H)  _CrtSetReportHook(H)
+#  else
+#    define BOOST_TEST_CRT_HOOK_TYPE    void*
+#    define BOOST_TEST_CRT_ASSERT       2
+#    define BOOST_TEST_CRT_ERROR        1
+#    define BOOST_TEST_CRT_SET_HOOK(H)  (void*)(H)
 #  endif
 
 #  if !BOOST_WORKAROUND(_MSC_VER,  >= 1400 ) || defined(UNDER_CE)
@@ -878,7 +886,7 @@ private:
 static void
 seh_catch_preventer( unsigned int /* id */, _EXCEPTION_POINTERS* /* exps */ )
 {
-        throw;
+    throw;
 }
 
 //____________________________________________________________________________//
@@ -1012,8 +1020,6 @@ system_signal_exception::report() const
 
 //____________________________________________________________________________//
 
-#if defined(BOOST_TEST_USE_DEBUG_MS_CRT)
-
 // ************************************************************************** //
 // **************          assert_reporting_function           ************** //
 // ************************************************************************** //
@@ -1022,11 +1028,11 @@ int BOOST_TEST_CALL_DECL
 assert_reporting_function( int reportType, char* userMessage, int* retVal )
 {
     switch( reportType ) {
-    case _CRT_ASSERT:
+    case BOOST_TEST_CRT_ASSERT:
         detail::report_error( execution_exception::user_error, userMessage );
 
         return 1; // return value and retVal are not important since we never reach this line
-    case _CRT_ERROR:
+    case BOOST_TEST_CRT_ERROR:
         detail::report_error( execution_exception::system_error, userMessage );
 
         return 1; // return value and retVal are not important since we never reach this line
@@ -1034,8 +1040,6 @@ assert_reporting_function( int reportType, char* userMessage, int* retVal )
         return 0; // use usual reporting method
     }
 } // assert_reporting_function
-
-#endif
 
 //____________________________________________________________________________//
 
@@ -1086,6 +1090,7 @@ int
 execution_monitor::catch_signals( unit_test::callback0<int> const& F )
 {
     _invalid_parameter_handler old_iph = _invalid_parameter_handler();
+    BOOST_TEST_CRT_HOOK_TYPE old_crt_hook;
 
     if( !p_catch_system_errors )
         _set_se_translator( &detail::seh_catch_preventer );
@@ -1093,9 +1098,7 @@ execution_monitor::catch_signals( unit_test::callback0<int> const& F )
         if( !!p_detect_fp_exceptions )
             detail::switch_fp_exceptions( true );
 
-#ifdef BOOST_TEST_USE_DEBUG_MS_CRT
-       _CrtSetReportHook( &detail::assert_reporting_function );
-#endif
+       old_crt_hook = BOOST_TEST_CRT_SET_HOOK( &detail::assert_reporting_function );
 
        old_iph = _set_invalid_parameter_handler( 
            reinterpret_cast<_invalid_parameter_handler>( &detail::invalid_param_handler ) );
@@ -1117,6 +1120,8 @@ execution_monitor::catch_signals( unit_test::callback0<int> const& F )
         if( !!p_catch_system_errors ) {
             if( !!p_detect_fp_exceptions )
                 detail::switch_fp_exceptions( false );
+
+            BOOST_TEST_CRT_SET_HOOK( old_crt_hook );
 
            _set_invalid_parameter_handler( old_iph );
         }
