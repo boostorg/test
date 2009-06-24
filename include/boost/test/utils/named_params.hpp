@@ -187,8 +187,8 @@ struct named_parameter
     {}
 
     // Access methods
-    ref_type        operator[]( keyword<unique_id,true> ) const     { return m_erased ? nil_t::inst().any_cast<ref_type>() :  m_value; }
-    ref_type        operator[]( keyword<unique_id,false> ) const    { return m_erased ? nil_t::inst().any_cast<ref_type>() :  m_value; }
+    ref_type        operator[]( keyword<unique_id,true> ) const     { return m_erased ? nil_t::inst().template any_cast<ref_type>() :  m_value; }
+    ref_type        operator[]( keyword<unique_id,false> ) const    { return m_erased ? nil_t::inst().template any_cast<ref_type>() :  m_value; }
     template<typename UnknownId>
     nil_t           operator[]( keyword<UnknownId,false> ) const    { return nil_t::inst(); }
 
