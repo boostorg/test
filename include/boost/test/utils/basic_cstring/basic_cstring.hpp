@@ -536,7 +536,7 @@ inline typename basic_cstring<CharT>::size_type
 basic_cstring<CharT>::rfind( basic_cstring<CharT> str ) const
 {
     if( str.is_empty() || str.size() > size() )
-        return reinterpret_cast<size_type>(npos);
+        return static_cast<size_type>(npos);
 
     const_iterator it   = end() - str.size();
     const_iterator last = begin()-1;
