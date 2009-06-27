@@ -218,7 +218,7 @@ inline typename basic_cstring<CharT>::value_type
 basic_cstring<CharT>::at( size_type index ) const
 {
     if( m_begin + index >= m_end )
-        return reinterpret_cast<value_type>(0);
+        return static_cast<value_type>(0);
 
     return m_begin[index];
 }
