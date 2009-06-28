@@ -23,7 +23,8 @@
 
 #include <boost/test/detail/unit_test_parameters.hpp>
 
-#if !defined(__BORLANDC__) && !BOOST_WORKAROUND( BOOST_MSVC, < 1300 )
+#if !defined(__BORLANDC__) && !BOOST_WORKAROUND( BOOST_MSVC, < 1300 ) && !BOOST_WORKAROUND( __SUNPRO_CC, < 0x5100 )
+#define BOOST_TEST_SUPPORT_RUN_BY_NAME
 #include <boost/test/utils/iterator/token_iterator.hpp>
 #endif
 
@@ -100,7 +101,7 @@ public:
         const_string    m_value;
     };
     // Constructor
-#if defined(__BORLANDC__) || BOOST_WORKAROUND( BOOST_MSVC, < 1300 )
+#ifndef BOOST_TEST_SUPPORT_RUN_BY_NAME
     explicit        test_case_filter( const_string ) : m_depth( 0 ) {}
 #else
     explicit        test_case_filter( const_string tc_to_run ) 

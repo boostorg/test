@@ -215,16 +215,22 @@ retrieve_parameter( const_string parameter_name, cla::parser const& s_cla_parser
             return s_cla_parser.get<T>( parameter_name );
 
         optional<T> val = s_cla_parser.get<optional<T> >( parameter_name );
-        return val ? *val : optional_value;
+        if( val )
+	    return *val;
+        else
+	    return optional_value;
     }
 
     boost::optional<T> v;
 
-    #ifndef UNDER_CE
+#ifndef UNDER_CE
     env::get( parameter_2_env_var[parameter_name], v );
-    #endif
+#endif
 
-    return v? *v : default_value;
+    if( v )
+        return *v;
+    else
+        return default_value;
 }
 
 //____________________________________________________________________________//
