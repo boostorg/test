@@ -1025,7 +1025,7 @@ system_signal_exception::report() const
 // ************************************************************************** //
 
 int BOOST_TEST_CALL_DECL
-assert_reporting_function( int reportType, char* userMessage, int* retVal )
+assert_reporting_function( int reportType, char* userMessage, int* )
 {
     switch( reportType ) {
     case BOOST_TEST_CRT_ASSERT:
