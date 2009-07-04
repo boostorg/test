@@ -130,6 +130,8 @@ set_format( output_format rf )
     case XML:
         set_format( new output::xml_report_formatter );
         break;
+    default:
+        break;
     }
 }
 

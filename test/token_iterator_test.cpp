@@ -153,7 +153,7 @@ void foo( Iter b, Iter e )
     moo( utf::make_range_token_iterator( b, e, (utf::kept_delimeters = utf::dt_isspace, utf::dropped_delimeters = "2" )) );
 }
 
-inline char loo( char c ) { return (std::toupper)( c ); }
+inline char loo( char c ) { return (char)(std::toupper)( c ); }
 
 BOOST_AUTO_TEST_CASE( test_make_range_token_iterator )
 {

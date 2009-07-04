@@ -27,7 +27,7 @@ namespace BOOST_RT_PARAM_NAMESPACE {
 namespace cla {
 
 // ************************************************************************** //
-// **************              single_name_policy              ************** //
+// **************              trivial_id_policy               ************** //
 // ************************************************************************** //
 
 class trivial_id_policy : public identification_policy {

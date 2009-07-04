@@ -30,7 +30,7 @@ namespace cla {
 // ************************************************************************** //
 // **************                argument_factory              ************** //
 // ************************************************************************** //
-// another name could be argument production policy
+// another name can be argument production policy
 
 class argument_factory {
 public:

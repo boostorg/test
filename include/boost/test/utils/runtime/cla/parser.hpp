@@ -64,7 +64,7 @@ public:
 private:
     // Data members;
     parser&             m_parser;
-    Modifier const&    m_modifiers;
+    Modifier const&     m_modifiers;
 };
 
 }
