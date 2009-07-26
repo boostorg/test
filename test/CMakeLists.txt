@@ -1,3 +1,9 @@
+#
+# Copyright Troy D. Straszheim
+#
+# Distributed under the Boost Software License, Version 1.0.
+# See http://www.boost.org/LICENSE_1_0.txt
+#
 add_definitions(-DBOOST_TEST_NO_AUTO_LINK=1)
 # shared needs:
 add_definitions(-DBOOST_TEST_DYN_LINK=1)
