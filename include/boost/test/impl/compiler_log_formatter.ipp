@@ -108,16 +108,14 @@ compiler_log_formatter::test_unit_skipped( std::ostream& output, test_unit const
 //____________________________________________________________________________//
 
 void
-compiler_log_formatter::log_exception( std::ostream& output, log_checkpoint_data const& checkpoint_data, const_string explanation )
+compiler_log_formatter::log_exception( std::ostream& output, log_checkpoint_data const& checkpoint_data, execution_exception const& ex )
 {
-    print_prefix( output, BOOST_TEST_L( "unknown location" ), 0 );
-    output << "fatal error in \"" << framework::current_test_case().p_name << "\": ";
+    execution_exception::location const& loc = ex.where();
+    print_prefix( output, loc.m_file_name, loc.m_line_num );
 
-    if( !explanation.is_empty() )
-        output << explanation;
-    else
-        output << "uncaught exception, system error or abort requested";
+    output << "fatal error in \"" << (loc.m_function.is_empty() ? framework::current_test_case().p_name.get() : loc.m_function ) << "\": ";
 
+    output << ex.what();
 
     if( !checkpoint_data.m_file_name.is_empty() ) {
         output << '\n';

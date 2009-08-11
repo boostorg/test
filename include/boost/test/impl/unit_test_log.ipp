@@ -238,7 +238,7 @@ unit_test_log_t::exception_caught( execution_exception const& ex )
         if( s_log_impl().m_entry_in_progress )
             *this << log::end();
 
-        s_log_impl().m_log_formatter->log_exception( s_log_impl().stream(), s_log_impl().m_checkpoint_data, ex.what() );
+        s_log_impl().m_log_formatter->log_exception( s_log_impl().stream(), s_log_impl().m_checkpoint_data, ex );
     }
 }
 
