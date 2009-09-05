@@ -42,6 +42,20 @@ namespace output {
 // **************            compiler_log_formatter            ************** //
 // ************************************************************************** //
 
+namespace {
+
+const_string
+test_phase_identifier()
+{
+    return framework::is_initialized() 
+            ? framework::current_test_case().p_name.get()
+            : BOOST_TEST_L( "Test setup" );
+}
+
+} // local namespace
+
+//____________________________________________________________________________//
+
 void
 compiler_log_formatter::log_start( std::ostream& output, counter_t test_cases_amount )
 {
@@ -113,7 +127,7 @@ compiler_log_formatter::log_exception( std::ostream& output, log_checkpoint_data
     execution_exception::location const& loc = ex.where();
     print_prefix( output, loc.m_file_name, loc.m_line_num );
 
-    output << "fatal error in \"" << (loc.m_function.is_empty() ? framework::current_test_case().p_name.get() : loc.m_function ) << "\": ";
+    output << "fatal error in \"" << (loc.m_function.is_empty() ? test_phase_identifier() : loc.m_function ) << "\": ";
 
     output << ex.what();
 
@@ -142,15 +156,15 @@ compiler_log_formatter::log_entry_start( std::ostream& output, log_entry_data co
             break;
         case BOOST_UTL_ET_WARNING:
             print_prefix( output, entry_data.m_file_name, entry_data.m_line_num );
-            output << "warning in \"" << framework::current_test_case().p_name << "\": ";
+            output << "warning in \"" << test_phase_identifier() << "\": ";
             break;
         case BOOST_UTL_ET_ERROR:
             print_prefix( output, entry_data.m_file_name, entry_data.m_line_num );
-            output << "error in \"" << framework::current_test_case().p_name << "\": ";
+            output << "error in \"" << test_phase_identifier() << "\": ";
             break;
         case BOOST_UTL_ET_FATAL_ERROR:
             print_prefix( output, entry_data.m_file_name, entry_data.m_line_num );
-            output << "fatal error in \"" << framework::current_test_case().p_name << "\": ";
+            output << "fatal error in \"" << test_phase_identifier() << "\": ";
             break;
     }
 }
