@@ -20,6 +20,7 @@ rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file * : source
               <toolset>gcc:<cxxflags>-pedantic
               <toolset>gcc:<cxxflags>-Wno-long-long
               <toolset>borland:<cxxflags>-w-8080
+              <toolset>borland:<cxxflags>-w-8084
               <toolset>msvc-6.5:<link>static
               <toolset>msvc-8.0:<define>_SCL_SECURE_NO_DEPRECATE
               <warnings>all
