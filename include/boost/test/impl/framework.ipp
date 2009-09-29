@@ -128,7 +128,7 @@ public:
             test_unit*                         tu_ptr = tu.second;
 
             // the delete will erase this element from map
-            if( test_id_2_unit_type( tu.second->p_id ) == tut_suite )
+            if( ut_detail::test_id_2_unit_type( tu.second->p_id ) == tut_suite )
                 delete  (test_suite const*)tu_ptr;
             else
                 delete  (test_case const*)tu_ptr;
