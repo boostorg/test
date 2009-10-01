@@ -125,13 +125,13 @@ public:
     {
         while( !m_test_units.empty() ) {
             test_unit_store::value_type const& tu     = *m_test_units.begin();
-            test_unit*                         tu_ptr = tu.second;
+            test_unit const*                   tu_ptr = tu.second;
 
             // the delete will erase this element from map
             if( ut_detail::test_id_2_unit_type( tu.second->p_id ) == tut_suite )
-                delete  (test_suite const*)tu_ptr;
+                delete static_cast<test_suite const*>(tu_ptr);
             else
-                delete  (test_case const*)tu_ptr;
+                delete static_cast<test_case const*>(tu_ptr);
         }
     }
 
