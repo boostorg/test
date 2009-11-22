@@ -653,7 +653,7 @@ under_debugger()
         if( dbg_list.find( pi.binary_name() ) != const_string::npos )
             return true;
 
-        pid = pi.parent_pid();
+        pid = (pi.parent_pid() == pid ? 0 : pi.parent_pid())
     }
 
     return false;
