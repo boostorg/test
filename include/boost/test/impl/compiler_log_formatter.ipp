@@ -48,7 +48,7 @@ const_string
 test_phase_identifier()
 {
     return framework::is_initialized() 
-            ? framework::current_test_case().p_name.get()
+            ? const_string( framework::current_test_case().p_name.get() )
             : BOOST_TEST_L( "Test setup" );
 }
 
