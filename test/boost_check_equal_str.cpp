@@ -19,8 +19,8 @@ BOOST_AUTO_TEST_CASE( check_string_compare )
 {
     char const* buf_ptr_cch     = "abc";
     char const  buf_array_cch[] = "abc";
-    char*       buf_ptr_ch      = "abc";
     char        buf_array_ch[]  = "abc";
+    char*       buf_ptr_ch      = buf_array_ch;
     std::string buf_str         = "abc";
 
     BOOST_CHECK_EQUAL(buf_ptr_cch, buf_ptr_cch);
