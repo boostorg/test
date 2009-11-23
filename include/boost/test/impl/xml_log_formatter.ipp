@@ -120,13 +120,13 @@ xml_log_formatter::log_exception( std::ostream& ostr, log_checkpoint_data const&
     if( !loc.m_function.is_empty() )
         ostr << " function"   << attr_value() << loc.m_function;
 
-    ostr << ">" << pcdata() << ex.what();
+    ostr << ">" << cdata() << ex.what();
 
     if( !checkpoint_data.m_file_name.is_empty() ) {
         ostr << "<LastCheckpoint file" << attr_value() << checkpoint_data.m_file_name
              << " line"                << attr_value() << checkpoint_data.m_line_num
              << ">"
-             << pcdata() << checkpoint_data.m_message
+             << cdata() << checkpoint_data.m_message
              << "</LastCheckpoint>";
     }
 
@@ -142,9 +142,9 @@ xml_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& en
 
     m_curr_tag = xml_tags[let];
     ostr << '<' << m_curr_tag
-         << " file" << attr_value() << entry_data.m_file_name
-         << " line" << attr_value() << entry_data.m_line_num
-         << ">";
+         << BOOST_TEST_L( " file" ) << attr_value() << entry_data.m_file_name
+         << BOOST_TEST_L( " line" ) << attr_value() << entry_data.m_line_num
+         << BOOST_TEST_L( "><![CDATA[" );
 }
 
 //____________________________________________________________________________//
@@ -152,7 +152,7 @@ xml_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& en
 void
 xml_log_formatter::log_entry_value( std::ostream& ostr, const_string value )
 {
-    ostr << pcdata() << value;
+    ostr << value;
 }
 
 //____________________________________________________________________________//
@@ -160,7 +160,7 @@ xml_log_formatter::log_entry_value( std::ostream& ostr, const_string value )
 void
 xml_log_formatter::log_entry_finish( std::ostream& ostr )
 {
-    ostr << "</" << m_curr_tag << ">";
+    ostr << BOOST_TEST_L( "]]></" ) << m_curr_tag << BOOST_TEST_L( ">" );
 
     m_curr_tag.clear();
 }
