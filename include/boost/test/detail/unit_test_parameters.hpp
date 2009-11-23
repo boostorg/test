@@ -20,6 +20,9 @@
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
+// STL
+#include <iosfwd>
+
 //____________________________________________________________________________//
 
 namespace boost {
@@ -48,6 +51,8 @@ bool                    BOOST_TEST_DECL use_alt_stack();
 bool                    BOOST_TEST_DECL detect_fp_exceptions();
 output_format           BOOST_TEST_DECL report_format();
 output_format           BOOST_TEST_DECL log_format();
+std::ostream*           BOOST_TEST_DECL report_sink();
+std::ostream*           BOOST_TEST_DECL log_sink();
 long                    BOOST_TEST_DECL detect_memory_leaks();
 int                     BOOST_TEST_DECL random_seed();
 

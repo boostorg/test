@@ -19,6 +19,8 @@
 #include <boost/test/progress_monitor.hpp>
 #include <boost/test/unit_test_suite_impl.hpp>
 
+#include <boost/test/detail/unit_test_parameters.hpp>
+
 // Boost
 #include <boost/progress.hpp>
 #include <boost/scoped_ptr.hpp>
@@ -40,7 +42,7 @@ namespace {
 struct progress_monitor_impl {
     // Constructor
     progress_monitor_impl()
-    : m_stream( &std::cout )
+        : m_stream( runtime_config::log_sink() )
     {}
 
     std::ostream*                m_stream;

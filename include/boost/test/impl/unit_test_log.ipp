@@ -33,9 +33,6 @@
 #include <boost/io/ios_state.hpp>
 typedef ::boost::io::ios_base_all_saver io_saver_type;
 
-// STL
-#include <iostream>
-
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
@@ -89,8 +86,8 @@ namespace {
 struct unit_test_log_impl {
     // Constructor
     unit_test_log_impl()
-    : m_stream( &std::cout )
-    , m_stream_state_saver( new io_saver_type( std::cout ) )
+    : m_stream( runtime_config::log_sink() )
+    , m_stream_state_saver( new io_saver_type( *m_stream ) )
     , m_threshold_level( log_all_errors )
     , m_log_formatter( new output::compiler_log_formatter )
     {
