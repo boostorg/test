@@ -103,7 +103,7 @@ public:
         // for backward compatibility
         log_exception( os, cd, ex.what() );
     }
-    virtual void        log_exception( std::ostream&, log_checkpoint_data const&, const_string explanation ) {}
+    virtual void        log_exception( std::ostream&, log_checkpoint_data const&, const_string /* explanation */ ) {}
 
     virtual void        log_entry_start( std::ostream&, log_entry_data const&, log_entry_types let ) = 0;
     virtual void        log_entry_value( std::ostream&, const_string value ) = 0;

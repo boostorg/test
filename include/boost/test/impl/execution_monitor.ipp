@@ -788,7 +788,14 @@ signal_handler::~signal_handler()
         ::alarm( 0 );
 
 #ifdef BOOST_TEST_USE_ALT_STACK
-    stack_t sigstk = {};
+#ifdef __GNUC__
+    // We shouldn't need to explicitly initialize all the members here,
+    // but gcc warns if we don't, so add initializers for each of the
+    // members specified in the POSIX std:
+    stack_t sigstk = { 0, 0, 0 };
+#else
+    stack_t sigstk = { };
+#endif
 
     sigstk.ss_size  = MINSIGSTKSZ;
     sigstk.ss_flags = SS_DISABLE;
@@ -1127,7 +1134,7 @@ int
 execution_monitor::catch_signals( unit_test::callback0<int> const& F )
 {
     _invalid_parameter_handler old_iph = _invalid_parameter_handler();
-    BOOST_TEST_CRT_HOOK_TYPE old_crt_hook;
+    BOOST_TEST_CRT_HOOK_TYPE old_crt_hook = 0;
 
     if( !p_catch_system_errors )
         _set_se_translator( &detail::seh_catch_preventer );
