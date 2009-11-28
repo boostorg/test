@@ -114,10 +114,10 @@ public:
     template<typename T>
     void                get( cstring string_id, boost::optional<T>& res ) const
     {
-        const_argument_ptr arg = (*this)[string_id];
+        const_argument_ptr actual_arg = (*this)[string_id];
 
-        if( arg )
-            res = arg_value<T>( *arg );
+        if( actual_arg )
+            res = arg_value<T>( *actual_arg );
         else
             res.reset();
     }

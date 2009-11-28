@@ -23,6 +23,8 @@
 #include <boost/test/output/plain_report_formatter.hpp>
 #include <boost/test/output/xml_report_formatter.hpp>
 
+#include <boost/test/detail/unit_test_parameters.hpp>
+
 // Boost
 #include <boost/scoped_ptr.hpp>
 #include <boost/io/ios_state.hpp>
@@ -50,8 +52,8 @@ namespace {
 struct results_reporter_impl : test_tree_visitor {
     // Constructor
     results_reporter_impl()
-    : m_output( &std::cerr )
-    , m_stream_state_saver( new io_saver_type( std::cerr ) )
+    : m_output( runtime_config::report_sink() )
+    , m_stream_state_saver( new io_saver_type( *m_output ) )
     , m_report_level( CONFIRMATION_REPORT )
     , m_formatter( new output::plain_report_formatter )
     {}

@@ -72,7 +72,7 @@ public:
 
 private:
     // Data members
-    dstring              m_buffer;
+    dstring                 m_buffer;
     cstring                 m_work_buffer;
 
     cstring                 m_token;
