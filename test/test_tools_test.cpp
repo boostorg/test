@@ -503,7 +503,7 @@ TEST_CASE( test_BOOST_CHECK_BITWISE_EQUAL )
 //____________________________________________________________________________//
 
 struct A {
-    friend std::ostream& operator<<( std::ostream& str, A const& a ) { str << "struct A"; return str;}
+    friend std::ostream& operator<<( std::ostream& str, A const& ) { str << "struct A"; return str;}
 };
 
 TEST_CASE( test_BOOST_TEST_MESSAGE )

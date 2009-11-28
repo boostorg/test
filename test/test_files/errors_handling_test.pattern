@@ -11,7 +11,7 @@ log level: log_successful_tests; error type: user message;
 
 Entering test case "error_on_demand"
 message
-Test case error_on_demand did not run any assertions
+Test case error_on_demand did not check any assertions
 Leaving test case "error_on_demand"
 
 ===========================
@@ -19,7 +19,7 @@ log level: log_successful_tests; error type: user warning;
 
 Entering test case "error_on_demand"
 107: warning in "error_on_demand": warning
-Test case error_on_demand did not run any assertions
+Test case error_on_demand did not check any assertions
 Leaving test case "error_on_demand"
 
 ===========================
@@ -72,7 +72,7 @@ log level: log_test_suites; error type: user message;
 
 Entering test case "error_on_demand"
 message
-Test case error_on_demand did not run any assertions
+Test case error_on_demand did not check any assertions
 Leaving test case "error_on_demand"
 
 ===========================
@@ -80,7 +80,7 @@ log level: log_test_suites; error type: user warning;
 
 Entering test case "error_on_demand"
 107: warning in "error_on_demand": warning
-Test case error_on_demand did not run any assertions
+Test case error_on_demand did not check any assertions
 Leaving test case "error_on_demand"
 
 ===========================
@@ -130,13 +130,13 @@ log level: log_messages; error type: no error;
 log level: log_messages; error type: user message;
 
 message
-Test case error_on_demand did not run any assertions
+Test case error_on_demand did not check any assertions
 
 ===========================
 log level: log_messages; error type: user warning;
 
 107: warning in "error_on_demand": warning
-Test case error_on_demand did not run any assertions
+Test case error_on_demand did not check any assertions
 
 ===========================
 log level: log_messages; error type: user non-fatal error;

@@ -9,6 +9,7 @@ project boost/test
     : requirements <link>shared:<define>BOOST_TEST_DYN_LINK=1
                    <toolset>msvc:<asynch-exceptions>on
                    <toolset>borland:<cxxflags>-w-8080
+                   <toolset>borland:<cxxflags>-w-8001
                    # Disable Warning about boost::noncopyable not being exported
                    <link>shared,<toolset>msvc:<cxxflags>-wd4275
                    <toolset>msvc:<cxxflags>-wd4671

@@ -20,6 +20,10 @@
 
 #include <boost/test/utils/foreach.hpp>
 
+#ifdef BOOST_MSVC
+#pragma warning(disable:4702) // Unreachable code
+#endif
+
 template<class T>
 void baz( std::list<T>const& list_of_T )
 {

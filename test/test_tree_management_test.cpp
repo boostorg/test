@@ -16,6 +16,9 @@
 #define BOOST_TEST_MODULE test tree management test
 #include <boost/test/unit_test.hpp>
 using namespace boost::unit_test;
+
+#include <boost/mpl/vector.hpp>
+
 //____________________________________________________________________________//
 
 // some empty test suites/cases
@@ -52,6 +55,33 @@ BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE( S3 )
+
+BOOST_AUTO_TEST_SUITE_END()
+
+struct F1 {
+   F1() { BOOST_TEST_MESSAGE( "In F1" ); }
+};
+
+BOOST_AUTO_TEST_SUITE( S4 )
+
+typedef boost::mpl::vector<int,float,char> test_types;
+BOOST_FIXTURE_TEST_CASE_TEMPLATE( tctempl, T, test_types, F1 )
+{
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+struct F2 {
+   F2() { BOOST_TEST_MESSAGE( "In F2" ); }
+};
+
+BOOST_FIXTURE_TEST_SUITE( S5, F2 )
+
+typedef boost::mpl::vector<int,float,char,double,int> test_types;
+BOOST_AUTO_TEST_CASE_TEMPLATE( tctempl, T, test_types )
+{
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 //____________________________________________________________________________//
@@ -152,7 +182,7 @@ BOOST_AUTO_TEST_CASE( automated_test_units_registration )
 {
     test_suite& mts = framework::master_test_suite();
 
-    BOOST_CHECK_EQUAL( mts.size(), 8U );
+    BOOST_CHECK_EQUAL( mts.size(), 10U );
     BOOST_CHECK_EQUAL( mts.p_expected_failures, 2U );
 
     BOOST_CHECK_EQUAL( framework::get<test_case>( mts.get( "automated_test_units_registration" ) ).p_expected_failures, 0U );
@@ -176,6 +206,14 @@ BOOST_AUTO_TEST_CASE( automated_test_units_registration )
 
     BOOST_CHECK_EQUAL( S21.size(), 1U );
     BOOST_CHECK_EQUAL( S1.p_expected_failures, 1U );
+
+    test_suite& S4 = framework::get<test_suite>( mts.get( "S4" ) );
+
+    BOOST_CHECK_EQUAL( S4.size(), 3U );
+
+    test_suite& S5 = framework::get<test_suite>( mts.get( "S5" ) );
+
+    BOOST_CHECK_EQUAL( S5.size(), 5U );
 }
 
 //____________________________________________________________________________//
