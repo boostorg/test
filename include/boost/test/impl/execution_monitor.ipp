@@ -168,7 +168,6 @@ namespace { void _set_se_translator( void* ) {} }
 #      define ILL_COPROC ILL_FPOP_FAULT
 
 #      define BOOST_TEST_LIMITED_SIGNAL_DETAILS
-#      define BOOST_TEST_IGNORE_SIGCHLD
 
 #    endif 
 #  endif 
@@ -745,9 +744,6 @@ signal_handler::signal_handler( bool catch_system_errors, int timeout, bool atta
 , m_FPE_action ( SIGFPE , catch_system_errors, attach_dbg, alt_stack )
 , m_SEGV_action( SIGSEGV, catch_system_errors, attach_dbg, alt_stack )
 , m_BUS_action ( SIGBUS , catch_system_errors, attach_dbg, alt_stack )
-#ifndef BOOST_TEST_IGNORE_SIGCHLD
-, m_CHLD_action( SIGCHLD, catch_system_errors, attach_dbg, alt_stack )
-#endif
 #ifdef BOOST_TEST_CATCH_SIGPOLL
 , m_POLL_action( SIGPOLL, catch_system_errors, attach_dbg, alt_stack )
 #endif
@@ -813,26 +809,8 @@ signal_handler::~signal_handler()
 
 extern "C" {
 
-static bool ignore_sigchild( siginfo_t* info )
-{
-    return info->si_signo == SIGCHLD
-#ifndef BOOST_TEST_LIMITED_SIGNAL_DETAILS
-            && info->si_code == CLD_EXITED 
-#endif
-#ifdef BOOST_TEST_IGNORE_NON_ZERO_CHILD_CODE
-            ;
-#else
-            && (int)info->si_status == 0;
-#endif
-}
-
-//____________________________________________________________________________//
-
 static void execution_monitor_jumping_signal_handler( int sig, siginfo_t* info, void* context )
 {
-    if( ignore_sigchild( info ) )
-        return;
-
     signal_handler::sys_sig()( info, context );
 
     siglongjmp( signal_handler::jump_buffer(), sig );
@@ -842,9 +820,6 @@ static void execution_monitor_jumping_signal_handler( int sig, siginfo_t* info, 
 
 static void execution_monitor_attaching_signal_handler( int sig, siginfo_t* info, void* context )
 {
-    if( ignore_sigchild( info ) )
-        return;
-
     if( !debug::attach_debugger( false ) )
         execution_monitor_jumping_signal_handler( sig, info, context );
 
