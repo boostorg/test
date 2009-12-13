@@ -49,6 +49,8 @@ public:
     void    assertion_result( bool ) {}
     void    exception_caught( execution_exception const& ) {}
 
+    virtual int priority() { return 2; }
+    
     // configuration
     void    set_stream( std::ostream& );
 
