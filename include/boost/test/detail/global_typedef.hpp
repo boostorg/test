@@ -20,6 +20,13 @@
 #define BOOST_TEST_STRINGIZE( s ) BOOST_TEST_L( BOOST_STRINGIZE( s ) )
 #define BOOST_TEST_EMPTY_STRING   BOOST_TEST_L( "" )
 
+#define BOOST_TEST_SCOPE_SETCOLOR( os, attr, color )            \
+    scope_setcolor const& sc = runtime_config::color_output()   \
+           ? scope_setcolor( os, attr, color )                  \
+           : scope_setcolor();                                  \
+    ut_detail::ignore_unused_variable_warning( sc )             \
+/**/
+
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//

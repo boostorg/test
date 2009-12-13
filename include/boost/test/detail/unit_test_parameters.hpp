@@ -46,6 +46,7 @@ BOOST_TEST_DECL bool                     save_pattern();
 BOOST_TEST_DECL bool                     show_build_info();
 BOOST_TEST_DECL bool                     show_progress();
 BOOST_TEST_DECL bool                     catch_sys_errors();
+BOOST_TEST_DECL bool                     color_output();
 BOOST_TEST_DECL bool                     auto_start_dbg();
 BOOST_TEST_DECL bool                     use_alt_stack();
 BOOST_TEST_DECL bool                     detect_fp_exceptions();

@@ -22,6 +22,8 @@
 #include <boost/test/unit_test_suite_impl.hpp>
 
 #include <boost/test/utils/basic_cstring/io.hpp>
+#include <boost/test/utils/setcolor.hpp>
+#include <boost/test/detail/unit_test_parameters.hpp>
 
 // STL
 #include <iomanip>
@@ -157,9 +159,13 @@ plain_report_formatter::do_confirmation_report( test_unit const& tu, std::ostrea
     test_results const& tr = results_collector.results( tu.p_id );
     
     if( tr.passed() ) {
+        BOOST_TEST_SCOPE_SETCOLOR( ostr, term_attr::BRIGHT, term_color::GREEN );
+
         ostr << "*** No errors detected\n";
         return;
     }
+        
+    BOOST_TEST_SCOPE_SETCOLOR( ostr, term_attr::BRIGHT, term_color::RED );
         
     if( tr.p_skipped ) {
         ostr << "*** Test " << tu.p_type_name << " skipped due to " 
