@@ -200,10 +200,10 @@ format_report( OutStream& os, predicate_result const& pr, unit_test::lazy_ostrea
     case CHECK_PRED_WITH_ARGS: {
         va_list args_copy;
 
-#if BOOST_WORKAROUND(BOOST_MSVC, <=1500)
-        args_copy = args;
-#else
+#ifdef va_copy
         va_copy( args_copy, args );
+#else
+        args_copy = args;
 #endif
         os << prefix << assertion_descr;
 
@@ -231,6 +231,10 @@ format_report( OutStream& os, predicate_result const& pr, unit_test::lazy_ostrea
             }
             os << " )";
         }
+
+#ifdef va_copy
+        va_end( args_copy );
+#endif
        
         if( !pr.has_empty_message() )
             os << ". " << pr.message();
