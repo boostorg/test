@@ -33,6 +33,8 @@
 #include <cctype>
 #include <cwchar>
 #include <stdexcept>
+#include <vector>
+#include <utility>
 #include <ios>
 
 // !! should we use #include <cstdarg>
@@ -198,20 +200,20 @@ format_report( OutStream& os, predicate_result const& pr, unit_test::lazy_ostrea
     }
 
     case CHECK_PRED_WITH_ARGS: {
-        va_list args_copy;
+        std::vector< std::pair<char const*, lazy_ostream const*> > args_copy;
+        args_copy.reserve( num_args );
+        for( std::size_t i = 0; i < num_args; ++i ) {
+            char const* desc = va_arg( args, char const* );
+            lazy_ostream const* value = va_arg( args, lazy_ostream const* );
+            args_copy.push_back( std::make_pair( desc, value ) );
+        }
 
-#ifdef va_copy
-        va_copy( args_copy, args );
-#else
-        args_copy = args;
-#endif
         os << prefix << assertion_descr;
 
         // print predicate call description
         os << "( ";
         for( std::size_t i = 0; i < num_args; ++i ) {
-            os << va_arg( args, char const* );
-            va_arg( args, lazy_ostream const* ); // skip argument value;
+            os << args_copy[i].first;
             
             if( i != num_args-1 )
                 os << ", ";
@@ -219,12 +221,9 @@ format_report( OutStream& os, predicate_result const& pr, unit_test::lazy_ostrea
         os << " )" << suffix;
                         
         if( tl != PASS ) {
-            args = args_copy;
-
             os << " for ( ";
             for( std::size_t i = 0; i < num_args; ++i ) {
-                va_arg( args, char const* ); // skip argument description;            
-                os << *va_arg( args, lazy_ostream const* );
+                os << *args_copy[i].second;
                 
                 if( i != num_args-1 )
                     os << ", ";
@@ -232,10 +231,6 @@ format_report( OutStream& os, predicate_result const& pr, unit_test::lazy_ostrea
             os << " )";
         }
 
-#ifdef va_copy
-        va_end( args_copy );
-#endif
-       
         if( !pr.has_empty_message() )
             os << ". " << pr.message();
         break;
