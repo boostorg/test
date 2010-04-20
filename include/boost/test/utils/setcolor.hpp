@@ -103,7 +103,7 @@ struct scope_setcolor {
     ~scope_setcolor()
     {
         if( m_os )
-	    *m_os << setcolor();
+        *m_os << setcolor();
     }
 private:
     // Data members
