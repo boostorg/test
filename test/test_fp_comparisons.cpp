@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2008.
+//  (C) Copyright Gennadiy Rozental 2001-2010.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -50,8 +50,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( test_BOOST_CHECK_CLOSE, FPT, test_types )
     fp2     = static_cast<FPT>(second);     \
     epsilon = static_cast<FPT>(e);          \
                                             \
-    BOOST_CHECK_PREDICATE( bind(not_func, bind(check_is_close, _1, _2, _3)),  \
-        (fp1)(fp2)(percent_tolerance( epsilon )) ); \
+    BOOST_CHECK_PREDICATE(                  \
+        bind(not_func, bind(check_is_close, _1, _2, _3)),  \
+        (fp1)(fp2)(fpc::percent_tolerance( epsilon )) ); \
 /**/
 
     FPT fp1, fp2, epsilon;
@@ -99,8 +100,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( test_CHECK_CLOSE_FRACTION, FPT, test_types )
     fp2     = static_cast<FPT>(second);     \
     epsilon = static_cast<FPT>(e);          \
                                             \
-    BOOST_CHECK_PREDICATE( bind(not_func, bind(check_is_close, _1, _2, _3)),  \
-        (fp1)(fp2)(fraction_tolerance( epsilon )) ); \
+    BOOST_CHECK_PREDICATE(                  \
+        bind(not_func, bind(check_is_close, _1, _2, _3)),  \
+        (fp1)(fp2)(epsilon) );              \
 /**/
 
     FPT fp1, fp2, epsilon;
@@ -152,26 +154,28 @@ BOOST_AUTO_TEST_CASE( test_CHECK_SMALL )
 
 //____________________________________________________________________________//
 
+namespace fpc = boost::math::fpc;
+
 BOOST_AUTO_TEST_CASE( test_close_at_tolerance )
 {
     double fp1     = 1.00000001;
     double fp2     = 1.00000002;
     double epsilon = 1e-6;
 
-    close_at_tolerance<double> pred( percent_tolerance( epsilon ), FPC_WEAK );
+    fpc::close_at_tolerance<double> pred( fpc::percent_tolerance( epsilon ), fpc::FPC_WEAK );
     BOOST_CHECK_PREDICATE( pred, (fp1)(fp2) );
 
     BOOST_CHECK_PREDICATE( bind(not_func, bind(check_is_close, _1, _2, _3)), 
-                           (fp1)(fp2)(percent_tolerance( epsilon )) );
+                           (fp1)(fp2)(fpc::percent_tolerance( epsilon )) );
 
     fp1     = 1.23456e-10;
     fp2     = 1.23457e-10;
     epsilon = 8.1e-4;
 
-    BOOST_CHECK_PREDICATE( close_at_tolerance<double>( percent_tolerance( epsilon ), FPC_WEAK ), (fp1)(fp2) );
+    BOOST_CHECK_PREDICATE( fpc::close_at_tolerance<double>( fpc::percent_tolerance( epsilon ), fpc::FPC_WEAK ), (fp1)(fp2) );
     BOOST_CHECK_PREDICATE( 
         bind(not_func, 
-             bind(close_at_tolerance<double>( percent_tolerance( epsilon ) ), _1, _2)), (fp1)(fp2) );
+             bind(fpc::close_at_tolerance<double>( fpc::percent_tolerance( epsilon ) ), _1, _2)), (fp1)(fp2) );
 }
 
 //____________________________________________________________________________//

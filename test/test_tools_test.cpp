@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2008.
+//  (C) Copyright Gennadiy Rozental 2001-2010.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -548,7 +548,7 @@ TEST_CASE( test_BOOST_TEST_PASSPOINT )
 
 //____________________________________________________________________________//
 
-TEST_CASE( test_BOOST_IS_DEFINED )
+BOOST_AUTO_TEST_CASE( test_BOOST_IS_DEFINED )
 {
 #define SYMBOL1
 #define SYMBOL2 std::cout
@@ -565,6 +565,38 @@ TEST_CASE( test_BOOST_IS_DEFINED )
 }
 
 //____________________________________________________________________________//
+
+int goo()
+{
+    static int i = 0;
+    return i++;
+}
+
+struct Foo : boost::noncopyable {
+    static int copy_counter;
+
+    Foo() {}
+    Foo( Foo const& ) { copy_counter++; }
+};
+
+int Foo::copy_counter = 0;
+
+bool operator==( Foo const&, Foo const& ) { return true; }
+std::ostream& operator<<( std::ostream& os, Foo const& ) { return os << "Foo"; }
+
+BOOST_AUTO_TEST_CASE( test_argument_handling )
+{
+    BOOST_CHECK_EQUAL( goo(), 0 );
+    BOOST_CHECK_EQUAL( goo(), 1 );
+    BOOST_CHECK_EQUAL( 2, goo() );
+    BOOST_CHECK_EQUAL( 3, goo() );
+    BOOST_CHECK_NE( goo(), 5 );
+    BOOST_CHECK_EQUAL( Foo(), Foo() );
+    BOOST_CHECK_EQUAL( Foo::copy_counter, 0 );
+}
+
+//____________________________________________________________________________//
+
 
 // !! CHECK_SMALL
 
