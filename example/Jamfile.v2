@@ -51,7 +51,7 @@ test-suite boost_test_examples
     [ run-fail unit_test_example_11.cpp unit_test_framework/<link>static ]
     [ link     unit_test_example_12.cpp unit_test_framework/<link>static ]
     [ run      unit_test_example_13.cpp ]
-    [ run      unit_test_example_14.cpp unit_test_framework/<link>static ]
+    [ run      unit_test_example_14.cpp unit_test_framework ]
 
     [ run      est_example1.cpp unit_test_framework ]
     [ run-fail est_example2.cpp unit_test_framework ]
