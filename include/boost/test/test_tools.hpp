@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2008.
+//  (C) Copyright Gennadiy Rozental 2001-2010.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -230,20 +230,20 @@ do {                                                                    \
 //____________________________________________________________________________//
 
 #define BOOST_WARN_CLOSE( L, R, T )         BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::check_is_close, "", WARN, CHECK_CLOSE, (L)(R)(::boost::test_tools::percent_tolerance(T)) )
+    ::boost::test_tools::check_is_close, "", WARN, CHECK_CLOSE, (L)(R)(::boost::math::fpc::percent_tolerance(T)) )
 #define BOOST_CHECK_CLOSE( L, R, T )        BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::check_is_close, "", CHECK, CHECK_CLOSE, (L)(R)(::boost::test_tools::percent_tolerance(T)) )
+    ::boost::test_tools::check_is_close, "", CHECK, CHECK_CLOSE, (L)(R)(::boost::math::fpc::percent_tolerance(T)) )
 #define BOOST_REQUIRE_CLOSE( L, R, T )      BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::check_is_close, "", REQUIRE, CHECK_CLOSE, (L)(R)(::boost::test_tools::percent_tolerance(T)) )
+    ::boost::test_tools::check_is_close, "", REQUIRE, CHECK_CLOSE, (L)(R)(::boost::math::fpc::percent_tolerance(T)) )
 
 //____________________________________________________________________________//
 
 #define BOOST_WARN_CLOSE_FRACTION(L, R, T)  BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::check_is_close, "", WARN, CHECK_CLOSE_FRACTION, (L)(R)(::boost::test_tools::fraction_tolerance(T)) )
+    ::boost::test_tools::check_is_close, "", WARN, CHECK_CLOSE_FRACTION, (L)(R)(T) )
 #define BOOST_CHECK_CLOSE_FRACTION(L, R, T) BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::check_is_close, "", CHECK, CHECK_CLOSE_FRACTION, (L)(R)(::boost::test_tools::fraction_tolerance(T)) )
+    ::boost::test_tools::check_is_close, "", CHECK, CHECK_CLOSE_FRACTION, (L)(R)(T) )
 #define BOOST_REQUIRE_CLOSE_FRACTION(L,R,T) BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::check_is_close, "", REQUIRE, CHECK_CLOSE_FRACTION, (L)(R)(::boost::test_tools::fraction_tolerance(T)) )
+    ::boost::test_tools::check_is_close, "", REQUIRE, CHECK_CLOSE_FRACTION, (L)(R)(T) )
 
 //____________________________________________________________________________//
 
