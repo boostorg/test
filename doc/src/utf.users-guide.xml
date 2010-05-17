@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE chapter PUBLIC "-//Boost//DTD BoostBook XML V1.0//EN"  "../../../../tools/boostbook/dtd/boostbook.dtd" [
+ <!ENTITY utf "<acronym>UTF</acronym>">
+]>
+<section id="utf.user-guide" last-revision="$Date$">
+ <title>Unit Test Framework: User's guide</title><titleabbrev>User's guide</titleabbrev>
+
+ <section id="utf.user-guide.intro">
+  <title>Introduction &hellip; or what's your name?</title><titleabbrev>Introduction</titleabbrev>
+
+  <para role="first-line-indented">
+   Without further ado, let's define terms regularly used by the &utf;.
+  </para>
+  <variablelist>
+   <?dbhtml term-width="16%"  list-width="100%"?>
+   <?dbhtml term-separator=":"?>
+   <?dbhtml table-summary="utf terms definition"?>
+
+   <varlistentry id="test-module.def">
+    <term><firstterm>The test module</firstterm></term>
+    <listitem>
+     <simpara>
+      This is a single binary that performs the test. Physically a test module consists of one or more test source files,
+      which can be built into an executable or a dynamic library. A test module that consists of a single test source 
+      file is called <firstterm id="single-file-test-module.def">single-file test module</firstterm>. Otherwise 
+      it's called <firstterm id="multi-file-test-module.def">multi-file test module</firstterm>. Logically a test 
+      module consists of four parts: <link linkend="test-setup.def">test setup</link> (or test initialization), 
+      <link linkend="test-body.def">test body</link>, <link linkend="test-cleanup.def">test cleanup</link> and 
+      <link linkend="test-runner.def">test runner</link>. The test runner part is optional. If a test module is built as
+      an executable the test runner is built-in. If a test module is built as a dynamic library, it is run by an 
+      external test runner.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="test-body.def">
+    <term><firstterm>The test body</firstterm></term>
+    <listitem>
+     <simpara>
+      This is the part of a test module that actually performs the test.
+      Logically test body is a collection of <link linkend="test-assertion.def">test assertions</link> wrapped in
+      <link linkend="test-case.def">test cases</link>, which are organized in a <link linkend="test-tree.def">test tree
+      </link>.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="test-tree.def">
+    <term><firstterm>The test tree</firstterm></term>
+    <listitem>
+     <simpara>
+      This is a hierarchical structure of <link linkend="test-suite.def">test suites</link> (non-leaf nodes) and
+      <link linkend="test-case.def">test cases</link> (leaf nodes).
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="test-unit.def">
+    <term><firstterm>The test unit</firstterm></term>
+    <listitem>
+     <simpara>
+      This is a collective name when referred to either <link linkend="test-suite.def">test suite</link> or
+      <link linkend="test-case.def">test case</link>
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="test-assertion.def">
+    <term><firstterm>Test assertion</firstterm></term>
+    <listitem>
+     <simpara>
+      This is a single binary condition (binary in a sense that is has two outcomes: pass and fail) checked
+      by a test module.
+     </simpara>
+     <simpara>
+      There are different schools of thought on how many test assertions a test case should consist of. Two polar
+      positions are the one advocated by TDD followers - one assertion per test case; and opposite of this - all test
+      assertions within single test case - advocated by those only interested in the first error in a
+      test module. The &utf; supports both approaches.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="test-case.def">
+    <term><firstterm>The test case</firstterm></term>
+    <listitem>
+     <simpara>
+      This is an independently monitored function within a test module that
+      consists of one or more test assertions. The term &quot;independently monitored&quot; in the definition above is
+      used to emphasize the fact, that all test cases are monitored independently. An uncaught exception or other normal
+      test case execution termination doesn't cause the testing to cease. Instead the error is caught by the test 
+      case execution monitor, reported by the &utf; and testing proceeds to the next test case. Later on you are going 
+      to see that this is on of the primary reasons to prefer multiple small test cases to a single big test function.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="test-suite.def">
+    <term><firstterm>The test suite</firstterm></term>
+    <listitem>
+     <simpara>
+      This is a container for one or more test cases. The test suite gives you an ability to group
+      test cases into a single referable entity. There are various reasons why you may opt to do so, including:
+     </simpara>
+     <itemizedlist>
+      <listitem>
+       <simpara>To group test cases per subsystems of the unit being tested.</simpara>
+      </listitem>
+      <listitem>
+       <simpara>To share test case setup/cleanup code.</simpara>
+      </listitem>
+      <listitem>
+       <simpara>To run selected group of test cases only.</simpara>
+      </listitem>
+      <listitem>
+       <simpara>To see test report split by groups of test cases</simpara>
+      </listitem>
+      <listitem>
+       <simpara>To skip groups of test cases based on the result of another test unit in a test tree.</simpara>
+      </listitem>
+     </itemizedlist>
+     <simpara>
+      A test suite can also contain other test suites, thus allowing a hierarchical test tree structure to be formed.
+      The &utf; requires the test tree to contain at least one test suite with at least one test case. The top level 
+      test suite - root node of the test tree - is called the master test suite.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="test-setup.def">
+    <term><firstterm>The test setup</firstterm></term>
+    <listitem>
+     <simpara>
+      This is the part of a test module that is responsible for the test
+      preparation. It includes the following operations that take place prior to a start of the test:
+     </simpara>
+     <itemizedlist>
+      <listitem>
+       <simpara>
+        The &utf; initialization
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        Test tree construction
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        Global test module setup code
+       </simpara>
+      </listitem>
+     </itemizedlist>
+     <simpara>
+      Per test case&quot; setup code, invoked for every test case it's assigned to, is also attributed to the
+      test initialization, even though it's executed as a part of the test case.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="test-cleanup.def">
+    <term><firstterm>The test cleanup</firstterm></term>
+    <listitem>
+     <simpara>
+      This is the part of test module that is responsible for cleanup operations.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="test-fixture.def">
+    <term><firstterm>The test fixture</firstterm></term>
+    <listitem>
+     <simpara>
+      Matching setup and cleanup operations are frequently united into a single entity called test fixture.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="test-runner.def">
+    <term><firstterm>The test runner</firstterm></term>
+    <listitem>
+     <simpara>
+      This is an &quot;executive manager&quot; that runs the show. The test runner's functionality should include
+      the following interfaces and operations:
+     </simpara>
+     <itemizedlist>
+      <listitem>
+       <simpara>
+        Entry point to a test module. This is usually either the function main() itself or single function that can be
+        invoked from it to start testing.
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        Initialize the &utf; based on runtime parameters
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        Select an output media for the test log and the test results report
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        Select test cases to execute based on runtime parameters
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        Execute all or selected test cases
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        Produce the test results report
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        Generate a test module result code.
+       </simpara>
+      </listitem>
+     </itemizedlist>
+     <para role="first-line-indented">
+      An advanced test runner may provide additional features, including interactive <acronym>GUI</acronym> interfaces,
+      test coverage and profiling support.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="test-log.def">
+    <term><firstterm>The test log</firstterm></term>
+    <listitem>
+     <simpara>
+      This is the record of all events that occur during the testing.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="test-results-report.def">
+    <term><firstterm>The test results report</firstterm></term>
+    <listitem>
+     <simpara>
+      This is the report produced by the &utf; after the testing is completed, that indicates which test cases/test
+      suites passed and which failed.
+     </simpara>
+    </listitem>
+   </varlistentry>
+  </variablelist >
+ </section>
+
+ <section id="utf.user-guide.usage-variants">
+  <title>The &utf; usage variants &hellip; or the <ulink url="http://en.wikipedia.org/wiki/Buridan's_ass">Buridan's donkey</ulink> parable</title>
+  <titleabbrev>Usage variants</titleabbrev>
+
+  <para role="first-line-indented">
+   The &utf; presents you with 4 different variants how it can be used.
+  </para>
+
+  <itemizedlist>
+   <listitem>
+    <simpara><link linkend="utf.user-guide.static-lib-variant">The static library variant</link></simpara>
+   </listitem>
+   <listitem>
+    <simpara><link linkend="utf.user-guide.dynamic-lib-variant">The dynamic library variant</link></simpara>
+   </listitem>
+   <listitem>
+    <simpara><link linkend="utf.user-guide.single-header-variant">The single-header variant</link></simpara>
+   </listitem>
+   <listitem>
+    <simpara><link linkend="utf.user-guide.extern-test-runner-variant">The external test runner variant</link></simpara>
+   </listitem>
+  </itemizedlist>
+
+  <para role="first-line-indented">
+   Unlike the Buridan's donkey though, you shouldn't have problems deciding which one to use, since there are
+   clear reasons why would you prefer each one.
+  </para>
+
+  <para role="first-line-indented">
+   In most cases to compile a test module based on the &utf; all you need to include is just the single header 
+   <filename class="headerfile">boost/test/unit_test.hpp</filename>. This header includes internally most of the other
+   headers that contains the &utf; definitions. Some advanced features, like the floating point comparison or the
+   logged  expectations testing, are defined in independent headers and need to be included explicitly.
+  </para>
+
+  <section id="utf.user-guide.static-lib-variant">
+   <title>The static library variant of the &utf;</title><titleabbrev>Static library</titleabbrev>
+   <para role="first-line-indented">
+    The &utf; can be built into a static library. If you opt to link a test module with the 
+    <link linkend="utf.compilation.standalone">standalone static library</link>, this usage is called the static library
+    variant of the &utf;.
+   </para>
+
+   <para role="first-line-indented">
+    The test runner supplied with this variant requires you to implement the <link linkend="test-module.def">test
+    module</link> initialization function that matches one of the two specifications depending on the compilation flag
+    <xref linkend="utf.flag.alt-init-api" endterm="utf.flag.alt-init-api"/>. If flag isn't defined you are required
+    to match the original specification. If you define the flag <xref linkend="utf.flag.alt-init-api"
+    endterm="utf.flag.alt-init-api"/> during a test module compilation you are required to use the alternative 
+    initialization function specification. The &utf; provides an ability to
+    <link linkend="utf.user-guide.initialization.auto-generation">automatically generate</link> an empty test module 
+    initialization function with correct specification if no custom initialization is required by a test module.
+   </para>
+
+   <important>
+    <simpara>
+     If you opted to use an alternative initialization API, for a test module to be able to link with prebuilt library, 
+     the flag <xref linkend="utf.flag.alt-init-api" endterm="utf.flag.alt-init-api"/> has to be defined both during 
+     library and a test module compilation.
+    </simpara>
+   </important>
+  </section>
+
+  <section id="utf.user-guide.dynamic-lib-variant">
+   <title>The dynamic library variant of the &utf;</title>
+   <titleabbrev>Dynamic library</titleabbrev>
+
+   <para role="first-line-indented">
+    In the project with large number of test modules <link linkend="utf.user-guide.dynamic-lib-variant">the static
+    library</link> variant of the &utf; may cause you to waste a lot of disk space, since the &utf; is linked
+    statically with every test module. The solution is to link with the &utf; built into a dynamic library. If you opt
+    to link a test module with the prebuilt dynamic library, this usage is called the dynamic library variant of the
+    &utf;. This variant requires you to define the flag <xref linkend="utf.flag.dyn-link" endterm="utf.flag.dyn-link"/>
+    either in a makefile or before the header <filename class="headerfile">boost/test/unit_test.hpp</filename>
+    inclusion.
+   </para>
+
+   <para role="first-line-indented">
+    The test runner supplied with this variant requires you to implement the <link linkend="test-module.def">test
+    module</link> initialization function that matches the alternative initialization function signature. The &utf;
+    provides an ability to <link linkend="utf.user-guide.initialization.auto-generation">automatically generate</link>
+    an empty test module initialization function with correct signature if no custom initialization is required by a
+    test module.
+   </para>
+
+   <note>
+    <simpara>
+     The name of the test module initialization function is not enforced, since the function is passed as an argument 
+     to the test runner.
+    </simpara>
+   </note>
+  </section>
+
+  <section id="utf.user-guide.single-header-variant">
+   <title>The single-header variant of the &utf;</title>
+   <titleabbrev>Single header</titleabbrev>
+
+   <para role="first-line-indented">
+    If you prefer to avoid the <link linkend="utf.compilation.standalone">standalone library compilation</link>, you
+    should use the single-header variant of the &utf;. This variant is implemented, as it follows from its name, in
+    the single header <filename class="headerfile">boost/test/included/unit_test.hpp</filename>. An inclusion of
+    the header causes the complete implementation of the &utf; to be included as a part of a test module's
+    source file. The header <filename class="headerfile">boost/test/unit_test.hpp</filename> doesn't have to be
+    included anymore. You don't have to worry about disabling <link linkend="utf.compilation.auto-linking">
+    auto-linking</link> feature either. It's done in the   implementation header already. This variant
+    can't be used with the <xref linkend="multi-file-test-module.def" endterm="multi-file-test-module.def"/>.
+    Otherwise it's almost identical from the usage prospective to the static library variant of the &utf;.
+    In fact the only difference is the name of the include file:
+    <filename class="headerfile">boost/test/included/unit_test.hpp</filename> instead of
+    <filename class="headerfile">boost/test/unit_test.hpp</filename>.
+   </para>
+
+   <para role="first-line-indented">
+    The test runner supplied with this variant requires you to implement the <link linkend="test-module.def">test
+    module</link> initialization function that matches one of the two specifications depending on the compilation flag
+    <xref linkend="utf.flag.alt-init-api" endterm="utf.flag.alt-init-api"/>. If flag isn't defined you are required to
+    match the original specification. If you define the flag 
+    <xref linkend="utf.flag.alt-init-api" endterm="utf.flag.alt-init-api"/> during a test module compilation you are
+    required to use the alternative initialization function  specification. The &utf; provides an ability to
+    <link linkend="utf.user-guide.initialization.auto-generation">automatically generate</link> an empty test module 
+    initialization function with correct specification if no custom initialization is required by a test module.
+   </para>
+  </section>
+
+  <section id="utf.user-guide.extern-test-runner-variant">
+   <title>The external test runner variant of the &utf;</title>
+   <titleabbrev>External test runner</titleabbrev>
+
+   <para role="first-line-indented">
+    All other usage variants employ the build-in test runners. If you plan to use an external test runner with your
+    test module you need to build it as a dynamic library. This usage of the &utf; is called the external test runner 
+    variant of the &utf;. The variant requires you to define the flag 
+    <xref linkend="utf.flag.dyn-link" endterm="utf.flag.dyn-link"/> either in a makefile or before the header
+    <filename class="headerfile">boost/test/unit_test.hpp</filename> inclusion. An external test runner utility is
+    required to link with dynamic library.
+   </para>
+
+   <para role="first-line-indented">
+    If an external test runner is based on the test runner built in to the dynamic library (like the standalone
+    boost_test_runner utility supplied by the &utf;), it requires you to implement the <link linkend="test-module.def">
+    test module</link> initialization function that matches the alternative initialization function signature. The
+    &utf; provides an ability to <link linkend="utf.user-guide.initialization.auto-generation">automatically generate
+    </link> an empty test module initialization function with correct signature if no custom initialization is required 
+    by a test module.
+   </para>
+
+   <note>
+    <simpara>
+     An advanced test runner doesn't have to be based on the build-in one and may require a different
+     test module initialization function signature and/or name.
+    </simpara>
+   </note>
+  </section>
+ </section>
+
+ <section id="utf.user-guide.test-runners">
+  <title>The supplied test runners &hellip; or where is the entrance?</title>
+  <titleabbrev>Supplied test runners</titleabbrev>
+
+  <para role="first-line-indented">
+   All usage variants of the &utf;, excluding the 
+   <link linkend="utf.user-guide.external-test-runner">external test runner</link>, supply the test runner in a form of 
+   free function named unit_test_main with the following signature:
+  </para>
+
+  <programlisting>int unit_test_main( init_unit_test_func init_func, int argc, char* argv[] );</programlisting>
+
+  <para role="first-line-indented">
+   To invoke the test runner you are required to supply the pointer to the <link linkend="test-module.def">test module</link>
+   initialization function as the first argument to the test runner function. In majority of the cases this function is 
+   invoked directly from test executable entry point - function main(). In most usage variants the &utf; can 
+   automatically generate default function main() implementation as either part of the library or test module itself. 
+   Since the function main needs to refer to the initialization function by name, it is predefined by the default 
+   implementation and you are required to match both specific signature and name, when implementing initialization 
+   function. If you for any reason prefer more flexibility you can opt to implement the function main() yourself, in 
+   which case it's going to be your responsibility to invoke the test runner, but the initialization function name is 
+   not enforces the &utf;. See below for flags that needs to be defined/undefined in each usage variant to enable this.
+  </para>
+  
+  <warning>
+   <simpara>
+    In spite syntactic similarity the signatures of the test runner function in fact are different for different usage 
+    variants. The cause is different signature of the test module initialization function referred by the 
+    <link linkend="utf.user-guide.initialization.signature-typedef">typedef init_unit_test_func</link>. This makes static
+    and dynamic library usage variants incompatible and they can't be easily switched on a fly.
+   </simpara>
+  </warning>
+
+  <section id="utf.user-guide.static-lib-runner">
+   <title>Static library variant of the &utf;</title>
+   <titleabbrev>Static library</titleabbrev>
+
+   <para role="first-line-indented">
+    By default this variant supplies the function main() as part of static library. If this is for any reason undesirable 
+    you need to define the flag <xref linkend="utf.flag.no-main" endterm="utf.flag.no-main"/> during the library 
+    compilation and the function main() implementation won't be generated.
+   </para>
+   
+   <para role="first-line-indented">
+    In addition to the <link linkend="utf.user-guide.static-lib-variant">initialization function signature requirement</link>
+    default function main() implementation assumes the name of initialization function is init_unit_test_suite
+   </para>
+   
+  </section>
+
+  <section id="utf.user-guide.dynamic-lib-runner">
+   <title>Dynamic library variant of the &utf;</title>
+   <titleabbrev>Dynamic library</titleabbrev>
+
+   <para role="first-line-indented">
+    Unlike the static library variant function main() can't reside in the dynamic library body. Instead this variant
+    supplies default function main() implementation as part of the header 
+    <filename class="headerfile">boost/test/unit_test.hpp</filename> to be generated as part of your test file body. 
+    The function main() is generated only if either the <xref linkend="utf.flag.main" endterm="utf.flag.main"/> or 
+    the <xref linkend="utf.flag.module" endterm="utf.flag.module"/> flags are defined during a test module compilation. 
+    For <link linkend="single-file-test-module.def">single-file test module</link> flags can be defined either in a 
+    test module's makefile or before the header <filename class="headerfile">boost/test/unit_test.hpp</filename>
+    inclusion. For a <xref linkend="multi-file-test-module.def" endterm="multi-file-test-module.def"/> flags can't
+    be defined in makefile and have to be defined in only one of the test files to avoid duplicate copies of the 
+    function main().
+   </para>
+
+   <important>
+    <simpara>
+     The same flags also govern generation of an empty 
+     <link linkend="utf.user-guide.initialization">test module initialization function</link>. This means that if you 
+     need to implement either function main() or initialization function manually, you can't define the above flags
+     and are required to manually implement both of them.
+    </simpara>
+   </important>
+  </section>
+
+  <section id="utf.user-guide.single-header-runner">
+   <title>Single-header variant of the &utf;</title>
+   <titleabbrev>Single header</titleabbrev>
+
+   <para role="first-line-indented">
+    By default this variant supplies function main() as part of the header 
+    <filename class="headerfile">boost/test/included/unit_test.hpp</filename> to be generated as part of your test file 
+    body. If this is for any reason undesirable you need to define the flag 
+    <xref linkend="utf.flag.no-main" endterm="utf.flag.no-main"/> during test module compilation and the function main()
+    implementation won't be generated.
+   </para>
+  </section>
+
+  <section id="utf.user-guide.external-test-runner">
+   <title>External test runner variant of the &utf;</title>
+   <titleabbrev>External test runner</titleabbrev>
+
+   <para role="first-line-indented">
+    The external test runner variant of the &utf; supplies the test runner in a form of standalone utility
+    boost_test_runner. You are free to implement different, more advanced, test runners that can be used with this
+    variant.
+   </para>
+
+   <simpara>
+    <!-- TO FIX -->
+   </simpara>
+  </section>
+
+  <section id="utf.user-guide.runners-exit-status">
+   <title>Generated exit status values</title>
+
+   <para role="first-line-indented">
+    Once testing is finished, all supplied test runners report the results and returns an exit status value. Here are
+    the summary of all possible generated values:
+   </para>
+
+   <table id="utf.user-guide.runners-exit-status-summary">
+    <title>Generated exit status values</title>
+    <tgroup cols="2">
+     <colspec colname="c1"/>
+     <colspec colname="c2"/>
+     <thead>
+      <row>
+        <entry>Value</entry>
+        <entry>Meaning</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>boost::exit_success</entry>
+       <entry>
+        No errors occurred during the test or the success result code was explicitly requested with the no_result_code
+        parameter.
+       </entry>
+      </row>
+      <row>
+       <entry>boost::exit_test_failure</entry>
+       <entry>
+        Non-fatal errors detected and no uncaught exceptions were thrown during testing or the &utf; fails during
+        initialization.
+       </entry>
+      </row>
+      <row>
+       <entry>boost::exit_exception_failure</entry>
+       <entry>
+        Fatal errors were detected or uncaught exceptions thrown during testing.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+  </section>
+ </section>
+
+ <section id="utf.user-guide.initialization">
+  <title>Test module initialization &hellip; or ready, set &hellip;</title>
+  <titleabbrev>Test module initialization</titleabbrev>
+
+  <para role="first-line-indented">
+   There are two tasks that you may need to perform before actual testing can start:
+  </para>
+
+  <itemizedlist>
+   <listitem>
+    <simpara>
+     The test tree needs to be built (unless you are using automated test units registration).
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Custom test module initialization needs to be performed. This includes
+     initialization of the code under test and custom tune-up of the &utf; parameters (for example the test log or the
+     test results report output streams redirection).
+    </simpara>
+   </listitem>
+  </itemizedlist>
+
+  <para role="first-line-indented">
+   The function dedicated for this purpose is called the test module initialization function. Alternatively you can
+   employ global fixtures, covered in details, including differences in two approaches, in 
+   <xref linkend="utf.user-guide.fixture"/>.
+  </para>
+
+  <para role="first-line-indented">
+   The &utf; requires you to implement the test module initialization function. The test runner supplied with the static
+   library or single-header variants of the &utf; requires the specific function specification. The test runner supplied
+   with the dynamic library variant of the &utf; requires the specific initialization function signature only. <!-- TO FIX: specific specification -->
+  </para>
+
+  <para role="first-line-indented">
+   For many <link linkend="test-module.def">test modules</link> you don't need to do any custom initialization
+   and test tree construction is automated. In this case you don't really need the initialization function and
+   the &utf; provides a way to automatically generate an empty one for you.
+  </para>
+
+  <para role="first-line-indented">
+   Original design of the &utf; supported the manual test tree construction only. Later versions introduced the
+   automated registration of test units. In later versions of the &utf; the original initialization function
+   specification became inconvenient and unnecessary unsafe. So the alternative initialization function specification
+   was introduced. This change is not backward compatible. The test runners supplied with the static library and
+   single-header variants of the &utf; by default still require original initialization function specification, but
+   support <link linkend="utf.compilation.flags">compilation flags</link> that switch to the alternative one. The test
+   runner supplied with dynamic library variant of the &utf; requires new specification and doesn't support
+   original one. The plan is to deprecate the original initialization function specification in one of the future
+   releases and ultimately to stop supporting it.
+  </para>
+
+  <para role="first-line-indented">
+   The initialization function invocation is monitored by the &utf; the same way as all the test cases. An unexpected 
+   exception or system error detected during initialization function invocation is treated as initialization error and 
+   is reported as such. 
+  </para>
+  
+  <section id="utf.user-guide.initialization.orig-signature">
+   <title>Original initialization function signature and name</title>
+   <titleabbrev>Original initialization function</titleabbrev>
+
+   <para role="first-line-indented">
+    The original design of the &utf; initialization requires you to implement the function with the following
+    specification:
+   </para>
+
+   <programlisting><classname>boost::unit_test::test_suite</classname>* init_unit_test_suite( int argc, char* argv[] );</programlisting>
+
+   <para role="first-line-indented">
+    In original design of the &utf; this function was intended to initialize and return a master test suite. The null
+    value was considered an initialization error. The current design of the &utf; maintains master test suite instance
+    internally and does not treat the null result value as an initialization error. In fact it's recommended to
+    return null value always and register test units in the master test suite using the regular test suite add
+    interface. The only way to indicate an initialization error is to throw the
+    <classname>boost::unit_test::framework::setup_error</classname> exception.
+   </para>
+
+   <para role="first-line-indented">
+    The initialization function parameters argc, argv provide the command line arguments specified during test
+    module invocation. It's guarantied that any framework-specific command line arguments are excluded. To be
+    consisted with the alternative initialization function specification it's recommended though to access the
+    command line arguments using the master test suite interface.
+   </para>
+  </section>
+
+  <section id="utf.user-guide.initialization.alt-signature">
+   <title>Alternative initialization function signature and name</title>
+   <titleabbrev>Alternative initialization function</titleabbrev>
+
+   <para role="first-line-indented">
+    The alternative design of the &utf; initialization requires you to implement a function with the following
+    specification:
+   </para>
+
+   <programlisting>bool init_unit_test();</programlisting>
+
+   <para role="first-line-indented">
+    The result value of this function indicates whether or not initialization was successful. To register test
+    units in a master test suite use the test suite add interface. To access command line arguments use the master
+    test suite interface. It's guarantied that any framework-specific command line arguments are excluded.
+   </para>
+  </section>
+
+  <section id="utf.user-guide.initialization.signature-typedef">
+   <title>Initialization function signature access</title>
+
+   <para role="first-line-indented">
+    The test runner interface needs to refer to the initialization function signature. The &utf; provides the typedef 
+    that resolves to proper signature in all configurations:
+   </para>
+
+   <programlisting>namespace boost {
+namespace unit_test {
+#ifdef BOOST_TEST_ALTERNATIVE_INIT_API
+typedef bool        (*init_unit_test_func)();
+#else
+typedef test_suite* (*init_unit_test_func)( int, char* [] );
+#endif
+}
+}</programlisting>
+
+  </section>
+
+  <section id="utf.user-guide.initialization.auto-generation">
+   <title>Automated generation of the test module initialization function</title>
+   <titleabbrev>Automated generation</titleabbrev>
+
+   <para role="first-line-indented">
+    To automatically generate an empty test module initialization function you need to define 
+    <xref linkend="utf.flag.main" endterm="utf.flag.main"/> before including the
+    <filename class="headerfile">boost/test/unit_test.hpp</filename> header. The value of this define is ignored.
+    Alternatively you can define the macro <xref linkend="utf.flag.module" endterm="utf.flag.module"/> to be equal to 
+    any string (not necessarily in quotes). This macro causes the same result as 
+    <xref linkend="utf.flag.main" endterm="utf.flag.main"/>, and in addition the macro value becomes the name of the 
+    master test suite.
+   </para>
+
+   <important>
+    <simpara>
+     For a test module consisting of multiple source files you have to define these flags in a single test file only.
+     Otherwise you end up with multiple instances of the initialization function.
+    </simpara>
+   </important>
+  </section>
+ </section>
+
+ <xi:include href="utf.users-guide.test-organization.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+ <xi:include href="utf.users-guide.fixture.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+ <xi:include href="utf.users-guide.test-output.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+ <xi:include href="utf.user-guide.runtime-config.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+</section>
