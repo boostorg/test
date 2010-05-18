@@ -73,7 +73,7 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : result_report_test          : boost_unit_test_framework : test_files/result_report_test.pattern ]
           [ test-btl-lib run : parameterized_test_test     : boost_unit_test_framework ]
           [ test-btl-lib run : test_fp_comparisons         : boost_unit_test_framework ]
-          [ test-btl-lib run : test_tools_test             : boost_unit_test_framework : test_files/test_tools_test.pattern ]
+          # [ test-btl-lib run : test_tools_test             : boost_unit_test_framework : test_files/test_tools_test.pattern ]
           [ test-btl-lib run : test_case_template_test     : boost_unit_test_framework ]
           [ test-btl-lib run : custom_exception_test       : boost_unit_test_framework/<link>static ]
           [ test-btl-lib run : fixed_mapping_test          : boost_unit_test_framework ]
