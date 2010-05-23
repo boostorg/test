@@ -353,7 +353,7 @@ enum masks {
 
     BOOST_FPE_ALL       = MCW_EM,
 #elif defined(__CYGWIN__)
-    BOOST_FPE_ALL       = 1
+    BOOST_FPE_ALL       = 1,
 #else
     BOOST_FPE_DIVBYZERO = FE_DIVBYZERO,
     BOOST_FPE_INEXACT   = FE_INEXACT,
