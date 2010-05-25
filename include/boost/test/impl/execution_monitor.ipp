@@ -1320,13 +1320,13 @@ enable( unsigned mask )
 		return BOOST_FPE_INV;
 
 	return ~old_cw & BOOST_FPE_ALL;
-#elif defined(__CYGWIN__) || defined(__APPLE__)
-    /* Not Implemented in cygwin or apple */
-    return 0;
-#else
+#elif defined(__GLIBC__) && defined(__USE_GNU)
     ::feclearexcept(BOOST_FPE_ALL);
 	int res = ::feenableexcept( mask );
 	return res == -1 ? BOOST_FPE_INV : (unsigned)res;
+#else
+    /* Not Implemented  */
+    return 0;
 #endif
 }
 
@@ -1347,13 +1347,13 @@ disable( unsigned mask )
 		return BOOST_FPE_INV;
 
     return ~old_cw & BOOST_FPE_ALL;
-#elif defined(__CYGWIN__) || defined(__APPLE__)
-    /* Not Implemented in cygwin or apple */
-    return BOOST_FPE_INV;
-#else
+#elif defined(__GLIBC__) && defined(__USE_GNU)
     ::feclearexcept(BOOST_FPE_ALL);
 	int res = ::fedisableexcept( mask );
 	return res == -1 ? BOOST_FPE_INV : (unsigned)res;
+#else
+    /* Not Implemented */
+    return BOOST_FPE_INV;
 #endif
 }
 
