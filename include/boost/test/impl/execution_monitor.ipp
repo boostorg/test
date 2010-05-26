@@ -1308,7 +1308,10 @@ namespace fpe {
 unsigned
 enable( unsigned mask )
 {
-#ifdef BOOST_SEH_BASED_SIGNAL_HANDLING
+#ifdef UNDER_CE
+    /* Not Implemented in Windows CE */
+    return 0;
+#elif BOOST_SEH_BASED_SIGNAL_HANDLING
     _clearfp();
 
     unsigned old_cw;
@@ -1335,7 +1338,10 @@ enable( unsigned mask )
 unsigned
 disable( unsigned mask )
 {
-#ifdef BOOST_SEH_BASED_SIGNAL_HANDLING
+#ifdef UNDER_CE
+    /* Not Implemented in Windows CE */
+    return 0;
+#elif BOOST_SEH_BASED_SIGNAL_HANDLING
     _clearfp();
 
     unsigned old_cw;
