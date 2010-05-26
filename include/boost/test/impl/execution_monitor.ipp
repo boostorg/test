@@ -1084,9 +1084,11 @@ execution_monitor::catch_signals( unit_test::callback0<int> const& F )
 
     detail::system_signal_exception SSE( this );
     
+	int ret_val = 0;
+	
     __try {
         __try {
-            return detail::do_invoke( m_custom_translators, F );
+            ret_val = detail::do_invoke( m_custom_translators, F );
         }
         __except( SSE( GetExceptionCode(), GetExceptionInformation() ) ) {
             throw SSE;
@@ -1099,6 +1101,8 @@ execution_monitor::catch_signals( unit_test::callback0<int> const& F )
            _set_invalid_parameter_handler( old_iph );
         }
     }
+	
+	return ret_val;
 }
 
 //____________________________________________________________________________//
