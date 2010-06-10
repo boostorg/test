@@ -181,7 +181,7 @@
               <?dbhtml filename="utf/user-guide/test-output/BOOST_TEST_PASSPOINT.html"?>
             </tocentry>
             <tocentry linkend="utf.user-guide.test-output.log.FPT">
-              <?dbhtml filename="utf/user-guide/test-output/BOOST_TEST_PASSPOINT.html"?>
+              <?dbhtml filename="utf/user-guide/test-output/FPT.html"?>
             </tocentry>
             <tocentry linkend="utf.user-guide.test-output.log.human-readabe-format">
               <?dbhtml filename="utf/user-guide/test-output/log-hr-format.html"?>
