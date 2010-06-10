@@ -785,7 +785,7 @@ File: test.cpp Line: 14</literallayout>
     </inline-synopsis>
 
     <para role="first-line-indented">
-     Check performed by these tools is the same as the one performed by <ref>BOOST_&lt;level&gt;</ref>( left &gt;= right ).
+     Check performed by these tools is the same as the one performed by <ref>BOOST_&lt;level&gt;</ref>( left &gt; right ).
      The difference is that the argument values are reported as well.
     </para>
     
