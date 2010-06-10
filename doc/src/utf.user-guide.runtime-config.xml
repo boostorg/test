@@ -304,7 +304,7 @@ Leaving test suite "example"
    <refentry name="detect_memory_leak">
     <name>Detect memory leaks</name>
     <env>BOOST_TEST_DETECT_MEMORY_LEAK</env>
-    <cla>build_info</cla>
+    <cla>detect_memory_leaks</cla>
     <vals>
      <simplelist>
       <member>0</member>
