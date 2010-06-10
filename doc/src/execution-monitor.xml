@@ -61,7 +61,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><ulink url="../../../../boost/test/impl/execution_monitor.ipp"><filename>libs/test/execution_monitor.hpp</filename></ulink></term>
+     <term><ulink url="../../../../boost/test/impl/execution_monitor.ipp"><filename>boost/test/impl/execution_monitor.ipp</filename></ulink></term>
      <listitem>
       <simpara>
        provides the Execution Monitor implementation for all supported configurations, including Microsoft structured 
@@ -82,7 +82,7 @@
 
    <para role="first-line-indented">
     To compile the Execution Monitor as standalone library compose it using only 
-    <filename>execution-monitor.cpp</filename> as a source file. Alternatively you can add this file directly to the 
+    <filename>execution_monitor.cpp</filename> as a source file. Alternatively you can add this file directly to the 
     list of source files for your project. Boost Test Library's components include this file as a part of their 
     compilation procedure.
    </para>
