@@ -663,21 +663,21 @@ File: test.cpp Line: 14</literallayout>
     </seealso>
    </refentry>
 
-   <refentry name="BOOST_&lt;level&gt;_EQUAL_COLLECTION">
+   <refentry name="BOOST_&lt;level&gt;_EQUAL_COLLECTIONS">
     <inline-synopsis>
-     <macro name="BOOST_WARN_EQUAL_COLLECTION" kind="functionlike" ref-id="utf.testing-tools.reference">
+     <macro name="BOOST_WARN_EQUAL_COLLECTIONS" kind="functionlike" ref-id="utf.testing-tools.reference">
        <macro-parameter name="left_begin"/>
        <macro-parameter name="left_end"/>
        <macro-parameter name="right_begin"/>
        <macro-parameter name="right_end"/>
      </macro>
-     <macro name="BOOST_CHECK_EQUAL_COLLECTION" kind="functionlike" ref-id="utf.testing-tools.reference">
+     <macro name="BOOST_CHECK_EQUAL_COLLECTIONS" kind="functionlike" ref-id="utf.testing-tools.reference">
        <macro-parameter name="left_begin"/>
        <macro-parameter name="left_end"/>
        <macro-parameter name="right_begin"/>
        <macro-parameter name="right_end"/>
      </macro>
-     <macro name="BOOST_REQUIRE_EQUAL_COLLECTION" kind="functionlike" ref-id="utf.testing-tools.reference">
+     <macro name="BOOST_REQUIRE_EQUAL_COLLECTIONS" kind="functionlike" ref-id="utf.testing-tools.reference">
        <macro-parameter name="left_begin"/>
        <macro-parameter name="left_end"/>
        <macro-parameter name="right_begin"/>
@@ -693,7 +693,7 @@ File: test.cpp Line: 14</literallayout>
     </para>
     
     <btl-example name="example36">
-     <title>BOOST_&lt;level&gt;_EQUAL_COLLECTION usage</title>
+     <title>BOOST_&lt;level&gt;_EQUAL_COLLECTIONS usage</title>
     </btl-example>
 
     <seealso>
