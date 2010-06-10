@@ -186,7 +186,7 @@
    <?dbhtml list-presentation="list"?>
 
    <varlistentry>
-    <term><ulink url="../../../../boost/test/impl/execution_monitor.ipp"><filename>libs/test/execution_monitor.cpp</filename></ulink></term>
+    <term><ulink url="../../../../boost/test/impl/execution_monitor.ipp"><filename>boost/test/impl/execution_monitor.ipp</filename></ulink></term>
     <listitem>
      <simpara>
       provides <link linkend="execution-monitor">Execution Monitor</link> implementation for all supported 
@@ -196,7 +196,7 @@
    </varlistentry>
 
    <varlistentry>
-    <term><ulink url="../../../../boost/test/impl/cpp_main.ipp"><filename>libs/test/cpp_main.cpp</filename></ulink></term>
+    <term><ulink url="../../../../boost/test/impl/cpp_main.ipp"><filename>boost/test/impl/cpp_main.ipp</filename></ulink></term>
     <listitem>
      <simpara>supplies function main() for static library build</simpara>
     </listitem>
