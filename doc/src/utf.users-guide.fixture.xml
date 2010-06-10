@@ -226,7 +226,7 @@
    <listitem>
     <simpara>
      Unlike the initialization function, the global fixture setup method invocation is guarded by the execution
-     monitor. That means that all uncaught errors that occur during initialization are properly.
+     monitor. That means that all uncaught errors that occur during initialization are properly reported.
     </simpara>
    </listitem>
    <listitem>
