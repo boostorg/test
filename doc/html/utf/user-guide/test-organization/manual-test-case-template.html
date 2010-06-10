@@ -1,9 +1,9 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Manually registered test case template</title>
 <link rel="stylesheet" href="../../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="../../../index.html" title="Boost Test Library">
 <link rel="up" href="test-case-template.html" title="Test case template">
 <link rel="prev" href="test-case-template.html" title="Test case template">
@@ -26,7 +26,7 @@
 </div></td>
 </tr></table>
 <hr>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h6 class="title">
 <a name="utf.user-guide.test-organization.manual-test-case-template"></a>Manually registered test case template</h6></div></div></div>
 <p class="first-line-indented">
@@ -49,14 +49,14 @@ void combined_test()
 <p class="first-line-indented">
     There several problems/inconveniencies with above approach, including:
     </p>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="itemizedlist"><ul type="disc"><li>
-<p>
+<div class="itemizedlist"><ul type="disc"><li class="listitem">
+<p class="simpara">
       Fatal error in one of the invocation will stop whole test case and will skip invocations with different types
       </p>
-<p>
+<p class="simpara">
       You need to repeat function invocation manually for all the parameters you are interested in
       </p>
-<p>
+<p class="simpara">
       You need two functions to implement the test
       </p>
 </li></ul></div>
@@ -117,10 +117,9 @@ test_case_name()
     them causes termination of the sub test case.
    </p>
 <div class="example">
-<a name="utf.user-guide.test-organization.manual-test-case-template.example09"></a><p class="title"><b>Example 13. Manually registered test case template</b></p>
+<a name="utf.user-guide.test-organization.manual-test-case-template.example09"></a><p class="title"><b>Example&#160;13.&#160;Manually registered test case template</b></p>
 <div class="example-contents">
 <pre class="programlisting">#include &lt;boost/test/included/unit_test.hpp&gt;
-#include &lt;boost/test/test_case_template.hpp&gt;
 #include &lt;boost/mpl/list.hpp&gt;
 using namespace boost::unit_test;
 
@@ -146,10 +145,10 @@ init_unit_test_suite( int argc, char* argv[] )
 
 //____________________________________________________________________________//
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example09.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id650562" onclick="toggle_element( 'example09-output', 'id650562', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id489089" onclick="toggle_element( 'example09-output', 'id489089', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example09-output">&gt; example
 Running 3 test cases...
@@ -163,7 +162,7 @@ test.cpp(10): error in "my_test&lt;unsigned char&gt;": check sizeof(T) == 4 fail
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

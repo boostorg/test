@@ -1,11 +1,11 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Floating-point comparison algorithms</title>
 <link rel="stylesheet" href="../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="../../index.html" title="Boost Test Library">
-<link rel="up" href="../testing-tools.html" title="The UTF testing tools or tester's toolbox for all occasions">
+<link rel="up" href="../testing-tools.html" title="The UTF testing tools &#8230; or tester's toolbox for all occasions">
 <link rel="prev" href="custom-predicate.html" title="Custom predicate support">
 <link rel="next" href="reference.html" title="The UTF testing tools reference">
 <script language="JavaScript1.2" src="../../../js/boost-test.js"></script>
@@ -22,13 +22,13 @@
 </div></td>
 </tr></table>
 <hr>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="utf.testing-tools.fpv-comparison"></a>Floating-point comparison algorithms</h4></div></div></div>
 <p class="first-line-indented">
    In most cases it is unreasonable to use an <code class="computeroutput">operator==(...)</code> for a floating-point values equality check.
    The simple, absolute value comparison based, solution for a floating-point values <code class="varname">u</code>,
-   <code class="varname">v</code> and a tolerance :
+   <code class="varname">v</code> and a tolerance &#949;:
   </p>
 <div class="equation">
 <a name="utf.testing-tools.fpv-comparison.eq.1"></a><table class="table">
@@ -38,7 +38,7 @@
 </colgroup>
 <tbody><tr>
 <td><div class="informalequation"><span class="mathphrase">
-   |<code class="varname">u</code>  <code class="varname">v</code>|  
+   |<code class="varname">u</code> &#8722; <code class="varname">v</code>| &#8804; &#949;
   </span></div></td>
 <td class="index">(<span class="bold"><strong>1</strong></span>)</td>
 </tr></tbody>
@@ -57,14 +57,14 @@
 </colgroup>
 <tbody><tr>
 <td><div class="informalequation"><span class="mathphrase">
-   |<code class="varname">u</code>  <code class="varname">v</code>|    |<code class="varname">u</code>|  |<code class="varname">u</code>  <code class="varname">v</code>|    |<code class="varname">v</code>|
+   |<code class="varname">u</code> &#8722; <code class="varname">v</code>| &#8804; &#949; &#215; |<code class="varname">u</code>| &#8743; |<code class="varname">u</code> &#8722; <code class="varname">v</code>| &#8804; &#949; &#215; |<code class="varname">v</code>|
   </span></div></td>
 <td class="index">(<span class="bold"><strong>2</strong></span>)</td>
 </tr></tbody>
 </table>
 </div>
 <p>
-  defines a <em class="firstterm">very close with tolerance </em> relationship between <code class="varname">u</code> and <code class="varname">v</code>
+  defines a <em class="firstterm">very close with tolerance &#949;</em> relationship between <code class="varname">u</code> and <code class="varname">v</code>
   </p>
 <div class="equation">
 <a name="utf.testing-tools.fpv-comparison.eq.3"></a><table class="table">
@@ -74,20 +74,20 @@
 </colgroup>
 <tbody><tr>
 <td><div class="informalequation"><span class="mathphrase">
-   |<code class="varname">u</code>  <code class="varname">v</code>|    |<code class="varname">u</code>|  |<code class="varname">u</code>  <code class="varname">v</code>|    |<code class="varname">v</code>|
+   |<code class="varname">u</code> &#8722; <code class="varname">v</code>| &#8804; &#949; &#215; |<code class="varname">u</code>| &#8744; |<code class="varname">u</code> &#8722; <code class="varname">v</code>| &#8804; &#949; &#215; |<code class="varname">v</code>|
   </span></div></td>
 <td class="index">(<span class="bold"><strong>3</strong></span>)</td>
 </tr></tbody>
 </table>
 </div>
 <p>
-   defines a <em class="firstterm">close enough with tolerance </em> relationship between <code class="varname">u</code> and <code class="varname">v</code>
+   defines a <em class="firstterm">close enough with tolerance &#949;</em> relationship between <code class="varname">u</code> and <code class="varname">v</code>
   </p>
 <p class="first-line-indented">
    Both relationships are commutative but are not transitive. The relationship defined by inequations
    (<a href="../../" target="_top">2</a>) is stronger
    that the relationship defined by inequations (<a href="../../" target="_top">3</a>)
-   (i.e. (<a href="../../" target="_top">2</a>) 
+   (i.e. (<a href="../../" target="_top">2</a>) &#8658;
    (<a href="../../" target="_top">3</a>)). Because of the multiplication in the right side
    of inequations, that can cause an unwanted underflow condition, the implementation is using modified version of the
    inequations (<a href="../../" target="_top">2</a>) and
@@ -102,7 +102,7 @@
 </colgroup>
 <tbody><tr>
 <td><div class="informalequation"><span class="mathphrase">
-   |<code class="varname">u</code>  <code class="varname">v</code>|  |<code class="varname">u</code>|    |<code class="varname">u</code>  <code class="varname">v</code>| / |<code class="varname">v</code>|  
+   |<code class="varname">u</code> &#8722; <code class="varname">v</code>| / |<code class="varname">u</code>| &#8804; &#949; &#8743; |<code class="varname">u</code> &#8722; <code class="varname">v</code>| / |<code class="varname">v</code>| &#8804; &#949;
   </span></div></td>
 <td class="index">(<span class="bold"><strong>4</strong></span>)</td>
 </tr></tbody>
@@ -116,7 +116,7 @@
 </colgroup>
 <tbody><tr>
 <td><div class="informalequation"><span class="mathphrase">
-   |<code class="varname">u</code>  <code class="varname">v</code>|  |<code class="varname">u</code>|    |<code class="varname">u</code>  <code class="varname">v</code>| / |<code class="varname">v</code>|  
+   |<code class="varname">u</code> &#8722; <code class="varname">v</code>| / |<code class="varname">u</code>| &#8804; &#949; &#8744; |<code class="varname">u</code> &#8722; <code class="varname">v</code>| / |<code class="varname">v</code>| &#8804; &#949;
   </span></div></td>
 <td class="index">(<span class="bold"><strong>5</strong></span>)</td>
 </tr></tbody>
@@ -125,8 +125,8 @@
 <p class="first-line-indented">
     Checks based on equations (<a href="../../" target="_top">4</a>) and
     (<a href="../../" target="_top">5</a>) are implemented by two predicates with
-    alternative interfaces: binary predicate <code class="computeroutput">close_at_tolerance</code><sup>[<a name="id658995" href="#ftn.id658995" class="footnote">8</a>]</sup> and predicate with four arguments
-    <code class="computeroutput">check_is_close</code><sup>[<a name="id659008" href="#ftn.id659008" class="footnote">9</a>]</sup>.
+    alternative interfaces: binary predicate <code class="computeroutput">close_at_tolerance</code><sup>[<a name="id497556" href="#ftn.id497556" class="footnote">8</a>]</sup> and predicate with four arguments
+    <code class="computeroutput">check_is_close</code><sup>[<a name="id497569" href="#ftn.id497569" class="footnote">9</a>]</sup>.
   </p>
 <p class="first-line-indented">
    While equations (<a href="../../" target="_top">4</a>) and
@@ -134,14 +134,14 @@
    point comparison check over equation (<a href="../../" target="_top">1</a>), they are
    unusable for the test on closeness to zero. The later check is still might be useful in some cases and the <acronym class="acronym">UTF</acronym>
    implements an algorithm based on equation (<a href="../../" target="_top">1</a>) in
-   binary predicate <code class="computeroutput">check_is_small</code><sup>[<a name="id659064" href="#ftn.id659064" class="footnote">10</a>]</sup>.
+   binary predicate <code class="computeroutput">check_is_small</code><sup>[<a name="id497633" href="#ftn.id497633" class="footnote">10</a>]</sup>.
   </p>
 <p class="first-line-indented">
    On top of the generic, flexible predicates the <acronym class="acronym">UTF</acronym> implements macro based family of tools
    <code class="computeroutput"><a class="link" href="reference.html" title="The UTF testing tools reference">BOOST_CHECK_CLOSE</a></code> and <code class="computeroutput"><a class="link" href="reference.html" title="The UTF testing tools reference">BOOST_CHECK_SMALL</a></code>. These tools limit the check
    flexibility to strong-only checks, but automate failed check arguments reporting.
   </p>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h5 class="title">
 <a name="utf.testing-tools.fpv-comparison.tolerance-selection"></a>Tolerance selection considerations</h5></div></div></div>
 <p class="first-line-indented">
@@ -151,23 +151,23 @@
     The "relative rounding error" is the difference between the real and the floating point values in relation to real
     value: |x-X|/|x|. The discrepancy between real and floating point value may be caused by several reasons:
    </p>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="itemizedlist"><ul type="disc">
-<li>Type promotion</li>
-<li>Arithmetic operations</li>
-<li>Conversion from a decimal presentation to a binary presentation</li>
-<li>Non-arithmetic operation</li>
+<div class="itemizedlist"><ul type="disc">
+<li class="listitem">Type promotion</li>
+<li class="listitem">Arithmetic operations</li>
+<li class="listitem">Conversion from a decimal presentation to a binary presentation</li>
+<li class="listitem">Non-arithmetic operation</li>
 </ul></div>
 <p class="first-line-indented">
-    The first two operations proved to have a relative rounding error that does not exceed  
+    The first two operations proved to have a relative rounding error that does not exceed &#189; &#215;
     "machine epsilon value" for the appropriate floating point type (represented by
     <code class="computeroutput">std::numeric_limits</code>&lt;FPT&gt;::epsilon()). Conversion to binary presentation, sadly, does
-    not have such requirement. So we can't assume that float 1.1 is close to real 1.1 with tolerance  
-     "machine epsilon value" for float (though for 11./10 we can). Non arithmetic operations either do not have a
+    not have such requirement. So we can't assume that float 1.1 is close to real 1.1 with tolerance &#189; 
+    &#215; "machine epsilon value" for float (though for 11./10 we can). Non arithmetic operations either do not have a
     predicted upper limit relative rounding errors. Note that both arithmetic and non-arithmetic operations might also
     produce others "non-rounding" errors, such as underflow/overflow, division-by-zero or 'operation errors'.
    </p>
 <p class="first-line-indented">
-    All theorems about the upper limit of a rounding error, including that of   epsilon, refer only to 
+    All theorems about the upper limit of a rounding error, including that of &#189; &#215; epsilon, refer only to 
     the 'rounding' operation, nothing more. This means that the 'operation error', that is, the error incurred by the 
     operation itself, besides rounding, isn't considered. In order for numerical software to be able to actually 
     predict error bounds, the IEEE754 standard requires arithmetic operations to be 'correctly or exactly rounded'. 
@@ -178,8 +178,8 @@
     with unpredictable upper limits.
    </p>
 <p class="first-line-indented">
-    At last be aware that   epsilon rules are not transitive. In other words combination of two 
-    arithmetic operations may produce rounding error that significantly exceeds 2    epsilon. All 
+    At last be aware that &#189; &#215; epsilon rules are not transitive. In other words combination of two 
+    arithmetic operations may produce rounding error that significantly exceeds 2 &#215; &#189; &#215; epsilon. All 
     in all there are no generic rules on how to select the tolerance and users need to apply common sense and domain/
     problem specific knowledge to decide on tolerance value.
    </p>
@@ -193,16 +193,16 @@
    </p>
 </div>
 <div class="bibliography">
-<div class="titlepage"><div><div><h3 class="title">
-<a name="bbl.fpv-comparison"></a>A floating-point comparison related references</h3></div></div></div>
+<div class="titlepage"><div><div><h5 class="title">
+<a name="bbl.fpv-comparison"></a>A floating-point comparison related references</h5></div></div></div>
 <div class="bibliodiv">
 <h3 class="title">
 <a name="bbl.fpv-comparison.books"></a>Books</h3>
 <div class="biblioentry">
-<a name="bbl.KnuthII"></a><p>[<abbr class="abbrev">KnuthII</abbr>] <span class="title"><i>The art of computer programming (vol II)</i>. </span><span class="author"><span class="firstname">Donald. E.</span> <span class="surname">Knuth</span>. </span><span class="copyright">Copyright © 1998 Addison-Wesley Longman, Inc.. </span><span class="isbn">0-201-89684-2. </span><span class="publisher"><span class="publishername">Addison-Wesley Professional; 3 edition. </span></span></p>
+<a name="bbl.KnuthII"></a><p>[<abbr class="abbrev">KnuthII</abbr>] <span class="title"><i>The art of computer programming (vol II)</i>. </span><span class="author"><span class="firstname">Donald. E.</span> <span class="surname">Knuth</span>. </span><span class="copyright">Copyright &#169; 1998 Addison-Wesley Longman, Inc.. </span><span class="isbn">0-201-89684-2. </span><span class="publisher"><span class="publishername">Addison-Wesley Professional; 3 edition. </span></span></p>
 </div>
 <div class="biblioentry">
-<a name="bbl.Kulisch"></a><p>[<abbr class="abbrev">Kulisch</abbr>] <span class="biblioset"><i>Rounding near zero</i>. </span><span class="biblioset"><i><a href="http://www.amazon.com/Advanced-Arithmetic-Digital-Computer-Kulisch/dp/3211838708" target="_top">Advanced Arithmetic for the Digital Computer</a></i>. <span class="author"><span class="firstname">Ulrich W</span> <span class="surname">Kulisch</span>. </span><span class="copyright">Copyright © 2002 Springer, Inc.. </span><span class="isbn">0-201-89684-2. </span><span class="publisher"><span class="publishername">Springer; 1 edition. </span></span></span></p>
+<a name="bbl.Kulisch"></a><p>[<abbr class="abbrev">Kulisch</abbr>] <span class="biblioset"><i>Rounding near zero</i>. </span><span class="biblioset"><i><a href="http://www.amazon.com/Advanced-Arithmetic-Digital-Computer-Kulisch/dp/3211838708" target="_top">Advanced Arithmetic for the Digital Computer</a></i>. <span class="author"><span class="firstname">Ulrich W</span> <span class="surname">Kulisch</span>. </span><span class="copyright">Copyright &#169; 2002 Springer, Inc.. </span><span class="isbn">0-201-89684-2. </span><span class="publisher"><span class="publishername">Springer; 1 edition. </span></span></span></p>
 </div>
 </div>
 <div class="bibliodiv">
@@ -221,11 +221,11 @@
 <h3 class="title">
 <a name="bbl.fpv-comparison.publications"></a>Publications</h3>
 <div class="biblioentry">
-<a name="bbl.Goldberg"></a><p>[<abbr class="abbrev">Goldberg</abbr>] <span class="biblioset">&#8220;<a href="http://citeseer.ist.psu.edu/goldberg91what.html" target="_top">What Every Computer Scientist Should Know About Floating-Point Arithmetic</a>&#8221;. <span class="author"><span class="firstname">David</span> <span class="surname">Goldberg</span>. </span><span class="copyright">Copyright © 1991 Association for Computing Machinery, Inc.. </span><span class="pagenums">150-230. </span></span><span class="biblioset"><i>Computing Surveys</i>. <span class="issuenum">March. </span>.
+<a name="bbl.Goldberg"></a><p>[<abbr class="abbrev">Goldberg</abbr>] <span class="biblioset">&#8220;<a href="http://citeseer.ist.psu.edu/goldberg91what.html" target="_top">What Every Computer Scientist Should Know About Floating-Point Arithmetic</a>&#8221;. <span class="author"><span class="firstname">David</span> <span class="surname">Goldberg</span>. </span><span class="copyright">Copyright &#169; 1991 Association for Computing Machinery, Inc.. </span><span class="pagenums">150-230. </span></span><span class="biblioset"><i>Computing Surveys</i>. <span class="issuenum">March. </span>.
      </span></p>
 </div>
 <div class="biblioentry">
-<a name="bbl.Langlois"></a><p>[<abbr class="abbrev">Langlois</abbr>] <span class="title"><i><a href="http://www.inria.fr/rrrt/rr-3967.html" target="_top">From Rounding Error Estimation to Automatic Correction with Automatic Differentiation</a></i>. </span><span class="author"><span class="firstname">Philippe</span> <span class="surname">Langlois</span>. </span><span class="copyright">Copyright © 2000. </span><span class="issn">0249-6399. </span></p>
+<a name="bbl.Langlois"></a><p>[<abbr class="abbrev">Langlois</abbr>] <span class="title"><i><a href="http://www.inria.fr/rrrt/rr-3967.html" target="_top">From Rounding Error Estimation to Automatic Correction with Automatic Differentiation</a></i>. </span><span class="author"><span class="firstname">Philippe</span> <span class="surname">Langlois</span>. </span><span class="copyright">Copyright &#169; 2000. </span><span class="issn">0249-6399. </span></p>
 </div>
 <div class="biblioentry">
 <a name="bbl.Kahan"></a><p>[<abbr class="abbrev">Kahan</abbr>] <span class="title"><i><a href="http://www.cs.berkeley.edu/~wkahan/" target="_top">Lots of information on William Kahan home page</a></i>. </span><span class="author"><span class="firstname">William</span> <span class="surname">Kahan</span>. </span></p>
@@ -234,16 +234,16 @@
 </div>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.id658995" href="#id658995" class="simpara">8</a>] </sup>check type 
+<div class="footnote"><p><sup>[<a id="ftn.id497556" href="#id497556" class="simpara">8</a>] </sup>check type 
     and tolerance value are fixed at predicate construction time</p></div>
-<div class="footnote"><p><sup>[<a name="ftn.id659008" href="#id659008" class="simpara">9</a>] </sup>check type and tolerance value are the arguments of the
+<div class="footnote"><p><sup>[<a id="ftn.id497569" href="#id497569" class="simpara">9</a>] </sup>check type and tolerance value are the arguments of the
     predicate</p></div>
-<div class="footnote"><p><sup>[<a name="ftn.id659064" href="#id659064" class="simpara">10</a>] </sup><code class="varname">v</code> is zero</p></div>
+<div class="footnote"><p><sup>[<a id="ftn.id497633" href="#id497633" class="simpara">10</a>] </sup><code class="varname">v</code> is zero</p></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

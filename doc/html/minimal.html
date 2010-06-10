@@ -1,13 +1,13 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Part III. Boost Test Library: The minimal testing facility</title>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Boost Test Library: The minimal testing facility</title>
 <link rel="stylesheet" href="../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="index.html" title="Boost Test Library">
 <link rel="up" href="index.html" title="Boost Test Library">
 <link rel="prev" href="prg-exec-monitor/compilation.html" title="The Program Execution Monitor compilation">
-<link rel="next" href="utf.html" title="Part IV. Boost Test Library: The Unit Test Framework">
+<link rel="next" href="utf.html" title="Boost Test Library: The Unit Test Framework">
 <script language="JavaScript1.2" src="../js/boost-test.js"></script>
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,10 +20,10 @@
 </div></td>
 </tr></table>
 <hr>
-<div class="part" lang="en">
-<div class="titlepage"><div><div><h1 class="title">
-<a name="minimal"></a>Part III. Boost Test Library: The minimal testing facility</h1></div></div></div>
-<div class="section" lang="en">
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="minimal"></a>Boost Test Library: The minimal testing facility</h2></div></div></div>
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="minimal.intro"></a>Introduction</h3></div></div></div>
 <p class="first-line-indented">
@@ -31,7 +31,7 @@
    original version of Boost.Test. As the name suggest, it provides only minimal basic facilities for test creation. It 
    have no configuration parameters (either command line arguments or environment variables) and it supplies 
    a limited set of <a class="link" href="minimal.html#minimal.tools" title="Provided testing tools">testing tools</a> which behaves similarly to ones defined amount 
-   the Unit Test Framework <a class="link" href="utf/testing-tools.html" title="The UTF testing tools or tester's toolbox for all occasions">Testing tools</a>. The minimal testing facility supplies its own function 
+   the Unit Test Framework <a class="link" href="utf/testing-tools.html" title="The UTF testing tools &#8230; or tester's toolbox for all occasions">Testing tools</a>. The minimal testing facility supplies its own function 
    main() (so can not be used for multi unit testing) and will execute the test program in a monitored environment.
   </p>
 <p class="first-line-indented">
@@ -40,7 +40,7 @@
    testing tools (and other goods), while still being as easy to set up.
   </p>
 </div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="minimal.usage"></a>Usage</h3></div></div></div>
 <p class="first-line-indented">
@@ -57,7 +57,7 @@
    <a class="link" href="minimal.html#minimal.tools" title="Provided testing tools">testing tools</a> provided by the minimal testing facility and get uniform errors reporting.
   </p>
 </div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="minimal.example"></a>Example</h3></div></div></div>
 <p class="first-line-indented">
@@ -65,7 +65,7 @@
     testing tools
   </p>
 <div class="example">
-<a name="minimal.example.example27"></a><p class="title"><b>Example 4. Minimal testing facility application</b></p>
+<a name="minimal.example.example27"></a><p class="title"><b>Example&#160;4.&#160;Minimal testing facility application</b></p>
 <div class="example-contents">
 <div class="programlistingco">
 <pre class="programlisting">#include &lt;boost/test/minimal.hpp&gt;
@@ -92,12 +92,12 @@ int test_main( int, char *[] )             // note the name!
 
 //____________________________________________________________________________//
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../src/examples/example27.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id643534" onclick="toggle_element( 'example27-annot', 'id643534', 'Show annotations', 'Hide annotations' ); return false;">Show annotations</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id482492" onclick="toggle_element( 'example27-annot', 'id482492', 'Show annotations', 'Hide annotations' ); return false;">Show annotations</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id643550" onclick="toggle_element( 'example27-output', 'id643550', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id482506" onclick="toggle_element( 'example27-output', 'id482506', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <div class="example-annot" id="example27-annot"><table border="0" summary="Callout list">
 <tr>
@@ -157,7 +157,7 @@ int test_main( int, char *[] )             // note the name!
 </div>
 <br class="example-break">
 </div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="minimal.tools"></a>Provided testing tools</h3></div></div></div>
 <p class="first-line-indented">
@@ -173,7 +173,7 @@ BOOST_FAIL(<span class="emphasis"><em>message</em></span>)</pre>
    implemented by the Unit Test Framework.
   </p>
 </div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="minimal.impl"></a>Implementation</h3></div></div></div>
 <p class="first-line-indented">
@@ -187,7 +187,7 @@ BOOST_FAIL(<span class="emphasis"><em>message</em></span>)</pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"><p><small>Last revised:  ,  at  </small></p></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

@@ -1,11 +1,11 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Custom predicate support</title>
 <link rel="stylesheet" href="../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="../../index.html" title="Boost Test Library">
-<link rel="up" href="../testing-tools.html" title="The UTF testing tools or tester's toolbox for all occasions">
+<link rel="up" href="../testing-tools.html" title="The UTF testing tools &#8230; or tester's toolbox for all occasions">
 <link rel="prev" href="output-test.html" title="Output testing tool">
 <link rel="next" href="floating_point_comparison.html" title="Floating-point comparison algorithms">
 <script language="JavaScript1.2" src="../../../js/boost-test.js"></script>
@@ -22,7 +22,7 @@
 </div></td>
 </tr></table>
 <hr>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="utf.testing-tools.custom-predicate"></a>Custom predicate support</h4></div></div></div>
 <p class="first-line-indented">
@@ -37,7 +37,7 @@
    automatically in case of failure.
   </p>
 <div class="example">
-<a name="utf.testing-tools.custom-predicate.example30"></a><p class="title"><b>Example 36. Custom predicate support using BOOST_CHECK_PREDICATE</b></p>
+<a name="utf.testing-tools.custom-predicate.example30"></a><p class="title"><b>Example&#160;36.&#160;Custom predicate support using BOOST_CHECK_PREDICATE</b></p>
 <div class="example-contents">
 <pre class="programlisting">#define BOOST_TEST_MODULE example
 #include &lt;boost/test/included/unit_test.hpp&gt;
@@ -57,10 +57,10 @@ BOOST_AUTO_TEST_CASE( test_is_even )
 //____________________________________________________________________________//
 
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../src/examples/example30.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id658382" onclick="toggle_element( 'example30-output', 'id658382', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id496917" onclick="toggle_element( 'example30-output', 'id496917', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example30-output">&gt; example
 Running 1 test case...
@@ -85,7 +85,7 @@ test.cpp(13): error in "test_is_even": check is_even( i ) failed for ( 17 )
    error message is stored in public read-write property p_message.
   </p>
 <div class="example">
-<a name="utf.testing-tools.custom-predicate.example31"></a><p class="title"><b>Example 37. Custom predicate support using class predicate_result</b></p>
+<a name="utf.testing-tools.custom-predicate.example31"></a><p class="title"><b>Example&#160;37.&#160;Custom predicate support using class predicate_result</b></p>
 <div class="example-contents">
 <pre class="programlisting">#define BOOST_TEST_MODULE example
 #include &lt;boost/test/included/unit_test.hpp&gt;
@@ -120,10 +120,10 @@ BOOST_AUTO_TEST_CASE( test_list_comparizon )
 //____________________________________________________________________________//
 
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../src/examples/example31.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id658525" onclick="toggle_element( 'example31-output', 'id658525', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id497061" onclick="toggle_element( 'example31-output', 'id497061', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example31-output">Running 1 test case...
 test.cpp(28): error in "test_list_comparizon": check compare_lists( l1, l2 ) failed. Different sizes [2!=0]
@@ -136,7 +136,7 @@ test.cpp(28): error in "test_list_comparizon": check compare_lists( l1, l2 ) fai
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

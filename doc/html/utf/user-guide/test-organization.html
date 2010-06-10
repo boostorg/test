@@ -1,12 +1,12 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Test organization or the house that Jack built</title>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Test organization &#8230; or the house that Jack built</title>
 <link rel="stylesheet" href="../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="../../index.html" title="Boost Test Library">
 <link rel="up" href="../user-guide.html" title="Unit Test Framework: User's guide">
-<link rel="prev" href="initialization.html" title="Test module initialization or ready, set">
+<link rel="prev" href="initialization.html" title="Test module initialization &#8230; or ready, set &#8230;">
 <link rel="next" href="test-organization/nullary-test-case.html" title="Nullary function based test case">
 <script language="JavaScript1.2" src="../../../js/boost-test.js"></script>
 </head>
@@ -24,30 +24,30 @@
 </div></td>
 </tr></table>
 <hr>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="utf.user-guide.test-organization"></a>Test organization  or the house that Jack built</h4></div></div></div>
+<a name="utf.user-guide.test-organization"></a>Test organization &#8230; or the house that Jack built</h4></div></div></div>
 <p class="first-line-indented">
   If you look at many legacy test modules, big chance is that it's implemented as one big test function that
   consists of a mixture of check and output statements. Is there anything wrong with it? Yes. There are various
   disadvantages in single test function approach:
  </p>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="itemizedlist"><ul type="square">
-<li style="list-style-type: square">
+<div class="itemizedlist"><ul type="square">
+<li class="listitem" style="list-style-type: square">
     One big function tends to become really difficult to manage if the number of checks exceeds a reasonable limit
     (true for any large function). What is tested and where - who knows?
    </li>
-<li style="list-style-type: square">
+<li class="listitem" style="list-style-type: square">
     Many checks require similar preparations. This results in code repetitions within the test function.
    </li>
-<li style="list-style-type: square">
+<li class="listitem" style="list-style-type: square">
     If a fatal error or an exception is caused by any checks within the test function the rest of tests are
     skipped and there is no way to prevent this.
    </li>
-<li style="list-style-type: square">
+<li class="listitem" style="list-style-type: square">
     No way to perform only checks for a particular subsystem of the tested unit.
    </li>
-<li style="list-style-type: square">
+<li class="listitem" style="list-style-type: square">
     No summary of how different subsystems of the tested unit performed under in the test.
    </li>
 </ul></div>
@@ -61,14 +61,14 @@
   adopting any function or function object that matches the signature as a test case. The signatures the <acronym class="acronym">UTF</acronym>
   supports are:
  </p>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="itemizedlist"><ul type="disc">
-<li>
+<div class="itemizedlist"><ul type="disc">
+<li class="listitem">
     <a class="link" href="test-organization/nullary-test-case.html" title="Nullary function based test case">Nullary function</a>
    </li>
-<li>
-    <a class="link" href="test-organization/nullary-test-case.html" title="Nullary function based test case">Unary function</a>
+<li class="listitem">
+    <a class="link" href="test-organization/unary-test-case.html" title="Unary function based test case">Unary function</a>
    </li>
-<li>
+<li class="listitem">
     <a class="link" href="test-organization/test-case-template.html" title="Test case template">Nullary function template</a>
    </li>
 </ul></div>
@@ -100,7 +100,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

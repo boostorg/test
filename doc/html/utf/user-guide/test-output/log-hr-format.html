@@ -1,12 +1,12 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Human readable log output format</title>
 <link rel="stylesheet" href="../../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="../../../index.html" title="Boost Test Library">
 <link rel="up" href="test-log.html" title="Test log output">
-<link rel="prev" href="BOOST_TEST_PASSPOINT.html" title="Logging floating point type numbers">
+<link rel="prev" href="FPT.html" title="Logging floating point type numbers">
 <link rel="next" href="log-xml-format.html" title="XML based log output format">
 <script language="JavaScript1.2" src="../../../../js/boost-test.js"></script>
 </head>
@@ -22,11 +22,11 @@
       </a><b>Human readable format</b>
 </td>
 <td><div class="spirit-nav">
-<a href="BOOST_TEST_PASSPOINT.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a href="log-xml-format.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a href="FPT.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a href="log-xml-format.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div></td>
 </tr></table>
 <hr>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h6 class="title">
 <a name="utf.user-guide.test-output.log.human-readabe-format"></a>Human readable log output format</h6></div></div></div>
 <p class="first-line-indented">
@@ -55,7 +55,7 @@
 <td><strong><nobr><span class="segtitle">Output</span></nobr></strong></td>
 <td>: </td>
 <td>
-      <code class="computeroutput"><div class="literallayout"><p>Running <span class="userinput">&lt;total number of test cases&gt;</span> test case(s) </p></div></code>
+      <code class="computeroutput"><div class="literallayout"><p>Running&#160;<span class="userinput">&lt;total&#160;number&#160;of&#160;test&#160;cases&gt;</span>&#160;test&#160;case(s)&#160;&#8230;</p></div></code>
      </td>
 </tr>
 </table>
@@ -74,10 +74,10 @@
 <td><strong><nobr><span class="segtitle">Output</span></nobr></strong></td>
 <td>: </td>
 <td>
-      <code class="computeroutput"><div class="literallayout"><p>Platform: $BOOST_PLATFORM<br>
-Compiler: $BOOST_COMPILER<br>
-STL     : $BOOST_STDLIB<br>
-Boost   : $BOOST_VERSION</p></div></code>
+      <code class="computeroutput"><div class="literallayout"><p>Platform:&#160;$BOOST_PLATFORM<br>
+Compiler:&#160;$BOOST_COMPILER<br>
+STL&#160;&#160;&#160;&#160;&#160;:&#160;$BOOST_STDLIB<br>
+Boost&#160;&#160;&#160;:&#160;$BOOST_VERSION</p></div></code>
      </td>
 </tr>
 </table>
@@ -96,7 +96,7 @@ Boost   : $BOOST_VERSION</p></div></code>
 <td><strong><nobr><span class="segtitle">Output</span></nobr></strong></td>
 <td>: </td>
 <td>
-      <code class="computeroutput"><div class="literallayout"><p>Test is aborted</p></div></code>
+      <code class="computeroutput"><div class="literallayout"><p>Test&#160;is&#160;aborted</p></div></code>
      </td>
 </tr>
 </table>
@@ -115,7 +115,7 @@ Boost   : $BOOST_VERSION</p></div></code>
 <td><strong><nobr><span class="segtitle">Output</span></nobr></strong></td>
 <td>: </td>
 <td>
-      <code class="computeroutput"><div class="literallayout"><p>Entering test <span class="userinput">&lt;test unit type&gt;</span> <span class="userinput">&lt;test unit name&gt;</span></p></div></code>
+      <code class="computeroutput"><div class="literallayout"><p>Entering&#160;test&#160;<span class="userinput">&lt;test&#160;unit&#160;type&gt;</span>&#160;<span class="userinput">&lt;test&#160;unit&#160;name&gt;</span></p></div></code>
      </td>
 </tr>
 </table>
@@ -134,7 +134,7 @@ Boost   : $BOOST_VERSION</p></div></code>
 <td><strong><nobr><span class="segtitle">Output</span></nobr></strong></td>
 <td>: </td>
 <td>
-      <code class="computeroutput"><div class="literallayout"><p>Leaving test <span class="userinput">&lt;test unit type&gt;</span> <span class="userinput">&lt;test unit name&gt;</span>; testing time <span class="userinput">&lt;value&gt;</span></p></div></code>
+      <code class="computeroutput"><div class="literallayout"><p>Leaving&#160;test&#160;<span class="userinput">&lt;test&#160;unit&#160;type&gt;</span>&#160;<span class="userinput">&lt;test&#160;unit&#160;name&gt;</span>;&#160;testing&#160;time&#160;<span class="userinput">&lt;value&gt;</span></p></div></code>
      </td>
 </tr>
 </table>
@@ -153,7 +153,7 @@ Boost   : $BOOST_VERSION</p></div></code>
 <td><strong><nobr><span class="segtitle">Output</span></nobr></strong></td>
 <td>: </td>
 <td>
-      <code class="computeroutput"><div class="literallayout"><p>Test <span class="userinput">&lt;test unit type&gt;</span> <span class="userinput">&lt;test unit name&gt;</span> is skipped</p></div></code>
+      <code class="computeroutput"><div class="literallayout"><p>Test&#160;<span class="userinput">&lt;test&#160;unit&#160;type&gt;</span>&#160;<span class="userinput">&lt;test&#160;unit&#160;name&gt;</span>&#160;is&#160;skipped</p></div></code>
      </td>
 </tr>
 </table>
@@ -172,8 +172,8 @@ Boost   : $BOOST_VERSION</p></div></code>
 <td><strong><nobr><span class="segtitle">Output</span></nobr></strong></td>
 <td>: </td>
 <td>
-      <code class="computeroutput"><div class="literallayout"><p>unknown location(0): fatal error in <span class="userinput">&lt;test case name&gt;</span>: <span class="userinput">&lt;explanation&gt;</span><br>
-<span class="userinput">&lt;last checkpoint location&gt;</span>: last checkpoint: <span class="userinput">&lt;checkpoint message&gt;</span></p></div></code>
+      <code class="computeroutput"><div class="literallayout"><p>unknown&#160;location(0):&#160;fatal&#160;error&#160;in&#160;<span class="userinput">&lt;test&#160;case&#160;name&gt;</span>:&#160;<span class="userinput">&lt;explanation&gt;</span><br>
+<span class="userinput">&lt;last&#160;checkpoint&#160;location&gt;</span>:&#160;last&#160;checkpoint:&#160;<span class="userinput">&lt;checkpoint&#160;message&gt;</span></p></div></code>
      </td>
 </tr>
 </table>
@@ -192,8 +192,8 @@ Boost   : $BOOST_VERSION</p></div></code>
 <td><strong><nobr><span class="segtitle">Output</span></nobr></strong></td>
 <td>: </td>
 <td>
-      <code class="computeroutput"><div class="literallayout"><p>unknown location(0): fatal error in <span class="userinput">&lt;test case name&gt;</span>: <span class="userinput">&lt;explanation&gt;</span><br>
-<span class="userinput">&lt;last checkpoint location&gt;</span>: last checkpoint: <span class="userinput">&lt;checkpoint message&gt;</span></p></div></code>
+      <code class="computeroutput"><div class="literallayout"><p>unknown&#160;location(0):&#160;fatal&#160;error&#160;in&#160;<span class="userinput">&lt;test&#160;case&#160;name&gt;</span>:&#160;<span class="userinput">&lt;explanation&gt;</span><br>
+<span class="userinput">&lt;last&#160;checkpoint&#160;location&gt;</span>:&#160;last&#160;checkpoint:&#160;<span class="userinput">&lt;checkpoint&#160;message&gt;</span></p></div></code>
      </td>
 </tr>
 </table>
@@ -212,8 +212,8 @@ Boost   : $BOOST_VERSION</p></div></code>
 <td><strong><nobr><span class="segtitle">Output</span></nobr></strong></td>
 <td>: </td>
 <td>
-      <code class="computeroutput"><div class="literallayout"><p>unknown location(0): fatal error in <span class="userinput">&lt;test case name&gt;</span>: <span class="userinput">&lt;explanation&gt;</span><br>
-<span class="userinput">&lt;last checkpoint location&gt;</span>: last checkpoint: <span class="userinput">&lt;checkpoint message&gt;</span></p></div></code>
+      <code class="computeroutput"><div class="literallayout"><p>unknown&#160;location(0):&#160;fatal&#160;error&#160;in&#160;<span class="userinput">&lt;test&#160;case&#160;name&gt;</span>:&#160;<span class="userinput">&lt;explanation&gt;</span><br>
+<span class="userinput">&lt;last&#160;checkpoint&#160;location&gt;</span>:&#160;last&#160;checkpoint:&#160;<span class="userinput">&lt;checkpoint&#160;message&gt;</span></p></div></code>
      </td>
 </tr>
 </table>
@@ -232,7 +232,7 @@ Boost   : $BOOST_VERSION</p></div></code>
 <td><strong><nobr><span class="segtitle">Output</span></nobr></strong></td>
 <td>: </td>
 <td>
-      <code class="computeroutput"><div class="literallayout"><p><span class="userinput">&lt;assertion location&gt;</span>: info: check<span class="userinput">&lt;assertion expression&gt;</span> passed</p></div></code>
+      <code class="computeroutput"><div class="literallayout"><p><span class="userinput">&lt;assertion&#160;location&gt;</span>:&#160;info:&#160;check<span class="userinput">&lt;assertion&#160;expression&gt;</span>&#160;passed</p></div></code>
      </td>
 </tr>
 </table>
@@ -251,7 +251,7 @@ Boost   : $BOOST_VERSION</p></div></code>
 <td><strong><nobr><span class="segtitle">Output</span></nobr></strong></td>
 <td>: </td>
 <td>
-      <code class="computeroutput"><div class="literallayout"><p><span class="userinput">&lt;assertion location&gt;</span>: warning in <span class="userinput">&lt;test case name&gt;</span>: condition <span class="userinput">&lt;assertion description&gt;</span> is not satisfied</p></div></code>
+      <code class="computeroutput"><div class="literallayout"><p><span class="userinput">&lt;assertion&#160;location&gt;</span>:&#160;warning&#160;in&#160;<span class="userinput">&lt;test&#160;case&#160;name&gt;</span>:&#160;condition&#160;<span class="userinput">&lt;assertion&#160;description&gt;</span>&#160;is&#160;not&#160;satisfied</p></div></code>
      </td>
 </tr>
 </table>
@@ -270,7 +270,7 @@ Boost   : $BOOST_VERSION</p></div></code>
 <td><strong><nobr><span class="segtitle">Output</span></nobr></strong></td>
 <td>: </td>
 <td>
-      <code class="computeroutput"><div class="literallayout"><p><span class="userinput">&lt;assertion location&gt;</span>: error in <span class="userinput">&lt;test case name&gt;</span>: check <span class="userinput">&lt;assertion description&gt;</span> failed</p></div></code>
+      <code class="computeroutput"><div class="literallayout"><p><span class="userinput">&lt;assertion&#160;location&gt;</span>:&#160;error&#160;in&#160;<span class="userinput">&lt;test&#160;case&#160;name&gt;</span>:&#160;check&#160;<span class="userinput">&lt;assertion&#160;description&gt;</span>&#160;failed</p></div></code>
      </td>
 </tr>
 </table>
@@ -289,7 +289,7 @@ Boost   : $BOOST_VERSION</p></div></code>
 <td><strong><nobr><span class="segtitle">Output</span></nobr></strong></td>
 <td>: </td>
 <td>
-      <code class="computeroutput"><div class="literallayout"><p><span class="userinput">&lt;assertion location&gt;</span>: fatal error in <span class="userinput">&lt;test case name&gt;</span>: critical check <span class="userinput">&lt;assertion description&gt;</span> failed</p></div></code>
+      <code class="computeroutput"><div class="literallayout"><p><span class="userinput">&lt;assertion&#160;location&gt;</span>:&#160;fatal&#160;error&#160;in&#160;<span class="userinput">&lt;test&#160;case&#160;name&gt;</span>:&#160;critical&#160;check&#160;<span class="userinput">&lt;assertion&#160;description&gt;</span>&#160;failed</p></div></code>
      </td>
 </tr>
 </table>
@@ -308,23 +308,23 @@ Boost   : $BOOST_VERSION</p></div></code>
 <td><strong><nobr><span class="segtitle">Output</span></nobr></strong></td>
 <td>: </td>
 <td>
-      <code class="computeroutput"><div class="literallayout"><p><span class="userinput">&lt;Message content&gt;</span></p></div></code>
+      <code class="computeroutput"><div class="literallayout"><p><span class="userinput">&lt;Message&#160;content&gt;</span></p></div></code>
      </td>
 </tr>
 </table>
 <br>
 </div>
 <p class="first-line-indented">
-    Advanced <a class="link" href="../../testing-tools.html" title="The UTF testing tools or tester's toolbox for all occasions">testing tools</a> may produce more complicated error messages.
+    Advanced <a class="link" href="../../testing-tools.html" title="The UTF testing tools &#8230; or tester's toolbox for all occasions">testing tools</a> may produce more complicated error messages.
    </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="BOOST_TEST_PASSPOINT.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="test-log.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="log-xml-format.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="FPT.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="test-log.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="log-xml-format.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

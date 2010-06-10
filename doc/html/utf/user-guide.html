@@ -1,13 +1,13 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Unit Test Framework: User's guide</title>
 <link rel="stylesheet" href="../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="../index.html" title="Boost Test Library">
-<link rel="up" href="../utf.html" title="Part IV. Boost Test Library: The Unit Test Framework">
+<link rel="up" href="../utf.html" title="Boost Test Library: The Unit Test Framework">
 <link rel="prev" href="compilation/direct-include.html" title="Including the UTF directly into your test module">
-<link rel="next" href="user-guide/usage-variants.html" title="The UTF usage variants or the Buridan's donkey parable">
+<link rel="next" href="user-guide/usage-variants.html" title="The UTF usage variants &#8230; or the Buridan's donkey parable">
 <script language="JavaScript1.2" src="../../js/boost-test.js"></script>
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -22,9 +22,9 @@
 </div></td>
 </tr></table>
 <hr>
-<div class="chapter" lang="en">
-<div class="titlepage"><div><div><h2 class="title">
-<a name="utf.user-guide"></a>Unit Test Framework: User's guide</h2></div></div></div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="utf.user-guide"></a>Unit Test Framework: User's guide</h3></div></div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
 <dl>
@@ -73,7 +73,7 @@
 <dt><a href="user-guide/test-output/BOOST_TEST_MESSAGE.html">BOOST_TEST_MESSAGE</a></dt>
 <dt><a href="user-guide/test-output/BOOST_TEST_CHECKPOINT.html">BOOST_TEST_CHECKPOINT</a></dt>
 <dt><a href="user-guide/test-output/BOOST_TEST_PASSPOINT.html">BOOST_TEST_PASSPOINT</a></dt>
-<dt><a href="user-guide/test-output/BOOST_TEST_PASSPOINT.html">Logging floating point type numbers</a></dt>
+<dt><a href="user-guide/test-output/FPT.html">Logging floating point type numbers</a></dt>
 <dt><a href="user-guide/test-output/log-hr-format.html">Human readable format</a></dt>
 <dt><a href="user-guide/test-output/log-xml-format.html">XML based log output format</a></dt>
 <dt><a href="user-guide/test-output/log-ct-config.html">Compile time configuration</a></dt>
@@ -88,9 +88,9 @@
 </dl>
 </dl>
 </div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="utf.user-guide.intro"></a>Introduction  or what's your name?</h4></div></div></div>
+<a name="utf.user-guide.intro"></a>Introduction &#8230; or what's your name?</h4></div></div></div>
 <p class="first-line-indented">
    Without further ado, let's define terms regularly used by the <acronym class="acronym">UTF</acronym>.
   </p>
@@ -137,11 +137,11 @@
 <tr>
 <td><p><a name="test-assertion.def"></a><span class="term"><em class="firstterm">Test assertion</em></span></p></td>
 <td>
-<p>
+<p class="simpara">
       This is a single binary condition (binary in a sense that is has two outcomes: pass and fail) checked
       by a test module.
      </p>
-<p>
+<p class="simpara">
       There are different schools of thought on how many test assertions a test case should consist of. Two polar
       positions are the one advocated by TDD followers - one assertion per test case; and opposite of this - all test
       assertions within single test case - advocated by those only interested in the first error in a
@@ -163,18 +163,18 @@
 <tr>
 <td><p><a name="test-suite.def"></a><span class="term"><em class="firstterm">The test suite</em></span></p></td>
 <td>
-<p>
+<p class="simpara">
       This is a container for one or more test cases. The test suite gives you an ability to group
       test cases into a single referable entity. There are various reasons why you may opt to do so, including:
      </p>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="itemizedlist"><ul type="disc">
-<li>To group test cases per subsystems of the unit being tested.</li>
-<li>To share test case setup/cleanup code.</li>
-<li>To run selected group of test cases only.</li>
-<li>To see test report split by groups of test cases</li>
-<li>To skip groups of test cases based on the result of another test unit in a test tree.</li>
+<div class="itemizedlist"><ul type="disc">
+<li class="listitem">To group test cases per subsystems of the unit being tested.</li>
+<li class="listitem">To share test case setup/cleanup code.</li>
+<li class="listitem">To run selected group of test cases only.</li>
+<li class="listitem">To see test report split by groups of test cases</li>
+<li class="listitem">To skip groups of test cases based on the result of another test unit in a test tree.</li>
 </ul></div>
-<p>
+<p class="simpara">
       A test suite can also contain other test suites, thus allowing a hierarchical test tree structure to be formed.
       The <acronym class="acronym">UTF</acronym> requires the test tree to contain at least one test suite with at least one test case. The top level 
       test suite - root node of the test tree - is called the master test suite.
@@ -184,22 +184,22 @@
 <tr>
 <td><p><a name="test-setup.def"></a><span class="term"><em class="firstterm">The test setup</em></span></p></td>
 <td>
-<p>
+<p class="simpara">
       This is the part of a test module that is responsible for the test
       preparation. It includes the following operations that take place prior to a start of the test:
      </p>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="itemizedlist"><ul type="disc">
-<li>
+<div class="itemizedlist"><ul type="disc">
+<li class="listitem">
         The <acronym class="acronym">UTF</acronym> initialization
        </li>
-<li>
+<li class="listitem">
         Test tree construction
        </li>
-<li>
+<li class="listitem">
         Global test module setup code
        </li>
 </ul></div>
-<p>
+<p class="simpara">
       Per test case" setup code, invoked for every test case it's assigned to, is also attributed to the
       test initialization, even though it's executed as a part of the test case.
      </p>
@@ -220,31 +220,31 @@
 <tr>
 <td><p><a name="test-runner.def"></a><span class="term"><em class="firstterm">The test runner</em></span></p></td>
 <td>
-<p>
+<p class="simpara">
       This is an "executive manager" that runs the show. The test runner's functionality should include
       the following interfaces and operations:
      </p>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="itemizedlist"><ul type="disc">
-<li>
+<div class="itemizedlist"><ul type="disc">
+<li class="listitem">
         Entry point to a test module. This is usually either the function main() itself or single function that can be
         invoked from it to start testing.
        </li>
-<li>
+<li class="listitem">
         Initialize the <acronym class="acronym">UTF</acronym> based on runtime parameters
        </li>
-<li>
+<li class="listitem">
         Select an output media for the test log and the test results report
        </li>
-<li>
+<li class="listitem">
         Select test cases to execute based on runtime parameters
        </li>
-<li>
+<li class="listitem">
         Execute all or selected test cases
        </li>
-<li>
+<li class="listitem">
         Produce the test results report
        </li>
-<li>
+<li class="listitem">
         Generate a test module result code.
        </li>
 </ul></div>
@@ -272,8 +272,8 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="left"><p><small>Last revised:  ,  at  </small></p></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

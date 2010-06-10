@@ -1,9 +1,9 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Test suites with automated registration</title>
 <link rel="stylesheet" href="../../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="../../../index.html" title="Boost Test Library">
 <link rel="up" href="test-suite.html" title="Test suite">
 <link rel="prev" href="manual-test-suite.html" title="Manually registered test suites">
@@ -26,7 +26,7 @@
 </div></td>
 </tr></table>
 <hr>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h6 class="title">
 <a name="utf.user-guide.test-organization.auto-test-suite"></a>Test suites with automated registration</h6></div></div></div>
 <p class="first-line-indented">
@@ -51,7 +51,7 @@
     become members of the master test suite. There is no limit on depth of test suite inclusion.
    </p>
 <div class="example">
-<a name="utf.user-guide.test-organization.auto-test-suite.example12"></a><p class="title"><b>Example 16. Test suites with automated registration</b></p>
+<a name="utf.user-guide.test-organization.auto-test-suite.example12"></a><p class="title"><b>Example&#160;16.&#160;Test suites with automated registration</b></p>
 <div class="example-contents">
 <p class="first-line-indented">
      This example creates a test tree that matches exactly the one created in the manual test suite registration
@@ -88,10 +88,10 @@ BOOST_AUTO_TEST_CASE( test_case4 )
 
 BOOST_AUTO_TEST_SUITE_END()
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example12.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id651307" onclick="toggle_element( 'example12-output', 'id651307', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id489831" onclick="toggle_element( 'example12-output', 'id489831', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example12-output">&gt; example
 Running 4 test cases...
@@ -103,7 +103,7 @@ test.cpp(27): error in "test_case4": check false failed
 </div>
 </div>
 <br class="example-break"><div class="example">
-<a name="utf.user-guide.test-organization.auto-test-suite.example53"></a><p class="title"><b>Example 17. Example of test suite extension using automated registration facility</b></p>
+<a name="utf.user-guide.test-organization.auto-test-suite.example53"></a><p class="title"><b>Example&#160;17.&#160;Example of test suite extension using automated registration facility</b></p>
 <div class="example-contents">
 <p class="first-line-indented">
      In this example test suite test_suite consists of two parts. Their definition is remote and is separated by another
@@ -137,10 +137,10 @@ BOOST_AUTO_TEST_CASE( test_case2 )
 
 BOOST_AUTO_TEST_SUITE_END()
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example53.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id651401" onclick="toggle_element( 'example53-output', 'id651401', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id489927" onclick="toggle_element( 'example53-output', 'id489927', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example53-output">&gt;example --report_level=detailed
 Running 3 test cases...
@@ -171,7 +171,7 @@ Test suite "example" failed with:
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

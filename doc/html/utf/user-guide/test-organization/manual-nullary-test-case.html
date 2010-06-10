@@ -1,9 +1,9 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Manually registered nullary function based test case</title>
 <link rel="stylesheet" href="../../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="../../../index.html" title="Boost Test Library">
 <link rel="up" href="nullary-test-case.html" title="Nullary function based test case">
 <link rel="prev" href="nullary-test-case.html" title="Nullary function based test case">
@@ -26,7 +26,7 @@
 </div></td>
 </tr></table>
 <hr>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h6 class="title">
 <a name="utf.user-guide.test-organization.manual-nullary-test-case"></a>Manually registered nullary function based test case</h6></div></div></div>
 <p class="first-line-indented">
@@ -47,7 +47,7 @@
     Note that the free function name is passed by address to the macro BOOST_TEST_CASE.
    </p>
 <div class="example">
-<a name="utf.user-guide.test-organization.manual-nullary-test-case.example01"></a><p class="title"><b>Example 5. Nullary free function manually registered</b></p>
+<a name="utf.user-guide.test-organization.manual-nullary-test-case.example01"></a><p class="title"><b>Example&#160;5.&#160;Nullary free function manually registered</b></p>
 <div class="example-contents">
 <pre class="programlisting">#include &lt;boost/test/included/unit_test.hpp&gt;
 using namespace boost::unit_test;
@@ -72,10 +72,10 @@ init_unit_test_suite( int argc, char* argv[] )
 
 //____________________________________________________________________________//
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example01.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id649237" onclick="toggle_element( 'example01-output', 'id649237', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id487762" onclick="toggle_element( 'example01-output', 'id487762', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example01-output">&gt; example
 Running 1 test case...
@@ -101,7 +101,7 @@ Running 1 test case...
     </p></td></tr>
 </table></div>
 <div class="example">
-<a name="utf.user-guide.test-organization.manual-nullary-test-case.example02"></a><p class="title"><b>Example 6. Nullary method of a class bound to global class instance and manually registered</b></p>
+<a name="utf.user-guide.test-organization.manual-nullary-test-case.example02"></a><p class="title"><b>Example&#160;6.&#160;Nullary method of a class bound to global class instance and manually registered</b></p>
 <div class="example-contents">
 <pre class="programlisting">#include &lt;boost/test/included/unit_test.hpp&gt;
 #include &lt;boost/bind.hpp&gt;
@@ -130,10 +130,10 @@ init_unit_test_suite( int argc, char* argv[] )
 
 //____________________________________________________________________________//
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example02.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id649344" onclick="toggle_element( 'example02-output', 'id649344', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id487875" onclick="toggle_element( 'example02-output', 'id487875', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example02-output">&gt; example
 Running 1 test case...
@@ -144,7 +144,7 @@ test.cpp(11): error in "boost::bind( &amp;test_class::test_method, &amp;tester )
 </div>
 </div>
 <br class="example-break"><div class="example">
-<a name="utf.user-guide.test-organization.manual-nullary-test-case.example03"></a><p class="title"><b>Example 7. Nullary method of a class bound to shared class instance and manually registered</b></p>
+<a name="utf.user-guide.test-organization.manual-nullary-test-case.example03"></a><p class="title"><b>Example&#160;7.&#160;Nullary method of a class bound to shared class instance and manually registered</b></p>
 <div class="example-contents">
 <pre class="programlisting">#include &lt;boost/test/included/unit_test.hpp&gt;
 #include &lt;boost/bind.hpp&gt;
@@ -180,10 +180,10 @@ init_unit_test_suite( int argc, char* argv[] )
 
 //____________________________________________________________________________//
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example03.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id649428" onclick="toggle_element( 'example03-output', 'id649428', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id487960" onclick="toggle_element( 'example03-output', 'id487960', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example03-output">&gt; example
 Running 2 test cases...
@@ -198,7 +198,7 @@ test.cpp(15): error in "boost::bind( &amp;test_class::test_method2, tester )": c
     instance globally it may be easier and safer to create an instance on the stack of free function:
    </p>
 <div class="example">
-<a name="utf.user-guide.test-organization.manual-nullary-test-case.example04"></a><p class="title"><b>Example 8. Nullary method of a class bound to local class instance inside free function</b></p>
+<a name="utf.user-guide.test-organization.manual-nullary-test-case.example04"></a><p class="title"><b>Example&#160;8.&#160;Nullary method of a class bound to local class instance inside free function</b></p>
 <div class="example-contents">
 <pre class="programlisting">#include&lt;boost/test/included/unit_test.hpp&gt;
 
@@ -233,10 +233,10 @@ init_unit_test_suite( int argc, char* argv[] )
 
 //____________________________________________________________________________//
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example04.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id649523" onclick="toggle_element( 'example04-output', 'id649523', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id488055" onclick="toggle_element( 'example04-output', 'id488055', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example04-output">&gt; example
 Running 1 test case...
@@ -260,13 +260,13 @@ Running 1 test case...
     </p></td></tr>
 </table></div>
 <div class="example">
-<a name="utf.user-guide.test-organization.manual-nullary-test-case.example05"></a><p class="title"><b>Example 9. Binary free function bound to set of different parameter pairs</b></p>
+<a name="utf.user-guide.test-organization.manual-nullary-test-case.example05"></a><p class="title"><b>Example&#160;9.&#160;Binary free function bound to set of different parameter pairs</b></p>
 <div class="example-contents">
 <p class="first-line-indented">
      This example employs the alternative test module initialization function specification.
     </p>
 <pre class="programlisting">#define BOOST_TEST_DYN_LINK
-#include &lt;boost/test/included/unit_test.hpp&gt;
+#include &lt;boost/test/unit_test.hpp&gt;
 #include &lt;boost/bind.hpp&gt;
 using namespace boost::unit_test;
 
@@ -302,10 +302,10 @@ main( int argc, char* argv[] )
 
 //____________________________________________________________________________//
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example05.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id649634" onclick="toggle_element( 'example05-output', 'id649634', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id488168" onclick="toggle_element( 'example05-output', 'id488168', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example05-output">&gt; example
 Running 3 test cases...
@@ -321,7 +321,7 @@ Running 3 test cases...
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

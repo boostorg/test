@@ -1,9 +1,9 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Compile time configuration</title>
 <link rel="stylesheet" href="../../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="../../../index.html" title="Boost Test Library">
 <link rel="up" href="test-log.html" title="Test log output">
 <link rel="prev" href="log-xml-format.html" title="XML based log output format">
@@ -26,7 +26,7 @@
 </div></td>
 </tr></table>
 <hr>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h6 class="title">
 <a name="utf.user-guide.test-output.log.ct-config"></a>Compile time configuration</h6></div></div></div>
 <p class="first-line-indented">
@@ -35,7 +35,7 @@
     log. The interface is provided by singleton class <code class="computeroutput">boost::unit_test::unit_test_log_t</code> and is
     accessible through local file scope reference to single instance of this class: boost::unit_test::unit_test_log.
    </p>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h6 class="title">
 <a name="utf.user-guide.test-output.log.ct-config.output-stream"></a>Log output stream redirection</h6></div></div></div>
 <p class="first-line-indented">
@@ -48,7 +48,7 @@
      cases. There are no limitations on number of output stream resets either.
     </p>
 <div class="example">
-<a name="utf.user-guide.test-output.log.ct-config.output-stream.example50"></a><p class="title"><b>Example 30. Test log output redirection</b></p>
+<a name="utf.user-guide.test-output.log.ct-config.output-stream.example50"></a><p class="title"><b>Example&#160;30.&#160;Test log output redirection</b></p>
 <div class="example-contents">
 <pre class="programlisting">#define BOOST_TEST_MODULE example
 #include &lt;boost/test/included/unit_test.hpp&gt;
@@ -75,10 +75,10 @@ BOOST_AUTO_TEST_CASE( test_case )
 //____________________________________________________________________________//
 
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example50.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id655358" onclick="toggle_element( 'example50-output', 'id655358', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id493885" onclick="toggle_element( 'example50-output', 'id493885', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example50-output">&gt; example
 
@@ -91,7 +91,7 @@ test.cpp(20): error in "test_case": check false failed
 </div>
 <br class="example-break">
 </div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h6 class="title">
 <a name="utf.user-guide.test-output.log.ct-config.log-level"></a>Log level configuration</h6></div></div></div>
 <p class="first-line-indented">
@@ -103,7 +103,7 @@ test.cpp(20): error in "test_case": check false failed
      the one supplied at test execution time. Prefer to use runtime parameters for log level selection.
     </p>
 <div class="example">
-<a name="utf.user-guide.test-output.log.ct-config.log-level.example51"></a><p class="title"><b>Example 31. Compile time log level configuration</b></p>
+<a name="utf.user-guide.test-output.log.ct-config.log-level.example51"></a><p class="title"><b>Example&#160;31.&#160;Compile time log level configuration</b></p>
 <div class="example-contents">
 <pre class="programlisting">#define BOOST_TEST_MODULE example
 #include &lt;boost/test/included/unit_test.hpp&gt;
@@ -123,10 +123,10 @@ BOOST_AUTO_TEST_CASE( test_case0 )
 //____________________________________________________________________________//
 
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example51.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id655481" onclick="toggle_element( 'example51-output', 'id655481', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id494008" onclick="toggle_element( 'example51-output', 'id494008', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example51-output">&gt; example
 Running 1 test case...
@@ -138,7 +138,7 @@ test.cpp(13): warning in "test_case0": condition sizeof(int) &gt; 4 is not satis
 </div>
 <br class="example-break">
 </div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h6 class="title">
 <a name="utf.user-guide.test-output.log.ct-config.log-format"></a>Predefined log format selection</h6></div></div></div>
 <p class="first-line-indented">
@@ -150,7 +150,7 @@ test.cpp(13): warning in "test_case0": condition sizeof(int) &gt; 4 is not satis
      format selection.
     </p>
 <div class="example">
-<a name="utf.user-guide.test-output.log.ct-config.log-format.example52"></a><p class="title"><b>Example 32. Compile time log format selection</b></p>
+<a name="utf.user-guide.test-output.log.ct-config.log-format.example52"></a><p class="title"><b>Example&#160;32.&#160;Compile time log format selection</b></p>
 <div class="example-contents">
 <pre class="programlisting">#define BOOST_TEST_MODULE example
 #include &lt;boost/test/included/unit_test.hpp&gt;
@@ -175,10 +175,10 @@ BOOST_AUTO_TEST_CASE( test_case0 )
 //____________________________________________________________________________//
 
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example52.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id655607" onclick="toggle_element( 'example52-output', 'id655607', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id494135" onclick="toggle_element( 'example52-output', 'id494135', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example52-output">&gt; example --report_level=no
 &lt;TestLog&gt;&lt;Error file="test.cpp" line="18"&gt;check false failed&lt;/Error&gt;&lt;/TestLog&gt;
@@ -187,12 +187,12 @@ BOOST_AUTO_TEST_CASE( test_case0 )
 </div>
 <br class="example-break">
 </div>
-<div class="section" lang="en"><div class="titlepage"><div><div><h6 class="title">
+<div class="section"><div class="titlepage"><div><div><h6 class="title">
 <a name="utf.user-guide.test-output.log.ct-config.log-formatter"></a>Custom log format support</h6></div></div></div></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

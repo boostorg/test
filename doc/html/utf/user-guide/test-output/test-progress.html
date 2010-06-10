@@ -1,13 +1,13 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Test progress display</title>
 <link rel="stylesheet" href="../../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="../../../index.html" title="Boost Test Library">
-<link rel="up" href="../test-output.html" title="Test Output or let's see what you got for your money">
+<link rel="up" href="../test-output.html" title="Test Output &#8230; or let's see what you got for your money">
 <link rel="prev" href="results-report.html" title="Test report output">
-<link rel="next" href="../runtime-config.html" title="Runtime configuration or what are the strings I can pull?">
+<link rel="next" href="../runtime-config.html" title="Runtime configuration &#8230; or what are the strings I can pull?">
 <script language="JavaScript1.2" src="../../../../js/boost-test.js"></script>
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -24,13 +24,13 @@
 </div></td>
 </tr></table>
 <hr>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h5 class="title">
 <a name="utf.user-guide.test-output.progress"></a>Test progress display</h5></div></div></div>
 <p class="first-line-indented">
    In case if the test module involves lengthy computation split among multiple test cases you may be interested in 
    progress monitor. The test runners supplied with the <acronym class="acronym">UTF</acronym> support simple text progress display, implemented based
-   on <code class="computeroutput">boost::progress_display</code><sup>[<a name="id655789" href="#ftn.id655789" class="footnote">5</a>]</sup>. The progress display output 
+   on <code class="computeroutput">boost::progress_display</code><sup>[<a name="id494316" href="#ftn.id494316" class="footnote">5</a>]</sup>. The progress display output 
    is enabled using the <acronym class="acronym">UTF</acronym> parameter <a class="link" href="../runtime-config/reference.html#utf.user-guide.runtime-config.parameters">show_progress</a>.
   </p>
 <p class="first-line-indented">
@@ -46,7 +46,7 @@
   </p>
 <pre class="programlisting">boost::unit_test::progress_monitor.set_stream( std::ostream&amp; )</pre>
 <div class="example">
-<a name="utf.user-guide.test-output.progress.example49"></a><p class="title"><b>Example 33. Progress report for the test module with large amount of test cases</b></p>
+<a name="utf.user-guide.test-output.progress.example49"></a><p class="title"><b>Example&#160;33.&#160;Progress report for the test module with large amount of test cases</b></p>
 <div class="example-contents">
 <pre class="programlisting">#include &lt;boost/test/included/unit_test.hpp&gt;
 using namespace boost::unit_test;
@@ -72,10 +72,10 @@ init_unit_test_suite( int argc, char* argv[] )
 
 //____________________________________________________________________________//
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example49.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id655904" onclick="toggle_element( 'example49-output', 'id655904', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id494425" onclick="toggle_element( 'example49-output', 'id494425', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example49-output">&gt; example --show_progress=yes --log_level=nothing
 
@@ -89,12 +89,12 @@ init_unit_test_suite( int argc, char* argv[] )
 </div>
 <br class="example-break"><div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><acronym class="acronym"><sup>[<a name="ftn.id655789" href="#id655789" class="acronym">5</a>] </sup>UTF</acronym></div>
+<div class="footnote"><acronym class="acronym"><sup>[<a name="ftn.id494316" href="#id494316" class="acronym">5</a>] </sup>UTF</acronym></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

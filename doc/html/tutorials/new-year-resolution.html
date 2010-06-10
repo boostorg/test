@@ -1,12 +1,12 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Boost.Test driven development or "getting started" for TDD followers</title>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Boost.Test driven development &#8230; or "getting started" for TDD followers</title>
 <link rel="stylesheet" href="../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="../index.html" title="Boost Test Library">
 <link rel="up" href="../utf/tutorials.html" title="The unit test framework tutorials">
-<link rel="prev" href="hello-the-testing-world.html" title="Hello the testing world or beginner's introduction into testing using the Unit Test Framework">
+<link rel="prev" href="hello-the-testing-world.html" title="Hello the testing world &#8230; or beginner's introduction into testing using the Unit Test Framework">
 <link rel="next" href="../utf/compilation.html" title="The UTF compilation variants and procedures">
 <script language="JavaScript1.2" src="../../js/boost-test.js"></script>
 </head>
@@ -22,12 +22,12 @@
 </div></td>
 </tr></table>
 <hr>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="tutorial.new-year-resolution"></a>Boost.Test driven development  or "getting started" for TDD followers</h4></div></div></div>
+<a name="tutorial.new-year-resolution"></a>Boost.Test driven development &#8230; or "getting started" for TDD followers</h4></div></div></div>
 <p class="first-line-indented">
   Today is a momentous day - first day of new year. Today I am going to start a new life. I am going to stop eating a 
-  greasy food, start attending a fitness club and  today I am going to test programs I am writing. I can start 
+  greasy food, start attending a fitness club and &#8230; today I am going to test programs I am writing. I can start 
   right after the last line of a program is completed or, even better, I can write tests while I am coding. And maybe 
   next time I will write tests before the coding, during the design stage. I have read a lot of literature on how to 
   write the tests, I have the unit test framework in hand and an idea of new class. So let's get started.
@@ -79,7 +79,7 @@ public:
 <pre class="programlisting">#define BOOST_TEST_MODULE const_string test
 #include &lt;boost/test/unit_test.hpp&gt;
 
-BOOST_AUTO_EST_CASE( constructors_test )
+BOOST_AUTO_TEST_CASE( constructors_test )
 {
      const_string cs0( "" );                                                 // 1 //
      BOOST_CHECK_EQUAL( cs0.length(), (size_t)0 );
@@ -124,7 +124,7 @@ BOOST_AUTO_EST_CASE( constructors_test )
   errors in the implementation (do you write programs without errors from scratch?) I am able to pass this test case 
   and the unit test framework gives me the following report:
  </p>
-<pre class="screen">Running 1 test case 
+<pre class="screen">Running 1 test case&#8230; 
   
 *** No errors detected</pre>
 <p class="first-line-indented">
@@ -146,12 +146,12 @@ public:
 <pre class="programlisting">#define BOOST_TEST_MODULE const_string test
 #include &lt;boost/test/unit_test.hpp&gt;
 
-BOOST_AUTO_EST_CASE( constructors_test )
+BOOST_AUTO_TEST_CASE( constructors_test )
 {
     ...
 }
 
-BOOST_AUTO_EST_CASE( data_access_test )
+BOOST_AUTO_TEST_CASE( data_access_test )
 {
     const_string cs1( "test_string" );                                 // 1 //
     BOOST_CHECK_EQUAL( cs1[(size_t)0], 't' );
@@ -184,7 +184,7 @@ BOOST_AUTO_EST_CASE( data_access_test )
  </p>
 <p class="first-line-indented">
   Well, I am step closer to fulfilling my new year resolution (we should see about this fitness club sometime next
-  ). What about you? Your testing habits could be a little different. You could start with a class/library 
+  &#8230;). What about you? Your testing habits could be a little different. You could start with a class/library 
   development and then at some point start writing test cases on feature basis. Or you can, given a detailed 
   specification for the future product, including expected interfaces, immediately start with writing all test cases 
   (or it could be a different person, while you working on implementation at the same time). In any case you should not 
@@ -196,7 +196,7 @@ BOOST_AUTO_EST_CASE( data_access_test )
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

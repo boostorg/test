@@ -1,9 +1,9 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Master Test Suite</title>
 <link rel="stylesheet" href="../../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="../../../index.html" title="Boost Test Library">
 <link rel="up" href="test-suite.html" title="Test suite">
 <link rel="prev" href="auto-test-suite.html" title="Test suites with automated registration">
@@ -26,7 +26,7 @@
 </div></td>
 </tr></table>
 <hr>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h6 class="title">
 <a name="utf.user-guide.test-organization.master-test-suite"></a>Master Test Suite</h6></div></div></div>
 <p class="first-line-indented">
@@ -57,7 +57,7 @@ master_test_suite_t&amp; master_test_suite();
 } // namespace framework
 } // namespace unit_test
 } // namespace boost</pre>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h6 class="title">
 <a name="utf.user-guide.test-organization.cla-access"></a>Command line arguments access interface</h6></div></div></div>
 <p class="first-line-indented">
@@ -87,7 +87,7 @@ boost::unit_test::framework::master_test_suite().argv</pre>
      test module arguments.
     </p>
 <div class="example">
-<a name="utf.user-guide.test-organization.cla-access.example13"></a><p class="title"><b>Example 18. Command line access in initialization function</b></p>
+<a name="utf.user-guide.test-organization.cla-access.example13"></a><p class="title"><b>Example&#160;18.&#160;Command line access in initialization function</b></p>
 <div class="example-contents">
 <pre class="programlisting">#include &lt;boost/test/included/unit_test.hpp&gt;
 using namespace boost::unit_test;
@@ -116,10 +116,10 @@ init_unit_test_suite( int argc, char* argv[] )
 //____________________________________________________________________________//
 
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example13.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id651615" onclick="toggle_element( 'example13-output', 'id651615', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id490143" onclick="toggle_element( 'example13-output', 'id490143', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example13-output">&gt; example 1
 Test setup error: test tree is empty</pre>
@@ -127,7 +127,7 @@ Test setup error: test tree is empty</pre>
 </div>
 <br class="example-break">
 </div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h6 class="title">
 <a name="utf.user-guide.test-organization.master-test-suite-name"></a>Naming</h6></div></div></div>
 <p class="first-line-indented">
@@ -137,7 +137,7 @@ Test setup error: test tree is empty</pre>
      manually implemented initialization function. Following examples illustrate these methods.
     </p>
 <div class="example">
-<a name="utf.user-guide.test-organization.master-test-suite-name.example14"></a><p class="title"><b>Example 19. Naming master test suite using the macro <a class="xref" href="../../compilation.html#utf.flag.module">BOOST_TEST_MODULE</a></b></p>
+<a name="utf.user-guide.test-organization.master-test-suite-name.example14"></a><p class="title"><b>Example&#160;19.&#160;Naming master test suite using the macro <a class="xref" href="../../compilation.html#utf.flag.module">BOOST_TEST_MODULE</a></b></p>
 <div class="example-contents">
 <p class="first-line-indented">
       If the macro <a class="xref" href="../../compilation.html#utf.flag.module">BOOST_TEST_MODULE</a> is defined, the test module initialization
@@ -158,10 +158,10 @@ BOOST_AUTO_TEST_CASE( free_test_function )
 //____________________________________________________________________________//
 
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example14.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id651774" onclick="toggle_element( 'example14-output', 'id651774', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id490303" onclick="toggle_element( 'example14-output', 'id490303', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example14-output">&gt; example --log_level=test_suite
 Running 1 test case...
@@ -176,7 +176,7 @@ Leaving test suite "my master test suite name"
 </div>
 </div>
 <br class="example-break"><div class="example">
-<a name="utf.user-guide.test-organization.master-test-suite-name.example15"></a><p class="title"><b>Example 20. Naming master test suite explicitly in the test module initialization function</b></p>
+<a name="utf.user-guide.test-organization.master-test-suite-name.example15"></a><p class="title"><b>Example&#160;20.&#160;Naming master test suite explicitly in the test module initialization function</b></p>
 <div class="example-contents">
 <p class="first-line-indented">
       Without the <a class="xref" href="../../compilation.html#utf.flag.main">BOOST_TEST_MAIN</a> and the <a class="xref" href="../../compilation.html#utf.flag.module">BOOST_TEST_MODULE</a> flags defined, the test module initialization function has to be manually implemented.
@@ -204,10 +204,10 @@ init_unit_test_suite( int argc, char* argv[] )
 
 //____________________________________________________________________________//
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example15.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id651887" onclick="toggle_element( 'example15-output', 'id651887', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id490417" onclick="toggle_element( 'example15-output', 'id490417', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example15-output">&gt; example --log_level=test_suite
 Running 1 test case...
@@ -226,7 +226,7 @@ Leaving test suite "my master test suite name"
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

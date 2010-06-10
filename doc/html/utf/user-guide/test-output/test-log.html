@@ -1,12 +1,12 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Test log output</title>
 <link rel="stylesheet" href="../../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="../../../index.html" title="Boost Test Library">
-<link rel="up" href="../test-output.html" title="Test Output or let's see what you got for your money">
-<link rel="prev" href="../test-output.html" title="Test Output or let's see what you got for your money">
+<link rel="up" href="../test-output.html" title="Test Output &#8230; or let's see what you got for your money">
+<link rel="prev" href="../test-output.html" title="Test Output &#8230; or let's see what you got for your money">
 <link rel="next" href="BOOST_TEST_MESSAGE.html" title="BOOST_TEST_MESSAGE">
 <script language="JavaScript1.2" src="../../../../js/boost-test.js"></script>
 </head>
@@ -26,7 +26,7 @@
 </div></td>
 </tr></table>
 <hr>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h5 class="title">
 <a name="utf.user-guide.test-output.log"></a>Test log output</h5></div></div></div>
 <p class="first-line-indented">
@@ -35,57 +35,57 @@
    appear in the test log output. Log levels are arranged by the "importance" of the log entries. Here is
    the list of all levels in order of increasing "importance":
   </p>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="itemizedlist"><ul type="disc">
-<li>
-<p>Success information messages</p>
-<p>
+<div class="itemizedlist"><ul type="disc">
+<li class="listitem">
+<p class="simpara">Success information messages</p>
+<p class="simpara">
      This category includes messages that provide information on successfully passed assertions
     </p>
 </li>
-<li>
-<p>Test tree traversal notifications</p>
-<p>
+<li class="listitem">
+<p class="simpara">Test tree traversal notifications</p>
+<p class="simpara">
      This category includes messages that are produced by the <acronym class="acronym">UTF</acronym> core and indicate which test suites/cases are
      currently being executed or skipped
     </p>
 </li>
-<li>
-<p>General information messages</p>
-<p>
+<li class="listitem">
+<p class="simpara">General information messages</p>
+<p class="simpara">
      This category includes general information massages produced in most cases by a test module author using the
      macro <code class="computeroutput"><a class="link" href="BOOST_TEST_MESSAGE.html#BOOST_TEST_MESSAGE">BOOST_TEST_MESSAGE</a></code>.
     </p>
 </li>
-<li>
-<p>Warning messages</p>
-<p>
+<li class="listitem">
+<p class="simpara">Warning messages</p>
+<p class="simpara">
      This category includes messages produced by failed warning level assertions.
     </p>
 </li>
-<li>
-<p>Non fatal error messages</p>
-<p>
+<li class="listitem">
+<p class="simpara">Non fatal error messages</p>
+<p class="simpara">
      This category includes messages produced by failed check level assertions
     </p>
 </li>
-<li>
-<p>Uncaught C++ exceptions notifications</p>
-<p>
+<li class="listitem">
+<p class="simpara">Uncaught C++ exceptions notifications</p>
+<p class="simpara">
      This category includes messages that are produced by the <acronym class="acronym">UTF</acronym> and provide detailed information on the C++
      exceptions uncaught by the test case body.
     </p>
 </li>
-<li>
-<p>Non-fatal system error</p>
-<p>
+<li class="listitem">
+<p class="simpara">Non-fatal system error</p>
+<p class="simpara">
      This category includes messages that are produced by the <acronym class="acronym">UTF</acronym> itself and provides information about caught
      non-fatal system error. For example it includes messages produced in the case of test case timeout or if
      floating  point values calculation errors are caught.
     </p>
 </li>
-<li>
-<p>Fatal system error</p>
-<p>
+<li class="listitem">
+<p class="simpara">Fatal system error</p>
+<p class="simpara">
      This category includes messages produced by failed require level assertions and by the <acronym class="acronym">UTF</acronym> itself in case of
      abnormal test case termination.
     </p>
@@ -106,17 +106,17 @@
    In addition to the levels described above the test log defines two special log levels. The current log level can
    be set to:
   </p>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="itemizedlist"><ul type="disc">
-<li>
-<p>All messages</p>
-<p>
+<div class="itemizedlist"><ul type="disc">
+<li class="listitem">
+<p class="simpara">All messages</p>
+<p class="simpara">
      If active log level threshold is set to this value, all test log entries appear in the output. In practice
      this is equivalent to setting the active log level threshold to "success information messages"
     </p>
 </li>
-<li>
-<p>Nothing</p>
-<p>
+<li class="listitem">
+<p class="simpara">Nothing</p>
+<p class="simpara">
      If the active log level threshold is set to this value, none of test log entries appear in the output. This log level
      is used to execute a "silent" test that doesn't produce any test log and only generates a result code indicating whether test failed or passed.
     </p>
@@ -137,21 +137,21 @@
    macros for this purpose: <code class="computeroutput"><a class="link" href="BOOST_TEST_CHECKPOINT.html#BOOST_TEST_CHECKPOINT">BOOST_TEST_CHECKPOINT</a></code> - to specify a "named" checkpoint 
    and <code class="computeroutput"><a class="link" href="BOOST_TEST_PASSPOINT.html#BOOST_TEST_PASSPOINT">BOOST_TEST_PASSPOINT</a></code> - to specify an "unnamed" checkpoint.
   </p>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h6 class="title">
 <a name="utf.user-guide.test-output.log.testing-tool-args"></a>Logging tool arguments</h6></div></div></div>
 <p class="first-line-indented">
-    Most of the <a class="link" href="../../testing-tools.html" title="The UTF testing tools or tester's toolbox for all occasions">testing tools</a> print values of their arguments to the output
+    Most of the <a class="link" href="../../testing-tools.html" title="The UTF testing tools &#8230; or tester's toolbox for all occasions">testing tools</a> print values of their arguments to the output
     stream in some form of log statement. If arguments type does not support <code class="computeroutput">operator&lt;&lt;(std::ostream&amp;,
     ArgumentType const&amp;)</code> interface you will get a compilation error. You can either implement above
-    interface or prohibit the <a class="link" href="../../testing-tools.html" title="The UTF testing tools or tester's toolbox for all occasions">testing tools</a> from logging argument values for
+    interface or prohibit the <a class="link" href="../../testing-tools.html" title="The UTF testing tools &#8230; or tester's toolbox for all occasions">testing tools</a> from logging argument values for
     specified type. To do so use following statement on file level before first test case that includes statement
     failing to compile:
    </p>
 <pre class="inline-synopsis">
 <a name="BOOST_TEST_DONT_PRINT_LOG_VALUE"></a>BOOST_TEST_DONT_PRINT_LOG_VALUE(<span class="emphasis"><em>ArgumentType</em></span>)</pre>
 <div class="example">
-<a name="utf.user-guide.test-output.log.testing-tool-args.example32"></a><p class="title"><b>Example 26. BOOST_TEST_DONT_PRINT_LOG_VALUE usage</b></p>
+<a name="utf.user-guide.test-output.log.testing-tool-args.example32"></a><p class="title"><b>Example&#160;26.&#160;BOOST_TEST_DONT_PRINT_LOG_VALUE usage</b></p>
 <div class="example-contents">
 <p>
      Try to comment out BOOST_TEST_DONT_PRINT_LOG_VALUE statement and you end up with compile time error.
@@ -176,10 +176,10 @@ BOOST_AUTO_TEST_CASE( test_list )
 
 //____________________________________________________________________________//
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example32.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id653825" onclick="toggle_element( 'example32-output', 'id653825', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id492356" onclick="toggle_element( 'example32-output', 'id492356', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example32-output">Running 1 test case...
 test.cpp(16): error in "test_list": check p1 == p2 failed [ != ]
@@ -190,7 +190,7 @@ test.cpp(16): error in "test_list": check p1 == p2 failed [ != ]
 </div>
 <br class="example-break">
 </div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h6 class="title">
 <a name="utf.user-guide.test-output.log.runtime-config"></a>Runtime configuration</h6></div></div></div>
 <p class="first-line-indented">
@@ -203,7 +203,7 @@ test.cpp(16): error in "test_list": check p1 == p2 failed [ != ]
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

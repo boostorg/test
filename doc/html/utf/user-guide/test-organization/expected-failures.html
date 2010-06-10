@@ -1,13 +1,13 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Expected failures specification</title>
 <link rel="stylesheet" href="../../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="../../../index.html" title="Boost Test Library">
-<link rel="up" href="../test-organization.html" title="Test organization or the house that Jack built">
+<link rel="up" href="../test-organization.html" title="Test organization &#8230; or the house that Jack built">
 <link rel="prev" href="master-test-suite.html" title="Master Test Suite">
-<link rel="next" href="../fixture.html" title="Fixtures or let me repeat myself">
+<link rel="next" href="../fixture.html" title="Fixtures &#8230; or let me repeat myself">
 <script language="JavaScript1.2" src="../../../../js/boost-test.js"></script>
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -24,7 +24,7 @@
 </div></td>
 </tr></table>
 <hr>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h5 class="title">
 <a name="utf.user-guide.test-organization.expected-failures"></a>Expected failures specification</h5></div></div></div>
 <p class="first-line-indented">
@@ -63,7 +63,7 @@
     case is going to fail, since the number of failures is smaller than expected.
    </p></td></tr>
 </table></div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h6 class="title">
 <a name="utf.user-guide.test-organization.manual-expected-failures"></a>Usage with manually registered test cases</h6></div></div></div>
 <p class="first-line-indented">
@@ -71,7 +71,7 @@
     test_suite::add call during test unit registration.
    </p>
 <div class="example">
-<a name="utf.user-guide.test-organization.manual-expected-failures.example16"></a><p class="title"><b>Example 21. Expected failures specification for manually registered test case</b></p>
+<a name="utf.user-guide.test-organization.manual-expected-failures.example16"></a><p class="title"><b>Example&#160;21.&#160;Expected failures specification for manually registered test case</b></p>
 <div class="example-contents">
 <pre class="programlisting">#include &lt;boost/test/included/unit_test.hpp&gt;
 using namespace boost::unit_test;
@@ -95,10 +95,10 @@ init_unit_test_suite( int, char* [] ) {
 
 //____________________________________________________________________________//
 </pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example16.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id652090" onclick="toggle_element( 'example16-output', 'id652090', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id490613" onclick="toggle_element( 'example16-output', 'id490613', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example16-output">&gt; example --log_level=message
 Running 1 test case...
@@ -111,7 +111,7 @@ Test case has less failures then expected
 </div>
 <br class="example-break">
 </div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h6 class="title">
 <a name="utf.user-guide.test-organization.auto-expected-failures"></a>Usage with automatically registered test cases</h6></div></div></div>
 <p class="first-line-indented">
@@ -126,7 +126,7 @@ Test case has less failures then expected
       test suite where BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES resides.
     </p>
 <div class="example">
-<a name="utf.user-guide.test-organization.auto-expected-failures.example17"></a><p class="title"><b>Example 22. Expected failures specification for automatically registered test case</b></p>
+<a name="utf.user-guide.test-organization.auto-expected-failures.example17"></a><p class="title"><b>Example&#160;22.&#160;Expected failures specification for automatically registered test case</b></p>
 <div class="example-contents">
 <pre class="programlisting">#define BOOST_TEST_MODULE example
 #include &lt;boost/test/included/unit_test.hpp&gt;
@@ -155,10 +155,10 @@ BOOST_AUTO_TEST_CASE( my_test1 )
 //____________________________________________________________________________//
 
 BOOST_AUTO_TEST_SUITE_END()</pre>
-<table class="simplelist" border="0" summary="Simple list"><tr>
+<table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example17.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id652235" onclick="toggle_element( 'example17-output', 'id652235', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id490759" onclick="toggle_element( 'example17-output', 'id490759', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example17-output">&gt; example --report_level=short
 Running 2 test cases...
@@ -178,7 +178,7 @@ Test suite "example" passed with:
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

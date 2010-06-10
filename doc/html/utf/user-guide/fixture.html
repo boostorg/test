@@ -1,9 +1,9 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Fixtures or let me repeat myself</title>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Fixtures &#8230; or let me repeat myself</title>
 <link rel="stylesheet" href="../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="../../index.html" title="Boost Test Library">
 <link rel="up" href="../user-guide.html" title="Unit Test Framework: User's guide">
 <link rel="prev" href="test-organization/expected-failures.html" title="Expected failures specification">
@@ -24,17 +24,17 @@
 </div></td>
 </tr></table>
 <hr>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="utf.user-guide.fixture"></a>Fixtures  or let me repeat myself</h4></div></div></div>
+<a name="utf.user-guide.fixture"></a>Fixtures &#8230; or let me repeat myself</h4></div></div></div>
 <p class="first-line-indented">
   In general terms a test fixture or test context is the collection of one or more of the following items, required
   to perform the test:
  </p>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="itemizedlist"><ul type="disc">
-<li>preconditions</li>
-<li>particular states of tested unites</li>
-<li>necessary cleanup procedures</li>
+<div class="itemizedlist"><ul type="disc">
+<li class="listitem">preconditions</li>
+<li class="listitem">particular states of tested unites</li>
+<li class="listitem">necessary cleanup procedures</li>
 </ul></div>
 <p class="first-line-indented">
   Though these tasks are encountered in many if not all test cases, what makes a test fixture different is
@@ -83,14 +83,14 @@ BOOST_AUTO_TEST_CASE( test_case2 )
   This is a generic solution that can be used to implement any kind of shared setup or cleanup procedure. Still
   there are several more or less minor practical issues with this pure C++ based fixtures solution:
  </p>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="itemizedlist"><ul type="disc">
-<li>
+<div class="itemizedlist"><ul type="disc">
+<li class="listitem">
     We need to add a fixture declaration statement into each test case manually.
    </li>
-<li>
+<li class="listitem">
     Objects defined in fixture are references with "&lt;fixture-instance-name&gt;." prefix.
    </li>
-<li>
+<li class="listitem">
     There is no place to execute a "global" fixture, which performs "global" setup/cleanup
     procedures before and after testing.
    </li>
@@ -102,15 +102,15 @@ BOOST_AUTO_TEST_CASE( test_case2 )
   teardown fixture functions should comply to. Based on the generic fixture model, the <acronym class="acronym">UTF</acronym> presents solution for
   the following tasks:
  </p>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="itemizedlist"><ul type="disc">
-<li><a class="link" href="fixture/per-test-case.html" title="Per test case fixture">per test case fixture automation</a></li>
-<li><a class="link" href="fixture/test-suite-shared.html" title="Test suite level fixture">shared test suite level fixture</a></li>
-<li><a class="link" href="fixture/global.html" title="Global fixture">"global" fixture support</a></li>
+<div class="itemizedlist"><ul type="disc">
+<li class="listitem"><a class="link" href="fixture/per-test-case.html" title="Per test case fixture">per test case fixture automation</a></li>
+<li class="listitem"><a class="link" href="fixture/test-suite-shared.html" title="Test suite level fixture">shared test suite level fixture</a></li>
+<li class="listitem"><a class="link" href="fixture/global.html" title="Global fixture">"global" fixture support</a></li>
 </ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

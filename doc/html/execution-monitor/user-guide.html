@@ -1,11 +1,11 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>The Execution Monitor user's guide</title>
 <link rel="stylesheet" href="../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="../index.html" title="Boost Test Library">
-<link rel="up" href="../execution-monitor.html" title="Part I. Boost Test Library: The Execution Monitor">
+<link rel="up" href="../execution-monitor.html" title="Boost Test Library: The Execution Monitor">
 <link rel="prev" href="compilation.html" title="The Execution Monitor compilation variants and procedures">
 <link rel="next" href="reference.html" title="The Execution Monitor reference">
 <script language="JavaScript1.2" src="../../js/boost-test.js"></script>
@@ -22,7 +22,7 @@
 </div></td>
 </tr></table>
 <hr>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="execution-monitor.user-guide"></a>The Execution Monitor user's guide</h3></div></div></div>
 <p class="first-line-indented">
@@ -40,29 +40,29 @@
    All symbols in the Execution Monitor implementation are located in the namespace boost. To use the Execution
    Monitor you need to:
   </p>
-<div class="orderedlist"><ol type="1">
-<li>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
      #include &lt;<a href="../../../../../boost/test/execution_monitor.hpp" target="_top"><code class="filename">boost/test/execution_monitor.hpp</code></a>&gt;
     </li>
-<li>Make an instance of <code class="computeroutput"><a class="link" href="reference.html#boost.execution_monitor" title="Class execution_monitor">execution_monitor</a></code>
+<li class="listitem">Make an instance of <code class="computeroutput"><a class="link" href="reference.html#boost.execution_monitor" title="Class execution_monitor">execution_monitor</a></code>
 </li>
-<li>
+<li class="listitem">
      Optionally register custom exception translators for exception classes which require special processing.
     </li>
 </ol></div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="execution-monitor.user-guide.monitor-outcomes"></a>Monitored function execution</h4></div></div></div>
 <p class="first-line-indented">
-    To start the monitored function, invoke the method <code class="computeroutput"><a class="link" href="reference.html#id270361-bb">execution_monitor::execute</a></code> and pass 
+    To start the monitored function, invoke the method <code class="computeroutput"><a class="link" href="reference.html#id186126-bb">execution_monitor::execute</a></code> and pass 
     the monitored function as an argument. If the call succeeds, the method returns the result code produced by the
     monitored function. If any of the following conditions occur:
    </p>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="itemizedlist"><ul type="disc">
-<li>Uncaught C++ exception.</li>
-<li>Hardware or software signal, trap, or other exception.</li>
-<li>Timeout reached.</li>
-<li>Debug assert event occurred (under Microsoft Visual C++ or compatible compiler).</li>
+<div class="itemizedlist"><ul type="disc">
+<li class="listitem">Uncaught C++ exception.</li>
+<li class="listitem">Hardware or software signal, trap, or other exception.</li>
+<li class="listitem">Timeout reached.</li>
+<li class="listitem">Debug assert event occurred (under Microsoft Visual C++ or compatible compiler).</li>
 </ul></div>
 <p>
     then the method throws the <code class="computeroutput"><a class="link" href="reference.html#boost.execution_exception" title="Class execution_exception">execution_exception</a></code>. The exception contains unique 
@@ -70,7 +70,7 @@
     the error.
    </p>
 </div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="execution-monitor.user-guide.monitor-params"></a>The execution monitor parameters</h4></div></div></div>
 <p class="first-line-indented">
@@ -105,7 +105,7 @@
     exception on platforms where it's supported.
    </p>
 </div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="execution-monitor.user-guide.errors-reporting"></a>Errors reporting and translation</h4></div></div></div>
 <p class="first-line-indented">
@@ -113,10 +113,10 @@
     <code class="computeroutput"><a class="link" href="reference.html#boost.execution_exception" title="Class execution_exception">execution_exception</a></code> - it's not intended to be used for this purpose. The simplest choice is 
     to use one of the following C++ types as an exception:
    </p>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="itemizedlist"><ul type="disc">
-<li>C string.</li>
-<li>std:string.</li>
-<li>any exception class in std::exception hierarchy.</li>
+<div class="itemizedlist"><ul type="disc">
+<li class="listitem">C string.</li>
+<li class="listitem">std:string.</li>
+<li class="listitem">any exception class in std::exception hierarchy.</li>
 </ul></div>
 <p class="first-line-indented">
     In case if you prefer to use your own exception classes or can't govern what exceptions are generated by monitored 
@@ -128,10 +128,10 @@
 <p class="first-line-indented">
      Finally, if you need to abort the monitored function execution without reporting any errors, you can throw an 
      exception <code class="computeroutput"><a class="link" href="reference.html#boost.execution_aborted" title="Class execution_aborted">execution_aborted</a></code>. As a result the execution is aborted and zero result code
-     is produced by the method <code class="computeroutput"><a class="link" href="reference.html#id270361-bb">execution_monitor::execute</a></code>.
+     is produced by the method <code class="computeroutput"><a class="link" href="reference.html#id186126-bb">execution_monitor::execute</a></code>.
    </p>
 </div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="execution-monitor.user-guide.mem-leaks-detection"></a>Memory leaks detection</h4></div></div></div>
 <p class="first-line-indented">
@@ -154,7 +154,7 @@ void break_memory_alloc( long mem_alloc_order_num );</pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

@@ -1,11 +1,11 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Test suite</title>
 <link rel="stylesheet" href="../../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="../../../index.html" title="Boost Test Library">
-<link rel="up" href="../test-organization.html" title="Test organization or the house that Jack built">
+<link rel="up" href="../test-organization.html" title="Test organization &#8230; or the house that Jack built">
 <link rel="prev" href="auto-test-case-template.html" title="Test case template with automated registration">
 <link rel="next" href="manual-test-suite.html" title="Manually registered test suites">
 <script language="JavaScript1.2" src="../../../../js/boost-test.js"></script>
@@ -26,7 +26,7 @@
 </div></td>
 </tr></table>
 <hr>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h5 class="title">
 <a name="utf.user-guide.test-organization.test-suite"></a>Test suite</h5></div></div></div>
 <p class="first-line-indented">
@@ -36,15 +36,15 @@
    want to construct a hierarchical test suite structure the <acronym class="acronym">UTF</acronym> provides both manual and automated
    test suite creation and registration facilities:
   </p>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="itemizedlist"><ul type="disc">
-<li>
+<div class="itemizedlist"><ul type="disc">
+<li class="listitem">
      <a class="link" href="manual-test-suite.html" title="Manually registered test suites">Manually registered test suite</a>
     </li>
-<li>
+<li class="listitem">
     <a class="link" href="auto-test-suite.html" title="Test suites with automated registration">Test suite with automated registration</a>
     </li>
 </ul></div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h6 class="title">
 <a name="utf.user-guide.test-organization.test-suite-registration-interface"></a>Test unit registration interface</h6></div></div></div>
 <p class="first-line-indented">
@@ -73,7 +73,7 @@
     The third optional parameter - timeout - defines the timeout value for the test unit. As of now the <acronym class="acronym">UTF</acronym>
     isn't able to set a timeout for the test suite execution, so this parameter makes sense only for test case
     registration. By default no timeout is set. See the method
-    <code class="computeroutput"><a class="link" href="../../../execution-monitor/reference.html#id270361-bb">boost::execution_monitor::execute</a></code> for more details about the timeout value.
+    <code class="computeroutput"><a class="link" href="../../../execution-monitor/reference.html#id186126-bb">boost::execution_monitor::execute</a></code> for more details about the timeout value.
    </p>
 <p class="first-line-indented">
     To register group of test units in one function call the boost::unit_test::test_suite provides another add
@@ -83,7 +83,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

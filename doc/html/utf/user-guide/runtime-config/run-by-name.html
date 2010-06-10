@@ -1,12 +1,12 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Running specific test units selected by their name</title>
 <link rel="stylesheet" href="../../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
 <link rel="home" href="../../../index.html" title="Boost Test Library">
-<link rel="up" href="../runtime-config.html" title="Runtime configuration or what are the strings I can pull?">
-<link rel="prev" href="../runtime-config.html" title="Runtime configuration or what are the strings I can pull?">
+<link rel="up" href="../runtime-config.html" title="Runtime configuration &#8230; or what are the strings I can pull?">
+<link rel="prev" href="../runtime-config.html" title="Runtime configuration &#8230; or what are the strings I can pull?">
 <link rel="next" href="reference.html" title="Runtime parameters reference">
 <script language="JavaScript1.2" src="../../../../js/boost-test.js"></script>
 </head>
@@ -22,7 +22,7 @@
 </div></td>
 </tr></table>
 <hr>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h5 class="title">
 <a name="utf.user-guide.runtime-config.run-by-name"></a>Running specific test units selected by their name</h5></div></div></div>
 <p class="first-line-indented">
@@ -84,9 +84,9 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE_END()
 </pre>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="itemizedlist"><ul type="disc">
-<li>
-<p>Run single test case by specifying it's name.</p>
+<div class="itemizedlist"><ul type="disc">
+<li class="listitem">
+<p class="simpara">Run single test case by specifying it's name.</p>
 <pre class="test-execution-output">&gt;example --log_level=test_suite --run_test=testA
 Running 1 test case...
 Entering test suite "example"
@@ -97,8 +97,8 @@ Leaving test suite "example"
 
 *** No errors detected</pre>
 </li>
-<li>
-<p>
+<li class="listitem">
+<p class="simpara">
      Running multiple test cases residing within the same test suite by listing their names in coma separated list.
     </p>
 <pre class="test-execution-output">&gt;example --log_level=test_suite --run_test=testA,testB
@@ -114,13 +114,13 @@ Leaving test suite "example"
 
 *** No errors detected</pre>
 </li>
-<li>
-<p>Incorrect test case name may lead to no test to be run.</p>
+<li class="listitem">
+<p class="simpara">Incorrect test case name may lead to no test to be run.</p>
 <pre class="test-execution-output">&gt;example --log_level=test_suite --run_test=testC
 Test setup error: no test cases matching filter</pre>
 </li>
-<li>
-<p>
+<li class="listitem">
+<p class="simpara">
      Test unit name can refer to a test suite as well. All test units within the referred test suites are going to be 
      run.
     </p>
@@ -139,8 +139,8 @@ Leaving test suite "example"
 
 *** No errors detected</pre>
 </li>
-<li>
-<p>
+<li class="listitem">
+<p class="simpara">
      Using '/' as levels separator you can refer to any test unit inside a test tree.
     </p>
 <pre class="test-execution-output">&gt;example --log_level=test_suite --run_test=s2/in/test
@@ -157,8 +157,8 @@ Leaving test suite "example"
 
 *** No errors detected</pre>
 </li>
-<li>
-<p>
+<li class="listitem">
+<p class="simpara">
      The <acronym class="acronym">UTF</acronym> supports simple regular expression-like '*' wildcard. Single '*' match any name of test unit. Accordingly
      expression 's1/*' is equivalent to the expression 's1' and matches all test units inside test suite s1. Similarly 
      expression '*/test1' refers to all test units named test1 that reside in master test suite's direct child suites.
@@ -180,8 +180,8 @@ Leaving test suite "example"
 
 *** No errors detected</pre>
 </li>
-<li>
-<p>
+<li class="listitem">
+<p class="simpara">
      The <acronym class="acronym">UTF</acronym> allows to match specific prefix in test unit names. For example, expression 's2/test*' filters out only 
      test units in test suite s2 with name that starts with 'test'. This avoids running test suite s2/in.
     </p>
@@ -200,8 +200,8 @@ Leaving test suite "example"
 
 *** No errors detected</pre>
 </li>
-<li>
-<p>
+<li class="listitem">
+<p class="simpara">
      The <acronym class="acronym">UTF</acronym> allows to match specific suffix in test unit names. For example, expression '*/*1' filters out test units
      with name that ends with '1' and reside in master test suite's direct child suites.
     </p>
@@ -220,8 +220,8 @@ Leaving test suite "example"
 
 *** No errors detected</pre>
 </li>
-<li>
-<p>
+<li class="listitem">
+<p class="simpara">
      Finally, the <acronym class="acronym">UTF</acronym> allows to match specific substring in test unit names.
     </p>
 <pre class="test-execution-output">&gt;example --log_level=test_suite --run_test=s1/*est*
@@ -243,7 +243,7 @@ Leaving test suite "example"
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2007 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">
