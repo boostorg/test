@@ -459,7 +459,7 @@ Leaving test suite "example"
    <refentry name="report_format">
     <name>The report format</name>
     <env>BOOST_TEST_REPORT_FORMAT</env>
-    <cla>report</cla>
+    <cla>report_format</cla>
     <vals>
      <simplelist>
       <member><emphasis role="bold">HRF</emphasis> - human readable format</member>
@@ -476,8 +476,8 @@ Leaving test suite "example"
 
    <refentry name="report_level">
     <name>The results report level</name>
-    <env>BOOST_TEST_LOG_FORMAT</env>
-    <cla>log_format</cla>
+    <env>BOOST_TEST_REPORT_LEVEL</env>
+    <cla>report_level</cla>
     <vals>
      <simplelist>
       <member>no</member>
