@@ -20,6 +20,10 @@
 
 #include <boost/test/utils/callback.hpp>
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
+#include <boost/test/unit_test_suite.hpp>
+
+// Boost
+#include <boost/bind.hpp>
 
 // STL
 #include <memory>
