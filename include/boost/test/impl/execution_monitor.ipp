@@ -127,6 +127,8 @@ namespace { void _set_se_translator( void* ) {} }
 
 #  if defined(__FreeBSD__)  
 
+#    include <osreldate.h>
+
 #    ifndef SIGPOLL
 #      define SIGPOLL SIGIO
 #    endif
