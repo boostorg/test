@@ -25,6 +25,12 @@
 #  define BOOST_SEH_BASED_SIGNAL_HANDLING
 #endif
 
+#if defined(__COMO__) && defined(_MSC_VER)
+// eh.h uses type_info without declaring it.
+class type_info;
+#  define BOOST_SEH_BASED_SIGNAL_HANDLING
+#endif
+
 //____________________________________________________________________________//
 
 #if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x570)) || \

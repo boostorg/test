@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( test_BOOST_CHECK_CLOSE, FPT, test_types )
                                             \
     BOOST_CHECK_PREDICATE(                  \
         bind(not_func, bind(check_is_close, _1, _2, _3)),  \
-        (fp1)(fp2)(fpc::percent_tolerance( epsilon )) ); \
+        (fp1)(fp2)(::fpc::percent_tolerance( epsilon )) ); \
 /**/
 
     FPT fp1, fp2, epsilon;
@@ -162,20 +162,20 @@ BOOST_AUTO_TEST_CASE( test_close_at_tolerance )
     double fp2     = 1.00000002;
     double epsilon = 1e-6;
 
-    fpc::close_at_tolerance<double> pred( fpc::percent_tolerance( epsilon ), fpc::FPC_WEAK );
+    ::fpc::close_at_tolerance<double> pred( ::fpc::percent_tolerance( epsilon ), ::fpc::FPC_WEAK );
     BOOST_CHECK_PREDICATE( pred, (fp1)(fp2) );
 
     BOOST_CHECK_PREDICATE( bind(not_func, bind(check_is_close, _1, _2, _3)), 
-                           (fp1)(fp2)(fpc::percent_tolerance( epsilon )) );
+                           (fp1)(fp2)( ::fpc::percent_tolerance( epsilon )) );
 
     fp1     = 1.23456e-10;
     fp2     = 1.23457e-10;
     epsilon = 8.1e-4;
 
-    BOOST_CHECK_PREDICATE( fpc::close_at_tolerance<double>( fpc::percent_tolerance( epsilon ), fpc::FPC_WEAK ), (fp1)(fp2) );
+    BOOST_CHECK_PREDICATE( ::fpc::close_at_tolerance<double>( ::fpc::percent_tolerance( epsilon ), ::fpc::FPC_WEAK ), (fp1)(fp2) );
     BOOST_CHECK_PREDICATE( 
         bind(not_func, 
-             bind(fpc::close_at_tolerance<double>( fpc::percent_tolerance( epsilon ) ), _1, _2)), (fp1)(fp2) );
+             bind( ::fpc::close_at_tolerance<double>( ::fpc::percent_tolerance( epsilon ) ), _1, _2)), (fp1)(fp2) );
 }
 
 //____________________________________________________________________________//

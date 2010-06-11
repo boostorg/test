@@ -96,7 +96,10 @@ typedef void* uintptr_t;
 #    define BOOST_TEST_CRT_SET_HOOK(H)  (void*)(H)
 #  endif
 
-#  if !BOOST_WORKAROUND(_MSC_VER,  >= 1400 ) || defined(UNDER_CE)
+// como always sets _MSC_VER to 1310, regardless of the
+// actual underlying msvc version.
+#  if (!BOOST_WORKAROUND(_MSC_VER,  >= 1400 ) && \
+      !defined(__COMO__)) || defined(UNDER_CE)
 
 typedef void* _invalid_parameter_handler;
 
