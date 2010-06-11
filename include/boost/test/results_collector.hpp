@@ -91,6 +91,8 @@ public:
     void                assertion_result( bool passed );
     void                exception_caught( execution_exception const& );
 
+    virtual int         priority() { return 2; }
+
     // results access
     test_results const& results( test_unit_id ) const;
 

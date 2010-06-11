@@ -162,7 +162,7 @@ public:
                 to->test_aborted();
         }
 
-        BOOST_TEST_FOREACH( test_observer*, to, m_observers )
+        BOOST_TEST_REVERSE_FOREACH( test_observer*, to, m_observers )
             to->test_unit_finish( tc, elapsed );
 
         m_curr_test_case = bkup;
@@ -188,7 +188,7 @@ public:
 
     void            test_suite_finish( test_suite const& ts )
     {
-        BOOST_TEST_FOREACH( test_observer*, to, m_observers )
+        BOOST_TEST_REVERSE_FOREACH( test_observer*, to, m_observers )
             to->test_unit_finish( ts, 0 );
     }
 
@@ -446,7 +446,7 @@ run( test_unit_id id, bool continue_test )
     }
 
     if( call_start_finish ) {
-        BOOST_TEST_FOREACH( test_observer*, to, s_frk_impl().m_observers )
+        BOOST_TEST_REVERSE_FOREACH( test_observer*, to, s_frk_impl().m_observers )
             to->test_finish();
     }
 

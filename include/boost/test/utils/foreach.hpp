@@ -178,6 +178,28 @@ next( static_any_t cur, C const&, mpl::true_ )
 //____________________________________________________________________________//
 
 // ************************************************************************** //
+// **************                      prev                    ************** //
+// ************************************************************************** //
+
+template<typename C>
+inline void
+prev( static_any_t cur, C&, mpl::false_ )
+{
+    --static_any_cast<BOOST_DEDUCED_TYPENAME C::iterator>( cur );
+}
+
+//____________________________________________________________________________//
+
+template<typename C>
+inline void
+prev( static_any_t cur, C const&, mpl::true_ )
+{
+    --static_any_cast<BOOST_DEDUCED_TYPENAME C::const_iterator>( cur );
+}
+
+//____________________________________________________________________________//
+
+// ************************************************************************** //
 // **************                      deref                   ************** //
 // ************************************************************************** //
 
@@ -233,6 +255,13 @@ deref( static_any_t cur, C const&, ::boost::type<RefType>, mpl::true_ )
         BOOST_TEST_FE_IS_CONST( COL ) )     \
 /**/
 
+#define BOOST_TEST_FE_PREV( COL )           \
+    ::boost::unit_test::for_each::prev(     \
+        BOOST_TEST_FE_CUR_VAR,              \
+        COL,                                \
+        BOOST_TEST_FE_IS_CONST( COL ) )     \
+/**/
+
 #define BOOST_FOREACH_NOOP(COL)             \
     ((void)&(COL))
 
@@ -262,6 +291,18 @@ for( bool BOOST_TEST_FE_CON_VAR = true;                                         
           BOOST_TEST_FE_CON_VAR ? BOOST_TEST_FE_NEXT( COL ) : BOOST_FOREACH_NOOP( COL ))    \
                                                                                             \
     if( (BOOST_TEST_FE_CON_VAR = false, false) ) {} else                                    \
+    for( RefType var = BOOST_TEST_FE_DEREF( COL, RefType );                                 \
+         !BOOST_TEST_FE_CON_VAR; BOOST_TEST_FE_CON_VAR = true )                             \
+/**/
+
+#define BOOST_TEST_REVERSE_FOREACH( RefType, var, COL )                                     \
+if( BOOST_TEST_FE_ANY BOOST_TEST_FE_CUR_VAR = BOOST_TEST_FE_END( COL ) ) {} else            \
+if( BOOST_TEST_FE_ANY BOOST_TEST_FE_END_VAR = BOOST_TEST_FE_BEG( COL ) ) {} else            \
+for( bool BOOST_TEST_FE_CON_VAR = true;                                                     \
+          BOOST_TEST_FE_CON_VAR && !BOOST_TEST_FE_DONE( COL ); )                            \
+                                                                                            \
+    if( (BOOST_TEST_FE_CON_VAR = false, false) ) {} else                                    \
+    if( (BOOST_TEST_FE_PREV( COL ), false) ) {} else                                        \
     for( RefType var = BOOST_TEST_FE_DEREF( COL, RefType );                                 \
          !BOOST_TEST_FE_CON_VAR; BOOST_TEST_FE_CON_VAR = true )                             \
 /**/
