@@ -47,7 +47,7 @@ public:
     // actual printing interface; to be accessed only by this class and children
     virtual std::ostream&   operator()( std::ostream& ostr ) const                  { return ostr; }
 protected:
-    explicit                lazy_ostream( bool empty = true ) : m_empty( empty )    {}
+    explicit                lazy_ostream( bool p_empty = true ) : m_empty( p_empty )    {}
 
 private:
     // Data members
