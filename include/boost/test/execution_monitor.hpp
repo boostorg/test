@@ -78,6 +78,9 @@
 #else // based on ISO C standard
 
 #ifndef __CYGWIN__
+#ifdef __SUNPRO_CC
+#include <stdio.h>
+#endif
 #include <fenv.h>
 #endif
 
