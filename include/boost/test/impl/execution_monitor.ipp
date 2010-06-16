@@ -1083,7 +1083,7 @@ execution_monitor::catch_signals( unit_test::callback0<int> const& F )
             reinterpret_cast<_invalid_parameter_handler>( &detail::invalid_param_handler ) );
     } else if( !p_detect_fp_exceptions ) {
 #if BOOST_WORKAROUND( BOOST_MSVC, <= 1310)
-        _set_se_translator( &seh_catch_preventer );
+        _set_se_translator( &detail::seh_catch_preventer );
 #endif
     }
 
@@ -1323,6 +1323,10 @@ enable( unsigned mask )
 #elif defined(BOOST_SEH_BASED_SIGNAL_HANDLING)
     _clearfp();
 
+#if BOOST_WORKAROUND( BOOST_MSVC, <= 1310)
+    unsigned old_cw = ::_controlfp( 0, 0 );
+    ::_controlfp( old_cw & ~mask, BOOST_FPE_ALL );
+#else
     unsigned old_cw;
     if( ::_controlfp_s( &old_cw, 0, 0 ) != 0 )
 		return BOOST_FPE_INV;
@@ -1330,6 +1334,7 @@ enable( unsigned mask )
     // Set the control word
     if( ::_controlfp_s( 0, old_cw & ~mask, BOOST_FPE_ALL ) != 0 )
 		return BOOST_FPE_INV;
+#endif
 
 	return ~old_cw & BOOST_FPE_ALL;
 #elif defined(__GLIBC__) && defined(__USE_GNU)
@@ -1353,6 +1358,10 @@ disable( unsigned mask )
 #elif defined(BOOST_SEH_BASED_SIGNAL_HANDLING)
     _clearfp();
 
+#if BOOST_WORKAROUND( BOOST_MSVC, <= 1310)
+    unsigned old_cw = ::_controlfp( 0, 0 );
+    ::_controlfp( old_cw | mask, BOOST_FPE_ALL );
+#else
     unsigned old_cw;
     if( ::_controlfp_s( &old_cw, 0, 0 ) != 0 )
 		return BOOST_FPE_INV;
@@ -1360,6 +1369,7 @@ disable( unsigned mask )
     // Set the control word
     if( ::_controlfp_s( 0, old_cw | mask, BOOST_FPE_ALL ) != 0 )
 		return BOOST_FPE_INV;
+#endif
 
     return ~old_cw & BOOST_FPE_ALL;
 #elif defined(__GLIBC__) && defined(__USE_GNU)
