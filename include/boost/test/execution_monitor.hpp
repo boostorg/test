@@ -77,12 +77,12 @@
 
 #else // based on ISO C standard
 
-#ifndef __CYGWIN__
-#ifdef __SUNPRO_CC
-#include <stdio.h>
-#endif
-#include <fenv.h>
-#endif
+# if defined(__CYGWIN__) && defined(BOOST_CLANG)
+#   if defined(__SUNPRO_CC)
+#     include <stdio.h>
+#   endif
+#   include <fenv.h>
+# endif
 
 #endif
 
@@ -355,7 +355,7 @@ enum masks {
     BOOST_FPE_UNDERFLOW = EM_UNDERFLOW|EM_DENORMAL,
 
     BOOST_FPE_ALL       = MCW_EM,
-#elif defined(__CYGWIN__)
+#elif defined(__CYGWIN__) || defined(BOOST_CLANG) 
     BOOST_FPE_ALL       = 1,
 #else
     BOOST_FPE_DIVBYZERO = FE_DIVBYZERO,
@@ -382,3 +382,4 @@ unsigned BOOST_TEST_DECL disable( unsigned mask );
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif
+
