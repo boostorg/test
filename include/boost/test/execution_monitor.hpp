@@ -77,7 +77,7 @@
 
 #else // based on ISO C standard
 
-# if defined(__CYGWIN__) && defined(BOOST_CLANG)
+# if !defined(__CYGWIN__) && !defined(BOOST_CLANG)
 #   if defined(__SUNPRO_CC)
 #     include <stdio.h>
 #   endif
