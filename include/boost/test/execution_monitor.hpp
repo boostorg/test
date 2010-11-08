@@ -77,12 +77,9 @@
 
 #else // based on ISO C standard
 
-# if !defined(__CYGWIN__) && !defined(BOOST_CLANG)
-#   if defined(__SUNPRO_CC)
-#     include <stdio.h>
-#   endif
-#   include <fenv.h>
-# endif
+#if !defined(__CYGWIN__) 
+  #include <boost/detail/fenv.hpp>
+#endif
 
 #endif
 
