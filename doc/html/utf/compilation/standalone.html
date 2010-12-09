@@ -4,7 +4,7 @@
 <title>Standalone library compilation</title>
 <link rel="stylesheet" href="../../../style/style.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
-<link rel="home" href="../../index.html" title="Boost Test Library">
+<link rel="home" href="../../index.html" title="Chapter&#160;.&#160;Boost Test Library">
 <link rel="up" href="../compilation.html" title="The UTF compilation variants and procedures">
 <link rel="prev" href="../compilation.html" title="The UTF compilation variants and procedures">
 <link rel="next" href="auto-linking.html" title="Support of the auto-linking feature">
@@ -18,7 +18,7 @@
       </a><b>Standalone library compilation</b>
 </td>
 <td><div class="spirit-nav">
-<a href="../compilation.html"><img src="../../../../../../doc/html/images/prev.png" alt="Prev"></a><a href="auto-linking.html"><img src="../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a href="../compilation.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a href="auto-linking.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div></td>
 </tr></table>
 <hr>
@@ -28,7 +28,7 @@
 <p class="first-line-indented">
     If you opted to link your program with the standalone library, you need to build it first. To build a standalone 
     library the all C++ files (.cpp), that constitute <acronym class="acronym">UTF</acronym> <a class="link" href="../../prg-exec-monitor/impl.html" title="The Program Execution Monitor implementation">implementation</a> need to be 
-    listed as source files in your makefile<sup>[<a name="id484832" href="#ftn.id484832" class="footnote">3</a>]</sup>.
+    listed as source files in your makefile<sup>[<a name="id485829" href="#ftn.id485829" class="footnote">3</a>]</sup>.
    </p>
 <p class="first-line-indented">
     The Jamfile for use with Boost.Build system is supplied in <code class="filename">libs/test/build</code>
@@ -52,7 +52,7 @@
 <div class="titlepage"><div><div><h5 class="title">
 <a name="utf.compilation.standalone.dynamic"></a>Dynamic library compilation</h5></div></div></div>
 <p class="first-line-indented">
-     To build the dynamic library<sup>[<a name="id484963" href="#ftn.id484963" class="footnote">4</a>]</sup> you 
+     To build the dynamic library<sup>[<a name="id485960" href="#ftn.id485960" class="footnote">4</a>]</sup> you 
      need to add <a class="xref" href="../compilation.html#utf.flag.dyn-link">BOOST_TEST_DYN_LINK</a> to the list of macro definitions in the 
      makefile. Using the Boost.Build system you can build the dynamic library with the following command from
      <code class="filename">libs/test/build</code> directory:
@@ -63,7 +63,7 @@
     </p>
 <div class="important"><table border="0" summary="Important">
 <tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../../../doc/html/images/important.png"></td>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../../../doc/src/images/important.png"></td>
 <th align="left">Important</th>
 </tr>
 <tr><td align="left" valign="top"><p>
@@ -75,13 +75,13 @@
 </div>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.id484832" href="#id484832" class="simpara">3</a>] </sup>There are varieties of make systems that can be used. To name 
+<div class="footnote"><p><sup>[<a id="ftn.id485829" href="#id485829" class="simpara">3</a>] </sup>There are varieties of make systems that can be used. To name 
     a few: <acronym class="acronym">GNU</acronym> make (and other make clones) and build systems integrated into <acronym class="acronym">IDE</acronym>s
     (for  example Microsoft  Visual Studio). The Boost preferred solution is Boost.Build system that is based on top of 
     bjam  tool. Make  systems require some kind of configuration file that lists all files that constitute the library 
     and all build  options. For example the makefile that is used by make, or the Microsoft Visual Studio project file, 
     Jamfile is  used by Boost.Build. For the sake of simplicity let's call this file the makefile.</p></div>
-<div class="footnote"><p><sup>[<a id="ftn.id484963" href="#id484963" class="simpara">4</a>] </sup>What is meant by the term dynamic library is a <em class="firstterm">dynamically 
+<div class="footnote"><p><sup>[<a id="ftn.id485960" href="#id485960" class="simpara">4</a>] </sup>What is meant by the term dynamic library is a <em class="firstterm">dynamically 
      loaded library</em>, alternatively called a <em class="firstterm">shared library</em>.</p></div>
 </div>
 </div>
@@ -91,7 +91,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../compilation.html"><img src="../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../compilation.html"><img src="../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="auto-linking.html"><img src="../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../compilation.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../compilation.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="auto-linking.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

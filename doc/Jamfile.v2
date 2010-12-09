@@ -7,6 +7,8 @@
 # accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 
+use-project /boost/test : ../build ;
+
 using utf-boostbook ;
 import path ;
 
@@ -19,9 +21,9 @@ boostbook standalone
     src/btl.xml
   :
     <xsl:param>chunk.toc=$(here)/src/btl-toc.xml
-	<xsl:param>manual.toc=$(here)/src/btl-toc.xml
-	<xsl:param>snippet.dir=file://$(here)/src/snippet
-	<xsl:param>example.dir=file://$(here)/src/examples
-	<utf-boostbook>on
-	<xsl:path>$(.here)/src
+    <xsl:param>manual.toc=$(here)/src/btl-toc.xml
+    <xsl:param>snippet.dir=file://$(here)/src/snippet
+    <xsl:param>example.dir=file://$(here)/src/examples
+    <utf-boostbook>on
+    <xsl:path>$(.here)/src
 ;

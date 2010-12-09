@@ -136,7 +136,7 @@
   <inline-synopsis>
    <macro name="BOOST_FIXTURE_TEST_CASE" kind="functionlike">
     <macro-parameter name="test_case_name"/>
-    <macro-parameter name="fixure_name"/>
+    <macro-parameter name="fixture_name"/>
    </macro>
   </inline-synopsis>
   

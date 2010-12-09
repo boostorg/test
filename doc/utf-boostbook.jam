@@ -24,12 +24,12 @@ rule init ( )
   if ! $(initialized)
   {
     .initialized = true ;
-	using boostbook ;
+    using boostbook ;
     generators.register-standard utf-boostbook.boostbook-to-docbook : XML : DOCBOOK : <utf-boostbook>on ;
     generators.register-standard utf-boostbook.docbook-to-htmldir : DOCBOOK : HTMLDIR : <utf-boostbook>on ;
 
-	generators.override utf-boostbook.boostbook-to-docbook : boostbook.boostbook-to-docbook ;
-	generators.override utf-boostbook.docbook-to-htmldir : boostbook.docbook-to-htmldir ;
+    generators.override utf-boostbook.boostbook-to-docbook : boostbook.boostbook-to-docbook ;
+    generators.override utf-boostbook.docbook-to-htmldir : boostbook.docbook-to-htmldir ;
   }
 }
 
