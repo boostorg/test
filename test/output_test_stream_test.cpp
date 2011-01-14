@@ -19,7 +19,7 @@
 using boost::test_tools::output_test_stream;
 
 // STL
-#include <iomanip>
+#include <boost/detail/iomanip.hpp>
 
 //____________________________________________________________________________//
 
@@ -122,7 +122,7 @@ BOOST_AUTO_TEST_CASE( test_is_equal )
     output << '\0';
     BOOST_CHECK( output.is_equal( boost::unit_test::const_string( "", 1 ) ) );
 
-    output << std::setw( 10 ) << "qwerty" << '\n';
+    output << boost::detail::setw( 10 ) << "qwerty" << '\n';
     BOOST_CHECK( output.is_equal( "    qwerty\n" ) );
 
     std::string s( "test string" );

@@ -7,6 +7,7 @@
 project boost/test 
     : source-location ../src
     : requirements <link>shared:<define>BOOST_TEST_DYN_LINK=1
+                   <include>../../../
                    <toolset>msvc:<asynch-exceptions>on
                    <toolset>borland:<cxxflags>-w-8080
                    # Disable Warning about boost::noncopyable not being exported
@@ -104,7 +105,7 @@ alias included : : : :
                    <toolset>msvc:<asynch-exceptions>on
        ;
 
-boost-install boost_prg_exec_monitor 
-              boost_test_exec_monitor
-              boost_unit_test_framework ;
+#boost-install boost_prg_exec_monitor 
+#              boost_test_exec_monitor
+#              boost_unit_test_framework ;
           

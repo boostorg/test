@@ -29,7 +29,7 @@
 
 // STL
 #include <iostream>
-#include <iomanip>
+#include <boost/detail/iomanip.hpp>
 
 #ifdef BOOST_MSVC
 # pragma warning(push)
@@ -525,7 +525,7 @@ TEST_CASE( test_BOOST_TEST_MESSAGE )
     BOOST_TEST_MESSAGE( "0x14" );
 #endif
 
-    BOOST_TEST_MESSAGE( std::setw( 4 ) << 20 );
+    BOOST_TEST_MESSAGE( boost::detail::setw( 4 ) << 20 );
 }
 
 //____________________________________________________________________________//

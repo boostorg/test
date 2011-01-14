@@ -26,7 +26,7 @@
 #include <boost/test/detail/unit_test_parameters.hpp>
 
 // STL
-#include <iomanip>
+#include <boost/detail/iomanip.hpp>
 #include <boost/config/no_tr1/cmath.hpp>
 #include <iostream>
 
@@ -64,7 +64,7 @@ print_stat_value( std::ostream& ostr, counter_t v, counter_t indent, counter_t t
                   const_string name, const_string res )
 {
     if( v > 0 ) {
-        ostr << std::setw( indent ) << ""
+        ostr << boost::detail::setw( indent ) << ""
              << v << ' ' << name << ( v != 1 ? "s" : "" );
         if( total > 0 )
             ostr << " out of " << total;
@@ -114,7 +114,7 @@ plain_report_formatter::test_unit_report_start( test_unit const& tu, std::ostrea
     else
         descr = "failed";
 
-    ostr << std::setw( m_indent ) << ""
+    ostr << boost::detail::setw( m_indent ) << ""
          << "Test " << (tu.p_type == tut_case ? "case " : "suite " ) << quote() << tu.p_name << ' ' << descr;
 
     if( tr.p_skipped ) {
