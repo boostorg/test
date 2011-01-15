@@ -43,8 +43,7 @@
 #include <vector>
 #include <cstdlib>
 #include <map>
-#include <ios>
-#include <boost/detail/iomanip.hpp>
+#include <iomanip>
 #include <cctype>
 #include <boost/limits.hpp>
 
@@ -402,7 +401,7 @@ inline void
 format_location( wrap_stringstream& formatter, execution_path_point const& /*p*/, unsigned indent )
 {
     if( indent )
-        formatter << std::left << boost::detail::setw( indent ) << "";
+        formatter << std::left << std::setw( indent ) << "";
 
 // !! ?? optional   if( p.m_file_name )
 //        formatter << p.m_file_name << '(' << p.m_line_num << "): ";

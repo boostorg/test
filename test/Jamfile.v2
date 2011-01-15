@@ -17,7 +17,6 @@ rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file * : source
               # Activating -pedantic finds more gotchas
               # Unfortunately, this warns about the use of "long long" in gcc's own stdlib
               # So deactivate those warnings again
-              <include>../../../
               <toolset>gcc:<cxxflags>-pedantic
               <toolset>gcc:<cxxflags>-Wno-long-long
               <toolset>borland:<cxxflags>-w-8080

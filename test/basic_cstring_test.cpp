@@ -38,7 +38,7 @@ using utf::const_string;
 // STL
 #include <cctype>
 #include <ctime>
-#include <boost/detail/iomanip.hpp>
+#include <iomanip>
 #include <iostream>
 #include <stdexcept>
 
@@ -391,13 +391,13 @@ BOOST_TEST_CASE_TEMPLATE_FUNCTION( io_test, CharT )
 
     tt::output_test_stream ostr;
 
-    ostr << boost::detail::setw( 6 ) << bcs1;
+    ostr << std::setw( 6 ) << bcs1;
     BOOST_CHECK( ostr.is_equal( "  test" ) );
 
-    ostr << boost::detail::setw( 3 ) << bcs1;
+    ostr << std::setw( 3 ) << bcs1;
     BOOST_CHECK( ostr.is_equal( "test" ) );
 
-    ostr << boost::detail::setw( 5 ) << boost::detail::setiosflags( std::ios::left ) << bcs1;
+    ostr << std::setw( 5 ) << std::setiosflags( std::ios::left ) << bcs1;
     BOOST_CHECK( ostr.is_equal( "test " ) );
 }
 

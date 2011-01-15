@@ -19,7 +19,7 @@ using boost::math::fpc::percent_tolerance;
 // STL
 #include <functional>
 #include <iostream>
-#include <boost/detail/iomanip.hpp>
+#include <iomanip>
 #include <memory>
 #include <stdexcept>
 
