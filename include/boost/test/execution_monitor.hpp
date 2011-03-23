@@ -77,7 +77,7 @@
 
 #else // based on ISO C standard
 
-#if !defined(__CYGWIN__) 
+#if !defined(BOOST_NO_FENV_H) 
   #include <boost/detail/fenv.hpp>
 #endif
 
@@ -352,7 +352,7 @@ enum masks {
     BOOST_FPE_UNDERFLOW = EM_UNDERFLOW|EM_DENORMAL,
 
     BOOST_FPE_ALL       = MCW_EM,
-#elif defined(__CYGWIN__) || defined(BOOST_CLANG) 
+#elif defined(BOOST_NO_FENV_H) || defined(BOOST_CLANG) 
     BOOST_FPE_ALL       = 1,
 #else
     BOOST_FPE_DIVBYZERO = FE_DIVBYZERO,
