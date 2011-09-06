@@ -117,6 +117,7 @@ public:
     , m_next_test_suite_id( MIN_TEST_SUITE_ID )
     , m_is_initialized( false )
     , m_test_in_progress( false )
+    , m_context_idx( 0 )
     {}
 
     ~framework_impl() { clear(); }
@@ -134,7 +135,7 @@ public:
                 delete static_cast<test_case const*>(tu_ptr);
         }
     }
-
+                                    
     void            set_tu_id( test_unit& tu, test_unit_id id ) { tu.p_id.value = id; }
 
     // test_tree_visitor interface implementation
@@ -147,9 +148,15 @@ public:
             return;
         }
 
+        // setup contexts
+        m_context_idx = 0;
+
+        // notify all observers
         BOOST_TEST_FOREACH( test_observer*, to, m_observers )
             to->test_unit_start( tc );
 
+      
+        // execute the test case body
         boost::timer tc_timer;
         test_unit_id bkup = m_curr_test_case;
         m_curr_test_case = tc.p_id;
@@ -157,14 +164,21 @@ public:
 
         unsigned long elapsed = static_cast<unsigned long>( tc_timer.elapsed() * 1e6 );
 
+
+        // notify all observers about abortion
         if( unit_test_monitor.is_critical_error( run_result ) ) {
             BOOST_TEST_FOREACH( test_observer*, to, m_observers )
                 to->test_aborted();
         }
 
+        // notify all observers about completion
         BOOST_TEST_REVERSE_FOREACH( test_observer*, to, m_observers )
             to->test_unit_finish( tc, elapsed );
 
+        // cleanup leftover context
+        m_context.clear();
+
+        // restore state and abort if necessary
         m_curr_test_case = bkup;
 
         if( unit_test_monitor.is_critical_error( run_result ) )
@@ -202,6 +216,18 @@ public:
 
     typedef std::map<test_unit_id,test_unit*>       test_unit_store;
     typedef std::set<test_observer*,priority_order> observer_store;
+    struct context_frame {
+        context_frame( std::string const& d, int id, bool sticky )
+        : descr( d )
+        , frame_id( id )
+        , is_sticky( sticky )
+        {}
+
+        std::string descr;
+        int         frame_id;
+        bool        is_sticky;    
+    };
+    typedef std::vector<context_frame> context_data;
 
     master_test_suite_t* m_master_test_suite;
     test_unit_id    m_curr_test_case;
@@ -214,6 +240,8 @@ public:
     bool            m_test_in_progress;
 
     observer_store  m_observers;
+    context_data    m_context;
+    int             m_context_idx;
 };
 
 //____________________________________________________________________________//
@@ -357,6 +385,74 @@ void
 reset_observers()
 {
     s_frk_impl().m_observers.clear();
+}
+
+//____________________________________________________________________________//
+
+int
+add_context( ::boost::unit_test::lazy_ostream const& context_descr, bool sticky )
+{
+    std::stringstream buffer;
+    context_descr( buffer );
+    int res_idx  = s_frk_impl().m_context_idx++;
+
+    s_frk_impl().m_context.push_back( framework_impl::context_frame( buffer.str(), res_idx, sticky ) );
+
+    return res_idx;
+}
+
+//____________________________________________________________________________//
+
+struct frame_with_id {
+    explicit frame_with_id( int id ) : m_id( id ) {}
+
+    bool    operator()( framework_impl::context_frame const& f )
+    {
+        return f.frame_id == m_id;
+    }
+    int     m_id;
+};
+
+void
+clear_context( int frame_id )
+{
+    if( frame_id == -1 ) {   // clear all non sticky frames
+        for( int i=s_frk_impl().m_context.size()-1; i>=0; i-- )
+            if( !s_frk_impl().m_context[i].is_sticky )
+                s_frk_impl().m_context.erase( s_frk_impl().m_context.begin()+i );
+    }
+ 
+    else { // clear specific frame
+        framework_impl::context_data::iterator it = 
+            std::find_if( s_frk_impl().m_context.begin(), s_frk_impl().m_context.end(), frame_with_id( frame_id ) );
+
+        if( it != s_frk_impl().m_context.end() ) // really an internal error if this is not true
+            s_frk_impl().m_context.erase( it );
+    }
+}
+
+//____________________________________________________________________________//
+
+context_generator
+get_context()
+{
+    return context_generator();
+}
+
+//____________________________________________________________________________//
+
+bool
+context_generator::is_empty() const
+{
+    return s_frk_impl().m_context.empty();
+}
+
+//____________________________________________________________________________//
+
+const_string
+context_generator::next() const
+{
+    return m_curr_frame < s_frk_impl().m_context.size() ? s_frk_impl().m_context[m_curr_frame++].descr : const_string();
 }
 
 //____________________________________________________________________________//

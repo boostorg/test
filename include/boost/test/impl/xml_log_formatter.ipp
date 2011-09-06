@@ -110,7 +110,7 @@ xml_log_formatter::test_unit_skipped( std::ostream& ostr, test_unit const& tu )
 //____________________________________________________________________________//
 
 void
-xml_log_formatter::log_exception( std::ostream& ostr, log_checkpoint_data const& checkpoint_data, execution_exception const& ex )
+xml_log_formatter::log_exception_start( std::ostream& ostr, log_checkpoint_data const& checkpoint_data, execution_exception const& ex )
 {
     execution_exception::location const& loc = ex.where();
 
@@ -129,7 +129,13 @@ xml_log_formatter::log_exception( std::ostream& ostr, log_checkpoint_data const&
              << cdata() << checkpoint_data.m_message
              << "</LastCheckpoint>";
     }
+}
 
+//____________________________________________________________________________//
+
+void
+xml_log_formatter::log_exception_finish( std::ostream& ostr )
+{
     ostr << "</Exception>";
 }
 
@@ -145,6 +151,8 @@ xml_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& en
          << BOOST_TEST_L( " file" ) << attr_value() << entry_data.m_file_name
          << BOOST_TEST_L( " line" ) << attr_value() << entry_data.m_line_num
          << BOOST_TEST_L( "><![CDATA[" );
+
+    m_value_closed = false;
 }
 
 //____________________________________________________________________________//
@@ -160,12 +168,41 @@ xml_log_formatter::log_entry_value( std::ostream& ostr, const_string value )
 void
 xml_log_formatter::log_entry_finish( std::ostream& ostr )
 {
-    ostr << BOOST_TEST_L( "]]></" ) << m_curr_tag << BOOST_TEST_L( ">" );
+    if( !m_value_closed ) {
+        ostr << BOOST_TEST_L( "]]>" );
+        m_value_closed = true;
+    }
+
+    ostr << BOOST_TEST_L( "</" ) << m_curr_tag << BOOST_TEST_L( ">" );
 
     m_curr_tag.clear();
 }
 
 //____________________________________________________________________________//
+
+void
+xml_log_formatter::entry_context_start( std::ostream& ostr )
+{
+    if( !m_value_closed ) {
+        ostr << BOOST_TEST_L( "]]>" );
+        m_value_closed = true;
+    }
+
+    ostr << BOOST_TEST_L( "<Context>" );
+   
+}
+
+void
+xml_log_formatter::entry_context_finish( std::ostream& ostr )
+{
+    ostr << BOOST_TEST_L( "</Context>" );
+}
+
+void
+xml_log_formatter::log_entry_context( std::ostream& ostr, const_string context_descr )
+{
+    ostr << BOOST_TEST_L( "<Frame><![CDATA[" ) << context_descr << BOOST_TEST_L( "]]></Frame>" );
+}
 
 } // namespace output
 

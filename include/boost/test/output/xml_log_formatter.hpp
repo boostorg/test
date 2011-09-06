@@ -47,16 +47,22 @@ public:
     void    test_unit_finish( std::ostream&, test_unit const& tu, unsigned long elapsed );
     void    test_unit_skipped( std::ostream&, test_unit const& tu );
 
-    void    log_exception( std::ostream&, log_checkpoint_data const&, execution_exception const& ex );
+    void    log_exception_start( std::ostream&, log_checkpoint_data const&, execution_exception const& ex );
+    void    log_exception_finish( std::ostream& );
 
     void    log_entry_start( std::ostream&, log_entry_data const&, log_entry_types let );
     using   unit_test_log_formatter::log_entry_value; // bring base class functions into overload set
     void    log_entry_value( std::ostream&, const_string value );
     void    log_entry_finish( std::ostream& );
 
+    void    entry_context_start( std::ostream& );
+    void    log_entry_context( std::ostream&, const_string );
+    void    entry_context_finish( std::ostream& );
+
 private:
     // Data members
     const_string    m_curr_tag;
+    bool            m_value_closed;
 };
 
 } // namespace output

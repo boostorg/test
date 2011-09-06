@@ -98,17 +98,17 @@ public:
     virtual void        test_unit_finish( std::ostream&, test_unit const& tu, unsigned long elapsed ) = 0;
     virtual void        test_unit_skipped( std::ostream&, test_unit const& ) = 0;
 
-    virtual void        log_exception( std::ostream& os, log_checkpoint_data const& cd, execution_exception const& ex )
-    {
-        // for backward compatibility
-        log_exception( os, cd, ex.what() );
-    }
-    virtual void        log_exception( std::ostream&, log_checkpoint_data const&, const_string /* explanation */ ) {}
+    virtual void        log_exception_start( std::ostream&, log_checkpoint_data const&, execution_exception const& ex ) = 0;
+    virtual void        log_exception_finish( std::ostream& ) = 0;
 
     virtual void        log_entry_start( std::ostream&, log_entry_data const&, log_entry_types let ) = 0;
     virtual void        log_entry_value( std::ostream&, const_string value ) = 0;
     virtual void        log_entry_value( std::ostream&, lazy_ostream const& value ); // there is a default impl
     virtual void        log_entry_finish( std::ostream& ) = 0;
+
+    virtual void        entry_context_start( std::ostream& ) = 0;
+    virtual void        log_entry_context( std::ostream&, const_string ) = 0;
+    virtual void        entry_context_finish( std::ostream& ) = 0;
 };
 
 } // namespace unit_test

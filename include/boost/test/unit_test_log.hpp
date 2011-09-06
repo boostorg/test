@@ -126,7 +126,9 @@ public:
     ut_detail::entry_value_collector operator()( log_level );   // initiate entry collection
 
 private:
-    bool            log_entry_start();
+    // Implementation helpers
+    bool                log_entry_start();
+    void                log_entry_context();
 
     BOOST_TEST_SINGLETON_CONS( unit_test_log_t );
 }; // unit_test_log_t

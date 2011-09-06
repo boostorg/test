@@ -20,6 +20,7 @@
 #include <boost/test/detail/fwd_decl.hpp>
 #include <boost/test/utils/trivial_singleton.hpp>
 
+
 #include <boost/test/detail/suppress_warnings.hpp>
 
 // STL
@@ -61,6 +62,26 @@ BOOST_TEST_DECL void    register_observer( test_observer& );
 BOOST_TEST_DECL void    deregister_observer( test_observer& );
 BOOST_TEST_DECL void    reset_observers();
 
+// Assertions context support
+struct BOOST_TEST_DECL context_generator {
+    context_generator() : m_curr_frame( 0 ) {}
+
+    // is there any context?
+    bool            is_empty() const;
+
+    // give me next frame; empty - last frame
+    const_string    next() const;
+
+private:
+    // Data members
+    mutable unsigned m_curr_frame;
+};
+
+BOOST_TEST_DECL int                 add_context( lazy_ostream const& context_descr, bool sticky );
+BOOST_TEST_DECL void                clear_context( int context_id = -1 );
+BOOST_TEST_DECL context_generator   get_context();
+
+// Master test suite access
 BOOST_TEST_DECL master_test_suite_t& master_test_suite();
 
 // constant access methods

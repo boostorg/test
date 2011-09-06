@@ -293,6 +293,16 @@ do {                                                                    \
 
 //____________________________________________________________________________//
 
+#define BOOST_TEST_INFO( context_descr ) \
+    ::boost::unit_test::framework::add_context( ::boost::unit_test::lazy_ostream::instance() << context_descr, false )
+
+//____________________________________________________________________________//
+
+#define BOOST_TEST_CONTEXT( context_descr ) \
+    if( ::boost::test_tools::tt_detail::context_frame BOOST_JOIN( context_frame_, __LINE__ ) = ::boost::test_tools::tt_detail::context_frame( ::boost::unit_test::lazy_ostream::instance() << context_descr ) )
+
+//____________________________________________________________________________//
+
 // ***************************** //
 // deprecated interface
 
@@ -711,6 +721,20 @@ struct bitwise_equal_impl {
 bool BOOST_TEST_DECL is_defined_impl( const_string symbol_name, const_string symbol_value );
 
 //____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************                 context_frame                ************** //
+// ************************************************************************** //
+
+struct BOOST_TEST_DECL context_frame {
+    explicit    context_frame( ::boost::unit_test::lazy_ostream const& context_descr );
+    ~context_frame();
+
+    operator bool();
+
+private:
+    int         m_frame_id;
+};
 
 } // namespace tt_detail
 
