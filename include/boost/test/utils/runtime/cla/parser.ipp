@@ -249,6 +249,15 @@ parser::help( out_stream& ostr )
 
 //____________________________________________________________________________//
 
+BOOST_RT_PARAM_INLINE void
+parser::reset()
+{
+    BOOST_TEST_FOREACH( parameter_ptr const&, param, m_parameters )
+        param->reset();
+}
+
+//____________________________________________________________________________//
+
 } // namespace cla
 
 } // namespace BOOST_RT_PARAM_NAMESPACE

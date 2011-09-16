@@ -81,6 +81,7 @@ public:
     bool            has_argument() const                        { return m_actual_argument; }
     argument const& actual_argument() const                     { return *m_actual_argument; }
     argument_ptr    actual_argument()                           { return m_actual_argument; }
+    void            reset()                                     { m_actual_argument.reset(); }
 
 
     // identification interface

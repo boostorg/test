@@ -114,7 +114,7 @@ struct interpret_argument_value_impl<bool> {
         }
         else {
             res = true;
-            return false;
+            return source.is_empty();
         }
     }
 };

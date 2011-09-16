@@ -49,6 +49,8 @@ argv_traverser::argv_traverser()
 BOOST_RT_PARAM_INLINE void
 argv_traverser::init( int argc, char_type** argv )
 {
+    m_buffer.clear();
+
     for( int index = 1; index < argc; ++index ) {
         m_buffer += argv[index];
         if( index != argc-1 )

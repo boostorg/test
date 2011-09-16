@@ -100,6 +100,8 @@ public:
     // parameters access
     param_iterator      first_param() const;
     param_iterator      last_param() const;
+    unsigned            num_params() const  { return m_parameters.size(); }
+    void                reset();
 
     // arguments access
     const_argument_ptr  operator[]( cstring string_id ) const;
