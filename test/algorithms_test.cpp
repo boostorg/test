@@ -13,6 +13,7 @@
 // ***************************************************************************
 
 // Boost.Test
+#define BOOST_TEST_MODULE Boost.Test algorithms test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/utils/class_properties.hpp>
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
@@ -34,7 +35,7 @@ bool predicate( char c1, char c2 ) { return (std::toupper)( c1 ) == (std::touppe
 
 //____________________________________________________________________________//
 
-void test_mismatch()
+BOOST_AUTO_TEST_CASE( test_mismatch )
 {
     const_string cs1( "test_string" );
     const_string cs2( "test_stream" );
@@ -55,7 +56,7 @@ void test_mismatch()
 
 //____________________________________________________________________________//
 
-void test_find_first_not_of()
+BOOST_AUTO_TEST_CASE( test_find_first_not_of )
 {
     const_string cs( "test_string" );
     const_string another( "tes" );
@@ -73,7 +74,7 @@ void test_find_first_not_of()
 
 //____________________________________________________________________________//
 
-void test_find_last_of()
+BOOST_AUTO_TEST_CASE( test_find_last_of )
 {
     const_string cs( "test_string" );
     const_string another( "tes" );
@@ -94,7 +95,7 @@ void test_find_last_of()
 
 //____________________________________________________________________________//
 
-void test_find_last_not_of()
+BOOST_AUTO_TEST_CASE( test_find_last_not_of )
 {
     const_string cs( "test_string" );
     const_string another( "string" );
@@ -108,21 +109,6 @@ void test_find_last_not_of()
 
     another = "e_string";
     BOOST_CHECK( utf::find_last_not_of( cs.begin(), cs.end(), another.begin(), another.end() ) == cs.end() );
-}
-
-//____________________________________________________________________________//
-
-utf::test_suite*
-init_unit_test_suite( int /* argc */, char* /* argv */ [] )
-{
-    utf::test_suite* test= BOOST_TEST_SUITE("Algorithms test");
-
-    test->add( BOOST_TEST_CASE( test_mismatch ) );
-    test->add( BOOST_TEST_CASE( test_find_first_not_of ) );
-    test->add( BOOST_TEST_CASE( test_find_last_of ) );
-    test->add( BOOST_TEST_CASE( test_find_last_not_of ) );
-
-    return test;
 }
 
 //____________________________________________________________________________//
