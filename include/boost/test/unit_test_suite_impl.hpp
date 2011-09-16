@@ -52,6 +52,7 @@ namespace unit_test {
 class BOOST_TEST_DECL test_unit {
 public:
     enum { type = tut_any };
+    typedef std::list<test_unit_id> id_list;
 
     // Constructor
     test_unit( const_string tu_name, test_unit_type t );
@@ -60,13 +61,20 @@ public:
     void    depends_on( test_unit* tu );
     bool    check_dependencies() const;
 
+    // labels management
+    void    add_label( const_string l );
+    bool    has_label( const_string l ) const;
+
     // Public r/o properties
     typedef BOOST_READONLY_PROPERTY(test_unit_id,(framework_impl))  id_t;
     typedef BOOST_READONLY_PROPERTY(test_unit_id,(test_suite))      parent_id_t;
+    typedef BOOST_READONLY_PROPERTY(id_list,(test_unit))            id_list_t;
+
     readonly_property<test_unit_type>   p_type;                 // type for this test unit
     readonly_property<const_string>     p_type_name;            // "case"/"suite"
     id_t                                p_id;                   // unique id for this test unit
     parent_id_t                         p_parent_id;            // parent test suite id
+    id_list_t                           p_dependencies;         // list of test units this one depends on
 
     // Public r/w properties
     readwrite_property<std::string>     p_name;                 // name for this test unit
@@ -81,7 +89,7 @@ protected:
 
 private:
     // Data members
-    std::list<test_unit_id>             m_dependencies;
+    std::list<std::string>              m_labels;
 };
 
 // ************************************************************************** //
@@ -141,7 +149,7 @@ public:
 
 protected:
     friend BOOST_TEST_DECL 
-    void        traverse_test_tree( test_suite const&, test_tree_visitor& );
+    void        traverse_test_tree( test_suite const&, test_tree_visitor&, bool );
     friend class framework_impl;
     virtual     ~test_suite() {}
 
@@ -185,19 +193,19 @@ protected:
 // **************               traverse_test_tree             ************** //
 // ************************************************************************** //
 
-BOOST_TEST_DECL void    traverse_test_tree( test_case const&, test_tree_visitor& );
-BOOST_TEST_DECL void    traverse_test_tree( test_suite const&, test_tree_visitor& );
-BOOST_TEST_DECL void    traverse_test_tree( test_unit_id     , test_tree_visitor& );
+BOOST_TEST_DECL void    traverse_test_tree( test_case const&, test_tree_visitor&, bool ignore_status = false );
+BOOST_TEST_DECL void    traverse_test_tree( test_suite const&, test_tree_visitor&, bool ignore_status = false );
+BOOST_TEST_DECL void    traverse_test_tree( test_unit_id     , test_tree_visitor&, bool ignore_status = false );
 
 //____________________________________________________________________________//
 
 inline void
-traverse_test_tree( test_unit const& tu, test_tree_visitor& V )
+traverse_test_tree( test_unit const& tu, test_tree_visitor& V, bool ignore_status = false )
 {
     if( tu.p_type == tut_case )
-        traverse_test_tree( static_cast<test_case const&>( tu ), V );
+        traverse_test_tree( static_cast<test_case const&>( tu ), V, ignore_status );
     else
-        traverse_test_tree( static_cast<test_suite const&>( tu ), V );
+        traverse_test_tree( static_cast<test_suite const&>( tu ), V, ignore_status );
 }
 
 //____________________________________________________________________________//

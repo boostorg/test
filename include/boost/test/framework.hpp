@@ -103,6 +103,12 @@ BOOST_TEST_DECL void    assertion_result( bool passed );
 BOOST_TEST_DECL void    exception_caught( execution_exception const& );
 BOOST_TEST_DECL void    test_unit_aborted( test_unit const& );
 
+namespace impl { // publisized to facilitate internal unit test only
+
+void    apply_filters( test_unit_id );
+
+} // namespace impl
+
 // ************************************************************************** //
 // **************                framework errors              ************** //
 // ************************************************************************** //

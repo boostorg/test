@@ -70,7 +70,7 @@ test_unit::~test_unit()
 void
 test_unit::depends_on( test_unit* tu )
 {
-    m_dependencies.push_back( tu->p_id );
+    p_dependencies.value.push_back( tu->p_id );
 }
 
 //____________________________________________________________________________//
@@ -78,7 +78,7 @@ test_unit::depends_on( test_unit* tu )
 bool
 test_unit::check_dependencies() const
 {
-    BOOST_TEST_FOREACH( test_unit_id, tu_id, m_dependencies ) {
+    BOOST_TEST_FOREACH( test_unit_id, tu_id, p_dependencies.get() ) {
         if( !unit_test::results_collector.results( tu_id ).passed() )
             return false;
     }
@@ -95,6 +95,22 @@ test_unit::increase_exp_fail( unsigned num )
 
     if( p_parent_id != 0 )
         framework::get<test_suite>( p_parent_id ).increase_exp_fail( num );
+}
+
+//____________________________________________________________________________//
+
+void
+test_unit::add_label( const_string l )
+{
+    m_labels.push_back( std::string( l.begin(), l.end() ) );
+}
+
+//____________________________________________________________________________//
+
+bool
+test_unit::has_label( const_string l ) const
+{
+    return std::find( m_labels.begin(), m_labels.end(), l ) != m_labels.end();
 }
 
 //____________________________________________________________________________//
@@ -187,30 +203,30 @@ test_suite::get( const_string tu_name ) const
 // ************************************************************************** //
 
 void
-traverse_test_tree( test_case const& tc, test_tree_visitor& V )
+traverse_test_tree( test_case const& tc, test_tree_visitor& V, bool ignore_status )
 {
-    if( tc.p_enabled )
-    V.visit( tc );
+    if( tc.p_enabled || ignore_status )
+        V.visit( tc );
 }
 
 //____________________________________________________________________________//
 
 void
-traverse_test_tree( test_suite const& suite, test_tree_visitor& V )
+traverse_test_tree( test_suite const& suite, test_tree_visitor& V, bool ignore_status )
 {
-    if( !suite.p_enabled || !V.test_suite_start( suite ) )
+    if( (!suite.p_enabled && !ignore_status) || !V.test_suite_start( suite ) )
         return;
 
     try {
         if( runtime_config::random_seed() == 0 ) {
             BOOST_TEST_FOREACH( test_unit_id, id, suite.m_members )
-                traverse_test_tree( id, V );
+                traverse_test_tree( id, V, ignore_status );
         }
         else {
             std::vector<test_unit_id> members( suite.m_members );
             std::random_shuffle( members.begin(), members.end() );
             BOOST_TEST_FOREACH( test_unit_id, id, members )
-                traverse_test_tree( id, V );
+                traverse_test_tree( id, V, ignore_status );
         }
         
     } catch( test_being_aborted const& ) {
@@ -226,12 +242,12 @@ traverse_test_tree( test_suite const& suite, test_tree_visitor& V )
 //____________________________________________________________________________//
 
 void
-traverse_test_tree( test_unit_id id, test_tree_visitor& V )
+traverse_test_tree( test_unit_id id, test_tree_visitor& V, bool ignore_status )
 {
     if( ut_detail::test_id_2_unit_type( id ) == tut_case )
-        traverse_test_tree( framework::get<test_case>( id ), V );
+        traverse_test_tree( framework::get<test_case>( id ), V, ignore_status );
     else
-        traverse_test_tree( framework::get<test_suite>( id ), V );
+        traverse_test_tree( framework::get<test_suite>( id ), V, ignore_status );
 }
 
 //____________________________________________________________________________//
