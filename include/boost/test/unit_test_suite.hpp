@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2010.
+//  (C) Copyright Gennadiy Rozental 2001-2011.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -26,7 +26,7 @@
 // ************************************************************************** //
 
 #define BOOST_TEST_CASE( test_function ) \
-boost::unit_test::make_test_case( boost::unit_test::callback0<>(test_function), BOOST_TEST_STRINGIZE( test_function ) )
+boost::unit_test::make_test_case( boost::function<void ()>(test_function), BOOST_TEST_STRINGIZE( test_function ) )
 #define BOOST_CLASS_TEST_CASE( test_function, tc_instance ) \
 boost::unit_test::make_test_case((test_function), BOOST_TEST_STRINGIZE( test_function ), tc_instance )
 
@@ -43,7 +43,9 @@ boost::unit_test::make_test_case((test_function), BOOST_TEST_STRINGIZE( test_fun
 
 #define BOOST_AUTO_TEST_SUITE( suite_name )                             \
 namespace suite_name {                                                  \
-BOOST_AUTO_TU_REGISTRAR( suite_name )( BOOST_STRINGIZE( suite_name ) ); \
+BOOST_AUTO_TU_REGISTRAR( suite_name )(                                  \
+    BOOST_STRINGIZE( suite_name ),                                      \
+    boost::unit_test::decorator::collector::instance() );               \
 /**/
 
 // ************************************************************************** //
@@ -67,20 +69,10 @@ BOOST_AUTO_TU_REGISTRAR( BOOST_JOIN( end_suite, __LINE__ ) )( 1 );      \
 // ************************************************************************** //
 // **************    BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES    ************** //
 // ************************************************************************** //
+// deprecated; use decorator instead
 
 #define BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES( test_name, n )          \
-struct BOOST_AUTO_TC_UNIQUE_ID( test_name );                            \
-                                                                        \
-static struct BOOST_JOIN( test_name, _exp_fail_num_spec )               \
-: boost::unit_test::ut_detail::                                         \
-  auto_tc_exp_fail<BOOST_AUTO_TC_UNIQUE_ID( test_name ) >               \
-{                                                                       \
-    BOOST_JOIN( test_name, _exp_fail_num_spec )()                       \
-    : boost::unit_test::ut_detail::                                     \
-      auto_tc_exp_fail<BOOST_AUTO_TC_UNIQUE_ID( test_name ) >( n )      \
-    {}                                                                  \
-} BOOST_JOIN( test_name, _exp_fail_num_spec_inst );                     \
-                                                                        \
+BOOST_TEST_DECORATOR( boost::unit_test::expected_failures( n ) )
 /**/
 
 // ************************************************************************** //
@@ -101,8 +93,7 @@ struct BOOST_AUTO_TC_UNIQUE_ID( test_name ) {};                         \
 BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     boost::unit_test::make_test_case(                                   \
         &BOOST_AUTO_TC_INVOKER( test_name ), #test_name ),              \
-    boost::unit_test::ut_detail::auto_tc_exp_fail<                      \
-        BOOST_AUTO_TC_UNIQUE_ID( test_name )>::instance()->value() );   \
+    boost::unit_test::decorator::collector::instance() );               \
                                                                         \
 void test_name::test_method()                                           \
 /**/
@@ -136,7 +127,8 @@ struct BOOST_AUTO_TC_INVOKER( test_name ) {                             \
 BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     boost::unit_test::ut_detail::template_test_case_gen<                \
         BOOST_AUTO_TC_INVOKER( test_name ),TL >(                        \
-          BOOST_STRINGIZE( test_name ) ) );                             \
+          BOOST_STRINGIZE( test_name ) ),                               \
+    boost::unit_test::decorator::collector::instance() );               \
                                                                         \
 template<typename type_name>                                            \
 void test_name<type_name>::test_method()                                \
@@ -153,29 +145,29 @@ BOOST_FIXTURE_TEST_CASE_TEMPLATE( test_name, type_name, TL, BOOST_AUTO_TEST_CASE
 // **************           BOOST_TEST_CASE_TEMPLATE           ************** //
 // ************************************************************************** //
 
-#define BOOST_TEST_CASE_TEMPLATE( name, typelist )                          \
-    boost::unit_test::ut_detail::template_test_case_gen<name,typelist >(    \
-        BOOST_TEST_STRINGIZE( name ) )                                      \
+#define BOOST_TEST_CASE_TEMPLATE( name, typelist )                      \
+    boost::unit_test::ut_detail::template_test_case_gen<name,typelist >(\
+        BOOST_TEST_STRINGIZE( name ) )                                  \
 /**/
 
 // ************************************************************************** //
 // **************      BOOST_TEST_CASE_TEMPLATE_FUNCTION       ************** //
 // ************************************************************************** //
 
-#define BOOST_TEST_CASE_TEMPLATE_FUNCTION( name, type_name )    \
-template<typename type_name>                                    \
-void BOOST_JOIN( name, _impl )( boost::type<type_name>* );      \
-                                                                \
-struct name {                                                   \
-    template<typename TestType>                                 \
-    static void run( boost::type<TestType>* frwrd = 0 )         \
-    {                                                           \
-       BOOST_JOIN( name, _impl )( frwrd );                      \
-    }                                                           \
-};                                                              \
-                                                                \
-template<typename type_name>                                    \
-void BOOST_JOIN( name, _impl )( boost::type<type_name>* )       \
+#define BOOST_TEST_CASE_TEMPLATE_FUNCTION( name, type_name )            \
+template<typename type_name>                                            \
+void BOOST_JOIN( name, _impl )( boost::type<type_name>* );              \
+                                                                        \
+struct name {                                                           \
+    template<typename TestType>                                         \
+    static void run( boost::type<TestType>* frwrd = 0 )                 \
+    {                                                                   \
+       BOOST_JOIN( name, _impl )( frwrd );                              \
+    }                                                                   \
+};                                                                      \
+                                                                        \
+template<typename type_name>                                            \
+void BOOST_JOIN( name, _impl )( boost::type<type_name>* )               \
 /**/
 
 // ************************************************************************** //
@@ -184,6 +176,15 @@ void BOOST_JOIN( name, _impl )( boost::type<type_name>* )       \
 
 #define BOOST_GLOBAL_FIXTURE( F ) \
 static boost::unit_test::ut_detail::global_fixture_impl<F> BOOST_JOIN( gf_, F ) ; \
+/**/
+
+// ************************************************************************** //
+// **************             BOOST_TEST_DECORATOR             ************** //
+// ************************************************************************** //
+
+#define BOOST_TEST_DECORATOR( D )                                       \
+static boost::unit_test::decorator::collector                           \
+BOOST_JOIN(decorator_collector,__LINE__)( D );                          \
 /**/
 
 // ************************************************************************** //

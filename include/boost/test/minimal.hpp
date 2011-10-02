@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2002-2010.
+//  (C) Copyright Gennadiy Rozental 2002-2011.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -118,9 +118,7 @@ int BOOST_TEST_CALL_DECL main( int argc, char* argv[] )
     }
     catch( boost::execution_exception const& exex ) {
         if( exex.code() != boost::execution_exception::no_error )
-            BOOST_ERROR( (std::string( "exception \"" ).
-                            append( exex.what().begin(), exex.what().end() ).
-                            append( "\" caught" ) ).c_str() );
+            BOOST_ERROR( (std::string( "exception \"" ) + exex.what() + "\" caught").c_str() );
         std::cerr << "\n**** Testing aborted.";
     }
 

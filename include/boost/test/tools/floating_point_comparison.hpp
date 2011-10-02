@@ -17,7 +17,7 @@
 
 // Boost.Test
 #include <boost/test/detail/global_typedef.hpp>
-#include <boost/test/predicate_result.hpp>
+#include <boost/test/tools/predicate_result.hpp>
 
 // Boost
 #include <boost/limits.hpp>  // for std::numeric_limits

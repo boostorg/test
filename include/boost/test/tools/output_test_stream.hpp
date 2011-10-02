@@ -18,7 +18,7 @@
 // Boost.Test
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/utils/wrap_stringstream.hpp>
-#include <boost/test/predicate_result.hpp>
+#include <boost/test/tools/predicate_result.hpp>
 
 // STL
 #include <cstddef>          // for std::size_t

@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2010.
+//  (C) Copyright Gennadiy Rozental 2001-2011.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -17,11 +17,13 @@
 
 // Boost.Test
 #include <boost/test/unit_test_suite.hpp>
-#include <boost/test/utils/callback.hpp>
 
 // Boost
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/type_traits/remove_const.hpp>
+
+#include <boost/bind.hpp>
+#include <boost/function/function1.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -44,26 +46,7 @@ namespace boost {
 
 namespace unit_test {
 
-// ************************************************************************** //
-// **************          test_func_with_bound_param          ************** //
-// ************************************************************************** //
-
 namespace ut_detail {
-
-template<typename ParamType>
-struct test_func_with_bound_param {
-    template<typename T>
-    test_func_with_bound_param( callback1<ParamType> test_func, T const& param )
-    : m_test_func( test_func )
-    , m_param( param )
-    {}
-
-    void operator()() { m_test_func( m_param ); }
-
-private:
-    callback1<ParamType> m_test_func;
-    ParamType            m_param;
-};
 
 // ************************************************************************** //
 // **************           param_test_case_generator          ************** //
@@ -72,10 +55,10 @@ private:
 template<typename ParamType, typename ParamIter>
 class param_test_case_generator : public test_unit_generator {
 public:
-    param_test_case_generator( callback1<ParamType> const&  test_func,
-                               const_string                 tc_name, 
-                               ParamIter                    par_begin,
-                               ParamIter                    par_end )
+    param_test_case_generator( boost::function<void (ParamType)> const& test_func,
+                               const_string                             tc_name, 
+                               ParamIter                                par_begin,
+                               ParamIter                                par_end )
     : m_test_func( test_func )
     , m_tc_name( ut_detail::normalize_test_case_name( tc_name ) )
     , m_par_begin( par_begin )
@@ -87,8 +70,7 @@ public:
         if( m_par_begin == m_par_end )
             return (test_unit*)0;
 
-        test_func_with_bound_param<ParamType> bound_test_func( m_test_func, *m_par_begin );
-        test_unit* res = new test_case( m_tc_name, bound_test_func );
+        test_unit* res = new test_case( m_tc_name, boost::bind( m_test_func, *m_par_begin ) );
 
         ++m_par_begin;
 
@@ -97,7 +79,7 @@ public:
 
 private:
     // Data members
-    callback1<ParamType>    m_test_func;
+    boost::function<void (ParamType)>    m_test_func;
     std::string             m_tc_name;
     mutable ParamIter       m_par_begin;
     ParamIter               m_par_end;
@@ -126,10 +108,10 @@ struct user_param_tc_method_invoker {
 
 template<typename ParamType, typename ParamIter>
 inline ut_detail::param_test_case_generator<ParamType,ParamIter>
-make_test_case( callback1<ParamType> const& test_func,
-                const_string   tc_name, 
-                ParamIter      par_begin,
-                ParamIter      par_end )
+make_test_case( boost::function<void (ParamType)> const& test_func,
+                const_string                             tc_name, 
+                ParamIter                                par_begin,
+                ParamIter                                par_end )
 {
     return ut_detail::param_test_case_generator<ParamType,ParamIter>( test_func, tc_name, par_begin, par_end );
 }

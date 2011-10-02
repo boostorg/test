@@ -29,9 +29,6 @@
 #include <boost/test/utils/runtime/env/modifier.hpp>
 #include <boost/test/utils/runtime/env/variable.hpp>
 
-// Boost.Test
-#include <boost/test/utils/callback.hpp>
-
 // Boost
 #include <boost/optional.hpp>
 

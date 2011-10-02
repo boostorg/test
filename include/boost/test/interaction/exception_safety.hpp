@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2010.
+//  (C) Copyright Gennadiy Rozental 2005-2011.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -18,12 +18,12 @@
 // Boost.Test
 #include <boost/test/detail/config.hpp>
 
-#include <boost/test/utils/callback.hpp>
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 #include <boost/test/unit_test_suite.hpp>
 
 // Boost
 #include <boost/bind.hpp>
+#include <boost/function/function0.hpp>
 
 // STL
 #include <memory>
@@ -53,8 +53,7 @@ struct BOOST_AUTO_TC_UNIQUE_ID( test_name ) {};                         \
 BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     boost::unit_test::make_test_case(                                   \
         &BOOST_AUTO_TC_INVOKER( test_name ), #test_name ),              \
-    boost::unit_test::ut_detail::auto_tc_exp_fail<                      \
-        BOOST_AUTO_TC_UNIQUE_ID( test_name )>::instance()->value() );   \
+    boost::unit_test::decorator::collector::instance() );               \
                                                                         \
 void test_name::test_method()                                           \
 /**/
@@ -67,8 +66,7 @@ namespace itest {
 // **************             exception safety test            ************** //
 // ************************************************************************** //
 
-void    BOOST_TEST_DECL exception_safety( unit_test::callback0<> const& F, 
-                                          unit_test::const_string test_name = "" );
+void    BOOST_TEST_DECL exception_safety( boost::function<void ()> const& F, unit_test::const_string test_name = "" );
 
 } // namespace itest
 
@@ -80,7 +78,7 @@ void    BOOST_TEST_DECL exception_safety( unit_test::callback0<> const& F,
 
 #ifndef BOOST_ITEST_NO_NEW_OVERLOADS
 
-#include <boost/test/interaction_based.hpp>
+#include <boost/test/interaction/interaction_based.hpp>
 
 # ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::isprint; using ::malloc; using ::free; }
@@ -183,8 +181,6 @@ operator delete[]( void* p, std::nothrow_t const& ) throw()
 //____________________________________________________________________________//
 
 #endif // BOOST_ITEST_NO_NEW_OVERLOADS
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

@@ -18,7 +18,7 @@
 // Boost.Test
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_log.hpp>
-#include <boost/test/output_test_stream.hpp>
+#include <boost/test/tools/output_test_stream.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/execution_monitor.hpp> // execution_aborted
 #include <boost/test/unit_test_suite_impl.hpp>

@@ -85,6 +85,12 @@ class type_info;
 
 //____________________________________________________________________________//
 
+#if !defined(__BORLANDC__) && !BOOST_WORKAROUND( BOOST_MSVC, < 1300 ) && !BOOST_WORKAROUND( __SUNPRO_CC, < 0x5100 )
+#define BOOST_TEST_SUPPORT_TOKEN_ITERATOR 1
+#endif
+
+//____________________________________________________________________________//
+
 #if defined(BOOST_ALL_DYN_LINK) && !defined(BOOST_TEST_DYN_LINK)
 #  define BOOST_TEST_DYN_LINK
 #endif

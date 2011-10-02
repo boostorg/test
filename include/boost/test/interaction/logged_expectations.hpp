@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2010.
+//  (C) Copyright Gennadiy Rozental 2005-2011.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -18,7 +18,9 @@
 // Boost.Test
 #include <boost/test/detail/config.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
-#include <boost/test/utils/callback.hpp>
+
+// Boost
+#include <boost/function/function0.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -46,8 +48,7 @@ struct BOOST_AUTO_TC_UNIQUE_ID( test_name ) {};                         \
 BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     boost::unit_test::make_test_case(                                   \
         &BOOST_AUTO_TC_INVOKER( test_name ), #test_name ),              \
-    boost::unit_test::ut_detail::auto_tc_exp_fail<                      \
-        BOOST_AUTO_TC_UNIQUE_ID( test_name )>::instance()->value() );   \
+    boost::unit_test::decorator::collector::instance() );               \
                                                                         \
 void test_name::test_method()                                           \
 /**/
@@ -61,9 +62,7 @@ namespace itest {
 // ************************************************************************** //
 
 void    BOOST_TEST_DECL
-logged_expectations( unit_test::callback0<> const&  F, 
-                     unit_test::const_string        log_file_name, 
-                     bool                           test_or_log = true );
+logged_expectations( boost::function<void ()> const&  F, unit_test::const_string log_file_name, bool test_or_log = true );
 
 } // namespace itest
 

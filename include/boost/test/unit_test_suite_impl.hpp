@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2010.
+//  (C) Copyright Gennadiy Rozental 2001-2011.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -18,11 +18,13 @@
 // Boost.Test
 #include <boost/test/detail/config.hpp>
 #include <boost/test/detail/global_typedef.hpp>
-#include <boost/test/utils/class_properties.hpp>
-#include <boost/test/utils/callback.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
 #include <boost/test/detail/workaround.hpp>
-#include <boost/test/test_observer.hpp>
+
+#include <boost/test/utils/class_properties.hpp>
+
+#include <boost/test/tree/observer.hpp>
+#include <boost/test/tree/decorators.hpp>
 
 // Boost
 #include <boost/shared_ptr.hpp>
@@ -30,6 +32,7 @@
 #include <boost/mpl/identity.hpp>
 #include <boost/type.hpp>
 #include <boost/type_traits/is_const.hpp>
+#include <boost/function/function0.hpp>
 
 // STL
 #include <typeinfo> // for typeid
@@ -44,6 +47,13 @@
 namespace boost {
 
 namespace unit_test {
+
+// ************************************************************************** //
+// **************               test_unit_fixture              ************** //
+// ************************************************************************** //
+
+struct test_unit_fixture {
+};
 
 // ************************************************************************** //
 // **************                   test_unit                  ************** //
@@ -78,9 +88,12 @@ public:
 
     // Public r/w properties
     readwrite_property<std::string>     p_name;                 // name for this test unit
+    readwrite_property<std::string>     p_description;          // description for this test unit
     readwrite_property<unsigned>        p_timeout;              // timeout for the test unit execution 
     readwrite_property<counter_t>       p_expected_failures;    // number of expected failures in this test unit
-    mutable readwrite_property<bool>    p_enabled;              // enabled status for this unit
+    mutable readwrite_property<bool>    p_enabled;               // enabled/disabled status for this unit
+
+    readwrite_property<decorator::for_test_unit_ptr> p_decorators; // automatically assigned decorators; execution is delayed till framework::init function
 
     void                                increase_exp_fail( unsigned num );
 
@@ -90,6 +103,7 @@ protected:
 private:
     // Data members
     std::list<std::string>              m_labels;
+    decorator::for_test_unit_ptr        m_decorators;
 };
 
 // ************************************************************************** //
@@ -113,18 +127,16 @@ public:
     enum { type = tut_case };
 
     // Constructor
-    test_case( const_string tc_name, callback0<> const& test_func );
+    test_case( const_string tc_name, boost::function<void ()> const& test_func );
 
-    // Access methods
-    callback0<> const&  test_func() const { return m_test_func; }
+    // Public property
+    typedef BOOST_READONLY_PROPERTY(boost::function<void ()>,(test_case))  test_func;
+
+    test_func   p_test_func;
 
 private:
     friend class framework_impl;
     ~test_case() {}
-
-    // BOOST_MSVC <= 1200 have problems with callback as property
-    // Data members
-    callback0<> m_test_func;
 };
 
 // ************************************************************************** //
@@ -181,8 +193,9 @@ public:
 class BOOST_TEST_DECL test_tree_visitor {
 public:
     // test tree visitor interface
-    virtual void    visit( test_case const& )               {}
-    virtual bool    test_suite_start( test_suite const& )   { return true; }
+    virtual bool    visit( test_unit const& )               { return true; }
+    virtual void    visit( test_case const& tc )            { visit( (test_unit const&)tc ); }
+    virtual bool    test_suite_start(test_suite const& ts)  { return visit( (test_unit const&)ts ); }
     virtual void    test_suite_finish( test_suite const& )  {}
 
 protected:
@@ -222,18 +235,18 @@ public:
     BOOST_READONLY_PROPERTY( counter_t, (test_case_counter)) p_count;
 private:
     // test tree visitor interface
-    virtual void    visit( test_case const& );
+    virtual void    visit( test_case const& tc )                { if( tc.p_enabled ) ++p_count.value; }
     virtual bool    test_suite_start( test_suite const& ts )    { return ts.p_enabled; }
 };
 
 // ************************************************************************** //
-// **************               test_being_aborted             ************** //
+// **************              test_being_aborted              ************** //
 // ************************************************************************** //
 
 struct BOOST_TEST_DECL test_being_aborted {};
 
 // ************************************************************************** //
-// **************               object generators              ************** //
+// **************            user_tc_method_invoker            ************** //
 // ************************************************************************** //
 
 namespace ut_detail {
@@ -257,8 +270,12 @@ struct user_tc_method_invoker {
 
 //____________________________________________________________________________//
 
+// ************************************************************************** //
+// **************                make_test_case                ************** //
+// ************************************************************************** //
+
 inline test_case*
-make_test_case( callback0<> const& test_func, const_string tc_name )
+make_test_case( boost::function<void ()> const& test_func, const_string tc_name )
 {
     return new test_case( ut_detail::normalize_test_case_name( tc_name ), test_func );
 }
@@ -286,40 +303,13 @@ namespace ut_detail {
 struct BOOST_TEST_DECL auto_test_unit_registrar
 {
     // Constructors
-                auto_test_unit_registrar( test_case* tc, counter_t exp_fail );
-    explicit    auto_test_unit_registrar( const_string ts_name );
-    explicit    auto_test_unit_registrar( test_unit_generator const& tc_gen );
+                auto_test_unit_registrar( test_case* tc, decorator::collector* decorators, counter_t exp_fail = 0 );
+    explicit    auto_test_unit_registrar( const_string ts_name, decorator::collector* decorators );
+    explicit    auto_test_unit_registrar( test_unit_generator const& tc_gen, decorator::collector* decorators );
     explicit    auto_test_unit_registrar( int );
 
 private:
     static std::list<test_suite*>& curr_ts_store();
-};
-
-//____________________________________________________________________________//
-
-template<typename T>
-struct auto_tc_exp_fail {
-    auto_tc_exp_fail() : m_value( 0 ) {}
-
-    explicit    auto_tc_exp_fail( unsigned v )
-    : m_value( v )
-    {
-        instance() = this;
-    }
-
-    static auto_tc_exp_fail*& instance() 
-    {
-        static auto_tc_exp_fail     inst; 
-        static auto_tc_exp_fail*    inst_ptr = &inst; 
-
-        return inst_ptr;
-    }
-
-    unsigned    value() const { return m_value; }
-
-private:
-    // Data members
-    unsigned    m_value;
 };
 
 //____________________________________________________________________________//

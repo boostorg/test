@@ -720,6 +720,28 @@ assign_op( std::basic_string<CharT1>& target, basic_cstring<CharT2> src, int )
 
 //____________________________________________________________________________//
 
+template<typename CharT1, typename CharT2>
+inline std::basic_string<CharT1>&
+operator+=( std::basic_string<CharT1>& target, basic_cstring<CharT2> const& str )
+{
+    target.append( str.begin(), str.end() );
+    return target;
+}
+
+//____________________________________________________________________________//
+
+template<typename CharT1, typename CharT2>
+inline std::basic_string<CharT1>
+operator+( std::basic_string<CharT1> const& lhs, basic_cstring<CharT2> const& rhs )
+{
+    std::basic_string<CharT1> res( lhs );
+
+    res.append( rhs.begin(), rhs.end() );
+    return res;
+}
+
+//____________________________________________________________________________//
+
 } // namespace unit_test
 
 } // namespace boost

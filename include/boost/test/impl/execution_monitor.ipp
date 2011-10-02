@@ -791,7 +791,7 @@ static void boost_execution_monitor_attaching_signal_handler( int sig, siginfo_t
 // ************************************************************************** //
 
 int
-execution_monitor::catch_signals( unit_test::callback0<int> const& F )
+execution_monitor::catch_signals( boost::function<int ()> const& F )
 {
     using namespace detail;
 
@@ -1071,7 +1071,7 @@ invalid_param_handler( wchar_t const* /* expr */,
 // ************************************************************************** //
 
 int
-execution_monitor::catch_signals( unit_test::callback0<int> const& F )
+execution_monitor::catch_signals( boost::function<int ()> const& F )
 {
     _invalid_parameter_handler old_iph = _invalid_parameter_handler();
     BOOST_TEST_CRT_HOOK_TYPE old_crt_hook = 0;
@@ -1124,7 +1124,7 @@ public:
 } // namespace detail
 
 int
-execution_monitor::catch_signals( unit_test::callback0<int> const& F )
+execution_monitor::catch_signals( boost::function<int ()> const& F )
 {
     return detail::do_invoke( m_custom_translators , F );
 }
@@ -1148,7 +1148,7 @@ execution_monitor::execution_monitor()
 //____________________________________________________________________________//
 
 int
-execution_monitor::execute( unit_test::callback0<int> const& F )
+execution_monitor::execute( boost::function<int ()> const& F )
 {
     if( debug::under_debugger() )
         p_catch_system_errors.value = false;
@@ -1272,6 +1272,20 @@ execution_monitor::execute( unit_test::callback0<int> const& F )
 } // execute
 
 //____________________________________________________________________________//
+
+void
+execution_monitor::vexecute( boost::function<void ()> const& F )
+{
+    struct forward {
+        explicit    forward( boost::function<void ()> const& F ) : m_F( F ) {}
+
+        int         operator()() { m_F(); return 0; }
+
+        boost::function<void ()> const& m_F;
+    };
+
+    execute( forward( F ) );
+}
 
 // ************************************************************************** //
 // **************                  system_error                ************** //

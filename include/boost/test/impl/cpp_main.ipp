@@ -46,13 +46,13 @@ struct cpp_main_caller {
     , m_argc( argc )
     , m_argv( argv ) {}
     
-    int operator()() { return (*m_cpp_main_func)( m_argc, m_argv ); }
+    int     operator()() { return (*m_cpp_main_func)( m_argc, m_argv ); }
   
 private:
     // Data members    
-    int (*m_cpp_main_func)( int argc, char* argv[] );
-    int      m_argc;
-    char**   m_argv;
+    int     (*m_cpp_main_func)( int argc, char* argv[] );
+    int     m_argc;
+    char**  m_argv;
 };
 
 } // local namespace
@@ -74,8 +74,7 @@ prg_exec_monitor_main( int (*cpp_main)( int argc, char* argv[] ), int argc, char
 
         ex_mon.p_catch_system_errors.value = p != "no";
         
-        result = ex_mon.execute( 
-            ::boost::unit_test::callback0<int>( cpp_main_caller( cpp_main, argc, argv ) ) );
+        result = ex_mon.execute( cpp_main_caller( cpp_main, argc, argv ) );
         
         if( result == 0 )
             result = ::boost::exit_success;

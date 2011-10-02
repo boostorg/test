@@ -33,11 +33,9 @@
 
 #include <boost/test/utils/runtime/cla/iface/argument_factory.hpp>
 
-// Boost.Test
-#include <boost/test/utils/callback.hpp>
-
 // Boost
 #include <boost/optional.hpp>
+#include <boost/function/function2.hpp>
 
 namespace boost {
 
@@ -112,9 +110,9 @@ struct typed_argument_factory : public argument_factory {
 
 // !! private?
     // Data members
-    unit_test::callback2<parameter const&,T&>                   m_value_handler;
-    unit_test::callback2<parser const&,boost::optional<T>&>     m_value_generator;
-    unit_test::callback2<argv_traverser&,boost::optional<T>&>   m_value_interpreter;
+    boost::function<void (parameter const&,T&)>                 m_value_handler;
+    boost::function<void (parser const&,boost::optional<T>&)>   m_value_generator;
+    boost::function<void (argv_traverser&,boost::optional<T>&)> m_value_interpreter;
 };
 
 //____________________________________________________________________________//

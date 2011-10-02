@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2010.
+//  (C) Copyright Gennadiy Rozental 2001-2011.
 //  (C) Copyright Beman Dawes 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
@@ -35,7 +35,6 @@
 // Boost.Test
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
-#include <boost/test/utils/callback.hpp>
 #include <boost/test/utils/class_properties.hpp>
 
 // Boost
@@ -43,6 +42,7 @@
 #include <boost/scoped_array.hpp>
 #include <boost/type.hpp>
 #include <boost/cstdlib.hpp>
+#include <boost/function/function0.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -103,7 +103,7 @@ public:
     // Constructor
     translator_holder_base( translator_holder_base_ptr next, const_string tag )
     : m_next( next )
-    , m_tag( tag.begin(), tag.end() )
+    , m_tag( std::string() + tag )
     {
     }
 
@@ -112,7 +112,8 @@ public:
 
     // translator holder interface
     // invokes the function F inside the try/catch guarding against specific exception
-    virtual int operator()( unit_test::callback0<int> const& F ) = 0;
+    virtual int operator()( boost::function<int ()> const& F ) = 0;
+
     // erases specific translator holder from the chain
     translator_holder_base_ptr erase( translator_holder_base_ptr this_, const_string tag ) 
     {
@@ -234,7 +235,7 @@ public:
     //  try to detect hardware floating point exceptions (!= 0), and which specific exception to catch
     unit_test::readwrite_property<unsigned> p_detect_fp_exceptions;
 
-    int         execute( unit_test::callback0<int> const& F ); 
+    int         execute( boost::function<int ()> const& F ); 
     //  Returns:  Value returned by function call F().
     //
     //  Effects:  Calls executes supplied function F inside a try/catch block which also may
@@ -244,6 +245,9 @@ public:
     //  a hardware or software signal, trap, or other exception.
     //
     //  Note: execute() doesn't consider it an error for F to return a non-zero value.
+
+    void         vexecute( boost::function<void ()> const& F ); 
+    //  Effects:  Same as above, but returns nothing
     
     // register custom (user supplied) exception translator
     template<typename ExceptionType, typename ExceptionTranslator>
@@ -262,7 +266,7 @@ public:
 
 private:
     // implementation helpers
-    int         catch_signals( unit_test::callback0<int> const& F );
+    int         catch_signals( boost::function<int ()> const& F );
 
     // Data members
     detail::translator_holder_base_ptr  m_custom_translators;
@@ -283,7 +287,7 @@ public:
     : translator_holder_base( next, tag ), m_translator( tr ) {}
 
     // translator holder interface
-    virtual int operator()( unit_test::callback0<int> const& F )
+    virtual int operator()( boost::function<int ()> const& F )
     {
         try {
             return m_next ? (*m_next)( F ) : F();

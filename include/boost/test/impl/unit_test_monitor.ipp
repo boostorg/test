@@ -32,26 +32,6 @@ namespace boost {
 
 namespace unit_test {
 
-namespace {
-
-template<typename F>
-struct zero_return_wrapper_t {
-    explicit zero_return_wrapper_t( F const& f ) : m_f( f ) {}
-    
-    int operator()() { m_f(); return 0; }
-    
-    F const& m_f;
-};
-
-template<typename F>
-zero_return_wrapper_t<F>
-zero_return_wrapper( F const& f )
-{
-    return zero_return_wrapper_t<F>( f );
-}
-
-}
-
 // ************************************************************************** //
 // **************               unit_test_monitor              ************** //
 // ************************************************************************** //
@@ -66,7 +46,7 @@ unit_test_monitor_t::execute_and_translate( test_case const& tc )
         p_use_alt_stack.value           = runtime_config::use_alt_stack();
         p_detect_fp_exceptions.value    = runtime_config::detect_fp_exceptions();
 
-        execute( callback0<int>( zero_return_wrapper( tc.test_func() ) ) );
+        vexecute( tc.p_test_func );
     }
     catch( execution_exception const& ex ) {
         framework::exception_caught( ex );

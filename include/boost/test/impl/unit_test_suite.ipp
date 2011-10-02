@@ -102,7 +102,7 @@ test_unit::increase_exp_fail( unsigned num )
 void
 test_unit::add_label( const_string l )
 {
-    m_labels.push_back( std::string( l.begin(), l.end() ) );
+    m_labels.push_back( std::string() + l );
 }
 
 //____________________________________________________________________________//
@@ -119,14 +119,10 @@ test_unit::has_label( const_string l ) const
 // **************                   test_case                  ************** //
 // ************************************************************************** //
 
-test_case::test_case( const_string name, callback0<> const& test_func )
+test_case::test_case( const_string name, boost::function<void ()> const& test_func )
 : test_unit( name, static_cast<test_unit_type>(type) )
-, m_test_func( test_func )
+, p_test_func( test_func )
 {
-     // !! weirdest MSVC BUG; try to remove this statement; looks like it eats first token of next statement   
-#if BOOST_WORKAROUND(BOOST_MSVC,<1300)   
-     0;   
-#endif 
     framework::register_test_unit( this );
 }
 
@@ -155,7 +151,7 @@ test_suite::add( test_unit* tu, counter_t expected_failures, unsigned timeout )
     m_members.push_back( tu->p_id );
     tu->p_parent_id.value = p_id;
 
-    if( tu->p_expected_failures )
+    if( tu->p_expected_failures != 0 )
         increase_exp_fail( tu->p_expected_failures );
 
     if( expected_failures )
@@ -214,7 +210,7 @@ traverse_test_tree( test_case const& tc, test_tree_visitor& V, bool ignore_statu
 void
 traverse_test_tree( test_suite const& suite, test_tree_visitor& V, bool ignore_status )
 {
-    if( (!suite.p_enabled && !ignore_status) || !V.test_suite_start( suite ) )
+    if( (!ignore_status && !suite.p_enabled) || !V.test_suite_start( suite ) )
         return;
 
     try {
@@ -253,19 +249,6 @@ traverse_test_tree( test_unit_id id, test_tree_visitor& V, bool ignore_status )
 //____________________________________________________________________________//
 
 // ************************************************************************** //
-// **************                test_case_counter             ************** //
-// ************************************************************************** //
-
-void
-test_case_counter::visit( test_case const& tc )
-{
-    if( tc.p_enabled )
-        ++p_count.value;
-}
-
-//____________________________________________________________________________//
-
-// ************************************************************************** //
 // **************               object generators              ************** //
 // ************************************************************************** //
 
@@ -285,21 +268,24 @@ normalize_test_case_name( const_string name )
 // **************           auto_test_unit_registrar           ************** //
 // ************************************************************************** //
 
-auto_test_unit_registrar::auto_test_unit_registrar( test_case* tc, counter_t exp_fail )
+auto_test_unit_registrar::auto_test_unit_registrar( test_case* tc, decorator::collector* decorators, counter_t exp_fail )
 {
     curr_ts_store().back()->add( tc, exp_fail );
+
+    if( decorators )
+        decorators->store_in( *tc );
 }
 
 //____________________________________________________________________________//
 
-auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name )
+auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name, decorator::collector* decorators )
 {
     test_unit_id id = curr_ts_store().back()->get( ts_name );
 
     test_suite* ts;
 
     if( id != INV_TEST_UNIT_ID ) {
-        ts = &framework::get<test_suite>( id ); // !! test for invalid tu type
+        ts = &framework::get<test_suite>( id );
         BOOST_ASSERT( ts->p_parent_id == curr_ts_store().back()->p_id );
     }
     else {
@@ -307,14 +293,21 @@ auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name )
         curr_ts_store().back()->add( ts );
     }
 
+    if( decorators )
+        decorators->store_in( *ts );
+
     curr_ts_store().push_back( ts );
 }
 
 //____________________________________________________________________________//
 
-auto_test_unit_registrar::auto_test_unit_registrar( test_unit_generator const& tc_gen )
+auto_test_unit_registrar::auto_test_unit_registrar( test_unit_generator const& tc_gen, decorator::collector* decorators )
 {
     curr_ts_store().back()->add( tc_gen );
+
+    // !! ??if( decorators )
+    // decorators->apply( *tc );
+
 }
 
 //____________________________________________________________________________//
@@ -354,8 +347,6 @@ global_fixture::global_fixture()
 } // namespace unit_test
 
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

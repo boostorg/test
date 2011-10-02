@@ -22,9 +22,8 @@
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
-#include <boost/test/utils/callback.hpp>
-#include <boost/test/interaction_based.hpp>
-#include <boost/test/mock_object.hpp>
+#include <boost/test/interaction/interaction_based.hpp>
+#include <boost/test/interaction/mock_object.hpp>
 #include <boost/test/framework.hpp>     // for setup_error
 
 #include <boost/test/detail/suppress_warnings.hpp>

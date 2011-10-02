@@ -22,16 +22,16 @@
 
 #include <boost/test/detail/global_typedef.hpp>
 
-#include <boost/test/utils/callback.hpp>
 #include <boost/test/utils/iterator/token_iterator.hpp>
 
-#include <boost/test/interaction_based.hpp>
+#include <boost/test/interaction/interaction_based.hpp>
 #include <boost/test/test_tools.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
 // Boost
 #include <boost/lexical_cast.hpp>
+#include <boost/function/function0.hpp>
 
 // STL
 #include <fstream>
@@ -224,7 +224,7 @@ expectations_logger::return_value( const_string default_value )
 // ************************************************************************** //
 
 void BOOST_TEST_DECL
-logged_expectations( callback0<> const& F, const_string log_file_name, bool test_or_log )
+logged_expectations( boost::function<void ()> const& F, const_string log_file_name, bool test_or_log )
 {
     expectations_logger el( log_file_name, test_or_log );
 

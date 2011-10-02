@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2010.
+//  (C) Copyright Gennadiy Rozental 2005-2011.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -19,7 +19,6 @@
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
 #include <boost/test/utils/trivial_singleton.hpp>
-
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -105,7 +104,7 @@ BOOST_TEST_DECL void    test_unit_aborted( test_unit const& );
 
 namespace impl { // publisized to facilitate internal unit test only
 
-void    apply_filters( test_unit_id );
+void                    apply_filters( test_unit_id );
 
 } // namespace impl
 

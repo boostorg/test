@@ -22,14 +22,13 @@
 #include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/unit_test_monitor.hpp>
-#include <boost/test/test_observer.hpp>
+#include <boost/test/tree/observer.hpp>
 #include <boost/test/results_collector.hpp>
 #include <boost/test/progress_monitor.hpp>
 #include <boost/test/results_reporter.hpp>
 #include <boost/test/test_tools.hpp>
 
-#if !defined(__BORLANDC__) && !BOOST_WORKAROUND( BOOST_MSVC, < 1300 ) && !BOOST_WORKAROUND( __SUNPRO_CC, < 0x5100 )
-#define BOOST_TEST_SUPPORT_RUN_BY_NAME
+#if BOOST_TEST_SUPPORT_TOKEN_ITERATOR
 #include <boost/test/utils/iterator/token_iterator.hpp>
 #endif
 
@@ -61,33 +60,13 @@ namespace boost {
 namespace unit_test {
 
 // ************************************************************************** //
-// **************           test_start calls wrapper           ************** //
+// **************            test_init call wrapper            ************** //
 // ************************************************************************** //
 
 namespace ut_detail {
 
-struct test_start_caller {
-    test_start_caller( test_observer* to, counter_t tc_amount )
-    : m_to( to )
-    , m_tc_amount( tc_amount )
-    {}
-
-    int operator()()
-    {
-        m_to->test_start( m_tc_amount );
-        return 0;
-    }
-
-private:
-    // Data members
-    test_observer*  m_to;
-    counter_t       m_tc_amount;
-};
-
-//____________________________________________________________________________//
-
-struct test_init_caller {
-    explicit    test_init_caller( init_unit_test_func init_func ) 
+struct test_init_invoker {
+    explicit    test_init_invoker( init_unit_test_func init_func ) 
     : m_init_func( init_func )
     {}
     int         operator()()
@@ -106,20 +85,6 @@ struct test_init_caller {
 
     // Data members
     init_unit_test_func m_init_func;
-};
-
-// ************************************************************************** //
-// **************                  tu_enabler                  ************** //
-// ************************************************************************** //
-
-struct tu_enabler : public test_tree_visitor {
-    explicit        tu_enabler( bool on_off ) : m_on_off( on_off ) {}
-private:
-    virtual void    visit( test_case const& tc )                { tc.p_enabled.value = m_on_off; }
-    virtual bool    test_suite_start( test_suite const& ts )    { ts.p_enabled.value = m_on_off; return true; }
-
-    // Data members
-    bool            m_on_off;
 };
 
 // ************************************************************************** //
@@ -180,7 +145,7 @@ public:
     // Constructor
     name_filter( tu_enable_list& tu_to_enable, const_string tc_to_run ) : m_tu_to_enable( tu_to_enable ), m_depth( 0 )
     {
-#ifdef BOOST_TEST_SUPPORT_RUN_BY_NAME
+#ifdef BOOST_TEST_SUPPORT_TOKEN_ITERATOR
         string_token_iterator tit( tc_to_run, (dropped_delimeters = "/", kept_delimeters = dt_none) );
 
         while( tit != string_token_iterator() ) {
@@ -246,21 +211,12 @@ public:
     {}
 
 private:
-    bool            filter_unit( test_unit const& tu )
-    {
-        return tu.has_label( m_label );
-    }
-
     // test_tree_visitor interface
-    virtual void    visit( test_case const& tc )
+    virtual bool    visit( test_unit const& tu )
     {
-        if( filter_unit( tc ) )
-            m_tu_to_enable.push_back( std::make_pair( tc.p_id, false ) ); // found a test case; add it to enable list without children
-    }
-    virtual bool    test_suite_start( test_suite const& ts )
-    {
-        if( filter_unit( ts ) ) {
-            m_tu_to_enable.push_back( std::make_pair( ts.p_id, true ) ); // found a test suite; add it to enable list with children and stop recursion
+        if( tu.has_label( m_label ) ) {
+            // found a test unit; add it to list of tu to enable with children and stop recursion in case of suites
+            m_tu_to_enable.push_back( std::make_pair( tu.p_id, tu.p_type == tut_suite ) );
             return false;
         }
 
@@ -268,35 +224,62 @@ private:
     }
 
     // Data members
-    const_string    m_label;
     tu_enable_list& m_tu_to_enable;
+    const_string    m_label;
 };
 
 // ************************************************************************** //
-// **************                 tu_collector                 ************** //
+// **************                change_status                 ************** //
 // ************************************************************************** //
 
-class tu_collector : public test_tree_visitor {
+class change_status : public test_tree_visitor {
 public:
-    explicit        tu_collector( tu_enable_list& tu_to_enable ) : m_tu_to_enable( tu_to_enable ) {}
+    explicit        change_status( bool enable_or_disable ) : m_new_status( enable_or_disable ) {}
 
 private:
     // test_tree_visitor interface
-    virtual void    visit( test_case const& tc )
+    virtual bool    visit( test_unit const& tu ) { tu.p_enabled.value = m_new_status; return true; }
+
+    // Data members
+    bool            m_new_status;
+};
+
+// ************************************************************************** //
+// **************               collect_disabled               ************** //
+// ************************************************************************** //
+
+class collect_disabled : public test_tree_visitor {
+public:
+    explicit        collect_disabled( tu_enable_list& tu_to_enable ) : m_tu_to_enable( tu_to_enable ) {}
+
+private:
+    // test_tree_visitor interface
+    virtual bool    visit( test_unit const& tu )
     {
-        if( !tc.p_enabled )
-            m_tu_to_enable.push_back( std::make_pair( tc.p_id, false ) );
-    }
-    virtual bool    test_suite_start( test_suite const& ts )
-    {
-        if( !ts.p_enabled )
-            m_tu_to_enable.push_back( std::make_pair( ts.p_id, false ) );
+        if( !tu.p_enabled )
+            m_tu_to_enable.push_back( std::make_pair( tu.p_id, false ) );
 
         return true;
     }
 
     // Data members
     tu_enable_list& m_tu_to_enable;
+};
+
+// ************************************************************************** //
+// **************               apply_decorators               ************** //
+// ************************************************************************** //
+
+class apply_decorators : public test_tree_visitor {
+private:
+    // test_tree_visitor interface
+    virtual bool    visit( test_unit const& tu )
+    {
+        if( tu.p_decorators.get() )
+            tu.p_decorators.get()->apply( const_cast<test_unit&>(tu) );
+
+        return true;
+    }
 };
 
 } // namespace ut_detail
@@ -359,7 +342,6 @@ public:
         unit_test_monitor_t::error_level run_result = unit_test_monitor.execute_and_translate( tc );
 
         unsigned long elapsed = static_cast<unsigned long>( tc_timer.elapsed() * 1e6 );
-
 
         // notify all observers about abortion
         if( unit_test_monitor.is_critical_error( run_result ) ) {
@@ -487,13 +469,16 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     try {
         boost::execution_monitor em;
 
-        ut_detail::test_init_caller tic( init_func );
+        ut_detail::test_init_invoker tic( init_func );
 
         em.execute( tic );
     }
     catch( execution_exception const& ex )  {
         throw setup_error( ex.what() );
     }
+
+    ut_detail::apply_decorators ad;
+    traverse_test_tree( master_test_suite().p_id, ad, true );
 
     impl::apply_filters( master_test_suite().p_id );
 
@@ -507,14 +492,14 @@ void
 apply_filters( test_unit_id tu_id )
 {
     if( runtime_config::test_to_run().empty() ) {
-        ut_detail::tu_enabler enable( true );
-
-        traverse_test_tree( tu_id, enable );
+        // enable all test units for this run
+        ut_detail::change_status enabler( true );
+        traverse_test_tree( tu_id, enabler, true );
     }
     else {
-        // 10. first disable all tu
-        ut_detail::tu_enabler disable( false );
-        traverse_test_tree( tu_id, disable );
+        // 10. First disable all test units. We'll re-enable only those that pass the filters
+        ut_detail::change_status disabler( false );
+        traverse_test_tree( tu_id, disabler, true );
 
         // 20. collect tu to enable based on filters
         ut_detail::tu_enable_list tu_to_enable;
@@ -568,16 +553,16 @@ apply_filters( test_unit_id tu_id )
 
             // 35. add all children to the list recursively
             if( data.second && tu.p_type == tut_suite ) {
-                ut_detail::tu_collector collect( tu_to_enable );
-                traverse_test_tree( tu.p_id, collect, true );
+                ut_detail::collect_disabled V( tu_to_enable );
+                traverse_test_tree( tu.p_id, V, true );
             }
         }
     }
 }
 
-} // namespace impl
-
 //____________________________________________________________________________//
+
+} // namespace impl
 
 bool
 is_initialized()
@@ -787,7 +772,7 @@ run( test_unit_id id, bool continue_test )
             boost::execution_monitor em;
 
             try {
-                em.execute( ut_detail::test_start_caller( to, tcc.p_count ) );
+                em.vexecute( boost::bind( &test_observer::test_start, to, tcc.p_count ) );
             }
             catch( execution_exception const& ex )  {
                 throw setup_error( ex.what() );

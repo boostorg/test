@@ -79,10 +79,10 @@ private:
 //____________________________________________________________________________//
 
 template<typename T>
-inline lazy_ostream_impl<lazy_ostream,T>
+inline lazy_ostream_impl<lazy_ostream const&,T>
 operator<<( lazy_ostream const& prev, T const& v )
 {
-    return lazy_ostream_impl<lazy_ostream,T>( prev, v );
+    return lazy_ostream_impl<lazy_ostream const&,T>( prev, v );
 }
 
 //____________________________________________________________________________//
@@ -103,7 +103,9 @@ template<typename PrevPrevType, typename TPrev,typename R,typename S>
 inline lazy_ostream_impl<lazy_ostream_impl<PrevPrevType,TPrev>,R& (BOOST_TEST_CALL_DECL *)(S&)>
 operator<<( lazy_ostream_impl<PrevPrevType,TPrev> const& prev, R& (BOOST_TEST_CALL_DECL *man)(S&) )
 {
-    return lazy_ostream_impl<lazy_ostream_impl<PrevPrevType,TPrev>,R& (BOOST_TEST_CALL_DECL *)(S&)>( prev, man );
+    typedef R& (BOOST_TEST_CALL_DECL * ManipType)(S&);
+
+    return lazy_ostream_impl<lazy_ostream_impl<PrevPrevType,TPrev>,ManipType>( prev, man );
 }
 
 //____________________________________________________________________________//
