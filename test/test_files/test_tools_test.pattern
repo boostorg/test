@@ -69,3 +69,35 @@ struct A
 535: last checkpoint: Going to do a silly things
 0: fatal error in "test_BOOST_TEST_PASSPOINT": unknown type
 546: last checkpoint
+603: error in "test_context_logging": check false failed
+Failure occurred in a following context:
+    some context
+607: error in "test_context_logging": check false failed
+Failure occurred in a following context:
+    some more context: 12
+612: error in "test_context_logging": check false failed
+Failure occurred in a following context:
+    info 1
+    info 2
+    info 3
+615: error in "test_context_logging": check false failed
+Failure occurred in a following context:
+    some sticky context
+618: error in "test_context_logging": check false failed
+Failure occurred in a following context:
+    some sticky context
+    more context
+621: error in "test_context_logging": check false failed
+Failure occurred in a following context:
+    some sticky context
+    different subcontext
+625: error in "test_context_logging": check false failed
+Failure occurred in a following context:
+    outer context
+628: error in "test_context_logging": check false failed
+Failure occurred in a following context:
+    outer context
+    inner context
+631: error in "test_context_logging": check false failed
+Failure occurred in a following context:
+    outer context

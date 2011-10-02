@@ -19,12 +19,11 @@
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
-#include <boost/test/test_case_template.hpp>
 
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 #include <boost/test/utils/basic_cstring/compare.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
-#include <boost/test/output_test_stream.hpp>
+#include <boost/test/tools/output_test_stream.hpp>
 namespace utf = boost::unit_test;
 namespace tt  = boost::test_tools;
 using utf::const_string;

@@ -16,7 +16,7 @@
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_log.hpp>
-#include <boost/test/output_test_stream.hpp>
+#include <boost/test/tools/output_test_stream.hpp>
 #include <boost/test/execution_monitor.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/test/output/compiler_log_formatter.hpp>
@@ -597,6 +597,42 @@ BOOST_AUTO_TEST_CASE( test_argument_handling )
 
 //____________________________________________________________________________//
 
+TEST_CASE( test_context_logging )
+{
+    BOOST_TEST_INFO( "some context" );
+    BOOST_CHECK( false );
+
+    int i = 12;
+    BOOST_TEST_INFO( "some more context: " << i );
+    BOOST_CHECK( false );
+
+    BOOST_TEST_INFO( "info 1" );
+    BOOST_TEST_INFO( "info 2" );
+    BOOST_TEST_INFO( "info 3" );
+    BOOST_CHECK( false );
+
+    BOOST_TEST_CONTEXT( "some sticky context" ) {
+        BOOST_CHECK( false );
+
+        BOOST_TEST_INFO( "more context" );
+        BOOST_CHECK( false );
+
+        BOOST_TEST_INFO( "different subcontext" );
+        BOOST_CHECK( false );
+    }
+
+    BOOST_TEST_CONTEXT( "outer context" ) {
+        BOOST_CHECK( false );
+
+        BOOST_TEST_CONTEXT( "inner context" ) {
+            BOOST_CHECK( false );
+        }
+
+        BOOST_CHECK( false );
+    }
+}
+
+//____________________________________________________________________________//
 
 // !! CHECK_SMALL
 

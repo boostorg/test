@@ -100,7 +100,7 @@ BOOST_AUTO_TEST_CASE( manual_test_case_creation_test )
     BOOST_CHECK_EQUAL( tc1->p_expected_failures, 0U );
     BOOST_CHECK_EQUAL( tc1->p_timeout, 0U );
     BOOST_CHECK_EQUAL( tc1->p_name, const_string( "empty" ) );
-    BOOST_CHECK( tc1->test_func() );
+    BOOST_CHECK( tc1->p_test_func );
     BOOST_CHECK( tc1->p_enabled );
 
     BOOST_CHECK_EQUAL( &framework::get<test_case>( tc1->p_id ), tc1 );
@@ -256,9 +256,9 @@ BOOST_AUTO_TEST_CASE( user_class_test_case )
     BOOST_CHECK_EQUAL( tc2->p_name, const_string( "A::test_methodA2" ) );
 
     BOOST_CHECK_EQUAL( instA->i, 0 );
-    tc1->test_func()();
+    tc1->p_test_func.get()();
     BOOST_CHECK_EQUAL( instA->i, 1 );
-    tc2->test_func()();
+    tc2->p_test_func.get()();
     BOOST_CHECK_EQUAL( instA->i, 2 );
 
     boost::shared_ptr<B> instB( new B );
@@ -269,9 +269,9 @@ BOOST_AUTO_TEST_CASE( user_class_test_case )
     BOOST_CHECK_EQUAL( tc4->p_name, const_string( "B::test_methodB" ) );
 
     BOOST_CHECK_EQUAL( instB->i, 0 );
-    tc3->test_func()();
+    tc3->p_test_func.get()();
     BOOST_CHECK_EQUAL( instB->i, 1 );
-    tc4->test_func()();
+    tc4->p_test_func.get()();
     BOOST_CHECK_EQUAL( instB->i, 0 );
 
     boost::shared_ptr<C> instC1( new D );
@@ -279,7 +279,7 @@ BOOST_AUTO_TEST_CASE( user_class_test_case )
 
     BOOST_CHECK_EQUAL( tc5->p_name, const_string( "C::test_method" ) );
 
-    tc5->test_func()();
+    tc5->p_test_func.get()();
     BOOST_CHECK_EQUAL( instC1->i, 1 );
 
     boost::shared_ptr<C> instC2( new E );
@@ -287,7 +287,7 @@ BOOST_AUTO_TEST_CASE( user_class_test_case )
 
     BOOST_CHECK_EQUAL( tc6->p_name, const_string( "C::test_method" ) );
 
-    tc6->test_func()();
+    tc6->p_test_func.get()();
     BOOST_CHECK_EQUAL( instC2->i, 2 );
 }
 
