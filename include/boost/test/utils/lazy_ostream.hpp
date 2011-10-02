@@ -99,6 +99,17 @@ operator<<( lazy_ostream_impl<PrevPrevType,TPrev> const& prev, T const& v )
 
 #if BOOST_TEST_USE_STD_LOCALE
 
+template<typename R,typename S>
+inline lazy_ostream_impl<lazy_ostream const&,R& (BOOST_TEST_CALL_DECL *)(S&)>
+operator<<( lazy_ostream const& prev, R& (BOOST_TEST_CALL_DECL *man)(S&) )
+{
+    typedef R& (BOOST_TEST_CALL_DECL * ManipType)(S&);
+
+    return lazy_ostream_impl<lazy_ostream const&,ManipType>( prev, man );
+}
+
+//____________________________________________________________________________//
+
 template<typename PrevPrevType, typename TPrev,typename R,typename S>
 inline lazy_ostream_impl<lazy_ostream_impl<PrevPrevType,TPrev>,R& (BOOST_TEST_CALL_DECL *)(S&)>
 operator<<( lazy_ostream_impl<PrevPrevType,TPrev> const& prev, R& (BOOST_TEST_CALL_DECL *man)(S&) )
