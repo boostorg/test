@@ -26,29 +26,10 @@ PRG_EXEC_MON_SOURCES =
   cpp_main
   ;
 
-TEST_EXEC_MON_SOURCES =
-  compiler_log_formatter
-  debug
-  execution_monitor
-  framework
-  plain_report_formatter
-  progress_monitor
-  results_collector
-  results_reporter
-  test_main
-  test_tools
-  unit_test_log
-  unit_test_main
-  unit_test_monitor
-  unit_test_parameters
-  unit_test_suite
-  xml_log_formatter
-  xml_report_formatter
-  ;
-
 UTF_SOURCES =
   compiler_log_formatter
   debug
+  decorators
   exception_safety
   execution_monitor
   framework
@@ -77,16 +58,6 @@ lib boost_prg_exec_monitor
     <link>shared:<define>BOOST_TEST_DYN_LINK=1
   ;
 
-lib boost_test_exec_monitor
-  : # sources
-    $(TEST_EXEC_MON_SOURCES).cpp
-  : # requirements
-    <link>static
-  : # default build
-  : # usage-requirements
-    <link>shared:<define>BOOST_TEST_DYN_LINK=1
-  ;
-
 lib boost_unit_test_framework
   : # sources
     $(UTF_SOURCES).cpp
@@ -107,4 +78,3 @@ alias included : : : :
 boost-install boost_prg_exec_monitor 
               boost_test_exec_monitor
               boost_unit_test_framework ;
-          
