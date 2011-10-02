@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_CASE( test1 )
 
 BOOST_AUTO_TEST_CASE( test2 )
 {
-    BOOST_CHECKPOINT("About to force division by zero!");
+    BOOST_TEST_CHECKPOINT("About to force division by zero!");
     int i = 1, j = 0;
 
     i = i / j;
