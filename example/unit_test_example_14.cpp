@@ -1,8 +1,8 @@
 #define BOOST_TEST_TOOL_REPORT_WARN_FAILURE( assertion_descr ) \
     std::cout << "Condition " << assertion_descr << " is not satisfied\n"
 
-#include <boost/test/prod_tools.hpp>
-#include <boost/exception.hpp>
+#include <boost/test/tools/prod_tools.hpp>
+#include <boost/exception/all.hpp>
 #include <boost/noncopyable.hpp>
 
 #include <iostream>

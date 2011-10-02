@@ -68,8 +68,6 @@ BOOST_AUTO_TEST_CASE( data_access_test )
     BOOST_CHECK_EQUAL( cs1[(size_t)2], cs1.at( 5 ) );
     BOOST_CHECK_EQUAL( cs1.at( cs1.length() - 1 ), 'g' );
 
-    BOOST_CHECK_THROW( cs1.at( cs1.length() ), std::out_of_range );
-
     BOOST_CHECK_EQUAL( common_layer::first_char()( cs1  ), 't' );
     BOOST_CHECK_EQUAL( common_layer::last_char()( cs1  ) , 'g' );
 }

@@ -114,7 +114,7 @@ cpp_main( int argc , char *[] )
     ex_mon.register_exception_translator<my_exception2>( &translate_my_exception2, "except2" );
 
     try {
-        ex_mon.execute( ::boost::unit_test::callback0<int>( dangerous_call( argc ) ) );
+        ex_mon.execute( dangerous_call( argc ) );
         std::cout << "Should reach this line " << __LINE__ << std::endl;
     }
     catch ( boost::execution_exception const& ex ) {
@@ -126,7 +126,7 @@ cpp_main( int argc , char *[] )
     ex_mon.erase_exception_translator( "except2" );
 
     try {
-        ex_mon.execute( ::boost::unit_test::callback0<int>( dangerous_call( 5 ) ) );
+        ex_mon.execute( dangerous_call( 5 ) );
         std::cout << "Should not reach this line " << __LINE__ << std::endl;
     }
     catch ( boost::execution_exception const& ex ) {
@@ -138,7 +138,7 @@ cpp_main( int argc , char *[] )
     ex_mon.erase_exception_translator<my_exception1>();
 
     try {
-        ex_mon.execute( ::boost::unit_test::callback0<int>( dangerous_call( 1 ) ) );
+        ex_mon.execute( dangerous_call( 1 ) );
         std::cout << "Should not reach this line " << __LINE__ << std::endl;
     }
     catch ( boost::execution_exception const& ex ) {

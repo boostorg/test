@@ -8,8 +8,8 @@
 // Boost.Test
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
-#include <boost/test/logged_expectations.hpp>
-#include <boost/test/mock_object.hpp>
+#include <boost/test/interaction/logged_expectations.hpp>
+#include <boost/test/interaction/mock_object.hpp>
 using namespace boost::itest;
 
 // Boost

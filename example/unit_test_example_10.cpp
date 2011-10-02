@@ -7,7 +7,7 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 // Boost.Test
-#include <boost/test/floating_point_comparison.hpp>
+#include <boost/test/tools/floating_point_comparison.hpp>
 #include <boost/test/unit_test.hpp>
 using namespace boost::unit_test;
 using boost::math::fpc::close_at_tolerance;

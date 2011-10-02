@@ -9,7 +9,7 @@ BOOST_AUTO_TEST_SUITE( test_suite_1 )
 
 BOOST_AUTO_TEST_CASE( test_case_1 )
 {
-     BOOST_MESSAGE( "Testing is in progress" );
+     BOOST_TEST_MESSAGE( "Testing is in progress" );
 
      BOOST_CHECK( false );
 }
