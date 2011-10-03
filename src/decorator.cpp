@@ -13,6 +13,6 @@
 // ***************************************************************************
 
 #define BOOST_TEST_SOURCE
-#include <boost/test/impl/decorators.ipp>
+#include <boost/test/impl/decorator.ipp>
 
 // EOF

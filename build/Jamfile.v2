@@ -29,7 +29,7 @@ PRG_EXEC_MON_SOURCES =
 UTF_SOURCES =
   compiler_log_formatter
   debug
-  decorators
+  decorator
   exception_safety
   execution_monitor
   framework
