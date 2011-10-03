@@ -16,6 +16,9 @@
 #define BOOST_TEST_MODULE Boost.Test run by name/label implementation test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
+#include <boost/test/tree/test_case_counter.hpp>
+#include <boost/test/tree/traverse.hpp>
+
 namespace utf = boost::unit_test;
 
 void A() {}
