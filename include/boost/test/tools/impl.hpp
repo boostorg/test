@@ -59,7 +59,6 @@
 // ************************************************************************** //
 
 namespace boost {
-
 namespace test_tools {
 
 typedef unit_test::const_string      const_string;
@@ -476,12 +475,8 @@ private:
 };
 
 } // namespace tt_detail
-
 } // namespace test_tools
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

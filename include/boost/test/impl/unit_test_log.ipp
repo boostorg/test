@@ -18,7 +18,6 @@
 // Boost.Test
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/unit_test_log_formatter.hpp>
-#include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/execution_monitor.hpp>
 #include <boost/test/framework.hpp>
 
@@ -39,7 +38,6 @@ typedef ::boost::io::ios_base_all_saver io_saver_type;
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
 
 // ************************************************************************** //
@@ -463,10 +461,7 @@ unit_test_log_formatter::log_entry_value( std::ostream& ostr, lazy_ostream const
 //____________________________________________________________________________//
 
 } // namespace unit_test
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

@@ -157,8 +157,6 @@ typedef basic_wrap_stringstream<wchar_t>    wrap_wstringstream;
 
 }  // namespace boost
 
-//____________________________________________________________________________//
-
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif  // BOOST_WRAP_STRINGSTREAM_HPP_071894GER

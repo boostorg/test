@@ -20,8 +20,8 @@
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/tools/output_test_stream.hpp>
 #include <boost/test/framework.hpp>
+#include <boost/test/tree/test_unit.hpp>
 #include <boost/test/execution_monitor.hpp> // execution_aborted
-#include <boost/test/unit_test_suite_impl.hpp>
 
 // Boost
 #include <boost/config.hpp>
@@ -52,7 +52,6 @@ namespace std { using ::wcscmp; }
 # endif
 
 namespace boost {
-
 namespace test_tools {
 
 // ************************************************************************** //
@@ -626,10 +625,7 @@ output_test_stream::sync()
 //____________________________________________________________________________//
 
 } // namespace test_tools
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

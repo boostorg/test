@@ -32,7 +32,6 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
 
 // configurable maximum fixed sized mapping size supported by this header.
@@ -107,10 +106,7 @@ private:
 };
 
 } // namespace unit_test
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

@@ -17,10 +17,9 @@
 
 // Boost.Test
 #include <boost/test/output/xml_log_formatter.hpp>
-#include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/framework.hpp>
+#include <boost/test/tree/test_unit.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
-
 #include <boost/test/utils/xml_printer.hpp>
 
 // Boost
@@ -34,9 +33,7 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
-
 namespace output {
 
 static const_string tu_type_name( test_unit const& tu )
@@ -192,11 +189,15 @@ xml_log_formatter::entry_context_start( std::ostream& ostr )
    
 }
 
+//____________________________________________________________________________//
+
 void
 xml_log_formatter::entry_context_finish( std::ostream& ostr )
 {
     ostr << BOOST_TEST_L( "</Context>" );
 }
+
+//____________________________________________________________________________//
 
 void
 xml_log_formatter::log_entry_context( std::ostream& ostr, const_string context_descr )
@@ -204,13 +205,11 @@ xml_log_formatter::log_entry_context( std::ostream& ostr, const_string context_d
     ostr << BOOST_TEST_L( "<Frame><![CDATA[" ) << context_descr << BOOST_TEST_L( "]]></Frame>" );
 }
 
-} // namespace output
-
-} // namespace unit_test
-
-} // namespace boost
-
 //____________________________________________________________________________//
+
+} // namespace output
+} // namespace unit_test
+} // namespace boost
 
 #include <boost/test/detail/enable_warnings.hpp>
 

@@ -28,9 +28,7 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
-
 namespace results_reporter {
 
 // ************************************************************************** //
@@ -75,12 +73,8 @@ inline void             detailed_report( test_unit_id id = INV_TEST_UNIT_ID )
 { make_report( DETAILED_REPORT, id ); }
 
 } // namespace results_reporter
-
 } // namespace unit_test
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

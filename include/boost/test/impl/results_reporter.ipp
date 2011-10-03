@@ -17,11 +17,14 @@
 
 // Boost.Test
 #include <boost/test/results_reporter.hpp>
-#include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/results_collector.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/output/plain_report_formatter.hpp>
 #include <boost/test/output/xml_report_formatter.hpp>
+
+#include <boost/test/tree/visitor.hpp>
+#include <boost/test/tree/test_unit.hpp>
+#include <boost/test/tree/traverse.hpp>
 
 #include <boost/test/detail/unit_test_parameters.hpp>
 
@@ -38,9 +41,7 @@ typedef ::boost::io::ios_base_all_saver io_saver_type;
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
-
 namespace results_reporter {
 
 // ************************************************************************** //
@@ -190,12 +191,8 @@ make_report( report_level l, test_unit_id id )
 //____________________________________________________________________________//
 
 } // namespace results_reporter
-
 } // namespace unit_test
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

@@ -19,10 +19,12 @@
 #include <boost/test/output/plain_report_formatter.hpp>
 #include <boost/test/utils/custom_manip.hpp>
 #include <boost/test/results_collector.hpp>
-#include <boost/test/unit_test_suite_impl.hpp>
+
+#include <boost/test/tree/test_unit.hpp>
 
 #include <boost/test/utils/basic_cstring/io.hpp>
 #include <boost/test/utils/setcolor.hpp>
+
 #include <boost/test/detail/unit_test_parameters.hpp>
 
 // STL
@@ -39,9 +41,7 @@ namespace std { using ::log10; }
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
-
 namespace output {
 
 namespace {
@@ -192,12 +192,8 @@ plain_report_formatter::do_confirmation_report( test_unit const& tu, std::ostrea
 //____________________________________________________________________________//
 
 } // namespace output
-
 } // namespace unit_test
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

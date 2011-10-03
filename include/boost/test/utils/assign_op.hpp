@@ -16,7 +16,6 @@
 #define BOOST_TEST_ASSIGN_OP_033005GER
 
 namespace boost {
-
 namespace unit_test {
 
 // ************************************************************************** //
@@ -34,7 +33,6 @@ assign_op( T& t, S const& s, long )
 //____________________________________________________________________________//
 
 } // namespace unit_test
-
 } // namespace boost
 
 #endif // BOOST_TEST_ASSIGN_OP_033005GER

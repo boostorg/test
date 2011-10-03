@@ -234,10 +234,7 @@ logged_expectations( boost::function<void ()> const& F, const_string log_file_na
 //____________________________________________________________________________//
 
 }  // namespace itest
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

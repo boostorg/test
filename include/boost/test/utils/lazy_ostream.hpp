@@ -30,7 +30,6 @@
 // ************************************************************************** //
 
 namespace boost {
-
 namespace unit_test {
 
 class lazy_ostream {
@@ -56,7 +55,7 @@ private:
 
 //____________________________________________________________________________//
 
-template<typename PrevType, typename T>
+template<typename PrevType, typename T, typename StorageT=T const&>
 class lazy_ostream_impl : public lazy_ostream {
 public:
     lazy_ostream_impl( PrevType const& prev, T const& value )
@@ -73,7 +72,7 @@ public:
 private:
     // Data members
     PrevType    m_prev;
-    T const&    m_value;
+    StorageT    m_value;
 };
 
 //____________________________________________________________________________//
@@ -100,23 +99,23 @@ operator<<( lazy_ostream_impl<PrevPrevType,TPrev> const& prev, T const& v )
 #if BOOST_TEST_USE_STD_LOCALE
 
 template<typename R,typename S>
-inline lazy_ostream_impl<lazy_ostream const&,R& (BOOST_TEST_CALL_DECL *)(S&)>
+inline lazy_ostream_impl<lazy_ostream const&,R& (BOOST_TEST_CALL_DECL *)(S&),R& (BOOST_TEST_CALL_DECL *)(S&)>
 operator<<( lazy_ostream const& prev, R& (BOOST_TEST_CALL_DECL *man)(S&) )
 {
     typedef R& (BOOST_TEST_CALL_DECL * ManipType)(S&);
 
-    return lazy_ostream_impl<lazy_ostream const&,ManipType>( prev, man );
+    return lazy_ostream_impl<lazy_ostream const&,ManipType,ManipType>( prev, man );
 }
 
 //____________________________________________________________________________//
 
 template<typename PrevPrevType, typename TPrev,typename R,typename S>
-inline lazy_ostream_impl<lazy_ostream_impl<PrevPrevType,TPrev>,R& (BOOST_TEST_CALL_DECL *)(S&)>
+inline lazy_ostream_impl<lazy_ostream_impl<PrevPrevType,TPrev>,R& (BOOST_TEST_CALL_DECL *)(S&),R& (BOOST_TEST_CALL_DECL *)(S&)>
 operator<<( lazy_ostream_impl<PrevPrevType,TPrev> const& prev, R& (BOOST_TEST_CALL_DECL *man)(S&) )
 {
     typedef R& (BOOST_TEST_CALL_DECL * ManipType)(S&);
 
-    return lazy_ostream_impl<lazy_ostream_impl<PrevPrevType,TPrev>,ManipType>( prev, man );
+    return lazy_ostream_impl<lazy_ostream_impl<PrevPrevType,TPrev> const&,ManipType,ManipType>( prev, man );
 }
 
 //____________________________________________________________________________//
@@ -124,7 +123,6 @@ operator<<( lazy_ostream_impl<PrevPrevType,TPrev> const& prev, R& (BOOST_TEST_CA
 #endif
 
 } // namespace unit_test
-
 } // namespace boost
 
 //____________________________________________________________________________//

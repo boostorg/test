@@ -17,10 +17,13 @@
 
 // Boost.Test
 #include <boost/test/progress_monitor.hpp>
-#include <boost/test/unit_test_suite_impl.hpp>
 
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/test/utils/setcolor.hpp>
+
+#include <boost/test/tree/test_unit.hpp>
+#include <boost/test/tree/test_case_counter.hpp>
+#include <boost/test/tree/traverse.hpp>
 
 // Boost
 #include <boost/progress.hpp>
@@ -31,7 +34,6 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
 
 // ************************************************************************** //
@@ -109,10 +111,7 @@ progress_monitor_t::set_stream( std::ostream& ostr )
 //____________________________________________________________________________//
     
 } // namespace unit_test
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

@@ -18,8 +18,11 @@
 // Boost.Test
 #include <boost/test/framework.hpp>
 #include <boost/test/results_collector.hpp>
-#include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/results_reporter.hpp>
+
+#include <boost/test/tree/visitor.hpp>
+#include <boost/test/tree/test_unit.hpp>
+#include <boost/test/tree/traverse.hpp>
 
 #include <boost/test/detail/unit_test_parameters.hpp>
 
@@ -36,7 +39,6 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
 
 namespace ut_detail {
@@ -118,7 +120,6 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
 }
 
 } // namespace unit_test
-
 } // namespace boost
 
 #if !defined(BOOST_TEST_DYN_LINK) && !defined(BOOST_TEST_NO_MAIN)

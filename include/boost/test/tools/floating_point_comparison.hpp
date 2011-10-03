@@ -33,8 +33,8 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
-namespace math { namespace fpc {
+namespace math { 
+namespace fpc {
 
 // ************************************************************************** //
 // **************                 fpc::strength                ************** //
@@ -208,7 +208,7 @@ private:
     // Data members
     FPT                 m_fraction_tolerance;
     fpc::strength       m_strength;
-	mutable FPT         m_failed_fraction;
+    mutable FPT         m_failed_fraction;
 };
 
 // ************************************************************************** //
@@ -329,10 +329,7 @@ check_is_small_t const& check_is_small = unit_test::ut_detail::static_constant<c
 //____________________________________________________________________________//
 
 } // namespace test_tools
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

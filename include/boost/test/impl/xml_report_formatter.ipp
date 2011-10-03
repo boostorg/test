@@ -17,9 +17,9 @@
 
 // Boost.Test
 #include <boost/test/results_collector.hpp>
-#include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/output/xml_report_formatter.hpp>
 
+#include <boost/test/tree/test_unit.hpp>
 #include <boost/test/utils/xml_printer.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
 
@@ -28,9 +28,7 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
-
 namespace output {
 
 void
@@ -103,12 +101,8 @@ xml_report_formatter::do_confirmation_report( test_unit const& tu, std::ostream&
 //____________________________________________________________________________//
 
 } // namespace output
-
 } // namespace unit_test
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

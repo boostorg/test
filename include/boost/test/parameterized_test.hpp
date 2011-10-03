@@ -43,7 +43,6 @@ boost::unit_test::make_test_case( function,                                \
 /**/
 
 namespace boost {
-
 namespace unit_test {
 
 namespace ut_detail {
@@ -152,10 +151,7 @@ make_test_case( void (UserTestCase::*test_method )( ParamType ),
 //____________________________________________________________________________//
 
 } // unit_test
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

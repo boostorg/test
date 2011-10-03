@@ -18,7 +18,6 @@
 #include <cstddef>
 
 namespace boost {
-
 namespace rtti {
 
 // ************************************************************************** //
@@ -58,7 +57,6 @@ type_id()
 //____________________________________________________________________________//
 
 } // namespace rtti
-
 } // namespace boost
 
 #endif // BOOST_RT_RTTI_HPP_062604GER

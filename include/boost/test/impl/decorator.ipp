@@ -12,12 +12,13 @@
 //  Description : unit test decorators implementation
 // ***************************************************************************
 
-#ifndef BOOST_TEST_DECORATORS_IPP_091911GER
-#define BOOST_TEST_DECORATORS_IPP_091911GER
+#ifndef BOOST_TEST_TREE_DECORATOR_IPP_091911GER
+#define BOOST_TEST_TREE_DECORATOR_IPP_091911GER
 
 // Boost.Test
-#include <boost/test/tree/decorators.hpp>
-#include <boost/test/unit_test_suite_impl.hpp>
+#include <boost/test/tree/decorator.hpp>
+#include <boost/test/tree/test_unit.hpp>
+
 #include <boost/test/framework.hpp>
 #if BOOST_TEST_SUPPORT_TOKEN_ITERATOR
 #include <boost/test/utils/iterator/token_iterator.hpp>
@@ -28,9 +29,7 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
-
 namespace decorator {
 
 // ************************************************************************** //
@@ -188,14 +187,22 @@ depends_on::do_apply( test_unit& tu )
 
 //____________________________________________________________________________//
 
-} // namespace decorator
+// ************************************************************************** //
+// **************        decorator::enable_if/disable_if       ************** //
+// ************************************************************************** //
 
-} // namespace unit_test
-
-} // namespace boost
+void
+enable_if::do_apply( test_unit& tu )
+{
+    tu.p_enabled.value = m_condition;
+}
 
 //____________________________________________________________________________//
 
+} // namespace decorator
+} // namespace unit_test
+} // namespace boost
+
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_TEST_DECORATORS_IPP_091911GER
+#endif // BOOST_TEST_TREE_DECORATOR_IPP_091911GER

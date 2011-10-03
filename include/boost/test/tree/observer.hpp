@@ -25,7 +25,6 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
 
 // ************************************************************************** //
@@ -53,11 +52,8 @@ protected:
     BOOST_TEST_PROTECTED_VIRTUAL ~test_observer() {}
 };
 
-} // unit_test
-
+} // namespace unit_test
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

@@ -59,7 +59,6 @@ void test_name::test_method()                                           \
 /**/
 
 namespace boost {
-
 namespace itest {
 
 // ************************************************************************** //
@@ -69,7 +68,6 @@ namespace itest {
 void    BOOST_TEST_DECL exception_safety( boost::function<void ()> const& F, unit_test::const_string test_name = "" );
 
 } // namespace itest
-
 } // namespace boost
 
 // ************************************************************************** //

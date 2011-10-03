@@ -17,7 +17,7 @@
 
 #include <boost/test/impl/compiler_log_formatter.ipp>
 #include <boost/test/impl/debug.ipp>
-#include <boost/test/impl/decorators.ipp>
+#include <boost/test/impl/decorator.ipp>
 #include <boost/test/impl/framework.ipp>
 #include <boost/test/impl/exception_safety.ipp>
 #include <boost/test/impl/execution_monitor.ipp>

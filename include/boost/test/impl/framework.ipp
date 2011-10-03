@@ -19,14 +19,18 @@
 #include <boost/test/framework.hpp>
 #include <boost/test/execution_monitor.hpp>
 #include <boost/test/debug.hpp>
-#include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/unit_test_monitor.hpp>
-#include <boost/test/tree/observer.hpp>
 #include <boost/test/results_collector.hpp>
 #include <boost/test/progress_monitor.hpp>
 #include <boost/test/results_reporter.hpp>
 #include <boost/test/test_tools.hpp>
+
+#include <boost/test/tree/observer.hpp>
+#include <boost/test/tree/test_unit.hpp>
+#include <boost/test/tree/visitor.hpp>
+#include <boost/test/tree/traverse.hpp>
+#include <boost/test/tree/test_case_counter.hpp>
 
 #if BOOST_TEST_SUPPORT_TOKEN_ITERATOR
 #include <boost/test/utils/iterator/token_iterator.hpp>
@@ -56,7 +60,6 @@ namespace std { using ::time; using ::srand; }
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
 
 // ************************************************************************** //
@@ -66,9 +69,7 @@ namespace unit_test {
 namespace ut_detail {
 
 struct test_init_invoker {
-    explicit    test_init_invoker( init_unit_test_func init_func ) 
-    : m_init_func( init_func )
-    {}
+    explicit    test_init_invoker( init_unit_test_func init_func )  : m_init_func( init_func ) {}
     int         operator()()
     {
 #ifdef BOOST_TEST_ALTERNATIVE_INIT_API
@@ -229,7 +230,7 @@ private:
 };
 
 // ************************************************************************** //
-// **************                change_status                 ************** //
+// **************                 change_status                ************** //
 // ************************************************************************** //
 
 class change_status : public test_tree_visitor {
@@ -242,44 +243,6 @@ private:
 
     // Data members
     bool            m_new_status;
-};
-
-// ************************************************************************** //
-// **************               collect_disabled               ************** //
-// ************************************************************************** //
-
-class collect_disabled : public test_tree_visitor {
-public:
-    explicit        collect_disabled( tu_enable_list& tu_to_enable ) : m_tu_to_enable( tu_to_enable ) {}
-
-private:
-    // test_tree_visitor interface
-    virtual bool    visit( test_unit const& tu )
-    {
-        if( !tu.p_enabled )
-            m_tu_to_enable.push_back( std::make_pair( tu.p_id, false ) );
-
-        return true;
-    }
-
-    // Data members
-    tu_enable_list& m_tu_to_enable;
-};
-
-// ************************************************************************** //
-// **************               apply_decorators               ************** //
-// ************************************************************************** //
-
-class apply_decorators : public test_tree_visitor {
-private:
-    // test_tree_visitor interface
-    virtual bool    visit( test_unit const& tu )
-    {
-        if( tu.p_decorators.get() )
-            tu.p_decorators.get()->apply( const_cast<test_unit&>(tu) );
-
-        return true;
-    }
 };
 
 } // namespace ut_detail
@@ -360,7 +323,7 @@ public:
         m_curr_test_case = bkup;
 
         if( unit_test_monitor.is_critical_error( run_result ) )
-            throw test_being_aborted();
+            throw framework::test_being_aborted();
     }
 
     bool            test_suite_start( test_suite const& ts )
@@ -477,11 +440,67 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
         throw setup_error( ex.what() );
     }
 
-    ut_detail::apply_decorators ad;
+    // Apply all decorators to the auto test units
+    class apply_decorators : public test_tree_visitor {
+    private:
+        // test_tree_visitor interface
+        virtual bool    visit( test_unit const& tu )
+        {
+            if( tu.p_decorators.get() )
+                tu.p_decorators.get()->apply( const_cast<test_unit&>(tu) );
+
+            return true;
+        }
+    } ad;
     traverse_test_tree( master_test_suite().p_id, ad, true );
 
+    // Let's see if anything was disabled during construction. These test units and anything 
+    // that depends on them are removed from the test tree
+    class remove_disabled : public test_tree_visitor {
+    public:
+        // test_tree_visitor interface
+        virtual bool    visit( test_unit const& tu )
+        {
+            // check if any of dependencies are disabled
+            if( tu.p_enabled ) {
+                BOOST_TEST_FOREACH( test_unit_id, dep_id, tu.p_dependencies.get() ) {
+                    test_unit const& dep = framework::get( dep_id, tut_any );
+
+                    if( !dep.p_enabled ) {
+                        BOOST_TEST_MESSAGE( "Disable test " << tu.p_type_name << ' ' << tu.p_name << 
+                                            " since it depends on desabled test " << dep.p_type_name << ' ' << dep.p_name );
+
+                        tu.p_enabled.value = false;
+                        break;
+                    }
+                }
+            }
+
+            // if this test unit is disabled - remove it from the tree and disable all subunits
+            if( !tu.p_enabled && tu.p_id != master_test_suite().p_id ) {
+                if( tu.p_type == tut_suite ) {
+                    ut_detail::change_status disabler( false );
+                    traverse_test_tree( tu.p_id, disabler, true );
+                }
+
+                framework::get<test_suite>( tu.p_parent_id ).remove( tu.p_id );
+                m_made_changes = true;
+            }
+
+            return tu.p_enabled;
+        }
+        bool m_made_changes;
+    } rd;
+
+    do {
+        rd.m_made_changes = false;
+        traverse_test_tree( master_test_suite().p_id, rd, true );
+    } while( rd.m_made_changes );
+
+    // apply all name and label filters
     impl::apply_filters( master_test_suite().p_id );
 
+    // We are Done!
     s_frk_impl().m_is_initialized = true;
 }
 
@@ -553,7 +572,24 @@ apply_filters( test_unit_id tu_id )
 
             // 35. add all children to the list recursively
             if( data.second && tu.p_type == tut_suite ) {
-                ut_detail::collect_disabled V( tu_to_enable );
+                class collect_disabled : public test_tree_visitor {
+                public:
+                    explicit        collect_disabled( ut_detail::tu_enable_list& tu_to_enable ) : m_tu_to_enable( tu_to_enable ) {}
+
+                private:
+                    // test_tree_visitor interface
+                    virtual bool    visit( test_unit const& tu )
+                    {
+                        if( !tu.p_enabled )
+                            m_tu_to_enable.push_back( std::make_pair( tu.p_id, false ) );
+
+                        return true;
+                    }
+
+                    // Data members
+                    ut_detail::tu_enable_list& m_tu_to_enable;
+                } V( tu_to_enable );
+
                 traverse_test_tree( tu.p_id, V, true );
             }
         }
@@ -797,7 +833,7 @@ run( test_unit_id id, bool continue_test )
     try {
         traverse_test_tree( id, s_frk_impl() );
     }
-    catch( test_being_aborted const& ) {
+    catch( framework::test_being_aborted const& ) {
         // abort already reported
     }
 
@@ -847,12 +883,8 @@ test_unit_aborted( test_unit const& tu )
 //____________________________________________________________________________//
 
 } // namespace framework
-
 } // namespace unit_test
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

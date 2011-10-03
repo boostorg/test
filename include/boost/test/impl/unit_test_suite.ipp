@@ -18,10 +18,18 @@
 
 // Boost.Test
 #include <boost/detail/workaround.hpp>
-#include <boost/test/unit_test_suite_impl.hpp>
+
 #include <boost/test/framework.hpp>
-#include <boost/test/utils/foreach.hpp>
 #include <boost/test/results_collector.hpp>
+
+#include <boost/test/tree/test_unit.hpp>
+#include <boost/test/tree/visitor.hpp>
+#include <boost/test/tree/traverse.hpp>
+#include <boost/test/tree/auto_registration.hpp>
+#include <boost/test/tree/global_fixture.hpp>
+
+#include <boost/test/utils/foreach.hpp>
+
 #include <boost/test/detail/unit_test_parameters.hpp>
 
 // Boost
@@ -33,16 +41,13 @@
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
-#if BOOST_WORKAROUND(__BORLANDC__, < 0x600) && \
-    BOOST_WORKAROUND(_STLPORT_VERSION, <= 0x450) \
-    /**/
+#if BOOST_WORKAROUND(__BORLANDC__, < 0x600) && BOOST_WORKAROUND(_STLPORT_VERSION, <= 0x450)
     using std::rand; // rand is in std and random_shuffle is in _STL
 #endif
 
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
 
 // ************************************************************************** //
@@ -215,8 +220,15 @@ traverse_test_tree( test_suite const& suite, test_tree_visitor& V, bool ignore_s
 
     try {
         if( runtime_config::random_seed() == 0 ) {
-            BOOST_TEST_FOREACH( test_unit_id, id, suite.m_members )
-                traverse_test_tree( id, V, ignore_status );
+            unsigned total_members = suite.m_members.size();
+            for( unsigned i=0; i < total_members; ) {
+                // this statement can remove the test unit from this list
+                traverse_test_tree( suite.m_members[i], V, ignore_status );
+                if( total_members > suite.m_members.size() )
+                    total_members = suite.m_members.size();
+                else
+                    ++i;
+            }
         }
         else {
             std::vector<test_unit_id> members( suite.m_members );
@@ -225,7 +237,7 @@ traverse_test_tree( test_suite const& suite, test_tree_visitor& V, bool ignore_s
                 traverse_test_tree( id, V, ignore_status );
         }
         
-    } catch( test_being_aborted const& ) {
+    } catch( framework::test_being_aborted const& ) {
         V.test_suite_finish( suite );
         framework::test_unit_aborted( suite );
 
@@ -345,7 +357,6 @@ global_fixture::global_fixture()
 //____________________________________________________________________________//
 
 } // namespace unit_test
-
 } // namespace boost
 
 #include <boost/test/detail/enable_warnings.hpp>

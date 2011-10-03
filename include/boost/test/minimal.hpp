@@ -101,7 +101,6 @@ private:
 }; // monitor
 
 } // namespace minimal_test
-
 } // namespace boost
 
 //____________________________________________________________________________//

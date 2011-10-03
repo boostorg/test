@@ -257,19 +257,19 @@ do_invoke( Tr const& tr, Functor const& F )
 
 struct fpe_except_guard {
     explicit fpe_except_guard( unsigned detect_fpe )
-	: m_detect_fpe( detect_fpe )
+    : m_detect_fpe( detect_fpe )
     {
         // prepare fp exceptions control
         m_previosly_enabled = fpe::disable( fpe::BOOST_FPE_ALL );
-		if( m_previosly_enabled != fpe::BOOST_FPE_INV && detect_fpe != fpe::BOOST_FPE_OFF )
+        if( m_previosly_enabled != fpe::BOOST_FPE_INV && detect_fpe != fpe::BOOST_FPE_OFF )
             fpe::enable( detect_fpe );
     }
     ~fpe_except_guard()
     {
         if( m_detect_fpe != fpe::BOOST_FPE_OFF )
             fpe::disable( m_detect_fpe );
-		if( m_previosly_enabled != fpe::BOOST_FPE_INV )
-			fpe::enable( m_previosly_enabled );
+        if( m_previosly_enabled != fpe::BOOST_FPE_INV )
+            fpe::enable( m_previosly_enabled );
     }
 
     unsigned m_detect_fpe;
@@ -1089,8 +1089,8 @@ execution_monitor::catch_signals( boost::function<int ()> const& F )
 
     detail::system_signal_exception SSE( this );
     
-	int ret_val = 0;
-	
+    int ret_val = 0;
+    
     __try {
         __try {
             ret_val = detail::do_invoke( m_custom_translators, F );
@@ -1106,8 +1106,8 @@ execution_monitor::catch_signals( boost::function<int ()> const& F )
            _set_invalid_parameter_handler( old_iph );
         }
     }
-	
-	return ret_val;
+    
+    return ret_val;
 }
 
 //____________________________________________________________________________//
@@ -1273,18 +1273,21 @@ execution_monitor::execute( boost::function<int ()> const& F )
 
 //____________________________________________________________________________//
 
+namespace detail {
+
+struct forward {
+    explicit    forward( boost::function<void ()> const& F ) : m_F( F ) {}
+
+    int         operator()() { m_F(); return 0; }
+
+    boost::function<void ()> const& m_F;
+};
+
+} // namespace detail
 void
 execution_monitor::vexecute( boost::function<void ()> const& F )
 {
-    struct forward {
-        explicit    forward( boost::function<void ()> const& F ) : m_F( F ) {}
-
-        int         operator()() { m_F(); return 0; }
-
-        boost::function<void ()> const& m_F;
-    };
-
-    execute( forward( F ) );
+    execute( detail::forward( F ) );
 }
 
 // ************************************************************************** //
@@ -1343,18 +1346,18 @@ enable( unsigned mask )
 #else
     unsigned old_cw;
     if( ::_controlfp_s( &old_cw, 0, 0 ) != 0 )
-		return BOOST_FPE_INV;
+        return BOOST_FPE_INV;
 
     // Set the control word
     if( ::_controlfp_s( 0, old_cw & ~mask, BOOST_FPE_ALL ) != 0 )
-		return BOOST_FPE_INV;
+        return BOOST_FPE_INV;
 #endif
 
-	return ~old_cw & BOOST_FPE_ALL;
+    return ~old_cw & BOOST_FPE_ALL;
 #elif defined(__GLIBC__) && defined(__USE_GNU) && !defined(BOOST_CLANG) && !defined(BOOST_NO_FENV_H)
     ::feclearexcept(BOOST_FPE_ALL);
-	int res = ::feenableexcept( mask );
-	return res == -1 ? BOOST_FPE_INV : (unsigned)res;
+    int res = ::feenableexcept( mask );
+    return res == -1 ? BOOST_FPE_INV : (unsigned)res;
 #else
     /* Not Implemented  */
     return 0;
@@ -1378,18 +1381,18 @@ disable( unsigned mask )
 #else
     unsigned old_cw;
     if( ::_controlfp_s( &old_cw, 0, 0 ) != 0 )
-		return BOOST_FPE_INV;
+        return BOOST_FPE_INV;
 
     // Set the control word
     if( ::_controlfp_s( 0, old_cw | mask, BOOST_FPE_ALL ) != 0 )
-		return BOOST_FPE_INV;
+        return BOOST_FPE_INV;
 #endif
 
     return ~old_cw & BOOST_FPE_ALL;
 #elif defined(__GLIBC__) && defined(__USE_GNU) && !defined(BOOST_CLANG) && !defined(BOOST_NO_FENV_H)
     ::feclearexcept(BOOST_FPE_ALL);
-	int res = ::fedisableexcept( mask );
-	return res == -1 ? BOOST_FPE_INV : (unsigned)res;
+    int res = ::fedisableexcept( mask );
+    return res == -1 ? BOOST_FPE_INV : (unsigned)res;
 #else
     /* Not Implemented */
     return BOOST_FPE_INV;

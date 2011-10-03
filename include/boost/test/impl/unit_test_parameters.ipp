@@ -62,7 +62,6 @@ namespace std { using ::getenv; using ::strncmp; using ::strcmp; }
 # endif
 
 namespace boost {
-
 namespace unit_test {
 
 // ************************************************************************** //
@@ -545,12 +544,8 @@ random_seed()
 //____________________________________________________________________________//
 
 } // namespace runtime_config
-
 } // namespace unit_test
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

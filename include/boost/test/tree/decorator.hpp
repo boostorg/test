@@ -12,8 +12,8 @@
 //  Description : defines decorators to be using with auto registered test units
 // ***************************************************************************
 
-#ifndef BOOST_TEST_DECORATORS_HPP_091911GER
-#define BOOST_TEST_DECORATORS_HPP_091911GER
+#ifndef BOOST_TEST_TREE_DECORATOR_HPP_091911GER
+#define BOOST_TEST_TREE_DECORATOR_HPP_091911GER
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
@@ -29,7 +29,6 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
 
 class test_unit;
@@ -175,6 +174,28 @@ private:
     const_string            m_dependency;
 };
 
+// ************************************************************************** //
+// **************        decorator::enable_if/disable_if       ************** //
+// ************************************************************************** //
+
+class BOOST_TEST_DECL enable_if : public decorator::for_test_unit {
+public:
+    explicit                enable_if( bool condition ) : m_condition( condition ) {}
+
+private:
+    // decorator::for_test_unit interface
+    virtual void            do_apply( test_unit& tu );
+    virtual for_test_unit*  do_clone() const            { return new enable_if( m_condition ); }
+
+    // Data members
+    bool                    m_condition;
+};
+
+class BOOST_TEST_DECL disable_if : public enable_if {
+public:
+    explicit    disable_if( bool condition ) : enable_if( !condition ) {}
+};
+
 } // namespace decorator
 
 using decorator::label;
@@ -182,12 +203,13 @@ using decorator::expected_failures;
 using decorator::timeout;
 using decorator::description;
 using decorator::depends_on;
+using decorator::enable_if;
+using decorator::disable_if;
 
-} // unit_test
-
+} // namespace unit_test
 } // namespace boost
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_TEST_DECORATORS_HPP_091911GER
+#endif // BOOST_TEST_TREE_DECORATOR_HPP_091911GER
 

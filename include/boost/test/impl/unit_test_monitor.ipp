@@ -18,10 +18,9 @@
 
 // Boost.Test
 #include <boost/test/unit_test_monitor.hpp>
-#include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/test_tools.hpp>
 #include <boost/test/framework.hpp>
-
+#include <boost/test/tree/test_unit.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -29,7 +28,6 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
 
 // ************************************************************************** //
@@ -71,10 +69,7 @@ unit_test_monitor_t::execute_and_translate( test_case const& tc )
 //____________________________________________________________________________//
 
 } // namespace unit_test
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

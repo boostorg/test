@@ -26,9 +26,7 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
-
 namespace ut_detail {
 
 #ifdef BOOST_NO_STD_DISTANCE
@@ -51,11 +49,7 @@ using std::distance;
 template <class T> inline void ignore_unused_variable_warning(const T&) {}
 
 } // namespace ut_detail
-
 } // namespace unit_test
-
-namespace unit_test_framework = unit_test;
-
 } // namespace boost
 
 //____________________________________________________________________________//

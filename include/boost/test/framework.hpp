@@ -28,7 +28,6 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
 
 // ************************************************************************** //
@@ -112,25 +111,31 @@ void                    apply_filters( test_unit_id );
 // **************                framework errors              ************** //
 // ************************************************************************** //
 
-struct internal_error : std::runtime_error {
+struct BOOST_TEST_DECL internal_error : std::runtime_error {
     internal_error( const_string m ) : std::runtime_error( std::string( m.begin(), m.size() ) ) {}
 };
 
-struct setup_error : std::runtime_error {
+//____________________________________________________________________________//
+
+struct BOOST_TEST_DECL setup_error : std::runtime_error {
     setup_error( const_string m ) : std::runtime_error( std::string( m.begin(), m.size() ) ) {}
 };
 
 #define BOOST_TEST_SETUP_ASSERT( cond, msg ) if( cond ) {} else throw unit_test::framework::setup_error( msg )
 
-struct nothing_to_test {}; // not really an error
+//____________________________________________________________________________//
 
-} // namespace framework
-
-} // unit_test
-
-} // namespace boost
+struct BOOST_TEST_DECL test_being_aborted {};
 
 //____________________________________________________________________________//
+
+struct nothing_to_test {}; // not really an error
+
+//____________________________________________________________________________//
+
+} // namespace framework
+} // unit_test
+} // namespace boost
 
 #include <boost/test/detail/enable_warnings.hpp>
 

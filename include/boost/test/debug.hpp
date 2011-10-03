@@ -30,7 +30,6 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace debug {
 
 // ************************************************************************** //
@@ -95,7 +94,6 @@ void BOOST_TEST_DECL detect_memory_leaks( bool on_off );
 void BOOST_TEST_DECL break_memory_alloc( long mem_alloc_order_num );
 
 } // namespace debug
-
 } // namespace boost
 
 #include <boost/test/detail/enable_warnings.hpp>

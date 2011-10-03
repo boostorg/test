@@ -35,7 +35,6 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace itest { // interaction-based testing
 
 // ************************************************************************** //
@@ -77,10 +76,7 @@ manager::instance_ptr( bool reset, manager* new_ptr )
 }
     
 }  // namespace itest
-
 }  // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

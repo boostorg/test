@@ -27,7 +27,6 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace itest {
 
 // ************************************************************************** //
@@ -286,6 +285,8 @@ public:
     }
 };
 
+//____________________________________________________________________________//
+
 // !! MO_BINARY_OP( BOOST_PP_COMMA(), "Comma operator" )
 
 MO_BINARY_BOOL_OP( !=, "Inequality" )
@@ -319,8 +320,9 @@ MO_BINARY_BOOL_OP( ||, "Logical OR" )
 MO_BINARY_OP( <<, "Left shift" )
 MO_BINARY_OP( >>, "Right shift" )
 
-} // namespace itest
+//____________________________________________________________________________//
 
+} // namespace itest
 } // namespace boost
 
 #include <boost/test/detail/enable_warnings.hpp>

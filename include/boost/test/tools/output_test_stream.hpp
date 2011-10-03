@@ -34,7 +34,6 @@
 // class to be used to simplify testing of ostream-based output operations
 
 namespace boost {
-
 namespace test_tools {
 
 class BOOST_TEST_DECL output_test_stream : public wrap_stringstream::wrapped_stream {
@@ -68,10 +67,7 @@ private:
 };
 
 } // namespace test_tools
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

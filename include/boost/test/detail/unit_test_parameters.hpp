@@ -27,14 +27,12 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
+namespace runtime_config {
 
 // ************************************************************************** //
 // **************                 runtime_config               ************** //
 // ************************************************************************** //
-
-namespace runtime_config {
 
 BOOST_TEST_DECL void                    init( int& argc, char** argv );
 
@@ -60,9 +58,7 @@ BOOST_TEST_DECL long                    detect_memory_leaks();
 BOOST_TEST_DECL int                     random_seed();
 
 } // namespace runtime_config
-
 } // namespace unit_test
-
 } // namespace boost
 
 //____________________________________________________________________________//

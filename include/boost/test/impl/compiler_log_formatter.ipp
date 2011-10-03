@@ -16,12 +16,12 @@
 #define BOOST_TEST_COMPILER_LOG_FORMATTER_IPP_020105GER
 
 // Boost.Test
-#include <boost/test/output/compiler_log_formatter.hpp>
-#include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/framework.hpp>
+#include <boost/test/tree/test_unit.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
 #include <boost/test/utils/lazy_ostream.hpp>
 #include <boost/test/utils/setcolor.hpp>
+#include <boost/test/output/compiler_log_formatter.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
 
 // Boost
@@ -35,9 +35,7 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
-
 namespace output {
 
 // ************************************************************************** //
@@ -269,12 +267,8 @@ compiler_log_formatter::log_entry_context( std::ostream& output, const_string co
 //____________________________________________________________________________//
 
 } // namespace output
-
 } // namespace unit_test
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

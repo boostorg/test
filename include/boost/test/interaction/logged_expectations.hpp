@@ -54,7 +54,6 @@ void test_name::test_method()                                           \
 /**/
 
 namespace boost {
-
 namespace itest {
 
 // ************************************************************************** //
@@ -65,7 +64,6 @@ void    BOOST_TEST_DECL
 logged_expectations( boost::function<void ()> const&  F, unit_test::const_string log_file_name, bool test_or_log = true );
 
 } // namespace itest
-
 } // namespace boost
 
 #include <boost/test/detail/enable_warnings.hpp>

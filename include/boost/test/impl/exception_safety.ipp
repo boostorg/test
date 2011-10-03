@@ -525,10 +525,7 @@ exception_safety( boost::function<void ()> const& F, const_string test_name )
 //____________________________________________________________________________//
 
 }  // namespace itest
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

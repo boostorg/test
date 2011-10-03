@@ -131,8 +131,6 @@ main( int argc, char* argv[] )
 
 #endif // !BOOST_TEST_DYN_LINK && !BOOST_TEST_NO_MAIN
 
-//____________________________________________________________________________//
-
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_CPP_MAIN_IPP_012205GER

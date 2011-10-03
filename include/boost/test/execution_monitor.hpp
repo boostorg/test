@@ -370,15 +370,17 @@ enum masks {
     BOOST_FPE_INV       = BOOST_FPE_ALL+1
 };
 
+//____________________________________________________________________________//
+
 // return the previous set of enabled exceptions when successful, and BOOST_FPE_INV otherwise
 unsigned BOOST_TEST_DECL enable( unsigned mask );
 unsigned BOOST_TEST_DECL disable( unsigned mask );
 
-} // namespace fpe
+//____________________________________________________________________________//
 
+} // namespace fpe
 }  // namespace boost
 
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 

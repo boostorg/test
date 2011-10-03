@@ -24,9 +24,7 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
-
 namespace output {
 
 // ************************************************************************** //
@@ -50,12 +48,8 @@ private:
 };
 
 } // namespace output
-
 } // namespace unit_test
-
 } // namespace boost
-
-//____________________________________________________________________________//
 
 #include <boost/test/detail/enable_warnings.hpp>
 
