@@ -35,16 +35,16 @@ namespace unit_test {
 // ************************************************************************** //
 
 unit_test_monitor_t::error_level
-unit_test_monitor_t::execute_and_translate( test_case const& tc )
+unit_test_monitor_t::execute_and_translate( boost::function<void ()> const& func, unsigned timeout )
 {
     try {
         p_catch_system_errors.value     = runtime_config::catch_sys_errors();
-        p_timeout.value                 = tc.p_timeout.get();
+        p_timeout.value                 = timeout;
         p_auto_start_dbg.value          = runtime_config::auto_start_dbg();
         p_use_alt_stack.value           = runtime_config::use_alt_stack();
         p_detect_fp_exceptions.value    = runtime_config::detect_fp_exceptions();
 
-        vexecute( tc.p_test_func );
+        vexecute( func );
     }
     catch( execution_exception const& ex ) {
         framework::exception_caught( ex );

@@ -19,10 +19,13 @@
 #include <boost/test/detail/config.hpp>
 #include <boost/test/detail/global_typedef.hpp>
 
+#include <boost/test/tree/fixture.hpp>
+
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 
 // Boost
 #include <boost/shared_ptr.hpp>
+#include <boost/function/function0.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -196,6 +199,43 @@ public:
     explicit    disable_if( bool condition ) : enable_if( !condition ) {}
 };
 
+// ************************************************************************** //
+// **************              decorator::fixture              ************** //
+// ************************************************************************** //
+
+class BOOST_TEST_DECL fixture_t : public decorator::for_test_unit {
+public:
+    // Constructor
+    explicit    fixture_t( test_unit_fixture_ptr impl ) : m_impl( impl ) {}
+
+private:
+    // decorator::for_test_unit interface
+    virtual void            do_apply( test_unit& tu );
+    virtual for_test_unit*  do_clone() const            { return new fixture_t( m_impl ); }
+
+    // Data members
+    test_unit_fixture_ptr   m_impl;
+};
+
+//____________________________________________________________________________//
+
+template<typename F>
+inline fixture_t
+fixture()
+{
+    return fixture_t( test_unit_fixture_ptr( new unit_test::class_based_fixture<F>() ) );
+}
+
+//____________________________________________________________________________//
+
+inline fixture_t
+fixture( boost::function<void()> const& setup, boost::function<void()> const& teardown = boost::function<void()>() )
+{
+    return fixture_t( test_unit_fixture_ptr( new unit_test::function_based_fixture( setup, teardown ) ) );
+}
+
+//____________________________________________________________________________//
+
 } // namespace decorator
 
 using decorator::label;
@@ -205,6 +245,7 @@ using decorator::description;
 using decorator::depends_on;
 using decorator::enable_if;
 using decorator::disable_if;
+using decorator::fixture;
 
 } // namespace unit_test
 } // namespace boost

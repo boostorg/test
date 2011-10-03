@@ -20,8 +20,6 @@
 #include <boost/test/detail/log_level.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
 
-#include <boost/test/execution_monitor.hpp>
-
 // STL
 #include <iosfwd>
 #include <string> // for std::string

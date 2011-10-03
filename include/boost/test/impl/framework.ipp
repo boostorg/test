@@ -68,25 +68,19 @@ namespace unit_test {
 
 namespace ut_detail {
 
-struct test_init_invoker {
-    explicit    test_init_invoker( init_unit_test_func init_func )  : m_init_func( init_func ) {}
-    int         operator()()
-    {
+void
+invoke_init_func( init_unit_test_func init_func )
+{
 #ifdef BOOST_TEST_ALTERNATIVE_INIT_API
-        if( !(*m_init_func)() )
-            throw std::runtime_error( "test module initialization failed" );
+    if( !(*init_func)() )
+        throw std::runtime_error( "test module initialization failed" );
 #else
-        test_suite*  manual_test_units = (*m_init_func)( framework::master_test_suite().argc, framework::master_test_suite().argv );
+    test_suite*  manual_test_units = (*init_func)( framework::master_test_suite().argc, framework::master_test_suite().argv );
 
-        if( manual_test_units )
-            framework::master_test_suite().add( manual_test_units );
+    if( manual_test_units )
+        framework::master_test_suite().add( manual_test_units );
 #endif
-        return 0;
-    }
-
-    // Data members
-    init_unit_test_func m_init_func;
-};
+}
 
 // ************************************************************************** //
 // **************                  name_filter                 ************** //
@@ -175,7 +169,8 @@ private:
     // test_tree_visitor interface
     virtual void    visit( test_case const& tc )
     {
-        if( filter_unit( tc ) )
+        // make sure we only accept test cases if we match last component of the filter
+        if( m_depth == m_components.size() && filter_unit( tc ) )
             m_tu_to_enable.push_back( std::make_pair( tc.p_id, false ) ); // found a test case; add it to enable list without children
     }
     virtual bool    test_suite_start( test_suite const& ts )
@@ -190,6 +185,10 @@ private:
         }
 
         return false;
+    }
+    virtual void    test_suite_finish( test_suite const& ts )
+    {
+        --m_depth;
     }
 
     // Data members
@@ -282,29 +281,40 @@ public:
     void            set_tu_id( test_unit& tu, test_unit_id id ) { tu.p_id.value = id; }
 
     // test_tree_visitor interface implementation
-    void            visit( test_case const& tc )
+    bool            test_unit_start( test_unit const& tu )
     {
-        if( !tc.check_dependencies() ) {
+        if( !tu.check_dependencies() ) {
             BOOST_TEST_FOREACH( test_observer*, to, m_observers )
-                to->test_unit_skipped( tc );
+                to->test_unit_skipped( tu );
 
-            return;
+            return false;
         }
-
-        // setup contexts
-        m_context_idx = 0;
 
         // notify all observers
         BOOST_TEST_FOREACH( test_observer*, to, m_observers )
-            to->test_unit_start( tc );
+            to->test_unit_start( tu );
 
-        // execute the test case body
-        boost::timer tc_timer;
-        test_unit_id bkup = m_curr_test_case;
-        m_curr_test_case = tc.p_id;
-        unit_test_monitor_t::error_level run_result = unit_test_monitor.execute_and_translate( tc );
+        // first execute setup fixtures if any; any failure here leads to test unit abortion
+        BOOST_TEST_FOREACH( test_unit_fixture_ptr, F, tu.p_fixtures.get() ) {
+            if( unit_test_monitor.execute_and_translate( boost::bind( &test_unit_fixture::setup, F ), 0 ) != unit_test_monitor_t::test_ok )
+                return false;
+        }
 
-        unsigned long elapsed = static_cast<unsigned long>( tc_timer.elapsed() * 1e6 );
+        return true;
+    }
+
+    void            test_unit_finish( test_unit const& tu, unit_test_monitor_t::error_level run_result, unsigned long elapsed )
+    {
+        // if run error is critical skip teardown, who knows what the state of the program at this point
+        if( !unit_test_monitor.is_critical_error( run_result ) ) {
+            // execute teardown fixtures if any
+            BOOST_TEST_FOREACH( test_unit_fixture_ptr, F, tu.p_fixtures.get() ) {
+                run_result = unit_test_monitor.execute_and_translate( boost::bind( &test_unit_fixture::teardown, F ), 0 );
+
+                if( unit_test_monitor.is_critical_error( run_result ) )
+                    break;
+            }
+        }
 
         // notify all observers about abortion
         if( unit_test_monitor.is_critical_error( run_result ) ) {
@@ -314,7 +324,27 @@ public:
 
         // notify all observers about completion
         BOOST_TEST_REVERSE_FOREACH( test_observer*, to, m_observers )
-            to->test_unit_finish( tc, elapsed );
+            to->test_unit_finish( tu, elapsed );
+
+        if( unit_test_monitor.is_critical_error( run_result ) )
+            throw framework::test_being_aborted();
+    }
+
+    // test_tree_visitor interface implementation
+    void            visit( test_case const& tc )
+    {
+        // all the setup work
+        test_unit_start( tc );
+
+        // setup contexts
+        m_context_idx = 0;
+        test_unit_id bkup = m_curr_test_case;
+        m_curr_test_case = tc.p_id;
+
+        // execute the test case body
+        boost::timer tc_timer;
+        unit_test_monitor_t::error_level run_result = unit_test_monitor.execute_and_translate( tc.p_test_func, tc.p_timeout );
+        unsigned long elapsed = static_cast<unsigned long>( tc_timer.elapsed() * 1e6 );
 
         // cleanup leftover context
         m_context.clear();
@@ -322,29 +352,18 @@ public:
         // restore state and abort if necessary
         m_curr_test_case = bkup;
 
-        if( unit_test_monitor.is_critical_error( run_result ) )
-            throw framework::test_being_aborted();
+        // all the teardown work
+        test_unit_finish( tc, run_result, elapsed );
     }
 
     bool            test_suite_start( test_suite const& ts )
     {
-        if( !ts.check_dependencies() ) {
-            BOOST_TEST_FOREACH( test_observer*, to, m_observers )
-                to->test_unit_skipped( ts );
-
-            return false;
-        }
-
-        BOOST_TEST_FOREACH( test_observer*, to, m_observers )
-            to->test_unit_start( ts );
-
-        return true;
+        return test_unit_start( ts );
     }
 
     void            test_suite_finish( test_suite const& ts )
     {
-        BOOST_TEST_REVERSE_FOREACH( test_observer*, to, m_observers )
-            to->test_unit_finish( ts, 0 );
+        test_unit_finish( ts, unit_test_monitor_t::test_ok, 0 );
     }
 
     //////////////////////////////////////////////////////////////////
@@ -383,6 +402,8 @@ public:
     observer_store  m_observers;
     context_data    m_context;
     int             m_context_idx;
+
+    boost::execution_monitor m_aux_em;
 };
 
 //____________________________________________________________________________//
@@ -430,11 +451,7 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     master_test_suite().argv = argv;
 
     try {
-        boost::execution_monitor em;
-
-        ut_detail::test_init_invoker tic( init_func );
-
-        em.execute( tic );
+        s_frk_impl().m_aux_em.vexecute( boost::bind( &ut_detail::invoke_init_func, init_func ) );
     }
     catch( execution_exception const& ex )  {
         throw setup_error( ex.what() );
@@ -468,7 +485,7 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
 
                     if( !dep.p_enabled ) {
                         BOOST_TEST_MESSAGE( "Disable test " << tu.p_type_name << ' ' << tu.p_name << 
-                                            " since it depends on desabled test " << dep.p_type_name << ' ' << dep.p_name );
+                                            " since it depends on disabled test " << dep.p_type_name << ' ' << dep.p_name );
 
                         tu.p_enabled.value = false;
                         break;
@@ -805,10 +822,8 @@ run( test_unit_id id, bool continue_test )
 
     if( call_start_finish ) {
         BOOST_TEST_FOREACH( test_observer*, to, s_frk_impl().m_observers ) {
-            boost::execution_monitor em;
-
             try {
-                em.vexecute( boost::bind( &test_observer::test_start, to, tcc.p_count ) );
+                s_frk_impl().m_aux_em.vexecute( boost::bind( &test_observer::test_start, to, tcc.p_count ) );
             }
             catch( execution_exception const& ex )  {
                 throw setup_error( ex.what() );

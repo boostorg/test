@@ -17,6 +17,7 @@
 
 // Boost.Test
 #include <boost/test/output/xml_log_formatter.hpp>
+#include <boost/test/execution_monitor.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/tree/test_unit.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
