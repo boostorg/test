@@ -43,6 +43,9 @@
 
 namespace boost { namespace unit_test {
 
+// !! ?? to remove
+namespace unit_test_framework=unit_test;
+
 int BOOST_TEST_DECL unit_test_main( init_unit_test_func init_func, int argc, char* argv[] );
 
 }}

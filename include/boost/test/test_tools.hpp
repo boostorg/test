@@ -286,6 +286,13 @@ struct print_log_value<the_type > {                         \
 
 //____________________________________________________________________________//
 
+// ***************************** //
+// deprecated interface
+
+#define BOOST_BITWISE_EQUAL( L, R )         BOOST_CHECK_BITWISE_EQUAL( L, R )
+#define BOOST_MESSAGE( M )                  BOOST_TEST_MESSAGE( M )
+#define BOOST_CHECKPOINT( M )               BOOST_TEST_CHECKPOINT( M )
+
 #include <boost/test/tools/impl.hpp>
 
 #include <boost/test/detail/enable_warnings.hpp>
