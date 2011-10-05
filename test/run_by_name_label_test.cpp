@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE( test_run_by_name )
 
         utf::test_case_counter tcc;
         utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 9U );
+        BOOST_CHECK_EQUAL( tcc.p_count, 5U );
     }
 
     {
@@ -91,7 +91,7 @@ BOOST_AUTO_TEST_CASE( test_run_by_name )
 
         utf::test_case_counter tcc;
         utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 9U );
+        BOOST_CHECK_EQUAL( tcc.p_count, 2U );
     }
 
     {
@@ -283,7 +283,7 @@ BOOST_AUTO_TEST_CASE( test_run_by_name )
 
         utf::test_case_counter tcc;
         utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 2U );
+        BOOST_CHECK_EQUAL( tcc.p_count, 1U );
     }
 
     {
