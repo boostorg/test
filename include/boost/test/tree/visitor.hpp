@@ -18,8 +18,9 @@
 // Boost.Test
 #include <boost/test/detail/config.hpp>
 
-#include <boost/test/detail/suppress_warnings.hpp>
+#include <boost/test/tree/test_unit.hpp>
 
+#include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
 

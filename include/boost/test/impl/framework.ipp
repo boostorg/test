@@ -334,7 +334,8 @@ public:
     void            visit( test_case const& tc )
     {
         // all the setup work
-        test_unit_start( tc );
+        if( !test_unit_start( tc ) )
+            return;
 
         // setup contexts
         m_context_idx = 0;
