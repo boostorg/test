@@ -35,6 +35,8 @@ namespace unit_test {
 
 class BOOST_TEST_DECL test_unit_fixture { 
 public: 
+    virtual ~test_unit_fixture() {}
+
     // Fixture interface
     virtual void    setup() = 0;
     virtual void    teardown() = 0;
