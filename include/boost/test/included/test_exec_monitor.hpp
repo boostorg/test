@@ -26,11 +26,11 @@
 #include <boost/test/impl/results_reporter.ipp>
 #include <boost/test/impl/test_main.ipp>
 #include <boost/test/impl/test_tools.ipp>
+#include <boost/test/impl/test_tree.ipp>
 #include <boost/test/impl/unit_test_log.ipp>
 #include <boost/test/impl/unit_test_main.ipp>
 #include <boost/test/impl/unit_test_monitor.ipp>
 #include <boost/test/impl/unit_test_parameters.ipp>
-#include <boost/test/impl/unit_test_suite.ipp>
 #include <boost/test/impl/xml_log_formatter.ipp>
 #include <boost/test/impl/xml_report_formatter.ipp>
 

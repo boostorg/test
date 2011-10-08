@@ -21,7 +21,7 @@
 #if BOOST_TEST_SUPPORT_INTERACTION_TESTING
 
 #include <boost/test/detail/global_typedef.hpp>
-#include <boost/test/detail/unit_test_parameters.hpp>
+#include <boost/test/unit_test_parameters.hpp>
 
 #include <boost/test/utils/wrap_stringstream.hpp>
 #include <boost/test/utils/iterator/token_iterator.hpp>

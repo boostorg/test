@@ -23,7 +23,7 @@
 #include <boost/test/utils/lazy_ostream.hpp>
 #include <boost/test/utils/setcolor.hpp>
 #include <boost/test/output/compiler_log_formatter.hpp>
-#include <boost/test/detail/unit_test_parameters.hpp>
+#include <boost/test/unit_test_parameters.hpp>
 
 // Boost
 #include <boost/version.hpp>

@@ -30,7 +30,7 @@
 
 #include <boost/test/utils/foreach.hpp>
 
-#include <boost/test/detail/unit_test_parameters.hpp>
+#include <boost/test/unit_test_parameters.hpp>
 
 // Boost
 #include <boost/timer.hpp>

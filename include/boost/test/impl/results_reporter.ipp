@@ -26,7 +26,7 @@
 #include <boost/test/tree/test_unit.hpp>
 #include <boost/test/tree/traverse.hpp>
 
-#include <boost/test/detail/unit_test_parameters.hpp>
+#include <boost/test/unit_test_parameters.hpp>
 
 // Boost
 #include <boost/scoped_ptr.hpp>

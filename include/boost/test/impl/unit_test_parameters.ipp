@@ -19,8 +19,8 @@
 #define BOOST_TEST_UNIT_TEST_PARAMETERS_IPP_012205GER
 
 // Boost.Test
-#define MAX_MAP_SIZE 25
-#include <boost/test/detail/unit_test_parameters.hpp>
+
+#include <boost/test/unit_test_parameters.hpp>
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 #include <boost/test/utils/basic_cstring/compare.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
@@ -173,32 +173,43 @@ std::string TESTS_TO_RUN      = "run_test";
 std::string SAVE_TEST_PATTERN = "save_pattern";
 std::string SHOW_PROGRESS     = "show_progress";
 std::string USE_ALT_STACK     = "use_alt_stack";
+std::string WAIT_FOR_DEBUGGER = "wait_for_debugger";
 
-fixed_mapping<const_string,const_string> parameter_2_env_var(
-    AUTO_START_DBG    , "BOOST_TEST_AUTO_START_DBG",
-    BREAK_EXEC_PATH   , "BOOST_TEST_BREAK_EXEC_PATH",
-    BUILD_INFO        , "BOOST_TEST_BUILD_INFO",
-    CATCH_SYS_ERRORS  , "BOOST_TEST_CATCH_SYSTEM_ERRORS",
-    COLOR_OUTPUT      , "BOOST_TEST_COLOR_OUTPUT",
-    DETECT_FP_EXCEPT  , "BOOST_TEST_DETECT_FP_EXCEPTIONS",
-    DETECT_MEM_LEAKS  , "BOOST_TEST_DETECT_MEMORY_LEAK",
-    LIST_CONTENT      , "BOOST_TEST_LIST_CONTENT",
-    LOG_FORMAT        , "BOOST_TEST_LOG_FORMAT",
-    LOG_LEVEL         , "BOOST_TEST_LOG_LEVEL",
-    LOG_SINK          , "BOOST_TEST_LOG_SINK",
-    OUTPUT_FORMAT     , "BOOST_TEST_OUTPUT_FORMAT",
-    RANDOM_SEED       , "BOOST_TEST_RANDOM",
-    REPORT_FORMAT     , "BOOST_TEST_REPORT_FORMAT",
-    REPORT_LEVEL      , "BOOST_TEST_REPORT_LEVEL",
-    REPORT_SINK       , "BOOST_TEST_REPORT_SINK",
-    RESULT_CODE       , "BOOST_TEST_RESULT_CODE",
-    TESTS_TO_RUN      , "BOOST_TESTS_TO_RUN",
-    SAVE_TEST_PATTERN , "BOOST_TEST_SAVE_PATTERN",
-    SHOW_PROGRESS     , "BOOST_TEST_SHOW_PROGRESS",
-    USE_ALT_STACK     , "BOOST_TEST_USE_ALT_STACK",
+static const_string
+parameter_2_env_var( const_string param_name )
+{
+    typedef std::map<const_string,const_string> mtype;
+    static mtype s_mapping;
 
-    ""
-);
+    if( s_mapping.empty() ) {
+        s_mapping[AUTO_START_DBG]       = "BOOST_TEST_AUTO_START_DBG";
+        s_mapping[BREAK_EXEC_PATH]      = "BOOST_TEST_BREAK_EXEC_PATH";
+        s_mapping[BUILD_INFO]           = "BOOST_TEST_BUILD_INFO";
+        s_mapping[CATCH_SYS_ERRORS]     = "BOOST_TEST_CATCH_SYSTEM_ERRORS";
+        s_mapping[COLOR_OUTPUT]         = "BOOST_TEST_COLOR_OUTPUT";
+        s_mapping[DETECT_FP_EXCEPT]     = "BOOST_TEST_DETECT_FP_EXCEPTIONS";
+        s_mapping[DETECT_MEM_LEAKS]     = "BOOST_TEST_DETECT_MEMORY_LEAK";
+        s_mapping[LIST_CONTENT]         = "BOOST_TEST_LIST_CONTENT";
+        s_mapping[LOG_FORMAT]           = "BOOST_TEST_LOG_FORMAT";
+        s_mapping[LOG_LEVEL]            = "BOOST_TEST_LOG_LEVEL";
+        s_mapping[LOG_SINK]             = "BOOST_TEST_LOG_SINK";
+        s_mapping[OUTPUT_FORMAT]        = "BOOST_TEST_OUTPUT_FORMAT";
+        s_mapping[RANDOM_SEED]          = "BOOST_TEST_RANDOM";
+        s_mapping[REPORT_FORMAT]        = "BOOST_TEST_REPORT_FORMAT";
+        s_mapping[REPORT_LEVEL]         = "BOOST_TEST_REPORT_LEVEL";
+        s_mapping[REPORT_SINK]          = "BOOST_TEST_REPORT_SINK";
+        s_mapping[RESULT_CODE]          = "BOOST_TEST_RESULT_CODE";
+        s_mapping[TESTS_TO_RUN]         = "BOOST_TESTS_TO_RUN";
+        s_mapping[SAVE_TEST_PATTERN]    = "BOOST_TEST_SAVE_PATTERN";
+        s_mapping[SHOW_PROGRESS]        = "BOOST_TEST_SHOW_PROGRESS";
+        s_mapping[USE_ALT_STACK]        = "BOOST_TEST_USE_ALT_STACK";
+        s_mapping[WAIT_FOR_DEBUGGER]    = "BOOST_TEST_WAIT_FOR_DEBUGGER";
+    }
+
+    mtype::const_iterator it = s_mapping.find( param_name );
+
+    return it == s_mapping.end() ? const_string() : it->second;
+}
 
 //____________________________________________________________________________//
 
@@ -233,7 +244,7 @@ retrieve_parameter( const_string parameter_name, cla::parser const& s_cla_parser
     boost::optional<T> v;
 
 #ifndef UNDER_CE
-    env::get( parameter_2_env_var[parameter_name], v );
+    env::get( parameter_2_env_var(parameter_name), v );
 #endif
 
     if( v )
@@ -320,6 +331,9 @@ init( int& argc, char** argv )
               << cla::named_parameter<bool>( USE_ALT_STACK )
                 - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,
                    cla::description = "Turns on/off usage of an alternative stack for signal handling")
+              << cla::dual_name_parameter<bool>( WAIT_FOR_DEBUGGER + "|w" )
+                - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,cla::optional_value,
+                   cla::description = "Forces test module to wait for button to be pressed before starting test run")
 
               << cla::dual_name_parameter<bool>( "help|?" )
                 - (cla::prefix = "--|-",cla::separator = "=",cla::guess_name,cla::optional,
@@ -454,9 +468,17 @@ color_output()
 bool
 auto_start_dbg()
 {
-    // !! set debugger as an option
+    // !! ?? set debugger as an option
     return retrieve_parameter( AUTO_START_DBG, s_cla_parser, false );
 ;
+}
+
+//____________________________________________________________________________//
+
+bool
+wait_for_debugger()
+{
+    return retrieve_parameter( WAIT_FOR_DEBUGGER, s_cla_parser, false );
 }
 
 //____________________________________________________________________________//

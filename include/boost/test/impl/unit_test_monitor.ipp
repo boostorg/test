@@ -21,7 +21,7 @@
 #include <boost/test/test_tools.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/tree/test_unit.hpp>
-#include <boost/test/detail/unit_test_parameters.hpp>
+#include <boost/test/unit_test_parameters.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 

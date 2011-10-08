@@ -24,7 +24,7 @@
 #include <boost/test/tree/test_unit.hpp>
 #include <boost/test/tree/traverse.hpp>
 
-#include <boost/test/detail/unit_test_parameters.hpp>
+#include <boost/test/unit_test_parameters.hpp>
 
 // Boost
 #include <boost/cstdlib.hpp>
@@ -91,8 +91,15 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
             return boost::exit_success;
         }
 
-        framework::run();
+        if( runtime_config::wait_for_debugger() ) {
+            results_reporter::get_stream() << "Press any key to continue..." << std::endl;
 
+            std::getchar();
+            results_reporter::get_stream() << "Continuing..." << std::endl;
+        }
+
+        framework::run();
+        
         results_reporter::make_report();
 
         return runtime_config::no_result_code() 
