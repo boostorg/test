@@ -21,7 +21,7 @@
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/unit_test_suite.hpp>
 #include <boost/test/framework.hpp>
-#include <boost/test/detail/unit_test_parameters.hpp>
+#include <boost/test/unit_test_parameters.hpp>
 #if BOOST_WORKAROUND(  __GNUC__, < 3 )
 typedef boost::test_tools::output_test_stream onullstream_type;
 #else

@@ -23,7 +23,7 @@
 #include <boost/test/unit_test_suite.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/tree/test_unit.hpp>
-#include <boost/test/detail/unit_test_parameters.hpp>
+#include <boost/test/unit_test_parameters.hpp>
 #include <boost/test/output/compiler_log_formatter.hpp>
 #include <boost/test/results_reporter.hpp>
 // STL

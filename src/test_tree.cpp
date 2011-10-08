@@ -13,6 +13,6 @@
 // ***************************************************************************
 
 #define BOOST_TEST_SOURCE
-#include <boost/test/impl/unit_test_suite.ipp>
+#include <boost/test/impl/test_tree.ipp>
 
 // EOF

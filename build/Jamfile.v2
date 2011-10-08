@@ -38,11 +38,11 @@ TEST_EXEC_MON_SOURCES =
   results_reporter
   test_main
   test_tools
+  test_tree
   unit_test_log
   unit_test_main
   unit_test_monitor
   unit_test_parameters
-  unit_test_suite
   xml_log_formatter
   xml_report_formatter
   ;
@@ -61,11 +61,11 @@ UTF_SOURCES =
   results_collector
   results_reporter
   test_tools
+  test_tree
   unit_test_log
   unit_test_main
   unit_test_monitor
   unit_test_parameters
-  unit_test_suite
   xml_log_formatter
   xml_report_formatter
   ;
