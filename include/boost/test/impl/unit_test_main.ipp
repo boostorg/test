@@ -30,6 +30,7 @@
 #include <boost/cstdlib.hpp>
 
 // STL
+#include <cstdio>
 #include <stdexcept>
 #include <iostream>
 #include <iomanip>
