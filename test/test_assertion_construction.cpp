@@ -173,6 +173,7 @@ BOOST_AUTO_TEST_CASE( test_arithmetic_ops )
     // assertion::expression const& E = seed->*99/2 == 48 || 101/2 > 50;
     // assertion::expression const& E = seed->* a ? 100 < 50 : 25*2 == 50;
     // assertion::expression const& E = seed->* true,false;
+}
 
 //____________________________________________________________________________//
 
