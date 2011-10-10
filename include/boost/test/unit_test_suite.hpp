@@ -19,6 +19,7 @@
 #include <boost/test/framework.hpp>
 #include <boost/test/tree/auto_registration.hpp>
 #include <boost/test/tree/test_case_template.hpp>
+#include <boost/test/tree/global_fixture.hpp>
 
 //____________________________________________________________________________//
 
