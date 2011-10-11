@@ -51,11 +51,13 @@ BOOST_AUTO_TEST_CASE( test_basic_value_expression_construction )
         BOOST_CHECK( res );
     }
 
+#ifndef BOOST_NO_DECLTYPE
     {
         assertion::expression const& E = seed->* "abc";
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( res );
     }
+#endif
 
     {
         assertion::expression const& E = seed->* 1>2;
@@ -120,6 +122,8 @@ BOOST_AUTO_TEST_CASE( test_comparison_expression )
 
 //____________________________________________________________________________//
 
+#ifndef BOOST_NO_DECLTYPE
+
 BOOST_AUTO_TEST_CASE( test_arithmetic_ops )
 {
     using namespace boost::test_tools;
@@ -177,12 +181,16 @@ BOOST_AUTO_TEST_CASE( test_arithmetic_ops )
 
 //____________________________________________________________________________//
 
+#endif // BOOST_NO_DECLTYPE
+
 struct Testee {
     static int s_copy_counter;
 
     Testee() : m_value( false ) {}
     Testee( Testee const& ) : m_value(false) { s_copy_counter++; }
+#ifndef BOOST_NO_RVALUE_REFERENCES
     Testee( Testee&& ) : m_value(false)     {}
+#endif
 
     bool foo() { return m_value; }
     operator bool() const { return m_value; }
@@ -194,9 +202,13 @@ struct Testee {
 
 int Testee::s_copy_counter = 0;
 
+#ifndef BOOST_NO_RVALUE_REFERENCES
 Testee          get_obj() { return std::move( Testee() ); }
-
 Testee const    get_const_obj() { return std::move( Testee() ); }
+#else
+Testee          get_obj() { return Testee(); }
+Testee const    get_const_obj() { return Testee(); }
+#endif
 
 BOOST_AUTO_TEST_CASE( test_objects )
 {
@@ -211,7 +223,11 @@ BOOST_AUTO_TEST_CASE( test_objects )
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
         BOOST_CHECK_EQUAL( res.message(), "(bool)Testee is false" );
+#ifndef BOOST_NO_RVALUE_REFERENCES
         BOOST_CHECK_EQUAL( Testee::s_copy_counter, 0 );
+#else
+        BOOST_CHECK_EQUAL( Testee::s_copy_counter, 1 );
+#endif
     }
 
     {
@@ -222,7 +238,11 @@ BOOST_AUTO_TEST_CASE( test_objects )
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
         BOOST_CHECK_EQUAL( res.message(), "(bool)Testee is false" );
+#ifndef BOOST_NO_RVALUE_REFERENCES
         BOOST_CHECK_EQUAL( Testee::s_copy_counter, 0 );
+#else
+        BOOST_CHECK_EQUAL( Testee::s_copy_counter, 1 );
+#endif
     }
 
     {
@@ -281,6 +301,7 @@ BOOST_AUTO_TEST_CASE( test_pointers )
         BOOST_CHECK_EQUAL( res.message(), "(bool)Testee is false" );
     }
 
+#ifndef BOOST_NO_DECLTYPE
     {
         Testee obj;
         Testee* ptr =&obj;
@@ -290,6 +311,7 @@ BOOST_AUTO_TEST_CASE( test_pointers )
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
     }
+#endif
 
     // do not support
     // Testee obj;
@@ -311,7 +333,11 @@ BOOST_AUTO_TEST_CASE( test_mutating_ops )
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
         BOOST_CHECK_EQUAL( res.message(), "(bool)0 is false" );
+#ifndef BOOST_NO_RVALUE_REFERENCES
         BOOST_CHECK_EQUAL( j, 0 );
+#else
+        BOOST_CHECK_EQUAL( j, 5 );
+#endif
     }
 
     {
@@ -321,7 +347,11 @@ BOOST_AUTO_TEST_CASE( test_mutating_ops )
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
         BOOST_CHECK_EQUAL( res.message(), "(bool)0 is false" );
+#ifndef BOOST_NO_RVALUE_REFERENCES
         BOOST_CHECK_EQUAL( j, 0 );
+#else
+        BOOST_CHECK_EQUAL( j, 5 );
+#endif
     }
 
     {
@@ -331,7 +361,11 @@ BOOST_AUTO_TEST_CASE( test_mutating_ops )
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
         BOOST_CHECK_EQUAL( res.message(), "(bool)0 is false" );
+#ifndef BOOST_NO_RVALUE_REFERENCES
         BOOST_CHECK_EQUAL( j, 0 );
+#else
+        BOOST_CHECK_EQUAL( j, 5 );
+#endif
     }
 
     {
@@ -341,7 +375,11 @@ BOOST_AUTO_TEST_CASE( test_mutating_ops )
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
         BOOST_CHECK_EQUAL( res.message(), "(bool)0 is false" );
+#ifndef BOOST_NO_RVALUE_REFERENCES
         BOOST_CHECK_EQUAL( j, 0 );
+#else
+        BOOST_CHECK_EQUAL( j, 5 );
+#endif
     }
 
     {
@@ -351,7 +389,11 @@ BOOST_AUTO_TEST_CASE( test_mutating_ops )
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
         BOOST_CHECK_EQUAL( res.message(), "(bool)0 is false" );
+#ifndef BOOST_NO_RVALUE_REFERENCES
         BOOST_CHECK_EQUAL( j, 0 );
+#else
+        BOOST_CHECK_EQUAL( j, 4 );
+#endif
     }
 
     {
@@ -361,7 +403,11 @@ BOOST_AUTO_TEST_CASE( test_mutating_ops )
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
         BOOST_CHECK_EQUAL( res.message(), "(bool)0 is false" );
+#ifndef BOOST_NO_RVALUE_REFERENCES
         BOOST_CHECK_EQUAL( j, 0 );
+#else
+        BOOST_CHECK_EQUAL( j, 5 );
+#endif
     }
 }
 
