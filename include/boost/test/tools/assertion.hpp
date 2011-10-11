@@ -81,6 +81,8 @@ enum id {
     // not supported
 };
 
+#ifndef BOOST_NO_DECLTYPE
+
 #define BOOST_TEST_FOR_EACH_OP( action )    \
     action(->*, MEMP )                      \
                                             \
@@ -106,6 +108,20 @@ enum id {
     action( ^ , XOR  )                      \
     action( | , BOR  )                      \
 /**/
+
+#else
+
+#define BOOST_TEST_FOR_EACH_OP( action )    \
+    action( < , LT   )                      \
+    action( <=, LE   )                      \
+    action( > , GT   )                      \
+    action( >=, GE   )                      \
+                                            \
+    action( ==, EQ   )                      \
+    action( !=, NE   )                      \
+/**/
+
+#endif
 
 #define BOOST_TEST_FOR_EACH_MUT_OP( action )\
     action( = , SET  )                      \
@@ -149,16 +165,13 @@ namespace detail {
 template<typename PrevExprType,typename Rhs,op::id OP>
 class expression_result;
 
-#ifndef BOOST_NO_DECLTYPE
-
 #define DEFINE_OP_EXPRESSION_RESULT( OPER, ID )             \
 template<typename PrevExprType,typename Rhs>                \
 class expression_result<PrevExprType,Rhs,op::ID> {          \
     typedef typename PrevExprType::result_type Lhs;         \
 public:                                                     \
                                                             \
-    typedef decltype(boost::declval<Lhs>() OPER             \
-                     boost::declval<Rhs>() ) type;          \
+    typedef DEDUCE_RESULT_TYPE( OPER ) type;                \
                                                             \
     static type                                             \
     produce( Lhs const& lhs, Rhs const& rhs)                \
@@ -179,11 +192,18 @@ public:                                                     \
 
 ////////////////////////////////////////////////////////////////
 
-BOOST_TEST_FOR_EACH_OP( DEFINE_OP_EXPRESSION_RESULT );
-
-#undef DEFINE_OP_EXPRESSION_RESULT
-
+#ifndef BOOST_NO_DECLTYPE
+#define DEDUCE_RESULT_TYPE( OPER ) decltype(boost::declval<Lhs>() OPER boost::declval<Rhs>() ) 
+#else
+#define DEDUCE_RESULT_TYPE( OPER ) predicate_result 
 #endif
+
+////////////////////////////////////////////////////////////////
+
+BOOST_TEST_FOR_EACH_OP( DEFINE_OP_EXPRESSION_RESULT )
+
+#undef DEDUCE_RESULT_TYPE
+#undef DEFINE_OP_EXPRESSION_RESULT
 
 } // namespace detail
 
@@ -199,7 +219,6 @@ template<typename Lhs,typename Rhs,op::id OP> class binary_expr;
 template<typename ExprType>
 class expression_op {
 public:
-#ifndef BOOST_NO_DECLTYPE
 
 #define ADD_OP_SUPPORT( OPER, ID )                          \
     template<typename T>                                    \
@@ -212,10 +231,8 @@ public:
     }                                                       \
 /**/
 
-    BOOST_TEST_FOR_EACH_OP( ADD_OP_SUPPORT );
+    BOOST_TEST_FOR_EACH_OP( ADD_OP_SUPPORT )
 #undef ADD_OP_SUPPORT
-
-#endif
 
     // Disabled operators
     template<typename T>
@@ -256,7 +273,11 @@ public:
     typedef T                   result_type;
 
     // Constructor
+#ifndef BOOST_NO_RVALUE_REFERENCES
     explicit                    value_expr( T&& val )
+#else
+    explicit                    value_expr( T const& val )
+#endif
     : m_value( val )
     {}
 
@@ -354,10 +375,18 @@ public:
     // ->* is highest precedence left to right operator
     template<typename T>
     value_expr<T>
+#ifndef BOOST_NO_RVALUE_REFERENCES
     operator->*( T&& v )
     {
         return value_expr<T>( std::forward<T>( v ) );
     }
+#else
+    operator->*( T const& v )
+    {
+        return value_expr<T>( v );
+    }
+#endif
+
 };
 
 #undef BOOST_TEST_FOR_EACH_OP
