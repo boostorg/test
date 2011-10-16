@@ -240,6 +240,8 @@ unit_test_log_t::exception_caught( execution_exception const& ex )
 
         s_log_impl().m_log_formatter->log_exception_finish( s_log_impl().stream() );
     }
+
+    clear_entry_context();
 }
 
 //____________________________________________________________________________//
@@ -292,6 +294,8 @@ unit_test_log_t::operator<<( log::end const& )
 
         s_log_impl().m_entry_in_progress = false;
     }
+
+    clear_entry_context();
 
     return *this;
 }
@@ -397,7 +401,13 @@ unit_test_log_t::log_entry_context()
         s_log_impl().m_log_formatter->log_entry_context( s_log_impl().stream(), frame );
 
     s_log_impl().m_log_formatter->entry_context_finish( s_log_impl().stream() );
+}
 
+//____________________________________________________________________________//
+
+void
+unit_test_log_t::clear_entry_context()
+{
     framework::clear_context();
 }
 

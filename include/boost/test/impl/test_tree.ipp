@@ -75,6 +75,8 @@ test_unit::~test_unit()
 void
 test_unit::depends_on( test_unit* tu )
 {
+    BOOST_TEST_SETUP_ASSERT( p_id != framework::master_test_suite().p_id, "Can't add dependency to the master test suite" );
+
     p_dependencies.value.push_back( tu->p_id );
 }
 

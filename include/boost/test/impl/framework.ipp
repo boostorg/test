@@ -234,14 +234,83 @@ private:
 
 class change_status : public test_tree_visitor {
 public:
-    explicit        change_status( bool enable_or_disable ) : m_new_status( enable_or_disable ) {}
+    explicit        change_status( bool enable_or_disable ) 
+    : m_new_status( enable_or_disable )
+    , m_made_change( false )
+    {}
+
+    bool            made_change() const { return m_made_change; }
 
 private:
     // test_tree_visitor interface
-    virtual bool    visit( test_unit const& tu ) { tu.p_enabled.value = m_new_status; return true; }
+    virtual bool    visit( test_unit const& tu )
+    {
+        if( tu.p_enabled.get() ^ m_new_status ) {
+            tu.p_enabled.value  = m_new_status;
+            m_made_change       = true;
+        }
+        return true;
+    }
 
     // Data members
     bool            m_new_status;
+    bool            m_made_change;
+};
+
+// ************************************************************************** //
+// **************                 change_status                ************** //
+// ************************************************************************** //
+
+class remove_disabled : public test_tree_visitor {
+public:
+    explicit        remove_disabled( bool remove_from_tree ) 
+    : m_remove_from_tree( remove_from_tree )
+    , m_made_change( false )
+    {}
+
+    bool            made_change() const { return m_made_change; }
+
+private:
+    // test_tree_visitor interface
+    virtual bool    visit( test_unit const& tu )
+    {
+        if( !m_remove_from_tree && !tu.p_enabled )
+            return false;
+
+        // check if any of dependencies are disabled
+        if( tu.p_enabled ) {
+            BOOST_TEST_FOREACH( test_unit_id, dep_id, tu.p_dependencies.get() ) {
+                test_unit const& dep = framework::get( dep_id, tut_any );
+
+                if( !dep.p_enabled ) {
+                    BOOST_TEST_MESSAGE( "Disable test " << tu.p_type_name << ' ' << tu.p_name << 
+                                        " since it depends on disabled test " << dep.p_type_name << ' ' << dep.p_name );
+
+                    tu.p_enabled.value = false;
+                    m_made_change      = true;
+                    break;
+                }
+            }
+        }
+
+        // if this test unit is disabled - disable all subunits and remove it from the tree if requested
+        if( !tu.p_enabled ) {
+            if( tu.p_type == tut_suite ) {
+                ut_detail::change_status disabler( false );
+                traverse_test_tree( tu.p_id, disabler, true );
+                m_made_change |= disabler.made_change();
+            }
+
+            if( m_remove_from_tree )
+                framework::get<test_suite>( tu.p_parent_id ).remove( tu.p_id );
+        }
+
+        return tu.p_enabled;
+    }
+
+    // Data members
+    bool m_remove_from_tree;
+    bool m_made_change;
 };
 
 } // namespace ut_detail
@@ -429,36 +498,59 @@ namespace framework {
 
 namespace impl {
 void
-apply_filters( test_unit_id tu_id )
+apply_filters( test_unit_id master_tu_id )
 {
     if( runtime_config::test_to_run().empty() ) {
         // enable all test units for this run
         ut_detail::change_status enabler( true );
-        traverse_test_tree( tu_id, enabler, true );
+        traverse_test_tree( master_tu_id, enabler, true );
     }
     else {
-        // 10. First disable all test units. We'll re-enable only those that pass the filters
-        ut_detail::change_status disabler( false );
-        traverse_test_tree( tu_id, disabler, true );
-
-        // 20. collect tu to enable based on filters
+        // 10. collect tu to enable and disable based on filters
         ut_detail::tu_enable_list tu_to_enable;
+        ut_detail::tu_enable_list tu_to_disable;
+        bool had_enable_filter = false;
+        bool had_disable_filter = false;
 
-        BOOST_TEST_FOREACH( std::string const&, filter, runtime_config::test_to_run() ) {
-            if( filter.empty() )
-                continue;
+        BOOST_TEST_FOREACH( const_string, filter, runtime_config::test_to_run() ) {
+            BOOST_TEST_SETUP_ASSERT( !filter.is_empty(), "Invalid filter specification" );
 
+            bool enable_or_disable = true;
+            
+            // 11. Decide if this "enabler" or "disabler" filter
+            if( filter[0] == '!' ) {
+                enable_or_disable = false;
+                filter.trim_left( 1 );
+                BOOST_TEST_SETUP_ASSERT( !filter.is_empty(), "Invalid filter specification" );
+            }
+
+            if( enable_or_disable )
+                had_enable_filter = true;
+            else
+                had_disable_filter = true;
+
+            // 12. Choose between name filter and label filter
             if( filter[0] == '@' ) {
-                ut_detail::label_filter lf( tu_to_enable, const_string(filter).trim_left(1) );
-                traverse_test_tree( tu_id, lf, true );
+                filter.trim_left( 1 );
+                ut_detail::label_filter lf( enable_or_disable ? tu_to_enable : tu_to_disable, filter );
+                traverse_test_tree( master_tu_id, lf, true );
             }
             else {
-                ut_detail::name_filter nf( tu_to_enable, filter );
-                traverse_test_tree( tu_id, nf, true );
+                ut_detail::name_filter nf( enable_or_disable ? tu_to_enable : tu_to_disable, filter );
+                traverse_test_tree( master_tu_id, nf, true );
             }
         }
 
-        // 30. enable all tu collected along with their parents, dependencies and children where necessary
+        // 15. At this point we collected 2 lists: tu to enable and tu to disable
+        //     If first list is not empty we'll disable all tu and only enable those we need
+        //     otherwise we enable all
+        //     If second list is not empty we'll go through tree based on whatever is currently 
+        //     enabled and disable units from second list
+
+        ut_detail::change_status change_status( tu_to_enable.empty() && !had_enable_filter );
+        traverse_test_tree( master_tu_id, change_status, true );
+
+        // 20. enable tu collected along with their parents, dependencies and children where necessary
         while( !tu_to_enable.empty() ) {
             std::pair<test_unit_id,bool>    data = tu_to_enable.front();
             test_unit const&                tu   = framework::get( data.first, tut_any );
@@ -468,18 +560,18 @@ apply_filters( test_unit_id tu_id )
             if( tu.p_enabled ) 
                 continue;
 
-            // 31. enable tu
+            // 21. enable tu
             tu.p_enabled.value = true;
 
-            // 32. master test suite - we are done
-            if( tu.p_id == tu_id )
+            // 22. master test suite - we are done
+            if( tu.p_id == master_tu_id )
                 continue;
 
-            // 33. add parent to the list (without children)
+            // 23. add parent to the list (without children)
             if( !framework::get( tu.p_parent_id, tut_any ).p_enabled )
                 tu_to_enable.push_back( std::make_pair( tu.p_parent_id, false ) );
 
-            // 34. add dependencies to the list (with children)
+            // 24. add dependencies to the list (with children)
             BOOST_TEST_FOREACH( test_unit_id, dep_id, tu.p_dependencies.get() ) {
                 test_unit const& dep = framework::get( dep_id, tut_any );
 
@@ -491,7 +583,7 @@ apply_filters( test_unit_id tu_id )
                 }
             }
 
-            // 35. add all children to the list recursively
+            // 25. add all children to the list recursively
             if( data.second && tu.p_type == tut_suite ) {
                 class collect_disabled : public test_tree_visitor {
                 public:
@@ -514,6 +606,32 @@ apply_filters( test_unit_id tu_id )
                 traverse_test_tree( tu.p_id, V, true );
             }
         }
+
+        // 30. disable tu collected along with their parents, dependents and children where necessary
+        bool made_change = false;
+
+        // 31. First go through the collected list and disable all tu along with their children
+        while( !tu_to_disable.empty() ) {
+            std::pair<test_unit_id,bool>    data = tu_to_disable.front();
+            test_unit const&                tu   = framework::get( data.first, tut_any );
+
+            tu_to_disable.pop_front();
+
+            if( !tu.p_enabled ) 
+                continue;
+
+            ut_detail::change_status disabler( false );
+            traverse_test_tree( tu.p_id, disabler, true );
+            made_change |= disabler.made_change();
+        }
+
+        // 32. Now disable all tu which depends on disabled
+        while( made_change ) {
+            ut_detail::remove_disabled rd( false );
+
+            traverse_test_tree( master_tu_id, rd, true );
+            made_change = rd.made_change();
+        } 
     }
 }
 
@@ -538,6 +656,7 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     results_reporter::set_level( runtime_config::report_level() );
     results_reporter::set_format( runtime_config::report_format() );
 
+    // register default observers
     register_observer( results_collector );
     register_observer( unit_test_log );
 
@@ -576,46 +695,13 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
 
     // Let's see if anything was disabled during construction. These test units and anything 
     // that depends on them are removed from the test tree
-    class remove_disabled : public test_tree_visitor {
-    public:
-        // test_tree_visitor interface
-        virtual bool    visit( test_unit const& tu )
-        {
-            // check if any of dependencies are disabled
-            if( tu.p_enabled ) {
-                BOOST_TEST_FOREACH( test_unit_id, dep_id, tu.p_dependencies.get() ) {
-                    test_unit const& dep = framework::get( dep_id, tut_any );
-
-                    if( !dep.p_enabled ) {
-                        BOOST_TEST_MESSAGE( "Disable test " << tu.p_type_name << ' ' << tu.p_name << 
-                                            " since it depends on disabled test " << dep.p_type_name << ' ' << dep.p_name );
-
-                        tu.p_enabled.value = false;
-                        break;
-                    }
-                }
-            }
-
-            // if this test unit is disabled - remove it from the tree and disable all subunits
-            if( !tu.p_enabled && tu.p_id != master_test_suite().p_id ) {
-                if( tu.p_type == tut_suite ) {
-                    ut_detail::change_status disabler( false );
-                    traverse_test_tree( tu.p_id, disabler, true );
-                }
-
-                framework::get<test_suite>( tu.p_parent_id ).remove( tu.p_id );
-                m_made_changes = true;
-            }
-
-            return tu.p_enabled;
-        }
-        bool m_made_changes;
-    } rd;
-
+    bool made_change = false;
     do {
-        rd.m_made_changes = false;
+        ut_detail::remove_disabled rd( true );
         traverse_test_tree( master_test_suite().p_id, rd, true );
-    } while( rd.m_made_changes );
+
+        made_change = rd.made_change();
+    } while( made_change );
 
     // apply all name and label filters
     impl::apply_filters( master_test_suite().p_id );
