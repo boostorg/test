@@ -423,6 +423,108 @@ framework_impl& s_frk_impl() { static framework_impl the_inst; return the_inst; 
 
 namespace framework {
 
+// ************************************************************************** //
+// **************                 apply_filters                ************** //
+// ************************************************************************** //
+
+namespace impl {
+void
+apply_filters( test_unit_id tu_id )
+{
+    if( runtime_config::test_to_run().empty() ) {
+        // enable all test units for this run
+        ut_detail::change_status enabler( true );
+        traverse_test_tree( tu_id, enabler, true );
+    }
+    else {
+        // 10. First disable all test units. We'll re-enable only those that pass the filters
+        ut_detail::change_status disabler( false );
+        traverse_test_tree( tu_id, disabler, true );
+
+        // 20. collect tu to enable based on filters
+        ut_detail::tu_enable_list tu_to_enable;
+
+        BOOST_TEST_FOREACH( std::string const&, filter, runtime_config::test_to_run() ) {
+            if( filter.empty() )
+                continue;
+
+            if( filter[0] == '@' ) {
+                ut_detail::label_filter lf( tu_to_enable, const_string(filter).trim_left(1) );
+                traverse_test_tree( tu_id, lf, true );
+            }
+            else {
+                ut_detail::name_filter nf( tu_to_enable, filter );
+                traverse_test_tree( tu_id, nf, true );
+            }
+        }
+
+        // 30. enable all tu collected along with their parents, dependencies and children where necessary
+        while( !tu_to_enable.empty() ) {
+            std::pair<test_unit_id,bool>    data = tu_to_enable.front();
+            test_unit const&                tu   = framework::get( data.first, tut_any );
+
+            tu_to_enable.pop_front();
+
+            if( tu.p_enabled ) 
+                continue;
+
+            // 31. enable tu
+            tu.p_enabled.value = true;
+
+            // 32. master test suite - we are done
+            if( tu.p_id == tu_id )
+                continue;
+
+            // 33. add parent to the list (without children)
+            if( !framework::get( tu.p_parent_id, tut_any ).p_enabled )
+                tu_to_enable.push_back( std::make_pair( tu.p_parent_id, false ) );
+
+            // 34. add dependencies to the list (with children)
+            BOOST_TEST_FOREACH( test_unit_id, dep_id, tu.p_dependencies.get() ) {
+                test_unit const& dep = framework::get( dep_id, tut_any );
+
+                if( !dep.p_enabled ) {
+                    BOOST_TEST_MESSAGE( "Including test " << dep.p_type_name << ' ' << dep.p_name << 
+                                        " as a dependacy of test " << tu.p_type_name << ' ' << tu.p_name );
+
+                    tu_to_enable.push_back( std::make_pair( dep_id, true ) );
+                }
+            }
+
+            // 35. add all children to the list recursively
+            if( data.second && tu.p_type == tut_suite ) {
+                class collect_disabled : public test_tree_visitor {
+                public:
+                    explicit        collect_disabled( ut_detail::tu_enable_list& tu_to_enable ) : m_tu_to_enable( tu_to_enable ) {}
+
+                private:
+                    // test_tree_visitor interface
+                    virtual bool    visit( test_unit const& tu )
+                    {
+                        if( !tu.p_enabled )
+                            m_tu_to_enable.push_back( std::make_pair( tu.p_id, false ) );
+
+                        return true;
+                    }
+
+                    // Data members
+                    ut_detail::tu_enable_list& m_tu_to_enable;
+                } V( tu_to_enable );
+
+                traverse_test_tree( tu.p_id, V, true );
+            }
+        }
+    }
+}
+
+//____________________________________________________________________________//
+
+} // namespace impl
+
+// ************************************************************************** //
+// **************                framework::init               ************** //
+// ************************************************************************** //
+
 void
 init( init_unit_test_func init_func, int argc, char* argv[] )
 {
@@ -524,99 +626,9 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
 
 //____________________________________________________________________________//
 
-namespace impl {
-void
-apply_filters( test_unit_id tu_id )
-{
-    if( runtime_config::test_to_run().empty() ) {
-        // enable all test units for this run
-        ut_detail::change_status enabler( true );
-        traverse_test_tree( tu_id, enabler, true );
-    }
-    else {
-        // 10. First disable all test units. We'll re-enable only those that pass the filters
-        ut_detail::change_status disabler( false );
-        traverse_test_tree( tu_id, disabler, true );
-
-        // 20. collect tu to enable based on filters
-        ut_detail::tu_enable_list tu_to_enable;
-
-        BOOST_TEST_FOREACH( std::string const&, filter, runtime_config::test_to_run() ) {
-            if( filter.empty() )
-                continue;
-
-            if( filter[0] == '@' ) {
-                ut_detail::label_filter lf( tu_to_enable, const_string(filter).trim_left(1) );
-                traverse_test_tree( tu_id, lf, true );
-            }
-            else {
-                ut_detail::name_filter nf( tu_to_enable, filter );
-                traverse_test_tree( tu_id, nf, true );
-            }
-        }
-
-        // 30. enable all tu collected along with their parents, dependencies and children where necessary
-        while( !tu_to_enable.empty() ) {
-            std::pair<test_unit_id,bool>    data = tu_to_enable.front();
-            test_unit const&                tu   = framework::get( data.first, tut_any );
-
-            tu_to_enable.pop_front();
-
-            if( tu.p_enabled ) 
-                continue;
-
-            // 31. enable tu
-            tu.p_enabled.value = true;
-
-            // 32. master test suite - we are done
-            if( tu.p_id == tu_id )
-                continue;
-
-            // 33. add parent to the list (without children)
-            if( !framework::get( tu.p_parent_id, tut_any ).p_enabled )
-                tu_to_enable.push_back( std::make_pair( tu.p_parent_id, false ) );
-
-            // 34. add dependencies to the list (with children)
-            BOOST_TEST_FOREACH( test_unit_id, dep_id, tu.p_dependencies.get() ) {
-                test_unit const& dep = framework::get( dep_id, tut_any );
-
-                if( !dep.p_enabled ) {
-                    BOOST_TEST_MESSAGE( "Including test " << dep.p_type_name << ' ' << dep.p_name << 
-                                        " as a dependacy of test " << tu.p_type_name << ' ' << tu.p_name );
-
-                    tu_to_enable.push_back( std::make_pair( dep_id, true ) );
-                }
-            }
-
-            // 35. add all children to the list recursively
-            if( data.second && tu.p_type == tut_suite ) {
-                class collect_disabled : public test_tree_visitor {
-                public:
-                    explicit        collect_disabled( ut_detail::tu_enable_list& tu_to_enable ) : m_tu_to_enable( tu_to_enable ) {}
-
-                private:
-                    // test_tree_visitor interface
-                    virtual bool    visit( test_unit const& tu )
-                    {
-                        if( !tu.p_enabled )
-                            m_tu_to_enable.push_back( std::make_pair( tu.p_id, false ) );
-
-                        return true;
-                    }
-
-                    // Data members
-                    ut_detail::tu_enable_list& m_tu_to_enable;
-                } V( tu_to_enable );
-
-                traverse_test_tree( tu.p_id, V, true );
-            }
-        }
-    }
-}
-
-//____________________________________________________________________________//
-
-} // namespace impl
+// ************************************************************************** //
+// **************                is_initialized                ************** //
+// ************************************************************************** //
 
 bool
 is_initialized()
@@ -625,6 +637,42 @@ is_initialized()
 }
 
 //____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************             framework::shutdown              ************** //
+// ************************************************************************** //
+
+void
+shutdown()
+{
+    // eliminating some fake memory leak reports. See for more details:
+    // http://connect.microsoft.com/VisualStudio/feedback/details/106937/memory-leaks-reported-by-debug-crt-inside-typeinfo-name
+
+#  if BOOST_WORKAROUND(BOOST_MSVC,  <= 1600 ) && !defined(_DLL) && defined(_DEBUG)
+#  if BOOST_WORKAROUND(BOOST_MSVC,  < 1600 )
+#define _Next next
+#define _MemPtr memPtr
+#endif
+   __type_info_node* pNode   = __type_info_root_node._Next;
+   __type_info_node* tmpNode = &__type_info_root_node;
+
+   for( ; pNode!=NULL; pNode = tmpNode ) {
+      tmpNode = pNode->_Next;
+      delete pNode->_MemPtr;
+      delete pNode;
+   }
+#  if BOOST_WORKAROUND(BOOST_MSVC,  < 1600 )
+#undef _Next 
+#undef _MemPtr
+#endif
+#  endif
+}
+
+//____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************              register_test_unit              ************** //
+// ************************************************************************** //
 
 void
 register_test_unit( test_case* tc )
@@ -645,6 +693,10 @@ register_test_unit( test_case* tc )
 
 //____________________________________________________________________________//
 
+// ************************************************************************** //
+// **************              register_test_unit              ************** //
+// ************************************************************************** //
+
 void
 register_test_unit( test_suite* ts )
 {
@@ -663,6 +715,10 @@ register_test_unit( test_suite* ts )
 
 //____________________________________________________________________________//
 
+// ************************************************************************** //
+// **************             deregister_test_unit             ************** //
+// ************************************************************************** //
+
 void
 deregister_test_unit( test_unit* tu )
 {
@@ -670,6 +726,10 @@ deregister_test_unit( test_unit* tu )
 }
 
 //____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************                     clear                    ************** //
+// ************************************************************************** //
 
 void
 clear()
@@ -679,6 +739,10 @@ clear()
 
 //____________________________________________________________________________//
 
+// ************************************************************************** //
+// **************               register_observer              ************** //
+// ************************************************************************** //
+
 void
 register_observer( test_observer& to )
 {
@@ -686,6 +750,10 @@ register_observer( test_observer& to )
 }
 
 //____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************              deregister_observer             ************** //
+// ************************************************************************** //
 
 void
 deregister_observer( test_observer& to )
@@ -695,6 +763,10 @@ deregister_observer( test_observer& to )
 
 //____________________________________________________________________________//
 
+// ************************************************************************** //
+// **************                reset_observer                ************** //
+// ************************************************************************** //
+
 void
 reset_observers()
 {
@@ -702,6 +774,10 @@ reset_observers()
 }
 
 //____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************                  add_context                 ************** //
+// ************************************************************************** //
 
 int
 add_context( ::boost::unit_test::lazy_ostream const& context_descr, bool sticky )
@@ -716,6 +792,10 @@ add_context( ::boost::unit_test::lazy_ostream const& context_descr, bool sticky 
 }
 
 //____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************                 clear_context                ************** //
+// ************************************************************************** //
 
 struct frame_with_id {
     explicit frame_with_id( int id ) : m_id( id ) {}
@@ -747,6 +827,10 @@ clear_context( int frame_id )
 
 //____________________________________________________________________________//
 
+// ************************************************************************** //
+// **************                  get_context                 ************** //
+// ************************************************************************** //
+
 context_generator
 get_context()
 {
@@ -754,6 +838,10 @@ get_context()
 }
 
 //____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************               context_generator              ************** //
+// ************************************************************************** //
 
 bool
 context_generator::is_empty() const
@@ -771,6 +859,10 @@ context_generator::next() const
 
 //____________________________________________________________________________//
 
+// ************************************************************************** //
+// **************               master_test_suite              ************** //
+// ************************************************************************** //
+
 master_test_suite_t&
 master_test_suite()
 {
@@ -782,6 +874,10 @@ master_test_suite()
 
 //____________________________________________________________________________//
 
+// ************************************************************************** //
+// **************               current_test_case              ************** //
+// ************************************************************************** //
+
 test_case const&
 current_test_case()
 {
@@ -789,6 +885,10 @@ current_test_case()
 }
 
 //____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************                framework::get                ************** //
+// ************************************************************************** //
 
 test_unit&
 get( test_unit_id id, test_unit_type t )
@@ -802,6 +902,10 @@ get( test_unit_id id, test_unit_type t )
 }
 
 //____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************                framework::run                ************** //
+// ************************************************************************** //
 
 void
 run( test_unit_id id, bool continue_test )
@@ -871,6 +975,10 @@ run( test_unit const* tu, bool continue_test )
 
 //____________________________________________________________________________//
 
+// ************************************************************************** //
+// **************               assertion_result               ************** //
+// ************************************************************************** //
+
 void
 assertion_result( bool passed )
 {
@@ -880,6 +988,10 @@ assertion_result( bool passed )
 
 //____________________________________________________________________________//
 
+// ************************************************************************** //
+// **************               exception_caught               ************** //
+// ************************************************************************** //
+
 void
 exception_caught( execution_exception const& ex )
 {
@@ -888,6 +1000,10 @@ exception_caught( execution_exception const& ex )
 }
 
 //____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************               test_unit_aborted              ************** //
+// ************************************************************************** //
 
 void
 test_unit_aborted( test_unit const& tu )

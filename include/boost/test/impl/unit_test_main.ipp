@@ -81,6 +81,8 @@ private:
 int BOOST_TEST_DECL
 unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
 {
+    int result_code = 0;
+
     try {
         framework::init( init_func, argc, argv );
 
@@ -103,28 +105,32 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
         
         results_reporter::make_report();
 
-        return runtime_config::no_result_code() 
-                    ? boost::exit_success
-                    : results_collector.results( framework::master_test_suite().p_id ).result_code();
+        result_code = runtime_config::no_result_code() 
+                        ? boost::exit_success
+                        : results_collector.results( framework::master_test_suite().p_id ).result_code();
     }
     catch( framework::nothing_to_test const& ) {
-        return boost::exit_success;
+        result_code = boost::exit_success;
     }
     catch( framework::internal_error const& ex ) {
         results_reporter::get_stream() << "Boost.Test framework internal error: " << ex.what() << std::endl;
         
-        return boost::exit_exception_failure;
+        result_code = boost::exit_exception_failure;
     }
     catch( framework::setup_error const& ex ) {
         results_reporter::get_stream() << "Test setup error: " << ex.what() << std::endl;
         
-        return boost::exit_exception_failure;
+        result_code = boost::exit_exception_failure;
     }
     catch( ... ) {
         results_reporter::get_stream() << "Boost.Test framework internal error: unknown reason" << std::endl;
         
-        return boost::exit_exception_failure;
+        result_code = boost::exit_exception_failure;
     }
+
+    framework::shutdown();
+
+    return result_code;
 }
 
 } // namespace unit_test

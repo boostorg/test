@@ -50,6 +50,9 @@ namespace framework {
 BOOST_TEST_DECL void    init( init_unit_test_func init_func, int argc, char* argv[] );
 BOOST_TEST_DECL bool    is_initialized();
 
+// shutdown
+BOOST_TEST_DECL void    shutdown();
+
 // mutation access methods
 BOOST_TEST_DECL void    register_test_unit( test_case* tc );
 BOOST_TEST_DECL void    register_test_unit( test_suite* ts );
