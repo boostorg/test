@@ -32,6 +32,23 @@ void Blongname() {}
 
 //____________________________________________________________________________//
 
+void
+test_count( utf::test_suite* master_ts, char const** argv, int argc, unsigned expected )
+{
+    argc /= sizeof(char*);
+
+    BOOST_TEST_INFO( argv[1] );
+    if( argc > 2 )
+        BOOST_TEST_INFO( argv[2] );
+
+    utf::runtime_config::init( argc, (char**)argv );
+    utf::framework::impl::apply_filters( master_ts->p_id );
+
+    utf::test_case_counter tcc;
+    utf::traverse_test_tree( master_ts->p_id, tcc );
+    BOOST_CHECK_EQUAL( tcc.p_count, expected );
+}
+
 BOOST_AUTO_TEST_CASE( test_run_by_name )
 {
     utf::test_suite* master_ts = BOOST_TEST_SUITE("local master");
@@ -59,257 +76,208 @@ BOOST_AUTO_TEST_CASE( test_run_by_name )
     }
 
     {
-        char* argv[] = { "a.exe", "--run=*" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 9U );
+        char const* argv[] = { "a.exe", "--run=*" };
+        test_count( master_ts, argv, sizeof(argv), 9 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=*/*" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 5U );
+        char const* argv[] = { "a.exe", "--run=!*" };
+        test_count( master_ts, argv, sizeof(argv), 0 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=*/*/*" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 2U );
+        char const* argv[] = { "a.exe", "--run=*/*" };
+        test_count( master_ts, argv, sizeof(argv), 5 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=klmn" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 0U );
+        char const* argv[] = { "a.exe", "--run=!*/*" };
+        test_count( master_ts, argv, sizeof(argv), 4 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=A" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 1U );
+        char const* argv[] = { "a.exe", "--run=*/*/*" };
+        test_count( master_ts, argv, sizeof(argv), 2 );
+    }
+    {
+        char const* argv[] = { "a.exe", "--run=!*/*/*" };
+        test_count( master_ts, argv, sizeof(argv), 7 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=*A" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 2U );
+        char const* argv[] = { "a.exe", "--run=klmn" };
+        test_count( master_ts, argv, sizeof(argv), 0 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=B*" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 2U );
+        char const* argv[] = { "a.exe", "--run=!klmn" };
+        test_count( master_ts, argv, sizeof(argv), 9 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=*ngn*" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 2U );
+        char const* argv[] = { "a.exe", "--run=A" };
+        test_count( master_ts, argv, sizeof(argv), 1 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=ts2" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 5U );
+        char const* argv[] = { "a.exe", "--run=!A" };
+        test_count( master_ts, argv, sizeof(argv), 8 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=ts2/*" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 5U );
+        char const* argv[] = { "a.exe", "--run=*A" };
+        test_count( master_ts, argv, sizeof(argv), 2 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=ts2/C" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 1U );
+        char const* argv[] = { "a.exe", "--run=!*A" };
+        test_count( master_ts, argv, sizeof(argv), 7 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=ts2/*A" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 2U );
+        char const* argv[] = { "a.exe", "--run=B*" };
+        test_count( master_ts, argv, sizeof(argv), 2 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=ts2/ts1" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 2U );
+        char const* argv[] = { "a.exe", "--run=!B*" };
+        test_count( master_ts, argv, sizeof(argv), 7 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=ts2/ts1/C" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 1U );
+        char const* argv[] = { "a.exe", "--run=*ngn*" };
+        test_count( master_ts, argv, sizeof(argv), 2 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=ts2/ts1/*D*" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 1U );
+        char const* argv[] = { "a.exe", "--run=ts2" };
+        test_count( master_ts, argv, sizeof(argv), 5 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=A,B" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 2U );
+        char const* argv[] = { "a.exe", "--run=!ts2" };
+        test_count( master_ts, argv, sizeof(argv), 4 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=*A,B" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 3U );
+        char const* argv[] = { "a.exe", "--run=ts2/*" };
+        test_count( master_ts, argv, sizeof(argv), 5 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=ts2/C,ts1" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 3U );
+        char const* argv[] = { "a.exe", "--run=!ts2/*" };
+        test_count( master_ts, argv, sizeof(argv), 4 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=ts2/C,ts1/D" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 1U );
+        char const* argv[] = { "a.exe", "--run=ts2/C" };
+        test_count( master_ts, argv, sizeof(argv), 1 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=A", "--run=B" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 2U );
+        char const* argv[] = { "a.exe", "--run=!ts2/C" };
+        test_count( master_ts, argv, sizeof(argv), 8 );
     }
 
-        {
-        char* argv[] = { "a.exe", "--run=A", "--run=ts2/ts1/C" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 2U );
+    {
+        char const* argv[] = { "a.exe", "--run=ts2/*A" };
+        test_count( master_ts, argv, sizeof(argv), 2 );
     }
 
+    {
+        char const* argv[] = { "a.exe", "--run=!ts2/*A" };
+        test_count( master_ts, argv, sizeof(argv), 7 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=ts2/ts1" };
+        test_count( master_ts, argv, sizeof(argv), 2 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=!ts2/ts1" };
+        test_count( master_ts, argv, sizeof(argv), 7 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=ts2/ts1/C" };
+        test_count( master_ts, argv, sizeof(argv), 1 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=!ts2/ts1/C" };
+        test_count( master_ts, argv, sizeof(argv), 8 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=ts2/ts1/*D*" };
+        test_count( master_ts, argv, sizeof(argv), 1 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=!ts2/ts1/*D*" };
+        test_count( master_ts, argv, sizeof(argv), 8 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=A,B" };
+        test_count( master_ts, argv, sizeof(argv), 2 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=!A,B" };
+        test_count( master_ts, argv, sizeof(argv), 7 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=*A,B" };
+        test_count( master_ts, argv, sizeof(argv), 3 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=!*A,B" };
+        test_count( master_ts, argv, sizeof(argv), 6 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=ts2/C,ts1" };
+        test_count( master_ts, argv, sizeof(argv), 3 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=!ts2/C,ts1" };
+        test_count( master_ts, argv, sizeof(argv), 6 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=ts2/C,ts1/D" };
+        test_count( master_ts, argv, sizeof(argv), 1 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=!ts2/C,ts1/D" };
+        test_count( master_ts, argv, sizeof(argv), 8 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=A", "--run=B" };
+        test_count( master_ts, argv, sizeof(argv), 2 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=!A", "--run=!B" };
+        test_count( master_ts, argv, sizeof(argv), 7 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=A", "--run=ts2/ts1/C" };
+        test_count( master_ts, argv, sizeof(argv), 2 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=ts2", "--run=!ts2/*A" };
+        test_count( master_ts, argv, sizeof(argv), 3 );
+    }
 }
 
 //____________________________________________________________________________//
@@ -344,75 +312,48 @@ BOOST_AUTO_TEST_CASE( test_run_by_label )
     master_ts->add( ts2 );
 
     {
-        char* argv[] = { "a.exe", "--run=@L1" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 3U );
+        char const* argv[] = { "a.exe", "--run=@L1" };
+        test_count( master_ts, argv, sizeof(argv), 3 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=@l2" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 1U );
+        char const* argv[] = { "a.exe", "--run=!@INV" };
+        test_count( master_ts, argv, sizeof(argv), 9 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=@inval" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 0U );
+        char const* argv[] = { "a.exe", "--run=!@L1" };
+        test_count( master_ts, argv, sizeof(argv), 6 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=@FAST" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 5U );
+        char const* argv[] = { "a.exe", "--run=@l2" };
+        test_count( master_ts, argv, sizeof(argv), 1 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=@f2" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 3U );
+        char const* argv[] = { "a.exe", "--run=@inval" };
+        test_count( master_ts, argv, sizeof(argv), 0 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=@L1", "--run=@l2" };
-        int argc     =  sizeof(argv)/sizeof(char*);
+        char const* argv[] = { "a.exe", "--run=@FAST" };
+        test_count( master_ts, argv, sizeof(argv), 5 );
+    }
 
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
+    {
+        char const* argv[] = { "a.exe", "--run=@f2" };
+        test_count( master_ts, argv, sizeof(argv), 3 );
+    }
 
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 3U );
+    {
+        char const* argv[] = { "a.exe", "--run=@L1", "--run=@l2" };
+        test_count( master_ts, argv, sizeof(argv), 3 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run=@L1", "--run=!@l2" };
+        test_count( master_ts, argv, sizeof(argv), 2 );
     }
 }
 
@@ -423,14 +364,14 @@ BOOST_AUTO_TEST_CASE( test_dependency_handling )
     utf::test_case* tc;
     utf::test_case* tcB;
 
-    //            M
-    //         /  |  \
-    //        /   |   \
-    //     TS2   TS4  TS3
-    //     / \    |   / \
-    //    C   D  TS1 E   F
-    //           / \
-    //          A   B
+    //            M             |
+    //         /  |  \          |
+    //        /   |   \         |
+    //     TS2   TS4  TS3       |
+    //     / \    |   / \       |
+    //    C   D  TS1 E   F      |
+    //           / \            |
+    //          A   B           |
     //
     //  D => TS1
     //  B => F
@@ -459,75 +400,43 @@ BOOST_AUTO_TEST_CASE( test_dependency_handling )
     master_ts->add( ts4 );
 
     {
-        char* argv[] = { "a.exe", "--run=ts2/C" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 1U );
+        char const* argv[] = { "a.exe", "--run=ts2/C" };
+        test_count( master_ts, argv, sizeof(argv), 1 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=ts3" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 2U );
+        char const* argv[] = { "a.exe", "--run=ts3" };
+        test_count( master_ts, argv, sizeof(argv), 2 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=ts2/C" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 1U );
+        char const* argv[] = { "a.exe", "--run=ts2/C" };
+        test_count( master_ts, argv, sizeof(argv), 1 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=ts4/ts1/B" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 2U );
+        char const* argv[] = { "a.exe", "--run=ts4/ts1/B" };
+        test_count( master_ts, argv, sizeof(argv), 2 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=ts4/ts1" };
-        int argc     =  sizeof(argv)/sizeof(char*);
-
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
-
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 3U );
+        char const* argv[] = { "a.exe", "--run=ts4/ts1" };
+        test_count( master_ts, argv, sizeof(argv), 3 );
     }
 
     {
-        char* argv[] = { "a.exe", "--run=ts2" };
-        int argc     =  sizeof(argv)/sizeof(char*);
+        char const* argv[] = { "a.exe", "--run=ts2" };
+        test_count( master_ts, argv, sizeof(argv), 5 );
+    }
 
-        utf::runtime_config::init( argc, argv );
-        utf::framework::impl::apply_filters( master_ts->p_id );
+    {
+        char const* argv[] = { "a.exe", "--run=!ts3/F" };
+        test_count( master_ts, argv, sizeof(argv), 4 );
+    }
 
-        utf::test_case_counter tcc;
-        utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 5U );
+    {
+        char const* argv[] = { "a.exe", "--run=!*/ts1" };
+        test_count( master_ts, argv, sizeof(argv), 3 );
     }
 }
 
