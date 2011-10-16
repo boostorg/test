@@ -279,7 +279,6 @@ BOOST_AUTO_TEST_CASE( test_pointers )
         assertion::expression const& E = seed->* ptr;
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
-        BOOST_CHECK_EQUAL( res.message(), "(bool)00000000 is false" );
     }
 
     {
