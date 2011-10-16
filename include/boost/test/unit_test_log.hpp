@@ -129,7 +129,7 @@ private:
     bool                log_entry_start();
     void                log_entry_context();
 
-    BOOST_TEST_SINGLETON_CONS( unit_test_log_t );
+    BOOST_TEST_SINGLETON_CONS( unit_test_log_t )
 }; // unit_test_log_t
 
 BOOST_TEST_SINGLETON_INST( unit_test_log )

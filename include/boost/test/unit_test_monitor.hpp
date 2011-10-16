@@ -51,7 +51,7 @@ public:
     error_level execute_and_translate( boost::function<void ()> const& func, unsigned timeout = 0 );
 
 private:
-    BOOST_TEST_SINGLETON_CONS( unit_test_monitor_t );
+    BOOST_TEST_SINGLETON_CONS( unit_test_monitor_t )
 };
 
 BOOST_TEST_SINGLETON_INST( unit_test_monitor )

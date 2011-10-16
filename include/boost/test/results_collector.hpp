@@ -96,7 +96,7 @@ public:
     test_results const& results( test_unit_id ) const;
 
 private:
-    BOOST_TEST_SINGLETON_CONS( results_collector_t );
+    BOOST_TEST_SINGLETON_CONS( results_collector_t )
 };
 
 BOOST_TEST_SINGLETON_INST( results_collector )

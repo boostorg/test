@@ -40,7 +40,7 @@ namespace test_tools {
 
 class BOOST_TEST_DECL predicate_result {
     typedef unit_test::const_string      const_string;
-    struct dummy { void nonnull() {}; };
+    struct dummy { void nonnull() {} };
     typedef void (dummy::*safe_bool)();
 
 public:

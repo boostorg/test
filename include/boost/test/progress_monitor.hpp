@@ -54,7 +54,7 @@ public:
     void    set_stream( std::ostream& );
 
 private:
-    BOOST_TEST_SINGLETON_CONS( progress_monitor_t );
+    BOOST_TEST_SINGLETON_CONS( progress_monitor_t )
 }; // progress_monitor_t
 
 BOOST_TEST_SINGLETON_INST( progress_monitor )

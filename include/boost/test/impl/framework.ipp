@@ -110,7 +110,7 @@ class name_filter : public test_tree_visitor {
                 m_kind  = SFK_MATCH;
                 m_name  = name;
             }
-        };
+        }
 
         bool            pass( test_unit const& tu ) const
         {

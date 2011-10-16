@@ -136,7 +136,7 @@ template<int i, typename Base>
 class mock_object : public Base {
     // Private typeefs
     typedef mock_object<i,Base> self_type;
-    struct dummy { void nonnull() {}; };
+    struct dummy { void nonnull() {} };
     typedef void (dummy::*safe_bool)();
 
     // prototype constructor

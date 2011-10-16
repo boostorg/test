@@ -67,7 +67,7 @@ using std::va_list;
 #ifdef BOOST_SEH_BASED_SIGNAL_HANDLING
 #  include <windows.h>
 
-#  if defined(__MWERKS__) || (defined(BOOST_MSVC) && !defined(UNDER_CE))
+#  if defined(__MWERKS__) || (defined(_MSC_VER) && !defined(UNDER_CE))
 #    include <eh.h>
 #  endif
 
@@ -79,11 +79,11 @@ using std::va_list;
     typedef unsigned uintptr_t;
 #  endif
 
-#  if BOOST_WORKAROUND(BOOST_MSVC,  < 1300 ) || defined(UNDER_CE)
+#  if BOOST_WORKAROUND(_MSC_VER,  < 1300 ) || defined(UNDER_CE)
 typedef void* uintptr_t;
 #  endif
 
-#  if !defined(NDEBUG) && defined(BOOST_MSVC) && !defined(UNDER_CE)
+#  if !defined(NDEBUG) && defined(_MSC_VER) && !defined(UNDER_CE)
 #    include <crtdbg.h>
 #    define BOOST_TEST_CRT_HOOK_TYPE    _CRT_REPORT_HOOK
 #    define BOOST_TEST_CRT_ASSERT       _CRT_ASSERT
@@ -96,9 +96,7 @@ typedef void* uintptr_t;
 #    define BOOST_TEST_CRT_SET_HOOK(H)  (void*)(H)
 #  endif
 
-// como always sets BOOST_MSVC to 1310, regardless of the
-// actual underlying msvc version.
-#  if (!BOOST_WORKAROUND(BOOST_MSVC,  >= 1400 ) && \
+#  if (!BOOST_WORKAROUND(_MSC_VER,  >= 1400 ) && \
       !defined(BOOST_COMO)) || defined(UNDER_CE)
 
 typedef void* _invalid_parameter_handler;
@@ -184,7 +182,7 @@ namespace detail {
 
 #ifdef __BORLANDC__
 #  define BOOST_TEST_VSNPRINTF( a1, a2, a3, a4 ) std::vsnprintf( (a1), (a2), (a3), (a4) )
-#elif BOOST_WORKAROUND(BOOST_MSVC, <= 1310) || \
+#elif BOOST_WORKAROUND(_MSC_VER, <= 1310) || \
       BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3000)) || \
       defined(UNDER_CE)
 #  define BOOST_TEST_VSNPRINTF( a1, a2, a3, a4 ) _vsnprintf( (a1), (a2), (a3), (a4) )
