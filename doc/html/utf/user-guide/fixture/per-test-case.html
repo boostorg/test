@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Per test case fixture</title>
 <link rel="stylesheet" href="../../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
-<link rel="home" href="../../../index.html" title="Chapter&#160;.&#160;Boost Test Library">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../../index.html" title="Boost Test Library">
 <link rel="up" href="../fixture.html" title="Fixtures &#8230; or let me repeat myself">
 <link rel="prev" href="model.html" title="Generic fixture model">
 <link rel="next" href="test-suite-shared.html" title="Test suite level fixture">
@@ -12,10 +12,12 @@
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table width="100%"><tr>
-<td width="10%"><a href="../../../index.html"><img alt="Home" width="229" height="61" border="0" src="../../../../../../../libs/test/docbook/img/boost.test.logo.png"></a></td>
-<td valign="middle" align="left"> &gt; <a href="../../../utf.html">The Unit Test Framework</a> &gt; <a href="../../user-guide.html">User's guide</a><a href="../../testing-tools.html">
+<td width="10%"><a href="../../../index.html"><img alt="Home" width="229" height="61" border="0" src="../../../../../../../libs/test/doc/img/boost.test.logo.png"></a></td>
+<td valign="middle" align="left"> &gt; <a href="../../../utf.html">The Unit Test Framework</a><a href="../../../execution-monitor.html">
       &gt;
-      </a><a href="../fixture.html">Fixtures</a><a href="../test-output.html">
+      </a><a href="../../user-guide.html">User's guide</a><a href="../../usage-recommendations.html">
+      &gt;
+      </a><a href="../fixture.html">Fixtures</a><a href="../initialization.html">
       &gt;
       </a><b>Per test case</b>
 </td>
@@ -48,7 +50,7 @@
    </p></td></tr>
 </table></div>
 <div class="example">
-<a name="utf.user-guide.fixture.per-test-case.example18"></a><p class="title"><b>Example&#160;23.&#160;Per test case fixture</b></p>
+<a name="utf.user-guide.fixture.per-test-case.example18"></a><p class="title"><b>Example&#160;52.&#160;Per test case fixture</b></p>
 <div class="example-contents">
 <p class="first-line-indented">
     In this example only test_case1 and test_case2 have fixture F assigned. In the next section you going to see
@@ -83,7 +85,7 @@ BOOST_AUTO_TEST_CASE( test_case3 )
 <table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example18.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id492281" onclick="toggle_element( 'example18-output', 'id492281', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id599721" onclick="toggle_element( 'example18-output', 'id599721', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example18-output">&gt; example --log_level=message
 Running 3 test cases...
@@ -101,7 +103,7 @@ teardown fixture
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2011 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

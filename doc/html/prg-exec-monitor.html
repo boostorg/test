@@ -3,16 +3,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Boost Test Library: The Program Execution Monitor</title>
 <link rel="stylesheet" href="../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
-<link rel="home" href="index.html" title="Chapter&#160;.&#160;Boost Test Library">
-<link rel="up" href="index.html" title="Chapter&#160;.&#160;Boost Test Library">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Boost Test Library">
+<link rel="up" href="index.html" title="Boost Test Library">
 <link rel="prev" href="execution-monitor/reference.html" title="The Execution Monitor reference">
 <link rel="next" href="prg-exec-monitor/impl.html" title="The Program Execution Monitor implementation">
 <script language="JavaScript1.2" src="../js/boost-test.js"></script>
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table width="100%"><tr>
-<td width="10%"><a href="index.html"><img alt="Home" width="229" height="61" border="0" src="../../../../libs/test/docbook/img/boost.test.logo.png"></a></td>
+<td width="10%"><a href="index.html"><img alt="Home" width="229" height="61" border="0" src="../../../../libs/test/doc/img/boost.test.logo.png"></a></td>
 <td valign="middle" align="left"> &gt; <b>The Program Execution Monitor</b><a href="minimal.html">
       &gt;
       </a>
@@ -62,7 +62,7 @@
 <p class="first-line-indented">
     Uniform error reporting can be also useful in test environments such as the Boost regression tests. Be aware though 
     in such case it might be preferable to use the <a class="link" href="utf.html" title="Boost Test Library: The Unit Test Framework">Unit Test Framework</a>, cause it allows one 
-    to use the <a class="link" href="utf/testing-tools.html" title="The UTF testing tools &#8230; or tester's toolbox for all occasions">Testing tools</a> and generate more detailed error information.
+    to use the <a class="link" href="utf/user-guide/testing-tools.html" title="The UTF testing tools &#8230; or tester's toolbox for all occasions">Testing tools</a> and generate more detailed error information.
    </p>
 </div>
 <div class="section">
@@ -76,7 +76,7 @@
    Here is the traditional Hello World program implemented using the Program Execution Monitor:
   </p>
 <div class="example">
-<a name="pem.usage.example24"></a><p class="title"><b>Example&#160;1.&#160;The Program Execution Monitor: Hello World</b></p>
+<a name="pem.usage.example24"></a><p class="title"><b>Example&#160;55.&#160;The Program Execution Monitor: Hello World</b></p>
 <div class="example-contents">
 <pre class="programlisting">#include &lt;iostream&gt;
 #include &lt;boost/test/included/prg_exec_monitor.hpp&gt; 
@@ -95,7 +95,7 @@ int cpp_main( int, char* [] ) // note name cpp_main, not main.
 <table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../src/examples/example24.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id482117" onclick="toggle_element( 'example24-output', 'id482117', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id604599" onclick="toggle_element( 'example24-output', 'id604599', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example24-output">Hello, world
 
@@ -118,14 +118,14 @@ no errors detected</pre>
    catch clause? Like in a following example:
   </p>
 <div class="example">
-<a name="pem.usage.example25"></a><p class="title"><b>Example&#160;2.&#160;The Program Execution Monitor: standard exception detection</b></p>
+<a name="pem.usage.example25"></a><p class="title"><b>Example&#160;56.&#160;The Program Execution Monitor: standard exception detection</b></p>
 <div class="example-contents">
 <pre class="programlisting">#include &lt;stdexcept&gt;
 #include &lt;boost/test/included/prg_exec_monitor.hpp&gt; 
 
 //____________________________________________________________________________//
 
-int foo() { throw std::runtime_exception( "big trouble" ); }
+int foo() { throw std::runtime_error( "big trouble" ); }
 
 //____________________________________________________________________________//
 
@@ -141,7 +141,7 @@ int cpp_main( int, char* [] ) // note the name
 <table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../src/examples/example25.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id482237" onclick="toggle_element( 'example25-output', 'id482237', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id604684" onclick="toggle_element( 'example25-output', 'id604684', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example25-output">**** exception(205): std::runtime_error: big trouble
 ******** errors detected; see standard output for details ********</pre>
@@ -159,7 +159,7 @@ int cpp_main( int, char* [] ) // note the name
    Let's consider an example where function cpp_main() had  bubbled up a return code of 5:
   </p>
 <div class="example">
-<a name="pem.usage.example26"></a><p class="title"><b>Example&#160;3.&#160;The Program Execution Monitor: error return code detection</b></p>
+<a name="pem.usage.example26"></a><p class="title"><b>Example&#160;57.&#160;The Program Execution Monitor: error return code detection</b></p>
 <div class="example-contents">
 <pre class="programlisting">#include &lt;boost/test/prg_exec_monitor.hpp&gt; // this header is optional
 
@@ -175,7 +175,7 @@ int cpp_main( int, char* [] ) // note the name
 <table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../src/examples/example26.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id482357" onclick="toggle_element( 'example26-output', 'id482357', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id604763" onclick="toggle_element( 'example26-output', 'id604763', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example26-output">**** error return code: 5
 ******** errors detected; see standard output for details ********</pre>
@@ -204,7 +204,7 @@ int cpp_main( int, char* [] ) // note the name
    environment variables.
   </p>
 <div class="table">
-<a name="pem.config.flags"></a><p class="title"><b>Table&#160;1.&#160;The Program Execution Monitor configuration environment variables</b></p>
+<a name="pem.config.flags"></a><p class="title"><b>Table&#160;4.&#160;The Program Execution Monitor configuration environment variables</b></p>
 <div class="table-contents"><table class="table" summary="The Program Execution Monitor configuration environment variables">
 <colgroup>
 <col class="c1">
@@ -240,7 +240,7 @@ int cpp_main( int, char* [] ) // note the name
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"><p><small>Last revised:  ,  at  </small></p></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2011 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

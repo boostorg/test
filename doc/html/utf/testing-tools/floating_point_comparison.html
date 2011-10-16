@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Floating-point comparison algorithms</title>
 <link rel="stylesheet" href="../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
-<link rel="home" href="../../index.html" title="Chapter&#160;.&#160;Boost Test Library">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../index.html" title="Boost Test Library">
 <link rel="up" href="../testing-tools.html" title="The UTF testing tools &#8230; or tester's toolbox for all occasions">
 <link rel="prev" href="custom-predicate.html" title="Custom predicate support">
 <link rel="next" href="reference.html" title="The UTF testing tools reference">
@@ -13,7 +13,9 @@
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table width="100%"><tr>
 <td width="10%"><a href="../../index.html"><img alt="Home" width="229" height="61" border="0" src="../../../../../../libs/test/docbook/img/boost.test.logo.png"></a></td>
-<td valign="middle" align="left"> &gt; <a href="../../utf.html">The Unit Test Framework</a> &gt; <a href="../testing-tools.html">Testing tools</a><a href="../usage-recommendations.html">
+<td valign="middle" align="left"> &gt; <a href="../../utf.html">The Unit Test Framework</a><a href="../../execution-monitor.html">
+      &gt;
+      </a><a href="../testing-tools.html">Testing tools</a><a href="../usage-recommendations.html">
       &gt;
       </a><b>Floating-point comparison algorithms</b>
 </td>
@@ -125,8 +127,8 @@
 <p class="first-line-indented">
     Checks based on equations (<a href="../../" target="_top">4</a>) and
     (<a href="../../" target="_top">5</a>) are implemented by two predicates with
-    alternative interfaces: binary predicate <code class="computeroutput">close_at_tolerance</code><sup>[<a name="id498577" href="#ftn.id498577" class="footnote">8</a>]</sup> and predicate with four arguments
-    <code class="computeroutput">check_is_close</code><sup>[<a name="id498590" href="#ftn.id498590" class="footnote">9</a>]</sup>.
+    alternative interfaces: binary predicate <code class="computeroutput">close_at_tolerance</code><sup>[<a name="id593971" href="#ftn.id593971" class="footnote">6</a>]</sup> and predicate with four arguments
+    <code class="computeroutput">check_is_close</code><sup>[<a name="id593979" href="#ftn.id593979" class="footnote">7</a>]</sup>.
   </p>
 <p class="first-line-indented">
    While equations (<a href="../../" target="_top">4</a>) and
@@ -134,7 +136,7 @@
    point comparison check over equation (<a href="../../" target="_top">1</a>), they are
    unusable for the test on closeness to zero. The later check is still might be useful in some cases and the <acronym class="acronym">UTF</acronym>
    implements an algorithm based on equation (<a href="../../" target="_top">1</a>) in
-   binary predicate <code class="computeroutput">check_is_small</code><sup>[<a name="id498654" href="#ftn.id498654" class="footnote">10</a>]</sup>.
+   binary predicate <code class="computeroutput">check_is_small</code><sup>[<a name="id594020" href="#ftn.id594020" class="footnote">8</a>]</sup>.
   </p>
 <p class="first-line-indented">
    On top of the generic, flexible predicates the <acronym class="acronym">UTF</acronym> implements macro based family of tools
@@ -234,16 +236,16 @@
 </div>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.id498577" href="#id498577" class="simpara">8</a>] </sup>check type 
+<div class="footnote"><p><sup>[<a id="ftn.id593971" href="#id593971" class="simpara">6</a>] </sup>check type 
     and tolerance value are fixed at predicate construction time</p></div>
-<div class="footnote"><p><sup>[<a id="ftn.id498590" href="#id498590" class="simpara">9</a>] </sup>check type and tolerance value are the arguments of the
+<div class="footnote"><p><sup>[<a id="ftn.id593979" href="#id593979" class="simpara">7</a>] </sup>check type and tolerance value are the arguments of the
     predicate</p></div>
-<div class="footnote"><p><sup>[<a id="ftn.id498654" href="#id498654" class="simpara">10</a>] </sup><code class="varname">v</code> is zero</p></div>
+<div class="footnote"><p><sup>[<a id="ftn.id594020" href="#id594020" class="simpara">8</a>] </sup><code class="varname">v</code> is zero</p></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2011 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

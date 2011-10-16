@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>The UTF compilation variants and procedures</title>
 <link rel="stylesheet" href="../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
-<link rel="home" href="../index.html" title="Chapter&#160;.&#160;Boost Test Library">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../index.html" title="Boost Test Library">
 <link rel="up" href="../utf.html" title="Boost Test Library: The Unit Test Framework">
 <link rel="prev" href="../tutorials/new-year-resolution.html" title='Boost.Test driven development &#8230; or "getting started" for TDD followers'>
 <link rel="next" href="compilation/standalone.html" title="Standalone library compilation">
@@ -12,8 +12,10 @@
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table width="100%"><tr>
-<td width="10%"><a href="../index.html"><img alt="Home" width="229" height="61" border="0" src="../../../../../libs/test/docbook/img/boost.test.logo.png"></a></td>
-<td valign="middle" align="left"> &gt; <a href="../utf.html">The Unit Test Framework</a> &gt; <b>Compilation</b><a href="user-guide.html">
+<td width="10%"><a href="../index.html"><img alt="Home" width="229" height="61" border="0" src="../../../../../libs/test/doc/img/boost.test.logo.png"></a></td>
+<td valign="middle" align="left"> &gt; <a href="../utf.html">The Unit Test Framework</a><a href="../execution-monitor.html">
+      &gt;
+      </a><b>Compilation</b><a href="user-guide.html">
       &gt;
       </a>
 </td>
@@ -39,7 +41,7 @@
     The <acronym class="acronym">UTF</acronym> is comparatively complicated component and is implemented in close to hundred header and source files,
     so for long term usage the preferable solution is to build the <acronym class="acronym">UTF</acronym> as a reusable standalone library.
     Depending on your platform this may save you a significant time during test module compilation and doesn't
-    really require that much effort. 
+    really require that much effort <sup>[<a name="id584400" href="#ftn.id584400" class="footnote">1</a>]</sup>. 
     <a href="http://boost.org/more/getting_started/index.html" target="_top">Boost Getting started</a> tells you how to get 
     pre-built libraries for some platforms. If available, this is the easiest option and you can ignore standalone 
     library compilation instructions below.
@@ -70,18 +72,18 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="utf.compilation.procedured"></a>Compilation procedures</h4></div></div></div>
+<a name="utf.compilation.procedure"></a>Compilation procedures</h4></div></div></div>
 <p class="first-line-indented">
     In comparison with many other boost libraries, which are completely implemented in header files, compilation and
     linking with the <acronym class="acronym">UTF</acronym> may require additional steps. The <acronym class="acronym">UTF</acronym> presents you with options to either
     <a class="link" href="compilation/standalone.html" title="Standalone library compilation">built and link with a standalone library</a> or
     <a class="link" href="compilation/direct-include.html" title="Including the UTF directly into your test module">include the implementation directly</a> into a test module.
-    If you opt to use the library the <acronym class="acronym">UTF</acronym> headers implement the 
-    <a class="link" href="compilation/auto-linking.html" title="Support of the auto-linking feature">auto-linking support</a>. The compilation of the <acronym class="acronym">UTF</acronym> library and
-    a test module can be configured using the following compilation flags.
+    If you opt to use the library the <acronym class="acronym">UTF</acronym> headers implement the <a class="link" href="compilation/auto-linking.html" title="Support of the auto-linking feature">
+    auto-linking support</a>. The compilation of the <acronym class="acronym">UTF</acronym> library and a test module can be configured using the 
+    following compilation flags.
    </p>
 <div class="table">
-<a name="utf.compilation.flags"></a><p class="title"><b>Table&#160;3.&#160;The <acronym class="acronym">UTF</acronym> compilation flags</b></p>
+<a name="utf.compilation.flags"></a><p class="title"><b>Table&#160;1.&#160;The <acronym class="acronym">UTF</acronym> compilation flags</b></p>
 <div class="table-contents"><table class="table" summary="The UTF compilation flags">
 <colgroup>
 <col class="c1">
@@ -139,10 +141,16 @@
     Further in documentation you are going to see in details when and how these flags should be used.
    </p>
 </div>
+<div class="footnotes">
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.id584400" href="#id584400" class="simpara">1</a>] </sup>If you are using Visual studio compilers do not forget to 
+    set a subsystem to console when you build test modules. You can do it either in project properties or by setting 
+    command line /SUBSYTEM:CONSOLE. Number of people reported link error caused specifically by this omission</p></div>
+</div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2011 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

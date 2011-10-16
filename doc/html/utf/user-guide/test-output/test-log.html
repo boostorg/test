@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Test log output</title>
 <link rel="stylesheet" href="../../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
-<link rel="home" href="../../../index.html" title="Chapter&#160;.&#160;Boost Test Library">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../../index.html" title="Boost Test Library">
 <link rel="up" href="../test-output.html" title="Test Output &#8230; or let's see what you got for your money">
 <link rel="prev" href="../test-output.html" title="Test Output &#8230; or let's see what you got for your money">
 <link rel="next" href="BOOST_TEST_MESSAGE.html" title="BOOST_TEST_MESSAGE">
@@ -12,8 +12,10 @@
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table width="100%"><tr>
-<td width="10%"><a href="../../../index.html"><img alt="Home" width="229" height="61" border="0" src="../../../../../../../libs/test/docbook/img/boost.test.logo.png"></a></td>
-<td valign="middle" align="left"> &gt; <a href="../../../utf.html">The Unit Test Framework</a> &gt; <a href="../../user-guide.html">User's guide</a><a href="../../testing-tools.html">
+<td width="10%"><a href="../../../index.html"><img alt="Home" width="229" height="61" border="0" src="../../../../../../../libs/test/doc/img/boost.test.logo.png"></a></td>
+<td valign="middle" align="left"> &gt; <a href="../../../utf.html">The Unit Test Framework</a><a href="../../../execution-monitor.html">
+      &gt;
+      </a><a href="../../user-guide.html">User's guide</a><a href="../../usage-recommendations.html">
       &gt;
       </a><a href="../test-output.html">Test Output </a><a href="../runtime-config.html">
       &gt;
@@ -141,17 +143,17 @@
 <div class="titlepage"><div><div><h6 class="title">
 <a name="utf.user-guide.test-output.log.testing-tool-args"></a>Logging tool arguments</h6></div></div></div>
 <p class="first-line-indented">
-    Most of the <a class="link" href="../../testing-tools.html" title="The UTF testing tools &#8230; or tester's toolbox for all occasions">testing tools</a> print values of their arguments to the output
+    Most of the <a class="link" href="../testing-tools.html" title="The UTF testing tools &#8230; or tester's toolbox for all occasions">testing tools</a> print values of their arguments to the output
     stream in some form of log statement. If arguments type does not support <code class="computeroutput">operator&lt;&lt;(std::ostream&amp;,
     ArgumentType const&amp;)</code> interface you will get a compilation error. You can either implement above
-    interface or prohibit the <a class="link" href="../../testing-tools.html" title="The UTF testing tools &#8230; or tester's toolbox for all occasions">testing tools</a> from logging argument values for
+    interface or prohibit the <a class="link" href="../testing-tools.html" title="The UTF testing tools &#8230; or tester's toolbox for all occasions">testing tools</a> from logging argument values for
     specified type. To do so use following statement on file level before first test case that includes statement
     failing to compile:
    </p>
 <pre class="inline-synopsis">
 <a name="BOOST_TEST_DONT_PRINT_LOG_VALUE"></a>BOOST_TEST_DONT_PRINT_LOG_VALUE(<span class="emphasis"><em>ArgumentType</em></span>)</pre>
 <div class="example">
-<a name="utf.user-guide.test-output.log.testing-tool-args.example32"></a><p class="title"><b>Example&#160;26.&#160;BOOST_TEST_DONT_PRINT_LOG_VALUE usage</b></p>
+<a name="utf.user-guide.test-output.log.testing-tool-args.example32"></a><p class="title"><b>Example&#160;44.&#160;BOOST_TEST_DONT_PRINT_LOG_VALUE usage</b></p>
 <div class="example-contents">
 <p>
      Try to comment out BOOST_TEST_DONT_PRINT_LOG_VALUE statement and you end up with compile time error.
@@ -179,7 +181,7 @@ BOOST_AUTO_TEST_CASE( test_list )
 <table border="0" summary="Simple list" class="simplelist"><tr>
 <td><code class="literal"><a href="../../../../src/examples/example32.cpp" target="_top">Source code</a></code></td>
 <td> | </td>
-<td><code class="literal"><a href="#" target="_top" id="id493369" onclick="toggle_element( 'example32-output', 'id493369', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
+<td><code class="literal"><a href="#" target="_top" id="id594865" onclick="toggle_element( 'example32-output', 'id594865', 'Show output', 'Hide output' ); return false;">Show output</a></code></td>
 </tr></table>
 <pre class="example-output" id="example32-output">Running 1 test case...
 test.cpp(16): error in "test_list": check p1 == p2 failed [ != ]
@@ -203,7 +205,7 @@ test.cpp(16): error in "test_list": check p1 == p2 failed [ != ]
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2011 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

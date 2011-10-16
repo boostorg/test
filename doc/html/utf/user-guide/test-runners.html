@@ -3,24 +3,26 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>The supplied test runners &#8230; or where is the entrance?</title>
 <link rel="stylesheet" href="../../../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
-<link rel="home" href="../../index.html" title="Chapter&#160;.&#160;Boost Test Library">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../index.html" title="Boost Test Library">
 <link rel="up" href="../user-guide.html" title="Unit Test Framework: User's guide">
-<link rel="prev" href="usage-variants/extern-test-runner-variant.html" title="The external test runner variant of the UTF">
+<link rel="prev" href="initialization.html" title="Test module initialization &#8230; or ready, set &#8230;">
 <link rel="next" href="usage-variants/extern-test-runner.html" title="External test runner variant of the UTF">
 <script language="JavaScript1.2" src="../../../js/boost-test.js"></script>
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table width="100%"><tr>
-<td width="10%"><a href="../../index.html"><img alt="Home" width="229" height="61" border="0" src="../../../../../../libs/test/docbook/img/boost.test.logo.png"></a></td>
-<td valign="middle" align="left"> &gt; <a href="../../utf.html">The Unit Test Framework</a> &gt; <a href="../user-guide.html">User's guide</a><a href="../testing-tools.html">
+<td width="10%"><a href="../../index.html"><img alt="Home" width="229" height="61" border="0" src="../../../../../../libs/test/doc/img/boost.test.logo.png"></a></td>
+<td valign="middle" align="left"> &gt; <a href="../../utf.html">The Unit Test Framework</a><a href="../../execution-monitor.html">
       &gt;
-      </a><b>Supplied test runners</b><a href="initialization.html">
+      </a><a href="../user-guide.html">User's guide</a><a href="../usage-recommendations.html">
+      &gt;
+      </a><b>Supplied test runners</b><a href="glossary.html">
       &gt;
       </a>
 </td>
 <td><div class="spirit-nav">
-<a href="usage-variants/extern-test-runner-variant.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a href="usage-variants/extern-test-runner.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a href="initialization.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a href="usage-variants/extern-test-runner.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div></td>
 </tr></table>
 <hr>
@@ -34,7 +36,7 @@
   </p>
 <pre class="programlisting">int unit_test_main( init_unit_test_func init_func, int argc, char* argv[] );</pre>
 <p class="first-line-indented">
-   To invoke the test runner you are required to supply the pointer to the <a class="link" href="../user-guide.html#test-module.def">test module</a>
+   To invoke the test runner you are required to supply the pointer to the <a class="link" href="glossary.html#test-module.def">test module</a>
    initialization function as the first argument to the test runner function. In majority of the cases this function is 
    invoked directly from test executable entry point - function main(). In most usage variants the <acronym class="acronym">UTF</acronym> can 
    automatically generate default function main() implementation as either part of the library or test module itself. 
@@ -80,9 +82,9 @@
     <code class="filename">boost/test/unit_test.hpp</code> to be generated as part of your test file body. 
     The function main() is generated only if either the <a class="xref" href="../compilation.html#utf.flag.main">BOOST_TEST_MAIN</a> or 
     the <a class="xref" href="../compilation.html#utf.flag.module">BOOST_TEST_MODULE</a> flags are defined during a test module compilation. 
-    For <a class="link" href="../user-guide.html#single-file-test-module.def">single-file test module</a> flags can be defined either in a 
+    For <a class="link" href="glossary.html#single-file-test-module.def">single-file test module</a> flags can be defined either in a 
     test module's makefile or before the header <code class="filename">boost/test/unit_test.hpp</code>
-    inclusion. For a <a class="xref" href="../user-guide.html#multi-file-test-module.def">multi-file test module</a> flags can't
+    inclusion. For a <a class="xref" href="glossary.html#multi-file-test-module.def">multi-file test module</a> flags can't
     be defined in makefile and have to be defined in only one of the test files to avoid duplicate copies of the 
     function main().
    </p>
@@ -119,7 +121,7 @@
     the summary of all possible generated values:
    </p>
 <div class="table">
-<a name="utf.user-guide.runners-exit-status-summary"></a><p class="title"><b>Table&#160;4.&#160;Generated exit status values</b></p>
+<a name="utf.user-guide.runners-exit-status-summary"></a><p class="title"><b>Table&#160;3.&#160;Generated exit status values</b></p>
 <div class="table-contents"><table class="table" summary="Generated exit status values">
 <colgroup>
 <col class="c1">
@@ -158,11 +160,11 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2011 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="usage-variants/extern-test-runner-variant.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../user-guide.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="usage-variants/extern-test-runner.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="initialization.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../user-guide.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="usage-variants/extern-test-runner.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

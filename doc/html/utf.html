@@ -3,20 +3,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Boost Test Library: The Unit Test Framework</title>
 <link rel="stylesheet" href="../style/style.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.0-pre">
-<link rel="home" href="index.html" title="Chapter&#160;.&#160;Boost Test Library">
-<link rel="up" href="index.html" title="Chapter&#160;.&#160;Boost Test Library">
-<link rel="prev" href="minimal.html" title="Boost Test Library: The minimal testing facility">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Boost Test Library">
+<link rel="up" href="index.html" title="Boost Test Library">
+<link rel="prev" href="aknowledgements.html" title="Acknowledgements">
 <link rel="next" href="utf/intro.html" title="Introduction">
 <script language="JavaScript1.2" src="../js/boost-test.js"></script>
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table width="100%"><tr>
-<td width="10%"><a href="index.html"><img alt="Home" width="229" height="61" border="0" src="../../../../libs/test/docbook/img/boost.test.logo.png"></a></td>
-<td valign="middle" align="left"> &gt; <b>The Unit Test Framework</b>
+<td width="10%"><a href="index.html"><img alt="Home" width="229" height="61" border="0" src="../../../../libs/test/doc/img/boost.test.logo.png"></a></td>
+<td valign="middle" align="left"> &gt; <b>The Unit Test Framework</b><a href="execution-monitor.html">
+      &gt;
+      </a>
 </td>
 <td><div class="spirit-nav">
-<a href="minimal.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a href="utf/intro.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a href="aknowledgements.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a href="utf/intro.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div></td>
 </tr></table>
 <hr>
@@ -48,36 +50,33 @@
 <dt><a href="utf/user-guide/usage-variants/single-header-variant.html">Single header</a></dt>
 <dt><a href="utf/user-guide/usage-variants/extern-test-runner-variant.html">External test runner</a></dt>
 </dl>
-<dt><a href="utf/user-guide/test-runners.html">Supplied test runners</a></dt>
-<dl><dt><a href="utf/user-guide/usage-variants/extern-test-runner.html">External test runner</a></dt></dl>
-<dt><a href="utf/user-guide/initialization.html">Test module initialization</a></dt>
 <dt><a href="utf/user-guide/test-organization.html">Test organization</a></dt>
 <dl>
 <dt><a href="utf/user-guide/test-organization/nullary-test-case.html">Nullary function based test case</a></dt>
 <dl>
-<dt><a href="utf/user-guide/test-organization/manual-nullary-test-case.html">Manual registration</a></dt>
 <dt><a href="utf/user-guide/test-organization/auto-nullary-test-case.html">Automated registration</a></dt>
+<dt><a href="utf/user-guide/test-organization/manual-nullary-test-case.html">Manual registration</a></dt>
 </dl>
 <dt><a href="utf/user-guide/test-organization/unary-test-case.html">Unary function based test case</a></dt>
 <dt><a href="utf/user-guide/test-organization/test-case-template.html">Test case template</a></dt>
 <dl>
-<dt><a href="utf/user-guide/test-organization/manual-test-case-template.html">Manual registration</a></dt>
 <dt><a href="utf/user-guide/test-organization/auto-test-case-template.html">Automated registration</a></dt>
+<dt><a href="utf/user-guide/test-organization/manual-test-case-template.html">Manual registration</a></dt>
 </dl>
 <dt><a href="utf/user-guide/test-organization/test-suite.html">Test suite</a></dt>
 <dl>
-<dt><a href="utf/user-guide/test-organization/manual-test-suite.html">Manual registration</a></dt>
 <dt><a href="utf/user-guide/test-organization/auto-test-suite.html">Automated registration</a></dt>
+<dt><a href="utf/user-guide/test-organization/manual-test-suite.html">Manual registration</a></dt>
 <dt><a href="utf/user-guide/test-organization/master-test-suite.html">Master Test Suite</a></dt>
 </dl>
 <dt><a href="utf/user-guide/test-organization/expected-failures.html">Expected failures specification</a></dt>
 </dl>
-<dt><a href="utf/user-guide/fixture.html">Fixtures</a></dt>
+<dt><a href="utf/user-guide/testing-tools.html">Testing tools</a></dt>
 <dl>
-<dt><a href="utf/user-guide/fixture/model.html">Generic model</a></dt>
-<dt><a href="utf/user-guide/fixture/per-test-case.html">Per test case</a></dt>
-<dt><a href="utf/user-guide/fixture/test-suite-shared.html">Test suite shared</a></dt>
-<dt><a href="utf/user-guide/fixture/global.html">Global fixture</a></dt>
+<dt><a href="utf/user-guide/testing-tools/output-test.html">Output testing tool</a></dt>
+<dt><a href="utf/user-guide/testing-tools/custom-predicate.html">Custom predicate support</a></dt>
+<dt><a href="utf/user-guide/testing-tools/floating_point_comparison.html">Floating-point comparison algorithms</a></dt>
+<dt><a href="utf/user-guide/testing-tools/reference.html">Reference</a></dt>
 </dl>
 <dt><a href="utf/user-guide/test-output.html">Test Output </a></dt>
 <dl>
@@ -99,13 +98,17 @@
 <dt><a href="utf/user-guide/runtime-config/run-by-name.html">Run by name</a></dt>
 <dt><a href="utf/user-guide/runtime-config/reference.html">Parameters reference</a></dt>
 </dl>
-</dl>
-<dt><a href="utf/testing-tools.html">Testing tools</a></dt>
+<dt><a href="utf/user-guide/fixture.html">Fixtures</a></dt>
 <dl>
-<dt><a href="utf/testing-tools/output-test.html">Output testing tool</a></dt>
-<dt><a href="utf/testing-tools/custom-predicate.html">Custom predicate support</a></dt>
-<dt><a href="utf/testing-tools/floating_point_comparison.html">Floating-point comparison algorithms</a></dt>
-<dt><a href="utf/testing-tools/reference.html">Reference</a></dt>
+<dt><a href="utf/user-guide/fixture/model.html">Generic model</a></dt>
+<dt><a href="utf/user-guide/fixture/per-test-case.html">Per test case</a></dt>
+<dt><a href="utf/user-guide/fixture/test-suite-shared.html">Test suite shared</a></dt>
+<dt><a href="utf/user-guide/fixture/global.html">Global fixture</a></dt>
+</dl>
+<dt><a href="utf/user-guide/initialization.html">Test module initialization</a></dt>
+<dt><a href="utf/user-guide/test-runners.html">Supplied test runners</a></dt>
+<dl><dt><a href="utf/user-guide/usage-variants/extern-test-runner.html">External test runner</a></dt></dl>
+<dt><a href="utf/user-guide/glossary.html">Introduction</a></dt>
 </dl>
 <dt><a href="utf/usage-recommendations.html">Usage recommendations</a></dt>
 <dl>
@@ -113,16 +116,17 @@
 <dt><a href="utf/usage-recommendations/dot-net-specific.html">Microsoft Visual Studio .NET users specific</a></dt>
 <dt><a href="utf/usage-recommendations/command-line-specific.html">Command-line (non-GUI) users specific</a></dt>
 </dl>
+<dt><a href="utf/examples-collection.html">Examples collection</a></dt>
 </dl>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"><p><small>Last revised:  ,  at  </small></p></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2008 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2011 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="minimal.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="index.html"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="utf/intro.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="aknowledgements.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="index.html"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="utf/intro.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>
