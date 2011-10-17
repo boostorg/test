@@ -1171,81 +1171,53 @@ execution_monitor::execute( boost::function<int ()> const& F )
                               "std::string: %s", ex.c_str() ); }
 
     //  std:: exceptions
-
-    catch( std::bad_alloc const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
-                              current_exception_cast<boost::exception const>(),
-                              "std::bad_alloc: %s", ex.what() ); }
-
-#if BOOST_WORKAROUND(__BORLANDC__, <= 0x0551)
-    catch( std::bad_cast const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
-                              current_exception_cast<boost::exception const>(),
-                              "std::bad_cast" ); }
-    catch( std::bad_typeid const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
-                              current_exception_cast<boost::exception const>(),
-                              "std::bad_typeid" ); }
+#ifdef BOOST_NO_TYPEID
+#define CATCH_AND_REPORT_STD_EXCEPTION( ex_name )                           \
+    catch( ex_name const& ex )                                              \
+       { detail::report_error( execution_exception::cpp_exception_error,    \
+                          current_exception_cast<boost::exception const>(), \
+                          #ex_name ": %s", ex.what() ); }                   \
+/**/
 #else
-    catch( std::bad_cast const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
-                              current_exception_cast<boost::exception const>(),
-                              "std::bad_cast: %s", ex.what() ); }
-    catch( std::bad_typeid const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
-                              current_exception_cast<boost::exception const>(),
-                              "std::bad_typeid: %s", ex.what() ); }
+#define CATCH_AND_REPORT_STD_EXCEPTION( ex_name )                           \
+    catch( ex_name const& ex )                                              \
+        { detail::report_error( execution_exception::cpp_exception_error,   \
+                          current_exception_cast<boost::exception const>(), \
+                          "%s: %s", typeid(ex).name(), ex.what() ); }       \
+/**/
 #endif
 
-    catch( std::bad_exception const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
-                              current_exception_cast<boost::exception const>(),
-                              "std::bad_exception: %s", ex.what() ); }
-    catch( std::domain_error const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
-                              current_exception_cast<boost::exception const>(),
-                              "std::domain_error: %s", ex.what() ); }
-    catch( std::invalid_argument const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
-                              current_exception_cast<boost::exception const>(),
-                              "std::invalid_argument: %s", ex.what() ); }
-    catch( std::length_error const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
-                              current_exception_cast<boost::exception const>(),
-                              "std::length_error: %s", ex.what() ); }
-    catch( std::out_of_range const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
-                              current_exception_cast<boost::exception const>(),
-                              "std::out_of_range: %s", ex.what() ); }
-    catch( std::range_error const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
-                              current_exception_cast<boost::exception const>(),
-                              "std::range_error: %s", ex.what() ); }
-    catch( std::overflow_error const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
-                              current_exception_cast<boost::exception const>(),
-                              "std::overflow_error: %s", ex.what() ); }
-    catch( std::underflow_error const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
-                              current_exception_cast<boost::exception const>(),
-                              "std::underflow_error: %s", ex.what() ); }
-    catch( std::logic_error const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
-                              current_exception_cast<boost::exception const>(),
-                              "std::logic_error: %s", ex.what() ); }
-    catch( std::runtime_error const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
-                              current_exception_cast<boost::exception const>(),
-                              "std::runtime_error: %s", ex.what() ); }
-    catch( std::exception const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
-                              current_exception_cast<boost::exception const>(),
-                              "std::exception: %s", ex.what() ); }
+    CATCH_AND_REPORT_STD_EXCEPTION( std::bad_alloc )
+
+#if BOOST_WORKAROUND(__BORLANDC__, <= 0x0551)
+    CATCH_AND_REPORT_STD_EXCEPTION( std::bad_cast )
+    CATCH_AND_REPORT_STD_EXCEPTION( std::bad_typeid )
+#else
+    CATCH_AND_REPORT_STD_EXCEPTION( std::bad_cast )
+    CATCH_AND_REPORT_STD_EXCEPTION( std::bad_typeid )
+#endif
+
+    CATCH_AND_REPORT_STD_EXCEPTION( std::bad_exception )
+    CATCH_AND_REPORT_STD_EXCEPTION( std::domain_error )
+    CATCH_AND_REPORT_STD_EXCEPTION( std::invalid_argument )
+    CATCH_AND_REPORT_STD_EXCEPTION( std::length_error )
+    CATCH_AND_REPORT_STD_EXCEPTION( std::out_of_range )
+    CATCH_AND_REPORT_STD_EXCEPTION( std::range_error )
+    CATCH_AND_REPORT_STD_EXCEPTION( std::overflow_error )
+    CATCH_AND_REPORT_STD_EXCEPTION( std::underflow_error )
+    CATCH_AND_REPORT_STD_EXCEPTION( std::logic_error )
+    CATCH_AND_REPORT_STD_EXCEPTION( std::runtime_error )
+    CATCH_AND_REPORT_STD_EXCEPTION( std::exception )
+#undef CATCH_AND_REPORT_STD_EXCEPTION
 
     catch( boost::exception const& ex )
-    { detail::report_error( execution_exception::cpp_exception_error, 
-                            &ex,
-                            "unknown boost::exception" ); }
+      { detail::report_error( execution_exception::cpp_exception_error, 
+                              &ex,
+#ifdef BOOST_NO_TYPEID
+                              "unknown boost::exception" ); }
+#else
+                              typeid(ex).name()          ); }
+#endif
 
     // system errors
     catch( system_error const& ex )
