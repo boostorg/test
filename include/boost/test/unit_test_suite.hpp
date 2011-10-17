@@ -86,8 +86,11 @@ struct test_name : public F { void test_method(); };                    \
                                                                         \
 static void BOOST_AUTO_TC_INVOKER( test_name )()                        \
 {                                                                       \
+    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture entry.");    \
     test_name t;                                                        \
+    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" entry.");            \
     t.test_method();                                                    \
+    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" exit.");             \
 }                                                                       \
                                                                         \
 struct BOOST_AUTO_TC_UNIQUE_ID( test_name ) {};                         \
@@ -121,8 +124,11 @@ struct BOOST_AUTO_TC_INVOKER( test_name ) {                             \
     template<typename TestType>                                         \
     static void run( boost::type<TestType>* = 0 )                       \
     {                                                                   \
+        BOOST_TEST_CHECKPOINT('"'<<#test_name <<"\" fixture entry.");   \
         test_name<TestType> t;                                          \
+        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" entry.");        \
         t.test_method();                                                \
+        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" exit.");         \
     }                                                                   \
 };                                                                      \
                                                                         \
