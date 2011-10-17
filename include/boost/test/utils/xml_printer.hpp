@@ -81,6 +81,22 @@ print_escaped( std::ostream& where_to, T const& value )
 
 //____________________________________________________________________________//
 
+inline void
+print_escaped_cdata( std::ostream& where_to, const_string value )
+{
+    static const_string cdata_end( "]]>" );
+    
+    const_string::size_type pos = value.find( cdata_end );
+    if( pos == const_string::npos )
+        where_to << value;
+    else {
+        where_to << value.substr( 0, pos+2 ) << cdata_end 
+                 << BOOST_TEST_L( "<![CDATA[" ) << value.substr( pos+2 );
+    }
+}
+
+//____________________________________________________________________________//
+
 typedef custom_manip<struct attr_value_t> attr_value;
 
 template<typename T>
@@ -101,7 +117,9 @@ typedef custom_manip<struct cdata_t> cdata;
 inline std::ostream&
 operator<<( custom_printer<cdata> const& p, const_string value )
 {
-    return *p << BOOST_TEST_L( "<![CDATA[" ) << value << BOOST_TEST_L( "]]>" );
+    *p << BOOST_TEST_L( "<![CDATA[" );
+    print_escaped_cdata( *p, value );
+    return  *p << BOOST_TEST_L( "]]>" );
 }
 
 //____________________________________________________________________________//

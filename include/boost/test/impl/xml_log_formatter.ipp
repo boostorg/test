@@ -158,7 +158,7 @@ xml_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& en
 void
 xml_log_formatter::log_entry_value( std::ostream& ostr, const_string value )
 {
-    ostr << value;
+    print_escaped_cdata( ostr, value );
 }
 
 //____________________________________________________________________________//
@@ -203,7 +203,7 @@ xml_log_formatter::entry_context_finish( std::ostream& ostr )
 void
 xml_log_formatter::log_entry_context( std::ostream& ostr, const_string context_descr )
 {
-    ostr << BOOST_TEST_L( "<Frame><![CDATA[" ) << context_descr << BOOST_TEST_L( "]]></Frame>" );
+    ostr << BOOST_TEST_L( "<Frame>" ) << cdata() << context_descr << BOOST_TEST_L( "</Frame>" );
 }
 
 //____________________________________________________________________________//
