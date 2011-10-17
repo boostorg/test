@@ -307,12 +307,16 @@ public:
 #undef ADD_OP_SUPPORT
 
 private:
+    template<typename U>
+    static void format_message( wrap_stringstream& ostr, U const& v )    { ostr << "(bool)" << v << " is false"; }
+    static void format_message( wrap_stringstream& ostr, bool v )        {}
+
     // expression interface
     virtual predicate_result    evaluate() const
     {
         predicate_result res( value() );
         if( !res )
-            res.message() << "(bool)" << value() << " is false";
+            format_message( res.message(), value() );
         
         return res;
     }
@@ -376,12 +380,12 @@ public:
     template<typename T>
     value_expr<T>
 #ifndef BOOST_NO_RVALUE_REFERENCES
-    operator->*( T&& v )
+    operator->*( T&& v ) const
     {
         return value_expr<T>( std::forward<T>( v ) );
     }
 #else
-    operator->*( T const& v )
+    operator->*( T const& v )  const
     {
         return value_expr<T>( v );
     }

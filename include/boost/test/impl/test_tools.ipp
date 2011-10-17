@@ -134,6 +134,17 @@ format_report( OutStream& os, predicate_result const& pr, unit_test::lazy_ostrea
             os << ". " << pr.message();
         break;
 
+    case CHECK_BUILT_ASSERTION:
+        os << prefix << assertion_descr << suffix;
+
+        if( tl != PASS ) {
+            const_string details_message = pr.message();
+
+            if( !details_message.is_empty() )
+                os << " [" << pr.message() << "]" ;
+        }
+        break;
+
     case CHECK_MSG:
         if( tl == PASS )
             os << prefix << "'" << assertion_descr << "'" << suffix;

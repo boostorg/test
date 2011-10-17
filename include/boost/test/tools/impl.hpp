@@ -22,6 +22,7 @@
 #endif
 
 #include <boost/test/tools/floating_point_comparison.hpp>
+#include <boost/test/tools/assertion.hpp>
 
 #include <boost/test/detail/config.hpp>
 #include <boost/test/detail/global_typedef.hpp>
@@ -164,7 +165,8 @@ enum check_type {
     CHECK_SMALL,
     CHECK_BITWISE_EQUAL,
     CHECK_PRED_WITH_ARGS,
-    CHECK_EQUAL_COLL
+    CHECK_EQUAL_COLL,
+    CHECK_BUILT_ASSERTION
 };
 
 enum tool_level {

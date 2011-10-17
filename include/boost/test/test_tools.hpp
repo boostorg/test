@@ -72,33 +72,57 @@
 #define BOOST_TEST_TOOL_PASS_ARGS2( ARGS ) \
     , 0
 
-#define BOOST_TEST_TOOL_IMPL(frwd_type, P, assertion_descr,TL,CT,ARGS)  \
-do {                                                                    \
-    BOOST_TEST_PASSPOINT();                                             \
-    ::boost::test_tools::tt_detail::                                    \
-    BOOST_PP_IF( frwd_type, check_impl, check_frwd ) (                  \
-        BOOST_JOIN( BOOST_TEST_TOOL_PASS_PRED, frwd_type )( P, ARGS ),  \
-        ::boost::unit_test::lazy_ostream::instance() << assertion_descr,\
-        BOOST_TEST_L(__FILE__),                                         \
-        static_cast<std::size_t>(__LINE__),                             \
-        ::boost::test_tools::tt_detail::TL,                             \
-        ::boost::test_tools::tt_detail::CT                              \
-        BOOST_JOIN( BOOST_TEST_TOOL_PASS_ARGS, frwd_type )( ARGS ) );   \
-} while( ::boost::test_tools::dummy_cond )                              \
+#define BOOST_TEST_TOOL_IMPL(frwd_type, P, assertion_descr,TL,CT,ARGS,PREPARE)  \
+do {                                                                            \
+    BOOST_TEST_PASSPOINT();                                                     \
+    PREPARE                                                                     \
+    ::boost::test_tools::tt_detail::                                            \
+    BOOST_PP_IF( frwd_type, check_impl, check_frwd ) (                          \
+        BOOST_JOIN( BOOST_TEST_TOOL_PASS_PRED, frwd_type )( P, ARGS ),          \
+        ::boost::unit_test::lazy_ostream::instance() << assertion_descr,        \
+        BOOST_TEST_L(__FILE__),                                                 \
+        static_cast<std::size_t>(__LINE__),                                     \
+        ::boost::test_tools::tt_detail::TL,                                     \
+        ::boost::test_tools::tt_detail::CT                                      \
+        BOOST_JOIN( BOOST_TEST_TOOL_PASS_ARGS, frwd_type )( ARGS ) );           \
+} while( ::boost::test_tools::dummy_cond )                                      \
 /**/
 #endif
 
 //____________________________________________________________________________//
 
-#define BOOST_WARN( P )                     BOOST_TEST_TOOL_IMPL( 2, (P), BOOST_TEST_TOOLS_STRINGIZE( P ), WARN, CHECK_PRED, _ )
-#define BOOST_CHECK( P )                    BOOST_TEST_TOOL_IMPL( 2, (P), BOOST_TEST_TOOLS_STRINGIZE( P ), CHECK, CHECK_PRED, _ )
-#define BOOST_REQUIRE( P )                  BOOST_TEST_TOOL_IMPL( 2, (P), BOOST_TEST_TOOLS_STRINGIZE( P ), REQUIRE, CHECK_PRED, _ )
+#define BOOST_WARN( P )                     BOOST_TEST_TOOL_IMPL( 2, \
+    (P), BOOST_TEST_TOOLS_STRINGIZE( P ), WARN, CHECK_PRED, _, BOOST_PP_EMPTY() )
+#define BOOST_CHECK( P )                    BOOST_TEST_TOOL_IMPL( 2, \
+    (P), BOOST_TEST_TOOLS_STRINGIZE( P ), CHECK, CHECK_PRED, _, BOOST_PP_EMPTY() )
+#define BOOST_REQUIRE( P )                  BOOST_TEST_TOOL_IMPL( 2, \
+    (P), BOOST_TEST_TOOLS_STRINGIZE( P ), REQUIRE, CHECK_PRED, _, BOOST_PP_EMPTY() )
 
 //____________________________________________________________________________//
 
-#define BOOST_WARN_MESSAGE( P, M )          BOOST_TEST_TOOL_IMPL( 2, (P), M, WARN, CHECK_MSG, _ )
-#define BOOST_CHECK_MESSAGE( P, M )         BOOST_TEST_TOOL_IMPL( 2, (P), M, CHECK, CHECK_MSG, _ )
-#define BOOST_REQUIRE_MESSAGE( P, M )       BOOST_TEST_TOOL_IMPL( 2, (P), M, REQUIRE, CHECK_MSG, _ )
+#define BOOST_CHECKA_BUILD_ASSERTION( P )                                       \
+    ::boost::test_tools::assertion::expression const& E =                       \
+    ::boost::test_tools::assertion::seed() ->* P;                               \
+/**/
+
+#define BOOST_WARNA( P )                    BOOST_TEST_TOOL_IMPL( 2,            \
+    (E.evaluate()), BOOST_TEST_TOOLS_STRINGIZE( P ), WARN,                      \
+    CHECK_BUILT_ASSERTION, _, BOOST_CHECKA_BUILD_ASSERTION( P ) )               \
+/**/
+#define BOOST_CHECKA( P )                   BOOST_TEST_TOOL_IMPL( 2,            \
+    (E.evaluate()), BOOST_TEST_TOOLS_STRINGIZE( P ), CHECK,                     \
+    CHECK_BUILT_ASSERTION, _, BOOST_CHECKA_BUILD_ASSERTION( P ) )               \
+/**/
+#define BOOST_REQUIREA( P )                 BOOST_TEST_TOOL_IMPL( 2,            \
+    (E.evaluate()), BOOST_TEST_TOOLS_STRINGIZE( P ), REQUIRE,                   \
+    CHECK_BUILT_ASSERTION, _, BOOST_CHECKA_BUILD_ASSERTION( P ) )               \
+/**/
+
+//____________________________________________________________________________//
+
+#define BOOST_WARN_MESSAGE( P, M )          BOOST_TEST_TOOL_IMPL( 2, (P), M, WARN, CHECK_MSG, _, BOOST_PP_EMPTY() )
+#define BOOST_CHECK_MESSAGE( P, M )         BOOST_TEST_TOOL_IMPL( 2, (P), M, CHECK, CHECK_MSG, _, BOOST_PP_EMPTY() )
+#define BOOST_REQUIRE_MESSAGE( P, M )       BOOST_TEST_TOOL_IMPL( 2, (P), M, REQUIRE, CHECK_MSG, _, BOOST_PP_EMPTY() )
 
 //____________________________________________________________________________//
 
@@ -107,15 +131,19 @@ do {                                                                    \
 
 //____________________________________________________________________________//
 
-#define BOOST_CHECK_THROW_IMPL( S, E, P, prefix, TL )                                                   \
-    try {                                                                                               \
-        BOOST_TEST_PASSPOINT();                                                                         \
-        S;                                                                                              \
-        BOOST_TEST_TOOL_IMPL( 2,false,"exception " BOOST_STRINGIZE(E) " is expected",TL,CHECK_MSG,_);  \
-    } catch( E const& ex ) {                                                                            \
-        ::boost::unit_test::ut_detail::ignore_unused_variable_warning( ex );                            \
-        BOOST_TEST_TOOL_IMPL( 2, P, prefix BOOST_STRINGIZE( E ) " is caught", TL, CHECK_MSG, _ );      \
-    }                                                                                                   \
+#define BOOST_CHECK_THROW_IMPL( S, E, P, prefix, TL )                                   \
+do {                                                                                    \
+    try {                                                                               \
+        BOOST_TEST_PASSPOINT();                                                         \
+        S;                                                                              \
+        BOOST_TEST_TOOL_IMPL( 2, false, "exception " BOOST_STRINGIZE(E) " is expected", \
+                              TL, CHECK_MSG, _, BOOST_PP_EMPTY() );                       \
+    } catch( E const& ex ) {                                                            \
+        ::boost::unit_test::ut_detail::ignore_unused_variable_warning( ex );            \
+        BOOST_TEST_TOOL_IMPL( 2, P, prefix BOOST_STRINGIZE( E ) " is caught",           \
+                              TL, CHECK_MSG, _ , BOOST_PP_EMPTY() );                      \
+    }                                                                                   \
+} while( ::boost::test_tools::dummy_cond )                                              \
 /**/
 
 //____________________________________________________________________________//
@@ -132,13 +160,17 @@ do {                                                                    \
 
 //____________________________________________________________________________//
 
-#define BOOST_CHECK_NO_THROW_IMPL( S, TL )                                                              \
-    try {                                                                                               \
-        S;                                                                                              \
-        BOOST_TEST_TOOL_IMPL( 2,true,"no exceptions thrown by " BOOST_STRINGIZE( S ),TL,CHECK_MSG,_);  \
-    } catch( ... ) {                                                                                    \
-        BOOST_TEST_TOOL_IMPL( 2,false,"exception thrown by " BOOST_STRINGIZE( S ), TL, CHECK_MSG, _ ); \
-    }                                                                                                   \
+#define BOOST_CHECK_NO_THROW_IMPL( S, TL )                                              \
+do {                                                                                    \
+    try {                                                                               \
+        S;                                                                              \
+        BOOST_TEST_TOOL_IMPL( 2, true, "no exceptions thrown by " BOOST_STRINGIZE( S ), \
+                              TL, CHECK_MSG, _, BOOST_PP_EMPTY() );                       \
+    } catch( ... ) {                                                                    \
+        BOOST_TEST_TOOL_IMPL( 2, false, "exception thrown by " BOOST_STRINGIZE( S ),    \
+                              TL, CHECK_MSG, _, BOOST_PP_EMPTY() );                       \
+    }                                                                                   \
+} while( ::boost::test_tools::dummy_cond )                                              \
 /**/
 
 #define BOOST_WARN_NO_THROW( S )            BOOST_CHECK_NO_THROW_IMPL( S, WARN )
@@ -148,116 +180,116 @@ do {                                                                    \
 //____________________________________________________________________________//
 
 #define BOOST_WARN_EQUAL( L, R )            BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::tt_detail::equal_impl_frwd(), "", WARN, CHECK_EQUAL, (L)(R) )
+    ::boost::test_tools::tt_detail::equal_impl_frwd(), "", WARN, CHECK_EQUAL, (L)(R), BOOST_PP_EMPTY() )
 #define BOOST_CHECK_EQUAL( L, R )           BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::tt_detail::equal_impl_frwd(), "", CHECK, CHECK_EQUAL, (L)(R) )
+    ::boost::test_tools::tt_detail::equal_impl_frwd(), "", CHECK, CHECK_EQUAL, (L)(R), BOOST_PP_EMPTY() )
 #define BOOST_REQUIRE_EQUAL( L, R )         BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::tt_detail::equal_impl_frwd(), "", REQUIRE, CHECK_EQUAL, (L)(R) )
+    ::boost::test_tools::tt_detail::equal_impl_frwd(), "", REQUIRE, CHECK_EQUAL, (L)(R), BOOST_PP_EMPTY() )
 
 //____________________________________________________________________________//
 
 #define BOOST_WARN_NE( L, R )               BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::tt_detail::ne_impl(), "", WARN, CHECK_NE, (L)(R) )
+    ::boost::test_tools::tt_detail::ne_impl(), "", WARN, CHECK_NE, (L)(R), BOOST_PP_EMPTY() )
 #define BOOST_CHECK_NE( L, R )              BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::tt_detail::ne_impl(), "", CHECK, CHECK_NE, (L)(R) )
+    ::boost::test_tools::tt_detail::ne_impl(), "", CHECK, CHECK_NE, (L)(R), BOOST_PP_EMPTY() )
 #define BOOST_REQUIRE_NE( L, R )            BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::tt_detail::ne_impl(), "", REQUIRE, CHECK_NE, (L)(R) )
+    ::boost::test_tools::tt_detail::ne_impl(), "", REQUIRE, CHECK_NE, (L)(R), BOOST_PP_EMPTY() )
 
 //____________________________________________________________________________//
 
 #define BOOST_WARN_LT( L, R )               BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::tt_detail::lt_impl(), "", WARN, CHECK_LT, (L)(R) )
+    ::boost::test_tools::tt_detail::lt_impl(), "", WARN, CHECK_LT, (L)(R), BOOST_PP_EMPTY() )
 #define BOOST_CHECK_LT( L, R )              BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::tt_detail::lt_impl(), "", CHECK, CHECK_LT, (L)(R) )
+    ::boost::test_tools::tt_detail::lt_impl(), "", CHECK, CHECK_LT, (L)(R), BOOST_PP_EMPTY() )
 #define BOOST_REQUIRE_LT( L, R )            BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::tt_detail::lt_impl(), "", REQUIRE, CHECK_LT, (L)(R) )
+    ::boost::test_tools::tt_detail::lt_impl(), "", REQUIRE, CHECK_LT, (L)(R), BOOST_PP_EMPTY() )
 
 //____________________________________________________________________________//
 
 #define BOOST_WARN_LE( L, R )               BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::tt_detail::le_impl(), "", WARN, CHECK_LE, (L)(R) )
+    ::boost::test_tools::tt_detail::le_impl(), "", WARN, CHECK_LE, (L)(R), BOOST_PP_EMPTY() )
 #define BOOST_CHECK_LE( L, R )              BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::tt_detail::le_impl(), "", CHECK, CHECK_LE, (L)(R) )
+    ::boost::test_tools::tt_detail::le_impl(), "", CHECK, CHECK_LE, (L)(R), BOOST_PP_EMPTY() )
 #define BOOST_REQUIRE_LE( L, R )            BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::tt_detail::le_impl(), "", REQUIRE, CHECK_LE, (L)(R) )
+    ::boost::test_tools::tt_detail::le_impl(), "", REQUIRE, CHECK_LE, (L)(R), BOOST_PP_EMPTY() )
 
 //____________________________________________________________________________//
 
 #define BOOST_WARN_GT( L, R )               BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::tt_detail::gt_impl(), "", WARN, CHECK_GT, (L)(R) )
+    ::boost::test_tools::tt_detail::gt_impl(), "", WARN, CHECK_GT, (L)(R), BOOST_PP_EMPTY() )
 #define BOOST_CHECK_GT( L, R )              BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::tt_detail::gt_impl(), "", CHECK, CHECK_GT, (L)(R) )
+    ::boost::test_tools::tt_detail::gt_impl(), "", CHECK, CHECK_GT, (L)(R), BOOST_PP_EMPTY() )
 #define BOOST_REQUIRE_GT( L, R )            BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::tt_detail::gt_impl(), "", REQUIRE, CHECK_GT, (L)(R) )
+    ::boost::test_tools::tt_detail::gt_impl(), "", REQUIRE, CHECK_GT, (L)(R), BOOST_PP_EMPTY() )
 
 //____________________________________________________________________________//
 
 #define BOOST_WARN_GE( L, R )               BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::tt_detail::ge_impl(), "", WARN, CHECK_GE, (L)(R) )
+    ::boost::test_tools::tt_detail::ge_impl(), "", WARN, CHECK_GE, (L)(R), BOOST_PP_EMPTY() )
 #define BOOST_CHECK_GE( L, R )              BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::tt_detail::ge_impl(), "", CHECK, CHECK_GE, (L)(R) )
+    ::boost::test_tools::tt_detail::ge_impl(), "", CHECK, CHECK_GE, (L)(R), BOOST_PP_EMPTY() )
 #define BOOST_REQUIRE_GE( L, R )            BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::tt_detail::ge_impl(), "", REQUIRE, CHECK_GE, (L)(R) )
+    ::boost::test_tools::tt_detail::ge_impl(), "", REQUIRE, CHECK_GE, (L)(R), BOOST_PP_EMPTY() )
 
 //____________________________________________________________________________//
 
 #define BOOST_WARN_CLOSE( L, R, T )         BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::check_is_close, "", WARN, CHECK_CLOSE, (L)(R)(::boost::math::fpc::percent_tolerance(T)) )
+    ::boost::test_tools::check_is_close, "", WARN, CHECK_CLOSE, (L)(R)(::boost::math::fpc::percent_tolerance(T)), BOOST_PP_EMPTY() )
 #define BOOST_CHECK_CLOSE( L, R, T )        BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::check_is_close, "", CHECK, CHECK_CLOSE, (L)(R)(::boost::math::fpc::percent_tolerance(T)) )
+    ::boost::test_tools::check_is_close, "", CHECK, CHECK_CLOSE, (L)(R)(::boost::math::fpc::percent_tolerance(T)), BOOST_PP_EMPTY() )
 #define BOOST_REQUIRE_CLOSE( L, R, T )      BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::check_is_close, "", REQUIRE, CHECK_CLOSE, (L)(R)(::boost::math::fpc::percent_tolerance(T)) )
+    ::boost::test_tools::check_is_close, "", REQUIRE, CHECK_CLOSE, (L)(R)(::boost::math::fpc::percent_tolerance(T)), BOOST_PP_EMPTY() )
 
 //____________________________________________________________________________//
 
 #define BOOST_WARN_CLOSE_FRACTION(L, R, T)  BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::check_is_close, "", WARN, CHECK_CLOSE_FRACTION, (L)(R)(T) )
+    ::boost::test_tools::check_is_close, "", WARN, CHECK_CLOSE_FRACTION, (L)(R)(T), BOOST_PP_EMPTY() )
 #define BOOST_CHECK_CLOSE_FRACTION(L, R, T) BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::check_is_close, "", CHECK, CHECK_CLOSE_FRACTION, (L)(R)(T) )
+    ::boost::test_tools::check_is_close, "", CHECK, CHECK_CLOSE_FRACTION, (L)(R)(T), BOOST_PP_EMPTY() )
 #define BOOST_REQUIRE_CLOSE_FRACTION(L,R,T) BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::check_is_close, "", REQUIRE, CHECK_CLOSE_FRACTION, (L)(R)(T) )
+    ::boost::test_tools::check_is_close, "", REQUIRE, CHECK_CLOSE_FRACTION, (L)(R)(T), BOOST_PP_EMPTY() )
 
 //____________________________________________________________________________//
 
 #define BOOST_WARN_SMALL( FPV, T )          BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::check_is_small, "", WARN, CHECK_SMALL, (FPV)(T) )
+    ::boost::test_tools::check_is_small, "", WARN, CHECK_SMALL, (FPV)(T), BOOST_PP_EMPTY() )
 #define BOOST_CHECK_SMALL( FPV, T )         BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::check_is_small, "", CHECK, CHECK_SMALL, (FPV)(T) )
+    ::boost::test_tools::check_is_small, "", CHECK, CHECK_SMALL, (FPV)(T), BOOST_PP_EMPTY() )
 #define BOOST_REQUIRE_SMALL( FPV, T )       BOOST_TEST_TOOL_IMPL( 0, \
-    ::boost::test_tools::check_is_small, "", REQUIRE, CHECK_SMALL, (FPV)(T) )
+    ::boost::test_tools::check_is_small, "", REQUIRE, CHECK_SMALL, (FPV)(T), BOOST_PP_EMPTY() )
 
 //____________________________________________________________________________//
 
 #define BOOST_WARN_PREDICATE( P, ARGS )     BOOST_TEST_TOOL_IMPL( 0, \
-    P, BOOST_TEST_TOOLS_STRINGIZE( P ), WARN, CHECK_PRED_WITH_ARGS, ARGS )
+    P, BOOST_TEST_TOOLS_STRINGIZE( P ), WARN, CHECK_PRED_WITH_ARGS, ARGS, BOOST_PP_EMPTY() )
 #define BOOST_CHECK_PREDICATE( P, ARGS )    BOOST_TEST_TOOL_IMPL( 0, \
-    P, BOOST_TEST_TOOLS_STRINGIZE( P ), CHECK, CHECK_PRED_WITH_ARGS, ARGS )
+    P, BOOST_TEST_TOOLS_STRINGIZE( P ), CHECK, CHECK_PRED_WITH_ARGS, ARGS, BOOST_PP_EMPTY() )
 #define BOOST_REQUIRE_PREDICATE( P, ARGS )  BOOST_TEST_TOOL_IMPL( 0, \
-    P, BOOST_TEST_TOOLS_STRINGIZE( P ), REQUIRE, CHECK_PRED_WITH_ARGS, ARGS )
+    P, BOOST_TEST_TOOLS_STRINGIZE( P ), REQUIRE, CHECK_PRED_WITH_ARGS, ARGS, BOOST_PP_EMPTY() )
 
 //____________________________________________________________________________//
 
-#define BOOST_WARN_EQUAL_COLLECTIONS( L_begin, L_end, R_begin, R_end )          \
-    BOOST_TEST_TOOL_IMPL( 1, ::boost::test_tools::tt_detail::equal_coll_impl(), \
-        "", WARN, CHECK_EQUAL_COLL, (L_begin)(L_end)(R_begin)(R_end) )          \
+#define BOOST_WARN_EQUAL_COLLECTIONS( L_begin, L_end, R_begin, R_end )                  \
+    BOOST_TEST_TOOL_IMPL( 1, ::boost::test_tools::tt_detail::equal_coll_impl(),         \
+        "", WARN, CHECK_EQUAL_COLL, (L_begin)(L_end)(R_begin)(R_end), BOOST_PP_EMPTY() )  \
 /**/
-#define BOOST_CHECK_EQUAL_COLLECTIONS( L_begin, L_end, R_begin, R_end )         \
-    BOOST_TEST_TOOL_IMPL( 1, ::boost::test_tools::tt_detail::equal_coll_impl(), \
-        "", CHECK, CHECK_EQUAL_COLL, (L_begin)(L_end)(R_begin)(R_end) )         \
+#define BOOST_CHECK_EQUAL_COLLECTIONS( L_begin, L_end, R_begin, R_end )                 \
+    BOOST_TEST_TOOL_IMPL( 1, ::boost::test_tools::tt_detail::equal_coll_impl(),         \
+        "", CHECK, CHECK_EQUAL_COLL, (L_begin)(L_end)(R_begin)(R_end), BOOST_PP_EMPTY() ) \
 /**/
-#define BOOST_REQUIRE_EQUAL_COLLECTIONS( L_begin, L_end, R_begin, R_end )       \
-    BOOST_TEST_TOOL_IMPL( 1, ::boost::test_tools::tt_detail::equal_coll_impl(), \
-        "", REQUIRE, CHECK_EQUAL_COLL, (L_begin)(L_end)(R_begin)(R_end) )       \
+#define BOOST_REQUIRE_EQUAL_COLLECTIONS( L_begin, L_end, R_begin, R_end )               \
+    BOOST_TEST_TOOL_IMPL( 1, ::boost::test_tools::tt_detail::equal_coll_impl(),         \
+        "", REQUIRE, CHECK_EQUAL_COLL, (L_begin)(L_end)(R_begin)(R_end), BOOST_PP_EMPTY() )\
 /**/
 
 //____________________________________________________________________________//
 
 #define BOOST_WARN_BITWISE_EQUAL( L, R )    BOOST_TEST_TOOL_IMPL( 1, \
-    ::boost::test_tools::tt_detail::bitwise_equal_impl(), "", WARN, CHECK_BITWISE_EQUAL, (L)(R) )
+    ::boost::test_tools::tt_detail::bitwise_equal_impl(), "", WARN, CHECK_BITWISE_EQUAL, (L)(R), BOOST_PP_EMPTY() )
 #define BOOST_CHECK_BITWISE_EQUAL( L, R )   BOOST_TEST_TOOL_IMPL( 1, \
-    ::boost::test_tools::tt_detail::bitwise_equal_impl(), "", CHECK, CHECK_BITWISE_EQUAL, (L)(R) )
+    ::boost::test_tools::tt_detail::bitwise_equal_impl(), "", CHECK, CHECK_BITWISE_EQUAL, (L)(R), BOOST_PP_EMPTY() )
 #define BOOST_REQUIRE_BITWISE_EQUAL( L, R ) BOOST_TEST_TOOL_IMPL( 1, \
-    ::boost::test_tools::tt_detail::bitwise_equal_impl(), "", REQUIRE, CHECK_BITWISE_EQUAL, (L)(R) )
+    ::boost::test_tools::tt_detail::bitwise_equal_impl(), "", REQUIRE, CHECK_BITWISE_EQUAL, (L)(R), BOOST_PP_EMPTY() )
 
 //____________________________________________________________________________//
 
