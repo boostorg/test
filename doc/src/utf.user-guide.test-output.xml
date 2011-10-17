@@ -16,7 +16,7 @@
    <simpara>All test errors are reported uniformly</simpara>
    <simpara>
     The test execution monitor along with standardized output from all included
-    <link linkend="utf.testing-tools">testing tools</link> provides uniform reporting for all errors including fatal
+    <link linkend="utf.user-guide.testing-tools">testing tools</link> provides uniform reporting for all errors including fatal
     errors, like memory assess violation and uncaught exceptions.
    </simpara>
   </listitem>
@@ -175,10 +175,10 @@
    <title>Logging tool arguments</title>
 
    <para role="first-line-indented">
-    Most of the <link linkend="utf.testing-tools">testing tools</link> print values of their arguments to the output
+    Most of the <link linkend="utf.user-guide.testing-tools">testing tools</link> print values of their arguments to the output
     stream in some form of log statement. If arguments type does not support <code>operator&lt;&lt;(std::ostream&amp;,
     ArgumentType const&amp;)</code> interface you will get a compilation error. You can either implement above
-    interface or prohibit the <link linkend="utf.testing-tools">testing tools</link> from logging argument values for
+    interface or prohibit the <link linkend="utf.user-guide.testing-tools">testing tools</link> from logging argument values for
     specified type. To do so use following statement on file level before first test case that includes statement
     failing to compile:
    </para>
@@ -473,7 +473,7 @@ Boost   : $BOOST_VERSION</literallayout></computeroutput>
    </segmentedlist>
 
    <para role="first-line-indented">
-    Advanced <link linkend="utf.testing-tools">testing tools</link> may produce more complicated error messages.
+    Advanced <link linkend="utf.user-guide.testing-tools">testing tools</link> may produce more complicated error messages.
    </para>
   </section>
 

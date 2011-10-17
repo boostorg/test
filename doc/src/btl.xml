@@ -18,6 +18,9 @@
    <year>2006</year>
    <year>2007</year>
    <year>2008</year>
+   <year>2009</year>
+   <year>2010</year>
+   <year>2011</year>
    <holder>Gennadiy Rozental</holder>
   </copyright>
 
@@ -156,10 +159,10 @@
   </section>
  </section>
 
+ <xi:include href="utf.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
  <xi:include href="execution-monitor.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
  <xi:include href="program-execution-monitor.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
  <xi:include href="minimal-testing.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
- <xi:include href="utf.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
  <!-- TO FIX: index -->
 </library>

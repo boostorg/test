@@ -256,7 +256,7 @@
     second and so on). Unfortunately this feature is, at the moment, implemented only for the Microsoft family of
     compilers (and Intel, if it employs Microsoft C Runtime Library). Also it can not be tuned per instance of the
     monitor and is only triggered globally and reported after the whole program execution is done. In a future this
-    ought to be improved. An interface is composed from two free functions residing in namespace boost:
+    ought to be improved. An interface is composed from two free functions residing in namespace boost::debug:
    </para>
 
    <!-- TO FIX -->
@@ -266,8 +266,8 @@ void break_memory_alloc( long mem_alloc_order_num );</programlisting>
    <para role="first-line-indented">
     Use function detect_memory_leaks to switch memory leaks detection on/off. Use break_memory_alloc to break a
     program execution at allocation specified by mem_alloc_order_num argument. The Unit Test Framework
-    provides a runtime parameter (--detect_memory_leak=yes or no) allowing you to manage this feature during monitored
-    unit tests.
+    provides a runtime parameter (--detect_memory_leaks=0 or 1 or N>1, where N is memory allocation number) 
+    allowing you to manage this feature during monitored unit tests.
    </para>
   </section>
  </section>

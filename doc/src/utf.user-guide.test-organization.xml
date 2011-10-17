@@ -113,15 +113,46 @@
   <itemizedlist>
    <listitem>
     <simpara>
-     <link linkend="utf.user-guide.test-organization.manual-nullary-test-case">Manually registered test case</link>
+     <link linkend="utf.user-guide.test-organization.auto-nullary-test-case">Test case with automated registration</link>
     </simpara>
    </listitem>
    <listitem>
     <simpara>
-     <link linkend="utf.user-guide.test-organization.auto-nullary-test-case">Test case with automated registration</link>
+     <link linkend="utf.user-guide.test-organization.manual-nullary-test-case">Manually registered test case</link>
     </simpara>
    </listitem>
   </itemizedlist>
+
+  <section id="utf.user-guide.test-organization.auto-nullary-test-case">
+   <title>Nullary function based test case with automated registration</title>
+   <titleabbrev>Automated registration</titleabbrev>
+
+   <para role="first-line-indented">
+    To create a nullary free function cased test case, which is registered in place of implementation, employ the
+    macro BOOST_AUTO_TEST_CASE.
+   </para>
+
+   <inline-synopsis>
+    <macro name="BOOST_AUTO_TEST_CASE" kind="functionlike">
+     <macro-parameter name="test_case_name"/>
+    </macro>
+   </inline-synopsis>
+
+   <para role="first-line-indented">
+    The macro is designed to closely mimic nullary free function syntax. Changes that are required to make an
+    existing test case, implemented as a free function, registered in place are illustrated in the following
+    example (compare with <xref linkend="utf.user-guide.test-organization.manual-nullary-test-case.example01"/>):
+   </para>
+
+   <btl-example name="example06">
+    <title>Nullary function based test case with automated registration</title>
+   </btl-example>
+
+   <para role="first-line-indented">
+    With this macro you don't need to implement the initialization function at all. The macro creates and
+    registers the test case with the name free_test_function automatically.
+   </para>
+  </section>
 
   <section id="utf.user-guide.test-organization.manual-nullary-test-case">
    <title>Manually registered nullary function based test case</title>
@@ -212,37 +243,6 @@
     <xref linkend="utf.user-guide.test-organization.unary-test-case"/>.
    </para>
   </section>
-
-  <section id="utf.user-guide.test-organization.auto-nullary-test-case">
-   <title>Nullary function based test case with automated registration</title>
-   <titleabbrev>Automated registration</titleabbrev>
-
-   <para role="first-line-indented">
-    To create a nullary free function cased test case, which is registered in place of implementation, employ the
-    macro BOOST_AUTO_TEST_CASE.
-   </para>
-
-   <inline-synopsis>
-    <macro name="BOOST_AUTO_TEST_CASE" kind="functionlike">
-     <macro-parameter name="test_case_name"/>
-    </macro>
-   </inline-synopsis>
-
-   <para role="first-line-indented">
-    The macro is designed to closely mimic nullary free function syntax. Changes that are required to make an
-    existing test case, implemented as a free function, registered in place are illustrated in the following
-    example (compare with <xref linkend="utf.user-guide.test-organization.manual-nullary-test-case.example01"/>):
-   </para>
-
-   <btl-example name="example06">
-    <title>Nullary function based test case with automated registration</title>
-   </btl-example>
-
-   <para role="first-line-indented">
-    With this macro you don't need to implement the initialization function at all. The macro creates and
-    registers the test case with the name free_test_function automatically.
-   </para>
-  </section>
  </section>
  <section id="utf.user-guide.test-organization.unary-test-case">
   <title>Unary function based test case</title>
@@ -331,17 +331,73 @@
   <itemizedlist>
    <listitem>
     <simpara>
-     <link linkend="utf.user-guide.test-organization.manual-test-case-template">Manually registered test case
-     template</link>
-    </simpara>
-   </listitem>
-   <listitem>
-    <simpara>
      <link linkend="utf.user-guide.test-organization.auto-test-case-template">Test case template with automated
      registration</link>
     </simpara>
    </listitem>
+   <listitem>
+    <simpara>
+     <link linkend="utf.user-guide.test-organization.manual-test-case-template">Manually registered test case
+     template</link>
+    </simpara>
+   </listitem>
   </itemizedlist>
+
+  <section id="utf.user-guide.test-organization.auto-test-case-template">
+   <title>Test case template with automated registration</title>
+   <titleabbrev>Automated registration</titleabbrev>
+
+   <para role="first-line-indented">
+    To create a test case template registered in place of implementation, employ the macro
+    BOOST_AUTO_TEST_CASE_TEMPLATE. This facility is also called <firstterm>auto test case template</firstterm>.
+   </para>
+
+   <inline-synopsis>
+    <macro name="BOOST_AUTO_TEST_CASE_TEMPLATE" kind="functionlike">
+     <macro-parameter name="test_case_name"/>
+     <macro-parameter name="formal_type_parameter_name"/>
+     <macro-parameter name="collection_of_types"/>
+    </macro>
+   </inline-synopsis>
+
+   <para role="first-line-indented">
+    The macro BOOST_AUTO_TEST_CASE_TEMPLATE requires three arguments:
+   </para>
+   <variablelist>
+    <?dbhtml list-presentation="list"?>
+    <?dbhtml term-width="60%"  list-width="100%"?>
+    <?dbhtml term-separator=" - "?> <!-- TO FIX: where separator? -->
+
+    <varlistentry>
+     <term>The test case template name</term>
+     <listitem>
+      <simpara>
+         unique test cases template identifier
+      </simpara>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term>The name of a formal template parameter</term>
+     <listitem>
+      <simpara>
+         name of the type the test case template is instantiated with
+      </simpara>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term>The collection of types to instantiate test case template with</term>
+     <listitem>
+      <simpara>
+         arbitrary MPL sequence
+      </simpara>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+
+   <btl-example name="example10">
+    <title>Test case template with automated registration</title>
+   </btl-example>
+  </section>
 
   <section id="utf.user-guide.test-organization.manual-test-case-template">
    <title>Manually registered test case template</title>
@@ -438,62 +494,6 @@
     <title>Manually registered test case template</title>
    </btl-example>
   </section>
-
-  <section id="utf.user-guide.test-organization.auto-test-case-template">
-   <title>Test case template with automated registration</title>
-   <titleabbrev>Automated registration</titleabbrev>
-
-   <para role="first-line-indented">
-    To create a test case template registered in place of implementation, employ the macro
-    BOOST_AUTO_TEST_CASE_TEMPLATE. This facility is also called <firstterm>auto test case template</firstterm>.
-   </para>
-
-   <inline-synopsis>
-    <macro name="BOOST_AUTO_TEST_CASE_TEMPLATE" kind="functionlike">
-     <macro-parameter name="test_case_name"/>
-     <macro-parameter name="formal_type_parameter_name"/>
-     <macro-parameter name="collection_of_types"/>
-    </macro>
-   </inline-synopsis>
-
-   <para role="first-line-indented">
-    The macro BOOST_AUTO_TEST_CASE_TEMPLATE requires three arguments:
-   </para>
-   <variablelist>
-    <?dbhtml list-presentation="list"?>
-    <?dbhtml term-width="60%"  list-width="100%"?>
-    <?dbhtml term-separator=" - "?> <!-- TO FIX: where separator? -->
-
-    <varlistentry>
-     <term>The test case template name</term>
-     <listitem>
-      <simpara>
-         unique test cases template identifier
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>The name of a formal template parameter</term>
-     <listitem>
-      <simpara>
-         name of the type the test case template is instantiated with
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>The collection of types to instantiate test case template with</term>
-     <listitem>
-      <simpara>
-         arbitrary MPL sequence
-      </simpara>
-     </listitem>
-    </varlistentry>
-   </variablelist>
-
-   <btl-example name="example10">
-    <title>Test case template with automated registration</title>
-   </btl-example>
-  </section>
  </section>
 
  <section id="utf.user-guide.test-organization.test-suite">
@@ -510,99 +510,22 @@
   <itemizedlist>
    <listitem>
     <simpara>
-     <link linkend="utf.user-guide.test-organization.manual-test-suite">Manually registered test suite</link>
+    <link linkend="utf.user-guide.test-organization.auto-test-suite">Test suite with automated registration</link>
     </simpara>
    </listitem>
    <listitem>
     <simpara>
-    <link linkend="utf.user-guide.test-organization.auto-test-suite">Test suite with automated registration</link>
+     <link linkend="utf.user-guide.test-organization.manual-test-suite">Manually registered test suite</link>
     </simpara>
    </listitem>
   </itemizedlist>
 
-  <section id="utf.user-guide.test-organization.test-suite-registration-interface">
-   <title>Test unit registration interface</title>
-
-   <para role="first-line-indented">
-    The &utf; models the notion of test case container - test suite - using class boost::unit_test::test_suite. For
-    complete class interface reference check advanced section of this documentation. Here you should only be
-    interested in a single test unit registration interface:
-   </para>
-
-   <programlisting>void test_suite::add( test_unit* tc, counter_t expected_failures = 0, int timeout = 0 );</programlisting>
-
-   <para role="first-line-indented">
-    The first parameter is a pointer to a newly created test unit. The second optional parameter -
-    expected_failures  - defines the number of test assertions that are expected to fail within the test unit. By
-    default no errors are  expected.
-   </para>
-
-   <caution>
-    <simpara>
-     Be careful when supplying a number of expected failures for test suites. By default the &utf; calculates the
-     number of expected failures in test suite as the sum of appropriate values in all test units that constitute
-     it. And it rarely makes sense to change this.
-    </simpara>
-   </caution>
-
-   <para role="first-line-indented">
-    The third optional parameter - timeout - defines the timeout value for the test unit. As of now the &utf;
-    isn't able to set a timeout for the test suite execution, so this parameter makes sense only for test case
-    registration. By default no timeout is set. See the method
-    <methodname>boost::execution_monitor::execute</methodname> for more details about the timeout value.
-   </para>
-
-   <para role="first-line-indented">
-    To register group of test units in one function call the boost::unit_test::test_suite provides another add
-    interface covered in the advanced section of this documentation.
-   </para>
-  </section>
-
-  <section id="utf.user-guide.test-organization.manual-test-suite">
-   <title>Manually registered test suites</title>
-   <titleabbrev>Manual registration</titleabbrev>
-
-   <para role="first-line-indented">
-    To create a test suite manually, employ the macro BOOST_TEST_SUITE:
-   </para>
-
-   <inline-synopsis>
-    <macro name="BOOST_TEST_SUITE" kind="functionlike">
-     <macro-parameter name="test_suite_name"/>
-    </macro>
-   </inline-synopsis>
-
-   <para role="first-line-indented">
-    BOOST_TEST_SUITE creates an instance of the class boost::unit_test::test_suite and returns a pointer to the
-    constructed instance. Alternatively you can create an instance of class boost::unit_test::test_suite yourself.
-   </para>
-
-   <note>
-    <simpara>
-     boost::unit_test::test_suite instances have to be allocated on the heap and the compiler won't allow you
-     to create one on the stack.
-    </simpara>
-   </note>
-
-   <para role="first-line-indented">
-    Newly created test suite has to be registered in a parent one using add interface. Both test suite creation and
-    registration is performed in the test module initialization function.
-   </para>
-
-   <btl-example name="example11">
-    <title>Manually registered test suites</title>
-   </btl-example>
-
-   <para role="first-line-indented">
-    This example creates a test tree, which can be represented by the following hierarchy:
-   </para>
-
-   <mediaobject>
-    <imageobject>
-     <imagedata format="jpg" fileref="../img/class-hier.jpg"/>
-    </imageobject>
-   </mediaobject>
-  </section>
+  <para role="first-line-indented">
+    In addition the &utf; presents a notion of 
+    <link linkend="utf.user-guide.test-organization.master-test-suite">Master Test Suite</link>. The most important 
+    reason to learn about this component is that it provides an ability to access command line arguments supplied 
+    to a test module.
+  </para>
 
   <section id="utf.user-guide.test-organization.auto-test-suite">
    <title>Test suites with automated registration</title>
@@ -656,6 +579,101 @@
    </btl-example>
 
   </section>
+
+  <section id="utf.user-guide.test-organization.manual-test-suite">
+   <title>Manually registered test suites</title>
+   <titleabbrev>Manual registration</titleabbrev>
+
+   <para role="first-line-indented">
+    To create a test suite manually you need to create an instance of boost::unit_test::test_suite class, register 
+    it in test tree and populate it with test cases (or lower level test suites).
+   </para>
+
+   <section id="utf.user-guide.test-organization.test-suite-registration-interface">
+    <title>Test unit registration interface</title>
+
+    <para role="first-line-indented">
+     The &utf; models the notion of test case container - test suite - using class boost::unit_test::test_suite. For
+     complete class interface reference check advanced section of this documentation. Here you should only be
+     interested in a single test unit registration interface:
+    </para>
+
+    <programlisting>void test_suite::add( test_unit* tc, counter_t expected_failures = 0, int timeout = 0 );</programlisting>
+
+    <para role="first-line-indented">
+     The first parameter is a pointer to a newly created test unit. The second optional parameter -
+     expected_failures  - defines the number of test assertions that are expected to fail within the test unit. By
+     default no errors are  expected.
+    </para>
+
+    <caution>
+     <simpara>
+      Be careful when supplying a number of expected failures for test suites. By default the &utf; calculates the
+      number of expected failures in test suite as the sum of appropriate values in all test units that constitute
+      it. And it rarely makes sense to change this.
+     </simpara>
+    </caution>
+
+    <para role="first-line-indented">
+     The third optional parameter - timeout - defines the timeout value for the test unit. As of now the &utf;
+     isn't able to set a timeout for the test suite execution, so this parameter makes sense only for test case
+      registration. By default no timeout is set. See the method
+     <methodname>boost::execution_monitor::execute</methodname> for more details about the timeout value.
+    </para>
+
+    <para role="first-line-indented">
+     To register group of test units in one function call the boost::unit_test::test_suite provides another add
+     interface covered in the advanced section of this documentation.
+    </para>
+   </section>
+
+   <section id="utf.user-guide.test-organization.test-suite-instance-construction">
+    <title>Test suite instance construction</title>
+
+    <para role="first-line-indented">
+     To create a test suite instance manually, employ the macro BOOST_TEST_SUITE. It hides all implementation 
+     details and you only required to specify the test suite name:
+    </para>
+
+    <inline-synopsis>
+     <macro name="BOOST_TEST_SUITE" kind="functionlike">
+      <macro-parameter name="test_suite_name"/>
+     </macro>
+    </inline-synopsis>
+
+    <para role="first-line-indented">
+     BOOST_TEST_SUITE creates an instance of the class boost::unit_test::test_suite and returns a pointer to the
+     constructed instance. Alternatively you can create an instance of class boost::unit_test::test_suite yourself.
+    </para>
+
+    <note>
+     <simpara>
+      boost::unit_test::test_suite instances have to be allocated on the heap and the compiler won't allow you
+      to create one on the stack.
+     </simpara>
+    </note>
+
+    <para role="first-line-indented">
+     Newly created test suite has to be registered in a parent one using add interface. Both test suite creation and
+     registration is performed in the test module initialization function.
+    </para>
+   </section>
+
+   <btl-example name="example11">
+    <title>Manually registered test suites</title>
+   </btl-example>
+
+   <para role="first-line-indented">
+    This example creates a test tree, which can be represented by the following hierarchy:
+   </para>
+
+   <mediaobject>
+    <imageobject>
+     <imagedata format="jpg" fileref="../img/class-hier.jpg"/>
+    </imageobject>
+   </mediaobject>
+  </section>
+
   <section id="utf.user-guide.test-organization.master-test-suite">
    <title>Master Test Suite</title>
 

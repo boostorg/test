@@ -14,7 +14,7 @@
    original version of Boost.Test. As the name suggest, it provides only minimal basic facilities for test creation. It 
    have no configuration parameters (either command line arguments or environment variables) and it supplies 
    a limited set of <link linkend="minimal.tools">testing tools</link> which behaves similarly to ones defined amount 
-   the Unit Test Framework <link linkend="utf.testing-tools">Testing tools</link>. The &mtf; supplies its own function 
+   the Unit Test Framework <link linkend="utf.user-guide.testing-tools">Testing tools</link>. The &mtf; supplies its own function 
    main() (so can not be used for multi unit testing) and will execute the test program in a monitored environment.
   </para>
 
@@ -131,7 +131,7 @@
   </inline-synopsis>
   
   <para role="first-line-indented">
-   Their behavior is modeled after the <link linkend="utf.testing-tools.reference">similarly named tools</link> 
+   Their behavior is modeled after the <link linkend="utf.user-guide.testing-tools.reference">similarly named tools</link> 
    implemented by the Unit Test Framework.
   </para>
  </section>

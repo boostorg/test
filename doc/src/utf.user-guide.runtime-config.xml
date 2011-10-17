@@ -265,6 +265,24 @@ Leaving test suite "example"
     </descr>
    </refentry>
 
+   <refentry name="break_exec_path">
+    <name>Break execution path</name>
+    <env>BOOST_TEST_BREAK_EXEC_PATH</env>
+    <cla>break_exec_path"</cla>
+    <vals>
+     <simplelist>
+      <member>string consisting of space separate test_name:execution_path_number pairs</member>
+     </simplelist>
+    </vals>
+    <descr>
+     <simpara>
+      this runtime parameter is used by exception safety tester. By default exception safety tester only reports index of 
+      execution path and  test case name where failure occurred. Using this parameter you can make the tester to break the 
+      execution right before entering this path.
+     </simpara>
+    </descr>
+   </refentry>
+
    <refentry name="build_info">
     <name>Print build info</name>
     <env>BOOST_TEST_BUILD_INFO</env>
@@ -301,25 +319,20 @@ Leaving test suite "example"
     </descr>
    </refentry>
 
-   <refentry name="detect_memory_leak">
-    <name>Detect memory leaks</name>
-    <env>BOOST_TEST_DETECT_MEMORY_LEAK</env>
-    <cla>detect_memory_leaks</cla>
+   <refentry name="color_output">
+    <name>Produce color output</name>
+    <env>BOOST_TEST_COLOR_OUTPUT</env>
+    <cla>color_output</cla>
     <vals>
      <simplelist>
-      <member>0</member>
-      <member><emphasis role="bold">1</emphasis></member>
-      <member>integer value &gt; 1</member>
+      <member><emphasis role="bold">no</emphasis></member>
+      <member>yes</member>
      </simplelist>
     </vals>
     <descr>
      <simpara>
-      positive value tells the framework to detect the memory leaks (if any). Any value greater then 1 in addition
-      is treated as leak allocation number and setup runtime breakpoint. In other words setting this parameter to
-      the positive value N greater than 1 causes the framework to set a breakpoint at Nth memory allocation (don't
-      do that from the command line - only when you are under debugger). Note: if your test program produce memory
-      leaks notifications, they are combined with allocation number values you could use to set a breakpoint.
-      Currently only applies to MS family of compilers.
+      The &utf; is able to produce color output on systems which supports it. To enable this behavior set the parameter to 
+      'yes'. By default the output produces in not colored.
      </simpara>
     </descr>
    </refentry>
@@ -340,7 +353,30 @@ Leaving test suite "example"
      </simpara>
     </descr>
    </refentry>
-   
+
+   <refentry name="detect_memory_leaks">
+    <name>Detect memory leaks</name>
+    <env>BOOST_TEST_DETECT_MEMORY_LEAK</env>
+    <cla>detect_memory_leaks</cla>
+    <vals>
+     <simplelist>
+      <member>0</member>
+      <member><emphasis role="bold">1</emphasis></member>
+      <member>integer value &gt; 1</member>
+     </simplelist>
+    </vals>
+    <descr>
+     <simpara>
+      positive value tells the framework to detect the memory leaks (if any). Any value greater then 1 in addition
+      is treated as leak allocation number and setups runtime breakpoint. In other words setting this parameter to
+      the positive value N greater than 1 causes the framework to set a breakpoint at Nth memory allocation (don't
+      do that from the command line - only when you are under debugger). Note: if your test program produce memory
+      leaks notifications, they are combined with allocation number values you could use to set a breakpoint.
+      Currently only applies to MS family of compilers.
+     </simpara>
+    </descr>
+   </refentry>
+
    <refentry name="log_format">
     <name>The log format</name>
     <env>BOOST_TEST_LOG_FORMAT</env>
@@ -415,6 +451,27 @@ Leaving test suite "example"
       complete log, when all successful tests are confirmed and  all test suite messages are included, to an empty
       log when nothing is logged a test output stream.  Note that log levels are accumulating, in other words each
       log level includes also all the information reported  by less  restrictive ones.
+     </simpara>
+    </descr>
+   </refentry>
+
+   <refentry name="log_sink">
+    <name>The log sink name</name>
+    <env>BOOST_TEST_LOG_SINK</env>
+    <cla>log_sink</cla>
+    <vals>
+     <simplelist>
+      <member><emphasis role="bold">stdout</emphasis></member>
+      <member>stderr</member>
+      <member>arbitrary file name</member>
+     </simplelist>
+    </vals>
+    <descr>
+     <simpara>
+      This parameter allows easily redirect the test log. The parameter value is the string containing either a file 
+      name, in which case the &utf; will redirect log into file with that name, or 'stdout', in which case log is
+      redirected into standard output stream, or 'stderr' , in which case log is redirected into standard error stream.
+      Default is 'stdout'
      </simpara>
     </descr>
    </refentry>
@@ -495,6 +552,27 @@ Leaving test suite "example"
     </descr>
    </refentry>
 
+   <refentry name="report_sink">
+    <name>The report sink name</name>
+    <env>BOOST_TEST_REPORT_SINK</env>
+    <cla>report_sink</cla>
+    <vals>
+     <simplelist>
+      <member><emphasis role="bold">stderr</emphasis></member>
+      <member>stdout</member>
+      <member>arbitrary file name</member>
+     </simplelist>
+    </vals>
+    <descr>
+     <simpara>
+      This parameter allows easily redirect the test results report. The parameter value is the string containing either 
+      a file name, in which case the &utf; will redirect results report into file with that name, or 'stdout', in which case 
+      report is redirected into standard output stream, or 'stderr', in which case report is redirected into standard error 
+      stream. Default is 'stderr'.
+     </simpara>
+    </descr>
+   </refentry>
+
    <refentry name="result_code">
     <name>[Do not] return result code</name>
     <env>BOOST_TEST_RESULT_CODE</env>
@@ -528,6 +606,26 @@ Leaving test suite "example"
     <descr>
      <simpara>
       specifies which test units to run.
+     </simpara>
+    </descr>
+   </refentry>
+
+   <refentry name="save_patterm">
+    <name>Save patterm</name>
+    <env>BOOST_TEST_SAVE_PATTERN</env>
+    <cla>save_pattern</cla>
+    <vals>
+     <simplelist>
+      <member><emphasis role="bold">no</emphasis></member>
+      <member>yes</member>
+     </simplelist>
+    </vals>
+    <descr>
+     <simpara>
+      this parameter serves no particular purpose within the framework itself. It can be used by test modules relying 
+      on output_test_stream to implement testing logic. output_test_stream has two modes of operation: save the pattern 
+      file and match against stored pattern. You can use this parameter to switch between these modes, by passing the 
+      parameter value to the output_test_stream constructor.
      </simpara>
     </descr>
    </refentry>

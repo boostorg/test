@@ -370,7 +370,7 @@
 
    <xsl:variable name = "home" select = "/*[1]"/>
    <xsl:variable name = "up"   select = "parent::*"/>
-   <xsl:variable name = "boost.test.image.src" select = "concat($boost.root, '/libs/test/docbook/img/boost.test.logo.png')"/>
+   <xsl:variable name = "boost.test.image.src" select = "concat($boost.root, '/libs/test/doc/img/boost.test.logo.png')"/>
 
    <table width = "100%">
     <tr>

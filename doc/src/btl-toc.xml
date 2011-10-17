@@ -20,38 +20,6 @@
       </tocentry>
     </tocentry>
 
-    <tocentry linkend="execution-monitor">
-      <?dbhtml filename="execution-monitor.html"?>
-
-      <tocentry linkend="execution-monitor.compilation">
-        <?dbhtml filename="execution-monitor/compilation.html"?>
-      </tocentry>
-  
-      <tocentry linkend="execution-monitor.user-guide">
-        <?dbhtml filename="execution-monitor/user-guide.html"?>
-      </tocentry>
-
-      <tocentry linkend="execution-monitor.reference">
-        <?dbhtml filename="execution-monitor/reference.html"?>
-      </tocentry>
-    </tocentry>
-
-    <tocentry linkend="pem">
-      <?dbhtml filename="prg-exec-monitor.html"?>
-
-      <tocentry linkend="pem.impl">
-        <?dbhtml filename="prg-exec-monitor/impl.html"?>
-      </tocentry>
-
-      <tocentry linkend="pem.compilation">
-        <?dbhtml filename="prg-exec-monitor/compilation.html"?>
-      </tocentry>
-    </tocentry>
-
-    <tocentry linkend="minimal">
-      <?dbhtml filename="minimal.html"?>
-    </tocentry>
-
     <tocentry linkend="utf">
       <?dbhtml filename="utf.html"?>
       <tocentry linkend="utf.intro">
@@ -104,24 +72,15 @@
             <?dbhtml filename="utf/user-guide/usage-variants/extern-test-runner-variant.html"?>
           </tocentry>
         </tocentry>
-        <tocentry linkend="utf.user-guide.test-runners">
-          <?dbhtml filename="utf/user-guide/test-runners.html"?>
-          <tocentry linkend="utf.user-guide.external-test-runner">
-            <?dbhtml filename="utf/user-guide/usage-variants/extern-test-runner.html"?>
-          </tocentry>
-        </tocentry>
-        <tocentry linkend="utf.user-guide.initialization">
-          <?dbhtml filename="utf/user-guide/initialization.html"?>
-        </tocentry>
         <tocentry linkend="utf.user-guide.test-organization">
           <?dbhtml filename="utf/user-guide/test-organization.html"?>
           <tocentry linkend="utf.user-guide.test-organization.nullary-test-case">
             <?dbhtml filename="utf/user-guide/test-organization/nullary-test-case.html"?>
-            <tocentry linkend="utf.user-guide.test-organization.manual-nullary-test-case">
-              <?dbhtml filename="utf/user-guide/test-organization/manual-nullary-test-case.html"?>
-            </tocentry>
             <tocentry linkend="utf.user-guide.test-organization.auto-nullary-test-case">
               <?dbhtml filename="utf/user-guide/test-organization/auto-nullary-test-case.html"?>
+            </tocentry>
+            <tocentry linkend="utf.user-guide.test-organization.manual-nullary-test-case">
+              <?dbhtml filename="utf/user-guide/test-organization/manual-nullary-test-case.html"?>
             </tocentry>
           </tocentry>
           <tocentry linkend="utf.user-guide.test-organization.unary-test-case">
@@ -129,20 +88,20 @@
           </tocentry>
           <tocentry linkend="utf.user-guide.test-organization.test-case-template">
             <?dbhtml filename="utf/user-guide/test-organization/test-case-template.html"?>
-            <tocentry linkend="utf.user-guide.test-organization.manual-test-case-template">
-              <?dbhtml filename="utf/user-guide/test-organization/manual-test-case-template.html"?>
-            </tocentry>
             <tocentry linkend="utf.user-guide.test-organization.auto-test-case-template">
               <?dbhtml filename="utf/user-guide/test-organization/auto-test-case-template.html"?>
+            </tocentry>
+            <tocentry linkend="utf.user-guide.test-organization.manual-test-case-template">
+              <?dbhtml filename="utf/user-guide/test-organization/manual-test-case-template.html"?>
             </tocentry>
           </tocentry>
           <tocentry linkend="utf.user-guide.test-organization.test-suite">
             <?dbhtml filename="utf/user-guide/test-organization/test-suite.html"?>
-            <tocentry linkend="utf.user-guide.test-organization.manual-test-suite">
-              <?dbhtml filename="utf/user-guide/test-organization/manual-test-suite.html"?>
-            </tocentry>
             <tocentry linkend="utf.user-guide.test-organization.auto-test-suite">
               <?dbhtml filename="utf/user-guide/test-organization/auto-test-suite.html"?>
+            </tocentry>
+            <tocentry linkend="utf.user-guide.test-organization.manual-test-suite">
+              <?dbhtml filename="utf/user-guide/test-organization/manual-test-suite.html"?>
             </tocentry>
             <tocentry linkend="utf.user-guide.test-organization.master-test-suite">
               <?dbhtml filename="utf/user-guide/test-organization/master-test-suite.html"?>
@@ -152,21 +111,27 @@
             <?dbhtml filename="utf/user-guide/test-organization/expected-failures.html"?>
           </tocentry>
         </tocentry>
-        <tocentry linkend="utf.user-guide.fixture">
-          <?dbhtml filename="utf/user-guide/fixture.html"?>
-          <tocentry linkend="utf.user-guide.fixture.model">
-            <?dbhtml filename="utf/user-guide/fixture/model.html"?>
+
+        <tocentry linkend="utf.user-guide.testing-tools">
+          <?dbhtml filename="utf/user-guide/testing-tools.html"?>
+
+          <tocentry linkend="utf.user-guide.testing-tools.output-test">
+            <?dbhtml filename="utf/user-guide/testing-tools/output-test.html"?>
           </tocentry>
-          <tocentry linkend="utf.user-guide.fixture.per-test-case">
-            <?dbhtml filename="utf/user-guide/fixture/per-test-case.html"?>
+
+          <tocentry linkend="utf.user-guide.testing-tools.custom-predicate">
+            <?dbhtml filename="utf/user-guide/testing-tools/custom-predicate.html"?>
           </tocentry>
-          <tocentry linkend="utf.user-guide.fixture.test-suite-shared">
-            <?dbhtml filename="utf/user-guide/fixture/test-suite-shared.html"?>
+
+          <tocentry linkend="utf.user-guide.testing-tools.fpv-comparison">
+            <?dbhtml filename="utf/user-guide/testing-tools/floating_point_comparison.html"?>
           </tocentry>
-          <tocentry linkend="utf.user-guide.fixture.global">
-            <?dbhtml filename="utf/user-guide/fixture/global.html"?>
+
+          <tocentry linkend="utf.user-guide.testing-tools.reference">
+            <?dbhtml filename="utf/user-guide/testing-tools/reference.html"?>
           </tocentry>
         </tocentry>
+
         <tocentry linkend="utf.user-guide.test-output">
           <?dbhtml filename="utf/user-guide/test-output.html"?>
           <tocentry linkend="utf.user-guide.test-output.log">
@@ -211,25 +176,32 @@
             <?dbhtml filename="utf/user-guide/runtime-config/reference.html"?>
           </tocentry>
         </tocentry>
-      </tocentry>
-
-      <tocentry linkend="utf.testing-tools">
-        <?dbhtml filename="utf/testing-tools.html"?>
-
-        <tocentry linkend="utf.testing-tools.output-test">
-          <?dbhtml filename="utf/testing-tools/output-test.html"?>
+        <tocentry linkend="utf.user-guide.fixture">
+          <?dbhtml filename="utf/user-guide/fixture.html"?>
+          <tocentry linkend="utf.user-guide.fixture.model">
+            <?dbhtml filename="utf/user-guide/fixture/model.html"?>
+          </tocentry>
+          <tocentry linkend="utf.user-guide.fixture.per-test-case">
+            <?dbhtml filename="utf/user-guide/fixture/per-test-case.html"?>
+          </tocentry>
+          <tocentry linkend="utf.user-guide.fixture.test-suite-shared">
+            <?dbhtml filename="utf/user-guide/fixture/test-suite-shared.html"?>
+          </tocentry>
+          <tocentry linkend="utf.user-guide.fixture.global">
+            <?dbhtml filename="utf/user-guide/fixture/global.html"?>
+          </tocentry>
         </tocentry>
-
-        <tocentry linkend="utf.testing-tools.custom-predicate">
-          <?dbhtml filename="utf/testing-tools/custom-predicate.html"?>
+        <tocentry linkend="utf.user-guide.initialization">
+          <?dbhtml filename="utf/user-guide/initialization.html"?>
         </tocentry>
-
-        <tocentry linkend="utf.testing-tools.fpv-comparison">
-          <?dbhtml filename="utf/testing-tools/floating_point_comparison.html"?>
+        <tocentry linkend="utf.user-guide.test-runners">
+          <?dbhtml filename="utf/user-guide/test-runners.html"?>
+          <tocentry linkend="utf.user-guide.external-test-runner">
+            <?dbhtml filename="utf/user-guide/usage-variants/extern-test-runner.html"?>
+          </tocentry>
         </tocentry>
-
-        <tocentry linkend="utf.testing-tools.reference">
-          <?dbhtml filename="utf/testing-tools/reference.html"?>
+        <tocentry linkend="utf.user-guide.glossary">
+          <?dbhtml filename="utf/user-guide/glossary.html"?>
         </tocentry>
       </tocentry>
 
@@ -248,6 +220,43 @@
           <?dbhtml filename="utf/usage-recommendations/command-line-specific.html"?>
         </tocentry>
       </tocentry>
+
+      <tocentry linkend="utf.examples">
+        <?dbhtml filename="utf/examples-collection.html"?>
+      </tocentry>
+
+    </tocentry>
+
+    <tocentry linkend="execution-monitor">
+      <?dbhtml filename="execution-monitor.html"?>
+
+      <tocentry linkend="execution-monitor.compilation">
+        <?dbhtml filename="execution-monitor/compilation.html"?>
+      </tocentry>
+  
+      <tocentry linkend="execution-monitor.user-guide">
+        <?dbhtml filename="execution-monitor/user-guide.html"?>
+      </tocentry>
+
+      <tocentry linkend="execution-monitor.reference">
+        <?dbhtml filename="execution-monitor/reference.html"?>
+      </tocentry>
+    </tocentry>
+
+    <tocentry linkend="pem">
+      <?dbhtml filename="prg-exec-monitor.html"?>
+
+      <tocentry linkend="pem.impl">
+        <?dbhtml filename="prg-exec-monitor/impl.html"?>
+      </tocentry>
+
+      <tocentry linkend="pem.compilation">
+        <?dbhtml filename="prg-exec-monitor/compilation.html"?>
+      </tocentry>
+    </tocentry>
+
+    <tocentry linkend="minimal">
+      <?dbhtml filename="minimal.html"?>
     </tocentry>
   </tocentry>
 </toc>

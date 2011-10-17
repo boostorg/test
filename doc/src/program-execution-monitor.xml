@@ -40,7 +40,7 @@
    <para role="first-line-indented">
     Uniform error reporting can be also useful in test environments such as the Boost regression tests. Be aware though 
     in such case it might be preferable to use the <link linkend="utf">Unit Test Framework</link>, cause it allows one 
-    to use the <link linkend="utf.testing-tools">Testing tools</link> and generate more detailed error information.
+    to use the <link linkend="utf.user-guide.testing-tools">Testing tools</link> and generate more detailed error information.
    </para>
  </section>
  

@@ -92,7 +92,7 @@
   <itemizedlist mark ="square">
    <listitem>
     <simpara>
-     Simplify writing test cases by using various <link linkend="utf.testing-tools.reference">testing tools</link>.
+     Simplify writing test cases by using various <link linkend="utf.user-guide.testing-tools.reference">testing tools</link>.
     </simpara>
    </listitem>
    <listitem>
@@ -143,8 +143,8 @@
   </itemizedlist>
 
   <para role="first-line-indented">
-   For those interested in getting started quickly please visit <ulink url="example-toc.html">collection of 
-   examples</ulink> presented in this documentation.
+   For those interested in getting started quickly please visit <link linkend="utf.examples">collection of 
+   examples</link> presented in this documentation.
   </para>
  </section>
 
@@ -161,7 +161,9 @@
     The &utf; is comparatively complicated component and is implemented in close to hundred header and source files,
     so for long term usage the preferable solution is to build the &utf; as a reusable standalone library.
     Depending on your platform this may save you a significant time during test module compilation and doesn't
-    really require that much effort. 
+    really require that much effort <footnote><simpara>If you are using Visual studio compilers do not forget to 
+    set a subsystem to console when you build test modules. You can do it either in project properties or by setting 
+    command line /SUBSYTEM:CONSOLE. Number of people reported link error caused specifically by this omission</simpara></footnote>. 
     <ulink url="http://boost.org/more/getting_started/index.html">Boost Getting started</ulink> tells you how to get 
     pre-built libraries for some platforms. If available, this is the easiest option and you can ignore standalone 
     library compilation instructions below.
@@ -229,7 +231,7 @@
    </itemizedlist>
   </section>
   
-  <section id="utf.compilation.procedured">
+  <section id="utf.compilation.procedure">
    <title>Compilation procedures</title>
 
    <para role="first-line-indented">
@@ -237,9 +239,9 @@
     linking with the &utf; may require additional steps. The &utf; presents you with options to either
     <link linkend="utf.compilation.standalone">built and link with a standalone library</link> or
     <link linkend="utf.compilation.direct-include">include the implementation directly</link> into a test module.
-    If you opt to use the library the &utf; headers implement the 
-    <link linkend="utf.compilation.auto-linking">auto-linking support</link>. The compilation of the &utf; library and
-    a test module can be configured using the following compilation flags.
+    If you opt to use the library the &utf; headers implement the <link linkend="utf.compilation.auto-linking">
+    auto-linking support</link>. The compilation of the &utf; library and a test module can be configured using the 
+    following compilation flags.
    </para>
 
    <table id="utf.compilation.flags">
@@ -314,7 +316,7 @@
     (for  example Microsoft  Visual Studio). The Boost preferred solution is Boost.Build system that is based on top of 
     bjam  tool. Make  systems require some kind of configuration file that lists all files that constitute the library 
     and all build  options. For example the makefile that is used by make, or the Microsoft Visual Studio project file, 
-    Jamfile is  used by Boost.Build. For the sake of simplicity let's call this file the makefile.</simpara></footnote>.
+    Jamfile is used by Boost.Build. For the sake of simplicity let's call this file the makefile.</simpara></footnote>.
    </para>
 
    <para role="first-line-indented">
@@ -409,7 +411,7 @@
   </section>
  </section>
 
- <xi:include href="utf.users-guide.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
- <xi:include href="utf.testing-tools.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+ <xi:include href="utf.user-guide.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
  <xi:include href="utf.usage-recommendations.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+ <xi:include href="utf.examples.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 </section>
