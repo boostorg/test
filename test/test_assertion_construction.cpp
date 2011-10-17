@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_CASE( test_basic_value_expression_construction )
     assertion::seed seed;
 
     {
-        assertion::expression const& E = seed->*1;
+        assertion::expression const& E = assertion::seed()->*1;
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( res );
         BOOST_CHECK( res.message().is_empty() );

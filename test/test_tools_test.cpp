@@ -269,7 +269,10 @@ TEST_CASE( test_BOOST_CHECK_THROW )
     CHECK_CRITICAL_TOOL_USAGE( BOOST_REQUIRE_THROW( i++, my_exception ) );
 
     unit_test_log.set_threshold_level( log_successful_tests );
-    BOOST_CHECK_THROW( throw my_exception(), my_exception ); // unreachable code warning is expected
+    if( i/10 > 10 )
+    {}
+    else 
+        BOOST_CHECK_THROW( throw my_exception(), my_exception ); // unreachable code warning is expected
 }
 
 //____________________________________________________________________________//
@@ -287,7 +290,9 @@ TEST_CASE( test_BOOST_CHECK_EXCEPTION )
 TEST_CASE( test_BOOST_CHECK_NO_THROW )
 {
     int i=0;
-    BOOST_CHECK_NO_THROW( i++ );
+    if( i*10 == 0 )
+        BOOST_CHECK_NO_THROW( i++ );
+    else {}
 
     BOOST_CHECK_NO_THROW( throw my_exception() ); // unreachable code warning is expected
 }
@@ -630,6 +635,13 @@ TEST_CASE( test_context_logging )
 
         BOOST_CHECK( false );
     }
+}
+
+//____________________________________________________________________________//
+
+TEST_CASE( test_BOOST_CHECKA )
+{
+    BOOST_CHECKA( true );
 }
 
 //____________________________________________________________________________//
