@@ -84,7 +84,7 @@ bool BOOST_TEST_DECL attach_debugger( bool break_or_continue = true );
 // **************   switch on/off detect memory leaks feature  ************** //
 // ************************************************************************** //
 
-void BOOST_TEST_DECL detect_memory_leaks( bool on_off );
+void BOOST_TEST_DECL detect_memory_leaks( bool on_off, unit_test::const_string report_file = unit_test::const_string() );
 
 // ************************************************************************** //
 // **************      cause program to break execution in     ************** //

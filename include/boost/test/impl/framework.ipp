@@ -664,7 +664,7 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
         register_observer( progress_monitor );
 
     if( runtime_config::detect_memory_leaks() > 0 ) {
-        debug::detect_memory_leaks( true );
+        debug::detect_memory_leaks( true, runtime_config::memory_leaks_report_file() );
         debug::break_memory_alloc( runtime_config::detect_memory_leaks() );
     }
 

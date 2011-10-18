@@ -285,8 +285,8 @@ init( int& argc, char** argv )
               << cla::named_parameter<bool>( DETECT_FP_EXCEPT )
                 - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,
                    cla::description = "Allows to switch between catching and ignoring floating point exceptions")
-              << cla::named_parameter<long>( DETECT_MEM_LEAKS )
-                - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,
+              << cla::named_parameter<std::string>( DETECT_MEM_LEAKS )
+                - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,cla::optional_value,
                    cla::description = "Allows to switch between catching and ignoring memory leaks")
               << cla::dual_name_parameter<unit_test::output_format>( LOG_FORMAT + "|f" )
                 - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,
@@ -552,7 +552,49 @@ log_sink()
 long
 detect_memory_leaks()
 {
-    return retrieve_parameter( DETECT_MEM_LEAKS, s_cla_parser, static_cast<long>(1) );
+    static int s_value = -1;
+
+    if( s_value >= 0 )
+        return s_value;
+
+    std::string value = retrieve_parameter( DETECT_MEM_LEAKS, s_cla_parser, s_empty );
+
+    optional<bool> bool_val;
+    if( runtime::interpret_argument_value_impl<bool>::_( value, bool_val ) )
+        s_value = *bool_val ? 1L : 0L;
+    else {
+        try {
+            // if representable as long - this is leak number
+            s_value = boost::lexical_cast<long>( value );
+        }
+        catch( boost::bad_lexical_cast const& ) {
+            // value is leak report file and detection is enabled
+            s_value = 1L;
+        }
+    }
+
+    return s_value;
+}
+
+//____________________________________________________________________________//
+
+const_string
+memory_leaks_report_file()
+{
+    if( detect_memory_leaks() != 1 )
+        return const_string();
+
+    static std::string s_value;
+
+    if( s_value.empty() ) {
+        s_value = retrieve_parameter<std::string>( DETECT_MEM_LEAKS, s_cla_parser );
+
+        optional<bool> bool_val;
+        if( runtime::interpret_argument_value_impl<bool>::_( s_value, bool_val ) )
+            s_value.clear();
+    }
+
+    return s_value;
 }
 
 //____________________________________________________________________________//
