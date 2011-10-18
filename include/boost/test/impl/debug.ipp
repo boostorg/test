@@ -935,7 +935,7 @@ detect_memory_leaks( bool on_off, unit_test::const_string report_file )
         _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);
 
         if( report_file.is_empty() )
-            _CrtSetReportFile(_CRT_WARN, _CRTDBG_FILE_STDOUT);
+            _CrtSetReportFile(_CRT_WARN, _CRTDBG_FILE_STDERR);
         else {
             HANDLE hreport_f = ::CreateFileA( report_file.begin(), 
                                               GENERIC_WRITE, FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
