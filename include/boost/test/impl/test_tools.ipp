@@ -284,8 +284,8 @@ check_impl( predicate_result const& pr, lazy_ostream const& assertion_descr,
 {
     using namespace unit_test;
 
-    if( !framework::is_initialized() )
-        throw std::runtime_error( "can't use testing tools before framework is initialized" );
+    if( framework::current_test_case_id() == INV_TEST_UNIT_ID )
+        throw std::runtime_error( "can't use testing tools outside of test case implementation" );
 
     if( !!pr )
         tl = PASS;

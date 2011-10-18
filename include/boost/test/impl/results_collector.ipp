@@ -247,7 +247,7 @@ results_collector_t::test_unit_skipped( test_unit const& tu )
 void
 results_collector_t::assertion_result( bool passed )
 {
-    test_results& tr = s_rc_impl().m_results_store[framework::current_test_case().p_id];
+    test_results& tr = s_rc_impl().m_results_store[framework::current_test_case_id()];
 
     if( passed )
         tr.p_assertions_passed.value++;
@@ -263,7 +263,7 @@ results_collector_t::assertion_result( bool passed )
 void
 results_collector_t::exception_caught( execution_exception const& )
 {
-    test_results& tr = s_rc_impl().m_results_store[framework::current_test_case().p_id];
+    test_results& tr = s_rc_impl().m_results_store[framework::current_test_case_id()];
 
     tr.p_assertions_failed.value++;
 }

@@ -87,6 +87,7 @@ BOOST_TEST_DECL master_test_suite_t& master_test_suite();
 
 // constant access methods
 BOOST_TEST_DECL test_case const&    current_test_case();
+BOOST_TEST_DECL test_unit_id        current_test_case_id(); /* safe version of above */
 
 BOOST_TEST_DECL test_unit&  get( test_unit_id, test_unit_type );
 template<typename UnitType>
