@@ -87,6 +87,7 @@ public:
 
 #ifdef BOOST_MSVC
 # pragma warning(default: 4355)
+# pragma warning(pop) 
 #endif
 
 typedef basic_ifstream_line_iterator<char>      ifstream_line_iterator;
