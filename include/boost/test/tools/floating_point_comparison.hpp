@@ -67,13 +67,13 @@ struct fpt_limits {
     {
         return std::numeric_limits<FPT>::is_specialized
                     ? (std::numeric_limits<FPT>::min)()
-                    : 0;
+                    : static_cast<FPT>(0);
     }
     static FPT    max_value()
     {
         return std::numeric_limits<FPT>::is_specialized
                     ? (std::numeric_limits<FPT>::max)()
-                    : static_cast<FPT>(1000000); // for the our purposes it doesn't really matter what value is returned here
+                    : static_cast<FPT>(1000000); // for our purposes it doesn't really matter what value is returned here
     }
 };
 
