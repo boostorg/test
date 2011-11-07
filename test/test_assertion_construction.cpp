@@ -190,6 +190,7 @@ struct Testee {
     Testee( Testee const& ) : m_value(false) { s_copy_counter++; }
 #ifndef BOOST_NO_RVALUE_REFERENCES
     Testee( Testee&& ) : m_value(false)     {}
+    Testee( Testee const&& ) : m_value(false)     {}
 #endif
 
     bool foo() { return m_value; }
@@ -252,7 +253,7 @@ BOOST_AUTO_TEST_CASE( test_objects )
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
         BOOST_CHECK_EQUAL( res.message(), "(bool)Testee is false" );
-        BOOST_CHECK_EQUAL( Testee::s_copy_counter, 1 ); // !! ??
+        BOOST_CHECK_EQUAL( Testee::s_copy_counter, 0 );
     }
 
     {
@@ -262,7 +263,7 @@ BOOST_AUTO_TEST_CASE( test_objects )
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
         BOOST_CHECK_EQUAL( res.message(), "(bool)Testee is false" );
-        BOOST_CHECK_EQUAL( Testee::s_copy_counter, 1 ); // !! ??
+        BOOST_CHECK_EQUAL( Testee::s_copy_counter, 0 );
     }
 }
 
