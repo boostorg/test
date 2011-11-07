@@ -510,13 +510,12 @@ apply_filters( test_unit_id master_tu_id )
         ut_detail::tu_enable_list tu_to_enable;
         ut_detail::tu_enable_list tu_to_disable;
         bool had_enable_filter = false;
-        bool had_disable_filter = false;
 
         BOOST_TEST_FOREACH( const_string, filter, runtime_config::test_to_run() ) {
             BOOST_TEST_SETUP_ASSERT( !filter.is_empty(), "Invalid filter specification" );
 
             bool enable_or_disable = true;
-            
+
             // 11. Decide if this "enabler" or "disabler" filter
             if( filter[0] == '!' ) {
                 enable_or_disable = false;
@@ -526,8 +525,6 @@ apply_filters( test_unit_id master_tu_id )
 
             if( enable_or_disable )
                 had_enable_filter = true;
-            else
-                had_disable_filter = true;
 
             // 12. Choose between name filter and label filter
             if( filter[0] == '@' ) {

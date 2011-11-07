@@ -158,6 +158,7 @@ namespace { void _set_se_translator( void* ) {} }
 #    define BOOST_TEST_ALT_STACK_SIZE SIGSTKSZ
 #  endif
 
+
 #else
 
 #  define BOOST_NO_SIGNAL_HANDLING
@@ -166,6 +167,10 @@ namespace { void _set_se_translator( void* ) {} }
 
 #ifndef UNDER_CE
 #include <errno.h>
+#endif
+
+#if defined(__GNUC__) && !defined(BOOST_NO_TYPEID)
+#  include <cxxabi.h>
 #endif
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -273,6 +278,26 @@ struct fpe_except_guard {
     unsigned m_detect_fpe;
     unsigned m_previosly_enabled;
 };
+
+#ifndef BOOST_NO_TYPEID
+
+// ************************************************************************** //
+// **************                  typeid_name                 ************** //
+// ************************************************************************** //
+
+template<typename T>
+char const*
+typeid_name( T const& t )
+{
+#ifdef __GNUC__
+    int status;
+
+    return abi::__cxa_demangle( typeid(t).name(), 0, 0, &status );
+#else
+    return typeid(t).name();
+#endif
+}
+#endif
 
 } // namespace detail
 
@@ -1183,7 +1208,7 @@ execution_monitor::execute( boost::function<int ()> const& F )
     catch( ex_name const& ex )                                              \
         { detail::report_error( execution_exception::cpp_exception_error,   \
                           current_exception_cast<boost::exception const>(), \
-                          "%s: %s", typeid(ex).name(), ex.what() ); }       \
+                          "%s: %s", detail::typeid_name(ex), ex.what() ); } \
 /**/
 #endif
 
