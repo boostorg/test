@@ -13,11 +13,13 @@ project boost/test
                    <link>shared,<toolset>msvc:<cxxflags>-wd4275
                    <toolset>msvc:<cxxflags>-wd4671
                    <toolset>msvc:<cxxflags>-wd4673
+                   <toolset>gcc:<cxxflags>-std=c++0x
                    <warnings>all
     : usage-requirements
                    <define>BOOST_TEST_NO_AUTO_LINK=1
                    # Disable Warning about boost::noncopyable not being exported
                    <link>shared,<toolset>msvc:<cxxflags>-wd4275
+                   <toolset>gcc:<cxxflags>-std=c++0x
     ;
 
 PRG_EXEC_MON_SOURCES =
