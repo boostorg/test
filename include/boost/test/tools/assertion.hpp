@@ -45,11 +45,11 @@ public:
 
 namespace op {
 
-enum id { 
+enum id {
     // precedence 4: ->*, .*
-    MEMP, 
+    MEMP,
     // precedence 5: *, /, %
-    MUL, DIV, MOD,  
+    MUL, DIV, MOD,
     // precedence 6: +, -
     ADD, SUB,
     // precedence 7: << , >>
@@ -73,7 +73,7 @@ enum id {
 
     // precedence 16: = and OP= operators
     SET, IADD, ISUB, IMUL, IDIV, IMOD,
-    ILSH, IRSH, 
+    ILSH, IRSH,
     IAND, IXOR, IOR
     // precedence 17: throw operator
     // not supported
@@ -275,10 +275,11 @@ public:
     // Constructor
 #ifndef BOOST_NO_RVALUE_REFERENCES
     explicit                    value_expr( T&& val )
+    : m_value( std::forward<T>(val) )
 #else
     explicit                    value_expr( T const& val )
-#endif
     : m_value( val )
+#endif
     {}
 
     // Specific expresson interface
@@ -317,7 +318,7 @@ private:
         predicate_result res( value() );
         if( !res )
             format_message( res.message(), value() );
-        
+
         return res;
     }
 
@@ -360,7 +361,7 @@ private:
         predicate_result res( value() );
         if( !res )
             report( res.message().stream() );
-        
+
         return res;
     }
 
