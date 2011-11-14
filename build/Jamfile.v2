@@ -18,7 +18,6 @@ project boost/test
                    <define>BOOST_TEST_NO_AUTO_LINK=1
                    # Disable Warning about boost::noncopyable not being exported
                    <link>shared,<toolset>msvc:<cxxflags>-wd4275
-                   <toolset>gcc:<cxxflags>-std=c++0x
     ;
 
 PRG_EXEC_MON_SOURCES =
