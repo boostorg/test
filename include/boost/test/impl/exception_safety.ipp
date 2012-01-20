@@ -51,9 +51,9 @@
 
 namespace boost {
 
-using namespace ::boost::unit_test;
- 
 namespace itest {
+
+using namespace ::boost::unit_test;
 
 // ************************************************************************** //
 // **************             execution_path_point             ************** //
