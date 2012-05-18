@@ -29,7 +29,6 @@
 #include <boost/test/utils/lazy_ostream.hpp>
 
 // Boost
-#include <boost/utility.hpp>
 
 // STL
 #include <iosfwd>   // for std::ostream&

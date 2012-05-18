@@ -24,7 +24,6 @@
 
 
 // Boost
-#include <boost/utility.hpp>
 #include <boost/scoped_array.hpp>
 #include <boost/bind.hpp>
 
