@@ -72,6 +72,10 @@ typedef std::basic_ostream<char_type>                           out_stream;
 #pragma warning(disable:4996) // putenv
 #endif
 
+#if defined(__MINGW32__)
+extern "C" int putenv( const char * );
+#endif
+
 #ifndef UNDER_CE
 #if defined(__COMO__) && 0
 inline void
