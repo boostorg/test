@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2011.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -74,7 +74,7 @@ template<typename T>
 struct print_log_value {
     void    operator()( std::ostream& ostr, T const& t )
     {
-        // avoid warning: 'boost::test_tools::<unnamed>::dummy_cond' defined but not used 
+        // avoid warning: 'boost::test_tools::<unnamed>::dummy_cond' defined but not used
         if( ::boost::test_tools::dummy_cond ) {}
 
         typedef typename mpl::or_<is_array<T>,is_function<T>,is_abstract<T> >::type cant_use_nl;
@@ -87,7 +87,11 @@ struct print_log_value {
     void set_precision( std::ostream& ostr, mpl::false_ )
     {
         if( std::numeric_limits<T>::is_specialized && std::numeric_limits<T>::radix == 2 )
-            ostr.precision( 2 + std::numeric_limits<T>::digits * 301/1000 ); 
+            ostr.precision( 2 + std::numeric_limits<T>::digits * 301/1000 );
+        if( std::numeric_limits<T>::is_specialized && std::numeric_limits<T>::radix == 10 )
+            ostr.precision( 2 + std::numeric_limits<T>::max_digits10);
+            // Assume that max_digits10 is provided for all radix 10 as they are quite new,
+            // and anyway Kahan formula will not work for decimal.
     }
 
     void set_precision( std::ostream&, mpl::true_ ) {}
@@ -152,7 +156,7 @@ namespace tt_detail {
 // ************************************************************************** //
 
 enum check_type {
-    CHECK_PRED, 
+    CHECK_PRED,
     CHECK_MSG,
     CHECK_EQUAL,
     CHECK_NE,
@@ -176,7 +180,7 @@ enum tool_level {
 // ************************************************************************** //
 // **************                 print_helper                 ************** //
 // ************************************************************************** //
-// Adds level of indirection to the output operation, allowing us to customize 
+// Adds level of indirection to the output operation, allowing us to customize
 // it for types that do not support operator << directly or for any other reason
 
 template<typename T>
@@ -188,7 +192,7 @@ struct print_helper_t {
 
 //____________________________________________________________________________//
 
-#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) 
+#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
 // Borland suffers premature pointer decay passing arrays by reference
 template<typename T, std::size_t N >
 struct print_helper_t< T[N] > {
@@ -209,7 +213,7 @@ inline print_helper_t<T> print_helper( T const& t )
 //____________________________________________________________________________//
 
 template<typename T>
-inline std::ostream& 
+inline std::ostream&
 operator<<( std::ostream& ostr, print_helper_t<T> const& ph )
 {
     print_log_value<T>()( ostr, ph.m_t );
@@ -223,7 +227,7 @@ operator<<( std::ostream& ostr, print_helper_t<T> const& ph )
 // **************            TOOL BOX Implementation           ************** //
 // ************************************************************************** //
 
-BOOST_TEST_DECL 
+BOOST_TEST_DECL
 bool check_impl( predicate_result const& pr, ::boost::unit_test::lazy_ostream const& assertion_descr,
                  const_string file_name, std::size_t line_num,
                  tool_level tl, check_type ct,
@@ -231,7 +235,7 @@ bool check_impl( predicate_result const& pr, ::boost::unit_test::lazy_ostream co
 
 //____________________________________________________________________________//
 
-// This function adds level of indirection, but it makes sure we evaluate predicate 
+// This function adds level of indirection, but it makes sure we evaluate predicate
 // arguments only once
 
 #ifndef BOOST_TEST_PROD
@@ -242,7 +246,7 @@ bool check_impl( predicate_result const& pr, ::boost::unit_test::lazy_ostream co
  , char const* BOOST_JOIN( BOOST_JOIN( arg, m ), _descr )                           \
 /**/
 
-#define PRED_PARAMS( z, m, dummy ) BOOST_PP_COMMA_IF( m ) BOOST_JOIN( arg, m ) 
+#define PRED_PARAMS( z, m, dummy ) BOOST_PP_COMMA_IF( m ) BOOST_JOIN( arg, m )
 
 #define ARG_INFO( z, m, dummy )                                                     \
  , BOOST_JOIN( BOOST_JOIN( arg, m ), _descr )                                       \
