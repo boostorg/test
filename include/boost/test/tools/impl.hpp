@@ -88,10 +88,13 @@ struct print_log_value {
     {
         if( std::numeric_limits<T>::is_specialized && std::numeric_limits<T>::radix == 2 )
             ostr.precision( 2 + std::numeric_limits<T>::digits * 301/1000 );
+        /*
+        This needs a test for support of max_digits10 to avoid failures on platforms that do not support.
         if( std::numeric_limits<T>::is_specialized && std::numeric_limits<T>::radix == 10 )
             ostr.precision( 2 + std::numeric_limits<T>::max_digits10);
             // Assume that max_digits10 is provided for all radix 10 as they are quite new,
             // and anyway Kahan formula will not work for decimal.
+        */
     }
 
     void set_precision( std::ostream&, mpl::true_ ) {}
