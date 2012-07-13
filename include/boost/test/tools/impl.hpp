@@ -92,8 +92,9 @@ struct print_log_value {
         }
         else if ( std::numeric_limits<T>::is_specialized && std::numeric_limits<T>::radix == 10 )
         {
-#ifdef BOOST_NO_NUMERIC_LIMITS_LOWEST
-// No support for std::numeric_limits<double>::max_digits10;
+#ifdef BOOST_NO_CXX11_NUMERIC_LIMITS
+// (was BOOST_NO_NUMERIC_LIMITS_LOWEST but now deprecated).
+// No support for std::numeric_limits<double>::max_digits10,
 // so guess that a couple of guard digits more than digits10 will display any difference.
            ostr.precision( 2 + std::numeric_limits<T>::digits10 );
 #else
@@ -102,7 +103,8 @@ struct print_log_value {
            ostr.precision( std::numeric_limits<T>::max_digits10 );
 #endif
        }
-       // else if T is not specialized, then will just get the default precision of 6 digits.
+       // else if T is not specialized for std::numeric_limits<>,
+       // then will just get the default precision of 6 digits.
     }
 
     void set_precision( std::ostream&, mpl::true_ ) {}
