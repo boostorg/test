@@ -40,9 +40,9 @@
 
 namespace boost {
 
-using namespace ::boost::unit_test;
-
 namespace itest {
+
+using namespace ::boost::unit_test;
 
 // ************************************************************************** //
 // **************    logged expectation test implementation    ************** //
