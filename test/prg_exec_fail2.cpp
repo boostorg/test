@@ -26,11 +26,12 @@
 #include <cstddef> //Metrowerks linker needs at least one standard library
 #endif
 
+#include <cstdio>
 
 int cpp_main( int, char *[] )  // note the name
 {
 #if (defined(APPLE) && defined(ppc)) || defined(_ARCH_PPC)
-    printf("The ppc doesn't throw on divide-by-zero. No check.\n"); 
+    std::printf("The ppc doesn't throw on divide-by-zero. No check.\n"); 
     return 1;
 #else 
     int div = 0;
