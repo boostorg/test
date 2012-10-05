@@ -86,11 +86,12 @@ BOOST_AUTO_TEST_SUITE_END()
 
 //____________________________________________________________________________//
 
-void empty() {}
+// VC9 defines a function called void empty(); in ivec.h
+void empty_() {}
 
 BOOST_AUTO_TEST_CASE( manual_test_case_creation_test )
 {
-    test_case* tc1 = BOOST_TEST_CASE( &empty );
+    test_case* tc1 = BOOST_TEST_CASE( &empty_ );
 
     BOOST_CHECK_EQUAL( tc1->p_type, tut_case );
     BOOST_CHECK_EQUAL( tc1->p_type_name, const_string( "case" ) );
@@ -99,7 +100,7 @@ BOOST_AUTO_TEST_CASE( manual_test_case_creation_test )
 
     BOOST_CHECK_EQUAL( tc1->p_expected_failures, 0U );
     BOOST_CHECK_EQUAL( tc1->p_timeout, 0U );
-    BOOST_CHECK_EQUAL( tc1->p_name, const_string( "empty" ) );
+    BOOST_CHECK_EQUAL( tc1->p_name, const_string( "empty_" ) );
     BOOST_CHECK( tc1->p_test_func );
     BOOST_CHECK( tc1->p_enabled );
 
@@ -108,7 +109,7 @@ BOOST_AUTO_TEST_CASE( manual_test_case_creation_test )
 
     BOOST_CHECK_THROW( &framework::get( tc1->p_id, tut_suite ), framework::internal_error );
 
-    test_case* tc2 = make_test_case( &empty, "my test case" );
+    test_case* tc2 = make_test_case( &empty_, "my test case" );
     BOOST_CHECK_EQUAL( tc2->p_name, const_string( "my test case" ) );
 }
 
@@ -139,7 +140,7 @@ BOOST_AUTO_TEST_CASE( manual_test_unit_registration )
 {
     test_suite* ts1 = BOOST_TEST_SUITE( "TestSuite" );
 
-    test_case* tc1 = make_test_case( &empty, "empty1" );
+    test_case* tc1 = make_test_case( &empty_, "empty1" );
 
     ts1->add( tc1, 1, 10U );
     BOOST_CHECK_EQUAL( ts1->size(), 1U );
@@ -148,7 +149,7 @@ BOOST_AUTO_TEST_CASE( manual_test_unit_registration )
     BOOST_CHECK_EQUAL( tc1->p_timeout, 10U );
     BOOST_CHECK_EQUAL( ts1->p_expected_failures, 1U );
 
-    test_case* tc2 = make_test_case( &empty, "empty2" );
+    test_case* tc2 = make_test_case( &empty_, "empty2" );
 
     ts1->add( tc2, 2U );
     BOOST_CHECK_EQUAL( ts1->size(), 2U );
