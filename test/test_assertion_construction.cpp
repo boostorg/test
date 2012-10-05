@@ -253,7 +253,11 @@ BOOST_AUTO_TEST_CASE( test_objects )
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
         BOOST_CHECK_EQUAL( res.message(), "(bool)Testee is false" );
+#ifndef BOOST_NO_RVALUE_REFERENCES
         BOOST_CHECK_EQUAL( Testee::s_copy_counter, 0 );
+#else
+        BOOST_CHECK_EQUAL( Testee::s_copy_counter, 1 );
+#endif
     }
 
     {
@@ -263,7 +267,11 @@ BOOST_AUTO_TEST_CASE( test_objects )
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
         BOOST_CHECK_EQUAL( res.message(), "(bool)Testee is false" );
+#ifndef BOOST_NO_RVALUE_REFERENCES
         BOOST_CHECK_EQUAL( Testee::s_copy_counter, 0 );
+#else
+        BOOST_CHECK_EQUAL( Testee::s_copy_counter, 1 );
+#endif
     }
 }
 
