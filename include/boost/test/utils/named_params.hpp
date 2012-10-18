@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2010.
+//  (C) Copyright Gennadiy Rozental 2005-2012.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -33,7 +33,7 @@ namespace boost {
 namespace nfp { // named function parameters
 
 // ************************************************************************** //
-// **************              forward declarations            ************** //
+// **************             forward declarations             ************** //
 // ************************************************************************** //
 
 template<typename T, typename unique_id,typename RefType>   struct named_parameter;
@@ -60,7 +60,7 @@ report_access_to_invalid_parameter()
 //____________________________________________________________________________//
 
 // ************************************************************************** //
-// **************                       nil                    ************** //
+// **************                      nil                     ************** //
 // ************************************************************************** //
 
 struct nil {
@@ -98,7 +98,7 @@ private:
 };
     
 // ************************************************************************** //
-// **************              named_parameter_base            ************** //
+// **************             named_parameter_base             ************** //
 // ************************************************************************** //
 
 template<typename Derived>
@@ -111,7 +111,7 @@ struct named_parameter_base {
 //____________________________________________________________________________//
 
 // ************************************************************************** //
-// **************             named_parameter_combine          ************** //
+// **************            named_parameter_combine           ************** //
 // ************************************************************************** //
 
 template<typename NP, typename Rest = nil>
@@ -163,10 +163,10 @@ private:
 } // namespace nfp_detail
 
 // ************************************************************************** //
-// **************                 named_parameter              ************** //
+// **************                named_parameter               ************** //
 // ************************************************************************** //
 
-template<typename T, typename unique_id,typename ReferenceType=T&>
+template<typename T, typename unique_id, typename ReferenceType=T&>
 struct named_parameter
 : nfp_detail::named_parameter_base<named_parameter<T, unique_id,ReferenceType> >
 {
@@ -215,7 +215,7 @@ private:
 //____________________________________________________________________________//
 
 // ************************************************************************** //
-// **************                    no_params                 ************** //
+// **************                   no_params                  ************** //
 // ************************************************************************** //
 
 namespace nfp_detail {
@@ -229,7 +229,7 @@ nfp_detail::no_params_type no_params( '\0' );
 //____________________________________________________________________________//
 
 // ************************************************************************** //
-// **************                     keyword                  ************** //
+// **************                    keyword                   ************** //
 // ************************************************************************** //
 
 template<typename unique_id, bool required = false>
@@ -251,7 +251,7 @@ struct keyword {
 //____________________________________________________________________________//
 
 // ************************************************************************** //
-// **************                  typed_keyword               ************** //
+// **************                 typed_keyword                ************** //
 // ************************************************************************** //
 
 template<typename T, typename unique_id, bool required = false>
@@ -280,7 +280,7 @@ struct typed_keyword<bool,unique_id,false>
 //____________________________________________________________________________//
 
 // ************************************************************************** //
-// **************                optionally_assign             ************** //
+// **************               optionally_assign              ************** //
 // ************************************************************************** //
 
 template<typename T>
@@ -317,6 +317,44 @@ optionally_assign( T& target, Params const& p, Keyword k )
 }
 
 //____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************                is_named_params               ************** //
+// ************************************************************************** //
+
+template<typename T>
+struct is_named_params : public mpl::false_ {};
+
+template<typename T, typename unique_id, typename ReferenceType>
+struct is_named_params<named_parameter<T,unique_id,ReferenceType> > : public mpl::true_ {};
+
+template<typename NP, typename Rest>
+struct is_named_params<nfp_detail::named_parameter_combine<NP,Rest> > : public mpl::true_ {};
+
+// ************************************************************************** //
+// **************                  param_type                  ************** //
+// ************************************************************************** //
+
+template<typename Params,typename KeywordType,typename DefaultType=void>
+struct param_type {
+    typedef DefaultType type;
+};
+
+template<typename NP,typename Rest,typename Keyword,typename DefaultType>
+struct param_type<nfp_detail::named_parameter_combine<NP,Rest>,Keyword,DefaultType> : param_type<Rest,Keyword,DefaultType> {
+};
+
+template<typename T, typename unique_id, typename ReferenceType,bool required,typename DefaultType>
+struct param_type<named_parameter<T,unique_id,ReferenceType>,keyword<unique_id,required>,DefaultType> {
+    typedef typename std::remove_cv<T>::type type;
+};
+
+template<typename T, typename unique_id, typename ReferenceType,typename Rest,bool required,typename DefaultType>
+struct param_type<nfp_detail::named_parameter_combine<named_parameter<T,unique_id,ReferenceType>,Rest>,
+                  keyword<unique_id,required>,
+                  DefaultType> {
+    typedef typename std::remove_cv<T>::type type;
+};
 
 } // namespace nfp
 } // namespace boost
