@@ -344,6 +344,8 @@ template<typename NP,typename Rest,typename Keyword,typename DefaultType>
 struct param_type<nfp_detail::named_parameter_combine<NP,Rest>,Keyword,DefaultType> : param_type<Rest,Keyword,DefaultType> {
 };
 
+#if !defined(BOOST_NO_CXX11_HDR_TYPE_TRAITS)
+
 template<typename T, typename unique_id, typename ReferenceType,bool required,typename DefaultType>
 struct param_type<named_parameter<T,unique_id,ReferenceType>,keyword<unique_id,required>,DefaultType> {
     typedef typename std::remove_cv<T>::type type;
@@ -355,6 +357,8 @@ struct param_type<nfp_detail::named_parameter_combine<named_parameter<T,unique_i
                   DefaultType> {
     typedef typename std::remove_cv<T>::type type;
 };
+
+#endif
 
 } // namespace nfp
 } // namespace boost
