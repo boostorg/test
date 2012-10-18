@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2011.
+//  (C) Copyright Gennadiy Rozental 2001-2012.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -78,10 +78,10 @@ public:
 
 private:
     // Data members
-    boost::function<void (ParamType)>    m_test_func;
-    std::string             m_tc_name;
-    mutable ParamIter       m_par_begin;
-    ParamIter               m_par_end;
+    boost::function<void (ParamType)>   m_test_func;
+    std::string                         m_tc_name;
+    mutable ParamIter                   m_par_begin;
+    ParamIter                           m_par_end;
 };
 
 //____________________________________________________________________________//

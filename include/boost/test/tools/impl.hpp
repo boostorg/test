@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011.
+//  (C) Copyright Gennadiy Rozental 2011-2012.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -87,24 +87,21 @@ struct print_log_value {
     void set_precision( std::ostream& ostr, mpl::false_ )
     {
         if( std::numeric_limits<T>::is_specialized && std::numeric_limits<T>::radix == 2 )
-        {
             ostr.precision( 2 + std::numeric_limits<T>::digits * 301/1000 );
-        }
-        else if ( std::numeric_limits<T>::is_specialized && std::numeric_limits<T>::radix == 10 )
-        {
+        else if ( std::numeric_limits<T>::is_specialized && std::numeric_limits<T>::radix == 10 ) {
 #ifdef BOOST_NO_CXX11_NUMERIC_LIMITS
-// (was BOOST_NO_NUMERIC_LIMITS_LOWEST but now deprecated).
-// No support for std::numeric_limits<double>::max_digits10,
-// so guess that a couple of guard digits more than digits10 will display any difference.
-           ostr.precision( 2 + std::numeric_limits<T>::digits10 );
+            // (was BOOST_NO_NUMERIC_LIMITS_LOWEST but now deprecated).
+            // No support for std::numeric_limits<double>::max_digits10,
+            // so guess that a couple of guard digits more than digits10 will display any difference.
+            ostr.precision( 2 + std::numeric_limits<T>::digits10 );
 #else
-  // std::numeric_limits<double>::max_digits10; IS supported.
-  // Any noisy or guard digits needed to display any difference are included in max_digits10.
-           ostr.precision( std::numeric_limits<T>::max_digits10 );
+            // std::numeric_limits<double>::max_digits10; IS supported.
+            // Any noisy or guard digits needed to display any difference are included in max_digits10.
+            ostr.precision( std::numeric_limits<T>::max_digits10 );
 #endif
-       }
-       // else if T is not specialized for std::numeric_limits<>,
-       // then will just get the default precision of 6 digits.
+        }
+        // else if T is not specialized for std::numeric_limits<>,
+        // then will just get the default precision of 6 digits.
     }
 
     void set_precision( std::ostream&, mpl::true_ ) {}
