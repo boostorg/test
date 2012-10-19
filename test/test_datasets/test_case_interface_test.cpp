@@ -25,7 +25,7 @@ namespace data=boost::unit_test::data;
 int samples1[] = {1,2,3};
 int index1 = 0;
 
-BOOST_DATA_TEST_CASE( test_case_interface_01, samples1 )
+BOOST_DATA_TEST_CASE( test_case_interface_01, samples1, sample )
 {   
     BOOST_CHECKA( sample == samples1[index1++] );
 }
@@ -35,9 +35,9 @@ BOOST_DATA_TEST_CASE( test_case_interface_01, samples1 )
 char const* samples2[] = {"qwerty","asdfg"};
 int index2 = 0;
 
-BOOST_DATA_TEST_CASE( test_case_interface_02, samples2 )
+BOOST_DATA_TEST_CASE( test_case_interface_02, samples2, str )
 {
-    BOOST_CHECKA( sample == samples2[index2++] );
+    BOOST_CHECKA( str == samples2[index2++] );
 }
 
 //____________________________________________________________________________//
@@ -45,12 +45,12 @@ BOOST_DATA_TEST_CASE( test_case_interface_02, samples2 )
 int samples3[] = {7,9};
 int index3 = 0;
 
-BOOST_DATA_TEST_CASE( test_case_interface_03, data::make(samples1)+samples3 )
+BOOST_DATA_TEST_CASE( test_case_interface_03, data::make(samples1)+samples3, val )
 {
     if( index3 < 3 )
-        BOOST_CHECKA( sample == samples1[index3] );
+        BOOST_CHECKA( val == samples1[index3] );
     else
-        BOOST_CHECKA( sample == samples3[index3-3] );
+        BOOST_CHECKA( val == samples3[index3-3] );
 
     ++index3;
 }
@@ -59,10 +59,10 @@ BOOST_DATA_TEST_CASE( test_case_interface_03, data::make(samples1)+samples3 )
 
 int index4 = 0;
 
-BOOST_DATA_TEST_CASE_N( 2, test_case_interface_04, data::make(samples2)^samples3 )
+BOOST_DATA_TEST_CASE( test_case_interface_04, data::make(samples2)^samples3, str, intval )
 {
-    BOOST_CHECKA( sample0 == samples2[index4] );
-    BOOST_CHECKA( sample1 == samples3[index4] );
+    BOOST_CHECKA( str == samples2[index4] );
+    BOOST_CHECKA( intval == samples3[index4] );
 
     ++index4;
 }
@@ -71,7 +71,7 @@ BOOST_DATA_TEST_CASE_N( 2, test_case_interface_04, data::make(samples2)^samples3
 
 int index5 = 0;
 
-BOOST_DATA_TEST_CASE_N( 2, test_case_interface_05, data::make(samples1) * samples2 )
+BOOST_DATA_TEST_CASE( test_case_interface_05, data::make(samples1) * samples2, sample0, sample1 )
 {
     BOOST_CHECKA( sample0 == samples1[index5/2] );
     BOOST_CHECKA( sample1 == samples2[index5%2] );
@@ -83,11 +83,11 @@ BOOST_DATA_TEST_CASE_N( 2, test_case_interface_05, data::make(samples1) * sample
 
 int index6 = 0;
 
-BOOST_DATA_TEST_CASE_N( 3, test_case_interface_06, data::make(samples1) * samples2 * samples3 )
+BOOST_DATA_TEST_CASE( test_case_interface_06, data::make(samples1) * samples2 * samples3, intval, str, val2 )
 {
-    BOOST_CHECKA( sample0 == samples1[index6/4] );
-    BOOST_CHECKA( sample1 == samples2[(index6/2)%2] );
-    BOOST_CHECKA( sample2 == samples3[index6%2] );
+    BOOST_CHECKA( intval == samples1[index6/4] );
+    BOOST_CHECKA( str == samples2[(index6/2)%2] );
+    BOOST_CHECKA( val2 == samples3[index6%2] );
 
     ++index6;
 }
