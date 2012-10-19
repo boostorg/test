@@ -22,11 +22,14 @@
 // Boost
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_binary_params.hpp>
-#include <boost/preprocessor/repetition/enum_shifted_binary_params.hpp>
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
-#include <boost/preprocessor/comparison/equal.hpp>
-#include <boost/preprocessor/control/iif.hpp>
-#include <boost/preprocessor/punctuation/comma.hpp>
+
+#include <boost/preprocessor/variadic/to_seq.hpp>
+#include <boost/preprocessor/variadic/size.hpp>
+#include <boost/preprocessor/cat.hpp>
+#include <boost/preprocessor/seq/for_each_i.hpp>
+#include <boost/preprocessor/seq/for_each.hpp>
+#include <boost/preprocessor/seq/enum.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -99,24 +102,30 @@ make_test_case_gen( const_string tc_name, DS&& ds )
 } // namespace ds_detail
 
 // ************************************************************************** //
-// **************            BOOST_DATA_TEST_CASE_N            ************** //
+// **************             BOOST_DATA_TEST_CASE             ************** //
 // ************************************************************************** //
 
-#define BOOST_DATA_TEST_CASE_N_ARGS( arity )                            \
-    BOOST_PP_IIF(BOOST_PP_EQUAL(arity, 1),                              \
-        Arg0 const& sample,                                             \
-        Arg0 const& sample0 )                                           \
-    BOOST_PP_IIF(BOOST_PP_EQUAL(arity, 1),                              \
-        BOOST_PP_EMPTY,                                                 \
-        BOOST_PP_COMMA )()                                              \
-    BOOST_PP_ENUM_SHIFTED_BINARY_PARAMS(arity, Arg, const& sample)      \
+#define BOOST_DATA_TEST_CASE_PARAM(r, _, i, param)  (BOOST_PP_CAT(Arg, i) const& param)
+#define BOOST_DATA_TEST_CONTEXT(r, _, param)  << BOOST_STRINGIZE(param) << " = " << param << "; "
+
+#define BOOST_DATA_TEST_CASE_PARAMS( params )                           \
+    BOOST_PP_SEQ_ENUM(                                                  \
+        BOOST_PP_SEQ_FOR_EACH_I(BOOST_DATA_TEST_CASE_PARAM, _, params)) \
 /**/
 
-#define BOOST_DATA_TEST_CASE_N( arity, test_name, dataset )             \
+#define BOOST_DATA_TEST_CASE_IMPL( arity, test_name, dataset, params )  \
 struct test_name                                                        \
 {                                                                       \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                 \
-    static void test_method( BOOST_DATA_TEST_CASE_N_ARGS( arity ) );    \
+    static void test_method( BOOST_DATA_TEST_CASE_PARAMS( params ) )    \
+    {                                                                   \
+        BOOST_TEST_CONTEXT( ""                                          \
+            BOOST_PP_SEQ_FOR_EACH(BOOST_DATA_TEST_CONTEXT, _, params))  \
+            _impl(BOOST_PP_SEQ_ENUM(params));                           \
+    }                                                                   \
+private:                                                                \
+    template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                 \
+    static void _impl(BOOST_DATA_TEST_CASE_PARAMS( params ));           \
 };                                                                      \
                                                                         \
 BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
@@ -125,15 +134,14 @@ BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     boost::unit_test::decorator::collector::instance() );               \
                                                                         \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                 \
-    void test_name::test_method( BOOST_DATA_TEST_CASE_N_ARGS( arity ) ) \
+    void test_name::_impl( BOOST_DATA_TEST_CASE_PARAMS( params ) )      \
 /**/
 
-// ************************************************************************** //
-// **************             BOOST_DATA_TEST_CASE             ************** //
-// ************************************************************************** //
-
-#define BOOST_DATA_TEST_CASE( test_name, dataset )                      \
-    BOOST_DATA_TEST_CASE_N( 1, test_name, dataset )
+#define BOOST_DATA_TEST_CASE( test_name, dataset, ... )                 \
+    BOOST_DATA_TEST_CASE_IMPL( BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),     \
+                               test_name, dataset,                      \
+                               BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__) )  \
+/**/
 
 } // namespace data
 } // namespace unit_test
