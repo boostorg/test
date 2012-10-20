@@ -17,7 +17,6 @@
 #include <boost/test/data/monomorphic/generators/xrange.hpp>
 #include <boost/test/data/monomorphic/join.hpp>
 namespace data=boost::unit_test::data;
-namespace mono=boost::unit_test::data::monomorphic;
 
 #include "test_datasets.hpp"
 
@@ -44,8 +43,8 @@ BOOST_AUTO_TEST_CASE( test_single_range )
     BOOST_CHECKA( data::xrange( 0., 3., 0.4 ).size() == 8 );
     BOOST_CHECKA( data::xrange( 1e-6, 2.e-6, 1e-9 ).size() == 1000 );
 
-    BOOST_CHECKA( data::xrange<int>(( mono::begin = 9, mono::end = 15 )).size() == 6 );
-    BOOST_CHECKA( data::xrange<double>(( mono::step = 0.5, mono::end = 3 )).size() == 6 );
+    BOOST_CHECKA( data::xrange<int>(( data::begin = 9, data::end = 15 )).size() == 6 );
+    BOOST_CHECKA( data::xrange<double>(( data::step = 0.5, data::end = 3 )).size() == 6 );
     
     int c = 0;
 
