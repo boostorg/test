@@ -17,7 +17,9 @@ feature.feature utf-boostbook : off on : propagated ;
 
 .initialized = ;
 
-.here = [ path.root [ path.make $(__file__:D) ] [ path.pwd ] ] ;
+.here = [ path.parent [ path.root
+  [ path.make [ modules.binding $(__name__) ] ]
+  [ path.pwd ] ] ] ;
 
 rule init ( )
 {
