@@ -639,9 +639,63 @@ TEST_CASE( test_context_logging )
 
 //____________________________________________________________________________//
 
+class FooType {
+public:
+    FooType&    operator*()     { return *this; }
+    operator    bool() const    { return false; }
+    int         operator&()     { return 10; }
+};
+
 TEST_CASE( test_BOOST_CHECKA )
 {
+    unit_test_log.set_threshold_level( log_successful_tests );
+
     BOOST_CHECKA( true );
+    BOOST_CHECKA( false );
+
+    bool_convertible bc;
+    BOOST_CHECKA( bc );
+
+    int i = 1;
+    BOOST_CHECKA( i == 2 );
+    BOOST_CHECKA( i != 1 );
+    BOOST_CHECKA( i > 2 );
+    BOOST_CHECKA( i < 1 );
+    BOOST_CHECKA( i <= 0 );
+    BOOST_CHECKA( i >= 5 );
+
+    int j = 2;
+    BOOST_CHECKA( i+j >= 5 );
+    BOOST_CHECKA( j-i == 2 );
+
+    int* p = &i;
+    BOOST_CHECKA( *p == 2 );
+    BOOST_CHECKA( j-*p == 0 );
+
+    BOOST_CHECKA(( i > 5, true ));
+
+    FooType F;
+
+    BOOST_CHECKA( FooType() );
+    BOOST_CHECKA( *F );
+    BOOST_CHECKA( **F );
+    BOOST_CHECKA( ***F );
+    BOOST_CHECKA( &F > 100 );
+    BOOST_CHECKA( &*F > 100 );
+
+    BOOST_CHECKA( (i == 1) & (j == 1) );
+    BOOST_CHECKA( (i == 2) | (j == 1) );
+
+    BOOST_CHECKA(( i == 1 && j == 1 ));
+    BOOST_CHECKA(( i == 2 || j == 1 ));
+
+    std::cout << MACROV() << std::endl;
+    std::cout << MACROV(q) << std::endl;
+    std::cout << MACROV(q,w) << std::endl;
+        // Does not work
+    // BOOST_CHECKA( i == 1 && j == 1 );
+    // BOOST_CHECKA( i == 2 || j == 1 );
+    // BOOST_CHECKA( i > 5 ? false : true );
 }
 
 //____________________________________________________________________________//
