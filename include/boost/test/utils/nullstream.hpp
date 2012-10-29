@@ -16,10 +16,12 @@
 #ifndef BOOST_NULLSTREAM_HPP_071894GER
 #define BOOST_NULLSTREAM_HPP_071894GER
 
+// STL
 #include <ostream>    // for std::basic_ostream
 #include <streambuf>  // for std::basic_streambuf
 #include <string>     // for std::char_traits
 
+// Boost
 #include <boost/utility/base_from_member.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>

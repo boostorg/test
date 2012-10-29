@@ -15,9 +15,11 @@
 #ifndef BOOST_TEST_TRIVIAL_SIGNLETON_HPP_020505GER
 #define BOOST_TEST_TRIVIAL_SIGNLETON_HPP_020505GER
 
+// Boost.Test
 #include <boost/config.hpp>
 #include <boost/detail/workaround.hpp>
 
+// Boost
 #include <boost/noncopyable.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>

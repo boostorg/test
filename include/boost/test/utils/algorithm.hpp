@@ -15,6 +15,7 @@
 #ifndef BOOST_ALGORITHM_HPP_062304GER
 #define BOOST_ALGORITHM_HPP_062304GER
 
+// STL
 #include <utility>
 #include <algorithm> // std::find
 #include <functional> // std::bind1st
