@@ -25,8 +25,8 @@ namespace data=boost::unit_test::data;
 int samples1[] = {1,2,3};
 int index1 = 0;
 
-BOOST_DATA_TEST_CASE( test_case_interface_01, samples1, sample )
-{   
+BOOST_DATA_TEST_CASE( test_case_interface_01, samples1 )
+{
     BOOST_CHECKA( sample == samples1[index1++] );
 }
 
