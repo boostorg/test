@@ -101,3 +101,27 @@ Failure occurred in a following context:
 636: error: in "test_context_logging": check false failed
 Failure occurred in a following context:
     outer context
+653: info: check true passed
+654: error: in "test_BOOST_CHECKA": check false failed
+657: info: check bc passed
+660: error: in "test_BOOST_CHECKA": check i == 2 failed [1!=2]
+661: error: in "test_BOOST_CHECKA": check i != 1 failed [1==1]
+662: error: in "test_BOOST_CHECKA": check i > 2 failed [1<=2]
+663: error: in "test_BOOST_CHECKA": check i < 1 failed [1>=1]
+664: error: in "test_BOOST_CHECKA": check i <= 0 failed [1>0]
+665: error: in "test_BOOST_CHECKA": check i >= 5 failed [1<5]
+668: error: in "test_BOOST_CHECKA": check i+j >= 5 failed [1+2<5]
+669: error: in "test_BOOST_CHECKA": check j-i == 2 failed [2-1!=2]
+672: error: in "test_BOOST_CHECKA": check *p == 2 failed [1!=2]
+673: error: in "test_BOOST_CHECKA": check j-*p == 0 failed [2-1!=0]
+675: info: check ( i > 5, true ) passed
+679: error: in "test_BOOST_CHECKA": check FooType() failed [(bool)0 is false]
+680: error: in "test_BOOST_CHECKA": check *F failed [(bool)0 is false]
+681: error: in "test_BOOST_CHECKA": check **F failed [(bool)0 is false]
+682: error: in "test_BOOST_CHECKA": check ***F failed [(bool)0 is false]
+683: error: in "test_BOOST_CHECKA": check &F > 100 failed [10<=100]
+684: error: in "test_BOOST_CHECKA": check &*F > 100 failed [10<=100]
+686: error: in "test_BOOST_CHECKA": check (i == 1) & (j == 1) failed [1&0]
+687: error: in "test_BOOST_CHECKA": check (i == 2) | (j == 1) failed [0|0]
+689: error: in "test_BOOST_CHECKA": check ( i == 1 && j == 1 ) failed
+690: error: in "test_BOOST_CHECKA": check ( i == 2 || j == 1 ) failed
