@@ -85,7 +85,7 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : test_tree_management_test    : boost_unit_test_framework ]
           [ test-btl-lib run : run_by_name_label_test       : boost_unit_test_framework/<link>static ]
           [ test-btl-lib run : test_assertion_construction  : boost_unit_test_framework/<link>static ]
-          [ test-btl-lib run : test_datasets                : boost_unit_test_framework/<link>static : : [ glob test_datasets/*.cpp ] ]
+          [ test-btl-lib run : test_datasets                : boost_unit_test_framework/<link>static : : [ glob test_datasets_src/*.cpp ] ]
         ;
 
 test-suite "multithreaded_test"

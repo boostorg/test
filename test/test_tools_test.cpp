@@ -646,56 +646,74 @@ public:
     int         operator&()     { return 10; }
 };
 
-TEST_CASE( test_BOOST_CHECKA )
+TEST_CASE( test_BOOST_TEST_universal )
 {
     unit_test_log.set_threshold_level( log_successful_tests );
 
-    BOOST_CHECKA( true );
-    BOOST_CHECKA( false );
+    BOOST_TEST( true );
+    BOOST_TEST( false );
 
     bool_convertible bc;
-    BOOST_CHECKA( bc );
+    BOOST_TEST( bc );
 
     int i = 1;
-    BOOST_CHECKA( i == 2 );
-    BOOST_CHECKA( i != 1 );
-    BOOST_CHECKA( i > 2 );
-    BOOST_CHECKA( i < 1 );
-    BOOST_CHECKA( i <= 0 );
-    BOOST_CHECKA( i >= 5 );
+    BOOST_TEST( i == 2 );
+    BOOST_TEST( i != 1 );
+    BOOST_TEST( i > 2 );
+    BOOST_TEST( i < 1 );
+    BOOST_TEST( i <= 0 );
+    BOOST_TEST( i >= 5 );
 
     int j = 2;
-    BOOST_CHECKA( i+j >= 5 );
-    BOOST_CHECKA( j-i == 2 );
+#ifdef BOOST_HAS_DECLTYPE
+    BOOST_TEST( i+j >= 5 );
+    BOOST_TEST( j-i == 2 );
+#endif
 
     int* p = &i;
-    BOOST_CHECKA( *p == 2 );
-    BOOST_CHECKA( j-*p == 0 );
+    BOOST_TEST( *p == 2 );
 
-    BOOST_CHECKA(( i > 5, true ));
+#ifdef BOOST_HAS_DECLTYPE
+    BOOST_TEST( j-*p == 0 );
+#endif
+
+    BOOST_TEST(( i > 5, true ));
 
     FooType F;
 
-    BOOST_CHECKA( FooType() );
-    BOOST_CHECKA( *F );
-    BOOST_CHECKA( **F );
-    BOOST_CHECKA( ***F );
-    BOOST_CHECKA( &F > 100 );
-    BOOST_CHECKA( &*F > 100 );
+    BOOST_TEST( FooType() );
+    BOOST_TEST( *F );
+    BOOST_TEST( **F );
+    BOOST_TEST( ***F );
+    BOOST_TEST( &F > 100 );
+    BOOST_TEST( &*F > 100 );
 
-    BOOST_CHECKA( (i == 1) & (j == 1) );
-    BOOST_CHECKA( (i == 2) | (j == 1) );
+#ifdef BOOST_HAS_DECLTYPE
+    BOOST_TEST( (i == 1) & (j == 1) );
+    BOOST_TEST( (i == 2) | (j == 1) );
+#endif
 
-    BOOST_CHECKA(( i == 1 && j == 1 ));
-    BOOST_CHECKA(( i == 2 || j == 1 ));
+    BOOST_TEST(( i == 1 && j == 1 ));
+    BOOST_TEST(( i == 2 || j == 1 ));
 
-    std::cout << MACROV() << std::endl;
-    std::cout << MACROV(q) << std::endl;
-    std::cout << MACROV(q,w) << std::endl;
-        // Does not work
-    // BOOST_CHECKA( i == 1 && j == 1 );
-    // BOOST_CHECKA( i == 2 || j == 1 );
-    // BOOST_CHECKA( i > 5 ? false : true );
+#if BOOST_PP_VARIADICS
+    BOOST_TEST( i+j==15,"This message reported instead");
+#endif
+
+    // check correct behavior in if clause
+    if( true )
+        BOOST_TEST( true );
+
+    // check correct behavior in else clause
+    if( false )
+    {}
+    else
+        BOOST_TEST( true );
+
+    // Does not work
+    // BOOST_TEST( i == 1 && j == 1 );
+    // BOOST_TEST( i == 2 || j == 1 );
+    // BOOST_TEST( i > 5 ? false : true );
 }
 
 //____________________________________________________________________________//

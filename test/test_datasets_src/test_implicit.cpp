@@ -37,35 +37,33 @@ BOOST_AUTO_TEST_CASE( test_implicit_for_each )
 
     ic.m_value = 0;
     data::for_each_sample( std::vector<int>( 3 ), ic );
-    BOOST_CHECKA( ic.m_value == 3 );
+    BOOST_TEST( ic.m_value == 3 );
 
     ic.m_value = 0;
     data::for_each_sample( std::list<double>( 2 ), ic, 1 );
-    BOOST_CHECKA( ic.m_value == 1 );
+    BOOST_TEST( ic.m_value == 1 );
 
     copy_count::value() = 0;
     std::vector<copy_count> samples1( 2 );
     data::for_each_sample( samples1, check_arg_type<copy_count>() );
-    BOOST_CHECKA( copy_count::value() == 0 );
+    BOOST_TEST( copy_count::value() == 0 );
 
     copy_count::value() = 0;
     copy_count samples2[] = { copy_count(), copy_count() };
     data::for_each_sample( samples2, check_arg_type<copy_count>() );
-    BOOST_CHECKA( copy_count::value() == 0 );
+    BOOST_TEST( copy_count::value() == 0 );
 }
 
 //____________________________________________________________________________//
 
 BOOST_AUTO_TEST_CASE( test_implicit_join )
 {
-#if 0
     auto ds = data::make( 5 );
-    BOOST_CHECKA( (1 + ds).size() == 2 );
-    BOOST_CHECKA( (ds + 1).size() == 2 );
+    BOOST_TEST( (1 + ds).size() == 2 );
+    BOOST_TEST( (ds + 1).size() == 2 );
 
-    BOOST_CHECKA( (1 + data::make( 5 )).size() == 2 );
-    BOOST_CHECKA( (data::make( 5 ) + 1).size() == 2 );
-#endif
+    BOOST_TEST( (1 + data::make( 5 )).size() == 2 );
+    BOOST_TEST( (data::make( 5 ) + 1).size() == 2 );
 }
 
 //____________________________________________________________________________//
@@ -73,11 +71,11 @@ BOOST_AUTO_TEST_CASE( test_implicit_join )
 BOOST_AUTO_TEST_CASE( test_implicit_zip )
 {
     auto ds = data::make( 5 );
-    BOOST_CHECKA( (1 ^ ds).size() == 1 );
-    BOOST_CHECKA( (ds ^ 1).size() == 1 );
+    BOOST_TEST( (1 ^ ds).size() == 1 );
+    BOOST_TEST( (ds ^ 1).size() == 1 );
 
-    BOOST_CHECKA( (1 ^ data::make( 5 )).size() == 1 );
-    BOOST_CHECKA( (data::make( 5 ) ^ 1).size() == 1 );
+    BOOST_TEST( (1 ^ data::make( 5 )).size() == 1 );
+    BOOST_TEST( (data::make( 5 ) ^ 1).size() == 1 );
 }
 
 //____________________________________________________________________________//

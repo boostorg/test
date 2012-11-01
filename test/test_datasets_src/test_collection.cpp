@@ -24,10 +24,10 @@ namespace data=boost::unit_test::data;
 
 BOOST_AUTO_TEST_CASE( test_collection )
 {
-    BOOST_CHECKA( data::make( std::vector<int>() ).size() == 0 );
-    BOOST_CHECKA( data::make( std::vector<int>( 3 ) ).size() == 3 );
-    BOOST_CHECKA( data::make( std::list<double>() ).size() == 0 );
-    BOOST_CHECKA( data::make( std::list<double>( 2 ) ).size() == 2 );
+    BOOST_TEST( data::make( std::vector<int>() ).size() == 0 );
+    BOOST_TEST( data::make( std::vector<int>( 3 ) ).size() == 3 );
+    BOOST_TEST( data::make( std::list<double>() ).size() == 0 );
+    BOOST_TEST( data::make( std::list<double>( 2 ) ).size() == 2 );
 
     data::for_each_sample( data::make( std::vector<int>( 3 ) ), check_arg_type<int>() );
     data::for_each_sample( data::make( std::list<double>( 2 ) ), check_arg_type<double>() );
@@ -36,15 +36,15 @@ BOOST_AUTO_TEST_CASE( test_collection )
 
     ic.m_value = 0;
     data::for_each_sample( data::make( std::vector<int>( 3 ) ), ic );
-    BOOST_CHECKA( ic.m_value == 3 );
+    BOOST_TEST( ic.m_value == 3 );
 
     ic.m_value = 0;
     data::for_each_sample( data::make( std::list<double>( 2 ) ), ic, 4 );
-    BOOST_CHECKA( ic.m_value == 2 );
+    BOOST_TEST( ic.m_value == 2 );
 
     ic.m_value = 0;
     data::for_each_sample( data::make( std::vector<int>( 3 ) ), ic, 1 );
-    BOOST_CHECKA( ic.m_value == 1 );
+    BOOST_TEST( ic.m_value == 1 );
 
     std::vector<int> samples1;
     samples1.push_back(5);
@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE( test_collection )
 
     int c = 0;
     data::for_each_sample( data::make( samples1 ), [&c,samples1](int i) {
-        BOOST_CHECKA( i == samples1[c++] );
+        BOOST_TEST( i == samples1[c++] );
     });
 
     std::list<char const*> samples2;
@@ -63,34 +63,34 @@ BOOST_AUTO_TEST_CASE( test_collection )
 
     auto it = samples2.begin();
     data::for_each_sample( data::make( samples2 ), [&it](char const* str ) {
-        BOOST_CHECKA( str == *it++ );
+        BOOST_TEST( str == *it++ );
     });
 
     copy_count::value() = 0;
     data::for_each_sample( data::make( std::vector<copy_count>( 2 ) ), check_arg_type<copy_count>() );
-    BOOST_CHECKA( copy_count::value() == 0 );
+    BOOST_TEST( copy_count::value() == 0 );
 
     copy_count::value() = 0;
     std::vector<copy_count> samples3( 2 );
     data::for_each_sample( data::make( samples3 ), check_arg_type<copy_count>() );
-    BOOST_CHECKA( copy_count::value() == 0 );
+    BOOST_TEST( copy_count::value() == 0 );
 
     copy_count::value() = 0;
     std::vector<copy_count> const samples4( 2 );
     data::for_each_sample( data::make( samples4 ), check_arg_type<copy_count>() );
-    BOOST_CHECKA( copy_count::value() == 0 );
+    BOOST_TEST( copy_count::value() == 0 );
 
     copy_count::value() = 0;
     auto ds1 = data::make( make_copy_count_collection() );
-    BOOST_CHECKA( ds1.size() == 3 );
+    BOOST_TEST( ds1.size() == 3 );
     data::for_each_sample( ds1, check_arg_type<copy_count>() );
-    BOOST_CHECKA( copy_count::value() == 0 );
+    BOOST_TEST( copy_count::value() == 0 );
 
     copy_count::value() = 0;
     auto ds2 = data::make( make_copy_count_const_collection() );
-    BOOST_CHECKA( ds2.size() == 3 );
+    BOOST_TEST( ds2.size() == 3 );
     data::for_each_sample( ds2, check_arg_type<copy_count>() );
-    BOOST_CHECKA( copy_count::value() == 3 ); // !! ?? no const rvalue rev constructor for std::list
+    BOOST_TEST( copy_count::value() == 3 ); // !! ?? no const rvalue rev constructor for std::list
 }
 
 //____________________________________________________________________________//

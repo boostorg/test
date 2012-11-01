@@ -26,7 +26,7 @@ namespace data=boost::unit_test::data;
 
 BOOST_AUTO_TEST_CASE( test_default )
 {
-    BOOST_CHECKA( data::random().size() == data::BOOST_TEST_DS_INFINITE_SIZE );
+    BOOST_TEST( data::random().size() == data::BOOST_TEST_DS_INFINITE_SIZE );
 
     auto ds = data::random();
 
@@ -36,12 +36,12 @@ BOOST_AUTO_TEST_CASE( test_default )
 
     ic.m_value = 0;
     data::for_each_sample( ds, ic, 10 );
-    BOOST_CHECKA( ic.m_value == 10 );
+    BOOST_TEST( ic.m_value == 10 );
 
     ic.m_value = 0;
     int arr[] = {1,2,3,4,5};
     data::for_each_sample( ds^arr, ic );
-    BOOST_CHECKA( ic.m_value == 5 );
+    BOOST_TEST( ic.m_value == 5 );
 
     BOOST_CHECK_THROW( ds * arr, std::logic_error );
     BOOST_CHECK_THROW( arr * ds, std::logic_error );
@@ -54,15 +54,15 @@ BOOST_AUTO_TEST_CASE( test_uniform_range )
     auto ds1 = data::random(1,5);
 
     data::for_each_sample( ds1, [](int s) {
-        BOOST_CHECKA(s>=1);
-        BOOST_CHECKA(s<=5);
+        BOOST_TEST(s>=1);
+        BOOST_TEST(s<=5);
     }, 10);
 
     auto ds2 = data::random(1.,2.);
 
     data::for_each_sample( ds2, [](double s) {
-        BOOST_CHECKA(s>=1.);
-        BOOST_CHECKA(s<=2.);
+        BOOST_TEST(s>=1.);
+        BOOST_TEST(s<=2.);
     }, 100);
 }
 
@@ -73,37 +73,37 @@ BOOST_AUTO_TEST_CASE( test_parameterized_init )
     auto ds1 = data::random(data::distribution = std::normal_distribution<>(5.,2));
     typedef decltype(ds1) DS1;
 
-    BOOST_CHECKA(( std::is_same<DS1::generator_type::distr_type,
+    BOOST_TEST(( std::is_same<DS1::generator_type::distr_type,
                                 std::normal_distribution<>>::value ));
-    BOOST_CHECKA(( std::is_same<DS1::generator_type::data_type,double>::value ));
-    BOOST_CHECKA(( std::is_same<DS1::generator_type::engine_type,
+    BOOST_TEST(( std::is_same<DS1::generator_type::data_type,double>::value ));
+    BOOST_TEST(( std::is_same<DS1::generator_type::engine_type,
                                 std::default_random_engine>::value ));
 
     auto ds2 = data::random(data::distribution = std::discrete_distribution<>());
     typedef decltype(ds2) DS2;
 
-    BOOST_CHECKA(( std::is_same<DS2::generator_type::distr_type,
+    BOOST_TEST(( std::is_same<DS2::generator_type::distr_type,
                                 std::discrete_distribution<>>::value ));
-    BOOST_CHECKA(( std::is_same<DS2::generator_type::data_type,int>::value ));
-    BOOST_CHECKA(( std::is_same<DS2::generator_type::engine_type,
+    BOOST_TEST(( std::is_same<DS2::generator_type::data_type,int>::value ));
+    BOOST_TEST(( std::is_same<DS2::generator_type::engine_type,
                                 std::default_random_engine>::value ));
 
     auto ds3 = data::random(data::engine = std::minstd_rand());
     typedef decltype(ds3) DS3;
 
-    BOOST_CHECKA(( std::is_same<DS3::generator_type::distr_type,
+    BOOST_TEST(( std::is_same<DS3::generator_type::distr_type,
                                 std::uniform_real_distribution<>>::value ));
-    BOOST_CHECKA(( std::is_same<DS3::generator_type::data_type,double>::value ));
-    BOOST_CHECKA(( std::is_same<DS3::generator_type::engine_type,
+    BOOST_TEST(( std::is_same<DS3::generator_type::data_type,double>::value ));
+    BOOST_TEST(( std::is_same<DS3::generator_type::engine_type,
                                 std::minstd_rand>::value ));
 
     auto ds4 = data::random(data::seed = 100UL);
     typedef decltype(ds4) DS4;
 
-    BOOST_CHECKA(( std::is_same<DS4::generator_type::distr_type,
+    BOOST_TEST(( std::is_same<DS4::generator_type::distr_type,
                                 std::uniform_real_distribution<>>::value ));
-    BOOST_CHECKA(( std::is_same<DS4::generator_type::data_type,double>::value ));
-    BOOST_CHECKA(( std::is_same<DS4::generator_type::engine_type,
+    BOOST_TEST(( std::is_same<DS4::generator_type::data_type,double>::value ));
+    BOOST_TEST(( std::is_same<DS4::generator_type::engine_type,
                                 std::default_random_engine>::value ));
 
     auto ds5 = data::random(data::seed = 100UL);
@@ -113,7 +113,7 @@ BOOST_AUTO_TEST_CASE( test_parameterized_init )
         vals.push_back( s );
     }, 10);
     data::for_each_sample( ds5, [&vals](double s) {
-        BOOST_CHECKA( vals.front() == s );
+        BOOST_TEST( vals.front() == s );
         vals.pop_front();
     }, 10);
 
@@ -122,10 +122,10 @@ BOOST_AUTO_TEST_CASE( test_parameterized_init )
                               data::seed = 20UL ));
     typedef decltype(ds6) DS6;
 
-    BOOST_CHECKA(( std::is_same<DS6::generator_type::distr_type,
+    BOOST_TEST(( std::is_same<DS6::generator_type::distr_type,
                                 std::normal_distribution<>>::value ));
-    BOOST_CHECKA(( std::is_same<DS6::generator_type::data_type,double>::value ));
-    BOOST_CHECKA(( std::is_same<DS6::generator_type::engine_type,
+    BOOST_TEST(( std::is_same<DS6::generator_type::data_type,double>::value ));
+    BOOST_TEST(( std::is_same<DS6::generator_type::engine_type,
                                 std::minstd_rand>::value ));
 }
 
