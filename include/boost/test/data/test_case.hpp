@@ -19,8 +19,6 @@
 #include <boost/test/data/config.hpp>
 #include <boost/test/data/dataset.hpp>
 
-#include <boost/test/utils/pp_variadic.hpp>
-
 // Boost
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_binary_params.hpp>
@@ -33,6 +31,7 @@
 #include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/preprocessor/seq/enum.hpp>
 #include <boost/preprocessor/control/iif.hpp>
+#include <boost/preprocessor/comparison/equal.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -66,7 +65,7 @@ public:
     {
         if( m_test_cases.empty() )
             return 0;
-    
+
         test_unit* res = m_test_cases.front();
         m_test_cases.pop_front();
 
@@ -79,8 +78,8 @@ public:
     void    operator()( BOOST_PP_ENUM_BINARY_PARAMS(arity, Arg, const& arg) ) const \
     {                                                                               \
         m_test_cases.push_back( new test_case( m_tc_name,                           \
-            std::bind( &TestCase::test_method<BOOST_PP_ENUM_PARAMS(arity,Arg)>,     \
-            BOOST_PP_ENUM_PARAMS(arity, arg) ) ) );                                 \
+         std::bind( &TestCase::template test_method<BOOST_PP_ENUM_PARAMS(arity,Arg)>, \
+         BOOST_PP_ENUM_PARAMS(arity, arg) ) ) );                                    \
     }                                                                               \
 
     BOOST_PP_REPEAT_FROM_TO(1, 4, TC_MAKE, _)
@@ -144,15 +143,14 @@ BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
                                test_name, dataset,                      \
                                BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__) )  \
 /**/
-#define BOOST_DATA_TEST_CASE_NO_PARAMS( test_name, dataset, ... )       \
+#define BOOST_DATA_TEST_CASE_NO_PARAMS( test_name, dataset )            \
     BOOST_DATA_TEST_CASE_WITH_PARAMS( test_name, dataset, sample )      \
 /**/
 
-#define BOOST_DATA_TEST_CASE( test_name, dataset, ... )                 \
-    BOOST_PP_IIF(BOOST_TEST_PP_NON_EMPTY(__VA_ARGS__),                  \
-                 BOOST_DATA_TEST_CASE_WITH_PARAMS,                      \
-                 BOOST_DATA_TEST_CASE_NO_PARAMS )                       \
-        (test_name, dataset, __VA_ARGS__)                               \
+#define BOOST_DATA_TEST_CASE( ... )                                     \
+    BOOST_PP_IIF(BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2), \
+                 BOOST_DATA_TEST_CASE_NO_PARAMS,                        \
+                 BOOST_DATA_TEST_CASE_WITH_PARAMS)(__VA_ARGS__)         \
 /**/
 
 } // namespace data

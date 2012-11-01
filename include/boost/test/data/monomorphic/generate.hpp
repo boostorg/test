@@ -37,6 +37,7 @@ template<typename Generator>
 class generated_by : public monomorphic::dataset<typename Generator::data_type> {
     typedef typename Generator::data_type T;
     typedef monomorphic::dataset<T> base;
+    typedef typename base::iter_ptr iter_ptr;
 
     struct iterator : public base::iterator {
         // Constructor

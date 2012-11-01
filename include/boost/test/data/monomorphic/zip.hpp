@@ -52,11 +52,11 @@ template<typename T1, typename T2,typename T3>
 struct zip_traits<T1,std::tuple<T2,T3>> {
     typedef std::tuple<T1,T2,T3> type;
     typedef typename monomorphic::traits<type>::ref_type ref_type;
-    
+
     static ref_type
     tuple_merge(T1 const& a1, std::tuple<T2 const&,T3 const&> const& a2)
     {
-        return ref_type(a1,get<0>(a2),get<1>(a2));
+        return ref_type(a1,std::get<0>(a2),std::get<1>(a2));
     }
 };
 
@@ -70,7 +70,7 @@ struct zip_traits<std::tuple<T1,T2>,T3> {
     static ref_type
     tuple_merge(std::tuple<T1 const&,T2 const&> const& a1, T3 const& a2)
     {
-        return ref_type(get<0>(a1),get<1>(a1),a2);
+        return ref_type(std::get<0>(a1),std::get<1>(a1),a2);
     }
 };
 
@@ -93,6 +93,7 @@ class zip : public monomorphic::dataset<typename ds_detail::zip_traits<typename 
 
     typedef typename ds_detail::zip_traits<T1,T2>::type T;
     typedef monomorphic::dataset<T> base;
+    typedef typename base::iter_ptr iter_ptr;
 
     struct iterator : public base::iterator {
         typedef typename monomorphic::traits<T>::ref_type ref_type;
@@ -169,19 +170,26 @@ zip_size( DS1&& ds1, DS2&& ds2 )
     BOOST_TEST_DS_ERROR( "Can't zip datasets of different sizes" );
 }
 
+} // namespace ds_detail
+
+//____________________________________________________________________________//
+
+namespace result_of {
+
+template<typename DS1Gen, typename DS2Gen>
+struct zip
+{
+    typedef monomorphic::zip<typename DS1Gen::type,typename DS2Gen::type> type;
+};
+
+} // namespace result_of
+
 //____________________________________________________________________________//
 
 template<typename DS1, typename DS2>
-struct explicit_zip_type
-{
-    typedef zip<DS1,DS2> type;
-};
-
-} // ds_detail
-
-template<typename DS1, typename DS2>
-inline typename boost::lazy_enable_if<mpl::and_<is_dataset<DS1>,is_dataset<DS2>>, 
-                                      ds_detail::explicit_zip_type<DS1,DS2>>::type
+inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && is_dataset<DS2>::value, 
+                                        result_of::zip<mpl::identity<DS1>,mpl::identity<DS2>>
+>::type
 operator^( DS1&& ds1, DS2&& ds2 )
 {
     return zip<DS1,DS2>( std::forward<DS1>( ds1 ),  std::forward<DS2>( ds2 ), ds_detail::zip_size( ds1, ds2 ) );
@@ -190,21 +198,23 @@ operator^( DS1&& ds1, DS2&& ds2 )
 //____________________________________________________________________________//
 
 template<typename DS1, typename DS2>
-inline auto 
-operator^( DS1&& ds1, DS2&& ds2 ) ->
-typename std::enable_if<is_dataset<DS1>::value && !is_dataset<DS2>::value, decltype(ds1 ^ data::make(ds2))>::type
+inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && !is_dataset<DS2>::value, 
+                                        result_of::zip<mpl::identity<DS1>,data::result_of::make<DS2>>
+>::type
+operator^( DS1&& ds1, DS2&& ds2 )
 {
-    return ds1 ^ data::make(ds2);
+    return std::forward<DS1>(ds1) ^ data::make(std::forward<DS2>(ds2));
 }
 
 //____________________________________________________________________________//
 
 template<typename DS1, typename DS2>
-inline auto 
-operator^( DS1&& ds1, DS2&& ds2 ) ->
-typename std::enable_if<!is_dataset<DS1>::value && is_dataset<DS2>::value, decltype(data::make(ds1) ^ ds2)>::type
+inline typename boost::lazy_enable_if_c<!is_dataset<DS1>::value && is_dataset<DS2>::value, 
+                                        result_of::zip<data::result_of::make<DS1>,mpl::identity<DS2>>
+>::type
+operator^( DS1&& ds1, DS2&& ds2 )
 {
-    return data::make(ds1) ^ ds2;
+    return data::make(std::forward<DS1>(ds1)) ^ std::forward<DS2>(ds2);
 }
 
 //____________________________________________________________________________//

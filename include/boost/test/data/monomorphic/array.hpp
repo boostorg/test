@@ -36,6 +36,7 @@ namespace monomorphic {
 template<typename T>
 class array : public monomorphic::dataset<T> {
     typedef monomorphic::dataset<T> base;
+    typedef typename base::iter_ptr iter_ptr;
 
     struct iterator : public base::iterator {
         // Constructor
@@ -50,7 +51,7 @@ class array : public monomorphic::dataset<T> {
 
     private:
         // Data members
-        typename T const*   m_it;
+        T const*            m_it;
         bool                m_singleton;
     };
 

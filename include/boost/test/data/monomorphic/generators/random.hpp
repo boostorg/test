@@ -134,7 +134,9 @@ random( Params const& params )
     typedef typename Gen::distr_type distr_type;
     typedef typename Gen::engine_type engine_type;
 
-    engine_type E((std::random_device()()));
+    std::random_device rd;
+    engine_type E;
+//    engine_type E( rd );
     if( params.has(engine) )
         E = params[engine];
 

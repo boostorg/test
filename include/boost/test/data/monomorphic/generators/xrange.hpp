@@ -101,7 +101,7 @@ struct make_xrange {
             BOOST_TEST_DS_ASSERT( (step_val < 0) ^ (begin_val < *end_val), "Invalid step direction" );
 
             SampleType  abs_distance    = step_val < 0 ? begin_val - *end_val : *end_val-begin_val;
-            StepType    abs_step        = make_xrange::abs(step_val, (boost::is_unsigned<StepType>::type*)0 );
+            StepType    abs_step        = make_xrange::abs(step_val, (typename boost::is_unsigned<StepType>::type*)0 );
             std::size_t s = static_cast<std::size_t>(abs_distance/abs_step);
 
             if( static_cast<SampleType>(s*abs_step) < abs_distance )

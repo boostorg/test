@@ -35,15 +35,17 @@ namespace monomorphic {
 // Models single element data set
 
 template<typename T>
-class singleton : public monomorphic::dataset<T> {
-    typedef monomorphic::dataset<T> base;
+class singleton : public monomorphic::dataset<typename std::decay<T>::type> {
+    typedef monomorphic::dataset<typename std::decay<T>::type> base;
+    typedef typename base::iter_ptr  iter_ptr;
 
     struct iterator : public base::iterator {
         // Constructor
         explicit            iterator( singleton<T> const& owner ) : m_owner( owner ) {}
 
         // forward iterator interface 
-        virtual T const&    operator*()     { return m_owner.value(); }
+        virtual typename base::data_type const&
+                            operator*()     { return m_owner.value(); }
         virtual void        operator++()    {}
 
     private:

@@ -40,6 +40,7 @@ template<typename DS1, typename DS2>
 class join : public monomorphic::dataset<typename std::decay<DS1>::type::data_type> {
     typedef typename std::decay<DS1>::type::data_type T;
     typedef monomorphic::dataset<T> base;
+    typedef typename base::iter_ptr iter_ptr;
 
     struct iterator : public base::iterator {
         // Constructor
@@ -94,19 +95,22 @@ struct is_dataset<join<DS1,DS2>> : std::true_type {};
 
 //____________________________________________________________________________//
 
-namespace ds_detail {
+namespace result_of {
 
-template<typename DS1, typename DS2>
-struct explicit_join_type
+template<typename DS1Gen, typename DS2Gen>
+struct join
 {
-    typedef join<DS1,DS2> type;
+    typedef monomorphic::join<typename DS1Gen::type,typename DS2Gen::type> type;
 };
 
-} // ds_detail
+} // namespace result_of
+
+//____________________________________________________________________________//    
 
 template<typename DS1, typename DS2>
-inline typename boost::lazy_enable_if<mpl::and_<is_dataset<DS1>,is_dataset<DS2>>, 
-                                      ds_detail::explicit_join_type<DS1,DS2>>::type
+inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && is_dataset<DS2>::value, 
+                                        result_of::join<mpl::identity<DS1>,mpl::identity<DS2>>
+>::type
 operator+( DS1&& ds1, DS2&& ds2 )
 {
     return join<DS1,DS2>( std::forward<DS1>( ds1 ),  std::forward<DS2>( ds2 ) );
@@ -115,21 +119,23 @@ operator+( DS1&& ds1, DS2&& ds2 )
 //____________________________________________________________________________//
 
 template<typename DS1, typename DS2>
-inline auto 
-operator+( DS1&& ds1, DS2&& ds2 ) ->
-typename std::enable_if<is_dataset<DS1>::value && !is_dataset<DS2>::value, decltype(ds1 + data::make(ds2))>::type
+inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && !is_dataset<DS2>::value, 
+                                        result_of::join<mpl::identity<DS1>,data::result_of::make<DS2>>
+>::type
+operator+( DS1&& ds1, DS2&& ds2 )
 {
-    return ds1 + data::make(ds2);
+    return std::forward<DS1>(ds1) + data::make(std::forward<DS2>(ds2));
 }
 
 //____________________________________________________________________________//
 
 template<typename DS1, typename DS2>
-inline auto 
-operator+( DS1&& ds1, DS2&& ds2 ) ->
-typename std::enable_if<!is_dataset<DS1>::value && is_dataset<DS2>::value, decltype(data::make(ds1) + ds2)>::type
+inline typename boost::lazy_enable_if_c<!is_dataset<DS1>::value && is_dataset<DS2>::value, 
+                                        result_of::join<data::result_of::make<DS1>,mpl::identity<DS2>>
+>::type
+operator+( DS1&& ds1, DS2&& ds2 )
 {
-    return data::make(ds1) + ds2;
+    return data::make(std::forward<DS1>(ds1)) + std::forward<DS2>(ds2);
 }
 
 //____________________________________________________________________________//

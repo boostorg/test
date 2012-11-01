@@ -18,11 +18,12 @@
 // Boost.Test
 #include <boost/test/data/config.hpp>
 #include <boost/test/data/size.hpp>
+#include <boost/test/data/monomorphic/fwd.hpp>
 
 // STL
-#include <vector>
-#include <list>
 #include <tuple>
+#include <memory>
+#include <stdexcept>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -62,7 +63,7 @@ struct traits<std::tuple<T1,T2>> {
     static void
     invoke_action( ref_type arg, Action const& action )
     {
-        action( get<0>(arg), get<1>(arg) );
+        action( std::get<0>(arg), std::get<1>(arg) );
     }
 };
 
@@ -77,7 +78,7 @@ struct traits<std::tuple<T1,T2,T3>> {
     static void
     invoke_action( ref_type arg, Action const& action )
     {
-        action( get<0>(arg), get<1>(arg), get<2>(arg) );
+        action( std::get<0>(arg), std::get<1>(arg), std::get<2>(arg) );
     }
 };
 
@@ -113,39 +114,7 @@ public:
     virtual iter_ptr        begin() const = 0;
 };
 
-// ************************************************************************** //
-// **************            monomorphic::is_dataset           ************** //
-// ************************************************************************** //
-
-template<typename DS>
-struct is_dataset : std::false_type {};
-
-//____________________________________________________________________________//
-
-template<typename DS>
-struct is_dataset<DS&> : is_dataset<DS> {};
-
-//____________________________________________________________________________//
-
-template<typename DS>
-struct is_dataset<DS const> : is_dataset<DS> {};
-
-//____________________________________________________________________________//
-
 } // namespace monomorphic
-
-// ************************************************************************** //
-// **************                  data::make                  ************** //
-// ************************************************************************** //
-
-template<typename DS>
-inline typename std::enable_if<monomorphic::is_dataset<DS>::value,DS>::type
-make(DS&& ds)
-{
-    return std::move( ds );
-}
-
-//____________________________________________________________________________//
 
 // ************************************************************************** //
 // **************                for_each_sample               ************** //
@@ -172,37 +141,14 @@ for_each_sample( monomorphic::dataset<SampleType> const& ds,
 
 template<typename SampleType, typename Action>
 inline typename std::enable_if<!monomorphic::is_dataset<SampleType>::value,void>::type
-for_each_sample( SampleType const&  samples, 
-                 Action const&      act, 
+for_each_sample( SampleType const&  samples,
+                 Action const&      act,
                  data::size_t       number_of_samples = BOOST_TEST_DS_INFINITE_SIZE )
 {
     data::for_each_sample( data::make( samples ), act, number_of_samples );
 }
 
 //____________________________________________________________________________//
-
-namespace ds_detail {
-
-// ************************************************************************** //
-// **************              is_std_collection               ************** //
-// ************************************************************************** //
-
-template<typename T>
-struct is_std_collection : std::false_type {};
-
-template<typename T>
-struct is_std_collection<T const> : is_std_collection<T> {};
-
-template<typename T>
-struct is_std_collection<T&> : is_std_collection<T> {};
-
-template<typename T>
-struct is_std_collection<std::vector<T>> : std::true_type {};
-
-template<typename T>
-struct is_std_collection<std::list<T>> : std::true_type {};
-
-} // namespace ds_detail
 
 } // namespace data
 } // namespace unit_test

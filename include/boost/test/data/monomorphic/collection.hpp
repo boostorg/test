@@ -37,6 +37,7 @@ class collection : public monomorphic::dataset<typename std::decay<C>::type::val
     typedef typename std::decay<C>::type col_type;
     typedef typename col_type::value_type T;
     typedef monomorphic::dataset<T> base;
+    typedef typename base::iter_ptr iter_ptr;
 
     struct iterator : public base::iterator {
         // Constructor
@@ -52,7 +53,7 @@ class collection : public monomorphic::dataset<typename std::decay<C>::type::val
     private:
         // Data members
         typename col_type::const_iterator m_iter;
-        bool            m_singleton;
+        bool                m_singleton;
     };
 
 public:

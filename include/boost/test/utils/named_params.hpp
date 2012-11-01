@@ -24,6 +24,7 @@
 #include <boost/test/utils/assign_op.hpp>
 
 #include <boost/type_traits/remove_reference.hpp>
+#include <boost/type_traits/remove_cv.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -344,21 +345,17 @@ template<typename NP,typename Rest,typename Keyword,typename DefaultType>
 struct param_type<nfp_detail::named_parameter_combine<NP,Rest>,Keyword,DefaultType> : param_type<Rest,Keyword,DefaultType> {
 };
 
-#if !defined(BOOST_NO_CXX11_HDR_TYPE_TRAITS)
-
 template<typename T, typename unique_id, typename ReferenceType,bool required,typename DefaultType>
 struct param_type<named_parameter<T,unique_id,ReferenceType>,keyword<unique_id,required>,DefaultType> {
-    typedef typename std::remove_cv<T>::type type;
+    typedef typename boost::remove_cv<T>::type type;
 };
 
 template<typename T, typename unique_id, typename ReferenceType,typename Rest,bool required,typename DefaultType>
 struct param_type<nfp_detail::named_parameter_combine<named_parameter<T,unique_id,ReferenceType>,Rest>,
                   keyword<unique_id,required>,
                   DefaultType> {
-    typedef typename std::remove_cv<T>::type type;
+    typedef typename boost::remove_cv<T>::type type;
 };
-
-#endif
 
 } // namespace nfp
 } // namespace boost
