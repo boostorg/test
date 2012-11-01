@@ -28,9 +28,10 @@
 #include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/preprocessor/seq/size.hpp>
 #include <boost/preprocessor/seq/to_tuple.hpp>
-#include <boost/preprocessor/repetition/repeat.hpp>
-#include <boost/preprocessor/punctuation/comma_if.hpp>
-#include <boost/preprocessor/arithmetic/add.hpp>
+
+#include <boost/preprocessor/control/iif.hpp>
+#include <boost/preprocessor/comparison/equal.hpp>
+#include <boost/preprocessor/variadic/size.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -100,22 +101,22 @@ do {                                                                            
 
 //____________________________________________________________________________//
 
-#define BOOST_CHECKA_BUILD_ASSERTION( P )                                       \
+#define BOOST_TEST_BUILD_ASSERTION( P )                                         \
     ::boost::test_tools::assertion::expression const& E =                       \
     ::boost::test_tools::assertion::seed() ->* P;                               \
 /**/
 
-#define BOOST_WARNA( P )                    BOOST_TEST_TOOL_IMPL( 2,            \
+#define BOOST_WARN_ASSERTION( P )           BOOST_TEST_TOOL_IMPL( 2,            \
     (E.evaluate()), BOOST_TEST_TOOLS_STRINGIZE( P ), WARN,                      \
-    CHECK_BUILT_ASSERTION, _, BOOST_CHECKA_BUILD_ASSERTION( P ) )               \
+    CHECK_BUILT_ASSERTION, _, BOOST_TEST_BUILD_ASSERTION( P ) )                 \
 /**/
-#define BOOST_CHECKA( P )                   BOOST_TEST_TOOL_IMPL( 2,            \
+#define BOOST_CHECK_ASSERTION( P )          BOOST_TEST_TOOL_IMPL( 2,            \
     (E.evaluate()), BOOST_TEST_TOOLS_STRINGIZE( P ), CHECK,                     \
-    CHECK_BUILT_ASSERTION, _, BOOST_CHECKA_BUILD_ASSERTION( P ) )               \
+    CHECK_BUILT_ASSERTION, _, BOOST_TEST_BUILD_ASSERTION( P ) )                 \
 /**/
-#define BOOST_REQUIREA( P )                 BOOST_TEST_TOOL_IMPL( 2,            \
+#define BOOST_REQUIRE_ASSERTION( P )            BOOST_TEST_TOOL_IMPL( 2,        \
     (E.evaluate()), BOOST_TEST_TOOLS_STRINGIZE( P ), REQUIRE,                   \
-    CHECK_BUILT_ASSERTION, _, BOOST_CHECKA_BUILD_ASSERTION( P ) )               \
+    CHECK_BUILT_ASSERTION, _, BOOST_TEST_BUILD_ASSERTION( P ) )                 \
 /**/
 
 //____________________________________________________________________________//
@@ -123,6 +124,34 @@ do {                                                                            
 #define BOOST_WARN_MESSAGE( P, M )          BOOST_TEST_TOOL_IMPL( 2, (P), M, WARN, CHECK_MSG, _, BOOST_PP_EMPTY() )
 #define BOOST_CHECK_MESSAGE( P, M )         BOOST_TEST_TOOL_IMPL( 2, (P), M, CHECK, CHECK_MSG, _, BOOST_PP_EMPTY() )
 #define BOOST_REQUIRE_MESSAGE( P, M )       BOOST_TEST_TOOL_IMPL( 2, (P), M, REQUIRE, CHECK_MSG, _, BOOST_PP_EMPTY() )
+
+//____________________________________________________________________________//
+
+#if BOOST_PP_VARIADICS
+
+#define BOOST_TEST_WARN( ... )              BOOST_PP_IIF(                       \
+    BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2),                      \
+    BOOST_WARN_MESSAGE,                                                         \
+    BOOST_WARN_ASSERTION)( __VA_ARGS__ )                                        \
+/**/
+#define BOOST_TEST( ... )                   BOOST_PP_IIF(                       \
+    BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2),                      \
+    BOOST_CHECK_MESSAGE,                                                        \
+    BOOST_CHECK_ASSERTION)( __VA_ARGS__ )                                       \
+/**/
+#define BOOST_TEST_REQUIRE( ... )           BOOST_PP_IIF(                       \
+    BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2),                      \
+    BOOST_REQUIRE_MESSAGE,                                                      \
+    BOOST_REQUIRE_ASSERTION)( __VA_ARGS__ )                                     \
+/**/
+
+#else
+
+#define BOOST_TEST_WARN( P )                BOOST_WARN_ASSERTION( P )
+#define BOOST_TEST( P )                     BOOST_CHECK_ASSERTION( P )
+#define BOOST_TEST_REQUIRE( P )             BOOST_REQUIRE_ASSERTION( P )
+
+#endif
 
 //____________________________________________________________________________//
 
@@ -137,11 +166,11 @@ do {                                                                            
         BOOST_TEST_PASSPOINT();                                                         \
         S;                                                                              \
         BOOST_TEST_TOOL_IMPL( 2, false, "exception " BOOST_STRINGIZE(E) " is expected", \
-                              TL, CHECK_MSG, _, BOOST_PP_EMPTY() );                       \
+                              TL, CHECK_MSG, _, BOOST_PP_EMPTY() );                     \
     } catch( E const& ex ) {                                                            \
         ::boost::unit_test::ut_detail::ignore_unused_variable_warning( ex );            \
         BOOST_TEST_TOOL_IMPL( 2, P, prefix BOOST_STRINGIZE( E ) " is caught",           \
-                              TL, CHECK_MSG, _ , BOOST_PP_EMPTY() );                      \
+                              TL, CHECK_MSG, _ , BOOST_PP_EMPTY() );                    \
     }                                                                                   \
 } while( ::boost::test_tools::dummy_cond )                                              \
 /**/
