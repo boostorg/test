@@ -19,6 +19,9 @@
 #include <boost/test/data/config.hpp>
 #include <boost/test/data/size.hpp>
 
+// Boost
+#include <boost/utility/declval.hpp>
+
 // STL
 #include <list>
 #include <vector>
@@ -140,7 +143,7 @@ namespace result_of {
 template<typename DS>
 struct make
 {
-    typedef decltype(data::make(std::declval<DS>())) type;
+    typedef decltype(data::make(boost::declval<DS>())) type;
 };
 
 } // namespace result_of
