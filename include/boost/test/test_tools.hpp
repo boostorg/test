@@ -129,20 +129,29 @@ do {                                                                            
 
 #if BOOST_PP_VARIADICS
 
-#define BOOST_TEST_WARN( ... )              BOOST_PP_IIF(                       \
-    BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2),                      \
-    BOOST_WARN_MESSAGE,                                                         \
-    BOOST_WARN_ASSERTION)( __VA_ARGS__ )                                        \
+#if BOOST_PP_VARIADICS_MSVC
+#define BOOST_TEST_INVOKE_TOOL( tool, ... ) BOOST_PP_CAT( tool (__VA_ARGS__), )
+#else
+#define BOOST_TEST_INVOKE_TOOL( tool, ... ) tool (__VA_ARGS__)
+#endif
+
+#define BOOST_TEST_WARN( ... )              BOOST_TEST_INVOKE_TOOL(             \
+    BOOST_PP_IIF(                                                               \
+        BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2),                  \
+        BOOST_WARN_MESSAGE,                                                     \
+        BOOST_WARN_ASSERTION), __VA_ARGS__ )                                    \
 /**/
-#define BOOST_TEST( ... )                   BOOST_PP_IIF(                       \
-    BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2),                      \
-    BOOST_CHECK_MESSAGE,                                                        \
-    BOOST_CHECK_ASSERTION)( __VA_ARGS__ )                                       \
+#define BOOST_TEST( ... )                   BOOST_TEST_INVOKE_TOOL(             \
+    BOOST_PP_IIF(                                                               \
+        BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2),                  \
+        BOOST_CHECK_MESSAGE,                                                    \
+        BOOST_CHECK_ASSERTION), __VA_ARGS__ )                                   \
 /**/
-#define BOOST_TEST_REQUIRE( ... )           BOOST_PP_IIF(                       \
-    BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2),                      \
-    BOOST_REQUIRE_MESSAGE,                                                      \
-    BOOST_REQUIRE_ASSERTION)( __VA_ARGS__ )                                     \
+#define BOOST_TEST_REQUIRE( ... )           BOOST_TEST_INVOKE_TOOL(             \
+    BOOST_PP_IIF(                                                               \
+        BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2),                  \
+        BOOST_REQUIRE_MESSAGE,                                                  \
+        BOOST_REQUIRE_ASSERTION), __VA_ARGS__ )                                 \
 /**/
 
 #else
