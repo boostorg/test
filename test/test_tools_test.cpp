@@ -646,6 +646,18 @@ public:
     int         operator&()     { return 10; }
 };
 
+#ifndef BOOST_NO_DECLTYPE
+#define BOOST_TEST_FWD_1(P,M) BOOST_TEST(P)
+#else
+#define BOOST_TEST_FWD_1(P,M) BOOST_CHECK_MESSAGE( P, M );
+#endif
+
+#if BOOST_PP_VARIADICS
+#define BOOST_TEST_FWD_2(P,M) BOOST_TEST(P,M)
+#else
+#define BOOST_TEST_FWD_2(P,M) BOOST_CHECK_MESSAGE( P, M );
+#endif
+
 TEST_CASE( test_BOOST_TEST_universal )
 {
     unit_test_log.set_threshold_level( log_successful_tests );
@@ -665,17 +677,13 @@ TEST_CASE( test_BOOST_TEST_universal )
     BOOST_TEST( i >= 5 );
 
     int j = 2;
-#ifdef BOOST_HAS_DECLTYPE
-    BOOST_TEST( i+j >= 5 );
-    BOOST_TEST( j-i == 2 );
-#endif
+    BOOST_TEST_FWD_1( i+j >= 5, "check i+j >= 5 failed [1+2<5]" );
+    BOOST_TEST_FWD_1( j-i == 2, "check j-i == 2 failed [2-1!=2]" );
 
     int* p = &i;
     BOOST_TEST( *p == 2 );
 
-#ifdef BOOST_HAS_DECLTYPE
-    BOOST_TEST( j-*p == 0 );
-#endif
+    BOOST_TEST_FWD_1( j-*p == 0, "check j-*p == 0 failed [2-1!=0]" );
 
     BOOST_TEST(( i > 5, true ));
 
@@ -688,17 +696,13 @@ TEST_CASE( test_BOOST_TEST_universal )
     BOOST_TEST( &F > 100 );
     BOOST_TEST( &*F > 100 );
 
-#ifdef BOOST_HAS_DECLTYPE
-    BOOST_TEST( (i == 1) & (j == 1) );
-    BOOST_TEST( (i == 2) | (j == 1) );
-#endif
+    BOOST_TEST_FWD_1( (i == 1) & (j == 1), "check (i == 1) & (j == 1) failed [1&0]" );
+    BOOST_TEST_FWD_1( (i == 2) | (j == 1), "check (i == 2) | (j == 1) failed [0|0]" );
 
     BOOST_TEST(( i == 1 && j == 1 ));
     BOOST_TEST(( i == 2 || j == 1 ));
 
-#if BOOST_PP_VARIADICS
-    BOOST_TEST( i+j==15,"This message reported instead");
-#endif
+    BOOST_TEST_FWD_2( i+j==15,"This message reported instead");
 
     // check correct behavior in if clause
     if( true )
