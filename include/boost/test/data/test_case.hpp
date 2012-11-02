@@ -147,11 +147,22 @@ BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     BOOST_DATA_TEST_CASE_WITH_PARAMS( test_name, dataset, sample )      \
 /**/
 
+#if BOOST_PP_VARIADICS_MSVC
+
+#define BOOST_DATA_TEST_CASE( ... )                                     \
+    BOOST_PP_CAT(                                                       \
+    BOOST_PP_IIF(BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2), \
+                     BOOST_DATA_TEST_CASE_NO_PARAMS,                    \
+                     BOOST_DATA_TEST_CASE_WITH_PARAMS) (__VA_ARGS__), ) \
+/**/
+#else
+
 #define BOOST_DATA_TEST_CASE( ... )                                     \
     BOOST_PP_IIF(BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2), \
-                 BOOST_DATA_TEST_CASE_NO_PARAMS,                        \
-                 BOOST_DATA_TEST_CASE_WITH_PARAMS)(__VA_ARGS__)         \
+                     BOOST_DATA_TEST_CASE_NO_PARAMS,                    \
+                     BOOST_DATA_TEST_CASE_WITH_PARAMS) (__VA_ARGS__)    \
 /**/
+#endif
 
 } // namespace data
 } // namespace unit_test
