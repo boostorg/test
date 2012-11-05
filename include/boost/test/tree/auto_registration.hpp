@@ -41,9 +41,6 @@ struct BOOST_TEST_DECL auto_test_unit_registrar {
     explicit    auto_test_unit_registrar( const_string ts_name, decorator::collector* decorators );
     explicit    auto_test_unit_registrar( test_unit_generator const& tc_gen, decorator::collector* decorators );
     explicit    auto_test_unit_registrar( int );
-
-private:
-    static std::list<test_suite*>& curr_ts_store();
 };
 
 } // namespace ut_detail

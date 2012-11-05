@@ -84,6 +84,7 @@ BOOST_TEST_DECL context_generator   get_context();
 
 // Master test suite access
 BOOST_TEST_DECL master_test_suite_t& master_test_suite();
+BOOST_TEST_DECL test_suite&          current_auto_test_suite( test_suite* ts = 0, bool push_or_pop = true );
 
 // constant access methods
 BOOST_TEST_DECL test_case const&    current_test_case();

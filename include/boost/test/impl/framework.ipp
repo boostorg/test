@@ -322,14 +322,16 @@ private:
 class framework_impl : public test_tree_visitor {
 public:
     framework_impl()
-    : m_master_test_suite( 0 )
-    , m_curr_test_case( INV_TEST_UNIT_ID )
+    : m_curr_test_case( INV_TEST_UNIT_ID )
     , m_next_test_case_id( MIN_TEST_CASE_ID )
     , m_next_test_suite_id( MIN_TEST_SUITE_ID )
     , m_is_initialized( false )
     , m_test_in_progress( false )
     , m_context_idx( 0 )
-    {}
+    {
+        m_master_test_suite = new master_test_suite_t;
+        m_auto_test_suites.push_back( m_master_test_suite );
+    }
 
     ~framework_impl() { clear(); }
 
@@ -460,6 +462,8 @@ public:
     typedef std::vector<context_frame> context_data;
 
     master_test_suite_t* m_master_test_suite;
+    std::vector<test_suite*> m_auto_test_suites;
+
     test_unit_id    m_curr_test_case;
     test_unit_store m_test_units;
 
@@ -949,10 +953,24 @@ context_generator::next() const
 master_test_suite_t&
 master_test_suite()
 {
-    if( !s_frk_impl().m_master_test_suite )
-        s_frk_impl().m_master_test_suite = new master_test_suite_t;
-
     return *s_frk_impl().m_master_test_suite;
+}
+
+//____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************            current_auto_test_suite           ************** //
+// ************************************************************************** //
+
+test_suite&
+current_auto_test_suite( test_suite* ts, bool push_or_pop )
+{
+    if( !push_or_pop )
+        s_frk_impl().m_auto_test_suites.pop_back();
+    else if( ts )
+        s_frk_impl().m_auto_test_suites.push_back( ts );
+
+    return *s_frk_impl().m_auto_test_suites.back();
 }
 
 //____________________________________________________________________________//

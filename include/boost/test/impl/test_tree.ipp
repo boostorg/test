@@ -284,7 +284,7 @@ normalize_test_case_name( const_string name )
 
 auto_test_unit_registrar::auto_test_unit_registrar( test_case* tc, decorator::collector* decorators, counter_t exp_fail )
 {
-    curr_ts_store().back()->add( tc, exp_fail );
+    framework::current_auto_test_suite().add( tc, exp_fail );
 
     if( decorators )
         decorators->store_in( *tc );
@@ -294,30 +294,30 @@ auto_test_unit_registrar::auto_test_unit_registrar( test_case* tc, decorator::co
 
 auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name, decorator::collector* decorators )
 {
-    test_unit_id id = curr_ts_store().back()->get( ts_name );
+    test_unit_id id = framework::current_auto_test_suite().get( ts_name );
 
     test_suite* ts;
 
     if( id != INV_TEST_UNIT_ID ) {
         ts = &framework::get<test_suite>( id );
-        BOOST_ASSERT( ts->p_parent_id == curr_ts_store().back()->p_id );
+        BOOST_ASSERT( ts->p_parent_id == framework::current_auto_test_suite().p_id );
     }
     else {
         ts = new test_suite( ts_name );
-        curr_ts_store().back()->add( ts );
+        framework::current_auto_test_suite().add( ts );
     }
 
     if( decorators )
         decorators->store_in( *ts );
 
-    curr_ts_store().push_back( ts );
+    framework::current_auto_test_suite( ts );
 }
 
 //____________________________________________________________________________//
 
 auto_test_unit_registrar::auto_test_unit_registrar( test_unit_generator const& tc_gen, decorator::collector* /*decorators*/ )
 {
-    curr_ts_store().back()->add( tc_gen );
+    framework::current_auto_test_suite().add( tc_gen );
 
     // !! ?? if( decorators )
     // decorators->apply( *tc );
@@ -327,19 +327,7 @@ auto_test_unit_registrar::auto_test_unit_registrar( test_unit_generator const& t
 
 auto_test_unit_registrar::auto_test_unit_registrar( int )
 {
-    if( curr_ts_store().size() == 0 )
-        return; // report error?
-
-    curr_ts_store().pop_back();
-}
-
-//____________________________________________________________________________//
-
-std::list<test_suite*>&
-auto_test_unit_registrar::curr_ts_store()
-{
-    static std::list<test_suite*> inst( 1, &framework::master_test_suite() );
-    return inst;
+    framework::current_auto_test_suite( 0, false );
 }
 
 //____________________________________________________________________________//
