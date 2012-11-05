@@ -733,7 +733,7 @@ set_debugger( unit_test::const_string dbg_id, dbg_starter s )
     assign_op( s_info.p_dbg.value, dbg_id, 0 );
 
     if( !!s )
-        s_info.m_dbg_starter_reg[s_info.p_dbg] = s;
+        s_info.m_dbg_starter_reg[s_info.p_dbg.get()] = s;
 
     return old;
 }
