@@ -18,8 +18,8 @@ DIV.epigraph
 
 DIV.epigraph p
 {
+    padding-left:     50%; 
     text-align:       right; 
-    width:            50%;
     align:            justify;
 }
 
