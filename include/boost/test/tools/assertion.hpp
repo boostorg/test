@@ -21,6 +21,11 @@
 #include <boost/mpl/assert.hpp>
 #include <boost/utility/declval.hpp>
 
+// STL
+#ifndef BOOST_NO_RVALUE_REFERENCES
+#include <utility>
+#endif
+
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
