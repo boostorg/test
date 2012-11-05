@@ -114,6 +114,7 @@ public:
     enum { type = tut_case };
 
     // Constructor
+    test_case( const_string tc_name, boost::function<void ()> const& test_func );
     test_case( const_string tc_name, const_string tc_file, std::size_t tc_line, boost::function<void ()> const& test_func );
 
     // Public property
