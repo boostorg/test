@@ -367,12 +367,12 @@ Leaving test suite "example"
     </vals>
     <descr>
      <simpara>
-      positive value tells the framework to detect the memory leaks (if any). Any value greater then 1 in addition
+      Positive value tells the framework to detect the memory leaks (if any). In addition any value greater than 1
       is treated as leak allocation number and setups runtime breakpoint. In other words setting this parameter to
       the positive value N greater than 1 causes the framework to set a breakpoint at Nth memory allocation (don't
-      do that from the command line - only when you are under debugger). Note: if your test program produce memory
+      do that from the command line - only when you are under debugger). Note: if your test program produces memory
       leaks notifications, they are combined with allocation number values you could use to set a breakpoint.
-      Currently only applies to MS family of compilers.
+      Currently only applies to MS family of compilers in debug builds.
      </simpara>
     </descr>
    </refentry>

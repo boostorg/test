@@ -3,10 +3,10 @@
  <!ENTITY utf "<acronym>UTF</acronym>">
 ]>
  <section id="utf.user-guide.glossary">
-  <title>Introduction &hellip; or what's your name?</title><titleabbrev>Introduction</titleabbrev>
+  <title>Glossary &hellip; or what's your name?</title><titleabbrev>Glossary</titleabbrev>
 
   <para role="first-line-indented">
-   Without further ado, let's define terms regularly used by the &utf;.
+   Here the list of terms used throughout the this documentation.
   </para>
   <variablelist>
    <?dbhtml term-width="16%"  list-width="100%"?>
