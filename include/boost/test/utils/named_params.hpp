@@ -53,9 +53,10 @@ struct access_to_invalid_parameter {};
 //____________________________________________________________________________//
 
 inline void 
-report_access_to_invalid_parameter()
+report_access_to_invalid_parameter(bool v)
 {
-    throw access_to_invalid_parameter();
+    if(v)
+        throw access_to_invalid_parameter();
 }
 
 //____________________________________________________________________________//
@@ -71,23 +72,23 @@ struct nil {
 #else
     operator T const&() const
 #endif
-    { report_access_to_invalid_parameter(); static T* v = 0; return *v; }
+    { report_access_to_invalid_parameter(true); static T* v = 0; return *v; }
 
     template<typename T>
     T any_cast() const
-    { report_access_to_invalid_parameter(); static typename remove_reference<T>::type* v = 0; return *v; }
+    { report_access_to_invalid_parameter(true); static typename remove_reference<T>::type* v = 0; return *v; }
 
     template<typename Arg1>
     nil operator()( Arg1 const& )
-    { report_access_to_invalid_parameter(); return nil(); }
+    { report_access_to_invalid_parameter(true); return nil(); }
 
     template<typename Arg1,typename Arg2>
     nil operator()( Arg1 const&, Arg2 const& )
-    { report_access_to_invalid_parameter(); return nil(); }
+    { report_access_to_invalid_parameter(true); return nil(); }
 
     template<typename Arg1,typename Arg2,typename Arg3>
     nil operator()( Arg1 const&, Arg2 const&, Arg3 const& )
-    { report_access_to_invalid_parameter(); return nil(); }
+    { report_access_to_invalid_parameter(true); return nil(); }
 
     // Visitation support
     template<typename Visitor>
@@ -288,7 +289,7 @@ template<typename T>
 inline void
 optionally_assign( T&, nfp_detail::nil )
 {
-    nfp_detail::report_access_to_invalid_parameter();
+    nfp_detail::report_access_to_invalid_parameter(true);
 }
 
 //____________________________________________________________________________//

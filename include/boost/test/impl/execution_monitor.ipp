@@ -1062,18 +1062,11 @@ system_signal_exception::report() const
 int BOOST_TEST_CALL_DECL
 assert_reporting_function( int reportType, char* userMessage, int* )
 {
-    switch( reportType ) {
-    case BOOST_TEST_CRT_ASSERT:
-        detail::report_error( execution_exception::user_error, userMessage );
+    // write this way instead of switch to avoid unreachable statements
+    if( reportType == BOOST_TEST_CRT_ASSERT || reportType == BOOST_TEST_CRT_ERROR )
+        detail::report_error( reportType == BOOST_TEST_CRT_ASSERT ? execution_exception::user_error : execution_exception::system_error, userMessage );
 
-        return 1; // return value and retVal are not important since we never reach this line
-    case BOOST_TEST_CRT_ERROR:
-        detail::report_error( execution_exception::system_error, userMessage );
-
-        return 1; // return value and retVal are not important since we never reach this line
-    default:
-        return 0; // use usual reporting method
-    }
+    return 0;
 } // assert_reporting_function
 
 //____________________________________________________________________________//
