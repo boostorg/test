@@ -2,7 +2,7 @@
 <!DOCTYPE part PUBLIC "-//Boost//DTD BoostBook XML V1.0//EN"  "../../../../tools/boostbook/dtd/boostbook.dtd" [
  <!ENTITY utf "<acronym>UTF</acronym>">
 ]>
-<section id="utf" last-revision="$Date$">
+<section id="utf">
  <title>Boost Test Library: The Unit Test Framework</title>
  <titleabbrev>The Unit Test Framework</titleabbrev>
 

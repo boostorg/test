@@ -2,7 +2,7 @@
 <!DOCTYPE part PUBLIC "-//Boost//DTD BoostBook XML V1.0//EN"  "../../../../tools/boostbook/dtd/boostbook.dtd" [
  <!ENTITY pem "Program Execution Monitor">
 ]>
-<section id="pem" last-revision="$Date$">
+<section id="pem">
  <title>Boost Test Library: The &pem;</title>
  <titleabbrev>The &pem;</titleabbrev>
  

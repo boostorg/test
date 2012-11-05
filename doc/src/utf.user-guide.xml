@@ -2,7 +2,7 @@
 <!DOCTYPE chapter PUBLIC "-//Boost//DTD BoostBook XML V1.0//EN"  "../../../../tools/boostbook/dtd/boostbook.dtd" [
  <!ENTITY utf "<acronym>UTF</acronym>">
 ]>
-<section id="utf.user-guide" last-revision="$Date$">
+<section id="utf.user-guide">
  <title>Unit Test Framework: User's guide</title><titleabbrev>User's guide</titleabbrev>
 
  <section id="utf.user-guide.intro">

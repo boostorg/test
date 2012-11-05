@@ -2,7 +2,7 @@
 <!DOCTYPE part PUBLIC "-//Boost//DTD BoostBook XML V1.0//EN"  "../../../../tools/boostbook/dtd/boostbook.dtd" [
  <!ENTITY mtf "minimal testing facility">
 ]>
-<section id="minimal" last-revision="$Date$">
+<section id="minimal">
  <title>Boost Test Library: The minimal testing facility</title>
  <titleabbrev>Minimal testing facility</titleabbrev>
 

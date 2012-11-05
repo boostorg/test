@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?><!DOCTYPE chapter PUBLIC "-//Boost//DTD BoostBook XML V1.0//EN"  "../../../../tools/boostbook/dtd/boostbook.dtd" [
  <!ENTITY utf "<acronym>UTF</acronym>">
 ]>
-<section id="utf.user-guide.testing-tools" last-revision="$Date$">
+<section id="utf.user-guide.testing-tools">
  <title>The &utf; testing tools &hellip; or tester's toolbox for all occasions</title>
  <titleabbrev>Testing tools</titleabbrev>
 
