@@ -216,7 +216,7 @@ extract( boost::exception const* ex )
 static void
 report_error( execution_exception::error_code ec, boost::exception const* be, char const* format, va_list* args )
 {
-    static const int REPORT_ERROR_BUFFER_SIZE = 512;
+    static const int REPORT_ERROR_BUFFER_SIZE = 4096;
     static char buf[REPORT_ERROR_BUFFER_SIZE];
 
     BOOST_TEST_VSNPRINTF( buf, sizeof(buf)-1, format, *args ); 
