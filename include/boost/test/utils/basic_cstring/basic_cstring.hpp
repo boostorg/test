@@ -91,18 +91,18 @@ public:
     self_type&      trim_left( size_type trim_size );
     self_type&      trim_right( iterator it );
     self_type&      trim_left( iterator it );
-#ifndef __IBMCPP__
+#if !BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(800))
     self_type&      trim_left( self_type exclusions = self_type() ) ;
     self_type&      trim_right( self_type exclusions = self_type() ) ;
     self_type&      trim( self_type exclusions = self_type() ) ;
 #else
-    // VisualAge version 6 has in this case a problem with the default arguments.
-    self_type&      trim_left( self_type exclusions ) ;
-    self_type&      trim_right( self_type exclusions ) ;
-    self_type&      trim( self_type exclusions ) ;
-    self_type&      trim_left() { trim_left( self_type() ) ; }
-    self_type&      trim_right() { trim_right( self_type() ) ; }
-    self_type&      trim() { trim( self_type() ) ; }
+    // VA C++/XL C++ v6 and v8 has in this case a problem with the default arguments.
+    self_type&      trim_left( self_type exclusions );
+    self_type&      trim_right( self_type exclusions );
+    self_type&      trim( self_type exclusions );
+    self_type&      trim_left()     { return trim_left( self_type() ); }
+    self_type&      trim_right()    { return trim_right( self_type() ); }
+    self_type&      trim()          { return trim( self_type() ); }
 #endif
 
     // Assignment operators
