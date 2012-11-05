@@ -27,17 +27,21 @@
 // **************    Non-auto (explicit) test case interface   ************** //
 // ************************************************************************** //
 
-#define BOOST_TEST_CASE( test_function ) \
-boost::unit_test::make_test_case( boost::function<void ()>(test_function), BOOST_TEST_STRINGIZE( test_function ) )
-#define BOOST_CLASS_TEST_CASE( test_function, tc_instance ) \
-boost::unit_test::make_test_case((test_function), BOOST_TEST_STRINGIZE( test_function ), tc_instance )
+#define BOOST_TEST_CASE( test_function )                                   \
+boost::unit_test::make_test_case( boost::function<void ()>(test_function), \
+                                  BOOST_TEST_STRINGIZE( test_function ),   \
+                                  __FILE__, __LINE__ )
+#define BOOST_CLASS_TEST_CASE( test_function, tc_instance )                \
+boost::unit_test::make_test_case( (test_function),                         \
+                                  BOOST_TEST_STRINGIZE( test_function ),   \
+                                  __FILE__, __LINE__, tc_instance )
 
 // ************************************************************************** //
 // **************               BOOST_TEST_SUITE               ************** //
 // ************************************************************************** //
 
 #define BOOST_TEST_SUITE( testsuite_name ) \
-( new boost::unit_test::test_suite( testsuite_name ) )
+( new boost::unit_test::test_suite( testsuite_name, __FILE__, __LINE__ ) )
 
 // ************************************************************************** //
 // **************             BOOST_AUTO_TEST_SUITE            ************** //
@@ -47,6 +51,7 @@ boost::unit_test::make_test_case((test_function), BOOST_TEST_STRINGIZE( test_fun
 namespace suite_name {                                                  \
 BOOST_AUTO_TU_REGISTRAR( suite_name )(                                  \
     BOOST_STRINGIZE( suite_name ),                                      \
+    __FILE__, __LINE__,                                                 \
     boost::unit_test::decorator::collector::instance() );               \
 /**/
 
@@ -97,7 +102,8 @@ struct BOOST_AUTO_TC_UNIQUE_ID( test_name ) {};                         \
                                                                         \
 BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     boost::unit_test::make_test_case(                                   \
-        &BOOST_AUTO_TC_INVOKER( test_name ), #test_name ),              \
+        &BOOST_AUTO_TC_INVOKER( test_name ),                            \
+        #test_name, __FILE__, __LINE__ ),                               \
     boost::unit_test::decorator::collector::instance() );               \
                                                                         \
 void test_name::test_method()                                           \
@@ -135,7 +141,7 @@ struct BOOST_AUTO_TC_INVOKER( test_name ) {                             \
 BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     boost::unit_test::ut_detail::template_test_case_gen<                \
         BOOST_AUTO_TC_INVOKER( test_name ),TL >(                        \
-          BOOST_STRINGIZE( test_name ) ),                               \
+          BOOST_STRINGIZE( test_name ), __FILE__, __LINE__ ),           \
     boost::unit_test::decorator::collector::instance() );               \
                                                                         \
 template<typename type_name>                                            \
@@ -155,7 +161,7 @@ BOOST_FIXTURE_TEST_CASE_TEMPLATE( test_name, type_name, TL, BOOST_AUTO_TEST_CASE
 
 #define BOOST_TEST_CASE_TEMPLATE( name, typelist )                      \
     boost::unit_test::ut_detail::template_test_case_gen<name,typelist >(\
-        BOOST_TEST_STRINGIZE( name ) )                                  \
+        BOOST_TEST_STRINGIZE( name ), __FILE__, __LINE__  )             \
 /**/
 
 // ************************************************************************** //

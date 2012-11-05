@@ -52,7 +52,8 @@ struct BOOST_AUTO_TC_UNIQUE_ID( test_name ) {};                         \
                                                                         \
 BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     boost::unit_test::make_test_case(                                   \
-        &BOOST_AUTO_TC_INVOKER( test_name ), #test_name ),              \
+        &BOOST_AUTO_TC_INVOKER( test_name ), #test_name,                \
+       __FILE__, __LINE__ ),                                            \
     boost::unit_test::decorator::collector::instance() );               \
                                                                         \
 void test_name::test_method()                                           \

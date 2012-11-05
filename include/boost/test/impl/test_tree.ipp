@@ -54,9 +54,11 @@ namespace unit_test {
 // **************                   test_unit                  ************** //
 // ************************************************************************** //
 
-test_unit::test_unit( const_string name, test_unit_type t )
+test_unit::test_unit( const_string name, const_string file_name, std::size_t line_num, test_unit_type t )
 : p_type( t )
 , p_type_name( t == tut_case ? "case" : "suite" )
+, p_file_name( file_name )
+, p_line_num( line_num )
 , p_id( INV_TEST_UNIT_ID )
 , p_name( std::string( name.begin(), name.size() ) )
 , p_enabled( true )
@@ -126,8 +128,8 @@ test_unit::has_label( const_string l ) const
 // **************                   test_case                  ************** //
 // ************************************************************************** //
 
-test_case::test_case( const_string name, boost::function<void ()> const& test_func )
-: test_unit( name, static_cast<test_unit_type>(type) )
+test_case::test_case( const_string name, const_string file_name, std::size_t line_num, boost::function<void ()> const& test_func )
+: test_unit( name, file_name, line_num, static_cast<test_unit_type>(type) )
 , p_test_func( test_func )
 {
     framework::register_test_unit( this );
@@ -141,8 +143,8 @@ test_case::test_case( const_string name, boost::function<void ()> const& test_fu
 
 //____________________________________________________________________________//
 
-test_suite::test_suite( const_string name )
-: test_unit( name, static_cast<test_unit_type>(type) )
+test_suite::test_suite( const_string name, const_string file_name, std::size_t line_num )
+: test_unit( name, file_name, line_num, static_cast<test_unit_type>(type) )
 {
     framework::register_test_unit( this );
 }
@@ -292,7 +294,7 @@ auto_test_unit_registrar::auto_test_unit_registrar( test_case* tc, decorator::co
 
 //____________________________________________________________________________//
 
-auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name, decorator::collector* decorators )
+auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name, const_string ts_file, std::size_t ts_line, decorator::collector* decorators )
 {
     test_unit_id id = framework::current_auto_test_suite().get( ts_name );
 
@@ -303,7 +305,7 @@ auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name, decora
         BOOST_ASSERT( ts->p_parent_id == framework::current_auto_test_suite().p_id );
     }
     else {
-        ts = new test_suite( ts_name );
+        ts = new test_suite( ts_name, ts_file, ts_line );
         framework::current_auto_test_suite().add( ts );
     }
 

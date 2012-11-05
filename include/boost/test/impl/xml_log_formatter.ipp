@@ -80,7 +80,13 @@ xml_log_formatter::log_build_info( std::ostream& ostr )
 void
 xml_log_formatter::test_unit_start( std::ostream& ostr, test_unit const& tu )
 {
-    ostr << "<" << tu_type_name( tu ) << " name" << attr_value() << tu.p_name.get() << ">";
+    ostr << "<" << tu_type_name( tu ) << " name" << attr_value() << tu.p_name.get();
+
+    if( !tu.p_file_name.get().empty() )
+        ostr << BOOST_TEST_L( " file" ) << attr_value() << tu.p_file_name
+             << BOOST_TEST_L( " line" ) << attr_value() << tu.p_line_num;
+
+    ostr << ">";
 }
 
 //____________________________________________________________________________//

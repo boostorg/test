@@ -51,7 +51,7 @@ template<typename TestCase,typename DS>
 class test_case_gen : public test_unit_generator {
 public:
     // Constructor
-    test_case_gen( const_string tc_name, DS&& ds )
+    test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, DS&& ds )
     : m_tc_name( ut_detail::normalize_test_case_name( tc_name ) )
     {
         data::for_each_sample( ds, *this );
@@ -77,7 +77,7 @@ public:
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                             \
     void    operator()( BOOST_PP_ENUM_BINARY_PARAMS(arity, Arg, const& arg) ) const \
     {                                                                               \
-        m_test_cases.push_back( new test_case( m_tc_name,                           \
+        m_test_cases.push_back( new test_case( m_tc_name, m_tc_file, m_tc_line,     \
          std::bind( &TestCase::template test_method<BOOST_PP_ENUM_PARAMS(arity,Arg)>, \
          BOOST_PP_ENUM_PARAMS(arity, arg) ) ) );                                    \
     }                                                                               \
@@ -87,6 +87,8 @@ public:
 private:
     // Data members
     std::string                     m_tc_name;
+    const_string                    m_tc_file;
+    std::size_t                     m_tc_line;
     mutable std::list<test_unit*>   m_test_cases;
 };
 
@@ -94,9 +96,9 @@ private:
 
 template<typename TestCase,typename DS>
 test_case_gen<TestCase,DS>
-make_test_case_gen( const_string tc_name, DS&& ds )
+make_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, DS&& ds )
 {
-    return test_case_gen<TestCase,DS>( tc_name, std::forward<DS>(ds) );
+    return test_case_gen<TestCase,DS>( tc_name, tc_file, tc_line, std::forward<DS>(ds) );
 }
 
 //____________________________________________________________________________//
@@ -131,7 +133,9 @@ private:                                                                \
                                                                         \
 BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     boost::unit_test::data::ds_detail::make_test_case_gen<test_name>(   \
-          BOOST_STRINGIZE( test_name ), data::make(dataset) ),          \
+          BOOST_STRINGIZE( test_name ),                                 \
+          __FILE__, __LINE__,                                           \
+          data::make(dataset) ),                                        \
     boost::unit_test::decorator::collector::instance() );               \
                                                                         \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                 \

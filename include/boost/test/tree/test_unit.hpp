@@ -49,7 +49,7 @@ public:
     typedef std::list<test_unit_fixture_ptr>    fixture_list;
 
     // Constructor
-    test_unit( const_string tu_name, test_unit_type t );
+    test_unit( const_string tu_name, const_string tc_file, std::size_t tc_line, test_unit_type t );
 
     // dependencies management
     void    depends_on( test_unit* tu );
@@ -70,6 +70,8 @@ public:
 
     readonly_property<test_unit_type>   p_type;                 // type for this test unit
     readonly_property<const_string>     p_type_name;            // "case"/"suite"
+    readonly_property<const_string>     p_file_name;
+    readonly_property<std::size_t>      p_line_num;
     id_t                                p_id;                   // unique id for this test unit
     parent_id_t                         p_parent_id;            // parent test suite id
     id_list_t                           p_dependencies;         // list of test units this one depends on
@@ -112,7 +114,7 @@ public:
     enum { type = tut_case };
 
     // Constructor
-    test_case( const_string tc_name, boost::function<void ()> const& test_func );
+    test_case( const_string tc_name, const_string tc_file, std::size_t tc_line, boost::function<void ()> const& test_func );
 
     // Public property
     typedef BOOST_READONLY_PROPERTY(boost::function<void ()>,(test_case))  test_func;
@@ -133,7 +135,7 @@ public:
     enum { type = tut_suite };
 
     // Constructor
-    explicit        test_suite( const_string ts_name );
+    explicit        test_suite( const_string ts_name, const_string ts_file, std::size_t ts_line );
 
     // test unit list management
     void            add( test_unit* tu, counter_t expected_failures = 0, unsigned timeout = 0 );
@@ -160,7 +162,7 @@ protected:
 
 class BOOST_TEST_DECL master_test_suite_t : public test_suite {
 public:
-    master_test_suite_t() : test_suite( "Master Test Suite" )
+    master_test_suite_t() : test_suite( "Master Test Suite", "", 0 )
     , argc( 0 )
     , argv( 0 )
     {}
@@ -200,9 +202,9 @@ struct user_tc_method_invoker {
 // ************************************************************************** //
 
 inline test_case*
-make_test_case( boost::function<void ()> const& test_func, const_string tc_name )
+make_test_case( boost::function<void ()> const& test_func, const_string tc_name, const_string tc_file, std::size_t tc_line )
 {
-    return new test_case( ut_detail::normalize_test_case_name( tc_name ), test_func );
+    return new test_case( ut_detail::normalize_test_case_name( tc_name ), tc_file, tc_line, test_func );
 }
 
 //____________________________________________________________________________//
@@ -211,9 +213,13 @@ template<typename UserTestCase, typename InstanceType>
 inline test_case*
 make_test_case( void (UserTestCase::*           test_method )(),
                 const_string                    tc_name,
+                const_string                    tc_file,
+                std::size_t                     tc_line,
                 boost::shared_ptr<InstanceType> user_test_case )
 {
     return new test_case( ut_detail::normalize_test_case_name( tc_name ), 
+                          tc_file,
+                          tc_line,
                           ut_detail::user_tc_method_invoker<InstanceType,UserTestCase>( user_test_case, test_method ) );
 }
 

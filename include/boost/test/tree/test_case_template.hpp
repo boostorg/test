@@ -64,8 +64,10 @@ public:
 
 template<typename Generator,typename TestCaseTemplate>
 struct generate_test_case_4_type {
-    explicit    generate_test_case_4_type( const_string tc_name, Generator& G )
+    explicit    generate_test_case_4_type( const_string tc_name, const_string tc_file, std::size_t tc_line, Generator& G )
     : m_test_case_name( tc_name )
+    , m_test_case_file( tc_file )
+    , m_test_case_line( tc_line )
     , m_holder( G )
     {}
 
@@ -80,12 +82,17 @@ struct generate_test_case_4_type {
             full_name += " const";
         full_name += '>';
 
-        m_holder.m_test_cases.push_back( new test_case( full_name, test_case_template_invoker<TestCaseTemplate,TestType>() ) );
+        m_holder.m_test_cases.push_back( new test_case( full_name,
+                                                        m_test_case_file, 
+                                                        m_test_case_line,
+                                                        test_case_template_invoker<TestCaseTemplate,TestType>() ) );
     }
 
 private:
     // Data members
     const_string    m_test_case_name;
+    const_string    m_test_case_file;
+    std::size_t     m_test_case_line;
     Generator&      m_holder;
 };
 
@@ -97,11 +104,11 @@ template<typename TestCaseTemplate,typename TestTypesList>
 class template_test_case_gen : public test_unit_generator {
 public:
     // Constructor
-    template_test_case_gen( const_string tc_name )
+    template_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line )
     {
         typedef generate_test_case_4_type<template_test_case_gen<TestCaseTemplate,TestTypesList>,TestCaseTemplate> single_test_gen;
 
-        mpl::for_each<TestTypesList,mpl::make_identity<mpl::_> >( single_test_gen( tc_name, *this ) );
+        mpl::for_each<TestTypesList,mpl::make_identity<mpl::_> >( single_test_gen( tc_name, tc_file, tc_line, *this ) );
     }
 
     virtual test_unit* next() const
