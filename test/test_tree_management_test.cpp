@@ -34,8 +34,15 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE( S1 )
 
-BOOST_AUTO_TEST_CASE( tc3 ) {}
-BOOST_AUTO_TEST_CASE( tc4 ) {}
+void tc3() {}
+void tc4() {}
+
+struct myreg {
+    myreg() {
+        framework::current_auto_test_suite().add( BOOST_TEST_CASE( &tc3 ) ); 
+        framework::current_auto_test_suite().add( BOOST_TEST_CASE( &tc4 ) ); 
+    }
+} myreg_;
 
 BOOST_AUTO_TEST_SUITE_END()
 
