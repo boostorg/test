@@ -315,13 +315,12 @@ auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name, decora
 
 //____________________________________________________________________________//
 
-auto_test_unit_registrar::auto_test_unit_registrar( test_unit_generator const& tc_gen, decorator::collector* decorators )
+auto_test_unit_registrar::auto_test_unit_registrar( test_unit_generator const& tc_gen, decorator::collector* /*decorators*/ )
 {
     curr_ts_store().back()->add( tc_gen );
 
-    // !! ??if( decorators )
+    // !! ?? if( decorators )
     // decorators->apply( *tc );
-
 }
 
 //____________________________________________________________________________//

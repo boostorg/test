@@ -944,6 +944,8 @@ detect_memory_leaks( bool on_off, unit_test::const_string report_file )
     }
 
     _CrtSetDbgFlag ( flags );
+#else
+    unit_test::ut_detail::ignore_unused_variable_warning( report_file );
 #endif // BOOST_MS_CRT_BASED_DEBUG
 }
 

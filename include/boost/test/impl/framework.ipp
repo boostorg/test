@@ -186,7 +186,7 @@ private:
 
         return false;
     }
-    virtual void    test_suite_finish( test_suite const& ts )
+    virtual void    test_suite_finish( test_suite const& /*ts*/ )
     {
         --m_depth;
     }
