@@ -65,7 +65,7 @@
 <p class="first-line-indented">
     If you opted to link your program with the standalone library, you need to build it first. To build a standalone 
     library all C++ files (.cpp), that constitute Program Execution Monitor <a class="link" href="impl.html" title="The Program Execution Monitor implementation">implementation</a> need to be 
-    listed as source files in your makefile<sup>[<a name="id605470" href="#ftn.id605470" class="footnote">10</a>]</sup>.
+    listed as source files in your makefile<sup>[<a name="id555228" href="#ftn.id555228" class="footnote">10</a>]</sup>.
    </p>
 <p class="first-line-indented">
     The makefile for use with Boost.Build system is supplied in <code class="filename">libs/test/build</code>
@@ -88,7 +88,7 @@
 <div class="titlepage"><div><div><h5 class="title">
 <a name="pem.compilation.standalone.dynamic"></a>Dynamic library compilation</h5></div></div></div>
 <p class="first-line-indented">
-     To build the dynamic library<sup>[<a name="id605554" href="#ftn.id605554" class="footnote">11</a>]</sup> you 
+     To build the dynamic library<sup>[<a name="id555312" href="#ftn.id555312" class="footnote">11</a>]</sup> you 
      need to add <a class="xref" href="compilation.html#pem.flag.dyn-link">BOOST_TEST_DYN_LINK</a> to the list of macro definitions in the 
      makefile. Using the Boost.Build system you can build the dynamic library with the following command from 
      <code class="filename">libs/test/build</code> directory:
@@ -142,19 +142,19 @@
 </div>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.id605470" href="#id605470" class="simpara">10</a>] </sup>There are varieties of make systems that can be used. To name 
+<div class="footnote"><p><sup>[<a id="ftn.id555228" href="#id555228" class="simpara">10</a>] </sup>There are varieties of make systems that can be used. To name 
     a few: <acronym class="acronym">GNU</acronym> make (and other make clones) and build systems integrated into <acronym class="acronym">IDE</acronym>s
     (for  example Microsoft  Visual Studio). The Boost preferred solution is Boost.Build system that is based on top of 
     bjam  tool. Make  systems require some kind of configuration file that lists all files that constitute the library 
     and all build  options. For example the makefile that is used by make, or the Microsoft Visual Studio project file, 
     Jamfile is  used by Boost.Build. For the sake of simplicity let's call this file the makefile.</p></div>
-<div class="footnote"><p><sup>[<a id="ftn.id605554" href="#id605554" class="simpara">11</a>] </sup>What is meant by the term dynamic library is a <em class="firstterm">dynamically 
+<div class="footnote"><p><sup>[<a id="ftn.id555312" href="#id555312" class="simpara">11</a>] </sup>What is meant by the term dynamic library is a <em class="firstterm">dynamically 
      loaded library</em>, alternatively called a <em class="firstterm">shared library</em>.</p></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2011 Gennadiy Rozental</div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2012 Gennadiy Rozental</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">
