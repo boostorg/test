@@ -20,6 +20,9 @@
 #include <boost/test/utils/basic_cstring/basic_cstring_fwd.hpp>
 #include <boost/test/utils/basic_cstring/bcs_char_traits.hpp>
 
+// Boost
+#include <boost/type_traits/remove_cv.hpp>
+
 // STL
 #include <string>
 
@@ -44,6 +47,7 @@ public:
     typedef typename ut_detail::bcs_char_traits<CharT>::std_string  std_string;
 
     typedef CharT                                       value_type;
+    typedef typename remove_cv<value_type>::type        value_ret_type;
     typedef value_type*                                 pointer;
     typedef value_type const*                           const_pointer;
     typedef value_type&                                 reference;
@@ -74,8 +78,8 @@ public:
     basic_cstring( pointer first, pointer last );
 
     // data access methods
-    value_type      operator[]( size_type index ) const;
-    value_type      at( size_type index ) const;
+    value_ret_type  operator[]( size_type index ) const;
+    value_ret_type  at( size_type index ) const;
 
     // size operators
     size_type       size() const;
@@ -205,7 +209,7 @@ basic_cstring<CharT>::basic_cstring( pointer first, pointer last )
 //____________________________________________________________________________//
 
 template<typename CharT>
-inline typename basic_cstring<CharT>::value_type
+inline typename basic_cstring<CharT>::value_ret_type
 basic_cstring<CharT>::operator[]( size_type index ) const
 {
     return m_begin[index];
@@ -214,7 +218,7 @@ basic_cstring<CharT>::operator[]( size_type index ) const
 //____________________________________________________________________________//
 
 template<typename CharT>
-inline typename basic_cstring<CharT>::value_type
+inline typename basic_cstring<CharT>::value_ret_type
 basic_cstring<CharT>::at( size_type index ) const
 {
     if( m_begin + index >= m_end )
@@ -682,12 +686,12 @@ operator!=( typename basic_cstring<CharT>::std_string const& s2, basic_cstring<C
 // ************************************************************************** //
 
 template<typename CharT>
-inline typename basic_cstring<CharT>::value_type
+inline typename basic_cstring<CharT>::value_ret_type
 first_char( basic_cstring<CharT> source )
 {
-    typedef typename basic_cstring<CharT>::value_type string_value_type;
+    typedef typename basic_cstring<CharT>::value_ret_type res_type;
 
-    return source.is_empty() ? static_cast<string_value_type>(0) : *source.begin();
+    return source.is_empty() ? static_cast<res_type>(0) : *source.begin();
 }
 
 //____________________________________________________________________________//
@@ -697,12 +701,12 @@ first_char( basic_cstring<CharT> source )
 // ************************************************************************** //
 
 template<typename CharT>
-inline typename basic_cstring<CharT>::value_type
+inline typename basic_cstring<CharT>::value_ret_type
 last_char( basic_cstring<CharT> source )
 {
-    typedef typename basic_cstring<CharT>::value_type string_value_type;
+    typedef typename basic_cstring<CharT>::value_ret_type res_type;
 
-    return source.is_empty() ? static_cast<string_value_type>(0) : *(source.end()-1);
+    return source.is_empty() ? static_cast<res_type>(0) : *(source.end()-1);
 }
 
 //____________________________________________________________________________//
