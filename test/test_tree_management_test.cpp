@@ -116,8 +116,10 @@ BOOST_AUTO_TEST_CASE( manual_test_case_creation_test )
 
     BOOST_CHECK_THROW( &framework::get( tc1->p_id, tut_suite ), framework::internal_error );
 
-    test_case* tc2 = make_test_case( &empty_, "my test case" );
+    test_case* tc2 = make_test_case( &empty_, "my test case", "test_file_name", 1 );
     BOOST_CHECK_EQUAL( tc2->p_name, const_string( "my test case" ) );
+    BOOST_CHECK_EQUAL( tc2->p_file_name, const_string( "test_file_name" ) );
+    BOOST_CHECK_EQUAL( tc2->p_line_num, 1U );
 }
 
 //____________________________________________________________________________//
@@ -130,6 +132,8 @@ BOOST_AUTO_TEST_CASE( manual_test_suite_creation )
     BOOST_CHECK_EQUAL( ts1->p_type_name, const_string( "suite" ) );
     BOOST_CHECK_EQUAL( ts1->p_parent_id, 0U );
     BOOST_CHECK_NE( ts1->p_id, INV_TEST_UNIT_ID );
+    BOOST_CHECK_EQUAL( ts1->p_file_name, const_string( "test_tree_management_test.cpp" ) );
+    BOOST_CHECK_EQUAL( ts1->p_line_num, 129U );
 
     BOOST_CHECK_EQUAL( ts1->p_expected_failures, 0U );
     BOOST_CHECK_EQUAL( ts1->p_timeout, 0U );
@@ -147,7 +151,9 @@ BOOST_AUTO_TEST_CASE( manual_test_unit_registration )
 {
     test_suite* ts1 = BOOST_TEST_SUITE( "TestSuite" );
 
-    test_case* tc1 = make_test_case( &empty_, "empty1" );
+    std::size_t line_num = 1;
+
+    test_case* tc1 = make_test_case( &empty_, "empty1", "file_name", line_num );
 
     ts1->add( tc1, 1, 10U );
     BOOST_CHECK_EQUAL( ts1->size(), 1U );
@@ -156,7 +162,7 @@ BOOST_AUTO_TEST_CASE( manual_test_unit_registration )
     BOOST_CHECK_EQUAL( tc1->p_timeout, 10U );
     BOOST_CHECK_EQUAL( ts1->p_expected_failures, 1U );
 
-    test_case* tc2 = make_test_case( &empty_, "empty2" );
+    test_case* tc2 = make_test_case( &empty_, "empty2", "file_name", line_num );
 
     ts1->add( tc2, 2U );
     BOOST_CHECK_EQUAL( ts1->size(), 2U );

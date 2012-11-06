@@ -100,7 +100,10 @@ void name ## _impl_defer();                                 \
                                                             \
 BOOST_AUTO_TEST_CASE( name )                                \
 {                                                           \
-    test_case* impl = make_test_case( &name ## _impl, #name ); \
+    test_case* impl = make_test_case( &name ## _impl,       \
+                                      #name,                \
+                                      __FILE__,             \
+                                      __LINE__ );           \
                                                             \
     unit_test_log.set_stream( ots() );                      \
     unit_test_log.set_threshold_level( log_nothing );       \
