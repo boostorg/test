@@ -329,8 +329,6 @@ public:
     , m_test_in_progress( false )
     , m_context_idx( 0 )
     {
-        m_master_test_suite = new master_test_suite_t;
-        m_auto_test_suites.push_back( m_master_test_suite );
     }
 
     ~framework_impl() { clear(); }
@@ -953,6 +951,9 @@ context_generator::next() const
 master_test_suite_t&
 master_test_suite()
 {
+    if( !s_frk_impl().m_master_test_suite )
+        s_frk_impl().m_master_test_suite = new master_test_suite_t;
+
     return *s_frk_impl().m_master_test_suite;
 }
 
@@ -965,6 +966,9 @@ master_test_suite()
 test_suite&
 current_auto_test_suite( test_suite* ts, bool push_or_pop )
 {
+    if( s_frk_impl().m_auto_test_suites.empty() )
+        s_frk_impl().m_auto_test_suites.push_back( &framework::master_test_suite() );
+
     if( !push_or_pop )
         s_frk_impl().m_auto_test_suites.pop_back();
     else if( ts )
