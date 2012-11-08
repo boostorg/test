@@ -55,10 +55,10 @@ template<typename T>
 struct is_forward_iterable<T&> : is_forward_iterable<T> {};
 
 template<typename T>
-struct is_forward_iterable<std::vector<T>> : mpl::true_ {};
+struct is_forward_iterable<std::vector<T> > : mpl::true_ {};
 
 template<typename T>
-struct is_forward_iterable<std::list<T>> : mpl::true_ {};
+struct is_forward_iterable<std::list<T> > : mpl::true_ {};
 
 #else
 
