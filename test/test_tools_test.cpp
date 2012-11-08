@@ -717,6 +717,19 @@ TEST_CASE( test_BOOST_TEST_universal )
     else
         BOOST_TEST( true );
 
+    std::vector<int> v;
+    v.push_back( 1 );
+    v.push_back( 2 );
+    v.push_back( 3 );
+
+    std::list<int> l;
+    l.push_back( 1 );
+    l.push_back( 3 );
+    l.push_back( 2 );
+
+    BOOST_TEST( v <= l );
+    BOOST_TEST( v == l );
+
     // Does not work
     // BOOST_TEST( i == 1 && j == 1 );
     // BOOST_TEST( i == 2 || j == 1 );
