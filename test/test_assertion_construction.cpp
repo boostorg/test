@@ -19,7 +19,7 @@
 
 //____________________________________________________________________________//
 
-#if BOOST_NO_CXX11_AUTO_DECLARATIONS
+#ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
 #define EXPR_TYPE assertion::expression const&
 #else
 #define EXPR_TYPE auto const&
@@ -303,8 +303,6 @@ BOOST_AUTO_TEST_CASE( test_objects )
         BOOST_CHECK_EQUAL( res.message(), "Testee == Testee" );
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
         BOOST_CHECK_EQUAL( Testee::s_copy_counter, 0 );
-#else
-        BOOST_CHECK_EQUAL( Testee::s_copy_counter, 1 );
 #endif
     }
 
@@ -467,6 +465,8 @@ BOOST_AUTO_TEST_CASE( test_mutating_ops )
 
 //____________________________________________________________________________//
 
+#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
+
 BOOST_AUTO_TEST_CASE( collection_comparison )
 {
     using namespace boost::test_tools;
@@ -517,9 +517,31 @@ BOOST_AUTO_TEST_CASE( collection_comparison )
         BOOST_CHECK( !res );
         BOOST_CHECK_EQUAL( res.message(), "\nMismatch in a position 1: 2 < 3");
     }
+
+    {
+        std::string s1 = "asdfhjk";
+        std::string s2 = "asdfgjk";
+
+        EXPR_TYPE E = seed->* s1 == s2;
+        predicate_result const& res = E.evaluate();
+        BOOST_CHECK( !res );
+        BOOST_CHECK_EQUAL( res.message(), "asdfhjk != asdfgjk");
+    }
+
+    {
+        std::string       str1 = "hello world";
+        std::string       str2 = "helko worlt";
+
+        EXPR_TYPE E = seed->* boost::unit_test::const_string( str1 ) == boost::unit_test::const_string( str2 );
+        predicate_result const& res = E.evaluate();
+        BOOST_CHECK( !res );
+        BOOST_CHECK_EQUAL( res.message(), "hello world != helko worlt");
+    }
 }
 
 //____________________________________________________________________________//
+
+#endif
 
 // EOF
 
