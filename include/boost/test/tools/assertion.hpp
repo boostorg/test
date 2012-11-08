@@ -227,7 +227,7 @@ BOOST_TEST_FOR_EACH_COMP_OP( DEFINE_COLLECTION_COMPARISON )
 // **************             assertion::expression            ************** //
 // ************************************************************************** //
 
-#if BOOST_NO_CXX11_AUTO_DECLARATIONS
+#ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
 class expression {
 public:
     // expression interface
@@ -244,7 +244,7 @@ template<typename Lhs, typename Rhs, typename OP> class binary_expr;
 
 template<typename ExprType,typename ValType>
 class expression_base 
-#if BOOST_NO_CXX11_AUTO_DECLARATIONS
+#ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
 : public expression
 #endif
 {
@@ -353,7 +353,7 @@ public:
 #undef ADD_OP_SUPPORT
 
     // expression interface
-#if BOOST_NO_CXX11_AUTO_DECLARATIONS
+#ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
     virtual predicate_result    evaluate() const
 #else
     predicate_result            evaluate() const
@@ -394,7 +394,7 @@ public:
     , m_rhs( std::forward<Rhs>(rhs) )
     {}
 #else
-    binary_expr( LExpr const& lhs, Rhs const&& rhs )
+    binary_expr( LExpr const& lhs, Rhs const& rhs )
     : m_lhs( lhs )
     , m_rhs( rhs )
     {}
@@ -410,7 +410,7 @@ public:
         return OP::report( ostr, m_lhs, m_rhs );
     }
 
-#if BOOST_NO_CXX11_AUTO_DECLARATIONS
+#ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
     virtual predicate_result    evaluate() const
 #else
     predicate_result            evaluate() const

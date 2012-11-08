@@ -101,7 +101,7 @@ do {                                                                            
 
 //____________________________________________________________________________//
 
-#if BOOST_NO_CXX11_AUTO_DECLARATIONS
+#ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
 #define BOOST_TEST_BUILD_ASSERTION( P )                                         \
     ::boost::test_tools::assertion::expression const& E =                       \
     ::boost::test_tools::assertion::seed() ->* P;                               \

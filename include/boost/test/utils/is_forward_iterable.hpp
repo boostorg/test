@@ -16,7 +16,7 @@
 #define BOOST_TEST_IS_FRWARD_ITERABLE_HPP_110612GER
 
 // Boost
-
+#include <boost/mpl/bool.hpp>
 // STL
 #include <list>
 #include <vector>
@@ -31,7 +31,7 @@ namespace unit_test {
 // ************************************************************************** //
 
 template<typename T>
-struct is_forward_iterable : std::false_type {};
+struct is_forward_iterable : mpl::false_ {};
 
 template<typename T>
 struct is_forward_iterable<T const> : is_forward_iterable<T> {};
@@ -40,10 +40,10 @@ template<typename T>
 struct is_forward_iterable<T&> : is_forward_iterable<T> {};
 
 template<typename T>
-struct is_forward_iterable<std::vector<T>> : std::true_type {};
+struct is_forward_iterable<std::vector<T>> : mpl::true_ {};
 
 template<typename T>
-struct is_forward_iterable<std::list<T>> : std::true_type {};
+struct is_forward_iterable<std::list<T>> : mpl::true_ {};
 
 } // namespace unit_test
 } // namespace boost
