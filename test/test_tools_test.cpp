@@ -651,8 +651,10 @@ public:
 
 #ifndef BOOST_NO_DECLTYPE
 #define BOOST_TEST_FWD_1(P,M) BOOST_TEST(P)
+#define BOOST_TEST_FWD_3(P,M) BOOST_TEST(P)
 #else
 #define BOOST_TEST_FWD_1(P,M) BOOST_CHECK_MESSAGE( P, M );
+#define BOOST_TEST_FWD_3(P,M) BOOST_ERROR(M)
 #endif
 
 #if BOOST_PP_VARIADICS
@@ -680,13 +682,13 @@ TEST_CASE( test_BOOST_TEST_universal )
     BOOST_TEST( i >= 5 );
 
     int j = 2;
-    BOOST_TEST_FWD_1( i+j >= 5, "check i+j >= 5 failed [1+2<5]" );
-    BOOST_TEST_FWD_1( j-i == 2, "check j-i == 2 failed [2-1!=2]" );
+    BOOST_TEST_FWD_1( i+j >= 5, "check i+j >= 5 failed [1 + 2 < 5]" );
+    BOOST_TEST_FWD_1( j-i == 2, "check j-i == 2 failed [2 - 1 != 2]" );
 
     int* p = &i;
     BOOST_TEST( *p == 2 );
 
-    BOOST_TEST_FWD_1( j-*p == 0, "check j-*p == 0 failed [2-1!=0]" );
+    BOOST_TEST_FWD_1( j-*p == 0, "check j-*p == 0 failed [2 - 1 != 0]" );
 
     BOOST_TEST(( i > 5, true ));
 
@@ -699,8 +701,8 @@ TEST_CASE( test_BOOST_TEST_universal )
     BOOST_TEST( &F > 100 );
     BOOST_TEST( &*F > 100 );
 
-    BOOST_TEST_FWD_1( (i == 1) & (j == 1), "check (i == 1) & (j == 1) failed [1&0]" );
-    BOOST_TEST_FWD_1( (i == 2) | (j == 1), "check (i == 2) | (j == 1) failed [0|0]" );
+    BOOST_TEST_FWD_1( (i == 1) & (j == 1), "check (i == 1) & (j == 1) failed [1 & 0]" );
+    BOOST_TEST_FWD_1( (i == 2) | (j == 1), "check (i == 2) | (j == 1) failed [0 | 0]" );
 
     BOOST_TEST(( i == 1 && j == 1 ));
     BOOST_TEST(( i == 2 || j == 1 ));
@@ -727,8 +729,8 @@ TEST_CASE( test_BOOST_TEST_universal )
     l.push_back( 3 );
     l.push_back( 2 );
 
-    BOOST_TEST( v <= l );
-    BOOST_TEST( v == l );
+    BOOST_TEST_FWD_3( v <= l, "check v <= l failed.\nMismatch in a position 2: 3 > 2" );
+    BOOST_TEST_FWD_3( v == l, "check v == l failed.\nMismatch in a position 1: 2 != 3\nMismatch in a position 2: 3 != 2" );
 
     // Does not work
     // BOOST_TEST( i == 1 && j == 1 );

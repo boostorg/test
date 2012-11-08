@@ -101,35 +101,35 @@ Failure occurred in a following context:
 639: error: in "test_context_logging": check false failed
 Failure occurred in a following context:
     outer context
-668: info: check true passed
-669: error: in "test_BOOST_TEST_universal": check false failed
-672: info: check bc passed
-675: error: in "test_BOOST_TEST_universal": check i == 2 failed [1 != 2]
-676: error: in "test_BOOST_TEST_universal": check i != 1 failed [1 == 1]
-677: error: in "test_BOOST_TEST_universal": check i > 2 failed [1 <= 2]
-678: error: in "test_BOOST_TEST_universal": check i < 1 failed [1 >= 1]
-679: error: in "test_BOOST_TEST_universal": check i <= 0 failed [1 > 0]
-680: error: in "test_BOOST_TEST_universal": check i >= 5 failed [1 < 5]
-683: error: in "test_BOOST_TEST_universal": check i+j >= 5 failed [1 + 2 < 5]
-684: error: in "test_BOOST_TEST_universal": check j-i == 2 failed [2 - 1 != 2]
-687: error: in "test_BOOST_TEST_universal": check *p == 2 failed [1 != 2]
-689: error: in "test_BOOST_TEST_universal": check j-*p == 0 failed [2 - 1 != 0]
-691: info: check ( i > 5, true ) passed
-695: error: in "test_BOOST_TEST_universal": check FooType() failed [(bool)0 is false]
-696: error: in "test_BOOST_TEST_universal": check *F failed [(bool)0 is false]
-697: error: in "test_BOOST_TEST_universal": check **F failed [(bool)0 is false]
-698: error: in "test_BOOST_TEST_universal": check ***F failed [(bool)0 is false]
-699: error: in "test_BOOST_TEST_universal": check &F > 100 failed [10 <= 100]
-700: error: in "test_BOOST_TEST_universal": check &*F > 100 failed [10 <= 100]
-702: error: in "test_BOOST_TEST_universal": check (i == 1) & (j == 1) failed [1 & 0]
-703: error: in "test_BOOST_TEST_universal": check (i == 2) | (j == 1) failed [0 | 0]
-705: error: in "test_BOOST_TEST_universal": check ( i == 1 && j == 1 ) failed
-706: error: in "test_BOOST_TEST_universal": check ( i == 2 || j == 1 ) failed
-708: error: in "test_BOOST_TEST_universal": This message reported instead
-712: info: check true passed
-718: info: check true passed
-730: error: in "test_BOOST_TEST_universal": check v <= l failed.
+670: info: check true passed
+671: error: in "test_BOOST_TEST_universal": check false failed
+674: info: check bc passed
+677: error: in "test_BOOST_TEST_universal": check i == 2 failed [1 != 2]
+678: error: in "test_BOOST_TEST_universal": check i != 1 failed [1 == 1]
+679: error: in "test_BOOST_TEST_universal": check i > 2 failed [1 <= 2]
+680: error: in "test_BOOST_TEST_universal": check i < 1 failed [1 >= 1]
+681: error: in "test_BOOST_TEST_universal": check i <= 0 failed [1 > 0]
+682: error: in "test_BOOST_TEST_universal": check i >= 5 failed [1 < 5]
+685: error: in "test_BOOST_TEST_universal": check i+j >= 5 failed [1 + 2 < 5]
+686: error: in "test_BOOST_TEST_universal": check j-i == 2 failed [2 - 1 != 2]
+689: error: in "test_BOOST_TEST_universal": check *p == 2 failed [1 != 2]
+691: error: in "test_BOOST_TEST_universal": check j-*p == 0 failed [2 - 1 != 0]
+693: info: check ( i > 5, true ) passed
+697: error: in "test_BOOST_TEST_universal": check FooType() failed [(bool)0 is false]
+698: error: in "test_BOOST_TEST_universal": check *F failed [(bool)0 is false]
+699: error: in "test_BOOST_TEST_universal": check **F failed [(bool)0 is false]
+700: error: in "test_BOOST_TEST_universal": check ***F failed [(bool)0 is false]
+701: error: in "test_BOOST_TEST_universal": check &F > 100 failed [10 <= 100]
+702: error: in "test_BOOST_TEST_universal": check &*F > 100 failed [10 <= 100]
+704: error: in "test_BOOST_TEST_universal": check (i == 1) & (j == 1) failed [1 & 0]
+705: error: in "test_BOOST_TEST_universal": check (i == 2) | (j == 1) failed [0 | 0]
+707: error: in "test_BOOST_TEST_universal": check ( i == 1 && j == 1 ) failed
+708: error: in "test_BOOST_TEST_universal": check ( i == 2 || j == 1 ) failed
+710: error: in "test_BOOST_TEST_universal": This message reported instead
+714: info: check true passed
+720: info: check true passed
+732: error: in "test_BOOST_TEST_universal": check v <= l failed.
 Mismatch in a position 2: 3 > 2
-731: error: in "test_BOOST_TEST_universal": check v == l failed.
+733: error: in "test_BOOST_TEST_universal": check v == l failed.
 Mismatch in a position 1: 2 != 3
 Mismatch in a position 2: 3 != 2
