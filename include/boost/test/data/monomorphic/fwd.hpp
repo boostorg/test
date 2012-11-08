@@ -19,6 +19,8 @@
 #include <boost/test/data/config.hpp>
 #include <boost/test/data/size.hpp>
 
+#include <boost/test/utils/is_forward_iterable.hpp>
+
 // Boost
 #include <boost/utility/declval.hpp>
 
@@ -33,29 +35,6 @@
 namespace boost {
 namespace unit_test {
 namespace data {
-
-// ************************************************************************** //
-// **************              is_std_collection               ************** //
-// ************************************************************************** //
-
-namespace ds_detail {
-
-template<typename T>
-struct is_std_collection : std::false_type {};
-
-template<typename T>
-struct is_std_collection<T const> : is_std_collection<T> {};
-
-template<typename T>
-struct is_std_collection<T&> : is_std_collection<T> {};
-
-template<typename T>
-struct is_std_collection<std::vector<T>> : std::true_type {};
-
-template<typename T>
-struct is_std_collection<std::list<T>> : std::true_type {};
-
-} // namespace ds_detail
 
 namespace monomorphic {
 
@@ -109,7 +88,7 @@ make(DS&& ds)
 //____________________________________________________________________________//
 
 template<typename T>
-inline typename std::enable_if<!ds_detail::is_std_collection<T>::value &&
+inline typename std::enable_if<!is_forward_iterable<T>::value &&
                                !monomorphic::is_dataset<T>::value,
                                monomorphic::singleton<T> >::type
 make( T&& v );

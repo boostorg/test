@@ -85,7 +85,7 @@ struct is_dataset<collection<C>> : std::true_type {};
 } // namespace monomorphic
 
 template<typename C>
-inline monomorphic::collection<typename std::enable_if<ds_detail::is_std_collection<C>::value,C>::type>
+inline monomorphic::collection<typename std::enable_if<is_forward_iterable<C>::value,C>::type>
 make( C&& c )
 {
     return monomorphic::collection<C>( std::forward<C>(c) );

@@ -140,8 +140,12 @@ format_report( OutStream& os, predicate_result const& pr, unit_test::lazy_ostrea
         if( tl != PASS ) {
             const_string details_message = pr.message();
 
-            if( !details_message.is_empty() )
-                os << " [" << pr.message() << "]" ;
+            if( !details_message.is_empty() ) {
+                if( first_char( details_message ) != '\n' )
+                    os << " [" << details_message << "]" ;
+                else
+                    os << "." << details_message;
+            }
         }
         break;
 

@@ -101,10 +101,17 @@ do {                                                                            
 
 //____________________________________________________________________________//
 
+#if BOOST_NO_CXX11_AUTO_DECLARATIONS
 #define BOOST_TEST_BUILD_ASSERTION( P )                                         \
     ::boost::test_tools::assertion::expression const& E =                       \
     ::boost::test_tools::assertion::seed() ->* P;                               \
 /**/
+#else
+#define BOOST_TEST_BUILD_ASSERTION( P )                                         \
+    auto const& E =                                                             \
+    ::boost::test_tools::assertion::seed() ->* P;                               \
+/**/
+#endif
 
 #define BOOST_WARN_ASSERTION( P )           BOOST_TEST_TOOL_IMPL( 2,            \
     (E.evaluate()), BOOST_TEST_TOOLS_STRINGIZE( P ), WARN,                      \

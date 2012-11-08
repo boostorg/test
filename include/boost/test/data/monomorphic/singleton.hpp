@@ -81,7 +81,7 @@ struct is_dataset<singleton<T>> : std::true_type {};
 } // namespace monomorphic
 
 template<typename T>
-inline typename std::enable_if<!ds_detail::is_std_collection<T>::value && 
+inline typename std::enable_if<!is_forward_iterable<T>::value && 
                                !monomorphic::is_dataset<T>::value, 
                                monomorphic::singleton<T> >::type
 make( T&& v )
