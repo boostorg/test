@@ -69,7 +69,7 @@ BOOST_AUTO_TEST_CASE( test_basic_value_expression_construction )
         EXPR_TYPE E = seed->* 1>2;
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
-        BOOST_CHECK_EQUAL( res.message(), "1<=2" );
+        BOOST_CHECK_EQUAL( res.message(), "1 <= 2" );
     }
 
 }
@@ -85,28 +85,28 @@ BOOST_AUTO_TEST_CASE( test_comparison_expression )
         EXPR_TYPE E = seed->* 1>2;
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
-        BOOST_CHECK_EQUAL( res.message(), "1<=2" );
+        BOOST_CHECK_EQUAL( res.message(), "1 <= 2" );
     }
 
     {
         EXPR_TYPE E = seed->* 100 < 50;
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
-        BOOST_CHECK_EQUAL( res.message(), "100>=50" );
+        BOOST_CHECK_EQUAL( res.message(), "100 >= 50" );
     }
 
     {
-        EXPR_TYPE E = seed->* 5<=4;
+        EXPR_TYPE E = seed->* 5 <= 4;
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
-        BOOST_CHECK_EQUAL( res.message(), "5>4" );
+        BOOST_CHECK_EQUAL( res.message(), "5 > 4" );
     }
 
     {
         EXPR_TYPE E = seed->* 10>=20;
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
-        BOOST_CHECK_EQUAL( res.message(), "10<20" );
+        BOOST_CHECK_EQUAL( res.message(), "10 < 20" );
     }
 
     {
@@ -114,7 +114,7 @@ BOOST_AUTO_TEST_CASE( test_comparison_expression )
         EXPR_TYPE E = seed->* i != 10;
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
-        BOOST_CHECK_EQUAL( res.message(), "10==10" );
+        BOOST_CHECK_EQUAL( res.message(), "10 == 10" );
     }
 
     {
@@ -122,7 +122,7 @@ BOOST_AUTO_TEST_CASE( test_comparison_expression )
         EXPR_TYPE E = seed->* i == 3;
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
-        BOOST_CHECK_EQUAL( res.message(), "5!=3" );
+        BOOST_CHECK_EQUAL( res.message(), "5 != 3" );
     }
 }
 
@@ -141,7 +141,7 @@ BOOST_AUTO_TEST_CASE( test_arithmetic_ops )
         EXPR_TYPE E = seed->* i+j !=8;
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
-        BOOST_CHECK_EQUAL( res.message(), "3+5==8" );
+        BOOST_CHECK_EQUAL( res.message(), "3 + 5 == 8" );
     }
 
     {
@@ -150,7 +150,7 @@ BOOST_AUTO_TEST_CASE( test_arithmetic_ops )
         EXPR_TYPE E = seed->* 2*i-j > 1;
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
-        BOOST_CHECK_EQUAL( res.message(), "2*3-5<=1" );
+        BOOST_CHECK_EQUAL( res.message(), "2 * 3 - 5 <= 1" );
     }
 
     {
@@ -158,7 +158,7 @@ BOOST_AUTO_TEST_CASE( test_arithmetic_ops )
         EXPR_TYPE E = seed->* 2<<j < 30;
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
-        BOOST_CHECK_EQUAL( res.message(), "2<<5>=30" );
+        BOOST_CHECK_EQUAL( res.message(), "2 << 5 >= 30" );
     }
 
     {
@@ -167,7 +167,7 @@ BOOST_AUTO_TEST_CASE( test_arithmetic_ops )
         EXPR_TYPE E = seed->* i&j;
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
-        BOOST_CHECK_EQUAL( res.message(), "2&5" );
+        BOOST_CHECK_EQUAL( res.message(), "2 & 5" );
     }
 
     {
@@ -176,7 +176,7 @@ BOOST_AUTO_TEST_CASE( test_arithmetic_ops )
         EXPR_TYPE E = seed->* i^j^6;
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
-        BOOST_CHECK_EQUAL( res.message(), "3^5^6" );
+        BOOST_CHECK_EQUAL( res.message(), "3 ^ 5 ^ 6" );
     }
 
     // do not support
@@ -300,7 +300,7 @@ BOOST_AUTO_TEST_CASE( test_objects )
         EXPR_TYPE E = seed->* t1 != t2;
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
-        BOOST_CHECK_EQUAL( res.message(), "Testee==Testee" );
+        BOOST_CHECK_EQUAL( res.message(), "Testee == Testee" );
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
         BOOST_CHECK_EQUAL( Testee::s_copy_counter, 0 );
 #else
@@ -316,7 +316,7 @@ BOOST_AUTO_TEST_CASE( test_objects )
         EXPR_TYPE E = seed->* nc1 == nc2;
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
-        BOOST_CHECK_EQUAL( res.message(), "NC!=NC" );
+        BOOST_CHECK_EQUAL( res.message(), "NC != NC" );
     }
 #endif
 }
@@ -483,10 +483,10 @@ BOOST_AUTO_TEST_CASE( collection_comparison )
         l.push_back( 3 );
         l.push_back( 2 );
 
-        EXPR_TYPE E = seed->* v == l;
+        EXPR_TYPE E = seed->* v < l;
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
-        BOOST_CHECK_EQUAL( res.message(), "\nMismatch in a position 1: 2 < 3" );
+        BOOST_CHECK_EQUAL( res.message(), "\nMismatch in a position 0: 1 >= 1\nMismatch in a position 2: 3 >= 2" );
     }
 
     {
@@ -515,7 +515,7 @@ BOOST_AUTO_TEST_CASE( collection_comparison )
         EXPR_TYPE E = seed->* v >= l;
         predicate_result const& res = E.evaluate();
         BOOST_CHECK( !res );
-        BOOST_CHECK_EQUAL( res.message(), "Collections size mismatch: 1 != 0");
+        BOOST_CHECK_EQUAL( res.message(), "\nMismatch in a position 1: 2 < 3");
     }
 }
 
