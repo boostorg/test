@@ -95,7 +95,10 @@ compiler_log_formatter::test_unit_start( std::ostream& output, test_unit const& 
 
     print_prefix( output, tu.p_file_name, tu.p_line_num );
 
-    const_string type = tu.p_parent_id == 0 ? BOOST_TEST_L("module") : tu.p_type_name;
+    const_string type = tu.p_type_name;
+    if( tu.p_type == tut_suite && (tu.p_id == framework::master_test_suite().p_id) )
+        type = BOOST_TEST_L("module");
+
     output << "Entering test " << type << " \"" << tu.p_name << "\"" << std::endl;
 }
 
