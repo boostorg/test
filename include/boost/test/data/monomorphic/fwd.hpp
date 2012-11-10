@@ -96,7 +96,7 @@ make( T&& v );
 //____________________________________________________________________________//
 
 template<typename C>
-inline monomorphic::collection<typename std::enable_if<ds_detail::is_std_collection<C>::value,C>::type>
+inline monomorphic::collection<typename std::enable_if<unit_test::is_forward_iterable<C>::value,C>::type>
 make( C&& c );
 
 //____________________________________________________________________________//
