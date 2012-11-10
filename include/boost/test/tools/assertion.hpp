@@ -211,9 +211,9 @@ public:                                                     \
                                                             \
     template<typename PrevExprType>                         \
     static void                                             \
-    report( std::ostream&       ostr,                       \
-            PrevExprType const& lhs,                        \
-            Rhs const&          rhs ) {}                    \
+    report( std::ostream&,                                  \
+            PrevExprType const&,                            \
+            Rhs const& ) {}                                 \
 };                                                          \
 /**/
 
