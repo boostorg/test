@@ -46,8 +46,8 @@ BOOST_AUTO_TEST_CASE( test_single_range )
     BOOST_TEST( data::xrange<int>(( data::begin = 9, data::end = 15 )).size() == 6 );
     BOOST_TEST( data::xrange<double>(( data::step = 0.5, data::end = 3 )).size() == 6 );
 
+#ifndef BOOST_NO_CXX11_LAMBDAS
     int c = 0;
-
     data::for_each_sample( data::xrange( 3 ), [&c](int a) {
         BOOST_TEST( a == c++ );
     });
@@ -57,10 +57,12 @@ BOOST_AUTO_TEST_CASE( test_single_range )
         BOOST_TEST( a == c );
         c += 2;
     });
+#endif
 }
 
 BOOST_AUTO_TEST_CASE( test_range_join )
 {
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     auto ds = data::xrange( 1, 4 ) + data::xrange( 7, 11 );
 
     BOOST_TEST( ds.size() == 7 );
@@ -77,6 +79,7 @@ BOOST_AUTO_TEST_CASE( test_range_join )
     data::for_each_sample( ds, [&c,exp](int a) {
         BOOST_TEST( a == exp[c++] );
     });
+#endif
 }
 
 //____________________________________________________________________________//

@@ -46,7 +46,11 @@ BOOST_AUTO_TEST_CASE( test_implicit_for_each )
     copy_count::value() = 0;
     std::vector<copy_count> samples1( 2 );
     data::for_each_sample( samples1, check_arg_type<copy_count>() );
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     BOOST_TEST( copy_count::value() == 0 );
+#else
+    BOOST_TEST( copy_count::value() == 4 );
+#endif
 
     copy_count::value() = 0;
     copy_count samples2[] = { copy_count(), copy_count() };
@@ -58,24 +62,32 @@ BOOST_AUTO_TEST_CASE( test_implicit_for_each )
 
 BOOST_AUTO_TEST_CASE( test_implicit_join )
 {
+#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
     auto ds = data::make( 5 );
     BOOST_TEST( (1 + ds).size() == 2 );
     BOOST_TEST( (ds + 1).size() == 2 );
+#endif
 
+#ifndef BOOST_NO_CXX11_DECLTYPE
     BOOST_TEST( (1 + data::make( 5 )).size() == 2 );
     BOOST_TEST( (data::make( 5 ) + 1).size() == 2 );
+#endif
 }
 
 //____________________________________________________________________________//
 
 BOOST_AUTO_TEST_CASE( test_implicit_zip )
 {
+#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
     auto ds = data::make( 5 );
     BOOST_TEST( (1 ^ ds).size() == 1 );
     BOOST_TEST( (ds ^ 1).size() == 1 );
+#endif
 
+#ifndef BOOST_NO_CXX11_HDR_TUPLE
     BOOST_TEST( (1 ^ data::make( 5 )).size() == 1 );
     BOOST_TEST( (data::make( 5 ) ^ 1).size() == 1 );
+#endif
 }
 
 //____________________________________________________________________________//

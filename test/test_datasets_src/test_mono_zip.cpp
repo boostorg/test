@@ -9,11 +9,14 @@
 //
 //  Version     : $Revision$
 //
-//  Description : tests monomorphic join
+//  Description : tests monomorphic zip
 // ***************************************************************************
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
+
+#ifndef BOOST_NO_CXX11_HDR_TUPLE
+
 #include <boost/test/data/monomorphic/zip.hpp>
 #include <boost/test/data/monomorphic/singleton.hpp>
 #include <boost/test/data/monomorphic/array.hpp>
@@ -137,5 +140,7 @@ BOOST_AUTO_TEST_CASE( test_mono_zip )
 }
 
 //____________________________________________________________________________//
+
+#endif // BOOST_NO_CXX11_HDR_TUPLE
 
 // EOF

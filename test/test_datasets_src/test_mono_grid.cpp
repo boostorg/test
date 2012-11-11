@@ -9,11 +9,14 @@
 //
 //  Version     : $Revision$
 //
-//  Description : tests monomorphic join
+//  Description : tests monomorphic grid
 // ***************************************************************************
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
+
+#ifndef BOOST_NO_CXX11_HDR_TUPLE
+
 #include <boost/test/data/monomorphic/grid.hpp>
 #include <boost/test/data/monomorphic/singleton.hpp>
 #include <boost/test/data/monomorphic/array.hpp>
@@ -139,5 +142,7 @@ BOOST_AUTO_TEST_CASE( test_mono_grid )
 }
 
 //____________________________________________________________________________//
+
+#endif // BOOST_NO_CXX11_HDR_TUPLE
 
 // EOF

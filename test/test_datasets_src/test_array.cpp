@@ -30,10 +30,12 @@ BOOST_AUTO_TEST_CASE( test_array )
     int* ptr3 = arr3;
     data::for_each_sample( data::make( arr3 ), check_arg_type<int>() );
 
+#ifndef BOOST_NO_CXX11_LAMBDAS
     int c = 0;
     data::for_each_sample( data::make( arr3 ), [&c,ptr3](int i) {
         BOOST_TEST( i == ptr3[c++] );
     });
+#endif
 
     invocation_count ic;
 

@@ -35,6 +35,7 @@ BOOST_AUTO_TEST_CASE( test_mono_join )
 
     BOOST_TEST( (data::make( std::vector<int>(2) ) + data::make( 1 ) + data::make( arr2 ) + data::make( 17 )).size() == 6 );
 
+#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
     int expected[] = {1,2,5,7,19,37};
     int* exp = expected;
     int c = 0;
@@ -72,24 +73,33 @@ BOOST_AUTO_TEST_CASE( test_mono_join )
     data::for_each_sample( samples3, [&c,exp](int i) {
         BOOST_TEST( i == exp[c++] );
     });
+#endif
 
     copy_count::value() = 0;
     data::for_each_sample( data::make( copy_count() ) + data::make( copy_count() ), check_arg_type<copy_count>() );
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     BOOST_TEST( copy_count::value() == 0 );
+#endif
 
     copy_count::value() = 0;
     data::for_each_sample( data::make( copy_count() ) + data::make( copy_count() ) + data::make( copy_count() ), check_arg_type<copy_count>() );
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     BOOST_TEST( copy_count::value() == 0 );
+#endif
 
     copy_count::value() = 0;
     data::for_each_sample( data::make( copy_count() ) + (data::make( copy_count() ) + data::make( copy_count() )), check_arg_type<copy_count>() );
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     BOOST_TEST( copy_count::value() == 0 );
-
+#endif
     copy_count::value() = 0;
     data::for_each_sample( (data::make( copy_count() ) + data::make( copy_count() )) + 
                            (data::make( copy_count() ) + data::make( copy_count() )), check_arg_type<copy_count>() );
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     BOOST_TEST( copy_count::value() == 0 );
+#endif
 
+#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
     auto ds1        = data::make( copy_count() );
     auto const ds2  = data::make( copy_count() );
 
@@ -131,6 +141,7 @@ BOOST_AUTO_TEST_CASE( test_mono_join )
     BOOST_TEST( ds3.size() == 6 );
     data::for_each_sample( ds3, check_arg_type<copy_count>() );
     BOOST_TEST( copy_count::value() == 0 );
+#endif
 }
 
 //____________________________________________________________________________//

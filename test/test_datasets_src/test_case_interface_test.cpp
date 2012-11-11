@@ -14,6 +14,9 @@
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
+
+#if BOOST_PP_VARIADICS
+
 #include <boost/test/data/test_case.hpp>
 #include <boost/test/data/monomorphic.hpp>
 namespace data=boost::unit_test::data;
@@ -41,6 +44,8 @@ BOOST_DATA_TEST_CASE( test_case_interface_02, samples2, str )
 }
 
 //____________________________________________________________________________//
+
+#ifndef BOOST_NO_CXX11_DECLTYPE
 
 int samples3[] = {7,9};
 int index3 = 0;
@@ -93,5 +98,8 @@ BOOST_DATA_TEST_CASE( test_case_interface_06, data::make(samples1) * samples2 * 
 }
 
 //____________________________________________________________________________//
+
+#endif // BOOST_NO_CXX11_DECLTYPE
+#endif // BOOST_PP_VARIADICS
 
 // EOF

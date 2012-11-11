@@ -51,6 +51,7 @@ BOOST_AUTO_TEST_CASE( test_collection )
     samples1.push_back(567);
     samples1.push_back(13);
 
+#ifndef BOOST_NO_CXX11_LAMBDAS
     int c = 0;
     data::for_each_sample( data::make( samples1 ), [&c,samples1](int i) {
         BOOST_TEST( i == samples1[c++] );
@@ -65,32 +66,41 @@ BOOST_AUTO_TEST_CASE( test_collection )
     data::for_each_sample( data::make( samples2 ), [&it](char const* str ) {
         BOOST_TEST( str == *it++ );
     });
+#endif
+
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    int exp_copy_count = 0;
+#else
+    int exp_copy_count = 4;
+#endif
 
     copy_count::value() = 0;
     data::for_each_sample( data::make( std::vector<copy_count>( 2 ) ), check_arg_type<copy_count>() );
-    BOOST_TEST( copy_count::value() == 0 );
+    BOOST_TEST( copy_count::value() == exp_copy_count );
 
     copy_count::value() = 0;
     std::vector<copy_count> samples3( 2 );
     data::for_each_sample( data::make( samples3 ), check_arg_type<copy_count>() );
-    BOOST_TEST( copy_count::value() == 0 );
+    BOOST_TEST( copy_count::value() == exp_copy_count );
 
     copy_count::value() = 0;
     std::vector<copy_count> const samples4( 2 );
     data::for_each_sample( data::make( samples4 ), check_arg_type<copy_count>() );
-    BOOST_TEST( copy_count::value() == 0 );
+    BOOST_TEST( copy_count::value() == exp_copy_count );
 
+#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
     copy_count::value() = 0;
     auto ds1 = data::make( make_copy_count_collection() );
     BOOST_TEST( ds1.size() == 3 );
     data::for_each_sample( ds1, check_arg_type<copy_count>() );
-    BOOST_TEST( copy_count::value() == 0 );
+    BOOST_TEST( copy_count::value() == exp_copy_count );
 
     copy_count::value() = 0;
     auto ds2 = data::make( make_copy_count_const_collection() );
     BOOST_TEST( ds2.size() == 3 );
     data::for_each_sample( ds2, check_arg_type<copy_count>() );
     BOOST_TEST( copy_count::value() == 3 ); // !! ?? no const rvalue rev constructor for std::list
+#endif
 }
 
 //____________________________________________________________________________//
