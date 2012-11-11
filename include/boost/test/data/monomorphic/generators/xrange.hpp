@@ -28,6 +28,7 @@
 
 // STL
 #include <limits>
+#include <cmath>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -120,7 +121,7 @@ struct make_xrange {
 //____________________________________________________________________________//
 
 template<typename SampleType, typename Params>
-inline monomorphic::generated_by<monomorphic::xrange_t<SampleType>>
+inline monomorphic::generated_by<monomorphic::xrange_t<SampleType> >
 xrange( Params const& params )
 {
     return monomorphic::ds_detail::make_xrange<SampleType>::_( params );

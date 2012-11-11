@@ -17,7 +17,6 @@
 
 // Boost.Test
 #include <boost/test/data/config.hpp>
-#include <boost/test/data/size.hpp>
 #include <boost/test/data/monomorphic/dataset.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -35,8 +34,8 @@ namespace monomorphic {
 // Models single element data set
 
 template<typename T>
-class singleton : public monomorphic::dataset<typename std::decay<T>::type> {
-    typedef monomorphic::dataset<typename std::decay<T>::type> base;
+class singleton : public monomorphic::dataset<typename boost::decay<T>::type> {
+    typedef monomorphic::dataset<typename boost::decay<T>::type> base;
     typedef typename base::iter_ptr  iter_ptr;
 
     struct iterator : public base::iterator {
@@ -55,18 +54,23 @@ class singleton : public monomorphic::dataset<typename std::decay<T>::type> {
 public:
     enum { arity = 1 };
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     // Constructor
-    explicit        singleton( T&& value ) : m_value( std::forward<T>( value ) ) {}
+    explicit                singleton( T&& value ) : m_value( std::forward<T>( value ) ) {}
 
     // Move constructor
     singleton( singleton&& s ) : m_value( std::forward<T>( s.m_value ) ) {}
+#else
+    // Constructor
+    explicit                singleton( T const& value ) : m_value( value ) {}
+#endif
 
     // Access methods
-    T const&        value() const                   { return m_value; }
+    T const&                value() const           { return m_value; }
 
     // dataset interface
     virtual data::size_t    size() const            { return 1; }
-    virtual iter_ptr        begin() const           { return std::make_shared<iterator>( *this ); }
+    virtual iter_ptr        begin() const           { return boost::make_shared<iterator>( *this ); }
 
 private:
     // Data members
@@ -76,25 +80,37 @@ private:
 //____________________________________________________________________________//
 
 template<typename T>
-struct is_dataset<singleton<T>> : std::true_type {};
+struct is_dataset<singleton<T> > : mpl::true_ {};
 
 } // namespace monomorphic
 
 template<typename T>
-inline typename std::enable_if<!is_forward_iterable<T>::value && 
-                               !monomorphic::is_dataset<T>::value, 
-                               monomorphic::singleton<T> >::type
+inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
+                                     !monomorphic::is_dataset<T>::value, 
+                                     monomorphic::singleton<T>
+>::type
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 make( T&& v )
 {
     return monomorphic::singleton<T>( std::forward<T>( v ) );
 }
+#else
+make( T const& v )
+{
+    return monomorphic::singleton<T>( v );
+}
+#endif
 
 //____________________________________________________________________________//
 
 inline monomorphic::singleton<char*>
 make( char* str )
 {
-    return monomorphic::singleton<char*>( std::forward<char*>( str ) );
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    return monomorphic::singleton<char*>( std::move(str) );
+#else
+    return monomorphic::singleton<char*>( str );
+#endif
 }
 
 //____________________________________________________________________________//
@@ -102,7 +118,11 @@ make( char* str )
 inline monomorphic::singleton<char const*>
 make( char const* str )
 {
-    return monomorphic::singleton<char const*>( std::forward<char const*>( str ) );
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    return monomorphic::singleton<char const*>( std::move(str) );
+#else
+    return monomorphic::singleton<char const*>( str );
+#endif
 }
 
 //____________________________________________________________________________//

@@ -17,7 +17,6 @@
 
 // Boost.Test
 #include <boost/test/data/config.hpp>
-#include <boost/test/data/size.hpp>
 #include <boost/test/data/monomorphic/dataset.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -66,7 +65,7 @@ public:
 
     // dataset interface
     virtual data::size_t    size() const            { return m_size; } 
-    virtual iter_ptr        begin() const           { return std::make_shared<iterator>( m_arr, m_size ); }
+    virtual iter_ptr        begin() const           { return boost::make_shared<iterator>( m_arr, m_size ); }
 
 private:
     // Data members
@@ -77,7 +76,7 @@ private:
 //____________________________________________________________________________//
 
 template<typename T>
-struct is_dataset<array<T>> : std::true_type {};
+struct is_dataset<array<T> > : mpl::true_ {};
 
 } // namespace monomorphic
 

@@ -17,13 +17,13 @@
 
 // Boost.Test
 #include <boost/test/data/config.hpp>
-#include <boost/test/data/size.hpp>
 #include <boost/test/data/monomorphic/fwd.hpp>
 
 // STL
+#ifndef BOOST_NO_CXX11_HDR_TUPLE
 #include <tuple>
-#include <memory>
-#include <stdexcept>
+#endif
+//#include <stdexcept>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -53,6 +53,7 @@ struct traits {
 
 //____________________________________________________________________________//
 
+#ifndef BOOST_NO_CXX11_HDR_TUPLE
 // !! ?? reimplement using variadics
 template<typename T1, typename T2>
 struct traits<std::tuple<T1,T2>> {
@@ -84,6 +85,8 @@ struct traits<std::tuple<T1,T2,T3>> {
 
 //____________________________________________________________________________//
 
+#endif
+
 // ************************************************************************** //
 // **************             monomorphic::dataset             ************** //
 // ************************************************************************** //
@@ -106,7 +109,7 @@ public:
         virtual void        operator++() = 0;
     };
 
-    typedef std::shared_ptr<iterator> iter_ptr;
+    typedef boost::shared_ptr<iterator> iter_ptr;
 
     // dataset size
     virtual data::size_t    size() const = 0;
@@ -126,10 +129,10 @@ for_each_sample( monomorphic::dataset<SampleType> const& ds,
                  Action const&                           act,
                  data::size_t                            number_of_samples = BOOST_TEST_DS_INFINITE_SIZE )
 {
-    auto size = (std::min)( ds.size(), number_of_samples );
+    data::size_t size = (std::min)( ds.size(), number_of_samples );
     BOOST_TEST_DS_ASSERT( !size.is_inf(), "Dataset has infinite size. Please specify the number of samples" );
 
-    auto it = ds.begin();
+    typename monomorphic::dataset<SampleType>::iter_ptr it = ds.begin();
 
     while( size-- > 0 ) {
         monomorphic::traits<SampleType>::invoke_action( **it, act );
@@ -140,7 +143,7 @@ for_each_sample( monomorphic::dataset<SampleType> const& ds,
 //____________________________________________________________________________//
 
 template<typename SampleType, typename Action>
-inline typename std::enable_if<!monomorphic::is_dataset<SampleType>::value,void>::type
+inline typename BOOST_TEST_ENABLE_IF<!monomorphic::is_dataset<SampleType>::value,void>::type
 for_each_sample( SampleType const&  samples,
                  Action const&      act,
                  data::size_t       number_of_samples = BOOST_TEST_DS_INFINITE_SIZE )

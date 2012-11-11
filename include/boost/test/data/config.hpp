@@ -18,6 +18,9 @@
 // Boost.Test
 #include <boost/test/detail/config.hpp>
 
+// STL
+#include <stdexcept> // for std::logic_error
+
 //____________________________________________________________________________//
 
 #define BOOST_TEST_DS_ERROR( msg ) throw std::logic_error( msg )

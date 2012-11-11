@@ -15,12 +15,11 @@
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_ZIP_HPP_102211GER
 #define BOOST_TEST_DATA_MONOMORPHIC_ZIP_HPP_102211GER
 
+#ifndef BOOST_NO_CXX11_HDR_TUPLE
+
 // Boost.Test
 #include <boost/test/data/config.hpp>
 #include <boost/test/data/monomorphic/dataset.hpp>
-
-// Boost
-#include <boost/utility/enable_if.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -83,10 +82,10 @@ struct zip_traits<std::tuple<T1,T2>,T3> {
 // ************************************************************************** //
 
 template<typename DS1, typename DS2>
-class zip : public monomorphic::dataset<typename ds_detail::zip_traits<typename std::decay<DS1>::type::data_type,
-                                                                       typename std::decay<DS2>::type::data_type>::type> {
-    typedef typename std::decay<DS1>::type::data_type T1;
-    typedef typename std::decay<DS2>::type::data_type T2;
+class zip : public monomorphic::dataset<typename ds_detail::zip_traits<typename boost::decay<DS1>::type::data_type,
+                                                                       typename boost::decay<DS2>::type::data_type>::type> {
+    typedef typename boost::decay<DS1>::type::data_type T1;
+    typedef typename boost::decay<DS2>::type::data_type T2;
 
     typedef typename monomorphic::dataset<T1>::iter_ptr ds1_iter_ptr;
     typedef typename monomorphic::dataset<T2>::iter_ptr ds2_iter_ptr;
@@ -115,7 +114,7 @@ class zip : public monomorphic::dataset<typename ds_detail::zip_traits<typename 
     };
 
 public:
-    enum { arity = std::decay<DS1>::type::arity + std::decay<DS2>::type::arity };
+    enum { arity = boost::decay<DS1>::type::arity + boost::decay<DS2>::type::arity };
 
     // Constructor
     zip( DS1&& ds1, DS2&& ds2, data::size_t size ) 
@@ -133,7 +132,7 @@ public:
 
     // dataset interface
     virtual data::size_t    size() const    { return m_size; } 
-    virtual iter_ptr        begin() const   { return std::make_shared<iterator>( m_ds1.begin(), m_ds2.begin() ); }
+    virtual iter_ptr        begin() const   { return boost::make_shared<iterator>( m_ds1.begin(), m_ds2.begin() ); }
 
 private:
     // Data members
@@ -145,7 +144,7 @@ private:
 //____________________________________________________________________________//
 
 template<typename DS1, typename DS2>
-struct is_dataset<zip<DS1,DS2>> : std::true_type {};
+struct is_dataset<zip<DS1,DS2> > : mpl::true_ {};
 
 //____________________________________________________________________________//
 
@@ -177,8 +176,7 @@ zip_size( DS1&& ds1, DS2&& ds2 )
 namespace result_of {
 
 template<typename DS1Gen, typename DS2Gen>
-struct zip
-{
+struct zip {
     typedef monomorphic::zip<typename DS1Gen::type,typename DS2Gen::type> type;
 };
 
@@ -226,6 +224,8 @@ operator^( DS1&& ds1, DS2&& ds2 )
 } // namespace boost
 
 #include <boost/test/detail/enable_warnings.hpp>
+
+#endif // BOOST_NO_CXX11_HDR_TUPLE
 
 #endif // BOOST_TEST_DATA_MONOMORPHIC_ZIP_HPP_102211GER
 

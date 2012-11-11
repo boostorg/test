@@ -33,6 +33,8 @@
 #include <boost/preprocessor/control/iif.hpp>
 #include <boost/preprocessor/comparison/equal.hpp>
 
+#include <boost/bind.hpp>
+
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
@@ -51,15 +53,23 @@ template<typename TestCase,typename DS>
 class test_case_gen : public test_unit_generator {
 public:
     // Constructor
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, DS&& ds )
     : m_tc_name( ut_detail::normalize_test_case_name( tc_name ) )
     {
-        data::for_each_sample( ds, *this );
+        data::for_each_sample( std::forward<DS>( ds ), *this );
     }
     test_case_gen( test_case_gen&& gen )
     : m_tc_name( gen.m_tc_name )
     , m_test_cases( std::move(gen.m_test_cases) )
     {}
+#else
+    test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, DS const& ds )
+    : m_tc_name( ut_detail::normalize_test_case_name( tc_name ) )
+    {
+        data::for_each_sample( ds, *this );
+    }
+#endif
 
     virtual test_unit* next() const
     {
@@ -78,7 +88,7 @@ public:
     void    operator()( BOOST_PP_ENUM_BINARY_PARAMS(arity, Arg, const& arg) ) const \
     {                                                                               \
         m_test_cases.push_back( new test_case( m_tc_name, m_tc_file, m_tc_line,     \
-         std::bind( &TestCase::template test_method<BOOST_PP_ENUM_PARAMS(arity,Arg)>, \
+         boost::bind( &TestCase::template test_method<BOOST_PP_ENUM_PARAMS(arity,Arg)>, \
          BOOST_PP_ENUM_PARAMS(arity, arg) ) ) );                                    \
     }                                                                               \
 
@@ -94,12 +104,21 @@ private:
 
 //____________________________________________________________________________//
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 template<typename TestCase,typename DS>
 test_case_gen<TestCase,DS>
 make_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, DS&& ds )
 {
     return test_case_gen<TestCase,DS>( tc_name, tc_file, tc_line, std::forward<DS>(ds) );
 }
+#else
+template<typename TestCase,typename DS>
+test_case_gen<TestCase,DS>
+make_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, DS const& ds )
+{
+    return test_case_gen<TestCase,DS>( tc_name, tc_file, tc_line, ds );
+}
+#endif
 
 //____________________________________________________________________________//
 

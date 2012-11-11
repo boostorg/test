@@ -17,7 +17,6 @@
 
 // Boost.Test
 #include <boost/test/data/config.hpp>
-#include <boost/test/data/size.hpp>
 #include <boost/test/data/monomorphic/dataset.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -58,14 +57,26 @@ public:
     enum { arity = 1 };
     typedef Generator generator_type;
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     // Constructor
     explicit                generated_by( Generator&& G )
     : m_generator( std::forward<Generator>(G) )
     {}
 
+    // Move constructor
+    generated_by( generated_by&& rhs )
+    : m_generator( std::forward<Generator>(rhs.m_generator) )
+    {}
+#else
+    // Constructor
+    explicit                generated_by( Generator const& G )
+    : m_generator( G )
+    {}
+#endif
+
     // Access methods
     data::size_t            size() const            { return m_generator.capacity(); }
-    virtual iter_ptr        begin() const           { return std::make_shared<iterator>( const_cast<Generator&>(m_generator) ); }
+    virtual iter_ptr        begin() const           { return boost::make_shared<iterator>( boost::ref(const_cast<Generator&>(m_generator)) ); }
 
 private:
     // Data members
@@ -75,7 +86,7 @@ private:
 //____________________________________________________________________________//
 
 template<typename Generator>
-struct is_dataset<generated_by<Generator>> : std::true_type {};
+struct is_dataset<generated_by<Generator> > : mpl::true_ {};
 
 //____________________________________________________________________________//
 

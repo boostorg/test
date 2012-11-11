@@ -17,12 +17,11 @@
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_GRID_HPP_101512GER
 #define BOOST_TEST_DATA_MONOMORPHIC_GRID_HPP_101512GER
 
+#ifndef BOOST_NO_CXX11_HDR_TUPLE
+
 // Boost.Test
 #include <boost/test/data/config.hpp>
 #include <boost/test/data/monomorphic/dataset.hpp>
-
-// Boost
-#include <boost/utility/enable_if.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -85,10 +84,10 @@ struct grid_traits<std::tuple<T1,T2>,T3> {
 // ************************************************************************** //
 
 template<typename DS1, typename DS2>
-class grid : public monomorphic::dataset<typename ds_detail::grid_traits<typename std::decay<DS1>::type::data_type,
-                                                                         typename std::decay<DS2>::type::data_type>::type> {
-    typedef typename std::decay<DS1>::type::data_type T1;
-    typedef typename std::decay<DS2>::type::data_type T2;
+class grid : public monomorphic::dataset<typename ds_detail::grid_traits<typename boost::decay<DS1>::type::data_type,
+                                                                         typename boost::decay<DS2>::type::data_type>::type> {
+    typedef typename boost::decay<DS1>::type::data_type T1;
+    typedef typename boost::decay<DS2>::type::data_type T2;
 
     typedef typename monomorphic::dataset<T1>::iter_ptr ds1_iter_ptr;
     typedef typename monomorphic::dataset<T2>::iter_ptr ds2_iter_ptr;
@@ -131,7 +130,7 @@ class grid : public monomorphic::dataset<typename ds_detail::grid_traits<typenam
     };
 
 public:
-    enum { arity = std::decay<DS1>::type::arity + std::decay<DS2>::type::arity };
+    enum { arity = boost::decay<DS1>::type::arity + boost::decay<DS2>::type::arity };
 
     // Constructor
     grid( DS1&& ds1, DS2&& ds2 ) 
@@ -147,7 +146,7 @@ public:
 
     // dataset interface
     virtual data::size_t    size() const    { return m_ds1.size() * m_ds2.size(); } 
-    virtual iter_ptr        begin() const   { return std::make_shared<iterator>( m_ds1.begin(), m_ds2 ); }
+    virtual iter_ptr        begin() const   { return boost::make_shared<iterator>( m_ds1.begin(), m_ds2 ); }
 
 private:
     // Data members
@@ -158,15 +157,14 @@ private:
 //____________________________________________________________________________//
 
 template<typename DS1, typename DS2>
-struct is_dataset<grid<DS1,DS2>> : std::true_type {};
+struct is_dataset<grid<DS1,DS2> > : mpl::true_ {};
 
 //____________________________________________________________________________//
 
 namespace result_of {
 
 template<typename DS1Gen, typename DS2Gen>
-struct grid
-{
+struct grid {
     typedef monomorphic::grid<typename DS1Gen::type,typename DS2Gen::type> type;
 };
 
@@ -216,6 +214,8 @@ operator*( DS1&& ds1, DS2&& ds2 )
 } // namespace boost
 
 #include <boost/test/detail/enable_warnings.hpp>
+
+#endif // BOOST_NO_CXX11_HDR_TUPLE
 
 #endif // BOOST_TEST_DATA_MONOMORPHIC_GRID_HPP_101512GER
 

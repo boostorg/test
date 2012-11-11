@@ -17,11 +17,7 @@
 
 // Boost.Test
 #include <boost/test/data/config.hpp>
-#include <boost/test/data/size.hpp>
 #include <boost/test/data/monomorphic/dataset.hpp>
-
-// Boost
-#include <boost/utility/enable_if.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -37,16 +33,21 @@ namespace monomorphic {
 // ************************************************************************** //
 
 template<typename DS1, typename DS2>
-class join : public monomorphic::dataset<typename std::decay<DS1>::type::data_type> {
-    typedef typename std::decay<DS1>::type::data_type T;
+class join : public monomorphic::dataset<typename boost::decay<DS1>::type::data_type> {
+    typedef typename boost::decay<DS1>::type::data_type T;
     typedef monomorphic::dataset<T> base;
     typedef typename base::iter_ptr iter_ptr;
 
     struct iterator : public base::iterator {
         // Constructor
         explicit    iterator( iter_ptr it1, iter_ptr it2, data::size_t first_size )
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
         : m_it1( std::move(it1) )
         , m_it2( std::move(it2) )
+#else
+        : m_it1( it1 )
+        , m_it2( it2 )
+#endif
         , m_first_size( first_size )
         {}
 
@@ -62,8 +63,9 @@ class join : public monomorphic::dataset<typename std::decay<DS1>::type::data_ty
     };
 
 public:
-    enum { arity = std::decay<DS1>::type::arity };
+    enum { arity = boost::decay<DS1>::type::arity };
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     // Constructor
     join( DS1&& ds1, DS2&& ds2 )
     : m_ds1( std::forward<DS1>( ds1 ) )
@@ -75,12 +77,19 @@ public:
     : m_ds1( std::forward<DS1>( j.m_ds1 ) )
     , m_ds2( std::forward<DS2>( j.m_ds2 ) )
     {}
+#else
+    // Constructor
+    join( DS1 const& ds1, DS2 const& ds2 )
+    : m_ds1( ds1 )
+    , m_ds2( ds2 )
+    {}
+#endif
 
     // dataset interface
     virtual data::size_t    size() const            { return m_ds1.size() + m_ds2.size(); } 
-    virtual iter_ptr        begin() const           { return std::make_shared<iterator>( m_ds1.begin(), 
-                                                                                         m_ds2.begin(),
-                                                                                         m_ds1.size() ); }
+    virtual iter_ptr        begin() const           { return boost::make_shared<iterator>( m_ds1.begin(), 
+                                                                                           m_ds2.begin(),
+                                                                                           m_ds1.size() ); }
 
 private:
     // Data members
@@ -91,15 +100,14 @@ private:
 //____________________________________________________________________________//
 
 template<typename DS1, typename DS2>
-struct is_dataset<join<DS1,DS2>> : std::true_type {};
+struct is_dataset<join<DS1,DS2> > : mpl::true_ {};
 
 //____________________________________________________________________________//
 
 namespace result_of {
 
 template<typename DS1Gen, typename DS2Gen>
-struct join
-{
+struct join {
     typedef monomorphic::join<typename DS1Gen::type,typename DS2Gen::type> type;
 };
 
@@ -109,18 +117,27 @@ struct join
 
 template<typename DS1, typename DS2>
 inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && is_dataset<DS2>::value, 
-                                        result_of::join<mpl::identity<DS1>,mpl::identity<DS2>>
+                                        result_of::join<mpl::identity<DS1>,mpl::identity<DS2> >
 >::type
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 operator+( DS1&& ds1, DS2&& ds2 )
 {
     return join<DS1,DS2>( std::forward<DS1>( ds1 ),  std::forward<DS2>( ds2 ) );
 }
+#else
+operator+( DS1 const& ds1, DS2 const& ds2 )
+{
+    return join<DS1,DS2>( ds1,  ds2 );
+}
+#endif
 
 //____________________________________________________________________________//
 
+#ifndef BOOST_NO_CXX11_DECLTYPE
+
 template<typename DS1, typename DS2>
 inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && !is_dataset<DS2>::value, 
-                                        result_of::join<mpl::identity<DS1>,data::result_of::make<DS2>>
+                                        result_of::join<mpl::identity<DS1>,data::result_of::make<DS2> >
 >::type
 operator+( DS1&& ds1, DS2&& ds2 )
 {
@@ -131,7 +148,7 @@ operator+( DS1&& ds1, DS2&& ds2 )
 
 template<typename DS1, typename DS2>
 inline typename boost::lazy_enable_if_c<!is_dataset<DS1>::value && is_dataset<DS2>::value, 
-                                        result_of::join<data::result_of::make<DS1>,mpl::identity<DS2>>
+                                        result_of::join<data::result_of::make<DS1>,mpl::identity<DS2> >
 >::type
 operator+( DS1&& ds1, DS2&& ds2 )
 {
@@ -139,6 +156,8 @@ operator+( DS1&& ds1, DS2&& ds2 )
 }
 
 //____________________________________________________________________________//
+
+#endif
 
 } // namespace monomorphic
 

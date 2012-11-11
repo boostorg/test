@@ -18,10 +18,10 @@
 // Boost.Test
 #include <boost/test/data/config.hpp>
 
+#ifndef BOOST_NO_0X_HDR_RANDOM
+
 #include <boost/test/data/monomorphic/generate.hpp>
 #include <boost/test/data/monomorphic/generators/keywords.hpp>
-
-// Boost
 
 // STL
 #include <random>
@@ -46,8 +46,8 @@ namespace ds_detail {
 template<typename SampleType>
 struct default_distribution {
     typedef typename mpl::if_<std::is_integral<SampleType>,
-                        std::uniform_int_distribution<SampleType>,
-                        std::uniform_real_distribution<SampleType>>::type type;
+                              std::uniform_int_distribution<SampleType>,
+                              std::uniform_real_distribution<SampleType> >::type type;
 };
 
 } // namespace ds_detail
@@ -157,5 +157,8 @@ random( Params const& params )
 } // namespace boost
 
 #include <boost/test/detail/enable_warnings.hpp>
+
+#endif // BOOST_NO_0X_HDR_RANDOM
+
 
 #endif // BOOST_TEST_DATA_MONOMORPHIC_GENERATORS_RANDOM_HPP_101512GER

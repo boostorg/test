@@ -22,11 +22,15 @@
 #include <boost/test/utils/is_forward_iterable.hpp>
 
 // Boost
+#ifdef BOOST_NO_CXX11_RVALUE_REFERENCES
+#include <boost/utility/enable_if.hpp>
+#else
 #include <boost/utility/declval.hpp>
-
-// STL
-#include <list>
-#include <vector>
+#endif
+#include <boost/mpl/bool.hpp>
+#include <boost/smart_ptr/make_shared.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/type_traits/decay.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -53,12 +57,18 @@ class collection;
 template<typename T>
 class array;
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+#  define BOOST_TEST_ENABLE_IF std::enable_if
+#else
+#  define BOOST_TEST_ENABLE_IF boost::enable_if_c
+#endif
+
 // ************************************************************************** //
 // **************            monomorphic::is_dataset           ************** //
 // ************************************************************************** //
 
 template<typename DS>
-struct is_dataset : std::false_type {};
+struct is_dataset : mpl::false_ {};
 
 //____________________________________________________________________________//
 
@@ -78,8 +88,10 @@ struct is_dataset<DS const> : is_dataset<DS> {};
 // **************                  data::make                  ************** //
 // ************************************************************************** //
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+
 template<typename DS>
-inline typename std::enable_if<monomorphic::is_dataset<DS>::value,DS>::type
+inline typename BOOST_TEST_ENABLE_IF<monomorphic::is_dataset<DS>::value,DS>::type
 make(DS&& ds)
 {
     return std::forward<DS>( ds );
@@ -88,18 +100,47 @@ make(DS&& ds)
 //____________________________________________________________________________//
 
 template<typename T>
-inline typename std::enable_if<!is_forward_iterable<T>::value &&
-                               !monomorphic::is_dataset<T>::value,
-                               monomorphic::singleton<T> >::type
+inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
+                                     !monomorphic::is_dataset<T>::value, 
+                                     monomorphic::singleton<T>
+>::type
 make( T&& v );
 
 //____________________________________________________________________________//
 
 template<typename C>
-inline monomorphic::collection<typename std::enable_if<unit_test::is_forward_iterable<C>::value,C>::type>
+inline monomorphic::collection<typename BOOST_TEST_ENABLE_IF<unit_test::is_forward_iterable<C>::value,C>::type>
 make( C&& c );
 
 //____________________________________________________________________________//
+
+#else
+
+template<typename DS>
+inline typename BOOST_TEST_ENABLE_IF<monomorphic::is_dataset<DS>::value,DS const&>::type
+make(DS const& ds)
+{
+    return ds;
+}
+
+//____________________________________________________________________________//
+
+template<typename T>
+inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
+                                     !monomorphic::is_dataset<T>::value, 
+                                     monomorphic::singleton<T>
+>::type
+make( T const& v );
+
+//____________________________________________________________________________//
+
+template<typename C>
+inline monomorphic::collection<typename BOOST_TEST_ENABLE_IF<unit_test::is_forward_iterable<C>::value,C>::type>
+make( C const& c );
+
+//____________________________________________________________________________//
+
+#endif // BOOST_NO_CXX11_RVALUE_REFERENCES
 
 template<typename T, std::size_t size>
 inline monomorphic::array<T>
@@ -117,6 +158,8 @@ make( char const* str );
 
 //____________________________________________________________________________//
 
+#ifndef BOOST_NO_CXX11_DECLTYPE
+
 namespace result_of {
 
 template<typename DS>
@@ -126,6 +169,8 @@ struct make
 };
 
 } // namespace result_of
+
+#endif // BOOST_NO_CXX11_DECLTYPE
 
 //____________________________________________________________________________//
 

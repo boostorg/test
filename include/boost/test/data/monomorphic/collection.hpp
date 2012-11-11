@@ -33,8 +33,8 @@ namespace monomorphic {
 // ************************************************************************** //
 
 template<typename C>
-class collection : public monomorphic::dataset<typename std::decay<C>::type::value_type> {
-    typedef typename std::decay<C>::type col_type;
+class collection : public monomorphic::dataset<typename boost::decay<C>::type::value_type> {
+    typedef typename boost::decay<C>::type col_type;
     typedef typename col_type::value_type T;
     typedef monomorphic::dataset<T> base;
     typedef typename base::iter_ptr iter_ptr;
@@ -59,18 +59,22 @@ class collection : public monomorphic::dataset<typename std::decay<C>::type::val
 public:
     enum { arity = 1 };
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     // Constructor
-    explicit        collection( C&& col ) : m_col( std::forward<C>(col) ) {}
+    explicit                collection( C&& col ) : m_col( std::forward<C>(col) ) {}
 
     // Move constructor
     collection( collection&& c ) : m_col( std::forward<C>( c.m_col ) ) {}
+#else
+    explicit                collection( C const& col ) : m_col( col ) {}
+#endif
 
     // Access methods
-    C const&        col() const                     { return m_col; }
+    C const&                col() const             { return m_col; }
 
     // dataset interface
     virtual data::size_t    size() const            { return m_col.size(); } 
-    virtual iter_ptr        begin() const           { return std::make_shared<iterator>( *this ); }
+    virtual iter_ptr        begin() const           { return boost::make_shared<iterator>( *this ); }
 
 private:
     // Data members
@@ -80,16 +84,23 @@ private:
 //____________________________________________________________________________//
 
 template<typename C>
-struct is_dataset<collection<C>> : std::true_type {};
+struct is_dataset<collection<C> > : mpl::true_ {};
 
 } // namespace monomorphic
 
 template<typename C>
-inline monomorphic::collection<typename std::enable_if<is_forward_iterable<C>::value,C>::type>
+inline monomorphic::collection<typename BOOST_TEST_ENABLE_IF<is_forward_iterable<C>::value,C>::type>
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 make( C&& c )
 {
     return monomorphic::collection<C>( std::forward<C>(c) );
 }
+#else
+make( C const& c )
+{
+    return monomorphic::collection<C>( c );
+}
+#endif
 
 //____________________________________________________________________________//
 
