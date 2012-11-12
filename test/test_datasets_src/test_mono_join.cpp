@@ -47,10 +47,12 @@ BOOST_AUTO_TEST_CASE( test_mono_join )
     data::for_each_sample( samples1, ic );
     BOOST_TEST( ic.m_value == 6 );
 
+#ifndef BOOST_NO_CXX11_LAMBDAS
     c = 0;
     data::for_each_sample( samples1, [&c,exp](int i) {
         BOOST_TEST( i == exp[c++] );
     });
+#endif
 
     auto samples2 = data::make( std::vector<int>(arr1,arr1+2) ) + (data::make( 5 ) + (data::make( arr2 ) + data::make( 37 )));
 
@@ -58,10 +60,12 @@ BOOST_AUTO_TEST_CASE( test_mono_join )
     data::for_each_sample( samples2, ic );
     BOOST_TEST( ic.m_value == 6 );
 
+#ifndef BOOST_NO_CXX11_LAMBDAS
     c = 0;
     data::for_each_sample( samples2, [&c,exp](int i) {
         BOOST_TEST( i == exp[c++] );
     });
+#endif
 
     auto samples3 = (data::make( std::vector<int>(arr1,arr1+2) ) + data::make( 5 )) + (data::make( arr2 ) + data::make( 37 ));
 
@@ -69,10 +73,12 @@ BOOST_AUTO_TEST_CASE( test_mono_join )
     data::for_each_sample( samples3, ic );
     BOOST_TEST( ic.m_value == 6 );
 
+#ifndef BOOST_NO_CXX11_LAMBDAS
     c = 0;
     data::for_each_sample( samples3, [&c,exp](int i) {
         BOOST_TEST( i == exp[c++] );
     });
+#endif
 #endif
 
     copy_count::value() = 0;
