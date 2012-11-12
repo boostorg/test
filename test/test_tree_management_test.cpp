@@ -132,7 +132,11 @@ BOOST_AUTO_TEST_CASE( manual_test_suite_creation )
     BOOST_CHECK_EQUAL( ts1->p_type_name, const_string( "suite" ) );
     BOOST_CHECK_EQUAL( ts1->p_parent_id, 0U );
     BOOST_CHECK_NE( ts1->p_id, INV_TEST_UNIT_ID );
-    BOOST_CHECK_EQUAL( ts1->p_file_name, const_string( "test_tree_management_test.cpp" ) );
+    const_string fn(ts1->p_file_name);
+    const_string::size_type pos = fn.rfind( "/" );
+    if( pos != const_string::npos )
+        fn.trim_left( pos+1 );
+    BOOST_CHECK_EQUAL( fn, const_string( "test_tree_management_test.cpp" ) );
     BOOST_CHECK_EQUAL( ts1->p_line_num, 129U );
 
     BOOST_CHECK_EQUAL( ts1->p_expected_failures, 0U );
