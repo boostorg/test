@@ -207,22 +207,6 @@ unit_test_log_t::test_unit_skipped( test_unit const& tu )
 //____________________________________________________________________________//
 
 void
-unit_test_log_t::test_unit_aborted( test_unit const& )
-{
-    // do nothing
-}
-
-//____________________________________________________________________________//
-
-void
-unit_test_log_t::assertion_result( bool )
-{
-    // do nothing
-}
-
-//____________________________________________________________________________//
-
-void
 unit_test_log_t::exception_caught( execution_exception const& ex )
 {
     log_level l =
@@ -442,7 +426,7 @@ unit_test_log_t::set_format( output_format log_format )
     if( s_log_impl().m_entry_in_progress )
         return;
 
-    if( log_format == CLF )
+    if( log_format == OF_CLF )
         set_formatter( new output::compiler_log_formatter );
     else
         set_formatter( new output::xml_log_formatter );

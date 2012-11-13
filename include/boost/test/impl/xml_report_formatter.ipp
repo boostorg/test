@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : XML report formatter
+//  Description : OF_XML report formatter
 // ***************************************************************************
 
 #ifndef BOOST_TEST_XML_REPORT_FORMATTER_IPP_020105GER
@@ -64,18 +64,21 @@ xml_report_formatter::test_unit_report_start( test_unit const& tu, std::ostream&
     else
         descr = "failed";
 
-    ostr << '<' << ( tu.p_type == tut_case ? "TestCase" : "TestSuite" ) 
+    ostr << '<' << ( tu.p_type == TUT_CASE ? "TestCase" : "TestSuite" ) 
          << " name"     << attr_value() << tu.p_name.get()
          << " result"   << attr_value() << descr
          << " assertions_passed"        << attr_value() << tr.p_assertions_passed
          << " assertions_failed"        << attr_value() << tr.p_assertions_failed
+         << " warnings_failed"          << attr_value() << tr.p_warnings_failed
          << " expected_failures"        << attr_value() << tr.p_expected_failures;
 
-    if( tu.p_type == tut_suite )
+    if( tu.p_type == TUT_SUITE ) {
         ostr << " test_cases_passed"    << attr_value() << tr.p_test_cases_passed
+             << " test_cases_passed_with_warnings" << attr_value() << tr.p_test_cases_warned
              << " test_cases_failed"    << attr_value() << tr.p_test_cases_failed
              << " test_cases_skipped"   << attr_value() << tr.p_test_cases_skipped
              << " test_cases_aborted"   << attr_value() << tr.p_test_cases_aborted;
+    }
              
     
     ostr << '>';
@@ -86,7 +89,7 @@ xml_report_formatter::test_unit_report_start( test_unit const& tu, std::ostream&
 void
 xml_report_formatter::test_unit_report_finish( test_unit const& tu, std::ostream& ostr )
 {
-    ostr << "</" << ( tu.p_type == tut_case ? "TestCase" : "TestSuite" ) << '>';
+    ostr << "</" << ( tu.p_type == TUT_CASE ? "TestCase" : "TestSuite" ) << '>';
 }
 
 //____________________________________________________________________________//

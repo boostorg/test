@@ -125,18 +125,18 @@ std::istream&
 operator>>( std::istream& in, unit_test::output_format& of )
 {
     fixed_mapping<const_string,unit_test::output_format,case_ins_less<char const> > output_format_name (
-        "HRF", unit_test::CLF,
-        "CLF", unit_test::CLF,
-        "XML", unit_test::XML,
+        "HRF", unit_test::OF_CLF,
+        "CLF", unit_test::OF_CLF,
+        "XML", unit_test::OF_XML,
 
-        unit_test::INV_OF
+        unit_test::OF_INVALID
         );
 
     std::string val;
     in >> val;
 
     of = output_format_name[val];
-    BOOST_TEST_SETUP_ASSERT( of != unit_test::INV_OF, "invalid output format " + val );
+    BOOST_TEST_SETUP_ASSERT( of != unit_test::OF_INVALID, "invalid output format " + val );
 
     return in;
 }
@@ -347,12 +347,12 @@ init( int& argc, char** argv )
             throw framework::nothing_to_test();
         }
 
-        s_report_format     = retrieve_parameter( REPORT_FORMAT, s_cla_parser, unit_test::CLF );
-        s_log_format        = retrieve_parameter( LOG_FORMAT, s_cla_parser, unit_test::CLF );
+        s_report_format     = retrieve_parameter( REPORT_FORMAT, s_cla_parser, unit_test::OF_CLF );
+        s_log_format        = retrieve_parameter( LOG_FORMAT, s_cla_parser, unit_test::OF_CLF );
 
-        unit_test::output_format of = retrieve_parameter( OUTPUT_FORMAT, s_cla_parser, unit_test::INV_OF );
+        unit_test::output_format of = retrieve_parameter( OUTPUT_FORMAT, s_cla_parser, unit_test::OF_INVALID );
 
-        if( of != unit_test::INV_OF )
+        if( of != unit_test::OF_INVALID )
             s_report_format = s_log_format = of;
 
         s_test_to_run = retrieve_parameter<std::list<std::string> >( TESTS_TO_RUN, s_cla_parser );

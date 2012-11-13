@@ -44,12 +44,9 @@ namespace unit_test {
 
 class BOOST_TEST_DECL test_unit {
 public:
-    enum { type = tut_any };
+    enum { type = TUT_ANY };
     typedef std::list<test_unit_id>             id_list;
     typedef std::list<test_unit_fixture_ptr>    fixture_list;
-
-    // Constructor
-    test_unit( const_string tu_name, const_string tc_file, std::size_t tc_line, test_unit_type t );
 
     // dependencies management
     void    depends_on( test_unit* tu );
@@ -69,7 +66,7 @@ public:
     typedef decorator::for_test_unit_ptr                            decorator_base;
 
     readonly_property<test_unit_type>   p_type;                 // type for this test unit
-    readonly_property<const_string>     p_type_name;            // "case"/"suite"
+    readonly_property<const_string>     p_type_name;            // "case"/"suite"/"module"
     readonly_property<const_string>     p_file_name;
     readonly_property<std::size_t>      p_line_num;
     id_t                                p_id;                   // unique id for this test unit
@@ -87,6 +84,10 @@ public:
 
 protected:
     ~test_unit();
+    // Constructor
+    test_unit( const_string tu_name, const_string tc_file, std::size_t tc_line, test_unit_type t );
+    // Master test suite constructor
+    explicit                            test_unit( const_string module_name );
 
 private:
     // Data members
@@ -111,7 +112,7 @@ protected:
 
 class BOOST_TEST_DECL test_case : public test_unit {
 public:
-    enum { type = tut_case };
+    enum { type = TUT_CASE };
 
     // Constructor
     test_case( const_string tc_name, boost::function<void ()> const& test_func );
@@ -133,7 +134,7 @@ private:
 
 class BOOST_TEST_DECL test_suite : public test_unit {
 public:
-    enum { type = tut_suite };
+    enum { type = TUT_SUITE };
 
     // Constructor
     explicit        test_suite( const_string ts_name, const_string ts_file, std::size_t ts_line );
@@ -148,6 +149,9 @@ public:
     std::size_t     size() const { return m_members.size(); }
 
 protected:
+    // Master test suite constructor
+    explicit        test_suite( const_string module_name );
+
     friend BOOST_TEST_DECL 
     void        traverse_test_tree( test_suite const&, test_tree_visitor&, bool );
     friend class framework_impl;
@@ -163,10 +167,7 @@ protected:
 
 class BOOST_TEST_DECL master_test_suite_t : public test_suite {
 public:
-    master_test_suite_t() : test_suite( "Master Test Suite", "", 0 )
-    , argc( 0 )
-    , argv( 0 )
-    {}
+    master_test_suite_t();
     
     // Data members    
     int      argc;

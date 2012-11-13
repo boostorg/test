@@ -60,17 +60,16 @@ operator<<( custom_printer<quote> const& p, T const& value )
 //____________________________________________________________________________//
 
 void
-print_stat_value( std::ostream& ostr, counter_t v, counter_t indent, counter_t total,
-                  const_string name, const_string res )
+print_stat_value( std::ostream& ostr, counter_t v, counter_t indent, counter_t total, const_string name, const_string res )
 {
-    if( v > 0 ) {
-        ostr << std::setw( indent ) << ""
-             << v << ' ' << name << ( v != 1 ? "s" : "" );
-        if( total > 0 )
-            ostr << " out of " << total;
+    if( v == 0 )
+        return;
 
-        ostr << ' ' << res << '\n';
-    }
+    if( total > 0 )
+        ostr << std::setw( indent ) << "" << v << ' ' << name << ( v != 1 ? "s" : "" )
+             << " out of " << total << ' ' << res << '\n';
+    else
+        ostr << std::setw( indent ) << "" << v << ' ' << res << ' ' << name << ( v != 1 ? "s" : "" ) << '\n';
 }
 
 //____________________________________________________________________________//
@@ -115,7 +114,7 @@ plain_report_formatter::test_unit_report_start( test_unit const& tu, std::ostrea
         descr = "failed";
 
     ostr << std::setw( m_indent ) << ""
-         << "Test " << (tu.p_type == tut_case ? "case " : "suite " ) << quote() << tu.p_name << ' ' << descr;
+         << "Test " << tu.p_type_name << ' ' << quote() << tu.p_name << ' ' << descr;
 
     if( tr.p_skipped ) {
         ostr << " due to " << (tu.check_dependencies() ? "test aborting\n" : "failed dependancy\n" );
@@ -124,21 +123,23 @@ plain_report_formatter::test_unit_report_start( test_unit const& tu, std::ostrea
     }
     
     counter_t total_assertions  = tr.p_assertions_passed + tr.p_assertions_failed;
-    counter_t total_tc          = tr.p_test_cases_passed + tr.p_test_cases_failed + tr.p_test_cases_skipped;
+    counter_t total_tc          = tr.p_test_cases_passed + tr.p_test_cases_warned + tr.p_test_cases_failed + tr.p_test_cases_skipped;
 
-    if( total_assertions > 0 || total_tc > 0 )
+    if( total_assertions > 0 || total_tc > 0 || tr.p_warnings_failed > 0)
         ostr << " with:";
 
     ostr << '\n';
     m_indent += 2;
 
-    print_stat_value( ostr, tr.p_assertions_passed, m_indent, total_assertions, "assertion", "passed" );
-    print_stat_value( ostr, tr.p_assertions_failed, m_indent, total_assertions, "assertion", "failed" );
-    print_stat_value( ostr, tr.p_expected_failures, m_indent, 0               , "failure"  , "expected" );
-    print_stat_value( ostr, tr.p_test_cases_passed, m_indent, total_tc        , "test case", "passed" );
-    print_stat_value( ostr, tr.p_test_cases_failed, m_indent, total_tc        , "test case", "failed" );
-    print_stat_value( ostr, tr.p_test_cases_skipped, m_indent, total_tc       , "test case", "skipped" );
-    print_stat_value( ostr, tr.p_test_cases_aborted, m_indent, total_tc       , "test case", "aborted" );
+    print_stat_value( ostr, tr.p_test_cases_passed , m_indent, total_tc        , "test case", "passed" );
+    print_stat_value( ostr, tr.p_test_cases_warned , m_indent, total_tc        , "test case", "passed with warnings" );
+    print_stat_value( ostr, tr.p_test_cases_failed , m_indent, total_tc        , "test case", "failed" );
+    print_stat_value( ostr, tr.p_test_cases_skipped, m_indent, total_tc        , "test case", "skipped" );
+    print_stat_value( ostr, tr.p_test_cases_aborted, m_indent, total_tc        , "test case", "aborted" );
+    print_stat_value( ostr, tr.p_assertions_passed , m_indent, total_assertions, "assertion", "passed" );
+    print_stat_value( ostr, tr.p_assertions_failed , m_indent, total_assertions, "assertion", "failed" );
+    print_stat_value( ostr, tr.p_warnings_failed   , m_indent, 0               , "warning"  , "failed" );
+    print_stat_value( ostr, tr.p_expected_failures , m_indent, 0               , "failure"  , "expected" );
     
     ostr << '\n';
 }

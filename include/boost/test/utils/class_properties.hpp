@@ -115,28 +115,6 @@ DEFINE_PROPERTY_FREE_BINARY_OPERATOR( != )
 
 #undef DEFINE_PROPERTY_FREE_BINARY_OPERATOR
 
-#if BOOST_WORKAROUND(BOOST_MSVC, < 1300)
-
-#define DEFINE_PROPERTY_LOGICAL_OPERATOR( op )                                  \
-template<class PropertyType>                                                    \
-inline bool                                                                     \
-operator op( bool b, class_property<PropertyType> const& p )                    \
-{                                                                               \
-    return b op p.get();                                                        \
-}                                                                               \
-template<class PropertyType>                                                    \
-inline bool                                                                     \
-operator op( class_property<PropertyType> const& p, bool b )                    \
-{                                                                               \
-    return b op p.get();                                                        \
-}                                                                               \
-/**/
-
-DEFINE_PROPERTY_LOGICAL_OPERATOR( && )
-DEFINE_PROPERTY_LOGICAL_OPERATOR( || )
-
-#endif
-
 // ************************************************************************** //
 // **************               readonly_property              ************** //
 // ************************************************************************** //

@@ -44,11 +44,15 @@ enum report_level  { INV_REPORT_LEVEL, CONFIRMATION_REPORT, SHORT_REPORT, DETAIL
 
 //____________________________________________________________________________//
 
-enum output_format { INV_OF, CLF /* compiler log format */, XML /* XML */ };
+enum output_format { OF_INVALID, OF_CLF /* compiler log format */, OF_XML /* OF_XML */ };
 
 //____________________________________________________________________________//
 
-enum test_unit_type { tut_case = 0x01, tut_suite = 0x10, tut_any = 0x11 };
+enum test_unit_type { TUT_CASE = 0x01, TUT_SUITE = 0x10, TUT_ANY = 0x11 };
+
+//____________________________________________________________________________//
+
+enum assertion_result { AR_FAILED, AR_PASSED, AR_TRIGGERED };
 
 //____________________________________________________________________________//
 
@@ -67,7 +71,7 @@ namespace ut_detail {
 inline test_unit_type
 test_id_2_unit_type( test_unit_id id )
 {
-    return (id & 0xFFFF0000) != 0 ? tut_case : tut_suite;
+    return (id & 0xFFFF0000) != 0 ? TUT_CASE : TUT_SUITE;
 }
 
 //____________________________________________________________________________//

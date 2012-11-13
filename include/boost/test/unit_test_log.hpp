@@ -91,17 +91,15 @@ private:
 class BOOST_TEST_DECL unit_test_log_t : public test_observer, public singleton<unit_test_log_t> {
 public:
     // test_observer interface implementation
-    void                test_start( counter_t test_cases_amount );
-    void                test_finish();
-    void                test_aborted();
+    virtual void        test_start( counter_t test_cases_amount );
+    virtual void        test_finish();
+    virtual void        test_aborted();
 
-    void                test_unit_start( test_unit const& );
-    void                test_unit_finish( test_unit const&, unsigned long elapsed );
-    void                test_unit_skipped( test_unit const& );
-    void                test_unit_aborted( test_unit const& );
+    virtual void        test_unit_start( test_unit const& );
+    virtual void        test_unit_finish( test_unit const&, unsigned long elapsed );
+    virtual void        test_unit_skipped( test_unit const& );
 
-    void                assertion_result( bool passed );
-    void                exception_caught( execution_exception const& );
+    virtual void        exception_caught( execution_exception const& ex );
 
     virtual int         priority() { return 1; }
 

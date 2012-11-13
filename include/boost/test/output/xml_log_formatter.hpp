@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : contains XML Log formatter definition
+//  Description : contains OF_XML Log formatter definition
 // ***************************************************************************
 
 #ifndef BOOST_TEST_XML_LOG_FORMATTER_020105GER

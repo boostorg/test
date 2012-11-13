@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : XML report formatter implementation
+//  Description : OF_XML report formatter implementation
 // ***************************************************************************
 
 #ifndef BOOST_TEST_XML_REPORT_FORMATTER_HPP_020105GER

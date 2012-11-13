@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : implements XML Log formatter
+//  Description : implements OF_XML Log formatter
 // ***************************************************************************
 
 #ifndef BOOST_TEST_XML_LOG_FORMATTER_IPP_020105GER
@@ -39,7 +39,7 @@ namespace output {
 
 static const_string tu_type_name( test_unit const& tu )
 {
-    return tu.p_type == tut_case ? "TestCase" : "TestSuite";
+    return tu.p_type == TUT_CASE ? "TestCase" : "TestSuite";
 }
 
 // ************************************************************************** //
@@ -94,7 +94,7 @@ xml_log_formatter::test_unit_start( std::ostream& ostr, test_unit const& tu )
 void
 xml_log_formatter::test_unit_finish( std::ostream& ostr, test_unit const& tu, unsigned long elapsed )
 {
-    if( tu.p_type == tut_case )
+    if( tu.p_type == TUT_CASE )
         ostr << "<TestingTime>" << elapsed << "</TestingTime>";
         
     ostr << "</" << tu_type_name( tu ) << ">";

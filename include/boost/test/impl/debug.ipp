@@ -40,10 +40,6 @@
 #  endif
 
 
-#  if BOOST_WORKAROUND( BOOST_MSVC, <1300)
-#    define snprintf _snprintf
-#  endif
-
 #  ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::memset; using ::sprintf; }
 #  endif

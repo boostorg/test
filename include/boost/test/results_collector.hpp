@@ -53,8 +53,10 @@ public:
 
     counter_prop    p_assertions_passed;
     counter_prop    p_assertions_failed;
+    counter_prop    p_warnings_failed;
     counter_prop    p_expected_failures;
     counter_prop    p_test_cases_passed;
+    counter_prop    p_test_cases_warned;
     counter_prop    p_test_cases_failed;
     counter_prop    p_test_cases_skipped;
     counter_prop    p_test_cases_aborted;
@@ -78,17 +80,15 @@ public:
 class BOOST_TEST_DECL results_collector_t : public test_observer, public singleton<results_collector_t> {
 public:
     // test_observer interface implementation
-    void                test_start( counter_t test_cases_amount );
-    void                test_finish();
-    void                test_aborted();
+    virtual void        test_start( counter_t test_cases_amount );
 
-    void                test_unit_start( test_unit const& );
-    void                test_unit_finish( test_unit const&, unsigned long elapsed );
-    void                test_unit_skipped( test_unit const& );
-    void                test_unit_aborted( test_unit const& );
+    virtual void        test_unit_start( test_unit const& );
+    virtual void        test_unit_finish( test_unit const&, unsigned long );
+    virtual void        test_unit_skipped( test_unit const& );
+    virtual void        test_unit_aborted( test_unit const& );
 
-    void                assertion_result( bool passed );
-    void                exception_caught( execution_exception const& );
+    virtual void        assertion_result( unit_test::assertion_result );
+    virtual void        exception_caught( execution_exception const& );
 
     virtual int         priority() { return 2; }
 

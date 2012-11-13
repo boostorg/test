@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : common code used by any agent serving as XML printer
+//  Description : common code used by any agent serving as OF_XML printer
 // ***************************************************************************
 
 #ifndef BOOST_TEST_XML_PRINTER_HPP_071894GER

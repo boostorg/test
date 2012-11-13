@@ -123,7 +123,7 @@ struct exception_safety_tester : itest::manager, test_observer {
     virtual void        freed( void* p );
 
     // test observer interface
-    virtual void        assertion_result( bool passed );
+    virtual void        assertion_result( unit_test::assertion_result ar );
     virtual int         priority() { return (std::numeric_limits<int>::max)(); } // we want this observer to run the last
 
 private:
@@ -208,7 +208,7 @@ exception_safety_tester::next_execution_path()
     // check memory usage
     if( m_execution_path.size() > 0 ) {
         bool errors_detected = m_invairant_failed || (m_memory_in_use.size() != 0);
-        framework::assertion_result( !errors_detected );
+        framework::assertion_result( errors_detected ? AR_FAILED : AR_PASSED );
 
         if( errors_detected )
             report_error();
@@ -373,9 +373,9 @@ exception_safety_tester::freed( void* p )
 //____________________________________________________________________________//
 
 void
-exception_safety_tester::assertion_result( bool passed )
+exception_safety_tester::assertion_result( unit_test::assertion_result ar )
 {
-    if( !m_internal_activity && !passed ) {
+    if( !m_internal_activity && (ar != AR_PASSED) ) {
         m_invairant_failed = true;
 
         failure_point();

@@ -102,7 +102,7 @@ BOOST_TEST_DECL void    run( test_unit_id = INV_TEST_UNIT_ID, bool continue_test
 BOOST_TEST_DECL void    run( test_unit const*, bool continue_test = true );
 
 // public test events dispatchers
-BOOST_TEST_DECL void    assertion_result( bool passed );
+BOOST_TEST_DECL void    assertion_result( unit_test::assertion_result ar );
 BOOST_TEST_DECL void    exception_caught( execution_exception const& );
 BOOST_TEST_DECL void    test_unit_aborted( test_unit const& );
 

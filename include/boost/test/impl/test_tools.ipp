@@ -334,18 +334,19 @@ check_impl( predicate_result const& pr, lazy_ostream const& assertion_descr,
 
     switch( tl ) {
     case PASS:
-        framework::assertion_result( true );
+        framework::assertion_result( AR_PASSED );
         return true;
 
     case WARN:
+        framework::assertion_result( AR_TRIGGERED );
         return false;
 
     case CHECK:
-        framework::assertion_result( false );
+        framework::assertion_result( AR_FAILED );
         return false;
         
     case REQUIRE:
-        framework::assertion_result( false );
+        framework::assertion_result( AR_FAILED );
 
         framework::test_unit_aborted( framework::current_test_case() );
 

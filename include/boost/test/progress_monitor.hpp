@@ -36,22 +36,16 @@ namespace unit_test {
 class BOOST_TEST_DECL progress_monitor_t : public test_observer, public singleton<progress_monitor_t> {
 public:
     // test observer interface
-    void    test_start( counter_t test_cases_amount );
-    void    test_finish() {}
-    void    test_aborted();
+    virtual void    test_start( counter_t test_cases_amount );
+    virtual void    test_aborted();
 
-    void    test_unit_start( test_unit const& ) {}
-    void    test_unit_finish( test_unit const&, unsigned long );
-    void    test_unit_skipped( test_unit const& );
-    void    test_unit_aborted( test_unit const& ) {}
+    virtual void    test_unit_finish( test_unit const&, unsigned long );
+    virtual void    test_unit_skipped( test_unit const& );
 
-    void    assertion_result( bool ) {}
-    void    exception_caught( execution_exception const& ) {}
-
-    virtual int priority() { return 3; }
+    virtual int     priority() { return 3; }
     
     // configuration
-    void    set_stream( std::ostream& );
+    void            set_stream( std::ostream& );
 
 private:
     BOOST_TEST_SINGLETON_CONS( progress_monitor_t )

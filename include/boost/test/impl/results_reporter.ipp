@@ -127,10 +127,10 @@ void
 set_format( output_format rf )
 {
     switch( rf ) {
-    case CLF:
+    case OF_CLF:
         set_format( new output::plain_report_formatter );
         break;
-    case XML:
+    case OF_XML:
         set_format( new output::xml_report_formatter );
         break;
     default:

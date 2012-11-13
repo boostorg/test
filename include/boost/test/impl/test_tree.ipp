@@ -56,11 +56,23 @@ namespace unit_test {
 
 test_unit::test_unit( const_string name, const_string file_name, std::size_t line_num, test_unit_type t )
 : p_type( t )
-, p_type_name( t == tut_case ? "case" : "suite" )
+, p_type_name( t == TUT_CASE ? "case" : "suite" )
 , p_file_name( file_name )
 , p_line_num( line_num )
 , p_id( INV_TEST_UNIT_ID )
 , p_name( std::string( name.begin(), name.size() ) )
+, p_enabled( true )
+{
+}
+
+//____________________________________________________________________________//
+
+test_unit::test_unit( const_string module_name )
+: p_type( TUT_SUITE )
+, p_type_name( "module" )
+, p_line_num( 0 )
+, p_id( INV_TEST_UNIT_ID )
+, p_name( std::string( module_name.begin(), module_name.size() ) )
 , p_enabled( true )
 {
 }
@@ -160,6 +172,14 @@ test_suite::test_suite( const_string name, const_string file_name, std::size_t l
 
 //____________________________________________________________________________//
 
+test_suite::test_suite( const_string module_name )
+: test_unit( module_name )
+{
+    framework::register_test_unit( this );
+}
+
+//____________________________________________________________________________//
+
 void
 test_suite::add( test_unit* tu, counter_t expected_failures, unsigned timeout )
 {
@@ -211,6 +231,17 @@ test_suite::get( const_string tu_name ) const
 }
 
 //____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************               master_test_suite              ************** //
+// ************************************************************************** //
+
+master_test_suite_t::master_test_suite_t() 
+: test_suite( "Master Test Suite" )
+, argc( 0 )
+, argv( 0 )
+{
+}
 
 // ************************************************************************** //
 // **************               traverse_test_tree             ************** //
@@ -265,7 +296,7 @@ traverse_test_tree( test_suite const& suite, test_tree_visitor& V, bool ignore_s
 void
 traverse_test_tree( test_unit_id id, test_tree_visitor& V, bool ignore_status )
 {
-    if( ut_detail::test_id_2_unit_type( id ) == tut_case )
+    if( ut_detail::test_id_2_unit_type( id ) == TUT_CASE )
         traverse_test_tree( framework::get<test_case>( id ), V, ignore_status );
     else
         traverse_test_tree( framework::get<test_suite>( id ), V, ignore_status );

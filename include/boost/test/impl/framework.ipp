@@ -216,7 +216,7 @@ private:
     {
         if( tu.has_label( m_label ) ) {
             // found a test unit; add it to list of tu to enable with children and stop recursion in case of suites
-            m_tu_to_enable.push_back( std::make_pair( tu.p_id, tu.p_type == tut_suite ) );
+            m_tu_to_enable.push_back( std::make_pair( tu.p_id, tu.p_type == TUT_SUITE ) );
             return false;
         }
 
@@ -280,7 +280,7 @@ private:
         // check if any of dependencies are disabled
         if( tu.p_enabled ) {
             BOOST_TEST_FOREACH( test_unit_id, dep_id, tu.p_dependencies.get() ) {
-                test_unit const& dep = framework::get( dep_id, tut_any );
+                test_unit const& dep = framework::get( dep_id, TUT_ANY );
 
                 if( !dep.p_enabled ) {
                     BOOST_TEST_MESSAGE( "Disable test " << tu.p_type_name << ' ' << tu.p_name << 
@@ -295,7 +295,7 @@ private:
 
         // if this test unit is disabled - disable all subunits and remove it from the tree if requested
         if( !tu.p_enabled ) {
-            if( tu.p_type == tut_suite ) {
+            if( tu.p_type == TUT_SUITE ) {
                 ut_detail::change_status disabler( false );
                 traverse_test_tree( tu.p_id, disabler, true );
                 m_made_change |= disabler.made_change();
@@ -340,7 +340,7 @@ public:
             test_unit const*                   tu_ptr = tu.second;
 
             // the delete will erase this element from map
-            if( ut_detail::test_id_2_unit_type( tu.second->p_id ) == tut_suite )
+            if( ut_detail::test_id_2_unit_type( tu.second->p_id ) == TUT_SUITE )
                 delete static_cast<test_suite const*>(tu_ptr);
             else
                 delete static_cast<test_case const*>(tu_ptr);
@@ -552,7 +552,7 @@ apply_filters( test_unit_id master_tu_id )
         // 20. enable tu collected along with their parents, dependencies and children where necessary
         while( !tu_to_enable.empty() ) {
             std::pair<test_unit_id,bool>    data = tu_to_enable.front();
-            test_unit const&                tu   = framework::get( data.first, tut_any );
+            test_unit const&                tu   = framework::get( data.first, TUT_ANY );
 
             tu_to_enable.pop_front();
 
@@ -567,12 +567,12 @@ apply_filters( test_unit_id master_tu_id )
                 continue;
 
             // 23. add parent to the list (without children)
-            if( !framework::get( tu.p_parent_id, tut_any ).p_enabled )
+            if( !framework::get( tu.p_parent_id, TUT_ANY ).p_enabled )
                 tu_to_enable.push_back( std::make_pair( tu.p_parent_id, false ) );
 
             // 24. add dependencies to the list (with children)
             BOOST_TEST_FOREACH( test_unit_id, dep_id, tu.p_dependencies.get() ) {
-                test_unit const& dep = framework::get( dep_id, tut_any );
+                test_unit const& dep = framework::get( dep_id, TUT_ANY );
 
                 if( !dep.p_enabled ) {
                     BOOST_TEST_MESSAGE( "Including test " << dep.p_type_name << ' ' << dep.p_name << 
@@ -583,7 +583,7 @@ apply_filters( test_unit_id master_tu_id )
             }
 
             // 25. add all children to the list recursively
-            if( data.second && tu.p_type == tut_suite ) {
+            if( data.second && tu.p_type == TUT_SUITE ) {
                 class collect_disabled : public test_tree_visitor {
                 public:
                     explicit        collect_disabled( ut_detail::tu_enable_list& tu_to_enable ) : m_tu_to_enable( tu_to_enable ) {}
@@ -612,7 +612,7 @@ apply_filters( test_unit_id master_tu_id )
         // 31. First go through the collected list and disable all tu along with their children
         while( !tu_to_disable.empty() ) {
             std::pair<test_unit_id,bool>    data = tu_to_disable.front();
-            test_unit const&                tu   = framework::get( data.first, tut_any );
+            test_unit const&                tu   = framework::get( data.first, TUT_ANY );
 
             tu_to_disable.pop_front();
 
@@ -1093,10 +1093,10 @@ run( test_unit const* tu, bool continue_test )
 // ************************************************************************** //
 
 void
-assertion_result( bool passed )
+assertion_result( unit_test::assertion_result ar )
 {
     BOOST_TEST_FOREACH( test_observer*, to, s_frk_impl().m_observers )
-        to->assertion_result( passed );
+        to->assertion_result( ar );
 }
 
 //____________________________________________________________________________//

@@ -42,7 +42,7 @@ BOOST_TEST_DECL void    traverse_test_tree( test_unit_id     , test_tree_visitor
 inline void
 traverse_test_tree( test_unit const& tu, test_tree_visitor& V, bool ignore_status = false )
 {
-    if( tu.p_type == tut_case )
+    if( tu.p_type == TUT_CASE )
         traverse_test_tree( static_cast<test_case const&>( tu ), V, ignore_status );
     else
         traverse_test_tree( static_cast<test_suite const&>( tu ), V, ignore_status );
