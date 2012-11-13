@@ -17,14 +17,8 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/results_collector.hpp>
-
-#if BOOST_WORKAROUND(  __GNUC__, < 3 )
-#include <boost/test/output_test_stream.hpp>
-typedef boost::test_tools::output_test_stream onullstream_type;
-#else
 #include <boost/test/utils/nullstream.hpp>
 typedef boost::onullstream onullstream_type;
-#endif
 
 // BOOST
 #include <boost/mpl/range_c.hpp>
