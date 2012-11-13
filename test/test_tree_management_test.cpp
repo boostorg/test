@@ -100,7 +100,7 @@ BOOST_AUTO_TEST_CASE( manual_test_case_creation_test )
 {
     test_case* tc1 = BOOST_TEST_CASE( &empty_ );
 
-    BOOST_CHECK_EQUAL( tc1->p_type, tut_case );
+    BOOST_CHECK_EQUAL( tc1->p_type, TUT_CASE );
     BOOST_CHECK_EQUAL( tc1->p_type_name, const_string( "case" ) );
     BOOST_CHECK_EQUAL( tc1->p_parent_id, 0U );
     BOOST_CHECK_NE( tc1->p_id, INV_TEST_UNIT_ID );
@@ -112,9 +112,9 @@ BOOST_AUTO_TEST_CASE( manual_test_case_creation_test )
     BOOST_CHECK( tc1->p_enabled );
 
     BOOST_CHECK_EQUAL( &framework::get<test_case>( tc1->p_id ), tc1 );
-    BOOST_CHECK_EQUAL( &framework::get( tc1->p_id, tut_case ), tc1 );
+    BOOST_CHECK_EQUAL( &framework::get( tc1->p_id, TUT_CASE ), tc1 );
 
-    BOOST_CHECK_THROW( &framework::get( tc1->p_id, tut_suite ), framework::internal_error );
+    BOOST_CHECK_THROW( &framework::get( tc1->p_id, TUT_SUITE ), framework::internal_error );
 
     test_case* tc2 = make_test_case( &empty_, "my test case", "test_file_name", 1 );
     BOOST_CHECK_EQUAL( tc2->p_name, const_string( "my test case" ) );
@@ -128,7 +128,7 @@ BOOST_AUTO_TEST_CASE( manual_test_suite_creation )
 {
     test_suite* ts1 = BOOST_TEST_SUITE( "TestSuite" );
 
-    BOOST_CHECK_EQUAL( ts1->p_type, tut_suite );
+    BOOST_CHECK_EQUAL( ts1->p_type, TUT_SUITE );
     BOOST_CHECK_EQUAL( ts1->p_type_name, const_string( "suite" ) );
     BOOST_CHECK_EQUAL( ts1->p_parent_id, 0U );
     BOOST_CHECK_NE( ts1->p_id, INV_TEST_UNIT_ID );
@@ -146,7 +146,7 @@ BOOST_AUTO_TEST_CASE( manual_test_suite_creation )
     BOOST_CHECK_EQUAL( ts1->size(), 0U );
 
     BOOST_CHECK_EQUAL( &framework::get<test_suite>( ts1->p_id ), ts1 );
-    BOOST_CHECK_EQUAL( &framework::get( ts1->p_id, tut_suite ), ts1 );
+    BOOST_CHECK_EQUAL( &framework::get( ts1->p_id, TUT_SUITE ), ts1 );
 }
 
 //____________________________________________________________________________//
