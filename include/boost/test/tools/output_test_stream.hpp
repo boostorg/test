@@ -38,7 +38,6 @@ namespace test_tools {
 
 class BOOST_TEST_DECL output_test_stream : public wrap_stringstream::wrapped_stream {
     typedef unit_test::const_string const_string;
-    typedef predicate_result        result_type;
 public:
     // Constructor
     explicit        output_test_stream( const_string    pattern_file_name = const_string(),
@@ -49,10 +48,10 @@ public:
     ~output_test_stream();
 
     // checking function
-    result_type     is_empty( bool flush_stream = true );
-    result_type     check_length( std::size_t length, bool flush_stream = true );
-    result_type     is_equal( const_string arg_, bool flush_stream = true );
-    result_type     match_pattern( bool flush_stream = true );
+    predicate_result    is_empty( bool flush_stream = true );
+    predicate_result    check_length( std::size_t length, bool flush_stream = true );
+    predicate_result    is_equal( const_string arg_, bool flush_stream = true );
+    predicate_result    match_pattern( bool flush_stream = true );
 
     // explicit flush
     void            flush();

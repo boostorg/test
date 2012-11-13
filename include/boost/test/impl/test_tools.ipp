@@ -494,7 +494,7 @@ output_test_stream::is_empty( bool flush_stream )
 {
     sync();
 
-    result_type res( m_pimpl->m_synced_string.empty() );
+    predicate_result res( m_pimpl->m_synced_string.empty() );
 
     m_pimpl->check_and_fill( res );
 
@@ -511,7 +511,7 @@ output_test_stream::check_length( std::size_t length_, bool flush_stream )
 {
     sync();
 
-    result_type res( m_pimpl->m_synced_string.length() == length_ );
+    predicate_result res( m_pimpl->m_synced_string.length() == length_ );
 
     m_pimpl->check_and_fill( res );
 
@@ -528,7 +528,7 @@ output_test_stream::is_equal( const_string arg, bool flush_stream )
 {
     sync();
 
-    result_type res( const_string( m_pimpl->m_synced_string ) == arg );
+    predicate_result res( const_string( m_pimpl->m_synced_string ) == arg );
 
     m_pimpl->check_and_fill( res );
 
@@ -545,7 +545,7 @@ output_test_stream::match_pattern( bool flush_stream )
 {
     sync();
 
-    result_type result( true );
+    predicate_result result( true );
 
     if( !m_pimpl->m_pattern.is_open() ) {
         result = false;
