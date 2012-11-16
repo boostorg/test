@@ -123,7 +123,10 @@ namespace op {
 //____________________________________________________________________________//
 
 #ifndef BOOST_NO_CXX11_DECLTYPE
-#   define DEDUCE_RESULT_TYPE( oper ) typename boost::remove_reference<decltype(boost::declval<Lhs>() oper boost::declval<Rhs>() )>::type 
+#   define DEDUCE_RESULT_TYPE( oper )                                   \
+    decltype(boost::declval<Lhs>() oper boost::declval<Rhs>() ) optype; \
+    typedef typename boost::remove_reference<optype>::type              \
+/**/
 #else
 #   define DEDUCE_RESULT_TYPE( oper ) bool
 #endif
