@@ -80,7 +80,9 @@ using std::va_list;
 #  endif
 
 #  if BOOST_WORKAROUND(_MSC_VER,  < 1300 ) || (defined(UNDER_CE) && BOOST_WORKAROUND(_MSC_VER,  < 1500 ))
-typedef void* uintptr_t;
+	 typedef void* uintptr_t;
+#  elif defined(UNDER_CE)	 
+#	 include <crtdefs.h>
 #  endif
 
 #  if !defined(NDEBUG) && defined(_MSC_VER) && !defined(UNDER_CE)
