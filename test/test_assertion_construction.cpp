@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE( test_basic_value_expression_construction )
         BOOST_CHECK( res );
     }
 
-#ifndef BOOST_NO_DECLTYPE
+#ifndef BOOST_NO_CXX11_DECLTYPE
     {
         EXPR_TYPE E = seed->* "abc";
         predicate_result const& res = E.evaluate();
@@ -128,7 +128,7 @@ BOOST_AUTO_TEST_CASE( test_comparison_expression )
 
 //____________________________________________________________________________//
 
-#ifndef BOOST_NO_DECLTYPE
+#ifndef BOOST_NO_CXX11_DECLTYPE
 
 BOOST_AUTO_TEST_CASE( test_arithmetic_ops )
 {
@@ -187,7 +187,7 @@ BOOST_AUTO_TEST_CASE( test_arithmetic_ops )
 
 //____________________________________________________________________________//
 
-#endif // BOOST_NO_DECLTYPE
+#endif // BOOST_NO_CXX11_DECLTYPE
 
 struct Testee {
     static int s_copy_counter;
@@ -353,7 +353,7 @@ BOOST_AUTO_TEST_CASE( test_pointers )
         BOOST_CHECK_EQUAL( res.message(), "(bool)Testee is false" );
     }
 
-#ifndef BOOST_NO_DECLTYPE
+#ifndef BOOST_NO_CXX11_DECLTYPE
     {
         Testee obj;
         Testee* ptr =&obj;

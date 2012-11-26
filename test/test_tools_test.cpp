@@ -649,7 +649,7 @@ public:
     int         operator&()     { return 10; }
 };
 
-#ifndef BOOST_NO_DECLTYPE
+#ifndef BOOST_NO_CXX11_DECLTYPE
 #define BOOST_TEST_FWD_1(P,M) BOOST_TEST(P)
 #define BOOST_TEST_FWD_3(P,M) BOOST_TEST(P)
 #else
