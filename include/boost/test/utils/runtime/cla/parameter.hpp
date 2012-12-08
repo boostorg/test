@@ -78,7 +78,7 @@ public:
     }
 
     // access methods
-    bool            has_argument() const                        { return m_actual_argument; }
+    bool            has_argument() const                        { return m_actual_argument!=0; }
     argument const& actual_argument() const                     { return *m_actual_argument; }
     argument_ptr    actual_argument()                           { return m_actual_argument; }
     void            reset()                                     { m_actual_argument.reset(); }
