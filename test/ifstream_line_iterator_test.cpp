@@ -32,16 +32,16 @@ BOOST_AUTO_TEST_CASE( test_default_delimeter )
 
     BOOST_CHECK( it != eoi ); 
 
-    BOOST_CHECK_EQUAL( *it, "acv ffg" ); 
+    BOOST_TEST( *it == "acv ffg" ); 
     ++it;
 
-    BOOST_CHECK_EQUAL( *it, "" ); 
+    BOOST_TEST( *it == "" ); 
     ++it;
 
-    BOOST_CHECK_EQUAL( *it, " " ); 
+    BOOST_TEST( *it == " " ); 
     ++it;
 
-    BOOST_CHECK_EQUAL( *it, "1" ); 
+    BOOST_TEST( *it == "1" ); 
     ++it;
 
     BOOST_CHECK( it == eoi ); 
@@ -57,13 +57,13 @@ BOOST_AUTO_TEST_CASE( test_custom_delimeter )
 
     BOOST_CHECK( it != eoi ); 
 
-    BOOST_CHECK_EQUAL( *it, "{ abc d " ); 
+    BOOST_TEST( *it == "{ abc d " ); 
     ++it;
 
-    BOOST_CHECK_EQUAL( *it, "\n{ d \n dsfg\n" ); 
+    BOOST_TEST( *it == "\n{ d \n dsfg\n" ); 
     ++it;
 
-    BOOST_CHECK_EQUAL( *it, "\n" ); 
+    BOOST_TEST( *it == "\n" ); 
     ++it;
 
     BOOST_CHECK( it == eoi ); 

@@ -3,7 +3,7 @@
 log level: log_successful_tests; error type: no error;
 
 164: Entering test case "error_on_demand"
-99: info: check 'no error' passed
+99: info: check 'no error' has passed
 Leaving test case "error_on_demand"
 
 ===========================

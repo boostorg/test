@@ -36,8 +36,8 @@
 # pragma warning(disable: 4702) // unreachable code
 #endif
 
-using namespace boost::unit_test;
-using namespace boost::test_tools;
+namespace ut=boost::unit_test;
+namespace tt=boost::test_tools;
 
 //____________________________________________________________________________//
 
@@ -53,6 +53,21 @@ using namespace boost::test_tools;
     BOOST_CHECK_MESSAGE( throw_, "not aborted" );   \
 }                                                   \
 /**/
+
+//____________________________________________________________________________//
+
+// thanks to http://stackoverflow.com/questions/9226400/portable-printing-of-exponent-of-a-double-to-c-iostreams
+#ifdef BOOST_MSVC
+struct ScientificNotationExponentOutputNormalizer {
+    ScientificNotationExponentOutputNormalizer() : m_old_format(_set_output_format(_TWO_DIGIT_EXPONENT)) {}
+
+    ~ScientificNotationExponentOutputNormalizer() { _set_output_format(m_old_format); }
+private:
+    unsigned m_old_format;
+};
+#else
+struct ScientificNotationExponentOutputNormalizer {};
+#endif
 
 //____________________________________________________________________________//
 
@@ -78,15 +93,15 @@ struct shorten_lf : public boost::unit_test::output::compiler_log_formatter
 std::string match_file_name( "./test_files/test_tools_test.pattern" );
 std::string save_file_name( "test_tools_test.pattern" );
 
-output_test_stream& ots()
+tt::output_test_stream& ots()
 {
-    static boost::shared_ptr<output_test_stream> inst;
+    static boost::shared_ptr<tt::output_test_stream> inst;
 
     if( !inst ) {
         inst.reset( 
-            framework::master_test_suite().argc <= 1
-                ? new output_test_stream( runtime_config::save_pattern() ? save_file_name : match_file_name, !runtime_config::save_pattern() )
-                : new output_test_stream( framework::master_test_suite().argv[1], !runtime_config::save_pattern() ) );
+            ut::framework::master_test_suite().argc <= 1
+                ? new tt::output_test_stream( ut::runtime_config::save_pattern() ? save_file_name : match_file_name, !ut::runtime_config::save_pattern() )
+                : new tt::output_test_stream( ut::framework::master_test_suite().argv[1], !ut::runtime_config::save_pattern() ) );
     }
 
     return *inst;
@@ -94,51 +109,51 @@ output_test_stream& ots()
 
 //____________________________________________________________________________//
 
-#define TEST_CASE( name )                                   \
-void name ## _impl();                                       \
-void name ## _impl_defer();                                 \
-                                                            \
-BOOST_AUTO_TEST_CASE( name )                                \
-{                                                           \
-    test_case* impl = make_test_case( &name ## _impl,       \
-                                      #name,                \
-                                      __FILE__,             \
-                                      __LINE__ );           \
-                                                            \
-    unit_test_log.set_stream( ots() );                      \
-    unit_test_log.set_threshold_level( log_nothing );       \
-    unit_test_log.set_formatter( new shorten_lf );          \
-    framework::run( impl );                                 \
-                                                            \
-    unit_test_log.set_threshold_level(                      \
-        runtime_config::log_level() != invalid_log_level    \
-            ? runtime_config::log_level()                   \
-            : log_all_errors );                             \
-    unit_test_log.set_format( runtime_config::log_format());\
-    unit_test_log.set_stream( std::cout );                  \
-    BOOST_CHECK( ots().match_pattern() );                   \
-}                                                           \
-                                                            \
-void name ## _impl()                                        \
-{                                                           \
-    unit_test_log.set_threshold_level( log_all_errors );    \
-                                                            \
-    name ## _impl_defer();                                  \
-                                                            \
-    unit_test_log.set_threshold_level( log_nothing );       \
-}                                                           \
-                                                            \
-void name ## _impl_defer()                                  \
+#define TEST_CASE( name )                                           \
+void name ## _impl();                                               \
+void name ## _impl_defer();                                         \
+                                                                    \
+BOOST_AUTO_TEST_CASE( name )                                        \
+{                                                                   \
+    ut::test_case* impl = ut::make_test_case(&name ## _impl,        \
+                                             #name,                 \
+                                             __FILE__,              \
+                                             __LINE__ );            \
+                                                                    \
+    ut::unit_test_log.set_stream( ots() );                          \
+    ut::unit_test_log.set_threshold_level( ut::log_nothing );       \
+    ut::unit_test_log.set_formatter( new shorten_lf );              \
+    ut::framework::run( impl );                                     \
+                                                                    \
+    ut::unit_test_log.set_threshold_level(                          \
+        ut::runtime_config::log_level() != ut::invalid_log_level    \
+            ? ut::runtime_config::log_level()                       \
+            : ut::log_all_errors );                                 \
+    ut::unit_test_log.set_format( ut::runtime_config::log_format());\
+    ut::unit_test_log.set_stream( std::cout );                      \
+    BOOST_TEST( ots().match_pattern() );                            \
+}                                                                   \
+                                                                    \
+void name ## _impl()                                                \
+{                                                                   \
+    ut::unit_test_log.set_threshold_level( ut::log_all_errors );    \
+                                                                    \
+    name ## _impl_defer();                                          \
+                                                                    \
+    ut::unit_test_log.set_threshold_level( ut::log_nothing );       \
+}                                                                   \
+                                                                    \
+void name ## _impl_defer()                                          \
 /**/
 
 //____________________________________________________________________________//
 
 TEST_CASE( test_BOOST_WARN )
 {
-    unit_test_log.set_threshold_level( log_warnings );
+    ut::unit_test_log.set_threshold_level( ut::log_warnings );
     BOOST_WARN( sizeof(int) == sizeof(short) );
 
-    unit_test_log.set_threshold_level( log_successful_tests );
+    ut::unit_test_log.set_threshold_level( ut::log_successful_tests );
     BOOST_WARN( sizeof(unsigned char) == sizeof(char) );
 }
 
@@ -165,7 +180,7 @@ TEST_CASE( test_BOOST_CHECK )
     BOOST_CHECK( 1==2 );
     BOOST_CHECK( i==1 );
 
-    unit_test_log.set_threshold_level( log_successful_tests );
+    ut::unit_test_log.set_threshold_level( ut::log_successful_tests );
     BOOST_CHECK( i==2 );
 }
 
@@ -181,7 +196,7 @@ TEST_CASE( test_BOOST_REQUIRE )
 
     CHECK_CRITICAL_TOOL_USAGE( BOOST_REQUIRE( j > 5 ) );
 
-    unit_test_log.set_threshold_level( log_successful_tests );
+    ut::unit_test_log.set_threshold_level( ut::log_successful_tests );
     CHECK_CRITICAL_TOOL_USAGE( BOOST_REQUIRE( j < 5 ) );
 }
 
@@ -195,7 +210,7 @@ TEST_CASE( test_BOOST_WARN_MESSAGE )
     BOOST_WARN_MESSAGE( obj_size <= 8, 
                         "object size " << obj_size << " is too big to be efficiently passed by value" );
 
-    unit_test_log.set_threshold_level( log_successful_tests );
+    ut::unit_test_log.set_threshold_level( ut::log_successful_tests );
     BOOST_WARN_MESSAGE( obj_size > 8, "object size " << obj_size << " is too small" );
 }
 
@@ -217,7 +232,7 @@ TEST_CASE( test_BOOST_CHECK_MESSAGE )
 
     BOOST_CHECK_MESSAGE( test_pred1(), "Checking predicate failed" );
 
-    unit_test_log.set_threshold_level( log_successful_tests );
+    ut::unit_test_log.set_threshold_level( ut::log_successful_tests );
     BOOST_CHECK_MESSAGE( 2+2 == 4, "Could it fail?" );
 
     int i = 1;
@@ -232,7 +247,7 @@ TEST_CASE( test_BOOST_REQUIRE_MESSAGE )
 {
     CHECK_CRITICAL_TOOL_USAGE( BOOST_REQUIRE_MESSAGE( false, "Here we should stop" ) );
 
-    unit_test_log.set_threshold_level( log_successful_tests );
+    ut::unit_test_log.set_threshold_level( ut::log_successful_tests );
     CHECK_CRITICAL_TOOL_USAGE( BOOST_REQUIRE_MESSAGE( true, "That's OK" ) );
 }
 
@@ -265,13 +280,13 @@ TEST_CASE( test_BOOST_CHECK_THROW )
     int i=0;
     BOOST_CHECK_THROW( i++, my_exception );
 
-    unit_test_log.set_threshold_level( log_warnings );
+    ut::unit_test_log.set_threshold_level( ut::log_warnings );
     BOOST_WARN_THROW( i++, my_exception );
 
-    unit_test_log.set_threshold_level( log_all_errors );
+    ut::unit_test_log.set_threshold_level( ut::log_all_errors );
     CHECK_CRITICAL_TOOL_USAGE( BOOST_REQUIRE_THROW( i++, my_exception ) );
 
-    unit_test_log.set_threshold_level( log_successful_tests );
+    ut::unit_test_log.set_threshold_level( ut::log_successful_tests );
     if( i/10 > 10 )
     {}
     else 
@@ -284,7 +299,7 @@ TEST_CASE( test_BOOST_CHECK_EXCEPTION )
 {
     BOOST_CHECK_EXCEPTION( throw my_exception( 1 ), my_exception, is_critical ); // unreachable code warning is expected
 
-    unit_test_log.set_threshold_level( log_successful_tests );
+    ut::unit_test_log.set_threshold_level( ut::log_successful_tests );
     BOOST_CHECK_EXCEPTION( throw my_exception( -1 ), my_exception, is_critical ); // unreachable code warning is expected
 }
 
@@ -351,13 +366,13 @@ TEST_CASE( test_BOOST_CHECK_EQUAL )
     char const* str2 = "test12";
     BOOST_CHECK_EQUAL( str1, str2 );
 
-    unit_test_log.set_threshold_level( log_successful_tests );
+    ut::unit_test_log.set_threshold_level( ut::log_successful_tests );
     BOOST_CHECK_EQUAL( i+1, j );
 
     char const* str3 = "1test1";
     BOOST_CHECK_EQUAL( str1, str3+1 );
 
-    unit_test_log.set_threshold_level( log_all_errors );
+    ut::unit_test_log.set_threshold_level( ut::log_all_errors );
     str1 = NULL;
     str2 = NULL;
     BOOST_CHECK_EQUAL( str1, str2 );
@@ -369,10 +384,10 @@ TEST_CASE( test_BOOST_CHECK_EQUAL )
     B b1(1);
     B b2(2);
 
-    unit_test_log.set_threshold_level( log_warnings );
+    ut::unit_test_log.set_threshold_level( ut::log_warnings );
     BOOST_WARN_EQUAL( b1, b2 );
 
-    unit_test_log.set_threshold_level( log_all_errors );
+    ut::unit_test_log.set_threshold_level( ( ut::log_all_errors ) );
     C c1( 0, 100 );
     C c2( 0, 101 );
     C c3( 1, 102 );
@@ -419,7 +434,7 @@ bool moo( int arg1, int arg2, int mod ) { return ((arg1+arg2) % mod) == 0; }
 
 BOOST_TEST_DONT_PRINT_LOG_VALUE( std::list<int> )
 
-boost::test_tools::predicate_result
+boost::test_tools::assertion_result
 compare_lists( std::list<int> const& l1, std::list<int> const& l2 )
 {
     if( l1.size() != l2.size() ) {
@@ -432,7 +447,7 @@ compare_lists( std::list<int> const& l1, std::list<int> const& l2 )
 
     return true;
 }
-
+#ifndef BOOST_TEST_NO_OLD_TOOLS
 TEST_CASE( test_BOOST_CHECK_PREDICATE )
 {
     BOOST_CHECK_PREDICATE( is_even, (14) );
@@ -446,10 +461,10 @@ TEST_CASE( test_BOOST_CHECK_PREDICATE )
     int j=15;
     BOOST_CHECK_PREDICATE( boost::bind( is_even, boost::bind( &foo, _1, _2 ) ), (i)(j) );
 
-    unit_test_log.set_threshold_level( log_warnings );
+    ut::unit_test_log.set_threshold_level( ut::log_warnings );
     BOOST_WARN_PREDICATE( moo, (12)(i)(j) );
 
-    unit_test_log.set_threshold_level( log_all_errors );
+    ut::unit_test_log.set_threshold_level( ( ut::log_all_errors ) );
     std::list<int> l1, l2, l3;
     l1.push_back( 1 );
     l3.push_back( 1 );
@@ -472,10 +487,10 @@ TEST_CASE( test_BOOST_REQUIRE_PREDICATE )
 }
 
 //____________________________________________________________________________//
-
+#endif
 TEST_CASE( test_BOOST_CHECK_EQUAL_COLLECTIONS )
 {
-    unit_test_log.set_threshold_level( log_all_errors );
+    ut::unit_test_log.set_threshold_level( ( ut::log_all_errors ) );
 
     int pattern [] = { 1, 2, 3, 4, 5, 6, 7 };
 
@@ -501,10 +516,10 @@ TEST_CASE( test_BOOST_CHECK_BITWISE_EQUAL )
 
     BOOST_CHECK_BITWISE_EQUAL( (char)0x06, (char)0x16 );
 
-    unit_test_log.set_threshold_level( log_warnings );
+    ut::unit_test_log.set_threshold_level( ut::log_warnings );
     BOOST_WARN_BITWISE_EQUAL( (char)0x26, (char)0x04 );
 
-    unit_test_log.set_threshold_level( log_all_errors );
+    ut::unit_test_log.set_threshold_level( ( ut::log_all_errors ) );
     CHECK_CRITICAL_TOOL_USAGE( BOOST_REQUIRE_BITWISE_EQUAL( (char)0x26, (int)0x26 ) );
 }
 
@@ -516,7 +531,7 @@ struct A {
 
 TEST_CASE( test_BOOST_TEST_MESSAGE )
 {
-    unit_test_log.set_threshold_level( log_messages );
+    ut::unit_test_log.set_threshold_level( ut::log_messages );
 
     BOOST_TEST_MESSAGE( "still testing" );
     BOOST_TEST_MESSAGE( "1+1=" << 2 );
@@ -574,37 +589,6 @@ BOOST_AUTO_TEST_CASE( test_BOOST_IS_DEFINED )
 
 //____________________________________________________________________________//
 
-int goo()
-{
-    static int i = 0;
-    return i++;
-}
-
-struct Foo : boost::noncopyable {
-    static int copy_counter;
-
-    Foo() {}
-    Foo( Foo const& ) { copy_counter++; }
-};
-
-int Foo::copy_counter = 0;
-
-bool operator==( Foo const&, Foo const& ) { return true; }
-std::ostream& operator<<( std::ostream& os, Foo const& ) { return os << "Foo"; }
-
-BOOST_AUTO_TEST_CASE( test_argument_handling )
-{
-    BOOST_CHECK_EQUAL( goo(), 0 );
-    BOOST_CHECK_EQUAL( goo(), 1 );
-    BOOST_CHECK_EQUAL( 2, goo() );
-    BOOST_CHECK_EQUAL( 3, goo() );
-    BOOST_CHECK_NE( goo(), 5 );
-    BOOST_CHECK_EQUAL( Foo(), Foo() );
-    BOOST_CHECK_EQUAL( Foo::copy_counter, 0 );
-}
-
-//____________________________________________________________________________//
-
 TEST_CASE( test_context_logging )
 {
     BOOST_TEST_INFO( "some context" );
@@ -642,6 +626,8 @@ TEST_CASE( test_context_logging )
 
 //____________________________________________________________________________//
 
+#ifndef BOOST_TEST_NO_NEW_TOOLS
+
 class FooType {
 public:
     FooType&    operator*()     { return *this; }
@@ -649,23 +635,19 @@ public:
     int         operator&()     { return 10; }
 };
 
-#ifndef BOOST_NO_CXX11_DECLTYPE
+#ifndef BOOST_NO_DECLTYPE
 #define BOOST_TEST_FWD_1(P,M) BOOST_TEST(P)
-#define BOOST_TEST_FWD_3(P,M) BOOST_TEST(P)
-#else
-#define BOOST_TEST_FWD_1(P,M) BOOST_CHECK_MESSAGE( P, M );
-#define BOOST_TEST_FWD_3(P,M) BOOST_ERROR(M)
-#endif
-
-#if BOOST_PP_VARIADICS
 #define BOOST_TEST_FWD_2(P,M) BOOST_TEST(P,M)
+#define BOOST_TEST_FWD_3(P,A,M) BOOST_TEST(P,A)
 #else
+#define BOOST_TEST_FWD_1(P,M) BOOST_ERROR( M );
 #define BOOST_TEST_FWD_2(P,M) BOOST_CHECK_MESSAGE( P, M );
+#define BOOST_TEST_FWD_3(P,A,M) BOOST_ERROR( M )
 #endif
 
-TEST_CASE( test_BOOST_TEST_universal )
+TEST_CASE( test_BOOST_TEST_basic_arithmetic_op )
 {
-    unit_test_log.set_threshold_level( log_successful_tests );
+    ut::unit_test_log.set_threshold_level( ut::log_successful_tests );
 
     BOOST_TEST( true );
     BOOST_TEST( false );
@@ -674,6 +656,7 @@ TEST_CASE( test_BOOST_TEST_universal )
     BOOST_TEST( bc );
 
     int i = 1;
+
     BOOST_TEST( i == 2 );
     BOOST_TEST( i != 1 );
     BOOST_TEST( i > 2 );
@@ -682,13 +665,13 @@ TEST_CASE( test_BOOST_TEST_universal )
     BOOST_TEST( i >= 5 );
 
     int j = 2;
-    BOOST_TEST_FWD_1( i+j >= 5, "check i+j >= 5 failed [1 + 2 < 5]" );
-    BOOST_TEST_FWD_1( j-i == 2, "check j-i == 2 failed [2 - 1 != 2]" );
+    BOOST_TEST_FWD_1( i+j >= 5, "check i+j >= 5 has failed [1 + 2 < 5]" );
+    BOOST_TEST_FWD_1( j-i == 2, "check j-i == 2 has failed [2 - 1 != 2]" );
 
     int* p = &i;
     BOOST_TEST( *p == 2 );
 
-    BOOST_TEST_FWD_1( j-*p == 0, "check j-*p == 0 failed [2 - 1 != 0]" );
+    BOOST_TEST_FWD_1( j-*p == 0, "check j-*p == 0 has failed [2 - 1 != 0]" );
 
     BOOST_TEST(( i > 5, true ));
 
@@ -701,13 +684,11 @@ TEST_CASE( test_BOOST_TEST_universal )
     BOOST_TEST( &F > 100 );
     BOOST_TEST( &*F > 100 );
 
-    BOOST_TEST_FWD_1( (i == 1) & (j == 1), "check (i == 1) & (j == 1) failed [1 & 0]" );
-    BOOST_TEST_FWD_1( (i == 2) | (j == 1), "check (i == 2) | (j == 1) failed [0 | 0]" );
+    BOOST_TEST_FWD_1( (i == 1) & (j == 1), "check (i == 1) & (j == 1) has failed [true & false]" );
+    BOOST_TEST_FWD_1( (i == 2) | (j == 1), "check (i == 2) | (j == 1) has failed [false | false]" );
 
     BOOST_TEST(( i == 1 && j == 1 ));
     BOOST_TEST(( i == 2 || j == 1 ));
-
-    BOOST_TEST_FWD_2( i+j==15,"This message reported instead");
 
     // check correct behavior in if clause
     if( true )
@@ -719,6 +700,16 @@ TEST_CASE( test_BOOST_TEST_universal )
     else
         BOOST_TEST( true );
 
+    BOOST_TEST_FWD_2( i+j==15, "This message reported instead including " << i << " and " << j );
+
+    // Does not work
+    // BOOST_TEST( i == 1 && j == 1 );
+    // BOOST_TEST( i == 2 || j == 1 );
+    // BOOST_TEST( i > 5 ? false : true );
+}
+
+TEST_CASE( test_BOOST_TEST_collection_comp )
+{
     std::vector<int> v;
     v.push_back( 1 );
     v.push_back( 2 );
@@ -729,17 +720,153 @@ TEST_CASE( test_BOOST_TEST_universal )
     l.push_back( 3 );
     l.push_back( 2 );
 
-    BOOST_TEST_FWD_3( v <= l, "check v <= l failed.\nMismatch in a position 2: 3 > 2" );
-    BOOST_TEST_FWD_3( v == l, "check v == l failed.\nMismatch in a position 1: 2 != 3\nMismatch in a position 2: 3 != 2" );
-
-    // Does not work
-    // BOOST_TEST( i == 1 && j == 1 );
-    // BOOST_TEST( i == 2 || j == 1 );
-    // BOOST_TEST( i > 5 ? false : true );
+    BOOST_TEST_FWD_1( v <= l, "check v <= l has failed.\nMismatch in a position 2: 3 > 2" );
+    BOOST_TEST_FWD_1( v == l, "check v == l has failed.\nMismatch in a position 1: 2 != 3\nMismatch in a position 2: 3 != 2" );
 }
 
 //____________________________________________________________________________//
 
-// !! CHECK_SMALL
+namespace boost{ namespace test_tools{ namespace tt_detail{
+template<>
+struct print_log_value<double> {
+    void    operator()( std::ostream& os, double d ) { os << std::setprecision(1) << d; }
+};
+}}}
+
+TEST_CASE( test_BOOST_TEST_fpv_comp )
+{
+    ScientificNotationExponentOutputNormalizer norm;
+
+    double d1 = 1.1e-5;
+    double d2 = 1.101e-5;
+    float  f1 = 1.1e-5f;
+
+    BOOST_TEST( tt::fpc_tolerance<double>() == 0 );
+    BOOST_TEST( d1 == d2 );
+    BOOST_TEST( tt::fpc_tolerance<double>() == 0 );
+    BOOST_TEST( d1 == d2, tt::tolerance( 1e-7 ) );
+    BOOST_TEST( tt::fpc_tolerance<double>() == 0 );
+    BOOST_TEST( d1 != f1, tt::tolerance( 1e-7 ) );
+    BOOST_TEST( tt::fpc_tolerance<double>() == 0 );
+    BOOST_TEST( tt::fpc_tolerance<float>() == 0 );
+
+    BOOST_TEST( d1 > d2 );
+    BOOST_TEST_FWD_3( d1+1./1e20 > d2,  1e-5% tt::tolerance(), "check d1+1./1e20 > d2 has failed [1e-005 + 1e-020 <= 1e-005]. Relative difference exceeds tolerance [0.000908265 > 1e-007]" );
+    BOOST_TEST( tt::fpc_tolerance<double>() == 0 );
+    BOOST_TEST( d2 <= d1, tt::tolerance( tt::fpc::percent_tolerance( 1e-5 ) ) );
+    BOOST_TEST( tt::fpc_tolerance<double>() == 0 );
+
+    BOOST_TEST_FWD_3( d1-1e-5 == 0., tt::tolerance( 1e-7 ), "check d1-1e-5 == 0. has failed [1e-005 - 1e-005 != 0]. Absolute value exceeds tolerance [|1e-006| > 1e-007]" );
+    BOOST_TEST_FWD_3( d1-1e-5 != 0., tt::tolerance( 1e-4 ), "check d1-1e-5 != 0. has failed [1e-005 - 1e-005 == 0]. Absolute value is within tolerance [|1e-006| < 0.0001]" );
+    BOOST_TEST_FWD_3( 0. != 1e-5-d1, tt::tolerance( 1e-4 ), "check 0. != 1e-5-d1 has failed [0 == -1e-006]. Absolute value is within tolerance [|-1e-006| < 0.0001]" );
+    BOOST_TEST_FWD_3( d2-1e-5 < 0., tt::tolerance( 1e-6 ), "check d2-1e-5 < 0. has failed [1e-005 - 1e-005 >= 0]. Absolute value exceeds tolerance [|1.01e-006| > 1e-006]" );
+}
+
+//____________________________________________________________________________//
+
+BOOST_TEST_DECORATOR(
++ut::tolerance(1e-3)
+)
+BOOST_AUTO_TEST_CASE( test_BOOST_TEST_fpv_comp_using_decorator )
+{
+    BOOST_TEST( tt::fpc_tolerance<double>() == 1e-3 );
+
+    double d1 = 1.1e-5;
+    double d2 = 1.101e-5;
+    BOOST_TEST( d1 == d2 );
+    BOOST_TEST( d1 > d2 );
+}
+
+//____________________________________________________________________________//
+
+BOOST_TEST_DECORATOR(
++ut::tolerance( tt::fpc::percent_tolerance( 1. ) )
+)
+BOOST_AUTO_TEST_CASE( test_BOOST_TEST_fpv_comp_using_decorator_2 )
+{
+    BOOST_TEST( tt::fpc_tolerance<double>() == 1e-2 );
+
+    double d1 = 1.1e-5;
+    double d2 = 1.101e-5;
+    BOOST_TEST( d1 > d2 );
+}
+
+//____________________________________________________________________________//
+
+TEST_CASE( test_BOOST_TEST_cstring_comp )
+{
+    char const* str1 = "test1";
+    char const* str2 = "test12";
+    std::string str3 = "test2";
+    char        str4[] = "test3";
+    char const* str5 = NULL;
+    char const* str6 = "1test1";
+
+    BOOST_TEST( str1 == str2 );
+    BOOST_TEST( str1 == str3 );
+    BOOST_TEST( str3 == str2 );
+    BOOST_TEST( str1 == str4 );
+    BOOST_TEST( str3 == str4 );
+    BOOST_TEST( str1 == str5 );
+
+    BOOST_TEST( str1 != (str6+1) );
+    BOOST_TEST( str5 != str5 );
+
+    BOOST_TEST( str3 < str1 );
+    BOOST_TEST( str1 >= str2 );
+}
+
+//____________________________________________________________________________//
+
+TEST_CASE( test_BOOST_TEST_bitwise )
+{
+    int a = 0xAB;
+    int b = 0x88;
+    short c = 0x8A;
+
+    BOOST_TEST( a == b, tt::bitwise() );
+    BOOST_TEST( c == b, tt::bitwise() );
+}
+
+//____________________________________________________________________________//
+
+int goo()
+{
+    static int i = 0;
+    return i++;
+}
+
+struct copy_counter : boost::noncopyable {
+    static int s_value;
+
+    copy_counter() {}
+    copy_counter( copy_counter const& ) { s_value++; }
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    copy_counter( copy_counter&& ) {}
+#endif
+};
+
+int copy_counter::s_value = 0;
+
+bool operator==( copy_counter const&, copy_counter const& ) { return true; }
+std::ostream& operator<<( std::ostream& os, copy_counter const& ) { return os << "copy_counter"; }
+
+BOOST_AUTO_TEST_CASE( test_argument_handling )
+{
+    BOOST_TEST( goo() == 0 );
+    BOOST_TEST( goo() == 1 );
+    BOOST_TEST( 2 == goo() );
+    BOOST_TEST( 3 == goo() );
+    BOOST_TEST( goo() != 5 );
+    BOOST_TEST( copy_counter() == copy_counter() );
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    BOOST_TEST( copy_counter::s_value == 0 );
+#endif
+}
+
+//____________________________________________________________________________//
+
+
+#endif
 
 // EOF

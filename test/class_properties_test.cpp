@@ -78,74 +78,74 @@ BOOST_AUTO_TEST_CASE( test_readonly_property )
     readonly_property<B> p_b;
     readonly_property<A> p_a;
 
-    BOOST_CHECK( p_one );
-    BOOST_CHECK( !!p_one );
+    BOOST_TEST( p_one );
+    BOOST_TEST( !!p_one );
 
     int i = p_one;
 
-    BOOST_CHECK( p_one == i );
+    BOOST_TEST( p_one == i );
 
     double d = p_one;
 
-    BOOST_CHECK( p_one == d );
+    BOOST_TEST( p_one == d );
 
-    BOOST_CHECK( p_one != 0 );
-    BOOST_CHECK( 0 != p_one );
-    BOOST_CHECK( !(p_one == 0) );
-    BOOST_CHECK( !(0 == p_one) );
+    BOOST_TEST( p_one != 0 );
+    BOOST_TEST( 0 != p_one );
+    BOOST_TEST( !(p_one == 0) );
+    BOOST_TEST( !(0 == p_one) );
 
     float fzero = 0;
 
-    BOOST_CHECK( p_one != fzero );
-    BOOST_CHECK( fzero != p_one );
+    BOOST_TEST( p_one != fzero );
+    BOOST_TEST( fzero != p_one );
 
-    BOOST_CHECK( p_one >= 1 );
-    BOOST_CHECK( 2 > p_one  );
+    BOOST_TEST( p_one >= 1 );
+    BOOST_TEST( 2 > p_one  );
 
-    BOOST_CHECK( !(p_one == p_two) );
-    BOOST_CHECK( p_one != p_two );
-    BOOST_CHECK( p_one < p_two );
+    BOOST_TEST( !(p_one == p_two) );
+    BOOST_TEST( p_one != p_two );
+    BOOST_TEST( p_one < p_two );
 
-    BOOST_CHECK_EQUAL( p_zero, 0 );
+    BOOST_TEST( p_zero == 0 );
 
-    BOOST_CHECK( (p_one - 1) == 0 );
-    BOOST_CHECK( (-p_one + 1) == 0 );
+    BOOST_TEST( (p_one - 1) == 0 );
+    BOOST_TEST( (-p_one + 1) == 0 );
 
-    BOOST_CHECK( p_true );
-    BOOST_CHECK( !p_false );
+    BOOST_TEST( p_true );
+    BOOST_TEST( !p_false );
 
-    BOOST_CHECK( (i > 0) && p_true );
-    BOOST_CHECK( p_true && (i > 0) );
-    BOOST_CHECK( (i > 0) || p_false );
-    BOOST_CHECK( p_false || (i > 0) );
+    BOOST_TEST(( (i > 0) && p_true ));
+    BOOST_TEST(( p_true && (i > 0) ));
+    BOOST_TEST(( (i > 0) || p_false ));
+    BOOST_TEST(( p_false || (i > 0) ));
 
-    BOOST_CHECK( a && p_true );
-    BOOST_CHECK( a || p_true );
+    BOOST_TEST(( a && p_true ));
+    BOOST_TEST(( a || p_true ));
 
-    BOOST_CHECK( p_true && a );
-    BOOST_CHECK( p_true && a );
+    BOOST_TEST(( p_true && a ));
+    BOOST_TEST(( p_true && a ));
 
     std::string s( "abcd" );
 
-    BOOST_CHECK( p_str == s );
-    BOOST_CHECK( s == p_str );
-    BOOST_CHECK( p_str2 != p_str );
+    BOOST_TEST( p_str == s );
+    BOOST_TEST( s == p_str );
+    BOOST_TEST( p_str2 != p_str );
 
-    BOOST_CHECK_EQUAL( p_b->foo(), 1 );
+    BOOST_TEST( p_b->foo() == 1 );
 
-    BOOST_CHECK_EQUAL( p_one ^ 3, 2 );
-    BOOST_CHECK_EQUAL( p_two / 2, 1 );
+    BOOST_TEST( (p_one ^ 3) == 2 );
+    BOOST_TEST( p_two / 2 == 1 );
 
-    BOOST_CHECK( !p_b_ptr );
+    BOOST_TEST( !p_b_ptr );
 
     C::init();
-    BOOST_CHECK( p_b_ptr );
+    BOOST_TEST( p_b_ptr );
 
-    BOOST_CHECK( !p_a_ptr );
+    BOOST_TEST( !p_a_ptr );
     D::init();
-    BOOST_CHECK( p_a_ptr );
+    BOOST_TEST( p_a_ptr );
     E::reset();
-    BOOST_CHECK( p_a_ptr );
+    BOOST_TEST( p_a_ptr );
 
     if( p_a_ptr )
         delete p_a_ptr.get();
@@ -160,29 +160,29 @@ BOOST_AUTO_TEST_CASE( test_readwrite_property )
 {
     readwrite_property<int> p_int;
 
-    BOOST_CHECK( !p_int );
-    BOOST_CHECK( p_int == 0 );
-    BOOST_CHECK( p_int != 1 );
+    BOOST_TEST( !p_int );
+    BOOST_TEST( p_int == 0 );
+    BOOST_TEST( p_int != 1 );
 
-    BOOST_CHECK( p_int < 5 );
-    BOOST_CHECK( p_int >= -5 );
+    BOOST_TEST( p_int < 5 );
+    BOOST_TEST( p_int >= -5 );
 
     p_int.value = 2;
 
-    BOOST_CHECK( p_int == 2 );
-    BOOST_CHECK( p_int );
+    BOOST_TEST( p_int == 2 );
+    BOOST_TEST( p_int );
 
     p_int.set( 3 );
 
-    BOOST_CHECK( p_int == 3 );
+    BOOST_TEST( p_int == 3 );
 
     readwrite_property<B> p_bb1;
 
-    BOOST_CHECK_EQUAL( p_bb1->foo(), 2 );
+    BOOST_TEST( p_bb1->foo() == 2 );
 
     readwrite_property<B> const p_bb2;
 
-    BOOST_CHECK_EQUAL( p_bb2->foo(), 1 );
+    BOOST_TEST( p_bb2->foo() == 1 );
 }
 
 //____________________________________________________________________________//

@@ -43,15 +43,25 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( test_BOOST_CHECK_CLOSE, FPT, test_types )
     BOOST_CHECK_CLOSE( fp1, fp2, epsilon ); \
 /**/
 
+#ifdef BOOST_TEST_NO_OLD_TOOLS
+
 #define CHECK_NOT_CLOSE( first, second, e ) \
     fp1     = static_cast<FPT>(first);      \
     fp2     = static_cast<FPT>(second);     \
     epsilon = static_cast<FPT>(e);          \
                                             \
-    BOOST_CHECK_PREDICATE(                  \
-        bind(not_func, bind(check_is_close, _1, _2, _3)),  \
-        (fp1)(fp2)(::fpc::percent_tolerance( epsilon )) ); \
+    BOOST_TEST( fp1 != fp2, fpc::percent_tolerance( epsilon ) ); \
+
+#else
+
+#define CHECK_NOT_CLOSE( first, second, e ) \
+    fp1     = static_cast<FPT>(first);      \
+    fp2     = static_cast<FPT>(second);     \
+    epsilon = static_cast<FPT>(e);          \
+                                            \
+    BOOST_CHECK( !check_is_close( fp1, fp2, ::fpc::percent_tolerance( epsilon ) ) ); \
 /**/
+#endif
 
     FPT fp1, fp2, epsilon;
 
@@ -93,15 +103,26 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( test_CHECK_CLOSE_FRACTION, FPT, test_types )
     BOOST_CHECK_CLOSE( fp1, fp2, epsilon ); \
 /**/
 
+#ifdef BOOST_TEST_NO_OLD_TOOLS
+
 #define CHECK_NOT_CLOSE( first, second, e ) \
     fp1     = static_cast<FPT>(first);      \
     fp2     = static_cast<FPT>(second);     \
     epsilon = static_cast<FPT>(e);          \
                                             \
-    BOOST_CHECK_PREDICATE(                  \
-        bind(not_func, bind(check_is_close, _1, _2, _3)),  \
-        (fp1)(fp2)(epsilon) );              \
+    BOOST_TEST( fp1 != fp2, epsilon );      \
+
+#else
+
+#define CHECK_NOT_CLOSE( first, second, e ) \
+    fp1     = static_cast<FPT>(first);      \
+    fp2     = static_cast<FPT>(second);     \
+    epsilon = static_cast<FPT>(e);          \
+                                            \
+    BOOST_CHECK( !check_is_close( fp1, fp2, epsilon ) ); \
 /**/
+#endif
+
 
     FPT fp1, fp2, epsilon;
 
@@ -135,9 +156,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( test_CHECK_CLOSE_FRACTION, FPT, test_types )
 
 BOOST_AUTO_TEST_CASE( test_type_mismatch )
 {
-    BOOST_CHECK_CLOSE_FRACTION( 2, 2.1, 0.06 );
-    BOOST_CHECK_CLOSE( 2.1, 2, 6 );
-    BOOST_CHECK_CLOSE( 2.1, 2.f, 6 );
+    BOOST_CHECK_CLOSE_FRACTION( 2., 2.1, 0.06 );
+    BOOST_CHECK_CLOSE( 2.1, 2., 6. );
+    BOOST_CHECK_CLOSE( 2.1, 2.f, 6. );
 }
 
 //____________________________________________________________________________//
@@ -147,7 +168,7 @@ BOOST_AUTO_TEST_CASE( test_CHECK_SMALL )
     BOOST_CHECK_SMALL( 1e-6, 1e-5 );
     BOOST_CHECK_SMALL( -1e-6, 1e-5 );
 
-    BOOST_CHECK_PREDICATE( bind(not_func, bind(check_is_small, _1, _2 )), (1e-6)(1e-7) );
+    BOOST_TEST( 1e-6 != 0., 1e-7 );
 }
 
 //____________________________________________________________________________//
@@ -160,20 +181,20 @@ BOOST_AUTO_TEST_CASE( test_close_at_tolerance )
     double fp2     = 1.00000002;
     double epsilon = 1e-6;
 
-    ::fpc::close_at_tolerance<double> pred( ::fpc::percent_tolerance( epsilon ), ::fpc::FPC_WEAK );
-    BOOST_CHECK_PREDICATE( pred, (fp1)(fp2) );
+//    ::fpc::close_at_tolerance<double> pred( ::fpc::percent_tolerance( epsilon ), ::fpc::FPC_WEAK );
+//    BOOST_CHECK_PREDICATE( pred, (fp1)(fp2) );
 
-    BOOST_CHECK_PREDICATE( bind(not_func, bind(check_is_close, _1, _2, _3)), 
-                           (fp1)(fp2)( ::fpc::percent_tolerance( epsilon )) );
+//    BOOST_CHECK_PREDICATE( bind(not_func, bind(check_is_close, _1, _2, _3)), 
+//                           (fp1)(fp2)( ::fpc::percent_tolerance( epsilon )) );
 
     fp1     = 1.23456e-10;
     fp2     = 1.23457e-10;
     epsilon = 8.1e-4;
 
-    BOOST_CHECK_PREDICATE( ::fpc::close_at_tolerance<double>( ::fpc::percent_tolerance( epsilon ), ::fpc::FPC_WEAK ), (fp1)(fp2) );
-    BOOST_CHECK_PREDICATE( 
-        bind(not_func, 
-             bind( ::fpc::close_at_tolerance<double>( ::fpc::percent_tolerance( epsilon ) ), _1, _2)), (fp1)(fp2) );
+//    BOOST_CHECK_PREDICATE( ::fpc::close_at_tolerance<double>( ::fpc::percent_tolerance( epsilon ), ::fpc::FPC_WEAK ), (fp1)(fp2) );
+//    BOOST_CHECK_PREDICATE( 
+//        bind(not_func, 
+//             bind( ::fpc::close_at_tolerance<double>( ::fpc::percent_tolerance( epsilon ) ), _1, _2)), (fp1)(fp2) );
 }
 
 //____________________________________________________________________________//

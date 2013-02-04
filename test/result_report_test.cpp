@@ -70,15 +70,15 @@ void check( output_test_stream& output, output_format report_format, test_unit_i
 
     results_reporter::confirmation_report( id );
     output << "*************************************************************************\n";
-    BOOST_CHECK( output.match_pattern() );
+    BOOST_TEST( output.match_pattern() );
 
     results_reporter::short_report( id );
     output << "*************************************************************************\n";
-    BOOST_CHECK( output.match_pattern() );
+    BOOST_TEST( output.match_pattern() );
 
     results_reporter::detailed_report( id );
     output << "*************************************************************************\n";
-    BOOST_CHECK( output.match_pattern() );
+    BOOST_TEST( output.match_pattern() );
 }
 
 //____________________________________________________________________________//

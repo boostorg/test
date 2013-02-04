@@ -35,16 +35,16 @@ namespace mpl = boost::mpl;
 
 BOOST_TEST_CASE_TEMPLATE_FUNCTION( test0, Number )
 {
-    BOOST_CHECK_EQUAL( 2, (int const)Number::value );
+    BOOST_TEST( 2 == (int const)Number::value );
 }
 
 //____________________________________________________________________________//
 
 BOOST_TEST_CASE_TEMPLATE_FUNCTION( test1, Number )
 {
-    BOOST_CHECK_EQUAL( 6, (int const)Number::value );
-    BOOST_REQUIRE( 2 <= (int const)Number::value );
-    BOOST_CHECK_EQUAL( 3, (int const)Number::value );
+    BOOST_TEST( 6 == (int const)Number::value );
+    BOOST_TEST_REQUIRE( 2 <= (int const)Number::value );
+    BOOST_TEST( 3 == (int const)Number::value );
 }
 
 //____________________________________________________________________________//
@@ -69,8 +69,8 @@ BOOST_AUTO_TEST_CASE( test0_only_2 )
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
     ut::unit_test_log.set_stream( std::cout );
-    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)0 );
-    BOOST_CHECK( !tr.p_aborted );
+    BOOST_TEST( tr.p_assertions_failed == 0U );
+    BOOST_TEST( !tr.p_aborted );
 }
 
 //____________________________________________________________________________//
@@ -89,8 +89,8 @@ BOOST_AUTO_TEST_CASE( test0_one_to_ten )
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
     ut::unit_test_log.set_stream( std::cout );
-    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)9 );
-    BOOST_CHECK( !tr.p_aborted );
+    BOOST_TEST( tr.p_assertions_failed == 9U );
+    BOOST_TEST( !tr.p_aborted );
 
 }
 
@@ -109,8 +109,8 @@ BOOST_AUTO_TEST_CASE( test1_one_to_five )
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
     ut::unit_test_log.set_stream( std::cout );
-    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)7 );
-    BOOST_CHECK( !tr.p_aborted );
+    BOOST_TEST( tr.p_assertions_failed == 7U );
+    BOOST_TEST( !tr.p_aborted );
 }
 
 //____________________________________________________________________________//
@@ -128,9 +128,9 @@ BOOST_AUTO_TEST_CASE( test2_one_to_three )
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
     ut::unit_test_log.set_stream( std::cout );
-    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)2 );
-    BOOST_CHECK( !tr.p_aborted );
-    BOOST_CHECK( !tr.passed() );
+    BOOST_TEST( tr.p_assertions_failed == 2U );
+    BOOST_TEST( !tr.p_aborted );
+    BOOST_TEST( !tr.passed() );
 }
 
 //____________________________________________________________________________//

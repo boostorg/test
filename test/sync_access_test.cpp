@@ -32,7 +32,7 @@ static void thread_function(boost::barrier& b)
 {
     b.wait(); /// wait until memory barrier allows the execution
     boost::mutex::scoped_lock lock(m); /// lock mutex
-    BOOST_CHECK_EQUAL(1,0); /// produce the fault
+    BOOST_TEST(1 ==0); /// produce the fault
 }
 
 BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES( test_multiple_assertion_faults, 100 )

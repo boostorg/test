@@ -136,6 +136,9 @@ BOOST_AUTO_TEST_CASE( manual_test_suite_creation )
     const_string::size_type pos = fn.rfind( "/" );
     if( pos != const_string::npos )
         fn.trim_left( pos+1 );
+    pos = fn.rfind( "\\" );
+    if( pos != const_string::npos )
+        fn.trim_left( pos+1 );
     BOOST_CHECK_EQUAL( fn, const_string( "test_tree_management_test.cpp" ) );
     BOOST_CHECK_EQUAL( ts1->p_line_num, 129U );
 

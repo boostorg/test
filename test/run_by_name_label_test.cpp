@@ -46,7 +46,7 @@ test_count( utf::test_suite* master_ts, char const** argv, int argc, unsigned ex
 
     utf::test_case_counter tcc;
     utf::traverse_test_tree( master_ts->p_id, tcc );
-    BOOST_CHECK_EQUAL( tcc.p_count, expected );
+    BOOST_TEST( tcc.p_count == expected );
 }
 
 BOOST_AUTO_TEST_CASE( test_run_by_name )
@@ -72,7 +72,7 @@ BOOST_AUTO_TEST_CASE( test_run_by_name )
     {
         utf::test_case_counter tcc;
         utf::traverse_test_tree( master_ts->p_id, tcc );
-        BOOST_CHECK_EQUAL( tcc.p_count, 9U );
+        BOOST_TEST( tcc.p_count == 9U );
     }
 
     {

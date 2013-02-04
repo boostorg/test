@@ -41,15 +41,15 @@ BOOST_AUTO_TEST_CASE( test_default_compare )
         0
         );
 
-    BOOST_CHECK_EQUAL( test_mapping[ "Key1" ], 1 );
-    BOOST_CHECK_EQUAL( test_mapping[ "Key2" ], 2 );
-    BOOST_CHECK_EQUAL( test_mapping[ "QWE" ] , 3 );
-    BOOST_CHECK_EQUAL( test_mapping[ "ASD" ] , 4 );
-    BOOST_CHECK_EQUAL( test_mapping[ "aws" ] , 5 );
-    BOOST_CHECK_EQUAL( test_mapping[ "dfg" ] , 6 );
-    BOOST_CHECK_EQUAL( test_mapping[ "dgt" ] , 7 );
-    BOOST_CHECK_EQUAL( test_mapping[ "ght" ] , 8 );
-    BOOST_CHECK_EQUAL( test_mapping[ "bla" ] , 0 );
+    BOOST_TEST( test_mapping[ "Key1" ] == 1 );
+    BOOST_TEST( test_mapping[ "Key2" ] == 2 );
+    BOOST_TEST( test_mapping[ "QWE" ]  == 3 );
+    BOOST_TEST( test_mapping[ "ASD" ]  == 4 );
+    BOOST_TEST( test_mapping[ "aws" ]  == 5 );
+    BOOST_TEST( test_mapping[ "dfg" ]  == 6 );
+    BOOST_TEST( test_mapping[ "dgt" ]  == 7 );
+    BOOST_TEST( test_mapping[ "ght" ]  == 8 );
+    BOOST_TEST( test_mapping[ "bla" ]  == 0 );
 }
 
 //____________________________________________________________________________//
@@ -65,15 +65,15 @@ BOOST_AUTO_TEST_CASE( test_custom_compare )
         0
     );
 
-    BOOST_CHECK_EQUAL( test_mapping[ "Key1" ], 1 );
-    BOOST_CHECK_EQUAL( test_mapping[ "Key2" ], 2 );
-    BOOST_CHECK_EQUAL( test_mapping[ "QWE" ] , 3 );
-    BOOST_CHECK_EQUAL( test_mapping[ "ASD" ] , 4 );
-    BOOST_CHECK_EQUAL( test_mapping[ "kEy1" ], 1 );
-    BOOST_CHECK_EQUAL( test_mapping[ "key2" ], 2 );
-    BOOST_CHECK_EQUAL( test_mapping[ "qwE" ] , 3 );
-    BOOST_CHECK_EQUAL( test_mapping[ "aSd" ] , 4 );
-    BOOST_CHECK_EQUAL( test_mapping[ "bla" ] , 0 );
+    BOOST_TEST( test_mapping[ "Key1" ] == 1 );
+    BOOST_TEST( test_mapping[ "Key2" ] == 2 );
+    BOOST_TEST( test_mapping[ "QWE" ]  == 3 );
+    BOOST_TEST( test_mapping[ "ASD" ]  == 4 );
+    BOOST_TEST( test_mapping[ "kEy1" ] == 1 );
+    BOOST_TEST( test_mapping[ "key2" ] == 2 );
+    BOOST_TEST( test_mapping[ "qwE" ]  == 3 );
+    BOOST_TEST( test_mapping[ "aSd" ]  == 4 );
+    BOOST_TEST( test_mapping[ "bla" ]  == 0 );
 }
 
 //____________________________________________________________________________//

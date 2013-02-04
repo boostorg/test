@@ -15,7 +15,7 @@
 // Boost.Test
 #include <boost/test/unit_test.hpp>
 
-#ifndef BOOST_NO_CXX11_HDR_RANDOM
+#ifndef BOOST_NO_0X_HDR_RANDOM
 
 #include <boost/test/data/monomorphic/generators/random.hpp>
 #include <boost/test/data/monomorphic/zip.hpp>
@@ -134,7 +134,7 @@ BOOST_AUTO_TEST_CASE( test_parameterized_init )
 
 //____________________________________________________________________________//
 
-#endif // BOOST_NO_CXX11_HDR_RANDOM
+#endif // BOOST_NO_0X_HDR_RANDOM
 
 
 // EOF
