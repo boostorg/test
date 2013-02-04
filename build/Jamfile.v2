@@ -15,7 +15,7 @@ project boost/test
                    <toolset>msvc:<cxxflags>-wd4673
                    <toolset>gcc:<cxxflags>-std=gnu++0x
                    <warnings>all
-                   <warnings-as-errors>on
+                   # <warnings-as-errors>on
     : usage-requirements
                    <define>BOOST_TEST_NO_AUTO_LINK=1
                    # Disable Warning about boost::noncopyable not being exported
