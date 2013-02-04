@@ -12,8 +12,8 @@
 //  Description : defines the is_forward_iterable collection type trait
 // ***************************************************************************
 
-#ifndef BOOST_TEST_IS_FRWARD_ITERABLE_HPP_110612GER
-#define BOOST_TEST_IS_FRWARD_ITERABLE_HPP_110612GER
+#ifndef BOOST_TEST_IS_FORWARD_ITERABLE_HPP_110612GER
+#define BOOST_TEST_IS_FORWARD_ITERABLE_HPP_110612GER
 
 #ifdef BOOST_NO_CXX11_DECLTYPE
 // Boost
@@ -74,7 +74,8 @@ struct is_forward_iterable_impl {
         is_present<typename T::value_type>::value                &&
         is_present<decltype(boost::declval<T>().size())>::value  &&
         is_present<decltype(boost::declval<T>().begin())>::value &&
-        !is_same<typename remove_cv<typename T::value_type>::type,char>::value
+        !is_same<typename remove_cv<typename T::value_type>::type,char>::value &&
+        !is_same<typename remove_cv<typename T::value_type>::type,wchar_t>::value
     , mpl::true_>::type
     test(int);
 
@@ -95,5 +96,5 @@ struct is_forward_iterable {
 } // namespace unit_test
 } // namespace boost
 
-#endif // BOOST_TEST_IS_FRWARD_ITERABLE_HPP_110612GER
+#endif // BOOST_TEST_IS_FORWARD_ITERABLE_HPP_110612GER
 

@@ -18,7 +18,7 @@
 // Boost.Test
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/utils/wrap_stringstream.hpp>
-#include <boost/test/tools/predicate_result.hpp>
+#include <boost/test/tools/assertion_result.hpp>
 
 // STL
 #include <cstddef>          // for std::size_t
@@ -48,10 +48,10 @@ public:
     ~output_test_stream();
 
     // checking function
-    predicate_result    is_empty( bool flush_stream = true );
-    predicate_result    check_length( std::size_t length, bool flush_stream = true );
-    predicate_result    is_equal( const_string arg_, bool flush_stream = true );
-    predicate_result    match_pattern( bool flush_stream = true );
+    assertion_result    is_empty( bool flush_stream = true );
+    assertion_result    check_length( std::size_t length, bool flush_stream = true );
+    assertion_result    is_equal( const_string arg_, bool flush_stream = true );
+    assertion_result    match_pattern( bool flush_stream = true );
 
     // explicit flush
     void            flush();

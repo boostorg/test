@@ -48,8 +48,26 @@ typedef shared_ptr<test_unit_fixture> test_unit_fixture_ptr;
 // **************              class_based_fixture             ************** //
 // ************************************************************************** //
 
-template<typename F>
+template<typename F, typename Arg=void>
 class class_based_fixture : public test_unit_fixture { 
+public: 
+    // Constructor
+    explicit class_based_fixture( Arg const& arg ) : m_inst( 0 ), m_arg( arg ) {}
+
+private:
+    // Fixture interface
+    virtual void    setup()         { m_inst = new F( m_arg ); }
+    virtual void    teardown()      { delete m_inst; }
+
+    // Data members
+    F*              m_inst;
+    Arg             m_arg;
+}; 
+
+//____________________________________________________________________________//
+
+template<typename F>
+class class_based_fixture<F,void> : public test_unit_fixture { 
 public: 
     // Constructor
     class_based_fixture() : m_inst( 0 ) {}
@@ -62,6 +80,8 @@ private:
     // Data members
     F*              m_inst;
 }; 
+
+//____________________________________________________________________________//
 
 // ************************************************************************** //
 // **************            function_based_fixture            ************** //

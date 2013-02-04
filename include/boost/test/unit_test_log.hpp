@@ -147,7 +147,7 @@ BOOST_TEST_SINGLETON_INST( unit_test_log )
 
 #define BOOST_TEST_MESSAGE( M )                                 \
     BOOST_TEST_LOG_ENTRY( ::boost::unit_test::log_messages )    \
-    << (::boost::unit_test::lazy_ostream::instance() << M)      \
+    << BOOST_TEST_LAZY_MSG( M )                                 \
 /**/
 
 //____________________________________________________________________________//

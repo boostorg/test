@@ -228,6 +228,15 @@ fixture()
 
 //____________________________________________________________________________//
 
+template<typename F, typename Arg>
+inline fixture_t
+fixture( Arg const& arg )
+{
+    return fixture_t( test_unit_fixture_ptr( new unit_test::class_based_fixture<F,Arg>( arg ) ) );
+}
+
+//____________________________________________________________________________//
+
 inline fixture_t
 fixture( boost::function<void()> const& setup, boost::function<void()> const& teardown = boost::function<void()>() )
 {

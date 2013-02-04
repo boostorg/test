@@ -74,7 +74,7 @@ public:
             res.reset();
     }
 
-    bool        has_value() const   { return m_data->m_value!=0; }
+    bool        has_value() const   { return m_data->m_value; }
     cstring     name() const        { return m_data->m_var_name; }
 
 protected:

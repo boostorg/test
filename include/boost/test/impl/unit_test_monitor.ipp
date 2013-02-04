@@ -18,7 +18,6 @@
 
 // Boost.Test
 #include <boost/test/unit_test_monitor.hpp>
-#include <boost/test/test_tools.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/tree/test_unit.hpp>
 #include <boost/test/unit_test_parameters.hpp>

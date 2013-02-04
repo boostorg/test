@@ -64,7 +64,7 @@
 
 #define BOOST_TEST_TOOL_REPORT_FORMAT( frwd_type, pred_res, assertion_descr, CT, ARGS )     \
     ::boost::test_tools::tt_detail::prod_report_format( pred_res,                           \
-        ::boost::unit_test::lazy_ostream::instance() << assertion_descr,                    \
+        BOOST_TEST_LAZY_MSG( assertion_descr ),                                             \
         ::boost::test_tools::tt_detail::CT,                                                 \
         BOOST_JOIN( BOOST_TEST_TOOL_REPORT_ARGS, frwd_type )( ARGS ) )                      \
 /**/
@@ -85,7 +85,7 @@
 
 // 1 - args exists, but do not need to be forwarded
 #define BOOST_TEST_TOOL_IMPL1( P, assertion_descr, TL, CT, ARGS )                           \
-    if( ::boost::test_tools::predicate_result const& pr = P BOOST_PP_SEQ_TO_TUPLE( ARGS ) ) \
+    if( ::boost::test_tools::assertion_result const& pr = P BOOST_PP_SEQ_TO_TUPLE( ARGS ) ) \
         ((void)0);                                                                          \
     else BOOST_JOIN( BOOST_JOIN( BOOST_TEST_TOOL_REPORT_, TL), _FAILURE)(                   \
             BOOST_TEST_TOOL_REPORT_FORMAT( 1, pr, assertion_descr, CT, ARGS ) )             \
@@ -95,7 +95,7 @@
 
 // 2 - assertion with no arguments; 
 #define BOOST_TEST_TOOL_IMPL2( P, assertion_descr, TL, CT, _ )                              \
-    if( ::boost::test_tools::predicate_result const& pr = P )                               \
+    if( ::boost::test_tools::assertion_result const& pr = P )                               \
         ((void)0);                                                                          \
     else BOOST_JOIN( BOOST_JOIN( BOOST_TEST_TOOL_REPORT_, TL), _FAILURE)(                   \
             BOOST_TEST_TOOL_REPORT_FORMAT( 2, pr, assertion_descr, CT, _ ) )                \
@@ -117,7 +117,7 @@ namespace tt_detail {
 // ************************************************************************** //
 
 BOOST_TEST_DECL std::string 
-prod_report_format( predicate_result const& pr, 
+prod_report_format( assertion_result const& pr, 
                     unit_test::lazy_ostream const& assertion_descr, 
                     check_type ct, std::size_t num_args, ... );
 
@@ -158,13 +158,13 @@ predicate_holder( Pred P, char const* assertion_descr, check_type ct            
                   BOOST_PP_REPEAT_ ## z( BOOST_PP_ADD( n, 1 ), FUNC_PARAMS, _ ) )   \
 : m_failure_descr( 0 )                                                              \
 {                                                                                   \
-    predicate_result const& pr =                                                    \
+    assertion_result const& pr =                                                    \
         P( BOOST_PP_REPEAT_ ## z( BOOST_PP_ADD( n, 1 ), PRED_PARAMS, _ ) );         \
     if( pr ) return;                                                                \
                                                                                     \
     m_failure_descr = new std::string;                                              \
     *m_failure_descr = prod_report_format( pr,                                      \
-        ::boost::unit_test::lazy_ostream::instance() << assertion_descr,            \
+        BOOST_TEST_LAZY_MSG( assertion_descr ),                                     \
         ct,                                                                         \
         BOOST_PP_ADD( n, 1 )                                                        \
         BOOST_PP_REPEAT_ ## z( BOOST_PP_ADD( n, 1 ), ARG_INFO, _ ) );               \

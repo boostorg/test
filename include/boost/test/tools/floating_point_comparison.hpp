@@ -17,7 +17,7 @@
 
 // Boost.Test
 #include <boost/test/detail/global_typedef.hpp>
-#include <boost/test/tools/predicate_result.hpp>
+#include <boost/test/tools/assertion_result.hpp>
 
 // Boost
 #include <boost/limits.hpp>  // for std::numeric_limits
@@ -164,6 +164,20 @@ percent_tolerance( FPT v )
 //____________________________________________________________________________//
 
 // ************************************************************************** //
+// **************                 fp_comp_type                 ************** //
+// ************************************************************************** //
+
+template<typename FPT1, typename FPT2>
+struct comp_supertype {
+    // deduce "better" type from types of arguments being compared
+    // if one type is floating and the second integral we use floating type and 
+    // value of integral type is promoted to the floating. The same for float and double
+    // But we don't want to compare two values of integral types using this tool.
+    typedef typename numeric::conversion_traits<FPT1,FPT2>::supertype type;
+    BOOST_STATIC_ASSERT( !is_integral<type>::value );
+};
+
+// ************************************************************************** //
 // **************             close_at_tolerance               ************** //
 // ************************************************************************** //
 
@@ -198,7 +212,9 @@ public:
             ? (fraction_of_right <= m_fraction_tolerance && fraction_of_left <= m_fraction_tolerance) 
             : (fraction_of_right <= m_fraction_tolerance || fraction_of_left <= m_fraction_tolerance) );
 
-        if( !res )
+        if( res )
+            m_failed_fraction = (fraction_of_right > m_fraction_tolerance ? fraction_of_right : fraction_of_left);
+        else
             m_failed_fraction = (fraction_of_right > m_fraction_tolerance ? fraction_of_right : fraction_of_left);
 
         return res;
@@ -219,20 +235,13 @@ template<typename FPT1, typename FPT2, typename ToleranceType>
 bool
 is_close_to( FPT1 left, FPT2 right, ToleranceType tolerance )
 {
-    // deduce "better" type from types of arguments being compared
-    // if one type is floating and the second integral we use floating type and 
-    // value of integral type is promoted to the floating. The same for float and double
-    // But we don't want to compare two values of integral types using this tool.
-    typedef typename numeric::conversion_traits<FPT1,FPT2>::supertype FPT;
-    BOOST_STATIC_ASSERT( !is_integral<FPT>::value );
-
-    return fpc::close_at_tolerance<FPT>( tolerance, FPC_STRONG )( left, right );
+    return fpc::close_at_tolerance<typename fpc::comp_supertype<FPT1,FPT2>::type>( tolerance, FPC_STRONG )( left, right );
 }
 
 //____________________________________________________________________________//
 
 // ************************************************************************** //
-// **************             close_at_tolerance               ************** //
+// **************            small_with_tolerance              ************** //
 // ************************************************************************** //
 
 template<typename FPT>
@@ -242,7 +251,7 @@ public:
     typedef bool result_type;
 
     // Constructor
-    explicit    small_with_tolerance( FPT tolerance ) 
+    explicit    small_with_tolerance( FPT tolerance ) // <= absolute tolerance
     : m_tolerance( tolerance )
     {
         BOOST_ASSERT( m_tolerance >= 0 ); // no reason for the tolerance to be negative
@@ -274,61 +283,6 @@ is_small( FPT fpv, FPT tolerance )
 
 } // namespace fpc
 } // namespace math
-
-namespace test_tools {
-
-namespace fpc = math::fpc;
-
-// ************************************************************************** //
-// **************               check_is_close                 ************** //
-// ************************************************************************** //
-
-struct BOOST_TEST_DECL check_is_close_t {
-    // Public typedefs
-    typedef bool result_type;
-
-    template<typename FPT1, typename FPT2, typename ToleranceType>
-    predicate_result
-    operator()( FPT1 left, FPT2 right, ToleranceType tolerance ) const
-    {
-        predicate_result pr( fpc::is_close_to( left, right, tolerance ) );
-
-        if( !pr )
-            pr.message() << tolerance;
-
-        return pr;
-    }
-};
-
-namespace {
-check_is_close_t const& check_is_close = unit_test::ut_detail::static_constant<check_is_close_t>::value;
-}
-
-//____________________________________________________________________________//
-
-// ************************************************************************** //
-// **************               check_is_small                 ************** //
-// ************************************************************************** //
-
-struct BOOST_TEST_DECL check_is_small_t {
-    // Public typedefs
-    typedef bool result_type;
-
-    template<typename FPT>
-    bool
-    operator()( FPT fpv, FPT tolerance ) const
-    {
-        return fpc::is_small( fpv, tolerance );
-    }
-};
-
-namespace {
-check_is_small_t const& check_is_small = unit_test::ut_detail::static_constant<check_is_small_t>::value;
-}
-
-//____________________________________________________________________________//
-
-} // namespace test_tools
 } // namespace boost
 
 #include <boost/test/detail/enable_warnings.hpp>

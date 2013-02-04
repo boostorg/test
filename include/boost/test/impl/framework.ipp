@@ -24,7 +24,6 @@
 #include <boost/test/results_collector.hpp>
 #include <boost/test/progress_monitor.hpp>
 #include <boost/test/results_reporter.hpp>
-#include <boost/test/test_tools.hpp>
 
 #include <boost/test/tree/observer.hpp>
 #include <boost/test/tree/test_unit.hpp>
@@ -40,6 +39,7 @@
 #include <boost/test/detail/global_typedef.hpp>
 
 #include <boost/test/utils/foreach.hpp>
+#include <boost/test/utils/basic_cstring/io.hpp>
 
 // Boost
 #include <boost/timer.hpp>

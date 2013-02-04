@@ -17,12 +17,18 @@
 
 // Boost.Test
 #include <boost/test/utils/is_forward_iterable.hpp>
+#include <boost/test/utils/is_cstring.hpp>
+#include <boost/test/utils/basic_cstring/compare.hpp>
+
+#include <boost/test/tools/floating_point_comparison.hpp>
+#include <boost/test/tools/fpc_tolerance.hpp>
 
 // Boost
 #include <boost/mpl/assert.hpp>
 #include <boost/utility/declval.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/remove_reference.hpp>
+#include <boost/type_traits/is_floating_point.hpp>
 
 // STL
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
@@ -150,7 +156,8 @@ struct name {                                       \
             Rhs const&          rhs)                \
     {                                               \
         lhs.report( ostr );                         \
-        ostr << revert() << rhs;                    \
+        ostr << revert()                            \
+             << tt_detail::print_helper( rhs );     \
     }                                               \
                                                     \
     static char const* revert()                     \
@@ -165,11 +172,13 @@ BOOST_TEST_FOR_EACH_CONST_OP( DEFINE_CONST_OPER )
 
 //____________________________________________________________________________//
 
+namespace op_detail {
+
 template <typename OP, typename Lhs, typename Rhs>
-inline predicate_result
+inline assertion_result
 compare_collections( Lhs const& lhs, Rhs const& rhs )
 {
-    predicate_result pr( true );
+    assertion_result pr( true );
 
     if( lhs.size() != rhs.size() ) {
         pr = false;
@@ -192,51 +201,206 @@ compare_collections( Lhs const& lhs, Rhs const& rhs )
     return pr;
 }
 
+} // namespace op_detail
+
 //____________________________________________________________________________//
 
-#define DEFINE_COLLECTION_COMPARISON( oper, name, _ )       \
-template<typename Lhs,typename Rhs>                         \
-struct name<Lhs,Rhs,typename boost::enable_if_c<            \
-unit_test::is_forward_iterable<Lhs>::value &&               \
-unit_test::is_forward_iterable<Rhs>::value>::type> {        \
-public:                                                     \
-    typedef predicate_result result_type;                   \
-                                                            \
-    static predicate_result                                 \
-    eval( Lhs const& lhs, Rhs const& rhs)                   \
-    {                                                       \
-        typedef name<typename boost::remove_reference<Lhs>  \
-                        ::type::value_type,                 \
-                     typename boost::remove_reference<Rhs>  \
-                        ::type::value_type> elem_comp_op;   \
-        return compare_collections<elem_comp_op>(lhs, rhs); \
-    }                                                       \
-                                                            \
-    template<typename PrevExprType>                         \
-    static void                                             \
-    report( std::ostream&,                                  \
-            PrevExprType const&,                            \
-            Rhs const& ) {}                                 \
-};                                                          \
+#define DEFINE_CSTRING_COMPARISON( oper, name, rev )                \
+template<typename Lhs,typename Rhs>                                 \
+struct name<Lhs,Rhs,typename boost::enable_if_c<                    \
+    unit_test::is_cstring<Lhs>::value &&                            \
+    unit_test::is_cstring<Rhs>::value>::type> {                     \
+    typedef typename boost::add_const<                              \
+                typename remove_pointer<                            \
+                    typename decay<Lhs>::type>::type>::type         \
+        lhs_char_type;                                              \
+    typedef typename boost::add_const<                              \
+                typename remove_pointer<                            \
+                    typename decay<Rhs>::type>::type>::type         \
+        rhs_char_type;                                              \
+public:                                                             \
+    typedef assertion_result result_type;                           \
+                                                                    \
+    static bool                                                     \
+    eval( Lhs const& lhs, Rhs const& rhs)                           \
+    {                                                               \
+        return unit_test::basic_cstring<lhs_char_type>(lhs) oper    \
+               unit_test::basic_cstring<rhs_char_type>(rhs);        \
+    }                                                               \
+                                                                    \
+    template<typename PrevExprType>                                 \
+    static void                                                     \
+    report( std::ostream&       ostr,                               \
+            PrevExprType const& lhs,                                \
+            Rhs const&          rhs)                                \
+    {                                                               \
+        lhs.report( ostr );                                         \
+        ostr << revert()                                            \
+             << tt_detail::print_helper( rhs );                     \
+    }                                                               \
+                                                                    \
+    static char const* revert()                                     \
+    { return " " #rev " "; }                                        \
+};                                                                  \
 /**/
 
+BOOST_TEST_FOR_EACH_COMP_OP( DEFINE_CSTRING_COMPARISON )
+#undef DEFINE_CSTRING_COMPARISON
+
 //____________________________________________________________________________//
 
+#define DEFINE_COLLECTION_COMPARISON( oper, name, _ )               \
+template<typename Lhs,typename Rhs>                                 \
+struct name<Lhs,Rhs,typename boost::enable_if_c<                    \
+    unit_test::is_forward_iterable<Lhs>::value &&                   \
+    unit_test::is_forward_iterable<Rhs>::value>::type> {            \
+public:                                                             \
+    typedef assertion_result result_type;                           \
+                                                                    \
+    static assertion_result                                         \
+    eval( Lhs const& lhs, Rhs const& rhs)                           \
+    {                                                               \
+        typedef name<typename Lhs::value_type,                      \
+                     typename Rhs::value_type> OP;                  \
+        return op_detail::compare_collections<OP>(lhs, rhs);        \
+    }                                                               \
+                                                                    \
+    template<typename PrevExprType>                                 \
+    static void                                                     \
+    report( std::ostream&,                                          \
+            PrevExprType const&,                                    \
+            Rhs const& ) {}                                         \
+};                                                                  \
+/**/
+
 BOOST_TEST_FOR_EACH_COMP_OP( DEFINE_COLLECTION_COMPARISON )
+#undef DEFINE_COLLECTION_COMPARISON
+
+//____________________________________________________________________________//
+
+namespace op_detail {
+
+template<typename OP, typename FPT>
+struct compare_fpv {
+    enum { cmp_direct = true };
+
+    template <typename Lhs, typename Rhs>
+    static assertion_result
+    compare( Lhs const& lhs, Rhs const& rhs )
+    {
+        fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_STRONG );
+
+        assertion_result ar( P( lhs, rhs ) );
+        if( !ar )
+            ar.message() << "Relative difference exceeds tolerance ["
+                         << P.failed_fraction() << " > " << P.fraction_tolerance() << ']';
+        return ar;
+    }
+
+    static assertion_result
+    compare_0( FPT const& fpv )
+    {
+        fpc::small_with_tolerance<FPT> P( fpc_tolerance<FPT>() );
+
+        assertion_result ar( P( fpv ) );
+        if( !ar )
+            ar.message() << "Absolute value exceeds tolerance [|" << fpv << "| > "<< fpc_tolerance<FPT>() << ']';
+
+        return ar;
+    }
+};
+
+//____________________________________________________________________________//
+
+template<typename Lhs, typename Rhs, typename FPT>
+struct compare_fpv<op::NE<Lhs,Rhs>,FPT> {
+    enum { cmp_direct = false };
+
+    static assertion_result
+    compare( Lhs const& lhs, Rhs const& rhs )
+    {
+        fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_STRONG );
+        
+        assertion_result ar( !P( lhs, rhs ) );
+        if( !ar )
+            ar.message() << "Relative difference is within tolerance ["
+                         << P.failed_fraction() << " < " << fpc_tolerance<FPT>() << ']';
+        return ar;
+    }
+
+    static assertion_result
+    compare_0( FPT const& fpv )
+    {
+        fpc::small_with_tolerance<FPT> P( fpc_tolerance<FPT>() );
+
+        assertion_result ar( !P( fpv ) );
+        if( !ar )
+            ar.message() << "Absolute value is within tolerance [|" << fpv << "| < "<< fpc_tolerance<FPT>() << ']';
+        return ar;
+    }
+};
+
+//____________________________________________________________________________//
+
+} // namespace op_detail
+
+#define DEFINE_FPV_COMPARISON( oper, name, rev )                    \
+template<typename Lhs,typename Rhs>                                 \
+struct name<Lhs,Rhs,typename boost::enable_if_c<                    \
+    is_floating_point<Lhs>::value &&                                \
+    is_floating_point<Rhs>::value>::type> {                         \
+        typedef typename numeric::conversion_traits<Lhs,Rhs         \
+    >::supertype FPT;                                               \
+    typedef name<Lhs,Rhs> OP;                                       \
+public:                                                             \
+    typedef assertion_result result_type;                           \
+                                                                    \
+    static bool                                                     \
+    eval_direct( Lhs const& lhs, Rhs const& rhs)                    \
+    {                                                               \
+        return lhs oper rhs;                                        \
+    }                                                               \
+                                                                    \
+    static assertion_result                                         \
+    eval( Lhs const& lhs, Rhs const& rhs)                           \
+    {                                                               \
+        if( lhs == Lhs() )                                          \
+            return op_detail::compare_fpv<OP,Rhs>::compare_0(rhs);  \
+                                                                    \
+        if( rhs == Rhs() )                                          \
+            return op_detail::compare_fpv<OP,Lhs>::compare_0(lhs);  \
+                                                                    \
+        bool direct_res = eval_direct( lhs, rhs );                  \
+                                                                    \
+        if(direct_res && op_detail::compare_fpv<OP,FPT>::cmp_direct \
+            || fpc_tolerance<FPT>() == FPT())                       \
+            return direct_res;                                      \
+                                                                    \
+        return op_detail::compare_fpv<OP,FPT>::compare(lhs, rhs);   \
+    }                                                               \
+                                                                    \
+    template<typename PrevExprType>                                 \
+    static void                                                     \
+    report( std::ostream& ostr,                                     \
+            PrevExprType const& lhs,                                \
+            Rhs const& rhs )                                        \
+    {                                                               \
+        lhs.report( ostr );                                         \
+        ostr << revert()                                            \
+             << tt_detail::print_helper( rhs );                     \
+    }                                                               \
+                                                                    \
+    static char const* revert()                                     \
+    { return " " #rev " "; }                                        \
+};                                                                  \
+/**/
+
+BOOST_TEST_FOR_EACH_COMP_OP( DEFINE_FPV_COMPARISON )
+#undef DEFINE_FPV_COMPARISON
+
+//____________________________________________________________________________//
 
 } // namespace op
-
-// ************************************************************************** //
-// **************             assertion::expression            ************** //
-// ************************************************************************** //
-
-#ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
-class expression {
-public:
-    // expression interface
-    virtual predicate_result    evaluate() const = 0;
-};
-#endif
 
 // ************************************************************************** //
 // **************          assertion::expression_base          ************** //
@@ -246,35 +410,36 @@ public:
 template<typename Lhs, typename Rhs, typename OP> class binary_expr;
 
 template<typename ExprType,typename ValType>
-class expression_base 
-#ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
-: public expression
-#endif
-{
+class expression_base {
 public:
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 
 #define ADD_OP_SUPPORT( oper, name, _ )                         \
     template<typename T>                                        \
-    binary_expr<ExprType,T,op::name<ValType,T> >                \
-    operator oper( T&& rhs ) const                              \
+    binary_expr<ExprType,T,                                     \
+        op::name<ValType,typename remove_reference<T>::type> >  \
+    operator oper( T&& rhs )                                    \
     {                                                           \
-        return binary_expr<ExprType,T,op::name<ValType,T> >(    \
-            *static_cast<ExprType const*>(this),                \
-            std::forward<T>(rhs) );                             \
+        return binary_expr<ExprType,T,                          \
+         op::name<ValType,typename remove_reference<T>::type> > \
+            ( std::forward<ExprType>(                           \
+                *static_cast<ExprType*>(this) ),                \
+              std::forward<T>(rhs) );                           \
     }                                                           \
 /**/
 #else
 
 #define ADD_OP_SUPPORT( oper, name, _ )                         \
     template<typename T>                                        \
-    binary_expr<ExprType,T,op::name<ValType,T> >                \
+    binary_expr<ExprType,typename decay<T const>::type,         \
+        op::name<ValType,typename decay<T const>::type> >       \
     operator oper( T const& rhs ) const                         \
     {                                                           \
-        return binary_expr<ExprType,T,op::name<ValType,T> >(    \
-            *static_cast<ExprType const*>(this),                \
-            rhs );                                              \
+        typedef typename decay<T const>::type Rhs;              \
+        return binary_expr<ExprType,Rhs,op::name<ValType,Rhs> > \
+            ( *static_cast<ExprType const*>(this),              \
+              rhs );                                            \
     }                                                           \
 /**/
 #endif
@@ -282,10 +447,11 @@ public:
     BOOST_TEST_FOR_EACH_CONST_OP( ADD_OP_SUPPORT )
     #undef ADD_OP_SUPPORT
 
+#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
     // Disabled operators
     template<typename T>
     ExprType&
-    operator ||( T const& )
+    operator ||( T const& rhs )
     {
         BOOST_MPL_ASSERT_MSG(false, CANT_USE_LOGICAL_OPERATOR_OR_WITHIN_THIS_TESTING_TOOL, () );
 
@@ -294,7 +460,7 @@ public:
 
     template<typename T>
     ExprType&
-    operator &&( T const& )
+    operator &&( T const& rhs )
     {
         BOOST_MPL_ASSERT_MSG(false, CANT_USE_LOGICAL_OPERATOR_AND_WITHIN_THIS_TESTING_TOOL, () );
 
@@ -307,6 +473,7 @@ public:
 
         return false;
     }
+#endif
 };
 
 // ************************************************************************** //
@@ -315,20 +482,24 @@ public:
 // simple value expression
 
 template<typename T>
-class value_expr : public expression_base<value_expr<T>,T> {
+class value_expr : public expression_base<value_expr<T>,typename remove_reference<T>::type> {
 public:
     // Public types
     typedef T                   result_type;
 
     // Constructor
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    value_expr( value_expr&& ve )
+    : m_value( std::forward<T>(ve.m_value) )
+    {}
     explicit                    value_expr( T&& val )
     : m_value( std::forward<T>(val) )
+    {}
 #else
     explicit                    value_expr( T const& val )
     : m_value( val )
-#endif
     {}
+#endif
 
     // Specific expresson interface
     T const&                    value() const
@@ -337,7 +508,7 @@ public:
     }
     void                        report( std::ostream& ostr ) const
     {
-        ostr << m_value;
+        ostr << tt_detail::print_helper( m_value );
     }
 
     // Mutating operators
@@ -356,23 +527,22 @@ public:
 #undef ADD_OP_SUPPORT
 
     // expression interface
-#ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
-    virtual predicate_result    evaluate() const
-#else
-    predicate_result            evaluate() const
-#endif
+    assertion_result            evaluate( bool no_message = false ) const
     {
-        predicate_result res( value() );
-        if( !res )
-            format_message( res.message(), value() );
+        assertion_result res( value() );
+        if( no_message || res )
+            return res;
 
-        return res;
+        format_message( res.message(), value() );
+
+        return tt_detail::format_assertion_result( "", res.message().str() );
     }
 
 private:
     template<typename U>
-    static void format_message( wrap_stringstream& ostr, U const& v )    { ostr << "(bool)" << v << " is false"; }
-    static void format_message( wrap_stringstream& , bool )        {}
+    static void format_message( wrap_stringstream& ostr, U const& v )   { ostr << "[(bool)" << v << " is false]"; }
+    static void format_message( wrap_stringstream& ostr, bool v )       {}
+    static void format_message( wrap_stringstream& ostr, assertion_result const& v ) {}
 
     // Data members
     T                           m_value;
@@ -384,16 +554,19 @@ private:
 // binary expression
 
 template<typename LExpr, typename Rhs, typename OP>
-class binary_expr : public expression_base<binary_expr<LExpr,Rhs,OP>,typename OP::result_type>
-{
+class binary_expr : public expression_base<binary_expr<LExpr,Rhs,OP>,typename OP::result_type> {
 public:
     // Public types
     typedef typename OP::result_type result_type;
 
     // Constructor
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-    binary_expr( LExpr const& lhs, Rhs&& rhs )
-    : m_lhs( lhs )
+    binary_expr( binary_expr&& be )
+    : m_lhs( std::forward<LExpr>(be.m_lhs) )
+    , m_rhs( std::forward<Rhs>(be.m_rhs) )
+    {}
+    binary_expr( LExpr&& lhs, Rhs&& rhs )
+    : m_lhs( std::forward<LExpr>(lhs) )
     , m_rhs( std::forward<Rhs>(rhs) )
     {}
 #else
@@ -413,19 +586,21 @@ public:
         return OP::report( ostr, m_lhs, m_rhs );
     }
 
-#ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
-    virtual predicate_result    evaluate() const
-#else
-    predicate_result            evaluate() const
-#endif
+    assertion_result            evaluate( bool no_message = false ) const
     {
-        predicate_result res( value() );
-        if( !res )
-            report( res.message().stream() );
+        assertion_result const expr_res( value() );
+        if( no_message || expr_res )
+            return expr_res;
 
-        return res;
+        wrap_stringstream buff;
+        report( buff.stream() );
+
+        return tt_detail::format_assertion_result( buff.stream().str(), expr_res.message() );
     }
 
+    // To support custom manipulators
+    LExpr const&                lhs() const     { return m_lhs; }
+    Rhs const&                  rhs() const     { return m_rhs; }
 private:
     // Data members
     LExpr                       m_lhs;

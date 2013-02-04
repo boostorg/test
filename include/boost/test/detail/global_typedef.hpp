@@ -18,7 +18,7 @@
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 #include <boost/test/detail/workaround.hpp>
 
-#define BOOST_TEST_L( s )         boost::unit_test::const_string( s, sizeof( s ) - 1 )
+#define BOOST_TEST_L( s )         ::boost::unit_test::const_string( s, sizeof( s ) - 1 )
 #define BOOST_TEST_STRINGIZE( s ) BOOST_TEST_L( BOOST_STRINGIZE( s ) )
 #define BOOST_TEST_EMPTY_STRING   BOOST_TEST_L( "" )
 

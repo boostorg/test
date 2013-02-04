@@ -122,6 +122,8 @@ operator<<( lazy_ostream_impl<PrevPrevType,TPrev> const& prev, R& (BOOST_TEST_CA
 
 #endif
 
+#define BOOST_TEST_LAZY_MSG( M ) (::boost::unit_test::lazy_ostream::instance() << M)
+
 } // namespace unit_test
 } // namespace boost
 

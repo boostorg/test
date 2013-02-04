@@ -22,7 +22,6 @@
 
 // Boost.Test
 #include <boost/test/utils/iterator/input_iterator_facade.hpp>
-#include <boost/test/utils/callback.hpp>
 #include <boost/test/utils/named_params.hpp>
 
 // Boost
@@ -99,7 +98,7 @@ class config_file_iterator : public unit_test::input_iterator_facade<config_file
     typedef unit_test::input_iterator_facade<config_file_iterator,cstring,cstring> base;
 public:
     // Public typedefs
-    typedef unit_test::callback1<cstring>   command_handler;
+    typedef boost::function<cstring ()>   command_handler;
 
     // Constructors
                     config_file_iterator() {}

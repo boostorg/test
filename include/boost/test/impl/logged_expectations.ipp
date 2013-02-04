@@ -21,13 +21,13 @@
 #if BOOST_TEST_SUPPORT_INTERACTION_TESTING
 
 #include <boost/test/detail/global_typedef.hpp>
+#include <boost/test/detail/suppress_warnings.hpp>
 
 #include <boost/test/utils/iterator/token_iterator.hpp>
 
 #include <boost/test/interaction/interaction_based.hpp>
-#include <boost/test/test_tools.hpp>
 
-#include <boost/test/detail/suppress_warnings.hpp>
+#include <boost/test/test_tools.hpp> // BOOST_REQUIRE_MESSAGE
 
 // Boost
 #include <boost/lexical_cast.hpp>
@@ -96,9 +96,9 @@ expectations_logger::expectations_logger( const_string log_file_name, bool test_
         const_string cline( line );
         string_token_iterator tit( cline, (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
 
-        BOOST_CHECK_EQUAL( *tit, FILE_SIG ); 
+        BOOST_CHECK( *tit == FILE_SIG ); 
         ++tit;
-        BOOST_CHECK_EQUAL( *tit, ELOG_VER );
+        BOOST_CHECK( *tit == ELOG_VER );
     }
     else {
         m_log_file << FILE_SIG << CLMN_SEP << ELOG_VER << LINE_SEP;
@@ -118,7 +118,8 @@ expectations_logger::decision_point( const_string, std::size_t )
         const_string cline( line );
         string_token_iterator tit( cline, (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
         
-        BOOST_CHECK_EQUAL( *tit, DP_SIG ); ++tit;
+        BOOST_CHECK( *tit == DP_SIG ); 
+        ++tit;
         return lexical_cast<bool>( *tit );
     }
     else {
@@ -141,8 +142,9 @@ expectations_logger::enter_scope( const_string, std::size_t, const_string scope_
         const_string cline( line );
         string_token_iterator tit( cline, (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
         
-        BOOST_CHECK_EQUAL( *tit, SCOPE_SIG ); ++tit;
-        BOOST_CHECK_EQUAL( *tit, scope_name );
+        BOOST_CHECK( *tit == SCOPE_SIG ); 
+        ++tit;
+        BOOST_CHECK( *tit == scope_name );
     }
     else {
         m_log_file << SCOPE_SIG << CLMN_SEP << scope_name << LINE_SEP;
@@ -164,8 +166,9 @@ expectations_logger::allocated( const_string, std::size_t, void*, std::size_t s 
         const_string cline( line );
         string_token_iterator tit( cline, (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
         
-        BOOST_CHECK_EQUAL( *tit, ALLOC_SIG ); ++tit;
-        BOOST_CHECK_EQUAL( lexical_cast<std::size_t>( *tit ), s );
+        BOOST_CHECK( *tit == ALLOC_SIG );
+        ++tit;
+        BOOST_CHECK( lexical_cast<std::size_t>( *tit ) == s );
     }
     else {
         m_log_file << ALLOC_SIG << CLMN_SEP << s << LINE_SEP;
@@ -185,8 +188,9 @@ expectations_logger::data_flow( const_string d )
         const_string cline( line );
         string_token_iterator tit( cline, (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
         
-        BOOST_CHECK_EQUAL( *tit, DATA_SIG ); ++tit;
-        BOOST_CHECK_EQUAL( *tit, d );
+        BOOST_CHECK( *tit == DATA_SIG );
+        ++tit;
+        BOOST_CHECK( *tit == d );
     }
     else {
         m_log_file << DATA_SIG << CLMN_SEP << d << LINE_SEP;
@@ -206,7 +210,8 @@ expectations_logger::return_value( const_string default_value )
         const_string cline( line );
         string_token_iterator tit( cline, (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
         
-        BOOST_CHECK_EQUAL( *tit, RETURN_SIG ); ++tit;
+        BOOST_CHECK( *tit == RETURN_SIG );
+        ++tit;
         
         return std::string( tit->begin(), tit->size() );
     }

@@ -9,8 +9,8 @@
 //
 //  Version     : $Revision$
 //
-//  Description : forward to new locaton
+//  Description : forward to new locaton/name
 // ***************************************************************************
 
 // Boost.Test
-#include <boost/test/tools/predicate_result.hpp>
+#include <boost/test/tools/assertion_result.hpp>

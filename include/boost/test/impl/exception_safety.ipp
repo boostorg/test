@@ -27,11 +27,12 @@
 #include <boost/test/utils/iterator/token_iterator.hpp>
 
 #include <boost/test/interaction/interaction_based.hpp>
-#include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/tree/observer.hpp>
 #include <boost/test/debug.hpp>
+
+#include <boost/test/test_tools.hpp> // BOOST_REQUIRE_MESSAGE
 
 #include <boost/test/detail/suppress_warnings.hpp>
 

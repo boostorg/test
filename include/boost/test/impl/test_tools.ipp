@@ -16,9 +16,13 @@
 #define BOOST_TEST_TEST_TOOLS_IPP_012205GER
 
 // Boost.Test
-#include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_log.hpp>
+#include <boost/test/tools/context.hpp>
 #include <boost/test/tools/output_test_stream.hpp>
+
+#include <boost/test/tools/detail/fwd.hpp>
+#include <boost/test/tools/detail/print_helper.hpp>
+
 #include <boost/test/framework.hpp>
 #include <boost/test/tree/test_unit.hpp>
 #include <boost/test/execution_monitor.hpp> // execution_aborted
@@ -53,6 +57,7 @@ namespace std { using ::wcscmp; }
 
 namespace boost {
 namespace test_tools {
+namespace tt_detail {
 
 // ************************************************************************** //
 // **************                print_log_value               ************** //
@@ -106,8 +111,6 @@ print_log_value<wchar_t const*>::operator()( std::ostream& ostr, wchar_t const* 
 
 //____________________________________________________________________________//
 
-namespace tt_detail {
-
 // ************************************************************************** //
 // **************            TOOL BOX Implementation           ************** //
 // ************************************************************************** //
@@ -119,7 +122,7 @@ static char const* rever_str [] = { " != ", " == ", " >= ", " > " , " <= ", " < 
 
 template<typename OutStream>
 void
-format_report( OutStream& os, predicate_result const& pr, unit_test::lazy_ostream const& assertion_descr,
+format_report( OutStream& os, assertion_result const& pr, unit_test::lazy_ostream const& assertion_descr,
                tool_level tl, check_type ct,
                std::size_t num_args, va_list args,
                char const*  prefix, char const*  suffix )
@@ -134,20 +137,18 @@ format_report( OutStream& os, predicate_result const& pr, unit_test::lazy_ostrea
             os << ". " << pr.message();
         break;
 
-    case CHECK_BUILT_ASSERTION:
+    case CHECK_BUILT_ASSERTION: {
         os << prefix << assertion_descr << suffix;
 
         if( tl != PASS ) {
             const_string details_message = pr.message();
 
             if( !details_message.is_empty() ) {
-                if( first_char( details_message ) != '\n' )
-                    os << " [" << details_message << "]" ;
-                else
-                    os << "." << details_message;
+                os << details_message;
             }
         }
         break;
+    }
 
     case CHECK_MSG:
         if( tl == PASS )
@@ -189,7 +190,7 @@ format_report( OutStream& os, predicate_result const& pr, unit_test::lazy_ostrea
         /* toler_descr = */               va_arg( args, char const* );
         lazy_ostream const* toler_val   = va_arg( args, lazy_ostream const* );
 
-        os << "difference{" << pr.message() << (ct == CHECK_CLOSE ? "%" : "")
+        os << "difference{" << pr.message()
                             << "} between " << arg1_descr << "{" << *arg1_val
                             << "} and "               << arg2_descr << "{" << *arg2_val
                             << ( tl == PASS ? "} doesn't exceed " : "} exceeds " )
@@ -281,17 +282,20 @@ format_report( OutStream& os, predicate_result const& pr, unit_test::lazy_ostrea
 //____________________________________________________________________________//
 
 bool
-check_impl( predicate_result const& pr, lazy_ostream const& assertion_descr,
-            const_string file_name, std::size_t line_num,
-            tool_level tl, check_type ct,
-            std::size_t num_args, ... )
+report_assertion( assertion_result const&   ar, 
+                  lazy_ostream const&       assertion_descr,
+                  const_string              file_name, 
+                  std::size_t               line_num,
+                  tool_level                tl, 
+                  check_type                ct,
+                  std::size_t               num_args, ... )
 {
     using namespace unit_test;
 
     if( framework::current_test_case_id() == INV_TEST_UNIT_ID )
         throw std::runtime_error( "can't use testing tools outside of test case implementation" );
 
-    if( !!pr )
+    if( !!ar )
         tl = PASS;
 
     log_level    ll;
@@ -302,7 +306,7 @@ check_impl( predicate_result const& pr, lazy_ostream const& assertion_descr,
     case PASS:
         ll      = log_successful_tests;
         prefix  = "check ";
-        suffix  = " passed";
+        suffix  = " has passed";
         break;
     case WARN:
         ll      = log_warnings;
@@ -312,12 +316,12 @@ check_impl( predicate_result const& pr, lazy_ostream const& assertion_descr,
     case CHECK:
         ll      = log_all_errors;
         prefix  = "check ";
-        suffix  = " failed";
+        suffix  = " has failed";
         break;
     case REQUIRE:
         ll      = log_fatal_errors;
         prefix  = "critical check ";
-        suffix  = " failed";
+        suffix  = " has failed";
         break;
     default:
         return true;
@@ -327,7 +331,7 @@ check_impl( predicate_result const& pr, lazy_ostream const& assertion_descr,
     va_list args;
     va_start( args, num_args );
 
-    format_report( unit_test_log, pr, assertion_descr, tl, ct, num_args, args, prefix, suffix );
+    format_report( unit_test_log, ar, assertion_descr, tl, ct, num_args, args, prefix, suffix );
 
     va_end( args );
     unit_test_log << unit_test::log::end();
@@ -358,15 +362,42 @@ check_impl( predicate_result const& pr, lazy_ostream const& assertion_descr,
 
 //____________________________________________________________________________//
 
+assertion_result
+format_assertion_result( const_string expr_val, const_string details )
+{
+    assertion_result res(false);
+    
+    bool starts_new_line = first_char( expr_val ) == '\n';
+
+    if( !starts_new_line && !expr_val.is_empty() )
+        res.message().stream() << " [" << expr_val << "]";
+
+    if( !details.is_empty() ) {
+        if( first_char(details) != '[' )
+            res.message().stream() << ". ";
+        else
+            res.message().stream() << " ";
+
+        res.message().stream() << details;
+    }
+
+    if( starts_new_line )
+        res.message().stream() << "." << expr_val;
+
+    return res;
+}
+
+//____________________________________________________________________________//
+
 BOOST_TEST_DECL std::string 
-prod_report_format( predicate_result const& pr, unit_test::lazy_ostream const& assertion_descr, check_type ct, std::size_t num_args, ... )
+prod_report_format( assertion_result const& ar, unit_test::lazy_ostream const& assertion_descr, check_type ct, std::size_t num_args, ... )
 {
     std::ostringstream msg_buff;
 
     va_list args;
     va_start( args, num_args );
 
-    format_report( msg_buff, pr, assertion_descr, CHECK, ct, num_args, args, "assertion ", " failed" );
+    format_report( msg_buff, ar, assertion_descr, CHECK, ct, num_args, args, "assertion ", " failed" );
 
     va_end( args );
 
@@ -375,7 +406,7 @@ prod_report_format( predicate_result const& pr, unit_test::lazy_ostream const& a
 
 //____________________________________________________________________________//
 
-predicate_result
+assertion_result
 equal_impl( char const* left, char const* right )
 {
     return (left && right) ? std::strcmp( left, right ) == 0 : (left == right);
@@ -385,7 +416,7 @@ equal_impl( char const* left, char const* right )
 
 #if !defined( BOOST_NO_CWCHAR )
 
-predicate_result
+assertion_result
 equal_impl( wchar_t const* left, wchar_t const* right )
 {
     return (left && right) ? std::wcscmp( left, right ) == 0 : (left == right);
@@ -452,7 +483,7 @@ struct output_test_stream::Impl
         return res;
     }
 
-    void            check_and_fill( predicate_result& res )
+    void            check_and_fill( assertion_result& res )
     {
         if( !res.p_predicate_value )
             res.message() << "Output content: \"" << m_synced_string << '\"';
@@ -471,9 +502,8 @@ output_test_stream::output_test_stream( const_string pattern_file_name, bool mat
 
         m_pimpl->m_pattern.open( pattern_file_name.begin(), m );
 
-        BOOST_WARN_MESSAGE( m_pimpl->m_pattern.is_open(),
-                             "Can't open pattern file " << pattern_file_name
-                                << " for " << (match_or_save ? "reading" : "writing") );
+        if( !m_pimpl->m_pattern.is_open() )
+            BOOST_TEST_MESSAGE( "Can't open pattern file " << pattern_file_name << " for " << (match_or_save ? "reading" : "writing") );
     }
 
     m_pimpl->m_match_or_save    = match_or_save;
@@ -489,12 +519,12 @@ output_test_stream::~output_test_stream()
 
 //____________________________________________________________________________//
 
-predicate_result
+assertion_result
 output_test_stream::is_empty( bool flush_stream )
 {
     sync();
 
-    predicate_result res( m_pimpl->m_synced_string.empty() );
+    assertion_result res( m_pimpl->m_synced_string.empty() );
 
     m_pimpl->check_and_fill( res );
 
@@ -506,12 +536,12 @@ output_test_stream::is_empty( bool flush_stream )
 
 //____________________________________________________________________________//
 
-predicate_result
+assertion_result
 output_test_stream::check_length( std::size_t length_, bool flush_stream )
 {
     sync();
 
-    predicate_result res( m_pimpl->m_synced_string.length() == length_ );
+    assertion_result res( m_pimpl->m_synced_string.length() == length_ );
 
     m_pimpl->check_and_fill( res );
 
@@ -523,12 +553,12 @@ output_test_stream::check_length( std::size_t length_, bool flush_stream )
 
 //____________________________________________________________________________//
 
-predicate_result
+assertion_result
 output_test_stream::is_equal( const_string arg, bool flush_stream )
 {
     sync();
 
-    predicate_result res( const_string( m_pimpl->m_synced_string ) == arg );
+    assertion_result res( const_string( m_pimpl->m_synced_string ) == arg );
 
     m_pimpl->check_and_fill( res );
 
@@ -540,12 +570,12 @@ output_test_stream::is_equal( const_string arg, bool flush_stream )
 
 //____________________________________________________________________________//
 
-predicate_result
+assertion_result
 output_test_stream::match_pattern( bool flush_stream )
 {
     sync();
 
-    predicate_result result( true );
+    assertion_result result( true );
 
     if( !m_pimpl->m_pattern.is_open() ) {
         result = false;

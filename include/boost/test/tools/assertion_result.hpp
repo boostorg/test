@@ -35,22 +35,22 @@ namespace boost {
 namespace test_tools {
 
 // ************************************************************************** //
-// **************                predicate_result              ************** //
+// **************                assertion_result              ************** //
 // ************************************************************************** //
 
-class BOOST_TEST_DECL predicate_result {
+class BOOST_TEST_DECL assertion_result {
     typedef unit_test::const_string      const_string;
     struct dummy { void nonnull() {} };
     typedef void (dummy::*safe_bool)();
 
 public:
     // Constructor
-    predicate_result( bool pv_ ) 
+    assertion_result( bool pv_ ) 
     : p_predicate_value( pv_ )
     {}
 
     template<typename BoolConvertable>
-    predicate_result( BoolConvertable const& pv_ ) : p_predicate_value( !!pv_ ) {}
+    assertion_result( BoolConvertable const& pv_ ) : p_predicate_value( !!pv_ ) {}
 
     // Access methods
     bool                operator!() const           { return !p_predicate_value; }
@@ -58,7 +58,7 @@ public:
     operator            safe_bool() const           { return !!p_predicate_value ? &dummy::nonnull : 0; }
 
     // Public properties
-    BOOST_READONLY_PROPERTY( bool, (predicate_result) ) p_predicate_value;
+    BOOST_READONLY_PROPERTY( bool, (assertion_result) ) p_predicate_value;
 
     // Access methods
     bool                has_empty_message() const   { return !m_message; }
@@ -75,6 +75,8 @@ private:
     // Data members
     shared_ptr<wrap_stringstream> m_message;
 };
+
+typedef assertion_result predicate_result;
 
 } // namespace test_tools
 } // namespace boost
