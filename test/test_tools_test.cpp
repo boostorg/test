@@ -93,7 +93,8 @@ struct shorten_lf : public boost::unit_test::output::compiler_log_formatter
 std::string match_file_name( "./test_files/test_tools_test.pattern" );
 std::string save_file_name( "test_tools_test.pattern" );
 
-tt::output_test_stream& ots()
+static tt::output_test_stream&
+ots()
 {
     static boost::shared_ptr<tt::output_test_stream> inst;
 
@@ -110,8 +111,8 @@ tt::output_test_stream& ots()
 //____________________________________________________________________________//
 
 #define TEST_CASE( name )                                           \
-void name ## _impl();                                               \
-void name ## _impl_defer();                                         \
+static void name ## _impl();                                        \
+static void name ## _impl_defer();                                  \
                                                                     \
 BOOST_AUTO_TEST_CASE( name )                                        \
 {                                                                   \
