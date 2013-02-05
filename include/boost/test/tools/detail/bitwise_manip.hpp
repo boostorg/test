@@ -48,7 +48,7 @@ operator<<( unit_test::lazy_ostream const&, bitwise )   { return 0; }
 namespace tt_detail {
 
 template<typename Lhs, typename Rhs, typename E>
-assertion_result
+inline assertion_result
 bitwise_compare(Lhs const& lhs, Rhs const& rhs, E const& expr )
 {
     assertion_result    pr( true );
@@ -89,7 +89,7 @@ bitwise_compare(Lhs const& lhs, Rhs const& rhs, E const& expr )
 //____________________________________________________________________________//
 
 template<typename T1, typename T2, typename T3, typename T4>
-assertion_result
+inline assertion_result
 operator<<(assertion_evaluate_t<assertion::binary_expr<T1,T2,assertion::op::EQ<T3,T4> > > const& ae, bitwise )
 {
     return bitwise_compare( ae.m_e.lhs().value(), ae.m_e.rhs(), ae.m_e );

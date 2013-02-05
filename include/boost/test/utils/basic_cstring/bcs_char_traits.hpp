@@ -119,11 +119,11 @@ struct char_traits_with_find : std::string_char_traits<CharT> {
     }
 };
 
-template<> struct bcs_char_traits_impl<char> : char_traits_with_find<char> {};
-template<> struct bcs_char_traits_impl<wchar_t> : char_traits_with_find<wchar_t> {};
+template<> struct bcs_char_traits_impl<char> : public char_traits_with_find<char> {};
+template<> struct bcs_char_traits_impl<wchar_t> : public char_traits_with_find<wchar_t> {};
 #else
-template<> struct bcs_char_traits_impl<char> : std::char_traits<char> {};
-template<> struct bcs_char_traits_impl<wchar_t> : std::char_traits<wchar_t> {};
+template<> struct bcs_char_traits_impl<char> : public std::char_traits<char> {};
+template<> struct bcs_char_traits_impl<wchar_t> : public std::char_traits<wchar_t> {};
 #endif
 
 template<typename CharT>

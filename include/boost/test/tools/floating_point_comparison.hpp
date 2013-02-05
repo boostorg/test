@@ -147,7 +147,7 @@ struct tolerance_traits<percent_tolerance_t<FPT> > {
 //____________________________________________________________________________//
 
 template<typename FPT>
-std::ostream& operator<<( std::ostream& out, percent_tolerance_t<FPT> t )
+inline std::ostream& operator<<( std::ostream& out, percent_tolerance_t<FPT> t )
 {
     return out << t.m_value;
 }
@@ -232,7 +232,7 @@ private:
 // ************************************************************************** //
 
 template<typename FPT1, typename FPT2, typename ToleranceType>
-bool
+inline bool
 is_close_to( FPT1 left, FPT2 right, ToleranceType tolerance )
 {
     return fpc::close_at_tolerance<typename fpc::comp_supertype<FPT1,FPT2>::type>( tolerance, FPC_STRONG )( left, right );
@@ -273,7 +273,7 @@ private:
 // ************************************************************************** //
 
 template<typename FPT>
-bool
+inline bool
 is_small( FPT fpv, FPT tolerance )
 {
     return small_with_tolerance<FPT>( tolerance )( fpv );

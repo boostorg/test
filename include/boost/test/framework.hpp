@@ -92,7 +92,7 @@ BOOST_TEST_DECL test_unit_id        current_test_case_id(); /* safe version of a
 
 BOOST_TEST_DECL test_unit&  get( test_unit_id, test_unit_type );
 template<typename UnitType>
-UnitType&               get( test_unit_id id )
+inline UnitType&            get( test_unit_id id )
 {
     return static_cast<UnitType&>( get( id, static_cast<test_unit_type>(UnitType::type) ) );
 }
@@ -116,13 +116,13 @@ void                    apply_filters( test_unit_id );
 // **************                framework errors              ************** //
 // ************************************************************************** //
 
-struct BOOST_TEST_DECL internal_error : std::runtime_error {
+struct BOOST_TEST_DECL internal_error : public std::runtime_error {
     internal_error( const_string m ) : std::runtime_error( std::string( m.begin(), m.size() ) ) {}
 };
 
 //____________________________________________________________________________//
 
-struct BOOST_TEST_DECL setup_error : std::runtime_error {
+struct BOOST_TEST_DECL setup_error : public std::runtime_error {
     setup_error( const_string m ) : std::runtime_error( std::string( m.begin(), m.size() ) ) {}
 };
 

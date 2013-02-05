@@ -46,26 +46,26 @@ namespace unit_test {
 
 #ifdef BOOST_NO_CXX11_DECLTYPE
 template<typename T>
-struct is_forward_iterable : mpl::false_ {};
+struct is_forward_iterable : public mpl::false_ {};
 
 template<typename T>
-struct is_forward_iterable<T const> : is_forward_iterable<T> {};
+struct is_forward_iterable<T const> : public is_forward_iterable<T> {};
 
 template<typename T>
-struct is_forward_iterable<T&> : is_forward_iterable<T> {};
+struct is_forward_iterable<T&> : public is_forward_iterable<T> {};
 
 template<typename T>
-struct is_forward_iterable<std::vector<T> > : mpl::true_ {};
+struct is_forward_iterable<std::vector<T> > : public mpl::true_ {};
 
 template<typename T>
-struct is_forward_iterable<std::list<T> > : mpl::true_ {};
+struct is_forward_iterable<std::list<T> > : public mpl::true_ {};
 
 #else
 
 namespace ut_detail {
 
 template<typename T>
-struct is_present : mpl::true_ {};
+struct is_present : public mpl::true_ {};
 
 struct is_forward_iterable_impl {
     template<typename T>

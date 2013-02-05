@@ -101,7 +101,7 @@ BOOST_PP_REPEAT( BOOST_TEST_MAX_PREDICATE_ARITY, IMPL_FRWD, _ )
 //____________________________________________________________________________//
 
 template <class Left, class Right>
-assertion_result equal_impl( Left const& left, Right const& right )
+inline assertion_result equal_impl( Left const& left, Right const& right )
 {
     return left == right;
 }
@@ -301,7 +301,7 @@ struct BOOST_TEST_DECL check_is_close_t {
 //____________________________________________________________________________//
 
 template<typename FPT1, typename FPT2, typename ToleranceType>
-assertion_result
+inline assertion_result
 check_is_close( FPT1 left, FPT2 right, ToleranceType tolerance )
 {
     return check_is_close_t()( left, right, tolerance );
@@ -328,7 +328,7 @@ struct BOOST_TEST_DECL check_is_small_t {
 //____________________________________________________________________________//
 
 template<typename FPT>
-bool
+inline bool
 check_is_small( FPT fpv, FPT tolerance )
 {
     return fpc::is_small( fpv, tolerance );

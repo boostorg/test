@@ -12,13 +12,16 @@
 //  Description : contains definition for all test tools in test toolbox
 // ***************************************************************************
 
-#ifndef BOOST_TEST_OLD_TOOLBOX_HPP_111712GER
-#define BOOST_TEST_OLD_TOOLBOX_HPP_111712GER
+#ifndef BOOST_TEST_TOOLS_INTERFACE_HPP_111712GER
+#define BOOST_TEST_TOOLS_INTERFACE_HPP_111712GER
 
 // Boost.Test
 #include <boost/test/unit_test_log.hpp>
 #ifdef BOOST_TEST_TOOLS_DEBUGGABLE
 #include <boost/test/debug.hpp>
+#endif
+#ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
+#include <boost/test/tools/detail/expression_holder.hpp>
 #endif
 
 // Boost
@@ -362,4 +365,4 @@ do { try {                                                                  \
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_TEST_OLD_TOOLBOX_HPP_111712GER
+#endif // BOOST_TEST_TOOLS_INTERFACE_HPP_111712GER

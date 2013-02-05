@@ -33,21 +33,21 @@ namespace unit_test {
 namespace ut_detail {
 
 template<typename T>
-struct is_cstring_impl : mpl::false_ {};
+struct is_cstring_impl : public mpl::false_ {};
 
 template<typename T>
-struct is_cstring_impl<T const*> : is_cstring_impl<T*> {};
+struct is_cstring_impl<T const*> : public is_cstring_impl<T*> {};
 
 template<>
-struct is_cstring_impl<char*> : mpl::true_ {};
+struct is_cstring_impl<char*> : public mpl::true_ {};
 
 template<>
-struct is_cstring_impl<wchar_t*> : mpl::true_ {};
+struct is_cstring_impl<wchar_t*> : public mpl::true_ {};
 
 } // namespace ut_detail
 
 template<typename T>
-struct is_cstring : ut_detail::is_cstring_impl<typename decay<T>::type> {};
+struct is_cstring : public ut_detail::is_cstring_impl<typename decay<T>::type> {};
 
 } // namespace unit_test
 } // namespace boost

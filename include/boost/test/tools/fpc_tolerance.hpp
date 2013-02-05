@@ -33,7 +33,7 @@ namespace fpc = math::fpc;
 // ************************************************************************** //
 
 template<typename FPT>
-FPT&
+inline FPT&
 fpc_tolerance()
 {
     static FPT s_value = FPT();
