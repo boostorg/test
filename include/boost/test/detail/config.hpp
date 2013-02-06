@@ -119,4 +119,8 @@ class type_info;
 #define BOOST_TEST_MAIN BOOST_TEST_MODULE
 #endif
 
+#ifdef __PGI
+#define BOOST_PP_VARIADICS 1
+#endif
+
 #endif // BOOST_TEST_CONFIG_HPP_071894GER

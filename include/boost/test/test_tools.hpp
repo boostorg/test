@@ -18,8 +18,8 @@
 // Boost.Test
 //#define BOOST_TEST_NO_OLD_TOOLS
 
-#if !defined(BOOST_PP_VARIADICS)
-//#define BOOST_TEST_NO_NEW_TOOLS
+#if !BOOST_PP_VARIADICS
+#define BOOST_TEST_NO_NEW_TOOLS
 #endif
 
 // #define BOOST_TEST_TOOLS_UNDER_DEBUGGER
