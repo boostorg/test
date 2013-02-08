@@ -59,7 +59,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( test_BOOST_CHECK_CLOSE, FPT, test_types )
     fp2     = static_cast<FPT>(second);     \
     epsilon = static_cast<FPT>(e);          \
                                             \
-    BOOST_CHECK( !check_is_close( fp1, fp2, ::fpc::percent_tolerance( epsilon ) ) ); \
+    BOOST_TEST( !check_is_close( fp1, fp2, ::fpc::percent_tolerance( epsilon ) ) ); \
 /**/
 #endif
 
@@ -119,7 +119,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( test_CHECK_CLOSE_FRACTION, FPT, test_types )
     fp2     = static_cast<FPT>(second);     \
     epsilon = static_cast<FPT>(e);          \
                                             \
-    BOOST_CHECK( !check_is_close( fp1, fp2, epsilon ) ); \
+    BOOST_TEST( !check_is_close( fp1, fp2, epsilon ) ); \
 /**/
 #endif
 
@@ -149,7 +149,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( test_CHECK_CLOSE_FRACTION, FPT, test_types )
     CHECK_NOT_CLOSE( 1, 1.0002, 1.1e-4 );
 
 #undef CHECK_CLOSE
-#undef CHECK_NOT_CLOSE
+#undef CHECK_NOT_CLOSE                        
 }
 
 //____________________________________________________________________________//
@@ -168,7 +168,9 @@ BOOST_AUTO_TEST_CASE( test_CHECK_SMALL )
     BOOST_CHECK_SMALL( 1e-6, 1e-5 );
     BOOST_CHECK_SMALL( -1e-6, 1e-5 );
 
+#ifndef BOOST_TEST_NO_NEW_TOOLS
     BOOST_TEST( 1e-6 != 0., 1e-7 );
+#endif
 }
 
 //____________________________________________________________________________//
