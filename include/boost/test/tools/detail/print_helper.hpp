@@ -25,6 +25,7 @@
 #include <boost/type_traits/is_array.hpp>
 #include <boost/type_traits/is_function.hpp>
 #include <boost/type_traits/is_abstract.hpp>
+#include <limits>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
