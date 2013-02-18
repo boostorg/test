@@ -98,7 +98,7 @@ operator<<(assertion_evaluate_t<assertion::binary_expr<T1,T2,assertion::op::EQ<T
 //____________________________________________________________________________//
 
 inline check_type
-operator<<( assertion_type const& at, bitwise )
+operator<<( assertion_type const& , bitwise )
 {
     return CHECK_BUILT_ASSERTION;
 }
