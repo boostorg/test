@@ -13,7 +13,7 @@ project boost/test
                    <link>shared,<toolset>msvc:<cxxflags>-wd4275
                    <toolset>msvc:<cxxflags>-wd4671
                    <toolset>msvc:<cxxflags>-wd4673
-                   <toolset>gcc:<cxxflags>-std=gnu++0x
+                   #<toolset>gcc:<cxxflags>-std=gnu++0x
                    <warnings>all
                    # <warnings-as-errors>on
     : usage-requirements
