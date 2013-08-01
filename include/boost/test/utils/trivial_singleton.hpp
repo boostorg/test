@@ -20,8 +20,6 @@
 #include <boost/detail/workaround.hpp>
 
 // Boost
-#include <boost/noncopyable.hpp>
-
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
@@ -34,12 +32,16 @@ namespace unit_test {
 // ************************************************************************** //
 
 template<typename Derived>
-class singleton : private boost::noncopyable {
+class singleton {
 public:
-    static Derived& instance() { static Derived the_inst; return the_inst; }    
+    static Derived& instance() { static Derived the_inst; return the_inst; }
+
+    BOOST_DELETED_FUNCTION(singleton(singleton const&))
+    BOOST_DELETED_FUNCTION(singleton& operator=(singleton const&))
+
 protected:
-    singleton()  {}
-    ~singleton() {}
+    BOOST_DEFAULTED_FUNCTION(singleton(), {})
+    BOOST_DEFAULTED_FUNCTION(~singleton(), {})
 };
 
 //____________________________________________________________________________//
