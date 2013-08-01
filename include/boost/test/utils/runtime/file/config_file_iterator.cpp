@@ -26,6 +26,7 @@
 // Boost
 #include <boost/scoped_array.hpp>
 #include <boost/bind.hpp>
+#include <boost/noncopyable.hpp>
 
 // Boost.Test
 #include <boost/test/utils/basic_cstring/compare.hpp>
