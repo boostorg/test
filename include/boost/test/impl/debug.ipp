@@ -958,7 +958,9 @@ break_memory_alloc( long mem_alloc_order_num )
     unit_test::ut_detail::ignore_unused_variable_warning( mem_alloc_order_num );
 
 #ifdef BOOST_MS_CRT_BASED_DEBUG
-    _CrtSetBreakAlloc( mem_alloc_order_num );
+    // only set the value if one was supplied (do not use default used by UTF just as a indicator to enable leak detection)
+    if( mem_alloc_order_num > 1 )
+        _CrtSetBreakAlloc( mem_alloc_order_num );
 #endif // BOOST_MS_CRT_BASED_DEBUG
 }
 
