@@ -79,7 +79,7 @@ using std::va_list;
     typedef unsigned uintptr_t;
 #  endif
 
-#  if BOOST_WORKAROUND(_MSC_VER,  < 1300 ) || (defined(UNDER_CE) && BOOST_WORKAROUND(_MSC_VER,  < 1500 ))
+#  if defined(UNDER_CE) && BOOST_WORKAROUND(_MSC_VER,  < 1500 )
 	 typedef void* uintptr_t;
 #  elif defined(UNDER_CE)	 
 #	 include <crtdefs.h>

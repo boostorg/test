@@ -49,9 +49,7 @@ class type_info;
 
 //____________________________________________________________________________//
 
-#if !defined(BOOST_NO_STD_LOCALE) &&            \
-    !BOOST_WORKAROUND(BOOST_MSVC, < 1310)  &&   \
-    !defined(__MWERKS__) 
+#if !defined(BOOST_NO_STD_LOCALE) && !defined(__MWERKS__)
 #  define BOOST_TEST_USE_STD_LOCALE 1
 #endif
 
@@ -78,14 +76,13 @@ class type_info;
 //____________________________________________________________________________//
 
 #if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) && \
-    !BOOST_WORKAROUND(BOOST_MSVC, <1310) && \
     !BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530))
 #  define BOOST_TEST_SUPPORT_INTERACTION_TESTING 1
 #endif
 
 //____________________________________________________________________________//
 
-#if !defined(__BORLANDC__) && !BOOST_WORKAROUND( BOOST_MSVC, < 1300 ) && !BOOST_WORKAROUND( __SUNPRO_CC, < 0x5100 )
+#if !defined(__BORLANDC__) && !BOOST_WORKAROUND( __SUNPRO_CC, < 0x5100 )
 #define BOOST_TEST_SUPPORT_TOKEN_ITERATOR 1
 #endif
 
