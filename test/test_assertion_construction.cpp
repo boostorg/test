@@ -20,6 +20,8 @@
 #include <boost/test/tools/detail/expression_holder.hpp>
 #endif
 
+#include <boost/noncopyable.hpp>
+
 //____________________________________________________________________________//
 
 #ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
