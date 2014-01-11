@@ -261,7 +261,7 @@ public:
     template<typename ExceptionType>
     void        erase_exception_translator( boost::type<ExceptionType>* = 0 )
     {
-        m_custom_translators = m_custom_translators->erase<ExceptionType>( m_custom_translators );
+        m_custom_translators = m_custom_translators->template erase<ExceptionType>( m_custom_translators );
     }
 
 private:
