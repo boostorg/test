@@ -52,7 +52,7 @@ boostbook standalone
 ########################################################################
 # HTML documentation for $(BOOST_ROOT)/doc/html
 
-xml asio_doc
+xml test_doc
   :
     test.qbk
   ;
