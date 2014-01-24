@@ -27,6 +27,8 @@
 [def __UTF__ /UTF/]
 
 
+[/<link linkend="utf.user-guide.testing-tools">testing tools</link>]
+[def __testing_tools__ [*testing tools]]
 
 [/ to be replaced by the proper link]
 [/ currently replace <xref linkend="utf.flag.alt-init-api" endterm="utf.flag.alt-init-api"/> ]
@@ -36,6 +38,9 @@
 [/ to be replaced by the proper link]
 [/ currently replace <xref linkend="utf.flag.dyn-link" endterm="utf.flag.dyn-link"/> ]
 [def __BOOST_TEST_DYN_LINK__ `BOOST_TEST_DYN_LINK`]
+
+[def __BOOST_TEST_CHECKPOINT__ `BOOST_TEST_CHECKPOINT`]
+[def __BOOST_TEST_PASSPOINT__ `BOOST_TEST_PASSPOINT`]
 
 [/=============================================================================]
 

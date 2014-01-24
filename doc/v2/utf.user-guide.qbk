@@ -116,11 +116,9 @@ An inclusion of the header causes the complete implementation of the __UTF__ to 
 source file. The header ``boost/test/unit_test.hpp`` doesn't have to be
 included anymore. You don't have to worry about disabling [*auto-linking] feature either. [/ <link linkend="utf.compilation.auto-linking"> ]
 It's done in the implementation header already. This variant
-can't be used with the <xref linkend="multi-file-test-module.def" endterm="multi-file-test-module.def"/>.
+can't be used with the [*multi-file test module]. [/ <xref linkend="multi-file-test-module.def" endterm="multi-file-test-module.def"/>]
 Otherwise it's almost identical from the usage prospective to the static library variant of the __UTF__.
-In fact the only difference is the name of the include file:
-``boost/test/included/unit_test.hpp`` instead of
-``boost/test/unit_test.hpp``.
+In fact the only difference is the name of the include file: ``boost/test/included/unit_test.hpp`` instead of ``boost/test/unit_test.hpp``.
 
 
 The test runner supplied with this variant requires you to implement the [*test module] [/ todo]
