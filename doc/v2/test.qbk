@@ -42,12 +42,17 @@
 [def __BOOST_TEST_CHECKPOINT__ `BOOST_TEST_CHECKPOINT`]
 [def __BOOST_TEST_PASSPOINT__ `BOOST_TEST_PASSPOINT`]
 
+[def __param_show_progress__ [*show_progress]]
+
 [/=============================================================================]
 
 Boost.Test is a cross-platform C++ library for testing behavioural correctness of your programs.
 
 [include overview.qbk]
 [include utf.user-guide.qbk]
+
+[include test-output.qbk]
+[include utf.user-guide.test-progress.qbk]
 
 [/[include using.qbk]
 [include tutorial.qbk]
