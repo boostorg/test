@@ -27,9 +27,19 @@
 [def __UTF__ /UTF/]
 
 
+
+[/ to be replaced by the proper link]
+[/ currently replace <xref linkend="utf.flag.alt-init-api" endterm="utf.flag.alt-init-api"/> ]
+[def __BOOST_TEST_ALTERNATIVE_INIT_API__ `BOOST_TEST_ALTERNATIVE_INIT_API`]
+
+
+[/ to be replaced by the proper link]
+[/ currently replace <xref linkend="utf.flag.dyn-link" endterm="utf.flag.dyn-link"/> ]
+[def __BOOST_TEST_DYN_LINK__ `BOOST_TEST_DYN_LINK`]
+
 [/=============================================================================]
 
-Boost.Test is a cross-platform C++ library for testing behavioral correctness of your programs.
+Boost.Test is a cross-platform C++ library for testing behavioural correctness of your programs.
 
 [include overview.qbk]
 [utf.user-guide.qbk]
