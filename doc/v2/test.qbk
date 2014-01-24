@@ -6,7 +6,7 @@
  /]
 
 [library Boost.Test
-    [quickbook 1.4]
+    [quickbook 1.6]
     [copyright 2001 - 2013 Gennadiy Rozental]
     [purpose Testing library]
     [license
@@ -31,70 +31,9 @@
 
 Boost.Test is a cross-platform C++ library for testing behavioral correctness of your programs.
 
-[variablelist
-  [
-    [
-      [link boost_test.overview Overview]
-    ]
-    [
-      An overview of the features included in Boost.Test.
-    ]
-  ]
-  [/[
-    [
-      [link boost_test.using Using Boost.Test]
-    ]
-    [
-      How to use Boost.Asio in your applications. Includes information on
-      library dependencies and supported platforms.
-    ]
-  ]
-  [
-    [
-      [link boost_test.tutorial Tutorial]
-    ]
-    [
-      A tutorial that introduces the fundamental concepts required to use
-      Boost.Asio, and shows how to use Boost.Asio to develop simple client and
-      server programs.
-    ]
-  ]
-  [
-    [
-      [link boost_asio.examples Examples]
-    ]
-    [
-      Examples that illustrate the use of Boost.Asio in more complex applications.
-    ]
-  ]
-  [
-    [
-      [link boost_asio.reference Reference]
-    ]
-    [
-      Detailed class and function reference.
-    ]
-  ]
-  [
-    [
-      [link boost_asio.history Revision History]
-    ]
-    [
-      Log of Boost.Asio changes made in each Boost release.
-    ]
-  ]
-  [
-    [
-      [link boost_asio.index Index]
-    ]
-    [
-      Book-style text index of Boost.Asio documentation.
-    ]
-  ]
-  ]
-]
-
 [include overview.qbk]
+
+
 [/[include using.qbk]
 [include tutorial.qbk]
 [include examples.qbk]

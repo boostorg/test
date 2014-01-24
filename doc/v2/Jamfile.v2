@@ -26,26 +26,18 @@ install images
     <location>html/boost_test
   ;
 
-local example-names = example/ ;
-
-for local l in $(example-names)
-{
-  install ex_$(l) : [ glob $(l)/*.*pp ] : <location>html/boost_test/$(l) ;
-  install ex_$(l) : [ glob $(l)/*.output ] : <location>html/boost_test/$(l) ;
-}
 
 boostbook standalone
   :
     standalone_doc
   :
-    <xsl:param>boost.root=../../../..
+    <xsl:param>boost.root=../../../../..
     <xsl:param>chapter.autolabel=0
     <xsl:param>chunk.section.depth=8
     <xsl:param>chunk.first.sections=1
     <xsl:param>toc.section.depth=2
-    <xsl:param>toc.max.depth=1
-    <xsl:param>generate.section.toc.level=1
-    <xsl:param>generate.toc="chapter nop section nop"
+    <xsl:param>toc.max.depth=2
+    <xsl:param>generate.section.toc.level=10
     <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/test/doc/html
   ;
 
@@ -72,17 +64,7 @@ install test_doc_images
 
 explicit test_doc_images ;
 
-for local l in $(example-names)
-{
-  install test_ex_$(l) : [ glob $(l)/*.*pp ] : <location>$(BOOST_ROOT)/doc/html/test/$(l) ;
-  explicit test_ex_$(l) ;
-}
-
-alias test_examples : test_ex_$(example-names) ;
-
-explicit test_examples ;
-
-path-constant images_location : ../../../doc/html ;
+path-constant images_location : ../../../../../doc/html ;
 
 boostbook test
   :
@@ -93,14 +75,12 @@ boostbook test
     <xsl:param>chunk.first.sections=1
     <xsl:param>toc.section.depth=2
     <xsl:param>toc.max.depth=1
-    <xsl:param>generate.section.toc.level=1
-    <xsl:param>generate.toc="chapter nop section nop"
-    <xsl:param>root.filename=boost_asio
+    <xsl:param>generate.section.toc.level=10
+    <xsl:param>root.filename=boost_test
     <format>pdf:<xsl:param>img.src.path=$(images_location)/
-    <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/asio/doc/html
+    <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/test/doc/html
   :
     <dependency>test_doc_images
-    <dependency>test_examples
   ;
 
 explicit test ;
