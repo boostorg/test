@@ -1,3 +1,10 @@
 index.html
 boost_test/intro.html
 boost_test/intro_objective.html
+boost_test/users_guide.html
+boost_test/users_guide/user_guide_intro.html
+boost_test/users_guide/usage_variants.html
+boost_test/users_guide/usage_variants/static_lib_variant.html
+boost_test/users_guide/usage_variants/dynamic_lib_variant.html
+boost_test/users_guide/usage_variants/single_header_variant.html
+boost_test/users_guide/usage_variants/extern_test_runner_variant.html
