@@ -8,3 +8,7 @@ boost_test/users_guide/usage_variants/static_lib_variant.html
 boost_test/users_guide/usage_variants/dynamic_lib_variant.html
 boost_test/users_guide/usage_variants/single_header_variant.html
 boost_test/users_guide/usage_variants/extern_test_runner_variant.html
+boost_test/test.html
+boost_test/test/test.html
+boost_test/test/testing_tool_args.html
+boost_test/test/testing_tool_args/test_output_progress.html
