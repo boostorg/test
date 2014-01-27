@@ -58,6 +58,9 @@
 [def __BOOST_FIXTURE_TEST_SUITE__ `BOOST_FIXTURE_TEST_SUITE`]
 [def __BOOST_GLOBAL_FIXTURE__    `BOOST_GLOBAL_FIXTURE`]
 
+[/ log]
+[def __BOOST_TEST_LOG_LEVEL__    `BOOST_TEST_LOG_LEVEL`]
+
 
 [def __param_show_progress__ [*show_progress]]
 [def __param_log_level__     [*log_level]]
@@ -77,6 +80,7 @@ Boost.Test is a cross-platform C++ library for testing behavioural correctness o
 [include utf.user-guide.test-output.qbk]
 [include utf.user-guide.test-progress.qbk]
 
+[include faq.qbk]
 [include glossary.qbk]
 
 [/[include using.qbk]

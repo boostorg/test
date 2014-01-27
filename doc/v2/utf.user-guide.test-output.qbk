@@ -319,11 +319,11 @@ in the output.
 
   [ [On testing start]
     [threshold != log_nothing, show_build_info is set]
-    [`  Platform: $BOOST_PLATFORM
+    [`` Platform: $BOOST_PLATFORM
         Compiler: $BOOST_COMPILER
         STL     : $BOOST_STDLIB
         Boost   : $BOOST_VERSION
-     `] ]
+     ``] ]
 
   [ [On abnormal testing termination]
     [threshold <= log_messages]

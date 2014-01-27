@@ -71,7 +71,7 @@ to be fully customized. Accordingly the material provided in this documentation 
 
 # [*The User's Guide] covers all functionality that doesn't require knowledge of the __UTF__ internals
 # [*The Advanced User's Guide] covers all implementation details
-  required for a user to understand the advanced customization options available in the &utf;, and for a user
+  required for a user to understand the advanced customization options available in the __UTF__, and for a user
   interested in extending the testing framework.
 
 

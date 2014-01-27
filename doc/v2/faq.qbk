@@ -1,0 +1,75 @@
+[section:faq Frequently Asked Questions]
+
+[h3 Where the latest version of the Boost Test Library is located?]
+The latest version of Boost Test Library is available online at [@http://www.boost.org/libs/test].
+
+[h3 I found a bug. Where can I report it?]
+You can send a bug report to the boost users' mailing list and/or directly to
+[@"mailto:boost-test =at= emailaccount =dot= com" Gennadiy Rozental].
+
+ 
+[h3 I have a request for a new feature. Where can I ask for it?]
+You can send a request to the boost developers' mailing list and/or directly to
+<ulink url="mailto:boost-test =at= emailaccount -dot- com">Gennadiy Rozental</ulink>.
+
+[h3 How to create test case using the Unit Test Framework?]
+To create a test case, use the macro
+ 
+  BOOST_AUTO_TEST_CASE( test_function );
+
+For more details see the Unit Test Framework
+<link linkend="utf.user-guide.test-organization.auto-nullary-test-case">documentation</link>.
+
+[h3 How to create test suite using the Unit Test Framework?]
+To create a test suite use the macro
+ 
+  BOOST_AUTO_TEST_SUITE( suite_name );
+
+For more details see the Unit Test Framework
+<link linkend="utf.user-guide.test-organization.auto-test-suite">documentation</link>.
+
+ 
+[h3
+     Why did I get a linker error when compiling my test program?]
+
+Boost Test Library components provide several usage variants: to create a test program you can
+link with the one of the precompiled library variants or use single-header variant. For example, to use Unit Test
+Framework you may either include
+
+``
+  #include <boost/test/unit_test.hpp>
+``
+and link with ``libunit_test_framework.lib`` or you can include
+
+``
+ #include <boost/test/included/unit_test.hpp>
+``
+
+in which case you should not need to link with any precompiled component. Note also that
+you should strictly follow specification on initialization function in other case some compilers may produce linker
+error like this.
+
+``
+  Unresolved external init_unit_test_suite(int, char**).
+``
+ 
+
+The reason for this error is that in your implementation you should specify second argument of
+init_unit_test_suite exactly as in the specification, i.e.: char* [].
+
+[h3
+  How can I redirect testing output?]
+Use ``unit_test_log::instance().set_log_output( std::ostream & )``.
+For more details see the Unit Test Framework
+     <link linkend="utf.user-guide.test-output.log.ct-config.output-stream">documentation</link>.
+
+[h3 I want different default log trace level]
+Use environment variable __BOOST_TEST_LOG_LEVEL__ to define desired log trace level. You still will be able to reset
+this value from the command line. For the list of acceptable values see the Unit Test Framework 
+<link linkend="utf.user-guide.runtime-config.parameters">documentation</link>.
+
+[h3 Is there DLL version of Boost.Test components available on Win32 platform?]
+Yes. Starting with Boost 1.34.0.
+
+
+[endsect] [/faq]

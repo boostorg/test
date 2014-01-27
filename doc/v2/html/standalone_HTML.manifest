@@ -12,12 +12,12 @@ boost_test/users_guide/usage_variants/dynamic_lib_variant.html
 boost_test/users_guide/usage_variants/single_header_variant.html
 boost_test/users_guide/usage_variants/extern_test_runner_variant.html
 boost_test/fixtures.html
-boost_test/fixtures/fixtures_generic.html
+boost_test/fixtures/generic_fixture_model.html
 boost_test/fixtures/fixture_per_test_cases.html
 boost_test/fixtures/fixture_test_suite.html
 boost_test/fixtures/fixtures_global.html
 boost_test/test_output.html
-boost_test/test_output/log_outputbist.html
+boost_test/test_output/log_outputbis.html
 boost_test/test_output/testing_tool_args.html
 boost_test/test_output/log_test_messages.html
 boost_test/test_output/log_test_checkpoint.html
@@ -31,4 +31,5 @@ boost_test/test_output/log_compil_time_configuration/log_ct_log_level.html
 boost_test/test_output/log_compil_time_configuration/log_ct_log_format.html
 boost_test/test_output/log_compil_time_configuration/custom_log_formatter.html
 boost_test/test_output_progress.html
+boost_test/faq.html
 boost_test/glossary.html

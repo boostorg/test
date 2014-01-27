@@ -70,7 +70,7 @@ the following tasks:
 * ['global] fixture support
 
 
-[section:fixtures_generic  Generic fixture model]
+[#fixtures_generic][section  Generic fixture model]
 The __UTF__ defines the generic fixture model as follows:
 
 ``
