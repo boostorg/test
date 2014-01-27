@@ -1,6 +1,8 @@
+//[example20o
 > example
 global setup
 Running 1 test case...
 global teardown
 
 *** No errors detected
+//]

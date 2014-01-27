@@ -11,6 +11,11 @@ boost_test/users_guide/usage_variants/static_lib_variant.html
 boost_test/users_guide/usage_variants/dynamic_lib_variant.html
 boost_test/users_guide/usage_variants/single_header_variant.html
 boost_test/users_guide/usage_variants/extern_test_runner_variant.html
+boost_test/fixtures.html
+boost_test/fixtures/fixtures_generic.html
+boost_test/fixtures/fixture_per_test_cases.html
+boost_test/fixtures/fixture_test_suite.html
+boost_test/fixtures/fixtures_global.html
 boost_test/test_output.html
 boost_test/test_output/log_outputbist.html
 boost_test/test_output/testing_tool_args.html

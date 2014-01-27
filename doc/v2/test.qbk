@@ -50,6 +50,14 @@
 [def __BOOST_CHECK_MESSAGE__   `BOOST_CHECK_MESSAGE`]
 [def __BOOST_CHECK_EQUAL__     `BOOST_CHECK_EQUAL`]
 
+[def __BOOST_AUTO_TEST_CASE__  `BOOST_AUTO_TEST_CASE`]
+[def __BOOST_AUTO_TEST_SUITE__ `BOOST_AUTO_TEST_SUITE`]
+
+[/ fixtures]
+[def __BOOST_FIXTURE_TEST_CASE__ `BOOST_FIXTURE_TEST_CASE`]
+[def __BOOST_FIXTURE_TEST_SUITE__ `BOOST_FIXTURE_TEST_SUITE`]
+[def __BOOST_GLOBAL_FIXTURE__    `BOOST_GLOBAL_FIXTURE`]
+
 
 [def __param_show_progress__ [*show_progress]]
 [def __param_log_level__     [*log_level]]
@@ -65,6 +73,7 @@ Boost.Test is a cross-platform C++ library for testing behavioural correctness o
 [include tutorial.qbk]
 [include utf.user-guide.qbk]
 
+[include utf.user-guide.fixture.qbk]
 [include utf.user-guide.test-output.qbk]
 [include utf.user-guide.test-progress.qbk]
 
