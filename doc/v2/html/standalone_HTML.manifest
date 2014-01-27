@@ -1,6 +1,8 @@
 index.html
 boost_test/intro.html
 boost_test/intro_objective.html
+boost_test/tutorial.html
+boost_test/tutorial/hello.html
 boost_test/users_guide.html
 boost_test/users_guide/user_guide_intro.html
 boost_test/users_guide/usage_variants.html
