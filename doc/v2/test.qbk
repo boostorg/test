@@ -26,6 +26,7 @@
 [def __Windows__ /Windows/]
 [def __UTF__ /UTF/]
 [def __IEEE754__ [*IEEE754]]
+[def __MTF__     ['Minimal Testing Facility]]
 
 [/<link linkend="utf.user-guide.testing-tools">testing tools</link>]
 [def __testing_tools__ [*testing tools]]
@@ -79,6 +80,8 @@ Boost.Test is a cross-platform C++ library for testing behavioural correctness o
 [include utf.user-guide.fixture.qbk]
 [include utf.user-guide.test-output.qbk]
 [include utf.user-guide.test-progress.qbk]
+
+[include minimal-testing.qbk]
 
 [include faq.qbk]
 [include glossary.qbk]

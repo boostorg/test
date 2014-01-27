@@ -31,5 +31,8 @@ boost_test/test_output/log_compil_time_configuration/log_ct_log_level.html
 boost_test/test_output/log_compil_time_configuration/log_ct_log_format.html
 boost_test/test_output/log_compil_time_configuration/custom_log_formatter.html
 boost_test/test_output_progress.html
+boost_test/bt_minimal_testing.html
+boost_test/bt_minimal_testing/bt_minimal_usage.html
+boost_test/bt_minimal_testing/bt_minimal.html
 boost_test/faq.html
 boost_test/glossary.html

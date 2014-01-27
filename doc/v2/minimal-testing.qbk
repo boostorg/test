@@ -1,0 +1,74 @@
+[section:bt_minimal_testing Minimal testing facility]
+
+['Boost.Test minimal testing facility] provides the functionality previously implemented by the
+original version of Boost.Test. As the name suggest, it provides only minimal basic facilities for test creation. It 
+have no configuration parameters (either command line arguments or environment variables) and it supplies 
+a limited set of <link linkend="minimal.tools">testing tools</link> which behaves similarly to ones defined amount 
+the [*Unit Test Framework Testing tools]. The __MTF__ supplies its own function
+`main()` (so can not be used for multi unit testing) and will execute the test program in a monitored environment.
+
+ 
+As it follows from the name this component provides only minimal set of the testing capabilities and as a general
+rule the Unit Test Framework should be preferred. In a majority of the cases it provides you with much wider set of 
+testing tools (and other goods), while still being as easy to set up.
+ 
+ 
+[section:bt_minimal_usage Usage]
+The __MTF__ is implemented inline in one header: ``#include <boost/test/minimal.hpp>``. 
+There are no special compilation instructions for this component.
+
+The second and last change you need to make to integrate your test module with __MTF__ is 
+the signature of your function `main()`. It should look like this:
+ 
+``
+int test_main( int argc, char* argv[] )
+{
+  //...
+}
+``
+
+Once you apply the change test automatically starts running in monitored environment. Also you can start using
+<link linkend="minimal.tools">testing tools</link> provided by the __MTF__ and get uniform errors reporting.
+
+[h3 Example]
+Following example illustrates different approaches you can employ to detect and report errors using different
+testing tools
+ 
+[import examples/example27.cpp]
+[import examples/example27.output]
+[table:id_example27 Minimal testing facility application
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example27]]
+    [[example27o]]
+  ]
+]
+
+ 
+[endsect] [/usage]
+
+
+[section:bt_minimal Testing tools]
+
+The __MTF__ supplies following four tools:
+ 
+    BOOST_CHECK(predicate)
+
+    BOOST_REQUIRE(predicate)
+
+    BOOST_ERROR(message)
+
+    BOOST_FAIL(message)
+
+Their behavior is modeled after the <link linkend="utf.user-guide.testing-tools.reference">similarly named tools</link>
+implemented by the Unit Test Framework.
+
+There is a single unit test program that validates __MTF__ functionality: minimal_test <!-- TO FIX: link to test -->
+[warning what is this sentence for?]
+[endsect] [/ tools]
+
+
+[endsect]
