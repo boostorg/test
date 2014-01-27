@@ -7,10 +7,10 @@ library.
 
 
 [include tutorial_hello_world.qbk]
+[include tutorial_new_year_resolution.qbk]
 
 [/
  <xi:include href="tutorial.intro-in-testing.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
- <xi:include href="tutorial.new-year-resolution.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 ]
  
 [endsect] [/tutorial]
