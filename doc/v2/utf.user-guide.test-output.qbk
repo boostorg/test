@@ -24,7 +24,7 @@ kind of manual/assert based solution the __UTF__ provide following services:
   your purposes almost any way you want.
   
   
-[section:log_outputbist Test log output]
+[section:log_outputbis Test log output]
 
 The test log is produced during the test execution. All entries in the test log are assigned a particular log
 level. Only the entries with level that exceeds the ['active log level threshold] actually
@@ -34,7 +34,7 @@ the list of all levels in order of increasing 'importance':
 
 [table:id_messages Messages
     [
-      [notifications]
+      [Notifications]
       [Meaning]
     ]
     [
@@ -48,7 +48,7 @@ the list of all levels in order of increasing 'importance':
     [
       [General information]
       [This category includes general information massages produced in most cases by a test module author using the
-       macro `BOOST_TEST_MESSAGE`]
+       macro __BOOST_TEST_MESSAGE__]
     ]
     [
       [Warning]
