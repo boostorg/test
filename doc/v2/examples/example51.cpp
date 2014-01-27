@@ -1,3 +1,4 @@
+//[example51
 #define BOOST_TEST_MODULE example
 #include <boost/test/included/unit_test.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
@@ -14,4 +15,4 @@ BOOST_AUTO_TEST_CASE( test_case0 )
 }
 
 //____________________________________________________________________________//
-
+//]

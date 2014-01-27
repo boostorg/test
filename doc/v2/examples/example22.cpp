@@ -1,3 +1,4 @@
+//[example22
 #define BOOST_TEST_MODULE example
 #include <boost/test/included/unit_test.hpp>
 
@@ -23,3 +24,4 @@ void foo( int i )
 }
 
 //____________________________________________________________________________//
+//]

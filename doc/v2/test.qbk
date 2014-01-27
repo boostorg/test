@@ -25,7 +25,7 @@
 [def __POSIX__ /POSIX/]
 [def __Windows__ /Windows/]
 [def __UTF__ /UTF/]
-
+[def __IEEE754__ [*IEEE754]]
 
 [/<link linkend="utf.user-guide.testing-tools">testing tools</link>]
 [def __testing_tools__ [*testing tools]]
@@ -40,9 +40,15 @@
 [def __BOOST_TEST_DYN_LINK__ `BOOST_TEST_DYN_LINK`]
 
 [def __BOOST_TEST_CHECKPOINT__ `BOOST_TEST_CHECKPOINT`]
-[def __BOOST_TEST_PASSPOINT__ `BOOST_TEST_PASSPOINT`]
+[def __BOOST_TEST_PASSPOINT__  `BOOST_TEST_PASSPOINT`]
+[def __BOOST_TEST_MESSAGE__    `BOOST_TEST_MESSAGE`]
+[def __BOOST_TEST_CHECKPOINT__ `BOOST_TEST_CHECKPOINT`]
+[def __BOOST_TEST_PASSPOINT__  `BOOST_TEST_PASSPOINT`]
 
 [def __param_show_progress__ [*show_progress]]
+[def __param_log_level__     [*log_level]]
+[def __param_output_format__ [*output_format]]
+[def __param_log_format__    [*log_format]]
 
 [/=============================================================================]
 

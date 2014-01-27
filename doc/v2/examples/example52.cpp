@@ -1,3 +1,4 @@
+//[example52
 #define BOOST_TEST_MODULE example
 #include <boost/test/included/unit_test.hpp>
 using namespace boost::unit_test;
@@ -19,4 +20,4 @@ BOOST_AUTO_TEST_CASE( test_case0 )
 }
 
 //____________________________________________________________________________//
-
+//]

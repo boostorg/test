@@ -6,9 +6,9 @@ on
 boost::progress_display
 ``
 
-[footnote The __UTF__ interfaces allow implementing 
-an advanced GUI based test runner with arbitrary progress display controls</footnote>. The progress display output 
-is enabled using the __UTF__ parameter __param_show_progress__.]
+[footnote The __UTF__ interfaces allow implementing an advanced GUI based test runner with arbitrary progress display controls]. 
+
+The progress display output is enabled using the __UTF__ parameter __param_show_progress__.
 
 
 The __UTF__ has no ability to estimate how long the test case execution is going to take and the manual test 
@@ -21,13 +21,24 @@ log messages are going to interfere with test progress display. To prevent this 
 lower level or redirect either test log or test progress output into different stream during test module 
 initialization. Use following interface to redirect test progress output:
 
+
 ``
   boost::unit_test::progress_monitor.set_stream( std::ostream& )
 ``
 
-[warning include example49]
-[/  
-<btl-example name="example49">
- <title>Progress report for the test module with large amount of test cases</title>
-</btl-example>
+[import examples/example49.cpp]
+[import examples/example49.output]
+[table:id_example49 Progress report for the test module with large amount of test cases
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example49]]
+    [[example49o]]
+  ]
 ]
+
+
+
+[endsect] [/section:test_output_progress]
