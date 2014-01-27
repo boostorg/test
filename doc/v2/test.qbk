@@ -77,6 +77,8 @@ Boost.Test is a cross-platform C++ library for testing behavioural correctness o
 [include utf.user-guide.test-output.qbk]
 [include utf.user-guide.test-progress.qbk]
 
+[include glossary.qbk]
+
 [/[include using.qbk]
 
 [include examples.qbk]

@@ -63,6 +63,7 @@ In most cases to compile a test module based on the __UTF__ all you need to incl
 This header includes internally most of the other headers that contains the __UTF__ definitions. Some advanced features, 
 like the floating point comparison or the logged  expectations testing, are defined in independent headers and need to be included explicitly.
 
+[#static_lib_variant]
 [section:static_lib_variant The static library variant of the __UTF__]
 The __UTF__ can be built into a static library. If you opt to link a test module with the [*standalone static library], [/ <link linkend="utf.compilation.standalone">]
 this usage is called the static library variant of the __UTF__.
