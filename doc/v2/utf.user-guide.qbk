@@ -164,9 +164,7 @@ function signature and/or name.]
 [/ the remaining parts to be documented/ported to quickbook]
 [/ <xi:include href="utf.user-guide.test-organization.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
  <xi:include href="utf.user-guide.testing-tools.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
- <xi:include href="utf.user-guide.test-output.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
  <xi:include href="utf.user-guide.runtime-config.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
- <xi:include href="utf.user-guide.fixture.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
  <xi:include href="utf.user-guide.initialization.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
  <xi:include href="utf.user-guide.test-runners.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
  <xi:include href="utf.user-guide.glossary.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
