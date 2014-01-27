@@ -69,28 +69,9 @@ program shows several different ways to detect and report an error in the `add()
 [import snippet/snippet12.cpp]
 [snippet12]
 
-[/
-
-
-   <annotation id="snippet12.ann-5" coords="1">
-    <para role="first-line-indented">
-    </para>
-   </annotation>
-
-   <annotation id="snippet12.ann-6" coords="1">
-    <para role="first-line-indented">
-    </para>
-   </annotation>
-
-   <annotation id="snippet12.ann-7" coords="1"> <!-- TO FIX: all the coords -->
-    <para role="first-line-indented">
-    </para>
-   </annotation>
-  </annotations>
- </btl-snippet>
-
- <para/> <!-- TO FIX: some finishing statements here -->
-] 
+[warning check why there is a remaining TO FIX: all the coords in the source doc + why 
+TO FIX: some finishing statements here
+]
 
 [endsect] [/section:hello]
 
