@@ -4,7 +4,7 @@ provide a  uniform error reporting mechanism. The toolbox supplied in most part 
 declarations. While the functions can be called directly, the usual way to use testing tools is via convenience
 macros. All macros arguments are calculated once, so it's safe to pass complex expressions in their place.
 All tools automatically supply an error location: a file name and a line number. The testing tools are intended
-for unit test code rather than library or production code, where throwing exceptions,  using assert(),
+for unit test code rather than library or production code, where throwing exceptions, using `assert()`,
 `boost::concept_check` or `BOOST_STATIC_ASSERT()` may be more suitable
 ways to detect and report errors. For list of all supplied testing tools and usage examples see the reference.
 
@@ -12,16 +12,21 @@ ways to detect and report errors. For list of all supplied testing tools and usa
 [section:tools_assertion_severity_level Assertion severity level]
 
 All the tools are supplied in three flavors/levels, from lowest to highest:
+
 # `WARN`
 # `CHECK` and
 # `REQUIRE`
 
-For example: __BOOST_WARN_EQUAL__, __BOOST_CHECK_EQUAL__, __BOOST_REQUIRE_EQUAL__.
+For example: 
+
+* __BOOST_WARN_EQUAL__
+* __BOOST_CHECK_EQUAL__
+* __BOOST_REQUIRE_EQUAL__
 
 If an assertion designated by
 the tool passes, confirmation message can be printed in log output [footnote to manage what messages appear
-in the test log stream, set the proper [link testing_tool_args.log_runtime_config log
-level]. If an assertion designated by the tool failed, depending on the level following
+in the test log stream, set the proper [link testing_tool_args.log_runtime_config log level]].
+If an assertion designated by the tool failed, depending on the level following
 will happened [footnote in some cases log message can be slightly different to reflect failed tool
 specifics]:
 
@@ -35,22 +40,19 @@ specifics]:
   
   [
     [WARN]
-    [warning in <replaceable>&lt;test case name&gt;</replaceable>: condition
-       <replaceable>&lt;assertion description&gt;</replaceable> is not satisfied]
+    [warning in `<test case name>`: condition `<assertion description>` is not satisfied]
     [not affected]
     [continues]
   ]
   [
     [CHECK]
-    [error in <replaceable>&lt;test case name&gt;</replaceable>: test
-       <replaceable>&lt;assertion description&gt;</replaceable> failed]
+    [error in `<test case name>`: test `<assertion description>` failed]
     [increased]
     [continues]
   ]
   [
     [REQUIRE]
-    [fatal error in <replaceable>&lt;test case name&gt;</replaceable>: critical test
-       <replaceable>&lt;assertion description&gt;</replaceable> failed]
+    [fatal error in `<test case name>`: critical test `<assertion description>` failed]
     [increased]
     [aborts]
   ]
@@ -160,8 +162,9 @@ Detailed specification of class `output_test_stream` is covered in reference sec
 
 [h3:usages Usage]
 There are two ways to employ the class `output_test_stream`: 
+
 # explicit output checks and
-# pattern file matching.
+# pattern file matching
 
 [h4 Explicit output checks]
 
@@ -233,24 +236,27 @@ In most cases it is unreasonable to use an `operator==(...)` for a floating-poin
 The simple, absolute value comparison based, solution for a floating-point values `u`,
 `v` and a tolerance `epsilon`:
 
+[#equ1]
 ``
-   abs(u - v) <= epsilon; (1)[#equ1]
+   abs(u - v) <= epsilon; // (1)
 ``
 
 
-does not produce expected results in many circumstances - specifically for very small or very big values (See
+does not produce expected results in many circumstances - specifically for very small or very big values (see
 [link Squassabia] for examples). The __UTF__ implements floating-point comparison algorithm that is
 based on the more confident solution first presented in [link KnuthII Knuth]:
 
+[#equ2]
 ``
    abs(u - v) <= epsilon * abs(u)
-&& abs(u - v) <= epsilon * abs(v)); //(1)[#equ1]
+&& abs(u - v) <= epsilon * abs(v)); // (2)
 ``
 defines a ['very close with tolerance `epsilon`] relationship between `u` and `v`, while
 
+[#equ3]
 ``
    abs(u - v) <= epsilon * abs(u)
-|| abs(u - v) <= epsilon * abs(v); //(2)[#equ2]
+|| abs(u - v) <= epsilon * abs(v); // (3)
 ``
 
 defines a ['close enough with tolerance `epsilon`] relationship between `u` and `v`.
@@ -262,18 +268,17 @@ The multiplication in the right side of inequations may cause an unwanted underf
 the implementation is using modified version of the
 inequations [link equ2 (2)] and [link equ3 (3)] where all underflow, overflow conditions can be guarded safely:
 
+[#equ4]
 ``
    abs(u - v)/abs(u) <= epsilon * abs(u)
-&& abs(u - v)/abs(v) <= epsilon * abs(v); //(4)[#equ4]
+&& abs(u - v)/abs(v) <= epsilon * abs(v); // (4)
 ``
 
+[#equ5]
 ``
    abs(u - v)/abs(u) <= epsilon * abs(u)
-|| abs(u - v)/abs(v) <= epsilon * abs(v); //(5)[#equ5]
+|| abs(u - v)/abs(v) <= epsilon * abs(v); // (5)
 ``
-
-
-
 
 Checks based on equations [link equ4 (4)] and [link equ5 (5)] are implemented by two predicates with
 alternative interfaces: binary predicate `close_at_tolerance` [footnote check type
@@ -298,7 +303,7 @@ In case of absence of domain specific requirements the value of tolerance can be
 upper limits for "relative rounding errors" of compared values. The "rounding" is the operation by which a real 
 value 'x' is represented in a floating-point format with 'p' binary digits (bits) as the floating-point value [*X].
 The "relative rounding error" is the difference between the real and the floating point values in relation to real
-value: `abs(x-[*X])/abs(x)`. The discrepancy between real and floating point value may be caused by several reasons:
+value: `abs(x-X)/abs(x)`. The discrepancy between real and floating point value may be caused by several reasons:
 
 * Type promotion
 * Arithmetic operations
@@ -306,11 +311,15 @@ value: `abs(x-[*X])/abs(x)`. The discrepancy between real and floating point val
 * Non-arithmetic operation
 
 
-The first two operations proved to have a relative rounding error that does not exceed `half_epsilon = `['half of the
-[*machine epsilon value]] for the appropriate floating point type `FPT` [footnote [*machine epsilon value] is represented by
+The first two operations proved to have a relative rounding error that does not exceed 
+
+  half_epsilon = half of the 'machine epsilon value'
+
+for the appropriate floating point type `FPT`
+[footnote [*machine epsilon value] is represented by
 `std::numeric_limits<FPT>::epsilon()`]. Conversion to binary presentation, sadly, does
-not have such requirement. So we can't assume that `float(1.1)` is close to the real number `1.1` with tolerance &frac12;
-&times; "machine epsilon value" for float (though for 11./10 we can). Non arithmetic operations either do not have a
+not have such requirement. So we can't assume that `float(1.1)` is close to the real number `1.1` with tolerance `half_epsilon` 
+for float (though for 11./10 we can). Non arithmetic operations either do not have a
 predicted upper limit relative rounding errors. 
 
 [note Note that both arithmetic and non-arithmetic operations might also
@@ -328,7 +337,7 @@ from most non-arithmetic operation. The underflow/overflow and division-by-zero 
 with unpredictable upper limits.
 
 At last be aware that `half_epsilon` rules are not transitive. In other words combination of two
-arithmetic operations may produce rounding error that significantly exceeds `2 * half_epsilon`. All
+arithmetic operations may produce rounding error that significantly exceeds `2*half_epsilon`. All
 in all there are no generic rules on how to select the tolerance and users need to apply common sense and domain/
 problem specific knowledge to decide on tolerance value.
 
@@ -365,14 +374,13 @@ For more reading about floating-point comparison see references below.
 
 [variablelist Publications
   [
-    [[@http://citeseer.ist.psu.edu/goldberg91what.html
+    [[@http://dl.acm.org/citation.cfm?id=103163
       What Every Computer Scientist Should Know About Floating-Point Arithmetic]]
     [David Goldberg, pages 150-230, in Computing Surveys (March 1991), Association for Computing Machinery, Inc.]
   ]
 
   [
-    [[@http://hal.archives-ouvertes.fr/docs/00/07/26/81/PDF/RR-3967.pdf‎
-      From Rounding Error Estimation to Automatic Correction with Automatic Differentiation]]
+    [[@http://hal.archives-ouvertes.fr/docs/00/07/26/81/PDF/RR-3967.pdf From Rounding Error Estimation to Automatic Correction with Automatic Differentiation]]
     [Philippe Langlois, Technical report, INRIA]
   ]
 
@@ -415,7 +423,8 @@ expression gets evaluated only once, so it's safe to pass complex expression for
 ]
 
 See also:
-* [link ref_BOOST_level_MESSAGE `BOOST_<level>_MESSAGE`]
+
+* __BOOST_LEVEL_MESSAGE__
 
 
 [#ref_BOOST_level_BITWISE_EQUAL][h3 `BOOST_<level>_BITWISE_EQUAL`]
@@ -435,7 +444,7 @@ not required to be of the same type, but warning is issued if their type's size 
 
 [import examples/example33.cpp]
 [import examples/example33.output]
-[table:id_example33 `BOOST_<level>_BITWISE_EQUAL` usage
+[table:id_example33 __BOOST_LEVEL_BITWISE_EQUAL__ usage
   [
     [Code]
     [Output]
@@ -447,7 +456,8 @@ not required to be of the same type, but warning is issued if their type's size 
 ]
 
 See also:
-* [link ref_BOOST_level_EQUAL `BOOST_<level>_EQUAL`]
+
+* __BOOST_LEVEL_EQUAL__
 
 
 [#ref_BOOST_level_CLOSE][h3 `BOOST_<level>_CLOSE`]
@@ -504,6 +514,7 @@ The first parameter is the ['left] compared value. The second parameter is the
 ]
 
 See also:
+
 * __BOOST_LEVEL_CLOSE_FRACTION__
 * __BOOST_LEVEL_SMALL__
 * __BOOST_LEVEL_EQUAL__
@@ -547,6 +558,7 @@ The first parameter is the ['left] compared value. The second parameter is the
 ]
 
 See also:
+
 * __BOOST_LEVEL_CLOSE__
 * __BOOST_LEVEL_SMALL__
 * __BOOST_LEVEL_EQUAL__
@@ -584,6 +596,7 @@ The difference is that the mismatched values are reported as well.
 
 
 See also:
+
 * __BOOST_LEVEL__
 * __BOOST_LEVEL_CLOSE__
 * __BOOST_LEVEL_NE__
@@ -618,6 +631,7 @@ second collection.
 
 
 See also:
+
 * __BOOST_LEVEL_EQUAL__
 
 
@@ -652,6 +666,7 @@ error message.
 ]
 
 See also:
+
 * __BOOST_LEVEL_THROW__
 
 
@@ -681,6 +696,7 @@ The difference is that the argument values are reported as well.
 ]
 
 See also:
+
 * __BOOST_LEVEL_LE__
 * __BOOST_LEVEL_LT__
 * __BOOST_LEVEL_GT__
@@ -712,6 +728,7 @@ The difference is that the argument values are reported as well.
   ]
 ]
 See also:
+
 * __BOOST_LEVEL_LE__
 * __BOOST_LEVEL_LT__
 * __BOOST_LEVEL_GE__
@@ -743,6 +760,7 @@ The difference is that the argument values are reported as well.
 ]
 
 See also:
+
 * __BOOST_LEVEL_LE__
 * __BOOST_LEVEL_GE__
 * __BOOST_LEVEL_GT__
@@ -774,6 +792,7 @@ The difference is that the argument values are reported as well.
 ]
 
 See also:
+
 * __BOOST_LEVEL_LE__
 * __BOOST_LEVEL_GE__
 * __BOOST_LEVEL_GT__
@@ -809,6 +828,7 @@ failure. The message argument can be constructed of components of any type suppo
 ]
 
 See also:
+
 * __BOOST_LEVEL__
 
 
@@ -839,6 +859,7 @@ The difference is that the matched values are reported as well.
 ]
 
 See also:
+
 * __BOOST_LEVEL_EQUAL__
 
 
@@ -877,6 +898,7 @@ statement.
 
 
 See also:
+
 * __BOOST_LEVEL_THROW__
 
 
@@ -914,6 +936,7 @@ in round brackets (`BOOST_PP` sequence format).
 [note Note difference in error log from __BOOST_LEVEL__]
 
 See also:
+
 * __BOOST_LEVEL__
 
 
@@ -949,9 +972,10 @@ The first parameter is the value to check. The second parameter is the tolerance
 
 
 See also:
+
 * __BOOST_LEVEL_CLOSE__
 * __BOOST_LEVEL_CLOSE_FRACTION__
-* [link floating_point Floating point comparison algorithms] [/todo]
+* [link testing_floating_points Floating point comparison algorithms]
 
 
 
@@ -986,7 +1010,9 @@ statement. The second parameter is an expected exception.
     [[example45o]]
   ]
 ]
+
 See also:
+
 * __BOOST_LEVEL_NO_THROW__
 
 
@@ -1016,6 +1042,7 @@ The only tool's parameter is an error message to log.
 ]
 
 See also:
+
 * __BOOST_LEVEL__
 
 
@@ -1047,6 +1074,7 @@ The only tool's parameter is an error message to log.
 ]
 
 See also:
+
 * __BOOST_LEVEL__
 * __BOOST_REQUIRE_MESSAGE__
 
@@ -1082,9 +1110,10 @@ The only tool's parameter is a preprocessor symbol that gets validated.
 
 
 See also:
+
 * __BOOST_LEVEL__
 
 
-
+[endsect] [/ testing_tool_ref]
 
 [endsect] [/ testing tools]
