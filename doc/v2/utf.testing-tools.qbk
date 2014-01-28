@@ -386,134 +386,113 @@ For more reading about floating-point comparison see references below.
 
 [endsect] [/ floating points]
 
- <section id="utf.testing-tools.reference">
-  <title>The __UTF__ testing tools reference</title>
-  <titleabbrev>Reference</titleabbrev>
+[section:testing_tool_ref __UTF__ testing tools reference]
 
-  <inline-reference id="utf.testing-tools.reference.body">
-   <refentry name="BOOST_&lt;level&gt;">
-    <inline-synopsis>
-     <macro name="BOOST_WARN" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="predicate"/>
-     </macro>
-     <macro name="BOOST_CHECK" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="predicate"/>
-     </macro>
-     <macro name="BOOST_REQUIRE" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="predicate"/>
-     </macro>
-    </inline-synopsis>
+[#ref_BOOST_level][h3:boost_level `BOOST_<level>`]
+[def __BOOST_LEVEL__ [link ref_BOOST_level `BOOST_<level>`]]
 
-    <para role="first-line-indented">
-     These tools are used to validate the predicate value. The only parameter for these tools is a boolean predicate
-     value that gets validated. It could be any expression that could be evaluated and converted to boolean value. The
-     expression gets evaluated only once, so it's safe to pass complex expression for validation.
-    </para>
+``
+  BOOST_WARN(predicate);
+  BOOST_CHECK(predicate);
+  BOOST_REQUIRE(predicate);
+``
 
-    <btl-example name="example34">
-     <title>BOOST_&lt;level&gt; usage</title>
-    </btl-example>
+These tools are used to validate the predicate value. The only parameter for these tools is a boolean predicate
+value that gets validated. It could be any expression that could be evaluated and converted to boolean value. The
+expression gets evaluated only once, so it's safe to pass complex expression for validation.
 
-    <seealso>
-     <ref>BOOST_&lt;level&gt;_MESSAGE</ref>
-    </seealso>
-   </refentry>
+[import examples/example34.cpp]
+[import examples/example34.output]
+[table:id_example34 `BOOST_<level>` usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example34]]
+    [[example34o]]
+  ]
+]
 
-   <refentry name="BOOST_&lt;level&gt;_BITWISE_EQUAL">
-    <inline-synopsis>
-     <macro name="BOOST_WARN_BITWISE_EQUAL" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-     <macro name="BOOST_CHECK_BITWISE_EQUAL" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-     <macro name="BOOST_REQUIRE_BITWISE_EQUAL" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-    </inline-synopsis>
+See also:
+* [link ref_BOOST_level_MESSAGE `BOOST_<level>_MESSAGE`]
 
-    <para role="first-line-indented">
-     These tools are used to perform bitwise comparison of two values. The check shows all positions where left and 
-     right value's bits mismatch.
-    </para>
 
-    <para role="first-line-indented">
-     The first parameter is the left compared value. The second parameter is the right compared value. Parameters are
-     not required to be of the same type, but warning is issued if their type's size does not coincide.
-    </para>
+[#ref_BOOST_level_BITWISE_EQUAL][h3:boost_level `BOOST_<level>_BITWISE_EQUAL`]
+[def __BOOST_LEVEL_BITWISE_EQUAL__ [link ref_BOOST_level_BITWISE_EQUAL `BOOST_<level>_BITWISE_EQUAL`]]
 
-    <btl-example name="example33">
-     <title>BOOST_&lt;level&gt;_BITWISE_EQUAL usage</title>
-    </btl-example>
+``
+  BOOST_WARN_BITWISE_EQUAL(left, right);
+  BOOST_CHECK_BITWISE_EQUAL(left, right);
+  BOOST_REQUIRE_BITWISE_EQUAL(left, right);
+``
 
-    <seealso>
-     <ref>BOOST_&lt;level&gt;_EQUAL</ref>
-    </seealso>
-   </refentry>
+These tools are used to perform bitwise comparison of two values. The check shows all positions where left and
+right value's bits mismatch.
 
-   <refentry name="BOOST_&lt;level&gt;_CLOSE">
-    <inline-synopsis>
-     <macro name="BOOST_WARN_CLOSE" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="left"/>
-      <macro-parameter name="right"/>      
-      <macro-parameter name="tolerance"/>
-     </macro>
-     <macro name="BOOST_CHECK_CLOSE" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="left"/>
-      <macro-parameter name="right"/>      
-      <macro-parameter name="tolerance"/>
-     </macro>
-     <macro name="BOOST_REQUIRE_CLOSE" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="left"/>
-      <macro-parameter name="right"/>      
-      <macro-parameter name="tolerance"/>
-     </macro>
-    </inline-synopsis>
+The first parameter is the left compared value. The second parameter is the right compared value. Parameters are
+not required to be of the same type, but warning is issued if their type's size does not coincide.
 
-    <para role="first-line-indented">
-     These tools are used to check on closeness using strong relationship defined by the predicate 
-     <functionname>check_is_close</functionname>( left, right, tolerance ). To check for the weak relationship use 
-     <ref>BOOST_&lt;level&gt;_PREDICATE</ref> family of tools with explicit <functionname>check_is_close</functionname>
-     invocation.
-    </para>
+[import examples/example33.cpp]
+[import examples/example33.output]
+[table:id_example33 `BOOST_<level>_BITWISE_EQUAL` usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example33]]
+    [[example33o]]
+  ]
+]
 
-    <para>
-     The first parameter is the <emphasis>left</emphasis> compared value. The second parameter is the 
-     <emphasis>right</emphasis> compared value. Last third parameter defines the tolerance for the comparison in 
-     <link linkend="utf.testing-tools.fpv-comparison.tolerance-selection"><emphasis role="bold">percentage units</emphasis></link>.
-    </para>
+See also:
+* [link ref_BOOST_level_EQUAL `BOOST_<level>_EQUAL`]
 
-    <note>
-     <simpara>
-      It is required for left and right parameters to be of the same floating point type. You will need to explicitly 
+
+[#ref_BOOST_level_BITWISE_CLOSE][h3:boost_level `BOOST_<level>_CLOSE`]
+[def __BOOST_LEVEL_CLOSE__ [link ref_BOOST_level_BITWISE_CLOSE `BOOST_<level>_CLOSE`]]
+
+
+``
+  BOOST_WARN_CLOSE(left, right, tolerance);
+  BOOST_CHECK_CLOSE(left, right, tolerance);
+  BOOST_REQUIRE_CLOSE(left, right, tolerance);
+``
+
+These tools are used to check on closeness using strong relationship defined by the predicate
+``check_is_close( left, right, tolerance )`` 
+
+To check for the weak relationship use
+__BOOST_LEVEL_PREDICATE__ family of tools with explicit `check_is_close` invocation.
+
+
+The first parameter is the ['left] compared value. The second parameter is the
+['right] compared value. Last third parameter defines the tolerance for the comparison in 
+[link [*percentage units]].
+
+[note It is required for left and right parameters to be of the same floating point type. You will need to explicitly
       resolve any type mismatch to select which type to use for comparison.
-     </simpara>
-    </note>
-    
-    <note>
-     <simpara>
-      Note that to use these tools you need to include additional header floating_point_comparison.hpp. 
-     </simpara>
-    </note>
+]
+
+[note Note that to use these tools you need to include additional header `floating_point_comparison.hpp`.
+]
 
     <btl-example name="example42">
-     <title>BOOST_&lt;level&gt;_CLOSE usage with very small values</title>
+     <title>BOOST_LEVEL_CLOSE usage with very small values</title>
     </btl-example>
 
     <btl-example name="example43">
-     <title>BOOST_&lt;level&gt;_CLOSE usage with very big values</title>
+     <title>BOOST_LEVEL_CLOSE usage with very big values</title>
     </btl-example>
 
     <seealso>
-     <ref>BOOST_&lt;level&gt;_CLOSE_FRACTION</ref>, <ref>BOOST_&lt;level&gt;_SMALL</ref>, <ref>BOOST_&lt;level&gt;_EQUAL</ref>,
+     <ref>BOOST_LEVEL_CLOSE_FRACTION</ref>, <ref>BOOST_LEVEL_SMALL</ref>, <ref>BOOST_LEVEL_EQUAL</ref>,
      <link linkend="utf.testing-tools.fpv-comparison">Floating point comparison algorithms</link>
     </seealso>
    </refentry>
 
-   <refentry name="BOOST_&lt;level&gt;_CLOSE_FRACTION">
+   <refentry name="BOOST_LEVEL_CLOSE_FRACTION">
     <inline-synopsis>
      <macro name="BOOST_WARN_CLOSE_FRACTION" kind="functionlike" ref-id="utf.testing-tools.reference">
       <macro-parameter name="left"/>
@@ -535,7 +514,7 @@ For more reading about floating-point comparison see references below.
     <para role="first-line-indented">
      These tools are used to check on closeness using strong relationship defined by the predicate 
      <functionname>check_is_close</functionname>( left, right, tolerance ). To check for the weak relationship use 
-     <ref>BOOST_&lt;level&gt;_PREDICATE</ref> family of tools with explicit <functionname>check_is_close</functionname>
+     <ref>BOOST_LEVEL_PREDICATE</ref> family of tools with explicit <functionname>check_is_close</functionname>
      invocation.
     </para>
 
@@ -546,30 +525,22 @@ For more reading about floating-point comparison see references below.
      values being compared</emphasis></link>.
     </para>
 
-    <note>
-     <simpara>
-      It is required for left and right parameters to be of the same floating point type. You will need to explicitly 
-      resolve any type mismatch to select which type to use for comparison.
-     </simpara>
-    </note>
-    
-    <note>
-     <simpara>
-      Note that to use these tools you need to include additional header floating_point_comparison.hpp. 
-     </simpara>
-    </note>
+[note It is required for left and right parameters to be of the same floating point type. You will need to explicitly
+      resolve any type mismatch to select which type to use for comparison.]
+
+[note Note that to use these tools you need to include additional header `floating_point_comparison.hpp`.]
 
     <btl-example name="example44">
-     <title>BOOST_&lt;level&gt;_CLOSE_FRACTION usage</title>
+     <title>BOOST_LEVEL_CLOSE_FRACTION usage</title>
     </btl-example>
 
     <seealso>
-     <ref>BOOST_&lt;level&gt;_CLOSE</ref>, <ref>BOOST_&lt;level&gt;_SMALL</ref>, <ref>BOOST_&lt;level&gt;_EQUAL</ref>,
+     <ref>BOOST_LEVEL_CLOSE</ref>, <ref>BOOST_LEVEL_SMALL</ref>, <ref>BOOST_LEVEL_EQUAL</ref>,
      <link linkend="utf.testing-tools.fpv-comparison">Floating point comparison algorithms</link>
     </seealso>
    </refentry>
 
-   <refentry name="BOOST_&lt;level&gt;_EQUAL">
+   <refentry name="BOOST_LEVEL_EQUAL">
     <inline-synopsis>
      <macro name="BOOST_WARN_EQUAL" kind="functionlike" ref-id="utf.testing-tools.reference">
        <macro-parameter name="left"/>
@@ -585,28 +556,23 @@ For more reading about floating-point comparison see references below.
      </macro>
     </inline-synopsis>
 
-    <para role="first-line-indented">
-     Check performed by these tools is the same as the one performed by <ref>BOOST_&lt;level&gt;</ref>( left == right ).
-     The difference is that the mismatched values are reported as well.
-    </para>
-    
-    <note>
-     <simpara>
-      It is bad idea to use these tools to compare floating point values. Use <ref>BOOST_&lt;level&gt;_CLOSE</ref> or 
-      <ref>BOOST_&lt;level&gt;_CLOSE_FRACTION</ref> tools instead.
-     </simpara>
-    </note>
 
+Check performed by these tools is the same as the one performed by <ref>BOOST_LEVEL</ref>( left == right ).
+The difference is that the mismatched values are reported as well.
+
+[note It is bad idea to use these tools to compare floating point values. Use __BOOST_LEVEL_CLOSE</ref> or
+      <ref>BOOST_LEVEL_CLOSE_FRACTION</ref> tools instead.
+]
     <btl-example name="example35">
-     <title>BOOST_&lt;level&gt;_EQUAL usage</title>
+     <title>BOOST_LEVEL_EQUAL usage</title>
     </btl-example>
 
     <seealso>
-     <ref>BOOST_&lt;level&gt;</ref>, <ref>BOOST_&lt;level&gt;_CLOSE</ref>, <ref>BOOST_&lt;level&gt;_NE</ref>
+     <ref>BOOST_LEVEL</ref>, <ref>BOOST_LEVEL_CLOSE</ref>, <ref>BOOST_LEVEL_NE</ref>
     </seealso>
    </refentry>
 
-   <refentry name="BOOST_&lt;level&gt;_EQUAL_COLLECTIONS">
+   <refentry name="BOOST_LEVEL_EQUAL_COLLECTIONS">
     <inline-synopsis>
      <macro name="BOOST_WARN_EQUAL_COLLECTIONS" kind="functionlike" ref-id="utf.testing-tools.reference">
        <macro-parameter name="left_begin"/>
@@ -636,15 +602,14 @@ For more reading about floating-point comparison see references below.
     </para>
     
     <btl-example name="example36">
-     <title>BOOST_&lt;level&gt;_EQUAL_COLLECTIONS usage</title>
+     <title>BOOST_LEVEL_EQUAL_COLLECTIONS usage</title>
     </btl-example>
 
-    <seealso>
-     <ref>BOOST_&lt;level&gt;_EQUAL</ref>
-    </seealso>
-   </refentry>
+See also:
+* __BOOST_LEVEL_EQUAL__
 
-   <refentry name="BOOST_&lt;level&gt;_EXCEPTION">
+
+   <refentry name="BOOST_LEVEL_EXCEPTION">
     <inline-synopsis>
      <macro name="BOOST_WARN_EXCEPTION" kind="functionlike" ref-id="utf.testing-tools.reference">
        <macro-parameter name="expression"/>
@@ -663,25 +628,22 @@ For more reading about floating-point comparison see references below.
      </macro>
     </inline-synopsis>
 
-    <para role="first-line-indented">
-     These tools are used to perform an exception detection and validation check. Tools execute the supplied expression 
-     and validate that it throws an exception of supplied class (or the one derived from it) that complies with the 
-     supplied predicate. If the expression throws any other unrelated exception, doesn't throw at all or 
-     predicate evaluates to false, check fails. In comparison with <ref>BOOST_&lt;level&gt;_THROW</ref> tools these
-     allow performing more fine-grained checks. For example: make sure that an expected exception has specific 
-     error message.
-    </para>
+
+These tools are used to perform an exception detection and validation check. Tools execute the supplied expression
+and validate that it throws an exception of supplied class (or the one derived from it) that complies with the 
+supplied predicate. If the expression throws any other unrelated exception, doesn't throw at all or 
+predicate evaluates to false, check fails. In comparison with __BOOST_LEVEL_THROW__ tools these
+allow performing more fine-grained checks. For example: make sure that an expected exception has specific 
+error message.
 
     <btl-example name="example37">
-     <title>BOOST_&lt;level&gt;_EXCEPTION usage</title>
+     <title>BOOST_LEVEL_EXCEPTION usage</title>
     </btl-example>
 
-    <seealso>
-     <ref>BOOST_&lt;level&gt;_THROW</ref>
-    </seealso>
-   </refentry>
+See also:
+* __BOOST_LEVEL_THROW__
 
-   <refentry name="BOOST_&lt;level&gt;_GE">
+   <refentry name="BOOST_LEVEL_GE">
     <inline-synopsis>
      <macro name="BOOST_WARN_GE" kind="functionlike" ref-id="utf.testing-tools.reference">
        <macro-parameter name="left"/>
@@ -697,21 +659,20 @@ For more reading about floating-point comparison see references below.
      </macro>
     </inline-synopsis>
 
-    <para role="first-line-indented">
-     Check performed by these tools is the same as the one performed by <ref>BOOST_&lt;level&gt;</ref>( left &gt;= right ).
-     The difference is that the argument values are reported as well.
-    </para>
-    
+Check performed by these tools is the same as the one performed by __BOOST_LEVEL__`( left >= right )`.
+The difference is that the argument values are reported as well.
+
     <btl-example name="example57">
-     <title>BOOST_&lt;level&gt;_GE usage</title>
+     <title>BOOST_LEVEL_GE usage</title>
     </btl-example>
 
-    <seealso>
-     <ref>BOOST_&lt;level&gt;_LE</ref>, <ref>BOOST_&lt;level&gt;_LT</ref>, <ref>BOOST_&lt;level&gt;_GT</ref>
-    </seealso>
-   </refentry>
-   
-   <refentry name="BOOST_&lt;level&gt;_GT">
+See also:
+* __BOOST_LEVEL_LE__
+* __BOOST_LEVEL_LT__
+* __BOOST_LEVEL_GT__
+
+
+   <refentry name="BOOST_LEVEL_GT">
     <inline-synopsis>
      <macro name="BOOST_WARN_GT" kind="functionlike" ref-id="utf.testing-tools.reference">
        <macro-parameter name="left"/>
@@ -727,21 +688,20 @@ For more reading about floating-point comparison see references below.
      </macro>
     </inline-synopsis>
 
-    <para role="first-line-indented">
-     Check performed by these tools is the same as the one performed by <ref>BOOST_&lt;level&gt;</ref>( left &gt; right ).
-     The difference is that the argument values are reported as well.
-    </para>
-    
+
+Check performed by these tools is the same as the one performed by __BOOST_LEVEL__`( left > right )`.
+The difference is that the argument values are reported as well.
+
     <btl-example name="example58">
-     <title>BOOST_&lt;level&gt;_GT usage</title>
+     <title>BOOST_LEVEL_GT usage</title>
     </btl-example>
 
-    <seealso>
-     <ref>BOOST_&lt;level&gt;_LE</ref>, <ref>BOOST_&lt;level&gt;_LT</ref>, <ref>BOOST_&lt;level&gt;_GE</ref>
-    </seealso>
-   </refentry>
+See also:
+* __BOOST_LEVEL_LE__
+* __BOOST_LEVEL_LT__
+* __BOOST_LEVEL_GE__
 
-   <refentry name="BOOST_&lt;level&gt;_LE">
+   <refentry name="BOOST_LEVEL_LE">
     <inline-synopsis>
      <macro name="BOOST_WARN_LE" kind="functionlike" ref-id="utf.testing-tools.reference">
        <macro-parameter name="left"/>
@@ -757,21 +717,20 @@ For more reading about floating-point comparison see references below.
      </macro>
     </inline-synopsis>
 
-    <para role="first-line-indented">
-     Check performed by these tools is the same as the one performed by <ref>BOOST_&lt;level&gt;</ref>( left &lt;= right ).
-     The difference is that the argument values are reported as well.
-    </para>
-    
+
+Check performed by these tools is the same as the one performed by __BOOST_LEVEL__`( left <= right )`.
+The difference is that the argument values are reported as well.
+
     <btl-example name="example55">
-     <title>BOOST_&lt;level&gt;_LE usage</title>
+     <title>BOOST_LEVEL_LE usage</title>
     </btl-example>
 
-    <seealso>
-     <ref>BOOST_&lt;level&gt;_LT</ref>, <ref>BOOST_&lt;level&gt;_GE</ref>, <ref>BOOST_&lt;level&gt;_GT</ref>
-    </seealso>
-   </refentry>
+See also:
+* __BOOST_LEVEL_LE__
+* __BOOST_LEVEL_GE__
+* __BOOST_LEVEL_GT__
 
-   <refentry name="BOOST_&lt;level&gt;_LT">
+   <refentry name="BOOST_LEVEL_LT">
     <inline-synopsis>
      <macro name="BOOST_WARN_LT" kind="functionlike" ref-id="utf.testing-tools.reference">
        <macro-parameter name="left"/>
@@ -787,21 +746,22 @@ For more reading about floating-point comparison see references below.
      </macro>
     </inline-synopsis>
 
-    <para role="first-line-indented">
-     Check performed by these tools is the same as the one performed by <ref>BOOST_&lt;level&gt;</ref>( left &lt; right ).
-     The difference is that the argument values are reported as well.
-    </para>
-    
+
+Check performed by these tools is the same as the one performed by `__BOOST_LEVEL__( left < right )`.
+The difference is that the argument values are reported as well.
+
     <btl-example name="example56">
-     <title>BOOST_&lt;level&gt;_LT usage</title>
+     <title>BOOST_LEVEL_LT usage</title>
     </btl-example>
 
-    <seealso>
-     <ref>BOOST_&lt;level&gt;_LE</ref>, <ref>BOOST_&lt;level&gt;_GE</ref>, <ref>BOOST_&lt;level&gt;_GT</ref>
-    </seealso>
-   </refentry>
+See also:
+* __BOOST_LEVEL_LE__
+* __BOOST_LEVEL_GE__
+* __BOOST_LEVEL_GT__
 
-   <refentry name="BOOST_&lt;level&gt;_MESSAGE">
+
+
+   <refentry name="BOOST_LEVEL_MESSAGE">
     <inline-synopsis>
      <macro name="BOOST_WARN_MESSAGE" kind="functionlike" ref-id="utf.testing-tools.reference">
        <macro-parameter name="predicate"/>
@@ -817,27 +777,23 @@ For more reading about floating-point comparison see references below.
      </macro>
     </inline-synopsis>
 
-    <para role="first-line-indented">
-     These tools perform exactly the same check as <ref>BOOST_&lt;level&gt;</ref> tools. The only difference is that 
-     instead of generating an error/confirm message these use the supplied one.
-    </para>
+These tools perform exactly the same check as __BOOST_LEVEL__ tools. The only difference is that
+instead of generating an error/confirm message these use the supplied one.
 
-    <para>
-     The first parameter is the boolean expression. The second parameter is the message reported in case of check 
-     failure. The message argument can be constructed of components of any type supporting the 
-     <code>std::ostream&amp; operator&lt;&lt;(std::ostream&amp;)</code>.
-    </para>
+The first parameter is the boolean expression. The second parameter is the message reported in case of check
+failure. The message argument can be constructed of components of any type supporting the 
+`std::ostream& operator<< (std::ostream&)`.
+
     
     <btl-example name="example38">
-     <title>BOOST_&lt;level&gt;_MESSAGE usage</title>
+     <title>BOOST_LEVEL_MESSAGE usage</title>
     </btl-example>
 
-    <seealso>
-     <ref>BOOST_&lt;level&gt;</ref>
-    </seealso>
-   </refentry>
+See also:
+* __BOOST_LEVEL__
 
-   <refentry name="BOOST_&lt;level&gt;_NE">
+
+   <refentry name="BOOST_LEVEL_NE">
     <inline-synopsis>
      <macro name="BOOST_WARN_NE" kind="functionlike" ref-id="utf.testing-tools.reference">
        <macro-parameter name="left"/>
@@ -853,21 +809,19 @@ For more reading about floating-point comparison see references below.
      </macro>
     </inline-synopsis>
 
-    <para role="first-line-indented">
-     Check performed by these tools is the same as the one performed by <ref>BOOST_&lt;level&gt;</ref>( left != right ).
-     The difference is that the matched values are reported as well.
-    </para>
-    
+
+Check performed by these tools is the same as the one performed by <ref>BOOST_LEVEL</ref>( left != right ).
+The difference is that the matched values are reported as well.
+
     <btl-example name="example54">
-     <title>BOOST_&lt;level&gt;_NE usage</title>
+     <title>BOOST_LEVEL_NE usage</title>
     </btl-example>
 
-    <seealso>
-     <ref>BOOST_&lt;level&gt;_EQUAL</ref>
-    </seealso>
-   </refentry>
+See also:
+* __BOOST_LEVEL_EQUAL__
+
    
-   <refentry name="BOOST_&lt;level&gt;_NO_THROW">
+   <refentry name="BOOST_LEVEL_NO_THROW">
     <inline-synopsis>
      <macro name="BOOST_WARN_NO_THROW" kind="functionlike" ref-id="utf.testing-tools.reference">
       <macro-parameter name="expression"/>
@@ -880,32 +834,26 @@ For more reading about floating-point comparison see references below.
      </macro>
     </inline-synopsis>
 
-    <para role="first-line-indented">
-     These tools are used to perform a "no throw" check. Tools execute the supplied expression and validate that it does
-     not throw any exceptions. Error would be reported by the framework even if the statement appear directly in test
-     case body and throw any exception. But these tools allow proceeding further with test case in case of failure.
-    </para>
 
-    <para>
-     If check is successful, tools may produce a confirmation message, in other case they produce an error message in 
-     a form "error in &lt;test case name&gt;exception was thrown by &lt;expression&gt;.
-    </para>
+These tools are used to perform a "no throw" check. Tools execute the supplied expression and validate that it does
+not throw any exceptions. Error would be reported by the framework even if the statement appear directly in test
+case body and throw any exception. But these tools allow proceeding further with test case in case of failure.
 
-    <para>
-     The only parameter is an expression to execute. You can use do-while(0) block if you want to execute more than one
-     statement.
-    </para>
-    
+If check is successful, tools may produce a confirmation message, in other case they produce an error message in
+a form ``error in <test case name>;exception was thrown by <expression>``
+
+The only parameter is an expression to execute. You can use `do {} while(0)` block if you want to execute more than one
+statement.
+
     <btl-example name="example39">
-     <title>BOOST_&lt;level&gt;_NO_THROW usage</title>
+     <title>BOOST_LEVEL_NO_THROW usage</title>
     </btl-example>
 
-    <seealso>
-     <ref>BOOST_&lt;level&gt;_THROW</ref>
-    </seealso>
-   </refentry>
+See also:
+* __BOOST_LEVEL_THROW_
 
-   <refentry name="BOOST_&lt;level&gt;_PREDICATE">
+
+   <refentry name="BOOST_LEVEL_PREDICATE">
     <inline-synopsis>
      <macro name="BOOST_WARN_PREDICATE" kind="functionlike" ref-id="utf.testing-tools.reference">
       <macro-parameter name="predicate"/>
@@ -921,31 +869,25 @@ For more reading about floating-point comparison see references below.
      </macro>
     </inline-synopsis>
 
-    <para role="first-line-indented">
-     These are generic tools used to validate an arbitrary supplied predicate functor (there is a compile time limit on
-     predicate arity defined by the configurable macro <macroname>BOOST_TEST_MAX_PREDICATE_ARITY</macroname>). To 
-     validate zero arity predicate use <ref>BOOST_&lt;level&gt;</ref> tools. In other cases prefer theses tools. The 
-     advantage of these tools is that they show arguments values in case of predicate failure.
-    </para>
+These are generic tools used to validate an arbitrary supplied predicate functor (there is a compile time limit on
+predicate arity defined by the configurable macro `BOOST_TEST_MAX_PREDICATE_ARITY`). To
+validate zero arity predicate use __BOOST_LEVEL__ tools. In other cases prefer theses tools. The
+advantage of these tools is that they show arguments values in case of predicate failure.
 
-    <para>
-     The first parameter is the predicate itself. The second parameter is the list of predicate arguments each wrapped
-     in round brackets (BOOST_PP sequence format).
-    </para>
+The first parameter is the predicate itself. The second parameter is the list of predicate arguments each wrapped
+in round brackets (`BOOST_PP` sequence format).
 
     <btl-example name="example40">
      <simpara>
       Note difference in error log from 
      </simpara>
-     <title>BOOST_&lt;level&gt;_PREDICATE usage</title>
+     <title>BOOST_LEVEL_PREDICATE usage</title>
     </btl-example>
 
-    <seealso>
-     <ref>BOOST_&lt;level&gt;</ref>
-    </seealso>
-   </refentry>
+See also:
+* __BOOST_LEVEL__
 
-   <refentry name="BOOST_&lt;level&gt;_SMALL">
+   <refentry name="BOOST_LEVEL_SMALL">
     <inline-synopsis>
      <macro name="BOOST_WARN_SMALL" kind="functionlike" ref-id="utf.testing-tools.reference">
       <macro-parameter name="value"/>
@@ -961,33 +903,25 @@ For more reading about floating-point comparison see references below.
      </macro>
     </inline-synopsis>
 
-    <para role="first-line-indented">
-     These tools are used to check that supplied value is small enough. The "smallness" is defined by absolute value
-     of the tolerance supplied as a second argument. Use these tools with caution. To compare to values on closeness 
-     it's preferable to use <ref>BOOST_&lt;level&gt;_CLOSE</ref> tools instead. 
-    </para>
+These tools are used to check that supplied value is small enough. The "smallness" is defined by absolute value
+of the tolerance supplied as a second argument. Use these tools with caution. To compare to values on closeness 
+it's preferable to use <ref>BOOST_LEVEL_CLOSE</ref> tools instead. 
 
-    <para role="first-line-indented">
-     The first parameter is the value to check. The second parameter is the tolerance.
-    </para>
-    
-    <note>
-     <simpara>
-      Note that to use these tools you need to include additional header floating_point_comparison.hpp. 
-     </simpara>
-    </note>
-    
+The first parameter is the value to check. The second parameter is the tolerance.
+
+[note Note that to use these tools you need to include additional header `floating_point_comparison.hpp`.]
+
     <btl-example name="example41">
-     <title>BOOST_&lt;level&gt;_SMALL usage</title>
+     <title>BOOST_LEVEL_SMALL usage</title>
     </btl-example>
 
     <seealso>
-     <ref>BOOST_&lt;level&gt;_CLOSE</ref>, <ref>BOOST_&lt;level&gt;_CLOSE_FRACTION</ref>,
+     <ref>BOOST_LEVEL_CLOSE</ref>, <ref>BOOST_LEVEL_CLOSE_FRACTION</ref>,
      <link linkend="utf.testing-tools.fpv-comparison">Floating point comparison algorithms</link>
     </seealso>
    </refentry>
 
-   <refentry name="BOOST_&lt;level&gt;_THROW">
+   <refentry name="BOOST_LEVEL_THROW">
     <inline-synopsis>
      <macro name="BOOST_WARN_THROW" kind="functionlike" ref-id="utf.testing-tools.reference">
       <macro-parameter name="expression"/>
@@ -1003,30 +937,24 @@ For more reading about floating-point comparison see references below.
      </macro>
     </inline-synopsis>
 
-    <para role="first-line-indented">
-     These tools are used to perform an exception detection check. Tools execute the supplied expression and validate 
-     that it throws an exception of supplied class (or the one derived from it) or it's child. If the statement 
-     throws any other unrelated exception or doesn't throw at all, check fails.
-    </para>
 
-    <para>
-     If check is successful, the tool produces a confirmation message, in other case it produces an error message in a
-     form "error in <replaceable>test case name</replaceable>: exception <replaceable>exception</replaceable> expected.
-    </para>
-    
-    <para role="first-line-indented">
-     The first parameter is the expression to execute. Use do-while(0) block if you want to execute more than one 
-     statement. The second parameter is an expected exception.
-    </para>
+These tools are used to perform an exception detection check. Tools execute the supplied expression and validate
+that it throws an exception of supplied class (or the one derived from it) or it's child. If the statement 
+throws any other unrelated exception or doesn't throw at all, check fails.
+
+If check is successful, the tool produces a confirmation message, in other case it produces an error message in a
+form "error in <replaceable>test case name</replaceable>: exception <replaceable>exception</replaceable> expected.
+
+The first parameter is the expression to execute. Use do-while(0) block if you want to execute more than one
+statement. The second parameter is an expected exception.
 
     <btl-example name="example45">
-     <title>BOOST_&lt;level&gt;_THROW usage</title>
+     <title>BOOST_LEVEL_THROW usage</title>
     </btl-example>
 
-    <seealso>
-     <ref>BOOST_&lt;level&gt;NO_THROW</ref>
-    </seealso>
-   </refentry>
+See also:
+* __BOOST_LEVELNOTHROW__
+
    
    <refentry name="BOOST_ERROR">
     <inline-synopsis>
@@ -1035,23 +963,19 @@ For more reading about floating-point comparison see references below.
      </macro>
     </inline-synopsis>
 
-    <para role="first-line-indented">
-     BOOST_ERROR tool behave the same way as <code>BOOST_CHECK_MESSAGE( false, message )</code>. This tool is used for
-     an unconditional error counter increasing and message logging. 
-    </para>
+__BOOST_ERROR__ tool behave the same way as __BOOST_CHECK_MESSAGE__`(false, message )`. This tool is used for
+an unconditional error counter increasing and message logging. 
 
-    <para>
-     The only tool's parameter is an error message to log.
-    </para>
-    
+
+The only tool's parameter is an error message to log.
+
     <btl-example name="example46">
-     <title>BOOST_ERROR usage</title>
+     <title>__BOOST_ERROR__ usage</title>
     </btl-example>
 
-    <seealso>
-     <ref>BOOST_&lt;level&gt;</ref>
-    </seealso>
-   </refentry>
+See also:
+* __BOOST_LEVEL__
+
    
    <refentry name="BOOST_FAIL">
     <inline-synopsis>
@@ -1060,23 +984,18 @@ For more reading about floating-point comparison see references below.
      </macro>
     </inline-synopsis>
 
-    <para role="first-line-indented">
-     BOOST_FAIL behave the same way as <code>BOOST_REQUIRE_MESSAGE( false, message )</code>. This tool is used for an
-     unconditional error counter increasing, message logging and the current test case aborting. 
-    </para>
+`BOOST_FAIL(message)` behave the same way as `BOOST_REQUIRE_MESSAGE(false, message)`. This tool is used for an
+unconditional error counter increasing, message logging and the current test case aborting. 
 
-    <para>
-     The only tool's parameter is an error message to log.
-    </para>
-    
+The only tool's parameter is an error message to log.
+
     <btl-example name="example47">
      <title>BOOST_FAIL usage</title>
     </btl-example>
 
-    <seealso>
-     <ref>BOOST_&lt;level&gt;</ref>
-    </seealso>
-   </refentry>
+See also:
+* __BOOST_LEVEL__
+
 
    <refentry name="BOOST_IS_DEFINED">
     <inline-synopsis>
@@ -1085,29 +1004,21 @@ For more reading about floating-point comparison see references below.
      </macro>
     </inline-synopsis>
 
-    <para role="first-line-indented">
-     Unlike the rest of the tools in the toolbox this tool does not perform the logging itself. Its only purpose
-     is to check at runtime whether or not the supplied preprocessor symbol is defined. Use it in combination with
-     <ref>BOOST_&lt;level&gt;</ref> to perform and log validation. Macros of any arity could be checked. To check the
-     macro definition with non-zero arity specify dummy arguments for it. See below for example.
-    </para>
+Unlike the rest of the tools in the toolbox this tool does not perform the logging itself. Its only purpose
+is to check at runtime whether or not the supplied preprocessor symbol is defined. Use it in combination with
+__BOOST_LEVEL__ to perform and log validation. Macros of any arity could be checked. To check the
+macro definition with non-zero arity specify dummy arguments for it. See below for example.
 
-    <para>
-     The only tool's parameter is a preprocessor symbol that gets validated.
-    </para>
+The only tool's parameter is a preprocessor symbol that gets validated.
 
     <btl-example name="example48">
      <title>BOOST_IS_DEFINED usage</title>
     </btl-example>
 
-    <seealso>
-     <ref>BOOST_&lt;level&gt;</ref>
-    </seealso>
-   </refentry>
+See also:
+* __BOOST_LEVEL__
 
-  </inline-reference>
 
- </section>
 
 
 [endsect] [/ testing tools]
