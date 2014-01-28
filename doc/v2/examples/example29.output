@@ -1,3 +1,4 @@
+//[example29o
 > example
 Running 1 test case...
 test.cpp(16): error in "test": check output.match_pattern() failed. Mismatch at position 23
@@ -5,3 +6,4 @@ test.cpp(16): error in "test": check output.match_pattern() failed. Mismatch at 
 ...4...
 
 *** 1 failure detected in test suite "example"
+//]
