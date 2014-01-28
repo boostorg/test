@@ -223,241 +223,168 @@ File: test.cpp Line:XXX
 [endsect] [/ output stream testing]
 
 
- <section id="utf.testing-tools.fpv-comparison">
-  <title>Floating-point comparison algorithms</title>
 
-  <para role="first-line-indented">
-   In most cases it is unreasonable to use an <code>operator==(...)</code> for a floating-point values equality check.
-   The simple, absolute value comparison based, solution for a floating-point values <varname>u</varname>,
-   <varname>v</varname> and a tolerance &egr;:
-  </para>
+[/ ############################################################ Floating points]
+[section:testing_floating_points Floating-point testing]
 
-  <btl-equation index="1">
-   |<varname>u</varname> &minus; <varname>v</varname>| &le; &egr;
-  </btl-equation>
+[note Have you seen that the current doc in boost.org skipped all the math ??]
 
-  <simpara>
-   does not produce expected results in many circumstances - specifically for very small or very big values (See
-   <xref linkend="bbl.Squassabia"/> for examples). The __UTF__ implements floating-point comparison algorithm that is
-   based on the more confident solution first presented in <xref linkend="bbl.KnuthII"/>:
-  </simpara>
+In most cases it is unreasonable to use an `operator==(...)` for a floating-point values equality check.
+The simple, absolute value comparison based, solution for a floating-point values `u`,
+`v` and a tolerance `epsilon`:
 
-  <btl-equation index="2">
-   |<varname>u</varname> &minus; <varname>v</varname>| &le; &egr; &times; |<varname>u</varname>| &and; |<varname>u</varname> &minus; <varname>v</varname>| &le; &egr; &times; |<varname>v</varname>|
-  </btl-equation>
+``
+   abs(u - v) <= epsilon; (1)[#equ1]
+``
 
-  <simpara>
-  defines a <firstterm>very close with tolerance &egr;</firstterm> relationship between <varname>u</varname> and <varname>v</varname>
-  </simpara>
 
-  <btl-equation index="3">
-   |<varname>u</varname> &minus; <varname>v</varname>| &le; &egr; &times; |<varname>u</varname>| &or; |<varname>u</varname> &minus; <varname>v</varname>| &le; &egr; &times; |<varname>v</varname>|
-  </btl-equation>
+does not produce expected results in many circumstances - specifically for very small or very big values (See
+[link Squassabia] for examples). The __UTF__ implements floating-point comparison algorithm that is
+based on the more confident solution first presented in [link KnuthII Knuth]:
 
-  <simpara>
-   defines a <firstterm>close enough with tolerance &egr;</firstterm> relationship between <varname>u</varname> and <varname>v</varname>
-  </simpara>
+``
+   abs(u - v) <= epsilon * abs(u)
+&& abs(u - v) <= epsilon * abs(v)); //(1)[#equ1]
+``
+defines a ['very close with tolerance `epsilon`] relationship between `u` and `v`, while
 
-  <para role="first-line-indented">
-   Both relationships are commutative but are not transitive. The relationship defined by inequations
-   (<ulink linkend="utf.testing-tools.fpv-comparison.eq.2">2</ulink>) is stronger
-   that the relationship defined by inequations (<ulink linkend="utf.testing-tools.fpv-comparison.eq.3">3</ulink>)
-   (i.e. (<ulink linkend="utf.testing-tools.fpv-comparison.eq.2">2</ulink>) &rArr;
-   (<ulink linkend="utf.testing-tools.fpv-comparison.eq.3">3</ulink>)). Because of the multiplication in the right side
-   of inequations, that can cause an unwanted underflow condition, the implementation is using modified version of the
-   inequations (<ulink linkend="utf.testing-tools.fpv-comparison.eq.2">2</ulink>) and
-   (<ulink linkend="utf.testing-tools.fpv-comparison.eq.3">3</ulink>) where all underflow, overflow conditions can be
-   guarded safely:
-  </para>
+``
+   abs(u - v) <= epsilon * abs(u)
+|| abs(u - v) <= epsilon * abs(v); //(2)[#equ2]
+``
 
-  <btl-equation index="4">
-   |<varname>u</varname> &minus; <varname>v</varname>| &sol; |<varname>u</varname>| &le; &egr; &and; |<varname>u</varname> &minus; <varname>v</varname>| / |<varname>v</varname>| &le; &egr;
-  </btl-equation>
+defines a ['close enough with tolerance `epsilon`] relationship between `u` and `v`.
 
-  <btl-equation index="5">
-   |<varname>u</varname> &minus; <varname>v</varname>| &sol; |<varname>u</varname>| &le; &egr; &or; |<varname>u</varname> &minus; <varname>v</varname>| / |<varname>v</varname>| &le; &egr;
-  </btl-equation>
+Both relationships are commutative but are not transitive. The relationship defined by inequations
+[link equ2 (2)] is stronger that the relationship defined by inequations [link equ3 (3)] since [link equ2 (2)] necessarilly implies [link equ3 (3)].
 
-  <para role="first-line-indented">
-    Checks based on equations (<ulink linkend="utf.testing-tools.fpv-comparison.eq.4">4</ulink>) and
-    (<ulink linkend="utf.testing-tools.fpv-comparison.eq.5">5</ulink>) are implemented by two predicates with
-    alternative interfaces: binary predicate <classname>close_at_tolerance</classname><footnote><simpara>check type 
-    and tolerance value are fixed at predicate construction time</simpara></footnote> and predicate with four arguments
-    <classname>check_is_close</classname><footnote><simpara>check type and tolerance value are the arguments of the
-    predicate</simpara></footnote>.
-  </para>
+The multiplication in the right side of inequations may cause an unwanted underflow condition. To prevent this, 
+the implementation is using modified version of the
+inequations [link equ2 (2)] and [link equ3 (3)] where all underflow, overflow conditions can be guarded safely:
 
-  <para role="first-line-indented">
-   While equations (<ulink linkend="utf.testing-tools.fpv-comparison.eq.4">4</ulink>) and
-   (<ulink linkend="utf.testing-tools.fpv-comparison.eq.5">5</ulink>) in general are preferred for the general floating
-   point comparison check over equation (<ulink linkend="utf.testing-tools.fpv-comparison.eq.1">1</ulink>), they are
-   unusable for the test on closeness to zero. The later check is still might be useful in some cases and the __UTF__
-   implements an algorithm based on equation (<ulink linkend="utf.testing-tools.fpv-comparison.eq.1">1</ulink>) in
-   binary predicate <classname>check_is_small</classname><footnote><simpara><varname>v</varname> is zero</simpara></footnote>.
-  </para>
+``
+   abs(u - v)/abs(u) <= epsilon * abs(u)
+&& abs(u - v)/abs(v) <= epsilon * abs(v); //(4)[#equ4]
+``
 
-  <para role="first-line-indented">
-   On top of the generic, flexible predicates the __UTF__ implements macro based family of tools
-   <macroname>BOOST_CHECK_CLOSE</macroname> and <macroname>BOOST_CHECK_SMALL</macroname>. These tools limit the check
-   flexibility to strong-only checks, but automate failed check arguments reporting.
-  </para>
+``
+   abs(u - v)/abs(u) <= epsilon * abs(u)
+|| abs(u - v)/abs(v) <= epsilon * abs(v); //(5)[#equ5]
+``
 
-  <section id="utf.testing-tools.fpv-comparison.tolerance-selection">
-   <title>Tolerance selection considerations</title>
 
-   <para role="first-line-indented">
-    In case of absence of domain specific requirements the value of tolerance can be chosen as a sum of the predicted 
-    upper limits for "relative rounding errors" of compared values. The "rounding" is the operation by which a real 
-    value 'x' is represented in a floating-point format with 'p' binary digits (bits) as the floating-point value 'X'.
-    The "relative rounding error" is the difference between the real and the floating point values in relation to real
-    value: |x-X|/|x|. The discrepancy between real and floating point value may be caused by several reasons:
-   </para>
 
-   <itemizedlist>
-    <listitem><simpara>Type promotion</simpara></listitem>
-    <listitem><simpara>Arithmetic operations</simpara></listitem>
-    <listitem><simpara>Conversion from a decimal presentation to a binary presentation</simpara></listitem>
-    <listitem><simpara>Non-arithmetic operation</simpara></listitem>
-   </itemizedlist>
 
-   <para role="first-line-indented">
-    The first two operations proved to have a relative rounding error that does not exceed &frac12; &times;
-    "machine epsilon value" for the appropriate floating point type (represented by
-    <classname>std::numeric_limits</classname>&lt;FPT&gt;::epsilon()). Conversion to binary presentation, sadly, does
-    not have such requirement. So we can't assume that float 1.1 is close to real 1.1 with tolerance &frac12; 
-    &times; "machine epsilon value" for float (though for 11./10 we can). Non arithmetic operations either do not have a
-    predicted upper limit relative rounding errors. Note that both arithmetic and non-arithmetic operations might also
-    produce others "non-rounding" errors, such as underflow/overflow, division-by-zero or 'operation errors'.
-   </para>
+Checks based on equations [link equ4 (4)] and [link equ5 (5)] are implemented by two predicates with
+alternative interfaces: binary predicate `close_at_tolerance` [footnote check type
+and tolerance value are fixed at predicate construction time] and predicate with four arguments
+`check_is_close` [footnote check type and tolerance value are the arguments of the
+predicate].
 
-   <para role="first-line-indented">
-    All theorems about the upper limit of a rounding error, including that of &frac12; &times; epsilon, refer only to 
-    the 'rounding' operation, nothing more. This means that the 'operation error', that is, the error incurred by the 
-    operation itself, besides rounding, isn't considered. In order for numerical software to be able to actually 
-    predict error bounds, the IEEE754 standard requires arithmetic operations to be 'correctly or exactly rounded'. 
-    That is, it is required that the internal computation of a given operation be such that the floating point result 
-    is the exact result rounded to the number of working bits. In other words, it is required that the computation used
-    by the operation itself doesn't introduce any additional errors. The IEEE754 standard does not require same behavior
-    from most non-arithmetic operation. The underflow/overflow and division-by-zero errors may cause rounding errors 
-    with unpredictable upper limits.
-   </para>
 
-   <para role="first-line-indented">
-    At last be aware that &frac12; &times; epsilon rules are not transitive. In other words combination of two 
-    arithmetic operations may produce rounding error that significantly exceeds 2 &times; &frac12; &times; epsilon. All 
-    in all there are no generic rules on how to select the tolerance and users need to apply common sense and domain/
-    problem specific knowledge to decide on tolerance value.
-   </para>
+While equations [link equ4 (4)] and [link equ5 (5)] in general are preferred for the general floating
+point comparison check over equation [link equ1 (1)], they are
+unusable for the test on closeness to zero. The later check is still might be useful in some cases and the __UTF__
+implements an algorithm based on equation [link equ1 (1)] in
+binary predicate `check_is_small` [footnote `v` is zero].
 
-   <para role="first-line-indented">
-    To simplify things in most usage cases latest version of algorithm below opted to use percentage values for
-    tolerance specification (instead of fractions of related values). In other words now you use it to check that
-    difference between two values does not exceed x percent.
-   </para>
+On top of the generic, flexible predicates the __UTF__ implements macro based family of tools
+__BOOST_CHECK_CLOSE__ and __BOOST_CHECK_SMALL__. These tools limit the check
+flexibility to strong-only checks, but automate failed check arguments reporting.
 
-   <para role="first-line-indented">
-   For more reading about floating-point comparison see references below.
-   </para>
-  </section>
+[h3 Tolerance selection considerations]
 
-  <bibliography id="bbl.fpv-comparison">
-   <title>A floating-point comparison related references</title>
+In case of absence of domain specific requirements the value of tolerance can be chosen as a sum of the predicted
+upper limits for "relative rounding errors" of compared values. The "rounding" is the operation by which a real 
+value 'x' is represented in a floating-point format with 'p' binary digits (bits) as the floating-point value [*X].
+The "relative rounding error" is the difference between the real and the floating point values in relation to real
+value: `abs(x-[*X])/abs(x)`. The discrepancy between real and floating point value may be caused by several reasons:
 
-   <bibliodiv id="bbl.fpv-comparison.books"><title>Books</title>
+* Type promotion
+* Arithmetic operations
+* Conversion from a decimal presentation to a binary presentation
+* Non-arithmetic operation
 
-    <biblioentry id="bbl.KnuthII">
-     <abbrev>KnuthII</abbrev>
 
-     <title>The art of computer programming (vol II)</title>
-     <author><firstname>Donald. E.</firstname><surname>Knuth</surname></author>
-     <copyright><year>1998</year><holder>Addison-Wesley Longman, Inc.</holder></copyright>
-     <isbn>0-201-89684-2</isbn>
-     <publisher><publishername>Addison-Wesley Professional; 3 edition</publishername></publisher>
-    </biblioentry>
+The first two operations proved to have a relative rounding error that does not exceed `half_epsilon = `['half of the
+[*machine epsilon value]] for the appropriate floating point type `FPT` [footnote [*machine epsilon value] is represented by
+`std::numeric_limits<FPT>::epsilon()`]. Conversion to binary presentation, sadly, does
+not have such requirement. So we can't assume that `float(1.1)` is close to the real number `1.1` with tolerance &frac12;
+&times; "machine epsilon value" for float (though for 11./10 we can). Non arithmetic operations either do not have a
+predicted upper limit relative rounding errors. 
 
-    <biblioentry id="bbl.Kulisch">
-     <abbrev>Kulisch</abbrev>
+[note Note that both arithmetic and non-arithmetic operations might also
+produce others "non-rounding" errors, such as underflow/overflow, division-by-zero or 'operation errors'.]
 
-     <biblioset relation="section">
-      <title>Rounding near zero</title>
-     </biblioset>
-     <biblioset relation="book">
-      <title><ulink url="http://www.amazon.com/Advanced-Arithmetic-Digital-Computer-Kulisch/dp/3211838708">Advanced Arithmetic for the Digital Computer</ulink></title>
 
-      <author><firstname>Ulrich W</firstname><surname>Kulisch</surname></author>
-      <copyright><year>2002</year><holder>Springer, Inc.</holder></copyright>
-      <isbn>0-201-89684-2</isbn>
-      <publisher><publishername>Springer; 1 edition</publishername></publisher>
-     </biblioset>
-    </biblioentry>
+All theorems about the upper limit of a rounding error, including that of `half_epsilon`, refer only to
+the 'rounding' operation, nothing more. This means that the 'operation error', that is, the error incurred by the 
+operation itself, besides rounding, isn't considered. In order for numerical software to be able to actually 
+predict error bounds, the __IEEE754__ standard requires arithmetic operations to be 'correctly or exactly rounded'.
+That is, it is required that the internal computation of a given operation be such that the floating point result 
+is the exact result rounded to the number of working bits. In other words, it is required that the computation used
+by the operation itself doesn't introduce any additional errors. The __IEEE754__ standard does not require same behavior
+from most non-arithmetic operation. The underflow/overflow and division-by-zero errors may cause rounding errors 
+with unpredictable upper limits.
 
-   </bibliodiv>
+At last be aware that `half_epsilon` rules are not transitive. In other words combination of two
+arithmetic operations may produce rounding error that significantly exceeds `2 * half_epsilon`. All
+in all there are no generic rules on how to select the tolerance and users need to apply common sense and domain/
+problem specific knowledge to decide on tolerance value.
 
-   <bibliodiv id="bbl.fpv-comparison.periodicals"><title>Periodicals</title>
+To simplify things in most usage cases latest version of algorithm below opted to use percentage values for
+tolerance specification (instead of fractions of related values). In other words now you use it to check that
+difference between two values does not exceed x percent.
 
-    <biblioentry id="bbl.Squassabia">
-     <abbrev>Squassabia</abbrev>
+For more reading about floating-point comparison see references below.
 
-     <title><ulink url="http://www.adtmag.com/joop/carticle.aspx?ID=396">Comparing Floats: How To Determine if Floating Quantities Are Close Enough Once a Tolerance Has Been Reached</ulink></title>
-     <author><firstname>Alberto</firstname><surname>Squassabia</surname></author>
+[h4 Bibliographic references]
+[variablelist Books
+  [
+    [[#KnuthII]The art of computer programming (vol II)]
+    [Donald. E. Knuth, 1998, Addison-Wesley Longman, Inc., ISBN 0-201-89684-2, Addison-Wesley Professional; 3rd edition]
+  ]
+  [
+    [Rounding near zero, in [@http://www.amazon.com/Advanced-Arithmetic-Digital-Computer-Kulisch/dp/3211838708 Advanced Arithmetic for the Digital Computer]]
+    [Ulrich W. Kulisch, 2002, Springer, Inc., ISBN 0-201-89684-2, Springer; 1st edition]
+  ]
+]
 
-     <biblioset relation="journal">
-      <title>C++ Report</title>
-      <issuenum>March 2000</issuenum>.
-     </biblioset>
-    </biblioentry>
+[variablelist Periodicals
+  [
+    [[#Squassabia][@http://www.adtmag.com/joop/carticle.aspx?ID=396
+      Comparing Floats: How To Determine if Floating Quantities Are Close Enough Once a Tolerance Has Been Reached]]
+    [Alberto Squassabia, in C++ Report (March 2000)]
+  ]
 
-    <biblioentry id="bbl.Becker">
-     <abbrev>Becker</abbrev>
+  [
+    [The Journeyman's Shop: Trap Handlers, Sticky Bits, and Floating-Point Comparisons]
+    [Pete Becker, in C/C++ Users Journal (December 2000)]
+  ]
+]
 
-     <biblioset relation="article">
-      <title>The Journeyman's Shop: Trap Handlers, Sticky Bits, and Floating-Point Comparisons</title>
-      <author><firstname>Pete</firstname><surname>Becker</surname></author>
-     </biblioset>
-     <biblioset relation="journal">
-      <title>C/C++ Users Journal</title>
-      <issuenum>December 2000</issuenum>.
-     </biblioset>
-    </biblioentry>
+[variablelist Publications
+  [
+    [[@http://citeseer.ist.psu.edu/goldberg91what.html
+      What Every Computer Scientist Should Know About Floating-Point Arithmetic]]
+    [David Goldberg, pages 150-230, in Computing Surveys (March 1991), Association for Computing Machinery, Inc.]
+  ]
 
-   </bibliodiv>
+  [
+    [[@http://hal.archives-ouvertes.fr/docs/00/07/26/81/PDF/RR-3967.pdf‎
+      From Rounding Error Estimation to Automatic Correction with Automatic Differentiation]]
+    [Philippe Langlois, Technical report, INRIA]
+  ]
 
-   <bibliodiv id="bbl.fpv-comparison.publications"><title>Publications</title>
+  [
+    [[@http://www.cs.berkeley.edu/~wkahan/
+      William Kahan home page]]
+    [Lots of information on floating point arithmetics.]
+  ]
 
-    <biblioentry id="bbl.Goldberg">
-     <abbrev>Goldberg</abbrev>
+]
 
-     <biblioset relation="article">
-      <title><ulink url="http://citeseer.ist.psu.edu/goldberg91what.html">What Every Computer Scientist Should Know About Floating-Point Arithmetic</ulink></title>
-      <author><firstname>David</firstname><surname>Goldberg</surname></author>
-      <copyright><year>1991</year><holder>Association for Computing Machinery, Inc.</holder></copyright>
-      <pagenums>150-230</pagenums>
-     </biblioset>
-     <biblioset relation="journal">
-      <title>Computing Surveys</title>
-      <issuenum>March</issuenum>.
-     </biblioset>
-    </biblioentry>
-
-    <biblioentry id="bbl.Langlois">
-     <abbrev>Langlois</abbrev>
-
-     <title><ulink url="http://www.inria.fr/rrrt/rr-3967.html">From Rounding Error Estimation to Automatic Correction with Automatic Differentiation</ulink></title>
-     <author><firstname>Philippe</firstname><surname>Langlois</surname></author>
-     <copyright><year>2000</year></copyright>
-     <issn>0249-6399</issn>
-    </biblioentry>
-
-    <biblioentry id="bbl.Kahan">
-     <abbrev>Kahan</abbrev>
-
-     <title><ulink url="http://www.cs.berkeley.edu/~wkahan/">Lots of information on William Kahan home page</ulink></title>
-     <author><firstname>William</firstname><surname>Kahan</surname></author>
-    </biblioentry>
-
-   </bibliodiv>
-  </bibliography>
- </section>
+[endsect] [/ floating points]
 
  <section id="utf.testing-tools.reference">
   <title>The __UTF__ testing tools reference</title>

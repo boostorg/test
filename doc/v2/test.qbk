@@ -68,6 +68,10 @@
 [/ log]
 [def __BOOST_TEST_LOG_LEVEL__    `BOOST_TEST_LOG_LEVEL`]
 
+[/ floating point]
+[def __BOOST_CHECK_SMALL__       `BOOST_CHECK_SMALL`]
+[def __BOOST_CHECK_CLOSE__       `BOOST_CHECK_CLOSE`]
+
 
 [def __param_show_progress__ [*show_progress]]
 [def __param_log_level__     [*log_level]]
