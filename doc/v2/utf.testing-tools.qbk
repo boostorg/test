@@ -388,7 +388,7 @@ For more reading about floating-point comparison see references below.
 
 [section:testing_tool_ref __UTF__ testing tools reference]
 
-[#ref_BOOST_level][h3:boost_level `BOOST_<level>`]
+[#ref_BOOST_level][h3 `BOOST_<level>`]
 [def __BOOST_LEVEL__ [link ref_BOOST_level `BOOST_<level>`]]
 
 ``
@@ -418,7 +418,7 @@ See also:
 * [link ref_BOOST_level_MESSAGE `BOOST_<level>_MESSAGE`]
 
 
-[#ref_BOOST_level_BITWISE_EQUAL][h3:boost_level `BOOST_<level>_BITWISE_EQUAL`]
+[#ref_BOOST_level_BITWISE_EQUAL][h3 `BOOST_<level>_BITWISE_EQUAL`]
 [def __BOOST_LEVEL_BITWISE_EQUAL__ [link ref_BOOST_level_BITWISE_EQUAL `BOOST_<level>_BITWISE_EQUAL`]]
 
 ``
@@ -450,9 +450,8 @@ See also:
 * [link ref_BOOST_level_EQUAL `BOOST_<level>_EQUAL`]
 
 
-[#ref_BOOST_level_BITWISE_CLOSE][h3:boost_level `BOOST_<level>_CLOSE`]
+[#ref_BOOST_level_BITWISE_CLOSE][h3 `BOOST_<level>_CLOSE`]
 [def __BOOST_LEVEL_CLOSE__ [link ref_BOOST_level_BITWISE_CLOSE `BOOST_<level>_CLOSE`]]
-
 
 ``
   BOOST_WARN_CLOSE(left, right, tolerance);
@@ -468,8 +467,8 @@ __BOOST_LEVEL_PREDICATE__ family of tools with explicit `check_is_close` invocat
 
 
 The first parameter is the ['left] compared value. The second parameter is the
-['right] compared value. Last third parameter defines the tolerance for the comparison in 
-[link [*percentage units]].
+['right] compared value. Last third parameter defines the tolerance for the comparison in
+[link testing_floating_points [*percentage units]].
 
 [note It is required for left and right parameters to be of the same floating point type. You will need to explicitly
       resolve any type mismatch to select which type to use for comparison.
@@ -486,148 +485,133 @@ The first parameter is the ['left] compared value. The second parameter is the
      <title>BOOST_LEVEL_CLOSE usage with very big values</title>
     </btl-example>
 
-    <seealso>
-     <ref>BOOST_LEVEL_CLOSE_FRACTION</ref>, <ref>BOOST_LEVEL_SMALL</ref>, <ref>BOOST_LEVEL_EQUAL</ref>,
-     <link linkend="utf.testing-tools.fpv-comparison">Floating point comparison algorithms</link>
-    </seealso>
-   </refentry>
+See also:
+* __BOOST_LEVEL_CLOSE_FRACTION__
+* __BOOST_LEVEL_SMALL__
+* __BOOST_LEVEL_EQUAL__
+* [link testing_floating_points Floating point comparison algorithms]
 
-   <refentry name="BOOST_LEVEL_CLOSE_FRACTION">
-    <inline-synopsis>
-     <macro name="BOOST_WARN_CLOSE_FRACTION" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="left"/>
-      <macro-parameter name="right"/>      
-      <macro-parameter name="tolerance"/>
-     </macro>
-     <macro name="BOOST_CHECK_CLOSE_FRACTION" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="left"/>
-      <macro-parameter name="right"/>      
-      <macro-parameter name="tolerance"/>
-     </macro>
-     <macro name="BOOST_REQUIRE_CLOSE_FRACTION" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="left"/>
-      <macro-parameter name="right"/>      
-      <macro-parameter name="tolerance"/>
-     </macro>
-    </inline-synopsis>
 
-    <para role="first-line-indented">
-     These tools are used to check on closeness using strong relationship defined by the predicate 
-     <functionname>check_is_close</functionname>( left, right, tolerance ). To check for the weak relationship use 
-     <ref>BOOST_LEVEL_PREDICATE</ref> family of tools with explicit <functionname>check_is_close</functionname>
-     invocation.
-    </para>
+[#ref_BOOST_level_CLOSE_FRACTION][h3 `BOOST_<level>_CLOSE_FRACTION`]
+[def __BOOST_LEVEL_CLOSE_FRACTION__ [link ref_BOOST_level_CLOSE_FRACTION `BOOST_<level>_CLOSE_FRACTION`]]
 
-    <para>
-     The first parameter is the <emphasis>left</emphasis> compared value. The second parameter is the 
-     <emphasis>right</emphasis> compared value. Last third parameter defines the tolerance for the comparison as  
-     <link linkend="utf.testing-tools.fpv-comparison.tolerance-selection"><emphasis role="bold">fraction of absolute 
-     values being compared</emphasis></link>.
-    </para>
+``
+  BOOST_WARN_CLOSE_FRACTION(left, right, tolerance);
+  BOOST_CHECK_CLOSE_FRACTION(left, right, tolerance);
+  BOOST_REQUIRE_CLOSE_FRACTION(left, right, tolerance);
+``
+
+These tools are used to check on closeness using strong relationship defined by the predicate
+``check_is_close(left, right, tolerance)`` 
+
+To check for the weak relationship use __BOOST_LEVEL_PREDICATE__ family of tools with explicit `check_is_close` invocation.
+
+The first parameter is the ['left] compared value. The second parameter is the
+['right] compared value. Last third parameter defines the tolerance for the comparison as
+[link testing_floating_points [*fraction of absolute values being compared]].
 
 [note It is required for left and right parameters to be of the same floating point type. You will need to explicitly
       resolve any type mismatch to select which type to use for comparison.]
 
 [note Note that to use these tools you need to include additional header `floating_point_comparison.hpp`.]
 
-    <btl-example name="example44">
-     <title>BOOST_LEVEL_CLOSE_FRACTION usage</title>
-    </btl-example>
+[import examples/example44.cpp]
+[import examples/example44.output]
+[table:id_example44 __BOOST_LEVEL_CLOSE_FRACTION__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example44]]
+    [[example44o]]
+  ]
+]
 
-    <seealso>
-     <ref>BOOST_LEVEL_CLOSE</ref>, <ref>BOOST_LEVEL_SMALL</ref>, <ref>BOOST_LEVEL_EQUAL</ref>,
-     <link linkend="utf.testing-tools.fpv-comparison">Floating point comparison algorithms</link>
-    </seealso>
-   </refentry>
+See also:
+* __BOOST_LEVEL_CLOSE__
+* __BOOST_LEVEL_SMALL__
+* __BOOST_LEVEL_EQUAL__
+* [link testing_floating_points Floating point comparison algorithms]
 
-   <refentry name="BOOST_LEVEL_EQUAL">
-    <inline-synopsis>
-     <macro name="BOOST_WARN_EQUAL" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-     <macro name="BOOST_CHECK_EQUAL" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-     <macro name="BOOST_REQUIRE_EQUAL" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-    </inline-synopsis>
 
+
+[#ref_BOOST_level_EQUAL][h3 `BOOST_<level>_EQUAL`]
+[def __BOOST_LEVEL_EQUAL__ [link ref_BOOST_level_EQUAL `BOOST_<level>_EQUAL`]]
+
+``
+  BOOST_WARN_EQUAL(left, right);
+  BOOST_CHECK_EQUAL(left, right);
+  BOOST_REQUIRE_EQUAL(left, right);
+``
 
 Check performed by these tools is the same as the one performed by <ref>BOOST_LEVEL</ref>( left == right ).
 The difference is that the mismatched values are reported as well.
 
-[note It is bad idea to use these tools to compare floating point values. Use __BOOST_LEVEL_CLOSE</ref> or
-      <ref>BOOST_LEVEL_CLOSE_FRACTION</ref> tools instead.
+[note It is bad idea to use these tools to compare floating point values. Use __BOOST_LEVEL_CLOSE__ or
+      __BOOST_LEVEL_CLOSE_FRACTION__ tools instead.
 ]
-    <btl-example name="example35">
-     <title>BOOST_LEVEL_EQUAL usage</title>
-    </btl-example>
+[import examples/example35.cpp]
+[import examples/example35.output]
+[table:id_example35 __BOOST_LEVEL_EQUAL__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example35]]
+    [[example35o]]
+  ]
+] 
 
-    <seealso>
-     <ref>BOOST_LEVEL</ref>, <ref>BOOST_LEVEL_CLOSE</ref>, <ref>BOOST_LEVEL_NE</ref>
-    </seealso>
-   </refentry>
 
-   <refentry name="BOOST_LEVEL_EQUAL_COLLECTIONS">
-    <inline-synopsis>
-     <macro name="BOOST_WARN_EQUAL_COLLECTIONS" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left_begin"/>
-       <macro-parameter name="left_end"/>
-       <macro-parameter name="right_begin"/>
-       <macro-parameter name="right_end"/>
-     </macro>
-     <macro name="BOOST_CHECK_EQUAL_COLLECTIONS" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left_begin"/>
-       <macro-parameter name="left_end"/>
-       <macro-parameter name="right_begin"/>
-       <macro-parameter name="right_end"/>
-     </macro>
-     <macro name="BOOST_REQUIRE_EQUAL_COLLECTIONS" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left_begin"/>
-       <macro-parameter name="left_end"/>
-       <macro-parameter name="right_begin"/>
-       <macro-parameter name="right_end"/>
-     </macro>
-    </inline-synopsis>
+See also:
+* __BOOST_LEVEL__
+* __BOOST_LEVEL_CLOSE__
+* __BOOST_LEVEL_NE__
 
-    <para role="first-line-indented">
-     These tools are used to perform an element by element comparison of two collections. They print all mismatched 
-     positions, collection elements at these positions and check that the collections have the same size. The first two 
-     parameters designate begin and end of the first collection. The two parameters designate begin and end of the 
-     second collection.
-    </para>
-    
-    <btl-example name="example36">
-     <title>BOOST_LEVEL_EQUAL_COLLECTIONS usage</title>
-    </btl-example>
+
+[#ref_BOOST_level_EQUAL_COLLECTIONS][h3 `BOOST_<level>_EQUAL_COLLECTIONS`]
+[def __BOOST_LEVEL_EQUAL_COLLECTIONS__ [link ref_BOOST_level_EQUAL_COLLECTIONS `BOOST_<level>_EQUAL_COLLECTIONS`]]
+
+``
+  BOOST_WARN_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
+  BOOST_CHECK_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
+  BOOST_REQUIRE_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
+``
+
+These tools are used to perform an element by element comparison of two collections. They print all mismatched
+positions, collection elements at these positions and check that the collections have the same size. The first two 
+parameters designate begin and end of the first collection. The two last parameters designate begin and end of the
+second collection.
+
+[import examples/example36.cpp]
+[import examples/example36.output]
+[table:id_example36 __BOOST_LEVEL_EQUAL_COLLECTIONS__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example36]]
+    [[example36o]]
+  ]
+]
+
 
 See also:
 * __BOOST_LEVEL_EQUAL__
 
 
-   <refentry name="BOOST_LEVEL_EXCEPTION">
-    <inline-synopsis>
-     <macro name="BOOST_WARN_EXCEPTION" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="expression"/>
-       <macro-parameter name="exception"/>
-       <macro-parameter name="predicate"/>
-     </macro>
-     <macro name="BOOST_CHECK_EXCEPTION" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="expression"/>
-       <macro-parameter name="exception"/>
-       <macro-parameter name="predicate"/>
-     </macro>
-     <macro name="BOOST_REQUIRE_EXCEPTION" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="expression"/>
-       <macro-parameter name="exception"/>
-       <macro-parameter name="predicate"/>
-     </macro>
-    </inline-synopsis>
 
+[#ref_BOOST_level_EXCEPTION][h3 `BOOST_<level>_EXCEPTION`]
+[def __BOOST_LEVEL_EXCEPTION__ [link ref_BOOST_level_EXCEPTION `BOOST_<level>_EXCEPTION`]]
+
+``
+  BOOST_WARN_EXCEPTION(expression, exception, predicate);
+  BOOST_CHECK_EXCEPTION(expression, exception, predicate);
+  BOOST_REQUIRE_EXCEPTION(expression, exception, predicate);
+``
 
 These tools are used to perform an exception detection and validation check. Tools execute the supplied expression
 and validate that it throws an exception of supplied class (or the one derived from it) that complies with the 
@@ -636,35 +620,47 @@ predicate evaluates to false, check fails. In comparison with __BOOST_LEVEL_THRO
 allow performing more fine-grained checks. For example: make sure that an expected exception has specific 
 error message.
 
-    <btl-example name="example37">
-     <title>BOOST_LEVEL_EXCEPTION usage</title>
-    </btl-example>
+[import examples/example37.cpp]
+[import examples/example37.output]
+[table:id_example37 __BOOST_LEVEL_EXCEPTION__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example37]]
+    [[example37o]]
+  ]
+]
 
 See also:
 * __BOOST_LEVEL_THROW__
 
-   <refentry name="BOOST_LEVEL_GE">
-    <inline-synopsis>
-     <macro name="BOOST_WARN_GE" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-     <macro name="BOOST_CHECK_GE" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-     <macro name="BOOST_REQUIRE_GE" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-    </inline-synopsis>
+
+[#ref_BOOST_level_GE][h3 `BOOST_<level>_GE`]
+[def __BOOST_LEVEL_GE__ [link ref_BOOST_level_GE `BOOST_<level>_GE`]]
+
+``
+  BOOST_WARN_GE(left, right);
+  BOOST_CHECK_GE(left, right);
+  BOOST_REQUIRE_GE(left, right);
+``
 
 Check performed by these tools is the same as the one performed by __BOOST_LEVEL__`( left >= right )`.
 The difference is that the argument values are reported as well.
 
-    <btl-example name="example57">
-     <title>BOOST_LEVEL_GE usage</title>
-    </btl-example>
+[import examples/example57.cpp]
+[import examples/example57.output]
+[table:id_example57 __BOOST_LEVEL_GE__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example57]]
+    [[example57o]]
+  ]
+]
 
 See also:
 * __BOOST_LEVEL_LE__
@@ -672,51 +668,45 @@ See also:
 * __BOOST_LEVEL_GT__
 
 
-   <refentry name="BOOST_LEVEL_GT">
-    <inline-synopsis>
-     <macro name="BOOST_WARN_GT" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-     <macro name="BOOST_CHECK_GT" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-     <macro name="BOOST_REQUIRE_GT" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-    </inline-synopsis>
 
+[#ref_BOOST_level_GT][h3 `BOOST_<level>_GT`]
+[def __BOOST_LEVEL_GT__ [link ref_BOOST_level_GT `BOOST_<level>_GT`]]
+
+``
+  BOOST_WARN_GT(left, right);
+  BOOST_CHECK_GT(left, right);
+  BOOST_REQUIRE_GT(left, right);
+``
 
 Check performed by these tools is the same as the one performed by __BOOST_LEVEL__`( left > right )`.
 The difference is that the argument values are reported as well.
 
-    <btl-example name="example58">
-     <title>BOOST_LEVEL_GT usage</title>
-    </btl-example>
-
+[import examples/example58.cpp]
+[import examples/example58.output]
+[table:id_example58 __BOOST_LEVEL_GT__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example58]]
+    [[example58o]]
+  ]
+]
 See also:
 * __BOOST_LEVEL_LE__
 * __BOOST_LEVEL_LT__
 * __BOOST_LEVEL_GE__
 
-   <refentry name="BOOST_LEVEL_LE">
-    <inline-synopsis>
-     <macro name="BOOST_WARN_LE" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-     <macro name="BOOST_CHECK_LE" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-     <macro name="BOOST_REQUIRE_LE" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-    </inline-synopsis>
 
+[#ref_BOOST_level_LE][h3 `BOOST_<level>_LE`]
+[def __BOOST_LEVEL_LE__ [link ref_BOOST_level_LE `BOOST_<level>_LE`]]
+
+``
+  BOOST_WARN_LE(left, right);
+  BOOST_CHECK_LE(left, right);
+  BOOST_REQUIRE_LE(left, right);
+``
 
 Check performed by these tools is the same as the one performed by __BOOST_LEVEL__`( left <= right )`.
 The difference is that the argument values are reported as well.
@@ -730,22 +720,15 @@ See also:
 * __BOOST_LEVEL_GE__
 * __BOOST_LEVEL_GT__
 
-   <refentry name="BOOST_LEVEL_LT">
-    <inline-synopsis>
-     <macro name="BOOST_WARN_LT" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-     <macro name="BOOST_CHECK_LT" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-     <macro name="BOOST_REQUIRE_LT" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-    </inline-synopsis>
 
+[#ref_BOOST_level_LT][h3 `BOOST_<level>_LT`]
+[def __BOOST_LEVEL_LT__ [link ref_BOOST_level_LT `BOOST_<level>_LT`]]
+
+``
+  BOOST_WARN_LT(left, right);
+  BOOST_CHECK_LT(left, right);
+  BOOST_REQUIRE_LT(left, right);
+``
 
 Check performed by these tools is the same as the one performed by `__BOOST_LEVEL__( left < right )`.
 The difference is that the argument values are reported as well.
@@ -760,22 +743,14 @@ See also:
 * __BOOST_LEVEL_GT__
 
 
+[#ref_BOOST_level_MESSAGE][h3 `BOOST_<level>_MESSAGE`]
+[def __BOOST_LEVEL_MESSAGE__ [link ref_BOOST_level_MESSAGE `BOOST_<level>_MESSAGE`]]
 
-   <refentry name="BOOST_LEVEL_MESSAGE">
-    <inline-synopsis>
-     <macro name="BOOST_WARN_MESSAGE" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="predicate"/>
-       <macro-parameter name="message"/>
-     </macro>
-     <macro name="BOOST_CHECK_MESSAGE" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="predicate"/>
-       <macro-parameter name="message"/>
-     </macro>
-     <macro name="BOOST_REQUIRE_MESSAGE" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="predicate"/>
-       <macro-parameter name="message"/>
-     </macro>
-    </inline-synopsis>
+``
+  BOOST_WARN_MESSAGE(predicate, message);
+  BOOST_CHECK_MESSAGE(predicate, message);
+  BOOST_REQUIRE_MESSAGE(predicate, message);
+``
 
 These tools perform exactly the same check as __BOOST_LEVEL__ tools. The only difference is that
 instead of generating an error/confirm message these use the supplied one.
@@ -793,22 +768,15 @@ See also:
 * __BOOST_LEVEL__
 
 
-   <refentry name="BOOST_LEVEL_NE">
-    <inline-synopsis>
-     <macro name="BOOST_WARN_NE" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-     <macro name="BOOST_CHECK_NE" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-     <macro name="BOOST_REQUIRE_NE" kind="functionlike" ref-id="utf.testing-tools.reference">
-       <macro-parameter name="left"/>
-       <macro-parameter name="right"/>
-     </macro>
-    </inline-synopsis>
 
+[#ref_BOOST_level_NE][h3 `BOOST_<level>_NE`]
+[def __BOOST_LEVEL_NE__ [link ref_BOOST_level_NE `BOOST_<level>_NE`]]
+
+``
+  BOOST_WARN_NE(left, right);
+  BOOST_CHECK_NE(left, right);
+  BOOST_REQUIRE_NE(left, right);
+``
 
 Check performed by these tools is the same as the one performed by <ref>BOOST_LEVEL</ref>( left != right ).
 The difference is that the matched values are reported as well.
@@ -850,7 +818,7 @@ statement.
     </btl-example>
 
 See also:
-* __BOOST_LEVEL_THROW_
+* __BOOST_LEVEL_THROW__
 
 
    <refentry name="BOOST_LEVEL_PREDICATE">
@@ -905,7 +873,7 @@ See also:
 
 These tools are used to check that supplied value is small enough. The "smallness" is defined by absolute value
 of the tolerance supplied as a second argument. Use these tools with caution. To compare to values on closeness 
-it's preferable to use <ref>BOOST_LEVEL_CLOSE</ref> tools instead. 
+it's preferable to use __BOOST_LEVEL_CLOSE__ tools instead.
 
 The first parameter is the value to check. The second parameter is the tolerance.
 
@@ -915,11 +883,10 @@ The first parameter is the value to check. The second parameter is the tolerance
      <title>BOOST_LEVEL_SMALL usage</title>
     </btl-example>
 
-    <seealso>
-     <ref>BOOST_LEVEL_CLOSE</ref>, <ref>BOOST_LEVEL_CLOSE_FRACTION</ref>,
-     <link linkend="utf.testing-tools.fpv-comparison">Floating point comparison algorithms</link>
-    </seealso>
-   </refentry>
+See also:
+* __BOOST_LEVEL_CLOSE__
+* __BOOST_LEVEL_CLOSE_FRACTION__
+* [link floating_point Floating point comparison algorithms] [/todo]
 
    <refentry name="BOOST_LEVEL_THROW">
     <inline-synopsis>
