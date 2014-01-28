@@ -898,31 +898,33 @@ advantage of these tools is that they show arguments values in case of predicate
 The first parameter is the predicate itself. The second parameter is the list of predicate arguments each wrapped
 in round brackets (`BOOST_PP` sequence format).
 
-    <btl-example name="example40">
-     <simpara>
-      Note difference in error log from 
-     </simpara>
-     <title>BOOST_LEVEL_PREDICATE usage</title>
-    </btl-example>
+[import examples/example40.cpp]
+[import examples/example40.output]
+[table:id_example40 __BOOST_LEVEL_PREDICATE__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example40]]
+    [[example40o]]
+  ]
+]
+
+[note Note difference in error log from __BOOST_LEVEL__]
 
 See also:
 * __BOOST_LEVEL__
 
-   <refentry name="BOOST_LEVEL_SMALL">
-    <inline-synopsis>
-     <macro name="BOOST_WARN_SMALL" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="value"/>
-      <macro-parameter name="tolerance"/>
-     </macro>
-     <macro name="BOOST_CHECK_SMALL" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="value"/>
-      <macro-parameter name="tolerance"/>
-     </macro>
-     <macro name="BOOST_REQUIRE_SMALL" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="value"/>
-      <macro-parameter name="tolerance"/>
-     </macro>
-    </inline-synopsis>
+
+[#ref_BOOST_level_SMALL][h3 `BOOST_<level>_SMALL`]
+[def __BOOST_LEVEL_SMALL__ [link ref_BOOST_level_SMALL `BOOST_<level>_SMALL`]]
+
+``
+  BOOST_WARN_SMALL(value, tolerance);
+  BOOST_CHECK_SMALL(value, tolerance);
+  BOOST_REQUIRE_SMALL(value, tolerance);
+``
 
 These tools are used to check that supplied value is small enough. The "smallness" is defined by absolute value
 of the tolerance supplied as a second argument. Use these tools with caution. To compare to values on closeness 
@@ -932,31 +934,35 @@ The first parameter is the value to check. The second parameter is the tolerance
 
 [note Note that to use these tools you need to include additional header `floating_point_comparison.hpp`.]
 
-    <btl-example name="example41">
-     <title>BOOST_LEVEL_SMALL usage</title>
-    </btl-example>
+[import examples/example41.cpp]
+[import examples/example41.output]
+[table:id_example41 __BOOST_LEVEL_SMALL__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example41]]
+    [[example41o]]
+  ]
+]
+
 
 See also:
 * __BOOST_LEVEL_CLOSE__
 * __BOOST_LEVEL_CLOSE_FRACTION__
 * [link floating_point Floating point comparison algorithms] [/todo]
 
-   <refentry name="BOOST_LEVEL_THROW">
-    <inline-synopsis>
-     <macro name="BOOST_WARN_THROW" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="expression"/>
-      <macro-parameter name="exception"/>
-     </macro>
-     <macro name="BOOST_CHECK_THROW" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="expression"/>
-      <macro-parameter name="exception"/>
-     </macro>
-     <macro name="BOOST_REQUIRE_THROW" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="expression"/>
-      <macro-parameter name="exception"/>
-     </macro>
-    </inline-synopsis>
 
+
+[#ref_BOOST_level_THROW][h3 `BOOST_<level>_THROW`]
+[def __BOOST_LEVEL_THROW__ [link ref_BOOST_level_THROW `BOOST_<level>_THROW`]]
+
+``
+  BOOST_WARN_THROW(expression, exception);
+  BOOST_CHECK_THROW(expression, exception);
+  BOOST_REQUIRE_THROW(expression, exception);
+``
 
 These tools are used to perform an exception detection check. Tools execute the supplied expression and validate
 that it throws an exception of supplied class (or the one derived from it) or it's child. If the statement 
@@ -983,17 +989,16 @@ statement. The second parameter is an expected exception.
 See also:
 * __BOOST_LEVEL_NO_THROW__
 
-   
-   <refentry name="BOOST_ERROR">
-    <inline-synopsis>
-     <macro name="BOOST_ERROR" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="message"/>
-     </macro>
-    </inline-synopsis>
+
+[#ref_BOOST_ERROR][h3 `BOOST_ERROR`]
+[def __BOOST_ERROR__ [link ref_BOOST_ERROR `BOOST_ERROR`]]
+
+``
+  BOOST_ERROR(message);
+``
 
 __BOOST_ERROR__ tool behave the same way as __BOOST_CHECK_MESSAGE__`(false, message )`. This tool is used for
 an unconditional error counter increasing and message logging. 
-
 
 The only tool's parameter is an error message to log.
 
@@ -1013,15 +1018,17 @@ The only tool's parameter is an error message to log.
 See also:
 * __BOOST_LEVEL__
 
-   
-   <refentry name="BOOST_FAIL">
-    <inline-synopsis>
-     <macro name="BOOST_FAIL" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="message"/>
-     </macro>
-    </inline-synopsis>
 
-`BOOST_FAIL(message)` behave the same way as `BOOST_REQUIRE_MESSAGE(false, message)`. This tool is used for an
+
+
+[#ref_BOOST_FAIL][h3 `BOOST_FAIL`]
+[def __BOOST_FAIL__ [link ref_BOOST_FAIL `BOOST_FAIL`]]
+
+``
+  BOOST_FAIL(message);
+``
+
+`__BOOST_FAIL__(message)` behave the same way as `__BOOST_REQUIRE_MESSAGE__(false, message)`. This tool is used for an
 unconditional error counter increasing, message logging and the current test case aborting. 
 
 The only tool's parameter is an error message to log.
@@ -1041,14 +1048,17 @@ The only tool's parameter is an error message to log.
 
 See also:
 * __BOOST_LEVEL__
+* __BOOST_REQUIRE_MESSAGE__
 
 
-   <refentry name="BOOST_IS_DEFINED">
-    <inline-synopsis>
-     <macro name="BOOST_IS_DEFINED" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="symbol"/>
-     </macro>
-    </inline-synopsis>
+
+
+[#ref_BOOST_IS_DEFINED][h3 `BOOST_IS_DEFINED`]
+[def __BOOST_IS_DEFINED__ [link ref_BOOST_IS_DEFINED `BOOST_IS_DEFINED`]]
+
+``
+  BOOST_IS_DEFINED(symbol);
+``
 
 Unlike the rest of the tools in the toolbox this tool does not perform the logging itself. Its only purpose
 is to check at runtime whether or not the supplied preprocessor symbol is defined. Use it in combination with
