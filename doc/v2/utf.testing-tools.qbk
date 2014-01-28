@@ -450,7 +450,7 @@ See also:
 * [link ref_BOOST_level_EQUAL `BOOST_<level>_EQUAL`]
 
 
-[#ref_BOOST_level_BITWISE_CLOSE][h3 `BOOST_<level>_CLOSE`]
+[#ref_BOOST_level_CLOSE][h3 `BOOST_<level>_CLOSE`]
 [def __BOOST_LEVEL_CLOSE__ [link ref_BOOST_level_BITWISE_CLOSE `BOOST_<level>_CLOSE`]]
 
 ``
@@ -477,13 +477,31 @@ The first parameter is the ['left] compared value. The second parameter is the
 [note Note that to use these tools you need to include additional header `floating_point_comparison.hpp`.
 ]
 
-    <btl-example name="example42">
-     <title>BOOST_LEVEL_CLOSE usage with very small values</title>
-    </btl-example>
+[import examples/example42.cpp]
+[import examples/example42.output]
+[table:id_example42 __BOOST_LEVEL_CLOSE__ usage with small values
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example42]]
+    [[example42o]]
+  ]
+]
 
-    <btl-example name="example43">
-     <title>BOOST_LEVEL_CLOSE usage with very big values</title>
-    </btl-example>
+[import examples/example43.cpp]
+[import examples/example43.output]
+[table:id_example43 __BOOST_LEVEL_CLOSE__ usage with big values
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example43]]
+    [[example43o]]
+  ]
+]
 
 See also:
 * __BOOST_LEVEL_CLOSE_FRACTION__
@@ -711,9 +729,18 @@ See also:
 Check performed by these tools is the same as the one performed by __BOOST_LEVEL__`( left <= right )`.
 The difference is that the argument values are reported as well.
 
-    <btl-example name="example55">
-     <title>BOOST_LEVEL_LE usage</title>
-    </btl-example>
+[import examples/example55.cpp]
+[import examples/example55.output]
+[table:id_example55 __BOOST_LEVEL_LE__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example55]]
+    [[example55o]]
+  ]
+]
 
 See also:
 * __BOOST_LEVEL_LE__
@@ -733,9 +760,18 @@ See also:
 Check performed by these tools is the same as the one performed by `__BOOST_LEVEL__( left < right )`.
 The difference is that the argument values are reported as well.
 
-    <btl-example name="example56">
-     <title>BOOST_LEVEL_LT usage</title>
-    </btl-example>
+[import examples/example56.cpp]
+[import examples/example56.output]
+[table:id_example56 __BOOST_LEVEL_LT__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example56]]
+    [[example56o]]
+  ]
+]
 
 See also:
 * __BOOST_LEVEL_LE__
@@ -759,10 +795,18 @@ The first parameter is the boolean expression. The second parameter is the messa
 failure. The message argument can be constructed of components of any type supporting the 
 `std::ostream& operator<< (std::ostream&)`.
 
-    
-    <btl-example name="example38">
-     <title>BOOST_LEVEL_MESSAGE usage</title>
-    </btl-example>
+[import examples/example38.cpp]
+[import examples/example38.output]
+[table:id_example38 __BOOST_LEVEL_MESSAGE__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example38]]
+    [[example38o]]
+  ]
+]
 
 See also:
 * __BOOST_LEVEL__
@@ -781,27 +825,32 @@ See also:
 Check performed by these tools is the same as the one performed by <ref>BOOST_LEVEL</ref>( left != right ).
 The difference is that the matched values are reported as well.
 
-    <btl-example name="example54">
-     <title>BOOST_LEVEL_NE usage</title>
-    </btl-example>
+[import examples/example54.cpp]
+[import examples/example54.output]
+[table:id_example54 __BOOST_LEVEL_NE__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example54]]
+    [[example54o]]
+  ]
+]
 
 See also:
 * __BOOST_LEVEL_EQUAL__
 
-   
-   <refentry name="BOOST_LEVEL_NO_THROW">
-    <inline-synopsis>
-     <macro name="BOOST_WARN_NO_THROW" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="expression"/>
-     </macro>
-     <macro name="BOOST_CHECK_NO_THROW" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="expression"/>
-     </macro>
-     <macro name="BOOST_REQUIRE_NO_THROW" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="expression"/>
-     </macro>
-    </inline-synopsis>
 
+
+[#ref_BOOST_level_NO_THROW][h3 `BOOST_<level>_NO_THROW`]
+[def __BOOST_LEVEL_NO_THROW__ [link ref_BOOST_level_NO_THROW `BOOST_<level>_NO_THROW`]]
+
+``
+  BOOST_WARN_NO_THROW(expression);
+  BOOST_CHECK_NO_THROW(expression);
+  BOOST_REQUIRE_NO_THROW(expression);
+``
 
 These tools are used to perform a "no throw" check. Tools execute the supplied expression and validate that it does
 not throw any exceptions. Error would be reported by the framework even if the statement appear directly in test
@@ -813,29 +862,33 @@ a form ``error in <test case name>;exception was thrown by <expression>``
 The only parameter is an expression to execute. You can use `do {} while(0)` block if you want to execute more than one
 statement.
 
-    <btl-example name="example39">
-     <title>BOOST_LEVEL_NO_THROW usage</title>
-    </btl-example>
+[import examples/example39.cpp]
+[import examples/example39.output]
+[table:id_example39 __BOOST_LEVEL_NO_THROW__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example39]]
+    [[example39o]]
+  ]
+]
+
 
 See also:
 * __BOOST_LEVEL_THROW__
 
 
-   <refentry name="BOOST_LEVEL_PREDICATE">
-    <inline-synopsis>
-     <macro name="BOOST_WARN_PREDICATE" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="predicate"/>
-      <macro-parameter name="arguments_list"/>
-     </macro>
-     <macro name="BOOST_CHECK_PREDICATE" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="predicate"/>
-      <macro-parameter name="arguments_list"/>
-     </macro>
-     <macro name="BOOST_REQUIRE_PREDICATE" kind="functionlike" ref-id="utf.testing-tools.reference">
-      <macro-parameter name="predicate"/>
-      <macro-parameter name="arguments_list"/>
-     </macro>
-    </inline-synopsis>
+
+[#ref_BOOST_level_PREDICATE][h3 `BOOST_<level>_PREDICATE`]
+[def __BOOST_LEVEL_PREDICATE__ [link ref_BOOST_level_PREDICATE `BOOST_<level>_PREDICATE`]]
+
+``
+  BOOST_WARN_PREDICATE(predicate, arguments_list);
+  BOOST_CHECK_PREDICATE(predicate, arguments_list);
+  BOOST_REQUIRE_PREDICATE(predicate, arguments_list);
+``
 
 These are generic tools used to validate an arbitrary supplied predicate functor (there is a compile time limit on
 predicate arity defined by the configurable macro `BOOST_TEST_MAX_PREDICATE_ARITY`). To
@@ -915,12 +968,20 @@ form "error in <replaceable>test case name</replaceable>: exception <replaceable
 The first parameter is the expression to execute. Use do-while(0) block if you want to execute more than one
 statement. The second parameter is an expected exception.
 
-    <btl-example name="example45">
-     <title>BOOST_LEVEL_THROW usage</title>
-    </btl-example>
-
+[import examples/example45.cpp]
+[import examples/example45.output]
+[table:id_example45 __BOOST_LEVEL_THROW__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example45]]
+    [[example45o]]
+  ]
+]
 See also:
-* __BOOST_LEVELNOTHROW__
+* __BOOST_LEVEL_NO_THROW__
 
    
    <refentry name="BOOST_ERROR">
@@ -936,9 +997,18 @@ an unconditional error counter increasing and message logging.
 
 The only tool's parameter is an error message to log.
 
-    <btl-example name="example46">
-     <title>__BOOST_ERROR__ usage</title>
-    </btl-example>
+[import examples/example46.cpp]
+[import examples/example46.output]
+[table:id_example46 __BOOST_ERROR__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example46]]
+    [[example46o]]
+  ]
+]
 
 See also:
 * __BOOST_LEVEL__
@@ -956,9 +1026,18 @@ unconditional error counter increasing, message logging and the current test cas
 
 The only tool's parameter is an error message to log.
 
-    <btl-example name="example47">
-     <title>BOOST_FAIL usage</title>
-    </btl-example>
+[import examples/example47.cpp]
+[import examples/example47.output]
+[table:id_example47 __BOOST_FAIL__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example47]]
+    [[example47o]]
+  ]
+]
 
 See also:
 * __BOOST_LEVEL__
@@ -978,9 +1057,19 @@ macro definition with non-zero arity specify dummy arguments for it. See below f
 
 The only tool's parameter is a preprocessor symbol that gets validated.
 
-    <btl-example name="example48">
-     <title>BOOST_IS_DEFINED usage</title>
-    </btl-example>
+[import examples/example48.cpp]
+[import examples/example48.output]
+[table:id_example48 __BOOST_IS_DEFINED__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example48]]
+    [[example48o]]
+  ]
+]
+
 
 See also:
 * __BOOST_LEVEL__
