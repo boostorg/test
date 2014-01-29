@@ -1108,7 +1108,7 @@
         If check is successful, tools may produce a confirmation message, in other
         case they produce an error message in a form
       </p>
-<pre class="programlisting"><span class="identifier">error</span> <span class="identifier">in</span> <span class="special">&lt;</span><span class="identifier">test</span> <span class="keyword">case</span> <span class="identifier">name</span><span class="special">&gt;;</span><span class="identifier">exception</span> <span class="identifier">was</span> <span class="identifier">thrown</span> <span class="identifier">by</span> <span class="special">&lt;</span><span class="identifier">expression</span><span class="special">&gt;</span></pre>
+<pre class="programlisting"><span class="identifier">error</span> <span class="identifier">in</span> <span class="special">&lt;</span><span class="identifier">test</span><span class="special">-</span><span class="keyword">case</span><span class="special">-</span><span class="identifier">name</span><span class="special">&gt;;</span><span class="identifier">exception</span> <span class="identifier">was</span> <span class="identifier">thrown</span> <span class="identifier">by</span> <span class="special">&lt;</span><span class="identifier">expression</span><span class="special">&gt;</span></pre>
 <p>
         The only parameter is an expression to execute. You can use <code class="computeroutput"><span class="keyword">do</span> <span class="special">{}</span> <span class="keyword">while</span><span class="special">(</span><span class="number">0</span><span class="special">)</span></code>
         block if you want to execute more than one statement.
@@ -1352,12 +1352,13 @@
       </p>
 <p>
         If check is successful, the tool produces a confirmation message, in other
-        case it produces an error message in a form "error in &lt;replaceable&gt;test
-        case name&lt;/replaceable&gt;: exception &lt;replaceable&gt;exception&lt;/replaceable&gt;
-        expected.
+        case it produces an error message in a form <code class="computeroutput"><span class="identifier">error</span>
+        <span class="identifier">in</span> <span class="special">&lt;</span><span class="identifier">test</span><span class="special">-</span><span class="keyword">case</span><span class="special">-</span><span class="identifier">name</span><span class="special">&gt;:</span>
+        <span class="identifier">exception</span> <span class="special">&lt;</span><span class="identifier">exception</span><span class="special">&gt;</span>
+        <span class="identifier">expected</span></code>.
       </p>
 <p>
-        The first parameter is the expression to execute. Use do-while(0) block if
+        The first parameter is the expression to execute. Use <code class="computeroutput"><span class="keyword">do</span><span class="special">{}</span> <span class="keyword">while</span><span class="special">(</span><span class="number">0</span><span class="special">)</span></code> block if
         you want to execute more than one statement. The second parameter is an expected
         exception.
       </p>
@@ -1485,7 +1486,7 @@
 <pre class="programlisting"><span class="identifier">BOOST_FAIL</span><span class="special">(</span><span class="identifier">message</span><span class="special">);</span>
 </pre>
 <p>
-        <code class="computeroutput"><a class="link" href="testing_tool_ref.html#ref_BOOST_FAIL"><code class="computeroutput"><span class="identifier">BOOST_FAIL</span></code></a><span class="special">(</span><span class="identifier">message</span><span class="special">)</span></code> behave the same way as <code class="computeroutput"><span class="identifier">__BOOST_REQUIRE_MESSAGE__</span><span class="special">(</span><span class="keyword">false</span><span class="special">,</span>
+        <code class="computeroutput"><a class="link" href="testing_tool_ref.html#ref_BOOST_FAIL"><code class="computeroutput"><span class="identifier">BOOST_FAIL</span></code></a><span class="special">(</span><span class="identifier">message</span><span class="special">)</span></code> behave the same way as <a class="link" href="testing_tool_ref.html#ref_BOOST_level_MESSAGE"><code class="computeroutput"><span class="identifier">BOOST_REQUIRE_MESSAGE</span></code></a><code class="computeroutput"><span class="special">(</span><span class="keyword">false</span><span class="special">,</span>
         <span class="identifier">message</span><span class="special">)</span></code>.
         This tool is used for an unconditional error counter increasing, message
         logging and the current test case aborting.
@@ -1544,7 +1545,7 @@
             <a class="link" href="testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
           </li>
 <li class="listitem">
-            __BOOST_REQUIRE_MESSAGE__
+            <a class="link" href="testing_tool_ref.html#ref_BOOST_level_MESSAGE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_MESSAGE</span></code></a>
           </li>
 </ul></div>
 <a name="ref_BOOST_IS_DEFINED"></a><h4>

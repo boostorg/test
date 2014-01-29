@@ -40,19 +40,19 @@ specifics]:
   
   [
     [WARN]
-    [warning in `<test case name>`: condition `<assertion description>` is not satisfied]
+    [warning in `<test-case-name>`: condition `<assertion description>` is not satisfied]
     [not affected]
     [continues]
   ]
   [
     [CHECK]
-    [error in `<test case name>`: test `<assertion description>` failed]
+    [error in `<test-case-name>`: test `<assertion description>` failed]
     [increased]
     [continues]
   ]
   [
     [REQUIRE]
-    [fatal error in `<test case name>`: critical test `<assertion description>` failed]
+    [fatal error in `<test-case-name>`: critical test `<assertion description>` failed]
     [increased]
     [aborts]
   ]
@@ -878,7 +878,7 @@ not throw any exceptions. Error would be reported by the framework even if the s
 case body and throw any exception. But these tools allow proceeding further with test case in case of failure.
 
 If check is successful, tools may produce a confirmation message, in other case they produce an error message in
-a form ``error in <test case name>;exception was thrown by <expression>``
+a form ``error in <test-case-name>;exception was thrown by <expression>``
 
 The only parameter is an expression to execute. You can use `do {} while(0)` block if you want to execute more than one
 statement.
@@ -993,9 +993,9 @@ that it throws an exception of supplied class (or the one derived from it) or it
 throws any other unrelated exception or doesn't throw at all, check fails.
 
 If check is successful, the tool produces a confirmation message, in other case it produces an error message in a
-form "error in <replaceable>test case name</replaceable>: exception <replaceable>exception</replaceable> expected.
+form `error in <test-case-name>: exception <exception> expected`.
 
-The first parameter is the expression to execute. Use do-while(0) block if you want to execute more than one
+The first parameter is the expression to execute. Use `do{} while(0)` block if you want to execute more than one
 statement. The second parameter is an expected exception.
 
 [import examples/example45.cpp]
@@ -1055,7 +1055,7 @@ See also:
   BOOST_FAIL(message);
 ``
 
-`__BOOST_FAIL__(message)` behave the same way as `__BOOST_REQUIRE_MESSAGE__(false, message)`. This tool is used for an
+`__BOOST_FAIL__(message)` behave the same way as [link ref_BOOST_level_MESSAGE `BOOST_REQUIRE_MESSAGE`]`(false, message)`. This tool is used for an
 unconditional error counter increasing, message logging and the current test case aborting. 
 
 The only tool's parameter is an error message to log.
@@ -1076,7 +1076,7 @@ The only tool's parameter is an error message to log.
 See also:
 
 * __BOOST_LEVEL__
-* __BOOST_REQUIRE_MESSAGE__
+* __BOOST_LEVEL_MESSAGE__
 
 
 
