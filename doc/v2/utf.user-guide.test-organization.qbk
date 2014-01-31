@@ -27,7 +27,7 @@ supports are:
 
 
 To solve test tree creation problem the __UTF__ provides facilities for
-<link linkend="utf.user-guide.test-organization.test-suite">test suite creation</link>.
+[*test suite creation].
 
 Generic test case construction design used by the __UTF__ causes the test case implementation (test function body)
 and test case creation/registration points to be remote. As a result you may forget to register the test case
@@ -54,71 +54,45 @@ function objects created with `boost::bind` and nullary `boost::function`
 instances. The simplest is a free function and the __UTF__ provides facilities to create a free function based test
 case that is automatically registered. Here are the two construction interfaces:
 
-  <itemizedlist>
-   <listitem>
-    <simpara>
-     <link linkend="utf.user-guide.test-organization.auto-nullary-test-case">Test case with automated registration</link>
-    </simpara>
-   </listitem>
-   <listitem>
-    <simpara>
-     <link linkend="utf.user-guide.test-organization.manual-nullary-test-case">Manually registered test case</link>
-    </simpara>
-   </listitem>
-  </itemizedlist>
+* [*Test case with automated registration]
+* [*Manually registered test case]
+ 
+ 
+[section:tests_organisation_auto_registration  Nullary function based test case with automated registration</title>
 
-  <section id="utf.user-guide.test-organization.auto-nullary-test-case">
-   <title>Nullary function based test case with automated registration</title>
-   <titleabbrev>Automated registration</titleabbrev>
+To create a nullary free function cased test case, which is registered in place of implementation, employ the
+macro `BOOST_AUTO_TEST_CASE`.
+ 
+``
+  BOOST_AUTO_TEST_CASE(test_case_name);
+``
 
-   <para role="first-line-indented">
-    To create a nullary free function cased test case, which is registered in place of implementation, employ the
-    macro BOOST_AUTO_TEST_CASE.
-   </para>
-
-   <inline-synopsis>
-    <macro name="BOOST_AUTO_TEST_CASE" kind="functionlike">
-     <macro-parameter name="test_case_name"/>
-    </macro>
-   </inline-synopsis>
-
-   <para role="first-line-indented">
-    The macro is designed to closely mimic nullary free function syntax. Changes that are required to make an
-    existing test case, implemented as a free function, registered in place are illustrated in the following
-    example (compare with <xref linkend="utf.user-guide.test-organization.manual-nullary-test-case.example01"/>):
-   </para>
+The macro is designed to closely mimic nullary free function syntax. Changes that are required to make an
+existing test case, implemented as a free function, registered in place are illustrated in the following
+example (compare with <xref linkend="utf.user-guide.test-organization.manual-nullary-test-case.example01"/>):
 
    <btl-example name="example06">
     <title>Nullary function based test case with automated registration</title>
    </btl-example>
 
-   <para role="first-line-indented">
-    With this macro you don't need to implement the initialization function at all. The macro creates and
-    registers the test case with the name free_test_function automatically.
-   </para>
-  </section>
 
-  <section id="utf.user-guide.test-organization.manual-nullary-test-case">
-   <title>Manually registered nullary function based test case</title>
-   <titleabbrev>Manual registration</titleabbrev>
+With this macro you don't need to implement the initialization function at all. The macro creates and
+registers the test case with the name free_test_function automatically.
 
-   <para role="first-line-indented">
-    To create a test case manually, employ the macro BOOST_TEST_CASE:
-   </para>
+[section:test_organization_nullary_manual Manually registered nullary function based test case]
 
-   <inline-synopsis>
-    <macro name="BOOST_TEST_CASE" kind="functionlike">
-     <macro-parameter name="test_function"/>
-    </macro>
-   </inline-synopsis>
+To create a test case manually, employ the macro `BOOST_TEST_CASE`:
 
-   <para role="first-line-indented">
-    BOOST_TEST_CASE creates an instance of the class boost::unit_test::test_case and returns a pointer to the
-    constructed instance. The test case name is deduced from the macro argument test_function. If you prefer to
-    assign a different test case name, you have to use the underlying make_test_case interface instead. To
-    register a new test case, employ the method test_suite::add. Both test case creation and registration are
-    performed in the test module initialization function.
-   </para>
+``
+  BOOST_TEST_CASE(test_function);
+``
+
+
+`BOOST_TEST_CASE` creates an instance of the class `boost::unit_test::test_case` and returns a pointer to the
+constructed instance. The test case name is deduced from the macro argument test_function. If you prefer to
+assign a different test case name, you have to use the underlying make_test_case interface instead. To
+register a new test case, employ the method `test_suite::add`. Both test case creation and registration are
+performed in the test module initialization function.
 
    <para role="first-line-indented">
     Here is the simplest possible manually registered test case. This example employs the original test module
@@ -137,14 +111,11 @@ case that is automatically registered. Here are the two construction interfaces:
     instance lifetime yourself.
    </para>
 
-   <warning>
-    <simpara>
-     The class instance can't be defined in the initialization function scope, since it becomes invalid as
-     soon as the test execution exits it. It needs to be either defined statically/globally or managed using a
-     shared pointer.
-    </simpara>
-   </warning>
-
+[warning
+ The class instance can't be defined in the initialization function scope, since it becomes invalid as
+ soon as the test execution exits it. It needs to be either defined statically/globally or managed using a
+ shared pointer.
+]
    <btl-example name="example02">
     <title>Nullary method of a class bound to global class instance and manually registered</title>
    </btl-example>
@@ -153,27 +124,22 @@ case that is automatically registered. Here are the two construction interfaces:
     <title>Nullary method of a class bound to shared class instance and manually registered</title>
    </btl-example>
 
-   <para role="first-line-indented">
-    If you do not need to reuse the test class instance and can't or do not wish to create test class
-    instance globally it may be easier and safer to create an instance on the stack of free function:
-   </para>
+If you do not need to reuse the test class instance and can't or do not wish to create test class
+instance globally it may be easier and safer to create an instance on the stack of free function:
 
    <btl-example name="example04">
     <title>Nullary method of a class bound to local class instance inside free function</title>
    </btl-example>
 
-   <para role="first-line-indented">
-    If you have to perform the same set of tests with different sets of parameters you may want to base your test
-    case on a function with arguments and bind particular parameters during test case creation.
-   </para>
+If you have to perform the same set of tests with different sets of parameters you may want to base your test
+case on a function with arguments and bind particular parameters during test case creation.
 
-   <warning>
-    <simpara>
-     If you bind parameters by reference or pointer, the referenced value can't have local storage in the
+[warning
+ If you bind parameters by reference or pointer, the referenced value can't have local storage in the
      test module initialization function.
-    </simpara>
-   </warning>
-
+]
+ 
+ 
    <btl-example name="example05">
     <title>Binary free function bound to set of different parameter pairs</title>
 
@@ -182,39 +148,28 @@ case that is automatically registered. Here are the two construction interfaces:
     </para>
    </btl-example>
 
-   <para role="first-line-indented">
-    The __UTF__ also presents an alternative method for parameterized test case creation, which is covered in
-    <xref linkend="utf.user-guide.test-organization.unary-test-case"/>.
-   </para>
-  </section>
- </section>
- <section id="utf.user-guide.test-organization.unary-test-case">
-  <title>Unary function based test case</title>
+The __UTF__ also presents an alternative method for parameterized test case creation, which is covered in
+<xref linkend="utf.user-guide.test-organization.unary-test-case"/>.
 
-  <para role="first-line-indented">
-   Some tests are required to be repeated for a series of different input parameters. One way to achieve this is
-   manually register a test case for each parameter as in example above. You can also invoke a test function with
-   all parameters manually from within your test case, like this:
-  </para>
+ 
+[section:test_organization_unary Unary function based test case]
+
+Some tests are required to be repeated for a series of different input parameters. One way to achieve this is
+manually register a test case for each parameter as in example above. You can also invoke a test function with
+all parameters manually from within your test case, like this:
 
   <btl-snippet name="snippet1"/>
 
-  <para role="first-line-indented">
-   The __UTF__ presents a better solution for this problem: the unary function based test case, also referred as
-   parameterized test case. The unary test function can be a free function, unary functor (for example created
-   with boost::bind) or unary method of a class with bound test class instance). The test function is converted
-   into test case using the macro BOOST_PARAM_TEST_CASE. The macro expects a collection of parameters (passed as
-   two input iterators) and an unary test function:
-  </para>
+The __UTF__ presents a better solution for this problem: the unary function based test case, also referred as
+parameterized test case. The unary test function can be a free function, unary functor (for example created
+with `boost::bind`) or unary method of a class with bound test class instance). The test function is converted
+into test case using the macro `BOOST_PARAM_TEST_CASE`. The macro expects a collection of parameters (passed as
+two input iterators) and an unary test function:
 
-   <inline-synopsis>
-    <macro name="BOOST_PARAM_TEST_CASE" kind="functionlike">
-     <macro-parameter name="test_function"/>
-     <macro-parameter name="params_begin"/>
-     <macro-parameter name="params_end"/>
-    </macro>
-   </inline-synopsis>
-
+``
+  BOOST_PARAM_TEST_CASE(test_function, params_begin, params_end);
+``
+ 
 
 `BOOST_PARAM_TEST_CASE` creates an instance of the test case generator. When passed to the method test_suite::add,
 the generator produces a separate sub test case for each parameter in the parameters collection and registers
@@ -253,80 +208,33 @@ This example employs the alternative test module initialization function specifi
   </btl-example>
  </section>
 
- <section id="utf.user-guide.test-organization.test-case-template">
-  <title>Test case template</title>
-  <para role="first-line-indented">
-   To test a template based component it's frequently necessary to perform the same set of checks for a
-   component instantiated with different template parameters. The __UTF__ provides the ability to create a series of
-   test cases based on a list of desired types and function similar to nullary function template. This facility is
-   called test case template. Here are the two construction interfaces:
-  </para>
+ [section:test_organization_templates Test case template]
 
-  <itemizedlist>
-   <listitem>
-    <simpara>
-     <link linkend="utf.user-guide.test-organization.auto-test-case-template">Test case template with automated
-     registration</link>
-    </simpara>
-   </listitem>
-   <listitem>
-    <simpara>
-     <link linkend="utf.user-guide.test-organization.manual-test-case-template">Manually registered test case
-     template</link>
-    </simpara>
-   </listitem>
-  </itemizedlist>
+To test a template based component it's frequently necessary to perform the same set of checks for a
+component instantiated with different template parameters. The __UTF__ provides the ability to create a series of
+test cases based on a list of desired types and function similar to nullary function template. This facility is
+called test case template. Here are the two construction interfaces:
 
-  <section id="utf.user-guide.test-organization.auto-test-case-template">
-   <title>Test case template with automated registration</title>
-   <titleabbrev>Automated registration</titleabbrev>
+* Test case template with automated registration
+* Manually registered test case template
 
+[h3 Test case template with automated registration]
 
 To create a test case template registered in place of implementation, employ the macro
 `BOOST_AUTO_TEST_CASE_TEMPLATE`. This facility is also called ['auto test case template].
 
-   <inline-synopsis>
-    <macro name="BOOST_AUTO_TEST_CASE_TEMPLATE" kind="functionlike">
-     <macro-parameter name="test_case_name"/>
-     <macro-parameter name="formal_type_parameter_name"/>
-     <macro-parameter name="collection_of_types"/>
-    </macro>
-   </inline-synopsis>
+``
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_case_name, formal_type_parameter_name, collection_of_types);
+``
 
-   <para role="first-line-indented">
-    The macro BOOST_AUTO_TEST_CASE_TEMPLATE requires three arguments:
-   </para>
-   <variablelist>
-    <?dbhtml list-presentation="list"?>
-    <?dbhtml term-width="60%"  list-width="100%"?>
-    <?dbhtml term-separator=" - "?> <!-- TO FIX: where separator? -->
+The macro `BOOST_AUTO_TEST_CASE_TEMPLATE` requires three arguments:
 
-    <varlistentry>
-     <term>The test case template name</term>
-     <listitem>
-      <simpara>
-         unique test cases template identifier
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>The name of a formal template parameter</term>
-     <listitem>
-      <simpara>
+# `test_case_name` The test case template name: unique test cases template identifier
+# `formal_type_parameter_name` The name of a formal template parameter:
          name of the type the test case template is instantiated with
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>The collection of types to instantiate test case template with</term>
-     <listitem>
-      <simpara>
-         arbitrary MPL sequence
-      </simpara>
-     </listitem>
-    </varlistentry>
-   </variablelist>
+ # The collection of types to instantiate test case template with: arbitrary MPL sequence
 
+ 
    <btl-example name="example10">
     <title>Test case template with automated registration</title>
    </btl-example>
@@ -361,14 +269,13 @@ To create a test case template registered in place of implementation, employ the
     Ideally the test case template would be based on nullary function template (like single_test above).
     Unfortunately function templates are neither addressable nor can be used as template parameters. To alleviate
     the issue the manually registered test case template facility consists of two co-working macros:
-    BOOST_TEST_CASE_TEMPLATE_FUNCTION and BOOST_TEST_CASE_TEMPLATE. Former is used to define the test case
+    `BOOST_TEST_CASE_TEMPLATE_FUNCTION` and `BOOST_TEST_CASE_TEMPLATE`. Former is used to define the test case
     template body, later - to create and register test cases based on it.
    </para>
 
-   <para role="first-line-indented">
-    The macro BOOST_TEST_CASE_TEMPLATE_FUNCTION requires two arguments: the name of the test case template and the
-    name of the format type parameter:
-   </para>
+
+The macro `BOOST_TEST_CASE_TEMPLATE_FUNCTION` requires two arguments: the name of the test case template and the
+name of the format type parameter:
 
    <inline-synopsis>
     <macro name="BOOST_TEST_CASE_TEMPLATE_FUNCTION" kind="functionlike">
@@ -379,22 +286,18 @@ To create a test case template registered in place of implementation, employ the
    
    <btl-snippet name="snippet3"/>
 
-   <para role="first-line-indented">
-    The macro BOOST_TEST_CASE_TEMPLATE_FUNCTION is intended to be used in place of nullary function template
-    signature:
-   </para>
+The macro `BOOST_TEST_CASE_TEMPLATE_FUNCTION` is intended to be used in place of nullary function template
+signature:
 
    <btl-snippet name="snippet4"/>
 
-   <para role="first-line-indented">
-    The only difference is that the BOOST_TEST_CASE_TEMPLATE_FUNCTION makes the test case template name usable in
-    the template argument list.
-   </para>
 
-   <para role="first-line-indented">
-    BOOST_TEST_CASE_TEMPLATE requires two arguments: the name of the test case template and Boost.MPL compatible
-    collection of types to instantiate it with. The names passed to both macros should be the same.
-   </para>
+The only difference is that the `BOOST_TEST_CASE_TEMPLATE_FUNCTION` makes the test case template name usable in
+the template argument list.
+
+`BOOST_TEST_CASE_TEMPLATE` requires two arguments: the name of the test case template and Boost.MPL compatible
+collection of types to instantiate it with. The names passed to both macros should be the same.
+
 
    <inline-synopsis>
     <macro name="BOOST_TEST_CASE_TEMPLATE" kind="functionlike">
@@ -403,25 +306,21 @@ To create a test case template registered in place of implementation, employ the
     </macro>
    </inline-synopsis>
 
-   <para role="first-line-indented">
-    BOOST_TEST_CASE_TEMPLATE creates an instance of the test case generator. When passed to the method
-    test_suite::add, the generator produces a separate sub test case for each type in the supplied collection of
-    types and registers it immediately in the test suite. Each test case is based on the test case template body
-    instantiated with a particular test type.
-   </para>
 
-   <para role="first-line-indented">
-    Sub test case names are deduced from the macro argument test_case_name. If you prefer to assign different test
-    case names, you need to use the underlying make_test_case interface instead. Both test cases creation and
-    registration is performed in the test module initialization function.
-   </para>
+`BOOST_TEST_CASE_TEMPLATE` creates an instance of the test case generator. When passed to the method
+`test_suite::add`, the generator produces a separate sub test case for each type in the supplied collection of
+types and registers it immediately in the test suite. Each test case is based on the test case template body
+instantiated with a particular test type.
 
-   <para role="first-line-indented">
-    The test case template facility is preferable to the approach in example above, since execution of each sub
-    test case is guarded and counted separately. It produces a better test log/results report (in example above in
-    case of failure you can't say which type is at fault) and allows you to test all types even if one of
-    them causes termination of the sub test case.
-   </para>
+
+Sub test case names are deduced from the macro argument test_case_name. If you prefer to assign different test
+case names, you need to use the underlying make_test_case interface instead. Both test cases creation and
+registration is performed in the test module initialization function.
+
+The test case template facility is preferable to the approach in example above, since execution of each sub
+test case is guarded and counted separately. It produces a better test log/results report (in example above in
+case of failure you can't say which type is at fault) and allows you to test all types even if one of
+them causes termination of the sub test case.
 
    <btl-example name="example09">
     <title>Manually registered test case template</title>
@@ -453,44 +352,35 @@ To create a test case template registered in place of implementation, employ the
    </listitem>
   </itemizedlist>
 
-  <para role="first-line-indented">
-    In addition the __UTF__ presents a notion of 
-    <link linkend="utf.user-guide.test-organization.master-test-suite">Master Test Suite</link>. The most important 
-    reason to learn about this component is that it provides an ability to access command line arguments supplied 
-    to a test module.
-  </para>
+
+In addition the __UTF__ presents a notion of[*Master Test Suite]. The most important
+reason to learn about this component is that it provides an ability to access command line arguments supplied 
+to a test module.
 
   <section id="utf.user-guide.test-organization.auto-test-suite">
    <title>Test suites with automated registration</title>
    <titleabbrev>Automated registration</titleabbrev>
 
-   <para role="first-line-indented">
-    The solution the __UTF__ presents for automated test suite creation and registration is designed to facilitate
-    multiple points of definition, arbitrary test suites depth and smooth integration with automated test case creation 
-    and registration. This facility should significantly simplify a test tree construction process in comparison with 
-    manual explicit registration case.
-   </para>
+The solution the __UTF__ presents for automated test suite creation and registration is designed to facilitate
+multiple points of definition, arbitrary test suites depth and smooth integration with automated test case creation 
+and registration. This facility should significantly simplify a test tree construction process in comparison with 
+manual explicit registration case.
 
-   <para role="first-line-indented">
-    The implementation is based on the order of file scope variables definitions within a single compilation unit.
-    The semantic of this facility is very similar to the namespace feature of C++, including support for test suite 
-    extension. To start test suite use the macro BOOST_AUTO_TEST_SUITE. To end test suite use the macro 
-    BOOST_AUTO_TEST_SUITE_END. The same test suite can be restarted multiple times inside the same test file or in a 
-    different test files. In a result all test units will be part of the same test suite in a constructed test tree.
-   </para>
 
-   <inline-synopsis>
-    <macro name="BOOST_AUTO_TEST_SUITE" kind="functionlike">
-     <macro-parameter name="test_suite_name"/>
-    </macro>
-    <macro name="BOOST_AUTO_TEST_SUITE_END" kind="functionlike"/>
-   </inline-synopsis>
+The implementation is based on the order of file scope variables definitions within a single compilation unit.
+The semantic of this facility is very similar to the namespace feature of C++, including support for test suite 
+extension. To start test suite use the macro `BOOST_AUTO_TEST_SUITE`. To end test suite use the macro
+`BOOST_AUTO_TEST_SUITE_END`. The same test suite can be restarted multiple times inside the same test file or in a
+different test files. In a result all test units will be part of the same test suite in a constructed test tree.
 
-   <para role="first-line-indented">
-    Test units defined in between test suite start and end declarations become members of the test suite. A test
-    unit always becomes the member of the closest test suite declared. Test units declared at a test file scope
-    become members of the master test suite. There is no limit on depth of test suite inclusion.
-   </para>
+``
+  BOOST_AUTO_TEST_SUITE(test_suite_name);
+  BOOST_AUTO_TEST_SUITE_END();
+``
+
+Test units defined in between test suite start and end declarations become members of the test suite. A test
+unit always becomes the member of the closest test suite declared. Test units declared at a test file scope
+become members of the master test suite. There is no limit on depth of test suite inclusion.
 
    <btl-example name="example12">
     <title>Test suites with automated registration</title>
@@ -525,40 +415,32 @@ To create a test case template registered in place of implementation, employ the
    <section id="utf.user-guide.test-organization.test-suite-registration-interface">
     <title>Test unit registration interface</title>
 
-    <para role="first-line-indented">
-     The __UTF__ models the notion of test case container - test suite - using class boost::unit_test::test_suite. For
-     complete class interface reference check advanced section of this documentation. Here you should only be
-     interested in a single test unit registration interface:
-    </para>
 
-    <programlisting>void test_suite::add( test_unit* tc, counter_t expected_failures = 0, int timeout = 0 );</programlisting>
+The __UTF__ models the notion of test case container - test suite - using class `boost::unit_test::test_suite`. For
+complete class interface reference check advanced section of this documentation. Here you should only be
+interested in a single test unit registration interface:
 
-    <para role="first-line-indented">
-     The first parameter is a pointer to a newly created test unit. The second optional parameter -
-     expected_failures  - defines the number of test assertions that are expected to fail within the test unit. By
-     default no errors are  expected.
-    </para>
+``
+  void test_suite::add( test_unit* tc, counter_t expected_failures = 0, int timeout = 0 );
+``
 
-    <caution>
-     <simpara>
-      Be careful when supplying a number of expected failures for test suites. By default the __UTF__ calculates the
-      number of expected failures in test suite as the sum of appropriate values in all test units that constitute
-      it. And it rarely makes sense to change this.
-     </simpara>
-    </caution>
+The first parameter is a pointer to a newly created test unit. The second optional parameter -
+expected_failures  - defines the number of test assertions that are expected to fail within the test unit. By
+default no errors are  expected.
 
-    <para role="first-line-indented">
-     The third optional parameter - timeout - defines the timeout value for the test unit. As of now the __UTF__
-     isn't able to set a timeout for the test suite execution, so this parameter makes sense only for test case
-      registration. By default no timeout is set. See the method
-     <methodname>boost::execution_monitor::execute</methodname> for more details about the timeout value.
-    </para>
+[caution
+  Be careful when supplying a number of expected failures for test suites. By default the __UTF__ calculates the
+  number of expected failures in test suite as the sum of appropriate values in all test units that constitute
+  it. And it rarely makes sense to change this.
+]
 
-    <para role="first-line-indented">
-     To register group of test units in one function call the boost::unit_test::test_suite provides another add
-     interface covered in the advanced section of this documentation.
-    </para>
-   </section>
+The third optional parameter - timeout - defines the timeout value for the test unit. As of now the __UTF__
+isn't able to set a timeout for the test suite execution, so this parameter makes sense only for test case
+registration. By default no timeout is set. See the method
+`boost::execution_monitor::execute` for more details about the timeout value.
+
+To register group of test units in one function call the `boost::unit_test::test_suite` provides another add
+interface covered in the advanced section of this documentation.
 
    <section id="utf.user-guide.test-organization.test-suite-instance-construction">
     <title>Test suite instance construction</title>
@@ -579,16 +461,12 @@ To create a test case template registered in place of implementation, employ the
      constructed instance. Alternatively you can create an instance of class boost::unit_test::test_suite yourself.
     </para>
 
-    <note>
-     <simpara>
-      boost::unit_test::test_suite instances have to be allocated on the heap and the compiler won't allow you
+[caution `boost::unit_test::test_suite` instances have to be allocated on the heap and the compiler won't allow you
       to create one on the stack.
-     </simpara>
-    </note>
+]
 
-    <para role="first-line-indented">
-     Newly created test suite has to be registered in a parent one using add interface. Both test suite creation and
-     registration is performed in the test module initialization function.
+ Newly created test suite has to be registered in a parent one using add interface. Both test suite creation and
+ registration is performed in the test module initialization function.
     </para>
    </section>
 
@@ -628,9 +506,8 @@ public:
 } // namespace boost
 ``
 
-   <para role="first-line-indented">
-    To access single instance of the master test suite use the following interface:
-   </para>
+
+To access single instance of the master test suite use the following interface:
 
 ``
 namespace boost {
@@ -647,32 +524,25 @@ master_test_suite_t& master_test_suite();
    <section id="utf.user-guide.test-organization.cla-access" >
     <title>Command line arguments access interface</title>
 
-    <para role="first-line-indented">
-     Master test suite implemented as an extension to the regular test suite, since it maintains references to the
-     command line arguments passed to the test module. To access the command line arguments use
-    </para>
+Master test suite implemented as an extension to the regular test suite, since it maintains references to the
+command line arguments passed to the test module. To access the command line arguments use
 
-    <programlisting>boost::unit_test::framework::master_test_suite().argc
-boost::unit_test::framework::master_test_suite().argv</programlisting>
+``
+boost::unit_test::framework::master_test_suite().argc
+boost::unit_test::framework::master_test_suite().argv
+``
 
-    <para role="first-line-indented">
-     In below example references to the command line arguments are accessible either as an initialization function
-     parameters or as members of the master test suite. Both references point to the same values. A test module that
-     uses the alternative initialization function specification can only access command line arguments through the
-     master test suite.
-    </para>
+In below example references to the command line arguments are accessible either as an initialization function
+parameters or as members of the master test suite. Both references point to the same values. A test module that
+uses the alternative initialization function specification can only access command line arguments through the
+master test suite.
 
-    <note>
-     <simpara>
-      This interface for runtime parameter access is temporary. It's planned to be updated once runtime
+[note This interface for runtime parameter access is temporary. It's planned to be updated once runtime
       parameters support is redesigned.
-     </simpara>
-    </note>
+]
 
-    <para role="first-line-indented">
-     Returning to the free function example, let's modify initialization function to check for absence of any
-     test module arguments.
-    </para>
+Returning to the free function example, let's modify initialization function to check for absence of any
+test module arguments.
 
    <btl-example name="example13">
      <title>Command line access in initialization function</title>
@@ -681,12 +551,11 @@ boost::unit_test::framework::master_test_suite().argv</programlisting>
 
    <section id="utf.user-guide.test-organization.master-test-suite-name">
     <title>Naming</title>
-    <para role="first-line-indented">
-     The master test suite is created with default name &quot;Master Test Suite&quot;. There are two methods two
-     reset the name to a different value: using the macro <xref linkend="utf.flag.module" endterm="utf.flag.module"/> 
-     and from within the test module initialization function. Former is used for test modules that don't have the
-     manually implemented initialization function. Following examples illustrate these methods.
-    </para>
+
+ The master test suite is created with default name ['Master Test Suite]. There are two methods two
+ reset the name to a different value: using the macro <xref linkend="utf.flag.module" endterm="utf.flag.module"/> 
+ and from within the test module initialization function. Former is used for test modules that don't have the
+ manually implemented initialization function. Following examples illustrate these methods.
 
     <btl-example name="example14">
      <title>Naming master test suite using the macro <xref linkend="utf.flag.module" endterm="utf.flag.module"/></title>
@@ -714,36 +583,28 @@ boost::unit_test::framework::master_test_suite().argv</programlisting>
  <section id="utf.user-guide.test-organization.expected-failures">
   <title>Expected failures specification</title>
 
-  <para role="first-line-indented">
-   While in a perfect world all test assertions should pass in order for a test module to pass, in some situations
-   it is desirable to temporarily allow particular tests to fail. For example, where a particular feature is not
-   implemented yet and one needs to prepare a library for the release or when particular test fails on some
-   platforms. To avoid a nagging red box in regression tests table, you can use the expected failures feature.
-  </para>
+While in a perfect world all test assertions should pass in order for a test module to pass, in some situations
+it is desirable to temporarily allow particular tests to fail. For example, where a particular feature is not
+implemented yet and one needs to prepare a library for the release or when particular test fails on some
+platforms. To avoid a nagging red box in regression tests table, you can use the expected failures feature.
 
-  <para role="first-line-indented">
-   This feature allows specifying an expected number of failed assertions per test unit. The value is specified
-   during test tree construction, and can't be updated during test execution.
-  </para>
 
-  <para role="first-line-indented">
-   The feature is not intended to be used to check for expected functionality failures. To check that a particular
-   input is causing an exception to be thrown use <macroname>BOOST_CHECK_THROW</macroname> family of testing 
-   tools.
-  </para>
+This feature allows specifying an expected number of failed assertions per test unit. The value is specified
+during test tree construction, and can't be updated during test execution.
 
-  <para role="first-line-indented">
-   The usage of this feature should be limited and employed only after careful consideration. In general you should
-   only use this feature when it is necessary to force a test module to pass without actually fixing the problem.
-   Obviously, an excessive usage of expected failures defeats the purpose of the unit test. In most cases it only
-   needs be applied temporarily.
-  </para>
+The feature is not intended to be used to check for expected functionality failures. To check that a particular
+input is causing an exception to be thrown use `BOOST_CHECK_THROW` family of testing
+tools.
 
-  <para role="first-line-indented">
-   You also need to remember that the expected failure specification is per test case. This means that any failed
-   assertion within that test case can satisfy the expected failures quota. Meaning it is possible for an
-   unexpected failure to occur to satisfy this quota.
-  </para>
+The usage of this feature should be limited and employed only after careful consideration. In general you should
+only use this feature when it is necessary to force a test module to pass without actually fixing the problem.
+Obviously, an excessive usage of expected failures defeats the purpose of the unit test. In most cases it only
+needs be applied temporarily.
+
+You also need to remember that the expected failure specification is per test case. This means that any failed
+assertion within that test case can satisfy the expected failures quota. Meaning it is possible for an
+unexpected failure to occur to satisfy this quota.
+
 
 [note If an assertion at fault is fixed and passed, while an expected failures specification still present, the test
     case is going to fail, since the number of failures is smaller than expected.
@@ -752,22 +613,22 @@ boost::unit_test::framework::master_test_suite().argv</programlisting>
 <section id="utf.user-guide.test-organization.manual-expected-failures">
    <title>Usage with manually registered test cases</title>
 
-   <para role="first-line-indented">
-    To set the value of expected failures for the manually registered test unit pass it as a second argument for the
-    test_suite::add call during test unit registration.
-   </para>
+
+To set the value of expected failures for the manually registered test unit pass it as a second argument for the
+`test_suite::add` call during test unit registration.
 
    <btl-example name="example16">
     <title>Expected failures specification for manually registered test case</title>
    </btl-example>
   </section>
-  <section id="utf.user-guide.test-organization.auto-expected-failures">
+
+
+<section id="utf.user-guide.test-organization.auto-expected-failures">
   <title>Usage with automatically registered test cases</title>
 
-   <para role="first-line-indented">
-    To set the number of expected failures for the automatically registered test unit use the macro
-    BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES before the test case definition.
-   </para>
+
+To set the number of expected failures for the automatically registered test unit use the macro
+`BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES` before the test case definition.
 
    <inline-synopsis>
     <macro name="BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES" kind="functionlike">
@@ -776,12 +637,10 @@ boost::unit_test::framework::master_test_suite().argv</programlisting>
     </macro>
    </inline-synopsis>
 
-    <para role="first-line-indented">
-      You can use this macro both on a file scope and inside a test suite. Moreover you can use it even if name of test
-      units coincide in different test suites. Expected failures specification applies to the test unit belonging to the same 
-      test suite where BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES resides.
-    </para>
-   
+You can use this macro both on a file scope and inside a test suite. Moreover you can use it even if name of test
+units coincide in different test suites. Expected failures specification applies to the test unit belonging to the same 
+test suite where `BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES` resides.
+
    <btl-example name="example17">
     <title>Expected failures specification for automatically registered test case</title>
    </btl-example>
