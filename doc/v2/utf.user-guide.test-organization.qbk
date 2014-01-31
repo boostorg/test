@@ -258,21 +258,44 @@ In following simple example the same test, implemented in `free_test_function`, 
 performed for 5 different parameters. The parameters are defined in the test module initialization function
 scope. The master test suite contains 5 independent test cases.
 
-  <btl-example name="example07">
-   <title>Unary free function based test case</title>
-  </btl-example>
+
+[import examples/example07.cpp]
+[import examples/example07.output]
+[table:id_example07 Unary free function based test case
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example07]]
+    [[example07o]]
+  ]
+]
+
 
 
 Next example is similar, but instead of a free function it uses a method of a class. Even though parameters are
 passed into test method by reference you can still define them in the test module initialization  function scope.
 This example employs the alternative test module initialization function specification.
 
-  <btl-example name="example08">
-   <title>Unary class method based test case</title>
-  </btl-example>
- </section>
+[import examples/example08.cpp]
+[import examples/example08.output]
+[table:id_example08 Unary class method based test case
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example08]]
+    [[example08o]]
+  ]
+]
 
-[section:test_organization_templates Test case template]
+[endsect] [/test case with arity]
+
+
+
+[section:test_organization_templates Test cases for templates]
 
 To test a template based component it's frequently necessary to perform the same set of checks for a
 component instantiated with different template parameters. The __UTF__ provides the ability to create a series of
@@ -296,23 +319,40 @@ The macro `BOOST_AUTO_TEST_CASE_TEMPLATE` requires three arguments:
 # `test_case_name` The test case template name: unique test cases template identifier
 # `formal_type_parameter_name` The name of a formal template parameter:
          name of the type the test case template is instantiated with
- # The collection of types to instantiate test case template with: arbitrary MPL sequence
+# The collection of types to instantiate test case template with: arbitrary MPL sequence
 
- 
-   <btl-example name="example10">
-    <title>Test case template with automated registration</title>
-   </btl-example>
-  </section>
+[import examples/example10.cpp]
+[import examples/example10.output]
+[table:id_example10 Test case template with automated registration
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example10]]
+    [[example10o]]
+  ]
+]
 
-  <section id="utf.user-guide.test-organization.manual-test-case-template">
-   <title>Manually registered test case template</title>
-   <titleabbrev>Manual registration</titleabbrev>
-
-
+[h3 Test case template with manual registration]
 One way to perform the same set of checks for a component instantiated with different template parameters is
 illustrated in the following example:
 
-   <btl-snippet name="snippet2"/>
+[/snippet2 deleted and copied below]
+``
+template <typename T>
+void single_test()
+{
+  BOOST_CHECK( /* test assertion */ );
+}
+
+void combined_test()
+{
+  single_test<int>();
+  single_test<float>();
+  single_test<unsigned char>();
+}
+``
 
 
 There several problems/inconveniencies with above approach, including:
@@ -334,13 +374,26 @@ name of the format type parameter:
 ``
   BOOST_TEST_CASE_TEMPLATE_FUNCTION(test_case_name, type_name);
 ``
-   <btl-snippet name="snippet3"/>
+
+[warning Is this snippet really useful??]
+[/ snippet 3 deleted and copied below]
+``
+BOOST_TEST_CASE_TEMPLATE_FUNCTION( test_case_name, type_name )
+{
+  // test case template body
+}
+``
 
 The macro `BOOST_TEST_CASE_TEMPLATE_FUNCTION` is intended to be used in place of nullary function template
 signature:
 
-   <btl-snippet name="snippet4"/>
-
+``
+template <typename type_name>
+void test_case_name()
+{
+  // test case template body
+}
+``
 
 The only difference is that the `BOOST_TEST_CASE_TEMPLATE_FUNCTION` makes the test case template name usable in
 the template argument list.
@@ -350,7 +403,7 @@ collection of types to instantiate it with. The names passed to both macros shou
 
 
 ``
-  BOOST_TEST_CASE_TEMPLATE"(test_case_name, collection_of_types);
+  BOOST_TEST_CASE_TEMPLATE(test_case_name, collection_of_types);
 ``
 
 `BOOST_TEST_CASE_TEMPLATE` creates an instance of the test case generator. When passed to the method
@@ -358,26 +411,37 @@ collection of types to instantiate it with. The names passed to both macros shou
 types and registers it immediately in the test suite. Each test case is based on the test case template body
 instantiated with a particular test type.
 
-
-Sub test case names are deduced from the macro argument test_case_name. If you prefer to assign different test
-case names, you need to use the underlying make_test_case interface instead. Both test cases creation and
+The names for the ['sub test cases] are deduced from the macro argument `test_case_name`. If you prefer to assign different test
+case names, you need to use the underlying `make_test_case` interface instead. Both test cases creation and
 registration is performed in the test module initialization function.
 
+[tip
 The test case template facility is preferable to the approach in example above, since execution of each sub
 test case is guarded and counted separately. It produces a better test log/results report (in example above in
 case of failure you can't say which type is at fault) and allows you to test all types even if one of
 them causes termination of the sub test case.
+]
 
-   <btl-example name="example09">
-    <title>Manually registered test case template</title>
-   </btl-example>
-  </section>
- </section>
+[import examples/example09.cpp]
+[import examples/example09.output]
+[table:id_example09 Manually registered test case template
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example09]]
+    [[example09o]]
+  ]
+]
 
- <section id="utf.user-guide.test-organization.test-suite">
-  <title>Test suite</title>
 
 
+[endsect] [/template test cases]
+
+[endsect] [/ test cases]
+
+[section:test_organization_test_suite Test suite]
 If you consider test cases as leaves on the test tree, the test suite can be considered as branch and the master
 test suite as a trunk. Unlike real trees though, our tree in many cases consists only of leaves attached
 directly to the trunk. This is common for all test cases to reside directly in the master test suite. If you do
