@@ -387,6 +387,7 @@ BOOST_TEST_CASE_TEMPLATE_FUNCTION( test_case_name, type_name )
 The macro `BOOST_TEST_CASE_TEMPLATE_FUNCTION` is intended to be used in place of nullary function template
 signature:
 
+[/snippet4 deleted]
 ``
 template <typename type_name>
 void test_case_name()
@@ -455,10 +456,7 @@ In addition the __UTF__ presents a notion of[*Master Test Suite]. The most impor
 reason to learn about this component is that it provides an ability to access command line arguments supplied 
 to a test module.
 
-  <section id="utf.user-guide.test-organization.auto-test-suite">
-   <title>Test suites with automated registration</title>
-   <titleabbrev>Automated registration</titleabbrev>
-
+[h3 Test suites with automated registration]
 The solution the __UTF__ presents for automated test suite creation and registration is designed to facilitate
 multiple points of definition, arbitrary test suites depth and smooth integration with automated test case creation 
 and registration. This facility should significantly simplify a test tree construction process in comparison with 
@@ -501,16 +499,12 @@ become members of the master test suite. There is no limit on depth of test suit
 
   </section>
 
-  <section id="utf.user-guide.test-organization.manual-test-suite">
-   <title>Manually registered test suites</title>
-   <titleabbrev>Manual registration</titleabbrev>
 
-
-To create a test suite manually you need to create an instance of boost::unit_test::test_suite class, register
+[h3 Test suites with manual registration]
+To create a test suite manually you need to create an instance of `boost::unit_test::test_suite` class, register
 it in test tree and populate it with test cases (or lower level test suites).
 
-   <section id="utf.user-guide.test-organization.test-suite-registration-interface">
-    <title>Test unit registration interface</title>
+[h4 Test unit registration interface]
 
 
 The __UTF__ models the notion of test case container - test suite - using class `boost::unit_test::test_suite`. For
@@ -539,8 +533,7 @@ registration. By default no timeout is set. See the method
 To register group of test units in one function call the `boost::unit_test::test_suite` provides another add
 interface covered in the advanced section of this documentation.
 
-   <section id="utf.user-guide.test-organization.test-suite-instance-construction">
-    <title>Test suite instance construction</title>
+[h4 Test suite instance construction]
 
 
 To create a test suite instance manually, employ the macro `BOOST_TEST_SUITE`. It hides all implementation
@@ -557,28 +550,29 @@ constructed instance. Alternatively you can create an instance of class `boost::
       to create one on the stack.
 ]
 
- Newly created test suite has to be registered in a parent one using add interface. Both test suite creation and
- registration is performed in the test module initialization function.
-    </para>
-   </section>
+Newly created test suite has to be registered in a parent one using add interface. Both test suite creation and
+registration is performed in the test module initialization function.
 
-   <btl-example name="example11">
-    <title>Manually registered test suites</title>
-   </btl-example>
+The example below creates a test tree, which can be represented by the following hierarchy:
+[$../img/class-hier.jpg]
 
-   <para role="first-line-indented">
-    This example creates a test tree, which can be represented by the following hierarchy:
-   </para>
+[import examples/example11.cpp]
+[import examples/example11.output]
+[table:id_example11 Manually registered test suites
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example11]]
+    [[example11o]]
+  ]
+]
 
-   <mediaobject>
-    <imageobject>
-     <imagedata format="jpg" fileref="../img/class-hier.jpg"/>
-    </imageobject>
-   </mediaobject>
-  </section>
 
-  <section id="utf.user-guide.test-organization.master-test-suite">
-   <title>Master Test Suite</title>
+
+
+[h3 Master Test Suite]
 
 
 As defined in introduction section the master test suite is a root node of a test tree. Each test module built
@@ -588,10 +582,11 @@ internally. All other test units are registered as direct or indirect children o
 ``
 namespace boost {
 namespace unit_test {
-class master_test_suite_t : public test_suite {
+class master_test_suite_t : public test_suite
+{
 public:
-   int argc;
-   char** argv;
+  int argc;
+  char** argv;
 };
 
 } // namespace unit_test
@@ -613,8 +608,7 @@ master_test_suite_t& master_test_suite();
 } // namespace boost
 ``
 
-   <section id="utf.user-guide.test-organization.cla-access" >
-    <title>Command line arguments access interface</title>
+[section Command line arguments access interface]
 
 Master test suite implemented as an extension to the regular test suite, since it maintains references to the
 command line arguments passed to the test module. To access the command line arguments use
@@ -671,9 +665,10 @@ test module arguments.
    </section>
   </section>
  </section>
+ 
+[endsect] [/ command line interface]
 
- <section id="utf.user-guide.test-organization.expected-failures">
-  <title>Expected failures specification</title>
+[section Expected failures specification]
 
 While in a perfect world all test assertions should pass in order for a test module to pass, in some situations
 it is desirable to temporarily allow particular tests to fail. For example, where a particular feature is not
@@ -702,9 +697,7 @@ unexpected failure to occur to satisfy this quota.
     case is going to fail, since the number of failures is smaller than expected.
 ]
 
-<section id="utf.user-guide.test-organization.manual-expected-failures">
-   <title>Usage with manually registered test cases</title>
-
+[h3 Usage with manually registered test cases]
 
 To set the value of expected failures for the manually registered test unit pass it as a second argument for the
 `test_suite::add` call during test unit registration.
@@ -715,19 +708,14 @@ To set the value of expected failures for the manually registered test unit pass
   </section>
 
 
-<section id="utf.user-guide.test-organization.auto-expected-failures">
-  <title>Usage with automatically registered test cases</title>
-
+[h3 Usage with automatically registered test cases]
 
 To set the number of expected failures for the automatically registered test unit use the macro
 `BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES` before the test case definition.
 
-   <inline-synopsis>
-    <macro name="BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES" kind="functionlike">
-     <macro-parameter name="test_case_name"/>
-     <macro-parameter name="number_of_expected_failures"/>
-    </macro>
-   </inline-synopsis>
+``
+BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES(test_case_name, number_of_expected_failures);
+``
 
 You can use this macro both on a file scope and inside a test suite. Moreover you can use it even if name of test
 units coincide in different test suites. Expected failures specification applies to the test unit belonging to the same 
@@ -737,6 +725,6 @@ test suite where `BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES` resides.
     <title>Expected failures specification for automatically registered test case</title>
    </btl-example>
 
-
+[endsect] [/ expected failures]
 
 [endsect] [/ test organization]
