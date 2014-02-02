@@ -1,3 +1,4 @@
+//[example53o
 >example --report_level=detailed
 Running 3 test cases...
 test.cpp(8): error in "test_case1": some error 1
@@ -21,3 +22,4 @@ Test suite "example" failed with:
 
   Test case "test_case_on_file_scope" passed with:
     1 assertion out of 1 passed
+//]

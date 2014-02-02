@@ -478,26 +478,42 @@ Test units defined in between test suite start and end declarations become membe
 unit always becomes the member of the closest test suite declared. Test units declared at a test file scope
 become members of the master test suite. There is no limit on depth of test suite inclusion.
 
-   <btl-example name="example12">
-    <title>Test suites with automated registration</title>
 
-    <para role="first-line-indented">
-     This example creates a test tree that matches exactly the one created in the manual test suite registration
-     example. As you can see test tree construction in this example is more straightforward and automated.
-    </para>
-   </btl-example>
-   
-   <btl-example name="example53">
-    <title>Example of test suite extension using automated registration facility</title>
+This example creates a test tree that matches exactly the one created in the manual test suite registration
+example.
 
-    <para role="first-line-indented">
-     In this example test suite test_suite consists of two parts. Their definition is remote and is separated by another
-     test case. In fact these parts may even reside in different test files. The resulting test tree remains the same. As
-     you can see from the output both test_case1 and test_case2 reside in the same test suite test_suite. 
-    </para>
-   </btl-example>
+[import examples/example12.cpp]
+[import examples/example12.output]
+[table:id_example12 Test suites with automated registration
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example12]]
+    [[example12o]]
+  ]
+]
+As you can see test tree construction in this example is more straightforward and automated.
 
-  </section>
+
+In the example below, the test suite `test_suite` consists of two parts. Their definition is remote and is separated by another
+test case. In fact these parts may even reside in different test files. The resulting test tree remains the same. As
+you can see from the output both `test_case1` and `test_case2` reside in the same test suite `test_suite`.
+
+[import examples/example53.cpp]
+[import examples/example53.output]
+[table:id_example53 Example of test suite extension using automated registration facility
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example53]]
+    [[example53o]]
+  ]
+]
+
 
 
 [h3 Test suites with manual registration]
@@ -530,8 +546,9 @@ isn't able to set a timeout for the test suite execution, so this parameter make
 registration. By default no timeout is set. See the method
 `boost::execution_monitor::execute` for more details about the timeout value.
 
-To register group of test units in one function call the `boost::unit_test::test_suite` provides another add
+To register group of test units in one function call, the `boost::unit_test::test_suite` provides another `add`
 interface covered in the advanced section of this documentation.
+[warning find the related advanced doc]
 
 [h4 Test suite instance construction]
 
@@ -630,42 +647,66 @@ master test suite.
 Returning to the free function example, let's modify initialization function to check for absence of any
 test module arguments.
 
-   <btl-example name="example13">
-     <title>Command line access in initialization function</title>
-   </btl-example>
-   </section>
+[import examples/example13.cpp]
+[import examples/example13.output]
+[table:id_example13 Command line access in initialization function
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example13]]
+    [[example13o]]
+  ]
+]
 
-   <section id="utf.user-guide.test-organization.master-test-suite-name">
-    <title>Naming</title>
+[h4 Naming the ['Master test suite]]
 
- The master test suite is created with default name ['Master Test Suite]. There are two methods two
- reset the name to a different value: using the macro <xref linkend="utf.flag.module" endterm="utf.flag.module"/> 
- and from within the test module initialization function. Former is used for test modules that don't have the
- manually implemented initialization function. Following examples illustrate these methods.
+The master test suite is created with default name ['Master Test Suite]. There are two methods two
+reset the name to a different value: using the macro `BOOST_TEST_MODULE`
+and from within the test module initialization function. Former is used for test modules that don't have the
+manually implemented initialization function. Following examples illustrate these methods.
 
-    <btl-example name="example14">
-     <title>Naming master test suite using the macro <xref linkend="utf.flag.module" endterm="utf.flag.module"/></title>
 
-     <para role="first-line-indented">
-      If the macro <xref linkend="utf.flag.module" endterm="utf.flag.module"/> is defined, the test module initialization
-      function is <link linkend="utf.user-guide.initialization.auto-generation">automatically generated</link> and the
-      macro value becomes the name of the master test suite. The name may include spaces.
-     </para>
-    </btl-example>
+[import examples/example14.cpp]
+[import examples/example14.output]
+[table:id_example14 Naming master test suite using the macro `BOOST_TEST_MODULE`
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example14]]
+    [[example14o]]
+  ]
+]
+
+If the macro `BOOST_TEST_MODULE` is defined, the test module initialization
+function is [*automatically generated] and the
+macro value becomes the name of the master test suite. The name may include spaces.
+
+[import examples/example15.cpp]
+[import examples/example15.output]
+[table:id_example15 Naming master test suite explicitly in the test module initialization function
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example15]]
+    [[example15o]]
+  ]
+]
 
     <btl-example name="example15">
-     <title>Naming master test suite explicitly in the test module initialization function</title>
+     <title></title>
 
-     <para role="first-line-indented">
-      Without the <xref linkend="utf.flag.main" endterm="utf.flag.main"/> and the <xref linkend="utf.flag.module"
-      endterm="utf.flag.module"/> flags defined, the test module initialization function has to be manually implemented.
-      The master test suite name can be reset at any point within this function.
-      </para>
-    </btl-example>
-   </section>
-  </section>
- </section>
- 
+
+Without the `BOOST_TEST_MAIN` and the `BOOST_TEST_MODULE` flags defined, the test module initialization 
+function has to be manually implemented. The master test suite name can be reset at any point within this function.
+
+[warning link to the definition of `BOOST_TEST_MAIN`]
+
 [endsect] [/ command line interface]
 
 [section Expected failures specification]
@@ -702,11 +743,18 @@ unexpected failure to occur to satisfy this quota.
 To set the value of expected failures for the manually registered test unit pass it as a second argument for the
 `test_suite::add` call during test unit registration.
 
-   <btl-example name="example16">
-    <title>Expected failures specification for manually registered test case</title>
-   </btl-example>
-  </section>
-
+[import examples/example16.cpp]
+[import examples/example16.output]
+[table:id_example16 Expected failures specification for manually registered test case
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example16]]
+    [[example16o]]
+  ]
+]
 
 [h3 Usage with automatically registered test cases]
 
@@ -721,9 +769,20 @@ You can use this macro both on a file scope and inside a test suite. Moreover yo
 units coincide in different test suites. Expected failures specification applies to the test unit belonging to the same 
 test suite where `BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES` resides.
 
-   <btl-example name="example17">
-    <title>Expected failures specification for automatically registered test case</title>
-   </btl-example>
+
+[import examples/example17.cpp]
+[import examples/example17.output]
+[table:id_example17 Expected failures specification for automatically registered test case
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example17]]
+    [[example17o]]
+  ]
+]
+
 
 [endsect] [/ expected failures]
 

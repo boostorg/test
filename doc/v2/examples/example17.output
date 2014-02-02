@@ -1,3 +1,4 @@
+//[example17o
 > example --report_level=short
 Running 2 test cases...
 test.cpp(10): error in "my_test1": check 2 == 1 failed
@@ -8,3 +9,4 @@ Test suite "example" passed with:
   3 assertions out of 3 failed
   3 failures expected
   2 test cases out of 2 passed
+//]
