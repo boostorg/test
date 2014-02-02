@@ -13,21 +13,31 @@ disadvantages in single test function approach:
 * No summary of how different subsystems of the tested unit performed under in the test.
 
 The above points should make it clear that it's preferable to split [*test module] into smaller units.
-These units are test cases. A test case has to be constructed based on some kind of
+These units are [*test cases].
+
+To solve test tree creation problem the __UTF__ provides facilities for
+[*test suite creation].
+
+
+
+In some cases it's desirable to allow some ['expected] failures in test case without failing a
+test module. To support this request The __UTF__ allows specifying the number of
+[*expected failures] in a test case.
+
+
+[section:test_cases Test cases]
+A test case has to be constructed based on some kind of
 function and registered in a test tree, so that the test runner knows how to invoke it. There are different
 possible designs for the test case construction problem: inheritance from the predefined base class, specifically
-named member function and so on. The __UTF__ opted to avoid classed altogether and to use the least intrusive ['generic callback] approach.
-The facility, the __UTF__ provides, requires specific function signature and allows
+named member function and so on. The __UTF__ opted to avoid classed altogether and to use the 
+least intrusive ['generic callback] approach.
+The facility the __UTF__ provides, requires specific function signature and allows
 adopting any function or function object that matches the signature as a test case. The signatures the __UTF__
 supports are:
 
 * Nullary function
 * Unary function
 * Nullary function template
-
-
-To solve test tree creation problem the __UTF__ provides facilities for
-[*test suite creation].
 
 Generic test case construction design used by the __UTF__ causes the test case implementation (test function body)
 and test case creation/registration points to be remote. As a result you may forget to register the test case
@@ -43,9 +53,6 @@ registration. In other words, within the same test module you can have both test
 registered manually in the test module initialization function and test cases that are registered automatically at
 implementation point.
 
-In some cases it's desirable to allow some ['expected] failures in test case without failing a
-test module. To support this request The __UTF__ allows specifying the number of
-[*expected failures] in a test case.
 
 [section:test_organization_nullary Nullary function based test case]
 
@@ -58,7 +65,7 @@ case that is automatically registered. Here are the two construction interfaces:
 * [*Manually registered test case]
  
  
-[section:tests_organisation_auto_registration  Nullary function based test case with automated registration</title>
+[h3  Nullary function based test case with automated registration]
 
 To create a nullary free function cased test case, which is registered in place of implementation, employ the
 macro `BOOST_AUTO_TEST_CASE`.
@@ -89,7 +96,7 @@ example (compare with <xref linkend="utf.user-guide.test-organization.manual-nul
 With this macro you don't need to implement the initialization function at all. The macro creates and
 registers the test case with the name free_test_function automatically.
 
-[section:test_organization_nullary_manual Manually registered nullary function based test case]
+[h3 Manually registered nullary function based test case]
 
 To create a test case manually, employ the macro `BOOST_TEST_CASE`:
 
@@ -200,9 +207,10 @@ The example below employs the alternative test module initialization function sp
 ]
 
 
-The __UTF__ also presents an alternative method for parameterized test case creation, which is covered in
-<xref linkend="utf.user-guide.test-organization.unary-test-case"/>.
+The __UTF__ also presents an alternative method for parameterized test case creation, which is covered in 
+[link test_organization_unary].
 
+[endsect]
  
 [section:test_organization_unary Unary function based test case]
 
@@ -441,6 +449,7 @@ them causes termination of the sub test case.
 [endsect] [/template test cases]
 
 [endsect] [/ test cases]
+
 
 [section:test_organization_test_suite Test suite]
 If you consider test cases as leaves on the test tree, the test suite can be considered as branch and the master
@@ -698,9 +707,6 @@ macro value becomes the name of the master test suite. The name may include spac
   ]
 ]
 
-    <btl-example name="example15">
-     <title></title>
-
 
 Without the `BOOST_TEST_MAIN` and the `BOOST_TEST_MODULE` flags defined, the test module initialization 
 function has to be manually implemented. The master test suite name can be reset at any point within this function.
@@ -785,5 +791,5 @@ test suite where `BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES` resides.
 
 
 [endsect] [/ expected failures]
-
+[endsect] [/test suite]
 [endsect] [/ test organization]
