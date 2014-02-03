@@ -38,13 +38,35 @@
 
 [/ to be replaced by the proper link]
 [/ currently replace <xref linkend="utf.flag.dyn-link" endterm="utf.flag.dyn-link"/> ]
-[def __BOOST_TEST_DYN_LINK__ `BOOST_TEST_DYN_LINK`]
+[def __BOOST_TEST_DYN_LINK__   `BOOST_TEST_DYN_LINK`]
 
 [def __BOOST_TEST_CHECKPOINT__ `BOOST_TEST_CHECKPOINT`]
 [def __BOOST_TEST_PASSPOINT__  `BOOST_TEST_PASSPOINT`]
 [def __BOOST_TEST_MESSAGE__    `BOOST_TEST_MESSAGE`]
 [def __BOOST_TEST_CHECKPOINT__ `BOOST_TEST_CHECKPOINT`]
 [def __BOOST_TEST_PASSPOINT__  `BOOST_TEST_PASSPOINT`]
+
+
+[/ Assertions ]
+[def __BOOST_LEVEL__           [link ref_BOOST_level `BOOST_<level>`]]
+[def __BOOST_LEVEL_MESSAGE__   [link ref_BOOST_level_MESSAGE `BOOST_<level>_MESSAGE`]]
+[def __BOOST_LEVEL_EQUAL__     [link ref_BOOST_level_EQUAL `BOOST_<level>_EQUAL`]]
+[def __BOOST_LEVEL_PREDICATE__ [link ref_BOOST_level_PREDICATE `BOOST_<level>_PREDICATE`]]
+[def __BOOST_LEVEL_EQUAL_COLLECTIONS__ [link ref_BOOST_level_EQUAL_COLLECTIONS `BOOST_<level>_EQUAL_COLLECTIONS`]]
+[def __BOOST_LEVEL_NE__        [link ref_BOOST_level_NE `BOOST_<level>_NE`]]
+[def __BOOST_LEVEL_GE__        [link ref_BOOST_level_GE `BOOST_<level>_GE`]]
+[def __BOOST_LEVEL_GT__        [link ref_BOOST_level_GT `BOOST_<level>_GT`]]
+[def __BOOST_LEVEL_LE__        [link ref_BOOST_level_LE `BOOST_<level>_LE`]]
+[def __BOOST_LEVEL_LT__        [link ref_BOOST_level_LT `BOOST_<level>_LT`]]
+
+[def __BOOST_LEVEL_NO_THROW__  [link ref_BOOST_level_NO_THROW `BOOST_<level>_NO_THROW`]]
+[def __BOOST_LEVEL_THROW__     [link ref_BOOST_level_THROW `BOOST_<level>_THROW`]]
+[def __BOOST_LEVEL_EXCEPTION__ [link ref_BOOST_level_EXCEPTION `BOOST_<level>_EXCEPTION`]]
+
+[def __BOOST_LEVEL_BITWISE_EQUAL__ [link ref_BOOST_level_BITWISE_EQUAL `BOOST_<level>_BITWISE_EQUAL`]]
+[def __BOOST_ERROR__           [link ref_BOOST_ERROR `BOOST_ERROR`]]
+[def __BOOST_FAIL__            [link ref_BOOST_FAIL `BOOST_FAIL`]]
+[def __BOOST_IS_DEFINED__      [link ref_BOOST_IS_DEFINED `BOOST_IS_DEFINED`]]
 
 [def __BOOST_CHECK__           `BOOST_CHECK`]
 [def __BOOST_REQUIRE__         `BOOST_REQUIRE`]
@@ -54,9 +76,16 @@
 [def __BOOST_CHECK_EQUAL__     `BOOST_CHECK_EQUAL`]
 [def __BOOST_REQUIRE_EQUAL__   `BOOST_REQUIRE_EQUAL`]
 
-[def __BOOST_CHECK_PREDICATE__ `BOOST_CHECK_PREDICATE`]
+[def __BOOST_CHECK_PREDICATE__ __BOOST_LEVEL_PREDICATE__]
 
+[/ Assertions / floating point]
+[def __BOOST_LEVEL_SMALL__     [link ref_BOOST_level_SMALL `BOOST_<level>_SMALL`]]
+[def __BOOST_CHECK_SMALL__     __BOOST_LEVEL_SMALL__]
+[def __BOOST_LEVEL_CLOSE__     [link ref_BOOST_level_CLOSE `BOOST_<level>_CLOSE`]]
+[def __BOOST_CHECK_CLOSE__     __BOOST_LEVEL_CLOSE__]
+[def __BOOST_LEVEL_CLOSE_FRACTION__ [link ref_BOOST_level_CLOSE_FRACTION `BOOST_<level>_CLOSE_FRACTION`]]
 
+[/ Tests cases]
 [def __BOOST_AUTO_TEST_CASE__  `BOOST_AUTO_TEST_CASE`]
 [def __BOOST_AUTO_TEST_SUITE__ `BOOST_AUTO_TEST_SUITE`]
 
@@ -68,9 +97,7 @@
 [/ log]
 [def __BOOST_TEST_LOG_LEVEL__    `BOOST_TEST_LOG_LEVEL`]
 
-[/ floating point]
-[def __BOOST_CHECK_SMALL__       `BOOST_CHECK_SMALL`]
-[def __BOOST_CHECK_CLOSE__       `BOOST_CHECK_CLOSE`]
+
 
 
 [def __param_show_progress__ [*show_progress]]

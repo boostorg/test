@@ -397,7 +397,7 @@ For more reading about floating-point comparison see references below.
 [section:testing_tool_ref __UTF__ testing tools reference]
 
 [#ref_BOOST_level][h3 `BOOST_<level>`]
-[def __BOOST_LEVEL__ [link ref_BOOST_level `BOOST_<level>`]]
+
 
 ``
   BOOST_WARN(predicate);
@@ -428,7 +428,7 @@ See also:
 
 
 [#ref_BOOST_level_BITWISE_EQUAL][h3 `BOOST_<level>_BITWISE_EQUAL`]
-[def __BOOST_LEVEL_BITWISE_EQUAL__ [link ref_BOOST_level_BITWISE_EQUAL `BOOST_<level>_BITWISE_EQUAL`]]
+
 
 ``
   BOOST_WARN_BITWISE_EQUAL(left, right);
@@ -461,7 +461,7 @@ See also:
 
 
 [#ref_BOOST_level_CLOSE][h3 `BOOST_<level>_CLOSE`]
-[def __BOOST_LEVEL_CLOSE__ [link ref_BOOST_level_BITWISE_CLOSE `BOOST_<level>_CLOSE`]]
+
 
 ``
   BOOST_WARN_CLOSE(left, right, tolerance);
@@ -522,7 +522,6 @@ See also:
 
 
 [#ref_BOOST_level_CLOSE_FRACTION][h3 `BOOST_<level>_CLOSE_FRACTION`]
-[def __BOOST_LEVEL_CLOSE_FRACTION__ [link ref_BOOST_level_CLOSE_FRACTION `BOOST_<level>_CLOSE_FRACTION`]]
 
 ``
   BOOST_WARN_CLOSE_FRACTION(left, right, tolerance);
@@ -567,7 +566,6 @@ See also:
 
 
 [#ref_BOOST_level_EQUAL][h3 `BOOST_<level>_EQUAL`]
-[def __BOOST_LEVEL_EQUAL__ [link ref_BOOST_level_EQUAL `BOOST_<level>_EQUAL`]]
 
 ``
   BOOST_WARN_EQUAL(left, right);
@@ -603,7 +601,6 @@ See also:
 
 
 [#ref_BOOST_level_EQUAL_COLLECTIONS][h3 `BOOST_<level>_EQUAL_COLLECTIONS`]
-[def __BOOST_LEVEL_EQUAL_COLLECTIONS__ [link ref_BOOST_level_EQUAL_COLLECTIONS `BOOST_<level>_EQUAL_COLLECTIONS`]]
 
 ``
   BOOST_WARN_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
@@ -637,7 +634,6 @@ See also:
 
 
 [#ref_BOOST_level_EXCEPTION][h3 `BOOST_<level>_EXCEPTION`]
-[def __BOOST_LEVEL_EXCEPTION__ [link ref_BOOST_level_EXCEPTION `BOOST_<level>_EXCEPTION`]]
 
 ``
   BOOST_WARN_EXCEPTION(expression, exception, predicate);
@@ -671,7 +667,6 @@ See also:
 
 
 [#ref_BOOST_level_GE][h3 `BOOST_<level>_GE`]
-[def __BOOST_LEVEL_GE__ [link ref_BOOST_level_GE `BOOST_<level>_GE`]]
 
 ``
   BOOST_WARN_GE(left, right);
@@ -679,7 +674,7 @@ See also:
   BOOST_REQUIRE_GE(left, right);
 ``
 
-Check performed by these tools is the same as the one performed by __BOOST_LEVEL__`( left >= right )`.
+Check performed by these tools is the same as the one performed by `__BOOST_LEVEL__( left >= right )`.
 The difference is that the argument values are reported as well.
 
 [import examples/example57.cpp]
@@ -704,7 +699,7 @@ See also:
 
 
 [#ref_BOOST_level_GT][h3 `BOOST_<level>_GT`]
-[def __BOOST_LEVEL_GT__ [link ref_BOOST_level_GT `BOOST_<level>_GT`]]
+
 
 ``
   BOOST_WARN_GT(left, right);
@@ -735,7 +730,6 @@ See also:
 
 
 [#ref_BOOST_level_LE][h3 `BOOST_<level>_LE`]
-[def __BOOST_LEVEL_LE__ [link ref_BOOST_level_LE `BOOST_<level>_LE`]]
 
 ``
   BOOST_WARN_LE(left, right);
@@ -743,7 +737,7 @@ See also:
   BOOST_REQUIRE_LE(left, right);
 ``
 
-Check performed by these tools is the same as the one performed by __BOOST_LEVEL__`( left <= right )`.
+Check performed by these tools is the same as the one performed by `__BOOST_LEVEL__( left <= right )`.
 The difference is that the argument values are reported as well.
 
 [import examples/example55.cpp]
@@ -767,7 +761,6 @@ See also:
 
 
 [#ref_BOOST_level_LT][h3 `BOOST_<level>_LT`]
-[def __BOOST_LEVEL_LT__ [link ref_BOOST_level_LT `BOOST_<level>_LT`]]
 
 ``
   BOOST_WARN_LT(left, right);
@@ -799,7 +792,7 @@ See also:
 
 
 [#ref_BOOST_level_MESSAGE][h3 `BOOST_<level>_MESSAGE`]
-[def __BOOST_LEVEL_MESSAGE__ [link ref_BOOST_level_MESSAGE `BOOST_<level>_MESSAGE`]]
+
 
 ``
   BOOST_WARN_MESSAGE(predicate, message);
@@ -834,7 +827,7 @@ See also:
 
 
 [#ref_BOOST_level_NE][h3 `BOOST_<level>_NE`]
-[def __BOOST_LEVEL_NE__ [link ref_BOOST_level_NE `BOOST_<level>_NE`]]
+
 
 ``
   BOOST_WARN_NE(left, right);
@@ -842,7 +835,7 @@ See also:
   BOOST_REQUIRE_NE(left, right);
 ``
 
-Check performed by these tools is the same as the one performed by <ref>BOOST_LEVEL</ref>( left != right ).
+Check performed by these tools is the same as the one performed by `__BOOST_LEVEL__( left != right )`.
 The difference is that the matched values are reported as well.
 
 [import examples/example54.cpp]
@@ -865,7 +858,7 @@ See also:
 
 
 [#ref_BOOST_level_NO_THROW][h3 `BOOST_<level>_NO_THROW`]
-[def __BOOST_LEVEL_NO_THROW__ [link ref_BOOST_level_NO_THROW `BOOST_<level>_NO_THROW`]]
+
 
 ``
   BOOST_WARN_NO_THROW(expression);
@@ -904,7 +897,7 @@ See also:
 
 
 [#ref_BOOST_level_PREDICATE][h3 `BOOST_<level>_PREDICATE`]
-[def __BOOST_LEVEL_PREDICATE__ [link ref_BOOST_level_PREDICATE `BOOST_<level>_PREDICATE`]]
+
 
 ``
   BOOST_WARN_PREDICATE(predicate, arguments_list);
@@ -941,7 +934,7 @@ See also:
 
 
 [#ref_BOOST_level_SMALL][h3 `BOOST_<level>_SMALL`]
-[def __BOOST_LEVEL_SMALL__ [link ref_BOOST_level_SMALL `BOOST_<level>_SMALL`]]
+
 
 ``
   BOOST_WARN_SMALL(value, tolerance);
@@ -980,7 +973,7 @@ See also:
 
 
 [#ref_BOOST_level_THROW][h3 `BOOST_<level>_THROW`]
-[def __BOOST_LEVEL_THROW__ [link ref_BOOST_level_THROW `BOOST_<level>_THROW`]]
+
 
 ``
   BOOST_WARN_THROW(expression, exception);
@@ -1017,13 +1010,12 @@ See also:
 
 
 [#ref_BOOST_ERROR][h3 `BOOST_ERROR`]
-[def __BOOST_ERROR__ [link ref_BOOST_ERROR `BOOST_ERROR`]]
 
 ``
   BOOST_ERROR(message);
 ``
 
-__BOOST_ERROR__ tool behave the same way as __BOOST_CHECK_MESSAGE__`(false, message )`. This tool is used for
+__BOOST_ERROR__ tool behave the same way as `__BOOST_CHECK_MESSAGE__(false, message )`. This tool is used for
 an unconditional error counter increasing and message logging. 
 
 The only tool's parameter is an error message to log.
@@ -1049,7 +1041,6 @@ See also:
 
 
 [#ref_BOOST_FAIL][h3 `BOOST_FAIL`]
-[def __BOOST_FAIL__ [link ref_BOOST_FAIL `BOOST_FAIL`]]
 
 ``
   BOOST_FAIL(message);
@@ -1082,7 +1073,6 @@ See also:
 
 
 [#ref_BOOST_IS_DEFINED][h3 `BOOST_IS_DEFINED`]
-[def __BOOST_IS_DEFINED__ [link ref_BOOST_IS_DEFINED `BOOST_IS_DEFINED`]]
 
 ``
   BOOST_IS_DEFINED(symbol);
