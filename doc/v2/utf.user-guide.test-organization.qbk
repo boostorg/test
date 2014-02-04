@@ -208,11 +208,11 @@ The example below employs the alternative test module initialization function sp
 
 
 The __UTF__ also presents an alternative method for parameterized test case creation, which is covered in 
-[link test_organization_unary].
+[link ref_BOOST_PARAM_TEST_CASE next section].
 
 [endsect]
  
-[section:test_organization_unary Unary function based test case]
+[#ref_BOOST_PARAM_TEST_CASE][section Unary function based test case]
 
 Some tests are required to be repeated for a series of different input parameters. One way to achieve this is
 manually register a test case for each parameter as in example above. You can also invoke a test function with
@@ -235,7 +235,7 @@ void combined_test()
 The __UTF__ presents a better solution for this problem: the unary function based test case, also referred as
 ['parameterized test case]. The unary test function can be a free function, unary functor (for example created
 with `boost::bind`) or unary method of a class with bound test class instance). The test function is converted
-into test case using the macro `BOOST_PARAM_TEST_CASE`. The macro expects a collection of parameters (passed as
+into test case using the macro __BOOST_PARAM_TEST_CASE__. The macro expects a collection of parameters (passed as
 two input iterators) and an unary test function:
 
 ``
@@ -243,7 +243,7 @@ two input iterators) and an unary test function:
 ``
  
 
-`BOOST_PARAM_TEST_CASE` creates an instance of the test case generator. When passed to the method test_suite::add,
+__BOOST_PARAM_TEST_CASE__ creates an instance of the test case generator. When passed to the method `test_suite::add`,
 the generator produces a separate sub test case for each parameter in the parameters collection and registers
 it immediately in a test suite. Each test case is based on a test function with the parameter bound by value,
 even if the test function expects a parameter by reference. The fact that parameter value is stored along with
@@ -536,7 +536,7 @@ you can see from the output both `test_case1` and `test_case2` reside in the sam
 To create a test suite manually you need to create an instance of `boost::unit_test::test_suite` class, register
 it in test tree and populate it with test cases (or lower level test suites).
 
-[h4 Test unit registration interface]
+[#ref_test_case_registration][h4 Test unit registration interface]
 
 
 The __UTF__ models the notion of test case container - test suite - using class `boost::unit_test::test_suite`. For
@@ -754,7 +754,7 @@ unexpected failure to occur to satisfy this quota.
 [h3 Usage with manually registered test cases]
 
 To set the value of expected failures for the manually registered test unit pass it as a second argument for the
-`test_suite::add` call during test unit registration.
+[link ref_test_case_registration `test_suite::add`] call during test unit registration.
 
 [import examples/example16.cpp]
 [import examples/example16.output]
