@@ -65,10 +65,10 @@ case that is automatically registered. Here are the two construction interfaces:
 * [*Manually registered test case]
  
  
-[h3  Nullary function based test case with automated registration]
+[#ref_BOOST_AUTO_TEST_CASE][h3  Nullary function based test case with automated registration]
 
 To create a nullary free function cased test case, which is registered in place of implementation, employ the
-macro `BOOST_AUTO_TEST_CASE`.
+macro __BOOST_AUTO_TEST_CASE__.
  
 ``
   BOOST_AUTO_TEST_CASE(test_case_name);
@@ -96,16 +96,16 @@ example (compare with <xref linkend="utf.user-guide.test-organization.manual-nul
 With this macro you don't need to implement the initialization function at all. The macro creates and
 registers the test case with the name free_test_function automatically.
 
-[h3 Manually registered nullary function based test case]
+[#ref_BOOST_TEST_CASE][h3 Manually registered nullary function based test case]
 
-To create a test case manually, employ the macro `BOOST_TEST_CASE`:
+To create a test case manually, employ the macro __BOOST_TEST_CASE__:
 
 ``
   BOOST_TEST_CASE(test_function);
 ``
 
 
-`BOOST_TEST_CASE` creates an instance of the class `boost::unit_test::test_case` and returns a pointer to the
+__BOOST_TEST_CASE__ creates an instance of the class `boost::unit_test::test_case` and returns a pointer to the
 constructed instance. The test case name is deduced from the macro argument test_function. If you prefer to
 assign a different test case name, you have to use the underlying make_test_case interface instead. To
 register a new test case, employ the method `test_suite::add`. Both test case creation and registration are
@@ -114,7 +114,7 @@ performed in the test module initialization function.
 
 Here is the simplest possible manually registered test case. This example employs the original test module
 initialization function specification. A single test case is created and registered in the master test suite.
-Note that the free function name is passed by address to the macro `BOOST_TEST_CASE`.
+Note that the free function name is passed by address to the macro __BOOST_TEST_CASE__`.
 
 [import examples/example01.cpp]
 [import examples/example01.output]
@@ -303,7 +303,7 @@ This example employs the alternative test module initialization function specifi
 
 
 
-[section:test_organization_templates Test cases for templates]
+[#ref_BOOST_AUTO_TEST_CASE_TEMPLATE][section:test_organization_templates Test cases for templates]
 
 To test a template based component it's frequently necessary to perform the same set of checks for a
 component instantiated with different template parameters. The __UTF__ provides the ability to create a series of
@@ -316,13 +316,13 @@ called test case template. Here are the two construction interfaces:
 [h3 Test case template with automated registration]
 
 To create a test case template registered in place of implementation, employ the macro
-`BOOST_AUTO_TEST_CASE_TEMPLATE`. This facility is also called ['auto test case template].
+__BOOST_AUTO_TEST_CASE_TEMPLATE__. This facility is also called ['auto test case template].
 
 ``
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_case_name, formal_type_parameter_name, collection_of_types);
 ``
 
-The macro `BOOST_AUTO_TEST_CASE_TEMPLATE` requires three arguments:
+The macro __BOOST_AUTO_TEST_CASE_TEMPLATE__ requires three arguments:
 
 # `test_case_name` The test case template name: unique test cases template identifier
 # `formal_type_parameter_name` The name of a formal template parameter:
@@ -406,6 +406,7 @@ void test_case_name()
 
 The only difference is that the `BOOST_TEST_CASE_TEMPLATE_FUNCTION` makes the test case template name usable in
 the template argument list.
+
 
 `BOOST_TEST_CASE_TEMPLATE` requires two arguments: the name of the test case template and Boost.MPL compatible
 collection of types to instantiate it with. The names passed to both macros should be the same.
@@ -598,7 +599,7 @@ The example below creates a test tree, which can be represented by the following
 
 
 
-[h3 Master Test Suite]
+[section:master_test_suite Master Test Suite]
 
 
 As defined in introduction section the master test suite is a root node of a test tree. Each test module built
@@ -634,7 +635,7 @@ master_test_suite_t& master_test_suite();
 } // namespace boost
 ``
 
-[section Command line arguments access interface]
+[h4 Command line arguments access interface]
 
 Master test suite implemented as an extension to the regular test suite, since it maintains references to the
 command line arguments passed to the test module. To access the command line arguments use
@@ -669,17 +670,17 @@ test module arguments.
   ]
 ]
 
-[h4 Naming the ['Master test suite]]
+[#ref_BOOST_TEST_MODULE][h4 Naming the ['Master test suite]]
 
 The master test suite is created with default name ['Master Test Suite]. There are two methods two
-reset the name to a different value: using the macro `BOOST_TEST_MODULE`
+reset the name to a different value: using the macro __BOOST_TEST_MODULE__
 and from within the test module initialization function. Former is used for test modules that don't have the
 manually implemented initialization function. Following examples illustrate these methods.
 
 
 [import examples/example14.cpp]
 [import examples/example14.output]
-[table:id_example14 Naming master test suite using the macro `BOOST_TEST_MODULE`
+[table:id_example14 Naming master test suite using the macro __BOOST_TEST_MODULE__
   [
     [Code]
     [Output]
@@ -690,7 +691,7 @@ manually implemented initialization function. Following examples illustrate thes
   ]
 ]
 
-If the macro `BOOST_TEST_MODULE` is defined, the test module initialization
+If the macro __BOOST_TEST_MODULE__ is defined, the test module initialization
 function is [*automatically generated] and the
 macro value becomes the name of the master test suite. The name may include spaces.
 
@@ -708,7 +709,7 @@ macro value becomes the name of the master test suite. The name may include spac
 ]
 
 
-Without the `BOOST_TEST_MAIN` and the `BOOST_TEST_MODULE` flags defined, the test module initialization 
+Without the `BOOST_TEST_MAIN` and the __BOOST_TEST_MODULE__ flags defined, the test module initialization 
 function has to be manually implemented. The master test suite name can be reset at any point within this function.
 
 [warning link to the definition of `BOOST_TEST_MAIN`]
