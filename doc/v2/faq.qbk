@@ -5,12 +5,12 @@ The latest version of Boost Test Library is available online at [@http://www.boo
 
 [h3 I found a bug. Where can I report it?]
 You can send a bug report to the boost users' mailing list and/or directly to
-[@"mailto:boost-test =at= emailaccount =dot= com" Gennadiy Rozental].
+__email_gr__.
 
  
 [h3 I have a request for a new feature. Where can I ask for it?]
 You can send a request to the boost developers' mailing list and/or directly to
-<ulink url="mailto:boost-test =at= emailaccount -dot- com">Gennadiy Rozental</ulink>.
+__email_gr__.
 
 [h3 How to create test case using the Unit Test Framework?]
 To create a test case, use the macro
@@ -18,7 +18,7 @@ To create a test case, use the macro
   BOOST_AUTO_TEST_CASE( test_function );
 
 For more details see the Unit Test Framework
-<link linkend="utf.user-guide.test-organization.auto-nullary-test-case">documentation</link>.
+[link ref_BOOST_AUTO_TEST_CASE documentation].
 
 [h3 How to create test suite using the Unit Test Framework?]
 To create a test suite use the macro
@@ -26,7 +26,7 @@ To create a test suite use the macro
   BOOST_AUTO_TEST_SUITE( suite_name );
 
 For more details see the Unit Test Framework
-<link linkend="utf.user-guide.test-organization.auto-test-suite">documentation</link>.
+[link ref_BOOST_AUTO_TEST_SUITE documentation].
 
  
 [h3
@@ -55,10 +55,9 @@ error like this.
  
 
 The reason for this error is that in your implementation you should specify second argument of
-init_unit_test_suite exactly as in the specification, i.e.: char* [].
+init_unit_test_suite exactly as in the specification, i.e.: `char* []`.
 
-[h3
-  How can I redirect testing output?]
+[h3 How can I redirect testing output?]
 Use ``unit_test_log::instance().set_log_output( std::ostream & )``.
 For more details see the Unit Test Framework
      <link linkend="utf.user-guide.test-output.log.ct-config.output-stream">documentation</link>.

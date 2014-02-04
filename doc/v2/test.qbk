@@ -18,6 +18,10 @@
     [category Correctness and testing]
 ]
 
+[/ email Gennadiy, I do not know how to make this in fact]
+[def __email_gr__ [@mailto:boost-test=at=emailaccount-dot-com Gennadiy Rozental]]
+
+
 [template mdash[] '''&mdash; ''']
 [template indexterm1[term1] '''<indexterm><primary>'''[term1]'''</primary></indexterm>''']
 [template indexterm2[term1 term2] '''<indexterm><primary>'''[term1]'''</primary><secondary>'''[term2]'''</secondary></indexterm>''']
