@@ -466,7 +466,7 @@ In addition the __UTF__ presents a notion of[*Master Test Suite]. The most impor
 reason to learn about this component is that it provides an ability to access command line arguments supplied 
 to a test module.
 
-[h3 Test suites with automated registration]
+[#ref_BOOST_AUTO_TEST_SUITE][h3 Test suites with automated registration]
 The solution the __UTF__ presents for automated test suite creation and registration is designed to facilitate
 multiple points of definition, arbitrary test suites depth and smooth integration with automated test case creation 
 and registration. This facility should significantly simplify a test tree construction process in comparison with 
@@ -475,8 +475,8 @@ manual explicit registration case.
 
 The implementation is based on the order of file scope variables definitions within a single compilation unit.
 The semantic of this facility is very similar to the namespace feature of C++, including support for test suite 
-extension. To start test suite use the macro `BOOST_AUTO_TEST_SUITE`. To end test suite use the macro
-`BOOST_AUTO_TEST_SUITE_END`. The same test suite can be restarted multiple times inside the same test file or in a
+extension. To start test suite use the macro __BOOST_AUTO_TEST_SUITE__. To end test suite use the macro
+__BOOST_AUTO_TEST_SUITE_END__. The same test suite can be restarted multiple times inside the same test file or in a
 different test files. In a result all test units will be part of the same test suite in a constructed test tree.
 
 ``
@@ -560,17 +560,17 @@ To register group of test units in one function call, the `boost::unit_test::tes
 interface covered in the advanced section of this documentation.
 [warning find the related advanced doc]
 
-[h4 Test suite instance construction]
+[#ref_BOOST_TEST_SUITE][h4 Test suite instance construction]
 
 
-To create a test suite instance manually, employ the macro `BOOST_TEST_SUITE`. It hides all implementation
+To create a test suite instance manually, employ the macro __BOOST_TEST_SUITE__. It hides all implementation
 details and you only required to specify the test suite name:
 
 ``
   BOOST_TEST_SUITE(test_suite_name);
 ``
 
-`BOOST_TEST_SUITE` creates an instance of the class `boost::unit_test::test_suite` and returns a pointer to the
+__BOOST_TEST_SUITE__ creates an instance of the class `boost::unit_test::test_suite` and returns a pointer to the
 constructed instance. Alternatively you can create an instance of class `boost::unit_test::test_suite` yourself.
 
 [caution `boost::unit_test::test_suite` instances have to be allocated on the heap and the compiler won't allow you
@@ -728,7 +728,7 @@ This feature allows specifying an expected number of failed assertions per test 
 during test tree construction, and can't be updated during test execution.
 
 The feature is not intended to be used to check for expected functionality failures. To check that a particular
-input is causing an exception to be thrown use `BOOST_CHECK_THROW` family of testing
+input is causing an exception to be thrown use __BOOST_LEVEL_THROW__ family of testing
 tools.
 
 The usage of this feature should be limited and employed only after careful consideration. In general you should
@@ -763,10 +763,10 @@ To set the value of expected failures for the manually registered test unit pass
   ]
 ]
 
-[h3 Usage with automatically registered test cases]
+[#ref_BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES][h3 Usage with automatically registered test cases]
 
 To set the number of expected failures for the automatically registered test unit use the macro
-`BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES` before the test case definition.
+__BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ before the test case definition.
 
 ``
 BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES(test_case_name, number_of_expected_failures);
@@ -774,7 +774,7 @@ BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES(test_case_name, number_of_expected_failur
 
 You can use this macro both on a file scope and inside a test suite. Moreover you can use it even if name of test
 units coincide in different test suites. Expected failures specification applies to the test unit belonging to the same 
-test suite where `BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES` resides.
+test suite where __BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ resides.
 
 
 [import examples/example17.cpp]
