@@ -61,11 +61,11 @@ function objects created with `boost::bind` and nullary `boost::function`
 instances. The simplest is a free function and the __UTF__ provides facilities to create a free function based test
 case that is automatically registered. Here are the two construction interfaces:
 
-* [*Test case with automated registration]
-* [*Manually registered test case]
+* Test case with automated registration
+* Manually registered test case
  
  
-[#ref_BOOST_AUTO_TEST_CASE][h3  Nullary function based test case with automated registration]
+[#ref_BOOST_AUTO_TEST_CASE][h4  Nullary function based test case with automated registration]
 
 To create a nullary free function cased test case, which is registered in place of implementation, employ the
 macro __BOOST_AUTO_TEST_CASE__.
@@ -96,7 +96,7 @@ example (compare with <xref linkend="utf.user-guide.test-organization.manual-nul
 With this macro you don't need to implement the initialization function at all. The macro creates and
 registers the test case with the name free_test_function automatically.
 
-[#ref_BOOST_TEST_CASE][h3 Manually registered nullary function based test case]
+[#ref_BOOST_TEST_CASE][h4 Manually registered nullary function based test case]
 
 To create a test case manually, employ the macro __BOOST_TEST_CASE__:
 
@@ -303,7 +303,7 @@ This example employs the alternative test module initialization function specifi
 
 
 
-[#ref_BOOST_AUTO_TEST_CASE_TEMPLATE][section:test_organization_templates Test cases for templates]
+[section:test_organization_templates Template test cases]
 
 To test a template based component it's frequently necessary to perform the same set of checks for a
 component instantiated with different template parameters. The __UTF__ provides the ability to create a series of
@@ -313,7 +313,7 @@ called test case template. Here are the two construction interfaces:
 * Test case template with automated registration
 * Manually registered test case template
 
-[h3 Test case template with automated registration]
+[#ref_BOOST_AUTO_TEST_CASE_TEMPLATE][h4 Test case template with automated registration]
 
 To create a test case template registered in place of implementation, employ the macro
 __BOOST_AUTO_TEST_CASE_TEMPLATE__. This facility is also called ['auto test case template].
@@ -342,7 +342,7 @@ The macro __BOOST_AUTO_TEST_CASE_TEMPLATE__ requires three arguments:
   ]
 ]
 
-[h3 Test case template with manual registration]
+[#ref_BOOST_TEST_CASE_TEMPLATE][h4 Test case template with manual registration]
 One way to perform the same set of checks for a component instantiated with different template parameters is
 illustrated in the following example:
 
@@ -372,12 +372,14 @@ There several problems/inconveniencies with above approach, including:
 Ideally the test case template would be based on nullary function template (like single_test above).
 Unfortunately function templates are neither addressable nor can be used as template parameters. To alleviate
 the issue the manually registered test case template facility consists of two co-working macros:
-`BOOST_TEST_CASE_TEMPLATE_FUNCTION` and `BOOST_TEST_CASE_TEMPLATE`. Former is used to define the test case
+__BOOST_TEST_CASE_TEMPLATE_FUNCTION__ and __BOOST_TEST_CASE_TEMPLATE__. Former is used to define the test case
 template body, later - to create and register test cases based on it.
 
 
-The macro `BOOST_TEST_CASE_TEMPLATE_FUNCTION` requires two arguments: the name of the test case template and the
-name of the format type parameter:
+The macro __BOOST_TEST_CASE_TEMPLATE_FUNCTION__ requires two arguments: 
+
+# the name of the test case template and 
+# the name of the format type parameter
 
 ``
   BOOST_TEST_CASE_TEMPLATE_FUNCTION(test_case_name, type_name);
@@ -392,7 +394,7 @@ BOOST_TEST_CASE_TEMPLATE_FUNCTION( test_case_name, type_name )
 }
 ``
 
-The macro `BOOST_TEST_CASE_TEMPLATE_FUNCTION` is intended to be used in place of nullary function template
+The macro __BOOST_TEST_CASE_TEMPLATE_FUNCTION__ is intended to be used in place of nullary function template
 signature:
 
 [/snippet4 deleted]
@@ -404,19 +406,23 @@ void test_case_name()
 }
 ``
 
-The only difference is that the `BOOST_TEST_CASE_TEMPLATE_FUNCTION` makes the test case template name usable in
+The only difference is that the __BOOST_TEST_CASE_TEMPLATE_FUNCTION__ makes the test case template name usable in
 the template argument list.
 
 
-`BOOST_TEST_CASE_TEMPLATE` requires two arguments: the name of the test case template and Boost.MPL compatible
-collection of types to instantiate it with. The names passed to both macros should be the same.
+__BOOST_TEST_CASE_TEMPLATE__ requires two arguments: 
+
+# the name of the test case template and 
+# Boost.MPL compatible collection of types to instantiate it with. 
+
+The names passed to both macros should be the same.
 
 
 ``
   BOOST_TEST_CASE_TEMPLATE(test_case_name, collection_of_types);
 ``
 
-`BOOST_TEST_CASE_TEMPLATE` creates an instance of the test case generator. When passed to the method
+__BOOST_TEST_CASE_TEMPLATE__ creates an instance of the test case generator. When passed to the method
 `test_suite::add`, the generator produces a separate sub test case for each type in the supplied collection of
 types and registers it immediately in the test suite. Each test case is based on the test case template body
 instantiated with a particular test type.
