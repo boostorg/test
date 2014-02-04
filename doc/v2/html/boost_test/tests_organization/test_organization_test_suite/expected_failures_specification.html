@@ -6,7 +6,7 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../../index.html" title="Boost.Test">
 <link rel="up" href="../test_organization_test_suite.html" title="Test suite">
-<link rel="prev" href="command_line_arguments_access_in.html" title="Command line arguments access interface">
+<link rel="prev" href="master_test_suite.html" title="Master Test Suite">
 <link rel="next" href="../../the_utf_testing_tools_or_tester_.html" title="The UTF testing tools... or tester's toolbox for all occasions">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="command_line_arguments_access_in.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../test_organization_test_suite.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../the_utf_testing_tools_or_tester_.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="master_test_suite.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../test_organization_test_suite.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../the_utf_testing_tools_or_tester_.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
@@ -43,7 +43,7 @@
 <p>
           The feature is not intended to be used to check for expected functionality
           failures. To check that a particular input is causing an exception to be
-          thrown use <code class="computeroutput"><span class="identifier">BOOST_CHECK_THROW</span></code>
+          thrown use <a class="link" href="../../the_utf_testing_tools_or_tester_/testing_tool_ref.html#ref_BOOST_level_THROW"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_THROW</span></code></a>
           family of testing tools.
         </p>
 <p>
@@ -130,14 +130,14 @@
 </tr></tbody>
 </table></div>
 </div>
-<br class="table-break"><h4>
+<br class="table-break"><a name="ref_BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES"></a><h4>
 <a name="boost_test.tests_organization.test_organization_test_suite.expected_failures_specification.h1"></a>
           <span class="phrase"><a name="boost_test.tests_organization.test_organization_test_suite.expected_failures_specification.usage_with_automatically_registe"></a></span><a class="link" href="expected_failures_specification.html#boost_test.tests_organization.test_organization_test_suite.expected_failures_specification.usage_with_automatically_registe">Usage
           with automatically registered test cases</a>
         </h4>
 <p>
           To set the number of expected failures for the automatically registered
-          test unit use the macro <code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES</span></code>
+          test unit use the macro <a class="link" href="expected_failures_specification.html#ref_BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES"><code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES</span></code></a>
           before the test case definition.
         </p>
 <pre class="programlisting"><span class="identifier">BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES</span><span class="special">(</span><span class="identifier">test_case_name</span><span class="special">,</span> <span class="identifier">number_of_expected_failures</span><span class="special">);</span>
@@ -146,7 +146,7 @@
           You can use this macro both on a file scope and inside a test suite. Moreover
           you can use it even if name of test units coincide in different test suites.
           Expected failures specification applies to the test unit belonging to the
-          same test suite where <code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES</span></code>
+          same test suite where <a class="link" href="expected_failures_specification.html#ref_BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES"><code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES</span></code></a>
           resides.
         </p>
 <div class="table">
@@ -223,7 +223,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="command_line_arguments_access_in.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../test_organization_test_suite.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../the_utf_testing_tools_or_tester_.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="master_test_suite.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../test_organization_test_suite.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../the_utf_testing_tools_or_tester_.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

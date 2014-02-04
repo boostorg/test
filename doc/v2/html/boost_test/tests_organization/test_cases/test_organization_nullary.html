@@ -37,20 +37,20 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-              <span class="bold"><strong>Test case with automated registration</strong></span>
+              Test case with automated registration
             </li>
 <li class="listitem">
-              <span class="bold"><strong>Manually registered test case</strong></span>
+              Manually registered test case
             </li>
 </ul></div>
-<h4>
+<a name="ref_BOOST_AUTO_TEST_CASE"></a><h5>
 <a name="boost_test.tests_organization.test_cases.test_organization_nullary.h0"></a>
           <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_organization_nullary.nullary_function_based_test_case"></a></span><a class="link" href="test_organization_nullary.html#boost_test.tests_organization.test_cases.test_organization_nullary.nullary_function_based_test_case">Nullary
           function based test case with automated registration</a>
-        </h4>
+        </h5>
 <p>
           To create a nullary free function cased test case, which is registered
-          in place of implementation, employ the macro <code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_CASE</span></code>.
+          in place of implementation, employ the macro <a class="link" href="test_organization_nullary.html#ref_BOOST_AUTO_TEST_CASE"><code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_CASE</span></code></a>.
         </p>
 <pre class="programlisting"><span class="identifier">BOOST_AUTO_TEST_CASE</span><span class="special">(</span><span class="identifier">test_case_name</span><span class="special">);</span>
 </pre>
@@ -109,19 +109,19 @@
           at all. The macro creates and registers the test case with the name free_test_function
           automatically.
         </p>
-<h4>
+<a name="ref_BOOST_TEST_CASE"></a><h5>
 <a name="boost_test.tests_organization.test_cases.test_organization_nullary.h1"></a>
           <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_organization_nullary.manually_registered_nullary_func"></a></span><a class="link" href="test_organization_nullary.html#boost_test.tests_organization.test_cases.test_organization_nullary.manually_registered_nullary_func">Manually
           registered nullary function based test case</a>
-        </h4>
+        </h5>
 <p>
-          To create a test case manually, employ the macro <code class="computeroutput"><span class="identifier">BOOST_TEST_CASE</span></code>:
+          To create a test case manually, employ the macro <a class="link" href="test_organization_nullary.html#ref_BOOST_TEST_CASE"><code class="computeroutput"><span class="identifier">BOOST_TEST_CASE</span></code></a>:
         </p>
 <pre class="programlisting"><span class="identifier">BOOST_TEST_CASE</span><span class="special">(</span><span class="identifier">test_function</span><span class="special">);</span>
 </pre>
 <p>
-          <code class="computeroutput"><span class="identifier">BOOST_TEST_CASE</span></code> creates
-          an instance of the class <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">test_case</span></code>
+          <a class="link" href="test_organization_nullary.html#ref_BOOST_TEST_CASE"><code class="computeroutput"><span class="identifier">BOOST_TEST_CASE</span></code></a>
+          creates an instance of the class <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">test_case</span></code>
           and returns a pointer to the constructed instance. The test case name is
           deduced from the macro argument test_function. If you prefer to assign
           a different test case name, you have to use the underlying make_test_case
@@ -132,7 +132,7 @@
           Here is the simplest possible manually registered test case. This example
           employs the original test module initialization function specification.
           A single test case is created and registered in the master test suite.
-          Note that the free function name is passed by address to the macro <code class="computeroutput"><span class="identifier">BOOST_TEST_CASE</span></code>.
+          Note that the free function name is passed by address to the macro <a class="link" href="test_organization_nullary.html#ref_BOOST_TEST_CASE"><code class="computeroutput"><span class="identifier">BOOST_TEST_CASE</span></code></a>`.
         </p>
 <div class="table">
 <a name="boost_test.tests_organization.test_cases.test_organization_nullary.id_example01"></a><p class="title"><b>Table&#160;2.&#160;Nullary free function manually registered</b></p>

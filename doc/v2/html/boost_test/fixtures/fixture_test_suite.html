@@ -32,17 +32,17 @@
         cases in the test suite based on a fixture required) you can make another
         step toward an automation of a test fixture assignment. To assign the same
         shared fixture for all test cases in a test suite use the macro <code class="computeroutput"><span class="identifier">BOOST_FIXTURE_TEST_SUITE</span></code> in place of the
-        macro <code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_SUITE</span></code>
+        macro <a class="link" href="../tests_organization/test_organization_test_suite.html#ref_BOOST_AUTO_TEST_SUITE"><code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_SUITE</span></code></a>
         for automated test suite creation and registration.
       </p>
 <pre class="programlisting"><span class="identifier">BOOST_FIXTURE_TEST_SUITE</span><span class="special">(</span><span class="identifier">suite_name</span><span class="special">,</span> <span class="identifier">fixure_name</span><span class="special">);</span>
 </pre>
 <p>
-        Once again the only difference from the macro <code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_SUITE</span></code>
-        usage is the presence of an extra argument - the fixture name. And now, you
-        not only have direct access to the public and protected members of the fixture,
-        but also do not need to refer to the fixture name in test case definition.
-        All test cases assigned the same fixture automatically.
+        Once again the only difference from the macro <a class="link" href="../tests_organization/test_organization_test_suite.html#ref_BOOST_AUTO_TEST_SUITE"><code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_SUITE</span></code></a> usage is the
+        presence of an extra argument - the fixture name. And now, you not only have
+        direct access to the public and protected members of the fixture, but also
+        do not need to refer to the fixture name in test case definition. All test
+        cases assigned the same fixture automatically.
       </p>
 <div class="tip"><table border="0" summary="Tip">
 <tr>

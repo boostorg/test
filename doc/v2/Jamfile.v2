@@ -35,8 +35,8 @@ boostbook standalone
     <xsl:param>chapter.autolabel=0
     <xsl:param>chunk.section.depth=8
     <xsl:param>chunk.first.sections=1
-    <xsl:param>toc.section.depth=2
-    <xsl:param>toc.max.depth=2
+    <xsl:param>toc.section.depth=3
+    <xsl:param>toc.max.depth=3
     <xsl:param>generate.section.toc.level=10
     <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/test/doc/html
   ;
