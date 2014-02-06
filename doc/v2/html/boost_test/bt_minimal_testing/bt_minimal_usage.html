@@ -32,7 +32,7 @@
       </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">minimal</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></pre>
 <p>
-        . There are no special compilation instructions for this component.
+        There are no special compilation instructions for this component.
       </p>
 <p>
         The second and last change you need to make to integrate your test module
@@ -46,147 +46,11 @@
 <span class="special">}</span>
 </pre>
 <p>
-        Once you apply the change test automatically starts running in monitored
-        environment. Also you can start using &lt;link linkend="minimal.tools"&gt;testing
-        tools&lt;/link&gt; provided by the <span class="emphasis"><em>Minimal Testing Facility</em></span>
+        Once you apply the changes, the test automatically starts running in monitored
+        environment. Also you can start using <a class="link" href="bt_minimal.html#ref_mtf_testing_tool">testing
+        tools</a> provided by the <span class="emphasis"><em>Minimal Testing Facility</em></span>
         and get uniform errors reporting.
       </p>
-<h4>
-<a name="boost_test.bt_minimal_testing.bt_minimal_usage.h0"></a>
-        <span class="phrase"><a name="boost_test.bt_minimal_testing.bt_minimal_usage.example"></a></span><a class="link" href="bt_minimal_usage.html#boost_test.bt_minimal_testing.bt_minimal_usage.example">Example</a>
-      </h4>
-<p>
-        Following example illustrates different approaches you can employ to detect
-        and report errors using different testing tools
-      </p>
-<div class="table">
-<a name="boost_test.bt_minimal_testing.bt_minimal_usage.id_example27"></a><p class="title"><b>Table&#160;57.&#160;Minimal testing facility application</b></p>
-<div class="table-contents"><table class="table" summary="Minimal testing facility application">
-<colgroup>
-<col>
-<col>
-</colgroup>
-<thead><tr>
-<th>
-                <p>
-                  Code
-                </p>
-              </th>
-<th>
-                <p>
-                  Output
-                </p>
-              </th>
-</tr></thead>
-<tbody><tr>
-<td>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">minimal</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-
-<span class="comment">//____________________________________________________________________________//</span>
-
-<span class="keyword">int</span> <span class="identifier">add</span><span class="special">(</span> <span class="keyword">int</span> <span class="identifier">i</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">j</span> <span class="special">)</span> <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">i</span><span class="special">+</span><span class="identifier">j</span><span class="special">;</span> <span class="special">}</span>
-
-<span class="comment">//____________________________________________________________________________//</span>
-
-<span class="keyword">int</span> <span class="identifier">test_main</span><span class="special">(</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">char</span> <span class="special">*[]</span> <span class="special">)</span>             <span class="comment">// note the name!</span>
-<span class="special">{</span>
-  <span class="comment">// six ways to detect and report the same error:</span>
-
-  <span class="comment">// continues on error</span>
-  <span class="identifier">BOOST_CHECK</span><span class="special">(</span> <span class="identifier">add</span><span class="special">(</span> <span class="number">2</span><span class="special">,</span><span class="number">2</span> <span class="special">)</span> <span class="special">==</span> <span class="number">4</span> <span class="special">);</span>  <a class="co" name="boost_test.bt_minimal_testing.bt_minimal_usage.c0" href="bt_minimal_usage.html#boost_test.bt_minimal_testing.bt_minimal_usage.c1"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a>
-
-  <span class="comment">// throws on error</span>
-  <span class="identifier">BOOST_REQUIRE</span><span class="special">(</span> <span class="identifier">add</span><span class="special">(</span> <span class="number">2</span><span class="special">,</span><span class="number">2</span> <span class="special">)</span> <span class="special">==</span> <span class="number">4</span> <span class="special">);</span> <a class="co" name="boost_test.bt_minimal_testing.bt_minimal_usage.c2" href="bt_minimal_usage.html#boost_test.bt_minimal_testing.bt_minimal_usage.c3"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a>
-
-  <span class="comment">// continues on error</span>
-  <span class="keyword">if</span><span class="special">(</span> <span class="identifier">add</span><span class="special">(</span> <span class="number">2</span><span class="special">,</span><span class="number">2</span> <span class="special">)</span> <span class="special">!=</span> <span class="number">4</span> <span class="special">)</span>
-    <span class="identifier">BOOST_ERROR</span><span class="special">(</span> <span class="string">"Ouch..."</span> <span class="special">);</span>       <a class="co" name="boost_test.bt_minimal_testing.bt_minimal_usage.c4" href="bt_minimal_usage.html#boost_test.bt_minimal_testing.bt_minimal_usage.c5"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a>
-
-  <span class="comment">// throws on error</span>
-  <span class="keyword">if</span><span class="special">(</span> <span class="identifier">add</span><span class="special">(</span> <span class="number">2</span><span class="special">,</span><span class="number">2</span> <span class="special">)</span> <span class="special">!=</span> <span class="number">4</span> <span class="special">)</span>
-    <span class="identifier">BOOST_FAIL</span><span class="special">(</span> <span class="string">"Ouch..."</span> <span class="special">);</span>        <a class="co" name="boost_test.bt_minimal_testing.bt_minimal_usage.c6" href="bt_minimal_usage.html#boost_test.bt_minimal_testing.bt_minimal_usage.c7"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a>
-
-  <span class="comment">// throws on error</span>
-  <span class="keyword">if</span><span class="special">(</span> <span class="identifier">add</span><span class="special">(</span> <span class="number">2</span><span class="special">,</span><span class="number">2</span> <span class="special">)</span> <span class="special">!=</span> <span class="number">4</span> <span class="special">)</span>
-    <span class="keyword">throw</span> <span class="string">"Oops..."</span><span class="special">;</span>                <a class="co" name="boost_test.bt_minimal_testing.bt_minimal_usage.c8" href="bt_minimal_usage.html#boost_test.bt_minimal_testing.bt_minimal_usage.c9"><img src="../../../../../../../doc/src/images/callouts/5.png" alt="5" border="0"></a>
-
-  <span class="comment">// returns error code</span>
-  <span class="keyword">return</span> <span class="identifier">add</span><span class="special">(</span> <span class="number">2</span><span class="special">,</span> <span class="number">2</span> <span class="special">)</span> <span class="special">==</span> <span class="number">4</span> <span class="special">?</span> <span class="number">0</span> <span class="special">:</span> <span class="number">1</span><span class="special">;</span>  <a class="co" name="boost_test.bt_minimal_testing.bt_minimal_usage.c10" href="bt_minimal_usage.html#boost_test.bt_minimal_testing.bt_minimal_usage.c11"><img src="../../../../../../../doc/src/images/callouts/6.png" alt="6" border="0"></a>
-<span class="special">}</span>
-</pre>
-                <div class="calloutlist"><table border="0" summary="Callout list">
-<tr>
-<td width="5%" valign="top" align="left"><p><a name="boost_test.bt_minimal_testing.bt_minimal_usage.c1"></a><a href="#boost_test.bt_minimal_testing.bt_minimal_usage.c0"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a> </p></td>
-<td valign="top" align="left"><p>
-                      This approach uses the <code class="computeroutput"><span class="identifier">BOOST_CHECK</span></code>
-                      tool, which displays an error message on std::cout that includes
-                      the expression that failed, the source file name, and the source
-                      file line number. It also increments the error count. At program
-                      termination, the error count will be displayed automatically
-                      by the <span class="emphasis"><em>Minimal Testing Facility</em></span>.
-                    </p></td>
-</tr>
-<tr>
-<td width="5%" valign="top" align="left"><p><a name="boost_test.bt_minimal_testing.bt_minimal_usage.c3"></a><a href="#boost_test.bt_minimal_testing.bt_minimal_usage.c2"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a> </p></td>
-<td valign="top" align="left"><p>
-                      This approach using the <code class="computeroutput"><span class="identifier">BOOST_REQUIRE</span></code>
-                      tool, is similar to #1, except that after displaying the error,
-                      an exception is thrown, to be caught by the <span class="emphasis"><em>Minimal
-                      Testing Facility</em></span>. This approach is suitable when
-                      writing an explicit test program, and the error would be so
-                      severe as to make further testing impractical. <code class="computeroutput"><span class="identifier">BOOST_REQUIRE</span></code> differs from
-                      the C++ Standard Library's <code class="computeroutput"><span class="identifier">assert</span><span class="special">()</span></code> macro in that it is always
-                      generated, and channels error detection into the uniform reporting
-                      procedure.
-                    </p></td>
-</tr>
-<tr>
-<td width="5%" valign="top" align="left"><p><a name="boost_test.bt_minimal_testing.bt_minimal_usage.c5"></a><a href="#boost_test.bt_minimal_testing.bt_minimal_usage.c4"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a> </p></td>
-<td valign="top" align="left"><p>
-                      This approach is similar to #1, except that the error detection
-                      is coded separately. This is most useful when the specific
-                      condition being tested is not indicative of the reason for
-                      failure.
-                    </p></td>
-</tr>
-<tr>
-<td width="5%" valign="top" align="left"><p><a name="boost_test.bt_minimal_testing.bt_minimal_usage.c7"></a><a href="#boost_test.bt_minimal_testing.bt_minimal_usage.c6"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a> </p></td>
-<td valign="top" align="left"><p>
-                      This approach is similar to #2, except that the error detection
-                      is coded separately. This is most useful when the specific
-                      condition being tested is not indicative of the reason for
-                      failure.
-                    </p></td>
-</tr>
-<tr>
-<td width="5%" valign="top" align="left"><p><a name="boost_test.bt_minimal_testing.bt_minimal_usage.c9"></a><a href="#boost_test.bt_minimal_testing.bt_minimal_usage.c8"><img src="../../../../../../../doc/src/images/callouts/5.png" alt="5" border="0"></a> </p></td>
-<td valign="top" align="left"><p>
-                      This approach throws an exception, which will be caught and
-                      reported by the <span class="emphasis"><em>Minimal Testing Facility</em></span>.
-                      This approach is suitable for both production and test code,
-                      in libraries or not. The error message displayed when the exception
-                      is caught will be most meaningful if the exception is derived
-                      from <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">exception</span></code>, or is a <code class="computeroutput"><span class="keyword">char</span><span class="special">*</span></code>
-                      or <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code>.
-                    </p></td>
-</tr>
-<tr>
-<td width="5%" valign="top" align="left"><p><a name="boost_test.bt_minimal_testing.bt_minimal_usage.c11"></a><a href="#boost_test.bt_minimal_testing.bt_minimal_usage.c10"><img src="../../../../../../../doc/src/images/callouts/6.png" alt="6" border="0"></a> </p></td>
-<td valign="top" align="left"><p>
-                      An error code may be returned by the <span class="emphasis"><em>Minimal Testing
-                      Facility</em></span>
-                    </p></td>
-</tr>
-</table></div>
-              </td>
-<td>
-<pre class="programlisting"><span class="special">****</span> <span class="identifier">no</span> <span class="identifier">errors</span> <span class="identifier">detected</span>
-</pre>
-              </td>
-</tr></tbody>
-</table></div>
-</div>
-<br class="table-break">
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

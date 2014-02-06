@@ -87,10 +87,18 @@
 </pre>
 <p>
         Checks based on equations <a class="link" href="testing_floating_points.html#equ4">(4)</a> and <a class="link" href="testing_floating_points.html#equ5">(5)</a>
-        are implemented by two predicates with alternative interfaces: binary predicate
-        <code class="computeroutput"><span class="identifier">close_at_tolerance</span></code> <a href="#ftn.boost_test.the_utf_testing_tools_or_tester_.testing_floating_points.f0" class="footnote" name="boost_test.the_utf_testing_tools_or_tester_.testing_floating_points.f0"><sup class="footnote">[3]</sup></a> and predicate with four arguments <code class="computeroutput"><span class="identifier">check_is_close</span></code>
-        <a href="#ftn.boost_test.the_utf_testing_tools_or_tester_.testing_floating_points.f1" class="footnote" name="boost_test.the_utf_testing_tools_or_tester_.testing_floating_points.f1"><sup class="footnote">[4]</sup></a>.
+        are implemented by two predicates with alternative interfaces:
       </p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+            binary predicate <code class="computeroutput"><span class="identifier">close_at_tolerance</span></code>
+            <a href="#ftn.boost_test.the_utf_testing_tools_or_tester_.testing_floating_points.f0" class="footnote" name="boost_test.the_utf_testing_tools_or_tester_.testing_floating_points.f0"><sup class="footnote">[3]</sup></a>
+          </li>
+<li class="listitem">
+            and predicate with four arguments <code class="computeroutput"><span class="identifier">check_is_close</span></code>
+            <a href="#ftn.boost_test.the_utf_testing_tools_or_tester_.testing_floating_points.f1" class="footnote" name="boost_test.the_utf_testing_tools_or_tester_.testing_floating_points.f1"><sup class="footnote">[4]</sup></a>.
+          </li>
+</ol></div>
 <p>
         While equations <a class="link" href="testing_floating_points.html#equ4">(4)</a> and <a class="link" href="testing_floating_points.html#equ5">(5)</a>
         in general are preferred for the general floating point comparison check
@@ -147,7 +155,7 @@
         requirement. So we can't assume that <code class="computeroutput"><span class="keyword">float</span><span class="special">(</span><span class="number">1.1</span><span class="special">)</span></code>
         is close to the real number <code class="computeroutput"><span class="number">1.1</span></code>
         with tolerance <code class="computeroutput"><span class="identifier">half_epsilon</span></code>
-        for float (though for 11./10 we can). Non arithmetic operations either do
+        for float (though for 11./10 we can). Non-arithmetic operations either do
         not have a predicted upper limit relative rounding errors.
       </p>
 <div class="note"><table border="0" summary="Note">
@@ -158,7 +166,7 @@
 <tr><td align="left" valign="top"><p>
           Note that both arithmetic and non-arithmetic operations might also produce
           others "non-rounding" errors, such as underflow/overflow, division-by-zero
-          or 'operation errors'.
+          or "operation errors".
         </p></td></tr>
 </table></div>
 <p>
@@ -172,7 +180,7 @@
         is, it is required that the internal computation of a given operation be
         such that the floating point result is the exact result rounded to the number
         of working bits. In other words, it is required that the computation used
-        by the operation itself doesn't introduce any additional errors. The <span class="bold"><strong>IEEE754</strong></span> standard does not require same behavior from
+        by the operation itself doesn't introduce any additional errors. The <span class="bold"><strong>IEEE754</strong></span> standard does not require same behaviour from
         most non-arithmetic operation. The underflow/overflow and division-by-zero
         errors may cause rounding errors with unpredictable upper limits.
       </p>
@@ -254,11 +262,12 @@
 <div class="footnotes">
 <br><hr style="width:100; text-align:left;margin-left: 0">
 <div id="ftn.boost_test.the_utf_testing_tools_or_tester_.testing_floating_points.f0" class="footnote"><p><a href="#boost_test.the_utf_testing_tools_or_tester_.testing_floating_points.f0" class="para"><sup class="para">[3] </sup></a>
-          check type and tolerance value are fixed at predicate construction time
-        </p></div>
+              check type and tolerance value are fixed at predicate construction
+              time
+            </p></div>
 <div id="ftn.boost_test.the_utf_testing_tools_or_tester_.testing_floating_points.f1" class="footnote"><p><a href="#boost_test.the_utf_testing_tools_or_tester_.testing_floating_points.f1" class="para"><sup class="para">[4] </sup></a>
-          check type and tolerance value are the arguments of the predicate
-        </p></div>
+              check type and tolerance value are the arguments of the predicate
+            </p></div>
 <div id="ftn.boost_test.the_utf_testing_tools_or_tester_.testing_floating_points.f2" class="footnote"><p><a href="#boost_test.the_utf_testing_tools_or_tester_.testing_floating_points.f2" class="para"><sup class="para">[5] </sup></a>
           <code class="computeroutput"><span class="identifier">v</span></code> is zero
         </p></div>

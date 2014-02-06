@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="Boost.Test">
-<link rel="next" href="boost_test/intro.html" title="What is Boost.Test">
+<link rel="next" href="boost_test/intro.html" title="What is Boost.Test?">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -36,8 +36,7 @@
 <div class="toc">
 <p><b>Table of Contents</b></p>
 <dl class="toc">
-<dt><span class="section"><a href="boost_test/intro.html">What is Boost.Test</a></span></dt>
-<dt><span class="section"><a href="boost_test/intro_objective.html">Objective and content</a></span></dt>
+<dt><span class="section"><a href="boost_test/intro.html">What is Boost.Test?</a></span></dt>
 <dt><span class="section"><a href="boost_test/tutorial.html">The unit test framework tutorials</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="boost_test/tutorial/hello.html">Hello the testing world ...
@@ -70,7 +69,7 @@
 <dd><dl>
 <dt><span class="section"><a href="boost_test/tests_organization/test_cases/test_organization_nullary.html">Nullary
         function based test case</a></span></dt>
-<dt><span class="section"><a href="boost_test/tests_organization/test_cases/test_organization_unary.html">Unary
+<dt><span class="section"><a href="boost_test/tests_organization/test_cases/unary_function_based_test_case.html">Unary
         function based test case</a></span></dt>
 <dt><span class="section"><a href="boost_test/tests_organization/test_cases/test_organization_templates.html">Template
         test cases</a></span></dt>
@@ -140,19 +139,53 @@
 <dt><span class="section"><a href="boost_test/bt_minimal_testing.html">Minimal testing facility</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="boost_test/bt_minimal_testing/bt_minimal_usage.html">Usage</a></span></dt>
-<dt><span class="section"><a href="boost_test/bt_minimal_testing/bt_minimal.html">Testing tools</a></span></dt>
+<dt><span class="section"><a href="boost_test/bt_minimal_testing/bt_minimal.html">Testing
+      tools</a></span></dt>
+<dt><span class="section"><a href="boost_test/bt_minimal_testing/example.html">Example</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="boost_test/faq.html">Frequently Asked Questions</a></span></dt>
 <dt><span class="section"><a href="boost_test/glossary.html">Glossary... or what's your name?</a></span></dt>
+<dt><span class="section"><a href="boost_test/portability.html">Portability</a></span></dt>
+<dt><span class="section"><a href="boost_test/open_issues.html">Open issues</a></span></dt>
+<dt><span class="section"><a href="boost_test/release_notes.html">Release notes</a></span></dt>
+<dt><span class="section"><a href="boost_test/acknowledgements.html">Acknowledgements</a></span></dt>
 </dl>
 </div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+      Test everything that could possibly break
+    </p></blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+      <span class="emphasis"><em>XP maxim</em></span>
+    </p></blockquote></div>
 <p>
-    Boost.Test is a cross-platform C++ library for testing behavioural correctness
-    of your programs.
+    The Boost.Test library provides a matched set of components for writing test
+    programs, organizing tests into simple test cases and test suites, and controlling
+    their runtime execution. The Program Execution Monitor is also useful in some
+    production (non-test) environments.
+  </p>
+<h3>
+<a name="boost_test.h0"></a>
+    <span class="phrase"><a name="boost_test.about_this_documentation"></a></span><a class="link" href="index.html#boost_test.about_this_documentation">About
+    this documentation</a>
+  </h3>
+<p>
+    This documentation is <span class="bold"><strong>not</strong></span> intended to be read
+    though from the beginning to the end by a novice user. You can do that if you
+    are interested in detailed bottom-up description of all Boost.Test components.
+    Otherwise you are better off jumping directly to the subject of your interest.
+  </p>
+<p>
+    For example: * If you are interested in unit testing framework you may go directly
+    &lt;link linkend="utf"&gt;there&lt;/link&gt; * For novice users I recommend
+    to start from simple &lt;link linkend="utf.tutorials"&gt;tutorials&lt;/link&gt;.
+    * Looking for quick help - check the &lt;link linkend="btl.faq"&gt;FAQ&lt;/link&gt;
+    section for resolution to many popular issues you may be faced with. Most pages
+    should link you directly to the terms that you need to understand it. * For help
+    with compilation see compilation sections of an appropriate component.
   </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: February 04, 2014 at 00:38:30 GMT</small></p></td>
+<td align="left"><p><small>Last revised: February 06, 2014 at 10:59:55 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

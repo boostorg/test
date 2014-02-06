@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>What is Boost.Test</title>
+<title>What is Boost.Test?</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="Boost.Test">
 <link rel="up" href="../index.html" title="Boost.Test">
 <link rel="prev" href="../index.html" title="Boost.Test">
-<link rel="next" href="intro_objective.html" title="Objective and content">
+<link rel="next" href="tutorial.html" title="The unit test framework tutorials">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,17 +20,20 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../index.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="intro_objective.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../index.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tutorial.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="boost_test.intro"></a><a class="link" href="intro.html" title="What is Boost.Test">What is Boost.Test</a>
+<a name="boost_test.intro"></a><a class="link" href="intro.html" title="What is Boost.Test?">What is Boost.Test?</a>
 </h2></div></div></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+        The acceptance test makes the customer satisfied that the software provides
+        the business value that makes them willing to pay for it. The unit test makes
+        the programmer satisfied that the software does what the programmer thinks
+        it does
+      </p></blockquote></div>
 <p>
-      [The acceptance test makes the customer satisfied that the software provides
-      the business value that makes them willing to pay for it. The unit test makes
-      the programmer satisfied that the software does what the programmer thinks
-      it does]--Xp Maxim
+      --Xp Maxim
     </p>
 <p>
       What is the first thing you need to do when you start working on new library/class/program?
@@ -38,12 +41,130 @@
       gave this answer!). Occasional, simple test may be implemented using asserts.
       But any professional developer soon finds this approach lacking. It becomes
       clear that it's too time-consuming and tedious for simple, but repetitive unit
-      testing tasks and it's too inflexible for most nontrivial ones.
+      testing tasks and it's too inflexible for most non-trivial ones.
     </p>
 <p>
       The Boost Test Library Unit Test Framework (further in the documentation referred
       by the acronym <span class="emphasis"><em>UTF</em></span>) provides both an easy to use and flexible
       solution to this problem domain: C++ unit test implementation and organization.
+    </p>
+<h5>
+<a name="boost_test.intro.h0"></a>
+      <span class="phrase"><a name="boost_test.intro.objective_and_content"></a></span><a class="link" href="intro.html#boost_test.intro.objective_and_content">Objective
+      and content</a>
+    </h5>
+<p>
+      Unit testing tasks arise during many different stages of software development:
+      from initial project implementation to its maintenance and later revisions.
+      These tasks differ in their complexity and purpose and accordingly are approached
+      differently by different developers. The wide spectrum of tasks in a problem
+      domain cause many requirements (sometimes conflicting) to be placed on a unit
+      testing framework. These include:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Writing a unit test module should be simple and obvious for new users.
+        </li>
+<li class="listitem">
+          The framework should allow advanced users to perform non-trivial tests.
+        </li>
+<li class="listitem">
+          Test module should be able to have many small test cases and developer
+          should be able to group them into test suites.
+        </li>
+<li class="listitem">
+          At the beginning of the development users want to see verbose and descriptive
+          error message, whereas during the regression testing they just want to
+          know if any tests failed.
+        </li>
+<li class="listitem">
+          For a small test modules run time should prevail over compilation time:
+          user don't want to wait a minute to compile a test that takes a second
+          to run.
+        </li>
+<li class="listitem">
+          For long and complex tests users want to be able to see the test progress.
+        </li>
+<li class="listitem">
+          Simplest tests shouldn't require an external library.
+        </li>
+<li class="listitem">
+          For long term usage users of a unit test framework should be able to build
+          it as a standalone library.
+        </li>
+</ul></div>
+<p>
+      The <span class="emphasis"><em>UTF</em></span> design is based on above rationale and provides
+      versatile facilities to:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Simplify writing test cases by using various testing tools
+        </li>
+<li class="listitem">
+          Organize test cases into a test tree.
+        </li>
+<li class="listitem">
+          Relieve you from messy error detection, reporting duties and framework
+          runtime parameters processing.
+        </li>
+</ul></div>
+<h5>
+<a name="boost_test.intro.h1"></a>
+      <span class="phrase"><a name="boost_test.intro.functions"></a></span><a class="link" href="intro.html#boost_test.intro.functions">Functions</a>
+    </h5>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        the elements in bold below should be linked to the appropriate places once
+        the doc ported
+      </p></td></tr>
+</table></div>
+<p>
+      The <span class="emphasis"><em>UTF</em></span> keeps track of all passed/failed testing tools
+      <span class="bold"><strong>assertions</strong></span>, provides an ability to check the
+      <span class="bold"><strong>test progress</strong></span> and generates a <span class="bold"><strong>result
+      report</strong></span> in several different formats. The <span class="emphasis"><em>UTF</em></span>
+      supplies command line test runners that initialize the framework and run the
+      requested tests.
+    </p>
+<p>
+      Depending on the selected <span class="bold"><strong>compilation flags</strong></span>
+      the function <code class="computeroutput"><span class="identifier">main</span><span class="special">()</span></code>
+      default implementation, that invoke the supplied test runner, can be generated
+      automatically as well.
+    </p>
+<p>
+      The <span class="emphasis"><em>UTF</em></span> is intended to be used both for a simple and non
+      trivial testing. It is not intended to be used with production code. In this
+      case the <span class="bold"><strong>Program Execution Monitor</strong></span> is more
+      suitable.
+    </p>
+<p>
+      Given the largely differing requirements of new and advanced users, it is clear
+      that the <span class="emphasis"><em>UTF</em></span> must provide both simple, easy-to-use interfaces
+      with limited customization options and advanced interfaces, which allow unit
+      testing to be fully customized. Accordingly the material provided in this documentation
+      is split into two sections:
+    </p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+          <span class="bold"><strong>The User's Guide</strong></span> covers all functionality
+          that doesn't require knowledge of the <span class="emphasis"><em>UTF</em></span> internals
+        </li>
+<li class="listitem">
+          <span class="bold"><strong>The Advanced User's Guide</strong></span> covers all implementation
+          details required for a user to understand the advanced customization options
+          available in the <span class="emphasis"><em>UTF</em></span>, and for a user interested in
+          extending the testing framework.
+        </li>
+</ol></div>
+<p>
+      For those interested in getting started quickly please visit <span class="bold"><strong>collection
+      of examples</strong></span> presented in this documentation.
     </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
@@ -56,7 +177,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../index.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="intro_objective.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../index.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tutorial.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>
