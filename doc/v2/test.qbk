@@ -50,7 +50,7 @@
 
 [def __BOOST_TEST_CHECKPOINT__ `BOOST_TEST_CHECKPOINT`]
 [def __BOOST_TEST_PASSPOINT__  `BOOST_TEST_PASSPOINT`]
-[def __BOOST_TEST_MESSAGE__    `BOOST_TEST_MESSAGE`]
+[def __BOOST_TEST_MESSAGE__    [link ref_macro_boost_test_message `BOOST_TEST_MESSAGE`]]
 [def __BOOST_TEST_CHECKPOINT__ `BOOST_TEST_CHECKPOINT`]
 [def __BOOST_TEST_PASSPOINT__  `BOOST_TEST_PASSPOINT`]
 
@@ -76,13 +76,13 @@
 [def __BOOST_FAIL__            [link ref_BOOST_FAIL `BOOST_FAIL`]]
 [def __BOOST_IS_DEFINED__      [link ref_BOOST_IS_DEFINED `BOOST_IS_DEFINED`]]
 
-[def __BOOST_CHECK__           `BOOST_CHECK`]
-[def __BOOST_REQUIRE__         `BOOST_REQUIRE`]
+[def __BOOST_CHECK__           [link ref_BOOST_level `BOOST_CHECK`]]
+[def __BOOST_REQUIRE__         [link ref_BOOST_level `BOOST_REQUIRE`]]
 [def __BOOST_CHECK_MESSAGE__   `BOOST_CHECK_MESSAGE`]
 
-[def __BOOST_WARN_EQUAL__      `BOOST_WARN_EQUAL`]
-[def __BOOST_CHECK_EQUAL__     `BOOST_CHECK_EQUAL`]
-[def __BOOST_REQUIRE_EQUAL__   `BOOST_REQUIRE_EQUAL`]
+[def __BOOST_WARN_EQUAL__      [link ref_BOOST_level_EQUAL `BOOST_WARN_EQUAL`]]
+[def __BOOST_CHECK_EQUAL__     [link ref_BOOST_level_EQUAL `BOOST_CHECK_EQUAL`]]
+[def __BOOST_REQUIRE_EQUAL__   [link ref_BOOST_level_EQUAL `BOOST_REQUIRE_EQUAL`]]
 
 [def __BOOST_CHECK_PREDICATE__ __BOOST_LEVEL_PREDICATE__]
 
@@ -116,11 +116,15 @@
 
 
 
-
-[def __param_show_progress__ [*show_progress]]
+[/ runtime/cla parameters]
+[def __param_show_progress__ [link ref_param_show_progress `show_progress`]
 [def __param_log_level__     [*log_level]]
 [def __param_output_format__ [*output_format]]
 [def __param_log_format__    [*log_format]]
+[def __param_run_test__      [*run_test]]
+[def __param_report_level__  [*report_level]]
+[def __param_catch_system__  [*catch_system_error]]
+[def __param_result_code__   [*result_code]]
 
 [/=============================================================================]
 
@@ -144,6 +148,7 @@
 [/ Raffi: I think it would be better to put this in test variants]
 [include minimal-testing.qbk]
 
+[include usage_recommandations.qbk]
 [include faq.qbk]
 [include glossary.qbk]
 
