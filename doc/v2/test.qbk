@@ -117,7 +117,7 @@
 
 
 [/ runtime/cla parameters]
-[def __param_show_progress__ [link ref_param_show_progress `show_progress`]
+[def __param_show_progress__ [link ref_param_show_progress `show_progress`]]
 [def __param_log_level__     [*log_level]]
 [def __param_output_format__ [*output_format]]
 [def __param_log_format__    [*log_format]]
@@ -147,6 +147,8 @@
 
 [/ Raffi: I think it would be better to put this in test variants]
 [include minimal-testing.qbk]
+
+[/[include runtime_configuration.qbk]]
 
 [include usage_recommandations.qbk]
 [include faq.qbk]
