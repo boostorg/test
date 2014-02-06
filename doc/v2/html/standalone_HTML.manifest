@@ -48,6 +48,10 @@ boost_test/bt_minimal_testing.html
 boost_test/bt_minimal_testing/bt_minimal_usage.html
 boost_test/bt_minimal_testing/bt_minimal.html
 boost_test/bt_minimal_testing/example.html
+boost_test/the_unit_test_framework_usage_re.html
+boost_test/the_unit_test_framework_usage_re/general.html
+boost_test/the_unit_test_framework_usage_re/microsoft_visual_studio_net_usag.html
+boost_test/the_unit_test_framework_usage_re/command_line_usage_recommendatio.html
 boost_test/faq.html
 boost_test/glossary.html
 boost_test/portability.html
