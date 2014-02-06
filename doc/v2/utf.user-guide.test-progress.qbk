@@ -1,9 +1,9 @@
-[section:test_output_progress Test progress display]
+[#ref_output_progress][section:test_output_progress Test progress display]
 In case if the test module involves lengthy computation split among multiple test cases you may be interested in 
 progress monitor. The test runners supplied with the __UTF__ support simple text progress display, implemented based
 on 
 ``
-boost::progress_display
+  boost::progress_display
 ``
 
 [footnote The __UTF__ interfaces allow implementing an advanced GUI based test runner with arbitrary progress display controls]. 
