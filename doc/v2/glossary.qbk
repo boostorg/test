@@ -2,11 +2,11 @@
 
 Here is the list of terms used throughout this documentation.
 
-[#test_module][h3 Test module]
+[#ref_test_module][h3 Test module]
 This is a single binary that performs the test. Physically a test module consists of one or more test source files,
 which can be built into an executable or a dynamic library. A test module that consists of a single test source
 file is called ['single-file test module]. Otherwise
-it's called ['multi-file test module]. Logically a test module consists of four parts:
+it's called ['multi-file test module]. Logically, each test module consists of four parts:
 
 # [link test_setup test setup] (or test initialization),
 # [link test_body test body]
@@ -14,7 +14,7 @@ it's called ['multi-file test module]. Logically a test module consists of four 
 # [link test_runner test runner]
  
 The test runner part is optional. If a test module is built as
-an executable the test runner is built-in. If a test module is built as a dynamic library, it is run by an
+an executable, the test runner is built-in. If a test module is built as a dynamic library, it is run by an
 external test runner.
 
 

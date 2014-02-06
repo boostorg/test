@@ -7,8 +7,8 @@
  /]
 
 
-[section:intro What is Boost.Test]
-[The acceptance test makes the customer satisfied that the software provides the business value that makes them
+[section:intro What is Boost.Test?]
+[:The acceptance test makes the customer satisfied that the software provides the business value that makes them
     willing to pay for it. The unit test makes the programmer satisfied that the software does what the programmer 
     thinks it does]--Xp Maxim
 
@@ -17,22 +17,21 @@ What is the first thing you need to do when you start working on new library/cla
 you need to start with the unit test module (I hope you all gave this answer!). Occasional, simple test may be
 implemented using asserts. But any professional developer soon finds this approach lacking. It becomes clear that
 it's too time-consuming and tedious for simple, but repetitive unit testing tasks and it's too inflexible for
-most nontrivial ones.
+most non-trivial ones.
 
 
 The Boost Test Library Unit Test Framework (further in the documentation referred by the acronym __UTF__) provides both
 an easy to use and flexible solution to this problem domain: C++ unit test implementation and organization.
-[endsect]
 
 
-[section:intro_objective Objective and content]
+[h4 Objective and content]
 Unit testing tasks arise during many different stages of software development: from initial project implementation
 to its maintenance and later revisions. These tasks differ in their complexity and purpose and accordingly are
 approached differently by different developers. The wide spectrum of tasks in a problem domain cause many
 requirements (sometimes conflicting) to be placed on a unit testing framework. These include:
 
 * Writing a unit test module should be simple and obvious for new users.
-* The framework should allow advanced users to perform nontrivial tests.
+* The framework should allow advanced users to perform non-trivial tests.
 * Test module should be able to have many small test cases and developer should be able to group them into test suites.
 * At the beginning of the development users want to see verbose and descriptive error message, whereas during the
   regression testing they just want to know if any tests failed.
@@ -48,7 +47,7 @@ The __UTF__ design is based on above rationale and provides versatile facilities
 * Organize test cases into a test tree. [/todo add a link utf.user-guide.test-organization]
 * Relieve you from messy error detection, reporting duties and framework runtime parameters processing.
 
-[h1 Functions]
+[h4 Functions]
 [note the elements in bold below should be linked to the appropriate places once the doc ported]
 The __UTF__ keeps track of all passed/failed testing tools [*assertions], [/ todo link to assertion]
 provides an ability to check the [*test progress]
@@ -58,12 +57,8 @@ The __UTF__ supplies command line test runners that initialize the framework and
 Depending on the selected [*compilation flags] the function `main()` default implementation, that invoke the 
 supplied test runner, can be generated automatically as well.
 
-
-
 The __UTF__ is intended to be used both for a simple and non trivial testing. It is not intended to be used with
 production code. In this case the [*Program Execution Monitor] is more suitable.
-
-
 
 Given the largely differing requirements of new and advanced users, it is clear that the __UTF__ must provide both
 simple, easy-to-use interfaces with limited customization options and advanced interfaces, which allow unit testing
@@ -77,4 +72,5 @@ to be fully customized. Accordingly the material provided in this documentation 
 
 For those interested in getting started quickly please visit [*collection of examples] presented in this documentation.
 
-[endsect]
+
+[endsect] [/ What is Boost.Test?]

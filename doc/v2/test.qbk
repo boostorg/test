@@ -124,7 +124,11 @@
 
 [/=============================================================================]
 
-Boost.Test is a cross-platform C++ library for testing behavioural correctness of your programs.
+
+
+[/ this is the introduction that appears on the first page of the documentation]
+[include forewords.qbk]
+
 
 [include overview.qbk]
 
@@ -137,10 +141,16 @@ Boost.Test is a cross-platform C++ library for testing behavioural correctness o
 [include utf.user-guide.test-output.qbk]
 [include utf.user-guide.test-progress.qbk]
 
+[/ Raffi: I think it would be better to put this in test variants]
 [include minimal-testing.qbk]
 
 [include faq.qbk]
 [include glossary.qbk]
+
+[include portability.qbk]
+[include open_issues.qbk]
+[include release_notes.qbk]
+[include acknowledgments.qbk]
 
 [/[include using.qbk]
 

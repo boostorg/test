@@ -11,7 +11,7 @@ ways to detect and report errors. For list of all supplied testing tools and usa
 
 [section:tools_assertion_severity_level Assertion severity level]
 
-All the tools are supplied in three flavors/levels, from lowest to highest:
+All the tools are supplied in three flavours/levels, from lowest to highest:
 
 # `WARN`
 # `CHECK` and
@@ -281,10 +281,10 @@ inequations [link equ2 (2)] and [link equ3 (3)] where all underflow, overflow co
 ``
 
 Checks based on equations [link equ4 (4)] and [link equ5 (5)] are implemented by two predicates with
-alternative interfaces: binary predicate `close_at_tolerance` [footnote check type
-and tolerance value are fixed at predicate construction time] and predicate with four arguments
-`check_is_close` [footnote check type and tolerance value are the arguments of the
-predicate].
+alternative interfaces: 
+
+# binary predicate `close_at_tolerance` [footnote check type and tolerance value are fixed at predicate construction time] 
+# and predicate with four arguments `check_is_close` [footnote check type and tolerance value are the arguments of the predicate].
 
 
 While equations [link equ4 (4)] and [link equ5 (5)] in general are preferred for the general floating
@@ -315,15 +315,13 @@ The first two operations proved to have a relative rounding error that does not 
 
   half_epsilon = half of the 'machine epsilon value'
 
-for the appropriate floating point type `FPT`
-[footnote [*machine epsilon value] is represented by
-`std::numeric_limits<FPT>::epsilon()`]. Conversion to binary presentation, sadly, does
-not have such requirement. So we can't assume that `float(1.1)` is close to the real number `1.1` with tolerance `half_epsilon` 
-for float (though for 11./10 we can). Non arithmetic operations either do not have a
+for the appropriate floating point type `FPT` [footnote [*machine epsilon value] is represented by `std::numeric_limits<FPT>::epsilon()`]. 
+Conversion to binary presentation, sadly, does not have such requirement. So we can't assume that `float(1.1)` is close 
+to the real number `1.1` with tolerance `half_epsilon` for float (though for 11./10 we can). Non-arithmetic operations either do not have a
 predicted upper limit relative rounding errors. 
 
 [note Note that both arithmetic and non-arithmetic operations might also
-produce others "non-rounding" errors, such as underflow/overflow, division-by-zero or 'operation errors'.]
+produce others "non-rounding" errors, such as underflow/overflow, division-by-zero or "operation errors".]
 
 
 All theorems about the upper limit of a rounding error, including that of `half_epsilon`, refer only to
@@ -332,7 +330,7 @@ operation itself, besides rounding, isn't considered. In order for numerical sof
 predict error bounds, the __IEEE754__ standard requires arithmetic operations to be 'correctly or exactly rounded'.
 That is, it is required that the internal computation of a given operation be such that the floating point result 
 is the exact result rounded to the number of working bits. In other words, it is required that the computation used
-by the operation itself doesn't introduce any additional errors. The __IEEE754__ standard does not require same behavior
+by the operation itself doesn't introduce any additional errors. The __IEEE754__ standard does not require same behaviour
 from most non-arithmetic operation. The underflow/overflow and division-by-zero errors may cause rounding errors 
 with unpredictable upper limits.
 
