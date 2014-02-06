@@ -35,7 +35,7 @@ Once you apply the changes, the test automatically starts running in monitored e
 [endsect] [/usage]
 
 
-[#ref_mtf_testing_tool[section:bt_minimal Testing tools]
+[#ref_mtf_testing_tool][section:bt_minimal Testing tools]
 
 The __MTF__ supplies following four assertions:
  
