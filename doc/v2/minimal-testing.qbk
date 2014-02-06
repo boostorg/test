@@ -39,8 +39,8 @@ Once you apply the changes, the test automatically starts running in monitored e
 
 The __MTF__ supplies following four assertions:
  
-    [link ref_BOOST_level BOOST_CHECK](predicate)
-    [link ref_BOOST_level BOOST_REQUIRE](predicate)
+    __BOOST_CHECK__(predicate)
+    __BOOST_REQUIRE__(predicate)
     __BOOST_ERROR__(message)
     __BOOST_FAIL__(message)
 
