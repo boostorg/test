@@ -148,7 +148,7 @@
 [/ Raffi: I think it would be better to put this in test variants]
 [include minimal-testing.qbk]
 
-[/[include runtime_configuration.qbk]]
+[include runtime_configuration.qbk]
 
 [include usage_recommandations.qbk]
 [include faq.qbk]
