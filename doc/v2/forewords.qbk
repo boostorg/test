@@ -2,7 +2,7 @@
 [/ this file should be included in the top file. It should not contain a section command]
 
 
-[:Test everything that could possibly break]
+[:[*Test everything that could possibly break]]
 [:['XP maxim]]
   
 The Boost.Test library provides a matched set of components for writing test programs, organizing tests into 
@@ -16,6 +16,7 @@ a novice user. You can do that if you are interested in detailed bottom-up descr
 Otherwise you are better off jumping directly to the subject of your interest. 
 
 For example:
+
 * If you are interested in unit testing framework you may go directly <link linkend="utf">there</link>
 * For novice users I recommend to start from simple <link linkend="utf.tutorials">tutorials</link>. 
 * Looking for quick help - check the <link linkend="btl.faq">FAQ</link> section for resolution to many popular issues you may be faced with. 

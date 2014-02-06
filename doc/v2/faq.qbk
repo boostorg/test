@@ -17,20 +17,17 @@ To create a test case, use the macro
  
   BOOST_AUTO_TEST_CASE( test_function );
 
-For more details see the Unit Test Framework
-[link ref_BOOST_AUTO_TEST_CASE documentation].
+For more details see the Unit Test Framework __BOOST_AUTO_TEST_CASE__ documentation.
 
 [h3 How to create test suite using the Unit Test Framework?]
 To create a test suite use the macro
  
   BOOST_AUTO_TEST_SUITE( suite_name );
 
-For more details see the Unit Test Framework
-[link ref_BOOST_AUTO_TEST_SUITE documentation].
+For more details see the Unit Test Framework __BOOST_AUTO_TEST_SUITE__ documentation.
 
  
-[h3
-     Why did I get a linker error when compiling my test program?]
+[h3 Why did I get a linker error when compiling my test program?]
 
 Boost Test Library components provide several usage variants: to create a test program you can
 link with the one of the precompiled library variants or use single-header variant. For example, to use Unit Test
