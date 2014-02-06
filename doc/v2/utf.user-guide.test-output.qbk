@@ -157,7 +157,7 @@ parameter __param_output_format__.
 
 [/ -------------------------------------------------------------------------------------------------- ]
 
-[section:log_test_messages __BOOST_TEST_MESSAGE__]
+[#ref_macro_boost_test_message][section:log_test_messages __BOOST_TEST_MESSAGE__]
 The macro __BOOST_TEST_MESSAGE__ is intended to be used for the purpose of injecting an additional message into the
 __UTF__ test log. These messages are not intended to indicate any error or warning conditions, but rather as
 information/status notifications. The macro signature is as follows:
