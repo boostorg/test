@@ -44,124 +44,201 @@ acceptable values list. All values are case sensitive and are required to exactl
 [table
   [
     [Command]
-    [Environment variable]
-    [Acceptable values]
-    [Description]
+    [Short description]
   ] 
-  
-  
   
   [/ ###############################################################################################]
   [
-    [`auto_start_dbg`]
-    [`BOOST_TEST_AUTO_START_DBG`]
-    [
-    
-* [*`no`]
-* `yes`
-* `debugger identifier`
-
-    ]
-    [
-Specifies whether Boost.Test should try to attach a debugger in case if fatal system error occurs. If value is `yes`
-the default debugger configured for the platform is going to be attempted. Alternatively the debugger identified 
-by the argument value of the parameter is used. For more details on advanced debugger support in Boost.Test check 
-<!-- TO FIX: add link --> section dedicated to Boost.Test debug API.
-    ]
+    [__param_auto_start_dbg__]
+    [Automatically attach debugger in case of system failure.]
   ]
   
   
   [/ ###############################################################################################]
   [
-    [[#ref_param_show_progress]`show_progress`]
-    [`BOOST_TEST_SHOW_PROGRESS`]
-    [
-    
-* [*`no`]
-* `yes`
-
-    ]
+    [__param_show_progress__]
     [Makes the framework to print progress information. More details [link ref_output_progress here].]
   ]
   
 
   [/ ###############################################################################################]
   [
-    [`build_info`]
-    [`BOOST_TEST_BUILD_INFO`]
-    [
-    
-* [*`no`]
-* `yes`
-
-    ]
-    [Print build information that include: platform, compiler, STL implementation in use and boost version.]
+    [__param_build_info__]
+    [Print build information.]
   ]
   
   
+  [/ ###############################################################################################]
+  [
+    [__param_catch_system__]
+    [Catch system errors.]
+  ]
   
-  
-]
+  [/ ###############################################################################################]
+  [
+    [__param_break_exec_path__]
+    [Break execution path]
+  ]    
 
+
+  [/ ###############################################################################################]
+  [
+    [__param_param_color_output__]
+    [Produce colour output]
+  ]  
+
+  [
+    [__param_log_format__]
+    [Specifies the log format]
+  ]
+]
 [warning There is a link to the Boost.Test debug API, never heard about]
 
 
+[/ ###############################################################################################]
 
-   <refentry name="break_exec_path">
-    <name>Break execution path</name>
-    <env>BOOST_TEST_BREAK_EXEC_PATH</env>
-    <cla>break_exec_path"</cla>
-    <vals>
-     <simplelist>
-      <member>string consisting of space separate test_name:execution_path_number pairs</member>
-     </simplelist>
-    </vals>
-    <descr>
-     <simpara>
-      this runtime parameter is used by exception safety tester. By default exception safety tester only reports index of 
-      execution path and  test case name where failure occurred. Using this parameter you can make the tester to break the 
-      execution right before entering this path.
-     </simpara>
-    </descr>
-   </refentry>
+[#ref_param_show_progress][section `show_progress`]
+
+Makes the framework to print progress information. More details [link ref_output_progress here].
+
+[h4 Acceptable values]
+
+* [*no] (default)
+* yes
+
+[h4 Environment variable]
+
+  BOOST_TEST_SHOW_PROGRESS
+
+[endsect]
+
+[/ ###############################################################################################]
+
+[#ref_param_build_info][section `build_info`]
+
+Print build information that include: 
+
+* platform
+* compiler
+* STL implementation in use and 
+* boost version
+
+[h4 Acceptable values]
+
+* [*no] (default)
+* yes
+
+[h4 Environment variable]
+
+  BOOST_TEST_BUILD_INFO
+
+[endsect] [/ build_info]
+
+[/ ###############################################################################################]
+
+[#ref_param_auto_dbg][section `auto_start_dbg`]
+
+Automatically attach debugger in case of system failure.
+
+Specifies whether Boost.Test should try to attach a debugger in case if fatal system error occurs. If value is ['yes]
+the default debugger configured for the platform is going to be attempted. Alternatively the debugger identified 
+by the argument value of the parameter is used. For more details on advanced debugger support in Boost.Test check 
+<!-- TO FIX: add link --> section dedicated to Boost.Test debug API.
+
+[h4 Acceptable values]
+
+* [*no]
+* yes
+* ['debugger identifier]
+
+[h4 Environment variable]
+
+  BOOST_TEST_AUTO_START_DBG
+
+  
+[warning There is a link to the Boost.Test debug API, never heard about]
+[endsect] [/auto_start_dbg]
 
 
 
-   <refentry name="catch_system_errors">
-    <name>Catch system errors</name>
-    <env>BOOST_TEST_CATCH_SYSTEM_ERRORS</env>
-    <cla>catch_system_errors</cla>
-    <vals>
-     <simplelist>
-      <member><emphasis role="bold">yes</emphasis></member>
-      <member>no</member>
-     </simplelist>
-    </vals>
-    <descr>
-     <simpara>
-      value "no" prohibits the framework from catching asynchronous system events. This could be used for test programs
-      executed within GUI or to get a coredump for stack analysis. See usage recommendations page for more details.
-     </simpara>
-    </descr>
-   </refentry>
+[/ ###############################################################################################]
+[#ref_param_catch_system][section `catch_system_errors`]
 
-   <refentry name="color_output">
-    <name>Produce color output</name>
-    <env>BOOST_TEST_COLOR_OUTPUT</env>
-    <cla>color_output</cla>
-    <vals>
-     <simplelist>
-      <member><emphasis role="bold">no</emphasis></member>
-      <member>yes</member>
-     </simplelist>
-    </vals>
-    <descr>
-     <simpara>
-      The __UTF__ is able to produce color output on systems which supports it. To enable this behavior set the parameter to 
-      'yes'. By default the output produces in not colored.
-     </simpara>
-    </descr>
-   </refentry>
+Value "no" prohibits the framework from catching asynchronous system events. This could be used for test programs
+executed within GUI or to get a coredump for stack analysis. See [link ref_usage_recommendations usage recommendations] pages for more details.
+
+[h4 Acceptable values]
+
+* [*yes] (default)
+* no
+
+[h4 Environment variable]
+
+  BOOST_TEST_CATCH_SYSTEM_ERRORS
+
+[endsect] [/catch_system_errors]
+
+[/ ###############################################################################################]
+[#ref_param_break_exe_path][section `break_exec_path`]
+
+this runtime parameter is used by exception safety tester. By default exception safety tester only reports index of 
+execution path and  test case name where failure occurred. Using this parameter you can make the tester to break the 
+execution right before entering this path.
+      
+[h4 Acceptable values]
+
+* string consisting of space separate test_name:execution_path_number pairs
+
+
+[h4 Environment variable]
+
+  BOOST_TEST_BREAK_EXEC_PATH
+
+[endsect] [/break_exec_path]
+
+
+
+[/ ###############################################################################################]
+[#ref_param_color_output][section `color_output`]
+
+The __UTF__ is able to produce colour output on systems which supports it. To enable this behaviour set the parameter to 
+`yes`. By default the output produces in not coloured.
+
+      
+[h4 Acceptable values]
+
+* [*no] (default)
+* yes
+
+
+[h4 Environment variable]
+
+  BOOST_TEST_COLOR_OUTPUT
+
+[endsect] [/color_output]
+
+[/ ###############################################################################################]
+[#ref_param_log_format][section `log_format`]
+
+Allows selecting the __UTF__ log format from the list of formats supplied by the framework. To specify custom log
+format use the [link ref_log_formatter_api custom log formatting API].
+      
+      
+      
+[h4 Acceptable values]
+
+* [*HRF] (default)
+* XML
+
+HRF stands for human readable format, while XML is dedicated to  automated output processing
+
+[h4 Environment variable]
+
+  BOOST_TEST_LOG_FORMAT
+
+[endsect] [/log_format]
+
+
 
    <refentry name="detect_fp_exceptions">
     <name>[Do not] trap floating point exceptions</name>
@@ -203,23 +280,7 @@ by the argument value of the parameter is used. For more details on advanced deb
     </descr>
    </refentry>
 
-   <refentry name="log_format">
-    <name>The log format</name>
-    <env>BOOST_TEST_LOG_FORMAT</env>
-    <cla>log_format</cla>
-    <vals>
-     <simplelist>
-      <member><emphasis role="bold">HRF</emphasis> - human readable format</member>
-      <member>XML - XML format for automated output processing</member>
-     </simplelist>
-    </vals>
-    <descr>
-     <simpara>
-      allows selecting the __UTF__ log format from the list of formats supplied by the framework. To specify custom log
-      format use the <link linkend="utf.user-guide.test-output.log.ct-config.log-formatter">unit_test_log API</link>.
-     </simpara>
-    </descr>
-   </refentry>
+
 
    <refentry name="log_level">
     <name>The __UTF__ log level</name>

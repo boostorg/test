@@ -120,11 +120,16 @@
 [def __param_show_progress__ [link ref_param_show_progress `show_progress`]]
 [def __param_log_level__     [*log_level]]
 [def __param_output_format__ [*output_format]]
-[def __param_log_format__    [*log_format]]
+[def __param_log_format__    [link ref_param_log_format `log_format`]]
 [def __param_run_test__      [*run_test]]
 [def __param_report_level__  [*report_level]]
-[def __param_catch_system__  [*catch_system_error]]
+[def __param_catch_system__  [link ref_param_catch_system `catch_system_error`]]
 [def __param_result_code__   [*result_code]]
+[def __param_build_info__    [link ref_param_build_info `build_info`]]
+[def __param_auto_start_dbg__ [link ref_param_auto_dbg `auto_start_dbg`]]
+[def __param_break_exec_path__ [link ref_param_break_exe_path `break_exec_path`]]
+[def __param_param_color_output__ [link ref_param_color_output `color_output`]]
+
 
 [/=============================================================================]
 

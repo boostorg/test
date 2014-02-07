@@ -1,4 +1,4 @@
-[section The unit test framework usage recommendations]
+[#ref_usage_recommendations][section The unit test framework usage recommendations]
  
 
 On following pages collected tips and recommendations on how to use and apply the &utf; in your real life practice. 
@@ -90,8 +90,12 @@ Now run the test again under debugger and it will break at the point of failure.
 [h4 If you got fatal exception somewhere within test case, make program generate coredump by adding extra command 
       line argument]
 If you got "memory access violation" message (or any other message indication fatal or system error) when you 
-run you test, to get more information about the error location add --catch_system_errors=no to the test run 
-command line. Now run the test again and it will create a coredump you could analyze using you preferable 
+run you test, to get more information about the error location add 
+``
+--__param_catch_system__=no 
+``
+
+to the test run command line. Now run the test again and it will create a coredump you could analyse using you preferable 
 debugger. Or run it under debugger in a first place and it will break at the point of failure.
 
 [h4 How to use test module build with Boost.Test framework under management of automated regression test facilities?]
@@ -102,8 +106,7 @@ My first recommendation is to make sure that the test framework catches all fata
 ``
 
 to all test modules invocations. Otherwise test program may produce unwanted dialogs (depends on compiler and OS) that will halt you 
-regression tests run. The second recommendation is to 
-suppress result report output by adding 
+regression tests run. The second recommendation is to suppress result report output by adding 
 
 ``
 --__param_report_level__=no

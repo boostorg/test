@@ -399,8 +399,10 @@ active log level threshold.
 
 While many test log configuration tasks can be performed at runtime using predefined framework parameters, the
 __UTF__ provides a compile time interface as well. The interface gives you full power over what, where and how to 
-log. The interface is provided by singleton class <classname>boost::unit_test::unit_test_log_t</classname> and is
-accessible through local file scope reference to single instance of this class: boost::unit_test::unit_test_log.
+log. The interface is provided by singleton class ``boost::unit_test::unit_test_log_t`` and is
+accessible through local file scope reference to single instance of this class
+
+``boost::unit_test::unit_test_log``
 
 
 [section:log_ct_output_stream_redirection Log output stream redirection]
@@ -432,6 +434,8 @@ cases. There are no limitations on number of output stream resets either.
   during teardown to prevent dangling references access]
 
 [endsect] [/section:log_ct_output_stream_redirection]
+
+
 
 
 [section:log_ct_log_level Log level configuration]
@@ -483,8 +487,7 @@ format selection.
 
 [endsect] [/section:log_ct_log_format]
 
-
-[section:custom_log_formatter Custom log format support]
+[#ref_log_formatter_api][section:custom_log_formatter Custom log format support]
 
 [warning Check what to do on this one]
 
