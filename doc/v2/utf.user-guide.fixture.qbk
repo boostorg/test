@@ -75,8 +75,8 @@ The __UTF__ defines the generic fixture model as follows:
 
 ``
 struct <fixture-name>{
-   <fixture-name>();      // setup function
-   ~<fixture-name>();     // teardown function
+  <fixture-name>();      // setup function
+  ~<fixture-name>();     // teardown function
 };
 ``
 
@@ -87,7 +87,7 @@ coincides with the pure C++ solution discusses earlier.
 
 [caution The above interface prevents you to report errors in the teardown procedure using an exception. It does make
     sense though: if somehow more than one fixture is assigned to a test unit, you want all teardown procedures to
-    run,  even if some may experience problems.
+    run, even if some may experience problems.
 ]
 [endsect] [/section generic fixture]
 
@@ -128,7 +128,7 @@ what can be done if all test cases in a test suite require the same fixture.
 
 If all test cases in a test require the same fixture (you can group test cases in the test suite based on a
 fixture required) you can make another step toward an automation of a test fixture assignment. To assign the
-same shared fixture for all test cases in a test suite use the macro __BOOST_FIXTURE_TEST_SUITE__ in place of the
+same shared fixture for all test cases in a test suite, use the macro __BOOST_FIXTURE_TEST_SUITE__ in place of the
 macro __BOOST_AUTO_TEST_SUITE__ for automated test suite creation and registration.
 
   BOOST_FIXTURE_TEST_SUITE(suite_name, fixure_name);
@@ -159,6 +159,9 @@ the same fixture automatically.
     [[example19o]]
   ]
 ]
+
+[caution The fixture constructor and destructor is called for each test cases (the state of the fixture is not shared among
+         the test cases).]
 
 [endsect] [/ testsuite fixtures]
 
