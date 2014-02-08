@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2012.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -293,7 +293,7 @@ BOOST_TEST_CASE_TEMPLATE_FUNCTION( comparison_test, CharT )
 
 //____________________________________________________________________________//
 
-BOOST_TEST_DONT_PRINT_LOG_VALUE( std::wstring );
+BOOST_TEST_DONT_PRINT_LOG_VALUE( std::wstring )
 
 BOOST_TEST_CASE_TEMPLATE_FUNCTION( comparison_std_string_test, CharT )
 {
