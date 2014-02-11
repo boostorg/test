@@ -137,6 +137,11 @@ acceptable values list. All values are case sensitive and are required to exactl
     [Runs the tests in random order]
   ]
   
+  [/ ###############################################################################################]
+  [
+    [__param_detect_memory_leaks__]
+    [Detects memory leaks.]
+  ]
 ]
 [warning There is a link to the Boost.Test debug API, never heard about]
 
@@ -486,6 +491,35 @@ it is used as a random seed. In other case random seed is generated based on cur
 
 
 
+[/ ###############################################################################################]
+[#ref_detect_memory_leaks][section `detect_memory_leaks`]
+
+Detect memory leaks.
+
+Positive value tells the framework to detect the memory leaks (if any). In addition any value greater than 1
+is treated as leak allocation number and setups runtime breakpoint. In other words setting this parameter to
+the positive value N greater than 1 causes the framework to set a breakpoint at Nth memory allocation (don't
+do that from the command line - only when you are under debugger). 
+
+[note If your test program produces memory
+leaks notifications, they are combined with allocation number values you could use to set a breakpoint.]
+
+[caution Currently only applies to MS family of compilers in debug builds.]
+      
+[h4 Acceptable values]
+
+* 0 
+* [*1] (default)
+* integer value > 1
+
+
+[h4 Environment variable]
+
+  BOOST_TEST_DETECT_MEMORY_LEAK
+
+[endsect] [/detect_memory_leaks]  
+
+
    <refentry name="detect_fp_exceptions">
     <name>[Do not] trap floating point exceptions</name>
     <env>BOOST_TEST_DETECT_FP_EXCEPTIONS</env>
@@ -503,28 +537,7 @@ it is used as a random seed. In other case random seed is generated based on cur
     </descr>
    </refentry>
 
-   <refentry name="detect_memory_leaks">
-    <name>Detect memory leaks</name>
-    <env>BOOST_TEST_DETECT_MEMORY_LEAK</env>
-    <cla>detect_memory_leaks</cla>
-    <vals>
-     <simplelist>
-      <member>0</member>
-      <member><emphasis role="bold">1</emphasis></member>
-      <member>integer value &gt; 1</member>
-     </simplelist>
-    </vals>
-    <descr>
-     <simpara>
-      Positive value tells the framework to detect the memory leaks (if any). In addition any value greater than 1
-      is treated as leak allocation number and setups runtime breakpoint. In other words setting this parameter to
-      the positive value N greater than 1 causes the framework to set a breakpoint at Nth memory allocation (don't
-      do that from the command line - only when you are under debugger). Note: if your test program produces memory
-      leaks notifications, they are combined with allocation number values you could use to set a breakpoint.
-      Currently only applies to MS family of compilers in debug builds.
-     </simpara>
-    </descr>
-   </refentry>
+
 
 
 
