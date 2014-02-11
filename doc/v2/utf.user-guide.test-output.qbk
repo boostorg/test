@@ -1,14 +1,14 @@
 
-[section:test_output Test output ... or let's see what you got for your money]
+[#ref_test_outputs][section:test_output Test output ... or let's see what you got for your money]
 The output produced by a test module is one of the major assets the __UTF__ brings to users. In comparison with any
 kind of manual/assert based solution the __UTF__ provide following services:
 
 * All test errors are reported uniformly[br]
   The test execution monitor along with standardized output from all included
-  [*testing tools] provides uniform reporting for all errors including fatal errors, like memory assess violation and uncaught exceptions.
+  __testing_tools__ provides uniform reporting for all errors including fatal errors, like memory assess violation and uncaught exceptions.
 * Detailed information on the source of an error[br]
   The __UTF__ test tool's based assertion provides as much information as possible about cause of error,
-    usually  allowing you to deduce what is wrong without entering the debugger or core analysis.
+  usually  allowing you to deduce what is wrong without entering the debugger or core analysis.
 * Separation of the test errors description (test log) from the results report summary (test results report)[br]
   The information produced during test execution, including all error, warning and info messages from the test
   tools, executed test units notification constitute the test log. By default all entries in the test log are
@@ -16,8 +16,8 @@ kind of manual/assert based solution the __UTF__ provide following services:
   different levels of detail. The test report is by default directed to the standard error output.
 * Flexibility in what is shown in the output[br]
   The __UTF__ provides the ability to configure what if shown in both the test log and the test report. The
-    configuration is supported both at runtime, during test module invocation and at compile time from within a
-    test module.
+  configuration is supported both at runtime, during test module invocation and at compile time from within a
+  test module.
 * Flexibility in how output is formatted[br]
   The __UTF__ provides the ability to configure the format of the test module output. At the moment only 2 formats
   are supported by the __UTF__ itself, the well defined public interface allows you to customize an output for
@@ -92,8 +92,8 @@ be set to:
   If active log level threshold is set to this value, all test log entries appear in the output. In practice
   this is equivalent to setting the active log level threshold to ['success information messages]
 * Nothing
-   If the active log level threshold is set to this value, none of test log entries appear in the output. This log level
-   is used to execute a ['silent] test that doesn't produce any test log and only generates a result code indicating whether test failed or passed.
+  If the active log level threshold is set to this value, none of test log entries appear in the output. This log level
+  is used to execute a ['silent] test that doesn't produce any test log and only generates a result code indicating whether test failed or passed.
 
 
 By default the active log level threshold is set to &quot;non fatal error messages&quot; and the test log output
