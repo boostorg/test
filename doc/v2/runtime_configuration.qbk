@@ -410,8 +410,7 @@ Allows selecting the __UTF__ report format from the list of formats supplied by 
 [#ref_param_result_code][section `result_code`]
 
 Value "no" enforces the framework to always return zero result code. This could be used for test programs 
-executed within GUI. See <link linkend="utf.usage-recommendations.dot-net-specific">usage recommendations</link>
-section for more details.
+executed within GUI. See the [link ref_usage_recommendations usage recommendations] section for more details.
       
 [h4 Acceptable values]
 
