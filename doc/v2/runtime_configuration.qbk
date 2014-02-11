@@ -118,6 +118,13 @@ acceptable values list. All values are case sensitive and are required to exactl
     [__param_report_format__]
     [Specifies the report format.]
   ]
+
+  [/ ###############################################################################################]
+  [
+    [__param_result_code__]
+    [Make the framework return a result code indicating an error in the tests.]
+  ]
+  
 ]
 [warning There is a link to the Boost.Test debug API, never heard about]
 
@@ -395,8 +402,28 @@ Allows selecting the __UTF__ report format from the list of formats supplied by 
 
   BOOST_TEST_REPORT_FORMAT
 
-[endsect] [/output_format]   
+[endsect] [/report_format]   
 
+
+
+[/ ###############################################################################################]
+[#ref_param_result_code][section `result_code`]
+
+Value "no" enforces the framework to always return zero result code. This could be used for test programs 
+executed within GUI. See <link linkend="utf.usage-recommendations.dot-net-specific">usage recommendations</link>
+section for more details.
+      
+[h4 Acceptable values]
+
+* [*yes] (default)
+* no
+
+
+[h4 Environment variable]
+
+  BOOST_TEST_RESULT_CODE
+
+[endsect] [/result_code]      
 
    <refentry name="detect_fp_exceptions">
     <name>[Do not] trap floating point exceptions</name>
@@ -528,24 +555,7 @@ Allows selecting the __UTF__ report format from the list of formats supplied by 
     </descr>
    </refentry>
 
-   <refentry name="result_code">
-    <name>[Do not] return result code</name>
-    <env>BOOST_TEST_RESULT_CODE</env>
-    <cla>result_code</cla>
-    <vals>
-     <simplelist>
-      <member><emphasis role="bold">yes</emphasis></member>
-      <member>no</member>
-     </simplelist>
-    </vals>
-    <descr>
-     <simpara>
-      value "no" enforces the framework to always return zero result code. This could be used for test programs
-      executed within GUI. See <link linkend="utf.usage-recommendations.dot-net-specific">usage recommendations</link>
-      section for more details.
-     </simpara>
-    </descr>
-   </refentry>
+
    
 
 
