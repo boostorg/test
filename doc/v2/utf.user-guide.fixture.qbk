@@ -56,7 +56,7 @@ there are several more or less minor practical issues with this pure C++ based f
 * We need to add a fixture declaration statement into each test case manually.
 * Objects defined in fixture are references with `<fixture-instance-name>` prefix.
 * There is no place to execute a ['global] fixture, which performs ['global] setup/cleanup
-    procedures before and after testing.
+  procedures before and after testing.
 
 
 While there is little the __UTF__ can do to address these issues for manually registered test units, it's
@@ -70,7 +70,7 @@ the following tasks:
 * ['global] fixture support
 
 
-[#fixtures_generic][section  Generic fixture model]
+[#fixtures_generic][section Generic fixture model]
 The __UTF__ defines the generic fixture model as follows:
 
 ``
@@ -91,7 +91,7 @@ coincides with the pure C++ solution discusses earlier.
 ]
 [endsect] [/section generic fixture]
 
-[section:fixture_per_test_cases Per test case fixture]
+[#ref_fixture_test_case][section Per test case fixture]
 
 To automate the task of assigning a fixture for the test case, for test case creation use the macro
 __BOOST_FIXTURE_TEST_CASE__ in place of the macro __BOOST_AUTO_TEST_CASE__:
@@ -124,7 +124,7 @@ what can be done if all test cases in a test suite require the same fixture.
 
 [endsect] [/ per test case]
 
-[section:fixture_test_suite Test suite level fixture]
+[#ref_fixture_test_suite][section Test suite level fixture]
 
 If all test cases in a test require the same fixture (you can group test cases in the test suite based on a
 fixture required) you can make another step toward an automation of a test fixture assignment. To assign the
@@ -165,7 +165,7 @@ the same fixture automatically.
 
 [endsect] [/ testsuite fixtures]
 
-[section:fixtures_global Global fixture]
+[#ref_fixture_test_global][section Global fixture]
 
 Any global initialization that needs to be performed every time testing begins or a global cleanup that is to be
 performed once testing is finished is called a global fixture. The __UTF__ global fixture design is based on a
