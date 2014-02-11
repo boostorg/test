@@ -161,8 +161,16 @@ acceptable values list. All values are case sensitive and are required to exactl
   [/ ###############################################################################################]
   [
     [__param_log_sink__]
-    [Specifies the sink for logging.]
+    [Specifies the sink stream for logging.]
   ]
+  
+  
+  [/ ###############################################################################################]
+  [
+    [__param_report_sink__]
+    [Specifies the sink stream for tests reports.]
+  ]
+  
   
 ]
 [warning There is a link to the Boost.Test debug API, never heard about]
@@ -601,7 +609,7 @@ Sets the logging sink to the one specified.
 This parameter allows to easily redirect the test logs. The parameter value is 
 
 * either the string containing either a file name, in which case the __UTF__ will redirect log into this file
-* `stdout` (the default), in which case log is redirected into standard output stream
+* or `stdout` (the default), in which case log is redirected into standard output stream
 * or `stderr` , in which case log is redirected into standard error stream.
 
       
@@ -619,28 +627,28 @@ This parameter allows to easily redirect the test logs. The parameter value is
 [endsect] [/log_sink]  
 
 
+[/ ###############################################################################################]
+[#ref_param_report_sink][section `report_sink`]
+
+Sets the report sink to the one specified.
+
+This parameter allows to easily redirect the test result report. See __param_log_sink__ for more details.
+
+      
+[h4 Acceptable values]
+
+* [*`stderr`] (default)
+* `stdout`
+* arbitrary file name
 
 
-   <refentry name="report_sink">
-    <name>The report sink name</name>
-    <env>BOOST_TEST_REPORT_SINK</env>
-    <cla>report_sink</cla>
-    <vals>
-     <simplelist>
-      <member><emphasis role="bold">stderr</emphasis></member>
-      <member>stdout</member>
-      <member>arbitrary file name</member>
-     </simplelist>
-    </vals>
-    <descr>
-     <simpara>
-      This parameter allows easily redirect the test results report. The parameter value is the string containing either 
-      a file name, in which case the __UTF__ will redirect results report into file with that name, or 'stdout', in which case 
-      report is redirected into standard output stream, or 'stderr', in which case report is redirected into standard error 
-      stream. Default is 'stderr'.
-     </simpara>
-    </descr>
-   </refentry>
+[h4 Environment variable]
+
+  BOOST_TEST_REPORT_SINK
+
+[endsect] [/report_sink]  
+
+
 
 
    
