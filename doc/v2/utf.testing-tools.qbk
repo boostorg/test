@@ -127,7 +127,7 @@ error message is stored in public read-write property `p_message`.
 
 
 [/ ############################################################ Output streams]
-[section:output_stream_testing Output streams testing tool]
+[#ref_test_output_streams][section:output_stream_testing Output streams testing tool]
 
 How do you perform correctness test for ``operator<< ( std::ostream &, ... )``
 operations? You can print into the standard output stream and manually check that it is matching your expectations.

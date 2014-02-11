@@ -34,6 +34,7 @@
 
 [/<link linkend="utf.user-guide.testing-tools">testing tools</link>]
 [def __testing_tools__ [*testing tools]]
+[def __output_stream_testing_tool__ [link ref_test_output_streams output streams]]
 
 [/ to be replaced by the proper link]
 [/ currently replace <xref linkend="utf.flag.alt-init-api" endterm="utf.flag.alt-init-api"/> ]
