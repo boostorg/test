@@ -157,6 +157,13 @@ acceptable values list. All values are case sensitive and are required to exactl
     [Traps floating point exceptions (on supported platforms).]
   ]
   
+  
+  [/ ###############################################################################################]
+  [
+    [__param_log_sink__]
+    [Specifies the sink for logging.]
+  ]
+  
 ]
 [warning There is a link to the Boost.Test debug API, never heard about]
 
@@ -507,7 +514,7 @@ it is used as a random seed. In other case random seed is generated based on cur
 
 
 [/ ###############################################################################################]
-[#ref_detect_memory_leaks][section `detect_memory_leaks`]
+[#ref_param_detect_memory_leaks][section `detect_memory_leaks`]
 
 Detect memory leaks.
 
@@ -538,7 +545,7 @@ leaks notifications, they are combined with allocation number values you could u
 
 
 [/ ###############################################################################################]
-[#ref_use_alt_stack][section `use_alt_stack`]
+[#ref_param_use_alt_stack][section `use_alt_stack`]
 
 Uses an alternative stack.
 
@@ -563,7 +570,7 @@ processing on platforms where they are supported.
 
 
 [/ ###############################################################################################]
-[#ref_detect_fp_exceptions][section `detect_fp_exceptions`]
+[#ref_param_detect_fp_exceptions][section `detect_fp_exceptions`]
 
 Traps or not floating point exceptions.
 
@@ -584,29 +591,32 @@ Dnables/disable hardware traps for the floating point exception (if supported).
 
 
 
-   <refentry name="log_sink">
-    <name>The log sink name</name>
-    <env>BOOST_TEST_LOG_SINK</env>
-    <cla>log_sink</cla>
-    <vals>
-     <simplelist>
-      <member><emphasis role="bold">stdout</emphasis></member>
-      <member>stderr</member>
-      <member>arbitrary file name</member>
-     </simplelist>
-    </vals>
-    <descr>
-     <simpara>
-      This parameter allows easily redirect the test log. The parameter value is the string containing either a file 
-      name, in which case the __UTF__ will redirect log into file with that name, or 'stdout', in which case log is
-      redirected into standard output stream, or 'stderr' , in which case log is redirected into standard error stream.
-      Default is 'stdout'
-     </simpara>
-    </descr>
-   </refentry>
 
 
+[/ ###############################################################################################]
+[#ref_param_log_sink][section `log_sink`]
 
+Sets the logging sink to the one specified.
+
+This parameter allows to easily redirect the test logs. The parameter value is 
+
+* either the string containing either a file name, in which case the __UTF__ will redirect log into this file
+* `stdout` (the default), in which case log is redirected into standard output stream
+* or `stderr` , in which case log is redirected into standard error stream.
+
+      
+[h4 Acceptable values]
+
+* [*`stdout`] (default)
+* `stderr`
+* arbitrary file name
+
+
+[h4 Environment variable]
+
+  BOOST_TEST_LOG_SINK
+
+[endsect] [/log_sink]  
 
 
 
