@@ -87,9 +87,16 @@ acceptable values list. All values are case sensitive and are required to exactl
     [Produce colour output]
   ]  
 
+  [/ ###############################################################################################]
   [
     [__param_log_format__]
     [Specifies the log format]
+  ]
+
+  [/ ###############################################################################################]
+  [
+    [__param_log_level__]
+    [Specifies the logging level of the __UTF__]
   ]
 ]
 [warning There is a link to the Boost.Test debug API, never heard about]
@@ -230,13 +237,84 @@ format use the [link ref_log_formatter_api custom log formatting API].
 * [*HRF] (default)
 * XML
 
-HRF stands for human readable format, while XML is dedicated to  automated output processing
+['HRF] stands for human readable format, while ['XML] is dedicated to  automated output processing
 
 [h4 Environment variable]
 
   BOOST_TEST_LOG_FORMAT
 
 [endsect] [/log_format]
+
+
+[/ ###############################################################################################]
+[#ref_param_log_level][section `log_level`]
+
+Allows setting the __UTF__ <link linkid="utf.user-guide.test-output.log">log level</link> in a range from a
+complete log, when all successful tests are confirmed and all test suite messages are included, to an empty
+log when nothing is logged a test output stream. 
+
+[note Log levels are accumulating, in other words each log level includes also all the information reported  by less restrictive ones.]
+      
+      
+[h4 Acceptable values]
+
+[table Log levels
+  [
+    [value]
+    [feature]
+  ]
+  [
+    [all]
+    [report all log messages including the passed test notification]
+  ]
+  [
+    [success]
+    [the same as all]
+  ]
+  [
+    [test_suite]
+    [Shows test suite messages]
+  ]
+  [
+    [message]
+    [Shows user messages]
+  ]  
+  [
+    [warning]
+    [Reports warnings issued by user]
+  ]  
+  [
+    [[*error] (default)]
+    [Reports all error conditions]
+  ]  
+  [
+    [cpp_exception]
+    [Reports uncaught C++ exception]
+  ]  
+  [
+    [system_error]
+    [Reports system originated non-fatal errors. For example, timeout or floating point exception.]
+  ]  
+  [
+    [fatal_error]
+    [Reports only user or system originated fatal errors. For example, memory access violation.]
+  ]  
+  [
+    [nothing]
+    [Does not report any information.]
+  ]  
+
+]
+
+
+[h4 Environment variable]
+
+  BOOST_TEST_LOG_LEVEL
+
+[endsect] [/log_format]
+
+
+
 
 
 
@@ -282,65 +360,7 @@ HRF stands for human readable format, while XML is dedicated to  automated outpu
 
 
 
-   <refentry name="log_level">
-    <name>The __UTF__ log level</name>
-    <env>BOOST_TEST_LOG_LEVEL</env>
-    <cla>log_level</cla>
-    <vals>
-     <variablelist>
-      <?dbhtml term-separator=" - "?>
 
-      <varlistentry>
-       <term>all</term>
-       <listitem><simpara>report all log messages including the passed test notification</simpara></listitem>
-      </varlistentry>
-      <varlistentry>
-       <term>success</term>
-       <listitem><simpara>the same as all</simpara></listitem>
-      </varlistentry>
-      <varlistentry>
-       <term>test_suite</term>
-       <listitem><simpara>show test suite messages</simpara></listitem>
-      </varlistentry>
-      <varlistentry>
-       <term>message</term>
-       <listitem><simpara>show user messages</simpara></listitem>
-      </varlistentry>
-      <varlistentry>
-       <term>warning</term>
-       <listitem><simpara>report warnings issued by user</simpara></listitem>
-      </varlistentry>
-      <varlistentry>
-       <term><emphasis role="bold">error</emphasis></term>
-       <listitem><simpara>report all error conditions</simpara></listitem>
-      </varlistentry>
-      <varlistentry>
-       <term>cpp_exception</term>
-       <listitem><simpara>report uncaught c++ exception</simpara></listitem>
-      </varlistentry>
-      <varlistentry>
-       <term>system_error</term>
-       <listitem><simpara>report system originated non-fatal errors (for example, timeout or floating point exception)</simpara></listitem>
-      </varlistentry>
-      <varlistentry>
-       <term>fatal_error</term>
-       <listitem><simpara>report only user or system originated fatal errors (for example, memory access violation)</simpara></listitem>
-      </varlistentry>
-      <varlistentry>
-       <term>nothing</term>
-       <listitem><simpara>do not report any information</simpara></listitem>
-      </varlistentry>
-     </variablelist>
-    </vals>
-    <descr>
-     <simpara>
-      allows setting the __UTF__ <link linkid="utf.user-guide.test-output.log">log level</link> in a range from a
-      complete log, when all successful tests are confirmed and  all test suite messages are included, to an empty
-      log when nothing is logged a test output stream.  Note that log levels are accumulating, in other words each
-      log level includes also all the information reported  by less  restrictive ones.
-     </simpara>
-    </descr>
-   </refentry>
 
    <refentry name="log_sink">
     <name>The log sink name</name>

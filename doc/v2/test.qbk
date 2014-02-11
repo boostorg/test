@@ -114,13 +114,13 @@
 [def __BOOST_GLOBAL_FIXTURE__     [link ref_fixture_test_global `BOOST_GLOBAL_FIXTURE`]]
 
 [/ log]
-[def __BOOST_TEST_LOG_LEVEL__    `BOOST_TEST_LOG_LEVEL`]
+[def __BOOST_TEST_LOG_LEVEL__    [link ref_param_log_level `BOOST_TEST_LOG_LEVEL`]] [/ this is an environment variable]
 
 
 
 [/ runtime/cla parameters]
 [def __param_show_progress__ [link ref_param_show_progress `show_progress`]]
-[def __param_log_level__     [*log_level]]
+[def __param_log_level__     [link ref_param_log_level `log_level`]]
 [def __param_output_format__ [*output_format]]
 [def __param_log_format__    [link ref_param_log_format `log_format`]]
 [def __param_run_test__      [*run_test]]
