@@ -17,7 +17,7 @@ where I collected short definition for all used terms. And again if you want to 
 The __UTF__ has several usage variants. And the first decision you have to make is which one to use. These variants are covered in 
 section dedicated to [*Usage variants]. The next step, probably the most important 
 for you, is to start writing test cases, bind them in test suites and implement your checks. First two topics are covered in 
-[*Test organization] section, while [*Testing tools] section arms you with rich set of tools enough to implement almost arbitrary check you need.
+[*Test organization] section, while __testing_tools__ section arms you with rich set of tools enough to implement almost arbitrary check you need.
 
 
 Next you'll learn how to understand and manipulate the __UTF__ output in a [*Test output] section. 
