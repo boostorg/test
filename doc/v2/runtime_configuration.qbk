@@ -131,7 +131,11 @@ acceptable values list. All values are case sensitive and are required to exactl
     [The level of details carried by the __UTF__ report.]
   ]
   
-  
+  [/ ###############################################################################################]
+  [
+    [__param_random__]
+    [Runs the tests in random order]
+  ]
   
 ]
 [warning There is a link to the Boost.Test debug API, never heard about]
@@ -456,6 +460,29 @@ Allows setting the level of details carried by the testing results report genera
 
 
 
+[/ ###############################################################################################]
+[#ref_param_random][section `random`]
+
+Runs the tests in random order.
+
+Positive value makes the framework to run the test cases in random order. Also if this value is greater than 1,
+it is used as a random seed. In other case random seed is generated based on current time.
+      
+[h4 Acceptable values]
+
+* [*0] (default)
+* 1
+* integer value > 1
+
+
+[h4 Environment variable]
+
+  BOOST_TEST_RANDOM
+
+[endsect] [/random]  
+
+
+
 
    <refentry name="detect_fp_exceptions">
     <name>[Do not] trap floating point exceptions</name>
@@ -524,24 +551,6 @@ Allows setting the level of details carried by the testing results report genera
 
 
 
-   <refentry name="random">
-    <name>Random seed for random order of test cases</name>
-    <env>BOOST_TEST_RANDOM</env>
-    <cla>random</cla>
-    <vals>
-     <simplelist>
-      <member><emphasis role="bold">0</emphasis></member>
-      <member>1</member>
-      <member>integer value &gt; 1</member>
-     </simplelist>
-    </vals>
-    <descr>
-     <simpara>
-      positive value makes the framework to run the test cases in random order. Also if this value is greater than 1,
-      it's used as a random seed. In other case random seed is generated based on current time.
-     </simpara>
-    </descr>
-   </refentry>
 
 
 

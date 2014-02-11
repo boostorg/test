@@ -130,6 +130,7 @@
 [def __param_auto_start_dbg__ [link ref_param_auto_dbg `auto_start_dbg`]]
 [def __param_break_exec_path__ [link ref_param_break_exe_path `break_exec_path`]]
 [def __param_param_color_output__ [link ref_param_color_output `color_output`]]
+[def __param_random__             [link ref_param_random `random`]]
 
 
 [/=============================================================================]
