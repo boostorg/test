@@ -103,9 +103,21 @@ acceptable values list. All values are case sensitive and are required to exactl
   [/ ###############################################################################################]
   [
     [__param_run_test__]
-    [Specifies which test units to run]
+    [Specifies which test units to run.]
   ]
   
+  
+  [/ ###############################################################################################]
+  [
+    [__param_output_format__]
+    [Specifies the log format and the report format.]
+  ]  
+  
+  [/ ###############################################################################################]
+  [
+    [__param_report_format__]
+    [Specifies the report format.]
+  ]
 ]
 [warning There is a link to the Boost.Test debug API, never heard about]
 
@@ -342,6 +354,50 @@ See the related [link ref_runtime_specification_test_to_run documentation] for t
 
 
 
+  
+[/ ###############################################################################################]
+[#ref_param_output_format][section `output_format`]
+
+Combines an effect of __param_report_format__ and __param_log_format__ parameters. Has higher priority than either one of them if specified.      
+      
+      
+[h4 Acceptable values]
+
+* [*HRF] (default)
+* XML
+
+['HRF] stands for human readable format, while ['XML] is dedicated to  automated output processing
+
+[h4 Environment variable]
+
+  BOOST_TEST_OUTPUT_FORMAT
+
+[endsect] [/output_format]   
+
+
+
+
+[/ ###############################################################################################]
+[#ref_param_report_format][section `report_format`]
+
+Allows selecting the __UTF__ report format from the list of formats supplied by the framework. To specify a custom report format use unit_test_report API.
+
+[warning Provide something concrete to the user]
+      
+[h4 Acceptable values]
+
+* [*HRF] (default)
+* XML
+
+['HRF] stands for human readable format, while ['XML] is dedicated to  automated output processing
+
+[h4 Environment variable]
+
+  BOOST_TEST_REPORT_FORMAT
+
+[endsect] [/output_format]   
+
+
    <refentry name="detect_fp_exceptions">
     <name>[Do not] trap floating point exceptions</name>
     <env>BOOST_TEST_DETECT_FP_EXCEPTIONS</env>
@@ -407,23 +463,7 @@ See the related [link ref_runtime_specification_test_to_run documentation] for t
     </descr>
    </refentry>
 
-   <refentry name="output_format">
-    <name>The output format</name>
-    <env>BOOST_TEST_OUTPUT_FORMAT</env>
-    <cla>output_format</cla>
-    <vals>
-     <simplelist>
-      <member><emphasis role="bold">HRF</emphasis> - human readable format</member>
-      <member>XML - XML format for automated output processing</member>
-     </simplelist>
-    </vals>
-    <descr>
-     <simpara>
-      combines an effect of report_format and log_format parameters. Has higher priority than either one of them if
-      specified.
-     </simpara>
-    </descr>
-   </refentry>
+
 
    <refentry name="random">
     <name>Random seed for random order of test cases</name>
@@ -444,23 +484,7 @@ See the related [link ref_runtime_specification_test_to_run documentation] for t
     </descr>
    </refentry>
 
-   <refentry name="report_format">
-    <name>The report format</name>
-    <env>BOOST_TEST_REPORT_FORMAT</env>
-    <cla>report_format</cla>
-    <vals>
-     <simplelist>
-      <member><emphasis role="bold">HRF</emphasis> - human readable format</member>
-      <member>XML - XML format for automated output processing</member>
-     </simplelist>
-    </vals>
-    <descr>
-     <simpara>
-      allows selecting the __UTF__ report format from the list of formats supplied by the framework. To
-      specify custom report format use unit_test_report API.
-     </simpara>
-    </descr>
-   </refentry>
+
 
    <refentry name="report_level">
     <name>The results report level</name>
