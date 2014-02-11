@@ -363,7 +363,7 @@ void combined_test()
 ``
 
 
-There several problems/inconveniencies with above approach, including:
+There several problems/inconveniences with above approach, including:
 
 * Fatal error in one of the invocation will stop whole test case and will skip invocations with different types
 * You need to repeat function invocation manually for all the parameters you are interested in
