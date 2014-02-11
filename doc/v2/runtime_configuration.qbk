@@ -467,6 +467,8 @@ Runs the tests in random order.
 
 Positive value makes the framework to run the test cases in random order. Also if this value is greater than 1,
 it is used as a random seed. In other case random seed is generated based on current time.
+
+[caution If computed from time, the seed is not outputted to the report]
       
 [h4 Acceptable values]
 
