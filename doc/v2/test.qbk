@@ -133,6 +133,7 @@
 [def __param_random__             [link ref_param_random `random`]]
 [def __param_detect_memory_leaks__ [link ref_detect_memory_leaks `detect_memory_leaks`]]
 [def __param_use_alt_stack__ [link ref_use_alt_stack `use_alt_stack`]]
+[def __param_detect_fp_exceptions__ [link ref_detect_fp_exceptions `detect_fp_exceptions`]]
 
 [/=============================================================================]
 

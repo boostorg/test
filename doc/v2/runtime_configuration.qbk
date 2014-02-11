@@ -150,6 +150,13 @@ acceptable values list. All values are case sensitive and are required to exactl
     [Uses an alternative stack for running tests (on supported platforms).]
   ]
   
+  
+  [/ ###############################################################################################]
+  [
+    [__param_detect_fp_exceptions__]
+    [Traps floating point exceptions (on supported platforms).]
+  ]
+  
 ]
 [warning There is a link to the Boost.Test debug API, never heard about]
 
@@ -553,25 +560,26 @@ processing on platforms where they are supported.
 
 [endsect] [/use_alt_stack]  
 
-   <refentry name="detect_fp_exceptions">
-    <name>[Do not] trap floating point exceptions</name>
-    <env>BOOST_TEST_DETECT_FP_EXCEPTIONS</env>
-    <cla>detect_fp_exceptions</cla>
-    <vals>
-     <simplelist>
-      <member><emphasis role="bold">no</emphasis></member>
-      <member>yes</member>
-     </simplelist>
-    </vals>
-    <descr>
-     <simpara>
-      enables/disable hardware traps for the floating point exception if they are supported. By default is disabled.
-     </simpara>
-    </descr>
-   </refentry>
 
 
+[/ ###############################################################################################]
+[#ref_detect_fp_exceptions][section `detect_fp_exceptions`]
 
+Traps or not floating point exceptions.
+
+Dnables/disable hardware traps for the floating point exception (if supported).
+      
+[h4 Acceptable values]
+
+* [*no] (default)
+* yes
+
+
+[h4 Environment variable]
+
+  BOOST_TEST_DETECT_FP_EXCEPTIONS
+
+[endsect] [/detect_fp_exceptions]  
 
 
 
