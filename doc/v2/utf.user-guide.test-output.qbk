@@ -24,7 +24,7 @@ kind of manual/assert based solution the __UTF__ provide following services:
   your purposes almost any way you want.
   
   
-[section:log_outputbis Test log output]
+[section Test log output]
 
 The test log is produced during the test execution. All entries in the test log are assigned a particular log
 level. Only the entries with level that exceeds the ['active log level threshold] actually
@@ -191,7 +191,7 @@ with in a manner similar to standard `iostream` operation.
 
 
 [/ -------------------------------------------------------------------------------------------------- ]
-[section:log_test_checkpoint __BOOST_TEST_CHECKPOINT__]
+[#ref_BOOST_TEST_CHECKPOINT][section __BOOST_TEST_CHECKPOINT__]
 
 
 The macro __BOOST_TEST_CHECKPOINT__ is intended to be used to inject [*named] checkpoint position. The
@@ -224,7 +224,7 @@ output stream compliant components.
 
 
 [/ -------------------------------------------------------------------------------------------------- ]
-[section:log_test_passpoint __BOOST_TEST_PASSPOINT__]
+[#ref_BOOST_TEST_PASSPOINT][section __BOOST_TEST_PASSPOINT__]
 
 The macro __BOOST_TEST_PASSPOINT__ is intended to be used to inject an &quot;unnamed&quot; checkpoint position. The
 macro signature is as follows:
