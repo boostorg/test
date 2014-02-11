@@ -2,8 +2,8 @@
 [/ this file should be included in the top file. It should not contain a section command]
 
 
-[:[*Test everything that could possibly break]]
-[:['XP maxim]]
+[:[*Test everything that could possibly break] - ['XP maxim]]
+
   
 The Boost.Test library provides a matched set of components for writing test programs, organizing tests into 
 simple test cases and test suites, and controlling their runtime execution. The Program Execution Monitor is also 
