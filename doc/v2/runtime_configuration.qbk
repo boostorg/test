@@ -142,6 +142,14 @@ acceptable values list. All values are case sensitive and are required to exactl
     [__param_detect_memory_leaks__]
     [Detects memory leaks.]
   ]
+  
+  
+  [/ ###############################################################################################]
+  [
+    [__param_use_alt_stack__]
+    [Uses an alternative stack for running tests (on supported platforms).]
+  ]
+  
 ]
 [warning There is a link to the Boost.Test debug API, never heard about]
 
@@ -519,6 +527,31 @@ leaks notifications, they are combined with allocation number values you could u
 
 [endsect] [/detect_memory_leaks]  
 
+
+
+
+[/ ###############################################################################################]
+[#ref_use_alt_stack][section `use_alt_stack`]
+
+Uses an alternative stack.
+
+Specifies whether or not the execution monitor should employ an alternative stack for signals 
+processing on platforms where they are supported.
+
+[warning indicate which platforms are supported]
+[warning add a link to the execution monitor]
+      
+[h4 Acceptable values]
+
+* [*yes] (default)
+* no
+
+
+[h4 Environment variable]
+
+  BOOST_TEST_USE_ALT_STACK
+
+[endsect] [/use_alt_stack]  
 
    <refentry name="detect_fp_exceptions">
     <name>[Do not] trap floating point exceptions</name>
