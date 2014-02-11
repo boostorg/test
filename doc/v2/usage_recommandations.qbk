@@ -28,8 +28,24 @@ function is defined you will be able to unroll the stack and see where error act
 [h4 To test reusable template base component with different template parameter use test case template facility]
 If you writing unit test for generic reusable component you may have a need to test it against set of different 
 template parameter types . Most probably you will end up with a code like this:
-     
-     <btl-snippet name="snippet6"/>
+
+[/ snippet6 deleted]
+``
+template<typename TestType>
+void specific_type_test( TestType* = 0 )
+{
+  MyComponent<TestType> c;
+  // ... here we perform actual testing
+}
+
+void my_component_test()
+{
+  specific_type_test( (int*)0 );
+  specific_type_test( (float*)0 );
+  specific_type_test( (UDT*)0 );
+  // ... 
+}
+``
      
 This is namely the situation where you would use test case template facility. It not only simplifies this kind 
 of unit testing by automating some of the work, in addition every argument type gets tested separately under 
