@@ -660,7 +660,7 @@ This parameter allows to easily redirect the test result report. See __param_log
 [/ ###############################################################################################]
 [#ref_param_save_patterm][section `save_patterm`]
 
-Provides parameters for testing output streams. See this [link section] for details on these tests.
+Provides parameters for testing output streams. See this [link ref_test_output_streams section] for details on these tests.
 
 This parameter serves no particular purpose within the framework itself. It can be used by test modules relying 
 on `output_test_stream` to implement testing logic. `output_test_stream` has two modes of operation: 
