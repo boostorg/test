@@ -98,6 +98,14 @@ acceptable values list. All values are case sensitive and are required to exactl
     [__param_log_level__]
     [Specifies the logging level of the __UTF__]
   ]
+  
+  
+  [/ ###############################################################################################]
+  [
+    [__param_run_test__]
+    [Specifies which test units to run]
+  ]
+  
 ]
 [warning There is a link to the Boost.Test debug API, never heard about]
 
@@ -311,10 +319,26 @@ log when nothing is logged a test output stream.
 
   BOOST_TEST_LOG_LEVEL
 
-[endsect] [/log_format]
+[endsect] [/log_level]
 
 
 
+[/ ###############################################################################################]
+[#ref_param_run_test][section `run_test`]
+
+Specifies the tests to run. 
+      
+      
+      
+[h4 Acceptable values]
+
+See the related [link ref_runtime_specification_test_to_run documentation] for the format of the acceptable values.
+
+[h4 Environment variable]
+
+  BOOST_TESTS_TO_RUN
+
+[endsect] [/run_test]
 
 
 
@@ -499,23 +523,7 @@ log when nothing is logged a test output stream.
     </descr>
    </refentry>
    
-   <refentry name="run_test">
-    <name>Test units to run</name>
-    <env>BOOST_TESTS_TO_RUN</env>
-    <cla>run_test</cla>
-    <vals>
-     <simplelist>
-      <member>
-       <link linkend="utf.user-guide.runtime-config.run-by-name">specification</link> of test units to run
-      </member>
-     </simplelist>
-    </vals>
-    <descr>
-     <simpara>
-      specifies which test units to run.
-     </simpara>
-    </descr>
-   </refentry>
+
 
    <refentry name="save_patterm">
     <name>Save patterm</name>

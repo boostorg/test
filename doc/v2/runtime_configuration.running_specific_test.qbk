@@ -1,4 +1,4 @@
-[section Running specific test units selected by their name]
+[#ref_runtime_specification_test_to_run][section Running specific test units selected by their name]
 In regular circumstances, test module execution initiates testing of all test units manually or automatically 
 registered in master test suite. 
 

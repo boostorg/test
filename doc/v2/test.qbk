@@ -123,7 +123,7 @@
 [def __param_log_level__     [link ref_param_log_level `log_level`]]
 [def __param_output_format__ [*output_format]]
 [def __param_log_format__    [link ref_param_log_format `log_format`]]
-[def __param_run_test__      [*run_test]]
+[def __param_run_test__      [link ref_param_run_test `run_test`]]
 [def __param_report_level__  [*report_level]]
 [def __param_catch_system__  [link ref_param_catch_system `catch_system_error`]]
 [def __param_result_code__   [*result_code]]
