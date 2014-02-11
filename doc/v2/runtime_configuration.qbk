@@ -558,7 +558,7 @@ leaks notifications, they are combined with allocation number values you could u
 Uses an alternative stack.
 
 Specifies whether or not the execution monitor should employ an alternative stack for signals 
-processing on platforms where they are supported.
+processing, on platforms where they are supported.
 
 [warning indicate which platforms are supported]
 [warning add a link to the execution monitor]
@@ -676,27 +676,6 @@ This parameter allows to easily redirect the test result report. See __param_log
 
 
    
-   <refentry name="use_alt_stack">
-    <name>Use alternative stack</name>
-    <env>BOOST_TEST_USE_ALT_STACK</env>
-    <cla>use_alt_stack</cla>
-    <vals>
-     <simplelist>
-      <member><emphasis role="bold">yes</emphasis></member>
-      <member>no</member>
-     </simplelist>
-    </vals>
-    <descr>
-     <simpara>
-      specifies whether or not the Boost.Test Execution Monitor should employ an alternative stack for signals 
-      processing on platforms where they are supported.
-     </simpara>
-    </descr>
-   </refentry>
-
-  </btl-parameter-reference>
- </section>
-</section>
 
 [endsect] [/ runtime parameters reference]
 
