@@ -7,7 +7,7 @@
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../the_unit_test_framework_usage_re.html" title="The unit test framework usage recommendations">
 <link rel="prev" href="microsoft_visual_studio_net_usag.html" title="Microsoft Visual Studio .NET usage recommendations">
-<link rel="next" href="../faq.html" title="Frequently Asked Questions">
+<link rel="next" href="../frequently_asked_questions.html" title="Frequently Asked Questions">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="microsoft_visual_studio_net_usag.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../the_unit_test_framework_usage_re.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../faq.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="microsoft_visual_studio_net_usag.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../the_unit_test_framework_usage_re.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../frequently_asked_questions.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -36,10 +36,14 @@
 <p>
         If you got "memory access violation" message (or any other message
         indication fatal or system error) when you run you test, to get more information
-        about the error location add --catch_system_errors=no to the test run command
-        line. Now run the test again and it will create a coredump you could analyze
-        using you preferable debugger. Or run it under debugger in a first place
-        and it will break at the point of failure.
+        about the error location add
+      </p>
+<pre class="programlisting"><span class="special">--</span><a class="link" href="../runtime_configuration_or_what_ar/runtime_parameters_reference/catch_system_errors.html#ref_param_catch_system"><code class="computeroutput"><span class="identifier">catch_system_error</span></code></a><span class="special">=</span><span class="identifier">no</span>
+</pre>
+<p>
+        to the test run command line. Now run the test again and it will create a
+        coredump you could analyse using you preferable debugger. Or run it under
+        debugger in a first place and it will break at the point of failure.
       </p>
 <h5>
 <a name="boost_test.the_unit_test_framework_usage_re.command_line_usage_recommendatio.h1"></a>
@@ -51,19 +55,19 @@
         My first recommendation is to make sure that the test framework catches all
         fatal errors by adding argument
       </p>
-<pre class="programlisting"><span class="special">--</span><span class="bold"><strong>catch_system_error</strong></span><span class="special">=</span><span class="identifier">yes</span>
+<pre class="programlisting"><span class="special">--</span><a class="link" href="../runtime_configuration_or_what_ar/runtime_parameters_reference/catch_system_errors.html#ref_param_catch_system"><code class="computeroutput"><span class="identifier">catch_system_error</span></code></a><span class="special">=</span><span class="identifier">yes</span>
 </pre>
 <p>
         to all test modules invocations. Otherwise test program may produce unwanted
         dialogs (depends on compiler and OS) that will halt you regression tests
         run. The second recommendation is to suppress result report output by adding
       </p>
-<pre class="programlisting"><span class="special">--</span><span class="bold"><strong>report_level</strong></span><span class="special">=</span><span class="identifier">no</span>
+<pre class="programlisting"><span class="special">--</span><a class="link" href="../runtime_configuration_or_what_ar/runtime_parameters_reference/report_level.html#ref_param_report_level"><code class="computeroutput"><span class="identifier">report_level</span></code></a><span class="special">=</span><span class="identifier">no</span>
 </pre>
 <p>
         argument and test log output by adding
       </p>
-<pre class="programlisting"><span class="special">--</span><span class="bold"><strong>log_level</strong></span><span class="special">=</span><span class="identifier">nothing</span>
+<pre class="programlisting"><span class="special">--</span><a class="link" href="../runtime_configuration_or_what_ar/runtime_parameters_reference/log_level.html#ref_param_log_level"><code class="computeroutput"><span class="identifier">log_level</span></code></a><span class="special">=</span><span class="identifier">nothing</span>
 </pre>
 <p>
         argument, so that test module won't produce undesirable output no one is
@@ -72,7 +76,7 @@
         is direct both log and report to separate file you could analyse later on.
         Moreover you can make Boost.Test to produce them in XML format using
       </p>
-<pre class="programlisting"><span class="special">--</span><span class="bold"><strong>output_format</strong></span><span class="special">=</span><span class="identifier">XML</span>
+<pre class="programlisting"><span class="special">--</span><a class="link" href="../runtime_configuration_or_what_ar/runtime_parameters_reference/output_format.html#ref_param_output_format"><code class="computeroutput"><span class="identifier">output_format</span></code></a><span class="special">=</span><span class="identifier">XML</span>
 </pre>
 <p>
         and use some automated tool that will format this information as you like.
@@ -88,7 +92,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="microsoft_visual_studio_net_usag.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../the_unit_test_framework_usage_re.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../faq.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="microsoft_visual_studio_net_usag.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../the_unit_test_framework_usage_re.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../frequently_asked_questions.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

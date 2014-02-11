@@ -78,7 +78,20 @@
         to test it against set of different template parameter types . Most probably
         you will end up with a code like this:
       </p>
-<pre class="programlisting"><span class="special">&lt;</span><span class="identifier">btl</span><span class="special">-</span><span class="identifier">snippet</span> <span class="identifier">name</span><span class="special">=</span><span class="string">"snippet6"</span><span class="special">/&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">TestType</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">specific_type_test</span><span class="special">(</span> <span class="identifier">TestType</span><span class="special">*</span> <span class="special">=</span> <span class="number">0</span> <span class="special">)</span>
+<span class="special">{</span>
+  <span class="identifier">MyComponent</span><span class="special">&lt;</span><span class="identifier">TestType</span><span class="special">&gt;</span> <span class="identifier">c</span><span class="special">;</span>
+  <span class="comment">// ... here we perform actual testing</span>
+<span class="special">}</span>
+
+<span class="keyword">void</span> <span class="identifier">my_component_test</span><span class="special">()</span>
+<span class="special">{</span>
+  <span class="identifier">specific_type_test</span><span class="special">(</span> <span class="special">(</span><span class="keyword">int</span><span class="special">*)</span><span class="number">0</span> <span class="special">);</span>
+  <span class="identifier">specific_type_test</span><span class="special">(</span> <span class="special">(</span><span class="keyword">float</span><span class="special">*)</span><span class="number">0</span> <span class="special">);</span>
+  <span class="identifier">specific_type_test</span><span class="special">(</span> <span class="special">(</span><span class="identifier">UDT</span><span class="special">*)</span><span class="number">0</span> <span class="special">);</span>
+  <span class="comment">// ... </span>
+<span class="special">}</span>
 </pre>
 <p>
         This is namely the situation where you would use test case template facility.

@@ -1,0 +1,162 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Frequently Asked Questions</title>
+<link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../index.html" title="Boost.Test">
+<link rel="up" href="../index.html" title="Boost.Test">
+<link rel="prev" href="the_unit_test_framework_usage_re/command_line_usage_recommendatio.html" title="Command line usage recommendations">
+<link rel="next" href="glossary.html" title="Glossary... or what's your name?">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="the_unit_test_framework_usage_re/command_line_usage_recommendatio.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="glossary.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="boost_test.frequently_asked_questions"></a><a name="ref_section_faq"></a><a class="link" href="frequently_asked_questions.html" title="Frequently Asked Questions">Frequently
+    Asked Questions</a>
+</h2></div></div></div>
+<h4>
+<a name="boost_test.frequently_asked_questions.h0"></a>
+      <span class="phrase"><a name="boost_test.frequently_asked_questions.where_the_latest_version_of_the_"></a></span><a class="link" href="frequently_asked_questions.html#boost_test.frequently_asked_questions.where_the_latest_version_of_the_">Where
+      the latest version of the Boost Test Library is located?</a>
+    </h4>
+<p>
+      The latest version of Boost Test Library is available online at <a href="http://www.boost.org/libs/test" target="_top">http://www.boost.org/libs/test</a>.
+    </p>
+<h4>
+<a name="boost_test.frequently_asked_questions.h1"></a>
+      <span class="phrase"><a name="boost_test.frequently_asked_questions.i_found_a_bug_where_can_i_report"></a></span><a class="link" href="frequently_asked_questions.html#boost_test.frequently_asked_questions.i_found_a_bug_where_can_i_report">I
+      found a bug. Where can I report it?</a>
+    </h4>
+<p>
+      You can send a bug report to the boost users' mailing list and/or directly
+      to <a href="mailto:boost-test=at=emailaccount-dot-com" target="_top">Gennadiy Rozental</a>.
+    </p>
+<h4>
+<a name="boost_test.frequently_asked_questions.h2"></a>
+      <span class="phrase"><a name="boost_test.frequently_asked_questions.i_have_a_request_for_a_new_featu"></a></span><a class="link" href="frequently_asked_questions.html#boost_test.frequently_asked_questions.i_have_a_request_for_a_new_featu">I
+      have a request for a new feature. Where can I ask for it?</a>
+    </h4>
+<p>
+      You can send a request to the boost developers' mailing list and/or directly
+      to <a href="mailto:boost-test=at=emailaccount-dot-com" target="_top">Gennadiy Rozental</a>.
+    </p>
+<h4>
+<a name="boost_test.frequently_asked_questions.h3"></a>
+      <span class="phrase"><a name="boost_test.frequently_asked_questions.how_to_create_test_case_using_th"></a></span><a class="link" href="frequently_asked_questions.html#boost_test.frequently_asked_questions.how_to_create_test_case_using_th">How
+      to create test case using the Unit Test Framework?</a>
+    </h4>
+<p>
+      To create a test case, use the macro
+    </p>
+<pre class="programlisting"><span class="identifier">BOOST_AUTO_TEST_CASE</span><span class="special">(</span> <span class="identifier">test_function</span> <span class="special">);</span>
+</pre>
+<p>
+      For more details see the Unit Test Framework <a class="link" href="tests_organization/test_cases/test_organization_nullary.html#ref_BOOST_AUTO_TEST_CASE"><code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_CASE</span></code></a> documentation.
+    </p>
+<h4>
+<a name="boost_test.frequently_asked_questions.h4"></a>
+      <span class="phrase"><a name="boost_test.frequently_asked_questions.how_to_create_test_suite_using_t"></a></span><a class="link" href="frequently_asked_questions.html#boost_test.frequently_asked_questions.how_to_create_test_suite_using_t">How
+      to create test suite using the Unit Test Framework?</a>
+    </h4>
+<p>
+      To create a test suite use the macro
+    </p>
+<pre class="programlisting"><span class="identifier">BOOST_AUTO_TEST_SUITE</span><span class="special">(</span> <span class="identifier">suite_name</span> <span class="special">);</span>
+</pre>
+<p>
+      For more details see the Unit Test Framework <a class="link" href="tests_organization/test_organization_test_suite.html#ref_BOOST_AUTO_TEST_SUITE"><code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_SUITE</span></code></a> documentation.
+    </p>
+<h4>
+<a name="boost_test.frequently_asked_questions.h5"></a>
+      <span class="phrase"><a name="boost_test.frequently_asked_questions.why_did_i_get_a_linker_error_whe"></a></span><a class="link" href="frequently_asked_questions.html#boost_test.frequently_asked_questions.why_did_i_get_a_linker_error_whe">Why
+      did I get a linker error when compiling my test program?</a>
+    </h4>
+<p>
+      Boost Test Library components provide several usage variants: to create a test
+      program you can link with the one of the precompiled library variants or use
+      single-header variant. For example, to use Unit Test Framework you may either
+      include
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      and link with
+    </p>
+<pre class="programlisting"><span class="identifier">libunit_test_framework</span><span class="special">.</span><span class="identifier">lib</span></pre>
+<p>
+      or you can include
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      in which case you should not need to link with any precompiled component. Note
+      also that you should strictly follow specification on initialization function
+      in other case some compilers may produce linker error like this.
+    </p>
+<pre class="programlisting"><span class="identifier">Unresolved</span> <span class="identifier">external</span> <span class="identifier">init_unit_test_suite</span><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">char</span><span class="special">**).</span>
+</pre>
+<p>
+      The reason for this error is that in your implementation you should specify
+      second argument of init_unit_test_suite exactly as in the specification, i.e.:
+      <code class="computeroutput"><span class="keyword">char</span><span class="special">*</span>
+      <span class="special">[]</span></code>.
+    </p>
+<h4>
+<a name="boost_test.frequently_asked_questions.h6"></a>
+      <span class="phrase"><a name="boost_test.frequently_asked_questions.how_can_i_redirect_testing_outpu"></a></span><a class="link" href="frequently_asked_questions.html#boost_test.frequently_asked_questions.how_can_i_redirect_testing_outpu">How
+      can I redirect testing output?</a>
+    </h4>
+<p>
+      Use
+    </p>
+<pre class="programlisting"><span class="identifier">unit_test_log</span><span class="special">::</span><span class="identifier">instance</span><span class="special">().</span><span class="identifier">set_log_output</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span> <span class="special">&amp;</span> <span class="special">)</span></pre>
+<p>
+      . For more details see the <span class="emphasis"><em>UTF</em></span> <a class="link" href="the_utf_testing_tools_or_tester_/output_stream_testing.html#ref_test_output_streams">output
+      streams</a> testing tools documentation.
+    </p>
+<h4>
+<a name="boost_test.frequently_asked_questions.h7"></a>
+      <span class="phrase"><a name="boost_test.frequently_asked_questions.i_want_different_default_log_tra"></a></span><a class="link" href="frequently_asked_questions.html#boost_test.frequently_asked_questions.i_want_different_default_log_tra">I
+      want different default log trace level</a>
+    </h4>
+<p>
+      Use environment variable <a class="link" href="runtime_configuration_or_what_ar/runtime_parameters_reference/log_level.html#ref_param_log_level"><code class="computeroutput"><span class="identifier">BOOST_TEST_LOG_LEVEL</span></code></a> to define desired
+      log trace level. You still will be able to reset this value from the command
+      line. For the list of acceptable values see the <span class="emphasis"><em>UTF</em></span> <a class="link" href="runtime_configuration_or_what_ar.html#ref_section_runtime_configuration">runtime configuration</a> documentation.
+    </p>
+<h4>
+<a name="boost_test.frequently_asked_questions.h8"></a>
+      <span class="phrase"><a name="boost_test.frequently_asked_questions.is_there_dll_version_of_boost_te"></a></span><a class="link" href="frequently_asked_questions.html#boost_test.frequently_asked_questions.is_there_dll_version_of_boost_te">Is
+      there DLL version of Boost.Test components available on Win32 platform?</a>
+    </h4>
+<p>
+      Yes. Starting with Boost 1.34.0.
+    </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2013 Gennadiy Rozental<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="the_unit_test_framework_usage_re/command_line_usage_recommendatio.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="glossary.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

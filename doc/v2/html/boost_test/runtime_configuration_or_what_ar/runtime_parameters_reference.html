@@ -7,7 +7,7 @@
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../runtime_configuration_or_what_ar.html" title="Runtime configuration ... or what are the strings I can pull?">
 <link rel="prev" href="running_specific_test_units_sele.html" title="Running specific test units selected by their name">
-<link rel="next" href="../the_unit_test_framework_usage_re.html" title="The unit test framework usage recommendations">
+<link rel="next" href="runtime_parameters_reference/show_progress.html" title="show_progress">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,13 +20,35 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="running_specific_test_units_sele.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../runtime_configuration_or_what_ar.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../the_unit_test_framework_usage_re.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="running_specific_test_units_sele.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../runtime_configuration_or_what_ar.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="runtime_parameters_reference/show_progress.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_test.runtime_configuration_or_what_ar.runtime_parameters_reference"></a><a class="link" href="runtime_parameters_reference.html" title="Runtime parameters reference">Runtime
       parameters reference</a>
 </h3></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="runtime_parameters_reference/show_progress.html"><code class="computeroutput"><span class="identifier">show_progress</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/build_info.html"><code class="computeroutput"><span class="identifier">build_info</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/auto_start_dbg.html"><code class="computeroutput"><span class="identifier">auto_start_dbg</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/catch_system_errors.html"><code class="computeroutput"><span class="identifier">catch_system_errors</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/break_exec_path.html"><code class="computeroutput"><span class="identifier">break_exec_path</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/color_output.html"><code class="computeroutput"><span class="identifier">color_output</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/log_format.html"><code class="computeroutput"><span class="identifier">log_format</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/log_level.html"><code class="computeroutput"><span class="identifier">log_level</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/run_test.html"><code class="computeroutput"><span class="identifier">run_test</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/output_format.html"><code class="computeroutput"><span class="identifier">output_format</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/report_format.html"><code class="computeroutput"><span class="identifier">report_format</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/result_code.html"><code class="computeroutput"><span class="identifier">result_code</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/report_level.html"><code class="computeroutput"><span class="identifier">report_level</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/random.html"><code class="computeroutput"><span class="identifier">random</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/detect_memory_leaks.html"><code class="computeroutput"><span class="identifier">detect_memory_leaks</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/use_alt_stack.html"><code class="computeroutput"><span class="identifier">use_alt_stack</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/detect_fp_exceptions.html"><code class="computeroutput"><span class="identifier">detect_fp_exceptions</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/log_sink.html"><code class="computeroutput"><span class="identifier">log_sink</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/report_sink.html"><code class="computeroutput"><span class="identifier">report_sink</span></code></a></span></dt>
+<dt><span class="section"><a href="runtime_parameters_reference/save_patterm.html"><code class="computeroutput"><span class="identifier">save_patterm</span></code></a></span></dt>
+</dl></div>
 <p>
         Each parameter specification includes:
       </p>
@@ -56,8 +78,6 @@
 <colgroup>
 <col>
 <col>
-<col>
-<col>
 </colgroup>
 <thead><tr>
 <th>
@@ -67,17 +87,7 @@
               </th>
 <th>
                 <p>
-                  Environment variable
-                </p>
-              </th>
-<th>
-                <p>
-                  Acceptable values
-                </p>
-              </th>
-<th>
-                <p>
-                  Description
+                  Short description
                 </p>
               </th>
 </tr></thead>
@@ -85,47 +95,19 @@
 <tr>
 <td>
                 <p>
-                  <code class="computeroutput"><span class="identifier">auto_start_dbg</span></code>
+                  <a class="link" href="runtime_parameters_reference/auto_start_dbg.html#ref_param_auto_dbg"><code class="computeroutput"><span class="identifier">auto_start_dbg</span></code></a>
                 </p>
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><span class="identifier">BOOST_TEST_AUTO_START_DBG</span></code>
-                </p>
-              </td>
-<td>
-                <p>
-                  * <span class="bold"><strong><code class="computeroutput"><span class="identifier">no</span></code></strong></span>
-                  * <code class="computeroutput"><span class="identifier">yes</span></code> * <code class="computeroutput"><span class="identifier">debugger</span> <span class="identifier">identifier</span></code>
-                </p>
-              </td>
-<td>
-                <p>
-                  Specifies whether Boost.Test should try to attach a debugger in
-                  case if fatal system error occurs. If value is <code class="computeroutput"><span class="identifier">yes</span></code>
-                  the default debugger configured for the platform is going to be
-                  attempted. Alternatively the debugger identified by the argument
-                  value of the parameter is used. For more details on advanced debugger
-                  support in Boost.Test check &lt;!-- TO FIX: add link --&gt; section
-                  dedicated to Boost.Test debug API.
+                  Automatically attach debugger in case of system failure.
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  <a name="ref_param_show_progress"></a><code class="computeroutput"><span class="identifier">show_progress</span></code>
-                </p>
-              </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">BOOST_TEST_SHOW_PROGRESS</span></code>
-                </p>
-              </td>
-<td>
-                <p>
-                  * <span class="bold"><strong><code class="computeroutput"><span class="identifier">no</span></code></strong></span>
-                  * <code class="computeroutput"><span class="identifier">yes</span></code>
+                  <a class="link" href="runtime_parameters_reference/show_progress.html#ref_param_show_progress"><code class="computeroutput"><span class="identifier">show_progress</span></code></a>
                 </p>
               </td>
 <td>
@@ -138,24 +120,217 @@
 <tr>
 <td>
                 <p>
-                  <code class="computeroutput"><span class="identifier">build_info</span></code>
+                  <a class="link" href="runtime_parameters_reference/build_info.html#ref_param_build_info"><code class="computeroutput"><span class="identifier">build_info</span></code></a>
                 </p>
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><span class="identifier">BOOST_TEST_BUILD_INFO</span></code>
+                  Print build information.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="runtime_parameters_reference/catch_system_errors.html#ref_param_catch_system"><code class="computeroutput"><span class="identifier">catch_system_error</span></code></a>
                 </p>
               </td>
 <td>
                 <p>
-                  * <span class="bold"><strong><code class="computeroutput"><span class="identifier">no</span></code></strong></span>
-                  * <code class="computeroutput"><span class="identifier">yes</span></code>
+                  Catch system errors.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="runtime_parameters_reference/break_exec_path.html#ref_param_break_exe_path"><code class="computeroutput"><span class="identifier">break_exec_path</span></code></a>
                 </p>
               </td>
 <td>
                 <p>
-                  Print build information that include: platform, compiler, STL implementation
-                  in use and boost version.
+                  Break execution path
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="runtime_parameters_reference/color_output.html#ref_param_color_output"><code class="computeroutput"><span class="identifier">color_output</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Produce colour output
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="runtime_parameters_reference/log_format.html#ref_param_log_format"><code class="computeroutput"><span class="identifier">log_format</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Specifies the log format
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="runtime_parameters_reference/log_level.html#ref_param_log_level"><code class="computeroutput"><span class="identifier">log_level</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Specifies the logging level of the <span class="emphasis"><em>UTF</em></span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="runtime_parameters_reference/run_test.html#ref_param_run_test"><code class="computeroutput"><span class="identifier">run_test</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Specifies which test units to run.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="runtime_parameters_reference/output_format.html#ref_param_output_format"><code class="computeroutput"><span class="identifier">output_format</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Specifies the log format and the report format.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="runtime_parameters_reference/report_format.html#ref_param_report_format"><code class="computeroutput"><span class="identifier">report_format</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Specifies the report format.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="runtime_parameters_reference/result_code.html#ref_param_result_code"><code class="computeroutput"><span class="identifier">result_code</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Make the framework return a result code indicating an error in
+                  the tests.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="runtime_parameters_reference/report_level.html#ref_param_report_level"><code class="computeroutput"><span class="identifier">report_level</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  The level of details carried by the <span class="emphasis"><em>UTF</em></span> report.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="runtime_parameters_reference/random.html#ref_param_random"><code class="computeroutput"><span class="identifier">random</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Runs the tests in random order
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="runtime_parameters_reference/detect_memory_leaks.html#ref_param_detect_memory_leaks"><code class="computeroutput"><span class="identifier">detect_memory_leaks</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Detects memory leaks.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="runtime_parameters_reference/use_alt_stack.html#ref_param_use_alt_stack"><code class="computeroutput"><span class="identifier">use_alt_stack</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Uses an alternative stack for running tests (on supported platforms).
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="runtime_parameters_reference/detect_fp_exceptions.html#ref_param_detect_fp_exceptions"><code class="computeroutput"><span class="identifier">detect_fp_exceptions</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Traps floating point exceptions (on supported platforms).
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="runtime_parameters_reference/log_sink.html#ref_param_log_sink"><code class="computeroutput"><span class="identifier">log_sink</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Specifies the sink stream for logging.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="runtime_parameters_reference/report_sink.html#ref_param_report_sink"><code class="computeroutput"><span class="identifier">report_sink</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Specifies the sink stream for tests reports.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="runtime_parameters_reference/save_patterm.html#ref_param_save_patterm"><code class="computeroutput"><span class="identifier">save_patterm</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Provides parameters for testing output streams.
                 </p>
               </td>
 </tr>
@@ -170,381 +345,6 @@
           There is a link to the Boost.Test debug API, never heard about
         </p></td></tr>
 </table></div>
-<pre class="programlisting">  <span class="special">&lt;</span><span class="identifier">refentry</span> <span class="identifier">name</span><span class="special">=</span><span class="string">"break_exec_path"</span><span class="special">&gt;</span>
-   <span class="special">&lt;</span><span class="identifier">name</span><span class="special">&gt;</span><span class="identifier">Break</span> <span class="identifier">execution</span> <span class="identifier">path</span><span class="special">&lt;/</span><span class="identifier">name</span><span class="special">&gt;</span>
-   <span class="special">&lt;</span><span class="identifier">env</span><span class="special">&gt;</span><span class="identifier">BOOST_TEST_BREAK_EXEC_PATH</span><span class="special">&lt;/</span><span class="identifier">env</span><span class="special">&gt;</span>
-   <span class="special">&lt;</span><span class="identifier">cla</span><span class="special">&gt;</span><span class="identifier">break_exec_path</span><span class="string">"&lt;/cla&gt;
-   &lt;vals&gt;
-    &lt;simplelist&gt;
-     &lt;member&gt;string consisting of space separate test_name:execution_path_number pairs&lt;/member&gt;
-    &lt;/simplelist&gt;
-   &lt;/vals&gt;
-   &lt;descr&gt;
-    &lt;simpara&gt;
-     this runtime parameter is used by exception safety tester. By default exception safety tester only reports index of
-     execution path and  test case name where failure occurred. Using this parameter you can make the tester to break the
-     execution right before entering this path.
-    &lt;/simpara&gt;
-   &lt;/descr&gt;
-  &lt;/refentry&gt;
-
-
-
-  &lt;refentry name="</span><span class="identifier">catch_system_errors</span><span class="string">"&gt;
-   &lt;name&gt;Catch system errors&lt;/name&gt;
-   &lt;env&gt;BOOST_TEST_CATCH_SYSTEM_ERRORS&lt;/env&gt;
-   &lt;cla&gt;catch_system_errors&lt;/cla&gt;
-   &lt;vals&gt;
-    &lt;simplelist&gt;
-     &lt;member&gt;&lt;emphasis role="</span><span class="identifier">bold</span><span class="string">"&gt;yes&lt;/emphasis&gt;&lt;/member&gt;
-     &lt;member&gt;no&lt;/member&gt;
-    &lt;/simplelist&gt;
-   &lt;/vals&gt;
-   &lt;descr&gt;
-    &lt;simpara&gt;
-     value "</span><span class="identifier">no</span><span class="string">" prohibits the framework from catching asynchronous system events. This could be used for test programs
-     executed within GUI or to get a coredump for stack analysis. See usage recommendations page for more details.
-    &lt;/simpara&gt;
-   &lt;/descr&gt;
-  &lt;/refentry&gt;
-
-  &lt;refentry name="</span><span class="identifier">color_output</span><span class="string">"&gt;
-   &lt;name&gt;Produce color output&lt;/name&gt;
-   &lt;env&gt;BOOST_TEST_COLOR_OUTPUT&lt;/env&gt;
-   &lt;cla&gt;color_output&lt;/cla&gt;
-   &lt;vals&gt;
-    &lt;simplelist&gt;
-     &lt;member&gt;&lt;emphasis role="</span><span class="identifier">bold</span><span class="string">"&gt;no&lt;/emphasis&gt;&lt;/member&gt;
-     &lt;member&gt;yes&lt;/member&gt;
-    &lt;/simplelist&gt;
-   &lt;/vals&gt;
-   &lt;descr&gt;
-    &lt;simpara&gt;
-     The __UTF__ is able to produce color output on systems which supports it. To enable this behavior set the parameter to
-     'yes'. By default the output produces in not colored.
-    &lt;/simpara&gt;
-   &lt;/descr&gt;
-  &lt;/refentry&gt;
-
-  &lt;refentry name="</span><span class="identifier">detect_fp_exceptions</span><span class="string">"&gt;
-   &lt;name&gt;[Do not] trap floating point exceptions&lt;/name&gt;
-   &lt;env&gt;BOOST_TEST_DETECT_FP_EXCEPTIONS&lt;/env&gt;
-   &lt;cla&gt;detect_fp_exceptions&lt;/cla&gt;
-   &lt;vals&gt;
-    &lt;simplelist&gt;
-     &lt;member&gt;&lt;emphasis role="</span><span class="identifier">bold</span><span class="string">"&gt;no&lt;/emphasis&gt;&lt;/member&gt;
-     &lt;member&gt;yes&lt;/member&gt;
-    &lt;/simplelist&gt;
-   &lt;/vals&gt;
-   &lt;descr&gt;
-    &lt;simpara&gt;
-     enables/disable hardware traps for the floating point exception if they are supported. By default is disabled.
-    &lt;/simpara&gt;
-   &lt;/descr&gt;
-  &lt;/refentry&gt;
-
-  &lt;refentry name="</span><span class="identifier">detect_memory_leaks</span><span class="string">"&gt;
-   &lt;name&gt;Detect memory leaks&lt;/name&gt;
-   &lt;env&gt;BOOST_TEST_DETECT_MEMORY_LEAK&lt;/env&gt;
-   &lt;cla&gt;detect_memory_leaks&lt;/cla&gt;
-   &lt;vals&gt;
-    &lt;simplelist&gt;
-     &lt;member&gt;0&lt;/member&gt;
-     &lt;member&gt;&lt;emphasis role="</span><span class="identifier">bold</span><span class="string">"&gt;1&lt;/emphasis&gt;&lt;/member&gt;
-     &lt;member&gt;integer value &amp;gt; 1&lt;/member&gt;
-    &lt;/simplelist&gt;
-   &lt;/vals&gt;
-   &lt;descr&gt;
-    &lt;simpara&gt;
-     Positive value tells the framework to detect the memory leaks (if any). In addition any value greater than 1
-     is treated as leak allocation number and setups runtime breakpoint. In other words setting this parameter to
-     the positive value N greater than 1 causes the framework to set a breakpoint at Nth memory allocation (don't
-     do that from the command line - only when you are under debugger). Note: if your test program produces memory
-     leaks notifications, they are combined with allocation number values you could use to set a breakpoint.
-     Currently only applies to MS family of compilers in debug builds.
-    &lt;/simpara&gt;
-   &lt;/descr&gt;
-  &lt;/refentry&gt;
-
-  &lt;refentry name="</span><span class="identifier">log_format</span><span class="string">"&gt;
-   &lt;name&gt;The log format&lt;/name&gt;
-   &lt;env&gt;BOOST_TEST_LOG_FORMAT&lt;/env&gt;
-   &lt;cla&gt;log_format&lt;/cla&gt;
-   &lt;vals&gt;
-    &lt;simplelist&gt;
-     &lt;member&gt;&lt;emphasis role="</span><span class="identifier">bold</span><span class="string">"&gt;HRF&lt;/emphasis&gt; - human readable format&lt;/member&gt;
-     &lt;member&gt;XML - XML format for automated output processing&lt;/member&gt;
-    &lt;/simplelist&gt;
-   &lt;/vals&gt;
-   &lt;descr&gt;
-    &lt;simpara&gt;
-     allows selecting the __UTF__ log format from the list of formats supplied by the framework. To specify custom log
-     format use the &lt;link linkend="</span><span class="identifier">utf</span><span class="special">.</span><span class="identifier">user</span><span class="special">-</span><span class="identifier">guide</span><span class="special">.</span><span class="identifier">test</span><span class="special">-</span><span class="identifier">output</span><span class="special">.</span><span class="identifier">log</span><span class="special">.</span><span class="identifier">ct</span><span class="special">-</span><span class="identifier">config</span><span class="special">.</span><span class="identifier">log</span><span class="special">-</span><span class="identifier">formatter</span><span class="string">"&gt;unit_test_log API&lt;/link&gt;.
-    &lt;/simpara&gt;
-   &lt;/descr&gt;
-  &lt;/refentry&gt;
-
-  &lt;refentry name="</span><span class="identifier">log_level</span><span class="string">"&gt;
-   &lt;name&gt;The __UTF__ log level&lt;/name&gt;
-   &lt;env&gt;BOOST_TEST_LOG_LEVEL&lt;/env&gt;
-   &lt;cla&gt;log_level&lt;/cla&gt;
-   &lt;vals&gt;
-    &lt;variablelist&gt;
-     &lt;?dbhtml term-separator="</span> <span class="special">-</span> <span class="string">"?&gt;
-
-     &lt;varlistentry&gt;
-      &lt;term&gt;all&lt;/term&gt;
-      &lt;listitem&gt;&lt;simpara&gt;report all log messages including the passed test notification&lt;/simpara&gt;&lt;/listitem&gt;
-     &lt;/varlistentry&gt;
-     &lt;varlistentry&gt;
-      &lt;term&gt;success&lt;/term&gt;
-      &lt;listitem&gt;&lt;simpara&gt;the same as all&lt;/simpara&gt;&lt;/listitem&gt;
-     &lt;/varlistentry&gt;
-     &lt;varlistentry&gt;
-      &lt;term&gt;test_suite&lt;/term&gt;
-      &lt;listitem&gt;&lt;simpara&gt;show test suite messages&lt;/simpara&gt;&lt;/listitem&gt;
-     &lt;/varlistentry&gt;
-     &lt;varlistentry&gt;
-      &lt;term&gt;message&lt;/term&gt;
-      &lt;listitem&gt;&lt;simpara&gt;show user messages&lt;/simpara&gt;&lt;/listitem&gt;
-     &lt;/varlistentry&gt;
-     &lt;varlistentry&gt;
-      &lt;term&gt;warning&lt;/term&gt;
-      &lt;listitem&gt;&lt;simpara&gt;report warnings issued by user&lt;/simpara&gt;&lt;/listitem&gt;
-     &lt;/varlistentry&gt;
-     &lt;varlistentry&gt;
-      &lt;term&gt;&lt;emphasis role="</span><span class="identifier">bold</span><span class="string">"&gt;error&lt;/emphasis&gt;&lt;/term&gt;
-      &lt;listitem&gt;&lt;simpara&gt;report all error conditions&lt;/simpara&gt;&lt;/listitem&gt;
-     &lt;/varlistentry&gt;
-     &lt;varlistentry&gt;
-      &lt;term&gt;cpp_exception&lt;/term&gt;
-      &lt;listitem&gt;&lt;simpara&gt;report uncaught c++ exception&lt;/simpara&gt;&lt;/listitem&gt;
-     &lt;/varlistentry&gt;
-     &lt;varlistentry&gt;
-      &lt;term&gt;system_error&lt;/term&gt;
-      &lt;listitem&gt;&lt;simpara&gt;report system originated non-fatal errors (for example, timeout or floating point exception)&lt;/simpara&gt;&lt;/listitem&gt;
-     &lt;/varlistentry&gt;
-     &lt;varlistentry&gt;
-      &lt;term&gt;fatal_error&lt;/term&gt;
-      &lt;listitem&gt;&lt;simpara&gt;report only user or system originated fatal errors (for example, memory access violation)&lt;/simpara&gt;&lt;/listitem&gt;
-     &lt;/varlistentry&gt;
-     &lt;varlistentry&gt;
-      &lt;term&gt;nothing&lt;/term&gt;
-      &lt;listitem&gt;&lt;simpara&gt;do not report any information&lt;/simpara&gt;&lt;/listitem&gt;
-     &lt;/varlistentry&gt;
-    &lt;/variablelist&gt;
-   &lt;/vals&gt;
-   &lt;descr&gt;
-    &lt;simpara&gt;
-     allows setting the __UTF__ &lt;link linkid="</span><span class="identifier">utf</span><span class="special">.</span><span class="identifier">user</span><span class="special">-</span><span class="identifier">guide</span><span class="special">.</span><span class="identifier">test</span><span class="special">-</span><span class="identifier">output</span><span class="special">.</span><span class="identifier">log</span><span class="string">"&gt;log level&lt;/link&gt; in a range from a
-     complete log, when all successful tests are confirmed and  all test suite messages are included, to an empty
-     log when nothing is logged a test output stream.  Note that log levels are accumulating, in other words each
-     log level includes also all the information reported  by less  restrictive ones.
-    &lt;/simpara&gt;
-   &lt;/descr&gt;
-  &lt;/refentry&gt;
-
-  &lt;refentry name="</span><span class="identifier">log_sink</span><span class="string">"&gt;
-   &lt;name&gt;The log sink name&lt;/name&gt;
-   &lt;env&gt;BOOST_TEST_LOG_SINK&lt;/env&gt;
-   &lt;cla&gt;log_sink&lt;/cla&gt;
-   &lt;vals&gt;
-    &lt;simplelist&gt;
-     &lt;member&gt;&lt;emphasis role="</span><span class="identifier">bold</span><span class="string">"&gt;stdout&lt;/emphasis&gt;&lt;/member&gt;
-     &lt;member&gt;stderr&lt;/member&gt;
-     &lt;member&gt;arbitrary file name&lt;/member&gt;
-    &lt;/simplelist&gt;
-   &lt;/vals&gt;
-   &lt;descr&gt;
-    &lt;simpara&gt;
-     This parameter allows easily redirect the test log. The parameter value is the string containing either a file
-     name, in which case the __UTF__ will redirect log into file with that name, or 'stdout', in which case log is
-     redirected into standard output stream, or 'stderr' , in which case log is redirected into standard error stream.
-     Default is 'stdout'
-    &lt;/simpara&gt;
-   &lt;/descr&gt;
-  &lt;/refentry&gt;
-
-  &lt;refentry name="</span><span class="identifier">output_format</span><span class="string">"&gt;
-   &lt;name&gt;The output format&lt;/name&gt;
-   &lt;env&gt;BOOST_TEST_OUTPUT_FORMAT&lt;/env&gt;
-   &lt;cla&gt;output_format&lt;/cla&gt;
-   &lt;vals&gt;
-    &lt;simplelist&gt;
-     &lt;member&gt;&lt;emphasis role="</span><span class="identifier">bold</span><span class="string">"&gt;HRF&lt;/emphasis&gt; - human readable format&lt;/member&gt;
-     &lt;member&gt;XML - XML format for automated output processing&lt;/member&gt;
-    &lt;/simplelist&gt;
-   &lt;/vals&gt;
-   &lt;descr&gt;
-    &lt;simpara&gt;
-     combines an effect of report_format and log_format parameters. Has higher priority than either one of them if
-     specified.
-    &lt;/simpara&gt;
-   &lt;/descr&gt;
-  &lt;/refentry&gt;
-
-  &lt;refentry name="</span><span class="identifier">random</span><span class="string">"&gt;
-   &lt;name&gt;Random seed for random order of test cases&lt;/name&gt;
-   &lt;env&gt;BOOST_TEST_RANDOM&lt;/env&gt;
-   &lt;cla&gt;random&lt;/cla&gt;
-   &lt;vals&gt;
-    &lt;simplelist&gt;
-     &lt;member&gt;&lt;emphasis role="</span><span class="identifier">bold</span><span class="string">"&gt;0&lt;/emphasis&gt;&lt;/member&gt;
-     &lt;member&gt;1&lt;/member&gt;
-     &lt;member&gt;integer value &amp;gt; 1&lt;/member&gt;
-    &lt;/simplelist&gt;
-   &lt;/vals&gt;
-   &lt;descr&gt;
-    &lt;simpara&gt;
-     positive value makes the framework to run the test cases in random order. Also if this value is greater than 1,
-     it's used as a random seed. In other case random seed is generated based on current time.
-    &lt;/simpara&gt;
-   &lt;/descr&gt;
-  &lt;/refentry&gt;
-
-  &lt;refentry name="</span><span class="identifier">report_format</span><span class="string">"&gt;
-   &lt;name&gt;The report format&lt;/name&gt;
-   &lt;env&gt;BOOST_TEST_REPORT_FORMAT&lt;/env&gt;
-   &lt;cla&gt;report_format&lt;/cla&gt;
-   &lt;vals&gt;
-    &lt;simplelist&gt;
-     &lt;member&gt;&lt;emphasis role="</span><span class="identifier">bold</span><span class="string">"&gt;HRF&lt;/emphasis&gt; - human readable format&lt;/member&gt;
-     &lt;member&gt;XML - XML format for automated output processing&lt;/member&gt;
-    &lt;/simplelist&gt;
-   &lt;/vals&gt;
-   &lt;descr&gt;
-    &lt;simpara&gt;
-     allows selecting the __UTF__ report format from the list of formats supplied by the framework. To
-     specify custom report format use unit_test_report API.
-    &lt;/simpara&gt;
-   &lt;/descr&gt;
-  &lt;/refentry&gt;
-
-  &lt;refentry name="</span><span class="identifier">report_level</span><span class="string">"&gt;
-   &lt;name&gt;The results report level&lt;/name&gt;
-   &lt;env&gt;BOOST_TEST_REPORT_LEVEL&lt;/env&gt;
-   &lt;cla&gt;report_level&lt;/cla&gt;
-   &lt;vals&gt;
-    &lt;simplelist&gt;
-     &lt;member&gt;no&lt;/member&gt;
-     &lt;member&gt;&lt;emphasis role="</span><span class="identifier">bold</span><span class="string">"&gt;confirm&lt;/emphasis&gt;&lt;/member&gt;
-     &lt;member&gt;short&lt;/member&gt;
-     &lt;member&gt;detailed&lt;/member&gt;
-    &lt;/simplelist&gt;
-   &lt;/vals&gt;
-   &lt;descr&gt;
-    &lt;simpara&gt;
-     allows setting the level of detailization for the testing results report generated by the framework. Use value
-     "</span><span class="identifier">no</span><span class="string">" to eliminate the results report completely. See the
-     &lt;xref linkend="</span><span class="identifier">utf</span><span class="special">.</span><span class="identifier">user</span><span class="special">-</span><span class="identifier">guide</span><span class="special">.</span><span class="identifier">test</span><span class="special">-</span><span class="identifier">output</span><span class="special">.</span><span class="identifier">results</span><span class="special">-</span><span class="identifier">report</span><span class="string">"/&gt; for description of different report formats.
-    &lt;/simpara&gt;
-   &lt;/descr&gt;
-  &lt;/refentry&gt;
-
-  &lt;refentry name="</span><span class="identifier">report_sink</span><span class="string">"&gt;
-   &lt;name&gt;The report sink name&lt;/name&gt;
-   &lt;env&gt;BOOST_TEST_REPORT_SINK&lt;/env&gt;
-   &lt;cla&gt;report_sink&lt;/cla&gt;
-   &lt;vals&gt;
-    &lt;simplelist&gt;
-     &lt;member&gt;&lt;emphasis role="</span><span class="identifier">bold</span><span class="string">"&gt;stderr&lt;/emphasis&gt;&lt;/member&gt;
-     &lt;member&gt;stdout&lt;/member&gt;
-     &lt;member&gt;arbitrary file name&lt;/member&gt;
-    &lt;/simplelist&gt;
-   &lt;/vals&gt;
-   &lt;descr&gt;
-    &lt;simpara&gt;
-     This parameter allows easily redirect the test results report. The parameter value is the string containing either
-     a file name, in which case the __UTF__ will redirect results report into file with that name, or 'stdout', in which case
-     report is redirected into standard output stream, or 'stderr', in which case report is redirected into standard error
-     stream. Default is 'stderr'.
-    &lt;/simpara&gt;
-   &lt;/descr&gt;
-  &lt;/refentry&gt;
-
-  &lt;refentry name="</span><span class="identifier">result_code</span><span class="string">"&gt;
-   &lt;name&gt;[Do not] return result code&lt;/name&gt;
-   &lt;env&gt;BOOST_TEST_RESULT_CODE&lt;/env&gt;
-   &lt;cla&gt;result_code&lt;/cla&gt;
-   &lt;vals&gt;
-    &lt;simplelist&gt;
-     &lt;member&gt;&lt;emphasis role="</span><span class="identifier">bold</span><span class="string">"&gt;yes&lt;/emphasis&gt;&lt;/member&gt;
-     &lt;member&gt;no&lt;/member&gt;
-    &lt;/simplelist&gt;
-   &lt;/vals&gt;
-   &lt;descr&gt;
-    &lt;simpara&gt;
-     value "</span><span class="identifier">no</span><span class="string">" enforces the framework to always return zero result code. This could be used for test programs
-     executed within GUI. See &lt;link linkend="</span><span class="identifier">utf</span><span class="special">.</span><span class="identifier">usage</span><span class="special">-</span><span class="identifier">recommendations</span><span class="special">.</span><span class="identifier">dot</span><span class="special">-</span><span class="identifier">net</span><span class="special">-</span><span class="identifier">specific</span><span class="string">"&gt;usage recommendations&lt;/link&gt;
-     section for more details.
-    &lt;/simpara&gt;
-   &lt;/descr&gt;
-  &lt;/refentry&gt;
-
-  &lt;refentry name="</span><span class="identifier">run_test</span><span class="string">"&gt;
-   &lt;name&gt;Test units to run&lt;/name&gt;
-   &lt;env&gt;BOOST_TESTS_TO_RUN&lt;/env&gt;
-   &lt;cla&gt;run_test&lt;/cla&gt;
-   &lt;vals&gt;
-    &lt;simplelist&gt;
-     &lt;member&gt;
-      &lt;link linkend="</span><span class="identifier">utf</span><span class="special">.</span><span class="identifier">user</span><span class="special">-</span><span class="identifier">guide</span><span class="special">.</span><span class="identifier">runtime</span><span class="special">-</span><span class="identifier">config</span><span class="special">.</span><span class="identifier">run</span><span class="special">-</span><span class="identifier">by</span><span class="special">-</span><span class="identifier">name</span><span class="string">"&gt;specification&lt;/link&gt; of test units to run
-     &lt;/member&gt;
-    &lt;/simplelist&gt;
-   &lt;/vals&gt;
-   &lt;descr&gt;
-    &lt;simpara&gt;
-     specifies which test units to run.
-    &lt;/simpara&gt;
-   &lt;/descr&gt;
-  &lt;/refentry&gt;
-
-  &lt;refentry name="</span><span class="identifier">save_patterm</span><span class="string">"&gt;
-   &lt;name&gt;Save patterm&lt;/name&gt;
-   &lt;env&gt;BOOST_TEST_SAVE_PATTERN&lt;/env&gt;
-   &lt;cla&gt;save_pattern&lt;/cla&gt;
-   &lt;vals&gt;
-    &lt;simplelist&gt;
-     &lt;member&gt;&lt;emphasis role="</span><span class="identifier">bold</span><span class="string">"&gt;no&lt;/emphasis&gt;&lt;/member&gt;
-     &lt;member&gt;yes&lt;/member&gt;
-    &lt;/simplelist&gt;
-   &lt;/vals&gt;
-   &lt;descr&gt;
-    &lt;simpara&gt;
-     this parameter serves no particular purpose within the framework itself. It can be used by test modules relying
-     on output_test_stream to implement testing logic. output_test_stream has two modes of operation: save the pattern
-     file and match against stored pattern. You can use this parameter to switch between these modes, by passing the
-     parameter value to the output_test_stream constructor.
-    &lt;/simpara&gt;
-   &lt;/descr&gt;
-  &lt;/refentry&gt;
-
-
-
-  &lt;refentry name="</span><span class="identifier">use_alt_stack</span><span class="string">"&gt;
-   &lt;name&gt;Use alternative stack&lt;/name&gt;
-   &lt;env&gt;BOOST_TEST_USE_ALT_STACK&lt;/env&gt;
-   &lt;cla&gt;use_alt_stack&lt;/cla&gt;
-   &lt;vals&gt;
-    &lt;simplelist&gt;
-     &lt;member&gt;&lt;emphasis role="</span><span class="identifier">bold</span><span class="error">"</span><span class="special">&gt;</span><span class="identifier">yes</span><span class="special">&lt;/</span><span class="identifier">emphasis</span><span class="special">&gt;&lt;/</span><span class="identifier">member</span><span class="special">&gt;</span>
-     <span class="special">&lt;</span><span class="identifier">member</span><span class="special">&gt;</span><span class="identifier">no</span><span class="special">&lt;/</span><span class="identifier">member</span><span class="special">&gt;</span>
-    <span class="special">&lt;/</span><span class="identifier">simplelist</span><span class="special">&gt;</span>
-   <span class="special">&lt;/</span><span class="identifier">vals</span><span class="special">&gt;</span>
-   <span class="special">&lt;</span><span class="identifier">descr</span><span class="special">&gt;</span>
-    <span class="special">&lt;</span><span class="identifier">simpara</span><span class="special">&gt;</span>
-     <span class="identifier">specifies</span> <span class="identifier">whether</span> <span class="keyword">or</span> <span class="keyword">not</span> <span class="identifier">the</span> <span class="identifier">Boost</span><span class="special">.</span><span class="identifier">Test</span> <span class="identifier">Execution</span> <span class="identifier">Monitor</span> <span class="identifier">should</span> <span class="identifier">employ</span> <span class="identifier">an</span> <span class="identifier">alternative</span> <span class="identifier">stack</span> <span class="keyword">for</span> <span class="identifier">signals</span>
-     <span class="identifier">processing</span> <span class="identifier">on</span> <span class="identifier">platforms</span> <span class="identifier">where</span> <span class="identifier">they</span> <span class="identifier">are</span> <span class="identifier">supported</span><span class="special">.</span>
-    <span class="special">&lt;/</span><span class="identifier">simpara</span><span class="special">&gt;</span>
-   <span class="special">&lt;/</span><span class="identifier">descr</span><span class="special">&gt;</span>
-  <span class="special">&lt;/</span><span class="identifier">refentry</span><span class="special">&gt;</span>
-
- <span class="special">&lt;/</span><span class="identifier">btl</span><span class="special">-</span><span class="identifier">parameter</span><span class="special">-</span><span class="identifier">reference</span><span class="special">&gt;</span>
-<span class="special">&lt;/</span><span class="identifier">section</span><span class="special">&gt;</span>
-</pre>
-<p>
-        &lt;/section&gt;
-      </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
@@ -556,7 +356,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="running_specific_test_units_sele.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../runtime_configuration_or_what_ar.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../the_unit_test_framework_usage_re.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="running_specific_test_units_sele.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../runtime_configuration_or_what_ar.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="runtime_parameters_reference/show_progress.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>
