@@ -171,6 +171,13 @@ acceptable values list. All values are case sensitive and are required to exactl
     [Specifies the sink stream for tests reports.]
   ]
   
+  [/ ###############################################################################################]
+  [
+    [__param_save_pattern__]
+    [Provides parameters for testing output streams.]
+  ]
+  
+  
   
 ]
 [warning There is a link to the Boost.Test debug API, never heard about]
@@ -650,29 +657,33 @@ This parameter allows to easily redirect the test result report. See __param_log
 
 
 
+[/ ###############################################################################################]
+[#ref_param_save_patterm][section `save_patterm`]
 
-   
+Provides parameters for testing output streams. See this [link section] for details on these tests.
+
+This parameter serves no particular purpose within the framework itself. It can be used by test modules relying 
+on `output_test_stream` to implement testing logic. `output_test_stream` has two modes of operation: 
+
+* save the pattern file 
+* and match against stored pattern. 
+
+You can use this parameter to switch between these modes, by passing the parameter value to the `output_test_stream` constructor.
+
+      
+[h4 Acceptable values]
+
+* [*no] (default)
+* yes
 
 
-   <refentry name="save_patterm">
-    <name>Save patterm</name>
-    <env>BOOST_TEST_SAVE_PATTERN</env>
-    <cla>save_pattern</cla>
-    <vals>
-     <simplelist>
-      <member><emphasis role="bold">no</emphasis></member>
-      <member>yes</member>
-     </simplelist>
-    </vals>
-    <descr>
-     <simpara>
-      this parameter serves no particular purpose within the framework itself. It can be used by test modules relying 
-      on output_test_stream to implement testing logic. output_test_stream has two modes of operation: save the pattern 
-      file and match against stored pattern. You can use this parameter to switch between these modes, by passing the 
-      parameter value to the output_test_stream constructor.
-     </simpara>
-    </descr>
-   </refentry>
+[h4 Environment variable]
+
+  BOOST_TEST_SAVE_PATTERN
+
+[endsect] [/save_patterm]  
+
+
 
 
    

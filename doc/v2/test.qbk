@@ -136,6 +136,7 @@
 [def __param_detect_fp_exceptions__ [link ref_param_detect_fp_exceptions `detect_fp_exceptions`]]
 [def __param_log_sink__       [link ref_param_log_sink `log_sink`]]
 [def __param_report_sink__       [link ref_param_report_sink `report_sink`]]
+[def __param_save_pattern__       [link ref_param_save_patterm `save_patterm`]]
 
 
 
