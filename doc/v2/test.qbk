@@ -40,6 +40,8 @@
 [/ to be replaced by the proper link]
 [/ currently replace <xref linkend="utf.flag.alt-init-api" endterm="utf.flag.alt-init-api"/> ]
 [def __BOOST_TEST_ALTERNATIVE_INIT_API__ `BOOST_TEST_ALTERNATIVE_INIT_API`]
+[def __dynamic_linking__ [*dynamic linking]]
+[def __auto_linking__ [*automatic linking]]
 
 
 [/ to be replaced by the proper link]
