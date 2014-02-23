@@ -73,8 +73,7 @@ catch clause? Like in a following example:
   ]
 ]
 
-
-Note that in both examples above we used single-header variant of the __PEM__. Alternatively we can build and link with
+[note Note that in both examples above we used single-header variant of the __PEM__. Alternatively we can build and link with
 standalone library. In case of static library we are not required to include any __PEM__ related headers. To use dynamic 
 library you are required to include 
 
@@ -83,13 +82,23 @@ library you are required to include
 ``
 
 and define __dynamic_linking__ during program compilation. The same header is required if you want to employ __auto_linking__ feature.
-  
+]
+[warning Move or copy this comment in the compilation part]
 
 Let's consider an example where function `cpp_main()` had bubbled up a return code of 5:
-  
-  <btl-example name="example26">
-   <title>The __PEM__: error return code detection</title>
-  </btl-example>
+
+[import examples/example26.cpp]
+[import examples/example26.output]
+[table:id_example26 Error return code detection of the __PEM__
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example26]]
+    [[example26o]]
+  ]
+]
   
 The __PEM__ reports errors to both `std::cout` (details) and `std::cerr` (summary). Primary detailed error 
 messages appear on standard output stream so that it is properly interlaced with other output, thus aiding error 
