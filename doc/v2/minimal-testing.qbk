@@ -11,7 +11,9 @@ the [*Unit Test Framework Testing tools]. The __MTF__ supplies its own function
 As it follows from the name this component provides only minimal set of the testing capabilities and as a general
 rule the Unit Test Framework should be preferred. In a majority of the cases it provides you with much wider set of 
 testing tools (and other goods), while still being as easy to set up.
- 
+
+[warning The use of the Minial Testing Facility is deprecated. The documentation is left for reference 
+ and backward compatibility]
  
 [section:bt_minimal_usage Usage]
 The __MTF__ is implemented inline in one header: ``#include <boost/test/minimal.hpp>``
