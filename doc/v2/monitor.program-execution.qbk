@@ -32,10 +32,20 @@ To facilitate uniform error reporting the &pem; supplies function main() as part
 &pem; instead of regular function main your program is required to supply a function cpp_main() with same signature.
    
 Here is the traditional ['Hello World] program implemented using the &pem;:
-  
-  <btl-example name="example24">
-   <title>The &pem;: Hello World</title>
-  </btl-example>
+
+[import examples/example24.cpp]
+[import examples/example24.output]
+[table:id_example24 Hello World with the Program Execution Monitor
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example24]]
+    [[example24o]]
+  ]
+]
+
      
 
 It really is that simple - just change the name of your initial function from `main()` to `cpp_main()`. Do make sure 
@@ -46,7 +56,7 @@ The &pem; treats as errors:
 * Exceptions thrown from `cpp_main()`
 * Non-zero return from `cpp_main()`
   
-So what if some function had thrown a runtime_error with the message "big trouble" and it's not trapped by any 
+So what if some function had thrown a `std::runtime_error` with the message "big trouble" and it is not trapped by any
 catch clause? Like in a following example:
   
   <btl-example name="example25">
