@@ -10,7 +10,7 @@ command line, script, or batch environments to continue processing in a controll
 ['GUI] environments benefit from the unification of errors into program return codes.
 
    
-<firstterm>The Boost Test Library's &pem;</firstterm> relieves users from messy error 
+The Boost.Test Library's ['Program Execution Monitor] (__PEM__ for short) relieves users from messy error
 detection and reporting duties by providing a replacement function `main()` which calls a user-supplied `cpp_main()`
 function within a monitored environment. The supplied `main()` then uniformly detects and reports the occurrence of 
 several types of errors, reducing them to a uniform return code which is returned to the host environment.
@@ -19,7 +19,7 @@ Uniform error reporting is particularly useful for programs running unattended u
 files. Some operating systems pop up message boxes if an uncaught exception occurs, and this requires manual 
 intervention. By converting such exceptions into non-zero program return codes, the library makes the program a 
 better citizen. More uniform reporting of errors isn't a benefit to some programs, particularly programs always 
-run by hand of a knowledgeable person. So the &pem; wouldn't be worth using in that environment.
+run by hand of a knowledgeable person. So the __PEM__ wouldn't be worth using in that environment.
 
 Uniform error reporting can be also useful in test environments such as the Boost regression tests. Be aware though 
 in such case it might be preferable to use the <link linkend="utf">Unit Test Framework</link>, because it allows one 
@@ -28,10 +28,10 @@ to use the <link linkend="utf.user-guide.testing-tools">Testing tools</link> and
 [section Usage]
 
 
-To facilitate uniform error reporting the &pem; supplies function main() as part if it's implementation. To use the 
-&pem; instead of regular function main your program is required to supply a function cpp_main() with same signature.
+To facilitate uniform error reporting the __PEM__ supplies function main() as part if it's implementation. To use the 
+__PEM__ instead of regular function main your program is required to supply a function cpp_main() with same signature.
    
-Here is the traditional ['Hello World] program implemented using the &pem;:
+Here is the traditional ['Hello World] program implemented using the __PEM__:
 
 [import examples/example24.cpp]
 [import examples/example24.output]
@@ -51,7 +51,7 @@ Here is the traditional ['Hello World] program implemented using the &pem;:
 It really is that simple - just change the name of your initial function from `main()` to `cpp_main()`. Do make sure 
 the `argc` and `argv` parameters are specified (although you don't have to name them if you don't use them).
   
-The &pem; treats as errors:
+The __PEM__ treats as errors:
   
 * Exceptions thrown from `cpp_main()`
 * Non-zero return from `cpp_main()`
@@ -74,8 +74,8 @@ catch clause? Like in a following example:
 ]
 
 
-Note that in both examples above we used single-header variant of the &pem;. Alternatively we can build and link with
-standalone library. In case of static library we are not required to include any &pem; related headers. To use dynamic 
+Note that in both examples above we used single-header variant of the __PEM__. Alternatively we can build and link with
+standalone library. In case of static library we are not required to include any __PEM__ related headers. To use dynamic 
 library you are required to include 
 
 ``
@@ -88,15 +88,15 @@ and define __dynamic_linking__ during program compilation. The same header is re
 Let's consider an example where function `cpp_main()` had bubbled up a return code of 5:
   
   <btl-example name="example26">
-   <title>The &pem;: error return code detection</title>
+   <title>The __PEM__: error return code detection</title>
   </btl-example>
   
-The &pem; reports errors to both `std::cout` (details) and `std::cerr` (summary). Primary detailed error 
+The __PEM__ reports errors to both `std::cout` (details) and `std::cerr` (summary). Primary detailed error 
 messages appear on standard output stream so that it is properly interlaced with other output, thus aiding error 
 analysis. While the final error notification message appears on standard error stream. This increases the 
 visibility of error notification if standard output and error streams are directed to different devices or files.
  
-The &pem;'s supplied `main()` will return following result codes:
+The __PEM__'s supplied `main()` will return following result codes:
    
 * `boost::exit_success` - no errors
 * `boost::exit_failure` - non-zero and `non-boost::exit_success` return code from `cpp_main()`
@@ -110,11 +110,11 @@ The &pem;'s supplied `main()` will return following result codes:
  <section id="pem.config">
   <title>Configuration</title>
   
-There are two aspects of the &pem; behavior that you can customize at runtime. Customization is performed using 
+There are two aspects of the __PEM__ behavior that you can customize at runtime. Customization is performed using 
 environment variables.
   
   <table id="pem.config.flags">
-   <title>The &pem; configuration environment variables</title>
+   <title>The __PEM__ configuration environment variables</title>
    
    <tgroup cols="2">
     <colspec colname="c1"/>
@@ -129,7 +129,7 @@ environment variables.
      <row>
       <entry>BOOST_TEST_CATCH_SYSTEM_ERRORS</entry>
       <entry>
-       allows customizing behavior of the &pem; in regards of catching system errors. For more details about the 
+       allows customizing behavior of the __PEM__ in regards of catching system errors. For more details about the 
        meaning of this option see the <link linkend="boost.execution_monitor">Execution Monitor</link>. If you 
        want to prevent the Program Execution Monitor from catching system exception, set the value of this 
        variable to "no". The default value is "yes".
@@ -150,12 +150,12 @@ environment variables.
  </section>
 
  <section id="pem.impl">
-  <title>The &pem; implementation</title>
+  <title>The __PEM__ implementation</title>
   <titleabbrev>Implementation</titleabbrev>
 
-To monitor execution of user supplied function `cpp_main()` the &pem; relies on the Boost.Test's
-<link linkend="execution-monitor">Execution Monitor</link>. Also the &pem; supplies the function main() to facilitate
-uniform error reporting. Following files constitute the &pem; implementation:
+To monitor execution of user supplied function `cpp_main()` the __PEM__ relies on the Boost.Test's
+<link linkend="execution-monitor">Execution Monitor</link>. Also the __PEM__ supplies the function main() to facilitate
+uniform error reporting. Following files constitute the __PEM__ implementation:
  
   <variablelist>
    <?dbhtml list-presentation="list"?>
@@ -195,7 +195,7 @@ uniform error reporting. Following files constitute the &pem; implementation:
   </variablelist>
   
 
-The &pem; implementation wraps several system headers and is intended to be used as standalone library. While there
+The __PEM__ implementation wraps several system headers and is intended to be used as standalone library. While there
 exist an alternative variant to <link linkend="pem.compilation.direct-include">include the whole implementation 
 directly</link> into your program, for the long term usage the preferable solution is to 
 <link linkend="pem.compilation.standalone">build library once</link> and reuse it.
@@ -204,19 +204,19 @@ directly</link> into your program, for the long term usage the preferable soluti
  </section>
  
  <section id="pem.compilation">
-  <title>The &pem; compilation</title>
+  <title>The __PEM__ compilation</title>
   <titleabbrev>Compilation</titleabbrev>
  
 In comparison with many other boost libraries, which are completely implemented in header files, compilation and
-linking with the &pem; may require additional steps. The &pem; presents you with options to either
+linking with the __PEM__ may require additional steps. The __PEM__ presents you with options to either
 <link linkend="pem.compilation.standalone">built and link with a standalone library</link> or
 <link linkend="pem.compilation.direct-include">include the implementation directly</link> into your 
-program. If you opt to use the library the &pem; header implements the 
+program. If you opt to use the library the __PEM__ header implements the 
 <link linkend="pem.compilation.auto-linking">auto-linking support</link> and following flags can be used to configure 
-compilation of the &pem; library and your program:
+compilation of the __PEM__ library and your program:
 
   <table id="pem.compilation.flags">
-   <title>&pem; compilation flags</title>
+   <title>__PEM__ compilation flags</title>
    <tgroup cols="2">
     <colspec colname="c1"/>
     <colspec colname="c3"/>
@@ -243,7 +243,7 @@ compilation of the &pem; library and your program:
    <title>Standalone library compilation</title>
 
 If you opted to link your program with the standalone library, you need to build it first. To build a standalone 
-library all C++ files (.cpp), that constitute &pem; <link linkend="pem.impl">implementation</link> need to be 
+library all C++ files (.cpp), that constitute __PEM__ <link linkend="pem.impl">implementation</link> need to be 
 listed as source files in your makefile [footnote There are varieties of make systems that can be used. To name 
 a few: <acronym>GNU</acronym> make (and other make clones) and build systems integrated into <acronym>IDE</acronym>s
 (for  example Microsoft  Visual Studio). The Boost preferred solution is Boost.Build system that is based on top of 
@@ -253,7 +253,7 @@ Jamfile is  used by Boost.Build. For the sake of simplicity let's call this file
 
 
 The makefile for use with Boost.Build system is supplied in <filename class="directory">libs/test/build</filename>
-directory. The &pem; can be built as either <link linkend="pem.compilation.standalone.static">static</link> 
+directory. The __PEM__ can be built as either <link linkend="pem.compilation.standalone.static">static</link> 
 or <link linkend="pem.compilation.standalone.dynamic">dynamic</link> library.
 
 
@@ -308,7 +308,7 @@ Also on Windows you can use the Microsoft Visual Studio .NET project file provid
    <title>Support of the auto-linking feature</title>
    <titleabbrev>Auto-linking support</titleabbrev>
 
-For the Microsoft family of compilers the &pem; provides an ability to automatically select proper library name
+For the Microsoft family of compilers the __PEM__ provides an ability to automatically select proper library name
 and add it to the list of objects to be linked with. To employ this feature you required to include either header
 <ulink url="../../../../boost/test/prg_exec_monitor.hpp"><filename>boost/test/prg_exec_monitor.hpp</filename></ulink>
 or header
@@ -322,16 +322,16 @@ For more details on the auto-linking feature implementation and configuration yo
   </section>
 
   <section id="pem.compilation.direct-include">
-   <title>Including the &pem; directly into your program</title>
+   <title>Including the __PEM__ directly into your program</title>
    <titleabbrev>Direct include</titleabbrev>
    
 If you prefer to avoid the standalone library compilation you have two alternative usage variants: you can either 
 include all files that constitute the static library in your program's makefile or include them as a part of
-your program's source file. To facilitate the later variant the &pem; implementation presents the header
+your program's source file. To facilitate the later variant the __PEM__ implementation presents the header
 <ulink url="../../../../boost/test/included/prg_exec_monitor.hpp"><filename>boost/test/included/prg_exec_monitor.hpp</filename></ulink>
 In both variants neither <xref linkend="pem.flag.dyn-link" endterm="pem.flag.dyn-link"/> nor 
 <xref linkend="pem.flag.no-lib" endterm="pem.flag.no-lib"/> are applicable. This solution may not be the best choice
-in a long run, since it requires the &pem; sources recompilation for every program you use it with.
+in a long run, since it requires the __PEM__ sources recompilation for every program you use it with.
 
 
   </section>
