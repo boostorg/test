@@ -2,9 +2,7 @@
 <!DOCTYPE part PUBLIC "-//Boost//DTD BoostBook XML V1.0//EN"  "../../../../tools/boostbook/dtd/boostbook.dtd" [
  <!ENTITY utf "<acronym>UTF</acronym>">
 ]>
-<section id="execution-monitor">
- <title>Boost Test Library: The Execution Monitor</title>
- <titleabbrev>The Execution Monitor</titleabbrev>
+[#ref_execution_monitor][section The Execution Monitor]
 
  <section id="execution-monitor.intro">
   <title/>

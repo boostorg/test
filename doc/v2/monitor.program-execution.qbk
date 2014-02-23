@@ -116,47 +116,35 @@ The __PEM__'s supplied `main()` will return following result codes:
 
 
 
- <section id="pem.config">
-  <title>Configuration</title>
+[section Configuration]
   
 There are two aspects of the __PEM__ behavior that you can customize at runtime. Customization is performed using 
 environment variables.
-  
-  <table id="pem.config.flags">
-   <title>The __PEM__ configuration environment variables</title>
-   
-   <tgroup cols="2">
-    <colspec colname="c1"/>
-    <colspec colname="c3"/>
-    <thead>
-     <row>
-       <entry>Flag</entry>
-       <entry>Usage</entry>
-     </row>
-    </thead>
-    <tbody>
-     <row>
-      <entry>BOOST_TEST_CATCH_SYSTEM_ERRORS</entry>
-      <entry>
-       allows customizing behavior of the __PEM__ in regards of catching system errors. For more details about the 
-       meaning of this option see the <link linkend="boost.execution_monitor">Execution Monitor</link>. If you 
-       want to prevent the Program Execution Monitor from catching system exception, set the value of this 
-       variable to "no". The default value is "yes".
-      </entry>
-     </row>
-     
-     <row>
-      <entry>BOOST_PRG_MON_CONFIRM</entry>
-      <entry>
-       allows avoiding success confirmation message. Some users prefer to see a confirmation message in case if program
+
+[table:id_pem_env The __PEM__ configuration environment variables
+  [
+    [Flag]
+    [Usage]
+  ]
+  [
+    [`BOOST_TEST_CATCH_SYSTEM_ERRORS`]
+    [allows customizing behavior of the __PEM__ in regards of catching system errors. For more details about the 
+     meaning of this option see the [link ref_execution_monitor Execution Monitor]. If you
+     want to prevent the Program Execution Monitor from catching system exception, set the value of this
+     variable to "no". The default value is "yes".]
+  ]
+  [
+    [`BOOST_PRG_MON_CONFIRM`]
+    [allows avoiding success confirmation message. Some users prefer to see a confirmation message in case if program
        successfully executed. While others don't like the clutter or any output is prohibited by organization standards.
-       To avoid the message set the value of this variable to "no". The default value is "yes".
-      </entry>
-     </row>
-    </tbody>
-   </tgroup>
-  </table>
- </section>
+       To avoid the message set the value of this variable to "no". The default value is "yes".]
+  ]
+
+]
+
+[warning Copy the environment variables into appropriate pages, as for the command line parameters]
+
+[endsect] [/ configuration]
 
  <section id="pem.impl">
   <title>The __PEM__ implementation</title>

@@ -31,6 +31,7 @@
 [def __UTF__ /UTF/]
 [def __IEEE754__ [*IEEE754]]
 [def __PEM__     ['PEM]]
+[def __EM__      [link ref_execution_monitor ['EM]]]
 [def __MTF__     ['Minimal Testing Facility]]
 
 [/<link linkend="utf.user-guide.testing-tools">testing tools</link>]
