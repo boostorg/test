@@ -59,10 +59,21 @@ The &pem; treats as errors:
 So what if some function had thrown a `std::runtime_error` with the message "big trouble" and it is not trapped by any
 catch clause? Like in a following example:
   
-  <btl-example name="example25">
-   <title>The &pem;: standard exception detection</title>
-  </btl-example>
   
+[import examples/example25.cpp]
+[import examples/example25.output]
+[table:id_example25 Standard exception detection within the Program Execution Monitor
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example25]]
+    [[example25o]]
+  ]
+]
+
+
 Note that in both examples above we used single-header variant of the &pem;. Alternatively we can build and link with
 standalone library. In case of static library we are not required to include any &pem; related headers. To use dynamic 
 library you are required to include 

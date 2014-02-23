@@ -1,17 +1,12 @@
+//[example25
 #include <stdexcept>
-#include <boost/test/included/prg_exec_monitor.hpp> 
-
-//____________________________________________________________________________//
+#include <boost/test/included/prg_exec_monitor.hpp>
 
 int foo() { throw std::runtime_error( "big trouble" ); }
 
-//____________________________________________________________________________//
-
 int cpp_main( int, char* [] ) // note the name
 {
-    foo();
-
-    return 0;
+  foo();
+  return 0;
 }
-
-//____________________________________________________________________________//
+//]
