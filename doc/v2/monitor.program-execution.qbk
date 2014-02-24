@@ -146,12 +146,10 @@ environment variables.
 
 [endsect] [/ configuration]
 
- <section id="pem.impl">
-  <title>The __PEM__ implementation</title>
-  <titleabbrev>Implementation</titleabbrev>
+[section Implementation]
 
 To monitor execution of user supplied function `cpp_main()` the __PEM__ relies on the Boost.Test's
-<link linkend="execution-monitor">Execution Monitor</link>. Also the __PEM__ supplies the function main() to facilitate
+[link ref_execution_monitor Execution Monitor] (['EM] for short). Also the __PEM__ supplies the function `main()` to facilitate
 uniform error reporting. Following files constitute the __PEM__ implementation:
  
   <variablelist>
@@ -161,7 +159,7 @@ uniform error reporting. Following files constitute the __PEM__ implementation:
     <term><ulink url="../../../../boost/test/impl/execution_monitor.ipp"><filename>boost/test/impl/execution_monitor.ipp</filename></ulink></term>
     <listitem>
      <simpara>
-      provides <link linkend="execution-monitor">Execution Monitor</link> implementation for all supported 
+      provides __EM__ implementation for all supported
       configurations.
      </simpara>
     </listitem>
@@ -170,7 +168,7 @@ uniform error reporting. Following files constitute the __PEM__ implementation:
    <varlistentry>
     <term><ulink url="../../../../boost/test/impl/cpp_main.ipp"><filename>boost/test/impl/cpp_main.ipp</filename></ulink></term>
     <listitem>
-     <simpara>supplies function main() for static library build</simpara>
+     <simpara>supplies function `main()` for static library build</simpara>
     </listitem>
    </varlistentry>
 
@@ -185,7 +183,7 @@ uniform error reporting. Following files constitute the __PEM__ implementation:
     <term><ulink url="../../../../boost/test/prg_exec_monitor.hpp"><filename>boost/test/prg_exec_monitor.hpp</filename></ulink></term>
     <listitem>
      <simpara>
-      contains definitions for main() function for dynamic library build and pragmas for auto-linking feature support.
+      contains definitions for `main()` function for dynamic library build and pragmas for auto-linking feature support.
      </simpara>
     </listitem>
    </varlistentry>
@@ -198,11 +196,9 @@ directly</link> into your program, for the long term usage the preferable soluti
 <link linkend="pem.compilation.standalone">build library once</link> and reuse it.
 
 
- </section>
+[endsect] [/implementation]
  
- <section id="pem.compilation">
-  <title>The __PEM__ compilation</title>
-  <titleabbrev>Compilation</titleabbrev>
+[section Compilation]
  
 In comparison with many other boost libraries, which are completely implemented in header files, compilation and
 linking with the __PEM__ may require additional steps. The __PEM__ presents you with options to either
@@ -315,7 +311,6 @@ By default the feature is going to be enabled. To disable it you have to define 
 
 For more details on the auto-linking feature implementation and configuration you should consult the 
 <ulink url="under_construction.html">appropriate documentation</ulink>.
-   </para>
   </section>
 
   <section id="pem.compilation.direct-include">
@@ -332,7 +327,7 @@ in a long run, since it requires the __PEM__ sources recompilation for every pro
 
 
   </section>
- </section>
+[endsect] [/compilation]
 
 
 
