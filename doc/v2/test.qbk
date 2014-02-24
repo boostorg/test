@@ -43,12 +43,13 @@
 [/ currently replace <xref linkend="utf.flag.alt-init-api" endterm="utf.flag.alt-init-api"/> ]
 [def __BOOST_TEST_ALTERNATIVE_INIT_API__ `BOOST_TEST_ALTERNATIVE_INIT_API`]
 [def __dynamic_linking__ [*dynamic linking]]
-[def __auto_linking__ [*automatic linking]]
+[def __auto_linking__ [link ref_pem_auto_link automatic linking]]
 
 
 [/ to be replaced by the proper link]
 [/ currently replace <xref linkend="utf.flag.dyn-link" endterm="utf.flag.dyn-link"/> ]
-[def __BOOST_TEST_DYN_LINK__   `BOOST_TEST_DYN_LINK`]
+[def __BOOST_TEST_DYN_LINK__   [link ref_BOOST_TEST_DYN_LINK `BOOST_TEST_DYN_LINK`]]
+[def __BOOST_TEST_NO_LIB__     [link ref_BOOST_TEST_NO_LIB `BOOST_TEST_NO_LIB`]]
 
 [def __BOOST_TEST_MODULE__     [link ref_BOOST_TEST_MODULE `BOOST_TEST_MODULE`]]
 

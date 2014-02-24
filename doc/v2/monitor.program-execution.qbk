@@ -115,7 +115,7 @@ The __PEM__'s supplied `main()` will return following result codes:
 
 
 
-
+[/ ####################################################################################  configuration]
 [section Configuration]
   
 There are two aspects of the __PEM__ behavior that you can customize at runtime. Customization is performed using 
@@ -146,7 +146,8 @@ environment variables.
 
 [endsect] [/ configuration]
 
-[section Implementation]
+[/ ####################################################################################  implementation]
+[#ref_pem_implementation][section Implementation]
 
 To monitor execution of user supplied function `cpp_main()` the __PEM__ relies on the Boost.Test's
 [link ref_execution_monitor Execution Monitor] (['EM] for short). Also the __PEM__ supplies the function `main()` to facilitate
@@ -202,41 +203,33 @@ directly</link> into your program, for the long term usage the preferable soluti
  
 In comparison with many other boost libraries, which are completely implemented in header files, compilation and
 linking with the __PEM__ may require additional steps. The __PEM__ presents you with options to either
-<link linkend="pem.compilation.standalone">built and link with a standalone library</link> or
-<link linkend="pem.compilation.direct-include">include the implementation directly</link> into your 
-program. If you opt to use the library the __PEM__ header implements the 
+
+# built and link with a [link ref_pem_stanlone standalone library] or
+# include the implementation [link ref_pem_direct_include directly] into your program. 
+
+If you opt to use the library the __PEM__ header implements the 
 <link linkend="pem.compilation.auto-linking">auto-linking support</link> and following flags can be used to configure 
 compilation of the __PEM__ library and your program:
 
-  <table id="pem.compilation.flags">
-   <title>__PEM__ compilation flags</title>
-   <tgroup cols="2">
-    <colspec colname="c1"/>
-    <colspec colname="c3"/>
-    <thead>
-     <row>
-       <entry>Variable</entry>
-       <entry>Usage</entry>
-     </row>
-    </thead>
-    <tbody>
-     <row>
-      <entry id="pem.flag.dyn-link">BOOST_TEST_DYN_LINK</entry>
-      <entry>Define this flag to build/use dynamic library.</entry>
-     </row>
-     <row>
-      <entry id="pem.flag.no-lib">BOOST_TEST_NO_LIB</entry>
-      <entry>Define this flag to prevent auto-linking.</entry>
-     </row>
-    </tbody>
-   </tgroup>
-  </table>
+[table 
+  [
+    [Variable]
+    [Usage]
+  ]
+  [
+    [[#ref_BOOST_TEST_DYN_LINK]`BOOST_TEST_DYN_LINK`]
+    [Define this flag to build/use dynamic library]
+  ]
+  [
+    [[#ref_BOOST_TEST_NO_LIB]`BOOST_TEST_NO_LIB`]
+    [Define this flag to prevent auto-linking]
+  ]
+]
 
-  <section id="pem.compilation.standalone">
-   <title>Standalone library compilation</title>
+[#ref_pem_stanlone][section Standalone library compilation]
 
 If you opted to link your program with the standalone library, you need to build it first. To build a standalone 
-library all C++ files (.cpp), that constitute __PEM__ <link linkend="pem.impl">implementation</link> need to be 
+library all C++ files (.cpp), that constitute __PEM__ [link ref_pem_implementation implementation] need to be
 listed as source files in your makefile [footnote There are varieties of make systems that can be used. To name 
 a few: <acronym>GNU</acronym> make (and other make clones) and build systems integrated into <acronym>IDE</acronym>s
 (for  example Microsoft  Visual Studio). The Boost preferred solution is Boost.Build system that is based on top of 
@@ -245,17 +238,20 @@ and all build  options. For example the makefile that is used by make, or the Mi
 Jamfile is  used by Boost.Build. For the sake of simplicity let's call this file the makefile.].
 
 
-The makefile for use with Boost.Build system is supplied in <filename class="directory">libs/test/build</filename>
-directory. The __PEM__ can be built as either <link linkend="pem.compilation.standalone.static">static</link> 
-or <link linkend="pem.compilation.standalone.dynamic">dynamic</link> library.
+The makefile for use with Boost.Build system is supplied in 
+
+``
+libs/test/build
+``
+
+directory. The __PEM__ can be built as either [link ref_pem_static static] or [link ref_pem_dynamic dynamic] library.
 
 
 
-   <section id="pem.compilation.standalone.static">
-    <title>Static library compilation</title>
+[#ref_pem_static][section Static library compilation]
 
 There are no additional build defines or options required to build static library. Using Boost.Build system you 
-can build the static library with a following command from libs/test/build directory:
+can build the static library with a following command from `libs/test/build` directory:
 
     <cmdsynopsis>
      <!-- TO FIX -->
@@ -266,17 +262,14 @@ can build the static library with a following command from libs/test/build direc
 
 Also on Windows you can use the Microsoft Visual Studio .NET project file provided.
 
-   </section>
-   
-   <section id="pem.compilation.standalone.dynamic">
-    <title>Dynamic library compilation</title>
-   
+[endsection] [/ static compilation]
 
-To build the dynamic library [footnote What is meant by the term dynamic library is a <firstterm>dynamically 
-loaded library</firstterm>, alternatively called a <firstterm>shared library</firstterm>.] you 
-need to add <xref linkend="pem.flag.dyn-link" endterm="pem.flag.dyn-link"/> to the list of macro definitions in the 
-makefile. Using the Boost.Build system you can build the dynamic library with the following command from 
-<filename class="directory">libs/test/build</filename> directory:
+[#ref_pem_dynamic][section Dynamic library compilation]
+
+To build the dynamic library [footnote What is meant by the term dynamic library is a ['dynamically
+loaded library], alternatively called a ['shared library].] you
+need to add __BOOST_TEST_DYN_LINK__ to the list of macro definitions in the
+``libs/test/build`` directory:
 
     <cmdsynopsis>
      <!-- TO FIX -->
@@ -289,44 +282,53 @@ Also on Windows you can use the Microsoft Visual Studio .NET project file provid
 
 [caution 
   For your program to successfully link with the dynamic library the flag
-  <xref linkend="pem.flag.dyn-link" endterm="pem.flag.dyn-link"/> needs to be defined both during dynamic library 
+  __BOOST_TEST_DYN_LINK__ needs to be defined both during dynamic library
   build and during your program compilation.
 ]
 
 
-   </section>
-  </section>
+[endsect] [/ dynamic compilation]
+[endsect] [/ standalone lib compilation]
 
-  <section id="pem.compilation.auto-linking">
-   <title>Support of the auto-linking feature</title>
-   <titleabbrev>Auto-linking support</titleabbrev>
+[#ref_pem_auto_link][section Support of the auto-linking feature]
+
 
 For the Microsoft family of compilers the __PEM__ provides an ability to automatically select proper library name
 and add it to the list of objects to be linked with. To employ this feature you required to include either header
-<ulink url="../../../../boost/test/prg_exec_monitor.hpp"><filename>boost/test/prg_exec_monitor.hpp</filename></ulink>
+
+``
+#include <boost/test/prg_exec_monitor.hpp>
+``
 or header
-<ulink url="../../../../boost/test/included/prg_exec_monitor.hpp"><filename>boost/test/included/prg_exec_monitor.hpp</filename></ulink>
-By default the feature is going to be enabled. To disable it you have to define the flag 
-<xref linkend="pem.flag.no-lib" endterm="pem.flag.no-lib"/>. 
+
+``
+#include <boost/test/included/prg_exec_monitor.hpp>
+``
+
+By default the feature is going to be enabled. To disable it you have to define the flag __BOOST_TEST_NO_LIB__.
 
 For more details on the auto-linking feature implementation and configuration you should consult the 
 <ulink url="under_construction.html">appropriate documentation</ulink>.
-  </section>
 
-  <section id="pem.compilation.direct-include">
-   <title>Including the __PEM__ directly into your program</title>
-   <titleabbrev>Direct include</titleabbrev>
+[warning the previous link points to "under construction"]
+
+[endsect] [/ autolink]
+
+[#ref_pem_direct_include][section Including the __PEM__ directly into your program]
    
 If you prefer to avoid the standalone library compilation you have two alternative usage variants: you can either 
 include all files that constitute the static library in your program's makefile or include them as a part of
 your program's source file. To facilitate the later variant the __PEM__ implementation presents the header
-<ulink url="../../../../boost/test/included/prg_exec_monitor.hpp"><filename>boost/test/included/prg_exec_monitor.hpp</filename></ulink>
-In both variants neither <xref linkend="pem.flag.dyn-link" endterm="pem.flag.dyn-link"/> nor 
-<xref linkend="pem.flag.no-lib" endterm="pem.flag.no-lib"/> are applicable. This solution may not be the best choice
+``
+#include <boost/test/included/prg_exec_monitor.hpp>
+``
+
+In both variants neither __BOOST_TEST_DYN_LINK__ nor __BOOST_TEST_NO_LIB__ are applicable. This solution may not be the best choice
 in a long run, since it requires the __PEM__ sources recompilation for every program you use it with.
 
+[endsect] [/ direct include]
 
-  </section>
+
 [endsect] [/compilation]
 
 
