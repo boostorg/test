@@ -52,10 +52,10 @@ error like this.
  
 
 The reason for this error is that in your implementation you should specify second argument of
-init_unit_test_suite exactly as in the specification, i.e.: `char* []`.
+`init_unit_test_suite` exactly as in the specification, i.e.: `char* []`.
 
 [h3 How can I redirect testing output?]
-Use ``unit_test_log::instance().set_log_output( std::ostream & )``.
+Use ``unit_test_log::instance().set_log_output( std::ostream & )``
 For more details see the __UTF__ __output_stream_testing_tool__ testing tools documentation.
 
 [h3 I want different default log trace level]
