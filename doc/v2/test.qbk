@@ -178,9 +178,3 @@
 [include release_notes.qbk]
 [include acknowledgments.qbk]
 
-[/[include using.qbk]
-
-[include examples.qbk]
-[include reference.qbk]
-[include history.qbk]
-[xinclude index.xml]]
