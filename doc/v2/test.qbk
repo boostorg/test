@@ -7,7 +7,6 @@
 
 [library Boost.Test
     [quickbook 1.6]
-    [copyright 2001 - 2013 Gennadiy Rozental]
     [copyright 2001 - 2014 Gennadiy Rozental]
     [purpose Testing library]
     [license
