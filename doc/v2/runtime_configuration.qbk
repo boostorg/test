@@ -330,7 +330,7 @@ format use the [link ref_log_formatter_api custom log formatting API].
 [/ ###############################################################################################]
 [#ref_param_log_level][section `log_level`]
 
-Allows setting the __UTF__ <link linkid="utf.user-guide.test-output.log">log level</link> in a range from a
+Allows setting the __UTF__ [link ref_log_level_explanations log level] in a range from a
 complete log, when all successful tests are confirmed and all test suite messages are included, to an empty
 log when nothing is logged a test output stream. 
 
