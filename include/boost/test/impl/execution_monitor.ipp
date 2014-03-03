@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2012.
+//  (C) Copyright Gennadiy Rozental 2001-2014.
 //  (C) Copyright Beman Dawes and Ullrich Koethe 1995-2001.
 //  Use, modification, and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
