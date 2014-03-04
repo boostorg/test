@@ -232,7 +232,7 @@ output stream compliant components.
 [/ -------------------------------------------------------------------------------------------------- ]
 [#ref_BOOST_TEST_PASSPOINT][section `BOOST_TEST_PASSPOINT`]
 
-The macro __BOOST_TEST_PASSPOINT__ is intended to be used to inject an &quot;unnamed&quot; checkpoint position. The
+The macro __BOOST_TEST_PASSPOINT__ is intended to be used to inject an [*unnamed] checkpoint position. The
 macro signature is as follows:
 
   __BOOST_TEST_PASSPOINT__();
