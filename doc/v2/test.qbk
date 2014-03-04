@@ -182,3 +182,6 @@
 [include release_notes.qbk]
 [include acknowledgments.qbk]
 
+[/ reference sections]
+[include runtime_configuration.reference.qbk]
+
