@@ -19,7 +19,7 @@ For example:
 
 * If you are interested in unit testing framework you may go directly <link linkend="utf">there</link>
 * For novice users I recommend to start from simple [link ref_section_tutorials tutorials]. 
-* Looking for quick help - check the [link ref_section_faq FAQ] section for resolution to many popular issues you may be faced with. 
+* Looking for quick help - check the __part_faq__ section for resolution to many popular issues you may be faced with. 
   Most pages should link you directly to the terms that you need to understand it. 
 * For help with compilation see compilation sections of an appropriate component.
 
