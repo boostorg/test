@@ -587,6 +587,7 @@ Newly created test suite has to be registered in a parent one using add interfac
 registration is performed in the test module initialization function.
 
 The example below creates a test tree, which can be represented by the following hierarchy:
+
 [$../img/class-hier.jpg]
 
 [import examples/example11.cpp]

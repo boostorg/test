@@ -72,13 +72,3 @@ like the floating point comparison or the logged  expectations testing, are defi
 [endsect] [/section:usage_variants]
 
 [endsect] [/section:users_guide]
-
-
-
-
-[/ the remaining parts to be documented/ported to quickbook]
-[/ <xi:include href="utf.user-guide.runtime-config.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
- <xi:include href="utf.user-guide.initialization.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
- <xi:include href="utf.user-guide.test-runners.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-
-]
