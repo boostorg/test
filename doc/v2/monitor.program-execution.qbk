@@ -22,8 +22,8 @@ better citizen. More uniform reporting of errors isn't a benefit to some program
 run by hand of a knowledgeable person. So the __PEM__ wouldn't be worth using in that environment.
 
 Uniform error reporting can be also useful in test environments such as the Boost regression tests. Be aware though 
-in such case it might be preferable to use the <link linkend="utf">Unit Test Framework</link>, because it allows one 
-to use the <link linkend="utf.user-guide.testing-tools">Testing tools</link> and generate more detailed error information.
+in such case it might be preferable to use the __UTF__, because it allows one 
+to use the __testing_tools__ and generate more detailed error information.
  
 [section Usage]
 
@@ -153,43 +153,30 @@ To monitor execution of user supplied function `cpp_main()` the __PEM__ relies o
 [link ref_execution_monitor Execution Monitor] (['EM] for short). Also the __PEM__ supplies the function `main()` to facilitate
 uniform error reporting. Following files constitute the __PEM__ implementation:
  
-  <variablelist>
-   <?dbhtml list-presentation="list"?>
+ 
+[table:pem_implementation_file __PEM__ implementation files
 
-   <varlistentry>
-    <term><ulink url="../../../../boost/test/impl/execution_monitor.ipp"><filename>boost/test/impl/execution_monitor.ipp</filename></ulink></term>
-    <listitem>
-     <simpara>
-      provides __EM__ implementation for all supported
-      configurations.
-     </simpara>
-    </listitem>
-   </varlistentry>
-
-   <varlistentry>
-    <term><ulink url="../../../../boost/test/impl/cpp_main.ipp"><filename>boost/test/impl/cpp_main.ipp</filename></ulink></term>
-    <listitem>
-     <simpara>supplies function `main()` for static library build</simpara>
-    </listitem>
-   </varlistentry>
-
-   <varlistentry>
-    <term><ulink url="../../../../boost/test/included/prg_exec_monitor.hpp"><filename>boost/test/included/prg_exec_monitor.hpp</filename></ulink></term>
-    <listitem>
-     <simpara>combines all implementation files into single header to be use as inlined version of component</simpara>
-    </listitem>
-   </varlistentry>
-
-   <varlistentry>
-    <term><ulink url="../../../../boost/test/prg_exec_monitor.hpp"><filename>boost/test/prg_exec_monitor.hpp</filename></ulink></term>
-    <listitem>
-     <simpara>
-      contains definitions for `main()` function for dynamic library build and pragmas for auto-linking feature support.
-     </simpara>
-    </listitem>
-   </varlistentry>
-  </variablelist>
-  
+  [
+    [File name]
+    [Content]
+  ]
+  [
+    [`boost/test/impl/execution_monitor.ipp`]
+    [provides __EM__ implementation for all supported configurations]
+  ]
+  [
+    [`boost/test/impl/cpp_main.ipp`]
+    [supplies function `main()` for static library build]
+  ]
+  [
+    [`boost/test/included/prg_exec_monitor.hpp`]
+    [combines all implementation files into single header to be use as inlined version of component]
+  ]
+  [
+    [`boost/test/prg_exec_monitor.hpp`]
+    [contains definitions for `main()` function for dynamic library build and pragmas for auto-linking feature support]
+  ]
+]  
 
 The __PEM__ implementation wraps several system headers and is intended to be used as standalone library. While there
 exist an alternative variant to <link linkend="pem.compilation.direct-include">include the whole implementation 
@@ -231,11 +218,11 @@ compilation of the __PEM__ library and your program:
 If you opted to link your program with the standalone library, you need to build it first. To build a standalone 
 library all C++ files (.cpp), that constitute __PEM__ [link ref_pem_implementation implementation] need to be
 listed as source files in your makefile [footnote There are varieties of make systems that can be used. To name 
-a few: <acronym>GNU</acronym> make (and other make clones) and build systems integrated into <acronym>IDE</acronym>s
-(for  example Microsoft  Visual Studio). The Boost preferred solution is Boost.Build system that is based on top of 
-bjam  tool. Make  systems require some kind of configuration file that lists all files that constitute the library 
+a few: ['GNU] make (and other make clones) and build systems integrated into ['IDE]s
+(for example ['Microsoft Visual Studio]). The Boost preferred solution is Boost.Build system that is based on top of 
+`bjam`  tool. Make  systems require some kind of configuration file that lists all files that constitute the library 
 and all build  options. For example the makefile that is used by make, or the Microsoft Visual Studio project file, 
-Jamfile is  used by Boost.Build. For the sake of simplicity let's call this file the makefile.].
+Jamfile is used by Boost.Build. For the sake of simplicity let's call this file the makefile.].
 
 
 The makefile for use with Boost.Build system is supplied in 
@@ -253,16 +240,13 @@ directory. The __PEM__ can be built as either [link ref_pem_static static] or [l
 There are no additional build defines or options required to build static library. Using Boost.Build system you 
 can build the static library with a following command from `libs/test/build` directory:
 
-    <cmdsynopsis>
-     <!-- TO FIX -->
-     <command>bjam</command>
-     <arg>-sTOOLS=&lt;your-tool-name&gt;</arg>
-     <arg choice="req">-sBUILD=boost_prg_exec_monitor</arg>
-    </cmdsynopsis>
+``
+bjam -sTOOLS=<your-tool-name> -sBUILD=boost_prg_exec_monitor 
+``
 
 Also on Windows you can use the Microsoft Visual Studio .NET project file provided.
 
-[endsection] [/ static compilation]
+[endsect] [/ static compilation]
 
 [#ref_pem_dynamic][section Dynamic library compilation]
 
@@ -271,12 +255,9 @@ loaded library], alternatively called a ['shared library].] you
 need to add __BOOST_TEST_DYN_LINK__ to the list of macro definitions in the
 ``libs/test/build`` directory:
 
-    <cmdsynopsis>
-     <!-- TO FIX -->
-     <command>bjam</command>
-     <arg>-sTOOLS=&lt;your-tool-name&gt;</arg>
-     <arg choice="req">-sBUILD=boost_prg_exec_monitor</arg>
-    </cmdsynopsis>
+``
+bjam -sTOOLS=<your-tool-name> -sBUILD=boost_prg_exec_monitor
+``
 
 Also on Windows you can use the Microsoft Visual Studio .NET project file provided.
 

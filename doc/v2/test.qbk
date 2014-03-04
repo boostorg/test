@@ -160,6 +160,10 @@
 [include overview.qbk]
 
 [include tutorial.qbk]
+
+
+[include monitor.program-execution.qbk]
+
 [include utf.user-guide.qbk]
 [include utf.user-guide.test-organization.qbk]
 
