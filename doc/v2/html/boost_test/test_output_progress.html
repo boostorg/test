@@ -36,11 +36,11 @@
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">progress_display</span>
 </pre>
 <p>
-      <a href="#ftn.boost_test.test_output_progress.f0" class="footnote" name="boost_test.test_output_progress.f0"><sup class="footnote">[7]</sup></a>.
+      <a href="#ftn.boost_test.test_output_progress.f0" class="footnote" name="boost_test.test_output_progress.f0"><sup class="footnote">[9]</sup></a>.
     </p>
 <p>
       The progress display output is enabled using the <span class="emphasis"><em>UTF</em></span> parameter
-      <a class="link" href="runtime_configuration_or_what_ar/runtime_parameters_reference/show_progress.html#ref_param_show_progress"><code class="computeroutput"><span class="identifier">show_progress</span></code></a>.
+      <a class="link" href="runtime_parameters_reference/show_progress.html#ref_param_show_progress"><code class="computeroutput"><span class="identifier">show_progress</span></code></a>.
     </p>
 <p>
       The <span class="emphasis"><em>UTF</em></span> has no ability to estimate how long the test case
@@ -60,7 +60,7 @@
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">progress_monitor</span><span class="special">.</span><span class="identifier">set_stream</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="special">)</span>
 </pre>
 <div class="table">
-<a name="boost_test.test_output_progress.id_example49"></a><p class="title"><b>Table&#160;56.&#160;Progress report for the test module with large amount of test cases</b></p>
+<a name="boost_test.test_output_progress.id_example49"></a><p class="title"><b>Table&#160;61.&#160;Progress report for the test module with large amount of test cases</b></p>
 <div class="table-contents"><table class="table" summary="Progress report for the test module with large amount of test cases">
 <colgroup>
 <col>
@@ -83,26 +83,19 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">;</span>
 
-<span class="comment">//____________________________________________________________________________//</span>
-
 <span class="keyword">void</span> <span class="identifier">free_test_function</span><span class="special">()</span>
 <span class="special">{</span>
-    <span class="identifier">BOOST_CHECK</span><span class="special">(</span> <span class="keyword">true</span> <span class="comment">/* test assertion */</span> <span class="special">);</span>
+  <span class="identifier">BOOST_CHECK</span><span class="special">(</span> <span class="keyword">true</span> <span class="comment">/* test assertion */</span> <span class="special">);</span>
 <span class="special">}</span>
 
-<span class="comment">//____________________________________________________________________________//</span>
-
-<span class="identifier">test_suite</span><span class="special">*</span>
-<span class="identifier">init_unit_test_suite</span><span class="special">(</span> <span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[]</span> <span class="special">)</span>
+<span class="identifier">test_suite</span><span class="special">*</span> <span class="identifier">init_unit_test_suite</span><span class="special">(</span> <span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[]</span> <span class="special">)</span>
 <span class="special">{</span>
-    <span class="keyword">for</span><span class="special">(</span> <span class="keyword">int</span> <span class="identifier">i</span><span class="special">=</span><span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="number">10000</span><span class="special">;</span> <span class="identifier">i</span><span class="special">++</span> <span class="special">)</span>
-        <span class="identifier">framework</span><span class="special">::</span><span class="identifier">master_test_suite</span><span class="special">().</span>
-            <span class="identifier">add</span><span class="special">(</span> <span class="identifier">BOOST_TEST_CASE</span><span class="special">(</span> <span class="special">&amp;</span><span class="identifier">free_test_function</span> <span class="special">)</span> <span class="special">);</span>
+  <span class="keyword">for</span><span class="special">(</span> <span class="keyword">int</span> <span class="identifier">i</span><span class="special">=</span><span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="number">10000</span><span class="special">;</span> <span class="identifier">i</span><span class="special">++</span> <span class="special">)</span>
+    <span class="identifier">framework</span><span class="special">::</span><span class="identifier">master_test_suite</span><span class="special">().</span>
+      <span class="identifier">add</span><span class="special">(</span> <span class="identifier">BOOST_TEST_CASE</span><span class="special">(</span> <span class="special">&amp;</span><span class="identifier">free_test_function</span> <span class="special">)</span> <span class="special">);</span>
 
-    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+  <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span>
-
-<span class="comment">//____________________________________________________________________________//</span>
 </pre>
             </td>
 <td>
@@ -120,7 +113,7 @@
 </div>
 <br class="table-break"><div class="footnotes">
 <br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.boost_test.test_output_progress.f0" class="footnote"><p><a href="#boost_test.test_output_progress.f0" class="para"><sup class="para">[7] </sup></a>
+<div id="ftn.boost_test.test_output_progress.f0" class="footnote"><p><a href="#boost_test.test_output_progress.f0" class="para"><sup class="para">[9] </sup></a>
         The <span class="emphasis"><em>UTF</em></span> interfaces allow implementing an advanced GUI
         based test runner with arbitrary progress display controls
       </p></div>
@@ -128,7 +121,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2013 Gennadiy Rozental<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2014 Gennadiy
+      Rozental<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

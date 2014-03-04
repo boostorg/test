@@ -60,7 +60,7 @@
         test case (actually I recommend better solution in such case- see below).
         Now if an error gets reported by the test tool within that reused code you
         may have difficulty locating were exactly error occurred. To address this
-        issue you could either a add <a class="link" href="../test_output/log_test_messages.html#ref_macro_boost_test_message"><code class="computeroutput"><span class="identifier">BOOST_TEST_MESSAGE</span></code></a> statements in
+        issue you could either a add <a class="link" href="../test_output/boost_test_message.html#ref_macro_boost_test_message"><code class="computeroutput"><span class="identifier">BOOST_TEST_MESSAGE</span></code></a> statements in
         templated code that log current type id of template parameters or you can
         use special hook located in <code class="computeroutput"><span class="identifier">unit_test_result</span><span class="special">.</span><span class="identifier">hpp</span></code> called
         <code class="computeroutput"><span class="identifier">first_failed_assertion</span><span class="special">()</span></code>.
@@ -107,11 +107,11 @@
         to <code class="computeroutput"><span class="identifier">BOOST_CHECK</span></code></a>
       </h5>
 <p>
-        Even though <a class="link" href="../the_utf_testing_tools_or_tester_/testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_CHECK</span></code></a>
+        Even though <a class="link" href="../testing_tools/testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_CHECK</span></code></a>
         tool is most generic and allows validating any <code class="computeroutput"><span class="keyword">bool</span></code>
         convertible expression, I would recommend using, if possible, more specific
         tools dedicated to the task. For example if you need you validate some variable
-        vs. some expected value use <a class="link" href="../the_utf_testing_tools_or_tester_/testing_tool_ref.html#ref_BOOST_level_EQUAL"><code class="computeroutput"><span class="identifier">BOOST_CHECK_EQUAL</span></code></a> instead. The main
+        vs. some expected value use <a class="link" href="../testing_tools/testing_tool_ref.html#ref_BOOST_level_EQUAL"><code class="computeroutput"><span class="identifier">BOOST_CHECK_EQUAL</span></code></a> instead. The main
         advantage is that in case of failure you will see the mismatched value -
         the information most useful for error identification. The same applies to
         other tools supplied by the framework.
@@ -119,7 +119,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2013 Gennadiy Rozental<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2014 Gennadiy
+      Rozental<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -1,0 +1,96 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Program Execution Monitor</title>
+<link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../index.html" title="Boost.Test">
+<link rel="up" href="../index.html" title="Boost.Test">
+<link rel="prev" href="tutorial/bt_and_tdd.html" title='Boost.Test driven development ... or "getting started" for TDD followers'>
+<link rel="next" href="program_execution_monitor/usage.html" title="Usage">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="tutorial/bt_and_tdd.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="program_execution_monitor/usage.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="boost_test.program_execution_monitor"></a><a class="link" href="program_execution_monitor.html" title="Program Execution Monitor">Program Execution
+    Monitor</a>
+</h2></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="program_execution_monitor/usage.html">Usage</a></span></dt>
+<dt><span class="section"><a href="program_execution_monitor/configuration.html">Configuration</a></span></dt>
+<dt><span class="section"><a href="program_execution_monitor/implementation.html">Implementation</a></span></dt>
+<dt><span class="section"><a href="program_execution_monitor/compilation.html">Compilation</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="program_execution_monitor/compilation/standalone_library_compilation.html">Standalone
+        library compilation</a></span></dt>
+<dt><span class="section"><a href="program_execution_monitor/compilation/support_of_the_auto_linking_feat.html">Support
+        of the auto-linking feature</a></span></dt>
+<dt><span class="section"><a href="program_execution_monitor/compilation/including_the_pem_directly_into_.html">Including
+        the <span class="emphasis"><em>PEM</em></span> directly into your program</a></span></dt>
+</dl></dd>
+</dl></div>
+<p>
+      The components of a C++ program may report user-detected errors in several
+      ways, such as via a return value or throwing an exception. System-detected
+      errors such as dereferencing an invalid pointer are reported in other ways,
+      totally operating system and compiler dependent.
+    </p>
+<p>
+      Yet many C++ programs, both production and test, must run in an environment
+      where uniform reporting of errors is necessary. For example, converting otherwise
+      uncaught exceptions to non-zero program return codes allows many command line,
+      script, or batch environments to continue processing in a controlled manner.
+      Even some <span class="emphasis"><em>GUI</em></span> environments benefit from the unification
+      of errors into program return codes.
+    </p>
+<p>
+      The Boost.Test Library's <span class="emphasis"><em>Program Execution Monitor</em></span> (<span class="emphasis"><em>PEM</em></span>
+      for short) relieves users from messy error detection and reporting duties by
+      providing a replacement function <code class="computeroutput"><span class="identifier">main</span><span class="special">()</span></code> which calls a user-supplied <code class="computeroutput"><span class="identifier">cpp_main</span><span class="special">()</span></code>
+      function within a monitored environment. The supplied <code class="computeroutput"><span class="identifier">main</span><span class="special">()</span></code> then uniformly detects and reports the occurrence
+      of several types of errors, reducing them to a uniform return code which is
+      returned to the host environment.
+    </p>
+<p>
+      Uniform error reporting is particularly useful for programs running unattended
+      under control of scripts or batch files. Some operating systems pop up message
+      boxes if an uncaught exception occurs, and this requires manual intervention.
+      By converting such exceptions into non-zero program return codes, the library
+      makes the program a better citizen. More uniform reporting of errors isn't
+      a benefit to some programs, particularly programs always run by hand of a knowledgeable
+      person. So the <span class="emphasis"><em>PEM</em></span> wouldn't be worth using in that environment.
+    </p>
+<p>
+      Uniform error reporting can be also useful in test environments such as the
+      Boost regression tests. Be aware though in such case it might be preferable
+      to use the <span class="emphasis"><em>UTF</em></span>, because it allows one to use the <a class="link" href="testing_tools.html" title="The UTF testing tools... or tester's toolbox for all occasions">testing tools</a> and generate more detailed
+      error information.
+    </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2014 Gennadiy
+      Rozental<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="tutorial/bt_and_tdd.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="program_execution_monitor/usage.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

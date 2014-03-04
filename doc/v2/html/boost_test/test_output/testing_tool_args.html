@@ -7,7 +7,7 @@
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../test_output.html" title="Test output ... or let's see what you got for your money">
 <link rel="prev" href="test_log_output.html" title="Test log output">
-<link rel="next" href="log_test_messages.html" title="BOOST_TEST_MESSAGE">
+<link rel="next" href="boost_test_message.html" title="BOOST_TEST_MESSAGE">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="test_log_output.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../test_output.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="log_test_messages.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="test_log_output.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../test_output.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="boost_test_message.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -28,22 +28,23 @@
       arguments</a>
 </h3></div></div></div>
 <p>
-        Most of the <span class="bold"><strong>testing tools</strong></span> print values of
-        their arguments to the output stream in some form of log statement. If arguments
-        type does not support
+        Most of the <a class="link" href="../testing_tools.html" title="The UTF testing tools... or tester's toolbox for all occasions">testing tools</a>
+        print values of their arguments to the output stream in some form of log
+        statement. If arguments type does not support
       </p>
 <pre class="programlisting"><span class="keyword">operator</span><span class="special">&lt;&lt;(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;,</span> <span class="identifier">ArgumentType</span> <span class="keyword">const</span><span class="special">&amp;);</span>
 </pre>
 <p>
         interface you will get a compilation error. You can either implement above
-        interface or prohibit the <span class="bold"><strong>testing tools</strong></span>
-        from logging argument values for specified type. To do so use following statement
-        on file level before first test case that includes statement failing to compile:
+        interface or prohibit the <a class="link" href="../testing_tools.html" title="The UTF testing tools... or tester's toolbox for all occasions">testing
+        tools</a> from logging argument values for specified type. To do so use
+        following statement on file level before first test case that includes statement
+        failing to compile:
       </p>
 <pre class="programlisting"><span class="identifier">BOOST_TEST_DONT_PRINT_LOG_VALUE</span><span class="special">(</span><span class="identifier">ArgumentType</span><span class="special">)</span>
 </pre>
 <div class="table">
-<a name="boost_test.test_output.testing_tool_args.id_example32"></a><p class="title"><b>Table&#160;49.&#160;BOOST_TEST_DONT_PRINT_LOG_VALUE usage</b></p>
+<a name="boost_test.test_output.testing_tool_args.id_example32"></a><p class="title"><b>Table&#160;54.&#160;BOOST_TEST_DONT_PRINT_LOG_VALUE usage</b></p>
 <div class="table-contents"><table class="table" summary="BOOST_TEST_DONT_PRINT_LOG_VALUE usage">
 <colgroup>
 <col>
@@ -98,13 +99,14 @@
       </h5>
 <p>
         The active log level threshold can be configured at runtime using the parameter
-        <a class="link" href="../runtime_configuration_or_what_ar/runtime_parameters_reference/log_level.html#ref_param_log_level"><code class="computeroutput"><span class="identifier">log_level</span></code></a>.
-        The test log output format can be selected using either parameter <a class="link" href="../runtime_configuration_or_what_ar/runtime_parameters_reference/log_format.html#ref_param_log_format"><code class="computeroutput"><span class="identifier">log_format</span></code></a> or the parameter <a class="link" href="../runtime_configuration_or_what_ar/runtime_parameters_reference/output_format.html#ref_param_output_format"><code class="computeroutput"><span class="identifier">output_format</span></code></a>.
+        <a class="link" href="../runtime_parameters_reference/log_level.html#ref_param_log_level"><code class="computeroutput"><span class="identifier">log_level</span></code></a>.
+        The test log output format can be selected using either parameter <a class="link" href="../runtime_parameters_reference/log_format.html#ref_param_log_format"><code class="computeroutput"><span class="identifier">log_format</span></code></a> or the parameter <a class="link" href="../runtime_parameters_reference/output_format.html#ref_param_output_format"><code class="computeroutput"><span class="identifier">output_format</span></code></a>.
       </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2013 Gennadiy Rozental<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2014 Gennadiy
+      Rozental<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -112,7 +114,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="test_log_output.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../test_output.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="log_test_messages.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="test_log_output.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../test_output.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="boost_test_message.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

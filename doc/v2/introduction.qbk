@@ -1,4 +1,40 @@
-[section Introduction]
+[section How to read this documentation?]
+Without further ado, I'd like to start ... but where? It's not obvious what is the best order to describe the framework. 
+One can use bottom up approach, starting with with basics and going up to cover real interfaces based on them. The downside is 
+that you'll have to dig through the multiple pages of information you may not never need in real life. One can follow the order 
+of test program execution. From test initialization to test tree construction to the report and log generation. This also 
+unfortunately may not be most clear way. The Boost.Test __UTF__ is very flexible and a lot of details of various test initialization
+options may not necessarily important for average user, while understanding test output is.
+
+Well ... This is a User's Guide after all. Let's go by what [*you] need to know to successfully use the __UTF__. Thus I follow
+the order of decisions you as a user have to make and order of complexity of the problems you have to solve. If you find yourself 
+faces with some unclear term feel free to jump directly to the __part_glossary__ section, 
+where I collected short definition for all used terms. And again if you want to jump right into coding the 
+[*Tutorials] section would be a better place to start.
+
+The __UTF__ has several usage variants. And the first decision you have to make is which one to use. These variants are covered in 
+section dedicated to [*Usage variants]. The next step, probably the most important 
+for you, is to start writing test cases, bind them in test suites and implement your checks. First two topics are covered in 
+[*Test organization] section, while __testing_tools__ section arms you with rich set of tools enough to implement almost arbitrary check you need.
+
+
+Next you'll learn how to understand and manipulate the __UTF__ output in a __test_outputs__ section. 
+At that point you should be able to build and run most simple test modules and almost inevitable find a need to configure 
+how the test module is executed. Whether you want to change output format, select which test case to run or run test cases in random order 
+these and may other runtime configuration parameters are described in [*Runtime configuration] section.
+
+
+One of the first non trivial things you might want to add to your test module is test fixture. Fixture support is covered in 
+[*Test fixture] section. Usually the default test module initialization will work just fine,
+but if you want to implement some custom initialization or change how default initialization behaves you need to first look in 
+[*Test module initialization] section. Here you'll learn about various options the __UTF__ provides for you to customize this behaviour.
+
+
+Finally you might want to learn about how the __UTF__ implements entry points into the test modules. This is especially important if you 
+intend to implement the `main` function yourself and not use the one provided by the __UTF__. The 
+[*Test runners] section covers this subject. Different usage variants employ slightly 
+different approached to implementing test module entry points and presents slightly different interfaces. This section intended for advanced 
+user some of the details of the implementation are described there.
 
 
 [endsect]

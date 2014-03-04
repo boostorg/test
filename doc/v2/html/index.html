@@ -25,7 +25,8 @@
 <div><div class="author"><h3 class="author">
 <span class="firstname">Gennadiy</span> <span class="surname">Rozental</span>
 </h3></div></div>
-<div><p class="copyright">Copyright &#169; 2001-2013 Gennadiy Rozental</p></div>
+<div><p class="copyright">Copyright &#169; 2001-2014 Gennadiy
+      Rozental</p></div>
 <div><div class="legalnotice">
 <a name="boost_test.legal"></a><p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -37,6 +38,8 @@
 <p><b>Table of Contents</b></p>
 <dl class="toc">
 <dt><span class="section"><a href="boost_test/intro.html">What is Boost.Test?</a></span></dt>
+<dt><span class="section"><a href="boost_test/how_to_read_this_documentation.html">How to read
+    this documentation?</a></span></dt>
 <dt><span class="section"><a href="boost_test/tutorial.html">The
     unit test framework tutorials</a></span></dt>
 <dd><dl>
@@ -45,10 +48,24 @@
 <dt><span class="section"><a href="boost_test/tutorial/bt_and_tdd.html">Boost.Test driven development
       ... or "getting started" for TDD followers</a></span></dt>
 </dl></dd>
+<dt><span class="section"><a href="boost_test/program_execution_monitor.html">Program Execution
+    Monitor</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="boost_test/program_execution_monitor/usage.html">Usage</a></span></dt>
+<dt><span class="section"><a href="boost_test/program_execution_monitor/configuration.html">Configuration</a></span></dt>
+<dt><span class="section"><a href="boost_test/program_execution_monitor/implementation.html">Implementation</a></span></dt>
+<dt><span class="section"><a href="boost_test/program_execution_monitor/compilation.html">Compilation</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="boost_test/program_execution_monitor/compilation/standalone_library_compilation.html">Standalone
+        library compilation</a></span></dt>
+<dt><span class="section"><a href="boost_test/program_execution_monitor/compilation/support_of_the_auto_linking_feat.html">Support
+        of the auto-linking feature</a></span></dt>
+<dt><span class="section"><a href="boost_test/program_execution_monitor/compilation/including_the_pem_directly_into_.html">Including
+        the <span class="emphasis"><em>PEM</em></span> directly into your program</a></span></dt>
+</dl></dd>
+</dl></dd>
 <dt><span class="section"><a href="boost_test/users_guide.html">User's guide</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="boost_test/users_guide/user_guide_intro.html">Introduction
-      ... or where to start?</a></span></dt>
 <dt><span class="section"><a href="boost_test/users_guide/usage_variants.html">The <span class="emphasis"><em>UTF</em></span>
       usage variants ... or the <a href="http://en.wikipedia.org/wiki/Buridan%27s_ass" target="_top">Buridan's
       donkey</a> parable</a></span></dt>
@@ -84,18 +101,18 @@
         failures specification</a></span></dt>
 </dl></dd>
 </dl></dd>
-<dt><span class="section"><a href="boost_test/the_utf_testing_tools_or_tester_.html">The <span class="emphasis"><em>UTF</em></span>
+<dt><span class="section"><a href="boost_test/testing_tools.html">The <span class="emphasis"><em>UTF</em></span>
     testing tools... or tester's toolbox for all occasions</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="boost_test/the_utf_testing_tools_or_tester_/tools_assertion_severity_level.html">Assertion
+<dt><span class="section"><a href="boost_test/testing_tools/tools_assertion_severity_level.html">Assertion
       severity level</a></span></dt>
-<dt><span class="section"><a href="boost_test/the_utf_testing_tools_or_tester_/custom_predicates.html">Custom
-      predicate support</a></span></dt>
-<dt><span class="section"><a href="boost_test/the_utf_testing_tools_or_tester_/output_stream_testing.html">Output
+<dt><span class="section"><a href="boost_test/testing_tools/custom_predicates.html">Custom predicate
+      support</a></span></dt>
+<dt><span class="section"><a href="boost_test/testing_tools/output_stream_testing.html">Output
       streams testing tool</a></span></dt>
-<dt><span class="section"><a href="boost_test/the_utf_testing_tools_or_tester_/testing_floating_points.html">Floating-point
+<dt><span class="section"><a href="boost_test/testing_tools/testing_floating_points.html">Floating-point
       testing</a></span></dt>
-<dt><span class="section"><a href="boost_test/the_utf_testing_tools_or_tester_/testing_tool_ref.html"><span class="emphasis"><em>UTF</em></span>
+<dt><span class="section"><a href="boost_test/testing_tools/testing_tool_ref.html"><span class="emphasis"><em>UTF</em></span>
       testing tools reference</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="boost_test/fixtures.html">Fixtures... or let me repeat myself</a></span></dt>
@@ -115,9 +132,9 @@
 <dt><span class="section"><a href="boost_test/test_output/test_log_output.html">Test log output</a></span></dt>
 <dt><span class="section"><a href="boost_test/test_output/testing_tool_args.html">Logging tool
       arguments</a></span></dt>
-<dt><span class="section"><a href="boost_test/test_output/log_test_messages.html"><a class="link" href="log_test_messages.html#ref_macro_boost_test_message"><code class="computeroutput"><span class="identifier">BOOST_TEST_MESSAGE</span></code></a></a></span></dt>
-<dt><span class="section"><a href="boost_test/test_output/boost_test_checkpoint.html"><a class="link" href="boost_test_checkpoint.html#ref_BOOST_TEST_CHECKPOINT"><code class="computeroutput"><span class="identifier">BOOST_TEST_CHECKPOINT</span></code></a></a></span></dt>
-<dt><span class="section"><a href="boost_test/test_output/boost_test_passpoint.html"><a class="link" href="boost_test_passpoint.html#ref_BOOST_TEST_PASSPOINT"><code class="computeroutput"><span class="identifier">BOOST_TEST_PASSPOINT</span></code></a></a></span></dt>
+<dt><span class="section"><a href="boost_test/test_output/boost_test_message.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_MESSAGE</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/test_output/boost_test_checkpoint.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_CHECKPOINT</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/test_output/boost_test_passpoint.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_PASSPOINT</span></code></a></span></dt>
 <dt><span class="section"><a href="boost_test/test_output/log_floating_points.html">Logging floating
       point type numbers</a></span></dt>
 <dt><span class="section"><a href="boost_test/test_output/log_human_readable_format.html">Human
@@ -153,30 +170,8 @@
 <dd><dl>
 <dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/running_specific_test_units_sele.html">Running
       specific test units selected by their name</a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference.html">Runtime
-      parameters reference</a></span></dt>
-<dd><dl>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/show_progress.html"><code class="computeroutput"><span class="identifier">show_progress</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/build_info.html"><code class="computeroutput"><span class="identifier">build_info</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/auto_start_dbg.html"><code class="computeroutput"><span class="identifier">auto_start_dbg</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/catch_system_errors.html"><code class="computeroutput"><span class="identifier">catch_system_errors</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/break_exec_path.html"><code class="computeroutput"><span class="identifier">break_exec_path</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/color_output.html"><code class="computeroutput"><span class="identifier">color_output</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/log_format.html"><code class="computeroutput"><span class="identifier">log_format</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/log_level.html"><code class="computeroutput"><span class="identifier">log_level</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/run_test.html"><code class="computeroutput"><span class="identifier">run_test</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/output_format.html"><code class="computeroutput"><span class="identifier">output_format</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/report_format.html"><code class="computeroutput"><span class="identifier">report_format</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/result_code.html"><code class="computeroutput"><span class="identifier">result_code</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/report_level.html"><code class="computeroutput"><span class="identifier">report_level</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/random.html"><code class="computeroutput"><span class="identifier">random</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/detect_memory_leaks.html"><code class="computeroutput"><span class="identifier">detect_memory_leaks</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/use_alt_stack.html"><code class="computeroutput"><span class="identifier">use_alt_stack</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/detect_fp_exceptions.html"><code class="computeroutput"><span class="identifier">detect_fp_exceptions</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/log_sink.html"><code class="computeroutput"><span class="identifier">log_sink</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/report_sink.html"><code class="computeroutput"><span class="identifier">report_sink</span></code></a></span></dt>
-<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_reference/save_patterm.html"><code class="computeroutput"><span class="identifier">save_patterm</span></code></a></span></dt>
-</dl></dd>
+<dt><span class="section"><a href="boost_test/runtime_configuration_or_what_ar/runtime_parameters_summary.html">Runtime
+      parameters summary</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="boost_test/the_unit_test_framework_usage_re.html">The
     unit test framework usage recommendations</a></span></dt>
@@ -187,13 +182,37 @@
 <dt><span class="section"><a href="boost_test/the_unit_test_framework_usage_re/command_line_usage_recommendatio.html">Command
       line usage recommendations</a></span></dt>
 </dl></dd>
-<dt><span class="section"><a href="boost_test/frequently_asked_questions.html">Frequently
-    Asked Questions</a></span></dt>
-<dt><span class="section"><a href="boost_test/glossary.html">Glossary... or what's your name?</a></span></dt>
+<dt><span class="section"><a href="boost_test/section_faq.html">Frequently Asked Questions</a></span></dt>
+<dt><span class="section"><a href="boost_test/section_glossary.html">Glossary... or what's your
+    name?</a></span></dt>
 <dt><span class="section"><a href="boost_test/portability.html">Portability</a></span></dt>
 <dt><span class="section"><a href="boost_test/open_issues.html">Open issues</a></span></dt>
 <dt><span class="section"><a href="boost_test/release_notes.html">Release notes</a></span></dt>
 <dt><span class="section"><a href="boost_test/acknowledgements.html">Acknowledgements</a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference.html">Runtime parameters
+    reference</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/show_progress.html"><code class="computeroutput"><span class="identifier">show_progress</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/build_info.html"><code class="computeroutput"><span class="identifier">build_info</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/auto_start_dbg.html"><code class="computeroutput"><span class="identifier">auto_start_dbg</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/catch_system_errors.html"><code class="computeroutput"><span class="identifier">catch_system_errors</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/break_exec_path.html"><code class="computeroutput"><span class="identifier">break_exec_path</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/color_output.html"><code class="computeroutput"><span class="identifier">color_output</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/log_format.html"><code class="computeroutput"><span class="identifier">log_format</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/log_level.html"><code class="computeroutput"><span class="identifier">log_level</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/run_test.html"><code class="computeroutput"><span class="identifier">run_test</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/output_format.html"><code class="computeroutput"><span class="identifier">output_format</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/report_format.html"><code class="computeroutput"><span class="identifier">report_format</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/result_code.html"><code class="computeroutput"><span class="identifier">result_code</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/report_level.html"><code class="computeroutput"><span class="identifier">report_level</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/random.html"><code class="computeroutput"><span class="identifier">random</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/detect_memory_leaks.html"><code class="computeroutput"><span class="identifier">detect_memory_leaks</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/use_alt_stack.html"><code class="computeroutput"><span class="identifier">use_alt_stack</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/detect_fp_exceptions.html"><code class="computeroutput"><span class="identifier">detect_fp_exceptions</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/log_sink.html"><code class="computeroutput"><span class="identifier">log_sink</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/report_sink.html"><code class="computeroutput"><span class="identifier">report_sink</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/runtime_parameters_reference/save_patterm.html"><code class="computeroutput"><span class="identifier">save_patterm</span></code></a></span></dt>
+</dl></dd>
 </dl>
 </div>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -229,7 +248,7 @@
         For novice users I recommend to start from simple <a class="link" href="boost_test/tutorial.html#ref_section_tutorials">tutorials</a>.
       </li>
 <li class="listitem">
-        Looking for quick help - check the <a class="link" href="boost_test/frequently_asked_questions.html#ref_section_faq">FAQ</a>
+        Looking for quick help - check the <a class="link" href="boost_test/section_faq.html" title="Frequently Asked Questions">FAQ</a>
         section for resolution to many popular issues you may be faced with. Most
         pages should link you directly to the terms that you need to understand it.
       </li>
@@ -239,7 +258,7 @@
 </ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: February 11, 2014 at 11:41:51 GMT</small></p></td>
+<td align="left"><p><small>Last revised: March 04, 2014 at 01:33:05 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

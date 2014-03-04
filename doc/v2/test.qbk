@@ -40,6 +40,7 @@
 [def __part_faq__                     [link boost_test.section_faq FAQ]]
 
 [def __testing_tools__                [link boost_test.testing_tools testing tools]]
+[def __test_outputs__                 [link boost_test.test_output test outputs]]
 [def __runtime_configuration__        [link ref_section_runtime_configuration runtime configuration]]
 [def __output_stream_testing_tool__   [link ref_test_output_streams output streams]]
 
@@ -159,6 +160,8 @@
 
 [include overview.qbk]
 
+[include introduction.qbk]
+
 [include tutorial.qbk]
 
 
@@ -170,7 +173,7 @@
 [include utf.testing-tools.qbk]
 [include utf.user-guide.fixture.qbk]
 [include utf.user-guide.test-output.qbk]
-[include utf.user-guide.test-progress.qbk]
+[include utf.user-guide.test-progress.qbk] [/ test progress should be in test-output]
 
 [/ Raffi: I think it would be better to put this in test variants]
 [include minimal-testing.qbk]
