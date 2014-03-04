@@ -1,4 +1,4 @@
-[section The __UTF__ testing tools... or tester's toolbox for all occasions]
+[section:testing_tools The __UTF__ testing tools... or tester's toolbox for all occasions]
 The __UTF__'s supplies a toolbox of testing tools to ease creation and maintenance of test programs and
 provide a  uniform error reporting mechanism. The toolbox supplied in most part in a form of macro and function
 declarations. While the functions can be called directly, the usual way to use testing tools is via convenience
