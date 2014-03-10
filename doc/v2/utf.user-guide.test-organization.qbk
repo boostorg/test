@@ -12,11 +12,10 @@ disadvantages in single test function approach:
 * No way to perform only checks for a particular subsystem of the tested unit.
 * No summary of how different subsystems of the tested unit performed under in the test.
 
-The above points should make it clear that it's preferable to split [*test module] into smaller units.
+The above points should make it clear that it's preferable to split [link ref_test_module test module] into smaller units.
 These units are [link boost_test.tests_organization.test_cases test cases].
 
-To solve test tree creation problem the __UTF__ provides facilities for
-[*test suite creation].
+To solve test tree creation problem the __UTF__ provides facilities for __section_test_suite__ creation.
 
 
 

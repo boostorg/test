@@ -45,6 +45,7 @@
 [/ content in the test organization]
 [def __section_test_organization__    [link boost_test.tests_organization tests organization]]
 [def __section_expected_failures__    [link boost_test.tests_organization.test_organization_test_suite.test_suite_expected_failure expected failures]]
+[def __section_test_suite__           [link boost_test.tests_organization.test_organization_test_suite test suite]]
 [def __section_master_test_suite__    [link boost_test.tests_organization.test_organization_test_suite.master_test_suite Master Test Suite]]
 
 [def __testing_tools__                [link boost_test.testing_tools testing tools]]
