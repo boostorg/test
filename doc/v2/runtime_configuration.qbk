@@ -1,4 +1,4 @@
-[#ref_section_runtime_configuration][section Runtime configuration ... or what are the strings I can pull?]
+[#ref_section_runtime_configuration][section Runtime configuration]
  
 
 The __UTF__ supports multiple parameters that affect test module execution. To set the parameter's value you can

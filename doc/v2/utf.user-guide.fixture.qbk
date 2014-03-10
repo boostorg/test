@@ -1,4 +1,4 @@
-[section:fixtures Fixtures...  or let me repeat myself]
+[section:fixtures Fixtures]
 In general terms a test fixture or test context is the collection of one or more of the following items, required
 to perform the test:
  

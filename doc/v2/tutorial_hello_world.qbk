@@ -1,6 +1,4 @@
-
-
-[section:hello Hello the testing world ... or beginner's introduction into testing using the Unit Test Framework]
+[section:hello Hello the testing world... or beginner's introduction into testing using the Unit Test Framework]
 How should a test program report errors? Displaying an error message is an obvious possibility:
 
 [/snippet9 deleted]

@@ -1,5 +1,4 @@
-
-[#ref_test_outputs][section:test_output Test output ... or let's see what you got for your money]
+[#ref_test_outputs][section:test_output Test output]
 The output produced by a test module is one of the major assets the __UTF__ brings to users. In comparison with any
 kind of manual/assert based solution the __UTF__ provide following services:
 

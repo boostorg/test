@@ -5,12 +5,9 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines specific version of execution monitor used to managed 
-//  run unit of test cases. Translates execution exception into error level
+/// @file unit_test_monitor.hpp @brief defines specific version of execution monitor used to managed run unit of test cases
+///
+/// Translates execution exception into error level
 // ***************************************************************************
 
 #ifndef BOOST_TEST_UNIT_TEST_MONITOR_HPP_020905GER

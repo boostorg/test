@@ -234,12 +234,14 @@ void                    apply_filters( test_unit_id );
 // **************                framework errors              ************** //
 // ************************************************************************** //
 
+/// This exception type is used to report internal Boost.Test framework errors
 struct BOOST_TEST_DECL internal_error : public std::runtime_error {
     internal_error( const_string m ) : std::runtime_error( std::string( m.begin(), m.size() ) ) {}
 };
 
 //____________________________________________________________________________//
 
+/// This exception type is used to report test module setup errors
 struct BOOST_TEST_DECL setup_error : public std::runtime_error {
     setup_error( const_string m ) : std::runtime_error( std::string( m.begin(), m.size() ) ) {}
 };

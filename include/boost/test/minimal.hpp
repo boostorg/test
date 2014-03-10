@@ -5,11 +5,26 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : simple minimal testing definitions and implementation
+/// @file minimal.hpp @brief Deprecated implementation of simple minimal testing
+///
+/// To convert to Unit Test Framework simply rewrite:
+/// @code
+/// #include <boost/test/minimal.hpp>
+/// 
+/// int test_main( int, char *[] )
+/// {
+///   ...
+/// }
+/// @endcode
+/// as
+/// @code
+/// #include <boost/test/included/unit_test.hpp>
+/// 
+/// BOOST_AUTO_TEST_CASE(test_main)
+/// {
+///   ...
+/// }
+/// @endcode
 // ***************************************************************************
 
 #ifndef BOOST_TEST_MINIMAL_HPP_071894GER
