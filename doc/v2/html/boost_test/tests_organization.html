@@ -44,6 +44,17 @@
 <dt><span class="section"><a href="tests_organization/test_organization_test_suite/test_suite_expected_failure.html">Expected
         failures specification</a></span></dt>
 </dl></dd>
+<dt><span class="section"><a href="tests_organization/fixtures.html">Fixtures</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="tests_organization/fixtures/generic_fixture_model.html">Generic
+        fixture model</a></span></dt>
+<dt><span class="section"><a href="tests_organization/fixtures/per_test_case_fixture.html">Per
+        test case fixture</a></span></dt>
+<dt><span class="section"><a href="tests_organization/fixtures/test_suite_level_fixture.html">Test
+        suite level fixture</a></span></dt>
+<dt><span class="section"><a href="tests_organization/fixtures/global_fixture.html">Global
+        fixture</a></span></dt>
+</dl></dd>
 </dl></div>
 <p>
       If you look at many legacy test modules, big chance is that it's implemented
@@ -75,17 +86,23 @@
         </li>
 </ul></div>
 <p>
-      The above points should make it clear that it's preferable to split <span class="bold"><strong>test module</strong></span> into smaller units. These units are <a class="link" href="tests_organization/test_cases.html" title="Test cases">test cases</a>.
+      The above points should make it clear that it's preferable to split <a class="link" href="section_glossary.html#ref_test_module">test
+      module</a> into smaller units. These units are <a class="link" href="tests_organization/test_cases.html" title="Test cases">test
+      cases</a>.
     </p>
 <p>
       To solve test tree creation problem the <span class="emphasis"><em>UTF</em></span> provides facilities
-      for <span class="bold"><strong>test suite creation</strong></span>.
+      for <a class="link" href="tests_organization/test_organization_test_suite.html" title="Test suite">test
+      suite</a> creation. In some cases it's desirable to allow some <span class="emphasis"><em>expected</em></span>
+      failures in test case without failing a test module. To support this request
+      The <span class="emphasis"><em>UTF</em></span> allows specifying the number of <a class="link" href="tests_organization/test_organization_test_suite/test_suite_expected_failure.html" title="Expected failures specification">expected
+      failures</a> in a test case.
     </p>
 <p>
-      In some cases it's desirable to allow some <span class="emphasis"><em>expected</em></span> failures
-      in test case without failing a test module. To support this request The <span class="emphasis"><em>UTF</em></span>
-      allows specifying the number of <a class="link" href="tests_organization/test_organization_test_suite/test_suite_expected_failure.html" title="Expected failures specification">expected
-      failures</a> in a test case.
+      When several tests shares the same set-up (environment, test data preparation,
+      etc.), the <a class="link" href="tests_organization/fixtures.html" title="Fixtures">fixture</a>
+      comes into play. In the <span class="emphasis"><em>UTF</em></span>, fixtures can be defined at
+      the test case or the test suite level.
     </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
