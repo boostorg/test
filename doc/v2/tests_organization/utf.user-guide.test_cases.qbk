@@ -52,8 +52,8 @@ existing test case, implemented as a free function, registered in place are illu
 example (compare with <xref linkend="utf.user-guide.test-organization.manual-nullary-test-case.example01"/>):
 
 
-[import examples/example06.cpp]
-[import examples/example06.output]
+[import ../examples/example06.cpp]
+[import ../examples/example06.output]
 [table:id_example06 Nullary function based test case with automated registration
   [
     [Code]
@@ -89,8 +89,8 @@ Here is the simplest possible manually registered test case. This example employ
 initialization function specification. A single test case is created and registered in the master test suite.
 Note that the free function name is passed by address to the macro __BOOST_TEST_CASE__`.
 
-[import examples/example01.cpp]
-[import examples/example01.output]
+[import ../examples/example01.cpp]
+[import ../examples/example01.output]
 [table:id_example01 Nullary free function manually registered
   [
     [Code]
@@ -113,8 +113,8 @@ instance lifetime yourself.
  shared pointer.
 ]
 
-[import examples/example02.cpp]
-[import examples/example02.output]
+[import ../examples/example02.cpp]
+[import ../examples/example02.output]
 [table:id_example02 Nullary method of a class bound to global class instance and manually registered
   [
     [Code]
@@ -126,8 +126,8 @@ instance lifetime yourself.
   ]
 ]
 
-[import examples/example03.cpp]
-[import examples/example03.output]
+[import ../examples/example03.cpp]
+[import ../examples/example03.output]
 [table:id_example03 Nullary method of a class bound to shared class instance and manually registered
   [
     [Code]
@@ -142,8 +142,8 @@ instance lifetime yourself.
 If you do not need to reuse the test class instance and can't or do not wish to create test class
 instance globally it may be easier and safer to create an instance on the stack of free function:
 
-[import examples/example04.cpp]
-[import examples/example04.output]
+[import ../examples/example04.cpp]
+[import ../examples/example04.output]
 [table:id_example04 Nullary method of a class bound to local class instance inside free function
   [
     [Code]
@@ -166,8 +166,8 @@ case on a function with arguments and bind particular parameters during test cas
  
 The example below employs the alternative test module initialization function specification:
 
-[import examples/example05.cpp]
-[import examples/example05.output]
+[import ../examples/example05.cpp]
+[import ../examples/example05.output]
 [table:id_example05 Binary free function bound to set of different parameter pairs
   [
     [Code]
@@ -240,8 +240,8 @@ performed for 5 different parameters. The parameters are defined in the test mod
 scope. The master test suite contains 5 independent test cases.
 
 
-[import examples/example07.cpp]
-[import examples/example07.output]
+[import ../examples/example07.cpp]
+[import ../examples/example07.output]
 [table:id_example07 Unary free function based test case
   [
     [Code]
@@ -259,8 +259,8 @@ Next example is similar, but instead of a free function it uses a method of a cl
 passed into test method by reference you can still define them in the test module initialization  function scope.
 This example employs the alternative test module initialization function specification.
 
-[import examples/example08.cpp]
-[import examples/example08.output]
+[import ../examples/example08.cpp]
+[import ../examples/example08.output]
 [table:id_example08 Unary class method based test case
   [
     [Code]
@@ -302,8 +302,8 @@ The macro __BOOST_AUTO_TEST_CASE_TEMPLATE__ requires three arguments:
          name of the type the test case template is instantiated with
 # The collection of types to instantiate test case template with: arbitrary MPL sequence
 
-[import examples/example10.cpp]
-[import examples/example10.output]
+[import ../examples/example10.cpp]
+[import ../examples/example10.output]
 [table:id_example10 Test case template with automated registration
   [
     [Code]
@@ -411,8 +411,8 @@ case of failure you can't say which type is at fault) and allows you to test all
 them causes termination of the sub test case.
 ]
 
-[import examples/example09.cpp]
-[import examples/example09.output]
+[import ../examples/example09.cpp]
+[import ../examples/example09.output]
 [table:id_example09 Manually registered test case template
   [
     [Code]

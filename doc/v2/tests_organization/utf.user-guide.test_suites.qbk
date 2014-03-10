@@ -38,8 +38,8 @@ become members of the master test suite. There is no limit on depth of test suit
 This example creates a test tree that matches exactly the one created in the manual test suite registration
 example.
 
-[import examples/example12.cpp]
-[import examples/example12.output]
+[import ../examples/example12.cpp]
+[import ../examples/example12.output]
 [table:id_example12 Test suites with automated registration
   [
     [Code]
@@ -57,8 +57,8 @@ In the example below, the test suite `test_suite` consists of two parts. Their d
 test case. In fact these parts may even reside in different test files. The resulting test tree remains the same. As
 you can see from the output both `test_case1` and `test_case2` reside in the same test suite `test_suite`.
 
-[import examples/example53.cpp]
-[import examples/example53.output]
+[import ../examples/example53.cpp]
+[import ../examples/example53.output]
 [table:id_example53 Example of test suite extension using automated registration facility
   [
     [Code]
@@ -131,8 +131,8 @@ The example below creates a test tree, which can be represented by the following
 
 [$../img/class-hier.jpg]
 
-[import examples/example11.cpp]
-[import examples/example11.output]
+[import ../examples/example11.cpp]
+[import ../examples/example11.output]
 [table:id_example11 Manually registered test suites
   [
     [Code]
@@ -205,8 +205,8 @@ master test suite.
 Returning to the free function example, let's modify initialization function to check for absence of any
 test module arguments.
 
-[import examples/example13.cpp]
-[import examples/example13.output]
+[import ../examples/example13.cpp]
+[import ../examples/example13.output]
 [table:id_example13 Command line access in initialization function
   [
     [Code]
@@ -226,8 +226,8 @@ and from within the test module initialization function. Former is used for test
 manually implemented initialization function. Following examples illustrate these methods.
 
 
-[import examples/example14.cpp]
-[import examples/example14.output]
+[import ../examples/example14.cpp]
+[import ../examples/example14.output]
 [table:id_example14 Naming master test suite using the macro __BOOST_TEST_MODULE__
   [
     [Code]
@@ -243,8 +243,8 @@ If the macro __BOOST_TEST_MODULE__ is defined, the test module initialization
 function is [*automatically generated] and the
 macro value becomes the name of the master test suite. The name may include spaces.
 
-[import examples/example15.cpp]
-[import examples/example15.output]
+[import ../examples/example15.cpp]
+[import ../examples/example15.output]
 [table:id_example15 Naming master test suite explicitly in the test module initialization function
   [
     [Code]
@@ -298,8 +298,8 @@ unexpected failure to occur to satisfy this quota.
 To set the value of expected failures for the manually registered test unit pass it as a second argument for the
 [link ref_test_case_registration `test_suite::add`] call during test unit registration.
 
-[import examples/example16.cpp]
-[import examples/example16.output]
+[import ../examples/example16.cpp]
+[import ../examples/example16.output]
 [table:id_example16 Expected failures specification for manually registered test case
   [
     [Code]
@@ -325,8 +325,8 @@ units coincide in different test suites. Expected failures specification applies
 test suite where __BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ resides.
 
 
-[import examples/example17.cpp]
-[import examples/example17.output]
+[import ../examples/example17.cpp]
+[import ../examples/example17.output]
 [table:id_example17 Expected failures specification for automatically registered test case
   [
     [Code]
