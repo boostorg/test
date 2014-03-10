@@ -166,13 +166,12 @@
 
 [/ this is the introduction that appears on the first page of the documentation]
 [include forewords.qbk]
-
-
 [include overview.qbk]
 
-[include introduction.qbk]
 
 [include tutorial.qbk]
+
+[include how_to_read_this_documentation.qbk]
 
 
 [include monitor.program-execution.qbk]
@@ -193,9 +192,8 @@
 [include faq.qbk]
 [include glossary.qbk]
 
-[include portability.qbk]
+
 [include open_issues.qbk]
-[include release_notes.qbk]
 [include acknowledgments.qbk]
 
 [/ reference sections]
