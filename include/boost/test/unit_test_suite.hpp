@@ -5,11 +5,7 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines Unit Test Framework public API
+/// @file floating_point_comparison.hpp @brief defines Unit Test Framework public API
 // ***************************************************************************
 
 #ifndef BOOST_TEST_UNIT_TEST_SUITE_HPP_071894GER

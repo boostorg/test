@@ -24,7 +24,7 @@
 #include <boost/test/detail/config.hpp>
 #include <boost/test/interaction/interaction_based.hpp>
 #include <boost/test/interaction/mock_object.hpp>
-#include <boost/test/framework.hpp>     // for setup_error
+#include <boost/test/framework.hpp>     // for BOOST_TEST_SETUP_ASSERT
 
 #include <boost/test/detail/suppress_warnings.hpp>
 

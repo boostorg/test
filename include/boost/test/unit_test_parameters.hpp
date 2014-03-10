@@ -7,7 +7,7 @@
 //
 /// @file unit_test_parameters.hpp @brief Provides access to various Unit Test Framework runtime parameters
 ///
-/// Primarily for use the framework itself
+/// Primarily for use by the framework itself
 // ***************************************************************************
 
 #ifndef BOOST_TEST_UNIT_TEST_PARAMETERS_HPP_071894GER
