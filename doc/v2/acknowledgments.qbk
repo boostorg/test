@@ -12,5 +12,7 @@ Dave Abrahams suggested numerous improvements during the Formal Review. Jeremy S
 Dawes was a great help in both final testing and merging library with rest of the boost. Gennadiy Rozental is the 
 developer and maintainer.
 
+[h4 New documentation]
+Raffi Enficiaud is a driving force behind the Boost.Test documentation overhaul.
 
 [endsect]

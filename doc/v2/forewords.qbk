@@ -3,7 +3,6 @@
 
 
 [:[*Test everything that could possibly break] - ['XP maxim]]
-
   
 The Boost.Test library provides a matched set of components for writing test programs, organizing tests into 
 simple test cases and test suites, and controlling their runtime execution. The Program Execution Monitor is also 

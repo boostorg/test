@@ -1,4 +1,4 @@
-[section:tests_organization Test organization... or the house that Jack built]
+[section:tests_organization Test organization]
 
 If you look at many legacy test modules, big chance is that it's implemented as one big test function that
 consists of a mixture of check and output statements. Is there anything wrong with it? Yes. There are various

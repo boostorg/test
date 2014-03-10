@@ -3,7 +3,6 @@
 The __UTF__ can be built into a static library. If you opt to link a test module with the [*standalone static library], [/ <link linkend="utf.compilation.standalone">]
 this usage is called the static library variant of the __UTF__.
 
-
 The test runner supplied with this variant required you to implement the [*test module] [/ <link linkend="test-module.def">]
 initialization function that matches one of the two specifications depending on the compilation flag
 __BOOST_TEST_ALTERNATIVE_INIT_API__. If flag isn't defined you are required
