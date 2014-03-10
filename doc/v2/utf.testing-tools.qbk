@@ -32,15 +32,28 @@ ways to detect and report errors. For list of all supplied testing tools and usa
   [/ ###############################################################################################]
   [
     [__BOOST_LEVEL_BITWISE_EQUAL__]
-    [Bitwise comparison of two values.]
+    [Bitwise equality test of two elements.]
   ]
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_EQUAL__]
+    [Equality test of two elements.]
+  ]
+
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_EQUAL_COLLECTIONS__]
+    [Element-wise equality test of two collections.]
+  ]
+  
 ]
 
 
 
 
 
-
+[/ ###############################################################################################]
 [#ref_BOOST_level][section:assertion_boost_level `BOOST_<level>`]
 
 
@@ -73,6 +86,8 @@ See also:
 
 [endsect]
 
+
+[/ ###############################################################################################]
 [#ref_BOOST_level_BITWISE_EQUAL][section:assertion_boost_level_bitwise_eq `BOOST_<level>_BITWISE_EQUAL`]
 
 
@@ -106,6 +121,81 @@ See also:
 * __BOOST_LEVEL_EQUAL__
 
 [endsect]
+
+[/ ###############################################################################################]
+[#ref_BOOST_level_EQUAL][section:assertion_boost_level_eq `BOOST_<level>_EQUAL`]
+
+``
+  BOOST_WARN_EQUAL(left, right);
+  BOOST_CHECK_EQUAL(left, right);
+  BOOST_REQUIRE_EQUAL(left, right);
+``
+
+Check performed by these tools is the same as the one performed by `__BOOST_LEVEL__(left == right)`.
+The difference is that the mismatched values are reported as well.
+
+[note It is bad idea to use these tools to compare floating point values. Use __BOOST_LEVEL_CLOSE__ or
+      __BOOST_LEVEL_CLOSE_FRACTION__ tools instead.
+]
+[import examples/example35.cpp]
+[import examples/example35.output]
+[table:id_example35 __BOOST_LEVEL_EQUAL__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example35]]
+    [[example35o]]
+  ]
+] 
+
+
+See also:
+
+* __BOOST_LEVEL__
+* __BOOST_LEVEL_CLOSE__
+* __BOOST_LEVEL_NE__
+* __BOOST_LEVEL_EQUAL_COLLECTIONS__
+
+[endsect]
+
+[/ ###############################################################################################]
+[#ref_BOOST_level_EQUAL_COLLECTIONS][section:assertion_boost_level_eq_collections `BOOST_<level>_EQUAL_COLLECTIONS`]
+
+``
+  BOOST_WARN_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
+  BOOST_CHECK_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
+  BOOST_REQUIRE_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
+``
+
+These tools are used to perform an element by element comparison of two collections. They print all mismatched
+positions, collection elements at these positions and check that the collections have the same size. The first two 
+parameters designate begin and end of the first collection. The two last parameters designate begin and end of the
+second collection.
+
+[import examples/example36.cpp]
+[import examples/example36.output]
+[table:id_example36 __BOOST_LEVEL_EQUAL_COLLECTIONS__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example36]]
+    [[example36o]]
+  ]
+]
+
+
+See also:
+
+* __BOOST_LEVEL_EQUAL__
+
+[endsect]
+
+
+
 
 
 [#ref_BOOST_level_CLOSE][h3 `BOOST_<level>_CLOSE`]
@@ -212,72 +302,6 @@ See also:
 * [link boost_test.testing_tools.testing_floating_points Floating point comparison algorithms]
 
 
-
-[#ref_BOOST_level_EQUAL][h3 `BOOST_<level>_EQUAL`]
-
-``
-  BOOST_WARN_EQUAL(left, right);
-  BOOST_CHECK_EQUAL(left, right);
-  BOOST_REQUIRE_EQUAL(left, right);
-``
-
-Check performed by these tools is the same as the one performed by <ref>BOOST_LEVEL</ref>( left == right ).
-The difference is that the mismatched values are reported as well.
-
-[note It is bad idea to use these tools to compare floating point values. Use __BOOST_LEVEL_CLOSE__ or
-      __BOOST_LEVEL_CLOSE_FRACTION__ tools instead.
-]
-[import examples/example35.cpp]
-[import examples/example35.output]
-[table:id_example35 __BOOST_LEVEL_EQUAL__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example35]]
-    [[example35o]]
-  ]
-] 
-
-
-See also:
-
-* __BOOST_LEVEL__
-* __BOOST_LEVEL_CLOSE__
-* __BOOST_LEVEL_NE__
-
-
-[#ref_BOOST_level_EQUAL_COLLECTIONS][h3 `BOOST_<level>_EQUAL_COLLECTIONS`]
-
-``
-  BOOST_WARN_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
-  BOOST_CHECK_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
-  BOOST_REQUIRE_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
-``
-
-These tools are used to perform an element by element comparison of two collections. They print all mismatched
-positions, collection elements at these positions and check that the collections have the same size. The first two 
-parameters designate begin and end of the first collection. The two last parameters designate begin and end of the
-second collection.
-
-[import examples/example36.cpp]
-[import examples/example36.output]
-[table:id_example36 __BOOST_LEVEL_EQUAL_COLLECTIONS__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example36]]
-    [[example36o]]
-  ]
-]
-
-
-See also:
-
-* __BOOST_LEVEL_EQUAL__
 
 
 
