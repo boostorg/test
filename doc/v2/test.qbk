@@ -76,7 +76,7 @@
 
 
 [/ Assertions ]
-[def __BOOST_LEVEL__           [link ref_BOOST_level `BOOST_<level>`]]
+[def __BOOST_LEVEL__           [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level `BOOST_<level>`]]
 [def __BOOST_LEVEL_MESSAGE__   [link ref_BOOST_level_MESSAGE `BOOST_<level>_MESSAGE`]]
 [def __BOOST_LEVEL_EQUAL__     [link ref_BOOST_level_EQUAL `BOOST_<level>_EQUAL`]]
 [def __BOOST_LEVEL_PREDICATE__ [link ref_BOOST_level_PREDICATE `BOOST_<level>_PREDICATE`]]
@@ -91,7 +91,7 @@
 [def __BOOST_LEVEL_THROW__     [link ref_BOOST_level_THROW `BOOST_<level>_THROW`]]
 [def __BOOST_LEVEL_EXCEPTION__ [link ref_BOOST_level_EXCEPTION `BOOST_<level>_EXCEPTION`]]
 
-[def __BOOST_LEVEL_BITWISE_EQUAL__ [link ref_BOOST_level_BITWISE_EQUAL `BOOST_<level>_BITWISE_EQUAL`]]
+[def __BOOST_LEVEL_BITWISE_EQUAL__ [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_bitwise_eq `BOOST_<level>_BITWISE_EQUAL`]]
 [def __BOOST_ERROR__           [link ref_BOOST_ERROR `BOOST_ERROR`]]
 [def __BOOST_FAIL__            [link ref_BOOST_FAIL `BOOST_FAIL`]]
 [def __BOOST_IS_DEFINED__      [link ref_BOOST_IS_DEFINED `BOOST_IS_DEFINED`]]

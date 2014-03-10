@@ -16,7 +16,32 @@ ways to detect and report errors. For list of all supplied testing tools and usa
 
 [section:testing_tool_ref __UTF__ testing tools reference]
 
-[#ref_BOOST_level][h3 `BOOST_<level>`]
+
+[table
+  [
+    [Assertions]
+    [Short description]
+  ] 
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL__]
+    [Simple validation of a boolean predicate value.]
+  ]
+
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_BITWISE_EQUAL__]
+    [Bitwise comparison of two values.]
+  ]
+]
+
+
+
+
+
+
+[#ref_BOOST_level][section:assertion_boost_level `BOOST_<level>`]
 
 
 ``
@@ -46,8 +71,9 @@ See also:
 
 * __BOOST_LEVEL_MESSAGE__
 
+[endsect]
 
-[#ref_BOOST_level_BITWISE_EQUAL][h3 `BOOST_<level>_BITWISE_EQUAL`]
+[#ref_BOOST_level_BITWISE_EQUAL][section:assertion_boost_level_bitwise_eq `BOOST_<level>_BITWISE_EQUAL`]
 
 
 ``
@@ -78,6 +104,8 @@ not required to be of the same type, but warning is issued if their type's size 
 See also:
 
 * __BOOST_LEVEL_EQUAL__
+
+[endsect]
 
 
 [#ref_BOOST_level_CLOSE][h3 `BOOST_<level>_CLOSE`]
