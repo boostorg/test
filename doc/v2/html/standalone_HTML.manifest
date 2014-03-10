@@ -1,9 +1,9 @@
 index.html
 boost_test/intro.html
-boost_test/how_to_read_this_documentation.html
 boost_test/tutorial.html
 boost_test/tutorial/hello.html
 boost_test/tutorial/bt_and_tdd.html
+boost_test/how_to_read_this_documentation.html
 boost_test/section_pem.html
 boost_test/section_pem/usage.html
 boost_test/section_pem/configuration.html
@@ -39,6 +39,10 @@ boost_test/testing_tools/custom_predicates.html
 boost_test/testing_tools/output_stream_testing.html
 boost_test/testing_tools/testing_floating_points.html
 boost_test/testing_tools/testing_tool_ref.html
+boost_test/testing_tools/testing_tool_ref/assertion_boost_level.html
+boost_test/testing_tools/testing_tool_ref/assertion_boost_level_bitwise_eq.html
+boost_test/testing_tools/testing_tool_ref/assertion_boost_level_eq.html
+boost_test/testing_tools/testing_tool_ref/assertion_boost_level_eq_collections.html
 boost_test/test_output.html
 boost_test/test_output/test_log_output.html
 boost_test/test_output/testing_tool_args.html
@@ -68,9 +72,7 @@ boost_test/the_unit_test_framework_usage_re/microsoft_visual_studio_net_usag.htm
 boost_test/the_unit_test_framework_usage_re/command_line_usage_recommendatio.html
 boost_test/section_faq.html
 boost_test/section_glossary.html
-boost_test/portability.html
 boost_test/open_issues.html
-boost_test/release_notes.html
 boost_test/acknowledgements.html
 boost_test/runtime_parameters_reference.html
 boost_test/runtime_parameters_reference/show_progress.html
