@@ -106,8 +106,8 @@ fixture, though you still need to refer to the fixture name in every test case.
  ]
 
  
-[import examples/example18.cpp]
-[import examples/example18.output]
+[import ../examples/example18.cpp]
+[import ../examples/example18.output]
 [table:id_example18 Per test case fixture
   [
     [Code]
@@ -147,8 +147,8 @@ the same fixture automatically.
     same fixture is assigned to all test cases, including ones that belong to the sub test suites.
 ]
 
-[import examples/example19.cpp]
-[import examples/example19.output]
+[import ../examples/example19.cpp]
+[import ../examples/example19.output]
 [table:id_example19 Test suite level fixture
   [
     [Code]
@@ -196,8 +196,8 @@ passed it as an argument to the macro __BOOST_GLOBAL_FIXTURE__.
 
 The statement, that performs global fixture definition, has to reside at a test file scope.
 
-[import examples/example20.cpp]
-[import examples/example20.output]
+[import ../examples/example20.cpp]
+[import ../examples/example20.output]
 [table:id_example20 Global fixture
 [
   [Code]

@@ -23,7 +23,7 @@ how the test module is executed. Whether you want to change output format, selec
 these and may other runtime configuration parameters are described in [*Runtime configuration] section.
 
 One of the first non trivial things you might want to add to your test module is test fixture. Fixture support is covered in 
-[*Test fixture] section. Usually the default test module initialization will work just fine,
+__section_test_fixture__ section. Usually the default test module initialization will work just fine,
 but if you want to implement some custom initialization or change how default initialization behaves you need to first look in 
 [*Test module initialization] section. Here you'll learn about various options the __UTF__ provides for you to customize this behaviour.
 

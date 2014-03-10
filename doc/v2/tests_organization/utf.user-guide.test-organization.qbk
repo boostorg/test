@@ -15,17 +15,18 @@ disadvantages in single test function approach:
 The above points should make it clear that it's preferable to split [link ref_test_module test module] into smaller units.
 These units are [link boost_test.tests_organization.test_cases test cases].
 
-To solve test tree creation problem the __UTF__ provides facilities for __section_test_suite__ creation.
 
-
-
+To solve test tree creation problem the __UTF__ provides facilities for __section_test_suite__ creation. 
 In some cases it's desirable to allow some ['expected] failures in test case without failing a
 test module. To support this request The __UTF__ allows specifying the number of
 __section_expected_failures__ in a test case.
 
+When several tests shares the same set-up (environment, test data preparation, etc.), the __section_test_fixture__ comes into play. 
+In the __UTF__, fixtures can be defined at the test case or the test suite level.
+
 [include utf.user-guide.test_cases.qbk]
 [include utf.user-guide.test_suites.qbk]
-
+[include utf.user-guide.fixture.qbk]
 
 
 [endsect] [/ test organization]
