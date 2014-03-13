@@ -1,0 +1,134 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Implementation</title>
+<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../index.html" title="Boost.Test">
+<link rel="up" href="../section_pem.html" title="Program Execution Monitor">
+<link rel="prev" href="configuration.html" title="Configuration">
+<link rel="next" href="compilation.html" title="Compilation">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="configuration.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../section_pem.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="compilation.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="boost_test.section_pem.implementation"></a><a name="ref_pem_implementation"></a><a class="link" href="implementation.html" title="Implementation">Implementation</a>
+</h3></div></div></div>
+<p>
+        To monitor execution of user supplied function <code class="computeroutput"><span class="identifier">cpp_main</span><span class="special">()</span></code> the <span class="emphasis"><em>PEM</em></span> relies on
+        the Boost.Test's <a class="link" href="../../">Execution Monitor</a>
+        (<span class="emphasis"><em>EM</em></span> for short). Also the <span class="emphasis"><em>PEM</em></span> supplies
+        the function <code class="computeroutput"><span class="identifier">main</span><span class="special">()</span></code>
+        to facilitate uniform error reporting. Following files constitute the <span class="emphasis"><em>PEM</em></span>
+        implementation:
+      </p>
+<div class="table">
+<a name="boost_test.section_pem.implementation.pem_implementation_file"></a><p class="title"><b>Table&#160;5.&#160;<span class="emphasis"><em>PEM</em></span> implementation files</b></p>
+<div class="table-contents"><table class="table" summary="PEM implementation files">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  File name
+                </p>
+              </th>
+<th>
+                <p>
+                  Content
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">execution_monitor</span><span class="special">.</span><span class="identifier">ipp</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  provides <a class="link" href="../../"><span class="emphasis"><em>EM</em></span></a>
+                  implementation for all supported configurations
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">cpp_main</span><span class="special">.</span><span class="identifier">ipp</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  supplies function <code class="computeroutput"><span class="identifier">main</span><span class="special">()</span></code> for static library build
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">prg_exec_monitor</span><span class="special">.</span><span class="identifier">hpp</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  combines all implementation files into single header to be use
+                  as inlined version of component
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">prg_exec_monitor</span><span class="special">.</span><span class="identifier">hpp</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  contains definitions for <code class="computeroutput"><span class="identifier">main</span><span class="special">()</span></code> function for dynamic library
+                  build and pragmas for auto-linking feature support
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><p>
+        The <span class="emphasis"><em>PEM</em></span> implementation wraps several system headers
+        and is intended to be used as standalone library. While there exist an alternative
+        variant to <a class="link" href="compilation/section_pem_full_include.html#ref_pem_direct_include">include the whole implementation
+        directly</a> into your program, for the long term usage the preferable
+        solution is to <a class="link" href="compilation/section_pem_standalone.html#ref_pem_stanlone">build library once</a>
+        and reuse it.
+      </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2014 Gennadiy
+      Rozental<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="configuration.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../section_pem.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="compilation.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

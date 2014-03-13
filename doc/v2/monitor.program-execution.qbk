@@ -1,4 +1,4 @@
-[section Program Execution Monitor]
+[section:section_pem Program Execution Monitor]
  
 The components of a C++ program may report user-detected errors in several ways, such as via a return value or 
 throwing an exception. System-detected errors such as dereferencing an invalid pointer are reported in other ways, 
@@ -28,8 +28,8 @@ to use the __testing_tools__ and generate more detailed error information.
 [section Usage]
 
 
-To facilitate uniform error reporting the __PEM__ supplies function main() as part if it's implementation. To use the 
-__PEM__ instead of regular function main your program is required to supply a function cpp_main() with same signature.
+To facilitate uniform error reporting the __PEM__ supplies function `main()` as part if it's implementation. To use the 
+__PEM__ instead of regular function `main` your program is required to supply a function `cpp_main()` with same signature.
    
 Here is the traditional ['Hello World] program implemented using the __PEM__:
 
@@ -179,9 +179,9 @@ uniform error reporting. Following files constitute the __PEM__ implementation:
 ]  
 
 The __PEM__ implementation wraps several system headers and is intended to be used as standalone library. While there
-exist an alternative variant to <link linkend="pem.compilation.direct-include">include the whole implementation 
-directly</link> into your program, for the long term usage the preferable solution is to 
-<link linkend="pem.compilation.standalone">build library once</link> and reuse it.
+exist an alternative variant to [link ref_pem_direct_include include the whole implementation 
+directly] into your program, for the long term usage the preferable solution is to 
+[link ref_pem_stanlone build library once] and reuse it.
 
 
 [endsect] [/implementation]
@@ -213,7 +213,7 @@ compilation of the __PEM__ library and your program:
   ]
 ]
 
-[#ref_pem_stanlone][section Standalone library compilation]
+[#ref_pem_stanlone][section:section_pem_standalone Standalone library compilation]
 
 If you opted to link your program with the standalone library, you need to build it first. To build a standalone 
 library all C++ files (.cpp), that constitute __PEM__ [link ref_pem_implementation implementation] need to be
@@ -295,7 +295,7 @@ For more details on the auto-linking feature implementation and configuration yo
 
 [endsect] [/ autolink]
 
-[#ref_pem_direct_include][section Including the __PEM__ directly into your program]
+[#ref_pem_direct_include][section:section_pem_full_include Including the __PEM__ directly into your program]
    
 If you prefer to avoid the standalone library compilation you have two alternative usage variants: you can either 
 include all files that constitute the static library in your program's makefile or include them as a part of

@@ -1,0 +1,32 @@
+[section:tests_organization Test organization]
+
+If you look at many legacy test modules, big chance is that it's implemented as one big test function that
+consists of a mixture of check and output statements. Is there anything wrong with it? Yes. There are various
+disadvantages in single test function approach:
+
+* One big function tends to become really difficult to manage if the number of checks exceeds a reasonable limit
+  (true for any large function). What is tested and where - who knows?
+* Many checks require similar preparations. This results in code repetitions within the test function.
+* If a fatal error or an exception is caused by any checks within the test function the rest of tests are
+  skipped and there is no way to prevent this.
+* No way to perform only checks for a particular subsystem of the tested unit.
+* No summary of how different subsystems of the tested unit performed under in the test.
+
+The above points should make it clear that it's preferable to split [link ref_test_module test module] into smaller units.
+These units are [link boost_test.tests_organization.test_cases test cases].
+
+
+To solve test tree creation problem the __UTF__ provides facilities for __section_test_suite__ creation. 
+In some cases it's desirable to allow some ['expected] failures in test case without failing a
+test module. To support this request The __UTF__ allows specifying the number of
+__section_expected_failures__ in a test case.
+
+When several tests shares the same set-up (environment, test data preparation, etc.), the __section_test_fixture__ comes into play. 
+In the __UTF__, fixtures can be defined at the test case or the test suite level.
+
+[include utf.user-guide.test_cases.qbk]
+[include utf.user-guide.test_suites.qbk]
+[include utf.user-guide.fixture.qbk]
+
+
+[endsect] [/ test organization]

@@ -15,7 +15,7 @@
 
 What is the first thing you need to do when you start working on new library/class/program? That's right -
 you need to start with the unit test module (I hope you all gave this answer!). Occasional, simple test may be
-implemented using asserts. But any professional developer soon finds this approach lacking. It becomes clear that
+implemented using `assert`s. But any professional developer soon finds this approach lacking. It becomes clear that
 it's too time-consuming and tedious for simple, but repetitive unit testing tasks and it's too inflexible for
 most non-trivial ones.
 
@@ -71,6 +71,22 @@ to be fully customized. Accordingly the material provided in this documentation 
 
 
 For those interested in getting started quickly please visit [*collection of examples] presented in this documentation.
+
+
+[h4 Portability]
+Because the Boost Test Library is critical for porting and testing Boost libraries, it has been written to be 
+conservative in its use of C++ features, and to keep dependencies to a bare minimum.
+
+Boost.Test supports all main Boost compilers and platforms. Confirmation of its status on core and additional 
+platforms/compilers can be seen by viewing Boost.Test's own internal regression test results on 
+[@http://beta.boost.org/development/tests/release/user/test_release.html release status page] or
+[@http://beta.boost.org/development/tests/trunk/developer/test.html trunk status page]
+
+[warning Check the links]
+
+
+
+[h4 Release notes]
 
 
 [endsect] [/ What is Boost.Test?]

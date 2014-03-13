@@ -1,0 +1,57 @@
+[section:tools_assertion_severity_level Assertion severity level]
+
+All the tools are supplied in three flavours/levels, from lowest to highest:
+
+# `WARN`
+# `CHECK` and
+# `REQUIRE`
+
+For example: 
+
+* __BOOST_WARN_EQUAL__
+* __BOOST_CHECK_EQUAL__
+* __BOOST_REQUIRE_EQUAL__
+
+If an assertion designated by
+the tool passes, confirmation message can be printed in log output [footnote to manage what messages appear
+in the test log stream, set the proper [link testing_tool_args.log_runtime_config log level]].
+If an assertion designated by the tool failed, depending on the level following
+will happened [footnote in some cases log message can be slightly different to reflect failed tool
+specifics]:
+
+[table:assertions_severity_levels Assertions severity levels
+  [
+    [Level]
+    [Test log content]
+    [Errors counter]
+    [Test execution]
+  ]
+  
+  [
+    [WARN]
+    [warning in `<test-case-name>`: condition `<assertion description>` is not satisfied]
+    [not affected]
+    [continues]
+  ]
+  [
+    [CHECK]
+    [error in `<test-case-name>`: test `<assertion description>` failed]
+    [increased]
+    [continues]
+  ]
+  [
+    [REQUIRE]
+    [fatal error in `<test-case-name>`: critical test `<assertion description>` failed]
+    [increased]
+    [aborts]
+  ]
+]
+
+[note in the above table, the ['test execution] is related to the current test case ['only]. Hence ['"aborts"] means 
+ that the current test case is aborted, but other test cases in the test tree are still executed.]
+
+Regularly you should use `CHECK` level tools to implement your assertions. You can use `WARN` level tools to validate
+aspects less important then correctness: performance, portability, usability etc. You should use `REQUIRE` level
+tools only if continuation of the test case doesn't make sense if this assertions fails.
+
+[endsect] [/ assertions severity level]

@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Hello the testing world ... or beginner's introduction into testing using the Unit Test Framework</title>
+<title>Hello the testing world... or beginner's introduction into testing using the Unit Test Framework</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../tutorial.html" title="The unit test framework tutorials">
 <link rel="prev" href="../tutorial.html" title="The unit test framework tutorials">
-<link rel="next" href="bt_and_tdd.html" title='Boost.Test driven development ... or "getting started" for TDD followers'>
+<link rel="next" href="bt_and_tdd.html" title='Boost.Test driven development... or "getting started" for TDD followers'>
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -24,7 +24,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="boost_test.tutorial.hello"></a><a class="link" href="hello.html" title="Hello the testing world ... or beginner's introduction into testing using the Unit Test Framework">Hello the testing world ...
+<a name="boost_test.tutorial.hello"></a><a class="link" href="hello.html" title="Hello the testing world... or beginner's introduction into testing using the Unit Test Framework">Hello the testing world...
       or beginner's introduction into testing using the Unit Test Framework</a>
 </h3></div></div></div>
 <p>
@@ -60,7 +60,7 @@
       </p>
 <p>
         The Boost Test Library's Unit Test Framework is designed to automate those
-        tasks. The library supplied main() relieves users from messy error detection
+        tasks. The library supplied <code class="computeroutput"><span class="identifier">main</span><span class="special">()</span></code> relieves users from messy error detection
         and reporting duties. Users could use supplied testing tools to perform complex
         validation tasks. Let's take a look on the following simple test program:
       </p>
@@ -77,7 +77,8 @@
       </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-            You need to convert is_valid result in proper result code.
+            You need to convert <code class="computeroutput"><span class="identifier">is_valid</span></code>
+            result in proper result code.
           </li>
 <li class="listitem">
             Would exception happen in test_object construction of method is_valid
@@ -103,7 +104,7 @@
 </pre>
 <p>
         Now, you not only receive uniform result code, even in case of exception,
-        but also nicely formatted output from <a class="link" href="../testing_tools/testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_CHECK</span></code></a> tool, would you choose
+        but also nicely formatted output from <a class="link" href="../testing_tools/testing_tool_ref/assertion_boost_level.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_CHECK</span></code></a> tool, would you choose
         to see it. Is there any other ways to perform checks? The following example
         test program shows several different ways to detect and report an error in
         the <code class="computeroutput"><span class="identifier">add</span><span class="special">()</span></code>
@@ -148,7 +149,7 @@
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="boost_test.tutorial.hello.c1"></a><a href="#boost_test.tutorial.hello.c0"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a> </p></td>
 <td valign="top" align="left"><p>
-            This approach uses the <a class="link" href="../testing_tools/testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_CHECK</span></code></a> tool, which displays
+            This approach uses the <a class="link" href="../testing_tools/testing_tool_ref/assertion_boost_level.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_CHECK</span></code></a> tool, which displays
             an error message (by default on <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span></code>)
             that includes the expression that failed, the source file name, and the
             source file line number. It also increments the error count. At program
@@ -159,11 +160,11 @@
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="boost_test.tutorial.hello.c3"></a><a href="#boost_test.tutorial.hello.c2"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a> </p></td>
 <td valign="top" align="left"><p>
-            This approach uses the <a class="link" href="../testing_tools/testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_REQUIRE</span></code></a> tool, is similar
+            This approach uses the <a class="link" href="../testing_tools/testing_tool_ref/assertion_boost_level.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_REQUIRE</span></code></a> tool, is similar
             to approach #1, except that after displaying the error, an exception
             is thrown, to be caught by the Unit Test Framework. This approach is
             suitable when writing an explicit test program, and the error would be
-            so severe as to make further testing impractical. <a class="link" href="../testing_tools/testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_REQUIRE</span></code></a> differs from the
+            so severe as to make further testing impractical. <a class="link" href="../testing_tools/testing_tool_ref/assertion_boost_level.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_REQUIRE</span></code></a> differs from the
             C++ Standard Library's assert() macro in that it is always generated,
             and channels error detection into the uniform Unit Test Framework reporting
             procedure.
@@ -206,7 +207,7 @@
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="boost_test.tutorial.hello.c13"></a><a href="#boost_test.tutorial.hello.c12"><img src="../../../../../../../doc/src/images/callouts/7.png" alt="7" border="0"></a> </p></td>
 <td valign="top" align="left"><p>
-            This approach uses the <a class="link" href="../testing_tools/testing_tool_ref.html#ref_BOOST_level_EQUAL"><code class="computeroutput"><span class="identifier">BOOST_CHECK_EQUAL</span></code></a> tool and functionally
+            This approach uses the <a class="link" href="../testing_tools/testing_tool_ref/assertion_boost_level_eq.html#ref_BOOST_level_EQUAL"><code class="computeroutput"><span class="identifier">BOOST_CHECK_EQUAL</span></code></a> tool and functionally
             is similar to approach #1. This approach is most attractive for checking
             equality of two variables, since in case of error it shows mismatched
             values.

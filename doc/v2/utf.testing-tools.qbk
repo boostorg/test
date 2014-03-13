@@ -8,393 +8,53 @@ for unit test code rather than library or production code, where throwing except
 `boost::concept_check` or `BOOST_STATIC_ASSERT()` may be more suitable
 ways to detect and report errors. For list of all supplied testing tools and usage examples see the reference.
 
+[include testing_tools/assertions_severity_levels.qbk]
+[include testing_tools/custom_predicates.qbk]
+[include testing_tools/testing_output_streams.qbk]
+[include testing_tools/testing_floating_points.qbk]
 
-[section:tools_assertion_severity_level Assertion severity level]
-
-All the tools are supplied in three flavours/levels, from lowest to highest:
-
-# `WARN`
-# `CHECK` and
-# `REQUIRE`
-
-For example: 
-
-* __BOOST_WARN_EQUAL__
-* __BOOST_CHECK_EQUAL__
-* __BOOST_REQUIRE_EQUAL__
-
-If an assertion designated by
-the tool passes, confirmation message can be printed in log output [footnote to manage what messages appear
-in the test log stream, set the proper [link testing_tool_args.log_runtime_config log level]].
-If an assertion designated by the tool failed, depending on the level following
-will happened [footnote in some cases log message can be slightly different to reflect failed tool
-specifics]:
-
-[table:assertions_severity_levels Assertions severity levels
-  [
-    [Level]
-    [Test log content]
-    [Errors counter]
-    [Test execution]
-  ]
-  
-  [
-    [WARN]
-    [warning in `<test-case-name>`: condition `<assertion description>` is not satisfied]
-    [not affected]
-    [continues]
-  ]
-  [
-    [CHECK]
-    [error in `<test-case-name>`: test `<assertion description>` failed]
-    [increased]
-    [continues]
-  ]
-  [
-    [REQUIRE]
-    [fatal error in `<test-case-name>`: critical test `<assertion description>` failed]
-    [increased]
-    [aborts]
-  ]
-]
-
-[note in the above table, the ['test execution] is related to the current test case ['only]. Hence ['"aborts"] means 
- that the current test case is aborted, but other test cases in the test tree are still executed.]
-
-Regularly you should use `CHECK` level tools to implement your assertions. You can use `WARN` level tools to validate
-aspects less important then correctness: performance, portability, usability etc. You should use `REQUIRE` level
-tools only if continuation of the test case doesn't make sense if this assertions fails.
-
-[endsect] [/ assertions severity level]
-
-
-
-[/ ############################################################ Custom predicates]
-[section:custom_predicates Custom predicate support]
-
-Even though supplied testing tools cover wide range of possible checks and provide detailed report on cause of error
-in some cases you may want to implement and use custom predicate that perform complex check and produce intelligent
-report on failure. To satisfy this need testing tools implement custom predicate support. There two layers of custom
-predicate support implemented by testing tools toolbox: with and without custom error message generation.
-
-
-The first layer is supported by __BOOST_CHECK_PREDICATE__ family of testing tools. You can use it to check any custom
-predicate that reports the result as boolean value. The values of the predicate arguments are reported by the tool
-automatically in case of failure.
-
-[import examples/example30.cpp]
-[import examples/example30.output]
-[table:id_example30 Custom predicate support using __BOOST_CHECK_PREDICATE__
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example30]]
-    [[example30o]]
-  ]
-]
-
-
-To use second layer your predicate has to return
-``boost::test_tools::predicate_result``
-
-This class encapsulates boolean result value along with any error or information message you opt to report.
-
-Usually you construct the instance of class `boost::test_tools::predicate_result` inside your
-predicate function and return it by value. The constructor expects one argument - the boolean result value. The
-constructor is implicit, so you can simply return boolean value from your predicate and
-`boost::test_tools::predicate_result` is constructed automatically to hold your value and empty
-message. You can also assign boolean value to the constructed instance. You can check the current predicate value by
-using `operator!` or directly accessing public read-only property `p_predicate_value`. The
-error message is stored in public read-write property `p_message`.
-
-[import examples/example31.cpp]
-[import examples/example31.output]
-[table:id_example31 Custom predicate support using class `predicate_result`
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example31]]
-    [[example31o]]
-  ]
-]
-[endsect] [/predicate]
-
-
-
-
-[/ ############################################################ Output streams]
-[#ref_test_output_streams][section:output_stream_testing Output streams testing tool]
-
-How do you perform correctness test for ``operator<< ( std::ostream &, ... )``
-operations? You can print into the standard output stream and manually check that it is matching your expectations.
-Unfortunately, this is not really acceptable for the regression testing and doesn't serve a long term purpose of a
-unit test. 
-
-You can use `std::stringstream` and compare resulting output buffer with the
-expected pattern string, but you are required to perform several additional operations with every check you do. So it
-becomes tedious very fast. 
-
-The class ``output_test_stream`` is designed to automate these tasks for you. This is a simple, but powerful tool for testing standard
-`std::ostream` based output operation. The class `output_test_stream`
-complies to `std::ostream` interface so it can be used in place of any
-`std::ostream` parameter. It provides several test methods to validate output content,
-including test for match to expected output content or test for expected output length. Flushing, synchronizing, 
-string comparison and error message generation is automated by the tool implementation.
-
-All `output_test_stream` validation methods by default flush the stream once check is performed.
-If you want to perform several checks with the same output, specify parameter `flush_stream`
-with value false. This parameter is supported on all comparison methods.
-[warning Is there any example of `flush_stream` ??]
-
-In some cases manual generation of expected output is either too time consuming or is impossible at all bacause
-of sheer volume. What we need in cases like this is to be able to check once manually that the output is as expected
-and to be able in a future check that it stays the same. To help manage this logic the class
-`output_test_stream` allows matching output content versus specified pattern file and produce
-pattern file based on successful test run.
-
-
-Detailed specification of class `output_test_stream` is covered in reference section.
-[warning Check if this is really the case]
-
-[h3:usages Usage]
-There are two ways to employ the class `output_test_stream`: 
-
-# explicit output checks and
-# pattern file matching
-
-[h4 Explicit output checks]
-
-Use the instance of class `output_test_stream` as an output stream and check output content using tool's methods.
-
-[import examples/example28.cpp]
-[import examples/example28.output]
-[table:id_example28 Explicit output checks with `output_test_stream`
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example28]]
-    [[example28o]]
-  ]
-]
-
-[note Use of `false` to prevent output flushing in first two invocation of check functions. Unless
-you want to perform several different checks for the same output you wouldn't need to use it though. Your
-test will look like a serie of output operators followed by one check.]
-
-[tip Try to perform checks as
-frequently as possible. It not only simplifies patterns you compare with, but also allows you to more closely
-identify possible source of failure.]
-
-[h4 Pattern file matching]
-The ['pattern file] is a companion file containing the patterns that the stream should match. Your testing will look 
-like a serie of output operators followed by match pattern checks repeated several times.
-
-[import examples/example29.cpp]
-[import examples/example29.output]
-In the example below, the file `pattern_file` contains the patterns that should match. 
-[pre
-i=2
-File: test.cpp Line:XXX
-]
-
-[table:id_example29 Pattern file matching with `output_test_stream`
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example29]]
-    [[example29o]]
-  ]
-]
-
-
-[tip Try to perform checks as frequently as possible, because it allows you to more closely identify possible source
-    of failure
-]
-
-[warning From what I understood, the matching is against the file and at most the number of characters that are currently 
- in the output stream. Is that correct?]
-
-
-[endsect] [/ output stream testing]
-
-
-
-[/ ############################################################ Floating points]
-[section:testing_floating_points Floating-point testing]
-
-[note Have you seen that the current doc in boost.org skipped all the math ??]
-
-In most cases it is unreasonable to use an `operator==(...)` for a floating-point values equality check.
-The simple, absolute value comparison based, solution for a floating-point values `u`,
-`v` and a tolerance `epsilon`:
-
-[#equ1]
-``
-   abs(u - v) <= epsilon; // (1)
-``
-
-
-does not produce expected results in many circumstances - specifically for very small or very big values (see
-[link Squassabia] for examples). The __UTF__ implements floating-point comparison algorithm that is
-based on the more confident solution first presented in [link KnuthII Knuth]:
-
-[#equ2]
-``
-   abs(u - v) <= epsilon * abs(u)
-&& abs(u - v) <= epsilon * abs(v)); // (2)
-``
-defines a ['very close with tolerance `epsilon`] relationship between `u` and `v`, while
-
-[#equ3]
-``
-   abs(u - v) <= epsilon * abs(u)
-|| abs(u - v) <= epsilon * abs(v); // (3)
-``
-
-defines a ['close enough with tolerance `epsilon`] relationship between `u` and `v`.
-
-Both relationships are commutative but are not transitive. The relationship defined by inequations
-[link equ2 (2)] is stronger that the relationship defined by inequations [link equ3 (3)] since [link equ2 (2)] necessarilly implies [link equ3 (3)].
-
-The multiplication in the right side of inequations may cause an unwanted underflow condition. To prevent this, 
-the implementation is using modified version of the
-inequations [link equ2 (2)] and [link equ3 (3)] where all underflow, overflow conditions can be guarded safely:
-
-[#equ4]
-``
-   abs(u - v)/abs(u) <= epsilon * abs(u)
-&& abs(u - v)/abs(v) <= epsilon * abs(v); // (4)
-``
-
-[#equ5]
-``
-   abs(u - v)/abs(u) <= epsilon * abs(u)
-|| abs(u - v)/abs(v) <= epsilon * abs(v); // (5)
-``
-
-Checks based on equations [link equ4 (4)] and [link equ5 (5)] are implemented by two predicates with
-alternative interfaces: 
-
-# binary predicate `close_at_tolerance` [footnote check type and tolerance value are fixed at predicate construction time] 
-# and predicate with four arguments `check_is_close` [footnote check type and tolerance value are the arguments of the predicate].
-
-
-While equations [link equ4 (4)] and [link equ5 (5)] in general are preferred for the general floating
-point comparison check over equation [link equ1 (1)], they are
-unusable for the test on closeness to zero. The later check is still might be useful in some cases and the __UTF__
-implements an algorithm based on equation [link equ1 (1)] in
-binary predicate `check_is_small` [footnote `v` is zero].
-
-On top of the generic, flexible predicates the __UTF__ implements macro based family of tools
-__BOOST_CHECK_CLOSE__ and __BOOST_CHECK_SMALL__. These tools limit the check
-flexibility to strong-only checks, but automate failed check arguments reporting.
-
-[h3 Tolerance selection considerations]
-
-In case of absence of domain specific requirements the value of tolerance can be chosen as a sum of the predicted
-upper limits for "relative rounding errors" of compared values. The "rounding" is the operation by which a real 
-value 'x' is represented in a floating-point format with 'p' binary digits (bits) as the floating-point value [*X].
-The "relative rounding error" is the difference between the real and the floating point values in relation to real
-value: `abs(x-X)/abs(x)`. The discrepancy between real and floating point value may be caused by several reasons:
-
-* Type promotion
-* Arithmetic operations
-* Conversion from a decimal presentation to a binary presentation
-* Non-arithmetic operation
-
-
-The first two operations proved to have a relative rounding error that does not exceed 
-
-  half_epsilon = half of the 'machine epsilon value'
-
-for the appropriate floating point type `FPT` [footnote [*machine epsilon value] is represented by `std::numeric_limits<FPT>::epsilon()`]. 
-Conversion to binary presentation, sadly, does not have such requirement. So we can't assume that `float(1.1)` is close 
-to the real number `1.1` with tolerance `half_epsilon` for float (though for 11./10 we can). Non-arithmetic operations either do not have a
-predicted upper limit relative rounding errors. 
-
-[note Note that both arithmetic and non-arithmetic operations might also
-produce others "non-rounding" errors, such as underflow/overflow, division-by-zero or "operation errors".]
-
-
-All theorems about the upper limit of a rounding error, including that of `half_epsilon`, refer only to
-the 'rounding' operation, nothing more. This means that the 'operation error', that is, the error incurred by the 
-operation itself, besides rounding, isn't considered. In order for numerical software to be able to actually 
-predict error bounds, the __IEEE754__ standard requires arithmetic operations to be 'correctly or exactly rounded'.
-That is, it is required that the internal computation of a given operation be such that the floating point result 
-is the exact result rounded to the number of working bits. In other words, it is required that the computation used
-by the operation itself doesn't introduce any additional errors. The __IEEE754__ standard does not require same behaviour
-from most non-arithmetic operation. The underflow/overflow and division-by-zero errors may cause rounding errors 
-with unpredictable upper limits.
-
-At last be aware that `half_epsilon` rules are not transitive. In other words combination of two
-arithmetic operations may produce rounding error that significantly exceeds `2*half_epsilon`. All
-in all there are no generic rules on how to select the tolerance and users need to apply common sense and domain/
-problem specific knowledge to decide on tolerance value.
-
-To simplify things in most usage cases latest version of algorithm below opted to use percentage values for
-tolerance specification (instead of fractions of related values). In other words now you use it to check that
-difference between two values does not exceed x percent.
-
-For more reading about floating-point comparison see references below.
-
-[h4 Bibliographic references]
-[variablelist Books
-  [
-    [[#KnuthII]The art of computer programming (vol II)]
-    [Donald. E. Knuth, 1998, Addison-Wesley Longman, Inc., ISBN 0-201-89684-2, Addison-Wesley Professional; 3rd edition]
-  ]
-  [
-    [Rounding near zero, in [@http://www.amazon.com/Advanced-Arithmetic-Digital-Computer-Kulisch/dp/3211838708 Advanced Arithmetic for the Digital Computer]]
-    [Ulrich W. Kulisch, 2002, Springer, Inc., ISBN 0-201-89684-2, Springer; 1st edition]
-  ]
-]
-
-[variablelist Periodicals
-  [
-    [[#Squassabia][@http://www.adtmag.com/joop/carticle.aspx?ID=396
-      Comparing Floats: How To Determine if Floating Quantities Are Close Enough Once a Tolerance Has Been Reached]]
-    [Alberto Squassabia, in C++ Report (March 2000)]
-  ]
-
-  [
-    [The Journeyman's Shop: Trap Handlers, Sticky Bits, and Floating-Point Comparisons]
-    [Pete Becker, in C/C++ Users Journal (December 2000)]
-  ]
-]
-
-[variablelist Publications
-  [
-    [[@http://dl.acm.org/citation.cfm?id=103163
-      What Every Computer Scientist Should Know About Floating-Point Arithmetic]]
-    [David Goldberg, pages 150-230, in Computing Surveys (March 1991), Association for Computing Machinery, Inc.]
-  ]
-
-  [
-    [[@http://hal.archives-ouvertes.fr/docs/00/07/26/81/PDF/RR-3967.pdf From Rounding Error Estimation to Automatic Correction with Automatic Differentiation]]
-    [Philippe Langlois, Technical report, INRIA]
-  ]
-
-  [
-    [[@http://www.cs.berkeley.edu/~wkahan/
-      William Kahan home page]]
-    [Lots of information on floating point arithmetics.]
-  ]
-
-]
-
-[endsect] [/ floating points]
 
 [section:testing_tool_ref __UTF__ testing tools reference]
 
-[#ref_BOOST_level][h3 `BOOST_<level>`]
+
+[table
+  [
+    [Assertions]
+    [Short description]
+  ] 
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL__]
+    [Simple validation of a boolean predicate value.]
+  ]
+
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_BITWISE_EQUAL__]
+    [Bitwise equality test of two elements.]
+  ]
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_EQUAL__]
+    [Equality test of two elements.]
+  ]
+
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_EQUAL_COLLECTIONS__]
+    [Element-wise equality test of two collections.]
+  ]
+  
+]
+
+
+
+
+
+[/ ###############################################################################################]
+[#ref_BOOST_level][section:assertion_boost_level `BOOST_<level>`]
 
 
 ``
@@ -424,8 +84,11 @@ See also:
 
 * __BOOST_LEVEL_MESSAGE__
 
+[endsect]
 
-[#ref_BOOST_level_BITWISE_EQUAL][h3 `BOOST_<level>_BITWISE_EQUAL`]
+
+[/ ###############################################################################################]
+[#ref_BOOST_level_BITWISE_EQUAL][section:assertion_boost_level_bitwise_eq `BOOST_<level>_BITWISE_EQUAL`]
 
 
 ``
@@ -456,6 +119,83 @@ not required to be of the same type, but warning is issued if their type's size 
 See also:
 
 * __BOOST_LEVEL_EQUAL__
+
+[endsect]
+
+[/ ###############################################################################################]
+[#ref_BOOST_level_EQUAL][section:assertion_boost_level_eq `BOOST_<level>_EQUAL`]
+
+``
+  BOOST_WARN_EQUAL(left, right);
+  BOOST_CHECK_EQUAL(left, right);
+  BOOST_REQUIRE_EQUAL(left, right);
+``
+
+Check performed by these tools is the same as the one performed by `__BOOST_LEVEL__(left == right)`.
+The difference is that the mismatched values are reported as well.
+
+[note It is bad idea to use these tools to compare floating point values. Use __BOOST_LEVEL_CLOSE__ or
+      __BOOST_LEVEL_CLOSE_FRACTION__ tools instead.
+]
+[import examples/example35.cpp]
+[import examples/example35.output]
+[table:id_example35 __BOOST_LEVEL_EQUAL__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example35]]
+    [[example35o]]
+  ]
+] 
+
+
+See also:
+
+* __BOOST_LEVEL__
+* __BOOST_LEVEL_CLOSE__
+* __BOOST_LEVEL_NE__
+* __BOOST_LEVEL_EQUAL_COLLECTIONS__
+
+[endsect]
+
+[/ ###############################################################################################]
+[#ref_BOOST_level_EQUAL_COLLECTIONS][section:assertion_boost_level_eq_collections `BOOST_<level>_EQUAL_COLLECTIONS`]
+
+``
+  BOOST_WARN_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
+  BOOST_CHECK_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
+  BOOST_REQUIRE_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
+``
+
+These tools are used to perform an element by element comparison of two collections. They print all mismatched
+positions, collection elements at these positions and check that the collections have the same size. The first two 
+parameters designate begin and end of the first collection. The two last parameters designate begin and end of the
+second collection.
+
+[import examples/example36.cpp]
+[import examples/example36.output]
+[table:id_example36 __BOOST_LEVEL_EQUAL_COLLECTIONS__ usage
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example36]]
+    [[example36o]]
+  ]
+]
+
+
+See also:
+
+* __BOOST_LEVEL_EQUAL__
+
+[endsect]
+
+
+
 
 
 [#ref_BOOST_level_CLOSE][h3 `BOOST_<level>_CLOSE`]
@@ -562,72 +302,6 @@ See also:
 * [link boost_test.testing_tools.testing_floating_points Floating point comparison algorithms]
 
 
-
-[#ref_BOOST_level_EQUAL][h3 `BOOST_<level>_EQUAL`]
-
-``
-  BOOST_WARN_EQUAL(left, right);
-  BOOST_CHECK_EQUAL(left, right);
-  BOOST_REQUIRE_EQUAL(left, right);
-``
-
-Check performed by these tools is the same as the one performed by <ref>BOOST_LEVEL</ref>( left == right ).
-The difference is that the mismatched values are reported as well.
-
-[note It is bad idea to use these tools to compare floating point values. Use __BOOST_LEVEL_CLOSE__ or
-      __BOOST_LEVEL_CLOSE_FRACTION__ tools instead.
-]
-[import examples/example35.cpp]
-[import examples/example35.output]
-[table:id_example35 __BOOST_LEVEL_EQUAL__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example35]]
-    [[example35o]]
-  ]
-] 
-
-
-See also:
-
-* __BOOST_LEVEL__
-* __BOOST_LEVEL_CLOSE__
-* __BOOST_LEVEL_NE__
-
-
-[#ref_BOOST_level_EQUAL_COLLECTIONS][h3 `BOOST_<level>_EQUAL_COLLECTIONS`]
-
-``
-  BOOST_WARN_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
-  BOOST_CHECK_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
-  BOOST_REQUIRE_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
-``
-
-These tools are used to perform an element by element comparison of two collections. They print all mismatched
-positions, collection elements at these positions and check that the collections have the same size. The first two 
-parameters designate begin and end of the first collection. The two last parameters designate begin and end of the
-second collection.
-
-[import examples/example36.cpp]
-[import examples/example36.output]
-[table:id_example36 __BOOST_LEVEL_EQUAL_COLLECTIONS__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example36]]
-    [[example36o]]
-  ]
-]
-
-
-See also:
-
-* __BOOST_LEVEL_EQUAL__
 
 
 

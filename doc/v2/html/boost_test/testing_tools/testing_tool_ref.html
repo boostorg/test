@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
-<link rel="up" href="../testing_tools.html" title="The UTF testing tools... or tester's toolbox for all occasions">
+<link rel="up" href="../testing_tools.html" title="The UTF testing tools">
 <link rel="prev" href="testing_floating_points.html" title="Floating-point testing">
-<link rel="next" href="../fixtures.html" title="Fixtures">
+<link rel="next" href="testing_tool_ref/assertion_boost_level.html" title="BOOST_&lt;level&gt;">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,33 +20,20 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="testing_floating_points.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../testing_tools.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../fixtures.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="testing_floating_points.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../testing_tools.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="testing_tool_ref/assertion_boost_level.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_test.testing_tools.testing_tool_ref"></a><a class="link" href="testing_tool_ref.html" title="UTF testing tools reference"><span class="emphasis"><em>UTF</em></span>
       testing tools reference</a>
 </h3></div></div></div>
-<a name="ref_BOOST_level"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h0"></a>
-        <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_level"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_level"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
-      </h4>
-<pre class="programlisting"><span class="identifier">BOOST_WARN</span><span class="special">(</span><span class="identifier">predicate</span><span class="special">);</span>
-<span class="identifier">BOOST_CHECK</span><span class="special">(</span><span class="identifier">predicate</span><span class="special">);</span>
-<span class="identifier">BOOST_REQUIRE</span><span class="special">(</span><span class="identifier">predicate</span><span class="special">);</span>
-</pre>
-<p>
-        These tools are used to validate the predicate value. The only parameter
-        for these tools is a boolean predicate value that gets validated. It could
-        be any expression that could be evaluated and converted to boolean value.
-        The expression gets evaluated only once, so it's safe to pass complex expression
-        for validation.
-      </p>
-<div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example34"></a><p class="title"><b>Table&#160;29.&#160;<code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code>
-        usage</b></p>
-<div class="table-contents"><table class="table" summary="BOOST_&lt;level&gt;
-        usage">
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="testing_tool_ref/assertion_boost_level.html"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a></span></dt>
+<dt><span class="section"><a href="testing_tool_ref/assertion_boost_level_bitwise_eq.html"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_BITWISE_EQUAL</span></code></a></span></dt>
+<dt><span class="section"><a href="testing_tool_ref/assertion_boost_level_eq.html"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EQUAL</span></code></a></span></dt>
+<dt><span class="section"><a href="testing_tool_ref/assertion_boost_level_eq_collections.html"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EQUAL_COLLECTIONS</span></code></a></span></dt>
+</dl></div>
+<div class="informaltable"><table class="table">
 <colgroup>
 <col>
 <col>
@@ -54,120 +41,68 @@
 <thead><tr>
 <th>
                 <p>
-                  Code
+                  Assertions
                 </p>
               </th>
 <th>
                 <p>
-                  Output
+                  Short description
                 </p>
               </th>
 </tr></thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>
-<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">example</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-
-<span class="identifier">BOOST_AUTO_TEST_CASE</span><span class="special">(</span> <span class="identifier">test</span> <span class="special">)</span>
-<span class="special">{</span>
-  <span class="keyword">int</span> <span class="identifier">i</span><span class="special">=</span><span class="number">2</span><span class="special">;</span>
-  <span class="identifier">BOOST_WARN</span><span class="special">(</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="special">==</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">short</span><span class="special">)</span> <span class="special">);</span>
-  <span class="identifier">BOOST_CHECK</span><span class="special">(</span> <span class="identifier">i</span> <span class="special">==</span> <span class="number">1</span> <span class="special">);</span>
-  <span class="identifier">BOOST_REQUIRE</span><span class="special">(</span> <span class="identifier">i</span> <span class="special">&gt;</span> <span class="number">5</span> <span class="special">);</span>
-  <span class="identifier">BOOST_CHECK</span><span class="special">(</span> <span class="identifier">i</span> <span class="special">==</span> <span class="number">6</span> <span class="special">);</span>  <span class="comment">// will never reach this check</span>
-<span class="special">}</span>
-</pre>
-              </td>
-<td>
-<pre class="programlisting"><span class="special">&gt;</span> <span class="identifier">example</span> <span class="special">--</span><span class="identifier">log_level</span><span class="special">=</span><span class="identifier">warning</span>
-<span class="identifier">Running</span> <span class="number">1</span> <span class="identifier">test</span> <span class="keyword">case</span><span class="special">...</span>
-<span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">9</span><span class="special">):</span> <span class="identifier">warning</span> <span class="identifier">in</span> <span class="string">"test"</span><span class="special">:</span> <span class="identifier">condition</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="special">==</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">short</span><span class="special">)</span> <span class="identifier">is</span> <span class="keyword">not</span> <span class="identifier">satisfied</span>
-<span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">10</span><span class="special">):</span> <span class="identifier">error</span> <span class="identifier">in</span> <span class="string">"test"</span><span class="special">:</span> <span class="identifier">check</span> <span class="identifier">i</span> <span class="special">==</span> <span class="number">1</span> <span class="identifier">failed</span>
-<span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">11</span><span class="special">):</span> <span class="identifier">fatal</span> <span class="identifier">error</span> <span class="identifier">in</span> <span class="string">"test"</span><span class="special">:</span> <span class="identifier">critical</span> <span class="identifier">check</span> <span class="identifier">i</span> <span class="special">&gt;</span> <span class="number">5</span> <span class="identifier">failed</span>
-
-<span class="special">***</span> <span class="number">2</span> <span class="identifier">failures</span> <span class="identifier">detected</span> <span class="identifier">in</span> <span class="identifier">test</span> <span class="identifier">suite</span> <span class="string">"example"</span>
-</pre>
-              </td>
-</tr></tbody>
-</table></div>
-</div>
-<br class="table-break"><p>
-        See also:
-      </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
-            <a class="link" href="testing_tool_ref.html#ref_BOOST_level_MESSAGE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_MESSAGE</span></code></a>
-          </li></ul></div>
-<a name="ref_BOOST_level_BITWISE_EQUAL"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h1"></a>
-        <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_level_bitwise_equal"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_level_bitwise_equal"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_BITWISE_EQUAL</span></code></a>
-      </h4>
-<pre class="programlisting"><span class="identifier">BOOST_WARN_BITWISE_EQUAL</span><span class="special">(</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">);</span>
-<span class="identifier">BOOST_CHECK_BITWISE_EQUAL</span><span class="special">(</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">);</span>
-<span class="identifier">BOOST_REQUIRE_BITWISE_EQUAL</span><span class="special">(</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">);</span>
-</pre>
-<p>
-        These tools are used to perform bitwise comparison of two values. The check
-        shows all positions where left and right value's bits mismatch.
-      </p>
-<p>
-        The first parameter is the left compared value. The second parameter is the
-        right compared value. Parameters are not required to be of the same type,
-        but warning is issued if their type's size does not coincide.
-      </p>
-<div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example33"></a><p class="title"><b>Table&#160;30.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_BITWISE_EQUAL"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_BITWISE_EQUAL</span></code></a>
-        usage</b></p>
-<div class="table-contents"><table class="table" summary="BOOST_&lt;level&gt;_BITWISE_EQUAL
-        usage">
-<colgroup>
-<col>
-<col>
-</colgroup>
-<thead><tr>
-<th>
                 <p>
-                  Code
+                  <a class="link" href="testing_tool_ref/assertion_boost_level.html" title="BOOST_&lt;level&gt;"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
                 </p>
-              </th>
-<th>
+              </td>
+<td>
                 <p>
-                  Output
+                  Simple validation of a boolean predicate value.
                 </p>
-              </th>
-</tr></thead>
-<tbody><tr>
+              </td>
+</tr>
+<tr>
 <td>
-<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">example</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-
-<span class="identifier">BOOST_AUTO_TEST_CASE</span><span class="special">(</span> <span class="identifier">test</span> <span class="special">)</span>
-<span class="special">{</span>
-  <span class="identifier">BOOST_CHECK_BITWISE_EQUAL</span><span class="special">(</span> <span class="special">(</span><span class="keyword">char</span><span class="special">)</span><span class="number">0x26</span><span class="special">,</span> <span class="number">0x04</span> <span class="special">);</span>
-<span class="special">}</span>
-</pre>
+                <p>
+                  <a class="link" href="testing_tool_ref/assertion_boost_level_bitwise_eq.html" title="BOOST_&lt;level&gt;_BITWISE_EQUAL"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_BITWISE_EQUAL</span></code></a>
+                </p>
               </td>
 <td>
-<pre class="programlisting"><span class="special">&gt;</span> <span class="identifier">example</span>
-<span class="identifier">Running</span> <span class="number">1</span> <span class="identifier">test</span> <span class="keyword">case</span><span class="special">...</span>
-<span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">8</span><span class="special">):</span> <span class="identifier">error</span> <span class="identifier">in</span> <span class="string">"test"</span><span class="special">:</span> <span class="identifier">check</span> <span class="special">(</span><span class="keyword">char</span><span class="special">)</span><span class="number">0x26</span> <span class="special">=.=</span> <span class="number">0x04</span> <span class="identifier">failed</span><span class="special">.</span>
-<span class="identifier">Mismatch</span> <span class="identifier">in</span> <span class="identifier">a</span> <span class="identifier">position</span> <span class="number">1</span>
-<span class="identifier">Mismatch</span> <span class="identifier">in</span> <span class="identifier">a</span> <span class="identifier">position</span> <span class="number">5</span>
-<span class="identifier">Operands</span> <span class="identifier">bit</span> <span class="identifier">sizes</span> <span class="identifier">mismatch</span><span class="special">:</span> <span class="number">8</span> <span class="special">!=</span> <span class="number">32</span>
-
-<span class="special">***</span> <span class="number">1</span> <span class="identifier">failure</span> <span class="identifier">detected</span> <span class="identifier">in</span> <span class="identifier">test</span> <span class="identifier">suite</span> <span class="string">"example"</span>
-</pre>
+                <p>
+                  Bitwise equality test of two elements.
+                </p>
               </td>
-</tr></tbody>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="testing_tool_ref/assertion_boost_level_eq.html" title="BOOST_&lt;level&gt;_EQUAL"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EQUAL</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Equality test of two elements.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="testing_tool_ref/assertion_boost_level_eq_collections.html" title="BOOST_&lt;level&gt;_EQUAL_COLLECTIONS"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EQUAL_COLLECTIONS</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Element-wise equality test of two collections.
+                </p>
+              </td>
+</tr>
+</tbody>
 </table></div>
-</div>
-<br class="table-break"><p>
-        See also:
-      </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
-            <a class="link" href="testing_tool_ref.html#ref_BOOST_level_EQUAL"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EQUAL</span></code></a>
-          </li></ul></div>
 <a name="ref_BOOST_level_CLOSE"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h2"></a>
+<a name="boost_test.testing_tools.testing_tool_ref.h0"></a>
         <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_level_close"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_level_close"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_CLOSE</span></code></a>
       </h4>
 <pre class="programlisting"><span class="identifier">BOOST_WARN_CLOSE</span><span class="special">(</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">,</span> <span class="identifier">tolerance</span><span class="special">);</span>
@@ -209,7 +144,7 @@
         </p></td></tr>
 </table></div>
 <div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example42"></a><p class="title"><b>Table&#160;31.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_CLOSE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_CLOSE</span></code></a>
+<a name="boost_test.testing_tools.testing_tool_ref.id_example42"></a><p class="title"><b>Table&#160;36.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_CLOSE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_CLOSE</span></code></a>
         usage with small values</b></p>
 <div class="table-contents"><table class="table" summary="BOOST_&lt;level&gt;_CLOSE
         usage with small values">
@@ -259,7 +194,7 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example43"></a><p class="title"><b>Table&#160;32.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_CLOSE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_CLOSE</span></code></a>
+<a name="boost_test.testing_tools.testing_tool_ref.id_example43"></a><p class="title"><b>Table&#160;37.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_CLOSE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_CLOSE</span></code></a>
         usage with big values</b></p>
 <div class="table-contents"><table class="table" summary="BOOST_&lt;level&gt;_CLOSE
         usage with big values">
@@ -318,7 +253,7 @@
             <a class="link" href="testing_tool_ref.html#ref_BOOST_level_SMALL"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_SMALL</span></code></a>
           </li>
 <li class="listitem">
-            <a class="link" href="testing_tool_ref.html#ref_BOOST_level_EQUAL"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EQUAL</span></code></a>
+            <a class="link" href="testing_tool_ref/assertion_boost_level_eq.html" title="BOOST_&lt;level&gt;_EQUAL"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EQUAL</span></code></a>
           </li>
 <li class="listitem">
             <a class="link" href="testing_floating_points.html" title="Floating-point testing">Floating
@@ -326,7 +261,7 @@
           </li>
 </ul></div>
 <a name="ref_BOOST_level_CLOSE_FRACTION"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h3"></a>
+<a name="boost_test.testing_tools.testing_tool_ref.h1"></a>
         <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_level_close_fraction"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_level_close_fraction"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_CLOSE_FRACTION</span></code></a>
       </h4>
 <pre class="programlisting"><span class="identifier">BOOST_WARN_CLOSE_FRACTION</span><span class="special">(</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">,</span> <span class="identifier">tolerance</span><span class="special">);</span>
@@ -368,7 +303,7 @@
         </p></td></tr>
 </table></div>
 <div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example44"></a><p class="title"><b>Table&#160;33.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_CLOSE_FRACTION"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_CLOSE_FRACTION</span></code></a>
+<a name="boost_test.testing_tools.testing_tool_ref.id_example44"></a><p class="title"><b>Table&#160;38.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_CLOSE_FRACTION"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_CLOSE_FRACTION</span></code></a>
         usage</b></p>
 <div class="table-contents"><table class="table" summary="BOOST_&lt;level&gt;_CLOSE_FRACTION
         usage">
@@ -425,168 +360,15 @@
             <a class="link" href="testing_tool_ref.html#ref_BOOST_level_SMALL"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_SMALL</span></code></a>
           </li>
 <li class="listitem">
-            <a class="link" href="testing_tool_ref.html#ref_BOOST_level_EQUAL"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EQUAL</span></code></a>
+            <a class="link" href="testing_tool_ref/assertion_boost_level_eq.html" title="BOOST_&lt;level&gt;_EQUAL"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EQUAL</span></code></a>
           </li>
 <li class="listitem">
             <a class="link" href="testing_floating_points.html" title="Floating-point testing">Floating
             point comparison algorithms</a>
           </li>
 </ul></div>
-<a name="ref_BOOST_level_EQUAL"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h4"></a>
-        <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_level_equal"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_level_equal"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EQUAL</span></code></a>
-      </h4>
-<pre class="programlisting"><span class="identifier">BOOST_WARN_EQUAL</span><span class="special">(</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">);</span>
-<span class="identifier">BOOST_CHECK_EQUAL</span><span class="special">(</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">);</span>
-<span class="identifier">BOOST_REQUIRE_EQUAL</span><span class="special">(</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">);</span>
-</pre>
-<p>
-        Check performed by these tools is the same as the one performed by &lt;ref&gt;BOOST_LEVEL&lt;/ref&gt;(
-        left == right ). The difference is that the mismatched values are reported
-        as well.
-      </p>
-<div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-          It is bad idea to use these tools to compare floating point values. Use
-          <a class="link" href="testing_tool_ref.html#ref_BOOST_level_CLOSE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_CLOSE</span></code></a>
-          or <a class="link" href="testing_tool_ref.html#ref_BOOST_level_CLOSE_FRACTION"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_CLOSE_FRACTION</span></code></a>
-          tools instead.
-        </p></td></tr>
-</table></div>
-<div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example35"></a><p class="title"><b>Table&#160;34.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_EQUAL"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EQUAL</span></code></a>
-        usage</b></p>
-<div class="table-contents"><table class="table" summary="BOOST_&lt;level&gt;_EQUAL
-        usage">
-<colgroup>
-<col>
-<col>
-</colgroup>
-<thead><tr>
-<th>
-                <p>
-                  Code
-                </p>
-              </th>
-<th>
-                <p>
-                  Output
-                </p>
-              </th>
-</tr></thead>
-<tbody><tr>
-<td>
-<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">example</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-
-<span class="identifier">BOOST_AUTO_TEST_CASE</span><span class="special">(</span> <span class="identifier">test</span> <span class="special">)</span>
-<span class="special">{</span>
-  <span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">2</span><span class="special">;</span>
-  <span class="keyword">int</span> <span class="identifier">j</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span>
-  <span class="identifier">BOOST_REQUIRE_EQUAL</span><span class="special">(</span> <span class="identifier">i</span><span class="special">,</span> <span class="identifier">j</span> <span class="special">);</span>
-<span class="special">}</span>
-</pre>
-              </td>
-<td>
-<pre class="programlisting"><span class="special">&gt;</span> <span class="identifier">example</span>
-<span class="identifier">Running</span> <span class="number">1</span> <span class="identifier">test</span> <span class="keyword">case</span><span class="special">...</span>
-<span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">10</span><span class="special">):</span> <span class="identifier">fatal</span> <span class="identifier">error</span> <span class="identifier">in</span> <span class="string">"test"</span><span class="special">:</span> <span class="identifier">critical</span> <span class="identifier">check</span> <span class="identifier">i</span> <span class="special">==</span> <span class="identifier">j</span> <span class="identifier">failed</span> <span class="special">[</span><span class="number">2</span> <span class="special">!=</span> <span class="number">1</span><span class="special">]</span>
-
-<span class="special">***</span> <span class="number">1</span> <span class="identifier">failure</span> <span class="identifier">detected</span> <span class="identifier">in</span> <span class="identifier">test</span> <span class="identifier">suite</span> <span class="string">"example"</span>
-</pre>
-              </td>
-</tr></tbody>
-</table></div>
-</div>
-<br class="table-break"><p>
-        See also:
-      </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
-<li class="listitem">
-            <a class="link" href="testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
-          </li>
-<li class="listitem">
-            <a class="link" href="testing_tool_ref.html#ref_BOOST_level_CLOSE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_CLOSE</span></code></a>
-          </li>
-<li class="listitem">
-            <a class="link" href="testing_tool_ref.html#ref_BOOST_level_NE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_NE</span></code></a>
-          </li>
-</ul></div>
-<a name="ref_BOOST_level_EQUAL_COLLECTIONS"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h5"></a>
-        <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_level_equal_collections"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_level_equal_collections"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EQUAL_COLLECTIONS</span></code></a>
-      </h4>
-<pre class="programlisting"><span class="identifier">BOOST_WARN_EQUAL_COLLECTIONS</span><span class="special">(</span><span class="identifier">left_begin</span><span class="special">,</span> <span class="identifier">left_end</span><span class="special">,</span> <span class="identifier">right_begin</span><span class="special">,</span> <span class="identifier">right_end</span><span class="special">);</span>
-<span class="identifier">BOOST_CHECK_EQUAL_COLLECTIONS</span><span class="special">(</span><span class="identifier">left_begin</span><span class="special">,</span> <span class="identifier">left_end</span><span class="special">,</span> <span class="identifier">right_begin</span><span class="special">,</span> <span class="identifier">right_end</span><span class="special">);</span>
-<span class="identifier">BOOST_REQUIRE_EQUAL_COLLECTIONS</span><span class="special">(</span><span class="identifier">left_begin</span><span class="special">,</span> <span class="identifier">left_end</span><span class="special">,</span> <span class="identifier">right_begin</span><span class="special">,</span> <span class="identifier">right_end</span><span class="special">);</span>
-</pre>
-<p>
-        These tools are used to perform an element by element comparison of two collections.
-        They print all mismatched positions, collection elements at these positions
-        and check that the collections have the same size. The first two parameters
-        designate begin and end of the first collection. The two last parameters
-        designate begin and end of the second collection.
-      </p>
-<div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example36"></a><p class="title"><b>Table&#160;35.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_EQUAL_COLLECTIONS"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EQUAL_COLLECTIONS</span></code></a>
-        usage</b></p>
-<div class="table-contents"><table class="table" summary="BOOST_&lt;level&gt;_EQUAL_COLLECTIONS
-        usage">
-<colgroup>
-<col>
-<col>
-</colgroup>
-<thead><tr>
-<th>
-                <p>
-                  Code
-                </p>
-              </th>
-<th>
-                <p>
-                  Output
-                </p>
-              </th>
-</tr></thead>
-<tbody><tr>
-<td>
-<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">example</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-
-<span class="identifier">BOOST_AUTO_TEST_CASE</span><span class="special">(</span> <span class="identifier">test</span> <span class="special">)</span>
-<span class="special">{</span>
-  <span class="keyword">int</span> <span class="identifier">col1</span> <span class="special">[]</span> <span class="special">=</span> <span class="special">{</span> <span class="number">1</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">3</span><span class="special">,</span> <span class="number">4</span><span class="special">,</span> <span class="number">5</span><span class="special">,</span> <span class="number">6</span><span class="special">,</span> <span class="number">7</span> <span class="special">};</span>
-  <span class="keyword">int</span> <span class="identifier">col2</span> <span class="special">[]</span> <span class="special">=</span> <span class="special">{</span> <span class="number">1</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">4</span><span class="special">,</span> <span class="number">4</span><span class="special">,</span> <span class="number">5</span><span class="special">,</span> <span class="number">7</span><span class="special">,</span> <span class="number">7</span> <span class="special">};</span>
-
-  <span class="identifier">BOOST_CHECK_EQUAL_COLLECTIONS</span><span class="special">(</span> <span class="identifier">col1</span><span class="special">,</span> <span class="identifier">col1</span><span class="special">+</span><span class="number">7</span><span class="special">,</span> <span class="identifier">col2</span><span class="special">,</span> <span class="identifier">col2</span><span class="special">+</span><span class="number">7</span> <span class="special">);</span>
-<span class="special">}</span>
-</pre>
-              </td>
-<td>
-<pre class="programlisting"><span class="special">&gt;</span> <span class="identifier">example</span>
-<span class="identifier">Running</span> <span class="number">1</span> <span class="identifier">test</span> <span class="keyword">case</span><span class="special">...</span>
-<span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">11</span><span class="special">):</span> <span class="identifier">error</span> <span class="identifier">in</span> <span class="string">"test"</span><span class="special">:</span> <span class="identifier">check</span> <span class="special">{</span> <span class="identifier">col1</span><span class="special">,</span> <span class="identifier">col1</span><span class="special">+</span><span class="number">7</span> <span class="special">}</span> <span class="special">==</span> <span class="special">{</span> <span class="identifier">col2</span><span class="special">,</span> <span class="identifier">col2</span><span class="special">+</span><span class="number">7</span> <span class="special">}</span> <span class="identifier">failed</span><span class="special">.</span>
-<span class="identifier">Mismatch</span> <span class="identifier">in</span> <span class="identifier">a</span> <span class="identifier">position</span> <span class="number">2</span><span class="special">:</span> <span class="number">3</span> <span class="special">!=</span> <span class="number">4</span>
-<span class="identifier">Mismatch</span> <span class="identifier">in</span> <span class="identifier">a</span> <span class="identifier">position</span> <span class="number">5</span><span class="special">:</span> <span class="number">6</span> <span class="special">!=</span> <span class="number">7</span>
-
-<span class="special">***</span> <span class="number">1</span> <span class="identifier">failure</span> <span class="identifier">detected</span> <span class="identifier">in</span> <span class="identifier">test</span> <span class="identifier">suite</span> <span class="string">"example"</span>
-</pre>
-              </td>
-</tr></tbody>
-</table></div>
-</div>
-<br class="table-break"><p>
-        See also:
-      </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
-            <a class="link" href="testing_tool_ref.html#ref_BOOST_level_EQUAL"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EQUAL</span></code></a>
-          </li></ul></div>
 <a name="ref_BOOST_level_EXCEPTION"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h6"></a>
+<a name="boost_test.testing_tools.testing_tool_ref.h2"></a>
         <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_level_exception"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_level_exception"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EXCEPTION</span></code></a>
       </h4>
 <pre class="programlisting"><span class="identifier">BOOST_WARN_EXCEPTION</span><span class="special">(</span><span class="identifier">expression</span><span class="special">,</span> <span class="identifier">exception</span><span class="special">,</span> <span class="identifier">predicate</span><span class="special">);</span>
@@ -604,7 +386,7 @@
         sure that an expected exception has specific error message.
       </p>
 <div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example37"></a><p class="title"><b>Table&#160;36.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_EXCEPTION"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EXCEPTION</span></code></a>
+<a name="boost_test.testing_tools.testing_tool_ref.id_example37"></a><p class="title"><b>Table&#160;39.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_EXCEPTION"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EXCEPTION</span></code></a>
         usage</b></p>
 <div class="table-contents"><table class="table" summary="BOOST_&lt;level&gt;_EXCEPTION
         usage">
@@ -663,7 +445,7 @@
             <a class="link" href="testing_tool_ref.html#ref_BOOST_level_THROW"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_THROW</span></code></a>
           </li></ul></div>
 <a name="ref_BOOST_level_GE"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h7"></a>
+<a name="boost_test.testing_tools.testing_tool_ref.h3"></a>
         <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_level_ge"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_level_ge"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_GE</span></code></a>
       </h4>
 <pre class="programlisting"><span class="identifier">BOOST_WARN_GE</span><span class="special">(</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">);</span>
@@ -671,13 +453,11 @@
 <span class="identifier">BOOST_REQUIRE_GE</span><span class="special">(</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">);</span>
 </pre>
 <p>
-        Check performed by these tools is the same as the one performed by <code class="computeroutput"><a class="link" href="testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a><span class="special">(</span>
-        <span class="identifier">left</span> <span class="special">&gt;=</span>
-        <span class="identifier">right</span> <span class="special">)</span></code>.
-        The difference is that the argument values are reported as well.
+        Check performed by these tools is the same as the one performed by <code class="computeroutput"><a class="link" href="testing_tool_ref/assertion_boost_level.html" title="BOOST_&lt;level&gt;"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a><span class="special">(</span> <span class="identifier">left</span> <span class="special">&gt;=</span> <span class="identifier">right</span> <span class="special">)</span></code>. The difference is that the argument values
+        are reported as well.
       </p>
 <div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example57"></a><p class="title"><b>Table&#160;37.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_GE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_GE</span></code></a>
+<a name="boost_test.testing_tools.testing_tool_ref.id_example57"></a><p class="title"><b>Table&#160;40.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_GE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_GE</span></code></a>
         usage</b></p>
 <div class="table-contents"><table class="table" summary="BOOST_&lt;level&gt;_GE
         usage">
@@ -736,7 +516,7 @@
           </li>
 </ul></div>
 <a name="ref_BOOST_level_GT"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h8"></a>
+<a name="boost_test.testing_tools.testing_tool_ref.h4"></a>
         <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_level_gt"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_level_gt"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_GT</span></code></a>
       </h4>
 <pre class="programlisting"><span class="identifier">BOOST_WARN_GT</span><span class="special">(</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">);</span>
@@ -744,13 +524,11 @@
 <span class="identifier">BOOST_REQUIRE_GT</span><span class="special">(</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">);</span>
 </pre>
 <p>
-        Check performed by these tools is the same as the one performed by <a class="link" href="testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a><code class="computeroutput"><span class="special">(</span>
-        <span class="identifier">left</span> <span class="special">&gt;</span>
-        <span class="identifier">right</span> <span class="special">)</span></code>.
-        The difference is that the argument values are reported as well.
+        Check performed by these tools is the same as the one performed by <a class="link" href="testing_tool_ref/assertion_boost_level.html" title="BOOST_&lt;level&gt;"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a><code class="computeroutput"><span class="special">(</span> <span class="identifier">left</span> <span class="special">&gt;</span> <span class="identifier">right</span> <span class="special">)</span></code>. The difference is that the argument values
+        are reported as well.
       </p>
 <div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example58"></a><p class="title"><b>Table&#160;38.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_GT"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_GT</span></code></a>
+<a name="boost_test.testing_tools.testing_tool_ref.id_example58"></a><p class="title"><b>Table&#160;41.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_GT"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_GT</span></code></a>
         usage</b></p>
 <div class="table-contents"><table class="table" summary="BOOST_&lt;level&gt;_GT
         usage">
@@ -809,7 +587,7 @@
           </li>
 </ul></div>
 <a name="ref_BOOST_level_LE"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h9"></a>
+<a name="boost_test.testing_tools.testing_tool_ref.h5"></a>
         <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_level_le"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_level_le"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_LE</span></code></a>
       </h4>
 <pre class="programlisting"><span class="identifier">BOOST_WARN_LE</span><span class="special">(</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">);</span>
@@ -817,13 +595,11 @@
 <span class="identifier">BOOST_REQUIRE_LE</span><span class="special">(</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">);</span>
 </pre>
 <p>
-        Check performed by these tools is the same as the one performed by <code class="computeroutput"><a class="link" href="testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a><span class="special">(</span>
-        <span class="identifier">left</span> <span class="special">&lt;=</span>
-        <span class="identifier">right</span> <span class="special">)</span></code>.
-        The difference is that the argument values are reported as well.
+        Check performed by these tools is the same as the one performed by <code class="computeroutput"><a class="link" href="testing_tool_ref/assertion_boost_level.html" title="BOOST_&lt;level&gt;"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a><span class="special">(</span> <span class="identifier">left</span> <span class="special">&lt;=</span> <span class="identifier">right</span> <span class="special">)</span></code>. The difference is that the argument values
+        are reported as well.
       </p>
 <div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example55"></a><p class="title"><b>Table&#160;39.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_LE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_LE</span></code></a>
+<a name="boost_test.testing_tools.testing_tool_ref.id_example55"></a><p class="title"><b>Table&#160;42.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_LE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_LE</span></code></a>
         usage</b></p>
 <div class="table-contents"><table class="table" summary="BOOST_&lt;level&gt;_LE
         usage">
@@ -882,7 +658,7 @@
           </li>
 </ul></div>
 <a name="ref_BOOST_level_LT"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h10"></a>
+<a name="boost_test.testing_tools.testing_tool_ref.h6"></a>
         <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_level_lt"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_level_lt"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_LT</span></code></a>
       </h4>
 <pre class="programlisting"><span class="identifier">BOOST_WARN_LT</span><span class="special">(</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">);</span>
@@ -890,13 +666,11 @@
 <span class="identifier">BOOST_REQUIRE_LT</span><span class="special">(</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">);</span>
 </pre>
 <p>
-        Check performed by these tools is the same as the one performed by <code class="computeroutput"><a class="link" href="testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a><span class="special">(</span>
-        <span class="identifier">left</span> <span class="special">&lt;</span>
-        <span class="identifier">right</span> <span class="special">)</span></code>.
-        The difference is that the argument values are reported as well.
+        Check performed by these tools is the same as the one performed by <code class="computeroutput"><a class="link" href="testing_tool_ref/assertion_boost_level.html" title="BOOST_&lt;level&gt;"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a><span class="special">(</span> <span class="identifier">left</span> <span class="special">&lt;</span> <span class="identifier">right</span> <span class="special">)</span></code>. The difference is that the argument values
+        are reported as well.
       </p>
 <div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example56"></a><p class="title"><b>Table&#160;40.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_LT"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_LT</span></code></a>
+<a name="boost_test.testing_tools.testing_tool_ref.id_example56"></a><p class="title"><b>Table&#160;43.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_LT"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_LT</span></code></a>
         usage</b></p>
 <div class="table-contents"><table class="table" summary="BOOST_&lt;level&gt;_LT
         usage">
@@ -955,7 +729,7 @@
           </li>
 </ul></div>
 <a name="ref_BOOST_level_MESSAGE"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h11"></a>
+<a name="boost_test.testing_tools.testing_tool_ref.h7"></a>
         <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_level_message"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_level_message"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_MESSAGE</span></code></a>
       </h4>
 <pre class="programlisting"><span class="identifier">BOOST_WARN_MESSAGE</span><span class="special">(</span><span class="identifier">predicate</span><span class="special">,</span> <span class="identifier">message</span><span class="special">);</span>
@@ -963,7 +737,7 @@
 <span class="identifier">BOOST_REQUIRE_MESSAGE</span><span class="special">(</span><span class="identifier">predicate</span><span class="special">,</span> <span class="identifier">message</span><span class="special">);</span>
 </pre>
 <p>
-        These tools perform exactly the same check as <a class="link" href="testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
+        These tools perform exactly the same check as <a class="link" href="testing_tool_ref/assertion_boost_level.html" title="BOOST_&lt;level&gt;"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
         tools. The only difference is that instead of generating an error/confirm
         message these use the supplied one.
       </p>
@@ -973,7 +747,7 @@
         of components of any type supporting the <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">&lt;&lt;</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;)</span></code>.
       </p>
 <div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example38"></a><p class="title"><b>Table&#160;41.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_MESSAGE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_MESSAGE</span></code></a>
+<a name="boost_test.testing_tools.testing_tool_ref.id_example38"></a><p class="title"><b>Table&#160;44.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_MESSAGE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_MESSAGE</span></code></a>
         usage</b></p>
 <div class="table-contents"><table class="table" summary="BOOST_&lt;level&gt;_MESSAGE
         usage">
@@ -1023,10 +797,10 @@
         See also:
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
-            <a class="link" href="testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
+            <a class="link" href="testing_tool_ref/assertion_boost_level.html" title="BOOST_&lt;level&gt;"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
           </li></ul></div>
 <a name="ref_BOOST_level_NE"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h12"></a>
+<a name="boost_test.testing_tools.testing_tool_ref.h8"></a>
         <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_level_ne"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_level_ne"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_NE</span></code></a>
       </h4>
 <pre class="programlisting"><span class="identifier">BOOST_WARN_NE</span><span class="special">(</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">);</span>
@@ -1034,13 +808,11 @@
 <span class="identifier">BOOST_REQUIRE_NE</span><span class="special">(</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">);</span>
 </pre>
 <p>
-        Check performed by these tools is the same as the one performed by <code class="computeroutput"><a class="link" href="testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a><span class="special">(</span>
-        <span class="identifier">left</span> <span class="special">!=</span>
-        <span class="identifier">right</span> <span class="special">)</span></code>.
-        The difference is that the matched values are reported as well.
+        Check performed by these tools is the same as the one performed by <code class="computeroutput"><a class="link" href="testing_tool_ref/assertion_boost_level.html" title="BOOST_&lt;level&gt;"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a><span class="special">(</span> <span class="identifier">left</span> <span class="special">!=</span> <span class="identifier">right</span> <span class="special">)</span></code>. The difference is that the matched values
+        are reported as well.
       </p>
 <div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example54"></a><p class="title"><b>Table&#160;42.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_NE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_NE</span></code></a>
+<a name="boost_test.testing_tools.testing_tool_ref.id_example54"></a><p class="title"><b>Table&#160;45.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_NE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_NE</span></code></a>
         usage</b></p>
 <div class="table-contents"><table class="table" summary="BOOST_&lt;level&gt;_NE
         usage">
@@ -1088,10 +860,10 @@
         See also:
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
-            <a class="link" href="testing_tool_ref.html#ref_BOOST_level_EQUAL"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EQUAL</span></code></a>
+            <a class="link" href="testing_tool_ref/assertion_boost_level_eq.html" title="BOOST_&lt;level&gt;_EQUAL"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_EQUAL</span></code></a>
           </li></ul></div>
 <a name="ref_BOOST_level_NO_THROW"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h13"></a>
+<a name="boost_test.testing_tools.testing_tool_ref.h9"></a>
         <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_level_no_throw"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_level_no_throw"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_NO_THROW</span></code></a>
       </h4>
 <pre class="programlisting"><span class="identifier">BOOST_WARN_NO_THROW</span><span class="special">(</span><span class="identifier">expression</span><span class="special">);</span>
@@ -1115,7 +887,7 @@
         block if you want to execute more than one statement.
       </p>
 <div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example39"></a><p class="title"><b>Table&#160;43.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_NO_THROW"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_NO_THROW</span></code></a>
+<a name="boost_test.testing_tools.testing_tool_ref.id_example39"></a><p class="title"><b>Table&#160;46.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_NO_THROW"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_NO_THROW</span></code></a>
         usage</b></p>
 <div class="table-contents"><table class="table" summary="BOOST_&lt;level&gt;_NO_THROW
         usage">
@@ -1166,7 +938,7 @@
             <a class="link" href="testing_tool_ref.html#ref_BOOST_level_THROW"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_THROW</span></code></a>
           </li></ul></div>
 <a name="ref_BOOST_level_PREDICATE"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h14"></a>
+<a name="boost_test.testing_tools.testing_tool_ref.h10"></a>
         <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_level_predicate"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_level_predicate"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_PREDICATE</span></code></a>
       </h4>
 <pre class="programlisting"><span class="identifier">BOOST_WARN_PREDICATE</span><span class="special">(</span><span class="identifier">predicate</span><span class="special">,</span> <span class="identifier">arguments_list</span><span class="special">);</span>
@@ -1177,7 +949,7 @@
         These are generic tools used to validate an arbitrary supplied predicate
         functor (there is a compile time limit on predicate arity defined by the
         configurable macro <code class="computeroutput"><span class="identifier">BOOST_TEST_MAX_PREDICATE_ARITY</span></code>).
-        To validate zero arity predicate use <a class="link" href="testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
+        To validate zero arity predicate use <a class="link" href="testing_tool_ref/assertion_boost_level.html" title="BOOST_&lt;level&gt;"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
         tools. In other cases prefer theses tools. The advantage of these tools is
         that they show arguments values in case of predicate failure.
       </p>
@@ -1186,7 +958,7 @@
         list of predicate arguments each wrapped in round brackets (<code class="computeroutput"><span class="identifier">BOOST_PP</span></code> sequence format).
       </p>
 <div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example40"></a><p class="title"><b>Table&#160;44.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_PREDICATE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_PREDICATE</span></code></a>
+<a name="boost_test.testing_tools.testing_tool_ref.id_example40"></a><p class="title"><b>Table&#160;47.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_PREDICATE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_PREDICATE</span></code></a>
         usage</b></p>
 <div class="table-contents"><table class="table" summary="BOOST_&lt;level&gt;_PREDICATE
         usage">
@@ -1242,17 +1014,17 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-          Note difference in error log from <a class="link" href="testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
+          Note difference in error log from <a class="link" href="testing_tool_ref/assertion_boost_level.html" title="BOOST_&lt;level&gt;"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
         </p></td></tr>
 </table></div>
 <p>
         See also:
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
-            <a class="link" href="testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
+            <a class="link" href="testing_tool_ref/assertion_boost_level.html" title="BOOST_&lt;level&gt;"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
           </li></ul></div>
 <a name="ref_BOOST_level_SMALL"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h15"></a>
+<a name="boost_test.testing_tools.testing_tool_ref.h11"></a>
         <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_level_small"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_level_small"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_SMALL</span></code></a>
       </h4>
 <pre class="programlisting"><span class="identifier">BOOST_WARN_SMALL</span><span class="special">(</span><span class="identifier">value</span><span class="special">,</span> <span class="identifier">tolerance</span><span class="special">);</span>
@@ -1279,7 +1051,7 @@
         </p></td></tr>
 </table></div>
 <div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example41"></a><p class="title"><b>Table&#160;45.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_SMALL"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_SMALL</span></code></a>
+<a name="boost_test.testing_tools.testing_tool_ref.id_example41"></a><p class="title"><b>Table&#160;48.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_SMALL"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_SMALL</span></code></a>
         usage</b></p>
 <div class="table-contents"><table class="table" summary="BOOST_&lt;level&gt;_SMALL
         usage">
@@ -1339,7 +1111,7 @@
           </li>
 </ul></div>
 <a name="ref_BOOST_level_THROW"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h16"></a>
+<a name="boost_test.testing_tools.testing_tool_ref.h12"></a>
         <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_level_throw"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_level_throw"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_THROW</span></code></a>
       </h4>
 <pre class="programlisting"><span class="identifier">BOOST_WARN_THROW</span><span class="special">(</span><span class="identifier">expression</span><span class="special">,</span> <span class="identifier">exception</span><span class="special">);</span>
@@ -1365,7 +1137,7 @@
         exception.
       </p>
 <div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example45"></a><p class="title"><b>Table&#160;46.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_THROW"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_THROW</span></code></a>
+<a name="boost_test.testing_tools.testing_tool_ref.id_example45"></a><p class="title"><b>Table&#160;49.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_level_THROW"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_THROW</span></code></a>
         usage</b></p>
 <div class="table-contents"><table class="table" summary="BOOST_&lt;level&gt;_THROW
         usage">
@@ -1417,7 +1189,7 @@
             <a class="link" href="testing_tool_ref.html#ref_BOOST_level_NO_THROW"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_NO_THROW</span></code></a>
           </li></ul></div>
 <a name="ref_BOOST_ERROR"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h17"></a>
+<a name="boost_test.testing_tools.testing_tool_ref.h13"></a>
         <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_error"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_error"><code class="computeroutput"><span class="identifier">BOOST_ERROR</span></code></a>
       </h4>
 <pre class="programlisting"><span class="identifier">BOOST_ERROR</span><span class="special">(</span><span class="identifier">message</span><span class="special">);</span>
@@ -1433,7 +1205,7 @@
         The only tool's parameter is an error message to log.
       </p>
 <div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example46"></a><p class="title"><b>Table&#160;47.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_ERROR"><code class="computeroutput"><span class="identifier">BOOST_ERROR</span></code></a>
+<a name="boost_test.testing_tools.testing_tool_ref.id_example46"></a><p class="title"><b>Table&#160;50.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_ERROR"><code class="computeroutput"><span class="identifier">BOOST_ERROR</span></code></a>
         usage</b></p>
 <div class="table-contents"><table class="table" summary="BOOST_ERROR
         usage">
@@ -1479,10 +1251,10 @@
         See also:
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
-            <a class="link" href="testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
+            <a class="link" href="testing_tool_ref/assertion_boost_level.html" title="BOOST_&lt;level&gt;"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
           </li></ul></div>
 <a name="ref_BOOST_FAIL"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h18"></a>
+<a name="boost_test.testing_tools.testing_tool_ref.h14"></a>
         <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_fail"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_fail"><code class="computeroutput"><span class="identifier">BOOST_FAIL</span></code></a>
       </h4>
 <pre class="programlisting"><span class="identifier">BOOST_FAIL</span><span class="special">(</span><span class="identifier">message</span><span class="special">);</span>
@@ -1497,7 +1269,7 @@
         The only tool's parameter is an error message to log.
       </p>
 <div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example47"></a><p class="title"><b>Table&#160;48.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_FAIL"><code class="computeroutput"><span class="identifier">BOOST_FAIL</span></code></a>
+<a name="boost_test.testing_tools.testing_tool_ref.id_example47"></a><p class="title"><b>Table&#160;51.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_FAIL"><code class="computeroutput"><span class="identifier">BOOST_FAIL</span></code></a>
         usage</b></p>
 <div class="table-contents"><table class="table" summary="BOOST_FAIL
         usage">
@@ -1544,14 +1316,14 @@
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-            <a class="link" href="testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
+            <a class="link" href="testing_tool_ref/assertion_boost_level.html" title="BOOST_&lt;level&gt;"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
           </li>
 <li class="listitem">
             <a class="link" href="testing_tool_ref.html#ref_BOOST_level_MESSAGE"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_MESSAGE</span></code></a>
           </li>
 </ul></div>
 <a name="ref_BOOST_IS_DEFINED"></a><h4>
-<a name="boost_test.testing_tools.testing_tool_ref.h19"></a>
+<a name="boost_test.testing_tools.testing_tool_ref.h15"></a>
         <span class="phrase"><a name="boost_test.testing_tools.testing_tool_ref.boost_is_defined"></a></span><a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.boost_is_defined"><code class="computeroutput"><span class="identifier">BOOST_IS_DEFINED</span></code></a>
       </h4>
 <pre class="programlisting"><span class="identifier">BOOST_IS_DEFINED</span><span class="special">(</span><span class="identifier">symbol</span><span class="special">);</span>
@@ -1559,15 +1331,16 @@
 <p>
         Unlike the rest of the tools in the toolbox this tool does not perform the
         logging itself. Its only purpose is to check at runtime whether or not the
-        supplied preprocessor symbol is defined. Use it in combination with <a class="link" href="testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a> to perform and log validation.
-        Macros of any arity could be checked. To check the macro definition with
-        non-zero arity specify dummy arguments for it. See below for example.
+        supplied preprocessor symbol is defined. Use it in combination with <a class="link" href="testing_tool_ref/assertion_boost_level.html" title="BOOST_&lt;level&gt;"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
+        to perform and log validation. Macros of any arity could be checked. To check
+        the macro definition with non-zero arity specify dummy arguments for it.
+        See below for example.
       </p>
 <p>
         The only tool's parameter is a preprocessor symbol that gets validated.
       </p>
 <div class="table">
-<a name="boost_test.testing_tools.testing_tool_ref.id_example48"></a><p class="title"><b>Table&#160;49.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_IS_DEFINED"><code class="computeroutput"><span class="identifier">BOOST_IS_DEFINED</span></code></a>
+<a name="boost_test.testing_tools.testing_tool_ref.id_example48"></a><p class="title"><b>Table&#160;52.&#160;<a class="link" href="testing_tool_ref.html#ref_BOOST_IS_DEFINED"><code class="computeroutput"><span class="identifier">BOOST_IS_DEFINED</span></code></a>
         usage</b></p>
 <div class="table-contents"><table class="table" summary="BOOST_IS_DEFINED
         usage">
@@ -1615,7 +1388,7 @@
         See also:
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
-            <a class="link" href="testing_tool_ref.html#ref_BOOST_level"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
+            <a class="link" href="testing_tool_ref/assertion_boost_level.html" title="BOOST_&lt;level&gt;"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code></a>
           </li></ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
@@ -1629,7 +1402,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="testing_floating_points.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../testing_tools.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../fixtures.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="testing_floating_points.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../testing_tools.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="testing_tool_ref/assertion_boost_level.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>
