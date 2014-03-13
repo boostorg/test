@@ -5,7 +5,7 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file output_test_stream.hpp @brief Deprecated header. Use #include <boost/test/tools/output_test_stream.hpp> instead
+/// @file test/output_test_stream.hpp @brief Deprecated header. Use #include <boost/test/tools/output_test_stream.hpp> instead
 // ***************************************************************************
 
 // Boost.Test

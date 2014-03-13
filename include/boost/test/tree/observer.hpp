@@ -5,11 +5,7 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines abstract interface for test observer
+/// @file observer.hpp @brief defines abstract interface for test observer
 // ***************************************************************************
 
 #ifndef BOOST_TEST_TEST_OBSERVER_HPP_021005GER

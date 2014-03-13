@@ -5,11 +5,7 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines simple text based progress monitor
+/// @file progress_monitor.hpp @brief defines simple text based progress monitor
 // ***************************************************************************
 
 #ifndef BOOST_TEST_PROGRESS_MONITOR_HPP_020105GER
@@ -33,9 +29,10 @@ namespace unit_test {
 // **************                progress_monitor              ************** //
 // ************************************************************************** //
 
+/// This class implements test observer interface and updates test progress as test units finish or get aborted
 class BOOST_TEST_DECL progress_monitor_t : public test_observer, public singleton<progress_monitor_t> {
 public:
-    // test observer interface
+    /// @name Test observer interface
     virtual void    test_start( counter_t test_cases_amount );
     virtual void    test_aborted();
 
@@ -43,8 +40,9 @@ public:
     virtual void    test_unit_skipped( test_unit const& );
 
     virtual int     priority() { return 3; }
+    /// @}
     
-    // configuration
+    /// @name Configuration
     void            set_stream( std::ostream& );
 
 private:

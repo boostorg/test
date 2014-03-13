@@ -6,7 +6,7 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file execution_monitor.hpp @brief Defines public interface of the Execution Monitor and related classes
+/// @file test/execution_monitor.hpp @brief Defines public interface of the Execution Monitor and related classes
 // ***************************************************************************
 
 #ifndef BOOST_TEST_EXECUTION_MONITOR_HPP_071894GER

@@ -5,11 +5,9 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : Entry point for the end user into the Unit Test Framework.
+/// @file test/unit_test.hpp @brief Entry point into the Unit Test Framework
+///
+/// This header sould be the only header necessary to include to start using the framework
 // ***************************************************************************
 
 #ifndef BOOST_TEST_UNIT_TEST_HPP_071894GER

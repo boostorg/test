@@ -5,7 +5,7 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file test_case_template.hpp @brief Deprecated header. Use #include <boost/test/unit_test.hpp> instead
+/// @file test/test_case_template.hpp @brief Deprecated header. Use #include <boost/test/unit_test.hpp> instead
 // ***************************************************************************
 
 #include <boost/test/unit_test.hpp>

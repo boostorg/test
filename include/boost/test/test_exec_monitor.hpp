@@ -5,11 +5,27 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : Entry point for the end user into the Test Execution Monitor.
+/// @file test/test_exec_monitor.hpp @brief Deprecated implementation of Test Execution Monitor
+///
+/// To convert to Unit Test Framework simply rewrite:
+/// @code
+/// #include <boost/test/test_exec_monitor.hpp>
+/// 
+/// int test_main( int, char *[] )
+/// {
+///   ...
+/// }
+/// @endcode
+/// as
+/// @code
+/// #include <boost/test/unit_test.hpp>
+/// 
+/// BOOST_AUTO_TEST_CASE(test_main)
+/// {
+///   ...
+/// }
+/// @endcode
+/// and link with boost_unit_test_framework library *instead of* boost_test_exec_monitor  
 // ***************************************************************************
 
 #ifndef BOOST_TEST_EXEC_MONITOR_HPP_071894GER

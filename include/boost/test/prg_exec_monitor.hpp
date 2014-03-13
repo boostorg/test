@@ -5,7 +5,7 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file prg_exec_monitor.hpp @brief Entry point for the end user into the Program Execution Monitor.
+/// @file test/prg_exec_monitor.hpp @brief Entry point for the end user into the Program Execution Monitor.
 ///
 /// Use this header to forward declare function prg_exec_monitor_main and to automatically define a main 
 /// function for you. If you prefer to use your own main you are free to do so, but you need to define 

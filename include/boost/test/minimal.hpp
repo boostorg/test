@@ -55,7 +55,7 @@
 #include <boost/test/utils/basic_cstring/io.hpp>
 
 // Boost
-#include <boost/cstdlib.hpp>            // for exit codes#include <boost/cstdlib.hpp>            // for exit codes
+#include <boost/cstdlib.hpp>            // for exit codes
 #include <boost/current_function.hpp>   // for BOOST_CURRENT_FUNCTION
 
 // STL

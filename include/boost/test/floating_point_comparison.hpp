@@ -5,7 +5,7 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file floating_point_comparison.hpp @brief Deprecated header. Use #include <boost/test/tools/floating_point_comparison.hpp> instead
+/// @file test/floating_point_comparison.hpp @brief Deprecated header. Use #include <boost/test/tools/floating_point_comparison.hpp> instead
 // ***************************************************************************
 
 // Boost.Test

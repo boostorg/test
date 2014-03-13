@@ -5,11 +5,9 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : test tools interface
+/// @file test_tools.hpp @brief test tools compartibility header
+///
+/// This file is used to select the test tools implementation and includes all the necessary headers
 // ***************************************************************************
 
 #ifndef BOOST_TEST_TOOLS_HPP_111812GER
