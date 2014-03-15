@@ -377,8 +377,10 @@ safe_execlp( char const* file, ... )
     va_start( args, file );
     while( !!(arg = va_arg( args, char const* )) ) {
         printf( "!! %s\n", arg );
-        if( !(*argv_it++ = copy_arg( work_buff, arg )) )
+        if( !(*argv_it++ = copy_arg( work_buff, arg )) ) {
+            va_end( args );
             return false;
+        }
     }
     va_end( args );
 
