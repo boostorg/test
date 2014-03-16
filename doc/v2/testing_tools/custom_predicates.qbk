@@ -7,13 +7,13 @@ report on failure. To satisfy this need testing tools implement custom predicate
 predicate support implemented by testing tools toolbox: with and without custom error message generation.
 
 
-The first layer is supported by __BOOST_CHECK_PREDICATE__ family of testing tools. You can use it to check any custom
+The first layer is supported by __BOOST_LEVEL_PREDICATE__ family of testing tools. You can use it to check any custom
 predicate that reports the result as boolean value. The values of the predicate arguments are reported by the tool
 automatically in case of failure.
 
 [import ../examples/example30.cpp]
 [import ../examples/example30.output]
-[table:id_example30 Custom predicate support using __BOOST_CHECK_PREDICATE__
+[table:id_example30 Custom predicate support using __BOOST_LEVEL_PREDICATE__
   [
     [Code]
     [Output]

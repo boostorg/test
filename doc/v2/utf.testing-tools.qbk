@@ -47,6 +47,27 @@ ways to detect and report errors. For list of all supplied testing tools and usa
     [Element-wise equality test of two collections.]
   ]
   
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_CLOSE__]
+    [Floating point comparison using a percentage of deviation.]
+  ]
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_CLOSE_FRACTION__]
+    [Floating point comparison using the fraction of the compared operands.]
+  ]
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_EXCEPTION__]
+    [Exception detection and validation check.]
+  ]
+  
+  
+  
+  
 ]
 
 
@@ -88,7 +109,7 @@ See also:
 
 
 [/ ###############################################################################################]
-[#ref_BOOST_level_BITWISE_EQUAL][section:assertion_boost_level_bitwise_eq `BOOST_<level>_BITWISE_EQUAL`]
+[section:assertion_boost_level_bitwise_eq `BOOST_<level>_BITWISE_EQUAL`]
 
 
 ``
@@ -123,7 +144,7 @@ See also:
 [endsect]
 
 [/ ###############################################################################################]
-[#ref_BOOST_level_EQUAL][section:assertion_boost_level_eq `BOOST_<level>_EQUAL`]
+[section:assertion_boost_level_eq `BOOST_<level>_EQUAL`]
 
 ``
   BOOST_WARN_EQUAL(left, right);
@@ -161,7 +182,7 @@ See also:
 [endsect]
 
 [/ ###############################################################################################]
-[#ref_BOOST_level_EQUAL_COLLECTIONS][section:assertion_boost_level_eq_collections `BOOST_<level>_EQUAL_COLLECTIONS`]
+[section:assertion_boost_level_eq_collections `BOOST_<level>_EQUAL_COLLECTIONS`]
 
 ``
   BOOST_WARN_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
@@ -197,8 +218,8 @@ See also:
 
 
 
-
-[#ref_BOOST_level_CLOSE][h3 `BOOST_<level>_CLOSE`]
+[/ ###############################################################################################]
+[section:assertion_boost_level_close `BOOST_<level>_CLOSE`]
 
 
 ``
@@ -258,8 +279,10 @@ See also:
 * __BOOST_LEVEL_EQUAL__
 * [link boost_test.testing_tools.testing_floating_points Floating point comparison algorithms]
 
+[endsect]
 
-[#ref_BOOST_level_CLOSE_FRACTION][h3 `BOOST_<level>_CLOSE_FRACTION`]
+[/ ###############################################################################################]
+[section:assertion_boost_level_close_fraction `BOOST_<level>_CLOSE_FRACTION`]
 
 ``
   BOOST_WARN_CLOSE_FRACTION(left, right, tolerance);
@@ -302,10 +325,11 @@ See also:
 * [link boost_test.testing_tools.testing_floating_points Floating point comparison algorithms]
 
 
+[endsect]
 
 
-
-[#ref_BOOST_level_EXCEPTION][h3 `BOOST_<level>_EXCEPTION`]
+[/ ###############################################################################################]
+[section:assertion_boost_level_exception `BOOST_<level>_EXCEPTION`]
 
 ``
   BOOST_WARN_EXCEPTION(expression, exception, predicate);
@@ -337,7 +361,14 @@ See also:
 
 * __BOOST_LEVEL_THROW__
 
+[endsect]
 
+
+
+
+
+
+[/ ###############################################################################################]
 [#ref_BOOST_level_GE][h3 `BOOST_<level>_GE`]
 
 ``
