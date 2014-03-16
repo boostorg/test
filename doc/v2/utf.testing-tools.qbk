@@ -64,8 +64,31 @@ ways to detect and report errors. For list of all supplied testing tools and usa
     [__BOOST_LEVEL_EXCEPTION__]
     [Exception detection and validation check.]
   ]
+
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_GE__]
+    [Comparison of two values (with convenient reporting).]
+  ]  
   
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_GT__]
+    [Comparison of two values (with convenient reporting).]
+  ]  
   
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_LE__]
+    [Comparison of two values (with convenient reporting).]
+  ]  
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_LT__]
+    [Comparison of two values (with convenient reporting).]
+  ]  
+    
   
   
 ]
@@ -369,7 +392,7 @@ See also:
 
 
 [/ ###############################################################################################]
-[#ref_BOOST_level_GE][h3 `BOOST_<level>_GE`]
+[section:assertion_boost_level_ge `BOOST_<level>_GE`]
 
 ``
   BOOST_WARN_GE(left, right);
@@ -399,9 +422,11 @@ See also:
 * __BOOST_LEVEL_LT__
 * __BOOST_LEVEL_GT__
 
+[endsect]
 
 
-[#ref_BOOST_level_GT][h3 `BOOST_<level>_GT`]
+[/ ###############################################################################################]
+[section:assertion_boost_level_gt `BOOST_<level>_GT`]
 
 
 ``
@@ -431,8 +456,10 @@ See also:
 * __BOOST_LEVEL_LT__
 * __BOOST_LEVEL_GE__
 
+[endsect]
 
-[#ref_BOOST_level_LE][h3 `BOOST_<level>_LE`]
+[/ ###############################################################################################]
+[section:assertion_boost_level_le `BOOST_<level>_LE`]
 
 ``
   BOOST_WARN_LE(left, right);
@@ -462,8 +489,11 @@ See also:
 * __BOOST_LEVEL_GE__
 * __BOOST_LEVEL_GT__
 
+[endsect]
 
-[#ref_BOOST_level_LT][h3 `BOOST_<level>_LT`]
+
+[/ ###############################################################################################]
+[section:assertion_boost_level_lt `BOOST_<level>_LT`]
 
 ``
   BOOST_WARN_LT(left, right);
@@ -492,6 +522,9 @@ See also:
 * __BOOST_LEVEL_LE__
 * __BOOST_LEVEL_GE__
 * __BOOST_LEVEL_GT__
+
+[endsect]
+
 
 
 [#ref_BOOST_level_MESSAGE][h3 `BOOST_<level>_MESSAGE`]
