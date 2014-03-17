@@ -89,6 +89,59 @@ ways to detect and report errors. For list of all supplied testing tools and usa
     [Comparison of two values (with convenient reporting).]
   ]  
     
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_MESSAGE__]
+    [Same as __BOOST_LEVEL__ with a custom message in case of failure.]
+  ]  
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_NE__]
+    [Comparison of two values (with convenient reporting).]
+  ]   
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_NO_THROW__]
+    [Checks an expression does not throw any exception.]
+  ]   
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_PREDICATE__]
+    [Checks a list of arguments against a predicate functor.]
+  ]   
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_SMALL__]
+    [Checks a value is small according to a tolerance.]
+  ]   
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_LEVEL_THROW__]
+    [Checks an expression throws a specific type of expression.]
+  ]   
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_ERROR__]
+    [Logs an error message, fails but does not abort the current test.]
+  ]   
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_FAIL__]
+    [Logs an error message, fails and aborts the current test.]
+  ]     
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_IS_DEFINED__]
+    [Checks at runtime whether or not the supplied preprocessor symbol is defined.]
+  ]   
   
   
 ]
@@ -527,7 +580,8 @@ See also:
 
 
 
-[#ref_BOOST_level_MESSAGE][h3 `BOOST_<level>_MESSAGE`]
+[/ ###############################################################################################]
+[section:assertion_boost_level_message `BOOST_<level>_MESSAGE`]
 
 
 ``
@@ -541,7 +595,7 @@ instead of generating an error/confirm message these use the supplied one.
 
 The first parameter is the boolean expression. The second parameter is the message reported in case of check
 failure. The message argument can be constructed of components of any type supporting the 
-`std::ostream& operator<< (std::ostream&)`.
+`std::ostream& operator<<(std::ostream&)`.
 
 [import examples/example38.cpp]
 [import examples/example38.output]
@@ -560,9 +614,11 @@ See also:
 
 * __BOOST_LEVEL__
 
+[endsect]
 
 
-[#ref_BOOST_level_NE][h3 `BOOST_<level>_NE`]
+[/ ###############################################################################################]
+[section:assertion_boost_level_ne `BOOST_<level>_NE`]
 
 
 ``
@@ -591,9 +647,10 @@ See also:
 
 * __BOOST_LEVEL_EQUAL__
 
+[endsect]
 
-
-[#ref_BOOST_level_NO_THROW][h3 `BOOST_<level>_NO_THROW`]
+[/ ###############################################################################################]
+[section:assertion_boost_level_no_throw `BOOST_<level>_NO_THROW`]
 
 
 ``
@@ -630,9 +687,10 @@ See also:
 
 * __BOOST_LEVEL_THROW__
 
+[endsect]
 
-
-[#ref_BOOST_level_PREDICATE][h3 `BOOST_<level>_PREDICATE`]
+[/ ###############################################################################################]
+[section:assertion_boost_level_predicate `BOOST_<level>_PREDICATE`]
 
 
 ``
@@ -668,8 +726,10 @@ See also:
 
 * __BOOST_LEVEL__
 
+[endsect]
 
-[#ref_BOOST_level_SMALL][h3 `BOOST_<level>_SMALL`]
+[/ ###############################################################################################]
+[section:assertion_boost_level_small `BOOST_<level>_SMALL`]
 
 
 ``
@@ -706,9 +766,10 @@ See also:
 * __BOOST_LEVEL_CLOSE_FRACTION__
 * [link boost_test.testing_tools.testing_floating_points Floating point comparison algorithms]
 
+[endsect]
 
-
-[#ref_BOOST_level_THROW][h3 `BOOST_<level>_THROW`]
+[/ ###############################################################################################]
+[section:assertion_boost_level_throw `BOOST_<level>_THROW`]
 
 
 ``
@@ -722,7 +783,10 @@ that it throws an exception of supplied class (or the one derived from it) or it
 throws any other unrelated exception or doesn't throw at all, check fails.
 
 If check is successful, the tool produces a confirmation message, in other case it produces an error message in a
-form `error in <test-case-name>: exception <exception> expected`.
+form 
+``
+error in <test-case-name>: exception <exception> expected
+``
 
 The first parameter is the expression to execute. Use `do{} while(0)` block if you want to execute more than one
 statement. The second parameter is an expected exception.
@@ -744,14 +808,16 @@ See also:
 
 * __BOOST_LEVEL_NO_THROW__
 
+[endsect]
 
-[#ref_BOOST_ERROR][h3 `BOOST_ERROR`]
+[/ ###############################################################################################]
+[section:assertion_boost_error `BOOST_ERROR`]
 
 ``
   BOOST_ERROR(message);
 ``
 
-__BOOST_ERROR__ tool behave the same way as `__BOOST_CHECK_MESSAGE__(false, message )`. This tool is used for
+__BOOST_ERROR__ tool behave the same way as `__BOOST_CHECK_MESSAGE__(false, message)`. This tool is used for
 an unconditional error counter increasing and message logging. 
 
 The only tool's parameter is an error message to log.
@@ -773,16 +839,17 @@ See also:
 
 * __BOOST_LEVEL__
 
+[endsect]
 
 
-
-[#ref_BOOST_FAIL][h3 `BOOST_FAIL`]
+[/ ###############################################################################################]
+[section:assertion_boost_fail `BOOST_FAIL`]
 
 ``
   BOOST_FAIL(message);
 ``
 
-`__BOOST_FAIL__(message)` behave the same way as [link ref_BOOST_level_MESSAGE `BOOST_REQUIRE_MESSAGE`]`(false, message)`. This tool is used for an
+`__BOOST_FAIL__(message)` behave the same way as `__BOOST_REQUIRE_MESSAGE__(false, message)`. This tool is used for an
 unconditional error counter increasing, message logging and the current test case aborting. 
 
 The only tool's parameter is an error message to log.
@@ -805,10 +872,11 @@ See also:
 * __BOOST_LEVEL__
 * __BOOST_LEVEL_MESSAGE__
 
+[endsect]
 
 
-
-[#ref_BOOST_IS_DEFINED][h3 `BOOST_IS_DEFINED`]
+[/ ###############################################################################################]
+[section:assertion_boost_is_defined `BOOST_IS_DEFINED`]
 
 ``
   BOOST_IS_DEFINED(symbol);
@@ -838,6 +906,8 @@ The only tool's parameter is a preprocessor symbol that gets validated.
 See also:
 
 * __BOOST_LEVEL__
+
+[endsect]
 
 
 [endsect] [/ testing_tool_ref]
