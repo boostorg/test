@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003-2013 Gennadiy Rozental (rogeeff at gmail dot com)
+ / Copyright (c) 2003-2014 Gennadiy Rozental (rogeeff at gmail dot com)
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -175,7 +175,6 @@
 [include how_to_read_this_documentation.qbk]
 
 
-[include monitor.program-execution.qbk]
 
 [include utf.user-guide.qbk]
 [include tests_organization/utf.user-guide.test-organization.qbk]
@@ -184,8 +183,6 @@
 [include utf.user-guide.test-output.qbk]
 [include utf.user-guide.test-progress.qbk] [/ test progress should be in test-output]
 
-[/ Raffi: I think it would be better to put this in test variants]
-[include minimal-testing.qbk]
 
 [include runtime_configuration.qbk]
 
@@ -196,6 +193,13 @@
 
 [include open_issues.qbk]
 [include acknowledgments.qbk]
+
+[section Components]
+[/ Raffi: I think it would be better to put this in test variants]
+[include minimal-testing.qbk]
+[include monitor.program-execution.qbk]
+[endsect]
+
 
 [/ reference sections]
 [include runtime_configuration.reference.qbk]
