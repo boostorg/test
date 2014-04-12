@@ -278,7 +278,7 @@ code passes through.
 [warning Section empty]
 [endsect]
 
-[include utf.user-guide.test-progress.qbk]
+[include progression_display.qbk]
 
 
 [endsect] 

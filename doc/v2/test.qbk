@@ -180,7 +180,7 @@
 [include tests_organization/utf.user-guide.test-organization.qbk]
 
 [include utf.testing-tools.qbk]
-[include test_output/utf.user-guide.test-output.qbk]
+[include test_output/test_output.qbk]
 
 
 
