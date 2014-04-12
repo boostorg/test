@@ -1,4 +1,4 @@
-[#ref_output_progress][section:test_output_progress Test progress display]
+[#ref_output_progress][section:test_output_progress Progression display]
 In case if the test module involves lengthy computation split among multiple test cases you may be interested in 
 progress monitor. The test runners supplied with the __UTF__ support simple text progress display, implemented based
 on 
@@ -26,8 +26,8 @@ initialization. Use following interface to redirect test progress output:
   boost::unit_test::progress_monitor.set_stream( std::ostream& )
 ``
 
-[import examples/example49.cpp]
-[import examples/example49.output]
+[import ../examples/example49.cpp]
+[import ../examples/example49.output]
 [table:id_example49 Progress report for the test module with large amount of test cases
   [
     [Code]

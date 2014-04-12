@@ -180,8 +180,8 @@
 [include tests_organization/utf.user-guide.test-organization.qbk]
 
 [include utf.testing-tools.qbk]
-[include utf.user-guide.test-output.qbk]
-[include utf.user-guide.test-progress.qbk] [/ test progress should be in test-output]
+[include test_output/utf.user-guide.test-output.qbk]
+[include test_output/utf.user-guide.test-progress.qbk] [/ test progress should be in test-output]
 
 
 [include runtime_configuration.qbk]

@@ -117,7 +117,7 @@ macros for this purpose:
 
 [/ -------------------------------------------------------------------------------------------------- ]
 
-[section:testing_tool_args Logging tool arguments]
+[section:testing_tool_args Disabling automatic printing for specific types]
 
 Most of the __testing_tools__ print values of their arguments to the output
 stream in some form of log statement. If arguments type does not support 
@@ -125,15 +125,15 @@ stream in some form of log statement. If arguments type does not support
   operator<<(std::ostream&, ArgumentType const&);
 ``
 interface you will get a compilation error. You can either implement above interface or prohibit the __testing_tools__ from logging argument values for
-specified type. To do so use following statement on file level before first test case that includes statement
+specified type. To do so, use following statement on file level before first test case that includes statement
 failing to compile:
 
 ``
   BOOST_TEST_DONT_PRINT_LOG_VALUE(ArgumentType)
 ``
 
-[import examples/example32.cpp]
-[import examples/example32.output]
+[import ../examples/example32.cpp]
+[import ../examples/example32.output]
 [table:id_example32 BOOST_TEST_DONT_PRINT_LOG_VALUE usage
   [
     [Code]
@@ -175,8 +175,8 @@ with in a manner similar to standard `std::iostream` operation.
    to "message".
 ]
 
-[import examples/example21.cpp]
-[import examples/example21.output]
+[import ../examples/example21.cpp]
+[import ../examples/example21.output]
 [table:id_example21 __BOOST_TEST_MESSAGE__ usage
   [
     [Code]
@@ -209,8 +209,8 @@ occurs). Similarly to the __BOOST_TEST_MESSAGE__ the message can be formatted fr
 output stream compliant components.
 
 
-[import examples/example22.cpp]
-[import examples/example22.output]
+[import ../examples/example22.cpp]
+[import ../examples/example22.output]
 [table:id_example22 __BOOST_TEST_CHECKPOINT__ usage
   [
     [Code]
@@ -241,8 +241,8 @@ Unlike the macro __BOOST_TEST_CHECKPOINT__ this macro doesn't require any messag
 supplied with it. It's just a simple "been there" marker that records file name and line number
 code passes through.
 
-[import examples/example23.cpp]
-[import examples/example23.output]
+[import ../examples/example23.cpp]
+[import ../examples/example23.output]
 [table:id_example23 __BOOST_TEST_PASSPOINT__ usage
   [
     [Code]
@@ -301,7 +301,7 @@ extended long double 128-bit - 36 decimal digits. For floating-point types, a co
 
 
 [/ -------------------------------------------------------------------------------------------------- ]
-[section:log_human_readable_format Human readable log output format]
+[section:log_human_readable_format Human readable log format]
 
 The human readable log format is designed to closely match an errors description produced by the Microsoft family
 of C++ compilers. This format allows jumping to the error location, if test module output is redirected into IDE
@@ -422,8 +422,8 @@ interface:
 You can reset the output stream at any time both during the test module initialization and from within test
 cases. There are no limitations on number of output stream resets either.
 
-[import examples/example50.cpp]
-[import examples/example50.output]
+[import ../examples/example50.cpp]
+[import ../examples/example50.output]
 [table:id_example50 Compile-time log output redirection
   [
     [Code]
@@ -456,8 +456,8 @@ In regular circumstances you shouldn't use this interface, since you not only ov
 the one supplied at test execution time. Prefer to use runtime parameters __param_log_level__ for log level selection.
 
 
-[import examples/example51.cpp]
-[import examples/example51.output]
+[import ../examples/example51.cpp]
+[import ../examples/example51.output]
 [table:id_example51 Compile-time log level configuration
   [
     [Code]
@@ -482,8 +482,8 @@ The select at compile time the log format from the list of the formats supplied 
 In regular circumstances you shouldn't use this interface. Prefer to use runtime parameters for predefined log
 format selection.
 
-[import examples/example52.cpp]
-[import examples/example52.output]
+[import ../examples/example52.cpp]
+[import ../examples/example52.output]
 [table:id_example52 Compile-time log format selection
   [
     [Code]
