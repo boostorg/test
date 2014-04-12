@@ -64,7 +64,7 @@ Now, you not only receive uniform result code, even in case of exception, but al
 __BOOST_CHECK__ tool, would you choose to see it. Is there any other ways to perform checks? The following example test 
 program shows several different ways to detect and report an error in the `add()` function.
 
-[import snippet/snippet12.cpp]
+[import ../snippet/snippet12.cpp]
 [snippet12]
 
 [warning check why there is a remaining TO FIX: all the coords in the source doc + why 

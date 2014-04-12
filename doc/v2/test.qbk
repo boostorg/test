@@ -170,7 +170,7 @@
 [include overview.qbk]
 
 
-[include tutorial.qbk]
+[include tutorials/tutorial.qbk]
 
 [include how_to_read_this_documentation.qbk]
 
