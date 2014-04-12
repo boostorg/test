@@ -1,5 +1,5 @@
 [/ ############################################################ Output streams]
-[#ref_test_output_streams][section:output_stream_testing Output streams testing tool]
+[section:output_stream_testing Output streams testing tool]
 
 How do you perform correctness test for ``operator<< ( std::ostream &, ... )``
 operations? You can print into the standard output stream and manually check that it is matching your expectations.
