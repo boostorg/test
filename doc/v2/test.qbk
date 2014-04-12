@@ -181,7 +181,7 @@
 
 [include utf.testing-tools.qbk]
 [include test_output/utf.user-guide.test-output.qbk]
-[include test_output/utf.user-guide.test-progress.qbk] [/ test progress should be in test-output]
+
 
 
 [include runtime_configuration.qbk]

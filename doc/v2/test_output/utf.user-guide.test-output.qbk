@@ -278,5 +278,8 @@ code passes through.
 [warning Section empty]
 [endsect]
 
+[include utf.user-guide.test-progress.qbk]
+
+
 [endsect] 
 
