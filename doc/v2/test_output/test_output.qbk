@@ -87,10 +87,10 @@ the list of all levels in order of increasing 'importance':
 In addition to the levels described above the test log defines two special log levels. The current log level can
 be set to:
 
-* All messages
+* All messages[br]
   If active log level threshold is set to this value, all test log entries appear in the output. In practice
   this is equivalent to setting the active log level threshold to ['success information messages]
-* Nothing
+* Nothing[br]
   If the active log level threshold is set to this value, none of test log entries appear in the output. This log level
   is used to execute a ['silent] test that doesn't produce any test log and only generates a result code indicating whether test failed or passed.
 
