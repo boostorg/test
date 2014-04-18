@@ -69,7 +69,7 @@ bitwise_compare(Lhs const& lhs, Rhs const& rhs, E const& expr )
                 pr.message() << "]. Bitwise comparison failed";
                 pr = false;
             }
-            pr.message() << "\nMismatch in a position " << counter;
+            pr.message() << "\nMismatch in position " << counter;
         }
     }
 

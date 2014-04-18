@@ -195,7 +195,7 @@ compare_collections( Lhs const& lhs, Rhs const& rhs )
             continue;
 
         pr = false;
-        pr.message() << "\nMismatch in a position " << pos << ": "  << *left << OP::revert() << *right;
+        pr.message() << "\nMismatch in position " << pos << ": "  << *left << OP::revert() << *right;
     }
 
     return pr;

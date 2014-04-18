@@ -207,7 +207,7 @@ struct equal_coll_impl {
         for( ; left_begin != left_end && right_begin != right_end; ++left_begin, ++right_begin, ++pos ) {
             if( *left_begin != *right_begin ) {
                 pr = false;
-                pr.message() << "\nMismatch in a position " << pos << ": "  << *left_begin << " != " << *right_begin;
+                pr.message() << "\nMismatch in position " << pos << ": "  << *left_begin << " != " << *right_begin;
             }
         }
 
@@ -256,7 +256,7 @@ struct bitwise_equal_impl {
         for( std::size_t counter = 0; counter < total_bits; ++counter ) {
             if( ( left & ( leftOne << counter ) ) != ( right & ( rightOne << counter ) ) ) {
                 pr = false;
-                pr.message() << "\nMismatch in a position " << counter;
+                pr.message() << "\nMismatch in position " << counter;
             }
         }
 
