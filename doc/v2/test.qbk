@@ -189,7 +189,7 @@
 [include usage_recommandations.qbk]
 [include faq.qbk]
 [include glossary.qbk]
-
+[include change_log.qbk]
 
 [include open_issues.qbk]
 [include acknowledgments.qbk]
