@@ -69,10 +69,11 @@ intended to do: check that the validation is working. A testing of a validation 
 important part of a unit testing and should not be left for a production stage. The data_access_test test case 
 passed and I am ready for the next step.
 
+[import ../snippet/const_string.hpp]
+[import ../snippet/const_string_test.cpp]
 
-Continuing my effort I am able to complete class `const_string` (see
-<ulink url="../src/snippet/const_string.hpp">Listing 1</ulink>) and testing module for it (see 
-<ulink url="../src/snippet/const_string_test.cpp">Listing 2</ulink>) that is checking all features that are presented 
+Continuing my effort I am able to complete class `const_string` (see [@../snippet/const_string.hpp Listing 1 =const_string.hpp=]) and testing module for it (see 
+[@../snippet/const_string_test.cpp Listing 2 =const_string_test.cpp=]) that is checking all features that are presented 
 in the class `const_string` specification.
  
 
@@ -85,7 +86,5 @@ have any problems to use facilities provided by the Boost.Test unit test framewo
 write a stable, bulletproof code. And what is even more important is your confidence in an ability to make changes 
 of any complexity without involving a lengthy regression testing of your whole product. Your test module and the 
 unit test framework will stay behind your back to help you with any occasional errors.
-
-[warning fix the links to the files + check how to do it nicely]
 
 [endsect]
