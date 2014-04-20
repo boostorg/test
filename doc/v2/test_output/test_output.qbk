@@ -116,6 +116,17 @@ macros for this purpose:
 
 
 [/ -------------------------------------------------------------------------------------------------- ]
+[section:log_runtime_config Configuring the verbosity of the logs]
+
+The active log level threshold can be configured at runtime using the parameter __param_log_level__. 
+The test log output format can be selected using either parameter __param_log_format__ or the
+parameter __param_output_format__.
+
+
+[endsect] [/section:log_runtime_config]
+
+
+[/ -------------------------------------------------------------------------------------------------- ]
 
 [section:testing_tool_args Disabling automatic printing for specific types]
 
@@ -145,15 +156,9 @@ failing to compile:
   ]
 ]
 
-
-[heading:log_runtime_config Runtime configuration]
-
-The active log level threshold can be configured at runtime using the parameter __param_log_level__. 
-The test log output format can be selected using either parameter __param_log_format__ or the
-parameter __param_output_format__.
+[endsect]
 
 
-[endsect] [/section:testing_tool_args]
 
 
 
@@ -259,19 +264,10 @@ code passes through.
 
 
 
-
-
-
-
-
-
 [include logging_floating_point.qbk]
 
 [include log_format.qbk]
 [include compilation_options.qbk]
-
-
-
 
 
 [#ref_tests_report][section Test reports]
