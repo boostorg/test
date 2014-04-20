@@ -1,13 +1,11 @@
 [section Open issues]
    
 * Finish update for the command line arguments support
-* Selective test cases run by name
 * Boost.Test thread safety need to be achieved at least if `BOOST_TEST_THREAD_SAFE` is defined. This one will require 
      separate discussion
 * Some performance testing tools (aka profiler). Unless somebody else will come up with something like this
 * Build info feature needs to be updated: there are at least two different "build infos": library build and test 
      module build
-* More tutorial documentation
 * Projects that could be very interesting, but I may not be able to do it by myself:
 
   * An add-on for Visual Studio to automate test case/test modules generation
