@@ -194,6 +194,21 @@
 [include open_issues.qbk]
 [include acknowledgments.qbk]
 
+[section Versions]
+
+[h3 Boost.Test v3 - Boost release XXX]
+
+# [ticket 2717] BOOST_<level>_EQUAL_COLLECTION docs typo
+# [ticket 3392] Boost::Test: Wrong contents for documentation of the BOOST_TEST_PASSPOINT macro
+# [ticket 4434] BOOST_AUTO_EST_CASE typos in docs
+# [ticket 8862] Boost.Test typo in documentation
+# [ticket 9539] Floating-point comparison algorithms aren't formatted correctly
+# [ticket 9581] Squassabia reference link gives 404 not found
+
+
+
+[endsect]
+
 [section Components]
 [/ Raffi: I think it would be better to put this in test variants]
 [include minimal-testing.qbk]
