@@ -70,9 +70,9 @@
 
 
 
-[def __BOOST_TEST_CHECKPOINT__            [link ref_BOOST_TEST_CHECKPOINT `BOOST_TEST_CHECKPOINT`]]
-[def __BOOST_TEST_PASSPOINT__             [link ref_BOOST_TEST_PASSPOINT `BOOST_TEST_PASSPOINT`]]
-[def __BOOST_TEST_MESSAGE__               [link ref_macro_boost_test_message `BOOST_TEST_MESSAGE`]]
+[def __BOOST_TEST_CHECKPOINT__            [link boost_test.test_output.test_output_macro_checkpoint `BOOST_TEST_CHECKPOINT`]]
+[def __BOOST_TEST_PASSPOINT__             [link boost_test.test_output.test_output_macro_passpoint  `BOOST_TEST_PASSPOINT`]]
+[def __BOOST_TEST_MESSAGE__               [link boost_test.test_output.test_output_macro_message    `BOOST_TEST_MESSAGE`]]
 
 
 [/ Assertions ]

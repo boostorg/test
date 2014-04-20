@@ -128,7 +128,7 @@ parameter __param_output_format__.
 
 [/ -------------------------------------------------------------------------------------------------- ]
 
-[section:testing_tool_args Disabling automatic printing for specific types]
+[section:testing_tool_output_disable Disabling automatic printing for specific types]
 
 Most of the __testing_tools__ print values of their arguments to the output
 stream in some form of log statement. If arguments type does not support 
@@ -165,7 +165,7 @@ failing to compile:
 
 [/ -------------------------------------------------------------------------------------------------- ]
 
-[#ref_macro_boost_test_message][section `BOOST_TEST_MESSAGE`]
+[section:test_output_macro_message `BOOST_TEST_MESSAGE`]
 The macro __BOOST_TEST_MESSAGE__ is intended to be used for the purpose of injecting an additional message into the
 __UTF__ test log. These messages are not intended to indicate any error or warning conditions, but rather as
 information/status notifications. The macro signature is as follows:
@@ -199,7 +199,7 @@ with in a manner similar to standard `std::iostream` operation.
 
 
 [/ -------------------------------------------------------------------------------------------------- ]
-[#ref_BOOST_TEST_CHECKPOINT][section `BOOST_TEST_CHECKPOINT`]
+[section:test_output_macro_checkpoint `BOOST_TEST_CHECKPOINT`]
 
 
 The macro __BOOST_TEST_CHECKPOINT__ is intended to be used to inject [*named] checkpoint position. The
@@ -234,7 +234,7 @@ output stream compliant components.
 
 
 [/ -------------------------------------------------------------------------------------------------- ]
-[#ref_BOOST_TEST_PASSPOINT][section `BOOST_TEST_PASSPOINT`]
+[section:test_output_macro_passpoint `BOOST_TEST_PASSPOINT`]
 
 The macro __BOOST_TEST_PASSPOINT__ is intended to be used to inject an [*unnamed] checkpoint position. The
 macro signature is as follows:
