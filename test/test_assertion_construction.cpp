@@ -479,7 +479,7 @@ BOOST_AUTO_TEST_CASE( collection_comparison )
         EXPR_TYPE( E,  v < l );
         predicate_result const& res = E.evaluate();
         BOOST_TEST_FWD( !res );
-        BOOST_TEST_FWD( res.message() == ". \nMismatch in a position 0: 1 >= 1\nMismatch in a position 2: 3 >= 2" );
+        BOOST_TEST_FWD( res.message() == ". \nMismatch in position 0: 1 >= 1\nMismatch in position 2: 3 >= 2" );
     }
 
     {
@@ -508,7 +508,7 @@ BOOST_AUTO_TEST_CASE( collection_comparison )
         EXPR_TYPE( E,  v >= l );
         predicate_result const& res = E.evaluate();
         BOOST_TEST_FWD( !res );
-        BOOST_TEST_FWD( res.message() == ". \nMismatch in a position 1: 2 < 3");
+        BOOST_TEST_FWD( res.message() == ". \nMismatch in position 1: 2 < 3");
     }
 
     {
