@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2004-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -9,15 +9,15 @@
 //
 //  Version     : $Revision$
 //
-//  Description : suppress some warnings 
+//  Description : suppress some warnings
 // ***************************************************************************
 
 #ifdef BOOST_MSVC
 # pragma warning(push)
 # pragma warning(disable: 4511) // copy constructor can't not be generated
 # pragma warning(disable: 4512) // assignment operator can't not be generated
-# pragma warning(disable: 4100) // unreferenced formal parameter 
-# pragma warning(disable: 4996) // <symbol> was declared deprecated 
+# pragma warning(disable: 4100) // unreferenced formal parameter
+# pragma warning(disable: 4996) // <symbol> was declared deprecated
 # pragma warning(disable: 4355) // 'this' : used in base member initializer list
 # pragma warning(disable: 4706) // assignment within conditional expression
 # pragma warning(disable: 4251) // class 'A<T>' needs to have dll-interface to be used by clients of class 'B'
@@ -29,3 +29,7 @@
 # pragma warning(disable: 4511) // 'class' : copy constructor could not be generated
 #endif
 
+#ifdef BOOST_CLANG
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wlogical-op-parentheses"
+#endif
