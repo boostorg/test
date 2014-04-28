@@ -886,7 +886,7 @@ void
 clear_context( int frame_id )
 {
     if( frame_id == -1 ) {   // clear all non sticky frames
-        for( int i=s_frk_impl().m_context.size()-1; i>=0; i-- )
+        for( int i=static_cast<int>(s_frk_impl().m_context.size())-1; i>=0; i-- )
             if( !s_frk_impl().m_context[i].is_sticky )
                 s_frk_impl().m_context.erase( s_frk_impl().m_context.begin()+i );
     }
