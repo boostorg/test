@@ -1,0 +1,116 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Configuration</title>
+<link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../index.html" title="Boost.Test">
+<link rel="up" href="../section_pem.html" title="Program Execution Monitor">
+<link rel="prev" href="usage.html" title="Usage">
+<link rel="next" href="implementation.html" title="Implementation">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="usage.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../section_pem.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="implementation.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="boost_test.components.section_pem.configuration"></a><a class="link" href="configuration.html" title="Configuration">Configuration</a>
+</h4></div></div></div>
+<p>
+          There are two aspects of the <span class="emphasis"><em>PEM</em></span> behavior that you
+          can customize at runtime. Customization is performed using environment
+          variables.
+        </p>
+<div class="table">
+<a name="boost_test.components.section_pem.configuration.id_pem_env"></a><p class="title"><b>Table&#160;40.&#160;The <span class="emphasis"><em>PEM</em></span> configuration environment variables</b></p>
+<div class="table-contents"><table class="table" summary="The PEM configuration environment variables">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Flag
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Usage
+                  </p>
+                </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">BOOST_TEST_CATCH_SYSTEM_ERRORS</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    allows customizing behavior of the <span class="emphasis"><em>PEM</em></span> in
+                    regards of catching system errors. For more details about the
+                    meaning of this option see the <a class="link" href="../../../">Execution
+                    Monitor</a>. If you want to prevent the Program Execution
+                    Monitor from catching system exception, set the value of this
+                    variable to "no". The default value is "yes".
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">BOOST_PRG_MON_CONFIRM</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    allows avoiding success confirmation message. Some users prefer
+                    to see a confirmation message in case if program successfully
+                    executed. While others don't like the clutter or any output is
+                    prohibited by organization standards. To avoid the message set
+                    the value of this variable to "no". The default value
+                    is "yes".
+                  </p>
+                </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../../../../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            Copy the environment variables into appropriate pages, as for the command
+            line parameters
+          </p></td></tr>
+</table></div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2014 Gennadiy
+      Rozental<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="usage.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../section_pem.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="implementation.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

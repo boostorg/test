@@ -1,0 +1,118 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Compilation</title>
+<link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../index.html" title="Boost.Test">
+<link rel="up" href="../section_pem.html" title="Program Execution Monitor">
+<link rel="prev" href="implementation.html" title="Implementation">
+<link rel="next" href="compilation/section_pem_standalone.html" title="Standalone library compilation">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="implementation.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../section_pem.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="compilation/section_pem_standalone.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="boost_test.components.section_pem.compilation"></a><a class="link" href="compilation.html" title="Compilation">Compilation</a>
+</h4></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="compilation/section_pem_standalone.html">Standalone
+          library compilation</a></span></dt>
+<dt><span class="section"><a href="compilation/support_of_the_auto_linking_feat.html">Support
+          of the auto-linking feature</a></span></dt>
+<dt><span class="section"><a href="compilation/section_pem_full_include.html">Including
+          the <span class="emphasis"><em>PEM</em></span> directly into your program</a></span></dt>
+</dl></div>
+<p>
+          In comparison with many other boost libraries, which are completely implemented
+          in header files, compilation and linking with the <span class="emphasis"><em>PEM</em></span>
+          may require additional steps. The <span class="emphasis"><em>PEM</em></span> presents you
+          with options to either
+        </p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+              built and link with a <a class="link" href="compilation/section_pem_standalone.html#ref_pem_stanlone">standalone library</a>
+              or
+            </li>
+<li class="listitem">
+              include the implementation <a class="link" href="compilation/section_pem_full_include.html#ref_pem_direct_include">directly</a>
+              into your program.
+            </li>
+</ol></div>
+<p>
+          If you opt to use the library the <span class="emphasis"><em>PEM</em></span> header implements
+          the &lt;link linkend="pem.compilation.auto-linking"&gt;auto-linking
+          support&lt;/link&gt; and following flags can be used to configure compilation
+          of the <span class="emphasis"><em>PEM</em></span> library and your program:
+        </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Variable
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Usage
+                  </p>
+                </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                  <p>
+                    <a name="ref_BOOST_TEST_DYN_LINK"></a><code class="computeroutput"><span class="identifier">BOOST_TEST_DYN_LINK</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Define this flag to build/use dynamic library
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <a name="ref_BOOST_TEST_NO_LIB"></a><code class="computeroutput"><span class="identifier">BOOST_TEST_NO_LIB</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Define this flag to prevent auto-linking
+                  </p>
+                </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2014 Gennadiy
+      Rozental<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="implementation.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../section_pem.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="compilation/section_pem_standalone.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

@@ -60,7 +60,7 @@
         test case (actually I recommend better solution in such case- see below).
         Now if an error gets reported by the test tool within that reused code you
         may have difficulty locating were exactly error occurred. To address this
-        issue you could either a add <a class="link" href="../test_output/boost_test_message.html#ref_macro_boost_test_message"><code class="computeroutput"><span class="identifier">BOOST_TEST_MESSAGE</span></code></a> statements in
+        issue you could either a add <a class="link" href="../test_output/test_output_macro_message.html" title="BOOST_TEST_MESSAGE"><code class="computeroutput"><span class="identifier">BOOST_TEST_MESSAGE</span></code></a> statements in
         templated code that log current type id of template parameters or you can
         use special hook located in <code class="computeroutput"><span class="identifier">unit_test_result</span><span class="special">.</span><span class="identifier">hpp</span></code> called
         <code class="computeroutput"><span class="identifier">first_failed_assertion</span><span class="special">()</span></code>.
@@ -106,11 +106,11 @@
         <code class="computeroutput"><span class="identifier">BOOST_CHECK_EQUAL</span></code> to <code class="computeroutput"><span class="identifier">BOOST_CHECK</span></code></a>
       </h5>
 <p>
-        Even though <a class="link" href="../testing_tools/testing_tool_ref/assertion_boost_level.html" title="BOOST_&lt;level&gt;"><code class="computeroutput"><span class="identifier">BOOST_CHECK</span></code></a> tool is most generic
+        Even though <a class="link" href="../testing_tool_ref/assertion_boost_level.html" title="BOOST_&lt;level&gt;"><code class="computeroutput"><span class="identifier">BOOST_CHECK</span></code></a> tool is most generic
         and allows validating any <code class="computeroutput"><span class="keyword">bool</span></code>
         convertible expression, I would recommend using, if possible, more specific
         tools dedicated to the task. For example if you need you validate some variable
-        vs. some expected value use <a class="link" href="../testing_tools/testing_tool_ref/assertion_boost_level_eq.html" title="BOOST_&lt;level&gt;_EQUAL"><code class="computeroutput"><span class="identifier">BOOST_CHECK_EQUAL</span></code></a> instead. The main
+        vs. some expected value use <a class="link" href="../testing_tool_ref/assertion_boost_level_eq.html" title="BOOST_&lt;level&gt;_EQUAL"><code class="computeroutput"><span class="identifier">BOOST_CHECK_EQUAL</span></code></a> instead. The main
         advantage is that in case of failure you will see the mismatched value -
         the information most useful for error identification. The same applies to
         other tools supplied by the framework.
