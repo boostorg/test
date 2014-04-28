@@ -60,7 +60,7 @@ operator<<( std::ostream& os, parameter const& p )
 param_namespace::param_namespace( cstring name, param_namespace const* parent )
 : p_parent( parent )
 {
-    assign_op( p_name.value, name );
+    assign_op( p_name.value, name, 0 );
 }
 
 //____________________________________________________________________________//
