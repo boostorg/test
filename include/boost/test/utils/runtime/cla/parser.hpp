@@ -100,7 +100,7 @@ public:
     // parameters access
     param_iterator      first_param() const;
     param_iterator      last_param() const;
-    unsigned            num_params() const  { return m_parameters.size(); }
+    unsigned            num_params() const  { return static_cast<unsigned int>(m_parameters.size()); }
     void                reset();
 
     // arguments access
@@ -147,8 +147,11 @@ private:
 
 #ifndef BOOST_RT_PARAM_OFFLINE
 
-#  define BOOST_RT_PARAM_INLINE inline
-#  include <boost/test/utils/runtime/cla/parser.ipp>
+#ifndef BOOST_RT_PARAM_INLINE
+  #define BOOST_RT_PARAM_INLINE inline
+#endif
+
+#include <boost/test/utils/runtime/cla/parser.ipp>
 
 #endif
 
