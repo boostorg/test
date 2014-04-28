@@ -18,6 +18,7 @@
 // Boost
 #include <boost/config.hpp>
 #include <boost/detail/workaround.hpp>
+#include <boost/mpl/bool.hpp>
 
 // Boost.Test
 #include <boost/test/utils/rtti.hpp>
@@ -325,13 +326,13 @@ optionally_assign( T& target, Params const& p, Keyword k )
 // ************************************************************************** //
 
 template<typename T>
-struct is_named_params : public mpl::false_ {};
+struct is_named_params : public boost::mpl::false_ {};
 
 template<typename T, typename unique_id, typename ReferenceType>
-struct is_named_params<named_parameter<T,unique_id,ReferenceType> > : public mpl::true_ {};
+struct is_named_params<named_parameter<T,unique_id,ReferenceType> > : public boost::mpl::true_ {};
 
 template<typename NP, typename Rest>
-struct is_named_params<nfp_detail::named_parameter_combine<NP,Rest> > : public mpl::true_ {};
+struct is_named_params<nfp_detail::named_parameter_combine<NP,Rest> > : public boost::mpl::true_ {};
 
 // ************************************************************************** //
 // **************                  param_type                  ************** //

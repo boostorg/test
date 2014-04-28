@@ -28,8 +28,15 @@ namespace BOOST_RT_PARAM_NAMESPACE {
 
 namespace environment {
 
+template<typename T>
+class variable;  
+
 class variable_base;
 variable_base var( cstring var_name );
+  
+template<typename T>
+inline variable<T>
+  var( cstring var_name );
 
 namespace rt_env_detail {
 
