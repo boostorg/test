@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines dataset interfaces
+//!@file 
+//!@brief dataset interfaces
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_DATASET_HPP_102211GER

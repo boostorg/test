@@ -5,8 +5,9 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file minimal.hpp @brief Deprecated implementation of simple minimal testing
-///
+/// @file
+/// @brief Deprecated implementation of simple minimal testing
+/// @deprecated
 /// To convert to Unit Test Framework simply rewrite:
 /// @code
 /// #include <boost/test/minimal.hpp>

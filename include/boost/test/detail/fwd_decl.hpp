@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : contains forward eclarations for Boost.Test data types
+//!@file  
+//!@brief contains forward eclarations for Boost.Test data types
 // ***************************************************************************
 
 #ifndef BOOST_TEST_FWD_DECL_HPP_011605GER

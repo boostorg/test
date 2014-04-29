@@ -5,10 +5,10 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file framework.hpp @brief Defines Unit Test Framework monostate interfaces
-
-/// The Unit Test framework is based on Monostate design patern. These interfaces are used to operate 
-/// on the monostate.
+//!@file 
+//!@brief Defines Unit Test Framework monostate interfaces.
+//! The Unit Test framework is based on Monostate design patern. These interfaces are used to operate 
+//! on the monostate.
 // ***************************************************************************
 
 #ifndef BOOST_TEST_FRAMEWORK_HPP_020805GER

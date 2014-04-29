@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines common dataset macros
+//!@file 
+//!@brief common dataset macros
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_CONFIG_HPP_112611GER

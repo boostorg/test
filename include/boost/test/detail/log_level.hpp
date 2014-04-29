@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : shared definition for unit test log levels
+//!@file
+//!@brief shared definition for unit test log levels
 // ***************************************************************************
 
 #ifndef BOOST_TEST_LOG_LEVEL_HPP_011605GER

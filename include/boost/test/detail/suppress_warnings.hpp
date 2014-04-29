@@ -5,7 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  Description : suppress some warnings
+//!@file 
+//!@brief suppress some warnings
 // ***************************************************************************
 
 #ifdef BOOST_MSVC

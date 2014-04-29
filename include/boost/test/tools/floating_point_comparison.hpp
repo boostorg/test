@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines algoirthms for comparing 2 floating point values
+//!@file 
+//!@brief algorithms for comparing floating point values
 // ***************************************************************************
 
 #ifndef BOOST_TEST_FLOATING_POINT_COMPARISON_HPP_071894GER

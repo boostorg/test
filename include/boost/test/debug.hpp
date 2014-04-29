@@ -4,10 +4,11 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
-///
-/// @file debug.hpp @brief defines portable debug interfaces
-///
-/// Intended to standardize interface of programs with debuggers
+//
+//! @file 
+//! @brief defines portable debug interfaces
+//!
+//! Intended to standardize interface of programs with debuggers
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DEBUG_API_HPP_112006GER
