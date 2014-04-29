@@ -57,7 +57,8 @@ namespace framework {
 
 /// It needs to be called every time before the test is started.
 /// @param[in] init_func test module initialization routine
-/// @param[in] argc,argv command line arguments collection
+/// @param[in] argc command line arguments collection
+/// @param[in] argv command line arguments collection
 BOOST_TEST_DECL void    init( init_unit_test_func init_func, int argc, char* argv[] );
 
 /// This function tells if the framework monostate is initailized
