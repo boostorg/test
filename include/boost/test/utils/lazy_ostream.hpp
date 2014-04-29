@@ -5,10 +5,6 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
 //  Description : contains definition for all test tools in test toolbox
 // ***************************************************************************
 
