@@ -5,11 +5,7 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : as a central place for global configuration switches
+///  @file a central place for global configuration switches
 // ***************************************************************************
 
 #ifndef BOOST_TEST_CONFIG_HPP_071894GER
@@ -119,5 +115,12 @@ class type_info;
 #ifdef __PGI
 #define BOOST_PP_VARIADICS 1
 #endif
+
+#ifdef BOOST_NO_CXX11_NOEXCEPT
+#  define BOOST_TEST_NOEXCEPT_OR_THROW_VOID throw()
+#else
+#  define BOOST_TEST_NOEXCEPT_OR_THROW_VOID noexcept
+#endif
+
 
 #endif // BOOST_TEST_CONFIG_HPP_071894GER
