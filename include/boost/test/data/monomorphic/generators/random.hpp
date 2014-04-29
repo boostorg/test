@@ -5,11 +5,7 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines range generator
+//!@file defines range generator
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_GENERATORS_XRANGE_HPP_112011GER
