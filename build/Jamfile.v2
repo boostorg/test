@@ -14,6 +14,8 @@ project boost/test
                    <toolset>msvc:<cxxflags>-wd4671
                    <toolset>msvc:<cxxflags>-wd4673
                    #<toolset>gcc:<cxxflags>-std=gnu++0x
+                   <toolset>clang:<cxxflags>-Wno-c99-extensions
+                   <toolset>clang:<cxxflags>-Wno-variadic-macros
                    <warnings>all
                    # <warnings-as-errors>on
     : usage-requirements
