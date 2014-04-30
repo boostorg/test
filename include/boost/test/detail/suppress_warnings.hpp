@@ -28,5 +28,5 @@
 
 #ifdef BOOST_CLANG
 #pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wlogical-op-parentheses"
+//#pragma clang diagnostic ignored "-Wlogical-op-parentheses"
 #endif
