@@ -11,7 +11,9 @@
 // Boost.Test
 #include <boost/test/unit_test.hpp>
 
-#ifndef BOOST_NO_0X_HDR_RANDOM
+#if !defined(BOOST_NO_0X_HDR_RANDOM) && \
+    !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && \
+    !defined(BOOST_NO_CXX11_LAMBDAS)
 
 #include <boost/test/data/monomorphic/generators/random.hpp>
 #include <boost/test/data/monomorphic/zip.hpp>
