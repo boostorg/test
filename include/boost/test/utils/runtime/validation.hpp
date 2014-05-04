@@ -46,11 +46,11 @@ class logic_error
 public:
     // Constructor // !! could we eliminate shared_ptr
     explicit    logic_error( cstring msg ) : m_msg( new dstring( msg.begin(), msg.size() ) ) {}
-    ~logic_error() BOOST_TEST_NOEXCEPT_OR_THROW_VOID 
+    ~logic_error() BOOST_NOEXCEPT_OR_NOTHROW 
     {}
 
     dstring const&   msg() const                    { return *m_msg; }
-    virtual char_type const* what() const BOOST_TEST_NOEXCEPT_OR_THROW_VOID
+    virtual char_type const* what() const BOOST_NOEXCEPT_OR_NOTHROW
     { return m_msg->c_str(); }
 
 private:
