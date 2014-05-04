@@ -1,0 +1,189 @@
+[#ref_section_runtime_configuration][section Runtime configuration]
+ 
+
+The __UTF__ supports multiple parameters that affect test module execution. To set the parameter's value you can
+either use a runtime configuration subsystem interface from within the test module initialization function or you can
+specify the value at runtime during test module invocation.
+
+The __UTF__ provides two ways to set a parameter at runtime: by specifying a command line argument and by setting an
+environment variable. The command line argument always overrides the corresponding environment variable.
+
+During test module initialization the __UTF__ parses the command line and excludes all parameters that belong to it and
+their values from the argument list. The rest of command line is forwarded to the test module initialization function
+supplied by you. The command line argument format expected by the __UTF__ is:
+
+[pre
+  --<command_line_argument_name>=<argument_value>
+]
+
+The command line argument name is case sensitive. It is required to match exactly the name in parameter specification.
+There should not be any spaces between '=' and either command line argument name or argument value.
+
+
+The corresponding environment variable name is also case sensitive and is required to exactly match the name in the
+parameter specification.
+
+All information about supported parameters is summarized below in the reference section.
+
+[include runtime_configuration.running_specific_test.qbk]
+
+
+[section Runtime parameters summary]
+Each parameter specification includes: 
+
+# the full parameter name
+# corresponding environment variable name
+# command line argument name
+# acceptable values and 
+# a long description
+
+The default value for the parameter is bold in the
+acceptable values list. All values are case sensitive and are required to exactly match the parameter specification.
+
+
+[table
+  [
+    [Command]
+    [Short description]
+  ] 
+  
+  [/ ###############################################################################################]
+  [
+    [__param_auto_start_dbg__]
+    [Automatically attach debugger in case of system failure.]
+  ]
+  
+  
+  [/ ###############################################################################################]
+  [
+    [__param_show_progress__]
+    [Makes the framework to print progress information. More details [link ref_output_progress here].]
+  ]
+  
+
+  [/ ###############################################################################################]
+  [
+    [__param_build_info__]
+    [Print build information.]
+  ]
+  
+  
+  [/ ###############################################################################################]
+  [
+    [__param_catch_system__]
+    [Catch system errors.]
+  ]
+  
+  [/ ###############################################################################################]
+  [
+    [__param_break_exec_path__]
+    [Break execution path]
+  ]    
+
+
+  [/ ###############################################################################################]
+  [
+    [__param_param_color_output__]
+    [Produce colour output]
+  ]  
+
+  [/ ###############################################################################################]
+  [
+    [__param_log_format__]
+    [Specifies the log format]
+  ]
+
+  [/ ###############################################################################################]
+  [
+    [__param_log_level__]
+    [Specifies the logging level of the __UTF__]
+  ]
+  
+  
+  [/ ###############################################################################################]
+  [
+    [__param_run_test__]
+    [Specifies which test units to run.]
+  ]
+  
+  
+  [/ ###############################################################################################]
+  [
+    [__param_output_format__]
+    [Specifies the log format and the report format.]
+  ]  
+  
+  [/ ###############################################################################################]
+  [
+    [__param_report_format__]
+    [Specifies the report format.]
+  ]
+
+  [/ ###############################################################################################]
+  [
+    [__param_result_code__]
+    [Make the framework return a result code indicating an error in the tests.]
+  ]
+  
+  [/ ###############################################################################################]
+  [
+    [__param_report_level__]
+    [The level of details carried by the __UTF__ report.]
+  ]
+  
+  [/ ###############################################################################################]
+  [
+    [__param_random__]
+    [Runs the tests in random order]
+  ]
+  
+  [/ ###############################################################################################]
+  [
+    [__param_detect_memory_leaks__]
+    [Detects memory leaks.]
+  ]
+  
+  
+  [/ ###############################################################################################]
+  [
+    [__param_use_alt_stack__]
+    [Uses an alternative stack for running tests (on supported platforms).]
+  ]
+  
+  
+  [/ ###############################################################################################]
+  [
+    [__param_detect_fp_exceptions__]
+    [Traps floating point exceptions (on supported platforms).]
+  ]
+  
+  
+  [/ ###############################################################################################]
+  [
+    [__param_log_sink__]
+    [Specifies the sink stream for logging.]
+  ]
+  
+  
+  [/ ###############################################################################################]
+  [
+    [__param_report_sink__]
+    [Specifies the sink stream for tests reports.]
+  ]
+  
+  [/ ###############################################################################################]
+  [
+    [__param_save_pattern__]
+    [Provides parameters for testing output streams.]
+  ]
+  
+  
+  
+]
+[warning There is a link to the Boost.Test debug API, never heard about]
+
+[endsect] [/ runtime parameter summary]
+
+
+
+[endsect] [/ runtime configuration]

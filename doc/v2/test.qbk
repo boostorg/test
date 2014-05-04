@@ -184,7 +184,7 @@
 
 
 
-[include runtime_configuration.qbk]
+[include runtime_configuration/runtime_configuration.qbk]
 
 [include usage_recommandations.qbk]
 [include faq.qbk]
@@ -204,6 +204,6 @@
 
 
 [/ reference sections]
-[include runtime_configuration.reference.qbk]
+[include runtime_configuration/runtime_configuration.reference.qbk]
 [include testing_tools/testing_tools_reference.qbk]
 

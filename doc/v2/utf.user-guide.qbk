@@ -21,10 +21,10 @@ In most cases to compile a test module based on the __UTF__ all you need to incl
 This header includes internally most of the other headers that contains the __UTF__ definitions. Some advanced features, 
 like the floating point comparison or the logged  expectations testing, are defined in independent headers and need to be included explicitly.
 
-[include variant_static_lib.qbk]
-[include variant_dynamic_lib.qbk]
-[include variant_single_header.qbk]
-[include variant_external_runner.qbk]
+[include compilation/variant_static_lib.qbk]
+[include compilation/variant_dynamic_lib.qbk]
+[include compilation/variant_single_header.qbk]
+[include compilation/variant_external_runner.qbk]
  
 
 [endsect] [/section:usage_variants]
