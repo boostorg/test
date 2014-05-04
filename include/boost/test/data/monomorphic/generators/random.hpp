@@ -5,7 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//!@file defines range generator
+//!@file
+//!@brief Random generator
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_GENERATORS_RANDOM_HPP_101512GER
