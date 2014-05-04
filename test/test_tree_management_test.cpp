@@ -241,6 +241,7 @@ BOOST_AUTO_TEST_CASE( automated_test_units_registration )
 
 struct A {
     A() : i(0){}
+    virtual ~A(){}
     void test_methodA1() { i++; }
     void test_methodA2() { i++; }
 
@@ -253,7 +254,7 @@ struct B : public A {
 
 struct C {
     C() : i( 0 ) {}
-
+    virtual ~C(){}
     void virtual test_method() = 0;
 
     int i; 
