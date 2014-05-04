@@ -95,7 +95,7 @@ operator new( std::size_t s ) throw(std::bad_alloc)
 //____________________________________________________________________________//
 
 inline void*
-operator new( std::size_t s, std::nothrow_t const& ) BOOST_TEST_NOEXCEPT_OR_THROW_VOID
+operator new( std::size_t s, std::nothrow_t const& ) BOOST_NOEXCEPT_OR_NOTHROW
 {
     void* res = std::malloc(s ? s : 1);
 
@@ -123,7 +123,7 @@ operator new[]( std::size_t s ) throw(std::bad_alloc)
 //____________________________________________________________________________//
 
 inline void*
-operator new[]( std::size_t s, std::nothrow_t const& ) BOOST_TEST_NOEXCEPT_OR_THROW_VOID
+operator new[]( std::size_t s, std::nothrow_t const& ) BOOST_NOEXCEPT_OR_NOTHROW
 {
     void* res = std::malloc(s ? s : 1);
 
@@ -136,7 +136,7 @@ operator new[]( std::size_t s, std::nothrow_t const& ) BOOST_TEST_NOEXCEPT_OR_TH
 //____________________________________________________________________________//
 
 inline void
-operator delete( void* p ) BOOST_TEST_NOEXCEPT_OR_THROW_VOID
+operator delete( void* p ) BOOST_NOEXCEPT_OR_NOTHROW
 {
     ::boost::itest::manager::instance().freed( p );
 
@@ -146,7 +146,7 @@ operator delete( void* p ) BOOST_TEST_NOEXCEPT_OR_THROW_VOID
 //____________________________________________________________________________//
 
 inline void
-operator delete( void* p, std::nothrow_t const& ) BOOST_TEST_NOEXCEPT_OR_THROW_VOID
+operator delete( void* p, std::nothrow_t const& ) BOOST_NOEXCEPT_OR_NOTHROW
 {
     ::boost::itest::manager::instance().freed( p );
 
@@ -156,7 +156,7 @@ operator delete( void* p, std::nothrow_t const& ) BOOST_TEST_NOEXCEPT_OR_THROW_V
 //____________________________________________________________________________//
 
 inline void
-operator delete[]( void* p ) throw()
+operator delete[]( void* p ) BOOST_NOEXCEPT_OR_NOTHROW
 {
     ::boost::itest::manager::instance().freed( p );
 
@@ -166,7 +166,7 @@ operator delete[]( void* p ) throw()
 //____________________________________________________________________________//
 
 inline void
-operator delete[]( void* p, std::nothrow_t const& ) BOOST_TEST_NOEXCEPT_OR_THROW_VOID
+operator delete[]( void* p, std::nothrow_t const& ) BOOST_NOEXCEPT_OR_NOTHROW
 {
     ::boost::itest::manager::instance().freed( p );
 

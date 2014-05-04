@@ -117,11 +117,6 @@ class type_info;
 #define BOOST_PP_VARIADICS 1
 #endif
 
-#ifdef BOOST_NO_CXX11_NOEXCEPT
-#  define BOOST_TEST_NOEXCEPT_OR_THROW_VOID throw()
-#else
-#  define BOOST_TEST_NOEXCEPT_OR_THROW_VOID noexcept
-#endif
 
 
 #endif // BOOST_TEST_CONFIG_HPP_071894GER
