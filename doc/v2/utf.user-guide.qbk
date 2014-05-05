@@ -1,5 +1,6 @@
 [section:users_guide User's guide]
 
+[/ ######################################################## ]
 [section:usage_variants The __UTF__ usage variants]
 
 The __UTF__ presents you with 4 different variants how it can be used.
@@ -25,8 +26,13 @@ like the floating point comparison or the logged  expectations testing, are defi
 [include compilation/variant_dynamic_lib.qbk]
 [include compilation/variant_single_header.qbk]
 [include compilation/variant_external_runner.qbk]
- 
 
 [endsect] [/section:usage_variants]
+
+
+[/ ######################################################## ]
+[include compilation/module_initialization.qbk]
+
+
 
 [endsect] [/section:users_guide]
