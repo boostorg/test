@@ -258,11 +258,13 @@ public:
     {
         m_custom_translators = m_custom_translators->erase( m_custom_translators, tag );
     }
+#ifndef BOOST_NO_RTTI
     template<typename ExceptionType>
     void        erase_exception_translator( boost::type<ExceptionType>* = 0 )
     {
         m_custom_translators = m_custom_translators->erase<ExceptionType>( m_custom_translators );
     }
+#endif
 
 private:
     // implementation helpers
