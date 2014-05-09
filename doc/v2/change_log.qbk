@@ -7,10 +7,9 @@
 # [ticket 4434] BOOST_AUTO_EST_CASE typos in docs
 # [ticket 8862] Boost.Test typo in documentation
 # [ticket 9179] Documentation: broken link (unable to find =const_string.hpp/const_string_test.cpp=)
+# [ticket 9272] boost::test BOOST_<level>_GT documentation bug
 # [ticket 9537] const_string_test example fails
 # [ticket 9539] Floating-point comparison algorithms aren't formatted correctly
 # [ticket 9581] Squassabia reference link gives 404 not found
-
-
 
 [endsect]
