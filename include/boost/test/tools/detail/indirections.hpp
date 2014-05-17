@@ -60,7 +60,7 @@ operator<<( assertion_evaluate_t<E> const& ae, T const& ) { return ae; }
 
 template<typename T>
 inline unit_test::lazy_ostream const&
-assertion_text( unit_test::lazy_ostream const& et, T const& m ) { return m; }
+assertion_text( unit_test::lazy_ostream const& /*et*/, T const& m ) { return m; }
 
 //____________________________________________________________________________//
 
