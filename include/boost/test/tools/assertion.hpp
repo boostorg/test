@@ -541,8 +541,8 @@ public:
 private:
     template<typename U>
     static void format_message( wrap_stringstream& ostr, U const& v )   { ostr << "[(bool)" << v << " is false]"; }
-    static void format_message( wrap_stringstream& ostr, bool v )       {}
-    static void format_message( wrap_stringstream& ostr, assertion_result const& v ) {}
+    static void format_message( wrap_stringstream& /*ostr*/, bool /*v*/ )       {}
+    static void format_message( wrap_stringstream& /*ostr*/, assertion_result const& /*v*/ ) {}
 
     // Data members
     T                           m_value;
