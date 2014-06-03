@@ -33,6 +33,7 @@ namespace unit_test {
 class BOOST_TEST_DECL progress_monitor_t : public test_observer, public singleton<progress_monitor_t> {
 public:
     /// @name Test observer interface
+    /// @{
     virtual void    test_start( counter_t test_cases_amount );
     virtual void    test_aborted();
 
@@ -43,7 +44,9 @@ public:
     /// @}
     
     /// @name Configuration
+    /// @{
     void            set_stream( std::ostream& );
+    /// @}
 
 private:
     BOOST_TEST_SINGLETON_CONS( progress_monitor_t )

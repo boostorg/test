@@ -10,6 +10,35 @@ using quickbook ;
 ########################################################################
 # Standalone HTML documentation
 
+import doxygen ;
+
+doxygen autodoc_execution_monitor
+    :
+         [ glob $(BOOST_ROOT)/libs/test/include/boost/test/*.hpp ]
+    :
+        <doxygen:param>EXTRACT_ALL=YES
+        <doxygen:param>"PREDEFINED=\"BOOST_DOXYGEN_INVOKED\" \\
+                                   \"BOOST_DEDUCED_TYPENAME=typename\" \\
+                                   "
+        <doxygen:param>HIDE_UNDOC_MEMBERS=NO
+        <doxygen:param>HIDE_UNDOC_CLASSES=NO
+        <doxygen:param>INLINE_INHERITED_MEMB=YES
+        <doxygen:param>EXTRACT_PRIVATE=NO
+        <doxygen:param>ENABLE_PREPROCESSING=YES
+        <doxygen:param>MACRO_EXPANSION=YES
+        <doxygen:param>EXPAND_ONLY_PREDEF=YES
+        <doxygen:param>SEARCH_INCLUDES=YES
+        <doxygen:param>INCLUDE_PATH=$(BOOST_ROOT)/libs/test/include
+        <doxygen:param>EXAMPLE_PATH=$(BOOST_ROOT)/libs/test/doc/v2/examples
+        <doxygen:param>BRIEF_MEMBER_DESC=YES
+        <doxygen:param>REPEAT_BRIEF=YES
+        <doxygen:param>ALWAYS_DETAILED_SEC=YES
+        <doxygen:param>MULTILINE_CPP_IS_BRIEF=YES
+    ;
+
+
+
+
 xml standalone_doc
   :
     test.qbk
@@ -38,6 +67,7 @@ boostbook standalone
     <xsl:param>toc.section.depth=3
     <xsl:param>toc.max.depth=3
     <xsl:param>generate.section.toc.level=10
+    <dependency>autodoc_execution_monitor
     <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/test/doc/html
   ;
 
@@ -77,6 +107,7 @@ boostbook test
     <xsl:param>toc.max.depth=1
     <xsl:param>generate.section.toc.level=10
     <xsl:param>root.filename=boost_test
+    <dependency>autodoc_execution_monitor
     <format>pdf:<xsl:param>img.src.path=$(images_location)/
     <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/test/doc/html
   :
