@@ -5,7 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file progress_monitor.hpp @brief defines simple text based progress monitor
+/// @file 
+/// @brief defines simple text based progress monitor
 // ***************************************************************************
 
 #ifndef BOOST_TEST_PROGRESS_MONITOR_HPP_020105GER

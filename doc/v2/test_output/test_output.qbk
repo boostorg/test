@@ -276,6 +276,9 @@ code passes through.
 
 [include progression_display.qbk]
 
+[section Reference]
+[headerref boost/test/output/compiler_log_formatter.hpp]
+[endsect]
 
 [endsect] 
 

@@ -1,0 +1,285 @@
+<?xml version="1.0" standalone="yes"?>
+<library-reference><header name="boost/test/debug.hpp">
+<para>defines portable debug interfaces </para><para>Intended to standardize interface of programs with debuggers </para><namespace name="boost">
+<namespace name="debug">
+<struct name="dbg_startup_info"><purpose>Collection of data, which is used by debugger starter routine. </purpose><data-member name="pid"><type>long</type><purpose>pid of a program to attach to </purpose></data-member>
+<data-member name="break_or_continue"><type>bool</type><purpose>what to do after debugger is attached </purpose></data-member>
+<data-member name="binary_path"><type>unit_test::const_string</type><purpose>path to executable for current process </purpose></data-member>
+<data-member name="display"><type>unit_test::const_string</type><purpose>if debugger has a GUI, which display to use (on UNIX) </purpose></data-member>
+<data-member name="init_done_lock"><type>unit_test::const_string</type><purpose>path to a uniquly named lock file, which is used to pause current application while debugger is being initialized </purpose></data-member>
+</struct><typedef name="dbg_starter"><purpose>Signature of debugger starter routine. Takes an instance of dbg_startup_into as only argument. </purpose><type>boost::function&lt; void(<classname>dbg_startup_info</classname> const &amp;)&gt;</type></typedef>
+<function name="under_debugger"><type>bool</type><purpose>Checks if programs runs under debugger. </purpose><description><para>
+</para></description><returns><para>true if current process is under debugger. False otherwise </para></returns></function>
+<function name="debugger_break"><type>void</type><purpose>Cause program to break execution in debugger at call point. </purpose></function>
+<function name="set_debugger"><type>std::string</type><parameter name="dbg_id"><paramtype>unit_test::const_string</paramtype><description><para>Unique id for debugger configuration (for example, gdb) </para></description></parameter><parameter name="s"><paramtype>dbg_starter</paramtype><default>dbg_starter()</default><description><para>Optional starter routine for selected configuration (use only you want to define your own configuration) </para></description></parameter><purpose>Specifies which debugger to use when attaching and optionally what routine to use to start that debugger. </purpose><description><para>There are many different debuggers avaialable for different platforms. Some of them also can be used in a different setups/configuratins. For example, gdb can be used in plain text mode, inside ddd, inside (x)emacs or in a separate xterm window. Boost.Test identifies each configuration with unique string. Also different debuggers configurations require different routines which is specifically tailored to start that debugger configuration. Boost.Test comes with set of predefined configuration names and corresponding routines for these configurations:<itemizedlist>
+<listitem><para>TODO</para></listitem></itemizedlist>
+</para><para>You can use this routine to select which one of the predefined debugger configurations to use in which case you do not need to provide starter routine (the one provided by Boost.Test will be used). You can also use this routine to select your own debugger by providing unique configuration id and starter routine for this configuration.</para><para>
+
+</para></description><returns><para>Id of previosly selected debugger configuration </para></returns></function>
+<function name="attach_debugger"><type>bool</type><parameter name="break_or_continue"><paramtype>bool</paramtype><default>true</default><description><para>tells what we wan to do aftr the debugger is attached. If true - process execution breaks in the point in invocation of this function. Otherwise execution continues, but now it is under the debugger </para></description></parameter><purpose>Attaches debugger to the current process. </purpose><description><para>Using currently selected debugger, this routine attempts to attach the debugger to this process. 
+
+</para></description><returns><para>true if debugger successfully attached. False otherwise </para></returns></function>
+<function name="detect_memory_leaks"><type>void</type><parameter name="on_off"><paramtype>bool</paramtype><description><para>boolean switch </para></description></parameter><parameter name="report_file"><paramtype>unit_test::const_string</paramtype><default>unit_test::const_string()</default><description><para>file, where the report should be directed to </para></description></parameter><purpose>Switches on/off memory leaks detection. </purpose><description><para>On platforms where memory leak detection is possible inside of running application (at the moment this is only Windows family) you can switch this feature on and off using this interface. In addition you can specify the name of the file to write a report into. Otherwise the report is going to be generated in standard error stream. 
+</para></description></function>
+<function name="break_memory_alloc"><type>void</type><parameter name="mem_alloc_order_num"><paramtype>long</paramtype><description><para>Specific memory allocation number </para></description></parameter><purpose>Causes program to break execution in debugger at specific allocation point. </purpose><description><para>On some platforms/memory managers (at the moment only on Windows/Visual Studio) one can tell a C Runtime to break on specific memory allocation. This can be used in combination with memory leak detection (which reports leaked memory allocation number) to locate the place where leak initiated. 
+</para></description></function>
+</namespace>
+</namespace>
+</header>
+<header name="boost/test/debug_config.hpp">
+<para>user's config for Boost.Test debugging support </para><para>This file is intended to be edited by end user to specify varios macros, which configure debugger interface Alterntively you can set these parameters in your own sources/makefiles </para></header>
+<header name="boost/test/execution_monitor.hpp">
+<para>Defines public interface of the Execution Monitor and related classes. </para><namespace name="boost">
+<class name="execution_exception"><purpose>This class is used to report any kind of an failure during execution of a monitored function inside of <classname alt="boost::execution_monitor">execution_monitor</classname>. </purpose><description><para>The instance of this class is thrown out of execution_monitor::execute invocation when failure is detected. Regardless of a kind of failure occured the instance will provide a uniform way to catch and report it.</para><para>One important design rationale for this class is that we should be ready to work after fatal memory corruptions or out of memory conditions. To facilitate this class never allocates any memory and assumes that strings it refers to are either some constants or live in a some kind of persistent (preallocated) memory. </para></description><struct name="location"><purpose>Simple model for the location of failure in a source code. </purpose><data-member name="m_file_name"><type>const_string</type><purpose>File name. </purpose></data-member>
+<data-member name="m_line_num"><type>size_t</type><purpose>Line number. </purpose></data-member>
+<data-member name="m_function"><type>const_string</type><purpose>Function name. </purpose></data-member>
+<method-group name="public member functions">
+</method-group>
+<constructor specifiers="explicit"><parameter name="file_name"><paramtype>char const *</paramtype><default>0</default></parameter><parameter name="line_num"><paramtype>size_t</paramtype><default>0</default></parameter><parameter name="func"><paramtype>char const *</paramtype><default>0</default></parameter></constructor>
+</struct><constructor><parameter name="ec"><paramtype>error_code</paramtype><description><para>error code </para></description></parameter><parameter name="what_msg"><paramtype>const_string</paramtype><description><para>error message </para></description></parameter><parameter name="location"><paramtype><classname>location</classname> const &amp;</paramtype><description><para>error location </para></description></parameter><purpose>Constructs instance based on message, location and error code. </purpose><description><para>
+</para></description></constructor>
+<enum name="error_code"><enumvalue name="no_error"><default>= 0</default><purpose>for completeness only; never returned </purpose></enumvalue><enumvalue name="user_error"><default>= 200</default><purpose>user reported non-fatal error </purpose></enumvalue><enumvalue name="cpp_exception_error"><default>= 205</default><purpose>see note (1) above </purpose></enumvalue><enumvalue name="system_error"><default>= 210</default><purpose>see note (2) above </purpose></enumvalue><enumvalue name="timeout_error"><default>= 215</default><purpose>only detectable on certain platforms </purpose></enumvalue><enumvalue name="user_fatal_error"><default>= 220</default><purpose>user reported fatal error </purpose></enumvalue><enumvalue name="system_fatal_error"><default>= 225</default><purpose>see note (2) above </purpose></enumvalue><purpose>These values are sometimes used as program return codes. The particular values have been chosen to avoid conflicts with commonly used program return codes: values &lt; 100 are often user assigned, values &gt; 255 are sometimes used to report system errors. Gaps in values allow for orderly expansion. </purpose><description><para><note><para>(1) Only uncaught C++ exceptions are treated as errors. If a function catches a C++ exception, it never reaches the <classname alt="boost::execution_monitor">execution_monitor</classname>.</para></note>
+The implementation decides what is a system_fatal_error and what is just a system_exception. Fatal errors are so likely to have corrupted machine state (like a stack overflow or addressing exception) that it is unreasonable to continue execution.</para><para><note><para>(2) These errors include Unix signals and Windows structured exceptions. They are often initiated by hardware traps. </para></note>
+</para></description></enum>
+</class><class name="execution_monitor"><purpose>Function execution monitor. </purpose><description><para>This class is used to uniformly detect and report an occurrence of several types of signals and exceptions, reducing various errors to a uniform <classname alt="boost::execution_exception">execution_exception</classname> that is returned to a caller.</para><para>The executiom_monitor behavior can be customised through a set of public parameters (properties) associated with the <classname alt="boost::execution_monitor">execution_monitor</classname> instance. All parameters are implemented as public unit_test::readwrite_property data members of the class <classname alt="boost::execution_monitor">execution_monitor</classname>. </para></description><constructor><purpose>Default constructor initializes all execution monitor properties. </purpose></constructor>
+<data-member name="p_catch_system_errors"><type>unit_test::readwrite_property&lt; bool &gt;</type><purpose>Should monitor catch system errors. </purpose><description><para>The <emphasis>p_catch_system_errors</emphasis> property is a boolean flag (default value is true) specifying whether or not <classname alt="boost::execution_monitor">execution_monitor</classname> should trap system errors/system level exceptions/signals, which would cause program to crash in a regular case (wihout <classname alt="boost::execution_monitor">execution_monitor</classname>). Set this property to false, for example, if you wish to force coredump file creation. The Unit Test Framework provides a runtime parameter <ndash/>catch_system_errors=yes to alter the behavior in monitored test cases. </para></description></data-member>
+<data-member name="p_auto_start_dbg"><type>unit_test::readwrite_property&lt; bool &gt;</type><purpose>Should monitor try to attach debugger in case of caught system error. </purpose><description><para>The <emphasis>p_auto_start_dbg</emphasis> property is a boolean flag (default value is false) specifying whether or not <classname alt="boost::execution_monitor">execution_monitor</classname> should try to attach debugger in case system error is caught. </para></description></data-member>
+<data-member name="p_timeout"><type>unit_test::readwrite_property&lt; int &gt;</type><purpose>Specifies the seconds that elapse before a timer_error occurs. </purpose><description><para>The <emphasis>p_timeout</emphasis> property is an integer timeout (in seconds) for monitored function execution. Use this parameter to monitor code with possible deadlocks or indefinite loops. This feature is only available for some operating systems (not yet Microsoft Windows). </para></description></data-member>
+<data-member name="p_use_alt_stack"><type>unit_test::readwrite_property&lt; bool &gt;</type><purpose>Should monitor use alternative stack for the signal catching. </purpose><description><para>The <emphasis>p_use_alt_stack</emphasis> property is a boolean flag (default value is false) specifying whether or not <classname alt="boost::execution_monitor">execution_monitor</classname> should use an alternative stack for the sigaction based signal catching. When enabled the signals are delivered to the <classname alt="boost::execution_monitor">execution_monitor</classname> on a stack different from current execution stack, which is safer in case if it is corrupted by monitored function. For more details on alternative stack handling see appropriate manuals. </para></description></data-member>
+<data-member name="p_detect_fp_exceptions"><type>unit_test::readwrite_property&lt; unsigned &gt;</type><purpose>Should monitor try to detect hardware floating point exceptions (!= 0), and which specific exception to catch. </purpose><description><para>The <emphasis>p_detect_fp_exceptions</emphasis> property is a boolean flag (default value is false) specifying whether or not <classname alt="boost::execution_monitor">execution_monitor</classname> should install hardware traps for the floating point exception on platforms where it's supported. </para></description></data-member>
+<method-group name="private member functions">
+<method name="catch_signals"><type>int</type><parameter name="F"><paramtype>boost::function&lt; int()&gt; const &amp;</paramtype></parameter></method>
+</method-group>
+</class><class name="execution_aborted"><purpose>This is a trivial default constructible class. Use it to report graceful abortion of a monitored function execution. </purpose></class><class name="system_error"><data-member name="p_errno"><type>unit_test::readonly_property&lt; long &gt;</type></data-member>
+<data-member name="p_failed_exp"><type>unit_test::readonly_property&lt; char const * &gt;</type></data-member>
+<method-group name="public member functions">
+</method-group>
+<constructor specifiers="explicit"><parameter name="exp"><paramtype>char const *</paramtype></parameter></constructor>
+</class><namespace name="fpe">
+<enum name="masks"><enumvalue name="BOOST_FPE_OFF"><default>= 0</default></enumvalue><enumvalue name="BOOST_FPE_DIVBYZERO"><default>= FE_DIVBYZERO</default></enumvalue><enumvalue name="BOOST_FPE_INEXACT"><default>= FE_INEXACT</default></enumvalue><enumvalue name="BOOST_FPE_INVALID"><default>= FE_INVALID</default></enumvalue><enumvalue name="BOOST_FPE_OVERFLOW"><default>= FE_OVERFLOW</default></enumvalue><enumvalue name="BOOST_FPE_UNDERFLOW"><default>= FE_UNDERFLOW</default></enumvalue><enumvalue name="BOOST_FPE_ALL"><default>= FE_ALL_EXCEPT</default></enumvalue><enumvalue name="BOOST_FPE_INV"><default>= BOOST_FPE_ALL+1</default></enumvalue></enum>
+<function name="enable"><type>unsigned</type><parameter name="mask"><paramtype>unsigned</paramtype></parameter></function>
+<function name="disable"><type>unsigned</type><parameter name="mask"><paramtype>unsigned</paramtype></parameter></function>
+</namespace>
+</namespace>
+<macro name="BOOST_TEST_SYS_ASSERT" kind="functionlike"><macro-parameter name="exp"/></macro>
+</header>
+<header name="boost/test/framework.hpp">
+<para>Defines Unit Test Framework monostate interfaces. </para><namespace name="boost">
+<namespace name="unit_test">
+<namespace name="framework">
+<struct name="context_generator"><method-group name="public member functions">
+<method name="is_empty" cv="const"><type>bool</type><purpose>Is there any context? </purpose></method>
+<method name="next" cv="const"><type>const_string</type><purpose>Give me next frame; empty - last frame. </purpose></method>
+</method-group>
+<constructor/>
+</struct><struct name="internal_error"><inherit access="public">runtime_error</inherit><purpose>This exception type is used to report internal Boost.Test framework errors. </purpose><method-group name="public member functions">
+</method-group>
+<constructor><parameter name="m"><paramtype>const_string</paramtype></parameter></constructor>
+</struct><struct name="setup_error"><inherit access="public">runtime_error</inherit><purpose>This exception type is used to report test module setup errors. </purpose><method-group name="public member functions">
+</method-group>
+<constructor><parameter name="m"><paramtype>const_string</paramtype></parameter></constructor>
+</struct><struct name="test_being_aborted"/><struct name="nothing_to_test"/><namespace name="impl">
+<function name="apply_filters"><type>void</type><parameter name=""><paramtype>test_unit_id</paramtype></parameter></function>
+</namespace>
+<function name="init"><type>void</type><parameter name="init_func"><paramtype>init_unit_test_func</paramtype><description><para>test module initialization routine </para></description></parameter><parameter name="argc"><paramtype>int</paramtype><description><para>command line arguments collection </para></description></parameter><parameter name="argv"><paramtype>char *</paramtype></parameter><purpose>This funcion performs initialization of the framework monostate. </purpose><description><para>It needs to be called every time before the test is started. 
+</para></description></function>
+<function name="is_initialized"><type>bool</type><purpose>This function tells if the framework monostate is initialized. </purpose></function>
+<function name="shutdown"><type>void</type><purpose>This function shuts down the framework and clears up its monostate. </purpose><description><para>It needs to be at the very end of test module execution </para></description></function>
+<function name="current_auto_test_suite"><type>test_suite &amp;</type><parameter name="ts"><paramtype>test_suite *</paramtype><default>0</default><description><para>test suite to push back to the queue </para></description></parameter><parameter name="push_or_pop"><paramtype>bool</paramtype><default>true</default><description><para>should we push ts to the queue or pop leaf test suite instead </para></description></parameter><purpose>Provides both read and write access to current "leaf" auto test suite during the test unit registration phase. </purpose><description><para>During auto-registration phase the framework maintain a FIFO queue of test units being registered. New test units become children of the current "leaf" test suite and if this is test suite it is pushed back into queue and becomes a new leaf. When test suite registration is completed, a test suite is poped from the back of the queue. Only automatically registered test suites should be added to this queue. Master test suite is always a zero element in this queue, so if no other test suites are registered all test cases are added to master test suite. This function facilitates all three possible actions:<itemizedlist>
+<listitem><para>if no argument are provided it returns the current queue leaf test suite</para></listitem><listitem><para>if test suite is provided and no second argument are set, test suite is added to the queue</para></listitem><listitem><para>if no test suite are provided and last argument is false, the semantic of this function is similar to queue pop: last element is popped from the queue 
+
+</para></listitem></itemizedlist>
+</para></description></function>
+<function name="register_test_unit"><type>void</type><parameter name="tc"><paramtype>test_case *</paramtype><description><para>test case to register </para></description></parameter><purpose>This function add new test case into the global collection of test units the framework aware of. </purpose><description><para>This function also assignes unique test unit id for every test case. Later on one can use this id to locate the test case if necessary. This is the way for the framework to maintain weak references between test units. 
+</para></description></function>
+<function name="register_test_unit"><type>void</type><parameter name="ts"><paramtype>test_suite *</paramtype><description><para>test suite to register </para></description></parameter><purpose>This function add new test suite into the global collection of test units the framework aware of. </purpose><description><para>This function also assignes unique test unit id for every test suite. Later on one can use this id to locate the test case if necessary. This is the way for the framework to maintain weak references between test units. 
+</para></description></function>
+<function name="deregister_test_unit"><type>void</type><parameter name="tu"><paramtype>test_unit *</paramtype><description><para>test unit to deregister </para></description></parameter><purpose>This function removes the test unit from the collection of known test units and destroys the test unit object. </purpose><description><para>This function also assignes unique test unit id for every test case. LAter on one can use this id to located the test case if necessary. This is the way for the framework to maintain weak references between test units. 
+</para></description></function>
+<function name="clear"><type>void</type><purpose>Afer this call the framework can be reinitialized to perform a second test run during the same program lifetime. </purpose></function>
+<function name="register_observer"><type>void</type><parameter name="to"><paramtype>test_observer &amp;</paramtype><description><para>test observer object to add </para></description></parameter><purpose>Observer lifetime should exceed the the testing execution timeframe. </purpose><description><para>
+</para></description></function>
+<function name="deregister_observer"><type>void</type><parameter name="to"><paramtype>test_observer &amp;</paramtype><description><para>test observer object to exclude </para></description></parameter><purpose>Excldes the observer object form the framework's list of test objecrvers. </purpose><description><para>
+</para></description></function>
+<function name="add_context"><type>int</type><parameter name="context_descr"><paramtype>lazy_ostream const &amp;</paramtype><description><para>context frame message </para></description></parameter><parameter name="sticky"><paramtype>bool</paramtype><description><para>is this sticky frame or not </para></description></parameter><purpose>Records context frame message. </purpose><description><para>Some context frames are sticky - they can only explicetly cleared by specifying context id. Other (non sticky) context frames cleared after every assertion. 
+
+</para></description><returns><para>id of the newly created frame </para></returns></function>
+<function name="clear_context"><type>void</type><parameter name="context_id"><paramtype>int</paramtype><default>-1</default></parameter><purpose>Erases context frame (when test exits context scope) </purpose><description><para>If context_id is passed clears that specific context frame identified by this id, otherwise clears all non sticky contexts </para></description></function>
+<function name="get_context"><type><classname>context_generator</classname></type><purpose>Produces an instance of small "delegate" object, which facilitates access to collected context. </purpose></function>
+<function name="master_test_suite"><type>master_test_suite_t &amp;</type><purpose>There is only only master test suite per test module. </purpose><description><para>
+</para></description><returns><para>a reference the master test suite instance </para></returns></function>
+<function name="current_test_case"><type>test_case const &amp;</type><purpose>This function provides an access to the test case currently being executed. </purpose><description><para>This function is only valid during test execution phase <para><emphasis role="bold">See Also:</emphasis><para>current_test_case_id </para></para>
+</para></description></function>
+<function name="current_test_case_id"><type>test_unit_id</type><purpose>This function provides an access to an id of the test case currently being executed. </purpose><description><para>This function safer than current_test_case, cause if wont throw if no test case is being executed. <para><emphasis role="bold">See Also:</emphasis><para>current_test_case </para></para>
+</para></description></function>
+<function name="get"><type>test_unit &amp;</type><parameter name="tu_id"><paramtype>test_unit_id</paramtype><description><para>id of a test unit to locate </para></description></parameter><parameter name="tu_type"><paramtype>test_unit_type</paramtype><description><para>type of a test unit to locate </para></description></parameter><purpose>This function provides access to a test unit by id and type combination. It will throw if no test unit located. </purpose><description><para>
+
+</para></description><returns><para>located test unit </para></returns></function>
+<function name="get"><type>UnitType &amp;</type><template>
+          <template-type-parameter name="UnitType"><purpose><para>compile time type of test unit to get (test_suite or test_case) </para></purpose></template-type-parameter>
+        </template><parameter name="id"><paramtype>test_unit_id</paramtype><description><para>id of test unit to get </para></description></parameter><purpose>This function template provides access to a typed test unit by id. </purpose><description><para>It will throw if you specify incorrect test unit type 
+
+</para></description></function>
+<function name="run"><type>void</type><parameter name="tu"><paramtype>test_unit_id</paramtype><default>INV_TEST_UNIT_ID</default><description><para>Optional id of the test unit or test unit itself from which the test is started. If absent, master test suite is used </para></description></parameter><parameter name="continue_test"><paramtype>bool</paramtype><default>true</default><description><para>true == continue test if it was already started, false == restart the test from scratch regardless </para></description></parameter><purpose>Initiates test execution. </purpose><description><para>This function is used to start the test execution from a specific "root" test unit. If no root provided, test is started from master test suite. This second argument facilitates an ability of the test cases to start some other test units (primirilly used internally for self testing) 
+</para></description></function>
+<function name="run"><type>void</type><parameter name="tu"><paramtype>test_unit const *</paramtype></parameter><parameter name="continue_test"><paramtype>bool</paramtype><default>true</default></parameter><purpose>Initiates test execution. Same as other overload. </purpose></function>
+<function name="assertion_result"><type>void</type><parameter name="ar"><paramtype>unit_test::assertion_result</paramtype></parameter></function>
+<function name="exception_caught"><type>void</type><parameter name=""><paramtype><classname>execution_exception</classname> const &amp;</paramtype></parameter><purpose>Reports uncaught exception to all test observers. </purpose></function>
+<function name="test_unit_aborted"><type>void</type><parameter name=""><paramtype>test_unit const &amp;</paramtype></parameter><purpose>Reports aborted test unit to all test observers. </purpose></function>
+</namespace>
+<typedef name="init_unit_test_func"><purpose>Test module initialization routine signature. </purpose><description><para>Different depending on whether BOOST_TEST_ALTERNATIVE_INIT_API is defined or not </para></description><type>test_suite *(*</type></typedef>
+
+
+
+</namespace>
+</namespace>
+<macro name="BOOST_TEST_SETUP_ASSERT" kind="functionlike"><macro-parameter name="cond"/><macro-parameter name="msg"/></macro>
+</header>
+<header name="boost/test/output/compiler_log_formatter.hpp">
+<namespace name="boost">
+<namespace name="unit_test">
+<namespace name="output">
+<class name="compiler_log_formatter"><inherit access="public">unit_test_log_formatter</inherit><method-group name="public member functions">
+<method name="log_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="test_cases_amount"><paramtype>counter_t</paramtype></parameter></method>
+<method name="log_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="log_build_info"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="test_unit_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="tu"><paramtype>test_unit const &amp;</paramtype></parameter></method>
+<method name="test_unit_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="tu"><paramtype>test_unit const &amp;</paramtype></parameter><parameter name="elapsed"><paramtype>unsigned long</paramtype></parameter></method>
+<method name="test_unit_skipped"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="tu"><paramtype>test_unit const &amp;</paramtype></parameter></method>
+<method name="log_exception_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name=""><paramtype>log_checkpoint_data const &amp;</paramtype></parameter><parameter name="ex"><paramtype><classname>execution_exception</classname> const &amp;</paramtype></parameter></method>
+<method name="log_exception_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="log_entry_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name=""><paramtype>log_entry_data const &amp;</paramtype></parameter><parameter name="let"><paramtype>log_entry_types</paramtype></parameter></method>
+<method name="log_entry_value"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="value"><paramtype>const_string</paramtype></parameter></method>
+<method name="log_entry_value"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="value"><paramtype>lazy_ostream const &amp;</paramtype></parameter></method>
+<method name="log_entry_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="entry_context_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="log_entry_context"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name=""><paramtype>const_string</paramtype></parameter></method>
+<method name="entry_context_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
+</method-group>
+<method-group name="protected member functions">
+<method name="print_prefix" specifiers="virtual"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="file"><paramtype>const_string</paramtype></parameter><parameter name="line"><paramtype>std::size_t</paramtype></parameter></method>
+</method-group>
+</class></namespace>
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/test/output/plain_report_formatter.hpp">
+<namespace name="boost">
+<namespace name="unit_test">
+<namespace name="output">
+<class name="plain_report_formatter"><inherit access="public">format</inherit><method-group name="public member functions">
+<method name="results_report_start"><type>void</type><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="results_report_finish"><type>void</type><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="test_unit_report_start"><type>void</type><parameter name=""><paramtype>test_unit const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="test_unit_report_finish"><type>void</type><parameter name=""><paramtype>test_unit const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="do_confirmation_report"><type>void</type><parameter name=""><paramtype>test_unit const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+</method-group>
+</class></namespace>
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/test/output/xml_log_formatter.hpp">
+<namespace name="boost">
+<namespace name="unit_test">
+<namespace name="output">
+<class name="xml_log_formatter"><inherit access="public">unit_test_log_formatter</inherit><method-group name="public member functions">
+<method name="log_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="test_cases_amount"><paramtype>counter_t</paramtype></parameter></method>
+<method name="log_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="log_build_info"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="test_unit_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="tu"><paramtype>test_unit const &amp;</paramtype></parameter></method>
+<method name="test_unit_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="tu"><paramtype>test_unit const &amp;</paramtype></parameter><parameter name="elapsed"><paramtype>unsigned long</paramtype></parameter></method>
+<method name="test_unit_skipped"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="tu"><paramtype>test_unit const &amp;</paramtype></parameter></method>
+<method name="log_exception_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name=""><paramtype>log_checkpoint_data const &amp;</paramtype></parameter><parameter name="ex"><paramtype><classname>execution_exception</classname> const &amp;</paramtype></parameter></method>
+<method name="log_exception_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="log_entry_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name=""><paramtype>log_entry_data const &amp;</paramtype></parameter><parameter name="let"><paramtype>log_entry_types</paramtype></parameter></method>
+<method name="log_entry_value"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="value"><paramtype>const_string</paramtype></parameter></method>
+<method name="log_entry_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="entry_context_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="log_entry_context"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name=""><paramtype>const_string</paramtype></parameter></method>
+<method name="entry_context_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
+</method-group>
+</class></namespace>
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/test/output/xml_report_formatter.hpp">
+<namespace name="boost">
+<namespace name="unit_test">
+<namespace name="output">
+<class name="xml_report_formatter"><inherit access="public">format</inherit><method-group name="public member functions">
+<method name="results_report_start"><type>void</type><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="results_report_finish"><type>void</type><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="test_unit_report_start"><type>void</type><parameter name=""><paramtype>test_unit const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="test_unit_report_finish"><type>void</type><parameter name=""><paramtype>test_unit const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="do_confirmation_report"><type>void</type><parameter name=""><paramtype>test_unit const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+</method-group>
+</class></namespace>
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/test/parameterized_test.hpp">
+<namespace name="boost">
+<namespace name="unit_test">
+<function name="make_test_case"><type><emphasis>unspecified</emphasis></type><template>
+          <template-type-parameter name="ParamType"/>
+          <template-type-parameter name="ParamIter"/>
+        </template><parameter name="test_func"><paramtype>boost::function&lt; void(ParamType)&gt; const &amp;</paramtype></parameter><parameter name="tc_name"><paramtype>const_string</paramtype></parameter><parameter name="tc_file"><paramtype>const_string</paramtype></parameter><parameter name="tc_line"><paramtype>std::size_t</paramtype></parameter><parameter name="par_begin"><paramtype>ParamIter</paramtype></parameter><parameter name="par_end"><paramtype>ParamIter</paramtype></parameter></function>
+<function name="make_test_case"><type><emphasis>unspecified</emphasis></type><template>
+          <template-type-parameter name="ParamType"/>
+          <template-type-parameter name="ParamIter"/>
+        </template><parameter name="test_func"><paramtype>void(*)(ParamType)</paramtype></parameter><parameter name="tc_name"><paramtype>const_string</paramtype></parameter><parameter name="tc_file"><paramtype>const_string</paramtype></parameter><parameter name="tc_line"><paramtype>std::size_t</paramtype></parameter><parameter name="par_begin"><paramtype>ParamIter</paramtype></parameter><parameter name="par_end"><paramtype>ParamIter</paramtype></parameter></function>
+<function name="make_test_case"><type><emphasis>unspecified</emphasis></type><template>
+          <template-type-parameter name="UserTestCase"/>
+          <template-type-parameter name="ParamType"/>
+          <template-type-parameter name="ParamIter"/>
+        </template><parameter name="test_method"><paramtype>void(UserTestCase::*)(ParamType)</paramtype></parameter><parameter name="tc_name"><paramtype>const_string</paramtype></parameter><parameter name="tc_file"><paramtype>const_string</paramtype></parameter><parameter name="tc_line"><paramtype>std::size_t</paramtype></parameter><parameter name="user_test_case"><paramtype>boost::shared_ptr&lt; UserTestCase &gt; const &amp;</paramtype></parameter><parameter name="par_begin"><paramtype>ParamIter</paramtype></parameter><parameter name="par_end"><paramtype>ParamIter</paramtype></parameter></function>
+</namespace>
+</namespace>
+<macro name="BOOST_PARAM_TEST_CASE" kind="functionlike"><macro-parameter name="function"/><macro-parameter name="begin"/><macro-parameter name="end"/></macro>
+<macro name="BOOST_PARAM_CLASS_TEST_CASE" kind="functionlike"><macro-parameter name="function"/><macro-parameter name="tc_instance"/><macro-parameter name="begin"/><macro-parameter name="end"/></macro>
+</header>
+<header name="boost/test/progress_monitor.hpp">
+<para>defines simple text based progress monitor </para><namespace name="boost">
+<namespace name="unit_test">
+<class name="progress_monitor_t"><inherit access="public">test_observer</inherit><inherit access="public">singleton&lt; progress_monitor_t &gt;</inherit><purpose>This class implements test observer interface and updates test progress as test units finish or get aborted. </purpose></class>
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/test/tools/assertion_result.hpp">
+<namespace name="boost">
+<namespace name="test_tools">
+<class name="assertion_result"><purpose>Type used for predicate assertions. </purpose><struct name="dummy"><method-group name="public member functions">
+<method name="nonnull"><type>void</type></method>
+</method-group>
+</struct><method-group name="public member functions">
+<method name="operator!" cv="const"><type>bool</type></method>
+<method name="conversion-operator" cv="const"><type>safe_bool</type></method>
+<method name="BOOST_READONLY_PROPERTY"><type/><parameter name=""><paramtype>bool</paramtype></parameter><parameter name=""><paramtype>(<classname>assertion_result</classname>)</paramtype></parameter></method>
+<method name="has_empty_message" cv="const"><type>bool</type></method>
+<method name="message"><type>wrap_stringstream &amp;</type></method>
+<method name="message" cv="const"><type>const_string</type></method>
+</method-group>
+<constructor><parameter name="pv_"><paramtype>bool</paramtype></parameter></constructor>
+<constructor><template>
+          <template-type-parameter name="BoolConvertable"/>
+        </template><parameter name="pv_"><paramtype>BoolConvertable const &amp;</paramtype></parameter></constructor>
+<copy-assignment><type>void</type><parameter name="pv_"><paramtype>bool</paramtype></parameter></copy-assignment>
+</class><typedef name="predicate_result"><type><classname>assertion_result</classname></type></typedef>
+</namespace>
+</namespace>
+</header>
+</library-reference>

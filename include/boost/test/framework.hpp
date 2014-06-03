@@ -52,31 +52,33 @@ typedef test_suite* (*init_unit_test_func)( int, char* [] );
 namespace framework {
 
 /// @name Unit Test Framework initialization and shutdown
+/// @{
 
-/// This funcion performs initialization of the framework monostate. 
-
+/// @brief This funcion performs initialization of the framework monostate. 
+///
 /// It needs to be called every time before the test is started.
 /// @param[in] init_func test module initialization routine
 /// @param[in] argc,argv command line arguments collection
 BOOST_TEST_DECL void    init( init_unit_test_func init_func, int argc, char* argv[] );
 
-/// This function tells if the framework monostate is initailized
+/// This function tells if the framework monostate is initialized
 BOOST_TEST_DECL bool    is_initialized();
 
 /// This function shuts down the framework and clears up its monostate.
-
+///
 /// It needs to be at the very end of test module execution
 BOOST_TEST_DECL void    shutdown();
 /// @}
 
 /// @name Test unit registration
+/// @{
 
 /// Provides both read and write access to current "leaf" auto test suite during the test unit registration phase.
-
-/// During auto-registration phase the framework maintain a FIFO quiue of test units being registered. New test units become children 
+///
+/// During auto-registration phase the framework maintain a FIFO queue of test units being registered. New test units become children 
 /// of the current "leaf" test suite and if this is test suite it is pushed back into queue and becomes a new leaf. 
-/// When test suite registration is competed test suite is poped from the back of the queue. Only automatically registered test suites
-/// should be added to this queue. MAster test suite is always a zero element in this queue, so if no other test suites are registered
+/// When test suite registration is completed, a test suite is poped from the back of the queue. Only automatically registered test suites
+/// should be added to this queue. Master test suite is always a zero element in this queue, so if no other test suites are registered
 /// all test cases are added to master test suite.
 
 /// This function facilitates all three possible actions:
@@ -116,7 +118,7 @@ BOOST_TEST_DECL void    clear();
 /// @}
 
 /// @name Test observer registration
-
+/// @{
 /// Adds new test execution observer object into the framework's list of test observers.
 
 /// Observer lifetime should exceed the the testing execution timeframe
@@ -130,7 +132,7 @@ BOOST_TEST_DECL void    deregister_observer( test_observer& to );
 /// @}
 
 /// @name Assertion/uncaught exception context support
-
+/// @{
 /// Context accessor
 struct BOOST_TEST_DECL context_generator {
     context_generator() : m_curr_frame( 0 ) {}
@@ -162,7 +164,7 @@ BOOST_TEST_DECL context_generator   get_context();
 /// @}
 
 /// @name Access to registered test units
-
+/// @{
 /// This function provides access to the master test suite. 
 
 /// There is only only master test suite per test module.
@@ -215,14 +217,14 @@ BOOST_TEST_DECL void    run( test_unit const* tu, bool continue_test = true );
 /// @}
 
 /// @name Test events dispatchers
-
+/// @{
 /// Reports results of assertion to all test observers
 BOOST_TEST_DECL void    assertion_result( unit_test::assertion_result ar );
 /// Reports uncaught exception to all test observers
 BOOST_TEST_DECL void    exception_caught( execution_exception const& );
 /// Reports aborted test unit to all test observers
 BOOST_TEST_DECL void    test_unit_aborted( test_unit const& );
-///@}
+/// @}
 
 namespace impl { // publisized to facilitate internal unit test only
 

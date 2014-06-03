@@ -38,10 +38,15 @@ namespace test_tools {
 // **************                assertion_result              ************** //
 // ************************************************************************** //
 
+//!@brief Type used for predicate assertions.
 class BOOST_TEST_DECL assertion_result {
+
+    //!@internal
+    //!@{
     typedef unit_test::const_string      const_string;
     struct dummy { void nonnull() {} };
     typedef void (dummy::*safe_bool)();
+    //!@}
 
 public:
     // Constructor

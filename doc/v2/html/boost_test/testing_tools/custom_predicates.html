@@ -91,27 +91,26 @@
 </table></div>
 </div>
 <br class="table-break"><p>
-        To use second layer your predicate has to return
+        To use second layer your predicate has to return <code class="computeroutput"><a class="link" href="../../header/boost/test/tools/assertion_result_hpp.html#boost.test_tools.predicate_result">boost::test_tools::predicate_result</a></code>.
       </p>
-<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">test_tools</span><span class="special">::</span><span class="identifier">predicate_result</span></pre>
 <p>
         This class encapsulates boolean result value along with any error or information
         message you opt to report.
       </p>
 <p>
-        Usually you construct the instance of class <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">test_tools</span><span class="special">::</span><span class="identifier">predicate_result</span></code>
+        Usually you construct the instance of class <code class="computeroutput"><a class="link" href="../../header/boost/test/tools/assertion_result_hpp.html#boost.test_tools.predicate_result">boost::test_tools::predicate_result</a></code>
         inside your predicate function and return it by value. The constructor expects
         one argument - the boolean result value. The constructor is implicit, so
-        you can simply return boolean value from your predicate and <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">test_tools</span><span class="special">::</span><span class="identifier">predicate_result</span></code> is constructed automatically
-        to hold your value and empty message. You can also assign boolean value to
-        the constructed instance. You can check the current predicate value by using
-        <code class="computeroutput"><span class="keyword">operator</span><span class="special">!</span></code>
-        or directly accessing public read-only property <code class="computeroutput"><span class="identifier">p_predicate_value</span></code>.
-        The error message is stored in public read-write property <code class="computeroutput"><span class="identifier">p_message</span></code>.
+        you can simply return boolean value from your predicate and <code class="computeroutput"><a class="link" href="../../header/boost/test/tools/assertion_result_hpp.html#boost.test_tools.predicate_result">boost::test_tools::predicate_result</a></code>
+        is constructed automatically to hold your value and empty message. You can
+        also assign boolean value to the constructed instance. You can check the
+        current predicate value by using <code class="computeroutput"><span class="keyword">operator</span><span class="special">!</span></code> or directly accessing public read-only property
+        <code class="computeroutput"><span class="identifier">p_predicate_value</span></code>. The error
+        message is stored in public read-write property <code class="computeroutput"><span class="identifier">p_message</span></code>.
       </p>
 <div class="table">
-<a name="boost_test.testing_tools.custom_predicates.id_example31"></a><p class="title"><b>Table&#160;24.&#160;Custom predicate support using class <code class="computeroutput"><span class="identifier">predicate_result</span></code></b></p>
-<div class="table-contents"><table class="table" summary="Custom predicate support using class predicate_result">
+<a name="boost_test.testing_tools.custom_predicates.id_example31"></a><p class="title"><b>Table&#160;24.&#160;Custom predicate support using class <code class="computeroutput"><a class="link" href="../../header/boost/test/tools/assertion_result_hpp.html#boost.test_tools.predicate_result">boost::test_tools::predicate_result</a></code></b></p>
+<div class="table-contents"><table class="table" summary="Custom predicate support using class boost::test_tools::predicate_result">
 <colgroup>
 <col>
 <col>

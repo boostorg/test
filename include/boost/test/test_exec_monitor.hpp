@@ -5,7 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file test/test_exec_monitor.hpp @brief Deprecated implementation of Test Execution Monitor
+/// @file  
+/// @brief Deprecated implementation of Test Execution Monitor
 ///
 /// To convert to Unit Test Framework simply rewrite:
 /// @code
