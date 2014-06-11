@@ -33,6 +33,7 @@
 // Boost
 #include <boost/cstdlib.hpp>    // for exit codes
 #include <boost/config.hpp>     // for workarounds
+#include <boost/core/ignore_unused.hpp> // for ignore_unused
 #include <boost/exception/get_error_info.hpp> // for get_error_info
 #include <boost/exception/current_exception_cast.hpp> // for current_exception_cast
 
@@ -1328,6 +1329,8 @@ namespace fpe {
 unsigned
 enable( unsigned mask )
 {
+    boost::ignore_unused(mask);
+
 #if defined(UNDER_CE)
     /* Not Implemented in Windows CE */
     return 0;
@@ -1363,6 +1366,8 @@ enable( unsigned mask )
 unsigned
 disable( unsigned mask )
 {
+    boost::ignore_unused(mask);
+
 #if defined(UNDER_CE)
     /* Not Implemented in Windows CE */
     return 0;
