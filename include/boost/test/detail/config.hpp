@@ -1,4 +1,5 @@
 //  (C) Copyright Gennadiy Rozental 2001-2012.
+//  (C) Copyright Microsoft Corporation 2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -17,6 +18,7 @@
 
 // Boost
 #include <boost/config.hpp> // compilers workarounds
+#include <boost/predef.h>
 #include <boost/detail/workaround.hpp>
 
 #if defined(_WIN32) && !defined(BOOST_DISABLE_WIN32) &&                  \
@@ -118,6 +120,14 @@ class type_info;
 
 #ifdef __PGI
 #define BOOST_PP_VARIADICS 1
+#endif
+
+// Used to turn on/off debugging support.
+#define BOOST_TEST_HAS_DEBUG_SUPPORT
+// Under Windows Runtime (WinRT) accessing registry, creating processes, etc..
+// are not supported so turn off debugging support.
+#if BOOST_PLAT_WINDOWS_RUNTIME
+#undef BOOST_TEST_HAS_DEBUG_SUPPORT
 #endif
 
 #endif // BOOST_TEST_CONFIG_HPP_071894GER

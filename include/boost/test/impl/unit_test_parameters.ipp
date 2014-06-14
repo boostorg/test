@@ -1,4 +1,5 @@
 //  (C) Copyright Gennadiy Rozental 2001-2012.
+//  (C) Copyright Microsoft Corporation 2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -18,6 +19,8 @@
 #ifndef BOOST_TEST_UNIT_TEST_PARAMETERS_IPP_012205GER
 #define BOOST_TEST_UNIT_TEST_PARAMETERS_IPP_012205GER
 
+#include <boost/predef/platform.h>
+
 // Boost.Test
 
 #include <boost/test/unit_test_parameters.hpp>
@@ -36,9 +39,11 @@ namespace rt  = boost::runtime;
 namespace cla = rt::cla;
 
 #ifndef UNDER_CE
+#if BOOST_PLAT_WINDOWS_DESKTOP
 #include <boost/test/utils/runtime/env/variable.hpp>
 
 namespace env = rt::env;
+#endif
 #endif
 
 // Boost
@@ -244,7 +249,9 @@ retrieve_parameter( const_string parameter_name, cla::parser const& s_cla_parser
     boost::optional<T> v;
 
 #ifndef UNDER_CE
+#if BOOST_PLAT_WINDOWS_DESKTOP
     env::get( parameter_2_env_var(parameter_name), v );
+#endif
 #endif
 
     if( v )

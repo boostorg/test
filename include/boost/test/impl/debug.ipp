@@ -1,4 +1,5 @@
 //  (C) Copyright Gennadiy Rozental 2006-2012.
+//  (C) Copyright Microsoft Corporation 2014.
 //  Use, modification, and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -112,6 +113,8 @@ namespace boost {
 namespace debug {
 
 using unit_test::const_string;
+
+#ifdef BOOST_TEST_HAS_DEBUG_SUPPORT
 
 // ************************************************************************** //
 // **************                debug::info_t                 ************** //
@@ -913,6 +916,8 @@ attach_debugger( bool break_or_continue )
 
 //____________________________________________________________________________//
 
+#endif // BOOST_TEST_HAS_DEBUG_SUPPORT
+
 // ************************************************************************** //
 // **************   switch on/off detect memory leaks feature  ************** //
 // ************************************************************************** //
@@ -934,8 +939,7 @@ detect_memory_leaks( bool on_off, unit_test::const_string report_file )
         if( report_file.is_empty() )
             _CrtSetReportFile(_CRT_WARN, _CRTDBG_FILE_STDERR);
         else {
-            HANDLE hreport_f = ::CreateFileA( report_file.begin(),
-                                              GENERIC_WRITE, FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+            HANDLE hreport_f = ::fopen(report_file.begin(), "w");
             _CrtSetReportFile(_CRT_WARN, hreport_f );
         }
     }

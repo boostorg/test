@@ -1,4 +1,5 @@
 //  (C) Copyright Gennadiy Rozental 2005-2012.
+//  (C) Copyright Microsoft Corporation 2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -17,6 +18,7 @@
 
 // Boost
 #include <boost/config.hpp>
+#include <boost/predef/platform.h>
 #ifdef BOOST_MSVC
 # pragma warning(disable: 4511) // copy constructor could not be generated
 # pragma warning(disable: 4512) // assignment operator could not be generated
@@ -77,6 +79,7 @@ extern "C" int putenv( const char * );
 #endif
 
 #ifndef UNDER_CE
+#if BOOST_PLAT_WINDOWS_DESKTOP
 #if defined(__COMO__) && 0
 inline void
 putenv_impl( cstring name, cstring value )
@@ -100,6 +103,7 @@ putenv_impl( cstring name, cstring value )
 }
 #endif
 #endif
+#endif
 
 #ifdef BOOST_MSVC 
 #pragma warning(pop) 
@@ -107,8 +111,10 @@ putenv_impl( cstring name, cstring value )
 
 #define BOOST_RT_PARAM_LITERAL( l ) l
 #define BOOST_RT_PARAM_CSTRING_LITERAL( l ) cstring( l, sizeof( l ) - 1 )
+#if BOOST_PLAT_WINDOWS_DESKTOP
 #define BOOST_RT_PARAM_GETENV getenv
 #define BOOST_RT_PARAM_PUTENV ::boost::BOOST_RT_PARAM_NAMESPACE::putenv_impl
+#endif
 #define BOOST_RT_PARAM_EXCEPTION_INHERIT_STD
 
 //____________________________________________________________________________//
@@ -123,6 +129,7 @@ typedef wrap_wstringstream                                      format_stream;
 typedef std::wostream                                           out_stream;
 
 #ifndef UNDER_CE
+#if BOOST_PLAT_WINDOWS_DESKTOP
 inline void
 putenv_impl( cstring name, cstring value )
 {
@@ -136,11 +143,14 @@ putenv_impl( cstring name, cstring value )
     wputenv( const_cast<wchar_t*>( fs.str().c_str() ) );
 }
 #endif
+#endif
 
 #define BOOST_RT_PARAM_LITERAL( l ) L ## l
 #define BOOST_RT_PARAM_CSTRING_LITERAL( l ) cstring( L ## l, sizeof( L ## l )/sizeof(wchar_t) - 1 )
+#if BOOST_PLAT_WINDOWS_DESKTOP
 #define BOOST_RT_PARAM_GETENV wgetenv
 #define BOOST_RT_PARAM_PUTENV putenv_impl
+#endif
 
 #  endif
 #endif

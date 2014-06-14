@@ -1,4 +1,5 @@
 //  (C) Copyright Gennadiy Rozental 2005-2012.
+//  (C) Copyright Microsoft Corporation 2014.
 //  Use, modification, and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -388,8 +389,10 @@ exception_safety_tester::assertion_result( unit_test::assertion_result ar )
 void
 exception_safety_tester::failure_point()
 {
+#ifdef BOOST_TEST_HAS_DEBUG_SUPPORT
     if( m_exec_path_counter == m_break_exec_path )
         debug::debugger_break();
+#endif
     
     throw unique_exception();
 }
