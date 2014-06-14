@@ -15,8 +15,14 @@
 #ifndef BOOST_RT_ENV_VARIABLE_HPP_062604GER
 #define BOOST_RT_ENV_VARIABLE_HPP_062604GER
 
+#include <boost/predef/platform.h>
+
 #ifdef UNDER_CE
 #error Windows CE does not support environment variables.
+#endif
+
+#if BOOST_PLAT_WINDOWS_RUNTIME
+#error Windows Runtime does not support environment variables.
 #endif
 
 // Boost.Runtime.Parameter
