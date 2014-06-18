@@ -1,4 +1,5 @@
 //  (C) Copyright Gennadiy Rozental 2005-2012.
+//  (C) Copyright Microsoft Corporation 2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -15,8 +16,14 @@
 #ifndef BOOST_RT_ENV_ENVIRONMENT_HPP_062604GER
 #define BOOST_RT_ENV_ENVIRONMENT_HPP_062604GER
 
+#include <boost/predef/platform.h>
+
 #ifdef UNDER_CE
 #error Windows CE does not support environment variables.
+#endif
+
+#if BOOST_PLAT_WINDOWS_RUNTIME
+#error Windows Runtime does not support environment variables.
 #endif
 
 // Boost.Runtime.Parameter
