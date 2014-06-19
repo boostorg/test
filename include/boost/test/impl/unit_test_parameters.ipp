@@ -19,10 +19,7 @@
 #ifndef BOOST_TEST_UNIT_TEST_PARAMETERS_IPP_012205GER
 #define BOOST_TEST_UNIT_TEST_PARAMETERS_IPP_012205GER
 
-#include <boost/predef/platform.h>
-
 // Boost.Test
-
 #include <boost/test/unit_test_parameters.hpp>
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 #include <boost/test/utils/basic_cstring/compare.hpp>
@@ -35,6 +32,19 @@
 #include <boost/test/utils/runtime/cla/dual_name_parameter.hpp>
 #include <boost/test/utils/runtime/cla/parser.hpp>
 
+// Boost
+#include <boost/config.hpp>
+#include <boost/predef/platform.h>
+#include <boost/test/detail/suppress_warnings.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/test/detail/enable_warnings.hpp>
+
+// STL
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <fstream>
+
 namespace rt  = boost::runtime;
 namespace cla = rt::cla;
 
@@ -45,18 +55,6 @@ namespace cla = rt::cla;
 namespace env = rt::env;
 #endif
 #endif
-
-// Boost
-#include <boost/config.hpp>
-#include <boost/test/detail/suppress_warnings.hpp>
-#include <boost/lexical_cast.hpp>
-#include <boost/test/detail/enable_warnings.hpp>
-
-// STL
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <fstream>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
