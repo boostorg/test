@@ -451,7 +451,7 @@ public:
     // Disabled operators
     template<typename T>
     ExprType&
-    operator ||( T const& rhs )
+    operator ||( T const& /*rhs*/ )
     {
         BOOST_MPL_ASSERT_MSG(false, CANT_USE_LOGICAL_OPERATOR_OR_WITHIN_THIS_TESTING_TOOL, () );
 
@@ -460,7 +460,7 @@ public:
 
     template<typename T>
     ExprType&
-    operator &&( T const& rhs )
+    operator &&( T const& /*rhs*/ )
     {
         BOOST_MPL_ASSERT_MSG(false, CANT_USE_LOGICAL_OPERATOR_AND_WITHIN_THIS_TESTING_TOOL, () );
 
