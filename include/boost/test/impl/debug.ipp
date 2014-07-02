@@ -23,6 +23,7 @@
 
 #include <boost/test/debug.hpp>
 #include <boost/test/debug_config.hpp>
+#include <boost/predef/platform.h>
 
 // Implementation on Windows
 #if defined(_WIN32) && !defined(UNDER_CE) && !defined(BOOST_DISABLE_WIN32) // ******* WIN32
@@ -31,7 +32,9 @@
 
 // SYSTEM API
 #  include <windows.h>
+#  if !BOOST_PLAT_WINDOWS_RUNTIME
 #  include <winreg.h>
+#  endif
 #  include <cstdio>
 #  include <cstring>
 
