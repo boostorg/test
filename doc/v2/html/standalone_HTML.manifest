@@ -15,6 +15,11 @@ boost_test/users_guide/module_initialization/original_initialization_function.ht
 boost_test/users_guide/module_initialization/alternative_initialization_funct.html
 boost_test/users_guide/module_initialization/initialization_function_signatur.html
 boost_test/users_guide/module_initialization/automated_generation.html
+boost_test/users_guide/link_references.html
+boost_test/users_guide/link_references/link_boost_test_main_macro.html
+boost_test/users_guide/link_references/link_boost_test_alternative_init_macro.html
+boost_test/users_guide/link_references/link_boost_test_no_lib.html
+boost_test/users_guide/link_references/link_boost_test_dyn_link.html
 boost_test/tests_organization.html
 boost_test/tests_organization/test_cases.html
 boost_test/tests_organization/test_cases/test_organization_nullary.html
@@ -146,8 +151,8 @@ boost/unit_test/framework/nothing_to_test.html
 boost/unit_test/framework/init.html
 boost/unit_test/framework/shutdown.html
 boost/unit_test/framework/current_auto_test_suite.html
-boost/unit_test/framework/register_t_idm104516175728.html
-boost/unit_test/framework/register_t_idm104516172896.html
+boost/unit_test/framework/register_t_idm256150015552.html
+boost/unit_test/framework/register_t_idm256150012720.html
 boost/unit_test/framework/deregister_test_unit.html
 boost/unit_test/framework/register_observer.html
 boost/unit_test/framework/deregister_observer.html
@@ -156,9 +161,9 @@ boost/unit_test/framework/clear_context.html
 boost/unit_test/framework/master_test_suite.html
 boost/unit_test/framework/current_test_case.html
 boost/unit_test/framework/current_test_case_id.html
-boost/unit_test/framework/get_idm104516145520.html
-boost/unit_test/framework/get_idm104516141424.html
-boost/unit_test/framework/run_idm104516137552.html
+boost/unit_test/framework/get_idm256149985344.html
+boost/unit_test/framework/get_idm256149981248.html
+boost/unit_test/framework/run_idm256149977376.html
 boost/unit_test/init_unit_test_func.html
 BOOST_TEST_SETUP_ASSERT.html
 header/boost/test/output/compiler_log_formatter_hpp.html

@@ -1,0 +1,81 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Standalone library compilation</title>
+<link rel="stylesheet" href="../../../../../../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../../../../index.html" title="Boost.Test">
+<link rel="up" href="../compilation.html" title="Compilation">
+<link rel="prev" href="../compilation.html" title="Compilation">
+<link rel="next" href="section_pem_standalone/static_library_compilation.html" title="Static library compilation">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../compilation.html"><img src="../../../../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../compilation.html"><img src="../../../../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../../../index.html"><img src="../../../../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="section_pem_standalone/static_library_compilation.html"><img src="../../../../../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h6 class="title">
+<a name="boost_test.users_guide.link_boost_test_main_macro.components.section_pem.compilation.section_pem_standalone"></a><a name="ref_pem_stanlone"></a><a class="link" href="section_pem_standalone.html" title="Standalone library compilation">Standalone
+              library compilation</a>
+</h6></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="section_pem_standalone/static_library_compilation.html">Static
+                library compilation</a></span></dt>
+<dt><span class="section"><a href="section_pem_standalone/dynamic_library_compilation.html">Dynamic
+                library compilation</a></span></dt>
+</dl></div>
+<p>
+                If you opted to link your program with the standalone library, you
+                need to build it first. To build a standalone library all C++ files
+                (.cpp), that constitute <span class="emphasis"><em>PEM</em></span> <a class="link" href="../implementation.html#ref_pem_implementation">implementation</a>
+                need to be listed as source files in your makefile <a href="#ftn.boost_test.users_guide.link_boost_test_main_macro.components.section_pem.compilation.section_pem_standalone.f0" class="footnote" name="boost_test.users_guide.link_boost_test_main_macro.components.section_pem.compilation.section_pem_standalone.f0"><sup class="footnote">[8]</sup></a>.
+              </p>
+<p>
+                The makefile for use with Boost.Build system is supplied in
+              </p>
+<pre class="programlisting"><span class="identifier">libs</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">build</span>
+</pre>
+<p>
+                directory. The <span class="emphasis"><em>PEM</em></span> can be built as either <a class="link" href="section_pem_standalone/static_library_compilation.html#ref_pem_static">static</a> or <a class="link" href="section_pem_standalone/dynamic_library_compilation.html#ref_pem_dynamic">dynamic</a>
+                library.
+              </p>
+<div class="footnotes">
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.boost_test.users_guide.link_boost_test_main_macro.components.section_pem.compilation.section_pem_standalone.f0" class="footnote"><p><a href="#boost_test.users_guide.link_boost_test_main_macro.components.section_pem.compilation.section_pem_standalone.f0" class="para"><sup class="para">[8] </sup></a>
+                  There are varieties of make systems that can be used. To name a
+                  few: <span class="emphasis"><em>GNU</em></span> make (and other make clones) and
+                  build systems integrated into <span class="emphasis"><em>IDE</em></span>s (for example
+                  <span class="emphasis"><em>Microsoft Visual Studio</em></span>). The Boost preferred
+                  solution is Boost.Build system that is based on top of <code class="computeroutput"><span class="identifier">bjam</span></code> tool. Make systems require
+                  some kind of configuration file that lists all files that constitute
+                  the library and all build options. For example the makefile that
+                  is used by make, or the Microsoft Visual Studio project file, Jamfile
+                  is used by Boost.Build. For the sake of simplicity let's call this
+                  file the makefile.
+                </p></div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2014 Gennadiy
+      Rozental<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../compilation.html"><img src="../../../../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../compilation.html"><img src="../../../../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../../../index.html"><img src="../../../../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="section_pem_standalone/static_library_compilation.html"><img src="../../../../../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

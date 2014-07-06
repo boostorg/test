@@ -92,10 +92,10 @@
         program needs to be changed to:
       </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">my_class</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-<span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">MyTest</span>
+<span class="preprocessor">#define</span> <a class="link" href="../tests_organization/test_organization_test_suite/master_test_suite.html#ref_BOOST_TEST_MODULE"><code class="computeroutput"><span class="identifier">BOOST_TEST_MODULE</span></code></a> <span class="identifier">MyTest</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
-<span class="identifier">BOOST_AUTO_TEST_CASE</span><span class="special">(</span> <span class="identifier">my_test</span> <span class="special">)</span>
+<a class="link" href="../tests_organization/test_cases/test_organization_nullary.html#ref_BOOST_AUTO_TEST_CASE"><code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_CASE</span></code></a><span class="special">(</span> <span class="identifier">my_test</span> <span class="special">)</span>
 <span class="special">{</span>
   <span class="identifier">my_class</span> <span class="identifier">test_object</span><span class="special">(</span> <span class="string">"qwerty"</span> <span class="special">);</span>
   <span class="identifier">BOOST_CHECK</span><span class="special">(</span> <span class="identifier">test_object</span><span class="special">.</span><span class="identifier">is_valid</span><span class="special">()</span> <span class="special">);</span>
