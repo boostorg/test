@@ -44,7 +44,7 @@ To create a nullary free function cased test case, which is registered in place 
 macro __BOOST_AUTO_TEST_CASE__.
  
 ``
-  BOOST_AUTO_TEST_CASE(test_case_name);
+  __BOOST_AUTO_TEST_CASE__(test_case_name);
 ``
 
 The macro is designed to closely mimic nullary free function syntax. Changes that are required to make an

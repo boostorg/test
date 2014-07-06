@@ -34,5 +34,10 @@ like the floating point comparison or the logged  expectations testing, are defi
 [include compilation/module_initialization.qbk]
 
 
+[/ ######################################################## ]
+[/ reference of the macros]
+[include compilation/link_reference.qbk]
+
+
 
 [endsect] [/section:users_guide]

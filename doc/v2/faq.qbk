@@ -15,7 +15,7 @@ __email_gr__.
 [h3 How to create test case using the Unit Test Framework?]
 To create a test case, use the macro
  
-  BOOST_AUTO_TEST_CASE( test_function );
+  __BOOST_AUTO_TEST_CASE__( test_function );
 
 For more details see the Unit Test Framework __BOOST_AUTO_TEST_CASE__ documentation.
 

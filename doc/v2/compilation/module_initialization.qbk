@@ -8,8 +8,8 @@ There are two tasks that you may need to perform before actual testing can start
 
 
 The function dedicated for this purpose is called ['the test module initialization function]. Alternatively you can
-employ global fixtures, covered in details, including differences in two approaches, in 
-<xref linkend="utf.user-guide.fixture"/>.
+employ global fixtures, covered in details, including differences in two approaches, in the [link boost_test.tests_organization.fixtures fixtures]
+section.
 
 
 The __UTF__ requires you to implement the test module initialization function. The test runner supplied with the static
@@ -83,7 +83,7 @@ that resolves to proper signature in all configurations:
 ``
 namespace boost {
   namespace unit_test {
-#ifdef BOOST_TEST_ALTERNATIVE_INIT_API
+#ifdef __BOOST_TEST_ALTERNATIVE_INIT_API__
     typedef bool        (*init_unit_test_func)();
 #else
     typedef test_suite* (*init_unit_test_func)( int, char* [] );
@@ -99,11 +99,11 @@ namespace boost {
 [section Automated generation]
 
 To automatically generate an empty test module initialization function you need to define 
-<xref linkend="utf.flag.main" endterm="utf.flag.main"/> before including the
+__BOOST_TEST_MAIN__ before including the
 ``boost/test/unit_test.hpp`` header. The value of this define is ignored.
 Alternatively you can define the macro __BOOST_TEST_MODULE__ to be equal to 
 any string (not necessarily in quotes). This macro causes the same result as 
-<xref linkend="utf.flag.main" endterm="utf.flag.main"/>, and in addition the macro value becomes the name of the 
+__BOOST_TEST_MAIN__, and in addition the macro value becomes the name of the 
 master test suite.
 
 [important

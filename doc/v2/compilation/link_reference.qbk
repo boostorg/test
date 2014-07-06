@@ -1,0 +1,23 @@
+
+[section:link_references Macros that control the build behaviours]
+
+[section:link_boost_test_main_macro `BOOST_TEST_MAIN`]
+
+
+[endsect]
+
+[section:link_boost_test_alternative_init_macro `BOOST_TEST_ALTERNATIVE_INIT_API`]
+
+[endsect]
+
+[section:link_boost_test_no_lib `BOOST_TEST_NO_LIB`]
+
+[endsect]
+
+[section:link_boost_test_dyn_link `BOOST_TEST_DYN_LINK`]
+
+
+[endsect]
+
+
+[endsect]

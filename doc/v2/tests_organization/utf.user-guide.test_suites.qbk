@@ -257,10 +257,10 @@ macro value becomes the name of the master test suite. The name may include spac
 ]
 
 
-Without the `BOOST_TEST_MAIN` and the __BOOST_TEST_MODULE__ flags defined, the test module initialization 
+Without the __BOOST_TEST_MAIN__ and the __BOOST_TEST_MODULE__ flags defined, the test module initialization 
 function has to be manually implemented. The master test suite name can be reset at any point within this function.
 
-[warning link to the definition of `BOOST_TEST_MAIN`]
+
 
 [endsect] [/ command line interface]
 

@@ -5,7 +5,7 @@
 
 [#ref_param_show_progress][section `show_progress`]
 
-Makes the framework to print progress information. More details [link ref_output_progress here].
+Makes the framework to print progress information. More details [link boost_test.test_output.test_output_progress here].
 
 [h4 Acceptable values]
 
@@ -49,7 +49,7 @@ Automatically attach debugger in case of system failure.
 Specifies whether Boost.Test should try to attach a debugger in case if fatal system error occurs. If value is ['yes]
 the default debugger configured for the platform is going to be attempted. Alternatively the debugger identified 
 by the argument value of the parameter is used. For more details on advanced debugger support in Boost.Test check 
-<!-- TO FIX: add link --> section dedicated to Boost.Test debug API.
+the [headerref boost/test/debug.hpp section dedicated to Boost.Test debug API], in particular the function [funcref boost::debug::set_debugger].
 
 [h4 Acceptable values]
 

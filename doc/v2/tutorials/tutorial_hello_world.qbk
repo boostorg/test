@@ -50,10 +50,10 @@ The Unit Test Framework solves all these issues. To integrate with it above prog
 [/snippet11 deleted]
 ``
 #include <my_class.hpp>
-#define BOOST_TEST_MODULE MyTest
+#define __BOOST_TEST_MODULE__ MyTest
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE( my_test )
+__BOOST_AUTO_TEST_CASE__( my_test )
 {
   my_class test_object( "qwerty" );
   BOOST_CHECK( test_object.is_valid() );
