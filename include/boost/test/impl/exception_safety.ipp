@@ -1,5 +1,4 @@
 //  (C) Copyright Gennadiy Rozental 2005-2012.
-//  (C) Copyright Microsoft Corporation 2014.
 //  Use, modification, and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
 //  http://www.boost.org/LICENSE_1_0.txt)
