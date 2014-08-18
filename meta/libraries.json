@@ -1,0 +1,14 @@
+{
+    "key": "test",
+    "name": "Test",
+    "authors": [
+        "Gennadiy Rozental"
+    ],
+    "description": "Support for simple program testing, full unit testing, and for program execution monitoring.",
+    "category": [
+        "Correctness"
+    ],
+    "maintainers": [
+        "Gennadiy Rozental <gennadiy.rozental -at- thomson.com>"
+    ]
+}
