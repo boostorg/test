@@ -11,5 +11,6 @@
 # [ticket 9537] const_string_test example fails
 # [ticket 9539] Floating-point comparison algorithms aren't formatted correctly
 # [ticket 9581] Squassabia reference link gives 404 not found
+# [ticket 10318] Minor documentation fix
 
 [endsect]
