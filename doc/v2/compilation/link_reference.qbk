@@ -19,5 +19,38 @@
 
 [endsect]
 
+[section:link_boost_test_no_main `BOOST_TEST_NO_MAIN`]
+Prevents the auto generation of the test module initialisation functions. This macro is particularly relevant for
+manually registered tests in conjunction with dynamic variant of the __UTF__. When defined, a `main` function 
+registering all the tests should be implemented. 
+
+An example of a module initialisation would be
+``
+#define __BOOST_TEST_NO_MAIN__
+#include <boost/test/unit_test.hpp>
+
+// a function in another compilation unit registering tests under the master test suite.
+void register_some_tests_manually(test_suite* test);
+
+bool registering_all_tests()
+{
+  test_suite* test_master_suite = &boost::unit_test::framework::master_test_suite();
+  register_some_tests_manually(test_master_suite);
+  
+  // register any other tests function or test suite to the master test suite
+  // ...
+  return true;
+}
+
+int main(int argc, char* argv[])
+{
+  return ::boost::unit_test::unit_test_main(&registering_all_tests, argc, argv);
+}
+
+``
+
+[endsect]
+
+
 
 [endsect]
