@@ -1,9 +1,11 @@
-[section:users_guide User's guide]
+[section:users_guide Building a test module with the __UTF__]
 
 [/ ######################################################## ]
-[section:usage_variants Building a test module with the __UTF__]
+[include compilation/module_initialization.qbk]
 
 
+[/ ######################################################## ]
+[section:usage_variants Linking with the __UTF__]
 
 The __UTF__ presents you with 4 different variants how it can be used.
 
@@ -32,8 +34,6 @@ like the floating point comparison or the logged expectations testing, are defin
 [endsect] [/section:usage_variants]
 
 
-[/ ######################################################## ]
-[include compilation/module_initialization.qbk]
 
 
 [/ ######################################################## ]
