@@ -1,5 +1,5 @@
 [section:module_initialization Test module initialization]
-There are two tasks that you may need to perform before actual testing can start:
+There are two tasks should be performed before actual testing is able to start:
 
 * The test tree needs to be built: unless you are using automated test units registration, the tests that should be run and their relationship
   should be indicated.
@@ -20,9 +20,9 @@ with the dynamic library variant of the __UTF__ requires the specific initializa
 
 [warning TO FIX: specific specification]
 
-For many [link ref_test_module test modules] you don't need to do any custom initialization
-and test tree construction is automated. In this case you don't really need the initialization function and
-the __UTF__ provides a way to automatically generate an empty one for you.
+For many [link ref_test_module test modules], no custom initialization is required 
+and test tree construction is automated. In this case, these initialization functions are not needed as
+the __UTF__ provides a way to automatically generate an empty one.
 
 Original design of the __UTF__ supported the manual test tree construction only. Later versions introduced the
 automated registration of test units. In later versions of the __UTF__ the original initialization function

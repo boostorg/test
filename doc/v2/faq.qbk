@@ -22,7 +22,7 @@ For more details see the Unit Test Framework __BOOST_AUTO_TEST_CASE__ documentat
 [h3 How to create test suite using the Unit Test Framework?]
 To create a test suite use the macro
  
-  BOOST_AUTO_TEST_SUITE( suite_name );
+  __BOOST_AUTO_TEST_SUITE__( suite_name );
 
 For more details see the Unit Test Framework __BOOST_AUTO_TEST_SUITE__ documentation.
 

@@ -1,6 +1,5 @@
-[#static_lib_variant]
-[section:static_lib_variant The static library variant of the __UTF__]
-The __UTF__ can be built into a static library. If you opt to link a test module with the [*standalone static library], [/ <link linkend="utf.compilation.standalone">]
+[section:static_lib_variant Static library variant]
+The __UTF__ can be built into a static library. If you opt to link a test module with the [*standalone static library],
 this usage is called the static library variant of the __UTF__.
 
 The test runner supplied with this variant required you to implement the [*test module] [/ <link linkend="test-module.def">]

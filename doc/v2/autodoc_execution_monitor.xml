@@ -85,16 +85,16 @@ The implementation decides what is a system_fatal_error and what is just a syste
 </para></description></function>
 <function name="is_initialized"><type>bool</type><purpose>This function tells if the framework monostate is initialized. </purpose></function>
 <function name="shutdown"><type>void</type><purpose>This function shuts down the framework and clears up its monostate. </purpose><description><para>It needs to be at the very end of test module execution </para></description></function>
-<function name="current_auto_test_suite"><type>test_suite &amp;</type><parameter name="ts"><paramtype>test_suite *</paramtype><default>0</default><description><para>test suite to push back to the queue </para></description></parameter><parameter name="push_or_pop"><paramtype>bool</paramtype><default>true</default><description><para>should we push ts to the queue or pop leaf test suite instead </para></description></parameter><purpose>Provides both read and write access to current "leaf" auto test suite during the test unit registration phase. </purpose><description><para>During auto-registration phase the framework maintain a FIFO queue of test units being registered. New test units become children of the current "leaf" test suite and if this is test suite it is pushed back into queue and becomes a new leaf. When test suite registration is completed, a test suite is poped from the back of the queue. Only automatically registered test suites should be added to this queue. Master test suite is always a zero element in this queue, so if no other test suites are registered all test cases are added to master test suite. This function facilitates all three possible actions:<itemizedlist>
+<function name="current_auto_test_suite"><type><classname>test_suite</classname> &amp;</type><parameter name="ts"><paramtype><classname>test_suite</classname> *</paramtype><default>0</default><description><para>test suite to push back to the queue </para></description></parameter><parameter name="push_or_pop"><paramtype>bool</paramtype><default>true</default><description><para>should we push ts to the queue or pop leaf test suite instead </para></description></parameter><purpose>Provides both read and write access to current "leaf" auto test suite during the test unit registration phase. </purpose><description><para>During auto-registration phase the framework maintain a FIFO queue of test units being registered. New test units become children of the current "leaf" test suite and if this is test suite it is pushed back into queue and becomes a new leaf. When test suite registration is completed, a test suite is poped from the back of the queue. Only automatically registered test suites should be added to this queue. Master test suite is always a zero element in this queue, so if no other test suites are registered all test cases are added to master test suite. This function facilitates all three possible actions:<itemizedlist>
 <listitem><para>if no argument are provided it returns the current queue leaf test suite</para></listitem><listitem><para>if test suite is provided and no second argument are set, test suite is added to the queue</para></listitem><listitem><para>if no test suite are provided and last argument is false, the semantic of this function is similar to queue pop: last element is popped from the queue 
 
 </para></listitem></itemizedlist>
 </para></description></function>
-<function name="register_test_unit"><type>void</type><parameter name="tc"><paramtype>test_case *</paramtype><description><para>test case to register </para></description></parameter><purpose>This function add new test case into the global collection of test units the framework aware of. </purpose><description><para>This function also assignes unique test unit id for every test case. Later on one can use this id to locate the test case if necessary. This is the way for the framework to maintain weak references between test units. 
+<function name="register_test_unit"><type>void</type><parameter name="tc"><paramtype><classname>test_case</classname> *</paramtype><description><para>test case to register </para></description></parameter><purpose>This function add new test case into the global collection of test units the framework aware of. </purpose><description><para>This function also assignes unique test unit id for every test case. Later on one can use this id to locate the test case if necessary. This is the way for the framework to maintain weak references between test units. 
 </para></description></function>
-<function name="register_test_unit"><type>void</type><parameter name="ts"><paramtype>test_suite *</paramtype><description><para>test suite to register </para></description></parameter><purpose>This function add new test suite into the global collection of test units the framework aware of. </purpose><description><para>This function also assignes unique test unit id for every test suite. Later on one can use this id to locate the test case if necessary. This is the way for the framework to maintain weak references between test units. 
+<function name="register_test_unit"><type>void</type><parameter name="ts"><paramtype><classname>test_suite</classname> *</paramtype><description><para>test suite to register </para></description></parameter><purpose>This function add new test suite into the global collection of test units the framework aware of. </purpose><description><para>This function also assignes unique test unit id for every test suite. Later on one can use this id to locate the test case if necessary. This is the way for the framework to maintain weak references between test units. 
 </para></description></function>
-<function name="deregister_test_unit"><type>void</type><parameter name="tu"><paramtype>test_unit *</paramtype><description><para>test unit to deregister </para></description></parameter><purpose>This function removes the test unit from the collection of known test units and destroys the test unit object. </purpose><description><para>This function also assignes unique test unit id for every test case. LAter on one can use this id to located the test case if necessary. This is the way for the framework to maintain weak references between test units. 
+<function name="deregister_test_unit"><type>void</type><parameter name="tu"><paramtype><classname>test_unit</classname> *</paramtype><description><para>test unit to deregister </para></description></parameter><purpose>This function removes the test unit from the collection of known test units and destroys the test unit object. </purpose><description><para>This function also assignes unique test unit id for every test case. LAter on one can use this id to located the test case if necessary. This is the way for the framework to maintain weak references between test units. 
 </para></description></function>
 <function name="clear"><type>void</type><purpose>Afer this call the framework can be reinitialized to perform a second test run during the same program lifetime. </purpose></function>
 <function name="register_observer"><type>void</type><parameter name="to"><paramtype>test_observer &amp;</paramtype><description><para>test observer object to add </para></description></parameter><purpose>Observer lifetime should exceed the the testing execution timeframe. </purpose><description><para>
@@ -106,28 +106,31 @@ The implementation decides what is a system_fatal_error and what is just a syste
 </para></description><returns><para>id of the newly created frame </para></returns></function>
 <function name="clear_context"><type>void</type><parameter name="context_id"><paramtype>int</paramtype><default>-1</default></parameter><purpose>Erases context frame (when test exits context scope) </purpose><description><para>If context_id is passed clears that specific context frame identified by this id, otherwise clears all non sticky contexts </para></description></function>
 <function name="get_context"><type><classname>context_generator</classname></type><purpose>Produces an instance of small "delegate" object, which facilitates access to collected context. </purpose></function>
-<function name="master_test_suite"><type>master_test_suite_t &amp;</type><purpose>There is only only master test suite per test module. </purpose><description><para>
+<function name="master_test_suite"><type><classname>master_test_suite_t</classname> &amp;</type><purpose>There is only only master test suite per test module. </purpose><description><para>
 </para></description><returns><para>a reference the master test suite instance </para></returns></function>
-<function name="current_test_case"><type>test_case const &amp;</type><purpose>This function provides an access to the test case currently being executed. </purpose><description><para>This function is only valid during test execution phase <para><emphasis role="bold">See Also:</emphasis><para>current_test_case_id </para></para>
+<function name="current_test_case"><type><classname>test_case</classname> const &amp;</type><purpose>This function provides an access to the test case currently being executed. </purpose><description><para>This function is only valid during test execution phase <para><emphasis role="bold">See Also:</emphasis><para>current_test_case_id </para></para>
 </para></description></function>
 <function name="current_test_case_id"><type>test_unit_id</type><purpose>This function provides an access to an id of the test case currently being executed. </purpose><description><para>This function safer than current_test_case, cause if wont throw if no test case is being executed. <para><emphasis role="bold">See Also:</emphasis><para>current_test_case </para></para>
 </para></description></function>
-<function name="get"><type>test_unit &amp;</type><parameter name="tu_id"><paramtype>test_unit_id</paramtype><description><para>id of a test unit to locate </para></description></parameter><parameter name="tu_type"><paramtype>test_unit_type</paramtype><description><para>type of a test unit to locate </para></description></parameter><purpose>This function provides access to a test unit by id and type combination. It will throw if no test unit located. </purpose><description><para>
+<function name="get"><type><classname>test_unit</classname> &amp;</type><parameter name="tu_id"><paramtype>test_unit_id</paramtype><description><para>id of a test unit to locate </para></description></parameter><parameter name="tu_type"><paramtype>test_unit_type</paramtype><description><para>type of a test unit to locate </para></description></parameter><purpose>This function provides access to a test unit by id and type combination. It will throw if no test unit located. </purpose><description><para>
 
 </para></description><returns><para>located test unit </para></returns></function>
 <function name="get"><type>UnitType &amp;</type><template>
-          <template-type-parameter name="UnitType"><purpose><para>compile time type of test unit to get (test_suite or test_case) </para></purpose></template-type-parameter>
+          <template-type-parameter name="UnitType"><purpose><para>compile time type of test unit to get (<classname alt="boost::unit_test::test_suite">test_suite</classname> or <classname alt="boost::unit_test::test_case">test_case</classname>) </para></purpose></template-type-parameter>
         </template><parameter name="id"><paramtype>test_unit_id</paramtype><description><para>id of test unit to get </para></description></parameter><purpose>This function template provides access to a typed test unit by id. </purpose><description><para>It will throw if you specify incorrect test unit type 
 
 </para></description></function>
 <function name="run"><type>void</type><parameter name="tu"><paramtype>test_unit_id</paramtype><default>INV_TEST_UNIT_ID</default><description><para>Optional id of the test unit or test unit itself from which the test is started. If absent, master test suite is used </para></description></parameter><parameter name="continue_test"><paramtype>bool</paramtype><default>true</default><description><para>true == continue test if it was already started, false == restart the test from scratch regardless </para></description></parameter><purpose>Initiates test execution. </purpose><description><para>This function is used to start the test execution from a specific "root" test unit. If no root provided, test is started from master test suite. This second argument facilitates an ability of the test cases to start some other test units (primirilly used internally for self testing) 
 </para></description></function>
-<function name="run"><type>void</type><parameter name="tu"><paramtype>test_unit const *</paramtype></parameter><parameter name="continue_test"><paramtype>bool</paramtype><default>true</default></parameter><purpose>Initiates test execution. Same as other overload. </purpose></function>
+<function name="run"><type>void</type><parameter name="tu"><paramtype><classname>test_unit</classname> const *</paramtype></parameter><parameter name="continue_test"><paramtype>bool</paramtype><default>true</default></parameter><purpose>Initiates test execution. Same as other overload. </purpose></function>
 <function name="assertion_result"><type>void</type><parameter name="ar"><paramtype>unit_test::assertion_result</paramtype></parameter></function>
 <function name="exception_caught"><type>void</type><parameter name=""><paramtype><classname>execution_exception</classname> const &amp;</paramtype></parameter><purpose>Reports uncaught exception to all test observers. </purpose></function>
-<function name="test_unit_aborted"><type>void</type><parameter name=""><paramtype>test_unit const &amp;</paramtype></parameter><purpose>Reports aborted test unit to all test observers. </purpose></function>
+<function name="test_unit_aborted"><type>void</type><parameter name=""><paramtype><classname>test_unit</classname> const &amp;</paramtype></parameter><purpose>Reports aborted test unit to all test observers. </purpose></function>
 </namespace>
-<typedef name="init_unit_test_func"><purpose>Test module initialization routine signature. </purpose><description><para>Different depending on whether BOOST_TEST_ALTERNATIVE_INIT_API is defined or not </para></description><type>test_suite *(*</type></typedef>
+<typedef name="init_unit_test_func"><purpose>Test module initialization routine signature. </purpose><description><para>Different depending on whether BOOST_TEST_ALTERNATIVE_INIT_API is defined or not </para></description><type><classname>test_suite</classname> *(*</type></typedef>
+
+
+
 
 
 
@@ -139,27 +142,58 @@ The implementation decides what is a system_fatal_error and what is just a syste
 <namespace name="boost">
 <namespace name="unit_test">
 <namespace name="output">
-<class name="compiler_log_formatter"><inherit access="public">unit_test_log_formatter</inherit><method-group name="public member functions">
-<method name="log_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="test_cases_amount"><paramtype>counter_t</paramtype></parameter></method>
-<method name="log_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
-<method name="log_build_info"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
-<method name="test_unit_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="tu"><paramtype>test_unit const &amp;</paramtype></parameter></method>
-<method name="test_unit_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="tu"><paramtype>test_unit const &amp;</paramtype></parameter><parameter name="elapsed"><paramtype>unsigned long</paramtype></parameter></method>
-<method name="test_unit_skipped"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="tu"><paramtype>test_unit const &amp;</paramtype></parameter></method>
-<method name="log_exception_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name=""><paramtype>log_checkpoint_data const &amp;</paramtype></parameter><parameter name="ex"><paramtype><classname>execution_exception</classname> const &amp;</paramtype></parameter></method>
-<method name="log_exception_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
-<method name="log_entry_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name=""><paramtype>log_entry_data const &amp;</paramtype></parameter><parameter name="let"><paramtype>log_entry_types</paramtype></parameter></method>
-<method name="log_entry_value"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="value"><paramtype>const_string</paramtype></parameter></method>
-<method name="log_entry_value"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="value"><paramtype>lazy_ostream const &amp;</paramtype></parameter></method>
-<method name="log_entry_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
-<method name="entry_context_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
-<method name="log_entry_context"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name=""><paramtype>const_string</paramtype></parameter></method>
-<method name="entry_context_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<class name="compiler_log_formatter"><inherit access="public">boost::unit_test::unit_test_log_formatter</inherit><method-group name="public member functions">
+<method name="log_start" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages to </para></description></parameter><parameter name="test_cases_amount"><paramtype>counter_t</paramtype><description><para>total test case amount to be run </para></description></parameter><purpose>Invoked at the begining of test module execution. </purpose><description><para>
+<para><emphasis role="bold">See Also:</emphasis><para>log_finish </para></para>
+</para></description></method>
+<method name="log_finish" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><purpose>Invoked at the end of test module execution. </purpose><description><para>
+<para><emphasis role="bold">See Also:</emphasis><para>log_start </para></para>
+</para></description></method>
+<method name="log_build_info" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><purpose>Invoked when Unit Test Framework build information is requested. </purpose><description><para>
+</para></description></method>
+<method name="test_unit_start" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="tu"><paramtype><classname>test_unit</classname> const &amp;</paramtype><description><para>test unit being started </para></description></parameter><purpose>Invoked when test unit starts (either test suite or test case) </purpose><description><para>
+<para><emphasis role="bold">See Also:</emphasis><para>test_unit_finish </para></para>
+</para></description></method>
+<method name="test_unit_finish" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="tu"><paramtype><classname>test_unit</classname> const &amp;</paramtype><description><para>test unit being finished </para></description></parameter><parameter name="elapsed"><paramtype>unsigned long</paramtype><description><para>time in milliseconds spend executing this test unit </para></description></parameter><purpose>Invoked when test unit finishes. </purpose><description><para>
+<para><emphasis role="bold">See Also:</emphasis><para>test_unit_start </para></para>
+</para></description></method>
+<method name="test_unit_skipped" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="tu"><paramtype><classname>test_unit</classname> const &amp;</paramtype><description><para>skipped test unit </para></description></parameter><purpose>Invoked if test unit skipped for any reason. </purpose><description><para>
+</para></description></method>
+<method name="log_exception_start" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="lcd"><paramtype><classname>log_checkpoint_data</classname> const &amp;</paramtype><description><para>information about the last checkpoint before the exception was triggered </para></description></parameter><parameter name="ex"><paramtype><classname>execution_exception</classname> const &amp;</paramtype><description><para>information about the caught exception </para></description></parameter><purpose>Invoked when Unit Test Framework detects uncaught exception. </purpose><description><para>Call to this function starts uncaught exception report. It is going to followed by context information. Report is finilized by call to log_exception_finish. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_exception_finish </para></para>
+</para></description></method>
+<method name="log_exception_finish" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><purpose>Invoked when Unit Test Framework detects uncaught exception. </purpose><description><para>Call to this function finishes uncaught exception report. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_exception_start </para></para>
+</para></description></method>
+<method name="log_entry_start" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="led"><paramtype><classname>log_entry_data</classname> const &amp;</paramtype><description><para>log entry attributes </para></description></parameter><parameter name="let"><paramtype>log_entry_types</paramtype><description><para>log entry type log_entry_finish </para></description></parameter><purpose>Invoked by Unit Test Framework to start new log entry. </purpose><description><para>Call to this function starts new log entry. It is followed by series of log_entry_value calls and finally call to log_entry_finish. A log entry may consist of one or more values being reported. Some of these values will be plain strings, while others can be complicated expressions in a form of "lazy" expression template lazy_ostream. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_value, log_entry_finish </para></para>
+</para></description></method>
+<method name="log_entry_value" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into. </para></description></parameter><parameter name="value"><paramtype>const_string</paramtype><description><para>log entry string value </para></description></parameter><purpose>Invoked by Unit Test Framework to report a log entry content. </purpose><description><para>This is one of two overloaded methods to report log entry content. This one is used to report plain string value. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_start, log_entry_finish </para></para>
+</para></description></method>
+<method name="log_entry_value" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="value"><paramtype>lazy_ostream const &amp;</paramtype><description><para>log entry "lazy" value </para></description></parameter><purpose>Invoked by Unit Test Framework to report a log entry content. </purpose><description><para>This is one of two ovrloaded methods to report log entry content. This one is used to report some complicated expression passed as an expression template lazy_ostream. In most cases default implementation provided by the framework should work as is (it just converts the lazy expression into a string. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_start, log_entry_finish </para></para>
+</para></description></method>
+<method name="log_entry_finish" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><purpose>Invoked by Unit Test Framework to finish a log entry report. </purpose><description><para>
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_start, log_entry_start </para></para>
+</para></description></method>
+<method name="entry_context_start" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><purpose>Invoked by Unit Test Framework to start log entry context report. </purpose><description><para>Unit Test Framewrk logs for failed assertons and uncaught exceptions context if one was defined by a test mofule. Context consists of multiple "scopes" identified by description messages assigned by the test module using BOOST_TEST_INFO/BOOST_TEST_CONTEXT statements. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_context, entry_context_finish </para></para>
+</para></description></method>
+<method name="log_entry_context" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="value"><paramtype>const_string</paramtype><description><para>context "scope" description </para></description></parameter><purpose>Invoked by Unit Test Framework to report log entry context "scope" description. </purpose><description><para>Each "scope" description is reported by separate call to log_entry_context. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_start, entry_context_finish </para></para>
+</para></description></method>
+<method name="entry_context_finish" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><purpose>Invoked by Unit Test Framework to finish log entry context report. </purpose><description><para>
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_start, entry_context_context </para></para>
+</para></description></method>
 </method-group>
 <method-group name="protected member functions">
 <method name="print_prefix" specifiers="virtual"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="file"><paramtype>const_string</paramtype></parameter><parameter name="line"><paramtype>std::size_t</paramtype></parameter></method>
 </method-group>
 </class></namespace>
+
+
+
 
 
 
@@ -170,14 +204,17 @@ The implementation decides what is a system_fatal_error and what is just a syste
 <namespace name="boost">
 <namespace name="unit_test">
 <namespace name="output">
-<class name="plain_report_formatter"><inherit access="public">format</inherit><method-group name="public member functions">
-<method name="results_report_start"><type>void</type><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
-<method name="results_report_finish"><type>void</type><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
-<method name="test_unit_report_start"><type>void</type><parameter name=""><paramtype>test_unit const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
-<method name="test_unit_report_finish"><type>void</type><parameter name=""><paramtype>test_unit const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
-<method name="do_confirmation_report"><type>void</type><parameter name=""><paramtype>test_unit const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<class name="plain_report_formatter"><inherit access="public">boost::unit_test::results_reporter::format</inherit><method-group name="public member functions">
+<method name="results_report_start" specifiers="virtual"><type>void</type><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="results_report_finish" specifiers="virtual"><type>void</type><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="test_unit_report_start" specifiers="virtual"><type>void</type><parameter name=""><paramtype><classname>test_unit</classname> const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="test_unit_report_finish" specifiers="virtual"><type>void</type><parameter name=""><paramtype><classname>test_unit</classname> const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="do_confirmation_report" specifiers="virtual"><type>void</type><parameter name=""><paramtype><classname>test_unit</classname> const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
 </method-group>
 </class></namespace>
+
+
+
 
 
 
@@ -188,23 +225,55 @@ The implementation decides what is a system_fatal_error and what is just a syste
 <namespace name="boost">
 <namespace name="unit_test">
 <namespace name="output">
-<class name="xml_log_formatter"><inherit access="public">unit_test_log_formatter</inherit><method-group name="public member functions">
-<method name="log_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="test_cases_amount"><paramtype>counter_t</paramtype></parameter></method>
-<method name="log_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
-<method name="log_build_info"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
-<method name="test_unit_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="tu"><paramtype>test_unit const &amp;</paramtype></parameter></method>
-<method name="test_unit_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="tu"><paramtype>test_unit const &amp;</paramtype></parameter><parameter name="elapsed"><paramtype>unsigned long</paramtype></parameter></method>
-<method name="test_unit_skipped"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="tu"><paramtype>test_unit const &amp;</paramtype></parameter></method>
-<method name="log_exception_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name=""><paramtype>log_checkpoint_data const &amp;</paramtype></parameter><parameter name="ex"><paramtype><classname>execution_exception</classname> const &amp;</paramtype></parameter></method>
-<method name="log_exception_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
-<method name="log_entry_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name=""><paramtype>log_entry_data const &amp;</paramtype></parameter><parameter name="let"><paramtype>log_entry_types</paramtype></parameter></method>
-<method name="log_entry_value"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="value"><paramtype>const_string</paramtype></parameter></method>
-<method name="log_entry_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
-<method name="entry_context_start"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
-<method name="log_entry_context"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><parameter name=""><paramtype>const_string</paramtype></parameter></method>
-<method name="entry_context_finish"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<class name="xml_log_formatter"><inherit access="public">boost::unit_test::unit_test_log_formatter</inherit><method-group name="public member functions">
+<method name="log_start" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages to </para></description></parameter><parameter name="test_cases_amount"><paramtype>counter_t</paramtype><description><para>total test case amount to be run </para></description></parameter><purpose>Invoked at the begining of test module execution. </purpose><description><para>
+<para><emphasis role="bold">See Also:</emphasis><para>log_finish </para></para>
+</para></description></method>
+<method name="log_finish" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><purpose>Invoked at the end of test module execution. </purpose><description><para>
+<para><emphasis role="bold">See Also:</emphasis><para>log_start </para></para>
+</para></description></method>
+<method name="log_build_info" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><purpose>Invoked when Unit Test Framework build information is requested. </purpose><description><para>
+</para></description></method>
+<method name="test_unit_start" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="tu"><paramtype><classname>test_unit</classname> const &amp;</paramtype><description><para>test unit being started </para></description></parameter><purpose>Invoked when test unit starts (either test suite or test case) </purpose><description><para>
+<para><emphasis role="bold">See Also:</emphasis><para>test_unit_finish </para></para>
+</para></description></method>
+<method name="test_unit_finish" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="tu"><paramtype><classname>test_unit</classname> const &amp;</paramtype><description><para>test unit being finished </para></description></parameter><parameter name="elapsed"><paramtype>unsigned long</paramtype><description><para>time in milliseconds spend executing this test unit </para></description></parameter><purpose>Invoked when test unit finishes. </purpose><description><para>
+<para><emphasis role="bold">See Also:</emphasis><para>test_unit_start </para></para>
+</para></description></method>
+<method name="test_unit_skipped" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="tu"><paramtype><classname>test_unit</classname> const &amp;</paramtype><description><para>skipped test unit </para></description></parameter><purpose>Invoked if test unit skipped for any reason. </purpose><description><para>
+</para></description></method>
+<method name="log_exception_start" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="lcd"><paramtype><classname>log_checkpoint_data</classname> const &amp;</paramtype><description><para>information about the last checkpoint before the exception was triggered </para></description></parameter><parameter name="ex"><paramtype><classname>execution_exception</classname> const &amp;</paramtype><description><para>information about the caught exception </para></description></parameter><purpose>Invoked when Unit Test Framework detects uncaught exception. </purpose><description><para>Call to this function starts uncaught exception report. It is going to followed by context information. Report is finilized by call to log_exception_finish. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_exception_finish </para></para>
+</para></description></method>
+<method name="log_exception_finish" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><purpose>Invoked when Unit Test Framework detects uncaught exception. </purpose><description><para>Call to this function finishes uncaught exception report. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_exception_start </para></para>
+</para></description></method>
+<method name="log_entry_start" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="led"><paramtype><classname>log_entry_data</classname> const &amp;</paramtype><description><para>log entry attributes </para></description></parameter><parameter name="let"><paramtype>log_entry_types</paramtype><description><para>log entry type log_entry_finish </para></description></parameter><purpose>Invoked by Unit Test Framework to start new log entry. </purpose><description><para>Call to this function starts new log entry. It is followed by series of log_entry_value calls and finally call to log_entry_finish. A log entry may consist of one or more values being reported. Some of these values will be plain strings, while others can be complicated expressions in a form of "lazy" expression template lazy_ostream. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_value, log_entry_finish </para></para>
+</para></description></method>
+<method name="log_entry_value" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into. </para></description></parameter><parameter name="value"><paramtype>const_string</paramtype><description><para>log entry string value </para></description></parameter><purpose>Invoked by Unit Test Framework to report a log entry content. </purpose><description><para>This is one of two overloaded methods to report log entry content. This one is used to report plain string value. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_start, log_entry_finish </para></para>
+</para></description></method>
+<method name="log_entry_finish" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><purpose>Invoked by Unit Test Framework to finish a log entry report. </purpose><description><para>
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_start, log_entry_start </para></para>
+</para></description></method>
+<method name="entry_context_start" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><purpose>Invoked by Unit Test Framework to start log entry context report. </purpose><description><para>Unit Test Framewrk logs for failed assertons and uncaught exceptions context if one was defined by a test mofule. Context consists of multiple "scopes" identified by description messages assigned by the test module using BOOST_TEST_INFO/BOOST_TEST_CONTEXT statements. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_context, entry_context_finish </para></para>
+</para></description></method>
+<method name="log_entry_context" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="value"><paramtype>const_string</paramtype><description><para>context "scope" description </para></description></parameter><purpose>Invoked by Unit Test Framework to report log entry context "scope" description. </purpose><description><para>Each "scope" description is reported by separate call to log_entry_context. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_start, entry_context_finish </para></para>
+</para></description></method>
+<method name="entry_context_finish" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><purpose>Invoked by Unit Test Framework to finish log entry context report. </purpose><description><para>
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_start, entry_context_context </para></para>
+</para></description></method>
+<method name="log_entry_value" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="value"><paramtype>lazy_ostream const &amp;</paramtype><description><para>log entry "lazy" value </para></description></parameter><purpose>Invoked by Unit Test Framework to report a log entry content. </purpose><description><para>This is one of two ovrloaded methods to report log entry content. This one is used to report some complicated expression passed as an expression template lazy_ostream. In most cases default implementation provided by the framework should work as is (it just converts the lazy expression into a string. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_start, log_entry_finish </para></para>
+</para></description></method>
 </method-group>
 </class></namespace>
+
+
+
 
 
 
@@ -215,14 +284,17 @@ The implementation decides what is a system_fatal_error and what is just a syste
 <namespace name="boost">
 <namespace name="unit_test">
 <namespace name="output">
-<class name="xml_report_formatter"><inherit access="public">format</inherit><method-group name="public member functions">
-<method name="results_report_start"><type>void</type><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
-<method name="results_report_finish"><type>void</type><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
-<method name="test_unit_report_start"><type>void</type><parameter name=""><paramtype>test_unit const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
-<method name="test_unit_report_finish"><type>void</type><parameter name=""><paramtype>test_unit const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
-<method name="do_confirmation_report"><type>void</type><parameter name=""><paramtype>test_unit const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<class name="xml_report_formatter"><inherit access="public">boost::unit_test::results_reporter::format</inherit><method-group name="public member functions">
+<method name="results_report_start" specifiers="virtual"><type>void</type><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="results_report_finish" specifiers="virtual"><type>void</type><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="test_unit_report_start" specifiers="virtual"><type>void</type><parameter name=""><paramtype><classname>test_unit</classname> const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="test_unit_report_finish" specifiers="virtual"><type>void</type><parameter name=""><paramtype><classname>test_unit</classname> const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="do_confirmation_report" specifiers="virtual"><type>void</type><parameter name=""><paramtype><classname>test_unit</classname> const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
 </method-group>
 </class></namespace>
+
+
+
 
 
 
@@ -245,6 +317,9 @@ The implementation decides what is a system_fatal_error and what is just a syste
           <template-type-parameter name="ParamType"/>
           <template-type-parameter name="ParamIter"/>
         </template><parameter name="test_method"><paramtype>void(UserTestCase::*)(ParamType)</paramtype></parameter><parameter name="tc_name"><paramtype>const_string</paramtype></parameter><parameter name="tc_file"><paramtype>const_string</paramtype></parameter><parameter name="tc_line"><paramtype>std::size_t</paramtype></parameter><parameter name="user_test_case"><paramtype>boost::shared_ptr&lt; UserTestCase &gt; const &amp;</paramtype></parameter><parameter name="par_begin"><paramtype>ParamIter</paramtype></parameter><parameter name="par_end"><paramtype>ParamIter</paramtype></parameter></function>
+
+
+
 </namespace>
 </namespace>
 <macro name="BOOST_PARAM_TEST_CASE" kind="functionlike"><macro-parameter name="function"/><macro-parameter name="begin"/><macro-parameter name="end"/></macro>
@@ -254,6 +329,81 @@ The implementation decides what is a system_fatal_error and what is just a syste
 <para>defines simple text based progress monitor </para><namespace name="boost">
 <namespace name="unit_test">
 <class name="progress_monitor_t"><inherit access="public">test_observer</inherit><inherit access="public">singleton&lt; progress_monitor_t &gt;</inherit><purpose>This class implements test observer interface and updates test progress as test units finish or get aborted. </purpose></class>
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/test/results_collector.hpp">
+<para>defines testing result collector components </para><para>Defines class results_collector_t that is responsible for gathering test results and class test_results for presenting this information to end-user </para><namespace name="boost">
+<namespace name="unit_test">
+<class name="test_results"><purpose>Collection of attributes constituting test unit results. </purpose><description><para>This class is a collection of attributes describing testing results. The atributes presented as public properties on an instance of the class. In addition summary conclusion methods are presented to generate simple answer to pass/fail question </para></description><data-member name="p_assertions_passed"><type>counter_prop</type></data-member>
+<data-member name="p_assertions_failed"><type>counter_prop</type></data-member>
+<data-member name="p_warnings_failed"><type>counter_prop</type></data-member>
+<data-member name="p_expected_failures"><type>counter_prop</type></data-member>
+<data-member name="p_test_cases_passed"><type>counter_prop</type></data-member>
+<data-member name="p_test_cases_warned"><type>counter_prop</type></data-member>
+<data-member name="p_test_cases_failed"><type>counter_prop</type></data-member>
+<data-member name="p_test_cases_skipped"><type>counter_prop</type></data-member>
+<data-member name="p_test_cases_aborted"><type>counter_prop</type></data-member>
+<data-member name="p_aborted"><type>bool_prop</type></data-member>
+<data-member name="p_skipped"><type>bool_prop</type></data-member>
+<method-group name="public member functions">
+<method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>counter_t</paramtype></parameter><parameter name=""><paramtype>(<classname>results_collector_t</classname>)(<classname>test_results</classname>)(results_collect_helper)</paramtype></parameter><purpose>Type representing counter like public property. </purpose></method>
+<method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>bool</paramtype></parameter><parameter name=""><paramtype>(<classname>results_collector_t</classname>)(<classname>test_results</classname>)(results_collect_helper)</paramtype></parameter><purpose>Type representing boolean like public property. </purpose></method>
+<method name="operator+="><type>void</type><parameter name=""><paramtype><classname>test_results</classname> const &amp;</paramtype></parameter></method>
+<method name="clear"><type>void</type></method>
+</method-group>
+<constructor/>
+</class><class name="results_collector_t"><inherit access="public">test_observer</inherit><inherit access="public">singleton&lt; results_collector_t &gt;</inherit><purpose>This class implements test observer interface to collect the result of test unit execution. </purpose><method-group name="public member functions">
+<method name="results" cv="const"><type><classname>test_results</classname> const &amp;</type><parameter name="tu_id"><paramtype>test_unit_id</paramtype><description><para>id of a test unit </para></description></parameter><purpose>Results access per test unit. </purpose><description><para>
+</para></description></method>
+</method-group>
+</class>
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/test/results_reporter.hpp">
+<para>defines testing result reporter interfaces </para><para>This file defines interfaces that are responsible for results reporting. Interface is presented in a form of free standing function implemented in namespace result_reporter </para><namespace name="boost">
+<namespace name="unit_test">
+<namespace name="results_reporter">
+<class name="format"><purpose>Results report formatter interface. </purpose><description><para>This is abstract interface for the report formatter used by results reporter routines. You can define a custom formatter by implementing this interface and setting the formatter using set_format function. This is usually done during test module initialization </para></description><method-group name="public member functions">
+<method name="results_report_start" cv="= 0" specifiers="virtual"><type>void</type><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="results_report_finish" cv="= 0" specifiers="virtual"><type>void</type><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="test_unit_report_start" cv="= 0" specifiers="virtual"><type>void</type><parameter name=""><paramtype><classname>test_unit</classname> const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="test_unit_report_finish" cv="= 0" specifiers="virtual"><type>void</type><parameter name=""><paramtype><classname>test_unit</classname> const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+<method name="do_confirmation_report" cv="= 0" specifiers="virtual"><type>void</type><parameter name=""><paramtype><classname>test_unit</classname> const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
+</method-group>
+<destructor/>
+</class><function name="set_level"><type>void</type><parameter name="l"><paramtype>report_level</paramtype><description><para>report level </para></description></parameter><purpose>Sets reporting level. </purpose><description><para>There are only four possible levels for results report:<itemizedlist>
+<listitem><para>confirmation report (boost::unit_test::CONFIRMATION_REPORT). This report level only produces short confirmation message about test module pass/fail status</para></listitem><listitem><para>short report (boost::unit_test::SHORT_REPORT). This report level produces short summary report for failed/passed assertions and test units.</para></listitem><listitem><para>detailed report (boost::unit_test::DETAILED_REPORT). This report level produces detailed report per test unit for passed/failed assertions and uncaught exceptions</para></listitem><listitem><para>no report (boost::unit_test::NO_REPORT). This report level produces no results report. This is used for test modules running as part of some kind of continues integration framework 
+</para></listitem></itemizedlist>
+</para></description></function>
+<function name="set_stream"><type>void</type><parameter name=""><paramtype>std::ostream &amp;</paramtype></parameter><purpose>Sets output stream for results reporting. </purpose><description><para>By default std::cerr is used. Use this function to set a different stream. The framework refers to the stream by reference, so you need to make sure the stream object lifetime exceeds the testing main scope. </para></description></function>
+<function name="set_format"><type>void</type><parameter name="of"><paramtype>output_format</paramtype><description><para>one of the presefined enumeration values for output formats </para></description></parameter><purpose>Sets one of the predefined formats. </purpose><description><para>The framework implements two results report formats:<itemizedlist>
+<listitem><para>plain human readable format (boost::unit_test::OF_CLF)</para></listitem><listitem><para>XML format (boost::unit_test::OF_XML) 
+</para></listitem></itemizedlist>
+</para></description></function>
+<function name="set_format"><type>void</type><parameter name="f"><paramtype><classname>results_reporter::format</classname> *</paramtype><description><para>pointer to heap allocated instance of custom report formatter class </para></description></parameter><purpose>Sets custom report formatter. </purpose><description><para>The framework takes ownership of the pointer passed as an argument. So this should be a pointer to a heap allocated object 
+</para></description></function>
+<function name="get_stream"><type>std::ostream &amp;</type><purpose>Access to configured results reporter stream. </purpose><description><para>Use this stream to report additional information abut test module execution </para></description></function>
+<function name="make_report"><type>void</type><parameter name="l"><paramtype>report_level</paramtype><default>INV_REPORT_LEVEL</default></parameter><parameter name=""><paramtype>test_unit_id</paramtype><default>INV_TEST_UNIT_ID</default></parameter></function>
+<function name="confirmation_report"><type>void</type><parameter name="id"><paramtype>test_unit_id</paramtype><default>INV_TEST_UNIT_ID</default></parameter></function>
+<function name="short_report"><type>void</type><parameter name="id"><paramtype>test_unit_id</paramtype><default>INV_TEST_UNIT_ID</default></parameter></function>
+<function name="detailed_report"><type>void</type><parameter name="id"><paramtype>test_unit_id</paramtype><default>INV_TEST_UNIT_ID</default></parameter></function>
+</namespace>
+
+
+
+
 
 
 </namespace>
@@ -279,6 +429,257 @@ The implementation decides what is a system_fatal_error and what is just a syste
         </template><parameter name="pv_"><paramtype>BoolConvertable const &amp;</paramtype></parameter></constructor>
 <copy-assignment><type>void</type><parameter name="pv_"><paramtype>bool</paramtype></parameter></copy-assignment>
 </class><typedef name="predicate_result"><type><classname>assertion_result</classname></type></typedef>
+</namespace>
+</namespace>
+</header>
+<header name="boost/test/tree/test_unit.hpp">
+<namespace name="boost">
+<namespace name="unit_test">
+<class name="test_unit"><enum name="@0"><enumvalue name="type"><default>= TUT_ANY</default></enumvalue></enum>
+<typedef name="id_list"><type>std::list&lt; test_unit_id &gt;</type></typedef>
+<typedef name="fixture_list"><type>std::list&lt; test_unit_fixture_ptr &gt;</type></typedef>
+<typedef name="decorator_base"><type>decorator::for_test_unit_ptr</type></typedef>
+<data-member name="p_type"><type>readonly_property&lt; test_unit_type &gt;</type></data-member>
+<data-member name="p_type_name"><type>readonly_property&lt; const_string &gt;</type></data-member>
+<data-member name="p_file_name"><type>readonly_property&lt; const_string &gt;</type></data-member>
+<data-member name="p_line_num"><type>readonly_property&lt; std::size_t &gt;</type></data-member>
+<data-member name="p_id"><type>id_t</type></data-member>
+<data-member name="p_parent_id"><type>parent_id_t</type></data-member>
+<data-member name="p_dependencies"><type>id_list_t</type></data-member>
+<data-member name="p_name"><type>readwrite_property&lt; std::string &gt;</type></data-member>
+<data-member name="p_description"><type>readwrite_property&lt; std::string &gt;</type></data-member>
+<data-member name="p_timeout"><type>readwrite_property&lt; unsigned &gt;</type></data-member>
+<data-member name="p_expected_failures"><type>readwrite_property&lt; counter_t &gt;</type></data-member>
+<data-member name="p_enabled" specifiers="mutable"><type>readwrite_property&lt; bool &gt;</type></data-member>
+<data-member name="p_decorators"><type>readwrite_property&lt; decorator_base &gt;</type></data-member>
+<data-member name="p_fixtures"><type>readwrite_property&lt; fixture_list &gt;</type></data-member>
+<method-group name="public member functions">
+<method name="depends_on"><type>void</type><parameter name="tu"><paramtype><classname>test_unit</classname> *</paramtype></parameter></method>
+<method name="check_dependencies" cv="const"><type>bool</type></method>
+<method name="add_label"><type>void</type><parameter name="l"><paramtype>const_string</paramtype></parameter></method>
+<method name="has_label" cv="const"><type>bool</type><parameter name="l"><paramtype>const_string</paramtype></parameter></method>
+<method name="increase_exp_fail"><type>void</type><parameter name="num"><paramtype>unsigned</paramtype></parameter></method>
+<method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>test_unit_id</paramtype></parameter><parameter name=""><paramtype>(framework_impl)</paramtype></parameter></method>
+<method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>test_unit_id</paramtype></parameter><parameter name=""><paramtype>(<classname>test_suite</classname>)</paramtype></parameter></method>
+<method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>id_list</paramtype></parameter><parameter name=""><paramtype>(<classname>test_unit</classname>)</paramtype></parameter></method>
+</method-group>
+<method-group name="protected member functions">
+</method-group>
+<destructor/>
+<constructor><parameter name="tu_name"><paramtype>const_string</paramtype></parameter><parameter name="tc_file"><paramtype>const_string</paramtype></parameter><parameter name="tc_line"><paramtype>std::size_t</paramtype></parameter><parameter name="t"><paramtype>test_unit_type</paramtype></parameter></constructor>
+<constructor specifiers="explicit"><parameter name="module_name"><paramtype>const_string</paramtype></parameter></constructor>
+</class><class name="test_unit_generator"><method-group name="public member functions">
+<method name="next" cv="const = 0" specifiers="virtual"><type><classname>test_unit</classname> *</type></method>
+</method-group>
+<method-group name="protected member functions">
+</method-group>
+<destructor/>
+</class><class name="test_case"><inherit access="public">boost::unit_test::test_unit</inherit><enum name="@1"><enumvalue name="type"><default>= TUT_CASE</default></enumvalue></enum>
+<enum name="@0"><enumvalue name="type"><default>= TUT_ANY</default></enumvalue></enum>
+<typedef name="id_list"><type>std::list&lt; test_unit_id &gt;</type></typedef>
+<typedef name="fixture_list"><type>std::list&lt; test_unit_fixture_ptr &gt;</type></typedef>
+<typedef name="decorator_base"><type>decorator::for_test_unit_ptr</type></typedef>
+<data-member name="p_test_func"><type>test_func</type></data-member>
+<data-member name="p_type"><type>readonly_property&lt; test_unit_type &gt;</type></data-member>
+<data-member name="p_type_name"><type>readonly_property&lt; const_string &gt;</type></data-member>
+<data-member name="p_file_name"><type>readonly_property&lt; const_string &gt;</type></data-member>
+<data-member name="p_line_num"><type>readonly_property&lt; std::size_t &gt;</type></data-member>
+<data-member name="p_id"><type>id_t</type></data-member>
+<data-member name="p_parent_id"><type>parent_id_t</type></data-member>
+<data-member name="p_dependencies"><type>id_list_t</type></data-member>
+<data-member name="p_name"><type>readwrite_property&lt; std::string &gt;</type></data-member>
+<data-member name="p_description"><type>readwrite_property&lt; std::string &gt;</type></data-member>
+<data-member name="p_timeout"><type>readwrite_property&lt; unsigned &gt;</type></data-member>
+<data-member name="p_expected_failures"><type>readwrite_property&lt; counter_t &gt;</type></data-member>
+<data-member name="p_enabled" specifiers="mutable"><type>readwrite_property&lt; bool &gt;</type></data-member>
+<data-member name="p_decorators"><type>readwrite_property&lt; decorator_base &gt;</type></data-member>
+<data-member name="p_fixtures"><type>readwrite_property&lt; fixture_list &gt;</type></data-member>
+<method-group name="public member functions">
+<method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>boost::function&lt; void()&gt;</paramtype></parameter><parameter name=""><paramtype>(<classname>test_case</classname>)</paramtype></parameter></method>
+<method name="depends_on"><type>void</type><parameter name="tu"><paramtype><classname>test_unit</classname> *</paramtype></parameter></method>
+<method name="check_dependencies" cv="const"><type>bool</type></method>
+<method name="add_label"><type>void</type><parameter name="l"><paramtype>const_string</paramtype></parameter></method>
+<method name="has_label" cv="const"><type>bool</type><parameter name="l"><paramtype>const_string</paramtype></parameter></method>
+<method name="increase_exp_fail"><type>void</type><parameter name="num"><paramtype>unsigned</paramtype></parameter></method>
+<method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>test_unit_id</paramtype></parameter><parameter name=""><paramtype>(framework_impl)</paramtype></parameter></method>
+<method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>test_unit_id</paramtype></parameter><parameter name=""><paramtype>(<classname>test_suite</classname>)</paramtype></parameter></method>
+<method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>id_list</paramtype></parameter><parameter name=""><paramtype>(<classname>test_unit</classname>)</paramtype></parameter></method>
+</method-group>
+<constructor><parameter name="tc_name"><paramtype>const_string</paramtype></parameter><parameter name="test_func"><paramtype>boost::function&lt; void()&gt; const &amp;</paramtype></parameter></constructor>
+<constructor><parameter name="tc_name"><paramtype>const_string</paramtype></parameter><parameter name="tc_file"><paramtype>const_string</paramtype></parameter><parameter name="tc_line"><paramtype>std::size_t</paramtype></parameter><parameter name="test_func"><paramtype>boost::function&lt; void()&gt; const &amp;</paramtype></parameter></constructor>
+<method-group name="private member functions">
+</method-group>
+<destructor/>
+</class><class name="test_suite"><inherit access="public">boost::unit_test::test_unit</inherit><purpose>Class representing test suites. </purpose><enum name="@2"><enumvalue name="type"><default>= TUT_SUITE</default></enumvalue></enum>
+<enum name="@0"><enumvalue name="type"><default>= TUT_ANY</default></enumvalue></enum>
+<typedef name="id_list"><type>std::list&lt; test_unit_id &gt;</type></typedef>
+<typedef name="fixture_list"><type>std::list&lt; test_unit_fixture_ptr &gt;</type></typedef>
+<typedef name="decorator_base"><type>decorator::for_test_unit_ptr</type></typedef>
+<method-group name="public member functions">
+<method name="add"><type>void</type><parameter name="tu"><paramtype><classname>test_unit</classname> *</paramtype></parameter><parameter name="expected_failures"><paramtype>counter_t</paramtype><default>0</default></parameter><parameter name="timeout"><paramtype>unsigned</paramtype><default>0</default></parameter><purpose>Adds a test unit to a test suite, with possibility to specify the timeout and the expected failures. </purpose></method>
+<method name="add"><type>void</type><parameter name="gen"><paramtype><classname>test_unit_generator</classname> const &amp;</paramtype></parameter><parameter name="timeout"><paramtype>unsigned</paramtype><default>0</default></parameter></method>
+<method name="remove"><type>void</type><parameter name="id"><paramtype>test_unit_id</paramtype></parameter><purpose>Removes a test from the test suite. </purpose></method>
+<method name="get" cv="const"><type>test_unit_id</type><parameter name="tu_name"><paramtype>const_string</paramtype></parameter></method>
+<method name="size" cv="const"><type>std::size_t</type></method>
+<method name="depends_on"><type>void</type><parameter name="tu"><paramtype><classname>test_unit</classname> *</paramtype></parameter></method>
+<method name="check_dependencies" cv="const"><type>bool</type></method>
+<method name="add_label"><type>void</type><parameter name="l"><paramtype>const_string</paramtype></parameter></method>
+<method name="has_label" cv="const"><type>bool</type><parameter name="l"><paramtype>const_string</paramtype></parameter></method>
+<method name="increase_exp_fail"><type>void</type><parameter name="num"><paramtype>unsigned</paramtype></parameter></method>
+<method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>test_unit_id</paramtype></parameter><parameter name=""><paramtype>(framework_impl)</paramtype></parameter></method>
+<method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>test_unit_id</paramtype></parameter><parameter name=""><paramtype>(<classname>test_suite</classname>)</paramtype></parameter></method>
+<method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>id_list</paramtype></parameter><parameter name=""><paramtype>(<classname>test_unit</classname>)</paramtype></parameter></method>
+</method-group>
+<constructor specifiers="explicit"><parameter name="ts_name"><paramtype>const_string</paramtype></parameter><parameter name="ts_file"><paramtype>const_string</paramtype></parameter><parameter name="ts_line"><paramtype>std::size_t</paramtype></parameter></constructor>
+<method-group name="protected member functions">
+</method-group>
+<constructor specifiers="explicit"><parameter name="module_name"><paramtype>const_string</paramtype></parameter></constructor>
+<destructor/>
+<data-member name="p_type"><type>readonly_property&lt; test_unit_type &gt;</type></data-member>
+<data-member name="p_type_name"><type>readonly_property&lt; const_string &gt;</type></data-member>
+<data-member name="p_file_name"><type>readonly_property&lt; const_string &gt;</type></data-member>
+<data-member name="p_line_num"><type>readonly_property&lt; std::size_t &gt;</type></data-member>
+<data-member name="p_id"><type>id_t</type></data-member>
+<data-member name="p_parent_id"><type>parent_id_t</type></data-member>
+<data-member name="p_dependencies"><type>id_list_t</type></data-member>
+<data-member name="p_name"><type>readwrite_property&lt; std::string &gt;</type></data-member>
+<data-member name="p_description"><type>readwrite_property&lt; std::string &gt;</type></data-member>
+<data-member name="p_timeout"><type>readwrite_property&lt; unsigned &gt;</type></data-member>
+<data-member name="p_expected_failures"><type>readwrite_property&lt; counter_t &gt;</type></data-member>
+<data-member name="p_enabled" specifiers="mutable"><type>readwrite_property&lt; bool &gt;</type></data-member>
+<data-member name="p_decorators"><type>readwrite_property&lt; decorator_base &gt;</type></data-member>
+<data-member name="p_fixtures"><type>readwrite_property&lt; fixture_list &gt;</type></data-member>
+</class><class name="master_test_suite_t"><inherit access="public">boost::unit_test::test_suite</inherit><data-member name="argc"><type>int</type></data-member>
+<data-member name="argv"><type>char **</type></data-member>
+<data-member name="p_type"><type>readonly_property&lt; test_unit_type &gt;</type></data-member>
+<data-member name="p_type_name"><type>readonly_property&lt; const_string &gt;</type></data-member>
+<data-member name="p_file_name"><type>readonly_property&lt; const_string &gt;</type></data-member>
+<data-member name="p_line_num"><type>readonly_property&lt; std::size_t &gt;</type></data-member>
+<data-member name="p_id"><type>id_t</type></data-member>
+<data-member name="p_parent_id"><type>parent_id_t</type></data-member>
+<data-member name="p_dependencies"><type>id_list_t</type></data-member>
+<data-member name="p_name"><type>readwrite_property&lt; std::string &gt;</type></data-member>
+<data-member name="p_description"><type>readwrite_property&lt; std::string &gt;</type></data-member>
+<data-member name="p_timeout"><type>readwrite_property&lt; unsigned &gt;</type></data-member>
+<data-member name="p_expected_failures"><type>readwrite_property&lt; counter_t &gt;</type></data-member>
+<data-member name="p_enabled" specifiers="mutable"><type>readwrite_property&lt; bool &gt;</type></data-member>
+<data-member name="p_decorators"><type>readwrite_property&lt; decorator_base &gt;</type></data-member>
+<data-member name="p_fixtures"><type>readwrite_property&lt; fixture_list &gt;</type></data-member>
+<method-group name="public member functions">
+<method name="add"><type>void</type><parameter name="tu"><paramtype><classname>test_unit</classname> *</paramtype></parameter><parameter name="expected_failures"><paramtype>counter_t</paramtype><default>0</default></parameter><parameter name="timeout"><paramtype>unsigned</paramtype><default>0</default></parameter><purpose>Adds a test unit to a test suite, with possibility to specify the timeout and the expected failures. </purpose></method>
+<method name="add"><type>void</type><parameter name="gen"><paramtype><classname>test_unit_generator</classname> const &amp;</paramtype></parameter><parameter name="timeout"><paramtype>unsigned</paramtype><default>0</default></parameter></method>
+<method name="remove"><type>void</type><parameter name="id"><paramtype>test_unit_id</paramtype></parameter><purpose>Removes a test from the test suite. </purpose></method>
+<method name="get" cv="const"><type>test_unit_id</type><parameter name="tu_name"><paramtype>const_string</paramtype></parameter></method>
+<method name="size" cv="const"><type>std::size_t</type></method>
+<method name="depends_on"><type>void</type><parameter name="tu"><paramtype><classname>test_unit</classname> *</paramtype></parameter></method>
+<method name="check_dependencies" cv="const"><type>bool</type></method>
+<method name="add_label"><type>void</type><parameter name="l"><paramtype>const_string</paramtype></parameter></method>
+<method name="has_label" cv="const"><type>bool</type><parameter name="l"><paramtype>const_string</paramtype></parameter></method>
+<method name="increase_exp_fail"><type>void</type><parameter name="num"><paramtype>unsigned</paramtype></parameter></method>
+<method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>test_unit_id</paramtype></parameter><parameter name=""><paramtype>(framework_impl)</paramtype></parameter></method>
+<method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>test_unit_id</paramtype></parameter><parameter name=""><paramtype>(<classname>test_suite</classname>)</paramtype></parameter></method>
+<method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>id_list</paramtype></parameter><parameter name=""><paramtype>(<classname>test_unit</classname>)</paramtype></parameter></method>
+</method-group>
+<constructor/>
+<enum name="@2"><enumvalue name="type"><default>= TUT_SUITE</default></enumvalue></enum>
+<enum name="@0"><enumvalue name="type"><default>= TUT_ANY</default></enumvalue></enum>
+<typedef name="id_list"><type>std::list&lt; test_unit_id &gt;</type></typedef>
+<typedef name="fixture_list"><type>std::list&lt; test_unit_fixture_ptr &gt;</type></typedef>
+<typedef name="decorator_base"><type>decorator::for_test_unit_ptr</type></typedef>
+</class>
+
+
+
+<function name="make_test_case"><type><classname>test_case</classname> *</type><parameter name="test_func"><paramtype>boost::function&lt; void()&gt; const &amp;</paramtype></parameter><parameter name="tc_name"><paramtype>const_string</paramtype></parameter><parameter name="tc_file"><paramtype>const_string</paramtype></parameter><parameter name="tc_line"><paramtype>std::size_t</paramtype></parameter></function>
+<function name="make_test_case"><type><classname>test_case</classname> *</type><template>
+          <template-type-parameter name="UserTestCase"/>
+          <template-type-parameter name="InstanceType"/>
+        </template><parameter name="test_method"><paramtype>void(UserTestCase::*)()</paramtype></parameter><parameter name="tc_name"><paramtype>const_string</paramtype></parameter><parameter name="tc_file"><paramtype>const_string</paramtype></parameter><parameter name="tc_line"><paramtype>std::size_t</paramtype></parameter><parameter name="user_test_case"><paramtype>boost::shared_ptr&lt; InstanceType &gt;</paramtype></parameter></function>
+</namespace>
+</namespace>
+</header>
+<header name="boost/test/unit_test.hpp">
+<para>Entry point into the Unit Test Framework. </para><para>This header sould be the only header necessary to include to start using the framework </para><namespace name="boost">
+<namespace name="unit_test">
+
+
+
+<function name="unit_test_main"><type>int</type><parameter name="init_func"><paramtype>init_unit_test_func</paramtype></parameter><parameter name="argc"><paramtype>int</paramtype></parameter><parameter name="argv"><paramtype>char *</paramtype></parameter></function>
+
+
+</namespace>
+</namespace>
+<macro name="BOOST_LIB_NAME"/>
+</header>
+<header name="boost/test/unit_test_log_formatter.hpp">
+<para>Defines unit test log formatter interface. </para><para>You can define a class with implements this interface and use an instance of it as a Unit Test Framework log formatter </para><namespace name="boost">
+<namespace name="unit_test">
+<struct name="log_entry_data"><purpose>Collection of log entry attributes. </purpose><data-member name="m_file_name"><type>std::string</type><purpose>log entry file name </purpose></data-member>
+<data-member name="m_line_num"><type>std::size_t</type><purpose>log entry line number </purpose></data-member>
+<data-member name="m_level"><type>log_level</type><purpose>log entry level </purpose></data-member>
+<method-group name="public member functions">
+<method name="clear"><type>void</type></method>
+</method-group>
+<constructor/>
+</struct><struct name="log_checkpoint_data"><purpose>Collection of log checkpoint attributes. </purpose><data-member name="m_file_name"><type>const_string</type><purpose>log checkpoint file name </purpose></data-member>
+<data-member name="m_line_num"><type>std::size_t</type><purpose>log checkpoint file name </purpose></data-member>
+<data-member name="m_message"><type>std::string</type><purpose>log checkpoint message </purpose></data-member>
+<method-group name="public member functions">
+<method name="clear"><type>void</type></method>
+</method-group>
+</struct><class name="unit_test_log_formatter"><purpose>Abstract Unit Test Framework log formatter interface. </purpose><description><para>During the test module execution Unit Test Framework can report messages about success or failure of assertions, which test suites are being run and more (specifically which messages are reported depends on log level threashold selected by the user). All these messages constitute Unit Test Framework log. There are many ways (formats) to present these messages to the user. Boost.Test comes with two formats: "Compiler-like log format" and "XML based log format". Former is intended for human consumption and later is intended for processing by automated regression test systems. If you want to produce some other format you need to implement class with specific interface and use method unit_test_log_t::set_formatter during a test module initialization to set an active formatter. The class <classname alt="boost::unit_test::unit_test_log_formatter">unit_test_log_formatter</classname> defines this interface.</para><para>This interface requires you to format all possible messages being produced in the log. These includes error messages about failed assertions, messages about caught exceptions and information messages about test units being started/ended. All the methods in this interface takes a reference to standard stream as a first argument. This is where final messages needs to be directed to. Also you are givn all the informaion necessary to produce a message. </para></description><enum name="log_entry_types"><enumvalue name="BOOST_UTL_ET_INFO"><purpose>Information message from the framework. </purpose></enumvalue><enumvalue name="BOOST_UTL_ET_MESSAGE"><purpose>Information message from the user. </purpose></enumvalue><enumvalue name="BOOST_UTL_ET_WARNING"><purpose>Warning (non error) condition notification message. </purpose></enumvalue><enumvalue name="BOOST_UTL_ET_ERROR"><purpose>Non fatal error notification message. </purpose></enumvalue><enumvalue name="BOOST_UTL_ET_FATAL_ERROR"><purpose>Fatal error notification message. </purpose></enumvalue><purpose>Types of log entries (messages written into a log) </purpose></enum>
+<method-group name="public member functions">
+<method name="log_start" cv="= 0" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages to </para></description></parameter><parameter name="test_cases_amount"><paramtype>counter_t</paramtype><description><para>total test case amount to be run </para></description></parameter><purpose>Invoked at the begining of test module execution. </purpose><description><para>
+<para><emphasis role="bold">See Also:</emphasis><para>log_finish </para></para>
+</para></description></method>
+<method name="log_finish" cv="= 0" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><purpose>Invoked at the end of test module execution. </purpose><description><para>
+<para><emphasis role="bold">See Also:</emphasis><para>log_start </para></para>
+</para></description></method>
+<method name="log_build_info" cv="= 0" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><purpose>Invoked when Unit Test Framework build information is requested. </purpose><description><para>
+</para></description></method>
+<method name="test_unit_start" cv="= 0" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="tu"><paramtype><classname>test_unit</classname> const &amp;</paramtype><description><para>test unit being started </para></description></parameter><purpose>Invoked when test unit starts (either test suite or test case) </purpose><description><para>
+<para><emphasis role="bold">See Also:</emphasis><para>test_unit_finish </para></para>
+</para></description></method>
+<method name="test_unit_finish" cv="= 0" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="tu"><paramtype><classname>test_unit</classname> const &amp;</paramtype><description><para>test unit being finished </para></description></parameter><parameter name="elapsed"><paramtype>unsigned long</paramtype><description><para>time in milliseconds spend executing this test unit </para></description></parameter><purpose>Invoked when test unit finishes. </purpose><description><para>
+<para><emphasis role="bold">See Also:</emphasis><para>test_unit_start </para></para>
+</para></description></method>
+<method name="test_unit_skipped" cv="= 0" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="tu"><paramtype><classname>test_unit</classname> const &amp;</paramtype><description><para>skipped test unit </para></description></parameter><purpose>Invoked if test unit skipped for any reason. </purpose><description><para>
+</para></description></method>
+<method name="log_exception_start" cv="= 0" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="lcd"><paramtype><classname>log_checkpoint_data</classname> const &amp;</paramtype><description><para>information about the last checkpoint before the exception was triggered </para></description></parameter><parameter name="ex"><paramtype><classname>execution_exception</classname> const &amp;</paramtype><description><para>information about the caught exception </para></description></parameter><purpose>Invoked when Unit Test Framework detects uncaught exception. </purpose><description><para>Call to this function starts uncaught exception report. It is going to followed by context information. Report is finilized by call to log_exception_finish. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_exception_finish </para></para>
+</para></description></method>
+<method name="log_exception_finish" cv="= 0" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><purpose>Invoked when Unit Test Framework detects uncaught exception. </purpose><description><para>Call to this function finishes uncaught exception report. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_exception_start </para></para>
+</para></description></method>
+<method name="log_entry_start" cv="= 0" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="led"><paramtype><classname>log_entry_data</classname> const &amp;</paramtype><description><para>log entry attributes </para></description></parameter><parameter name="let"><paramtype>log_entry_types</paramtype><description><para>log entry type log_entry_finish </para></description></parameter><purpose>Invoked by Unit Test Framework to start new log entry. </purpose><description><para>Call to this function starts new log entry. It is followed by series of log_entry_value calls and finally call to log_entry_finish. A log entry may consist of one or more values being reported. Some of these values will be plain strings, while others can be complicated expressions in a form of "lazy" expression template lazy_ostream. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_value, log_entry_finish </para></para>
+</para></description></method>
+<method name="log_entry_value" cv="= 0" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into. </para></description></parameter><parameter name="value"><paramtype>const_string</paramtype><description><para>log entry string value </para></description></parameter><purpose>Invoked by Unit Test Framework to report a log entry content. </purpose><description><para>This is one of two overloaded methods to report log entry content. This one is used to report plain string value. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_start, log_entry_finish </para></para>
+</para></description></method>
+<method name="log_entry_value" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="value"><paramtype>lazy_ostream const &amp;</paramtype><description><para>log entry "lazy" value </para></description></parameter><purpose>Invoked by Unit Test Framework to report a log entry content. </purpose><description><para>This is one of two ovrloaded methods to report log entry content. This one is used to report some complicated expression passed as an expression template lazy_ostream. In most cases default implementation provided by the framework should work as is (it just converts the lazy expression into a string. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_start, log_entry_finish </para></para>
+</para></description></method>
+<method name="log_entry_finish" cv="= 0" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><purpose>Invoked by Unit Test Framework to finish a log entry report. </purpose><description><para>
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_start, log_entry_start </para></para>
+</para></description></method>
+<method name="entry_context_start" cv="= 0" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><purpose>Invoked by Unit Test Framework to start log entry context report. </purpose><description><para>Unit Test Framewrk logs for failed assertons and uncaught exceptions context if one was defined by a test mofule. Context consists of multiple "scopes" identified by description messages assigned by the test module using BOOST_TEST_INFO/BOOST_TEST_CONTEXT statements. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_context, entry_context_finish </para></para>
+</para></description></method>
+<method name="log_entry_context" cv="= 0" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><parameter name="value"><paramtype>const_string</paramtype><description><para>context "scope" description </para></description></parameter><purpose>Invoked by Unit Test Framework to report log entry context "scope" description. </purpose><description><para>Each "scope" description is reported by separate call to log_entry_context. 
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_start, entry_context_finish </para></para>
+</para></description></method>
+<method name="entry_context_finish" cv="= 0" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages into </para></description></parameter><purpose>Invoked by Unit Test Framework to finish log entry context report. </purpose><description><para>
+<para><emphasis role="bold">See Also:</emphasis><para>log_entry_start, entry_context_context </para></para>
+</para></description></method>
+</method-group>
+<destructor/>
+</class>
+
+
+
+
+
 </namespace>
 </namespace>
 </header>

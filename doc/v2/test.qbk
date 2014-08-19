@@ -164,13 +164,16 @@
 
 
 [/ this is the introduction that appears on the first page of the documentation]
+[/ maybe we can just get rid of it]
 [include forewords.qbk]
+
+[/ introduction material and general presentation ]
 [include overview.qbk]
-
-
-[include tutorials/tutorial.qbk]
-
 [include how_to_read_this_documentation.qbk]
+
+
+[/ some tutorial ]
+[include tutorials/tutorial.qbk]
 
 
 
