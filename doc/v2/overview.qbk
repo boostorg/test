@@ -22,8 +22,8 @@ most non-trivial ones.
 The Boost Test Library Unit Test Framework (further in the documentation referred by the acronym __UTF__) provides both
 an easy to use and flexible solution to this problem domain: C++ unit test implementation and organization.
 
-
-[h4 Objective and content]
+[/ ##################################################################### ]
+[section Objective and content]
 Unit testing tasks arise during many different stages of software development: from initial project implementation
 to its maintenance and later revisions. These tasks differ in their complexity and purpose and accordingly are
 approached differently by different developers. The wide spectrum of tasks in a problem domain cause many
@@ -46,7 +46,10 @@ The __UTF__ design is based on above rationale and provides versatile facilities
 * Organize test cases into a test tree. [/todo add a link utf.user-guide.test-organization]
 * Relieve you from messy error detection, reporting duties and framework runtime parameters processing.
 
-[h4 Functions]
+[endsect]
+
+[/ ##################################################################### ]
+[section Features implemented]
 [note the elements in bold below should be linked to the appropriate places once the doc ported]
 The __UTF__ keeps track of all passed/failed testing tools [*assertions], [/ todo link to assertion]
 provides an ability to check the [*test progress]
@@ -71,8 +74,11 @@ to be fully customized. Accordingly the material provided in this documentation 
 
 For those interested in getting started quickly please visit [*collection of examples] presented in this documentation.
 
+[endsect]
 
-[h4 Portability]
+
+[/ ##################################################################### ]
+[section Portability concerns]
 Because the Boost Test Library is critical for porting and testing Boost libraries, it has been written to be 
 conservative in its use of C++ features, and to keep dependencies to a bare minimum.
 
@@ -80,6 +86,8 @@ Boost.Test supports all main Boost compilers and platforms. Confirmation of its 
 platforms/compilers can be seen by viewing Boost.Test's own internal regression test results on 
 [@http://www.boost.org/development/tests/master/developer/test.html master branch status page] or
 [@http://www.boost.org/development/tests/develop/developer/test.html development branch status page]
+
+[endsect]
 
 
 [endsect] [/ What is Boost.Test?]
