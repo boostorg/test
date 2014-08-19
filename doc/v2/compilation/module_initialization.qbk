@@ -32,12 +32,14 @@ runner supplied with dynamic library variant of the __UTF__ requires new specifi
 original one. The plan is to deprecate the original initialization function specification in one of the future
 releases and ultimately to stop supporting it.
 
+[note 
 The initialization function invocation is monitored by the __UTF__ the same way as all the test cases. An unexpected 
 exception or system error detected during initialization function invocation is treated as initialization error and 
 is reported as such. 
+]
 
 [/ ###################################################################################################### ]
-[section Original initialization function]
+[heading Original initialization function]
 The original design of the __UTF__ initialization required you to implement the function with the following
 specification:
 
@@ -57,11 +59,11 @@ module invocation. It's guarantied that any framework-specific command line argu
 consisted with the alternative initialization function specification it's recommended though to access the
 command line arguments using the master test suite interface.
 
-[endsect] [/ original init function]
+[/[endsect] [/ original init function]]
 
 
 [/ ###################################################################################################### ]
-[section Alternative initialization function]
+[heading Alternative initialization function]
 The alternative design of the __UTF__ initialization requires you to implement a function with the following
 specification:
 ``
@@ -71,11 +73,11 @@ specification:
 The result value of this function indicates whether or not initialization was successful. To register test
 units in a master test suite use the test suite add interface. To access command line arguments use the master
 test suite interface. It's guarantied that any framework-specific command line arguments are excluded.
-[endsect] [/ alternative init function]
+[/[endsect] [/ alternative init function]]
 
 
 [/ ###################################################################################################### ]
-[section Initialization function signature access]
+[heading Initialization function signature access]
 
 The test runner interface needs to refer to the initialization function signature. The __UTF__ provides the typedef 
 that resolves to proper signature in all configurations:
@@ -92,11 +94,11 @@ namespace boost {
 }
 ``
 
-[endsect] [/ signatures]
+[/[endsect] [/ signatures]]
 
 
 [/ ###################################################################################################### ]
-[section Automated generation]
+[heading Automated generation]
 
 To automatically generate an empty test module initialization function you need to define 
 __BOOST_TEST_MAIN__ before including the
@@ -111,6 +113,6 @@ For a test module consisting of multiple source files you have to define these f
 Otherwise you end up with multiple instances of the initialization function.
 ]
    
-[endsect] [/ automated generation]
+[/[endsect] [/ automated generation]]
 
 [endsect] [/ test module initialisation]

@@ -1,7 +1,9 @@
 [section:users_guide User's guide]
 
 [/ ######################################################## ]
-[section:usage_variants The __UTF__ usage variants]
+[section:usage_variants Building a test module with the __UTF__]
+
+
 
 The __UTF__ presents you with 4 different variants how it can be used.
 
@@ -20,7 +22,7 @@ In most cases to compile a test module based on the __UTF__ all you need to incl
 ``
 
 This header includes internally most of the other headers that contains the __UTF__ definitions. Some advanced features, 
-like the floating point comparison or the logged  expectations testing, are defined in independent headers and need to be included explicitly.
+like the floating point comparison or the logged expectations testing, are defined in independent headers and need to be included explicitly.
 
 [include compilation/variant_static_lib.qbk]
 [include compilation/variant_dynamic_lib.qbk]
