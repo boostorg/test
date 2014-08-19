@@ -51,6 +51,11 @@ int main(int argc, char* argv[])
 
 [endsect]
 
+[section:link_boost_test_module_macro `BOOST_TEST_MODULE`]
+An example may be found [link ref_BOOST_TEST_MODULE here].
+
+[endsect]
+
 
 
 [endsect]
