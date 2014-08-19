@@ -21,7 +21,11 @@ kind of manual/assert based solution the __UTF__ provide following services:
   The __UTF__ provides the ability to configure the format of the test module output. At the moment only 2 formats
   are supported by the __UTF__ itself, the well defined public interface allows you to customize an output for
   your purposes almost any way you want.
-  
+
+[tip More details about the class implementing the formatting of the logs can be found in the following reference sections.
+[classref boost::unit_test::unit_test_log_formatter] defines the interface for all loggers. Included HRF and XML interfaces derive from this class.[br]
+[classref boost::unit_test::test_results] defines the information carried by the tests to provide reports and logs.
+]
   
 [section Test log output]
 
@@ -109,6 +113,7 @@ macros for this purpose:
 
 * __BOOST_TEST_CHECKPOINT__ to specify a ['named] checkpoint and 
 * __BOOST_TEST_PASSPOINT__ to specify an ['unnamed] checkpoint.
+
 
 
 [endsect] [/test_output]
@@ -279,6 +284,7 @@ code passes through.
 [section Reference]
 [:
   [headerref boost/test/output/compiler_log_formatter.hpp]
+  
 ]
 [endsect]
 
