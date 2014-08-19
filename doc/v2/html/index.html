@@ -38,38 +38,43 @@
 <p><b>Table of Contents</b></p>
 <dl class="toc">
 <dt><span class="section"><a href="boost_test/intro.html">What is Boost.Test?</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="boost_test/intro/objective_and_content.html">Objective and
+      content</a></span></dt>
+<dt><span class="section"><a href="boost_test/intro/features_implemented.html">Features implemented</a></span></dt>
+<dt><span class="section"><a href="boost_test/intro/portability_concerns.html">Portability concerns</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="boost_test/how_to_read_this_documentation.html">How to read
+    this documentation?</a></span></dt>
 <dt><span class="section"><a href="boost_test/tutorial.html">Tutorials</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="boost_test/tutorial/hello.html">Hello the testing world!</a></span></dt>
 <dt><span class="section"><a href="boost_test/tutorial/bt_and_tdd.html">Boost.Test driven development</a></span></dt>
 </dl></dd>
-<dt><span class="section"><a href="boost_test/how_to_read_this_documentation.html">How to read
-    this documentation?</a></span></dt>
-<dt><span class="section"><a href="boost_test/users_guide.html">User's guide</a></span></dt>
+<dt><span class="section"><a href="boost_test/users_guide.html">Building a test module with the
+    <span class="emphasis"><em>UTF</em></span></a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="boost_test/users_guide/usage_variants.html">The <span class="emphasis"><em>UTF</em></span>
-      usage variants</a></span></dt>
+<dt><span class="section"><a href="boost_test/users_guide/module_initialization.html">Test module
+      initialization</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="boost_test/users_guide/usage_variants/static_lib_variant.html">The
-        static library variant of the <span class="emphasis"><em>UTF</em></span></a></span></dt>
-<dt><span class="section"><a href="boost_test/users_guide/usage_variants/dynamic_lib_variant.html">The
-        dynamic library variant of the <span class="emphasis"><em>UTF</em></span></a></span></dt>
+<dt><span class="section"><a href="boost_test/users_guide/module_initialization/legacy_initialization_function.html">Legacy
+        initialization function</a></span></dt>
+<dt><span class="section"><a href="boost_test/users_guide/module_initialization/initialization_function.html">Initialization
+        function</a></span></dt>
+<dt><span class="section"><a href="boost_test/users_guide/module_initialization/automated_generation.html">Automated
+        generation</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="boost_test/users_guide/usage_variants.html">Linking with the
+      <span class="emphasis"><em>UTF</em></span></a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="boost_test/users_guide/usage_variants/static_lib_variant.html">Static
+        library variant</a></span></dt>
+<dt><span class="section"><a href="boost_test/users_guide/usage_variants/dynamic_lib_variant.html">Dynamic
+        library variant</a></span></dt>
 <dt><span class="section"><a href="boost_test/users_guide/usage_variants/single_header_variant.html">The
         single-header variant of the <span class="emphasis"><em>UTF</em></span></a></span></dt>
 <dt><span class="section"><a href="boost_test/users_guide/usage_variants/extern_test_runner_variant.html">The
         external test runner variant of the <span class="emphasis"><em>UTF</em></span></a></span></dt>
-</dl></dd>
-<dt><span class="section"><a href="boost_test/users_guide/module_initialization.html">Test module
-      initialization</a></span></dt>
-<dd><dl>
-<dt><span class="section"><a href="boost_test/users_guide/module_initialization/original_initialization_function.html">Original
-        initialization function</a></span></dt>
-<dt><span class="section"><a href="boost_test/users_guide/module_initialization/alternative_initialization_funct.html">Alternative
-        initialization function</a></span></dt>
-<dt><span class="section"><a href="boost_test/users_guide/module_initialization/initialization_function_signatur.html">Initialization
-        function signature access</a></span></dt>
-<dt><span class="section"><a href="boost_test/users_guide/module_initialization/automated_generation.html">Automated
-        generation</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="boost_test/users_guide/link_references.html">Macros that control
       the build behaviours</a></span></dt>
@@ -78,9 +83,12 @@
 <dt><span class="section"><a href="boost_test/users_guide/link_references/link_boost_test_alternative_init_macro.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_ALTERNATIVE_INIT_API</span></code></a></span></dt>
 <dt><span class="section"><a href="boost_test/users_guide/link_references/link_boost_test_no_lib.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_NO_LIB</span></code></a></span></dt>
 <dt><span class="section"><a href="boost_test/users_guide/link_references/link_boost_test_dyn_link.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_DYN_LINK</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/users_guide/link_references/link_boost_test_no_main.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_NO_MAIN</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_test/users_guide/link_references/link_boost_test_module_macro.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_MODULE</span></code></a></span></dt>
 </dl></dd>
 </dl></dd>
-<dt><span class="section"><a href="boost_test/tests_organization.html">Organizing the tests</a></span></dt>
+<dt><span class="section"><a href="boost_test/tests_organization.html">Registering, generating
+    and organizing the unit tests</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="boost_test/tests_organization/test_cases.html">Test cases</a></span></dt>
 <dd><dl>
@@ -268,7 +276,17 @@
 <dd><dl></dl></dd>
 <dt><span class="section"><a href="header/boost/test/progress_monitor_hpp.html">Header &lt;boost/test/progress_monitor.hpp&gt;</a></span></dt>
 <dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/test/results_collector_hpp.html">Header &lt;boost/test/results_collector.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/test/results_reporter_hpp.html">Header &lt;boost/test/results_reporter.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
 <dt><span class="section"><a href="header/boost/test/tools/assertion_result_hpp.html">Header &lt;boost/test/tools/assertion_result.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/test/tree/test_unit_hpp.html">Header &lt;boost/test/tree/test_unit.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/test/unit_test_hpp.html">Header &lt;boost/test/unit_test.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/test/unit_test_log_formatter_hpp.html">Header &lt;boost/test/unit_test_log_formatter.hpp&gt;</a></span></dt>
 <dd><dl></dl></dd>
 </dl></dd>
 </dl>
@@ -316,7 +334,7 @@
 </ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: July 06, 2014 at 14:07:53 GMT</small></p></td>
+<td align="left"><p><small>Last revised: August 19, 2014 at 23:53:48 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

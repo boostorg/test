@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>User's guide</title>
+<title>Building a test module with the UTF</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="Boost.Test">
 <link rel="up" href="../index.html" title="Boost.Test">
-<link rel="prev" href="how_to_read_this_documentation.html" title="How to read this documentation?">
-<link rel="next" href="users_guide/usage_variants.html" title="The UTF usage variants">
+<link rel="prev" href="tutorial/bt_and_tdd.html" title="Boost.Test driven development">
+<link rel="next" href="users_guide/module_initialization.html" title="Test module initialization">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,36 +20,35 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="how_to_read_this_documentation.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="users_guide/usage_variants.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="tutorial/bt_and_tdd.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="users_guide/module_initialization.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="boost_test.users_guide"></a><a class="link" href="users_guide.html" title="User's guide">User's guide</a>
+<a name="boost_test.users_guide"></a><a class="link" href="users_guide.html" title="Building a test module with the UTF">Building a test module with the
+    <span class="emphasis"><em>UTF</em></span></a>
 </h2></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="users_guide/usage_variants.html">The <span class="emphasis"><em>UTF</em></span>
-      usage variants</a></span></dt>
+<dt><span class="section"><a href="users_guide/module_initialization.html">Test module
+      initialization</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="users_guide/usage_variants/static_lib_variant.html">The
-        static library variant of the <span class="emphasis"><em>UTF</em></span></a></span></dt>
-<dt><span class="section"><a href="users_guide/usage_variants/dynamic_lib_variant.html">The
-        dynamic library variant of the <span class="emphasis"><em>UTF</em></span></a></span></dt>
+<dt><span class="section"><a href="users_guide/module_initialization/legacy_initialization_function.html">Legacy
+        initialization function</a></span></dt>
+<dt><span class="section"><a href="users_guide/module_initialization/initialization_function.html">Initialization
+        function</a></span></dt>
+<dt><span class="section"><a href="users_guide/module_initialization/automated_generation.html">Automated
+        generation</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="users_guide/usage_variants.html">Linking with the
+      <span class="emphasis"><em>UTF</em></span></a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="users_guide/usage_variants/static_lib_variant.html">Static
+        library variant</a></span></dt>
+<dt><span class="section"><a href="users_guide/usage_variants/dynamic_lib_variant.html">Dynamic
+        library variant</a></span></dt>
 <dt><span class="section"><a href="users_guide/usage_variants/single_header_variant.html">The
         single-header variant of the <span class="emphasis"><em>UTF</em></span></a></span></dt>
 <dt><span class="section"><a href="users_guide/usage_variants/extern_test_runner_variant.html">The
         external test runner variant of the <span class="emphasis"><em>UTF</em></span></a></span></dt>
-</dl></dd>
-<dt><span class="section"><a href="users_guide/module_initialization.html">Test module
-      initialization</a></span></dt>
-<dd><dl>
-<dt><span class="section"><a href="users_guide/module_initialization/original_initialization_function.html">Original
-        initialization function</a></span></dt>
-<dt><span class="section"><a href="users_guide/module_initialization/alternative_initialization_funct.html">Alternative
-        initialization function</a></span></dt>
-<dt><span class="section"><a href="users_guide/module_initialization/initialization_function_signatur.html">Initialization
-        function signature access</a></span></dt>
-<dt><span class="section"><a href="users_guide/module_initialization/automated_generation.html">Automated
-        generation</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="users_guide/link_references.html">Macros that control
       the build behaviours</a></span></dt>
@@ -58,6 +57,8 @@
 <dt><span class="section"><a href="users_guide/link_references/link_boost_test_alternative_init_macro.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_ALTERNATIVE_INIT_API</span></code></a></span></dt>
 <dt><span class="section"><a href="users_guide/link_references/link_boost_test_no_lib.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_NO_LIB</span></code></a></span></dt>
 <dt><span class="section"><a href="users_guide/link_references/link_boost_test_dyn_link.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_DYN_LINK</span></code></a></span></dt>
+<dt><span class="section"><a href="users_guide/link_references/link_boost_test_no_main.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_NO_MAIN</span></code></a></span></dt>
+<dt><span class="section"><a href="users_guide/link_references/link_boost_test_module_macro.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_MODULE</span></code></a></span></dt>
 </dl></dd>
 </dl></div>
 </div>
@@ -72,7 +73,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="how_to_read_this_documentation.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="users_guide/usage_variants.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="tutorial/bt_and_tdd.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="users_guide/module_initialization.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>
