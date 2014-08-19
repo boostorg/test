@@ -26,10 +26,17 @@ doxygen autodoc_execution_monitor
       $(BOOST_ROOT)/libs/test/include/boost/test/output/xml_report_formatter.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/output/plain_report_formatter.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/output/compiler_log_formatter.hpp
+
+      # log formatter
+      $(BOOST_ROOT)/libs/test/include/boost/test/unit_test_log_formatter.hpp
+      $(BOOST_ROOT)/libs/test/include/boost/test/results_reporter.hpp
+      $(BOOST_ROOT)/libs/test/include/boost/test/results_collector.hpp
       
       # progress monitor
       $(BOOST_ROOT)/libs/test/include/boost/test/progress_monitor.hpp
       
+      # test cases and suites
+      $(BOOST_ROOT)/libs/test/include/boost/test/tree/test_unit.hpp
 
     :
         <doxygen:param>EXTRACT_ALL=YES
