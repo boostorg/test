@@ -132,6 +132,7 @@ private:
 // **************                  test_suite                  ************** //
 // ************************************************************************** //
 
+//! Class representing test suites
 class BOOST_TEST_DECL test_suite : public test_unit {
 public:
     enum { type = TUT_SUITE };
@@ -140,10 +141,15 @@ public:
     explicit        test_suite( const_string ts_name, const_string ts_file, std::size_t ts_line );
 
     // test unit list management
+
+    //! Adds a test unit to a test suite, with possibility to specify the timeout and the expected failures.
     void            add( test_unit* tu, counter_t expected_failures = 0, unsigned timeout = 0 );
     void            add( test_unit_generator const& gen, unsigned timeout = 0 );
+    
+    //! Removes a test from the test suite.
     void            remove( test_unit_id id );
 
+    
     // access methods
     test_unit_id    get( const_string tu_name ) const;
     std::size_t     size() const { return m_members.size(); }

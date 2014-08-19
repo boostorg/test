@@ -84,8 +84,6 @@ struct BOOST_TEST_DECL log_checkpoint_data
 /// This interface requires you to format all possible messages being produced in the log. These includes error messages about failed assertions, messages 
 /// about caught exceptions and information messages about test units being started/ended. All the methods in this interface takes a reference to standard
 /// stream as a first argument. This is where final messages needs to be directed to. Also you are givn all the informaion necessary to produce a message.
-// ************************************************************************** //
-
 class BOOST_TEST_DECL unit_test_log_formatter {
 public:
     /// Types of log entries (messages written into a log)
@@ -99,7 +97,7 @@ public:
     // Destructor
     virtual             ~unit_test_log_formatter() {}
 
-    /// @name Test start/finish
+    // @name Test start/finish
 
     /// Invoked at the begining of test module execution
 
@@ -118,9 +116,9 @@ public:
 
     /// @param[in] os   output stream to write a messages into
     virtual void        log_build_info( std::ostream& os ) = 0;
-    /// @}
+    // @}
 
-    /// @name Test unit start/finish
+    // @name Test unit start/finish
 
     /// Invoked when test unit starts (either test suite or test case)
 
@@ -142,9 +140,9 @@ public:
     /// @param[in] os   output stream to write a messages into
     /// @param[in] tu   skipped test unit
     virtual void        test_unit_skipped( std::ostream& os, test_unit const& tu ) = 0;
-    /// @}
+    // @}
 
-    /// @name Uncaught exception report
+    // @name Uncaught exception report
 
     /// Invoked when Unit Test Framework detects uncaught exception
 
@@ -162,9 +160,9 @@ public:
     /// @param[in] os   output stream to write a messages into
     /// @see log_exception_start
     virtual void        log_exception_finish( std::ostream& os ) = 0;
-    /// @}
+    // @}
 
-    /// @name Regular log entry
+    // @name Regular log entry
 
     /// Invoked by Unit Test Framework to start new log entry
 
@@ -200,9 +198,9 @@ public:
     /// @param[in] os   output stream to write a messages into
     /// @see log_entry_start, log_entry_start
     virtual void        log_entry_finish( std::ostream& os ) = 0;
-    /// @}
+    // @}
 
-    /// @name Log entry context report
+    // @name Log entry context report
 
     /// Invoked by Unit Test Framework to start log entry context report
 
@@ -226,7 +224,7 @@ public:
     /// @param[in] os   output stream to write a messages into
     /// @see log_entry_start, entry_context_context
     virtual void        entry_context_finish( std::ostream& os ) = 0;
-    /// @}
+    // @}
 };
 
 } // namespace unit_test
