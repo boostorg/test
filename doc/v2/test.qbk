@@ -64,10 +64,8 @@
 [def __BOOST_TEST_DYN_LINK__              [link boost_test.users_guide.link_references.link_boost_test_dyn_link               `BOOST_TEST_DYN_LINK`]]
 [def __BOOST_TEST_NO_LIB__                [link boost_test.users_guide.link_references.link_boost_test_no_lib                 `BOOST_TEST_NO_LIB`]]
 [def __BOOST_TEST_NO_MAIN__               [link boost_test.users_guide.link_references.link_boost_test_no_main                `BOOST_TEST_NO_MAIN`]]
+[def __BOOST_TEST_MODULE__                [link boost_test.users_guide.link_references.link_boost_test_module_macro           `BOOST_TEST_MODULE`]]
 
-
-[/ Master test suite renaming + declaration of BOOST_TEST_MAIN ]
-[def __BOOST_TEST_MODULE__                [link ref_BOOST_TEST_MODULE `BOOST_TEST_MODULE`]]
 
 
 [def __BOOST_TEST_CHECKPOINT__            [link boost_test.test_output.test_output_macro_checkpoint `BOOST_TEST_CHECKPOINT`]]
