@@ -20,6 +20,7 @@ doxygen autodoc_execution_monitor
       $(BOOST_ROOT)/libs/test/include/boost/test/framework.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/parameterized_test.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/tools/assertion_result.hpp
+      $(BOOST_ROOT)/libs/test/include/boost/test/unit_test.hpp
 
       # formatters
       $(BOOST_ROOT)/libs/test/include/boost/test/output/xml_log_formatter.hpp
