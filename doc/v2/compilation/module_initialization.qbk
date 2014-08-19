@@ -1,16 +1,18 @@
 [section:module_initialization Test module initialization]
 There are two tasks that you may need to perform before actual testing can start:
 
-* The test tree needs to be built (unless you are using automated test units registration).
+* The test tree needs to be built: unless you are using automated test units registration, the tests that should be run and their relationship
+  should be indicated.
 * Custom ['test module initialization] needs to be performed. This includes
   initialization of the code under test and custom tune-up of the __UTF__ parameters (for example the test log or the
-  test results report output streams redirection).
+  test results report output streams redirection, some command line parameters passed to the test module, etc.).
 
+The function dedicated for this purpose is called ['the test module initialization function]. 
 
-The function dedicated for this purpose is called ['the test module initialization function]. Alternatively you can
+[note Alternatively you can
 employ global fixtures, covered in details, including differences in two approaches, in the [link boost_test.tests_organization.fixtures fixtures]
 section.
-
+]
 
 The __UTF__ requires you to implement the test module initialization function. The test runner supplied with the static
 library or single-header variants of the __UTF__ requires the specific function specification. The test runner supplied
@@ -32,14 +34,14 @@ runner supplied with dynamic library variant of the __UTF__ requires new specifi
 original one. The plan is to deprecate the original initialization function specification in one of the future
 releases and ultimately to stop supporting it.
 
-[note 
+[important 
 The initialization function invocation is monitored by the __UTF__ the same way as all the test cases. An unexpected 
 exception or system error detected during initialization function invocation is treated as initialization error and 
 is reported as such. 
 ]
 
 [/ ###################################################################################################### ]
-[heading Original initialization function]
+[section Legacy initialization function]
 The original design of the __UTF__ initialization required you to implement the function with the following
 specification:
 
@@ -52,18 +54,18 @@ This function was intended to initialize and return a master test suite. The nul
 error. The current design of the __UTF__ maintains master test suite instance internally and does not treat the null result 
 value as an initialization error. In fact it's recommended to return null value always and register test units in the 
 master test suite using the regular test suite add interface. The only way to indicate an initialization error is to throw the
-``boost::unit_test::framework::setup_error`` exception.
+[classref boost::unit_test::framework::setup_error] exception.
 
 The initialization function parameters argc, argv provide the command line arguments specified during test
 module invocation. It's guarantied that any framework-specific command line arguments are excluded. To be
 consisted with the alternative initialization function specification it's recommended though to access the
 command line arguments using the master test suite interface.
 
-[/[endsect] [/ original init function]]
+[endsect] [/ legacy init function]
 
 
 [/ ###################################################################################################### ]
-[heading Alternative initialization function]
+[section Initialization function]
 The alternative design of the __UTF__ initialization requires you to implement a function with the following
 specification:
 ``
@@ -73,7 +75,7 @@ specification:
 The result value of this function indicates whether or not initialization was successful. To register test
 units in a master test suite use the test suite add interface. To access command line arguments use the master
 test suite interface. It's guarantied that any framework-specific command line arguments are excluded.
-[/[endsect] [/ alternative init function]]
+[endsect] [/ alternative init function]
 
 
 [/ ###################################################################################################### ]
@@ -98,7 +100,7 @@ namespace boost {
 
 
 [/ ###################################################################################################### ]
-[heading Automated generation]
+[section Automated generation]
 
 To automatically generate an empty test module initialization function you need to define 
 __BOOST_TEST_MAIN__ before including the
@@ -113,6 +115,6 @@ For a test module consisting of multiple source files you have to define these f
 Otherwise you end up with multiple instances of the initialization function.
 ]
    
-[/[endsect] [/ automated generation]]
+[endsect] [/ automated generation]
 
 [endsect] [/ test module initialisation]
