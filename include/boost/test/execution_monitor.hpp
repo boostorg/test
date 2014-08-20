@@ -227,7 +227,6 @@ public:
     ///        
     /// @note(2) These errors include Unix signals and Windows structured
     /// exceptions. They are often initiated by hardware traps.
-
     enum error_code {
         no_error               = 0,   ///< for completeness only; never returned
         user_error             = 200, ///< user reported non-fatal error
@@ -286,13 +285,9 @@ private:
 class BOOST_TEST_DECL execution_monitor {
     typedef boost::unit_test::const_string const_string;
 public:
-    /// @name Constructor
 
     /// Default constructor initializes all execution monitor properties
     execution_monitor();
-    ///@}
-
-    /// @name Public properties
 
     /// Should monitor catch system errors.
     ///
@@ -327,9 +322,9 @@ public:
     /// The @em p_detect_fp_exceptions property is a boolean flag (default value is false) specifying whether or not execution_monitor should install hardware 
     /// traps for the floating point exception on platforms where it's supported.
     unit_test::readwrite_property<unsigned> p_detect_fp_exceptions;
-    ///@}
 
-    /// @name Monitoring entry points
+
+    // @name Monitoring entry points
 
     /// @brief Execution monitor entry point for functions returning integer value 
     ///
@@ -349,9 +344,9 @@ public:
     /// @param[in] F  Function to monitor
     /// @see execute
     void         vexecute( boost::function<void ()> const& F ); 
-    /// @}
+    // @}
 
-    /// @name Exception translator registration
+    // @name Exception translator registration
         
     /// @brief Registers custom (user supplied) exception translator
 
@@ -388,7 +383,7 @@ public:
     {
         m_custom_translators = m_custom_translators->erase<ExceptionType>( m_custom_translators );
     }
-    ///@}
+    //@}
 
 private:
     // implementation helpers
