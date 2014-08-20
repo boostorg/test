@@ -1,6 +1,6 @@
 [#ref_execution_monitor][section:execution_monitor The Execution Monitor]
 
-ion and make sure that no user or system originated exceptions are being thrown
+Sometimes we need to call a function and make sure that no user or system originated exceptions are being thrown
 by it. Uniform exception reporting is also may be convenient. That's the purpose of the Boost.Test's
 ['Execution Monitor].
 
