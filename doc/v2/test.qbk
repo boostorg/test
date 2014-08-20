@@ -201,6 +201,7 @@
 [/ Raffi: I think it would be better to put this in test variants]
 [include minimal-testing.qbk]
 [include monitor.program-execution.qbk]
+[include monitor.execution.qbk]
 [endsect]
 
 
