@@ -31,11 +31,9 @@
 <dt><span class="section"><a href="users_guide/module_initialization.html">Test module
       initialization</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="users_guide/module_initialization/legacy_initialization_function.html">Legacy
-        initialization function</a></span></dt>
-<dt><span class="section"><a href="users_guide/module_initialization/initialization_function.html">Initialization
-        function</a></span></dt>
-<dt><span class="section"><a href="users_guide/module_initialization/automated_generation.html">Automated
+<dt><span class="section"><a href="users_guide/module_initialization/custom_module_initialisation.html">Custom
+        module initialisation</a></span></dt>
+<dt><span class="section"><a href="users_guide/module_initialization/module_initialisation_automated.html">Automated
         generation</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="users_guide/usage_variants.html">Linking with the
@@ -61,6 +59,50 @@
 <dt><span class="section"><a href="users_guide/link_references/link_boost_test_module_macro.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_MODULE</span></code></a></span></dt>
 </dl></dd>
 </dl></div>
+<p>
+      There are two tasks should be performed before actual testing is able to start:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          The test tree needs to be built: unless automated test units registration
+          is used, the tests that should be run and their relationship should be
+          indicated.
+        </li>
+<li class="listitem">
+          Custom <span class="emphasis"><em>test module initialization</em></span> needs to be performed.
+          This includes initialization of the code under test and custom tune-up
+          of the <span class="emphasis"><em>UTF</em></span> parameters (for example the test log or
+          the test results report output streams redirection, some command line parameters
+          passed to the test module, etc.).
+        </li>
+</ul></div>
+<p>
+      The part of the <span class="emphasis"><em>UTF</em></span> dedicated for this purpose is called
+      <a class="link" href="users_guide/module_initialization.html" title="Test module initialization"><span class="emphasis"><em>the
+      test module initialization</em></span></a> function.
+    </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        Note that alternatively to <span class="emphasis"><em>module initialization</em></span>, global
+        <a class="link" href="tests_organization/fixtures.html" title="Fixtures">fixtures</a> may
+        be employed.
+      </p></td></tr>
+</table></div>
+<p>
+      The <span class="emphasis"><em>module initialization</em></span> and the way the test module
+      is linked against the <span class="emphasis"><em>UTF</em></span> are closely related. The method
+      used to link against the <span class="emphasis"><em>UTF</em></span> are often lead by considerations
+      external to the tests themselves (compilation time, size of the generated binaries,
+      etc). However, the functions of the <span class="emphasis"><em>module initialization</em></span>
+      involved in, say static and dynamic linking, will not be the same. To cover
+      many possible usages, the <span class="emphasis"><em>UTF</em></span> handles several different
+      variants of linking, and indirectly the tools for proper <span class="emphasis"><em>module initialization</em></span>
+      corresponding to each of these variants are provided.
+    </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

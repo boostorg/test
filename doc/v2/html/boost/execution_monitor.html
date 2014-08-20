@@ -35,10 +35,10 @@
 <span class="keyword">class</span> <a class="link" href="execution_monitor.html" title="Class execution_monitor">execution_monitor</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="execution_monitor.html#boost.execution_monitorconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="execution_monitor.html#idm73294428400-bb"><span class="identifier">execution_monitor</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="execution_monitor.html#idm477440033680-bb"><span class="identifier">execution_monitor</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="execution_monitor.html#idm73294412256-bb">private member functions</a></span>
-  <span class="keyword">int</span> <a class="link" href="execution_monitor.html#idm73294411728-bb"><span class="identifier">catch_signals</span></a><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span> <span class="keyword">int</span><span class="special">(</span><span class="special">)</span><span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="execution_monitor.html#idm477440017536-bb">private member functions</a></span>
+  <span class="keyword">int</span> <a class="link" href="execution_monitor.html#idm477440017008-bb"><span class="identifier">catch_signals</span></a><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span> <span class="keyword">int</span><span class="special">(</span><span class="special">)</span><span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="execution_monitor.html#boost.execution_monitorpublic-data-members">public data members</a></span>
   <span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">readwrite_property</span><span class="special">&lt;</span> <span class="keyword">bool</span> <span class="special">&gt;</span> <a class="link" href="execution_monitor.html#boost.execution_monitor.p_catch_system_errors"><span class="identifier">p_catch_system_errors</span></a><span class="special">;</span>  <span class="comment">// Should monitor catch system errors. </span>
@@ -48,24 +48,24 @@
   <span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">readwrite_property</span><span class="special">&lt;</span> <span class="keyword">unsigned</span> <span class="special">&gt;</span> <a class="link" href="execution_monitor.html#boost.execution_monitor.p_detect_fp_exceptions"><span class="identifier">p_detect_fp_exceptions</span></a><span class="special">;</span>  <span class="comment">// Should monitor try to detect hardware floating point exceptions (!= 0), and which specific exception to catch. </span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm463474624128"></a><h2>Description</h2>
+<a name="idm460463858608"></a><h2>Description</h2>
 <p>This class is used to uniformly detect and report an occurrence of several types of signals and exceptions, reducing various errors to a uniform <a class="link" href="execution_exception.html" title="Class execution_exception">execution_exception</a> that is returned to a caller.</p>
 <p>The executiom_monitor behavior can be customised through a set of public parameters (properties) associated with the <a class="link" href="execution_monitor.html" title="Class execution_monitor">execution_monitor</a> instance. All parameters are implemented as public unit_test::readwrite_property data members of the class <a class="link" href="execution_monitor.html" title="Class execution_monitor">execution_monitor</a>. </p>
 <div class="refsect2">
-<a name="idm463474620480"></a><h3>
+<a name="idm460463854960"></a><h3>
 <a name="boost.execution_monitorconstruct-copy-destruct"></a><code class="computeroutput">execution_monitor</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idm73294428400-bb"></a><span class="identifier">execution_monitor</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Default constructor initializes all execution monitor properties. </li></ol></div>
+<pre class="literallayout"><a name="idm477440033680-bb"></a><span class="identifier">execution_monitor</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Default constructor initializes all execution monitor properties. </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idm463474614816"></a><h3>
-<a name="idm73294412256-bb"></a><code class="computeroutput">execution_monitor</code> private member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">int</span> <a name="idm73294411728-bb"></a><span class="identifier">catch_signals</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span> <span class="keyword">int</span><span class="special">(</span><span class="special">)</span><span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> F<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<a name="idm460463849296"></a><h3>
+<a name="idm477440017536-bb"></a><code class="computeroutput">execution_monitor</code> private member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">int</span> <a name="idm477440017008-bb"></a><span class="identifier">catch_signals</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span> <span class="keyword">int</span><span class="special">(</span><span class="special">)</span><span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> F<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idm463474603152"></a><h3>
+<a name="idm460463837632"></a><h3>
 <a name="boost.execution_monitorpublic-data-members"></a><code class="computeroutput">execution_monitor</code> 
         public
        public data members</h3>

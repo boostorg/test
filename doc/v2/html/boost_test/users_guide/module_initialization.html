@@ -7,7 +7,7 @@
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../users_guide.html" title="Building a test module with the UTF">
 <link rel="prev" href="../users_guide.html" title="Building a test module with the UTF">
-<link rel="next" href="module_initialization/legacy_initialization_function.html" title="Legacy initialization function">
+<link rel="next" href="module_initialization/custom_module_initialisation.html" title="Custom module initialisation">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../users_guide.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../users_guide.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="module_initialization/legacy_initialization_function.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../users_guide.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../users_guide.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="module_initialization/custom_module_initialisation.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -28,116 +28,76 @@
       initialization</a>
 </h3></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="module_initialization/legacy_initialization_function.html">Legacy
-        initialization function</a></span></dt>
-<dt><span class="section"><a href="module_initialization/initialization_function.html">Initialization
-        function</a></span></dt>
-<dt><span class="section"><a href="module_initialization/automated_generation.html">Automated
+<dt><span class="section"><a href="module_initialization/custom_module_initialisation.html">Custom
+        module initialisation</a></span></dt>
+<dt><span class="section"><a href="module_initialization/module_initialisation_automated.html">Automated
         generation</a></span></dt>
 </dl></div>
 <p>
-        There are two tasks should be performed before actual testing is able to
-        start:
+        As explained in the introductory material, the <span class="emphasis"><em>module initialization</em></span>
+        part of the <span class="emphasis"><em>UTF</em></span> prepares the test module for execution,
+        including:
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-            The test tree needs to be built: unless you are using automated test
-            units registration, the tests that should be run and their relationship
-            should be indicated.
+            the construction of the test tree
           </li>
 <li class="listitem">
-            Custom <span class="emphasis"><em>test module initialization</em></span> needs to be performed.
-            This includes initialization of the code under test and custom tune-up
-            of the <span class="emphasis"><em>UTF</em></span> parameters (for example the test log
-            or the test results report output streams redirection, some command line
-            parameters passed to the test module, etc.).
+            some optional custom initialisations
+          </li>
+</ul></div>
+<div class="caution"><table border="0" summary="Caution">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="../../../../../../../doc/src/images/caution.png"></td>
+<th align="left">Caution</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+          The elementary question one should ask himself is the following:
+        </p>
+<div class="blockquote"><blockquote class="blockquote"><p>
+            <span class="quote">&#8220;<span class="quote">Is there really a need for implementing the module initialisation
+            by yourself?</span>&#8221;</span>
+          </p></blockquote></div>
+</td></tr>
+</table></div>
+<p>
+        The argument against the implementation of a custom <span class="emphasis"><em>module initialization</em></span>
+        are the following:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            The test tree can be easily and efficiently constructed automatically
+            (covered in details in <a class="link" href="../tests_organization.html" title="Registering, generating and organizing the unit tests">this</a>
+            section).
+          </li>
+<li class="listitem">
+            <span class="emphasis"><em>UTF</em></span> also provides means to <a class="link" href="../tests_organization/test_organization_test_suite/master_test_suite.html#ref_BOOST_TEST_MODULE">rename</a>
+            the <span class="emphasis"><em>master test suite</em></span>.
+          </li>
+<li class="listitem">
+            Most of the command line parameters, except the ones used by the <span class="emphasis"><em>UTF</em></span>,
+            may be accessed through the <span class="emphasis"><em>master test suite</em></span>
+          </li>
+<li class="listitem">
+            <a class="link" href="../tests_organization/fixtures/global_fixture.html#ref_fixture_test_global">Global fixtures</a> may provide
+            <span class="emphasis"><em>states</em></span> that can be accessed during the lifetime
+            of the tests, with proper and controlled initialization and release.
+            This approach covers several use case that might need the tweaking of
+            the initialization functions, adding the robustness of the <span class="emphasis"><em>UTF</em></span>
+            in the initialization and release themselves.
+          </li>
+<li class="listitem">
+            If the test module is old and the need for <span class="emphasis"><em>module initialization</em></span>
+            is just driven by legacy code, then considering updating this part might
+            be a good choice.
           </li>
 </ul></div>
 <p>
-        The function dedicated for this purpose is called <span class="emphasis"><em>the test module
-        initialization function</em></span>.
+        From the points above, if the need for <span class="emphasis"><em>module initialization</em></span>
+        is not there anymore, then you may jump directly to the <a class="link" href="module_initialization/module_initialisation_automated.html" title="Automated generation">automated
+        section</a> directly.
       </p>
-<div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-          Alternatively you can employ global fixtures, covered in details, including
-          differences in two approaches, in the <a class="link" href="../tests_organization/fixtures.html" title="Fixtures">fixtures</a>
-          section.
-        </p></td></tr>
-</table></div>
-<p>
-        The <span class="emphasis"><em>UTF</em></span> requires you to implement the test module initialization
-        function. The test runner supplied with the static library or single-header
-        variants of the <span class="emphasis"><em>UTF</em></span> requires the specific function specification.
-        The test runner supplied with the dynamic library variant of the <span class="emphasis"><em>UTF</em></span>
-        requires the specific initialization function signature only.
-      </p>
-<div class="warning"><table border="0" summary="Warning">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../../../../../doc/src/images/warning.png"></td>
-<th align="left">Warning</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-          TO FIX: specific specification
-        </p></td></tr>
-</table></div>
-<p>
-        For many <a class="link" href="../section_glossary.html#ref_test_module">test modules</a>, no custom initialization
-        is required and test tree construction is automated. In this case, these
-        initialization functions are not needed as the <span class="emphasis"><em>UTF</em></span> provides
-        a way to automatically generate an empty one.
-      </p>
-<p>
-        Original design of the <span class="emphasis"><em>UTF</em></span> supported the manual test
-        tree construction only. Later versions introduced the automated registration
-        of test units. In later versions of the <span class="emphasis"><em>UTF</em></span> the original
-        initialization function specification became inconvenient and unnecessary
-        unsafe. So the alternative initialization function specification was introduced.
-        This change is not backward compatible. The test runners supplied with the
-        static library and single-header variants of the <span class="emphasis"><em>UTF</em></span>
-        by default still require original initialization function specification,
-        but support &lt;link linkend="utf.compilation.flags"&gt;compilation
-        flags&lt;/link&gt; that switch to the alternative one. The test runner supplied
-        with dynamic library variant of the <span class="emphasis"><em>UTF</em></span> requires new
-        specification and doesn't support original one. The plan is to deprecate
-        the original initialization function specification in one of the future releases
-        and ultimately to stop supporting it.
-      </p>
-<div class="important"><table border="0" summary="Important">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../../../../doc/src/images/important.png"></td>
-<th align="left">Important</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-          The initialization function invocation is monitored by the <span class="emphasis"><em>UTF</em></span>
-          the same way as all the test cases. An unexpected exception or system error
-          detected during initialization function invocation is treated as initialization
-          error and is reported as such.
-        </p></td></tr>
-</table></div>
-<h5>
-<a name="boost_test.users_guide.module_initialization.h0"></a>
-        <span class="phrase"><a name="boost_test.users_guide.module_initialization.initialization_function_signatur"></a></span><a class="link" href="module_initialization.html#boost_test.users_guide.module_initialization.initialization_function_signatur">Initialization
-        function signature access</a>
-      </h5>
-<p>
-        The test runner interface needs to refer to the initialization function signature.
-        The <span class="emphasis"><em>UTF</em></span> provides the typedef that resolves to proper
-        signature in all configurations:
-      </p>
-<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
-  <span class="keyword">namespace</span> <span class="identifier">unit_test</span> <span class="special">{</span>
-<span class="preprocessor">#ifdef</span> <a class="link" href="link_references/link_boost_test_alternative_init_macro.html" title="BOOST_TEST_ALTERNATIVE_INIT_API"><code class="computeroutput"><span class="identifier">BOOST_TEST_ALTERNATIVE_INIT_API</span></code></a>
-    <span class="keyword">typedef</span> <span class="keyword">bool</span>        <span class="special">(*</span><span class="identifier">init_unit_test_func</span><span class="special">)();</span>
-<span class="preprocessor">#else</span>
-    <span class="keyword">typedef</span> <span class="identifier">test_suite</span><span class="special">*</span> <span class="special">(*</span><span class="identifier">init_unit_test_func</span><span class="special">)(</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="special">[]</span> <span class="special">);</span>
-<span class="preprocessor">#endif</span>
-  <span class="special">}</span>
-<span class="special">}</span>
-</pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
@@ -150,7 +110,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../users_guide.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../users_guide.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="module_initialization/legacy_initialization_function.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../users_guide.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../users_guide.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="module_initialization/custom_module_initialisation.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>
