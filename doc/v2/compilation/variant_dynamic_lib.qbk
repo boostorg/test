@@ -55,7 +55,7 @@ Behind the scenes:
 
 
 [section:dynamic_lib_variant_multiple_source_files Multiple source files]
-The macro __BOOST_TEST_MAIN__ defines a main function and an automated registration of the tests. If the test module contains
+The macro __BOOST_TEST_MAIN__ defines a `main` function and an automated registration of the tests. If the test module contains
 several files, only one `main` and one registration function should be defined, which also means that __BOOST_TEST_MAIN__
 should be defined in one compilation unit only.
 
