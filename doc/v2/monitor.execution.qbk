@@ -10,19 +10,19 @@ with a uniform error notification. The Execution Monitor calls a user-supplied f
 environment, relieving users from messy error detection.
 
 The Execution Monitor usage is demonstrated in the example [headerref exec_mon_example.cpp]. Additional examples are 
-in <xref linkend="pem"/> or __UTF__.
+in [link boost_test.components.section_pem Program Execution Monitor] or __UTF__.
 
 [heading Design Rationale]
 The Execution Monitor design assumes that it can be used when no (or almost no) memory available. Also the
 Execution Monitor is intended to be portable to as many platforms as possible.
 
-[section The Execution Monitor compilation variants and procedures]
+[section Compilation variants and procedures]
 
 [heading Implementation]
 
 The Execution Monitor is implemented in two modules: one header file and one source file.
 
-* [headerref execution_monitor.hpp `boost/test/execution_monitor.hpp`]: defines abstract execution monitor 
+* [headerref boost/test/execution_monitor.hpp]: defines abstract execution monitor 
   interfaces and implements execution exception.
 * `boost/test/impl/execution_monitor.ipp`: provides the Execution Monitor implementation for all supported configurations, 
   including Microsoft structured exception based, UNIX signals.
@@ -62,12 +62,12 @@ All symbols in the Execution Monitor implementation are located in the namespace
 Monitor you need to:
 
 * ``#include <boost/test/execution_monitor.hpp>``
-* Make an instance of [classref execution_monitor]
+* Make an instance of [classref boost::execution_monitor execution_monitor]
 * Optionally register custom exception translators for exception classes which require special processing.
 
 [section Monitored function execution]
 
-To start the monitored function, invoke the method [memberref execution_monitor::execute] and pass 
+To start the monitored function, invoke the method [memberref boost::execution_monitor::execute] and pass 
 the monitored function as an argument. If the call succeeds, the method returns the result code produced by the
 monitored function. If any of the following conditions occur:
 
@@ -76,8 +76,8 @@ monitored function. If any of the following conditions occur:
 * Timeout reached
 * Debug assert event occurred (under Microsoft Visual C++ or compatible compiler)
 
-then the method throws the [classref execution_exception]. The exception contains unique 
-[enumref error_code] value identifying the error condition and the detailed message that can be used to report 
+then the method throws the [classref boost::execution_exception execution_exception]. The exception contains unique 
+[enumref boost::execution_exception::error_code error_code] value identifying the error condition and the detailed message that can be used to report 
 the error.
 
 [endsect]
@@ -85,30 +85,30 @@ the error.
 [/ ###########################################]
 [section The execution monitor parameters]
 
-All parameters are implemented as public read-write properties of class <classname>execution_monitor</classname>.
+All parameters are implemented as public read-write properties of class [classref boost::execution_monitor].
    
-The <firstterm>p_catch_system_errors</firstterm> property is a boolean flag (default value is true) specifying whether
-or not <classname>execution_monitor</classname> should trap system level exceptions (second category in above list).
+The `p_catch_system_errors` property is a boolean flag (default value is true) specifying whether
+or not `execution_monitor` should trap system level exceptions (second category in above list).
 Set this property to false, for example, if you wish to force coredump file creation. The Unit Test Framework 
-provides a runtime parameter --catch_system_errors=yes to alter the behavior in monitored test cases. 
+provides a runtime parameter `--catch_system_errors=yes` to alter the behavior in monitored test cases. 
 
 
-The <firstterm>p_auto_start_dbg</firstterm> property is a boolean flag (default value is false) specifying whether or
-not <classname>execution_monitor</classname> should try to attach debugger in case system error is caught.
+The `p_auto_start_dbg` property is a boolean flag (default value is false) specifying whether or
+not `execution_monitor` should try to attach debugger in case system error is caught.
 
-The [memberref execution_monitor::p_timeout property] is an integer timeout (in seconds) for monitored function execution. Use
+The `p_timeout` property is an integer timeout (in seconds) for monitored function execution. Use
 this parameter to monitor code with possible deadlocks or indefinite loops. This feature is only available for some 
 operating systems (not yet Microsoft Windows).
 
-The <firstterm>p_use_alt_stack</firstterm> property is a boolean flag (default value is false) specifying whether or
-not <classname>execution_monitor</classname> should use an alternative stack for the 
-<functionname>sigaction</functionname> based signal catching. When enabled the signals are delivered to the 
-<classname>execution_monitor</classname> on a stack different from current execution stack, which is safer in case 
+The `p_use_alt_stack` property is a boolean flag (default value is false) specifying whether or
+not `execution_monitor` should use an alternative stack for the 
+`sigaction` based signal catching. When enabled the signals are delivered to the 
+`execution_monitor` on a stack different from current execution stack, which is safer in case 
 if it is corrupted by monitored function. For more details on alternative stack handling see appropriate 
-<ulink url="http://www.opengroup.org/onlinepubs/000095399/functions/sigaltstack.html">manuals</ulink>.
+[@http://www.opengroup.org/onlinepubs/000095399/functions/sigaltstack.html manuals].
 
 The `p_detect_fp_exceptions` property is a boolean flag (default value is false) specifying 
-whether or not [classref execution_monitor] should install hardware traps for the floating point 
+whether or not `execution_monitor` should install hardware traps for the floating point 
 exception on platforms where it's supported.
 
 [endsect]
@@ -116,7 +116,7 @@ exception on platforms where it's supported.
 [/ ###########################################]
 [section Errors reporting and translation]
 If you need to report an error inside monitored function execution you have to throw an exception. Do not use the
-<classname>execution_exception</classname> - it's not intended to be used for this purpose. The simplest choice is 
+[classref boost::execution_exception] - it's not intended to be used for this purpose. The simplest choice is 
 to use one of the following C++ types as an exception:
 
 * C string
@@ -126,12 +126,12 @@ to use one of the following C++ types as an exception:
 In case if you prefer to use your own exception classes or can't govern what exceptions are generated by monitored 
 function and would like to see proper error message in a report, the Execution Monitor allows you to register the
 translator for any exception class. You can register as many independent translators as you like. See 
-<classname>execution_monitor</classname> specification for requirements on translator function. Also see below 
+`execution_monitor` specification for requirements on translator function. Also see below 
 for usage example.
    
 Finally, if you need to abort the monitored function execution without reporting any errors, you can throw an 
-exception <classname>execution_aborted</classname>. As a result the execution is aborted and zero result code
-is produced by the method <methodname>execution_monitor::execute</methodname>.
+exception [classref boost::execution_aborted execution_aborted]. As a result the execution is aborted and zero result code
+is produced by the method [memberref boost::execution_monitor::execute `execution_monitor::execute`].
     
 [endsect]
 
@@ -153,7 +153,7 @@ void break_memory_alloc( long mem_alloc_order_num );
 
 Use function detect_memory_leaks to switch memory leaks detection on/off. Use break_memory_alloc to break a
 program execution at allocation specified by mem_alloc_order_num argument. The Unit Test Framework
-provides a runtime parameter (--detect_memory_leaks=0 or 1 or N>1, where N is memory allocation number) 
+provides a runtime parameter (`--detect_memory_leaks=0` or `1` or `N>1`, where N is memory allocation number) 
 allowing you to manage this feature during monitored unit tests.
 
 [endsect]
