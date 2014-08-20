@@ -37,7 +37,6 @@ Some tests are required to be repeated for a series of different input parameter
 manually register a test case for each parameter as in example above. You can also invoke a test function with
 all parameters manually from within your test case, like this:
 
-[/ snippet1 deleted qnd copied below]
 ``
 void single_test( int i )
 {

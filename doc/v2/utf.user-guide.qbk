@@ -1,7 +1,29 @@
 [section:users_guide Building a test module with the __UTF__]
 
+There are two tasks should be performed before actual testing is able to start:
+
+* The test tree needs to be built: unless automated test units registration is used, the tests that should be run and their relationship
+  should be indicated.
+* Custom ['test module initialization] needs to be performed. This includes
+  initialization of the code under test and custom tune-up of the __UTF__ parameters (for example the test log or the
+  test results report output streams redirection, some command line parameters passed to the test module, etc.).
+
+The part of the __UTF__ dedicated for this purpose is called [link boost_test.users_guide.module_initialization ['the test module initialization]] function. 
+
+[note Note that alternatively to ['module initialization], global [link boost_test.tests_organization.fixtures fixtures] may be employed.]
+
+The ['module initialization] and the way the test module is linked against the __UTF__ are closely related. The method used to link 
+against the __UTF__ are often lead by considerations external to the tests themselves (compilation time, size of the generated binaries, etc). However,
+the functions of the ['module initialization] involved in, say static and dynamic linking, will not be the same. To cover many possible usages,
+the __UTF__ handles several different variants of linking, and indirectly the tools for proper ['module initialization] corresponding to each
+of these variants are provided.
+
+
 [/ ######################################################## ]
 [include compilation/module_initialization.qbk]
+
+
+
 
 
 [/ ######################################################## ]
