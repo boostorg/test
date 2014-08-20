@@ -208,7 +208,7 @@ compilation of the __PEM__ library and your program:
     [Define this flag to build/use dynamic library]
   ]
   [
-    [[#ref_BOOST_TEST_NO_LIB]`BOOST_TEST_NO_LIB`]
+    [__BOOST_TEST_NO_LIB__]
     [Define this flag to prevent auto-linking]
   ]
 ]
