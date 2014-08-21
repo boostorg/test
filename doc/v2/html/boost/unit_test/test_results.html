@@ -35,15 +35,15 @@
 <span class="keyword">class</span> <a class="link" href="test_results.html" title="Class test_results">test_results</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="test_results.html#boost.unit_test.test_resultsconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="test_results.html#idm56707703936-bb"><span class="identifier">test_results</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="test_results.html#idm101806379808-bb"><span class="identifier">test_results</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="test_results.html#idm56707713616-bb">public member functions</a></span>
-  <span class="keyword">typedef</span> <a class="link" href="test_results.html#idm56707713088-bb"><span class="identifier">BOOST_READONLY_PROPERTY</span></a><span class="special">(</span><span class="identifier">counter_t</span><span class="special">,</span> 
+  <span class="comment">// <a class="link" href="test_results.html#idm101806389488-bb">public member functions</a></span>
+  <span class="keyword">typedef</span> <a class="link" href="test_results.html#idm101806388960-bb"><span class="identifier">BOOST_READONLY_PROPERTY</span></a><span class="special">(</span><span class="identifier">counter_t</span><span class="special">,</span> 
                                   <span class="special">(</span><a class="link" href="results_collector_t.html" title="Class results_collector_t">results_collector_t</a><span class="special">)</span><span class="special">(</span><a class="link" href="test_results.html" title="Class test_results">test_results</a><span class="special">)</span><span class="special">(</span><span class="identifier">results_collect_helper</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">typedef</span> <a class="link" href="test_results.html#idm56707709824-bb"><span class="identifier">BOOST_READONLY_PROPERTY</span></a><span class="special">(</span><span class="keyword">bool</span><span class="special">,</span> 
+  <span class="keyword">typedef</span> <a class="link" href="test_results.html#idm101806385696-bb"><span class="identifier">BOOST_READONLY_PROPERTY</span></a><span class="special">(</span><span class="keyword">bool</span><span class="special">,</span> 
                                   <span class="special">(</span><a class="link" href="results_collector_t.html" title="Class results_collector_t">results_collector_t</a><span class="special">)</span><span class="special">(</span><a class="link" href="test_results.html" title="Class test_results">test_results</a><span class="special">)</span><span class="special">(</span><span class="identifier">results_collect_helper</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="test_results.html#idm56707706560-bb"><span class="keyword">operator</span><span class="special">+=</span></a><span class="special">(</span><a class="link" href="test_results.html" title="Class test_results">test_results</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="test_results.html#idm56707704864-bb"><span class="identifier">clear</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="test_results.html#idm101806382432-bb"><span class="keyword">operator</span><span class="special">+=</span></a><span class="special">(</span><a class="link" href="test_results.html" title="Class test_results">test_results</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="test_results.html#idm101806380736-bb"><span class="identifier">clear</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
   <span class="comment">// public data members</span>
   <span class="identifier">counter_prop</span> <span class="identifier">p_assertions_passed</span><span class="special">;</span>
@@ -59,27 +59,27 @@
   <span class="identifier">bool_prop</span> <span class="identifier">p_skipped</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm79954914992"></a><h2>Description</h2>
+<a name="idm218919470256"></a><h2>Description</h2>
 <p>This class is a collection of attributes describing testing results. The atributes presented as public properties on an instance of the class. In addition summary conclusion methods are presented to generate simple answer to pass/fail question </p>
 <div class="refsect2">
-<a name="idm79954914080"></a><h3>
+<a name="idm218919469360"></a><h3>
 <a name="boost.unit_test.test_resultsconstruct-copy-destruct"></a><code class="computeroutput">test_results</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idm56707703936-bb"></a><span class="identifier">test_results</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idm101806379808-bb"></a><span class="identifier">test_results</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idm79954908544"></a><h3>
-<a name="idm56707713616-bb"></a><code class="computeroutput">test_results</code> public member functions</h3>
+<a name="idm218919464032"></a><h3>
+<a name="idm101806389488-bb"></a><code class="computeroutput">test_results</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">typedef</span> <a name="idm56707713088-bb"></a><span class="identifier">BOOST_READONLY_PROPERTY</span><span class="special">(</span><span class="identifier">counter_t</span><span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">typedef</span> <a name="idm101806388960-bb"></a><span class="identifier">BOOST_READONLY_PROPERTY</span><span class="special">(</span><span class="identifier">counter_t</span><span class="special">,</span> 
                                 <span class="special">(</span><a class="link" href="results_collector_t.html" title="Class results_collector_t">results_collector_t</a><span class="special">)</span><span class="special">(</span><a class="link" href="test_results.html" title="Class test_results">test_results</a><span class="special">)</span><span class="special">(</span><span class="identifier">results_collect_helper</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>Type representing counter like public property. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">typedef</span> <a name="idm56707709824-bb"></a><span class="identifier">BOOST_READONLY_PROPERTY</span><span class="special">(</span><span class="keyword">bool</span><span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">typedef</span> <a name="idm101806385696-bb"></a><span class="identifier">BOOST_READONLY_PROPERTY</span><span class="special">(</span><span class="keyword">bool</span><span class="special">,</span> 
                                 <span class="special">(</span><a class="link" href="results_collector_t.html" title="Class results_collector_t">results_collector_t</a><span class="special">)</span><span class="special">(</span><a class="link" href="test_results.html" title="Class test_results">test_results</a><span class="special">)</span><span class="special">(</span><span class="identifier">results_collect_helper</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>Type representing boolean like public property. </li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idm56707706560-bb"></a><span class="keyword">operator</span><span class="special">+=</span><span class="special">(</span><a class="link" href="test_results.html" title="Class test_results">test_results</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idm56707704864-bb"></a><span class="identifier">clear</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idm101806382432-bb"></a><span class="keyword">operator</span><span class="special">+=</span><span class="special">(</span><a class="link" href="test_results.html" title="Class test_results">test_results</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idm101806380736-bb"></a><span class="identifier">clear</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>

@@ -9,7 +9,7 @@ other Boost.Test components, but also can be used standalone to get controlled e
 with a uniform error notification. The Execution Monitor calls a user-supplied function in a controlled
 environment, relieving users from messy error detection.
 
-The Execution Monitor usage is demonstrated in the example [headerref exec_mon_example.cpp]. Additional examples are 
+The Execution Monitor usage is demonstrated in the example [@../../../example/exec_mon_example.cpp =exec_mon_example.cpp=]. Additional examples are 
 in [link boost_test.components.section_pem Program Execution Monitor] or __UTF__.
 
 [heading Design Rationale]

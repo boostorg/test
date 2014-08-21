@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Function add_context</title>
+<title>Function get</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../../index.html" title="Boost.Test">
 <link rel="up" href="../../../header/boost/test/framework_hpp.html" title="Header &lt;boost/test/framework.hpp&gt;">
-<link rel="prev" href="deregister_observer.html" title="Function deregister_observer">
-<link rel="next" href="clear_context.html" title="Function clear_context">
+<link rel="prev" href="current_test_case_id.html" title="Function current_test_case_id">
+<link rel="next" href="get_idm101806641024.html" title="Function template get">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,22 +20,22 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="deregister_observer.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/boost/test/framework_hpp.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="clear_context.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="current_test_case_id.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/boost/test/framework_hpp.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="get_idm101806641024.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
-<a name="boost.unit_test.framework.add_context"></a><div class="titlepage"></div>
+<a name="boost.unit_test.framework.get_idm101806645392"></a><div class="titlepage"></div>
 <div class="refnamediv">
-<h2><span class="refentrytitle">Function add_context</span></h2>
-<p>boost::unit_test::framework::add_context &#8212; Records context frame message. </p>
+<h2><span class="refentrytitle">Function get</span></h2>
+<p>boost::unit_test::framework::get &#8212; This function provides access to a test unit by id and type combination. It will throw if no test unit located. </p>
 </div>
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../header/boost/test/framework_hpp.html" title="Header &lt;boost/test/framework.hpp&gt;">boost/test/framework.hpp</a>&gt;
 
 </span>
-<span class="keyword">int</span> <span class="identifier">add_context</span><span class="special">(</span><span class="identifier">lazy_ostream</span> <span class="keyword">const</span> <span class="special">&amp;</span> context_descr<span class="special">,</span> <span class="keyword">bool</span> sticky<span class="special">)</span><span class="special">;</span></pre></div>
+<a class="link" href="../test_unit.html" title="Class test_unit">test_unit</a> <span class="special">&amp;</span> <span class="identifier">get</span><span class="special">(</span><span class="identifier">test_unit_id</span> tu_id<span class="special">,</span> <span class="identifier">test_unit_type</span> tu_type<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm218950010608"></a><h2>Description</h2>
-<p>Some context frames are sticky - they can only explicetly cleared by specifying context id. Other (non sticky) context frames cleared after every assertion. 
+<a name="idm218949960928"></a><h2>Description</h2>
+<p>
 
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -53,19 +53,19 @@
 </colgroup>
 <tbody>
 <tr>
-<td><p><span class="term"><code class="computeroutput">context_descr</code></span></p></td>
-<td><p>context frame message </p></td>
+<td><p><span class="term"><code class="computeroutput">tu_id</code></span></p></td>
+<td><p>id of a test unit to locate </p></td>
 </tr>
 <tr>
-<td><p><span class="term"><code class="computeroutput">sticky</code></span></p></td>
-<td><p>is this sticky frame or not </p></td>
+<td><p><span class="term"><code class="computeroutput">tu_type</code></span></p></td>
+<td><p>type of a test unit to locate </p></td>
 </tr>
 </tbody>
 </table></div></td>
 </tr>
 <tr>
 <td><p><span class="term">Returns:</span></p></td>
-<td><p>id of the newly created frame </p></td>
+<td><p>located test unit </p></td>
 </tr>
 </tbody>
 </table></div>
@@ -82,7 +82,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="deregister_observer.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/boost/test/framework_hpp.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="clear_context.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="current_test_case_id.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/boost/test/framework_hpp.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="get_idm101806641024.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>
