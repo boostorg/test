@@ -5,10 +5,10 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file framework.hpp @brief Defines Unit Test Framework monostate interfaces
-
-/// The Unit Test framework is based on Monostate design patern. These interfaces are used to operate 
-/// on the monostate.
+//!@file 
+//!@brief Defines Unit Test Framework monostate interfaces.
+//! The Unit Test framework is based on Monostate design patern. These interfaces are used to operate 
+//! on the monostate.
 // ***************************************************************************
 
 #ifndef BOOST_TEST_FRAMEWORK_HPP_020805GER
@@ -58,7 +58,8 @@ namespace framework {
 ///
 /// It needs to be called every time before the test is started.
 /// @param[in] init_func test module initialization routine
-/// @param[in] argc,argv command line arguments collection
+/// @param[in] argc command line arguments collection
+/// @param[in] argv command line arguments collection
 BOOST_TEST_DECL void    init( init_unit_test_func init_func, int argc, char* argv[] );
 
 /// This function tells if the framework monostate is initialized

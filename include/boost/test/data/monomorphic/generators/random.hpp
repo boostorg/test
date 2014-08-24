@@ -5,20 +5,17 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines range generator
+//!@file
+//!@brief Random generator
 // ***************************************************************************
 
-#ifndef BOOST_TEST_DATA_MONOMORPHIC_GENERATORS_XRANGE_HPP_112011GER
+#ifndef BOOST_TEST_DATA_MONOMORPHIC_GENERATORS_RANDOM_HPP_101512GER
 #define BOOST_TEST_DATA_MONOMORPHIC_GENERATORS_RANDOM_HPP_101512GER
 
 // Boost.Test
 #include <boost/test/data/config.hpp>
 
-#ifndef BOOST_NO_0X_HDR_RANDOM
+#if !defined(BOOST_NO_0X_HDR_RANDOM) && !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
 
 #include <boost/test/data/monomorphic/generate.hpp>
 #include <boost/test/data/monomorphic/generators/keywords.hpp>
@@ -158,7 +155,7 @@ random( Params const& params )
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_NO_0X_HDR_RANDOM
+#endif // !defined(BOOST_NO_0X_HDR_RANDOM) && !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
 
 
 #endif // BOOST_TEST_DATA_MONOMORPHIC_GENERATORS_RANDOM_HPP_101512GER

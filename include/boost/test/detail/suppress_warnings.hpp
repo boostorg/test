@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : suppress some warnings
+//!@file 
+//!@brief suppress some warnings
 // ***************************************************************************
 
 #ifdef BOOST_MSVC
@@ -31,5 +28,5 @@
 
 #ifdef BOOST_CLANG
 #pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wlogical-op-parentheses"
+//#pragma clang diagnostic ignored "-Wlogical-op-parentheses"
 #endif

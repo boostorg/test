@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : contains mics. workarounds 
+//!@file 
+//!@brief contains mics. workarounds 
 // ***************************************************************************
 
 #ifndef BOOST_TEST_WORKAROUND_HPP_021005GER

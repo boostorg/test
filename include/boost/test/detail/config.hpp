@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : as a central place for global configuration switches
+//!@file 
+//!@brief a central place for global configuration switches
 // ***************************************************************************
 
 #ifndef BOOST_TEST_CONFIG_HPP_071894GER
@@ -119,5 +116,7 @@ class type_info;
 #ifdef __PGI
 #define BOOST_PP_VARIADICS 1
 #endif
+
+
 
 #endif // BOOST_TEST_CONFIG_HPP_071894GER

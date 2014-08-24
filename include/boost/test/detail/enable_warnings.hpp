@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : enable previosly suppressed warnings
+//!@file 
+//!@brief enable previously suppressed warnings
 // ***************************************************************************
 
 #ifdef BOOST_MSVC

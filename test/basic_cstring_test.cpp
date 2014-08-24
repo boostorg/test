@@ -293,7 +293,7 @@ BOOST_TEST_CASE_TEMPLATE_FUNCTION( comparison_test, CharT )
 
 //____________________________________________________________________________//
 
-BOOST_TEST_DONT_PRINT_LOG_VALUE( std::wstring );
+BOOST_TEST_DONT_PRINT_LOG_VALUE( std::wstring )
 
 BOOST_TEST_CASE_TEMPLATE_FUNCTION( comparison_std_string_test, CharT )
 {

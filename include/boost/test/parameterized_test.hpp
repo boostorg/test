@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : generators and helper macros for parameterized tests
+//!@file 
+//!@brief generators and helper macros for parameterized tests
 // ***************************************************************************
 
 #ifndef BOOST_TEST_PARAMETERIZED_TEST_HPP_021102GER

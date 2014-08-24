@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : some trivial global typedefs
+//!@file 
+//!@brief some trivial global typedefs
 // ***************************************************************************
 
 #ifndef BOOST_TEST_GLOBAL_TYPEDEF_HPP_021005GER

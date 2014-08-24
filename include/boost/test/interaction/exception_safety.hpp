@@ -5,11 +5,7 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : Facilities to perform exception safety tests
+//!@file Facilities to perform exception safety tests
 // ***************************************************************************
 
 #ifndef BOOST_TEST_EXCEPTION_SAFETY_HPP_111705GER
@@ -99,7 +95,7 @@ operator new( std::size_t s ) throw(std::bad_alloc)
 //____________________________________________________________________________//
 
 inline void*
-operator new( std::size_t s, std::nothrow_t const& ) throw()
+operator new( std::size_t s, std::nothrow_t const& ) BOOST_NOEXCEPT_OR_NOTHROW
 {
     void* res = std::malloc(s ? s : 1);
 
@@ -127,7 +123,7 @@ operator new[]( std::size_t s ) throw(std::bad_alloc)
 //____________________________________________________________________________//
 
 inline void*
-operator new[]( std::size_t s, std::nothrow_t const& ) throw()
+operator new[]( std::size_t s, std::nothrow_t const& ) BOOST_NOEXCEPT_OR_NOTHROW
 {
     void* res = std::malloc(s ? s : 1);
 
@@ -136,11 +132,11 @@ operator new[]( std::size_t s, std::nothrow_t const& ) throw()
 
     return res;
 }
-
+ 
 //____________________________________________________________________________//
 
 inline void
-operator delete( void* p ) throw()
+operator delete( void* p ) BOOST_NOEXCEPT_OR_NOTHROW
 {
     ::boost::itest::manager::instance().freed( p );
 
@@ -150,7 +146,7 @@ operator delete( void* p ) throw()
 //____________________________________________________________________________//
 
 inline void
-operator delete( void* p, std::nothrow_t const& ) throw()
+operator delete( void* p, std::nothrow_t const& ) BOOST_NOEXCEPT_OR_NOTHROW
 {
     ::boost::itest::manager::instance().freed( p );
 
@@ -160,7 +156,7 @@ operator delete( void* p, std::nothrow_t const& ) throw()
 //____________________________________________________________________________//
 
 inline void
-operator delete[]( void* p ) throw()
+operator delete[]( void* p ) BOOST_NOEXCEPT_OR_NOTHROW
 {
     ::boost::itest::manager::instance().freed( p );
 
@@ -170,7 +166,7 @@ operator delete[]( void* p ) throw()
 //____________________________________________________________________________//
 
 inline void
-operator delete[]( void* p, std::nothrow_t const& ) throw()
+operator delete[]( void* p, std::nothrow_t const& ) BOOST_NOEXCEPT_OR_NOTHROW
 {
     ::boost::itest::manager::instance().freed( p );
 

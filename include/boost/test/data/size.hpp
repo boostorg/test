@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines simple dataset size abstraction (can be infinite)
+//!@file 
+//!@brief simple dataset size abstraction (can be infinite)
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_SIZE_HPP_102211GER

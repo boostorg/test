@@ -5,11 +5,7 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : input validation helpers implementation
+//! @file input validation helpers implementation
 // ***************************************************************************
 
 #ifndef BOOST_RT_CLA_VALIDATION_IPP_070604GER

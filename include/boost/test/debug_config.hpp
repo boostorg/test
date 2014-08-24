@@ -5,10 +5,11 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file debug_config.hpp @brief user's config for Boost.Test debugging support
-///
-/// This file is intended to be edited by end user to specify varios macros, which configure debugger interface
-/// Alterntively you can set these parameters in your own sources/makefiles
+//! @file 
+//! @brief user's config for Boost.Test debugging support
+//!
+//! This file is intended to be edited by end user to specify varios macros, which configure debugger interface
+//! Alterntively you can set these parameters in your own sources/makefiles
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DEBUG_CONFIG_HPP_112006GER

@@ -5,8 +5,9 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file 
-/// @brief Deprecated header. Use <boost/test/unit_test.hpp> instead.
+//! @file
+//! @brief Deprecated header. 
+//! @deprecated Use #include <boost/test/unit_test.hpp> instead.
 // ***************************************************************************
 
 #ifndef BOOST_TEST_AUTO_UNIT_TEST_HPP_071894GER

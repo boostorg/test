@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines test case family based on data generator
+//!@file 
+//!@brief test case family based on data generator
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_TEST_CASE_HPP_102211GER
