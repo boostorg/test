@@ -11,8 +11,25 @@ The __UTF__ provides a facility in order to ease the automated generations of th
 
 
 [section Datasets]
+The power of the dataset object comes from
+
+* its ability to combine datasets in order to generate dataset of higher dimensions
+
+[section Cartesian product]
 
 [endsect]
+
+
+[section Joining]
+
+[endsect]
+
+
+[section Zipping]
+
+[endsect]
+
+[endsect] [/ datasets]
 
 [section Collections]
 
