@@ -36,6 +36,8 @@ implementation point.
 [/ ############################################# ] 
 [include typed_parametrized_tests.qbk]
 
+[/ ############################################# ] 
+[include parametric_test_case_generation.qbk]
 
 
 

@@ -1,0 +1,44 @@
+[section:test_case_generation Generation of test case parameters]
+
+In some circumstance, one would like to test a [link boost_test.tests_organization.test_cases.test_organization_unary parametrized] 
+test over a large set of parameters. __BOOST_PARAM_TEST_CASE__ provides an easy solution when these parameters can be described in 
+some collection. However, this solution has also limitations
+
+* Suppose we already have parametrized tests for two functions `func1` and `func2`. 
+*
+
+The __UTF__ provides a facility in order to ease the automated generations of these parameters.
+
+
+[section Datasets]
+
+[endsect]
+
+[section Collections]
+
+[endsect] [/ collection]
+
+
+
+[section Random values]
+
+
+[heading Choosing the distribution]
+The selection of the distibution may be given by the parameter `boost::unit_test::data::distribution`
+
+The following defines a random value generator with Gaussian distribution (mean 5, sigma 2).
+``
+auto rdgen = boost::unit_test::data::random(data::distribution = std::normal_distribution<>(5.,2));
+``
+
+[heading Setting the seed]
+In order to be able to reproduce a failure within a randomized parameter test case, the seed that generated the failure may be
+set in order to generate the same sequence of random values.
+
+``
+auto rdgen = boost::unit_test::data::random(data::seed = 100UL);
+``
+
+[endsect] [/ random]
+
+[endsect]
