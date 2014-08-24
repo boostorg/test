@@ -24,9 +24,9 @@ __section_expected_failures__ in a test case.
 When several tests shares the same set-up (environment, test data preparation, etc.), the __section_test_fixture__ comes into play. 
 In the __UTF__, fixtures can be defined at the test case or the test suite level.
 
-[include utf.user-guide.test_cases.qbk]
-[include utf.user-guide.test_suites.qbk]
-[include utf.user-guide.fixture.qbk]
+[include test_cases.qbk]
+[include test_suites.qbk]
+[include fixtures.qbk]
 
 
 [endsect] [/ test organization]
