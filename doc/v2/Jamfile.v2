@@ -18,7 +18,6 @@ doxygen autodoc_execution_monitor
       $(BOOST_ROOT)/libs/test/include/boost/test/debug.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/execution_monitor.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/framework.hpp
-      $(BOOST_ROOT)/libs/test/include/boost/test/parameterized_test.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/tools/assertion_result.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/unit_test.hpp
 
@@ -38,6 +37,7 @@ doxygen autodoc_execution_monitor
       
       # test cases and suites
       $(BOOST_ROOT)/libs/test/include/boost/test/tree/test_unit.hpp
+      $(BOOST_ROOT)/libs/test/include/boost/test/parameterized_test.hpp
       
       # execution monitor source files
       $(BOOST_ROOT)/libs/test/include/boost/test/execution_monitor.hpp
