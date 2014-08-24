@@ -174,7 +174,7 @@
 [include tutorials/tutorial.qbk]
 
 [/ build and link with boost.test]
-[include compilation/building_and_linking.qbk]
+[include building_and_linking/building_and_linking.qbk]
 
 [/ organizing, generating and registering tests]
 [include tests_organization/test-organization.qbk]
