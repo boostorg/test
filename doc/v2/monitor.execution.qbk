@@ -46,26 +46,26 @@ a lot of dependencies.
 [endsect] [/compilation variants and procedures]
 
 [/ ###########################################]
-[section The Execution Monitor user's guide]
+[section:section_em_users_guide The Execution Monitor user's guide]
 
 The Execution Monitor is designed to solve the problem of executing potentially dangerous function that may result
 in any number of error conditions, in monitored environment that should prevent any undesirable exceptions to 
 propagate out of function call and produce consistent result report for all 
-<link linkend="execution-monitor.user-guide.monitor-outcomes">outcomes</link>. The Execution Monitor is able to 
+[link boost_test.components.execution_monitor.section_em_users_guide.section_em_monitored_functions outcomes]. The Execution Monitor is able to 
 produce informative report for all standard C++ exceptions and intrinsic types. All other exceptions are reported as
 unknown. If you prefer different message for your exception class or need to perform any action, the Execution 
-Monitor supports <link linkend="execution-monitor.user-guide.errors-reporting">custom exception translators</link>.
-There are several other <link linkend="execution-monitor.user-guide.monitor-params">parameters</link> of the 
+Monitor supports [link boost_test.components.execution_monitor.section_em_users_guide.section_em_error_reporting custom exception translators].
+There are several other [link boost_test.components.execution_monitor.section_em_users_guide.section_em_parameters parameters] of the 
 monitored environment can be configured by setting appropriate properties of the Execution Monitor.
 
 All symbols in the Execution Monitor implementation are located in the namespace boost. To use the Execution
 Monitor you need to:
 
-* ``#include <boost/test/execution_monitor.hpp>``
+* `#include <boost/test/execution_monitor.hpp>`
 * Make an instance of [classref boost::execution_monitor execution_monitor]
 * Optionally register custom exception translators for exception classes which require special processing.
 
-[section Monitored function execution]
+[section:section_em_monitored_functions Monitored function execution]
 
 To start the monitored function, invoke the method [memberref boost::execution_monitor::execute] and pass 
 the monitored function as an argument. If the call succeeds, the method returns the result code produced by the
@@ -83,7 +83,7 @@ the error.
 [endsect]
   
 [/ ###########################################]
-[section The execution monitor parameters]
+[section:section_em_parameters The execution monitor parameters]
 
 All parameters are implemented as public read-write properties of class [classref boost::execution_monitor].
    
@@ -114,7 +114,7 @@ exception on platforms where it's supported.
 [endsect]
 
 [/ ###########################################]
-[section Errors reporting and translation]
+[section:section_em_error_reporting Errors reporting and translation]
 If you need to report an error inside monitored function execution you have to throw an exception. Do not use the
 [classref boost::execution_exception] - it's not intended to be used for this purpose. The simplest choice is 
 to use one of the following C++ types as an exception:

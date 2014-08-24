@@ -10,7 +10,7 @@ command line, script, or batch environments to continue processing in a controll
 ['GUI] environments benefit from the unification of errors into program return codes.
 
    
-The Boost.Test Library's ['Program Execution Monitor] (__PEM__ for short) relieves users from messy error
+The Boost.Test Library's [*Program Execution Monitor] (__PEM__ for short) relieves users from messy error
 detection and reporting duties by providing a replacement function `main()` which calls a user-supplied `cpp_main()`
 function within a monitored environment. The supplied `main()` then uniformly detects and reports the occurrence of 
 several types of errors, reducing them to a uniform return code which is returned to the host environment.
