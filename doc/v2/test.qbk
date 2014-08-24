@@ -199,9 +199,9 @@
 
 [/=============================================================================]
 [section Components]
-[include minimal-testing.qbk]
-[include monitor.execution.qbk]
-[include monitor.program-execution.qbk]
+[include component_minimal_testing.qbk]
+[include component_execution_monitor.qbk]
+[include component_program_execution_monitor.qbk]
 [endsect]
 
 
