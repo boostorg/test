@@ -98,7 +98,7 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 <macro name="BOOST_TEST_SYS_ASSERT" kind="functionlike"><macro-parameter name="exp"/></macro>
 </header>
 <header name="boost/test/framework.hpp">
-<para>Defines Unit Test Framework monostate interfaces. </para><namespace name="boost">
+<para>Defines Unit Test Framework monostate interfaces. The Unit Test framework is based on Monostate design patern. These interfaces are used to operate on the monostate. </para><namespace name="boost">
 <namespace name="unit_test">
 <namespace name="framework">
 <struct name="context_generator"><method-group name="public member functions">
@@ -115,7 +115,7 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 </struct><struct name="test_being_aborted"/><struct name="nothing_to_test"/><namespace name="impl">
 <function name="apply_filters"><type>void</type><parameter name=""><paramtype>test_unit_id</paramtype></parameter></function>
 </namespace>
-<function name="init"><type>void</type><parameter name="init_func"><paramtype>init_unit_test_func</paramtype><description><para>test module initialization routine </para></description></parameter><parameter name="argc"><paramtype>int</paramtype><description><para>command line arguments collection </para></description></parameter><parameter name="argv"><paramtype>char *</paramtype></parameter><purpose>This funcion performs initialization of the framework monostate. </purpose><description><para>It needs to be called every time before the test is started. 
+<function name="init"><type>void</type><parameter name="init_func"><paramtype>init_unit_test_func</paramtype><description><para>test module initialization routine </para></description></parameter><parameter name="argc"><paramtype>int</paramtype><description><para>command line arguments collection </para></description></parameter><parameter name="argv"><paramtype>char *</paramtype><description><para>command line arguments collection </para></description></parameter><purpose>This funcion performs initialization of the framework monostate. </purpose><description><para>It needs to be called every time before the test is started. 
 </para></description></function>
 <function name="is_initialized"><type>bool</type><purpose>This function tells if the framework monostate is initialized. </purpose></function>
 <function name="shutdown"><type>void</type><purpose>This function shuts down the framework and clears up its monostate. </purpose><description><para>It needs to be at the very end of test module execution </para></description></function>
@@ -336,8 +336,11 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 </namespace>
 </header>
 <header name="boost/test/parameterized_test.hpp">
-<namespace name="boost">
+<para>generators and helper macros for parameterized tests </para><namespace name="boost">
 <namespace name="unit_test">
+
+
+
 <function name="make_test_case"><type><emphasis>unspecified</emphasis></type><template>
           <template-type-parameter name="ParamType"/>
           <template-type-parameter name="ParamIter"/>
@@ -351,9 +354,6 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
           <template-type-parameter name="ParamType"/>
           <template-type-parameter name="ParamIter"/>
         </template><parameter name="test_method"><paramtype>void(UserTestCase::*)(ParamType)</paramtype></parameter><parameter name="tc_name"><paramtype>const_string</paramtype></parameter><parameter name="tc_file"><paramtype>const_string</paramtype></parameter><parameter name="tc_line"><paramtype>std::size_t</paramtype></parameter><parameter name="user_test_case"><paramtype>boost::shared_ptr&lt; UserTestCase &gt; const &amp;</paramtype></parameter><parameter name="par_begin"><paramtype>ParamIter</paramtype></parameter><parameter name="par_end"><paramtype>ParamIter</paramtype></parameter></function>
-
-
-
 </namespace>
 </namespace>
 <macro name="BOOST_PARAM_TEST_CASE" kind="functionlike"><macro-parameter name="function"/><macro-parameter name="begin"/><macro-parameter name="end"/></macro>
@@ -621,24 +621,24 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 <typedef name="fixture_list"><type>std::list&lt; test_unit_fixture_ptr &gt;</type></typedef>
 <typedef name="decorator_base"><type>decorator::for_test_unit_ptr</type></typedef>
 </class>
-
-
-
 <function name="make_test_case"><type><classname>test_case</classname> *</type><parameter name="test_func"><paramtype>boost::function&lt; void()&gt; const &amp;</paramtype></parameter><parameter name="tc_name"><paramtype>const_string</paramtype></parameter><parameter name="tc_file"><paramtype>const_string</paramtype></parameter><parameter name="tc_line"><paramtype>std::size_t</paramtype></parameter></function>
 <function name="make_test_case"><type><classname>test_case</classname> *</type><template>
           <template-type-parameter name="UserTestCase"/>
           <template-type-parameter name="InstanceType"/>
         </template><parameter name="test_method"><paramtype>void(UserTestCase::*)()</paramtype></parameter><parameter name="tc_name"><paramtype>const_string</paramtype></parameter><parameter name="tc_file"><paramtype>const_string</paramtype></parameter><parameter name="tc_line"><paramtype>std::size_t</paramtype></parameter><parameter name="user_test_case"><paramtype>boost::shared_ptr&lt; InstanceType &gt;</paramtype></parameter></function>
+
+
+
 </namespace>
 </namespace>
 </header>
 <header name="boost/test/unit_test.hpp">
 <para>Entry point into the Unit Test Framework. </para><para>This header sould be the only header necessary to include to start using the framework </para><namespace name="boost">
 <namespace name="unit_test">
-
-
-
 <function name="unit_test_main"><type>int</type><parameter name="init_func"><paramtype>init_unit_test_func</paramtype></parameter><parameter name="argc"><paramtype>int</paramtype></parameter><parameter name="argv"><paramtype>char *</paramtype></parameter></function>
+
+
+
 
 
 </namespace>

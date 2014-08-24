@@ -1,4 +1,4 @@
-[section:test_organization_nullary Nullary function based test case]
+[section:test_organization_nullary Non-parametric test cases]
 
 The most widely used are test cases based on a nullary function. These include nullary free functions, nullary
 function objects created with `boost::bind` and nullary `boost::function`
@@ -20,7 +20,7 @@ macro __BOOST_AUTO_TEST_CASE__.
 
 The macro is designed to closely mimic nullary free function syntax. Changes that are required to make an
 existing test case, implemented as a free function, registered in place are illustrated in the following
-example (compare with <xref linkend="utf.user-guide.test-organization.manual-nullary-test-case.example01"/>):
+example (compare with [link boost_test.tests_organization.test_cases.test_organization_nullary.id_example01 manual registration]):
 
 
 [import ../examples/example06.cpp]
@@ -38,7 +38,7 @@ example (compare with <xref linkend="utf.user-guide.test-organization.manual-nul
 
 
 With this macro you don't need to implement the initialization function at all. The macro creates and
-registers the test case with the name free_test_function automatically.
+registers the test case with the name `free_test_function` automatically.
 
 [#ref_BOOST_TEST_CASE][h4 Manual registration]
 
