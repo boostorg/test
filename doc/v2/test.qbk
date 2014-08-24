@@ -177,7 +177,7 @@
 [include utf.user-guide.qbk]
 
 [/ organizing, generating and registering tests]
-[include tests_organization/utf.user-guide.test-organization.qbk]
+[include tests_organization/test-organization.qbk]
 
 [/ creating assertions]
 [include utf.testing-tools.qbk]
