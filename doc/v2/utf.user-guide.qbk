@@ -29,7 +29,7 @@ of these variants are provided.
 [/ ######################################################## ]
 [section:usage_variants Linking with the __UTF__]
 
-The __UTF__ presents you with 4 different variants how it can be used.
+The __UTF__ presents you with 4 different variants:
 
 # The static library variant
 # The dynamic library variant
