@@ -73,17 +73,10 @@ catch clause? Like in a following example:
   ]
 ]
 
-[note Note that in both examples above we used single-header variant of the __PEM__. Alternatively we can build and link with
-standalone library. In case of static library we are not required to include any __PEM__ related headers. To use dynamic 
-library you are required to include 
-
-``
-#include <boost/test/prg_exec_monitor.hpp>
-``
-
-and define __dynamic_linking__ during program compilation. The same header is required if you want to employ __auto_linking__ feature.
+[note Note that in both examples above we used [link boost_test.components.section_pem.section_pem_compilation.section_pem_full_include single-header variant]
+of the __PEM__. Alternatively the binaries may be built and linked with
+a [link boost_test.components.section_pem.section_pem_compilation.section_pem_standalone standalone library] (in case of static library we are not required to include any __PEM__ related headers).
 ]
-[warning Move or copy this comment in the compilation part]
 
 Let's consider an example where function `cpp_main()` had bubbled up a return code of 5:
 
@@ -116,7 +109,7 @@ The __PEM__'s supplied `main()` will return following result codes:
 
 
 [/ ####################################################################################  configuration]
-[section Configuration]
+[section Runtime configuration]
   
 There are two aspects of the __PEM__ behavior that you can customize at runtime. Customization is performed using 
 environment variables.
@@ -129,8 +122,8 @@ environment variables.
   [
     [`BOOST_TEST_CATCH_SYSTEM_ERRORS`]
     [allows customizing behavior of the __PEM__ in regards of catching system errors. For more details about the 
-     meaning of this option see the [link ref_execution_monitor Execution Monitor]. If you
-     want to prevent the Program Execution Monitor from catching system exception, set the value of this
+     meaning of this option see the [classref boost::execution_monitor execution_monitor] class. If you
+     want to prevent the __PEM__ from catching system exception, set the value of this
      variable to "no". The default value is "yes".]
   ]
   [
@@ -142,7 +135,7 @@ environment variables.
 
 ]
 
-[warning Copy the environment variables into appropriate pages, as for the command line parameters]
+[note `BOOST_TEST_CATCH_SYSTEM_ERRORS` is similar to the __UTF__'s __param_catch_system__ command line parameter.]
 
 [endsect] [/ configuration]
 
@@ -150,7 +143,7 @@ environment variables.
 [#ref_pem_implementation][section Implementation]
 
 To monitor execution of user supplied function `cpp_main()` the __PEM__ relies on the Boost.Test's
-[link ref_execution_monitor Execution Monitor] (['EM] for short). Also the __PEM__ supplies the function `main()` to facilitate
+[link boost_test.components.execution_monitor Execution Monitor]. Also the __PEM__ supplies the function `main()` to facilitate
 uniform error reporting. Following files constitute the __PEM__ implementation:
  
  
@@ -186,7 +179,7 @@ directly] into your program, for the long term usage the preferable solution is 
 
 [endsect] [/implementation]
  
-[section Compilation]
+[section:section_pem_compilation Compilation]
  
 In comparison with many other boost libraries, which are completely implemented in header files, compilation and
 linking with the __PEM__ may require additional steps. The __PEM__ presents you with options to either
@@ -195,7 +188,7 @@ linking with the __PEM__ may require additional steps. The __PEM__ presents you 
 # include the implementation [link ref_pem_direct_include directly] into your program. 
 
 If you opt to use the library the __PEM__ header implements the 
-<link linkend="pem.compilation.auto-linking">auto-linking support</link> and following flags can be used to configure 
+[*auto-linking support] and following flags can be used to configure 
 compilation of the __PEM__ library and your program:
 
 [table 
@@ -204,7 +197,7 @@ compilation of the __PEM__ library and your program:
     [Usage]
   ]
   [
-    [[#ref_BOOST_TEST_DYN_LINK]`BOOST_TEST_DYN_LINK`]
+    [__BOOST_TEST_DYN_LINK__]
     [Define this flag to build/use dynamic library]
   ]
   [
@@ -235,7 +228,7 @@ directory. The __PEM__ can be built as either [link ref_pem_static static] or [l
 
 
 
-[#ref_pem_static][section Static library compilation]
+[#ref_pem_static][section:section_pem_compilation_static Static library compilation]
 
 There are no additional build defines or options required to build static library. Using Boost.Build system you 
 can build the static library with a following command from `libs/test/build` directory:
@@ -248,7 +241,7 @@ Also on Windows you can use the Microsoft Visual Studio .NET project file provid
 
 [endsect] [/ static compilation]
 
-[#ref_pem_dynamic][section Dynamic library compilation]
+[#ref_pem_dynamic][section:section_pem_compilation_dynamic Dynamic library compilation]
 
 To build the dynamic library [footnote What is meant by the term dynamic library is a ['dynamically
 loaded library], alternatively called a ['shared library].] you
@@ -286,12 +279,8 @@ or header
 #include <boost/test/included/prg_exec_monitor.hpp>
 ``
 
-By default the feature is going to be enabled. To disable it you have to define the flag __BOOST_TEST_NO_LIB__.
+By default the feature is enabled. To disable it you have to define the flag __BOOST_TEST_NO_LIB__.
 
-For more details on the auto-linking feature implementation and configuration you should consult the 
-<ulink url="under_construction.html">appropriate documentation</ulink>.
-
-[warning the previous link points to "under construction"]
 
 [endsect] [/ autolink]
 

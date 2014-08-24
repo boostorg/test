@@ -292,9 +292,9 @@ public:
     /// Should monitor catch system errors.
     ///
     /// The @em p_catch_system_errors property is a boolean flag (default value is true) specifying whether or not execution_monitor should trap system 
-    /// errors/system level exceptions/signals, which would cause program to crash in a regular case (wihout execution_monitor).
+    /// errors/system level exceptions/signals, which would cause program to crash in a regular case (without execution_monitor).
     /// Set this property to false, for example, if you wish to force coredump file creation. The Unit Test Framework provides a 
-    /// runtime parameter --catch_system_errors=yes to alter the behavior in monitored test cases.
+    /// runtime parameter @c \-\-catch_system_errors=yes to alter the behavior in monitored test cases.
     unit_test::readwrite_property<bool> p_catch_system_errors; 
 
     ///  Should monitor try to attach debugger in case of caught system error.

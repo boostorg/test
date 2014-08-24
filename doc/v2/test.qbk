@@ -33,7 +33,7 @@
 [def __UTF__ /UTF/]
 [def __IEEE754__ [*IEEE754]]
 [def __PEM__     ['PEM]]
-[def __EM__      [link ref_execution_monitor ['EM]]]
+[def __EM__      [link boost_test.components.execution_monitor ['EM]]]
 [def __MTF__     ['Minimal Testing Facility]]
 
 [def __part_glossary__                [link boost_test.section_glossary Glossary]]
@@ -55,7 +55,6 @@
 [def __output_stream_testing_tool__   [link boost_test.testing_tools.output_stream_testing output streams]]
 
 
-[def __dynamic_linking__                  [*dynamic linking]]
 [def __auto_linking__                     [link ref_pem_auto_link automatic linking]]
 
 
@@ -171,20 +170,22 @@
 [include overview.qbk]
 [include how_to_read_this_documentation.qbk]
 
-
 [/ some tutorial ]
 [include tutorials/tutorial.qbk]
 
-
-
+[/ build and link with boost.test]
 [include utf.user-guide.qbk]
+
+[/ organizing, generating and registering tests]
 [include tests_organization/utf.user-guide.test-organization.qbk]
 
+[/ creating assertions]
 [include utf.testing-tools.qbk]
+
+[/ controlling outputs]
 [include test_output/test_output.qbk]
 
-
-
+[/ command line + environment options]
 [include runtime_configuration/runtime_configuration.qbk]
 
 [include usage_recommandations.qbk]
@@ -196,12 +197,11 @@
 [include acknowledgments.qbk]
 
 
-
+[/=============================================================================]
 [section Components]
-[/ Raffi: I think it would be better to put this in test variants]
 [include minimal-testing.qbk]
-[include monitor.program-execution.qbk]
 [include monitor.execution.qbk]
+[include monitor.program-execution.qbk]
 [endsect]
 
 

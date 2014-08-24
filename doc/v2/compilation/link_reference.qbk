@@ -12,11 +12,12 @@
 
 [section:link_boost_test_no_lib `BOOST_TEST_NO_LIB`]
 Define this flag to prevent auto-linking.
+[note The same flag is used for the __UTF__ and the __PEM__ components.]
 [endsect]
 
 [section:link_boost_test_dyn_link `BOOST_TEST_DYN_LINK`]
 Define this flag to link against the __UTF__ shared library.
-
+[note The same flag is used for the __UTF__ and the __PEM__ components.]
 [endsect]
 
 [section:link_boost_test_no_main `BOOST_TEST_NO_MAIN`]
