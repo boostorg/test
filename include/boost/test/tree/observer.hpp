@@ -49,6 +49,7 @@ public:
         case AR_PASSED: assertion_result( true ); break;
         case AR_FAILED: assertion_result( false ); break;
         case AR_TRIGGERED: break;
+        default: break;
         }
     }
     virtual void    exception_caught( execution_exception const& ) {}

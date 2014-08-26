@@ -252,7 +252,7 @@
 
    <inline-synopsis>
     <macro name="BOOST_TEST_CHECKPOINT" kind="functionlike">
-     <macro-parameter name="checkoint_message"/>
+     <macro-parameter name="checkpoint_message"/>
     </macro>
    </inline-synopsis>
 
