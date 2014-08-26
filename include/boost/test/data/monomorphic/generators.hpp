@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines specific generators
+///@file
+///Defines specific generators
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_GENERATORS_HPP_112011GER

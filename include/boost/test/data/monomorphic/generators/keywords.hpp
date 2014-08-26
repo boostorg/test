@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : keywords used in generator interfaces
+///@file
+/// Keywords used in generator interfaces
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_GENERATORS_KEYWORDS_HPP_101512GER

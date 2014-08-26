@@ -5,13 +5,10 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines monomorphic dataset n+m dimentional *. Samples in this
-//                dataset is grid of elements in DS1 and DS2. There will be total 
-//                |DS1| * |DS2| samples
+///@file
+/// Defines monomorphic dataset n+m dimentional *. Samples in this
+/// dataset is grid of elements in DS1 and DS2. There will be total 
+/// |DS1| * |DS2| samples
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_GRID_HPP_101512GER
