@@ -182,13 +182,22 @@ operator<<( std::ostream& ostr, print_helper_t<T> const& ph )
 // **************       BOOST_TEST_DONT_PRINT_LOG_VALUE        ************** //
 // ************************************************************************** //
 
-#define BOOST_TEST_DONT_PRINT_LOG_VALUE( the_type )         \
-namespace boost{ namespace test_tools{ namespace tt_detail{ \
-template<>                                                  \
-struct print_log_value<the_type > {                         \
-    void    operator()( std::ostream&, the_type const& ) {} \
-};                                                          \
-}}}                                                         \
+#define BOOST_TEST_DONT_PRINT_LOG_VALUE( the_type )                 \
+namespace boost {                                                   \
+                                                                    \
+template <typename CharT>                                           \
+inline basic_wrap_stringstream<CharT>&                              \
+operator<<( basic_wrap_stringstream<CharT>& targ, the_type const& ) \
+{                                                                   \
+    return targ;                                                    \
+}                                                                   \
+                                                                    \
+namespace test_tools{ namespace tt_detail{                          \
+template<>                                                          \
+struct print_log_value<the_type > {                                 \
+    void    operator()( std::ostream&, the_type const& ) {}         \
+};                                                                  \
+}}}                                                                 \
 /**/
 
 } // namespace test_tools

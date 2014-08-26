@@ -91,6 +91,7 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : test_datasets_cxx11          : boost_unit_test_framework : : [ glob test_datasets_src/*.cpp ] : : <toolset>gcc:<cxxflags>-std=gnu++0x ]
           # [ test-btl-lib run : config_file_iterator_test    : boost_unit_test_framework/<link>static ]
           # [ test-btl-lib run : config_file_test             : boost_unit_test_framework/<link>static ]
+          [ test-btl-lib run : test_dont_print_log_value    : boost_unit_test_framework ]
         ;
 
 test-suite "multithreaded_test"
