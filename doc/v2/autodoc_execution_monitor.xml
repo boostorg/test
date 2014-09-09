@@ -17,7 +17,7 @@
 <namespace name="monomorphic">
 <class name="array"><template>
       <template-type-parameter name="T"/>
-    </template><inherit access="public">monomorphic::dataset&lt; T &gt;</inherit><struct name="iterator"><inherit access="public">iterator</inherit><method-group name="public member functions">
+    </template><inherit access="public">boost::unit_test::data::monomorphic::dataset&lt; T &gt;</inherit><struct name="iterator"><inherit access="public">boost::unit_test::data::monomorphic::dataset&lt; T &gt;::iterator</inherit><method-group name="public member functions">
 <method name="operator*" specifiers="virtual"><type>T const &amp;</type></method>
 <method name="operator++" specifiers="virtual"><type>void</type></method>
 </method-group>
@@ -40,6 +40,8 @@
 
 
 </namespace>
+
+
 
 
 
@@ -92,13 +94,13 @@
 </namespace>
 </header>
 <header name="boost/test/data/monomorphic/collection.hpp">
-<namespace name="boost">
+<para>Defines monomorphic dataset based on stl sequence. </para><namespace name="boost">
 <namespace name="unit_test">
 <namespace name="data">
 <namespace name="monomorphic">
 <class name="collection"><template>
       <template-type-parameter name="C"/>
-    </template><inherit access="public">monomorphic::dataset&lt; boost::decay&lt; C &gt;::type::value_type &gt;</inherit><struct name="iterator"><inherit access="public">iterator</inherit><method-group name="public member functions">
+    </template><inherit access="public">boost::unit_test::data::monomorphic::dataset&lt; boost::decay&lt; C &gt;::type::value_type &gt;</inherit><struct name="iterator"><inherit access="public">boost::unit_test::data::monomorphic::dataset&lt; T &gt;::iterator</inherit><method-group name="public member functions">
 <method name="operator*" specifiers="virtual"><type>T const &amp;</type></method>
 <method name="operator++" specifiers="virtual"><type>void</type></method>
 </method-group>
@@ -149,9 +151,123 @@
 
 
 
+
+
 <function name="make"><type><classname>monomorphic::collection</classname>&lt; typename BOOST_TEST_ENABLE_IF&lt; is_forward_iterable&lt; C &gt;::value, C &gt;::type &gt;</type><template>
           <template-type-parameter name="C"/>
         </template><parameter name="c"><paramtype>C &amp;&amp;</paramtype></parameter></function>
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/test/data/monomorphic/dataset.hpp">
+<namespace name="boost">
+<namespace name="unit_test">
+<namespace name="data">
+<namespace name="monomorphic">
+<struct name="traits"><template>
+      <template-type-parameter name="T"/>
+    </template><typedef name="ref_type"><type>T const &amp;</type></typedef>
+<method-group name="public static functions">
+<method name="invoke_action" specifiers="static"><type>void</type><template>
+          <template-type-parameter name="Action"/>
+        </template><parameter name="arg"><paramtype>ref_type</paramtype></parameter><parameter name="action"><paramtype>Action const &amp;</paramtype></parameter></method>
+</method-group>
+</struct><struct-specialization name="traits"><template>
+      <template-type-parameter name="T1"/>
+      <template-type-parameter name="T2"/>
+    </template><specialization><template-arg>std::tuple&lt; T1</template-arg><template-arg>T2 &gt;</template-arg></specialization><typedef name="ref_type"><type>std::tuple&lt; T1 const &amp;, T2 const &amp; &gt;</type></typedef>
+<method-group name="public static functions">
+<method name="invoke_action" specifiers="static"><type>void</type><template>
+          <template-type-parameter name="Action"/>
+        </template><parameter name="arg"><paramtype>ref_type</paramtype></parameter><parameter name="action"><paramtype>Action const &amp;</paramtype></parameter></method>
+</method-group>
+</struct-specialization><struct-specialization name="traits"><template>
+      <template-type-parameter name="T1"/>
+      <template-type-parameter name="T2"/>
+      <template-type-parameter name="T3"/>
+    </template><specialization><template-arg>std::tuple&lt; T1</template-arg><template-arg>T2</template-arg><template-arg>T3 &gt;</template-arg></specialization><typedef name="ref_type"><type>std::tuple&lt; T1 const &amp;, T2 const &amp;, T3 const &amp; &gt;</type></typedef>
+<method-group name="public static functions">
+<method name="invoke_action" specifiers="static"><type>void</type><template>
+          <template-type-parameter name="Action"/>
+        </template><parameter name="arg"><paramtype>ref_type</paramtype></parameter><parameter name="action"><paramtype>Action const &amp;</paramtype></parameter></method>
+</method-group>
+</struct-specialization><class name="dataset"><template>
+      <template-type-parameter name="T"/>
+    </template><class name="iterator"><typedef name="ref_type"><type><classname>monomorphic::traits</classname>&lt; T &gt;::ref_type</type></typedef>
+<method-group name="public member functions">
+<method name="operator*" cv="= 0" specifiers="virtual"><type>ref_type</type></method>
+<method name="operator++" cv="= 0" specifiers="virtual"><type>void</type></method>
+</method-group>
+<destructor/>
+</class><typedef name="data_type"><type>T</type></typedef>
+<typedef name="iter_ptr"><type>boost::shared_ptr&lt; <classname>iterator</classname> &gt;</type></typedef>
+<method-group name="public member functions">
+<method name="size" cv="const = 0" specifiers="virtual"><type><classname>data::size_t</classname></type></method>
+<method name="begin" cv="const = 0" specifiers="virtual"><type>iter_ptr</type></method>
+</method-group>
+</class>
+
+
+
+
+
+
+
+
+</namespace>
+<function name="for_each_sample"><type>void</type><template>
+          <template-type-parameter name="SampleType"/>
+          <template-type-parameter name="Action"/>
+        </template><parameter name="ds"><paramtype><classname>monomorphic::dataset</classname>&lt; SampleType &gt; const &amp;</paramtype></parameter><parameter name="act"><paramtype>Action const &amp;</paramtype></parameter><parameter name="number_of_samples"><paramtype><classname>data::size_t</classname></paramtype><default>BOOST_TEST_DS_INFINITE_SIZE</default></parameter></function>
+<function name="for_each_sample"><type>BOOST_TEST_ENABLE_IF&lt;!monomorphic::is_dataset&lt; SampleType &gt;::value, void &gt;::type</type><template>
+          <template-type-parameter name="SampleType"/>
+          <template-type-parameter name="Action"/>
+        </template><parameter name="samples"><paramtype>SampleType const &amp;</paramtype></parameter><parameter name="act"><paramtype>Action const &amp;</paramtype></parameter><parameter name="number_of_samples"><paramtype><classname>data::size_t</classname></paramtype><default>BOOST_TEST_DS_INFINITE_SIZE</default></parameter></function>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -180,7 +296,7 @@
 <namespace name="monomorphic">
 <class name="generated_by"><template>
       <template-type-parameter name="Generator"/>
-    </template><inherit access="public">monomorphic::dataset&lt; Generator::data_type &gt;</inherit><struct name="iterator"><inherit access="public">iterator</inherit><method-group name="public member functions">
+    </template><inherit access="public">boost::unit_test::data::monomorphic::dataset&lt; Generator::data_type &gt;</inherit><struct name="iterator"><inherit access="public">boost::unit_test::data::monomorphic::dataset&lt; T &gt;::iterator</inherit><method-group name="public member functions">
 <method name="operator*" specifiers="virtual"><type>T const &amp;</type></method>
 <method name="operator++" specifiers="virtual"><type>void</type></method>
 </method-group>
@@ -188,7 +304,7 @@
 </struct><enum name="@5"><enumvalue name="arity"><default>= 1</default></enumvalue></enum>
 <typedef name="generator_type"><type>Generator</type></typedef>
 <method-group name="public member functions">
-<method name="size" cv="const"><type><classname>data::size_t</classname></type></method>
+<method name="size" cv="const" specifiers="virtual"><type><classname>data::size_t</classname></type></method>
 <method name="begin" cv="const" specifiers="virtual"><type>iter_ptr</type></method>
 </method-group>
 <constructor specifiers="explicit"><parameter name="G"><paramtype>Generator &amp;&amp;</paramtype></parameter></constructor>
@@ -243,6 +359,8 @@
 
 
 
+
+
 </namespace>
 
 
@@ -254,11 +372,13 @@
 </namespace>
 </header>
 <header name="boost/test/data/monomorphic/generators.hpp">
-</header>
+<para>Defines specific generators. </para></header>
 <header name="boost/test/data/monomorphic/generators/keywords.hpp">
-<namespace name="boost">
+<para>Keywords used in generator interfaces. </para><namespace name="boost">
 <namespace name="unit_test">
 <namespace name="data">
+
+
 
 
 
@@ -369,6 +489,8 @@
 
 
 
+
+
 <function name="random"><type><classname>monomorphic::generated_by</classname>&lt; <classname>monomorphic::random_t</classname>&lt;&gt; &gt;</type></function>
 <function name="random"><type><classname>monomorphic::generated_by</classname>&lt; <classname>monomorphic::random_t</classname>&lt; SampleType &gt; &gt;</type><template>
           <template-type-parameter name="SampleType"/>
@@ -392,7 +514,7 @@
 </namespace>
 </header>
 <header name="boost/test/data/monomorphic/generators/xrange.hpp">
-<namespace name="boost">
+<para>Defines range generator. </para><namespace name="boost">
 <namespace name="unit_test">
 <namespace name="data">
 <namespace name="monomorphic">
@@ -415,6 +537,8 @@
 
 
 </namespace>
+
+
 
 
 
@@ -484,7 +608,7 @@
 <class name="grid"><template>
       <template-type-parameter name="DS1"/>
       <template-type-parameter name="DS2"/>
-    </template><struct name="iterator"><inherit access="public">iterator</inherit><typedef name="ref_type"><type>monomorphic::traits&lt; T &gt;::ref_type</type></typedef>
+    </template><struct name="iterator"><inherit access="public">boost::unit_test::data::monomorphic::dataset&lt; T &gt;::iterator</inherit><typedef name="ref_type"><type><classname>monomorphic::traits</classname>&lt; T &gt;::ref_type</type></typedef>
 <method-group name="public member functions">
 <method name="operator*" specifiers="virtual"><type>ref_type</type></method>
 <method name="operator++" specifiers="virtual"><type>void</type></method>
@@ -563,6 +687,8 @@
 
 
 
+
+
 </namespace>
 
 
@@ -581,7 +707,7 @@
 <class name="join"><template>
       <template-type-parameter name="DS1"/>
       <template-type-parameter name="DS2"/>
-    </template><inherit access="public">monomorphic::dataset&lt; boost::decay&lt; DS1 &gt;::type::data_type &gt;</inherit><struct name="iterator"><inherit access="public">iterator</inherit><method-group name="public member functions">
+    </template><inherit access="public">boost::unit_test::data::monomorphic::dataset&lt; boost::decay&lt; DS1 &gt;::type::data_type &gt;</inherit><struct name="iterator"><inherit access="public">boost::unit_test::data::monomorphic::dataset&lt; T &gt;::iterator</inherit><method-group name="public member functions">
 <method name="operator*" specifiers="virtual"><type>T const &amp;</type></method>
 <method name="operator++" specifiers="virtual"><type>void</type></method>
 </method-group>
@@ -659,6 +785,8 @@
 
 
 
+
+
 </namespace>
 
 
@@ -670,13 +798,13 @@
 </namespace>
 </header>
 <header name="boost/test/data/monomorphic/singleton.hpp">
-<namespace name="boost">
+<para>Defines single element monomorphic dataset. </para><namespace name="boost">
 <namespace name="unit_test">
 <namespace name="data">
 <namespace name="monomorphic">
 <class name="singleton"><template>
       <template-type-parameter name="T"/>
-    </template><inherit access="public">monomorphic::dataset&lt; boost::decay&lt; T &gt;::type &gt;</inherit><struct name="iterator"><inherit access="public">iterator</inherit><method-group name="public member functions">
+    </template><inherit access="public">boost::unit_test::data::monomorphic::dataset&lt; boost::decay&lt; T &gt;::type &gt;</inherit><purpose>Models a single element data set. </purpose><struct name="iterator"><inherit access="public">boost::unit_test::data::monomorphic::dataset&lt; T &gt;::iterator</inherit><method-group name="public member functions">
 <method name="operator*" specifiers="virtual"><type>base::data_type const &amp;</type></method>
 <method name="operator++" specifiers="virtual"><type>void</type></method>
 </method-group>
@@ -701,6 +829,8 @@
 
 
 </namespace>
+
+
 
 
 
@@ -759,7 +889,7 @@
 <class name="zip"><template>
       <template-type-parameter name="DS1"/>
       <template-type-parameter name="DS2"/>
-    </template><struct name="iterator"><inherit access="public">iterator</inherit><typedef name="ref_type"><type>monomorphic::traits&lt; T &gt;::ref_type</type></typedef>
+    </template><struct name="iterator"><inherit access="public">boost::unit_test::data::monomorphic::dataset&lt; T &gt;::iterator</inherit><typedef name="ref_type"><type><classname>monomorphic::traits</classname>&lt; T &gt;::ref_type</type></typedef>
 <method-group name="public member functions">
 <method name="operator*" specifiers="virtual"><type>ref_type</type></method>
 <method name="operator++" specifiers="virtual"><type>void</type></method>
@@ -838,6 +968,8 @@
 
 
 
+
+
 </namespace>
 
 
@@ -873,7 +1005,9 @@
 <constructor><template>
           <template-type-parameter name="T"/>
         </template><parameter name="v"><paramtype>T</paramtype></parameter></constructor>
-</class><function name="operator&gt;"><type>bool</type><parameter name="lhs"><paramtype><classname>data::size_t</classname></paramtype></parameter><parameter name="rhs"><paramtype>std::size_t</paramtype></parameter></function>
+</class>
+
+<function name="operator&gt;"><type>bool</type><parameter name="lhs"><paramtype><classname>data::size_t</classname></paramtype></parameter><parameter name="rhs"><paramtype>std::size_t</paramtype></parameter></function>
 <function name="operator&gt;"><type>bool</type><parameter name="lhs"><paramtype>std::size_t</paramtype></parameter><parameter name="rhs"><paramtype><classname>data::size_t</classname></paramtype></parameter></function>
 <function name="operator&gt;"><type>bool</type><parameter name="lhs"><paramtype><classname>data::size_t</classname></paramtype></parameter><parameter name="rhs"><paramtype><classname>data::size_t</classname></paramtype></parameter></function>
 <function name="operator&gt;="><type>bool</type><parameter name="lhs"><paramtype><classname>data::size_t</classname></paramtype></parameter><parameter name="rhs"><paramtype>std::size_t</paramtype></parameter></function>
@@ -928,6 +1062,8 @@
 <para>test case family based on data generator </para><namespace name="boost">
 <namespace name="unit_test">
 <namespace name="data">
+
+
 
 
 

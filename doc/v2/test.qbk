@@ -133,6 +133,9 @@
 [def __BOOST_TEST_LOG_LEVEL__    [link ref_param_log_level `BOOST_TEST_LOG_LEVEL`]] [/ this is an environment variable]
 
 
+[/ parametrized test cases]
+[def __BOOST_DATA_TEST_CASE_WITH_PARAMS__ [link boost_test.tests_organization.test_cases.test_case_generation.datasets_auto_registration `BOOST_DATA_TEST_CASE_WITH_PARAMS`]]
+
 
 [/ runtime/cla parameters]
 [def __param_show_progress__          [link ref_param_show_progress `show_progress`]]

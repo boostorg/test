@@ -43,21 +43,26 @@ doxygen autodoc_execution_monitor
       $(BOOST_ROOT)/libs/test/include/boost/test/execution_monitor.hpp
       #$(BOOST_ROOT)/libs/test/include/boost/test/impl/execution_monitor.ipp
       $(BOOST_ROOT)/libs/test/example/exec_mon_example.cpp
+
+
+
       
       # datasets
+      $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/dataset.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/test_case.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/size.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/array.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/collection.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generate.hpp
       
-      $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators.hpp
+     
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/grid.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/join.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/singleton.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/zip.hpp
       
       # datasets generators
+       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators/keywords.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators/random.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators/xrange.hpp      

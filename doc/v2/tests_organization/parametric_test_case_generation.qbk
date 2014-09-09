@@ -9,42 +9,127 @@ some collection. However, this solution has also limitations
 
 The __UTF__ provides a facility in order to ease the automated generations of these parameters.
 
+The unit test toolbox is augmented with one new registration macro: __BOOST_DATA_TEST_CASE_WITH_PARAMS__. 
 
 [section Datasets]
 The power of the dataset object comes from
 
-* its ability to combine datasets in order to generate dataset of higher dimensions
+* the operations they provide for combination
+* the generators provided
+* their interface with other type of collections
 
-[section Operations]
+A dataset is a collection of elements, that 
 
-[section Cartesian product]
+* is forward iterable
+* can be queried for their `size`
+
+
+
+[tip datasets are implemented in [classref boost::unit_test::data::monomorphic::dataset]]
+
+[warning Only "monomorphic" datasets are supported, which means that all elements of the collection have the same type.]
+
+
+
+[section Operations on dataset]
+As mentionned earlier, one of the major aspects of using the __UTF__ datasets lies in the number of operations provided
+for their combination.
+ 
+[section Cartesian products]
+The cartesian product, or ['grid], combines two datasets to form a new dataset of higher dimension. The iteration over
+the resulting datasets creates pairs of values with types respectives to the initial datasets.
+
+
 
 [endsect]
 
 
-[section Joining]
-
+[section Joins]
+A ['join] is the concatenation of two datasets. These datasets are required to have compatible types. 
 [endsect]
 
 
-[section Zipping]
+[section Zips]
+A ['zip] is the concatenation of two datasets. These datasets are required to have the same size.
+
+
+``
+#include <boost/test/unit_test.hpp>
+
+#if BOOST_PP_VARIADICS
+
+#include <boost/test/data/test_case.hpp>
+#include <boost/test/data/monomorphic.hpp>
+namespace data=boost::unit_test::data;
+
+int samples1[] = {1,2};
+char const* samples2[] = {"qwerty","asdfg"};
+
+__BOOST_DATA_TEST_CASE__( test_name, data::make(samples1)^samples2, integer_values, string_value)
+{
+  std::cout << integer_values << ", " << string_value << std::endl;
+}
+#endif
+``
+
+
+[table:id_example_dataset_zipop Custom predicate support using __BOOST_LEVEL_PREDICATE__
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [``
+#include <boost/test/unit_test.hpp>
+
+#if BOOST_PP_VARIADICS
+
+#include <boost/test/data/test_case.hpp>
+#include <boost/test/data/monomorphic.hpp>
+namespace data=boost::unit_test::data;
+
+int samples1[] = {1,2};
+char const* samples2[] = {"qwerty","asdfg"};
+
+__BOOST_DATA_TEST_CASE__( test_name, data::make(samples1)^samples2, integer_values, string_value)
+{
+  std::cout << integer_values << ", " << string_value << std::endl;
+}
+#endif
+``
+]
+    [blablablabla]
+  ]
+]
+
 
 [endsect]
 
 [endsect] [/ operations on dataset]
 
 
-[section Dataset types]
-[section Collections]
-
-[endsect] [/ collection]
 
 
+[section Datasets generators]
+Several ['generators] are implemented in __UTF__. The purpose is to:
 
-[section Random values]
+* ease the generation of data, even in large scale
+* improve the readability and expressivity of the test cases
 
 
-[heading Choosing the distribution]
+
+[section Ranges]
+
+[endsect]
+
+
+[section Random value generators]
+
+[classref boost::unit_test::data::monomorphic::random_t]
+
+[warning the random value generators are available only for C++11 capable compilers.]
+
+[h3 Choosing the distribution]
 The selection of the distibution may be given by the parameter `boost::unit_test::data::distribution`
 
 The following defines a random value generator with Gaussian distribution (mean 5, sigma 2).
@@ -52,7 +137,7 @@ The following defines a random value generator with Gaussian distribution (mean 
 auto rdgen = boost::unit_test::data::random(data::distribution = std::normal_distribution<>(5.,2));
 ``
 
-[heading Setting the seed]
+[h3 Setting the seed]
 In order to be able to reproduce a failure within a randomized parameter test case, the seed that generated the failure may be
 set in order to generate the same sequence of random values.
 
@@ -62,8 +147,17 @@ auto rdgen = boost::unit_test::data::random(data::seed = 100UL);
 
 [endsect] [/ random]
 
-[endsect] [/ Dataset types]
+
+[endsect] [/ Datasets generators]
 
 [endsect] [/ datasets]
+
+[section:datasets_auto_registration Test case with datasets]
+
+``
+BOOST_DATA_TEST_CASE_WITH_PARAMS
+``
+
+[endsect]
 
 [endsect]

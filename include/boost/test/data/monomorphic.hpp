@@ -6,7 +6,7 @@
 //  See http://www.boost.org/libs/test for the library home page.
 //
 //!@file 
-//!@brief monomorphic dataset interfaces
+//!@brief Monomorphic dataset interfaces
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_HPP_102211GER
