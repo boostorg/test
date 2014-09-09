@@ -87,7 +87,7 @@ putenv_impl( cstring name, cstring value )
     // !! this may actually fail. What should we do?
     setenv( name.begin(), value.begin(), 1 );
 }
-#else
+#else /* defined(__COMO__) && 0 */
 inline void
 putenv_impl( cstring name, cstring value )
 {
@@ -100,9 +100,9 @@ putenv_impl( cstring name, cstring value )
     using namespace std;
     putenv( const_cast<char*>( fs.str().c_str() ) );
 }
-#endif
-#endif
-#endif
+#endif /* defined(__COMO__) && 0 */
+#endif /* BOOST_PLAT_WINDOWS_DESKTOP */
+#endif /* !UNDER_CE */
 
 #ifdef BOOST_MSVC 
 #pragma warning(pop) 
@@ -118,7 +118,7 @@ putenv_impl( cstring name, cstring value )
 
 //____________________________________________________________________________//
 
-#  else
+#  else /* !BOOST_RT_PARAM_WIDE_STRING */
 
 typedef wchar_t                                                 char_type;
 typedef std::basic_string<char_type>                            dstring;
@@ -151,8 +151,8 @@ putenv_impl( cstring name, cstring value )
 #define BOOST_RT_PARAM_PUTENV putenv_impl
 #endif
 
-#  endif
-#endif
+#  endif /* !BOOST_RT_PARAM_WIDE_STRING */
+#endif /* !BOOST_RT_PARAM_CUSTOM_STRING */
 
 #ifdef __GNUC__
 #define BOOST_RT_PARAM_UNNEEDED_VIRTUAL virtual
