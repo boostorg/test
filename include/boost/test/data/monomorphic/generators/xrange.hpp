@@ -40,6 +40,8 @@ namespace monomorphic {
 // **************             monomorphic::xrange_t            ************** //
 // ************************************************************************** //
 
+
+//! Implements the range dataset generator.
 template<typename SampleType, typename StepType=SampleType>
 class xrange_t {
 public:
@@ -126,6 +128,9 @@ xrange( Params const& params )
 
 //____________________________________________________________________________//
 
+//! Creates an xrange [0, end) with unit step.
+//!
+//! "0" is the 0 of the SampleType, as returned by SampleType default constructor.
 template<typename SampleType>
 inline monomorphic::generated_by<monomorphic::xrange_t<SampleType> >
 xrange( SampleType const& end_val )
@@ -145,6 +150,7 @@ xrange( SampleType const& end_val, Params const& params )
 
 //____________________________________________________________________________//
 
+//! Creates an xrange [begin, end) with unit step
 template<typename SampleType>
 inline monomorphic::generated_by<monomorphic::xrange_t<SampleType> >
 xrange( SampleType const& begin_val, SampleType const& end_val )
@@ -155,6 +161,9 @@ xrange( SampleType const& begin_val, SampleType const& end_val )
 
 //____________________________________________________________________________//
 
+//! Creates an xrange [begin, end) with given step.
+//!
+//! The step size cannot be null.
 template<typename SampleType,typename StepType>
 inline monomorphic::generated_by<monomorphic::xrange_t<SampleType> >
 xrange( SampleType const& begin_val, SampleType const& end_val, StepType const& step_val )

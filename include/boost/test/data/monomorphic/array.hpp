@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines monomorphic dataset based on stl sequence
+///@file
+///Defines monomorphic dataset based on C type arrays
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_ARRAY_HPP_121411GER

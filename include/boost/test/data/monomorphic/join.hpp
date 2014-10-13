@@ -32,6 +32,9 @@ namespace monomorphic {
 // **************                      join                    ************** //
 // ************************************************************************** //
 
+//! Defines a new dataset from the concatenation of two datasets
+//!
+//! The size of the resulting dataset is the sum of the two underlying datasets.
 template<typename DS1, typename DS2>
 class join : public monomorphic::dataset<typename boost::decay<DS1>::type::data_type> {
     typedef typename boost::decay<DS1>::type::data_type T;

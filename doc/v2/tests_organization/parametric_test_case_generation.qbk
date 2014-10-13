@@ -5,11 +5,11 @@ test over a large set of parameters. __BOOST_PARAM_TEST_CASE__ provides an easy 
 some collection. However, this solution has also limitations
 
 * Suppose we already have parametrized tests for two functions `func1` and `func2`. 
-*
+* 
 
 The __UTF__ provides a facility in order to ease the automated generations of these parameters.
 
-The unit test toolbox is augmented with one new registration macro: __BOOST_DATA_TEST_CASE_WITH_PARAMS__. 
+The unit test toolbox is augmented with one new registration macro: __BOOST_DATA_TEST_CASE__. 
 
 [section Datasets]
 The power of the dataset object comes from
@@ -39,38 +39,40 @@ for their combination.
 The cartesian product, or ['grid], combines two datasets to form a new dataset of higher dimension. The iteration over
 the resulting datasets creates pairs of values with types respectives to the initial datasets.
 
+Cartesian products are accessible through the `operator*` on datasets:
 
 
 [endsect]
 
 
 [section Joins]
-A ['join] is the concatenation of two datasets. These datasets are required to have compatible types. 
+A ['join] is the concatenation of two datasets. These datasets are required to have compatible types. Joins are accessible through
+the `operator+` on datasets:
+
+``
+int arr1[] = {1,2};
+int arr2[] = {7,19};
+__BOOST_CHECK_EQUAL__( (data::make( arr1 ) + data::make( arr2 )).size(), 4);
+``
+
+[note
+The `join` functionality is implemented in the class [classref boost::unit_test::data::monomorphic::join].
+]
+
 [endsect]
 
 
+
+
 [section Zips]
-A ['zip] is the concatenation of two datasets. These datasets are required to have the same size.
+The ['zip] function returns a dataset of tuples, where the i-th tuple contains the i-th element from each of the argument datasets.
+The size of the zipped dataset is as follow:
 
+* if one of the dataset is of size 1 (singleton) or of infinite size, the final zip size is governed by the other dataset.
+* otherwise the datasets are required to have the same size
 
-``
-#include <boost/test/unit_test.hpp>
+Zips are accessible through the `operator^` on datasets:
 
-#if BOOST_PP_VARIADICS
-
-#include <boost/test/data/test_case.hpp>
-#include <boost/test/data/monomorphic.hpp>
-namespace data=boost::unit_test::data;
-
-int samples1[] = {1,2};
-char const* samples2[] = {"qwerty","asdfg"};
-
-__BOOST_DATA_TEST_CASE__( test_name, data::make(samples1)^samples2, integer_values, string_value)
-{
-  std::cout << integer_values << ", " << string_value << std::endl;
-}
-#endif
-``
 
 
 [table:id_example_dataset_zipop Custom predicate support using __BOOST_LEVEL_PREDICATE__
@@ -97,8 +99,13 @@ __BOOST_DATA_TEST_CASE__( test_name, data::make(samples1)^samples2, integer_valu
 }
 #endif
 ``
-]
-    [blablablabla]
+    ]
+    [
+``
+1, qwerty
+2, asdfg
+``
+    ]
   ]
 ]
 
@@ -111,14 +118,61 @@ __BOOST_DATA_TEST_CASE__( test_name, data::make(samples1)^samples2, integer_valu
 
 
 [section Datasets generators]
-Several ['generators] are implemented in __UTF__. The purpose is to:
+Several ['generators] are implemented in __UTF__. The purpose are:
 
-* ease the generation of data, even in large scale
-* improve the readability and expressivity of the test cases
+* to ease the generation of data, even in large scale
+* to improve the readability and expressivity of the test cases
 
 
 
 [section Ranges]
+A range is a sequence of equally spaced values. An optional `begin` and `step` can be given. 
+The range initialisation supports named values. 
+
+``
+void generate_ranges()
+{
+  using namespace boost::unit_test;
+  generated_by< data::xrange_t<double> > r_double = data::xrange( data::step = 0.5, data::end = 3 );
+}
+``
+
+[h5 Parameters]
+The details of the named value parameters is given in the table below.
+[table:id_range_parameter_table Range parameters
+  [
+    [Name]
+    [Default]
+    [Description]
+  ]
+  [
+    [`begin`]
+    [0]
+    [Number indicating the beginning of the generated range. The `begin` value is included in set of values returned
+     by the generator.
+    ]
+  ]
+
+  [
+    [`end`]
+    [+ infinity]
+    [Number indicating the end of the generated range. The `end` value is not included in set of values returned
+     by the generator. If omitted, the generator has infinite size. 
+    ]
+  ]
+  
+  [
+    [`step`]
+    [1]
+    [Strictly positive number indicating the step between two consecutive elements of the generated range. 
+     The default type is the same as the input type.
+    ]
+  ]  
+]
+
+
+[tip ranges are implemented in [classref boost::unit_test::data::monomorphic::xrange_t], ]
+
 
 [endsect]
 
@@ -126,6 +180,14 @@ Several ['generators] are implemented in __UTF__. The purpose is to:
 [section Random value generators]
 
 [classref boost::unit_test::data::monomorphic::random_t]
+
+
+
+seed;
+distribution;
+engine;
+
+
 
 [warning the random value generators are available only for C++11 capable compilers.]
 
@@ -152,11 +214,13 @@ auto rdgen = boost::unit_test::data::random(data::seed = 100UL);
 
 [endsect] [/ datasets]
 
-[section:datasets_auto_registration Test case with datasets]
+[section:datasets_auto_registration Declaring test case with datasets]
+The dataset framework comes with a new test-case declaration macro:
 
 ``
-BOOST_DATA_TEST_CASE_WITH_PARAMS
+BOOST_DATA_TEST_CASE
 ``
+
 
 [endsect]
 
