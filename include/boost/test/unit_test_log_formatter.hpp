@@ -20,6 +20,8 @@
 #include <boost/test/detail/log_level.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
 
+#include <boost/test/utils/timer.hpp>
+
 // STL
 #include <iosfwd>
 #include <string> // for std::string
@@ -92,7 +94,7 @@ public:
     virtual void        log_build_info( std::ostream& ) = 0;
 
     virtual void        test_unit_start( std::ostream&, test_unit const& tu ) = 0;
-    virtual void        test_unit_finish( std::ostream&, test_unit const& tu, unsigned long elapsed ) = 0;
+    virtual void        test_unit_finish( std::ostream&, test_unit const& tu, elapsed_t elapsed ) = 0;
     virtual void        test_unit_skipped( std::ostream&, test_unit const& ) = 0;
 
     virtual void        log_exception_start( std::ostream&, log_checkpoint_data const&, execution_exception const& ex ) = 0;

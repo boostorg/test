@@ -22,6 +22,7 @@
 #include <boost/test/utils/basic_cstring/io.hpp>
 #include <boost/test/utils/lazy_ostream.hpp>
 #include <boost/test/utils/setcolor.hpp>
+#include <boost/test/utils/timer.hpp>
 #include <boost/test/output/compiler_log_formatter.hpp>
 #include <boost/test/unit_test_parameters.hpp>
 
@@ -101,18 +102,15 @@ compiler_log_formatter::test_unit_start( std::ostream& output, test_unit const& 
 //____________________________________________________________________________//
 
 void
-compiler_log_formatter::test_unit_finish( std::ostream& output, test_unit const& tu, unsigned long elapsed )
+compiler_log_formatter::test_unit_finish( std::ostream& output, test_unit const& tu, elapsed_t elapsed )
 {
     BOOST_TEST_SCOPE_SETCOLOR( output, term_attr::BRIGHT, term_color::BLUE );
 
     output << "Leaving test " << tu.p_type_name << " \"" << tu.p_name << "\"";
 
-    if( elapsed > 0 ) {
+    if( has_time( elapsed ) ) {
         output << "; testing time: ";
-        if( elapsed % 1000 == 0 )
-            output << elapsed/1000 << "ms";
-        else
-            output << elapsed << "mks";
+        output << to_string( elapsed );
     }
 
     output << std::endl;

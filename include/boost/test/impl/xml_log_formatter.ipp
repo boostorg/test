@@ -23,6 +23,8 @@
 #include <boost/test/utils/basic_cstring/io.hpp>
 #include <boost/test/utils/xml_printer.hpp>
 
+#include <boost/test/utils/timer.hpp>
+
 // Boost
 #include <boost/version.hpp>
 
@@ -92,11 +94,11 @@ xml_log_formatter::test_unit_start( std::ostream& ostr, test_unit const& tu )
 //____________________________________________________________________________//
 
 void
-xml_log_formatter::test_unit_finish( std::ostream& ostr, test_unit const& tu, unsigned long elapsed )
+xml_log_formatter::test_unit_finish( std::ostream& ostr, test_unit const& tu, elapsed_t elapsed )
 {
     if( tu.p_type == TUT_CASE )
-        ostr << "<TestingTime>" << elapsed << "</TestingTime>";
-        
+        ostr << to_xml( elapsed );
+
     ostr << "</" << tu_type_name( tu ) << ">";
 }
 
