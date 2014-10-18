@@ -19,6 +19,7 @@
 #include <boost/test/framework.hpp>
 #include <boost/test/execution_monitor.hpp>
 #include <boost/test/tree/test_unit.hpp>
+#include <boost/test/results_collector.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
 #include <boost/test/utils/lazy_ostream.hpp>
 #include <boost/test/utils/setcolor.hpp>
@@ -52,6 +53,22 @@ test_phase_identifier()
             ? const_string( framework::current_test_case().p_name.get() )
             : BOOST_TEST_L( "Test setup" );
 }
+
+//____________________________________________________________________________//
+
+void
+print_result( std::ostream& ostr, counter_t v, counter_t total,
+              const_string name, const_string res )
+{
+    if( v > 0 ) {
+        ostr << v << ' ' << name << ( v != 1 ? "s" : "" );
+        if( total > 0 )
+            ostr << " out of " << total;
+
+        ostr << ' ' << res << ". ";
+    }
+}
+
 
 } // local namespace
 
@@ -115,7 +132,43 @@ compiler_log_formatter::test_unit_finish( std::ostream& output, test_unit const&
             output << elapsed << "mks";
     }
 
-    output << std::endl;
+    output << ". ";
+
+    test_results const& tr = results_collector.results( tu.p_id );
+
+    const_string status;
+
+    if( tr.passed() )
+        status = "passed";
+    else if( tr.p_skipped )
+        status = "skipped";
+    else if( tr.p_aborted )
+        status = "aborted";
+    else
+        status = "failed";
+
+    output << "Test " << ( tu.p_type == TUT_CASE ? "case" : "suite" ) << ' ' << status << ". ";
+
+    if( tr.p_skipped ) {
+        output << "due to " << ( tu.check_dependencies() ? "test aborting\n" : "failed dependency\n" );
+        return;
+    }
+
+    counter_t total_assertions  = tr.p_assertions_passed + tr.p_assertions_failed;
+    counter_t total_tc          = tr.p_test_cases_passed + tr.p_test_cases_warned + tr.p_test_cases_failed + tr.p_test_cases_skipped;
+
+    if( total_assertions > 0 || total_tc > 0 ) {
+        print_result( output, tr.p_assertions_passed,  total_assertions, "assertion", "passed" );
+        print_result( output, tr.p_assertions_failed,  total_assertions, "assertion", "failed" );
+        print_result( output, tr.p_warnings_failed,    0               , "failure"  , "warning" );
+        print_result( output, tr.p_expected_failures,  0               , "failure"  , "expected" );
+        print_result( output, tr.p_test_cases_passed,  total_tc        , "test case", "passed" );
+        print_result( output, tr.p_test_cases_warned,  total_tc        , "test case", "warned" );
+        print_result( output, tr.p_test_cases_failed,  total_tc        , "test case", "failed" );
+        print_result( output, tr.p_test_cases_skipped, total_tc        , "test case", "skipped" );
+        print_result( output, tr.p_test_cases_aborted, total_tc        , "test case", "aborted" );
+    }
+    output << "\n";
 }
 
 //____________________________________________________________________________//
