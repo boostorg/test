@@ -258,6 +258,14 @@ parser::reset()
 
 //____________________________________________________________________________//
 
+BOOST_RT_PARAM_INLINE void
+parser::clear()
+{
+    m_parameters.clear();
+}
+
+//____________________________________________________________________________//
+
 } // namespace cla
 
 } // namespace BOOST_RT_PARAM_NAMESPACE

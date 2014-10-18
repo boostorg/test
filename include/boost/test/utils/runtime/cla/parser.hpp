@@ -128,6 +128,9 @@ public:
     void                usage( out_stream& ostr );
     void                help(  out_stream& ostr );
 
+    // clear
+    void                clear();
+
 private:
     argument const&     valid_argument( cstring string_id ) const;
 

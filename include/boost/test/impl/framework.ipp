@@ -333,6 +333,16 @@ public:
 
     ~framework_impl() { clear(); }
 
+    void            reset()
+    {
+        clear();
+        m_master_test_suite  = 0;
+        m_curr_test_case     = INV_TEST_UNIT_ID;
+        m_next_test_case_id  = MIN_TEST_CASE_ID;
+        m_next_test_suite_id = MIN_TEST_SUITE_ID;
+        m_test_in_progress   = false;
+    }
+
     void            clear()
     {
         while( !m_test_units.empty() ) {
@@ -643,8 +653,20 @@ apply_filters( test_unit_id master_tu_id )
 // ************************************************************************** //
 
 void
+reset()
+{
+    reset_observers();
+    s_frk_impl().reset();
+}
+
+void
 init( init_unit_test_func init_func, int argc, char* argv[] )
 {
+    if( s_frk_impl().m_is_initialized )
+    {
+        reset();
+    }
+
     runtime_config::init( argc, argv );
 
     // set the log level and format

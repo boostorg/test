@@ -152,6 +152,30 @@ namespace runtime_config {
 namespace {
 
 // framework parameters and corresponding command-line arguments
+#ifdef BOOST_TEST_USE_QUALIFIED_COMMANDLINE_ARGUMENTS
+std::string AUTO_START_DBG    = "boost.test.auto_start_dbg";
+std::string BREAK_EXEC_PATH   = "boost.test.break_exec_path";
+std::string BUILD_INFO        = "boost.test.build_info";
+std::string CATCH_SYS_ERRORS  = "boost.test.catch_system_errors";
+std::string COLOR_OUTPUT      = "boost.test.color_output";
+std::string DETECT_FP_EXCEPT  = "boost.test.detect_fp_exceptions";
+std::string DETECT_MEM_LEAKS  = "boost.test.detect_memory_leaks";
+std::string LIST_CONTENT      = "boost.test.list_content";
+std::string LOG_FORMAT        = "boost.test.log_format";
+std::string LOG_LEVEL         = "boost.test.log_level";
+std::string LOG_SINK          = "boost.test.log_sink";
+std::string OUTPUT_FORMAT     = "boost.test.output_format";
+std::string RANDOM_SEED       = "boost.test.random";
+std::string REPORT_FORMAT     = "boost.test.report_format";
+std::string REPORT_LEVEL      = "boost.test.report_level";
+std::string REPORT_SINK       = "boost.test.report_sink";
+std::string RESULT_CODE       = "boost.test.result_code";
+std::string TESTS_TO_RUN      = "boost.test.run_test";
+std::string SAVE_TEST_PATTERN = "boost.test.save_pattern";
+std::string SHOW_PROGRESS     = "boost.test.show_progress";
+std::string USE_ALT_STACK     = "boost.test.use_alt_stack";
+std::string WAIT_FOR_DEBUGGER = "boost.test.wait_for_debugger";
+#else
 std::string AUTO_START_DBG    = "auto_start_dbg";
 std::string BREAK_EXEC_PATH   = "break_exec_path";
 std::string BUILD_INFO        = "build_info";
@@ -174,6 +198,7 @@ std::string SAVE_TEST_PATTERN = "save_pattern";
 std::string SHOW_PROGRESS     = "show_progress";
 std::string USE_ALT_STACK     = "use_alt_stack";
 std::string WAIT_FOR_DEBUGGER = "wait_for_debugger";
+#endif
 
 static const_string
 parameter_2_env_var( const_string param_name )
@@ -261,6 +286,8 @@ void
 init( int& argc, char** argv )
 {
     using namespace cla;
+
+    s_cla_parser.clear();
 
     try {
         if( s_cla_parser.num_params() != 0 )
