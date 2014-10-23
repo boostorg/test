@@ -15,10 +15,6 @@
 // argument parsing implementation bug in Boost.Test causing a buffer overrun
 // and thus triggering access-violation/segfault errors when one of the
 // arguments starts with a space or the leading argument is empty.
-//
-// Test cases marked with <UNDESIRABLE RESULT #1> do not check the command-line
-// arguments after they are processed by UTF because the current UTF
-// implementation seems to mess them up.
 
 // disable MSVC warnings about std::strcpy() being unsafe
 #ifdef _MSC_VER
@@ -178,7 +174,7 @@ BOOST_AUTO_TEST_SUITE(argument_starting_with_space)
     {
         char * argv[] = {"a.exe", " x"};
         ArgChecker arg_checker(sizeof(argv)/sizeof(argv[0]), argv);
-        // <UNDESIRABLE RESULT #1> - should not split on embedded spaces
+        arg_checker.check_unchanged();
     }
 
     //<REGRESSION #1>
@@ -186,7 +182,7 @@ BOOST_AUTO_TEST_SUITE(argument_starting_with_space)
     {
         char * argv[] = {"a.exe", " x", "y"};
         ArgChecker arg_checker(sizeof(argv)/sizeof(argv[0]), argv);
-        // <UNDESIRABLE RESULT #1> - should not split on embedded spaces
+        arg_checker.check_unchanged();
     }
 
     //<REGRESSION #1>
@@ -194,7 +190,7 @@ BOOST_AUTO_TEST_SUITE(argument_starting_with_space)
     {
         char * argv[] = {"a.exe", "x", " y"};
         ArgChecker arg_checker(sizeof(argv)/sizeof(argv[0]), argv);
-        // <UNDESIRABLE RESULT #1> - should not split on embedded spaces
+        arg_checker.check_unchanged();
     }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -223,12 +219,32 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(arguments_with_embedded_spaces)
 
+    BOOST_AUTO_TEST_CASE(test_one_arg_with_one_space)
+    {
+        char const * const argv[] = {"a.exe", "x y"};
+        ArgChecker arg_checker(sizeof(argv)/sizeof(argv[0]), argv);
+        arg_checker.check_unchanged();
+    }
+
+    BOOST_AUTO_TEST_CASE(test_multiple_args_with_one_space)
+    {
+        char const * const argv[] = {"a.exe", "x y", "u w"};
+        ArgChecker arg_checker(sizeof(argv)/sizeof(argv[0]), argv);
+        arg_checker.check_unchanged();
+    }
+
     BOOST_AUTO_TEST_CASE(test_multiple_spaces)
     {
         char const * const argv[] = {"a.exe", "x  y"};
         ArgChecker arg_checker(sizeof(argv)/sizeof(argv[0]), argv);
-        // <UNDESIRABLE RESULT #1> - should not split on embedded spaces
-        arg_checker.check_for_argv_overrun();
+        arg_checker.check_unchanged();
+    }
+
+    BOOST_AUTO_TEST_CASE(test_multiple_arguments)
+    {
+        char const * const argv[] = {"a.exe", "fee fae", "fou fum", "  floppy"};
+        ArgChecker arg_checker(sizeof(argv)/sizeof(argv[0]), argv);
+        arg_checker.check_unchanged();
     }
 
 BOOST_AUTO_TEST_SUITE_END()
