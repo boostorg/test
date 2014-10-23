@@ -221,4 +221,18 @@ BOOST_AUTO_TEST_SUITE_END()
 
 //____________________________________________________________________________//
 
+BOOST_AUTO_TEST_SUITE(arguments_with_embedded_spaces)
+
+    BOOST_AUTO_TEST_CASE(test_multiple_spaces)
+    {
+        char const * const argv[] = {"a.exe", "x  y"};
+        ArgChecker arg_checker(sizeof(argv)/sizeof(argv[0]), argv);
+        // <UNDESIRABLE RESULT #1> - should not split on embedded spaces
+        arg_checker.check_for_argv_overrun();
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
+
+//____________________________________________________________________________//
+
 // EOF
