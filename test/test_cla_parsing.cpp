@@ -57,7 +57,7 @@ public:
 
         // prepare argument data (data + argv)
         data_.resize(data_size);
-        argv_.resize(input_data_count + 1);
+        argv_.resize(input_data_count + 1 + sentinel_count);
         for (int i = 0; i < input_data_count; ++i) {
             argv_[i] = &data_[data_offset[i]];
             std::strcpy(argv_[i], input_data[i]);
@@ -65,6 +65,10 @@ public:
 
         // argv[argc] must be NULL according to ANSI C standard
         argv_[argc_] = NULL;
+
+        // add sentinel values for argv buffer overrun checking
+        for (int i = 0; i < sentinel_count; ++i)
+            argv_[argc_ + 1 + i] = const_cast<char *>(sentinel_value);
 
         // save original data & argv content
         saved_argc_ = argc_;
@@ -95,11 +99,29 @@ public:
         if (expected_argc == argc_)
             for (int i = 0; i < argc_; ++i)
                 BOOST_CHECK(!std::strcmp(expected_argv[i], argv_[i]));
+        check_for_argv_overrun();
+    }
+
+    // Check that UTF command-line argument processing did not attempt to write
+    // passed the end of the argv array.
+    //
+    void check_for_argv_overrun() const
+    {
+        for (int i = 0; i < sentinel_count; ++i)
+            if (argv_[saved_argc_ + 1 + i] != sentinel_value) {
+                BOOST_ERROR("argv buffer overrun detected at index " <<
+                    saved_argc_ + 1 + i);
+                return;
+            }
     }
 
 private:
     ArgChecker(ArgChecker const &);
     void operator=(ArgChecker const &) const;
+
+private:
+    static int const sentinel_count;
+    static char const * const sentinel_value;
 
 private:
     int argc_;
@@ -109,6 +131,15 @@ private:
     std::vector<char> saved_data_;
     std::vector<char *> saved_argv_;
 };
+
+// argv buffer overrun testing configuration
+//
+// Keep the sentinel count large to reduce the chances of our test data causing
+// a large enough buffer overrun to have it detected by OS or RTL's debug
+// checks. This allows our more specialized checks to report such errors more
+// clearly to the user.
+int const ArgChecker::sentinel_count = 1000;
+char const * const ArgChecker::sentinel_value = (char *)0xBAADF00D;
 
 //____________________________________________________________________________//
 
