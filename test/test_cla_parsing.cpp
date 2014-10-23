@@ -141,6 +141,13 @@ char const * const ArgChecker::sentinel_value = (char *)0xBAADF00D;
 
 BOOST_AUTO_TEST_SUITE(empty_argument)
 
+    BOOST_AUTO_TEST_CASE(test_only)
+    {
+        char * argv[] = {"a.exe", ""};
+        ArgChecker arg_checker(sizeof(argv)/sizeof(argv[0]), argv);
+        arg_checker.check_unchanged();
+    }
+
     //<REGRESSION #1>
     BOOST_AUTO_TEST_CASE(test_initial)
     {
@@ -159,6 +166,13 @@ BOOST_AUTO_TEST_SUITE(empty_argument)
     BOOST_AUTO_TEST_CASE(test_inside_sequence)
     {
         char * argv[] = {"a.exe", "x", "", "", "y"};
+        ArgChecker arg_checker(sizeof(argv)/sizeof(argv[0]), argv);
+        arg_checker.check_unchanged();
+    }
+
+    BOOST_AUTO_TEST_CASE(test_final)
+    {
+        char * argv[] = {"a.exe", "x", ""};
         ArgChecker arg_checker(sizeof(argv)/sizeof(argv[0]), argv);
         arg_checker.check_unchanged();
     }
