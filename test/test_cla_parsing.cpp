@@ -11,6 +11,14 @@
 //
 //  Description : unit test for UTF command-line argument parsing
 // ***************************************************************************
+// Tests marked with <REGRESSION #1> are regression tests against a command-line
+// argument parsing implementation bug in Boost.Test causing a buffer overrun
+// and thus triggering access-violation/segfault errors when one of the
+// arguments starts with a space or the leading argument is empty.
+//
+// Test cases marked with <UNDESIRABLE RESULT #1> do not check the command-line
+// arguments after they are processed by UTF because the current UTF
+// implementation seems to mess them up.
 
 // disable MSVC warnings about std::strcpy() being unsafe
 #ifdef _MSC_VER
@@ -106,6 +114,14 @@ private:
 
 BOOST_AUTO_TEST_SUITE(empty_argument)
 
+    //<REGRESSION #1>
+    BOOST_AUTO_TEST_CASE(test_initial)
+    {
+        char * argv[] = {"a.exe", "", "x"};
+        ArgChecker arg_checker(sizeof(argv)/sizeof(argv[0]), argv);
+        arg_checker.check_unchanged();
+    }
+
     BOOST_AUTO_TEST_CASE(test_inside)
     {
         char * argv[] = {"a.exe", "x", "", "y"};
@@ -118,6 +134,36 @@ BOOST_AUTO_TEST_SUITE(empty_argument)
         char * argv[] = {"a.exe", "x", "", "", "y"};
         ArgChecker arg_checker(sizeof(argv)/sizeof(argv[0]), argv);
         arg_checker.check_unchanged();
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
+
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_SUITE(argument_starting_with_space)
+
+    //<REGRESSION #1>
+    BOOST_AUTO_TEST_CASE(test_only)
+    {
+        char * argv[] = {"a.exe", " x"};
+        ArgChecker arg_checker(sizeof(argv)/sizeof(argv[0]), argv);
+        // <UNDESIRABLE RESULT #1> - should not split on embedded spaces
+    }
+
+    //<REGRESSION #1>
+    BOOST_AUTO_TEST_CASE(test_initial)
+    {
+        char * argv[] = {"a.exe", " x", "y"};
+        ArgChecker arg_checker(sizeof(argv)/sizeof(argv[0]), argv);
+        // <UNDESIRABLE RESULT #1> - should not split on embedded spaces
+    }
+
+    //<REGRESSION #1>
+    BOOST_AUTO_TEST_CASE(test_non_initial)
+    {
+        char * argv[] = {"a.exe", "x", " y"};
+        ArgChecker arg_checker(sizeof(argv)/sizeof(argv[0]), argv);
+        // <UNDESIRABLE RESULT #1> - should not split on embedded spaces
     }
 
 BOOST_AUTO_TEST_SUITE_END()

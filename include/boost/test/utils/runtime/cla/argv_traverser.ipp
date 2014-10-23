@@ -64,7 +64,7 @@ argv_traverser::init( int argc, char_type** argv )
 
     BOOST_RT_PARAM_TRACE( "Input buffer: " << m_buffer );
 
-    next_token();
+    next_token( true );
 }
 
 //____________________________________________________________________________//
@@ -96,13 +96,21 @@ argv_traverser::token() const
 BOOST_RT_PARAM_INLINE void
 argv_traverser::next_token()
 {
+    return next_token( false );
+}
+
+//____________________________________________________________________________//
+
+BOOST_RT_PARAM_INLINE void
+argv_traverser::next_token( bool initial_token )
+{
     if( m_work_buffer.is_empty() )
         return;
 
     m_work_buffer.trim_left( m_token.size() ); // skip remainder of current token
 
-    if( m_work_buffer.size() != m_buffer.size() ) // !! is there a better way to identify first token
-        m_work_buffer.trim_left( 1 ); // skip separator if not first token;
+    if( !initial_token )
+        m_work_buffer.trim_left( 1 ); // skip separator
 
     m_token.assign( m_work_buffer.begin(),
                     std::find( m_work_buffer.begin(), m_work_buffer.end(), p_separator ) );
