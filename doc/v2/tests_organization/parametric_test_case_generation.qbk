@@ -27,7 +27,8 @@ A dataset is a collection of elements, that
 
 [tip datasets are implemented in [classref boost::unit_test::data::monomorphic::dataset]]
 
-[warning Only "monomorphic" datasets are supported, which means that all elements of the collection have the same type.]
+[warning Only "monomorphic" datasets are supported, which means that all elements of the collection have the same type.
+ ]
 
 
 
@@ -50,8 +51,8 @@ A ['join] is the concatenation of two datasets. These datasets are required to h
 the `operator+` on datasets:
 
 ``
-int arr1[] = {1,2};
-int arr2[] = {7,19};
+int arr1[] = {1, 2};
+int arr2[] = {7, 19};
 __BOOST_CHECK_EQUAL__( (data::make( arr1 ) + data::make( arr2 )).size(), 4);
 ``
 
@@ -181,17 +182,15 @@ The details of the named value parameters is given in the table below.
 
 [classref boost::unit_test::data::monomorphic::random_t]
 
-
-
-seed;
-distribution;
-engine;
-
-
+A factory for creating datasets with this random generator is given by 
+[funcref boost::unit_test::data::monomorphic::random]
 
 [warning the random value generators are available only for C++11 capable compilers.]
 
-[h3 Choosing the distribution]
+
+
+
+[h5 Choosing the distribution]
 The selection of the distibution may be given by the parameter `boost::unit_test::data::distribution`
 
 The following defines a random value generator with Gaussian distribution (mean 5, sigma 2).
@@ -199,13 +198,52 @@ The following defines a random value generator with Gaussian distribution (mean 
 auto rdgen = boost::unit_test::data::random(data::distribution = std::normal_distribution<>(5.,2));
 ``
 
-[h3 Setting the seed]
+[h5 Setting the seed]
 In order to be able to reproduce a failure within a randomized parameter test case, the seed that generated the failure may be
 set in order to generate the same sequence of random values.
 
 ``
 auto rdgen = boost::unit_test::data::random(data::seed = 100UL);
 ``
+
+
+[h5 Parameters]
+The details of the named value parameters is given in the table below.
+[table:id_range_parameter_table Range parameters
+  [
+    [Name]
+    [Default]
+    [Description]
+  ]
+  [
+    [`seed`]
+    [0]
+    [Number indicating the beginning of the generated range. The `begin` value is included in set of values returned
+     by the generator.
+    ]
+  ]
+
+  [
+    [`distribution`]
+    [Uniform]
+    [Number indicating the end of the generated range. The `end` value is not included in set of values returned
+     by the generator. If omitted, the generator has infinite size. 
+    ]
+  ]
+  
+  [
+    [`engine`]
+    [1]
+    [Strictly positive number indicating the step between two consecutive elements of the generated range. 
+     The default type is the same as the input type.
+    ]
+  ]  
+]
+
+
+
+
+
 
 [endsect] [/ random]
 
