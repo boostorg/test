@@ -9,7 +9,6 @@
 rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file * : source_files * : extra-libs ? : extra-options ? )
 {
    source_files ?= $(test-name).cpp ;
-
    return [ $(test-rule) $(source_files) ../build//$(lib-name) $(extra-libs)
             : #args
             : $(pattern_file)
@@ -25,6 +24,32 @@ rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file * : source
               <toolset>msvc-8.0:<define>_SCL_SECURE_NO_DEPRECATE
               <toolset>clang:<cxxflags>-Wno-c99-extensions
               <toolset>clang:<cxxflags>-Wno-variadic-macros
+              <warnings>all
+              $(extra-options)
+            : $(test-name)
+          ] ;
+}
+
+rule test-btl-lib-c11 ( test-rule : test-name : lib-name ? : pattern_file * : source_files * : extra-libs ? : extra-options ? )
+{
+   source_files ?= $(test-name).cpp ;
+   return [ $(test-rule) $(source_files) ../build//$(lib-name) $(extra-libs)
+            : #args
+            : $(pattern_file)
+            : #<stlport-iostream>on 
+              # Activating -pedantic finds more gotchas
+              # Unfortunately, this warns about the use of "long long" in gcc's own stdlib
+              # So deactivate those warnings again
+              <toolset>gcc:<cxxflags>-pedantic
+              <toolset>gcc:<cxxflags>-Wno-long-long
+              <toolset>gcc:<cxxflags>-std=gnu++0x
+              <toolset>borland:<cxxflags>-w-8080
+              <toolset>borland:<cxxflags>-w-8084
+              <toolset>msvc-6.5:<link>static
+              <toolset>msvc-8.0:<define>_SCL_SECURE_NO_DEPRECATE
+              <toolset>clang:<cxxflags>-Wno-c99-extensions
+              <toolset>clang:<cxxflags>-Wno-variadic-macros
+              <toolset>clang:<cxxflags>-std=c++11
               <warnings>all
               $(extra-options)
             : $(test-name)
@@ -92,7 +117,8 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : run_by_name_label_test       : boost_unit_test_framework/<link>static ]
           [ test-btl-lib run : test_assertion_construction  : boost_unit_test_framework/<link>static ]
           [ test-btl-lib run : test_datasets                : boost_unit_test_framework : : [ glob test_datasets_src/*.cpp ] : ]
-          [ test-btl-lib run : test_datasets_cxx11          : boost_unit_test_framework : : [ glob test_datasets_src/*.cpp ] : : <toolset>gcc:<cxxflags>-std=gnu++0x<toolset>clang:<cxxflags>-std=c++11 ]
+          #                     test-rule : test-name : lib-name ? : pattern_file * : source_files * : extra-libs ? : extra-options ?
+          [ test-btl-lib-c11 run : test_datasets_cxx11          : boost_unit_test_framework : : [ glob test_datasets_src/*.cpp ] : ]
           # [ test-btl-lib run : config_file_iterator_test    : boost_unit_test_framework/<link>static ]
           # [ test-btl-lib run : config_file_test             : boost_unit_test_framework/<link>static ]
         ;
