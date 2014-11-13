@@ -71,6 +71,7 @@ doxygen autodoc_execution_monitor
     :
         <doxygen:param>EXTRACT_ALL=YES
         <doxygen:param>"PREDEFINED=\"BOOST_TEST_DECL=\" \\
+                                   \"BOOST_TEST_DOXYGEN_DOC__=1\"
                                    "
         <doxygen:param>HIDE_UNDOC_MEMBERS=NO
         <doxygen:param>HIDE_UNDOC_CLASSES=NO
@@ -88,6 +89,7 @@ doxygen autodoc_execution_monitor
         <doxygen:param>MULTILINE_CPP_IS_BRIEF=YES
         <doxygen:param>CASE_SENSE_NAMES=YES
         <doxygen:param>INTERNAL_DOCS=NO
+        <doxygen:param>SUBGROUPING=YES
     ;
 
 

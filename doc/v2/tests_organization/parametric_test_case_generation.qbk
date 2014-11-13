@@ -183,7 +183,7 @@ The details of the named value parameters is given in the table below.
 [classref boost::unit_test::data::monomorphic::random_t]
 
 A factory for creating datasets with this random generator is given by 
-[funcref boost::unit_test::data::monomorphic::random]
+[funcref boost::unit_test::data::random]
 
 [warning the random value generators are available only for C++11 capable compilers.]
 

@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : forward declares monomorphic datasets interfaces
+/// @file
+/// Forward declares monomorphic datasets interfaces
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_FWD_HPP_102212GER
