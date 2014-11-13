@@ -188,9 +188,9 @@ A factory for creating datasets with this random generator is given by
 [warning the random value generators are available only for C++11 capable compilers.]
 
 
-[def __random_1__ [funcref boost::unit_test::data::random::1 boost::unit_test::data::random]]
-[def __random_2__ [funcref boost::unit_test::data::random::2 boost::unit_test::data::random]]
-[def __random_3__ [funcref boost::unit_test::data::random::3 boost::unit_test::data::random]]
+[def __random_1__ [funcref boost::unit_test::data::random boost::unit_test::data::random]]
+[def __random_2__ [funcref boost::unit_test::data::random\(t,t\) boost::unit_test::data::random]]
+[def __random_3__ [funcref boost::unit_test::data::random\(t\) boost::unit_test::data::random]]
 
 
 [h5 Choosing the distribution]
@@ -214,15 +214,14 @@ auto rdgen = __random_3__(data::seed = 100UL);
 The details of the named value parameters is given in the table below.
 [table:id_range_parameter_table Range parameters
   [
-    [Name]
+    [Parameter name]
     [Default]
     [Description]
   ]
   [
     [`seed`]
     [0]
-    [Number indicating the beginning of the generated range. The `begin` value is included in set of values returned
-     by the generator.
+    [Seed for the generation of the random sequence.
     ]
   ]
 
@@ -236,10 +235,8 @@ The details of the named value parameters is given in the table below.
   
   [
     [`engine`]
-    [1]
-    [Strictly positive number indicating the step between two consecutive elements of the generated range. 
-     The default type is the same as the input type.
-    ]
+    [`std::default_random_engine`]
+    [Random number generator engine.]
   ]  
 ]
 

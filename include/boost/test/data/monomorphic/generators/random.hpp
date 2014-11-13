@@ -131,7 +131,7 @@ struct random_gen_type {
 
 }
 
-//! Generates a dataset from a random distribution.
+//! Generates a random sequence from the parameters.
 template<typename Params>
 inline monomorphic::generated_by<typename ds_detail::random_gen_type<Params>::type>
 random( Params const& params )
