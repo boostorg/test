@@ -68,6 +68,11 @@ doxygen autodoc_execution_monitor
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators/random.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators/xrange.hpp      
       
+      # utils
+      $(BOOST_ROOT)/libs/test/include/boost/test/utils/algorithm.hpp
+      
+      # others
+      $(BOOST_ROOT)/libs/test/include/boost/test/unit_test_parameters.hpp
     :
         <doxygen:param>EXTRACT_ALL=YES
         <doxygen:param>"PREDEFINED=\"BOOST_TEST_DECL=\" \\
