@@ -5,7 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file test_tools.hpp @brief test tools compartibility header
+/// @file 
+/// @brief test tools compatibility header
 ///
 /// This file is used to select the test tools implementation and includes all the necessary headers
 // ***************************************************************************
