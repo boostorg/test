@@ -13,7 +13,7 @@ using doxygen ;
 
 import doxygen ;
 
-doxygen autodoc_execution_monitor
+doxygen doxygen_reference_generated_doc
     :
       $(BOOST_ROOT)/libs/test/include/boost/test/debug_config.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/debug.hpp
@@ -92,28 +92,6 @@ doxygen autodoc_execution_monitor
         <doxygen:param>SUBGROUPING=YES
     ;
 
-doxygen examples
-    :
-        [ glob $(BOOST_ROOT)/libs/test/example/*.cpp ]
-    :
-        <doxygen:param>EXTRACT_ALL=YES
-        <doxygen:param>"PREDEFINED=\"BOOST_TEST_DECL=\" \\
-                                   "
-        <doxygen:param>HIDE_UNDOC_MEMBERS=NO
-        <doxygen:param>HIDE_UNDOC_CLASSES=NO
-        <doxygen:param>INLINE_INHERITED_MEMB=YES
-        <doxygen:param>EXTRACT_PRIVATE=NO
-        <doxygen:param>ENABLE_PREPROCESSING=YES
-        <doxygen:param>MACRO_EXPANSION=YES
-        <doxygen:param>EXPAND_ONLY_PREDEF=YES
-        <doxygen:param>SEARCH_INCLUDES=YES
-        <doxygen:param>INCLUDE_PATH=$(BOOST_ROOT)/libs/test/include
-        <doxygen:param>EXAMPLE_PATH=$(BOOST_ROOT)/libs/test/doc/v2/examples
-        <doxygen:param>BRIEF_MEMBER_DESC=YES
-        <doxygen:param>REPEAT_BRIEF=YES
-        <doxygen:param>ALWAYS_DETAILED_SEC=YES
-        <doxygen:param>MULTILINE_CPP_IS_BRIEF=YES
-    ;
 
 
 ########################################################################
@@ -142,7 +120,7 @@ boostbook standalone
     <xsl:param>generate.section.toc.level=0
     <format>pdf:<xsl:param>img.src.path=$(images_location)/
     <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/test/doc/html
-    <dependency>autodoc_execution_monitor
+    <dependency>doxygen_reference_generated_doc
   ;
 
 explicit test ;
