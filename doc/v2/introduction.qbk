@@ -57,7 +57,10 @@ The __UTF__ design is based on above rationale and provides versatile facilities
 * Relieve you from messy error detection, reporting duties and framework runtime parameters processing.
 
 The __UTF__ is intended to be used both for a simple and non trivial testing. It is not intended to be used
-with production code, but some of the Boost.Test interfaces can be, incuding ... [/TOFIX].
+with production code, but some of the Boost.Test interfaces can be, including ... 
+
+[warning TOFIX]
+
 
 [/ ##################################################################### ]
 [section How to read this documentation?]
@@ -105,6 +108,54 @@ there.
 
 [endsect] [/How to read]
 
-[endsect] [/ Overview]
+[/ ##################################################################### ]
+[section 5mn primer]
+This section shows a step-by-step guide for writing your very first test in less than 5mn. 
+
+[h3 Building boost.test]
+Before being able to do anything, you have to build boost.test. 
+
+``
+cd boost_path
+boostrap.bat
+b2 --with-test --prefix=$installation_path install
+``
+
+or for Unix operating system (including OSX)
+``
+cd boost_path
+./boostrap.sh
+./b2 --with-test --prefix=$installation_path install
+``
+
+More documentation here
+http://www.boost.org/doc/libs/1_57_0/more/getting_started/windows.html
+
+
+[h3 Writing your first test]
+Let's start by creating the minimal skeleton for our [link ref_test_module test module]:
+``
+#define BOOST_TEST_MAIN
+#include <boost/test/unit_test.hpp>
+
+BOOST_AUTO_TEST_CASE(first_test)
+{
+  BOOST_CHECK(true);
+  
+  int i = 1;
+  BOOST_CHECK_EQUAL(i, 1);
+}
+`` 
+
+We then need to build the test module. Two ingredients are needed here:
+
+* make the compiler understand where to find the file `boost/test/unit_test.hpp`.
+* make the linker understand where to find the boost unit test library. 
+
+
+[endsect] [/ 5mn primer]
+
+
+[endsect] [/ Introduction]
 
 [/ EOF]
