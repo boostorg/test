@@ -2,10 +2,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>BOOST_TEST_CHECKPOINT</title>
-<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
-<link rel="up" href="../test_output.html" title="Controlling the outputs">
+<link rel="up" href="../test_output.html" title="Controlling the Unit Test Framework outputs">
 <link rel="prev" href="test_output_macro_message.html" title="BOOST_TEST_MESSAGE">
 <link rel="next" href="test_output_macro_passpoint.html" title="BOOST_TEST_PASSPOINT">
 </head>
@@ -38,9 +38,12 @@
         the exception logging functions (if any occurs). Similarly to the <a class="link" href="test_output_macro_message.html" title="BOOST_TEST_MESSAGE"><code class="computeroutput"><span class="identifier">BOOST_TEST_MESSAGE</span></code></a> the message can
         be formatted from any standard output stream compliant components.
       </p>
-<div class="table">
-<a name="boost_test.test_output.test_output_macro_checkpoint.id_example22"></a><p class="title"><b>Table&#160;30.&#160;<a class="link" href="test_output_macro_checkpoint.html" title="BOOST_TEST_CHECKPOINT"><code class="computeroutput"><span class="identifier">BOOST_TEST_CHECKPOINT</span></code></a> usage</b></p>
-<div class="table-contents"><table class="table" summary="BOOST_TEST_CHECKPOINT usage">
+<h6>
+<a name="boost_test.test_output.test_output_macro_checkpoint.h0"></a>
+        <span><a name="boost_test.test_output.test_output_macro_checkpoint.example_descr"></a></span><a class="link" href="test_output_macro_checkpoint.html#boost_test.test_output.test_output_macro_checkpoint.example_descr">Example:
+        <a class="link" href="test_output_macro_checkpoint.html" title="BOOST_TEST_CHECKPOINT"><code class="computeroutput"><span class="identifier">BOOST_TEST_CHECKPOINT</span></code></a> usage</a>
+      </h6>
+<div class="informaltable"><table class="table">
 <colgroup>
 <col>
 <col>
@@ -59,7 +62,7 @@
 </tr></thead>
 <tbody><tr>
 <td>
-<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">example</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">example</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
 <span class="keyword">extern</span> <span class="keyword">void</span> <span class="identifier">foo</span><span class="special">(</span> <span class="keyword">int</span> <span class="identifier">i</span> <span class="special">);</span>
@@ -79,7 +82,7 @@
 </pre>
               </td>
 <td>
-<pre class="programlisting"><span class="special">&gt;</span> <span class="identifier">example</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="special">&gt;</span> <span class="identifier">example</span>
 <span class="identifier">Running</span> <span class="number">1</span> <span class="identifier">test</span> <span class="keyword">case</span><span class="special">...</span>
 <span class="identifier">unknown</span> <span class="identifier">location</span><span class="special">(</span><span class="number">0</span><span class="special">):</span> <span class="identifier">fatal</span> <span class="identifier">error</span> <span class="identifier">in</span> <span class="string">"test_external_interface"</span><span class="special">:</span> <span class="identifier">signal</span><span class="special">:</span> <span class="identifier">integer</span> <span class="identifier">divide</span> <span class="identifier">by</span> <span class="identifier">zero</span><span class="special">;</span> <span class="identifier">address</span> <span class="identifier">of</span> <span class="identifier">failing</span> <span class="identifier">instruction</span><span class="special">:</span> <span class="number">0x00048090</span>
 <span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">13</span><span class="special">):</span> <span class="identifier">last</span> <span class="identifier">checkpoint</span><span class="special">:</span> <span class="identifier">Calling</span> <span class="identifier">foo</span> <span class="identifier">with</span> <span class="identifier">i</span><span class="special">=</span><span class="number">1</span>
@@ -89,8 +92,6 @@
               </td>
 </tr></tbody>
 </table></div>
-</div>
-<br class="table-break">
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

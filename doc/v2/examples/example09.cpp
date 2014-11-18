@@ -1,4 +1,4 @@
-//[example09
+//[example_code
 #include <boost/test/included/unit_test.hpp>
 #include <boost/mpl/list.hpp>
 using namespace boost::unit_test;

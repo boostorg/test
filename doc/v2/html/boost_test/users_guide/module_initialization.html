@@ -2,12 +2,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Test module initialization</title>
-<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
-<link rel="up" href="../users_guide.html" title="Building a test module with the UTF">
-<link rel="prev" href="../users_guide.html" title="Building a test module with the UTF">
-<link rel="next" href="module_initialization/custom_module_initialisation.html" title="Custom module initialisation">
+<link rel="up" href="../users_guide.html" title="Building a test module with the Unit Test Framework">
+<link rel="prev" href="../users_guide.html" title="Building a test module with the Unit Test Framework">
+<link rel="next" href="usage_variants.html" title="Linking with the Unit Test Framework">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,25 +20,19 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../users_guide.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../users_guide.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="module_initialization/custom_module_initialisation.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../users_guide.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../users_guide.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="usage_variants.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_test.users_guide.module_initialization"></a><a class="link" href="module_initialization.html" title="Test module initialization">Test module
       initialization</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="module_initialization/custom_module_initialisation.html">Custom
-        module initialisation</a></span></dt>
-<dt><span class="section"><a href="module_initialization/module_initialisation_automated.html">Automated
-        generation</a></span></dt>
-</dl></div>
 <p>
         As explained in the introductory material, the <span class="emphasis"><em>module initialization</em></span>
-        part of the <span class="emphasis"><em>UTF</em></span> prepares the test module for execution,
-        including:
+        part of the <span class="emphasis"><em>Unit Test Framework</em></span> prepares the test module
+        for execution, including:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             the construction of the test tree
           </li>
@@ -65,27 +59,28 @@
         The argument against the implementation of a custom <span class="emphasis"><em>module initialization</em></span>
         are the following:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             The test tree can be easily and efficiently constructed automatically
-            (covered in details in <a class="link" href="../tests_organization.html" title="Registering, generating and organizing the unit tests">this</a>
+            (covered in details in <a class="link" href="../tests_organization.html" title="Test organization using the Unit Test Framework">this</a>
             section).
           </li>
 <li class="listitem">
-            <span class="emphasis"><em>UTF</em></span> also provides means to <a class="link" href="../tests_organization/test_organization_test_suite/master_test_suite.html#ref_BOOST_TEST_MODULE">rename</a>
-            the <span class="emphasis"><em>master test suite</em></span>.
+            <span class="emphasis"><em>Unit Test Framework</em></span> also provides means to <a class="link" href="../tests_organization/test_organization_test_suite.html#ref_BOOST_TEST_MODULE">rename</a> the <span class="emphasis"><em>master test
+            suite</em></span>.
           </li>
 <li class="listitem">
-            Most of the command line parameters, except the ones used by the <span class="emphasis"><em>UTF</em></span>,
-            may be accessed through the <span class="emphasis"><em>master test suite</em></span>
+            Most of the command line parameters, except the ones used by the <span class="emphasis"><em>Unit
+            Test Framework</em></span>, may be accessed through the <span class="emphasis"><em>master
+            test suite</em></span>
           </li>
 <li class="listitem">
-            <a class="link" href="../tests_organization/fixtures/global_fixture.html#ref_fixture_test_global">Global fixtures</a> may provide
+            <a class="link" href="../tests_organization/fixtures.html#ref_fixture_test_global">Global fixtures</a> may provide
             <span class="emphasis"><em>states</em></span> that can be accessed during the lifetime
             of the tests, with proper and controlled initialization and release.
             This approach covers several use case that might need the tweaking of
-            the initialization functions, adding the robustness of the <span class="emphasis"><em>UTF</em></span>
-            in the initialization and release themselves.
+            the initialization functions, adding the robustness of the <span class="emphasis"><em>Unit
+            Test Framework</em></span> in the initialization and release themselves.
           </li>
 <li class="listitem">
             If the test module is old and the need for <span class="emphasis"><em>module initialization</em></span>
@@ -95,9 +90,179 @@
 </ul></div>
 <p>
         From the points above, if the need for <span class="emphasis"><em>module initialization</em></span>
-        is not there anymore, then you may jump directly to the <a class="link" href="module_initialization/module_initialisation_automated.html" title="Automated generation">automated
+        is not there anymore, then you may jump directly to the <a class="link" href="module_initialization.html#boost_test.users_guide.module_initialization.module_initialisation_automated" title="Automated generation">automated
         section</a> directly.
       </p>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="boost_test.users_guide.module_initialization.custom_module_initialisation"></a><a class="link" href="module_initialization.html#boost_test.users_guide.module_initialization.custom_module_initialisation" title="Custom module initialisation">Custom
+        module initialisation</a>
+</h4></div></div></div>
+<h6>
+<a name="boost_test.users_guide.module_initialization.custom_module_initialisation.h0"></a>
+          <span><a name="boost_test.users_guide.module_initialization.custom_module_initialisation.a_bit_of_history"></a></span><a class="link" href="module_initialization.html#boost_test.users_guide.module_initialization.custom_module_initialisation.a_bit_of_history">A
+          bit of history</a>
+        </h6>
+<p>
+          Original design of the <span class="emphasis"><em>Unit Test Framework</em></span> supported
+          the manual test tree construction only. Later versions introduced the automated
+          registration of test units. In later versions of the <span class="emphasis"><em>Unit Test
+          Framework</em></span> the original initialization function specification
+          became inconvenient and unnecessary unsafe, and the alternative initialization
+          function specification was introduced. This change is not backward compatible.
+        </p>
+<p>
+          These initialisation functions are refered to as <span class="bold"><strong>legacy</strong></span>
+          and <span class="bold"><strong>alternative/simplified</strong></span> respectively.
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+              The test runners supplied with the static library and single-header
+              variants of the <span class="emphasis"><em>Unit Test Framework</em></span> by default
+              still require original/legacy initialization function, but support
+              <a class="link" href="link_references.html#boost_test.users_guide.link_references.link_boost_test_alternative_init_macro" title="BOOST_TEST_ALTERNATIVE_INIT_API">compilation
+              flags</a> that switch to the alternative/simplified one.
+            </li>
+<li class="listitem">
+              The test runner supplied with dynamic library variant of the <span class="emphasis"><em>Unit
+              Test Framework</em></span> requires the simplified initialisation and
+              doesn't support legacy one.
+            </li>
+</ul></div>
+<p>
+          The legacy initialization function is, at its name suggest, deprecated.
+        </p>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../../../../doc/src/images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            The initialization function invocation is monitored by the <span class="emphasis"><em>Unit
+            Test Framework</em></span> the same way as all the test cases. An unexpected
+            exception or system error detected during initialization function invocation
+            is treated as initialization error and is reported as such.
+          </p></td></tr>
+</table></div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="boost_test.users_guide.module_initialization.custom_module_initialisation.legacy_initialization_function"></a><a class="link" href="module_initialization.html#boost_test.users_guide.module_initialization.custom_module_initialisation.legacy_initialization_function" title="Legacy initialization function">Legacy
+          initialization function</a>
+</h5></div></div></div>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../../../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              In this section, the <span class="bold"><strong>legacy</strong></span> initialisation
+              function is described. For new code, consider using the simplified
+              initialisation function.
+            </p></td></tr>
+</table></div>
+<p>
+            The original design of the <span class="emphasis"><em>Unit Test Framework</em></span> initialization
+            required you to implement the function with the following specification:
+          </p>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">test_suite</span><span class="special">*</span> <span class="identifier">init_unit_test_suite</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[]);</span>
+</pre>
+<p>
+            This function was intended to initialize and return a master test suite.
+            The null value was considered an initialization error. The current design
+            of the <span class="emphasis"><em>Unit Test Framework</em></span> maintains master test
+            suite instance internally and does not treat the <code class="computeroutput"><span class="identifier">null</span></code>
+            result value as an initialization error. In fact it's recommended to
+            return <code class="computeroutput"><span class="identifier">null</span></code> value always
+            and register test units in the master test suite using the regular <code class="computeroutput"><span class="identifier">test_suite</span><span class="special">::</span><span class="identifier">add</span></code> interface (see <a class="link" href="../tests_organization/test_cases.html#ref_BOOST_TEST_CASE">here</a>
+            for an example). The only way to indicate an initialization error is
+            to throw a <code class="computeroutput"><a class="link" href="../../boost/unit_test/framework/setup_error.html" title="Struct setup_error">boost::unit_test::framework::setup_error</a></code>
+            exception.
+          </p>
+<p>
+            The initialization function parameters <code class="computeroutput"><span class="identifier">argc</span></code>,
+            <code class="computeroutput"><span class="identifier">argv</span></code> provide the command
+            line arguments specified during test module invocation. It's guarantied
+            that any framework-specific command line arguments are excluded. To be
+            consistant with the <span class="emphasis"><em>simplified</em></span> initialization function
+            specification it's recommended though to access the command line arguments
+            using the <a class="link" href="../tests_organization/test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.master_test_suite" title="Master Test Suite">master
+            test suite</a> interface.
+          </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="boost_test.users_guide.module_initialization.custom_module_initialisation.switching_from_legacy_to_simplif"></a><a class="link" href="module_initialization.html#boost_test.users_guide.module_initialization.custom_module_initialisation.switching_from_legacy_to_simplif" title="Switching from legacy to simplified">Switching
+          from legacy to simplified</a>
+</h5></div></div></div>
+<p>
+            The test runner interface needs to refer to the initialization function
+            signature. The <span class="emphasis"><em>Unit Test Framework</em></span> provides the
+            <code class="computeroutput"><span class="keyword">typedef</span></code> that resolves to
+            proper signature in all configurations:
+          </p>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">unit_test</span> <span class="special">{</span>
+<span class="preprocessor">#ifdef</span> <a class="link" href="link_references.html#boost_test.users_guide.link_references.link_boost_test_alternative_init_macro" title="BOOST_TEST_ALTERNATIVE_INIT_API"><code class="computeroutput"><span class="identifier">BOOST_TEST_ALTERNATIVE_INIT_API</span></code></a>
+    <span class="keyword">typedef</span> <span class="keyword">bool</span>        <span class="special">(*</span><span class="identifier">init_unit_test_func</span><span class="special">)();</span>
+<span class="preprocessor">#else</span>
+    <span class="keyword">typedef</span> <span class="identifier">test_suite</span><span class="special">*</span> <span class="special">(*</span><span class="identifier">init_unit_test_func</span><span class="special">)(</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="special">[]</span> <span class="special">);</span>
+<span class="preprocessor">#endif</span>
+  <span class="special">}</span>
+<span class="special">}</span>
+</pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="boost_test.users_guide.module_initialization.custom_module_initialisation.simplified_initialization_functi"></a><a class="link" href="module_initialization.html#boost_test.users_guide.module_initialization.custom_module_initialisation.simplified_initialization_functi" title="Simplified initialization function">Simplified
+          initialization function</a>
+</h5></div></div></div>
+<p>
+            The alternative design of the <span class="emphasis"><em>Unit Test Framework</em></span>
+            initialization requires you to implement a function with the following
+            specification:
+          </p>
+<pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">init_unit_test</span><span class="special">();</span>
+</pre>
+<p>
+            The result value of this function indicates whether or not initialization
+            was successful. To register test units in a master test suite use the
+            <code class="computeroutput"><span class="identifier">test_suite</span><span class="special">::</span><span class="identifier">add</span></code> interface (see <a class="link" href="../tests_organization/test_cases.html#ref_BOOST_TEST_CASE">here</a>
+            for an example). To access command line arguments use the <a class="link" href="../tests_organization/test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.master_test_suite" title="Master Test Suite">master
+            test suite</a> interface. It's guarantied that any framework-specific
+            command line arguments are excluded.
+          </p>
+</div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="boost_test.users_guide.module_initialization.module_initialisation_automated"></a><a class="link" href="module_initialization.html#boost_test.users_guide.module_initialization.module_initialisation_automated" title="Automated generation">Automated
+        generation</a>
+</h4></div></div></div>
+<p>
+          To automatically generate an empty test module initialization function
+          you need to define <a class="link" href="link_references.html#boost_test.users_guide.link_references.link_boost_test_main_macro" title="BOOST_TEST_MAIN"><code class="computeroutput"><span class="identifier">BOOST_TEST_MAIN</span></code></a> before including
+          the
+        </p>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span></pre>
+<p>
+          header. The value of this define is ignored. Alternatively you can define
+          the macro <a class="link" href="link_references.html#boost_test.users_guide.link_references.link_boost_test_module_macro" title="BOOST_TEST_MODULE"><code class="computeroutput"><span class="identifier">BOOST_TEST_MODULE</span></code></a> to be equal
+          to any string (not necessarily in quotes). This macro causes the same result
+          as <a class="link" href="link_references.html#boost_test.users_guide.link_references.link_boost_test_main_macro" title="BOOST_TEST_MAIN"><code class="computeroutput"><span class="identifier">BOOST_TEST_MAIN</span></code></a>, and in addition
+          the macro value becomes the name of the master test suite.
+        </p>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../../../../doc/src/images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            For a test module consisting of multiple source files you have to define
+            these flags in a single test file only. Otherwise you end up with multiple
+            instances of the initialization function.
+          </p></td></tr>
+</table></div>
+</div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
@@ -110,7 +275,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../users_guide.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../users_guide.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="module_initialization/custom_module_initialisation.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../users_guide.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../users_guide.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="usage_variants.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

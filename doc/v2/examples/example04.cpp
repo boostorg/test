@@ -1,4 +1,4 @@
-//[example04
+//[example_code
 #include<boost/test/included/unit_test.hpp>
 
 using namespace boost::unit_test; 

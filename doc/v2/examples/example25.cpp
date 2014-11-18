@@ -1,4 +1,4 @@
-//[example25
+//[example_code
 #include <stdexcept>
 #include <boost/test/included/prg_exec_monitor.hpp> 
 

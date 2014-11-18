@@ -38,39 +38,15 @@ become members of the master test suite. There is no limit on depth of test suit
 This example creates a test tree that matches exactly the one created in the manual test suite registration
 example.
 
-[import ../examples/example12.cpp]
-[import ../examples/example12.output]
-[table:id_example12 Test suites with automated registration
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example12]]
-    [[example12o]]
-  ]
-]
-As you can see test tree construction in this example is more straightforward and automated.
+[bt_example example12..Test suites with automated registration]
 
+As you can see test tree construction in this example is more straightforward and automated.
 
 In the example below, the test suite `test_suite` consists of two parts. Their definition is remote and is separated by another
 test case. In fact these parts may even reside in different test files. The resulting test tree remains the same. As
 you can see from the output both `test_case1` and `test_case2` reside in the same test suite `test_suite`.
 
-[import ../examples/example53.cpp]
-[import ../examples/example53.output]
-[table:id_example53 Example of test suite extension using automated registration facility
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example53]]
-    [[example53o]]
-  ]
-]
-
-
+[bt_example example53..Test suite extension using automated registration facility]
 
 [h3 Test suites with manual registration]
 To create a test suite manually you need to create an instance of `boost::unit_test::test_suite` class, register
@@ -134,21 +110,7 @@ The example below creates a test tree, which can be represented by the following
 
 [$../img/class-hier.jpg]
 
-[import ../examples/example11.cpp]
-[import ../examples/example11.output]
-[table:id_example11 Manually registered test suites
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example11]]
-    [[example11o]]
-  ]
-]
-
-
-
+[bt_example example11..Manually registered test suites]
 
 [section:master_test_suite Master Test Suite]
 
@@ -208,18 +170,7 @@ master test suite.
 Returning to the free function example, let's modify initialization function to check for absence of any
 test module arguments.
 
-[import ../examples/example13.cpp]
-[import ../examples/example13.output]
-[table:id_example13 Command line access in initialization function
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example13]]
-    [[example13o]]
-  ]
-]
+[bt_example example13..Command line access in initialization function]
 
 [#ref_BOOST_TEST_MODULE][h4 Naming the ['Master test suite]]
 
@@ -228,42 +179,16 @@ reset the name to a different value: using the macro __BOOST_TEST_MODULE__
 and from within the test module initialization function. Former is used for test modules that don't have the
 manually implemented initialization function. Following examples illustrate these methods.
 
-
-[import ../examples/example14.cpp]
-[import ../examples/example14.output]
-[table:id_example14 Naming master test suite using the macro __BOOST_TEST_MODULE__
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example14]]
-    [[example14o]]
-  ]
-]
+[bt_example example14..Naming master test suite using the macro __BOOST_TEST_MODULE__]
 
 If the macro __BOOST_TEST_MODULE__ is defined, the test module initialization
 function is [*automatically generated] and the
 macro value becomes the name of the master test suite. The name may include spaces.
 
-[import ../examples/example15.cpp]
-[import ../examples/example15.output]
-[table:id_example15 Naming master test suite explicitly in the test module initialization function
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example15]]
-    [[example15o]]
-  ]
-]
-
+[bt_example example15..Naming master test suite explicitly in the test module initialization function]
 
 Without the __BOOST_TEST_MAIN__ and the __BOOST_TEST_MODULE__ flags defined, the test module initialization 
 function has to be manually implemented. The master test suite name can be reset at any point within this function.
-
-
 
 [endsect] [/ command line interface]
 
@@ -301,18 +226,7 @@ unexpected failure to occur to satisfy this quota.
 To set the value of expected failures for the manually registered test unit pass it as a second argument for the
 [link ref_test_case_registration `test_suite::add`] call during test unit registration.
 
-[import ../examples/example16.cpp]
-[import ../examples/example16.output]
-[table:id_example16 Expected failures specification for manually registered test case
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example16]]
-    [[example16o]]
-  ]
-]
+[bt_example example16..Expected failures specification for manually registered test case]
 
 [#ref_BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES][h3 Usage with automatically registered test cases]
 
@@ -327,20 +241,7 @@ You can use this macro both on a file scope and inside a test suite. Moreover yo
 units coincide in different test suites. Expected failures specification applies to the test unit belonging to the same 
 test suite where __BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ resides.
 
-
-[import ../examples/example17.cpp]
-[import ../examples/example17.output]
-[table:id_example17 Expected failures specification for automatically registered test case
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example17]]
-    [[example17o]]
-  ]
-]
-
+[bt_example example17..Expected failures specification for automatically registered test case]
 
 [endsect] [/ expected failures]
 [endsect] [/ test suite]

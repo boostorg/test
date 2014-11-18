@@ -20,22 +20,9 @@ macro __BOOST_AUTO_TEST_CASE__.
 
 The macro is designed to closely mimic nullary free function syntax. Changes that are required to make an
 existing test case, implemented as a free function, registered in place are illustrated in the following
-example (compare with [link boost_test.tests_organization.test_cases.test_organization_nullary.id_example01 manual registration]):
+example (compare with [link ref_bt_example01 manual registration]):
 
-
-[import ../examples/example06.cpp]
-[import ../examples/example06.output]
-[table:id_example06 Nullary function based test case with automated registration
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example06]]
-    [[example06o]]
-  ]
-]
-
+[bt_example example06..Nullary function based test case with automated registration]
 
 With this macro you don't need to implement the initialization function at all. The macro creates and
 registers the test case with the name `free_test_function` automatically.
@@ -60,18 +47,8 @@ Here is the simplest possible manually registered test case. This example employ
 initialization function specification. A single test case is created and registered in the master test suite.
 Note that the free function name is passed by address to the macro __BOOST_TEST_CASE__`.
 
-[import ../examples/example01.cpp]
-[import ../examples/example01.output]
-[table:id_example01 Nullary free function manually registered
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example01]]
-    [[example01o]]
-  ]
-]
+[#ref_bt_example01]
+[bt_example example01..Nullary free function manually registered]
 
 A test case can be implemented as a method of a class. In this case a pointer to the class instance has to be
 bound to the test method to create a test case. You can use the same instance of the class for multiple test
@@ -84,47 +61,13 @@ instance lifetime yourself.
  shared pointer.
 ]
 
-[import ../examples/example02.cpp]
-[import ../examples/example02.output]
-[table:id_example02 Nullary method of a class bound to global class instance and manually registered
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example02]]
-    [[example02o]]
-  ]
-]
-
-[import ../examples/example03.cpp]
-[import ../examples/example03.output]
-[table:id_example03 Nullary method of a class bound to shared class instance and manually registered
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example03]]
-    [[example03o]]
-  ]
-]
+[bt_example example02..Nullary method of a class bound to global class instance and manually registered]
+[bt_example example03..Nullary method of a class bound to shared class instance and manually registered]
 
 If you do not need to reuse the test class instance and can't or do not wish to create test class
 instance globally it may be easier and safer to create an instance on the stack of free function:
 
-[import ../examples/example04.cpp]
-[import ../examples/example04.output]
-[table:id_example04 Nullary method of a class bound to local class instance inside free function
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example04]]
-    [[example04o]]
-  ]
-]
+[bt_example example04..Nullary method of a class bound to local class instance inside free function]
 
 If you have to perform the same set of tests with different sets of parameters you may want to base your test
 case on a function with arguments and bind particular parameters during test case creation.
@@ -134,22 +77,9 @@ case on a function with arguments and bind particular parameters during test cas
      test module initialization function.
 ]
  
- 
 The example below employs the alternative test module initialization function specification:
 
-[import ../examples/example05.cpp]
-[import ../examples/example05.output]
-[table:id_example05 Binary free function bound to set of different parameter pairs
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example05]]
-    [[example05o]]
-  ]
-]
-
+[bt_example example05..Binary free function bound to set of different parameter pairs]
 
 The __UTF__ also presents an alternative method for parameterized test case creation, which is covered in 
 [link ref_BOOST_PARAM_TEST_CASE next section].

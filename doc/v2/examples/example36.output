@@ -1,4 +1,4 @@
-//[example36o
+//[example_output
 > example
 Running 1 test case...
 test.cpp(11): error in "test": check { col1, col1+7 } == { col2, col2+7 } failed. 

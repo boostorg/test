@@ -1,4 +1,4 @@
-//[example21o
+//[example_output
 > example --log_level=message
 Running 2 test cases...
 Testing initialization :

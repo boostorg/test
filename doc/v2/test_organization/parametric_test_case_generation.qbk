@@ -62,9 +62,6 @@ The `join` functionality is implemented in the class [classref boost::unit_test:
 
 [endsect]
 
-
-
-
 [section Zips]
 The ['zip] function returns a dataset of tuples, where the i-th tuple contains the i-th element from each of the argument datasets.
 The size of the zipped dataset is as follow:
@@ -73,8 +70,6 @@ The size of the zipped dataset is as follow:
 * otherwise the datasets are required to have the same size
 
 Zips are accessible through the `operator^` on datasets:
-
-
 
 [table:id_example_dataset_zipop Custom predicate support using __BOOST_LEVEL_PREDICATE__
   [

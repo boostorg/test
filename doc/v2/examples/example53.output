@@ -1,4 +1,4 @@
-//[example53o
+//[example_output
 >example --report_level=detailed
 Running 3 test cases...
 test.cpp(8): error in "test_case1": some error 1

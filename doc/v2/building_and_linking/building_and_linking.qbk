@@ -22,14 +22,10 @@ of these variants are provided.
 [/ ######################################################## ]
 [include module_initialization.qbk]
 
-
-
-
-
 [/ ######################################################## ]
 [section:usage_variants Linking with the __UTF__]
 
-The __UTF__ presents you with 4 different variants:
+The __UTF__ supports four different usage variants:
 
 # The static library variant
 # The dynamic library variant
@@ -55,13 +51,8 @@ like the floating point comparison or the logged expectations testing, are defin
 
 [endsect] [/section:usage_variants]
 
-
-
-
 [/ ######################################################## ]
 [/ reference of the macros]
 [include link_reference.qbk]
-
-
 
 [endsect] [/section:users_guide]

@@ -1,4 +1,4 @@
-//[example34o
+//[example_output
 > example --log_level=warning
 Running 1 test case...
 test.cpp(9): warning in "test": condition sizeof(int) == sizeof(short) is not satisfied

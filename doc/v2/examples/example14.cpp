@@ -1,4 +1,4 @@
-//[example14
+//[example_code
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE my master test suite name
 #include <boost/test/included/unit_test.hpp>

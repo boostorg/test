@@ -1,4 +1,4 @@
-//[example18o
+//[example_output
 > example --log_level=message
 Running 3 test cases...
 setup fixture

@@ -1,4 +1,4 @@
-//[example07o
+//[example_output
 > example
 Running 5 test cases...
 test.cpp(9): error in "free_test_function": check i < 4 failed

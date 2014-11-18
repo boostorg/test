@@ -1,4 +1,4 @@
-//[example33o
+//[example_output
 > example
 Running 1 test case...                                                          
 test.cpp(8): error in "test": check (char)0x26 =.= 0x04 failed.                 

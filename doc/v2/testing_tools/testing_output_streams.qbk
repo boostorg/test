@@ -42,18 +42,7 @@ There are two ways to employ the class `output_test_stream`:
 
 Use the instance of class `output_test_stream` as an output stream and check output content using tool's methods.
 
-[import ../examples/example28.cpp]
-[import ../examples/example28.output]
-[table:id_example28 Explicit output checks with `output_test_stream`
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example28]]
-    [[example28o]]
-  ]
-]
+[bt_example example28..Explicit output checks with `output_test_stream`]
 
 [note Use of `false` to prevent output flushing in first two invocation of check functions. Unless
 you want to perform several different checks for the same output you wouldn't need to use it though. Your
@@ -67,25 +56,13 @@ identify possible source of failure.]
 The ['pattern file] is a companion file containing the patterns that the stream should match. Your testing will look 
 like a serie of output operators followed by match pattern checks repeated several times.
 
-[import ../examples/example29.cpp]
-[import ../examples/example29.output]
 In the example below, the file `pattern_file` contains the patterns that should match. 
 [pre
 i=2
 File: test.cpp Line:XXX
 ]
 
-[table:id_example29 Pattern file matching with `output_test_stream`
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example29]]
-    [[example29o]]
-  ]
-]
-
+[bt_example example28..Pattern file matching with `output_test_stream`]
 
 [tip Try to perform checks as frequently as possible, because it allows you to more closely identify possible source
     of failure

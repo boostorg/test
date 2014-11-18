@@ -41,11 +41,6 @@ doxygen autodoc_execution_monitor
       
       # execution monitor source files
       $(BOOST_ROOT)/libs/test/include/boost/test/execution_monitor.hpp
-      #$(BOOST_ROOT)/libs/test/include/boost/test/impl/execution_monitor.ipp
-      $(BOOST_ROOT)/libs/test/example/exec_mon_example.cpp
-
-
-
       
       # datasets
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/dataset.hpp
@@ -62,7 +57,7 @@ doxygen autodoc_execution_monitor
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/zip.hpp
       
       # datasets generators
-       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators.hpp
+      $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators/keywords.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators/random.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators/xrange.hpp      
@@ -89,12 +84,9 @@ doxygen autodoc_execution_monitor
         <doxygen:param>INTERNAL_DOCS=NO
     ;
 
-
-
-
 doxygen examples
     :
-         [ glob $(BOOST_ROOT)/libs/test/example/*.cpp ]
+        [ glob $(BOOST_ROOT)/libs/test/example/*.cpp ]
     :
         <doxygen:param>EXTRACT_ALL=YES
         <doxygen:param>"PREDEFINED=\"BOOST_TEST_DECL=\" \\
@@ -116,39 +108,6 @@ doxygen examples
     ;
 
 
-
-xml standalone_doc
-  :
-    test.qbk
-  ;
-
-install images
-  :
-    img/boost.test.logo.png
-    img/class-hier.jpg
-    img/post_build_event.jpg
-    img/post_build_out.jpg
-    img/run_args.jpg
-  :
-    <location>html/boost_test
-  ;
-
-
-boostbook standalone
-  :
-    standalone_doc
-  :
-    <xsl:param>boost.root=../../../../..
-    <xsl:param>chapter.autolabel=0
-    <xsl:param>chunk.section.depth=8
-    <xsl:param>chunk.first.sections=1
-    <xsl:param>toc.section.depth=5
-    <xsl:param>toc.max.depth=3
-    <xsl:param>generate.section.toc.level=10
-    <dependency>autodoc_execution_monitor
-    <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/test/doc/html
-  ;
-
 ########################################################################
 # HTML documentation for $(BOOST_ROOT)/doc/html
 
@@ -159,37 +118,23 @@ xml test_doc
 
 explicit test_doc ;
 
-install test_doc_images
-  :
-    img/boost.test.logo.png
-    img/class-hier.jpg
-    img/post_build_event.jpg
-    img/post_build_out.jpg
-    img/run_args.jpg
-  :
-    <location>$(BOOST_ROOT)/doc/html/boost_test
-  ;
+path-constant images_location : html ;
 
-explicit test_doc_images ;
-
-path-constant images_location : ../../../../../doc/html ;
-
-boostbook test
+boostbook standalone
   :
     test_doc
   :
+    <xsl:param>boost.root=../../../../..
+    <xsl:param>html.stylesheet=boostbook.css
     <xsl:param>chapter.autolabel=0
-    <xsl:param>chunk.section.depth=8
+    <xsl:param>toc.max.depth=10
+    <xsl:param>toc.section.depth=10
+    <xsl:param>chunk.section.depth=2
     <xsl:param>chunk.first.sections=1
-    <xsl:param>toc.section.depth=2
-    <xsl:param>toc.max.depth=1
-    <xsl:param>generate.section.toc.level=10
-    <xsl:param>root.filename=boost_test
-    <dependency>autodoc_execution_monitor
+    <xsl:param>generate.section.toc.level=0
     <format>pdf:<xsl:param>img.src.path=$(images_location)/
     <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/test/doc/html
-  :
-    <dependency>test_doc_images
+    <dependency>autodoc_execution_monitor
   ;
 
 explicit test ;

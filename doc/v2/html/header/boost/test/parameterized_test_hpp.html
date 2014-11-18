@@ -2,8 +2,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Header &lt;boost/test/parameterized_test.hpp&gt;</title>
-<link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="stylesheet" href="../../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../index.html" title="Boost.Test">
 <link rel="up" href="../../../boost_test/reference.html" title="Reference">
 <link rel="prev" href="../../../boost/unit_test/output/xml_report_formatter.html" title="Class xml_report_formatter">
@@ -25,6 +25,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="header.boost.test.parameterized_test_hpp"></a>Header &lt;<a href="../../../../../../../../boost/test/parameterized_test.hpp" target="_top">boost/test/parameterized_test.hpp</a>&gt;</h3></div></div></div>
+<p>generators and helper macros for parameterized tests </p>
 <pre class="synopsis">
 
 <a class="link" href="../../../BOOST_PARAM_TEST_CASE.html" title="Macro BOOST_PARAM_TEST_CASE">BOOST_PARAM_TEST_CASE</a>(function, begin, end)
@@ -32,17 +33,17 @@
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">unit_test</span> <span class="special">{</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ParamType<span class="special">,</span> <span class="keyword">typename</span> ParamIter<span class="special">&gt;</span> 
-      <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a name="boost.unit_test.make_test_c_idm18026024320"></a><span class="identifier">make_test_case</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span> <span class="keyword">void</span><span class="special">(</span><span class="identifier">ParamType</span><span class="special">)</span><span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> test_func<span class="special">,</span> 
+      <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a name="boost.unit_test.make_test_case_id329298"></a><span class="identifier">make_test_case</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span> <span class="keyword">void</span><span class="special">(</span><span class="identifier">ParamType</span><span class="special">)</span><span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> test_func<span class="special">,</span> 
                                  <span class="identifier">const_string</span> tc_name<span class="special">,</span> <span class="identifier">const_string</span> tc_file<span class="special">,</span> 
                                  <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> tc_line<span class="special">,</span> <span class="identifier">ParamIter</span> par_begin<span class="special">,</span> 
                                  <span class="identifier">ParamIter</span> par_end<span class="special">)</span><span class="special">;</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ParamType<span class="special">,</span> <span class="keyword">typename</span> ParamIter<span class="special">&gt;</span> 
-      <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a name="boost.unit_test.make_test_c_idm18026018240"></a><span class="identifier">make_test_case</span><span class="special">(</span><span class="keyword">void</span><span class="special">(</span><span class="special">*</span><span class="special">)</span><span class="special">(</span><span class="identifier">ParamType</span><span class="special">)</span> test_func<span class="special">,</span> 
+      <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a name="boost.unit_test.make_test_case_id332523"></a><span class="identifier">make_test_case</span><span class="special">(</span><span class="keyword">void</span><span class="special">(</span><span class="special">*</span><span class="special">)</span><span class="special">(</span><span class="identifier">ParamType</span><span class="special">)</span> test_func<span class="special">,</span> 
                                  <span class="identifier">const_string</span> tc_name<span class="special">,</span> <span class="identifier">const_string</span> tc_file<span class="special">,</span> 
                                  <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> tc_line<span class="special">,</span> <span class="identifier">ParamIter</span> par_begin<span class="special">,</span> 
                                  <span class="identifier">ParamIter</span> par_end<span class="special">)</span><span class="special">;</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> UserTestCase<span class="special">,</span> <span class="keyword">typename</span> ParamType<span class="special">,</span> <span class="keyword">typename</span> ParamIter<span class="special">&gt;</span> 
-      <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a name="boost.unit_test.make_test_c_idm18026012176"></a><span class="identifier">make_test_case</span><span class="special">(</span><span class="keyword">void</span><span class="special">(</span><span class="identifier">UserTestCase</span><span class="special">::</span><span class="special">*</span><span class="special">)</span><span class="special">(</span><span class="identifier">ParamType</span><span class="special">)</span> test_method<span class="special">,</span> 
+      <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a name="boost.unit_test.make_test_case_id332554"></a><span class="identifier">make_test_case</span><span class="special">(</span><span class="keyword">void</span><span class="special">(</span><span class="identifier">UserTestCase</span><span class="special">::</span><span class="special">*</span><span class="special">)</span><span class="special">(</span><span class="identifier">ParamType</span><span class="special">)</span> test_method<span class="special">,</span> 
                                  <span class="identifier">const_string</span> tc_name<span class="special">,</span> <span class="identifier">const_string</span> tc_file<span class="special">,</span> 
                                  <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> tc_line<span class="special">,</span> 
                                  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">UserTestCase</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> user_test_case<span class="special">,</span> 

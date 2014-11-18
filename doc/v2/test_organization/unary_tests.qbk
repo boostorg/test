@@ -51,37 +51,12 @@ In following simple example the same test, implemented in `free_test_function`, 
 performed for 5 different parameters. The parameters are defined in the test module initialization function
 scope. The master test suite contains 5 independent test cases.
 
-
-[import ../examples/example07.cpp]
-[import ../examples/example07.output]
-[table:id_example07 Unary free function based test case
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example07]]
-    [[example07o]]
-  ]
-]
-
-
+[bt_example example07..Unary free function based test case]
 
 Next example is similar, but instead of a free function it uses a method of a class. Even though parameters are
 passed into test method by reference you can still define them in the test module initialization function scope.
 This example employs the alternative test module initialization function specification.
 
-[import ../examples/example08.cpp]
-[import ../examples/example08.output]
-[table:id_example08 Unary class method based test case
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example08]]
-    [[example08o]]
-  ]
-]
+[bt_example example08..Unary class method based test case]
 
 [endsect] [/test case with arity]

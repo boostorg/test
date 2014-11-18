@@ -102,22 +102,9 @@ The only difference from the macro __BOOST_AUTO_TEST_CASE__ is the presence of a
 - fixture name. Unlike the pure C++ solution you have direct access to the public and protected members of the
 fixture, though you still need to refer to the fixture name in every test case.
 
-[note You can't access private members of fixture, but then why would you make anything private?
- ]
+[note You can't access private members of fixture, but then why would you make anything private?]
 
- 
-[import ../examples/example18.cpp]
-[import ../examples/example18.output]
-[table:id_example18 Per test case fixture
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example18]]
-    [[example18o]]
-  ]
-]
+[bt_example example18..Per test case fixture]
 
 In this example only `test_case1` and `test_case2` have fixture `F` assigned. In the next section you going to see
 what can be done if all test cases in a test suite require the same fixture.
@@ -147,21 +134,10 @@ the same fixture automatically.
     same fixture is assigned to all test cases, including ones that belong to the sub test suites.
 ]
 
-[import ../examples/example19.cpp]
-[import ../examples/example19.output]
-[table:id_example19 Test suite level fixture
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example19]]
-    [[example19o]]
-  ]
-]
+[bt_example example19..Test suite level fixture]
 
-[caution The fixture constructor and destructor is called for each test cases (the state of the fixture is not shared among
-         the test cases).]
+[caution The fixture constructor and destructor is called for each test cases (the state of the 
+         fixture is not shared among the test cases).]
 
 [endsect] [/ testsuite fixtures]
 
@@ -196,18 +172,8 @@ passed it as an argument to the macro __BOOST_GLOBAL_FIXTURE__.
 
 The statement, that performs global fixture definition, has to reside at a test file scope.
 
-[import ../examples/example20.cpp]
-[import ../examples/example20.output]
-[table:id_example20 Global fixture
-[
-  [Code]
-  [Output]
-]
-[
-  [[example20]]
-  [[example20o]]
-]
-]
+[bt_example example20..Global fixture]
+
 [endsect] [/section Global fixtures]
 
 [endsect] [/ section fixtures]

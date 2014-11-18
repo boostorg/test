@@ -2,12 +2,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Test suite</title>
-<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
-<link rel="up" href="../tests_organization.html" title="Registering, generating and organizing the unit tests">
-<link rel="prev" href="test_cases/test_organization_templates.html" title="Template test cases">
-<link rel="next" href="test_organization_test_suite/master_test_suite.html" title="Master Test Suite">
+<link rel="up" href="../tests_organization.html" title="Test organization using the Unit Test Framework">
+<link rel="prev" href="test_cases.html" title="Test cases">
+<link rel="next" href="fixtures.html" title="Fixtures">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,27 +20,21 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="test_cases/test_organization_templates.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tests_organization.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="test_organization_test_suite/master_test_suite.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="test_cases.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tests_organization.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="fixtures.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_test.tests_organization.test_organization_test_suite"></a><a class="link" href="test_organization_test_suite.html" title="Test suite">Test
       suite</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="test_organization_test_suite/master_test_suite.html">Master
-        Test Suite</a></span></dt>
-<dt><span class="section"><a href="test_organization_test_suite/test_suite_expected_failure.html">Expected
-        failures specification</a></span></dt>
-</dl></div>
 <p>
         If you consider test cases as leaves on the test tree, the test suite can
         be considered as branch and the master test suite as a trunk. Unlike real
         trees though, our tree in many cases consists only of leaves attached directly
         to the trunk. This is common for all test cases to reside directly in the
         master test suite. If you do want to construct a hierarchical test suite
-        structure the <span class="emphasis"><em>UTF</em></span> provides both manual and automated
-        test suite creation and registration facilities:
+        structure the <span class="emphasis"><em>Unit Test Framework</em></span> provides both manual
+        and automated test suite creation and registration facilities:
       </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
@@ -51,22 +45,23 @@
           </li>
 </ol></div>
 <p>
-        In addition the <span class="emphasis"><em>UTF</em></span> presents a notion of <a class="link" href="test_organization_test_suite/master_test_suite.html" title="Master Test Suite">Master
+        In addition the <span class="emphasis"><em>Unit Test Framework</em></span> presents a notion
+        of <a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.master_test_suite" title="Master Test Suite">Master
         Test Suite</a>. The most important reason to learn about this component
         is that it provides an ability to access command line arguments supplied
         to a test module.
       </p>
 <a name="ref_BOOST_AUTO_TEST_SUITE"></a><h4>
 <a name="boost_test.tests_organization.test_organization_test_suite.h0"></a>
-        <span class="phrase"><a name="boost_test.tests_organization.test_organization_test_suite.test_suites_with_automated_regis"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.test_suites_with_automated_regis">Test
+        <span><a name="boost_test.tests_organization.test_organization_test_suite.test_suites_with_automated_regis"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.test_suites_with_automated_regis">Test
         suites with automated registration</a>
       </h4>
 <p>
-        The solution the <span class="emphasis"><em>UTF</em></span> presents for automated test suite
-        creation and registration is designed to facilitate multiple points of definition,
-        arbitrary test suites depth and smooth integration with automated test case
-        creation and registration. This facility should significantly simplify a
-        test tree construction process in comparison with manual explicit registration
+        The solution the <span class="emphasis"><em>Unit Test Framework</em></span> presents for automated
+        test suite creation and registration is designed to facilitate multiple points
+        of definition, arbitrary test suites depth and smooth integration with automated
+        test case creation and registration. This facility should significantly simplify
+        a test tree construction process in comparison with manual explicit registration
         case.
       </p>
 <p>
@@ -92,9 +87,12 @@
         This example creates a test tree that matches exactly the one created in
         the manual test suite registration example.
       </p>
-<div class="table">
-<a name="boost_test.tests_organization.test_organization_test_suite.id_example12"></a><p class="title"><b>Table&#160;11.&#160;Test suites with automated registration</b></p>
-<div class="table-contents"><table class="table" summary="Test suites with automated registration">
+<h6>
+<a name="boost_test.tests_organization.test_organization_test_suite.h1"></a>
+        <span><a name="boost_test.tests_organization.test_organization_test_suite.example_descr"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.example_descr">Example:
+        Test suites with automated registration</a>
+      </h6>
+<div class="informaltable"><table class="table">
 <colgroup>
 <col>
 <col>
@@ -113,7 +111,7 @@
 </tr></thead>
 <tbody><tr>
 <td>
-<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">example</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">example</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
 <span class="identifier">BOOST_AUTO_TEST_SUITE</span><span class="special">(</span> <span class="identifier">test_suite1</span> <span class="special">)</span>
@@ -146,7 +144,7 @@
 </pre>
               </td>
 <td>
-<pre class="programlisting"><span class="special">&gt;</span> <span class="identifier">example</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="special">&gt;</span> <span class="identifier">example</span>
 <span class="identifier">Running</span> <span class="number">4</span> <span class="identifier">test</span> <span class="identifier">cases</span><span class="special">...</span>
 <span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">12</span><span class="special">):</span> <span class="identifier">fatal</span> <span class="identifier">error</span> <span class="identifier">in</span> <span class="string">"test_case2"</span><span class="special">:</span> <span class="identifier">critical</span> <span class="identifier">check</span> <span class="number">1</span> <span class="special">==</span> <span class="number">2</span> <span class="identifier">failed</span> <span class="special">[</span><span class="number">1</span> <span class="special">!=</span> <span class="number">2</span><span class="special">]</span>
 <span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">27</span><span class="special">):</span> <span class="identifier">error</span> <span class="identifier">in</span> <span class="string">"test_case4"</span><span class="special">:</span> <span class="identifier">check</span> <span class="keyword">false</span> <span class="identifier">failed</span>
@@ -156,8 +154,7 @@
               </td>
 </tr></tbody>
 </table></div>
-</div>
-<br class="table-break"><p>
+<p>
         As you can see test tree construction in this example is more straightforward
         and automated.
       </p>
@@ -169,9 +166,12 @@
         <code class="computeroutput"><span class="identifier">test_case1</span></code> and <code class="computeroutput"><span class="identifier">test_case2</span></code> reside in the same test suite
         <code class="computeroutput"><span class="identifier">test_suite</span></code>.
       </p>
-<div class="table">
-<a name="boost_test.tests_organization.test_organization_test_suite.id_example53"></a><p class="title"><b>Table&#160;12.&#160;Example of test suite extension using automated registration facility</b></p>
-<div class="table-contents"><table class="table" summary="Example of test suite extension using automated registration facility">
+<h6>
+<a name="boost_test.tests_organization.test_organization_test_suite.h2"></a>
+        <span><a name="boost_test.tests_organization.test_organization_test_suite.example_descr0"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.example_descr0">Example:
+        Test suite extension using automated registration facility</a>
+      </h6>
+<div class="informaltable"><table class="table">
 <colgroup>
 <col>
 <col>
@@ -190,7 +190,7 @@
 </tr></thead>
 <tbody><tr>
 <td>
-<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">example</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">example</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
 <span class="identifier">BOOST_AUTO_TEST_SUITE</span><span class="special">(</span> <span class="identifier">test_suite</span> <span class="special">)</span>
@@ -219,7 +219,7 @@
 </pre>
               </td>
 <td>
-<pre class="programlisting"><span class="special">&gt;</span><span class="identifier">example</span> <span class="special">--</span><span class="identifier">report_level</span><span class="special">=</span><span class="identifier">detailed</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="special">&gt;</span><span class="identifier">example</span> <span class="special">--</span><span class="identifier">report_level</span><span class="special">=</span><span class="identifier">detailed</span>
 <span class="identifier">Running</span> <span class="number">3</span> <span class="identifier">test</span> <span class="identifier">cases</span><span class="special">...</span>
 <span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">8</span><span class="special">):</span> <span class="identifier">error</span> <span class="identifier">in</span> <span class="string">"test_case1"</span><span class="special">:</span> <span class="identifier">some</span> <span class="identifier">error</span> <span class="number">1</span>
 <span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">23</span><span class="special">):</span> <span class="identifier">error</span> <span class="identifier">in</span> <span class="string">"test_case2"</span><span class="special">:</span> <span class="identifier">some</span> <span class="identifier">error</span> <span class="number">2</span>
@@ -246,10 +246,9 @@
               </td>
 </tr></tbody>
 </table></div>
-</div>
-<br class="table-break"><h4>
-<a name="boost_test.tests_organization.test_organization_test_suite.h1"></a>
-        <span class="phrase"><a name="boost_test.tests_organization.test_organization_test_suite.test_suites_with_manual_registra"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.test_suites_with_manual_registra">Test
+<h4>
+<a name="boost_test.tests_organization.test_organization_test_suite.h3"></a>
+        <span><a name="boost_test.tests_organization.test_organization_test_suite.test_suites_with_manual_registra"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.test_suites_with_manual_registra">Test
         suites with manual registration</a>
       </h4>
 <p>
@@ -257,13 +256,13 @@
         and populate it with test cases (or lower level test suites).
       </p>
 <a name="ref_test_case_registration"></a><h5>
-<a name="boost_test.tests_organization.test_organization_test_suite.h2"></a>
-        <span class="phrase"><a name="boost_test.tests_organization.test_organization_test_suite.test_unit_registration_interface"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.test_unit_registration_interface">Test
+<a name="boost_test.tests_organization.test_organization_test_suite.h4"></a>
+        <span><a name="boost_test.tests_organization.test_organization_test_suite.test_unit_registration_interface"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.test_unit_registration_interface">Test
         unit registration interface</a>
       </h5>
 <p>
-        The <span class="emphasis"><em>UTF</em></span> models the notion of test case container - test
-        suite - using class <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">test_suite</span></code>.
+        The <span class="emphasis"><em>Unit Test Framework</em></span> models the notion of test case
+        container - test suite - using class <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">test_suite</span></code>.
         For complete class interface reference check advanced section of this documentation.
         Here you should only be interested in a single test unit registration interface:
       </p>
@@ -282,18 +281,19 @@
 </tr>
 <tr><td align="left" valign="top"><p>
           Be careful when supplying a number of expected failures for test suites.
-          By default the <span class="emphasis"><em>UTF</em></span> calculates the number of expected
-          failures in test suite as the sum of appropriate values in all test units
-          that constitute it. And it rarely makes sense to change this.
+          By default the <span class="emphasis"><em>Unit Test Framework</em></span> calculates the
+          number of expected failures in test suite as the sum of appropriate values
+          in all test units that constitute it. And it rarely makes sense to change
+          this.
         </p></td></tr>
 </table></div>
 <p>
         The third optional parameter - <code class="computeroutput"><span class="identifier">timeout</span></code>
-        - defines the timeout value for the test unit. As of now the <span class="emphasis"><em>UTF</em></span>
-        isn't able to set a timeout for the test suite execution, so this parameter
-        makes sense only for test case registration. By default no timeout is set.
-        See the method <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">execution_monitor</span><span class="special">::</span><span class="identifier">execute</span></code> for more details about the timeout
-        value. <code class="computeroutput"><a class="link" href="../../boost/unit_test/test_suite.html#idm18025820912-bb">boost::unit_test::test_suite::add</a></code>
+        - defines the timeout value for the test unit. As of now the <span class="emphasis"><em>Unit
+        Test Framework</em></span> isn't able to set a timeout for the test suite
+        execution, so this parameter makes sense only for test case registration.
+        By default no timeout is set. See the method <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">execution_monitor</span><span class="special">::</span><span class="identifier">execute</span></code>
+        for more details about the timeout value. <code class="computeroutput"><a class="link" href="../../boost/unit_test/test_suite.html#id331790-bb">boost::unit_test::test_suite::add</a></code>
         <code class="computeroutput"><a class="link" href="../../boost/unit_test/test_suite.html" title="Class test_suite">test_suite</a></code>.
       </p>
 <p>
@@ -311,8 +311,8 @@
         </p></td></tr>
 </table></div>
 <a name="ref_BOOST_TEST_SUITE"></a><h5>
-<a name="boost_test.tests_organization.test_organization_test_suite.h3"></a>
-        <span class="phrase"><a name="boost_test.tests_organization.test_organization_test_suite.test_suite_instance_construction"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.test_suite_instance_construction">Test
+<a name="boost_test.tests_organization.test_organization_test_suite.h5"></a>
+        <span><a name="boost_test.tests_organization.test_organization_test_suite.test_suite_instance_construction"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.test_suite_instance_construction">Test
         suite instance construction</a>
       </h5>
 <p>
@@ -350,9 +350,12 @@
 <p>
         <span class="inlinemediaobject"><img src="../../../img/class-hier.jpg"></span>
       </p>
-<div class="table">
-<a name="boost_test.tests_organization.test_organization_test_suite.id_example11"></a><p class="title"><b>Table&#160;13.&#160;Manually registered test suites</b></p>
-<div class="table-contents"><table class="table" summary="Manually registered test suites">
+<h6>
+<a name="boost_test.tests_organization.test_organization_test_suite.h6"></a>
+        <span><a name="boost_test.tests_organization.test_organization_test_suite.example_descr1"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.example_descr1">Example:
+        Manually registered test suites</a>
+      </h6>
+<div class="informaltable"><table class="table">
 <colgroup>
 <col>
 <col>
@@ -371,7 +374,7 @@
 </tr></thead>
 <tbody><tr>
 <td>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">;</span>
 
 <span class="keyword">void</span> <span class="identifier">test_case1</span><span class="special">()</span> <span class="special">{</span> <span class="comment">/* ... */</span> <span class="special">}</span>
@@ -397,7 +400,7 @@
 </pre>
               </td>
 <td>
-<pre class="programlisting"><span class="special">&gt;</span> <span class="identifier">example</span> <span class="special">--</span><span class="identifier">log_level</span><span class="special">=</span><span class="identifier">test_suite</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="special">&gt;</span> <span class="identifier">example</span> <span class="special">--</span><span class="identifier">log_level</span><span class="special">=</span><span class="identifier">test_suite</span>
 <span class="identifier">Running</span> <span class="number">4</span> <span class="identifier">test</span> <span class="identifier">cases</span><span class="special">...</span>
 <span class="identifier">Entering</span> <span class="identifier">test</span> <span class="identifier">suite</span> <span class="string">"Master Test Suite"</span>
 <span class="identifier">Entering</span> <span class="identifier">test</span> <span class="identifier">suite</span> <span class="string">"test_suite1"</span>
@@ -419,8 +422,443 @@
               </td>
 </tr></tbody>
 </table></div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="boost_test.tests_organization.test_organization_test_suite.master_test_suite"></a><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.master_test_suite" title="Master Test Suite">Master
+        Test Suite</a>
+</h4></div></div></div>
+<p>
+          As defined in introduction section the master test suite is a root node
+          of a test tree. Each test module built with the <span class="emphasis"><em>Unit Test Framework</em></span>
+          always has the master test suite defined. The <span class="emphasis"><em>Unit Test Framework</em></span>
+          maintain the master test suite instance internally. All other test units
+          are registered as direct or indirect children of the master test suite.
+        </p>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+<span class="keyword">namespace</span> <span class="identifier">unit_test</span> <span class="special">{</span>
+<span class="keyword">class</span> <span class="identifier">master_test_suite_t</span> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">test_suite</span>
+<span class="special">{</span>
+<span class="keyword">public</span><span class="special">:</span>
+  <span class="keyword">int</span> <span class="identifier">argc</span><span class="special">;</span>
+  <span class="keyword">char</span><span class="special">**</span> <span class="identifier">argv</span><span class="special">;</span>
+<span class="special">};</span>
+
+<span class="special">}</span> <span class="comment">// namespace unit_test</span>
+<span class="special">}</span> <span class="comment">// namespace boost</span>
+</pre>
+<p>
+          To access single instance of the master test suite use the following interface:
+        </p>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+<span class="keyword">namespace</span> <span class="identifier">unit_test</span> <span class="special">{</span>
+<span class="keyword">namespace</span> <span class="identifier">framework</span> <span class="special">{</span>
+
+<span class="identifier">master_test_suite_t</span><span class="special">&amp;</span> <span class="identifier">master_test_suite</span><span class="special">();</span>
+
+<span class="special">}</span> <span class="comment">// namespace framework</span>
+<span class="special">}</span> <span class="comment">// namespace unit_test</span>
+<span class="special">}</span> <span class="comment">// namespace boost</span>
+</pre>
+<h5>
+<a name="boost_test.tests_organization.test_organization_test_suite.master_test_suite.h0"></a>
+          <span><a name="boost_test.tests_organization.test_organization_test_suite.master_test_suite.command_line_arguments_access_in"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.master_test_suite.command_line_arguments_access_in">Command
+          line arguments access interface</a>
+        </h5>
+<p>
+          Master test suite implemented as an extension to the regular test suite,
+          since it maintains references to the command line arguments passed to the
+          test module. To access the command line arguments use
+        </p>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">framework</span><span class="special">::</span><span class="identifier">master_test_suite</span><span class="special">().</span><span class="identifier">argc</span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">framework</span><span class="special">::</span><span class="identifier">master_test_suite</span><span class="special">().</span><span class="identifier">argv</span>
+</pre>
+<p>
+          In below example references to the command line arguments are accessible
+          either as an initialization function parameters or as members of the master
+          test suite. Both references point to the same values. A test module that
+          uses the alternative initialization function specification can only access
+          command line arguments through the master test suite.
+        </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            This interface for runtime parameter access is temporary. It's planned
+            to be updated once runtime parameters support is redesigned.
+          </p></td></tr>
+</table></div>
+<p>
+          Returning to the free function example, let's modify initialization function
+          to check for absence of any test module arguments.
+        </p>
+<h6>
+<a name="boost_test.tests_organization.test_organization_test_suite.master_test_suite.h1"></a>
+          <span><a name="boost_test.tests_organization.test_organization_test_suite.master_test_suite.example_descr"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.master_test_suite.example_descr">Example:
+          Command line access in initialization function</a>
+        </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Code
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Output
+                  </p>
+                </th>
+</tr></thead>
+<tbody><tr>
+<td>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">;</span>
+
+<span class="keyword">void</span> <span class="identifier">free_test_function</span><span class="special">()</span>
+<span class="special">{</span>
+  <span class="identifier">BOOST_CHECK</span><span class="special">(</span> <span class="keyword">true</span> <span class="comment">/* test assertion */</span> <span class="special">);</span>
+<span class="special">}</span>
+
+<span class="identifier">test_suite</span><span class="special">*</span> <span class="identifier">init_unit_test_suite</span><span class="special">(</span> <span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[]</span> <span class="special">)</span>
+<span class="special">{</span>
+  <span class="keyword">if</span><span class="special">(</span> <span class="identifier">framework</span><span class="special">::</span><span class="identifier">master_test_suite</span><span class="special">().</span><span class="identifier">argc</span> <span class="special">&gt;</span> <span class="number">1</span> <span class="special">)</span>
+    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+
+  <span class="identifier">framework</span><span class="special">::</span><span class="identifier">master_test_suite</span><span class="special">().</span>
+    <span class="identifier">add</span><span class="special">(</span> <span class="identifier">BOOST_TEST_CASE</span><span class="special">(</span> <span class="special">&amp;</span><span class="identifier">free_test_function</span> <span class="special">)</span> <span class="special">);</span>
+
+  <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+                </td>
+<td>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="special">&gt;</span> <span class="identifier">example</span> <span class="number">1</span>
+<span class="identifier">Test</span> <span class="identifier">setup</span> <span class="identifier">error</span><span class="special">:</span> <span class="identifier">test</span> <span class="identifier">tree</span> <span class="identifier">is</span> <span class="identifier">empty</span>
+</pre>
+                </td>
+</tr></tbody>
+</table></div>
+<a name="ref_BOOST_TEST_MODULE"></a><h5>
+<a name="boost_test.tests_organization.test_organization_test_suite.master_test_suite.h2"></a>
+          <span><a name="boost_test.tests_organization.test_organization_test_suite.master_test_suite.naming_the_master_test_suite"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.master_test_suite.naming_the_master_test_suite">Naming
+          the <span class="emphasis"><em>Master test suite</em></span></a>
+        </h5>
+<p>
+          The master test suite is created with default name <span class="emphasis"><em>Master Test
+          Suite</em></span>. There are two methods two reset the name to a different
+          value: using the macro <a class="link" href="../users_guide/link_references.html#boost_test.users_guide.link_references.link_boost_test_module_macro" title="BOOST_TEST_MODULE"><code class="computeroutput"><span class="identifier">BOOST_TEST_MODULE</span></code></a> and from within
+          the test module initialization function. Former is used for test modules
+          that don't have the manually implemented initialization function. Following
+          examples illustrate these methods.
+        </p>
+<h6>
+<a name="boost_test.tests_organization.test_organization_test_suite.master_test_suite.h3"></a>
+          <span><a name="boost_test.tests_organization.test_organization_test_suite.master_test_suite.example_descr0"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.master_test_suite.example_descr0">Example:
+          Naming master test suite using the macro <a class="link" href="../users_guide/link_references.html#boost_test.users_guide.link_references.link_boost_test_module_macro" title="BOOST_TEST_MODULE"><code class="computeroutput"><span class="identifier">BOOST_TEST_MODULE</span></code></a></a>
+        </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Code
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Output
+                  </p>
+                </th>
+</tr></thead>
+<tbody><tr>
+<td>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_DYN_LINK</span>
+<span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">my</span> <span class="identifier">master</span> <span class="identifier">test</span> <span class="identifier">suite</span> <span class="identifier">name</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="identifier">BOOST_AUTO_TEST_CASE</span><span class="special">(</span> <span class="identifier">free_test_function</span> <span class="special">)</span>
+<span class="special">{</span>
+  <span class="identifier">BOOST_CHECK</span><span class="special">(</span> <span class="keyword">true</span> <span class="comment">/* test assertion */</span> <span class="special">);</span>
+<span class="special">}</span>
+</pre>
+                </td>
+<td>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="special">&gt;</span> <span class="identifier">example</span> <span class="special">--</span><span class="identifier">log_level</span><span class="special">=</span><span class="identifier">test_suite</span>
+<span class="identifier">Running</span> <span class="number">1</span> <span class="identifier">test</span> <span class="keyword">case</span><span class="special">...</span>
+<span class="identifier">Entering</span> <span class="identifier">test</span> <span class="identifier">suite</span> <span class="string">"my master test suite name"</span>
+<span class="identifier">Entering</span> <span class="identifier">test</span> <span class="keyword">case</span> <span class="string">"free_test_function"</span>
+<span class="identifier">Leaving</span> <span class="identifier">test</span> <span class="keyword">case</span> <span class="string">"free_test_function"</span><span class="special">;</span> <span class="identifier">testing</span> <span class="identifier">time</span><span class="special">:</span> <span class="number">1</span><span class="identifier">ms</span>
+<span class="identifier">Leaving</span> <span class="identifier">test</span> <span class="identifier">suite</span> <span class="string">"my master test suite name"</span>
+
+<span class="special">***</span> <span class="identifier">No</span> <span class="identifier">errors</span> <span class="identifier">detected</span>
+</pre>
+                </td>
+</tr></tbody>
+</table></div>
+<p>
+          If the macro <a class="link" href="../users_guide/link_references.html#boost_test.users_guide.link_references.link_boost_test_module_macro" title="BOOST_TEST_MODULE"><code class="computeroutput"><span class="identifier">BOOST_TEST_MODULE</span></code></a> is defined,
+          the test module initialization function is <span class="bold"><strong>automatically
+          generated</strong></span> and the macro value becomes the name of the master
+          test suite. The name may include spaces.
+        </p>
+<h6>
+<a name="boost_test.tests_organization.test_organization_test_suite.master_test_suite.h4"></a>
+          <span><a name="boost_test.tests_organization.test_organization_test_suite.master_test_suite.example_descr1"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.master_test_suite.example_descr1">Example:
+          Naming master test suite explicitly in the test module initialization function</a>
+        </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Code
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Output
+                  </p>
+                </th>
+</tr></thead>
+<tbody><tr>
+<td>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">;</span>
+
+
+<span class="identifier">BOOST_AUTO_TEST_CASE</span><span class="special">(</span> <span class="identifier">free_test_function</span> <span class="special">)</span>
+<span class="special">{</span>
+  <span class="identifier">BOOST_CHECK</span><span class="special">(</span> <span class="keyword">true</span> <span class="comment">/* test assertion */</span> <span class="special">);</span>
+<span class="special">}</span>
+
+<span class="identifier">test_suite</span><span class="special">*</span> <span class="identifier">init_unit_test_suite</span><span class="special">(</span> <span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[]</span> <span class="special">)</span>
+<span class="special">{</span>
+  <span class="identifier">framework</span><span class="special">::</span><span class="identifier">master_test_suite</span><span class="special">().</span><span class="identifier">p_name</span><span class="special">.</span><span class="identifier">value</span> <span class="special">=</span> <span class="string">"my master test suite name"</span><span class="special">;</span>
+  <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+                </td>
+<td>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="special">&gt;</span> <span class="identifier">example</span> <span class="special">--</span><span class="identifier">log_level</span><span class="special">=</span><span class="identifier">test_suite</span>
+<span class="identifier">Running</span> <span class="number">1</span> <span class="identifier">test</span> <span class="keyword">case</span><span class="special">...</span>
+<span class="identifier">Entering</span> <span class="identifier">test</span> <span class="identifier">suite</span> <span class="string">"my master test suite name"</span>
+<span class="identifier">Entering</span> <span class="identifier">test</span> <span class="keyword">case</span> <span class="string">"free_test_function"</span>
+<span class="identifier">Leaving</span> <span class="identifier">test</span> <span class="keyword">case</span> <span class="string">"free_test_function"</span><span class="special">;</span> <span class="identifier">testing</span> <span class="identifier">time</span><span class="special">:</span> <span class="number">1</span><span class="identifier">ms</span>
+<span class="identifier">Leaving</span> <span class="identifier">test</span> <span class="identifier">suite</span> <span class="string">"my master test suite name"</span>
+
+<span class="special">***</span> <span class="identifier">No</span> <span class="identifier">errors</span> <span class="identifier">detected</span>
+</pre>
+                </td>
+</tr></tbody>
+</table></div>
+<p>
+          Without the <a class="link" href="../users_guide/link_references.html#boost_test.users_guide.link_references.link_boost_test_main_macro" title="BOOST_TEST_MAIN"><code class="computeroutput"><span class="identifier">BOOST_TEST_MAIN</span></code></a> and the <a class="link" href="../users_guide/link_references.html#boost_test.users_guide.link_references.link_boost_test_module_macro" title="BOOST_TEST_MODULE"><code class="computeroutput"><span class="identifier">BOOST_TEST_MODULE</span></code></a> flags defined,
+          the test module initialization function has to be manually implemented.
+          The master test suite name can be reset at any point within this function.
+        </p>
 </div>
-<br class="table-break">
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="boost_test.tests_organization.test_organization_test_suite.test_suite_expected_failure"></a><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.test_suite_expected_failure" title="Expected failures specification">Expected
+        failures specification</a>
+</h4></div></div></div>
+<p>
+          While in a perfect world all test assertions should pass in order for a
+          test module to pass, in some situations it is desirable to temporarily
+          allow particular tests to fail. For example, where a particular feature
+          is not implemented yet and one needs to prepare a library for the release
+          or when particular test fails on some platforms. To avoid a nagging red
+          box in regression tests table, you can use the expected failures feature.
+        </p>
+<p>
+          This feature allows specifying an expected number of failed assertions
+          per test unit. The value is specified during test tree construction, and
+          can't be updated during test execution.
+        </p>
+<p>
+          The feature is not intended to be used to check for expected functionality
+          failures. To check that a particular input is causing an exception to be
+          thrown use <a class="link" href="../testing_tools/testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.assertion_boost_level_throw" title="BOOST_&lt;level&gt;_THROW"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_THROW</span></code></a> family of testing tools.
+        </p>
+<p>
+          The usage of this feature should be limited and employed only after careful
+          consideration. In general you should only use this feature when it is necessary
+          to force a test module to pass without actually fixing the problem. Obviously,
+          an excessive usage of expected failures defeats the purpose of the unit
+          test. In most cases it only needs be applied temporarily.
+        </p>
+<p>
+          You also need to remember that the expected failure specification is per
+          test case. This means that any failed assertion within that test case can
+          satisfy the expected failures quota. Meaning it is possible for an unexpected
+          failure to occur to satisfy this quota.
+        </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            If an assertion at fault is fixed and passed, while an expected failures
+            specification still present, the test case is going to fail, since the
+            number of failures is smaller than expected.
+          </p></td></tr>
+</table></div>
+<h4>
+<a name="boost_test.tests_organization.test_organization_test_suite.test_suite_expected_failure.h0"></a>
+          <span><a name="boost_test.tests_organization.test_organization_test_suite.test_suite_expected_failure.usage_with_manually_registered_t"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.test_suite_expected_failure.usage_with_manually_registered_t">Usage
+          with manually registered test cases</a>
+        </h4>
+<p>
+          To set the value of expected failures for the manually registered test
+          unit pass it as a second argument for the <a class="link" href="test_organization_test_suite.html#ref_test_case_registration"><code class="computeroutput"><span class="identifier">test_suite</span><span class="special">::</span><span class="identifier">add</span></code></a> call during test unit registration.
+        </p>
+<h6>
+<a name="boost_test.tests_organization.test_organization_test_suite.test_suite_expected_failure.h1"></a>
+          <span><a name="boost_test.tests_organization.test_organization_test_suite.test_suite_expected_failure.example_descr"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.test_suite_expected_failure.example_descr">Example:
+          Expected failures specification for manually registered test case</a>
+        </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Code
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Output
+                  </p>
+                </th>
+</tr></thead>
+<tbody><tr>
+<td>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">;</span>
+
+<span class="keyword">void</span> <span class="identifier">free_test_function</span><span class="special">()</span>
+<span class="special">{</span>
+  <span class="identifier">BOOST_CHECK</span><span class="special">(</span> <span class="number">2</span> <span class="special">==</span> <span class="number">1</span> <span class="special">);</span>
+<span class="special">}</span>
+
+<span class="identifier">test_suite</span><span class="special">*</span> <span class="identifier">init_unit_test_suite</span><span class="special">(</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="special">[]</span> <span class="special">)</span>
+<span class="special">{</span>
+  <span class="identifier">framework</span><span class="special">::</span><span class="identifier">master_test_suite</span><span class="special">().</span>
+    <span class="identifier">add</span><span class="special">(</span> <span class="identifier">BOOST_TEST_CASE</span><span class="special">(</span> <span class="special">&amp;</span><span class="identifier">free_test_function</span> <span class="special">),</span> <span class="number">2</span> <span class="special">);</span>
+
+  <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+                </td>
+<td>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="special">&gt;</span> <span class="identifier">example</span> <span class="special">--</span><span class="identifier">log_level</span><span class="special">=</span><span class="identifier">message</span>
+<span class="identifier">Running</span> <span class="number">1</span> <span class="identifier">test</span> <span class="keyword">case</span><span class="special">...</span>
+<span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">8</span><span class="special">):</span> <span class="identifier">error</span> <span class="identifier">in</span> <span class="string">"free_test_function"</span><span class="special">:</span> <span class="identifier">check</span> <span class="number">2</span> <span class="special">==</span> <span class="number">1</span> <span class="identifier">failed</span>
+<span class="identifier">Test</span> <span class="keyword">case</span> <span class="identifier">has</span> <span class="identifier">less</span> <span class="identifier">failures</span> <span class="identifier">then</span> <span class="identifier">expected</span>
+
+<span class="special">***</span> <span class="identifier">No</span> <span class="identifier">errors</span> <span class="identifier">detected</span>
+</pre>
+                </td>
+</tr></tbody>
+</table></div>
+<a name="ref_BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES"></a><h4>
+<a name="boost_test.tests_organization.test_organization_test_suite.test_suite_expected_failure.h2"></a>
+          <span><a name="boost_test.tests_organization.test_organization_test_suite.test_suite_expected_failure.usage_with_automatically_registe"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.test_suite_expected_failure.usage_with_automatically_registe">Usage
+          with automatically registered test cases</a>
+        </h4>
+<p>
+          To set the number of expected failures for the automatically registered
+          test unit use the macro <a class="link" href="test_organization_test_suite.html#ref_BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES"><code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES</span></code></a>
+          before the test case definition.
+        </p>
+<pre class="programlisting"><span class="identifier">BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES</span><span class="special">(</span><span class="identifier">test_case_name</span><span class="special">,</span> <span class="identifier">number_of_expected_failures</span><span class="special">);</span>
+</pre>
+<p>
+          You can use this macro both on a file scope and inside a test suite. Moreover
+          you can use it even if name of test units coincide in different test suites.
+          Expected failures specification applies to the test unit belonging to the
+          same test suite where <a class="link" href="test_organization_test_suite.html#ref_BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES"><code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES</span></code></a>
+          resides.
+        </p>
+<h6>
+<a name="boost_test.tests_organization.test_organization_test_suite.test_suite_expected_failure.h3"></a>
+          <span><a name="boost_test.tests_organization.test_organization_test_suite.test_suite_expected_failure.example_descr0"></a></span><a class="link" href="test_organization_test_suite.html#boost_test.tests_organization.test_organization_test_suite.test_suite_expected_failure.example_descr0">Example:
+          Expected failures specification for automatically registered test case</a>
+        </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Code
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Output
+                  </p>
+                </th>
+</tr></thead>
+<tbody><tr>
+<td>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">example</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="identifier">BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES</span><span class="special">(</span> <span class="identifier">my_test1</span><span class="special">,</span> <span class="number">1</span> <span class="special">)</span>
+
+<span class="identifier">BOOST_AUTO_TEST_CASE</span><span class="special">(</span> <span class="identifier">my_test1</span> <span class="special">)</span>
+<span class="special">{</span>
+  <span class="identifier">BOOST_CHECK</span><span class="special">(</span> <span class="number">2</span> <span class="special">==</span> <span class="number">1</span> <span class="special">);</span>
+<span class="special">}</span>
+
+<span class="identifier">BOOST_AUTO_TEST_SUITE</span><span class="special">(</span> <span class="identifier">internal</span> <span class="special">)</span>
+
+<span class="identifier">BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES</span><span class="special">(</span> <span class="identifier">my_test1</span><span class="special">,</span> <span class="number">2</span> <span class="special">)</span>
+
+<span class="identifier">BOOST_AUTO_TEST_CASE</span><span class="special">(</span> <span class="identifier">my_test1</span> <span class="special">)</span>
+<span class="special">{</span>
+  <span class="identifier">BOOST_CHECK_EQUAL</span><span class="special">(</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">int</span><span class="special">),</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">char</span><span class="special">)</span> <span class="special">);</span>
+  <span class="identifier">BOOST_CHECK_EQUAL</span><span class="special">(</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">int</span><span class="special">*),</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">char</span><span class="special">)</span> <span class="special">);</span>
+<span class="special">}</span>
+
+<span class="identifier">BOOST_AUTO_TEST_SUITE_END</span><span class="special">()</span>
+</pre>
+                </td>
+<td>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="special">&gt;</span> <span class="identifier">example</span> <span class="special">--</span><span class="identifier">report_level</span><span class="special">=</span><span class="keyword">short</span>
+<span class="identifier">Running</span> <span class="number">2</span> <span class="identifier">test</span> <span class="identifier">cases</span><span class="special">...</span>
+<span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">10</span><span class="special">):</span> <span class="identifier">error</span> <span class="identifier">in</span> <span class="string">"my_test1"</span><span class="special">:</span> <span class="identifier">check</span> <span class="number">2</span> <span class="special">==</span> <span class="number">1</span> <span class="identifier">failed</span>
+<span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">21</span><span class="special">):</span> <span class="identifier">error</span> <span class="identifier">in</span> <span class="string">"my_test1"</span><span class="special">:</span> <span class="identifier">check</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="special">==</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">char</span><span class="special">)</span> <span class="identifier">failed</span> <span class="special">[</span><span class="number">4</span> <span class="special">!=</span> <span class="number">1</span><span class="special">]</span>
+<span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">22</span><span class="special">):</span> <span class="identifier">error</span> <span class="identifier">in</span> <span class="string">"my_test1"</span><span class="special">:</span> <span class="identifier">check</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">int</span><span class="special">*)</span> <span class="special">==</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">char</span><span class="special">)</span> <span class="identifier">failed</span> <span class="special">[</span><span class="number">4</span> <span class="special">!=</span> <span class="number">1</span><span class="special">]</span>
+
+<span class="identifier">Test</span> <span class="identifier">suite</span> <span class="string">"example"</span> <span class="identifier">passed</span> <span class="identifier">with</span><span class="special">:</span>
+  <span class="number">3</span> <span class="identifier">assertions</span> <span class="identifier">out</span> <span class="identifier">of</span> <span class="number">3</span> <span class="identifier">failed</span>
+  <span class="number">3</span> <span class="identifier">failures</span> <span class="identifier">expected</span>
+  <span class="number">2</span> <span class="identifier">test</span> <span class="identifier">cases</span> <span class="identifier">out</span> <span class="identifier">of</span> <span class="number">2</span> <span class="identifier">passed</span>
+</pre>
+                </td>
+</tr></tbody>
+</table></div>
+</div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
@@ -433,7 +871,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="test_cases/test_organization_templates.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tests_organization.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="test_organization_test_suite/master_test_suite.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="test_cases.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tests_organization.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="fixtures.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

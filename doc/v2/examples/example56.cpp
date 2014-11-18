@@ -1,4 +1,4 @@
-//[example56
+//[example_code
 #define BOOST_TEST_MODULE example
 #include <boost/test/included/unit_test.hpp>
 

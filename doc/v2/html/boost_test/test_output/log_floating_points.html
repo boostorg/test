@@ -2,10 +2,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Logging floating point type numbers</title>
-<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
-<link rel="up" href="../test_output.html" title="Controlling the outputs">
+<link rel="up" href="../test_output.html" title="Controlling the Unit Test Framework outputs">
 <link rel="prev" href="test_output_macro_passpoint.html" title="BOOST_TEST_PASSPOINT">
 <link rel="next" href="log_human_readable_format.html" title="Human readable log format">
 </head>
@@ -28,13 +28,13 @@
       point type numbers</a>
 </h3></div></div></div>
 <p>
-        It may appear that floating-point numbers are displayed by the <span class="emphasis"><em>UTF</em></span>
-        with an excessive number of decimal digits. However the number of digits
-        shown is chosen to avoid apparently nonsensical displays like <code class="computeroutput"><span class="special">[</span><span class="number">1.00000</span> <span class="special">!=</span>
-        <span class="number">1.00000</span><span class="special">]</span></code>
-        when comparing exactly unity against a value which is increased by just one
-        least significant binary digit using the default precision for float of just
-        6 decimal digits, given by <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="keyword">float</span><span class="special">&gt;::</span><span class="identifier">digits10</span></code>.
+        It may appear that floating-point numbers are displayed by the <span class="emphasis"><em>Unit
+        Test Framework</em></span> with an excessive number of decimal digits. However
+        the number of digits shown is chosen to avoid apparently nonsensical displays
+        like <code class="computeroutput"><span class="special">[</span><span class="number">1.00000</span>
+        <span class="special">!=</span> <span class="number">1.00000</span><span class="special">]</span></code> when comparing exactly unity against a value
+        which is increased by just one least significant binary digit using the default
+        precision for float of just 6 decimal digits, given by <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="keyword">float</span><span class="special">&gt;::</span><span class="identifier">digits10</span></code>.
         The function used for the number of decimal digits displayed is that proposed
         for a future C++ Standard, <a href="http://www2.open-std.org/JTC1/SC22/WG21/docs/papers/2005/n1822.pdf" target="_top">A
         Proposal to add a max significant decimal digits value</a>, to be called

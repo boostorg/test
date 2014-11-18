@@ -1,4 +1,4 @@
-//[example07
+//[example_code
 #include <boost/test/included/unit_test.hpp>
 #include <boost/test/parameterized_test.hpp>
 using namespace boost::unit_test;

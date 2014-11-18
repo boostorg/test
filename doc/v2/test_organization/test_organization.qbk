@@ -1,4 +1,4 @@
-[section:tests_organization Registering, generating and organizing the unit tests]
+[section:tests_organization Test organization using the __UTF__]
 
 If you look at many legacy test modules, big chance is that it's implemented as one big test function that
 consists of a mixture of check and output statements. Is there anything wrong with it? Yes. There are various
@@ -14,7 +14,6 @@ disadvantages in single test function approach:
 
 The above points should make it clear that it's preferable to split [link ref_test_module test module] into smaller units.
 These units are [link boost_test.tests_organization.test_cases test cases].
-
 
 To solve test tree creation problem the __UTF__ provides facilities for __section_test_suite__ creation. 
 In some cases it's desirable to allow some ['expected] failures in test case without failing a

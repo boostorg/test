@@ -1,4 +1,4 @@
-//[example14o
+//[example_output
 > example --log_level=test_suite
 Running 1 test case...
 Entering test suite "my master test suite name"

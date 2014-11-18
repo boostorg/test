@@ -13,19 +13,7 @@ The first layer is supported by __BOOST_LEVEL_PREDICATE__ family of testing tool
 predicate that reports the result as boolean value. The values of the predicate arguments are reported by the tool
 automatically in case of failure.
 
-[import ../examples/example30.cpp]
-[import ../examples/example30.output]
-[table:id_example30 Custom predicate support using __BOOST_LEVEL_PREDICATE__
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example30]]
-    [[example30o]]
-  ]
-]
-
+[bt_example example30..Custom predicate support using __BOOST_LEVEL_PREDICATE__]
 
 To use second layer your predicate has to return __class_predicate_result__.
 
@@ -39,16 +27,6 @@ message. You can also assign boolean value to the constructed instance. You can 
 using `operator!` or directly accessing public read-only property `p_predicate_value`. The
 error message is stored in public read-write property `p_message`.
 
-[import ../examples/example31.cpp]
-[import ../examples/example31.output]
-[table:id_example31 Custom predicate support using class __class_predicate_result__
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example31]]
-    [[example31o]]
-  ]
-]
+[bt_example example31..Custom predicate support using class __class_predicate_result__]
+
 [endsect] [/predicate]

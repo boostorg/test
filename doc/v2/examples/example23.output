@@ -1,4 +1,4 @@
-//[example23o
+//[example_output
 > example
 Running 1 test case...
 unknown location(0): fatal error in "test_case": memory access violation at address: 0x00000008: no mapping at fault address

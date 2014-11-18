@@ -24,24 +24,12 @@ The macro __BOOST_AUTO_TEST_CASE_TEMPLATE__ requires three arguments:
          name of the type the test case template is instantiated with
 # The collection of types to instantiate test case template with: arbitrary MPL sequence
 
-[import ../examples/example10.cpp]
-[import ../examples/example10.output]
-[table:id_example10 Test case template with automated registration
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example10]]
-    [[example10o]]
-  ]
-]
+[bt_example example10..Test case template with automated registration]
 
 [#ref_BOOST_TEST_CASE_TEMPLATE][h4 Test case template with manual registration]
 One way to perform the same set of checks for a component instantiated with different template parameters is
 illustrated in the following example:
 
-[/snippet2 deleted and copied below]
 ``
 template <typename T>
 void single_test()
@@ -133,19 +121,6 @@ case of failure you can't say which type is at fault) and allows you to test all
 them causes termination of the sub test case.
 ]
 
-[import ../examples/example09.cpp]
-[import ../examples/example09.output]
-[table:id_example09 Manually registered test case template
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example09]]
-    [[example09o]]
-  ]
-]
-
-
+[bt_example example09..Manually registered test case template]
 
 [endsect] [/template test cases]

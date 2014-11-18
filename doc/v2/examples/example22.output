@@ -1,4 +1,4 @@
-//[example22o
+//[example_output
 > example
 Running 1 test case...
 unknown location(0): fatal error in "test_external_interface": signal: integer divide by zero; address of failing instruction: 0x00048090

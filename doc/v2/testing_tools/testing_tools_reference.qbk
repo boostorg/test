@@ -1,4 +1,4 @@
-[section:testing_tool_ref __UTF__ testing tools reference]
+[section:testing_tool_ref Reference]
 
 
 [table
@@ -130,12 +130,8 @@
   
 ]
 
-
-
-
-
 [/ ###############################################################################################]
-[#ref_BOOST_level][section:assertion_boost_level `BOOST_<level>`]
+[#ref_BOOST_level][section:assertion_boost_level BOOST_<level>]
 
 
 ``
@@ -148,18 +144,7 @@ These tools are used to validate the predicate value. The only parameter for the
 value that gets validated. It could be any expression that could be evaluated and converted to boolean value. The
 expression gets evaluated only once, so it's safe to pass complex expression for validation.
 
-[import ../examples/example34.cpp]
-[import ../examples/example34.output]
-[table:id_example34 `BOOST_<level>` usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example34]]
-    [[example34o]]
-  ]
-]
+[bt_example example34..BOOST_<level> usage]
 
 See also:
 
@@ -169,7 +154,7 @@ See also:
 
 
 [/ ###############################################################################################]
-[section:assertion_boost_level_bitwise_eq `BOOST_<level>_BITWISE_EQUAL`]
+[section:assertion_boost_level_bitwise_eq BOOST_<level>_BITWISE_EQUAL]
 
 
 ``
@@ -184,18 +169,7 @@ right value's bits mismatch.
 The first parameter is the left compared value. The second parameter is the right compared value. Parameters are
 not required to be of the same type, but warning is issued if their type's size does not coincide.
 
-[import ../examples/example33.cpp]
-[import ../examples/example33.output]
-[table:id_example33 __BOOST_LEVEL_BITWISE_EQUAL__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example33]]
-    [[example33o]]
-  ]
-]
+[bt_example example33..BOOST_<level>_BITWISE_EQUAL usage]
 
 See also:
 
@@ -204,7 +178,7 @@ See also:
 [endsect]
 
 [/ ###############################################################################################]
-[section:assertion_boost_level_eq `BOOST_<level>_EQUAL`]
+[section:assertion_boost_level_eq BOOST_<level>_EQUAL]
 
 ``
   BOOST_WARN_EQUAL(left, right);
@@ -218,19 +192,8 @@ The difference is that the mismatched values are reported as well.
 [note It is bad idea to use these tools to compare floating point values. Use __BOOST_LEVEL_CLOSE__ or
       __BOOST_LEVEL_CLOSE_FRACTION__ tools instead.
 ]
-[import ../examples/example35.cpp]
-[import ../examples/example35.output]
-[table:id_example35 __BOOST_LEVEL_EQUAL__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example35]]
-    [[example35o]]
-  ]
-] 
 
+[bt_example example35..BOOST_<level>_EQUAL usage]
 
 See also:
 
@@ -242,7 +205,7 @@ See also:
 [endsect]
 
 [/ ###############################################################################################]
-[section:assertion_boost_level_eq_collections `BOOST_<level>_EQUAL_COLLECTIONS`]
+[section:assertion_boost_level_eq_collections BOOST_<level>_EQUAL_COLLECTIONS]
 
 ``
   BOOST_WARN_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
@@ -255,19 +218,7 @@ positions, collection elements at these positions and check that the collections
 parameters designate begin and end of the first collection. The two last parameters designate begin and end of the
 second collection.
 
-[import ../examples/example36.cpp]
-[import ../examples/example36.output]
-[table:id_example36 __BOOST_LEVEL_EQUAL_COLLECTIONS__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example36]]
-    [[example36o]]
-  ]
-]
-
+[bt_example example36..BOOST_<level>_EQUAL_COLLECTIONS usage]
 
 See also:
 
@@ -275,12 +226,8 @@ See also:
 
 [endsect]
 
-
-
-
 [/ ###############################################################################################]
-[section:assertion_boost_level_close `BOOST_<level>_CLOSE`]
-
+[section:assertion_boost_level_close BOOST_<level>_CLOSE]
 
 ``
   BOOST_WARN_CLOSE(left, right, tolerance);
@@ -306,31 +253,8 @@ The first parameter is the ['left] compared value. The second parameter is the
 [note Note that to use these tools you need to include additional header `floating_point_comparison.hpp`.
 ]
 
-[import ../examples/example42.cpp]
-[import ../examples/example42.output]
-[table:id_example42 __BOOST_LEVEL_CLOSE__ usage with small values
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example42]]
-    [[example42o]]
-  ]
-]
-
-[import ../examples/example43.cpp]
-[import ../examples/example43.output]
-[table:id_example43 __BOOST_LEVEL_CLOSE__ usage with big values
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example43]]
-    [[example43o]]
-  ]
-]
+[bt_example example42..BOOST_<level>_CLOSE usage with small values]
+[bt_example example43..BOOST_<level>_CLOSE usage with big values]
 
 See also:
 
@@ -342,7 +266,7 @@ See also:
 [endsect]
 
 [/ ###############################################################################################]
-[section:assertion_boost_level_close_fraction `BOOST_<level>_CLOSE_FRACTION`]
+[section:assertion_boost_level_close_fraction BOOST_<level>_CLOSE_FRACTION]
 
 ``
   BOOST_WARN_CLOSE_FRACTION(left, right, tolerance);
@@ -364,18 +288,7 @@ The first parameter is the ['left] compared value. The second parameter is the
 
 [note Note that to use these tools you need to include additional header `floating_point_comparison.hpp`.]
 
-[import ../examples/example44.cpp]
-[import ../examples/example44.output]
-[table:id_example44 __BOOST_LEVEL_CLOSE_FRACTION__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example44]]
-    [[example44o]]
-  ]
-]
+[bt_example example44..BOOST_<level>_CLOSE_FRACTION usage]
 
 See also:
 
@@ -384,12 +297,10 @@ See also:
 * __BOOST_LEVEL_EQUAL__
 * [link boost_test.testing_tools.testing_floating_points Floating point comparison algorithms]
 
-
 [endsect]
 
-
 [/ ###############################################################################################]
-[section:assertion_boost_level_exception `BOOST_<level>_EXCEPTION`]
+[section:assertion_boost_level_exception BOOST_<level>_EXCEPTION]
 
 ``
   BOOST_WARN_EXCEPTION(expression, exception, predicate);
@@ -404,18 +315,7 @@ predicate evaluates to false, check fails. In comparison with __BOOST_LEVEL_THRO
 allow performing more fine-grained checks. For example: make sure that an expected exception has specific 
 error message.
 
-[import ../examples/example37.cpp]
-[import ../examples/example37.output]
-[table:id_example37 __BOOST_LEVEL_EXCEPTION__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example37]]
-    [[example37o]]
-  ]
-]
+[bt_example example37..BOOST_<level>_EXCEPTION usage]
 
 See also:
 
@@ -423,13 +323,8 @@ See also:
 
 [endsect]
 
-
-
-
-
-
 [/ ###############################################################################################]
-[section:assertion_boost_level_ge `BOOST_<level>_GE`]
+[section:assertion_boost_level_ge BOOST_<level>_GE]
 
 ``
   BOOST_WARN_GE(left, right);
@@ -440,18 +335,7 @@ See also:
 Check performed by these tools is the same as the one performed by `__BOOST_LEVEL__( left >= right )`.
 The difference is that the argument values are reported as well.
 
-[import ../examples/example57.cpp]
-[import ../examples/example57.output]
-[table:id_example57 __BOOST_LEVEL_GE__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example57]]
-    [[example57o]]
-  ]
-]
+[bt_example example57..BOOST_<level>_GE usage]
 
 See also:
 
@@ -463,7 +347,7 @@ See also:
 
 
 [/ ###############################################################################################]
-[section:assertion_boost_level_gt `BOOST_<level>_GT`]
+[section:assertion_boost_level_gt BOOST_<level>_GT]
 
 
 ``
@@ -475,18 +359,8 @@ See also:
 Check performed by these tools is the same as the one performed by __BOOST_LEVEL__`( left > right )`.
 The difference is that the argument values are reported as well.
 
-[import ../examples/example58.cpp]
-[import ../examples/example58.output]
-[table:id_example58 __BOOST_LEVEL_GT__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example58]]
-    [[example58o]]
-  ]
-]
+[bt_example example58..BOOST_<level>_GT usage]
+
 See also:
 
 * __BOOST_LEVEL_LE__
@@ -496,7 +370,7 @@ See also:
 [endsect]
 
 [/ ###############################################################################################]
-[section:assertion_boost_level_le `BOOST_<level>_LE`]
+[section:assertion_boost_level_le BOOST_<level>_LE]
 
 ``
   BOOST_WARN_LE(left, right);
@@ -507,18 +381,7 @@ See also:
 Check performed by these tools is the same as the one performed by `__BOOST_LEVEL__( left <= right )`.
 The difference is that the argument values are reported as well.
 
-[import ../examples/example55.cpp]
-[import ../examples/example55.output]
-[table:id_example55 __BOOST_LEVEL_LE__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example55]]
-    [[example55o]]
-  ]
-]
+[bt_example example55..BOOST_<level>_LE usage]
 
 See also:
 
@@ -528,9 +391,8 @@ See also:
 
 [endsect]
 
-
 [/ ###############################################################################################]
-[section:assertion_boost_level_lt `BOOST_<level>_LT`]
+[section:assertion_boost_level_lt BOOST_<level>_LT]
 
 ``
   BOOST_WARN_LT(left, right);
@@ -541,18 +403,7 @@ See also:
 Check performed by these tools is the same as the one performed by `__BOOST_LEVEL__( left < right )`.
 The difference is that the argument values are reported as well.
 
-[import ../examples/example56.cpp]
-[import ../examples/example56.output]
-[table:id_example56 __BOOST_LEVEL_LT__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example56]]
-    [[example56o]]
-  ]
-]
+[bt_example example56..BOOST_<level>_LT usage]
 
 See also:
 
@@ -562,11 +413,8 @@ See also:
 
 [endsect]
 
-
-
 [/ ###############################################################################################]
-[section:assertion_boost_level_message `BOOST_<level>_MESSAGE`]
-
+[section:assertion_boost_level_message BOOST_<level>_MESSAGE]
 
 ``
   BOOST_WARN_MESSAGE(predicate, message);
@@ -581,18 +429,7 @@ The first parameter is the boolean expression. The second parameter is the messa
 failure. The message argument can be constructed of components of any type supporting the 
 `std::ostream& operator<<(std::ostream&)`.
 
-[import ../examples/example38.cpp]
-[import ../examples/example38.output]
-[table:id_example38 __BOOST_LEVEL_MESSAGE__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example38]]
-    [[example38o]]
-  ]
-]
+[bt_example example38..BOOST_<level>_MESSAGE usage]
 
 See also:
 
@@ -602,7 +439,7 @@ See also:
 
 
 [/ ###############################################################################################]
-[section:assertion_boost_level_ne `BOOST_<level>_NE`]
+[section:assertion_boost_level_ne BOOST_<level>_NE]
 
 
 ``
@@ -611,21 +448,10 @@ See also:
   BOOST_REQUIRE_NE(left, right);
 ``
 
-Check performed by these tools is the same as the one performed by `__BOOST_LEVEL__( left != right )`.
+Check performed by these tools is the same as the one performed by `__BOOST_<level>__( left != right )`.
 The difference is that the matched values are reported as well.
 
-[import ../examples/example54.cpp]
-[import ../examples/example54.output]
-[table:id_example54 __BOOST_LEVEL_NE__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example54]]
-    [[example54o]]
-  ]
-]
+[bt_example example54..BOOST_<level>_NE usage]
 
 See also:
 
@@ -634,7 +460,7 @@ See also:
 [endsect]
 
 [/ ###############################################################################################]
-[section:assertion_boost_level_no_throw `BOOST_<level>_NO_THROW`]
+[section:assertion_boost_level_no_throw BOOST_<level>_NO_THROW]
 
 
 ``
@@ -653,19 +479,7 @@ a form ``error in <test-case-name>;exception was thrown by <expression>``
 The only parameter is an expression to execute. You can use `do {} while(0)` block if you want to execute more than one
 statement.
 
-[import ../examples/example39.cpp]
-[import ../examples/example39.output]
-[table:id_example39 __BOOST_LEVEL_NO_THROW__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example39]]
-    [[example39o]]
-  ]
-]
-
+[bt_example example39..BOOST_<level>_NO_THROW usage]
 
 See also:
 
@@ -674,7 +488,7 @@ See also:
 [endsect]
 
 [/ ###############################################################################################]
-[section:assertion_boost_level_predicate `BOOST_<level>_PREDICATE`]
+[section:assertion_boost_level_predicate BOOST_<level>_PREDICATE]
 
 
 ``
@@ -685,26 +499,15 @@ See also:
 
 These are generic tools used to validate an arbitrary supplied predicate functor (there is a compile time limit on
 predicate arity defined by the configurable macro `BOOST_TEST_MAX_PREDICATE_ARITY`). To
-validate zero arity predicate use __BOOST_LEVEL__ tools. In other cases prefer theses tools. The
+validate zero arity predicate use __BOOST_<level>__ tools. In other cases prefer theses tools. The
 advantage of these tools is that they show arguments values in case of predicate failure.
 
 The first parameter is the predicate itself. The second parameter is the list of predicate arguments each wrapped
 in round brackets (`BOOST_PP` sequence format).
 
-[import ../examples/example40.cpp]
-[import ../examples/example40.output]
-[table:id_example40 __BOOST_LEVEL_PREDICATE__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example40]]
-    [[example40o]]
-  ]
-]
+[bt_example example40..BOOST_<level>_PREDICATE usage]
 
-[note Note difference in error log from __BOOST_LEVEL__]
+[note Note difference in error log from __BOOST_<level>__]
 
 See also:
 
@@ -713,8 +516,7 @@ See also:
 [endsect]
 
 [/ ###############################################################################################]
-[section:assertion_boost_level_small `BOOST_<level>_SMALL`]
-
+[section:assertion_boost_level_small BOOST_<level>_SMALL]
 
 ``
   BOOST_WARN_SMALL(value, tolerance);
@@ -724,25 +526,13 @@ See also:
 
 These tools are used to check that supplied value is small enough. The "smallness" is defined by absolute value
 of the tolerance supplied as a second argument. Use these tools with caution. To compare to values on closeness 
-it's preferable to use __BOOST_LEVEL_CLOSE__ tools instead.
+it's preferable to use __BOOST_<level>_CLOSE__ tools instead.
 
 The first parameter is the value to check. The second parameter is the tolerance.
 
 [note Note that to use these tools you need to include additional header `floating_point_comparison.hpp`.]
 
-[import ../examples/example41.cpp]
-[import ../examples/example41.output]
-[table:id_example41 __BOOST_LEVEL_SMALL__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example41]]
-    [[example41o]]
-  ]
-]
-
+[bt_example example41..BOOST_<level>_SMALL usage]
 
 See also:
 
@@ -753,7 +543,7 @@ See also:
 [endsect]
 
 [/ ###############################################################################################]
-[section:assertion_boost_level_throw `BOOST_<level>_THROW`]
+[section:assertion_boost_level_throw BOOST_<level>_THROW]
 
 
 ``
@@ -775,18 +565,7 @@ error in <test-case-name>: exception <exception> expected
 The first parameter is the expression to execute. Use `do{} while(0)` block if you want to execute more than one
 statement. The second parameter is an expected exception.
 
-[import ../examples/example45.cpp]
-[import ../examples/example45.output]
-[table:id_example45 __BOOST_LEVEL_THROW__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example45]]
-    [[example45o]]
-  ]
-]
+[bt_example example45..BOOST_<level>_THROW usage]
 
 See also:
 
@@ -795,7 +574,7 @@ See also:
 [endsect]
 
 [/ ###############################################################################################]
-[section:assertion_boost_error `BOOST_ERROR`]
+[section:assertion_boost_error BOOST_ERROR]
 
 ``
   BOOST_ERROR(message);
@@ -804,20 +583,9 @@ See also:
 __BOOST_ERROR__ tool behave the same way as `__BOOST_CHECK_MESSAGE__(false, message)`. This tool is used for
 an unconditional error counter increasing and message logging. 
 
-The only tool's parameter is an error message to log.
+The tool's only parameter is an error message to log.
 
-[import ../examples/example46.cpp]
-[import ../examples/example46.output]
-[table:id_example46 __BOOST_ERROR__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example46]]
-    [[example46o]]
-  ]
-]
+[bt_example example46..BOOST_ERROR usage]
 
 See also:
 
@@ -827,7 +595,7 @@ See also:
 
 
 [/ ###############################################################################################]
-[section:assertion_boost_fail `BOOST_FAIL`]
+[section:assertion_boost_fail BOOST_FAIL]
 
 ``
   BOOST_FAIL(message);
@@ -836,20 +604,9 @@ See also:
 `__BOOST_FAIL__(message)` behave the same way as `__BOOST_REQUIRE_MESSAGE__(false, message)`. This tool is used for an
 unconditional error counter increasing, message logging and the current test case aborting. 
 
-The only tool's parameter is an error message to log.
+The tool's only parameter is an error message to log.
 
-[import ../examples/example47.cpp]
-[import ../examples/example47.output]
-[table:id_example47 __BOOST_FAIL__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example47]]
-    [[example47o]]
-  ]
-]
+[bt_example example47..BOOST_FAIL usage]
 
 See also:
 
@@ -860,7 +617,7 @@ See also:
 
 
 [/ ###############################################################################################]
-[section:assertion_boost_is_defined `BOOST_IS_DEFINED`]
+[section:assertion_boost_is_defined BOOST_IS_DEFINED]
 
 ``
   BOOST_IS_DEFINED(symbol);
@@ -868,30 +625,17 @@ See also:
 
 Unlike the rest of the tools in the toolbox this tool does not perform the logging itself. Its only purpose
 is to check at runtime whether or not the supplied preprocessor symbol is defined. Use it in combination with
-__BOOST_LEVEL__ to perform and log validation. Macros of any arity could be checked. To check the
+__BOOST_<level>__ to perform and log validation. Macros of any arity could be checked. To check the
 macro definition with non-zero arity specify dummy arguments for it. See below for example.
 
 The only tool's parameter is a preprocessor symbol that gets validated.
 
-[import ../examples/example48.cpp]
-[import ../examples/example48.output]
-[table:id_example48 __BOOST_IS_DEFINED__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example48]]
-    [[example48o]]
-  ]
-]
-
+[bt_example example48..BOOST_IS_DEFINED usage]
 
 See also:
 
 * __BOOST_LEVEL__
 
 [endsect]
-
 
 [endsect] [/ testing_tool_ref]

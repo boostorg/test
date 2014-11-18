@@ -6,7 +6,7 @@
  /]
 
 [library Boost.Test
-    [quickbook 1.6]
+    [quickbook 1.7]
     [copyright 2001 - 2014 Gennadiy Rozental]
     [id boost_test]
     [purpose Testing library]
@@ -19,7 +19,7 @@
     [category Correctness and testing]
 ]
 
-[/ email Gennadiy, I do not know how to make this in fact]
+[/TOFIX email Gennadiy, I do not know how to make this in fact]
 [def __email_gr__ [@mailto:boost-test=at=emailaccount-dot-com Gennadiy Rozental]]
 
 
@@ -30,11 +30,10 @@
 
 [def __POSIX__ /POSIX/]
 [def __Windows__ /Windows/]
-[def __UTF__ /UTF/]
+[def __UTF__ /Unit Test Framework/]
+[def __PEM__ /Program Exceution Monitor]
+
 [def __IEEE754__ [*IEEE754]]
-[def __PEM__     ['PEM]]
-[def __EM__      [link boost_test.components.execution_monitor ['EM]]]
-[def __MTF__     ['Minimal Testing Facility]]
 
 [def __part_glossary__                [link boost_test.section_glossary Glossary]]
 [def __part_faq__                     [link boost_test.section_faq FAQ]]
@@ -73,43 +72,43 @@
 
 
 [/ Assertions ]
-[def __BOOST_LEVEL__                      [link boost_test.testing_tool_ref.assertion_boost_level `BOOST_<level>`]]
-[def __BOOST_CHECK__                      [link boost_test.testing_tool_ref.assertion_boost_level `BOOST_CHECK`]]
-[def __BOOST_REQUIRE__                    [link boost_test.testing_tool_ref.assertion_boost_level `BOOST_REQUIRE`]]
+[def __BOOST_LEVEL__                      [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level `BOOST_<level>`]]
+[def __BOOST_CHECK__                      [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level `BOOST_CHECK`]]
+[def __BOOST_REQUIRE__                    [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level `BOOST_REQUIRE`]]
 
-[def __BOOST_LEVEL_MESSAGE__              [link boost_test.testing_tool_ref.assertion_boost_level_message `BOOST_<level>_MESSAGE`]]
-[def __BOOST_CHECK_MESSAGE__              [link boost_test.testing_tool_ref.assertion_boost_level_message `BOOST_CHECK_MESSAGE`]]
-[def __BOOST_REQUIRE_MESSAGE__            [link boost_test.testing_tool_ref.assertion_boost_level_message `BOOST_REQUIRE_MESSAGE`]]
+[def __BOOST_LEVEL_MESSAGE__              [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_message `BOOST_<level>_MESSAGE`]]
+[def __BOOST_CHECK_MESSAGE__              [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_message `BOOST_CHECK_MESSAGE`]]
+[def __BOOST_REQUIRE_MESSAGE__            [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_message `BOOST_REQUIRE_MESSAGE`]]
 
-[def __BOOST_LEVEL_EQUAL__                [link boost_test.testing_tool_ref.assertion_boost_level_eq `BOOST_<level>_EQUAL`]]
-[def __BOOST_WARN_EQUAL__                 [link boost_test.testing_tool_ref.assertion_boost_level_eq `BOOST_WARN_EQUAL`]]
-[def __BOOST_CHECK_EQUAL__                [link boost_test.testing_tool_ref.assertion_boost_level_eq `BOOST_CHECK_EQUAL`]]
-[def __BOOST_REQUIRE_EQUAL__              [link boost_test.testing_tool_ref.assertion_boost_level_eq `BOOST_REQUIRE_EQUAL`]]
+[def __BOOST_LEVEL_EQUAL__                [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_eq `BOOST_<level>_EQUAL`]]
+[def __BOOST_WARN_EQUAL__                 [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_eq `BOOST_WARN_EQUAL`]]
+[def __BOOST_CHECK_EQUAL__                [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_eq `BOOST_CHECK_EQUAL`]]
+[def __BOOST_REQUIRE_EQUAL__              [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_eq `BOOST_REQUIRE_EQUAL`]]
 
-[def __BOOST_LEVEL_PREDICATE__            [link boost_test.testing_tool_ref.assertion_boost_level_predicate `BOOST_<level>_PREDICATE`]]
-[def __BOOST_LEVEL_EQUAL_COLLECTIONS__    [link boost_test.testing_tool_ref.assertion_boost_level_eq_collections `BOOST_<level>_EQUAL_COLLECTIONS`]]
-[def __BOOST_LEVEL_NE__                   [link boost_test.testing_tool_ref.assertion_boost_level_ne `BOOST_<level>_NE`]]
-[def __BOOST_LEVEL_GE__                   [link boost_test.testing_tool_ref.assertion_boost_level_ge `BOOST_<level>_GE`]]
-[def __BOOST_LEVEL_GT__                   [link boost_test.testing_tool_ref.assertion_boost_level_gt `BOOST_<level>_GT`]]
-[def __BOOST_LEVEL_LE__                   [link boost_test.testing_tool_ref.assertion_boost_level_le `BOOST_<level>_LE`]]
-[def __BOOST_LEVEL_LT__                   [link boost_test.testing_tool_ref.assertion_boost_level_lt `BOOST_<level>_LT`]]
+[def __BOOST_LEVEL_PREDICATE__            [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_predicate `BOOST_<level>_PREDICATE`]]
+[def __BOOST_LEVEL_EQUAL_COLLECTIONS__    [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_eq_collections `BOOST_<level>_EQUAL_COLLECTIONS`]]
+[def __BOOST_LEVEL_NE__                   [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_ne `BOOST_<level>_NE`]]
+[def __BOOST_LEVEL_GE__                   [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_ge `BOOST_<level>_GE`]]
+[def __BOOST_LEVEL_GT__                   [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_gt `BOOST_<level>_GT`]]
+[def __BOOST_LEVEL_LE__                   [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_le `BOOST_<level>_LE`]]
+[def __BOOST_LEVEL_LT__                   [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_lt `BOOST_<level>_LT`]]
 
-[def __BOOST_LEVEL_NO_THROW__             [link boost_test.testing_tool_ref.assertion_boost_level_no_throw `BOOST_<level>_NO_THROW`]]
-[def __BOOST_LEVEL_THROW__                [link boost_test.testing_tool_ref.assertion_boost_level_throw `BOOST_<level>_THROW`]]
-[def __BOOST_LEVEL_EXCEPTION__            [link boost_test.testing_tool_ref.assertion_boost_level_exception `BOOST_<level>_EXCEPTION`]]
+[def __BOOST_LEVEL_NO_THROW__             [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_no_throw `BOOST_<level>_NO_THROW`]]
+[def __BOOST_LEVEL_THROW__                [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_throw `BOOST_<level>_THROW`]]
+[def __BOOST_LEVEL_EXCEPTION__            [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_exception `BOOST_<level>_EXCEPTION`]]
 
-[def __BOOST_LEVEL_BITWISE_EQUAL__        [link boost_test.testing_tool_ref.assertion_boost_level_bitwise_eq `BOOST_<level>_BITWISE_EQUAL`]]
-[def __BOOST_ERROR__                      [link boost_test.testing_tool_ref.assertion_boost_error `BOOST_ERROR`]]
-[def __BOOST_FAIL__                       [link boost_test.testing_tool_ref.assertion_boost_fail `BOOST_FAIL`]]
-[def __BOOST_IS_DEFINED__                 [link boost_test.testing_tool_ref.assertion_boost_is_defined `BOOST_IS_DEFINED`]]
+[def __BOOST_LEVEL_BITWISE_EQUAL__        [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_bitwise_eq `BOOST_<level>_BITWISE_EQUAL`]]
+[def __BOOST_ERROR__                      [link boost_test.testing_tools.testing_tool_ref.assertion_boost_error `BOOST_ERROR`]]
+[def __BOOST_FAIL__                       [link boost_test.testing_tools.testing_tool_ref.assertion_boost_fail `BOOST_FAIL`]]
+[def __BOOST_IS_DEFINED__                 [link boost_test.testing_tools.testing_tool_ref.assertion_boost_is_defined `BOOST_IS_DEFINED`]]
 
 
 [/ Assertions / floating point]
-[def __BOOST_LEVEL_SMALL__                [link boost_test.testing_tool_ref.assertion_boost_level_small `BOOST_<level>_SMALL`]]
-[def __BOOST_CHECK_SMALL__                [link boost_test.testing_tool_ref.assertion_boost_level_small `BOOST_CHECK_SMALL`]]
-[def __BOOST_LEVEL_CLOSE__                [link boost_test.testing_tool_ref.assertion_boost_level_close `BOOST_<level>_CLOSE`]]
-[def __BOOST_CHECK_CLOSE__                [link boost_test.testing_tool_ref.assertion_boost_level_close `BOOST_CHECK_CLOSE`]]
-[def __BOOST_LEVEL_CLOSE_FRACTION__       [link boost_test.testing_tool_ref.assertion_boost_level_close_fraction `BOOST_<level>_CLOSE_FRACTION`]]
+[def __BOOST_LEVEL_SMALL__                [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_small `BOOST_<level>_SMALL`]]
+[def __BOOST_CHECK_SMALL__                [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_small `BOOST_CHECK_SMALL`]]
+[def __BOOST_LEVEL_CLOSE__                [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_close `BOOST_<level>_CLOSE`]]
+[def __BOOST_CHECK_CLOSE__                [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_close `BOOST_CHECK_CLOSE`]]
+[def __BOOST_LEVEL_CLOSE_FRACTION__       [link boost_test.testing_tools.testing_tool_ref.assertion_boost_level_close_fraction `BOOST_<level>_CLOSE_FRACTION`]]
 
 [/ Tests cases]
 [def __BOOST_AUTO_TEST_CASE__                 [link ref_BOOST_AUTO_TEST_CASE `BOOST_AUTO_TEST_CASE`]]
@@ -159,31 +158,39 @@
 [def __param_report_sink__            [link ref_param_report_sink `report_sink`]]
 [def __param_save_pattern__           [link ref_param_save_patterm `save_patterm`]]
 
+[/=============================================================================]
 
+[template bt_example[name descr]
+
+[h5 Example: [descr]]
+
+[import ../examples/[name].cpp]
+[import ../examples/[name].output]
+[table
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [[example_code]]
+    [[example_output]]
+  ]
+]
+] [/ end bt_example]
 
 [/=============================================================================]
 
-
-
-[/ this is the introduction that appears on the first page of the documentation]
-[/ maybe we can just get rid of it]
-[include forewords.qbk]
-
 [/ introduction material and general presentation ]
-[include overview.qbk]
-[include how_to_read_this_documentation.qbk]
-
-[/ some tutorial ]
-[include tutorials/tutorial.qbk]
+[include introduction.qbk]
 
 [/ build and link with boost.test]
 [include building_and_linking/building_and_linking.qbk]
 
 [/ organizing, generating and registering tests]
-[include tests_organization/test-organization.qbk]
+[include test_organization/test_organization.qbk]
 
 [/ creating assertions]
-[include utf.testing-tools.qbk]
+[include testing_tools/testing_tools.qbk]
 
 [/ controlling outputs]
 [include test_output/test_output.qbk]
@@ -192,25 +199,28 @@
 [include runtime_configuration/runtime_configuration.qbk]
 
 [include usage_recommandations.qbk]
-[include faq.qbk]
-[include glossary.qbk]
-[include change_log.qbk]
-
-[include open_issues.qbk]
-[include acknowledgments.qbk]
-
 
 [/=============================================================================]
-[section Components]
-[include component_minimal_testing.qbk]
-[include component_execution_monitor.qbk]
-[include component_program_execution_monitor.qbk]
-[endsect]
 
-
-[/ reference sections]
-[include runtime_configuration/runtime_configuration.reference.qbk]
-[include testing_tools/testing_tools_reference.qbk]
-
-[/ doxygen autogenerated documentation] 
+[/ doxygen autogenerated reference documentation] 
 [xinclude autodoc_execution_monitor.xml]
+
+[/=============================================================================]
+
+[/TOFIX section Components]
+[/include component_program_execution_monitor.qbk]
+[/endsect]
+
+[/=============================================================================]
+
+[/ some tutorial ]
+[include tutorials/tutorials.qbk]
+
+[include closing_chapters/faq.qbk]
+[include closing_chapters/glossary.qbk]
+[include closing_chapters/change_log.qbk]
+[include closing_chapters/open_issues.qbk]
+[include closing_chapters/acknowledgments.qbk]
+
+[/ EOF]
+

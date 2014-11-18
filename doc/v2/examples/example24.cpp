@@ -1,4 +1,4 @@
-//[example24
+//[example_code
 #include <iostream>
 #include <boost/test/included/prg_exec_monitor.hpp> 
 

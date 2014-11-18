@@ -2,12 +2,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Floating-point testing</title>
-<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
-<link rel="up" href="../testing_tools.html" title="The UTF testing tools">
+<link rel="up" href="../testing_tools.html" title="The Unit Test Framework testing tools">
 <link rel="prev" href="output_stream_testing.html" title="Output streams testing tool">
-<link rel="next" href="../test_output.html" title="Controlling the outputs">
+<link rel="next" href="testing_tool_ref.html" title="Reference">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="output_stream_testing.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../testing_tools.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../test_output.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="output_stream_testing.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../testing_tools.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="testing_tool_ref.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -47,9 +47,9 @@
 <p>
         does not produce expected results in many circumstances - specifically for
         very small or very big values (see <a class="link" href="testing_floating_points.html#Squassabia">Squassabia</a>
-        for examples). The <span class="emphasis"><em>UTF</em></span> implements floating-point comparison
-        algorithm that is based on the more confident solution first presented in
-        <a class="link" href="testing_floating_points.html#KnuthII">Knuth</a>:
+        for examples). The <span class="emphasis"><em>Unit Test Framework</em></span> implements floating-point
+        comparison algorithm that is based on the more confident solution first presented
+        in <a class="link" href="testing_floating_points.html#KnuthII">Knuth</a>:
       </p>
 <a name="equ2"></a><pre class="programlisting">   <span class="identifier">abs</span><span class="special">(</span><span class="identifier">u</span> <span class="special">-</span> <span class="identifier">v</span><span class="special">)</span> <span class="special">&lt;=</span> <span class="identifier">epsilon</span> <span class="special">*</span> <span class="identifier">abs</span><span class="special">(</span><span class="identifier">u</span><span class="special">)</span>
 <span class="special">&amp;&amp;</span> <span class="identifier">abs</span><span class="special">(</span><span class="identifier">u</span> <span class="special">-</span> <span class="identifier">v</span><span class="special">)</span> <span class="special">&lt;=</span> <span class="identifier">epsilon</span> <span class="special">*</span> <span class="identifier">abs</span><span class="special">(</span><span class="identifier">v</span><span class="special">));</span> <span class="comment">// (2)</span>
@@ -92,11 +92,11 @@
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
             binary predicate <code class="computeroutput"><span class="identifier">close_at_tolerance</span></code>
-            <a href="#ftn.boost_test.testing_tools.testing_floating_points.f0" class="footnote" name="boost_test.testing_tools.testing_floating_points.f0"><sup class="footnote">[3]</sup></a>
+            <sup>[<a name="boost_test.testing_tools.testing_floating_points.f0" href="#ftn.boost_test.testing_tools.testing_floating_points.f0" class="footnote">3</a>]</sup>
           </li>
 <li class="listitem">
             and predicate with four arguments <code class="computeroutput"><span class="identifier">check_is_close</span></code>
-            <a href="#ftn.boost_test.testing_tools.testing_floating_points.f1" class="footnote" name="boost_test.testing_tools.testing_floating_points.f1"><sup class="footnote">[4]</sup></a>.
+            <sup>[<a name="boost_test.testing_tools.testing_floating_points.f1" href="#ftn.boost_test.testing_tools.testing_floating_points.f1" class="footnote">4</a>]</sup>.
           </li>
 </ol></div>
 <p>
@@ -104,19 +104,18 @@
         in general are preferred for the general floating point comparison check
         over equation <a class="link" href="testing_floating_points.html#equ1">(1)</a>, they are unusable for the
         test on closeness to zero. The later check is still might be useful in some
-        cases and the <span class="emphasis"><em>UTF</em></span> implements an algorithm based on equation
-        <a class="link" href="testing_floating_points.html#equ1">(1)</a> in binary predicate <code class="computeroutput"><span class="identifier">check_is_small</span></code>
-        <a href="#ftn.boost_test.testing_tools.testing_floating_points.f2" class="footnote" name="boost_test.testing_tools.testing_floating_points.f2"><sup class="footnote">[5]</sup></a>.
+        cases and the <span class="emphasis"><em>Unit Test Framework</em></span> implements an algorithm
+        based on equation <a class="link" href="testing_floating_points.html#equ1">(1)</a> in binary predicate <code class="computeroutput"><span class="identifier">check_is_small</span></code> <sup>[<a name="boost_test.testing_tools.testing_floating_points.f2" href="#ftn.boost_test.testing_tools.testing_floating_points.f2" class="footnote">5</a>]</sup>.
       </p>
 <p>
-        On top of the generic, flexible predicates the <span class="emphasis"><em>UTF</em></span> implements
-        macro based family of tools <a class="link" href="../testing_tool_ref/assertion_boost_level_close.html" title="BOOST_&lt;level&gt;_CLOSE"><code class="computeroutput"><span class="identifier">BOOST_CHECK_CLOSE</span></code></a> and <a class="link" href="../testing_tool_ref/assertion_boost_level_small.html" title="BOOST_&lt;level&gt;_SMALL"><code class="computeroutput"><span class="identifier">BOOST_CHECK_SMALL</span></code></a>. These tools limit
+        On top of the generic, flexible predicates the <span class="emphasis"><em>Unit Test Framework</em></span>
+        implements macro based family of tools <a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.assertion_boost_level_close" title="BOOST_&lt;level&gt;_CLOSE"><code class="computeroutput"><span class="identifier">BOOST_CHECK_CLOSE</span></code></a> and <a class="link" href="testing_tool_ref.html#boost_test.testing_tools.testing_tool_ref.assertion_boost_level_small" title="BOOST_&lt;level&gt;_SMALL"><code class="computeroutput"><span class="identifier">BOOST_CHECK_SMALL</span></code></a>. These tools limit
         the check flexibility to strong-only checks, but automate failed check arguments
         reporting.
       </p>
 <h4>
 <a name="boost_test.testing_tools.testing_floating_points.h0"></a>
-        <span class="phrase"><a name="boost_test.testing_tools.testing_floating_points.tolerance_selection_consideratio"></a></span><a class="link" href="testing_floating_points.html#boost_test.testing_tools.testing_floating_points.tolerance_selection_consideratio">Tolerance
+        <span><a name="boost_test.testing_tools.testing_floating_points.tolerance_selection_consideratio"></a></span><a class="link" href="testing_floating_points.html#boost_test.testing_tools.testing_floating_points.tolerance_selection_consideratio">Tolerance
         selection considerations</a>
       </h4>
 <p>
@@ -130,7 +129,7 @@
         The discrepancy between real and floating point value may be caused by several
         reasons:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Type promotion
           </li>
@@ -152,7 +151,7 @@
 </pre>
 <p>
         for the appropriate floating point type <code class="computeroutput"><span class="identifier">FPT</span></code>
-        <a href="#ftn.boost_test.testing_tools.testing_floating_points.f3" class="footnote" name="boost_test.testing_tools.testing_floating_points.f3"><sup class="footnote">[6]</sup></a>. Conversion to binary presentation, sadly, does not have such
+        <sup>[<a name="boost_test.testing_tools.testing_floating_points.f3" href="#ftn.boost_test.testing_tools.testing_floating_points.f3" class="footnote">6</a>]</sup>. Conversion to binary presentation, sadly, does not have such
         requirement. So we can't assume that <code class="computeroutput"><span class="keyword">float</span><span class="special">(</span><span class="number">1.1</span><span class="special">)</span></code>
         is close to the real number <code class="computeroutput"><span class="number">1.1</span></code>
         with tolerance <code class="computeroutput"><span class="identifier">half_epsilon</span></code>
@@ -204,12 +203,12 @@
       </p>
 <h5>
 <a name="boost_test.testing_tools.testing_floating_points.h1"></a>
-        <span class="phrase"><a name="boost_test.testing_tools.testing_floating_points.bibliographic_references"></a></span><a class="link" href="testing_floating_points.html#boost_test.testing_tools.testing_floating_points.bibliographic_references">Bibliographic
+        <span><a name="boost_test.testing_tools.testing_floating_points.bibliographic_references"></a></span><a class="link" href="testing_floating_points.html#boost_test.testing_tools.testing_floating_points.bibliographic_references">Bibliographic
         references</a>
       </h5>
 <div class="variablelist">
 <p class="title"><b>Books</b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><a name="KnuthII"></a>The art of computer programming (vol II)</span></dt>
 <dd><p>
               Donald. E. Knuth, 1998, Addison-Wesley Longman, Inc., ISBN 0-201-89684-2,
@@ -225,7 +224,7 @@
 </div>
 <div class="variablelist">
 <p class="title"><b>Periodicals</b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><a name="Squassabia"></a><a href="http://www.adtmag.com/joop/carticle.aspx?ID=396" target="_top">Comparing
           Floats: How To Determine if Floating Quantities Are Close Enough Once a
           Tolerance Has Been Reached</a></span></dt>
@@ -241,7 +240,7 @@
 </div>
 <div class="variablelist">
 <p class="title"><b>Publications</b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><a href="http://dl.acm.org/citation.cfm?id=103163" target="_top">What Every
           Computer Scientist Should Know About Floating-Point Arithmetic</a></span></dt>
 <dd><p>
@@ -261,18 +260,18 @@
 </dl>
 </div>
 <div class="footnotes">
-<br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.boost_test.testing_tools.testing_floating_points.f0" class="footnote"><p><a href="#boost_test.testing_tools.testing_floating_points.f0" class="para"><sup class="para">[3] </sup></a>
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.boost_test.testing_tools.testing_floating_points.f0" href="#boost_test.testing_tools.testing_floating_points.f0" class="para">3</a>] </sup>
               check type and tolerance value are fixed at predicate construction
               time
             </p></div>
-<div id="ftn.boost_test.testing_tools.testing_floating_points.f1" class="footnote"><p><a href="#boost_test.testing_tools.testing_floating_points.f1" class="para"><sup class="para">[4] </sup></a>
+<div class="footnote"><p><sup>[<a id="ftn.boost_test.testing_tools.testing_floating_points.f1" href="#boost_test.testing_tools.testing_floating_points.f1" class="para">4</a>] </sup>
               check type and tolerance value are the arguments of the predicate
             </p></div>
-<div id="ftn.boost_test.testing_tools.testing_floating_points.f2" class="footnote"><p><a href="#boost_test.testing_tools.testing_floating_points.f2" class="para"><sup class="para">[5] </sup></a>
+<div class="footnote"><p><sup>[<a id="ftn.boost_test.testing_tools.testing_floating_points.f2" href="#boost_test.testing_tools.testing_floating_points.f2" class="para">5</a>] </sup>
           <code class="computeroutput"><span class="identifier">v</span></code> is zero
         </p></div>
-<div id="ftn.boost_test.testing_tools.testing_floating_points.f3" class="footnote"><p><a href="#boost_test.testing_tools.testing_floating_points.f3" class="para"><sup class="para">[6] </sup></a>
+<div class="footnote"><p><sup>[<a id="ftn.boost_test.testing_tools.testing_floating_points.f3" href="#boost_test.testing_tools.testing_floating_points.f3" class="para">6</a>] </sup>
           <span class="bold"><strong>machine epsilon value</strong></span> is represented by
           <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">FPT</span><span class="special">&gt;::</span><span class="identifier">epsilon</span><span class="special">()</span></code>
         </p></div>
@@ -289,7 +288,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="output_stream_testing.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../testing_tools.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../test_output.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="output_stream_testing.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../testing_tools.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="testing_tool_ref.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

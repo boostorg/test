@@ -2,11 +2,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Test log output</title>
-<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
-<link rel="up" href="../test_output.html" title="Controlling the outputs">
-<link rel="prev" href="../test_output.html" title="Controlling the outputs">
+<link rel="up" href="../test_output.html" title="Controlling the Unit Test Framework outputs">
+<link rel="prev" href="../test_output.html" title="Controlling the Unit Test Framework outputs">
 <link rel="next" href="log_runtime_config.html" title="Configuring the verbosity of the logs">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -34,7 +34,7 @@
         log entries. Here is the list of all levels in order of increasing 'importance':
       </p>
 <div class="table">
-<a name="boost_test.test_output.test_log_output.id_messages"></a><p class="title"><b>Table&#160;27.&#160;Messages</b></p>
+<a name="boost_test.test_output.test_log_output.id_messages"></a><p class="title"><b>Table&#160;5.&#160;Messages</b></p>
 <div class="table-contents"><table class="table" summary="Messages">
 <colgroup>
 <col>
@@ -74,9 +74,9 @@
               </td>
 <td>
                 <p>
-                  This category includes messages that are produced by the <span class="emphasis"><em>UTF</em></span>
-                  core and indicate which test suites/cases are currently being executed
-                  or skipped
+                  This category includes messages that are produced by the <span class="emphasis"><em>Unit
+                  Test Framework</em></span> core and indicate which test suites/cases
+                  are currently being executed or skipped
                 </p>
               </td>
 </tr>
@@ -127,9 +127,9 @@
               </td>
 <td>
                 <p>
-                  This category includes messages that are produced by the <span class="emphasis"><em>UTF</em></span>
-                  and provide detailed information on the C++ exceptions uncaught
-                  by the test case body.
+                  This category includes messages that are produced by the <span class="emphasis"><em>Unit
+                  Test Framework</em></span> and provide detailed information on the
+                  C++ exceptions uncaught by the test case body.
                 </p>
               </td>
 </tr>
@@ -141,10 +141,11 @@
               </td>
 <td>
                 <p>
-                  This category includes messages that are produced by the <span class="emphasis"><em>UTF</em></span>
-                  itself and provides information about caught non-fatal system error.
-                  For example it includes messages produced in the case of test case
-                  timeout or if floating point values calculation errors are caught.
+                  This category includes messages that are produced by the <span class="emphasis"><em>Unit
+                  Test Framework</em></span> itself and provides information about
+                  caught non-fatal system error. For example it includes messages
+                  produced in the case of test case timeout or if floating point
+                  values calculation errors are caught.
                 </p>
               </td>
 </tr>
@@ -157,8 +158,8 @@
 <td>
                 <p>
                   This category includes messages produced by failed require level
-                  assertions and by the <span class="emphasis"><em>UTF</em></span> itself in case of
-                  abnormal test case termination.
+                  assertions and by the <span class="emphasis"><em>Unit Test Framework</em></span>
+                  itself in case of abnormal test case termination.
                 </p>
               </td>
 </tr>
@@ -181,7 +182,7 @@
         In addition to the levels described above the test log defines two special
         log levels. The current log level can be set to:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             All messages<br> If active log level threshold is set to this value,
             all test log entries appear in the output. In practice this is equivalent
@@ -206,15 +207,16 @@
         based format.
       </p>
 <p>
-        In most cases, the <span class="emphasis"><em>UTF</em></span> can't provide an exact location,
-        where system error occurs or uncaught C++ exception is thrown from. To be
-        able to pinpoint it as close as possible the <span class="emphasis"><em>UTF</em></span> keeps
-        track of checkpoints - the location a test module passed through. A test
-        case entrance and exit points, a test tool invocation point the <span class="emphasis"><em>UTF</em></span>
-        tracks automatically. Any other checkpoints should be entered by you manually.
-        The test log provides two macros for this purpose:
+        In most cases, the <span class="emphasis"><em>Unit Test Framework</em></span> can't provide
+        an exact location, where system error occurs or uncaught C++ exception is
+        thrown from. To be able to pinpoint it as close as possible the <span class="emphasis"><em>Unit
+        Test Framework</em></span> keeps track of checkpoints - the location a test
+        module passed through. A test case entrance and exit points, a test tool
+        invocation point the <span class="emphasis"><em>Unit Test Framework</em></span> tracks automatically.
+        Any other checkpoints should be entered by you manually. The test log provides
+        two macros for this purpose:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <a class="link" href="test_output_macro_checkpoint.html" title="BOOST_TEST_CHECKPOINT"><code class="computeroutput"><span class="identifier">BOOST_TEST_CHECKPOINT</span></code></a> to specify
             a <span class="emphasis"><em>named</em></span> checkpoint and

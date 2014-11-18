@@ -1,4 +1,4 @@
-//[example41o
+//[example_output
 > example
 Running 1 test case...
 test.cpp(11): error in "test": absolute value of v{-0.00123456} exceeds 1e-006

@@ -2,12 +2,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Compile time configuration</title>
-<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
-<link rel="up" href="../test_output.html" title="Controlling the outputs">
+<link rel="up" href="../test_output.html" title="Controlling the Unit Test Framework outputs">
 <link rel="prev" href="log_xml_format.html" title="XML based log output format">
-<link rel="next" href="log_compil_time_configuration/log_ct_output_stream_redirection.html" title="Log output stream redirection">
+<link rel="next" href="test_reports.html" title="Test reports">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,28 +20,18 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="log_xml_format.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../test_output.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="log_compil_time_configuration/log_ct_output_stream_redirection.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="log_xml_format.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../test_output.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="test_reports.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_test.test_output.log_compil_time_configuration"></a><a class="link" href="log_compil_time_configuration.html" title="Compile time configuration">Compile
       time configuration</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="log_compil_time_configuration/log_ct_output_stream_redirection.html">Log
-        output stream redirection</a></span></dt>
-<dt><span class="section"><a href="log_compil_time_configuration/log_ct_log_level.html">Log
-        level configuration</a></span></dt>
-<dt><span class="section"><a href="log_compil_time_configuration/log_ct_log_format.html">Predefined
-        log format selection</a></span></dt>
-<dt><span class="section"><a href="log_compil_time_configuration/custom_log_formatter.html">Custom
-        log format support</a></span></dt>
-</dl></div>
 <p>
         While many test log configuration tasks can be performed at runtime using
-        predefined framework parameters, the <span class="emphasis"><em>UTF</em></span> provides a
-        compile time interface as well. The interface gives you full power over what,
-        where and how to log. The interface is provided by singleton class
+        predefined framework parameters, the <span class="emphasis"><em>Unit Test Framework</em></span>
+        provides a compile time interface as well. The interface gives you full power
+        over what, where and how to log. The interface is provided by singleton class
       </p>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">unit_test_log_t</span></pre>
 <p>
@@ -49,6 +39,244 @@
         this class
       </p>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">unit_test_log</span></pre>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="boost_test.test_output.log_compil_time_configuration.log_ct_output_stream_redirection"></a><a class="link" href="log_compil_time_configuration.html#boost_test.test_output.log_compil_time_configuration.log_ct_output_stream_redirection" title="Log output stream redirection">Log
+        output stream redirection</a>
+</h4></div></div></div>
+<p>
+          If you want to redirect the test log output stream into something different
+          from <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span></code> use the following interface:
+        </p>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">unit_test_log</span><span class="special">.</span><span class="identifier">set_stream</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="identifier">str</span> <span class="special">);</span>
+</pre>
+<p>
+          You can reset the output stream at any time both during the test module
+          initialization and from within test cases. There are no limitations on
+          number of output stream resets either.
+        </p>
+<h6>
+<a name="boost_test.test_output.log_compil_time_configuration.log_ct_output_stream_redirection.h0"></a>
+          <span><a name="boost_test.test_output.log_compil_time_configuration.log_ct_output_stream_redirection.example_descr"></a></span><a class="link" href="log_compil_time_configuration.html#boost_test.test_output.log_compil_time_configuration.log_ct_output_stream_redirection.example_descr">Example:
+          Compile-time log output redirection</a>
+        </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Code
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Output
+                  </p>
+                </th>
+</tr></thead>
+<tbody><tr>
+<td>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">example</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">fstream</span><span class="special">&gt;</span>
+
+<span class="comment">//____________________________________________________________________________//</span>
+
+<span class="keyword">struct</span> <span class="identifier">MyConfig</span> <span class="special">{</span>
+    <span class="identifier">MyConfig</span><span class="special">()</span> <span class="special">:</span> <span class="identifier">test_log</span><span class="special">(</span> <span class="string">"example.log"</span> <span class="special">)</span>  <span class="special">{</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">unit_test_log</span><span class="special">.</span><span class="identifier">set_stream</span><span class="special">(</span> <span class="identifier">test_log</span> <span class="special">);</span> <span class="special">}</span>
+    <span class="special">~</span><span class="identifier">MyConfig</span><span class="special">()</span>                             <span class="special">{</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">unit_test_log</span><span class="special">.</span><span class="identifier">set_stream</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">);</span> <span class="special">}</span>
+
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">ofstream</span> <span class="identifier">test_log</span><span class="special">;</span>
+<span class="special">};</span>
+
+<span class="comment">//____________________________________________________________________________//</span>
+
+<span class="identifier">BOOST_GLOBAL_FIXTURE</span><span class="special">(</span> <span class="identifier">MyConfig</span> <span class="special">);</span>
+
+<span class="identifier">BOOST_AUTO_TEST_CASE</span><span class="special">(</span> <span class="identifier">test_case</span> <span class="special">)</span>
+<span class="special">{</span>
+    <span class="identifier">BOOST_CHECK</span><span class="special">(</span> <span class="keyword">false</span> <span class="special">);</span>
+<span class="special">}</span>
+
+<span class="comment">//____________________________________________________________________________//</span>
+</pre>
+                </td>
+<td>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="special">&gt;</span> <span class="identifier">example</span>
+
+<span class="special">***</span> <span class="number">1</span> <span class="identifier">failure</span> <span class="identifier">detected</span> <span class="identifier">in</span> <span class="identifier">test</span> <span class="identifier">suite</span> <span class="string">"example"</span>
+<span class="special">&gt;</span> <span class="identifier">cat</span> <span class="identifier">example</span><span class="special">.</span><span class="identifier">log</span>
+<span class="identifier">Running</span> <span class="number">1</span> <span class="identifier">test</span> <span class="keyword">case</span><span class="special">...</span>
+<span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">20</span><span class="special">):</span> <span class="identifier">error</span> <span class="identifier">in</span> <span class="string">"test_case"</span><span class="special">:</span> <span class="identifier">check</span> <span class="keyword">false</span> <span class="identifier">failed</span>
+</pre>
+                </td>
+</tr></tbody>
+</table></div>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../../../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            If you redirect test log output stream from global fixture setup, you
+            are <span class="bold"><strong>required</strong></span> to reset it back to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span></code> during teardown to prevent dangling
+            references access
+          </p></td></tr>
+</table></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="boost_test.test_output.log_compil_time_configuration.log_ct_log_level"></a><a name="ref_log_level_explanations"></a><a class="link" href="log_compil_time_configuration.html#boost_test.test_output.log_compil_time_configuration.log_ct_log_level" title="Log level configuration">Log
+        level configuration</a>
+</h4></div></div></div>
+<p>
+          If you need to enforce specific log level from within your test module
+          use the following interface:
+        </p>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">unit_test_log</span><span class="special">.</span><span class="identifier">set_threshold_level</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">log_level</span> <span class="special">);</span>
+</pre>
+<p>
+          In regular circumstances you shouldn't use this interface, since you not
+          only override default log level, but also the one supplied at test execution
+          time. Prefer to use runtime parameters <a class="link" href="../the_utf_runtime_parameters/reference.html#ref_param_log_level"><code class="computeroutput"><span class="identifier">log_level</span></code></a> for log level selection.
+        </p>
+<h6>
+<a name="boost_test.test_output.log_compil_time_configuration.log_ct_log_level.h0"></a>
+          <span><a name="boost_test.test_output.log_compil_time_configuration.log_ct_log_level.example_descr"></a></span><a class="link" href="log_compil_time_configuration.html#boost_test.test_output.log_compil_time_configuration.log_ct_log_level.example_descr">Example:
+          Compile-time log level configuration</a>
+        </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Code
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Output
+                  </p>
+                </th>
+</tr></thead>
+<tbody><tr>
+<td>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">example</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">detail</span><span class="special">/</span><span class="identifier">unit_test_parameters</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">;</span>
+
+<span class="identifier">BOOST_AUTO_TEST_CASE</span><span class="special">(</span> <span class="identifier">test_case0</span> <span class="special">)</span>
+<span class="special">{</span>
+  <span class="keyword">if</span><span class="special">(</span> <span class="identifier">runtime_config</span><span class="special">::</span><span class="identifier">log_level</span><span class="special">()</span> <span class="special">&lt;</span> <span class="identifier">log_warnings</span> <span class="special">)</span>
+    <span class="identifier">unit_test_log</span><span class="special">.</span><span class="identifier">set_threshold_level</span><span class="special">(</span> <span class="identifier">log_warnings</span> <span class="special">);</span>
+
+  <span class="identifier">BOOST_WARN</span><span class="special">(</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="special">&gt;</span> <span class="number">4</span> <span class="special">);</span>
+<span class="special">}</span>
+</pre>
+                </td>
+<td>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="special">&gt;</span> <span class="identifier">example</span>
+<span class="identifier">Running</span> <span class="number">1</span> <span class="identifier">test</span> <span class="keyword">case</span><span class="special">...</span>
+<span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">13</span><span class="special">):</span> <span class="identifier">warning</span> <span class="identifier">in</span> <span class="string">"test_case0"</span><span class="special">:</span> <span class="identifier">condition</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="special">&gt;</span> <span class="number">4</span> <span class="identifier">is</span> <span class="keyword">not</span> <span class="identifier">satisfied</span>
+
+<span class="special">***</span> <span class="identifier">No</span> <span class="identifier">errors</span> <span class="identifier">detected</span>
+</pre>
+                </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="boost_test.test_output.log_compil_time_configuration.log_ct_log_format"></a><a class="link" href="log_compil_time_configuration.html#boost_test.test_output.log_compil_time_configuration.log_ct_log_format" title="Predefined log format selection">Predefined
+        log format selection</a>
+</h4></div></div></div>
+<p>
+          The select at compile time the log format from the list of the formats
+          supplied by the <span class="emphasis"><em>Unit Test Framework</em></span>
+        </p>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">unit_test_log</span><span class="special">.</span><span class="identifier">set_format</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">output_format</span> <span class="special">);</span>
+</pre>
+<p>
+          In regular circumstances you shouldn't use this interface. Prefer to use
+          runtime parameters for predefined log format selection.
+        </p>
+<h6>
+<a name="boost_test.test_output.log_compil_time_configuration.log_ct_log_format.h0"></a>
+          <span><a name="boost_test.test_output.log_compil_time_configuration.log_ct_log_format.example_descr"></a></span><a class="link" href="log_compil_time_configuration.html#boost_test.test_output.log_compil_time_configuration.log_ct_log_format.example_descr">Example:
+          Compile-time log format selection</a>
+        </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Code
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Output
+                  </p>
+                </th>
+</tr></thead>
+<tbody><tr>
+<td>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">example</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">unit_test</span><span class="special">;</span>
+
+<span class="comment">//____________________________________________________________________________//</span>
+
+<span class="keyword">struct</span> <span class="identifier">MyConfig</span> <span class="special">{</span>
+    <span class="identifier">MyConfig</span><span class="special">()</span>  <span class="special">{</span> <span class="identifier">unit_test_log</span><span class="special">.</span><span class="identifier">set_format</span><span class="special">(</span> <span class="identifier">XML</span> <span class="special">);</span> <span class="special">}</span>
+    <span class="special">~</span><span class="identifier">MyConfig</span><span class="special">()</span> <span class="special">{}</span>
+<span class="special">};</span>
+
+<span class="comment">//____________________________________________________________________________//</span>
+
+<span class="identifier">BOOST_GLOBAL_FIXTURE</span><span class="special">(</span> <span class="identifier">MyConfig</span> <span class="special">);</span>
+
+<span class="identifier">BOOST_AUTO_TEST_CASE</span><span class="special">(</span> <span class="identifier">test_case0</span> <span class="special">)</span>
+<span class="special">{</span>
+    <span class="identifier">BOOST_CHECK</span><span class="special">(</span> <span class="keyword">false</span> <span class="special">);</span>
+<span class="special">}</span>
+
+<span class="comment">//____________________________________________________________________________//</span>
+</pre>
+                </td>
+<td>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="special">&gt;</span> <span class="identifier">example</span> <span class="special">--</span><span class="identifier">report_level</span><span class="special">=</span><span class="identifier">no</span>
+<span class="special">&lt;</span><span class="identifier">TestLog</span><span class="special">&gt;&lt;</span><span class="identifier">Error</span> <span class="identifier">file</span><span class="special">=</span><span class="string">"test.cpp"</span> <span class="identifier">line</span><span class="special">=</span><span class="string">"18"</span><span class="special">&gt;</span><span class="identifier">check</span> <span class="keyword">false</span> <span class="identifier">failed</span><span class="special">&lt;/</span><span class="identifier">Error</span><span class="special">&gt;&lt;/</span><span class="identifier">TestLog</span><span class="special">&gt;</span>
+</pre>
+                </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="boost_test.test_output.log_compil_time_configuration.custom_log_formatter"></a><a name="ref_log_formatter_api"></a><a class="link" href="log_compil_time_configuration.html#boost_test.test_output.log_compil_time_configuration.custom_log_formatter" title="Custom log format support">Custom
+        log format support</a>
+</h4></div></div></div>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../../../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            Check what to do on this one
+          </p></td></tr>
+</table></div>
+</div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
@@ -61,7 +289,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="log_xml_format.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../test_output.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="log_compil_time_configuration/log_ct_output_stream_redirection.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="log_xml_format.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../test_output.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="test_reports.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

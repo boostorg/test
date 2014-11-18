@@ -1,7 +1,8 @@
-[#ref_test_outputs][section:test_output Controlling the outputs]
+[#ref_test_outputs][section:test_output Controlling the __UTF__ outputs]
 The output produced by a test module is one of the major assets the __UTF__ brings to users. In comparison with any
 kind of manual/assert based solution the __UTF__ provide following services:
 
+[/TOFIX into proper list]
 * All test errors are reported uniformly[br]
   The test execution monitor along with standardized output from all included
   __testing_tools__ provides uniform reporting for all errors including fatal errors, like memory assess violation and uncaught exceptions.
@@ -127,9 +128,7 @@ The active log level threshold can be configured at runtime using the parameter 
 The test log output format can be selected using either parameter __param_log_format__ or the
 parameter __param_output_format__.
 
-
 [endsect] [/section:log_runtime_config]
-
 
 [/ -------------------------------------------------------------------------------------------------- ]
 
@@ -148,25 +147,9 @@ failing to compile:
   BOOST_TEST_DONT_PRINT_LOG_VALUE(ArgumentType)
 ``
 
-[import ../examples/example32.cpp]
-[import ../examples/example32.output]
-[table:id_example32 BOOST_TEST_DONT_PRINT_LOG_VALUE usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example32]]
-    [[example32o]]
-  ]
-]
+[bt_example example32..BOOST_TEST_DONT_PRINT_LOG_VALUE usage]
 
-[endsect]
-
-
-
-
-
+[endsect] [/section:testing_tool_output_disable]
 
 [/ -------------------------------------------------------------------------------------------------- ]
 
@@ -185,23 +168,9 @@ with in a manner similar to standard `std::iostream` operation.
    to "message".
 ]
 
-[import ../examples/example21.cpp]
-[import ../examples/example21.output]
-[table:id_example21 __BOOST_TEST_MESSAGE__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example21]]
-    [[example21o]]
-  ]
-]
+[bt_example example21..__BOOST_TEST_MESSAGE__ usage]
 
-[endsect] [/section:log_test_messages]
-
-
-
+[endsect] [/section:test_output_macro_message]
 
 [/ -------------------------------------------------------------------------------------------------- ]
 [section:test_output_macro_checkpoint `BOOST_TEST_CHECKPOINT`]
@@ -218,25 +187,9 @@ The message formatted at the checkpoint position is saved and reported by the ex
 occurs). Similarly to the __BOOST_TEST_MESSAGE__ the message can be formatted from any standard
 output stream compliant components.
 
+[bt_example example22..__BOOST_TEST_CHECKPOINT__ usage]
 
-[import ../examples/example22.cpp]
-[import ../examples/example22.output]
-[table:id_example22 __BOOST_TEST_CHECKPOINT__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example22]]
-    [[example22o]]
-  ]
-]
-[endsect] [/section:log_test_checkpoint]
-
-
-
-
-
+[endsect] [/section:test_output_macro_checkpoint]
 
 [/ -------------------------------------------------------------------------------------------------- ]
 [section:test_output_macro_passpoint `BOOST_TEST_PASSPOINT`]
@@ -244,30 +197,17 @@ output stream compliant components.
 The macro __BOOST_TEST_PASSPOINT__ is intended to be used to inject an [*unnamed] checkpoint position. The
 macro signature is as follows:
 
+``
   __BOOST_TEST_PASSPOINT__();
-
+``
 
 Unlike the macro __BOOST_TEST_CHECKPOINT__ this macro doesn't require any message to be
 supplied with it. It's just a simple "been there" marker that records file name and line number
 code passes through.
 
-[import ../examples/example23.cpp]
-[import ../examples/example23.output]
-[table:id_example23 __BOOST_TEST_PASSPOINT__ usage
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [[example23]]
-    [[example23o]]
-  ]
-]
-[endsect] [/section:log_test_passpoint]
+[bt_example example23..__BOOST_TEST_PASSPOINT__ usage]
 
-
-
-
+[endsect] [/section:test_output_macro_passpoint]
 
 [include logging_floating_point.qbk]
 
@@ -279,14 +219,7 @@ code passes through.
 [warning Section empty]
 [endsect]
 
-[include progression_display.qbk]
-
-[section Reference]
-[:
-  [headerref boost/test/output/compiler_log_formatter.hpp]
-  
-]
-[endsect]
+[include progress_display.qbk]
 
 [endsect] 
 
