@@ -15,7 +15,7 @@
 // Boost.Test
 #include <boost/test/data/config.hpp>
 
-#if !defined(BOOST_NO_0X_HDR_RANDOM) && !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+#if (!defined(BOOST_NO_0X_HDR_RANDOM) && !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)) || defined(BOOST_TEST_DOXYGEN_DOC__)
 
 #include <boost/test/data/monomorphic/generate.hpp>
 #include <boost/test/data/monomorphic/generators/keywords.hpp>
@@ -92,6 +92,9 @@ private:
 
 } // namespace monomorphic
 
+//! @brief Returns an infinite sequence of random (real) numbers. 
+//!
+//! The generator uses the default distribution, which is uniform in [0, 1).
 inline monomorphic::generated_by<monomorphic::random_t<>>
 random()
 {
@@ -100,6 +103,11 @@ random()
 
 //____________________________________________________________________________//
 
+
+//! @brief Returns an infinite sequence of random numbers, in the given interval. 
+//!
+//! The generator uses the default distribution, which is uniform (in [begin, end) for real numbers, and in 
+//! [begin, end] for integers).
 template<typename SampleType>
 inline monomorphic::generated_by<monomorphic::random_t<SampleType>>
 random( SampleType begin, SampleType end )
@@ -123,7 +131,7 @@ struct random_gen_type {
 
 }
 
-//! Generates a dataset from a random distribution.
+//! Generates a random sequence from the parameters.
 template<typename Params>
 inline monomorphic::generated_by<typename ds_detail::random_gen_type<Params>::type>
 random( Params const& params )
@@ -156,7 +164,7 @@ random( Params const& params )
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // !defined(BOOST_NO_0X_HDR_RANDOM) && !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+#endif // (!defined(BOOST_NO_0X_HDR_RANDOM) && !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)) || defined(BOOST_TEST_DOXYGEN_DOC__)
 
 
 #endif // BOOST_TEST_DATA_MONOMORPHIC_GENERATORS_RANDOM_HPP_101512GER

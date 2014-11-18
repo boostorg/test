@@ -6,6 +6,7 @@
 #
 
 using quickbook ;
+using doxygen ;
 
 ########################################################################
 # Standalone HTML documentation
@@ -62,9 +63,15 @@ doxygen autodoc_execution_monitor
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators/random.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators/xrange.hpp      
       
+      # utils
+      $(BOOST_ROOT)/libs/test/include/boost/test/utils/algorithm.hpp
+      
+      # others
+      $(BOOST_ROOT)/libs/test/include/boost/test/unit_test_parameters.hpp
     :
         <doxygen:param>EXTRACT_ALL=YES
         <doxygen:param>"PREDEFINED=\"BOOST_TEST_DECL=\" \\
+                                   \"BOOST_TEST_DOXYGEN_DOC__=1\"
                                    "
         <doxygen:param>HIDE_UNDOC_MEMBERS=NO
         <doxygen:param>HIDE_UNDOC_CLASSES=NO
@@ -82,6 +89,7 @@ doxygen autodoc_execution_monitor
         <doxygen:param>MULTILINE_CPP_IS_BRIEF=YES
         <doxygen:param>CASE_SENSE_NAMES=YES
         <doxygen:param>INTERNAL_DOCS=NO
+        <doxygen:param>SUBGROUPING=YES
     ;
 
 doxygen examples

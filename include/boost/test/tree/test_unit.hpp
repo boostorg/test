@@ -5,11 +5,9 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision: -1 $
-//
-//  Description : defines test_unit, test_case, test_suite, master_test_suite_t
+/// @file
+/// Defines @ref boost::unit_test::test_unit "test_unit", @ref boost::unit_test::test_case "test_case", 
+/// @ref boost::unit_test::test_suite "test_suite" and @ref boost::unit_test::master_test_suite_t "master_test_suite_t"
 // ***************************************************************************
 
 #ifndef BOOST_TEST_TREE_TEST_UNIT_HPP_100211GER

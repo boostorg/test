@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : addition to STL algorithms
+/// @file
+/// Addition to STL algorithms
 // ***************************************************************************
 
 #ifndef BOOST_ALGORITHM_HPP_062304GER
@@ -30,7 +27,7 @@ namespace unit_test {
 
 /// @brief this algorithm search through two collections for first mismatch position that get returned as a pair
 /// of iterators, first pointing to the mismatch position in first collection, second iterator in second one
-
+///
 /// @param first1 - first collection begin iterator
 /// @param last1 - first collection end iterator
 /// @param first2 - second collection begin iterator
@@ -53,7 +50,7 @@ mismatch( InputIter1 first1, InputIter1 last1,
 /// @brief this algorithm search through two collections for first mismatch position that get returned as a pair
 /// of iterators, first pointing to the mismatch position in first collection, second iterator in second one. This algorithms
 /// uses supplied predicate for collection elements comparison
-
+/// 
 /// @param first1 - first collection begin iterator
 /// @param last1 - first collection end iterator
 /// @param first2 - second collection begin iterator
@@ -76,7 +73,7 @@ mismatch( InputIter1 first1, InputIter1 last1,
 //____________________________________________________________________________//
 
 /// @brief this algorithm search through first collection for first element that does not belong a second one
-
+///
 /// @param first1 - first collection begin iterator
 /// @param last1 - first collection end iterator
 /// @param first2 - second collection begin iterator
@@ -99,7 +96,7 @@ find_first_not_of( ForwardIterator1 first1, ForwardIterator1 last1,
 
 /// @brief this algorithm search through first collection for first element that does not satisfy binary 
 /// predicate in conjunction will any element in second collection
-
+///
 /// @param first1 - first collection begin iterator
 /// @param last1 - first collection end iterator
 /// @param first2 - second collection begin iterator
@@ -123,7 +120,7 @@ find_first_not_of( ForwardIterator1 first1, ForwardIterator1 last1,
 //____________________________________________________________________________//
 
 /// @brief this algorithm search through first collection for last element that belongs to a second one
-
+///
 /// @param first1 - first collection begin iterator
 /// @param last1 - first collection end iterator
 /// @param first2 - second collection begin iterator
@@ -146,7 +143,7 @@ find_last_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 
 /// @brief this algorithm search through first collection for last element that satisfy binary 
 /// predicate in conjunction will at least one element in second collection
-
+///
 /// @param first1 - first collection begin iterator
 /// @param last1 - first collection end iterator
 /// @param first2 - second collection begin iterator
@@ -170,7 +167,7 @@ find_last_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 //____________________________________________________________________________//
 
 /// @brief this algorithm search through first collection for last element that does not belong to a second one
-
+///
 /// @param first1 - first collection begin iterator
 /// @param last1 - first collection end iterator
 /// @param first2 - second collection begin iterator
@@ -193,7 +190,7 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 
 /// @brief this algorithm search through first collection for last element that does not satisfy binary 
 /// predicate in conjunction will any element in second collection
-
+///
 /// @param first1 - first collection begin iterator
 /// @param last1 - first collection end iterator
 /// @param first2 - second collection begin iterator

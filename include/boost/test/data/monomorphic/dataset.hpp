@@ -5,11 +5,9 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
+/// @file
+/// Defines monomorphic dataset interface
 //
-//  Version     : $Revision$
-//
-//  Description : defines monomorphic dataset interface
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_DATASET_HPP_102211GER

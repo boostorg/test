@@ -178,11 +178,14 @@ The details of the named value parameters is given in the table below.
 [classref boost::unit_test::data::monomorphic::random_t]
 
 A factory for creating datasets with this random generator is given by 
-[funcref boost::unit_test::data::monomorphic::random]
+[funcref boost::unit_test::data::random()]
 
 [warning the random value generators are available only for C++11 capable compilers.]
 
 
+[def __random_1__ [funcref boost::unit_test::data::random boost::unit_test::data::random]]
+[def __random_2__ [funcref boost::unit_test::data::random\(t,t\) boost::unit_test::data::random]]
+[def __random_3__ [funcref boost::unit_test::data::random\(t\) boost::unit_test::data::random]]
 
 
 [h5 Choosing the distribution]
@@ -190,7 +193,7 @@ The selection of the distibution may be given by the parameter `boost::unit_test
 
 The following defines a random value generator with Gaussian distribution (mean 5, sigma 2).
 ``
-auto rdgen = boost::unit_test::data::random(data::distribution = std::normal_distribution<>(5.,2));
+auto rdgen = __random_3__(data::distribution = std::normal_distribution<>(5.,2));
 ``
 
 [h5 Setting the seed]
@@ -198,7 +201,7 @@ In order to be able to reproduce a failure within a randomized parameter test ca
 set in order to generate the same sequence of random values.
 
 ``
-auto rdgen = boost::unit_test::data::random(data::seed = 100UL);
+auto rdgen = __random_3__(data::seed = 100UL);
 ``
 
 
@@ -206,15 +209,14 @@ auto rdgen = boost::unit_test::data::random(data::seed = 100UL);
 The details of the named value parameters is given in the table below.
 [table:id_range_parameter_table Range parameters
   [
-    [Name]
+    [Parameter name]
     [Default]
     [Description]
   ]
   [
     [`seed`]
     [0]
-    [Number indicating the beginning of the generated range. The `begin` value is included in set of values returned
-     by the generator.
+    [Seed for the generation of the random sequence.
     ]
   ]
 
@@ -222,16 +224,14 @@ The details of the named value parameters is given in the table below.
     [`distribution`]
     [Uniform]
     [Number indicating the end of the generated range. The `end` value is not included in set of values returned
-     by the generator. If omitted, the generator has infinite size. 
+     by the generator for real values, and is included for integers. If omitted, the generator has infinite size. 
     ]
   ]
   
   [
     [`engine`]
-    [1]
-    [Strictly positive number indicating the step between two consecutive elements of the generated range. 
-     The default type is the same as the input type.
-    ]
+    [`std::default_random_engine`]
+    [Random number generator engine.]
   ]  
 ]
 
