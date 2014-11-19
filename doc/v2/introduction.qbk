@@ -109,7 +109,7 @@ there.
 [endsect] [/How to read]
 
 [/ ##################################################################### ]
-[section 5mn primer]
+[section The 5mn primer]
 This section shows a step-by-step guide for writing your very first test in less than 5mn. 
 
 [h3 Building boost.test]
@@ -118,39 +118,76 @@ Before being able to do anything, you have to build boost.test.
 ```
 > cd boost_path
 > boostrap.bat
-> b2 --with-test --prefix=$installation_path install
+> b2 --with-test --prefix=$boost_installation_prefix install
 ```
 
 or for Unix operating system (including OSX)
 ```
 > cd boost_path
 > ./boostrap.sh
-> ./b2 --with-test --prefix=$installation_path install
+> ./b2 --with-test --prefix=$boost_installation_prefix install
 ```
 
 More documentation [@http://www.boost.org/more/getting_started/index.html here]
 
 
 [h3 Writing your first test]
-Let's start by creating the minimal skeleton for our [link ref_test_module test module]:
+Let's start by creating the minimal skeleton for our [link ref_test_module test module], and paste the following content in the file `my_test_file.cpp`:
+
 ``
-#define BOOST_TEST_MAIN
+#define __BOOST_TEST_MAIN__
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(first_test)
+__BOOST_AUTO_TEST_CASE__(first_test)
 {
-  BOOST_CHECK(true);
+  __BOOST_CHECK__(true);
   
   int i = 1;
-  BOOST_CHECK_EQUAL(i, 1);
+  __BOOST_CHECK_EQUAL__(i, 1);
 }
 `` 
 
-We then need to build the test module. Two ingredients are needed here:
+The command/macro __BOOST_AUTO_TEST_CASE__ declares a test named `first_test`, which in turn will run the content of `first_test` inside the 
+controlled testing environment. 
 
-* make the compiler understand where to find the file `boost/test/unit_test.hpp`.
-* make the linker understand where to find the boost unit test library. 
+The test module should now be built. Two ingredients are needed here:
 
+* make the compiler understand where to find the header file `boost/test/unit_test.hpp`.
+* make the linker understand where to find the boost.test library that were previously compiled.
+
+
+[h4 Using GCC]
+
+[h4 Using Visual Studio]
+
+[h4 Using CMake]
+Let's be more independent of the platform, and use [@http://www.cmake.org cmake]. Let's paste the following content in a `CMakeLists.txt` 
+at the same location than our previous test file `my_test_file.cpp`:
+
+```
+cmake_minimum_required(VERSION 2.8.11)
+project(my_first_test)
+
+# looking for the boost installation path
+find_package(Boost COMPONENTS unit_test_framework)
+
+# creates the executable
+add_executable(test_executable my_test_file.cpp)
+
+# declares a test with our executable
+add_test(NAME test1 COMMAND test_executable)
+
+```
+
+The project then can be built using 
+```
+cd $test_path
+mkdir build
+cd build
+cmake -DBOOST_ROOT=$boost_installation_prefix ..
+cmake --build . 
+ctest 
+```
 
 [endsect] [/ 5mn primer]
 
