@@ -115,21 +115,20 @@ This section shows a step-by-step guide for writing your very first test in less
 [h3 Building boost.test]
 Before being able to do anything, you have to build boost.test. 
 
-``
-cd boost_path
-boostrap.bat
-b2 --with-test --prefix=$installation_path install
-``
+```
+> cd boost_path
+> boostrap.bat
+> b2 --with-test --prefix=$installation_path install
+```
 
 or for Unix operating system (including OSX)
-``
-cd boost_path
-./boostrap.sh
-./b2 --with-test --prefix=$installation_path install
-``
+```
+> cd boost_path
+> ./boostrap.sh
+> ./b2 --with-test --prefix=$installation_path install
+```
 
-More documentation here
-http://www.boost.org/doc/libs/1_57_0/more/getting_started/windows.html
+More documentation [@http://www.boost.org/more/getting_started/index.html here]
 
 
 [h3 Writing your first test]

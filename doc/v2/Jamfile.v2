@@ -65,6 +65,7 @@ doxygen doxygen_reference_generated_doc
       
       # utils
       $(BOOST_ROOT)/libs/test/include/boost/test/utils/algorithm.hpp
+      $(BOOST_ROOT)/libs/test/include/boost/test/utils/named_params.hpp
       
       # others
       $(BOOST_ROOT)/libs/test/include/boost/test/unit_test_parameters.hpp

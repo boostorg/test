@@ -4,12 +4,13 @@ function and registered in a test tree, so that the test runner knows how to inv
 possible designs for the test case construction problem: inheritance from the predefined base class, specifically
 named member function and so on. The __UTF__ opted to avoid classed altogether and to use the 
 least intrusive ['generic callback] approach.
-The facility the __UTF__ provides, requires specific function signature and allows
+
+The facility the __UTF__ provides requires specific function signature, and allows
 adopting any function or function object that matches the signature as a test case. The signatures the __UTF__
 supports are:
 
-* Nullary function
-* Unary function
+* Nullary function: 
+* Unary function: 
 * Nullary function template
 
 Generic test case construction design used by the __UTF__ causes the test case implementation (test function body)

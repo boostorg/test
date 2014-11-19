@@ -132,6 +132,9 @@ struct random_gen_type {
 }
 
 //! Generates a random sequence from the parameters.
+//!
+//! Parameters that can be set are
+//! - distribution
 template<typename Params>
 inline monomorphic::generated_by<typename ds_detail::random_gen_type<Params>::type>
 random( Params const& params )

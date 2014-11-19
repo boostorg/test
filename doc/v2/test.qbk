@@ -31,7 +31,7 @@
 [def __POSIX__ /POSIX/]
 [def __Windows__ /Windows/]
 [def __UTF__ /Unit Test Framework/]
-[def __PEM__ /Program Exceution Monitor]
+[def __PEM__ /Program Execution Monitor]
 
 [def __IEEE754__ [*IEEE754]]
 
@@ -56,7 +56,7 @@
 
 [def __auto_linking__                     [link ref_pem_auto_link automatic linking]]
 
-
+[/ content in the test variant]
 [def __BOOST_TEST_ALTERNATIVE_INIT_API__  [link boost_test.users_guide.link_references.link_boost_test_alternative_init_macro `BOOST_TEST_ALTERNATIVE_INIT_API`]]
 [def __BOOST_TEST_MAIN__                  [link boost_test.users_guide.link_references.link_boost_test_main_macro             `BOOST_TEST_MAIN`]]
 [def __BOOST_TEST_DYN_LINK__              [link boost_test.users_guide.link_references.link_boost_test_dyn_link               `BOOST_TEST_DYN_LINK`]]

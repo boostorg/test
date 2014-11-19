@@ -215,17 +215,15 @@ The details of the named value parameters is given in the table below.
   ]
   [
     [`seed`]
-    [0]
-    [Seed for the generation of the random sequence.
-    ]
+    [(not set)]
+    [Seed for the generation of the random sequence.]
   ]
 
   [
     [`distribution`]
     [Uniform]
-    [Number indicating the end of the generated range. The `end` value is not included in set of values returned
-     by the generator for real values, and is included for integers. If omitted, the generator has infinite size. 
-    ]
+    [Distribution instance for generating the random number sequences. The `end` value is not included in set of values returned
+     by the generator for real values, and is included for integers. If omitted, the generator has infinite size. ]
   ]
   
   [
