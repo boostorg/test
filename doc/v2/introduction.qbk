@@ -52,8 +52,8 @@ include:
 
 The __UTF__ design is based on above rationale and provides versatile facilities to:
 
-* Simplify writing test cases by using various testing tools [/ add a link]
-* Organize test cases into a test tree. [/todo add a link utf.user-guide.test-organization]
+* Simplify writing test cases by using various [link boost_test.testing_tools testing tools].
+* Organize test cases into a [link boost_test.tests_organization test tree].
 * Relieve you from messy error detection, reporting duties and framework runtime parameters processing.
 
 The __UTF__ is intended to be used both for a simple and non trivial testing. It is not intended to be used
