@@ -33,12 +33,12 @@ A dataset is a collection of elements, that
 
 
 [section Operations on dataset]
-As mentionned earlier, one of the major aspects of using the __UTF__ datasets lies in the number of operations provided
+As mentioned earlier, one of the major aspects of using the __UTF__ datasets lies in the number of operations provided
 for their combination.
  
 [section Cartesian products]
-The cartesian product, or ['grid], combines two datasets to form a new dataset of higher dimension. The iteration over
-the resulting datasets creates pairs of values with types respectives to the initial datasets.
+The Cartesian product, or ['grid], combines two datasets to form a new dataset of higher dimension. The iteration over
+the resulting datasets creates pairs of values with types respective to the initial datasets.
 
 Cartesian products are accessible through the `operator*` on datasets:
 
@@ -117,7 +117,7 @@ __BOOST_DATA_TEST_CASE__( test_name, data::make(samples1)^samples2, integer_valu
 Several ['generators] are implemented in __UTF__. The purpose are:
 
 * to ease the generation of data, even in large scale
-* to improve the readability and expressivity of the test cases
+* to improve the readability and expressiveness of the test cases
 
 
 
@@ -189,7 +189,7 @@ A factory for creating datasets with this random generator is given by
 
 
 [h5 Choosing the distribution]
-The selection of the distibution may be given by the parameter `boost::unit_test::data::distribution`
+The selection of the distribution may be given by the parameter `boost::unit_test::data::distribution`
 
 The following defines a random value generator with Gaussian distribution (mean 5, sigma 2).
 ``

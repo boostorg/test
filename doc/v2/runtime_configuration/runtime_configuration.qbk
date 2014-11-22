@@ -1,4 +1,4 @@
-[#ref_section_runtime_configuration][section The __UTF__ runtime parameters]
+[#ref_section_runtime_configuration][section:runtime_configuration The __UTF__ runtime parameters]
  
 
 The __UTF__ supports multiple parameters that affect test module execution. To set the parameter's value you can

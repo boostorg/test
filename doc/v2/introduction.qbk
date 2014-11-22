@@ -140,7 +140,7 @@ than enough to build our own unique test file into an appropriate test module.
   # under C/C++/General/include directories, add $`boost_installation_prefix/include`
   # under Link/General/Additional library paths, add $`boost_installation_prefix/lib`
 
-A nice property on Windows is [link boost_test.users_guide.link_references.link_boost_test_no_lib auto-linking], 
+A nice property on Windows is [link boost_test.building_utf.link_references.link_boost_test_no_lib auto-linking], 
 so you do not need to specify the library `boost_unit_test_framework` to the
 linker. 
 
@@ -148,7 +148,7 @@ linker.
 Let's be more independent of the platform, and use [@http://www.cmake.org cmake]. Let's paste the following content in a `CMakeLists.txt` 
 at the same location than our previous test file `test_file.cpp`:
 
-```
+[pre
 cmake_minimum_required(VERSION 2.8.11)
 project(my_first_test)
 enable_testing()
@@ -169,10 +169,7 @@ target_link_libraries(test_executable ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 # declares a test with our executable
 add_test(NAME test1 COMMAND test_executable)
 
-
-
-
-```
+]
 
 We will now create the build directory for this project (separate directory), configure and build the project,
 as follow:
@@ -189,8 +186,9 @@ as follow:
 ```
 
 [h4 Really less than 5mn]
-You should now be convinced that starting using the __UTF__ is straighforward. As any framework, __UTF__ also provides 
-a lot of functionalities that you will discover when needed. 
+You should now be convinced that starting using the __UTF__ is straightforward. As any framework, __UTF__ also provides 
+a lot of functionalities that you will discover when needed. The next section will help you jump to the part of the documentation
+that best suits your needs. 
 
 
 
@@ -218,7 +216,7 @@ collected. And if you want to jump right into coding the __section_tutorial__ se
 place to start.
 
 The __UTF__ has several usage variants. And the first decision you have to make is which one to use. These
-variants are covered in section dedicated to [link boost_test.users_guide Usage variants]. The next step, probably the most important 
+variants are covered in section dedicated to [link boost_test.building_utf Usage variants]. The next step, probably the most important 
 for you, is to start writing test cases, bind them in test suites and implement your checks. First two 
 topics are covered in __section_test_organization__ section, while __testing_tools__ section arms you with
 rich set of tools enough to implement almost arbitrary check you need.
@@ -227,7 +225,7 @@ Next you'll learn how to understand and manipulate the __UTF__ output in a __tes
 At that point you should be able to build and run most simple test modules and almost inevitable find a need
 to configure how the test module is executed. Whether you want to change output format, select which test 
 case to run or run test cases in random order these and may other runtime configuration parameters are 
-described in [*Runtime configuration] section.
+described in [link boost_test.runtime_configuration runtime configuration] section.
 
 One of the first non trivial things you might want to add to your test module is test fixture. Fixture
 support is covered in __section_test_fixture__ section. Usually the default test module initialization
@@ -237,10 +235,9 @@ about various options the __UTF__ provides for you to customize this behaviour.
 
 Finally you might want to learn about how the __UTF__ implements entry points into the test modules. This
 is especially important if you intend to implement the `main` function yourself and not use the one 
-provided by the __UTF__. The [*Test runners] section covers this subject. Different usage variants employ
+provided by the __UTF__. The [link boost_test.building_utf build] section covers this subject. Different usage variants employ
 slightly different approached to implementing test module entry points and presents slightly different
-interfaces. This section intended for advanced user some of the details of the implementation are described
-there.
+interfaces. This section is intended for advanced use.
 
 [endsect] [/How to read]
 
