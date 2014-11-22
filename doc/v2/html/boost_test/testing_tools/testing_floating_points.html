@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Floating-point testing</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../testing_tools.html" title="The Unit Test Framework testing tools">
 <link rel="prev" href="output_stream_testing.html" title="Output streams testing tool">
@@ -92,11 +92,11 @@
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
             binary predicate <code class="computeroutput"><span class="identifier">close_at_tolerance</span></code>
-            <sup>[<a name="boost_test.testing_tools.testing_floating_points.f0" href="#ftn.boost_test.testing_tools.testing_floating_points.f0" class="footnote">3</a>]</sup>
+            <a href="#ftn.boost_test.testing_tools.testing_floating_points.f0" class="footnote" name="boost_test.testing_tools.testing_floating_points.f0"><sup class="footnote">[4]</sup></a>
           </li>
 <li class="listitem">
             and predicate with four arguments <code class="computeroutput"><span class="identifier">check_is_close</span></code>
-            <sup>[<a name="boost_test.testing_tools.testing_floating_points.f1" href="#ftn.boost_test.testing_tools.testing_floating_points.f1" class="footnote">4</a>]</sup>.
+            <a href="#ftn.boost_test.testing_tools.testing_floating_points.f1" class="footnote" name="boost_test.testing_tools.testing_floating_points.f1"><sup class="footnote">[5]</sup></a>.
           </li>
 </ol></div>
 <p>
@@ -105,7 +105,7 @@
         over equation <a class="link" href="testing_floating_points.html#equ1">(1)</a>, they are unusable for the
         test on closeness to zero. The later check is still might be useful in some
         cases and the <span class="emphasis"><em>Unit Test Framework</em></span> implements an algorithm
-        based on equation <a class="link" href="testing_floating_points.html#equ1">(1)</a> in binary predicate <code class="computeroutput"><span class="identifier">check_is_small</span></code> <sup>[<a name="boost_test.testing_tools.testing_floating_points.f2" href="#ftn.boost_test.testing_tools.testing_floating_points.f2" class="footnote">5</a>]</sup>.
+        based on equation <a class="link" href="testing_floating_points.html#equ1">(1)</a> in binary predicate <code class="computeroutput"><span class="identifier">check_is_small</span></code> <a href="#ftn.boost_test.testing_tools.testing_floating_points.f2" class="footnote" name="boost_test.testing_tools.testing_floating_points.f2"><sup class="footnote">[6]</sup></a>.
       </p>
 <p>
         On top of the generic, flexible predicates the <span class="emphasis"><em>Unit Test Framework</em></span>
@@ -115,7 +115,7 @@
       </p>
 <h4>
 <a name="boost_test.testing_tools.testing_floating_points.h0"></a>
-        <span><a name="boost_test.testing_tools.testing_floating_points.tolerance_selection_consideratio"></a></span><a class="link" href="testing_floating_points.html#boost_test.testing_tools.testing_floating_points.tolerance_selection_consideratio">Tolerance
+        <span class="phrase"><a name="boost_test.testing_tools.testing_floating_points.tolerance_selection_consideratio"></a></span><a class="link" href="testing_floating_points.html#boost_test.testing_tools.testing_floating_points.tolerance_selection_consideratio">Tolerance
         selection considerations</a>
       </h4>
 <p>
@@ -129,7 +129,7 @@
         The discrepancy between real and floating point value may be caused by several
         reasons:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Type promotion
           </li>
@@ -151,7 +151,7 @@
 </pre>
 <p>
         for the appropriate floating point type <code class="computeroutput"><span class="identifier">FPT</span></code>
-        <sup>[<a name="boost_test.testing_tools.testing_floating_points.f3" href="#ftn.boost_test.testing_tools.testing_floating_points.f3" class="footnote">6</a>]</sup>. Conversion to binary presentation, sadly, does not have such
+        <a href="#ftn.boost_test.testing_tools.testing_floating_points.f3" class="footnote" name="boost_test.testing_tools.testing_floating_points.f3"><sup class="footnote">[7]</sup></a>. Conversion to binary presentation, sadly, does not have such
         requirement. So we can't assume that <code class="computeroutput"><span class="keyword">float</span><span class="special">(</span><span class="number">1.1</span><span class="special">)</span></code>
         is close to the real number <code class="computeroutput"><span class="number">1.1</span></code>
         with tolerance <code class="computeroutput"><span class="identifier">half_epsilon</span></code>
@@ -203,12 +203,12 @@
       </p>
 <h5>
 <a name="boost_test.testing_tools.testing_floating_points.h1"></a>
-        <span><a name="boost_test.testing_tools.testing_floating_points.bibliographic_references"></a></span><a class="link" href="testing_floating_points.html#boost_test.testing_tools.testing_floating_points.bibliographic_references">Bibliographic
+        <span class="phrase"><a name="boost_test.testing_tools.testing_floating_points.bibliographic_references"></a></span><a class="link" href="testing_floating_points.html#boost_test.testing_tools.testing_floating_points.bibliographic_references">Bibliographic
         references</a>
       </h5>
 <div class="variablelist">
 <p class="title"><b>Books</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><a name="KnuthII"></a>The art of computer programming (vol II)</span></dt>
 <dd><p>
               Donald. E. Knuth, 1998, Addison-Wesley Longman, Inc., ISBN 0-201-89684-2,
@@ -224,7 +224,7 @@
 </div>
 <div class="variablelist">
 <p class="title"><b>Periodicals</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><a name="Squassabia"></a><a href="http://www.adtmag.com/joop/carticle.aspx?ID=396" target="_top">Comparing
           Floats: How To Determine if Floating Quantities Are Close Enough Once a
           Tolerance Has Been Reached</a></span></dt>
@@ -240,7 +240,7 @@
 </div>
 <div class="variablelist">
 <p class="title"><b>Publications</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><a href="http://dl.acm.org/citation.cfm?id=103163" target="_top">What Every
           Computer Scientist Should Know About Floating-Point Arithmetic</a></span></dt>
 <dd><p>
@@ -260,18 +260,18 @@
 </dl>
 </div>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.boost_test.testing_tools.testing_floating_points.f0" href="#boost_test.testing_tools.testing_floating_points.f0" class="para">3</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.boost_test.testing_tools.testing_floating_points.f0" class="footnote"><p><a href="#boost_test.testing_tools.testing_floating_points.f0" class="para"><sup class="para">[4] </sup></a>
               check type and tolerance value are fixed at predicate construction
               time
             </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.boost_test.testing_tools.testing_floating_points.f1" href="#boost_test.testing_tools.testing_floating_points.f1" class="para">4</a>] </sup>
+<div id="ftn.boost_test.testing_tools.testing_floating_points.f1" class="footnote"><p><a href="#boost_test.testing_tools.testing_floating_points.f1" class="para"><sup class="para">[5] </sup></a>
               check type and tolerance value are the arguments of the predicate
             </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.boost_test.testing_tools.testing_floating_points.f2" href="#boost_test.testing_tools.testing_floating_points.f2" class="para">5</a>] </sup>
+<div id="ftn.boost_test.testing_tools.testing_floating_points.f2" class="footnote"><p><a href="#boost_test.testing_tools.testing_floating_points.f2" class="para"><sup class="para">[6] </sup></a>
           <code class="computeroutput"><span class="identifier">v</span></code> is zero
         </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.boost_test.testing_tools.testing_floating_points.f3" href="#boost_test.testing_tools.testing_floating_points.f3" class="para">6</a>] </sup>
+<div id="ftn.boost_test.testing_tools.testing_floating_points.f3" class="footnote"><p><a href="#boost_test.testing_tools.testing_floating_points.f3" class="para"><sup class="para">[7] </sup></a>
           <span class="bold"><strong>machine epsilon value</strong></span> is represented by
           <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">FPT</span><span class="special">&gt;::</span><span class="identifier">epsilon</span><span class="special">()</span></code>
         </p></div>

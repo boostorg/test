@@ -3,10 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class test_unit</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../../header/boost/test/tree/test_unit_hpp.html" title="Header &lt;boost/test/tree/test_unit.hpp&gt;">
-<link rel="prev" href="test_suite.html" title="Class test_suite">
+<link rel="prev" href="../../header/boost/test/tree/test_unit_hpp.html" title="Header &lt;boost/test/tree/test_unit.hpp&gt;">
 <link rel="next" href="test_unit_generator.html" title="Class test_unit_generator">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="test_suite.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../header/boost/test/tree/test_unit_hpp.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="test_unit_generator.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../../header/boost/test/tree/test_unit_hpp.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../header/boost/test/tree/test_unit_hpp.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="test_unit_generator.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.unit_test.test_unit"></a><div class="titlepage"></div>
@@ -42,19 +42,19 @@
   <span class="keyword">enum</span> <a name="boost.unit_test.test_unit.@0"></a>@0 <span class="special">{</span> type = = TUT_ANY <span class="special">}</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="test_unit.html#boost.unit_test.test_unitconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="test_unit.html#id332342-bb"><span class="identifier">test_unit</span></a><span class="special">(</span><span class="identifier">const_string</span><span class="special">,</span> <span class="identifier">const_string</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">,</span> <span class="identifier">test_unit_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="test_unit.html#id332331-bb"><span class="identifier">test_unit</span></a><span class="special">(</span><span class="identifier">const_string</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="test_unit.html#id332338-bb"><span class="special">~</span><span class="identifier">test_unit</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="test_unit.html#idm386371113120-bb"><span class="identifier">test_unit</span></a><span class="special">(</span><span class="identifier">const_string</span><span class="special">,</span> <span class="identifier">const_string</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">,</span> <span class="identifier">test_unit_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="test_unit.html#idm386371110288-bb"><span class="identifier">test_unit</span></a><span class="special">(</span><span class="identifier">const_string</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="test_unit.html#idm386371113392-bb"><span class="special">~</span><span class="identifier">test_unit</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="test_unit.html#id332208-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="test_unit.html#id332236-bb"><span class="identifier">depends_on</span></a><span class="special">(</span><a class="link" href="test_unit.html" title="Class test_unit">test_unit</a> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="test_unit.html#id332229-bb"><span class="identifier">check_dependencies</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="test_unit.html#id332217-bb"><span class="identifier">add_label</span></a><span class="special">(</span><span class="identifier">const_string</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="test_unit.html#id332252-bb"><span class="identifier">has_label</span></a><span class="special">(</span><span class="identifier">const_string</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="test_unit.html#id332260-bb"><span class="identifier">increase_exp_fail</span></a><span class="special">(</span><span class="keyword">unsigned</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">typedef</span> <a class="link" href="test_unit.html#id332278-bb"><span class="identifier">BOOST_READONLY_PROPERTY</span></a><span class="special">(</span><span class="identifier">test_unit_id</span><span class="special">,</span> <span class="special">(</span><span class="identifier">framework_impl</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">typedef</span> <a class="link" href="test_unit.html#id332308-bb"><span class="identifier">BOOST_READONLY_PROPERTY</span></a><span class="special">(</span><span class="identifier">test_unit_id</span><span class="special">,</span> <span class="special">(</span><a class="link" href="test_suite.html" title="Class test_suite">test_suite</a><span class="special">)</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">typedef</span> <a class="link" href="test_unit.html#id332288-bb"><span class="identifier">BOOST_READONLY_PROPERTY</span></a><span class="special">(</span><span class="identifier">id_list</span><span class="special">,</span> <span class="special">(</span><a class="link" href="test_unit.html" title="Class test_unit">test_unit</a><span class="special">)</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="test_unit.html#idm386371129088-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="test_unit.html#idm386371128560-bb"><span class="identifier">depends_on</span></a><span class="special">(</span><a class="link" href="test_unit.html" title="Class test_unit">test_unit</a> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="test_unit.html#idm386371126864-bb"><span class="identifier">check_dependencies</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="test_unit.html#idm386371125824-bb"><span class="identifier">add_label</span></a><span class="special">(</span><span class="identifier">const_string</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="test_unit.html#idm386371124400-bb"><span class="identifier">has_label</span></a><span class="special">(</span><span class="identifier">const_string</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="test_unit.html#idm386371122736-bb"><span class="identifier">increase_exp_fail</span></a><span class="special">(</span><span class="keyword">unsigned</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">typedef</span> <a class="link" href="test_unit.html#idm386371121296-bb"><span class="identifier">BOOST_READONLY_PROPERTY</span></a><span class="special">(</span><span class="identifier">test_unit_id</span><span class="special">,</span> <span class="special">(</span><span class="identifier">framework_impl</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">typedef</span> <a class="link" href="test_unit.html#idm386371119200-bb"><span class="identifier">BOOST_READONLY_PROPERTY</span></a><span class="special">(</span><span class="identifier">test_unit_id</span><span class="special">,</span> <span class="special">(</span><a class="link" href="test_suite.html" title="Class test_suite">test_suite</a><span class="special">)</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">typedef</span> <a class="link" href="test_unit.html#idm386371116704-bb"><span class="identifier">BOOST_READONLY_PROPERTY</span></a><span class="special">(</span><span class="identifier">id_list</span><span class="special">,</span> <span class="special">(</span><a class="link" href="test_unit.html" title="Class test_unit">test_unit</a><span class="special">)</span><span class="special">)</span><span class="special">;</span>
 
   <span class="comment">// public data members</span>
   <span class="identifier">readonly_property</span><span class="special">&lt;</span> <span class="identifier">test_unit_type</span> <span class="special">&gt;</span> <span class="identifier">p_type</span><span class="special">;</span>
@@ -73,31 +73,31 @@
   <span class="identifier">readwrite_property</span><span class="special">&lt;</span> <span class="identifier">fixture_list</span> <span class="special">&gt;</span> <span class="identifier">p_fixtures</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="id977426"></a><h2>Description</h2>
+<a name="idm51823850960"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="id977429"></a><h3>
+<a name="idm51823850560"></a><h3>
 <a name="boost.unit_test.test_unitconstruct-copy-destruct"></a><code class="computeroutput">test_unit</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><a name="id332342-bb"></a><span class="identifier">test_unit</span><span class="special">(</span><span class="identifier">const_string</span> tu_name<span class="special">,</span> <span class="identifier">const_string</span> tc_file<span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> tc_line<span class="special">,</span> 
+<li class="listitem"><pre class="literallayout"><a name="idm386371113120-bb"></a><span class="identifier">test_unit</span><span class="special">(</span><span class="identifier">const_string</span> tu_name<span class="special">,</span> <span class="identifier">const_string</span> tc_file<span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> tc_line<span class="special">,</span> 
           <span class="identifier">test_unit_type</span> t<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">explicit</span> <a name="id332331-bb"></a><span class="identifier">test_unit</span><span class="special">(</span><span class="identifier">const_string</span> module_name<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a name="id332338-bb"></a><span class="special">~</span><span class="identifier">test_unit</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">explicit</span> <a name="idm386371110288-bb"></a><span class="identifier">test_unit</span><span class="special">(</span><span class="identifier">const_string</span> module_name<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idm386371113392-bb"></a><span class="special">~</span><span class="identifier">test_unit</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="id980648"></a><h3>
-<a name="id332208-bb"></a><code class="computeroutput">test_unit</code> public member functions</h3>
+<a name="idm51823830976"></a><h3>
+<a name="idm386371129088-bb"></a><code class="computeroutput">test_unit</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="id332236-bb"></a><span class="identifier">depends_on</span><span class="special">(</span><a class="link" href="test_unit.html" title="Class test_unit">test_unit</a> <span class="special">*</span> tu<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">bool</span> <a name="id332229-bb"></a><span class="identifier">check_dependencies</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="id332217-bb"></a><span class="identifier">add_label</span><span class="special">(</span><span class="identifier">const_string</span> l<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">bool</span> <a name="id332252-bb"></a><span class="identifier">has_label</span><span class="special">(</span><span class="identifier">const_string</span> l<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="id332260-bb"></a><span class="identifier">increase_exp_fail</span><span class="special">(</span><span class="keyword">unsigned</span> num<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">typedef</span> <a name="id332278-bb"></a><span class="identifier">BOOST_READONLY_PROPERTY</span><span class="special">(</span><span class="identifier">test_unit_id</span><span class="special">,</span> <span class="special">(</span><span class="identifier">framework_impl</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">typedef</span> <a name="id332308-bb"></a><span class="identifier">BOOST_READONLY_PROPERTY</span><span class="special">(</span><span class="identifier">test_unit_id</span><span class="special">,</span> <span class="special">(</span><a class="link" href="test_suite.html" title="Class test_suite">test_suite</a><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">typedef</span> <a name="id332288-bb"></a><span class="identifier">BOOST_READONLY_PROPERTY</span><span class="special">(</span><span class="identifier">id_list</span><span class="special">,</span> <span class="special">(</span><a class="link" href="test_unit.html" title="Class test_unit">test_unit</a><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idm386371128560-bb"></a><span class="identifier">depends_on</span><span class="special">(</span><a class="link" href="test_unit.html" title="Class test_unit">test_unit</a> <span class="special">*</span> tu<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">bool</span> <a name="idm386371126864-bb"></a><span class="identifier">check_dependencies</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idm386371125824-bb"></a><span class="identifier">add_label</span><span class="special">(</span><span class="identifier">const_string</span> l<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">bool</span> <a name="idm386371124400-bb"></a><span class="identifier">has_label</span><span class="special">(</span><span class="identifier">const_string</span> l<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idm386371122736-bb"></a><span class="identifier">increase_exp_fail</span><span class="special">(</span><span class="keyword">unsigned</span> num<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">typedef</span> <a name="idm386371121296-bb"></a><span class="identifier">BOOST_READONLY_PROPERTY</span><span class="special">(</span><span class="identifier">test_unit_id</span><span class="special">,</span> <span class="special">(</span><span class="identifier">framework_impl</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">typedef</span> <a name="idm386371119200-bb"></a><span class="identifier">BOOST_READONLY_PROPERTY</span><span class="special">(</span><span class="identifier">test_unit_id</span><span class="special">,</span> <span class="special">(</span><a class="link" href="test_suite.html" title="Class test_suite">test_suite</a><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">typedef</span> <a name="idm386371116704-bb"></a><span class="identifier">BOOST_READONLY_PROPERTY</span><span class="special">(</span><span class="identifier">id_list</span><span class="special">,</span> <span class="special">(</span><a class="link" href="test_unit.html" title="Class test_unit">test_unit</a><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>
@@ -113,7 +113,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="test_suite.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../header/boost/test/tree/test_unit_hpp.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="test_unit_generator.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../../header/boost/test/tree/test_unit_hpp.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../header/boost/test/tree/test_unit_hpp.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="test_unit_generator.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

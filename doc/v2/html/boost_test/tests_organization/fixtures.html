@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Fixtures</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../tests_organization.html" title="Test organization using the Unit Test Framework">
 <link rel="prev" href="test_organization_test_suite.html" title="Test suite">
@@ -30,7 +30,7 @@
         In general terms a test fixture or test context is the collection of one
         or more of the following items, required to perform the test:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             preconditions
           </li>
@@ -93,7 +93,7 @@
         setup or cleanup procedure. Still there are several more or less minor practical
         issues with this pure C++ based fixtures solution:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             We need to add a fixture declaration statement into each test case manually.
           </li>
@@ -116,7 +116,7 @@
         functions should comply to. Based on the generic fixture model, the <span class="emphasis"><em>Unit
         Test Framework</em></span> presents solution for the following tasks:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             per test case fixture automation
           </li>
@@ -192,7 +192,7 @@
 </table></div>
 <h6>
 <a name="boost_test.tests_organization.fixtures.per_test_case_fixture.h0"></a>
-          <span><a name="boost_test.tests_organization.fixtures.per_test_case_fixture.example_descr"></a></span><a class="link" href="fixtures.html#boost_test.tests_organization.fixtures.per_test_case_fixture.example_descr">Example:
+          <span class="phrase"><a name="boost_test.tests_organization.fixtures.per_test_case_fixture.example_descr"></a></span><a class="link" href="fixtures.html#boost_test.tests_organization.fixtures.per_test_case_fixture.example_descr">Example:
           Per test case fixture</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -311,7 +311,7 @@
 </table></div>
 <h6>
 <a name="boost_test.tests_organization.fixtures.test_suite_level_fixture.h0"></a>
-          <span><a name="boost_test.tests_organization.fixtures.test_suite_level_fixture.example_descr"></a></span><a class="link" href="fixtures.html#boost_test.tests_organization.fixtures.test_suite_level_fixture.example_descr">Example:
+          <span class="phrase"><a name="boost_test.tests_organization.fixtures.test_suite_level_fixture.example_descr"></a></span><a class="link" href="fixtures.html#boost_test.tests_organization.fixtures.test_suite_level_fixture.example_descr">Example:
           Test suite level fixture</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -401,7 +401,7 @@
           can be implemented in the test module initialization function, there are
           several reasons to prefer the global fixture approach:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               There is no place for cleanup/teardown operations in the initialization
               function.
@@ -450,7 +450,7 @@
         </p>
 <h6>
 <a name="boost_test.tests_organization.fixtures.global_fixture.h0"></a>
-          <span><a name="boost_test.tests_organization.fixtures.global_fixture.example_descr"></a></span><a class="link" href="fixtures.html#boost_test.tests_organization.fixtures.global_fixture.example_descr">Example:
+          <span class="phrase"><a name="boost_test.tests_organization.fixtures.global_fixture.example_descr"></a></span><a class="link" href="fixtures.html#boost_test.tests_organization.fixtures.global_fixture.example_descr">Example:
           Global fixture</a>
         </h6>
 <div class="informaltable"><table class="table">
