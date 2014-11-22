@@ -110,7 +110,7 @@ there.
 
 [/ ##################################################################### ]
 [section The 5mn starter guide]
-This section shows a step-by-step guide for writing your very first test in less than 5mn. 
+This section shows a step-by-step guide for writing your very first test, in less than 5mn. 
 
 [h3 Building boost.test]
 Before being able to do anything, you have to build boost.test. 
@@ -163,6 +163,7 @@ the linker, which should be configured appropriately:
 We will see now three common use cases.
 
 [h4 Using GCC/Clang]
+
 ```
 g++ -o test_executable \
     -I ``$``boost_installation_prefix/include \
@@ -171,7 +172,7 @@ g++ -o test_executable \
     test_file.cpp
 ```
 
-The command line is exactly similar for `clang`. 
+The command line is similar for `clang`. 
 As you can see, the previous example is not exactly an example to follow for bigger projects, but this is more
 than enough to build our own unique test file into an appropriate test module. 
 
@@ -179,11 +180,11 @@ than enough to build our own unique test file into an appropriate test module.
 
 [h4 Using Visual Studio]
 
-# open Visual and create an empty C++ binary project
-# add the file `first_test.cpp`
+# open Visual and create an empty C++ console Win32 project
+# add the file `test_file.cpp`
 # go to the properties of the project,
-  # under compilation, add `$boost_installation_prefix/include` to the include path
-  # under linker, add `$boost_installation_prefix/lib` as link location
+  # under C/C++/General/include directories, add `$boost_installation_prefix/include`
+  # under Link/General/Additional library paths, add `$boost_installation_prefix/lib`
 
 A nice property on Windows is [link boost_test.users_guide.link_references.link_boost_test_no_lib auto-linking], 
 so you do not need to specify the library `boost_unit_test_framework` to the
@@ -195,7 +196,7 @@ at the same location than our previous test file `test_file.cpp`:
 
 ```
 cmake_minimum_required(VERSION 2.8.11)
-project(my_first_test)
+project(first_test_with_cmake)
 enable_testing()
 
 # looking for the boost installation path
@@ -222,6 +223,10 @@ as follow:
                       previous command line >*/
 > ctest           /*< runs the tests declared in the project and prints a report >*/
 ```
+
+[h4 Really less than 5mn]
+You should now be convinced that starting using the __UTF__ is straighforward. As any framework, __UTF__ also provides 
+a lot of functionalities that you will discover when needed. 
 
 
 
