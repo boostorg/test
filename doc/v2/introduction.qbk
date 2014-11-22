@@ -118,14 +118,14 @@ Before being able to do anything, you have to build boost.test.
 ```
 > cd boost_path
 > boostrap.bat
-> b2 --with-test --prefix='''$'''boost_installation_prefix install
+> b2 --with-test --prefix=``$``boost_installation_prefix install
 ```
 
 or for Unix operating system (including OSX)
 ```
 > cd boost_path
 > ./boostrap.sh
-> ./b2 --with-test --prefix='''$'''boost_installation_prefix install
+> ./b2 --with-test --prefix=``$``boost_installation_prefix install
 ```
 
 More documentation can be found [@http://www.boost.org/more/getting_started/index.html here]. Now you are ready
