@@ -14,7 +14,7 @@ The elementary question one should ask himself is the following:
 The argument against the implementation of a custom ['module initialization] are the following:
 
 * The test tree can be easily and efficiently constructed automatically (covered in details in [link boost_test.tests_organization this] section).
-* __UTF__ also provides means to [link ref_BOOST_TEST_MODULE rename] the ['master test suite].
+* __UTF__ also provides means to [link boost_test.users_guide.link_references.link_boost_test_module_macro rename] the ['master test suite].
 * Most of the command line parameters, except the ones used by the __UTF__, may be accessed through the ['master test suite]
 * [link ref_fixture_test_global Global fixtures] may provide ['states] that can be accessed during the lifetime of the tests, 
   with proper and controlled initialization and release. This approach covers several use case that might need the tweaking of the 
