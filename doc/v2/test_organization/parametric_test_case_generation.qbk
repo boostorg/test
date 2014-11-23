@@ -1,10 +1,45 @@
 [section:test_case_generation Generation of test case parameters]
 
-In some circumstance, one would like to test a [link boost_test.tests_organization.test_cases.test_organization_unary parametrized] 
+In some circumstance, one would like to run a [link boost_test.tests_organization.test_cases.test_organization_unary parametrized] 
 test over a large set of parameters. __BOOST_PARAM_TEST_CASE__ provides an easy solution when these parameters can be described in 
 some collection. However, this solution has also limitations
 
-* Suppose we already have parametrized tests for two functions `func1` and `func2`. 
+* Suppose we have a parametrized test on `func1`, on which we test `N` parameters. We know a few values on which `func1` has a deterministic behaviour and we test that: 
+  in this setting `N` is necessarily finite and usually small.  How would we extend or scale `N` easily? One solution is to be able to 
+  generate new parameters, and to be able to define a test on the *class* of possible inputs for `func1` on which the function should have the same defined behaviour. 
+  In some extent, the inputs of the parametrized test is a sample of the possible inputs of `func1`, and working on the class of inputs gives more flexibility and power 
+  to the test. 
+* Suppose we already have a parametrized tests for two functions `func1` and `func2`, taking as argument the types `T1` and `T2` respectively. Now we like to test a new functions `func3` that 
+  takes as argument a type `T3` containing `T1` and `T2`, and calling `func1` and `func2` through a known algorithm. An example of such a setting would be
+  `` 
+  // Returns the log of x
+  // Precondition: x strictly positive.
+  double fast_log(double x);
+
+  // Returns 1/(x-1)
+  // Precondition: x != 1
+  double fast_inv(double x);
+  
+  struct dummy {
+    unsigned int field1;
+    unsigned int field2;
+  };
+  
+  double func3(dummy value)
+  {
+    return 0.5 * (exp(fast_log(value.field1))/value.field1 + value.field2/fast_inv(value.field2));
+  }
+  
+  `` 
+  
+  In this example, 
+  
+  * `func3` inherits from the preconditions of `fast_log` and `fast_inv`: it is defined in `(0, +infinity)` and in `[-C, +C] - {1}` for `field1` and `field2` respectively (`C`
+     being a constant arbitrarily big).
+  * as defined above, `func3` should be close to 1 everywhere on its definition domain. 
+  * we would like to reuse the tests of `fast_log` and `fast_inv` in `func3` and assert that `func3` is well defined over an arbitrary large definition domain. 
+  
+  Having parametrized tests on `func3` hardly tells us about the possible numerical instabilities close to the point `{field1 = 0, field2 = 1}`. 
 * 
 
 The __UTF__ provides a facility in order to ease the automated generations of these parameters.
@@ -12,22 +47,23 @@ The __UTF__ provides a facility in order to ease the automated generations of th
 The unit test toolbox is augmented with one new registration macro: __BOOST_DATA_TEST_CASE__. 
 
 [section Datasets]
-The power of the dataset object comes from
+The power of the datasets in __UTF__ comes from
 
-* the operations they provide for combination
-* the generators provided
+* the operations they provide for combining different datasets 
+* the available /dataset generators/
 * their interface with other type of collections
 
 A dataset is a collection of elements, that 
 
 * is forward iterable
-* can be queried for their `size`
+* can be queried for its `size`
 
 
 
 [tip datasets are implemented in [classref boost::unit_test::data::monomorphic::dataset]]
 
-[warning Only "monomorphic" datasets are supported, which means that all elements of the collection have the same type.
+[warning Only "monomorphic" datasets are supported, which means that all elements of a dataset have the same type. However as we will see, 
+ datasets representing collections of different types may be combined together.
  ]
 
 
