@@ -39,30 +39,29 @@ some collection. However, this solution has also limitations
   * as defined above, `func3` should be close to 1 everywhere on its definition domain. 
   * we would like to reuse the tests of `fast_log` and `fast_inv` in `func3` and assert that `func3` is well defined over an arbitrary large definition domain. 
   
-  Having parametrized tests on `func3` hardly tells us about the possible numerical instabilities close to the point `{field1 = 0, field2 = 1}`. 
-* 
+  Having parametrized tests on `func3` hardly tells us about the possible numerical properties or instabilities close to the point `{field1 = 0, field2 = 1}`.  Indeed, the parametrized test may 
+  test for some points around (0,1), but will fail to provide an *asymptotical behaviour* of the function close to this point. 
 
-The __UTF__ provides a facility in order to ease the automated generations of these parameters.
+
+The __UTF__ provides a facility in order to ease the description and the generations of the class of inputs. 
 
 The unit test toolbox is augmented with one new registration macro: __BOOST_DATA_TEST_CASE__. 
 
 [section Datasets]
-The power of the datasets in __UTF__ comes from
+The descriptive power of the datasets in __UTF__ comes from
 
 * the operations they provide for combining different datasets 
 * the available /dataset generators/
 * their interface with other type of collections
 
-A dataset is a collection of elements, that 
+A [classref boost::unit_test::data::monomorphic::dataset dataset] is a collection of elements, that 
 
 * is forward iterable
-* can be queried for its `size`
+* can be queried for its `size`, which in turn can be infinite. 
 
+Hence the dataset implements the notion of /sequence/. 
 
-
-[tip datasets are implemented in [classref boost::unit_test::data::monomorphic::dataset]]
-
-[warning Only "monomorphic" datasets are supported, which means that all elements of a dataset have the same type. However as we will see, 
+[info Only "monomorphic" datasets are supported, which means that all elements of a dataset have the same type. However as we will see, 
  datasets representing collections of different types may be combined together.
  ]
 
