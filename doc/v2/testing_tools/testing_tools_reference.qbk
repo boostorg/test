@@ -244,7 +244,7 @@ __BOOST_LEVEL_PREDICATE__ family of tools with explicit `check_is_close` invocat
 
 The first parameter is the ['left] compared value. The second parameter is the
 ['right] compared value. Last third parameter defines the tolerance for the comparison in
-[link boost_test.testing_tools.testing_floating_points [*percentage units]].
+[link boost_test.users_guide.testing_tools.testing_floating_points [*percentage units]].
 
 [note It is required for left and right parameters to be of the same floating point type. You will need to explicitly
       resolve any type mismatch to select which type to use for comparison.
@@ -261,7 +261,7 @@ See also:
 * __BOOST_LEVEL_CLOSE_FRACTION__
 * __BOOST_LEVEL_SMALL__
 * __BOOST_LEVEL_EQUAL__
-* [link boost_test.testing_tools.testing_floating_points Floating point comparison algorithms]
+* __floating_points_testing_tools__
 
 [endsect]
 
@@ -281,7 +281,7 @@ To check for the weak relationship use __BOOST_LEVEL_PREDICATE__ family of tools
 
 The first parameter is the ['left] compared value. The second parameter is the
 ['right] compared value. Last third parameter defines the tolerance for the comparison as
-[link boost_test.testing_tools.testing_floating_points [*fraction of absolute values being compared]].
+[link boost_test.users_guide.testing_tools.testing_floating_points [*fraction of absolute values being compared]].
 
 [note It is required for left and right parameters to be of the same floating point type. You will need to explicitly
       resolve any type mismatch to select which type to use for comparison.]
@@ -295,7 +295,7 @@ See also:
 * __BOOST_LEVEL_CLOSE__
 * __BOOST_LEVEL_SMALL__
 * __BOOST_LEVEL_EQUAL__
-* [link boost_test.testing_tools.testing_floating_points Floating point comparison algorithms]
+* __floating_points_testing_tools__
 
 [endsect]
 
@@ -538,7 +538,7 @@ See also:
 
 * __BOOST_LEVEL_CLOSE__
 * __BOOST_LEVEL_CLOSE_FRACTION__
-* [link boost_test.testing_tools.testing_floating_points Floating point comparison algorithms]
+* __floating_points_testing_tools__
 
 [endsect]
 

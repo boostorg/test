@@ -10,7 +10,7 @@
 
 [section:dynamic_lib_variant Dynamic library variant]
 
-In the project with large number of test modules [link boost_test.users_guide.usage_variants.static_lib_variant the static library variant] of the __UTF__ 
+In the project with large number of test modules [link boost_test.beyond_basics.build.usage_variants.static_lib_variant the static library variant] of the __UTF__ 
 may cause you to waste a lot of disk space, since the __UTF__ is linked statically with every test module. The solution is 
 to link with the __UTF__ built into a dynamic library (dynamic library variant of the __UTF__). 
 
@@ -64,7 +64,7 @@ should be defined in one compilation unit only.
 
 [section:dynamic_lib_variant_manual_registration Manual test registration]
 The automatic generation of the test module works well with auto-registrated tests 
-(explained in detail [link boost_test.tests_organization.test_cases here]), but needs some tweaking for tests registered manually. 
+(explained in detail in __section_test_cases__ section), but needs some tweaking for tests registered manually. 
 
 In that case, __BOOST_TEST_NO_MAIN__ may be defined in order to prevent the generation of the test module initialisation. 
 [tip Another advantage of defining __BOOST_TEST_NO_MAIN__ is that the code for the test module initialisation would then 

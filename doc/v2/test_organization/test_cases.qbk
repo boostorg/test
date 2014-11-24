@@ -39,6 +39,6 @@ implementation point.
 [/ ############################################# ] 
 [include parametric_test_case_generation.qbk]
 
-
-
 [endsect] [/ test cases]
+
+[/EOF]

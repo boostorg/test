@@ -1,4 +1,4 @@
-[#ref_BOOST_PARAM_TEST_CASE][section:test_organization_unary Parameterized test cases]
+[#ref_BOOST_PARAM_TEST_CASE][section:param_test Parameterized test cases]
 
 Some tests are required to be repeated for a series of different input parameters. One way to achieve this is
 manually register a test case for each parameter as in the previous examples. You can also invoke a test function with
@@ -60,3 +60,5 @@ This example employs the alternative test module initialization function specifi
 [bt_example example08..Unary class method based test case]
 
 [endsect] [/test case with arity]
+
+[/EOF]

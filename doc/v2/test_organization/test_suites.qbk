@@ -1,4 +1,4 @@
-[section:test_organization_test_suite Test suite]
+[section:test_suite Test suite]
 If you consider test cases as leaves on the test tree, the test suite can be considered as branch and the master
 test suite as a trunk. Unlike real trees though, our tree in many cases consists only of leaves attached
 directly to the trunk. This is common for all test cases to reside directly in the master test suite. If you do
@@ -192,56 +192,6 @@ function has to be manually implemented. The master test suite name can be reset
 
 [endsect] [/ command line interface]
 
-[section:test_suite_expected_failure Expected failures specification]
-
-While in a perfect world all test assertions should pass in order for a test module to pass, in some situations
-it is desirable to temporarily allow particular tests to fail. For example, where a particular feature is not
-implemented yet and one needs to prepare a library for the release or when particular test fails on some
-platforms. To avoid a nagging red box in regression tests table, you can use the expected failures feature.
-
-
-This feature allows specifying an expected number of failed assertions per test unit. The value is specified
-during test tree construction, and can't be updated during test execution.
-
-The feature is not intended to be used to check for expected functionality failures. To check that a particular
-input is causing an exception to be thrown use __BOOST_LEVEL_THROW__ family of testing
-tools.
-
-The usage of this feature should be limited and employed only after careful consideration. In general you should
-only use this feature when it is necessary to force a test module to pass without actually fixing the problem.
-Obviously, an excessive usage of expected failures defeats the purpose of the unit test. In most cases it only
-needs be applied temporarily.
-
-You also need to remember that the expected failure specification is per test case. This means that any failed
-assertion within that test case can satisfy the expected failures quota. Meaning it is possible for an
-unexpected failure to occur to satisfy this quota.
-
-
-[note If an assertion at fault is fixed and passed, while an expected failures specification still present, the test
-    case is going to fail, since the number of failures is smaller than expected.
-]
-
-[h3 Usage with manually registered test cases]
-
-To set the value of expected failures for the manually registered test unit pass it as a second argument for the
-[link ref_test_case_registration `test_suite::add`] call during test unit registration.
-
-[bt_example example16..Expected failures specification for manually registered test case]
-
-[#ref_BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES][h3 Usage with automatically registered test cases]
-
-To set the number of expected failures for the automatically registered test unit use the macro
-__BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ before the test case definition.
-
-``
-BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES(test_case_name, number_of_expected_failures);
-``
-
-You can use this macro both on a file scope and inside a test suite. Moreover you can use it even if name of test
-units coincide in different test suites. Expected failures specification applies to the test unit belonging to the same 
-test suite where __BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ resides.
-
-[bt_example example17..Expected failures specification for automatically registered test case]
-
-[endsect] [/ expected failures]
 [endsect] [/ test suite]
+
+[/EOF]

@@ -1,4 +1,4 @@
-[#ref_section_runtime_configuration][section The __UTF__ runtime parameters]
+[section:runtime_config Runtime parameters]
  
 
 The __UTF__ supports multiple parameters that affect test module execution. To set the parameter's value you can
@@ -25,8 +25,7 @@ parameter specification.
 
 All information about supported parameters is summarized below in the reference section.
 
-[include runtime_configuration.running_specific_test.qbk]
-[include runtime_configuration.reference.qbk]
-
+[include run_by_name_label.qbk]
+[include runtime_config_reference.qbk]
 
 [endsect] [/ runtime configuration]

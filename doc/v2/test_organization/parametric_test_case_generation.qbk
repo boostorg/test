@@ -1,7 +1,7 @@
 [section:test_case_generation Generation of test case parameters]
 
-In some circumstance, one would like to test a [link boost_test.tests_organization.test_cases.test_organization_unary parametrized] 
-test over a large set of parameters. __BOOST_PARAM_TEST_CASE__ provides an easy solution when these parameters can be described in 
+In some circumstance, one would like to test a __section_parameterized_test__
+over a large set of parameters. __BOOST_PARAM_TEST_CASE__ provides an easy solution when these parameters can be described in 
 some collection. However, this solution has also limitations
 
 * Suppose we already have parametrized tests for two functions `func1` and `func2`. 
@@ -27,8 +27,7 @@ A dataset is a collection of elements, that
 
 [tip datasets are implemented in [classref boost::unit_test::data::monomorphic::dataset]]
 
-[warning Only "monomorphic" datasets are supported, which means that all elements of the collection have the same type.
- ]
+[warning For now only "monomorphic" datasets are supported, which means that all elements of the collection have the same type.]
 
 
 
@@ -235,13 +234,7 @@ The details of the named value parameters is given in the table below.
   ]  
 ]
 
-
-
-
-
-
 [endsect] [/ random]
-
 
 [endsect] [/ Datasets generators]
 
@@ -254,7 +247,8 @@ The dataset framework comes with a new test-case declaration macro:
 BOOST_DATA_TEST_CASE
 ``
 
-
 [endsect]
 
 [endsect]
+
+[/EOF]

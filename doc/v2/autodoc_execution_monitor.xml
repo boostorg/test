@@ -79,6 +79,14 @@
 
 
 
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </header>
@@ -163,11 +171,19 @@
 
 
 
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </header>
 <header name="boost/test/data/monomorphic/dataset.hpp">
-<namespace name="boost">
+<para>Defines monomorphic dataset interface. </para><namespace name="boost">
 <namespace name="unit_test">
 <namespace name="data">
 <namespace name="monomorphic">
@@ -275,11 +291,19 @@
 
 
 
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </header>
 <header name="boost/test/data/monomorphic/generate.hpp">
-<namespace name="boost">
+<para>Defines generic interface for monomorphic dataset based on generator. </para><namespace name="boost">
 <namespace name="unit_test">
 <namespace name="data">
 <namespace name="monomorphic">
@@ -359,6 +383,14 @@
 
 
 
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </header>
@@ -409,6 +441,14 @@
 
 
 </namespace>
+
+
+
+
+
+
+
+
 
 
 
@@ -482,19 +522,27 @@
 
 
 
-<function name="random"><type><classname>monomorphic::generated_by</classname>&lt; <classname>monomorphic::random_t</classname>&lt;&gt; &gt;</type></function>
+<function name="random"><type><classname>monomorphic::generated_by</classname>&lt; <classname>monomorphic::random_t</classname>&lt;&gt; &gt;</type><purpose>Returns an infinite sequence of random (real) numbers. </purpose><description><para>The generator uses the default distribution, which is uniform in [0, 1). </para></description></function>
 <function name="random"><type><classname>monomorphic::generated_by</classname>&lt; <classname>monomorphic::random_t</classname>&lt; SampleType &gt; &gt;</type><template>
           <template-type-parameter name="SampleType"/>
-        </template><parameter name="begin"><paramtype>SampleType</paramtype></parameter><parameter name="end"><paramtype>SampleType</paramtype></parameter></function>
+        </template><parameter name="begin"><paramtype>SampleType</paramtype></parameter><parameter name="end"><paramtype>SampleType</paramtype></parameter><purpose>Returns an infinite sequence of random numbers, in the given interval. </purpose><description><para>The generator uses the default distribution, which is uniform (in [begin, end) for real numbers, and in [begin, end] for integers). </para></description></function>
 <function name="random"><type><emphasis>unspecified</emphasis></type><template>
           <template-type-parameter name="Params"/>
-        </template><parameter name="params"><paramtype>Params const &amp;</paramtype></parameter><purpose>Generates a dataset from a random distribution. </purpose></function>
+        </template><parameter name="params"><paramtype>Params const &amp;</paramtype></parameter><purpose>Generates a random sequence from the parameters. </purpose></function>
 
 
 
 
 
 </namespace>
+
+
+
+
+
+
+
+
 
 
 
@@ -582,6 +630,14 @@
           <template-type-parameter name="StepType"/>
         </template><parameter name="begin_val"><paramtype>SampleType const &amp;</paramtype></parameter><parameter name="end_val"><paramtype>SampleType const &amp;</paramtype></parameter><parameter name="step_val"><paramtype>StepType const &amp;</paramtype></parameter><purpose>Creates an xrange [begin, end) with given step. </purpose><description><para>The step size cannot be null. </para></description></function>
 </namespace>
+
+
+
+
+
+
+
+
 
 
 
@@ -687,6 +743,14 @@
 
 
 
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </header>
@@ -785,6 +849,14 @@
 
 
 
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </header>
@@ -863,6 +935,14 @@
 
 
 </namespace>
+
+
+
+
+
+
+
+
 
 
 
@@ -968,6 +1048,14 @@
 
 
 
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </header>
@@ -1046,6 +1134,14 @@
 
 
 
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </header>
@@ -1094,6 +1190,14 @@
 
 
 </namespace>
+
+
+
+
+
+
+
+
 
 
 
@@ -1269,6 +1373,14 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 
 
 
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 <macro name="BOOST_TEST_SETUP_ASSERT" kind="functionlike"><macro-parameter name="cond"/><macro-parameter name="msg"/></macro>
@@ -1332,6 +1444,14 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 
 
 
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </header>
@@ -1347,6 +1467,14 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 <method name="do_confirmation_report" specifiers="virtual"><type>void</type><parameter name=""><paramtype><classname>test_unit</classname> const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
 </method-group>
 </class></namespace>
+
+
+
+
+
+
+
+
 
 
 
@@ -1412,6 +1540,14 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 
 
 
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </header>
@@ -1427,6 +1563,14 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 <method name="do_confirmation_report" specifiers="virtual"><type>void</type><parameter name=""><paramtype><classname>test_unit</classname> const &amp;</paramtype></parameter><parameter name="ostr"><paramtype>std::ostream &amp;</paramtype></parameter></method>
 </method-group>
 </class></namespace>
+
+
+
+
+
+
+
+
 
 
 
@@ -1455,6 +1599,14 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
           <template-type-parameter name="ParamType"/>
           <template-type-parameter name="ParamIter"/>
         </template><parameter name="test_method"><paramtype>void(UserTestCase::*)(ParamType)</paramtype></parameter><parameter name="tc_name"><paramtype>const_string</paramtype></parameter><parameter name="tc_file"><paramtype>const_string</paramtype></parameter><parameter name="tc_line"><paramtype>std::size_t</paramtype></parameter><parameter name="user_test_case"><paramtype>boost::shared_ptr&lt; UserTestCase &gt; const &amp;</paramtype></parameter><parameter name="par_begin"><paramtype>ParamIter</paramtype></parameter><parameter name="par_end"><paramtype>ParamIter</paramtype></parameter></function>
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 <macro name="BOOST_PARAM_TEST_CASE" kind="functionlike"><macro-parameter name="function"/><macro-parameter name="begin"/><macro-parameter name="end"/></macro>
@@ -1464,6 +1616,14 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 <para>defines simple text based progress monitor </para><namespace name="boost">
 <namespace name="unit_test">
 <class name="progress_monitor_t"><inherit access="public">test_observer</inherit><inherit access="public">singleton&lt; progress_monitor_t &gt;</inherit><purpose>This class implements test observer interface and updates test progress as test units finish or get aborted. </purpose></class>
+
+
+
+
+
+
+
+
 
 
 
@@ -1498,6 +1658,14 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 </method-group>
 <constructor/>
 </class>
+
+
+
+
+
+
+
+
 
 
 
@@ -1541,6 +1709,14 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 
 
 
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </header>
@@ -1568,7 +1744,7 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 </namespace>
 </header>
 <header name="boost/test/tree/test_unit.hpp">
-<namespace name="boost">
+<para>Defines <classname alt="boost::unit_test::test_unit">test_unit</classname>, <classname alt="boost::unit_test::test_case">test_case</classname>, <classname alt="boost::unit_test::test_suite">test_suite</classname> and <classname alt="boost::unit_test::master_test_suite_t">master_test_suite_t</classname>. </para><namespace name="boost">
 <namespace name="unit_test">
 <class name="master_test_suite_t"><inherit access="public">boost::unit_test::test_suite</inherit><data-member name="argc"><type>int</type></data-member>
 <data-member name="argv"><type>char **</type></data-member>
@@ -1730,6 +1906,14 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 
 
 
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </header>
@@ -1737,6 +1921,14 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 <para>Entry point into the Unit Test Framework. </para><para>This header sould be the only header necessary to include to start using the framework </para><namespace name="boost">
 <namespace name="unit_test">
 <function name="unit_test_main"><type>int</type><parameter name="init_func"><paramtype>init_unit_test_func</paramtype></parameter><parameter name="argc"><paramtype>int</paramtype></parameter><parameter name="argv"><paramtype>char *</paramtype></parameter></function>
+
+
+
+
+
+
+
+
 
 
 
@@ -1815,6 +2007,115 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 
 
 
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/test/unit_test_parameters.hpp">
+<para>Provides access to various Unit Test Framework runtime parameters. </para><para>Primarily for use by the framework itself </para><namespace name="boost">
+<namespace name="unit_test">
+<namespace name="runtime_config">
+<function name="init"><type>void</type><parameter name="argc"><paramtype>int &amp;</paramtype></parameter><parameter name="argv"><paramtype>char **</paramtype></parameter></function>
+<function name="auto_start_dbg"><type>bool</type><purpose>Automatically attach debugger in a location of fatal error. </purpose></function>
+<function name="break_exec_path"><type>const_string</type></function>
+<function name="catch_sys_errors"><type>bool</type><purpose>Should we catch system errors/sygnals? </purpose></function>
+<function name="color_output"><type>bool</type><purpose>Should we try to produce color output? </purpose></function>
+<function name="detect_fp_exceptions"><type>bool</type><purpose>Should we detect floating point exceptions? </purpose></function>
+<function name="detect_memory_leaks"><type>long</type><purpose>Should we detect memory leaks (&gt;0)? And if yes, which specific memory allocation should we break. </purpose></function>
+<function name="list_content"><type>bool</type><purpose>Print content of test tree? </purpose></function>
+<function name="log_format"><type>output_format</type><purpose>Which output format to use. </purpose></function>
+<function name="log_level"><type>unit_test::log_level</type><purpose>Which log level to set. </purpose></function>
+<function name="log_sink"><type>std::ostream *</type><purpose>Where to direct log stream into. </purpose></function>
+<function name="memory_leaks_report_file"><type>const_string</type><purpose>If memory leak detection, where to direct the report. </purpose></function>
+<function name="no_result_code"><type>bool</type><purpose>Do not prodce result code. </purpose></function>
+<function name="random_seed"><type>int</type><purpose>Random seed to use to randomize order of test units being run. </purpose></function>
+<function name="report_format"><type>output_format</type><purpose>Which format to use to report results. </purpose></function>
+<function name="report_level"><type>unit_test::report_level</type><purpose>Wht lever of report format to set. </purpose></function>
+<function name="report_sink"><type>std::ostream *</type><purpose>Where to direct results report into. </purpose></function>
+<function name="save_pattern"><type>bool</type><purpose>Should we save pattern (true) or match against existing pattern (used by output validation tool) </purpose></function>
+<function name="show_build_info"><type>bool</type><purpose>Should Unit Test framework show the build information? </purpose></function>
+<function name="show_progress"><type>bool</type><purpose>Tells Unit Test Framework to show test progress (forces specific log level) </purpose></function>
+<function name="test_to_run"><type>std::list&lt; std::string &gt; const &amp;</type><purpose>Specific test units to run/exclude. </purpose></function>
+<function name="use_alt_stack"><type>bool</type><purpose>Should execution monitor use alternative stack for signal handling. </purpose></function>
+<function name="wait_for_debugger"><type>bool</type><purpose>Tells Unit Test Framework to wait for debugger to attach. </purpose></function>
+</namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/test/utils/algorithm.hpp">
+<para>Addition to STL algorithms. </para><namespace name="boost">
+<namespace name="unit_test">
+
+
+
+
+
+
+<function name="mismatch"><type>std::pair&lt; InputIter1, InputIter2 &gt;</type><template>
+          <template-type-parameter name="InputIter1"/>
+          <template-type-parameter name="InputIter2"/>
+        </template><parameter name="first1"><paramtype>InputIter1</paramtype><description><para>- first collection begin iterator </para></description></parameter><parameter name="last1"><paramtype>InputIter1</paramtype><description><para>- first collection end iterator </para></description></parameter><parameter name="first2"><paramtype>InputIter2</paramtype><description><para>- second collection begin iterator </para></description></parameter><parameter name="last2"><paramtype>InputIter2</paramtype><description><para>- second collection end iterator </para></description></parameter><purpose>this algorithm search through two collections for first mismatch position that get returned as a pair of iterators, first pointing to the mismatch position in first collection, second iterator in second one </purpose><description><para>
+</para></description></function>
+<function name="mismatch"><type>std::pair&lt; InputIter1, InputIter2 &gt;</type><template>
+          <template-type-parameter name="InputIter1"/>
+          <template-type-parameter name="InputIter2"/>
+          <template-type-parameter name="Predicate"/>
+        </template><parameter name="first1"><paramtype>InputIter1</paramtype><description><para>- first collection begin iterator </para></description></parameter><parameter name="last1"><paramtype>InputIter1</paramtype><description><para>- first collection end iterator </para></description></parameter><parameter name="first2"><paramtype>InputIter2</paramtype><description><para>- second collection begin iterator </para></description></parameter><parameter name="last2"><paramtype>InputIter2</paramtype><description><para>- second collection end iterator </para></description></parameter><parameter name="pred"><paramtype>Predicate</paramtype><description><para>- predicate to be used for search </para></description></parameter><purpose>this algorithm search through two collections for first mismatch position that get returned as a pair of iterators, first pointing to the mismatch position in first collection, second iterator in second one. This algorithms uses supplied predicate for collection elements comparison </purpose><description><para>
+</para></description></function>
+<function name="find_first_not_of"><type>ForwardIterator1</type><template>
+          <template-type-parameter name="ForwardIterator1"/>
+          <template-type-parameter name="ForwardIterator2"/>
+        </template><parameter name="first1"><paramtype>ForwardIterator1</paramtype><description><para>- first collection begin iterator </para></description></parameter><parameter name="last1"><paramtype>ForwardIterator1</paramtype><description><para>- first collection end iterator </para></description></parameter><parameter name="first2"><paramtype>ForwardIterator2</paramtype><description><para>- second collection begin iterator </para></description></parameter><parameter name="last2"><paramtype>ForwardIterator2</paramtype><description><para>- second collection end iterator </para></description></parameter><purpose>this algorithm search through first collection for first element that does not belong a second one </purpose><description><para>
+</para></description></function>
+<function name="find_first_not_of"><type>ForwardIterator1</type><template>
+          <template-type-parameter name="ForwardIterator1"/>
+          <template-type-parameter name="ForwardIterator2"/>
+          <template-type-parameter name="Predicate"/>
+        </template><parameter name="first1"><paramtype>ForwardIterator1</paramtype><description><para>- first collection begin iterator </para></description></parameter><parameter name="last1"><paramtype>ForwardIterator1</paramtype><description><para>- first collection end iterator </para></description></parameter><parameter name="first2"><paramtype>ForwardIterator2</paramtype><description><para>- second collection begin iterator </para></description></parameter><parameter name="last2"><paramtype>ForwardIterator2</paramtype><description><para>- second collection end iterator </para></description></parameter><parameter name="pred"><paramtype>Predicate</paramtype><description><para>- predicate to be used for search </para></description></parameter><purpose>this algorithm search through first collection for first element that does not satisfy binary predicate in conjunction will any element in second collection </purpose><description><para>
+</para></description></function>
+<function name="find_last_of"><type>BidirectionalIterator1</type><template>
+          <template-type-parameter name="BidirectionalIterator1"/>
+          <template-type-parameter name="ForwardIterator2"/>
+        </template><parameter name="first1"><paramtype>BidirectionalIterator1</paramtype><description><para>- first collection begin iterator </para></description></parameter><parameter name="last1"><paramtype>BidirectionalIterator1</paramtype><description><para>- first collection end iterator </para></description></parameter><parameter name="first2"><paramtype>ForwardIterator2</paramtype><description><para>- second collection begin iterator </para></description></parameter><parameter name="last2"><paramtype>ForwardIterator2</paramtype><description><para>- second collection end iterator </para></description></parameter><purpose>this algorithm search through first collection for last element that belongs to a second one </purpose><description><para>
+</para></description></function>
+<function name="find_last_of"><type>BidirectionalIterator1</type><template>
+          <template-type-parameter name="BidirectionalIterator1"/>
+          <template-type-parameter name="ForwardIterator2"/>
+          <template-type-parameter name="Predicate"/>
+        </template><parameter name="first1"><paramtype>BidirectionalIterator1</paramtype><description><para>- first collection begin iterator </para></description></parameter><parameter name="last1"><paramtype>BidirectionalIterator1</paramtype><description><para>- first collection end iterator </para></description></parameter><parameter name="first2"><paramtype>ForwardIterator2</paramtype><description><para>- second collection begin iterator </para></description></parameter><parameter name="last2"><paramtype>ForwardIterator2</paramtype><description><para>- second collection end iterator </para></description></parameter><parameter name="pred"><paramtype>Predicate</paramtype><description><para>- predicate to be used for search </para></description></parameter><purpose>this algorithm search through first collection for last element that satisfy binary predicate in conjunction will at least one element in second collection </purpose><description><para>
+</para></description></function>
+<function name="find_last_not_of"><type>BidirectionalIterator1</type><template>
+          <template-type-parameter name="BidirectionalIterator1"/>
+          <template-type-parameter name="ForwardIterator2"/>
+        </template><parameter name="first1"><paramtype>BidirectionalIterator1</paramtype><description><para>- first collection begin iterator </para></description></parameter><parameter name="last1"><paramtype>BidirectionalIterator1</paramtype><description><para>- first collection end iterator </para></description></parameter><parameter name="first2"><paramtype>ForwardIterator2</paramtype><description><para>- second collection begin iterator </para></description></parameter><parameter name="last2"><paramtype>ForwardIterator2</paramtype><description><para>- second collection end iterator </para></description></parameter><purpose>this algorithm search through first collection for last element that does not belong to a second one </purpose><description><para>
+</para></description></function>
+<function name="find_last_not_of"><type>BidirectionalIterator1</type><template>
+          <template-type-parameter name="BidirectionalIterator1"/>
+          <template-type-parameter name="ForwardIterator2"/>
+          <template-type-parameter name="Predicate"/>
+        </template><parameter name="first1"><paramtype>BidirectionalIterator1</paramtype><description><para>- first collection begin iterator </para></description></parameter><parameter name="last1"><paramtype>BidirectionalIterator1</paramtype><description><para>- first collection end iterator </para></description></parameter><parameter name="first2"><paramtype>ForwardIterator2</paramtype><description><para>- second collection begin iterator </para></description></parameter><parameter name="last2"><paramtype>ForwardIterator2</paramtype><description><para>- second collection end iterator </para></description></parameter><parameter name="pred"><paramtype>Predicate</paramtype><description><para>- predicate to be used for search </para></description></parameter><purpose>this algorithm search through first collection for last element that does not satisfy binary predicate in conjunction will any element in second collection </purpose><description><para>
+</para></description></function>
 </namespace>
 </namespace>
 </header>

@@ -137,7 +137,7 @@ boostbook standalone
     <xsl:param>chapter.autolabel=0
     <xsl:param>toc.max.depth=10
     <xsl:param>toc.section.depth=10
-    <xsl:param>chunk.section.depth=2
+    <xsl:param>chunk.section.depth=4
     <xsl:param>chunk.first.sections=1
     <xsl:param>generate.section.toc.level=0
     <format>pdf:<xsl:param>img.src.path=$(images_location)/

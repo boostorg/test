@@ -177,3 +177,5 @@ The statement, that performs global fixture definition, has to reside at a test 
 [endsect] [/section Global fixtures]
 
 [endsect] [/ section fixtures]
+
+[/EOF]
