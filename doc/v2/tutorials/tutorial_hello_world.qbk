@@ -45,9 +45,8 @@ There are several issues with above test.
 # Would exception happen in test_object construction of method is_valid invocation, the program will crash.
 # You won't see any output, would you run this test manually.
 
-The Unit Test Framework solves all these issues. To integrate with it above program needs to be changed to:
+The __UTF__ solves all these issues. To integrate with it above program needs to be changed to:
 
-[/snippet11 deleted]
 ``
 #include <my_class.hpp>
 #define __BOOST_TEST_MODULE__ MyTest
