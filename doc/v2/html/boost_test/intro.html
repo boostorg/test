@@ -1,0 +1,134 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Introduction</title>
+<link rel="stylesheet" href="../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../index.html" title="Boost.Test">
+<link rel="up" href="../index.html" title="Boost.Test">
+<link rel="prev" href="../index.html" title="Boost.Test">
+<link rel="next" href="users_guide.html" title="The Unit Test Framework User's Guide">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../index.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="users_guide.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="boost_test.intro"></a><a class="link" href="intro.html" title="Introduction">Introduction</a>
+</h2></div></div></div>
+<p>
+      <span class="epigraph">Test everything that could possibly break</span>
+      <span class="epigraph">--XP maxim</span>
+    </p>
+<p>
+      <span class="epigraph">The acceptance test makes the customer satisfied that
+      the software provides the business value that makes them willing to pay for
+      it. The unit test makes the programmer satisfied that the software does what
+      the programmer thinks it does </span> <span class="epigraph">--XP maxim</span>
+    </p>
+<p>
+      What is the first thing you need to do when you start working on new library/class/program?
+      That's right - you need to start with the unit test module (I hope you all
+      gave this answer!). Occasionally, you may get away with simple test implemented
+      using <code class="computeroutput"><span class="identifier">assert</span></code>s, but any professional
+      developer soon finds this approach lacking. It becomes clear that it's too
+      time-consuming and tedious for simple, but repetitive unit testing tasks and
+      it's too inflexible for most non-trivial ones.
+    </p>
+<p>
+      The Boost.Test library provides both an easy to use and flexible set of interfaces
+      for writing test programs, organizing tests into simple test cases and test
+      suites, and controlling their runtime execution. Some of Boost.Test's interfaces
+      are also useful in production (non-test) environments.
+    </p>
+<h4>
+<a name="boost_test.intro.h0"></a>
+      <span><a name="boost_test.intro.rationale"></a></span><a class="link" href="intro.html#boost_test.intro.rationale">Rationale</a>
+    </h4>
+<p>
+      Unit testing tasks arise during many different stages of software development:
+      from initial project implementation to its maintenance and later revisions.
+      These tasks differ in their complexity and purpose and accordingly are approached
+      differently by different developers. The wide spectrum of tasks in a problem
+      domain cause many requirements (sometimes conflicting) to be placed on a unit
+      testing framework. These include:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+          Writing a unit test module should be simple and obvious for new users.
+        </li>
+<li class="listitem">
+          The framework should allow advanced users to perform non-trivial tests.
+        </li>
+<li class="listitem">
+          Test module should be able to have many small test cases and developer
+          should be able to group them into test suites.
+        </li>
+<li class="listitem">
+          At the beginning of the development users want to see verbose and descriptive
+          error message, whereas during the regression testing they just want to
+          know if any tests failed.
+        </li>
+<li class="listitem">
+          For a small test modules run time should prevail over compilation time:
+          user don't want to wait a minute to compile a test that takes a second
+          to run.
+        </li>
+<li class="listitem">
+          For long and complex tests users want to be able to see the test progress.
+        </li>
+<li class="listitem">
+          Simplest tests shouldn't require an external library.
+        </li>
+<li class="listitem">
+          For long term usage users of a unit test framework should be able to build
+          it as a standalone library.
+        </li>
+</ul></div>
+<p>
+      The <span class="emphasis"><em>Unit Test Framework</em></span> design is based on above rationale
+      and provides versatile facilities to:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+          Simplify writing test cases by using various testing tools
+        </li>
+<li class="listitem">
+          Organize test cases into a test tree.
+        </li>
+<li class="listitem">
+          Relieve you from messy error detection, reporting duties and framework
+          runtime parameters processing.
+        </li>
+</ul></div>
+<p>
+      The <span class="emphasis"><em>Unit Test Framework</em></span> is intended to be used both for
+      a simple and non trivial testing. It is not intended to be used with production
+      code, but some of the Boost.Test interfaces can be, incuding ... .
+    </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2014 Gennadiy
+      Rozental<br>Copyright &#169; 2013, 2014 Raffi Enficiaud<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../index.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="users_guide.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

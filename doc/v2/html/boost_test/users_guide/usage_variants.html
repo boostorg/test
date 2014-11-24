@@ -1,0 +1,174 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Usage variants</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../index.html" title="Boost.Test">
+<link rel="up" href="../users_guide.html" title="The Unit Test Framework User's Guide">
+<link rel="prev" href="../users_guide.html" title="The Unit Test Framework User's Guide">
+<link rel="next" href="tests_organization.html" title="Test organization">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../users_guide.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../users_guide.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tests_organization.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="boost_test.users_guide.usage_variants"></a><a class="link" href="usage_variants.html" title="Usage variants">Usage variants</a>
+</h3></div></div></div>
+<p>
+        The <span class="emphasis"><em>Unit Test Framework</em></span> supports three different usage
+        variants:
+      </p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+            <a class="link" href="usage_variants.html#boost_test.users_guide.usage_variants.single_header">The
+            single-header variant</a>
+          </li>
+<li class="listitem">
+            <a class="link" href="usage_variants.html#boost_test.users_guide.usage_variants.static_lib">The
+            static library variant</a>
+          </li>
+<li class="listitem">
+            <a class="link" href="usage_variants.html#boost_test.users_guide.usage_variants.shared_lib">The
+            shared library variant</a>
+          </li>
+</ol></div>
+<p>
+        In most cases you shouldn't have problems deciding which one to use, since
+        there are clear reasons why would you prefer each one. Following sections
+        should help you with the decision.
+      </p>
+<h4>
+<a name="boost_test.users_guide.usage_variants.h0"></a>
+        <span><a name="boost_test.users_guide.usage_variants.single_header"></a></span><a class="link" href="usage_variants.html#boost_test.users_guide.usage_variants.single_header">Single-header
+        usage variant</a>
+      </h4>
+<p>
+        If you prefer to avoid the compilation of standalone library, you should
+        use the single-header variant of the <span class="emphasis"><em>Unit Test Framework</em></span>.
+        This variant only requires you to include, as it follows from its name, the
+        single header: <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
+        and there is no need to link with any library. There are several ways to
+        perform the initialization, but the simplest way is this:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">test</span> <span class="identifier">module</span> <span class="identifier">name</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+        BOOST_TEST_MODULE macro needs to be defined <span class="bold"><strong>before</strong></span>
+        the include and should be set to test module name. This name can include
+        spaces and does not need to be wrapped in quotes.
+      </p>
+<p>
+        The limitation of single header variant is that you can only implement this
+        way test modules with a single translation unit.
+      </p>
+<p>
+        For more details on customization for this usage variant you can check this
+        section
+      </p>
+<h4>
+<a name="boost_test.users_guide.usage_variants.h1"></a>
+        <span><a name="boost_test.users_guide.usage_variants.static_lib"></a></span><a class="link" href="usage_variants.html#boost_test.users_guide.usage_variants.static_lib">Static
+        library usage variant</a>
+      </h4>
+<p>
+        For most users, who has an access to prebuild static library of the <span class="emphasis"><em>Unit
+        Test Framework</em></span> or can build it themself, following usage can be
+        most versatile and simple approach. This usage variant entails two steps.
+        First you need to add following line to all translation units in a test module:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+        and <span class="bold"><strong>only one</strong></span> translation unit should include
+        following lines
+      </p>
+<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">test</span> <span class="identifier">module</span> <span class="identifier">name</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+        BOOST_TEST_MODULE macro needs to be defined <span class="bold"><strong>before</strong></span>
+        the include and should be set to test module name. This name can include
+        spaces and does not need to be wrapped in quotes.
+      </p>
+<p>
+        The second step is to link with the <span class="emphasis"><em>Unit Test Framework</em></span>
+        static library.
+      </p>
+<p>
+        The flip side of this usage variant is that each test module is going to
+        be statically linked with <span class="emphasis"><em>Unit Test Framework</em></span>, which
+        might be something you interrested to avoid. Also this usage variant has
+        limited options for test runners. For more information about these configuration
+        options check this section.
+      </p>
+<h4>
+<a name="boost_test.users_guide.usage_variants.h2"></a>
+        <span><a name="boost_test.users_guide.usage_variants.shared_lib"></a></span><a class="link" href="usage_variants.html#boost_test.users_guide.usage_variants.shared_lib">Shared
+        library usage variant</a>
+      </h4>
+<p>
+        In the project with large number of test modules the static library variant
+        of the <span class="emphasis"><em>Unit Test Framework</em></span> may cause you to waste a
+        lot of disk space. The solution is to link test module dynamically with the
+        <span class="emphasis"><em>Unit Test Framework</em></span> built as a shared library. This
+        usage variant entails two steps. First you need to add following lines to
+        all translation units in a test module:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_DYN_LINK</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+        and <span class="bold"><strong>only one</strong></span> translation unit should include
+        following lines
+      </p>
+<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_MODULE</span> <span class="identifier">test</span> <span class="identifier">module</span> <span class="identifier">name</span>
+<span class="preprocessor">#define</span> <span class="identifier">BOOST_TEST_DYN_LINK</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+        BOOST_TEST_MODULE macro needs to be defined <span class="bold"><strong>before</strong></span>
+        the include and should be set to test module name. This name can include
+        spaces and does not need to be wrapped in quotes.
+      </p>
+<p>
+        The second step is to link with the <span class="emphasis"><em>Unit Test Framework</em></span>
+        shared library.
+      </p>
+<p>
+        The flip of this usage variant is that you will need to make sure the <span class="emphasis"><em>Unit
+        Test Framework</em></span> shared library is accessible at runtime to a test
+        module.
+      </p>
+<p>
+        Shared library usage variant facilitates custom test runners. For more information
+        about this check this section.
+      </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2014 Gennadiy
+      Rozental<br>Copyright &#169; 2013, 2014 Raffi Enficiaud<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../users_guide.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../users_guide.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tests_organization.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
