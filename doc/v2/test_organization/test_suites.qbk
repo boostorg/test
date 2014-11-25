@@ -49,7 +49,7 @@ you can see from the output both `test_case1` and `test_case2` reside in the sam
 [bt_example example53..Test suite extension using automated registration facility]
 
 [h3 Test suites with manual registration]
-To create a test suite manually you need to create an instance of `boost::unit_test::test_suite` class, register
+To create a test suite manually you need to create an instance of [classref boost::unit_test::test_suite] class, register
 it in test tree and populate it with test cases (or lower level test suites).
 
 [#ref_test_case_registration][h4 Test unit registration interface]

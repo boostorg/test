@@ -1,8 +1,8 @@
 //[snippet17
-#define BOOST_TEST_MODULE const_string test
+#define __BOOST_TEST_MODULE__ const_string test
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE( constructors_test )
+__BOOST_AUTO_TEST_CASE__( constructors_test )
 {
   //...
 }
@@ -10,7 +10,7 @@ BOOST_AUTO_TEST_CASE( constructors_test )
 BOOST_AUTO_TEST_CASE( data_access_test )
 {
   const_string cs1( "test_string" );                                 // 1 //
-  BOOST_CHECK_EQUAL( cs1[(size_t)0], 't' );
+  __BOOST_CHECK_EQUAL__( cs1[(size_t)0], 't' );
   BOOST_CHECK_EQUAL( cs1[(size_t)4], '_' );
   BOOST_CHECK_EQUAL( cs1[cs1.length()-1], 'g' );
 

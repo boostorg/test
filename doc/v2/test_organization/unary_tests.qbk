@@ -20,7 +20,7 @@ void combined_test()
 The __UTF__ presents a better solution for this problem: the unary function based test case, also referred as
 ['parameterized test case]. The unary test function can be a free function, unary functor (for example created
 with `boost::bind`) or unary method of a class with bound test class instance). The test function is converted
-into test case using the macro __BOOST_PARAM_TEST_CASE__. The macro expects a collection of parameters (passed as
+into test case using the macro `BOOST_PARAM_TEST_CASE`. The macro expects a collection of parameters (passed as
 two input iterators) and an unary test function:
 
 ``
@@ -28,7 +28,7 @@ two input iterators) and an unary test function:
 ``
  
 
-__BOOST_PARAM_TEST_CASE__ creates an instance of the test case generator. When passed to the method `test_suite::add`,
+`BOOST_PARAM_TEST_CASE` creates an instance of the test case generator. When passed to the method `test_suite::add`,
 the generator produces a separate sub test case for each parameter in the parameters collection and registers
 it immediately in a test suite. Each test case is based on a test function with the parameter bound by value,
 even if the test function expects a parameter by reference. The fact that parameter value is stored along with

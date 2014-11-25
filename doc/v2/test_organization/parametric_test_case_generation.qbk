@@ -1,43 +1,79 @@
 [section:test_case_generation Generation of test case parameters]
 
-In some circumstance, one would like to test a __section_parameterized_test__
-over a large set of parameters. __BOOST_PARAM_TEST_CASE__ provides an easy solution when these parameters can be described in 
+In some circumstance, one would like to run a [link boost_test.tests_organization.test_cases.test_organization_unary parametrized] 
+test over a large set of parameters. __BOOST_PARAM_TEST_CASE__ provides an easy solution when these parameters can be described in 
 some collection. However, this solution has also limitations
 
-* Suppose we already have parametrized tests for two functions `func1` and `func2`. 
-* 
+* Suppose we have a parametrized test on `func1`, on which we test `N` parameters. We know a few values on which `func1` has a deterministic behaviour and we test that: 
+  in this setting `N` is necessarily finite and usually small.  How would we extend or scale `N` easily? One solution is to be able to 
+  generate new parameters, and to be able to define a test on the *class* of possible inputs for `func1` on which the function should have the same defined behaviour. 
+  In some extent, the inputs of the parametrized test is a sample of the possible inputs of `func1`, and working on the class of inputs gives more flexibility and power 
+  to the test. 
+* Suppose we already have a parametrized tests for two functions `func1` and `func2`, taking as argument the types `T1` and `T2` respectively. Now we like to test a new functions `func3` that 
+  takes as argument a type `T3` containing `T1` and `T2`, and calling `func1` and `func2` through a known algorithm. An example of such a setting would be
+  `` 
+  // Returns the log of x
+  // Precondition: x strictly positive.
+  double fast_log(double x);
 
-The __UTF__ provides a facility in order to ease the automated generations of these parameters.
+  // Returns 1/(x-1)
+  // Precondition: x != 1
+  double fast_inv(double x);
+  
+  struct dummy {
+    unsigned int field1;
+    unsigned int field2;
+  };
+  
+  double func3(dummy value)
+  {
+    return 0.5 * (exp(fast_log(value.field1))/value.field1 + value.field2/fast_inv(value.field2));
+  }
+  
+  `` 
+  
+  In this example, 
+  
+  * `func3` inherits from the preconditions of `fast_log` and `fast_inv`: it is defined in `(0, +infinity)` and in `[-C, +C] - {1}` for `field1` and `field2` respectively (`C`
+     being a constant arbitrarily big).
+  * as defined above, `func3` should be close to 1 everywhere on its definition domain. 
+  * we would like to reuse the tests of `fast_log` and `fast_inv` in `func3` and assert that `func3` is well defined over an arbitrary large definition domain. 
+  
+  Having parametrized tests on `func3` hardly tells us about the possible numerical properties or instabilities close to the point `{field1 = 0, field2 = 1}`.  Indeed, the parametrized test may 
+  test for some points around (0,1), but will fail to provide an *asymptotical behaviour* of the function close to this point. 
+
+
+The __UTF__ provides a facility in order to ease the description and the generations of the class of inputs. 
 
 The unit test toolbox is augmented with one new registration macro: __BOOST_DATA_TEST_CASE__. 
 
 [section Datasets]
-The power of the dataset object comes from
+The descriptive power of the datasets in __UTF__ comes from
 
-* the operations they provide for combination
-* the generators provided
+* the operations they provide for combining different datasets 
+* the available /dataset generators/
 * their interface with other type of collections
 
-A dataset is a collection of elements, that 
+A [classref boost::unit_test::data::monomorphic::dataset dataset] is a collection of elements, that 
 
 * is forward iterable
-* can be queried for their `size`
+* can be queried for its `size`, which in turn can be infinite. 
 
+Hence the dataset implements the notion of /sequence/. 
 
-
-[tip datasets are implemented in [classref boost::unit_test::data::monomorphic::dataset]]
-
-[warning For now only "monomorphic" datasets are supported, which means that all elements of the collection have the same type.]
+[info Only "monomorphic" datasets are supported, which means that all elements of a dataset have the same type. However as we will see, 
+ datasets representing collections of different types may be combined together.
+ ]
 
 
 
 [section Operations on dataset]
-As mentionned earlier, one of the major aspects of using the __UTF__ datasets lies in the number of operations provided
+As mentioned earlier, one of the major aspects of using the __UTF__ datasets lies in the number of operations provided
 for their combination.
  
 [section Cartesian products]
-The cartesian product, or ['grid], combines two datasets to form a new dataset of higher dimension. The iteration over
-the resulting datasets creates pairs of values with types respectives to the initial datasets.
+The Cartesian product, or ['grid], combines two datasets to form a new dataset of higher dimension. The iteration over
+the resulting datasets creates pairs of values with types respective to the initial datasets.
 
 Cartesian products are accessible through the `operator*` on datasets:
 
@@ -116,7 +152,7 @@ __BOOST_DATA_TEST_CASE__( test_name, data::make(samples1)^samples2, integer_valu
 Several ['generators] are implemented in __UTF__. The purpose are:
 
 * to ease the generation of data, even in large scale
-* to improve the readability and expressivity of the test cases
+* to improve the readability and expressiveness of the test cases
 
 
 
@@ -188,7 +224,7 @@ A factory for creating datasets with this random generator is given by
 
 
 [h5 Choosing the distribution]
-The selection of the distibution may be given by the parameter `boost::unit_test::data::distribution`
+The selection of the distribution may be given by the parameter `boost::unit_test::data::distribution`
 
 The following defines a random value generator with Gaussian distribution (mean 5, sigma 2).
 ``
@@ -214,17 +250,15 @@ The details of the named value parameters is given in the table below.
   ]
   [
     [`seed`]
-    [0]
-    [Seed for the generation of the random sequence.
-    ]
+    [(not set)]
+    [Seed for the generation of the random sequence.]
   ]
 
   [
     [`distribution`]
     [Uniform]
-    [Number indicating the end of the generated range. The `end` value is not included in set of values returned
-     by the generator for real values, and is included for integers. If omitted, the generator has infinite size. 
-    ]
+    [Distribution instance for generating the random number sequences. The `end` value is not included in set of values returned
+     by the generator for real values, and is included for integers. If omitted, the generator has infinite size. ]
   ]
   
   [
@@ -234,7 +268,13 @@ The details of the named value parameters is given in the table below.
   ]  
 ]
 
+
+
+
+
+
 [endsect] [/ random]
+
 
 [endsect] [/ Datasets generators]
 
@@ -247,8 +287,7 @@ The dataset framework comes with a new test-case declaration macro:
 BOOST_DATA_TEST_CASE
 ``
 
-[endsect]
 
 [endsect]
 
-[/EOF]
+[endsect]

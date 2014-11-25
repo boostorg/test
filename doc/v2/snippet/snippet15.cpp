@@ -1,12 +1,12 @@
 //[snippet15
-#define BOOST_TEST_MODULE const_string test
+#define __BOOST_TEST_MODULE__ const_string test
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE( constructors_test )
+__BOOST_AUTO_TEST_CASE__( constructors_test )
 {
   const_string cs0( "" );                                                 // 1 //
-  BOOST_CHECK_EQUAL( cs0.length(), (size_t)0 );
-  BOOST_CHECK( cs0.is_empty() );
+  __BOOST_CHECK_EQUAL__( cs0.length(), (size_t)0 );
+  __BOOST_CHECK__( cs0.is_empty() );
 
   const_string cs01( NULL );                                              // 2 //
   BOOST_CHECK_EQUAL( cs01.length(), (size_t)0 );

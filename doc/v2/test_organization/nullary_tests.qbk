@@ -1,6 +1,6 @@
 [section:test_organization_nullary Non-parameterized test cases]
 
-The most widely used are test cases based on a nullary function. These include nullary free functions, nullary
+The most widely used are test cases based on a /nullary/ function (functions without parameters). These include nullary free functions, nullary
 function objects created with `boost::bind` and nullary `boost::function`
 instances. The simplest is a free function and the __UTF__ provides facilities to create a free function based test
 case that is automatically registered. Here are the two construction interfaces:
@@ -36,7 +36,7 @@ To create a test case manually, employ the macro __BOOST_TEST_CASE__:
 ``
 
 
-__BOOST_TEST_CASE__ creates an instance of the class `boost::unit_test::test_case` and returns a pointer to the
+__BOOST_TEST_CASE__ creates an instance of the class [classref boost::unit_test::test_case] and returns a pointer to the
 constructed instance. The test case name is deduced from the macro argument test_function. If you prefer to
 assign a different test case name, you have to use the underlying make_test_case interface instead. To
 register a new test case, employ the method `test_suite::add`. Both test case creation and registration are
