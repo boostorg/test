@@ -56,7 +56,7 @@ The reason for this error is that in your implementation you should specify seco
 
 [h3 How can I redirect testing output?]
 Use ``unit_test_log::instance().set_log_output( std::ostream & )``
-For more details see the __UTF__ __output_stream_testing_tool__ testing tools documentation.
+For more details see the __UTF__ __output_test_stream_tool__ documentation.
 
 [h3 I want different default log trace level]
 Use environment variable __BOOST_TEST_LOG_LEVEL__ to define desired log trace level. You still will be able to reset

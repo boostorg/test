@@ -13,8 +13,9 @@ The elementary question one should ask himself is the following:
 
 The argument against the implementation of a custom ['module initialization] are the following:
 
-* The test tree can be easily and efficiently constructed automatically (covered in details in [link boost_test.tests_organization this] section).
-* __UTF__ also provides means to [link boost_test.building_utf.link_references.link_boost_test_module_macro rename] the ['master test suite].
+* The test tree can be easily and efficiently constructed automatically (covered in details in 
+  [link boost_test.users_guide.tests_organization Tests organization] section).
+* __UTF__ also provides means to [link boost_test.beyond_basics.build.link_references.link_boost_test_module_macro rename] the ['master test suite].
 * Most of the command line parameters, except the ones used by the __UTF__, may be accessed through the ['master test suite]
 * [link ref_fixture_test_global Global fixtures] may provide ['states] that can be accessed during the lifetime of the tests, 
   with proper and controlled initialization and release. This approach covers several use case that might need the tweaking of the 
@@ -23,7 +24,7 @@ The argument against the implementation of a custom ['module initialization] are
   part might be a good choice.
   
 From the points above, if the need for ['module initialization] is not there anymore, then you may jump directly 
-to the [link boost_test.building_utf.module_initialization.module_initialisation_automated automated section] directly.
+to the [link boost_test.beyond_basics.build.module_initialization.module_initialisation_automated automated section] directly.
 
 [section Custom module initialisation]
 
@@ -37,7 +38,7 @@ These initialisation functions are refered to as [*legacy] and [*alternative/sim
 
 * The test runners supplied with the static library and
   single-header variants of the __UTF__ by default still require original/legacy initialization function, but
-  support [link boost_test.building_utf.link_references.link_boost_test_alternative_init_macro compilation flags] that switch to the alternative/simplified
+  support [link boost_test.beyond_basics.build.link_references.link_boost_test_alternative_init_macro compilation flags] that switch to the alternative/simplified
   one. 
 * The test runner supplied with dynamic library variant of the __UTF__ requires the simplified initialisation and doesn't support
   legacy one. 
@@ -74,7 +75,7 @@ The only way to indicate an initialization error is to throw a [classref boost::
 The initialization function parameters `argc`, `argv` provide the command line arguments specified during test
 module invocation. It's guarantied that any framework-specific command line arguments are excluded. To be
 consistant with the ['simplified] initialization function specification it's recommended though to access the
-command line arguments using the [link boost_test.tests_organization.test_organization_test_suite.master_test_suite master test suite] interface.
+command line arguments using the __section_master_test_suite__ interface.
 
 [endsect] [/ legacy init function]
 
@@ -110,7 +111,7 @@ specification:
 
 The result value of this function indicates whether or not initialization was successful. To register test
 units in a master test suite use the `test_suite::add` interface (see [link ref_BOOST_TEST_CASE here] for an example). 
-To access command line arguments use the [link boost_test.tests_organization.test_organization_test_suite.master_test_suite master test suite] interface. 
+To access command line arguments use the __section_master_test_suite__ interface. 
 It's guarantied that any framework-specific command line arguments are excluded.
 [endsect] [/ alternative init function]
 

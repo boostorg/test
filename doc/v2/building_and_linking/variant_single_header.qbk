@@ -1,8 +1,8 @@
 [section:single_header_variant The single-header variant of the __UTF__]
 
-If you prefer to avoid the [*standalone library compilation], you [/ <link linkend="utf.compilation.standalone"> ]
-should use the single-header variant of the __UTF__. This variant is implemented, as it follows from its name, in
-the single header
+If you prefer to avoid the compilation od standalonr library, you should use the 
+single-header variant of the __UTF__. This variant is implemented, as it follows 
+from its name, inthe single header
 
 ``
   #include <boost/test/included/unit_test.hpp>

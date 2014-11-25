@@ -1,4 +1,4 @@
-[section:building_utf Building a test module with the __UTF__]
+[section:build Building a test module with the __UTF__]
 
 There are two tasks should be performed before actual testing is able to start:
 
@@ -8,9 +8,9 @@ There are two tasks should be performed before actual testing is able to start:
   initialization of the code under test and custom tune-up of the __UTF__ parameters (for example the test log or the
   test results report output streams redirection, some command line parameters passed to the test module, etc.).
 
-The part of the __UTF__ dedicated for this purpose is called [link boost_test.building_utf.module_initialization ['the test module initialization]] function. 
+The part of the __UTF__ dedicated for this purpose is called [link boost_test.beyond_basics.build.module_initialization ['the test module initialization]] function. 
 
-[note Note that alternatively to ['module initialization], global [link boost_test.tests_organization.fixtures fixtures] may be employed.]
+[note Note that alternatively to ['module initialization], global __section_test_fixture__ may be employed.]
 
 The ['module initialization] and the way the test module is linked against the __UTF__ are closely related. The method used to link 
 against the __UTF__ are often lead by considerations external to the tests themselves (compilation time, size of the generated binaries, etc). However,
@@ -55,4 +55,4 @@ like the floating point comparison or the logged expectations testing, are defin
 [/ reference of the macros]
 [include link_reference.qbk]
 
-[endsect] [/section:building_utf]
+[endsect] [/section:build]

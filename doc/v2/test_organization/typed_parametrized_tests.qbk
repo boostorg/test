@@ -124,3 +124,5 @@ them causes termination of the sub test case.
 [bt_example example09..Manually registered test case template]
 
 [endsect] [/template test cases]
+
+[/EOF]
