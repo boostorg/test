@@ -51,8 +51,8 @@ The unit test toolbox is augmented with one new registration macro: __BOOST_DATA
 The descriptive power of the datasets in __UTF__ comes from
 
 * the operations they provide for combining different datasets 
-* the available /dataset generators/
-* their interface with other type of collections
+* the available built-in /dataset generators/
+* their interface with other type of collections (`stl` containers, `C` arrays)
 
 A [classref boost::unit_test::data::monomorphic::dataset dataset] is a collection of elements, that 
 
@@ -61,99 +61,28 @@ A [classref boost::unit_test::data::monomorphic::dataset dataset] is a collectio
 
 Hence the dataset implements the notion of /sequence/. 
 
-[info Only "monomorphic" datasets are supported, which means that all elements of a dataset have the same type. However as we will see, 
+[tip Only "monomorphic" datasets are supported, which means that all elements of a dataset have the same type. However as we will see, 
  datasets representing collections of different types may be combined together.
  ]
 
+[section Creating datasets]
+Several ['generators] for datasets are implemented in __UTF__:
+
+* `stl` containers and `C` array like datasets
+* ranges
+* random values distributions
+
+[section Datasets from `C` arrays]
+This type of datasets does not contains the logic for generating the sequence of values, but contains the logic for parsing an existing
+sequence.
+
+[endsect] [/ datasets from C arrays]
 
 
-[section Operations on dataset]
-As mentioned earlier, one of the major aspects of using the __UTF__ datasets lies in the number of operations provided
-for their combination.
- 
-[section Cartesian products]
-The Cartesian product, or ['grid], combines two datasets to form a new dataset of higher dimension. The iteration over
-the resulting datasets creates pairs of values with types respective to the initial datasets.
+[section Datasets from `stl` containers]
+As for `C` arrays, this type of datasets does not contain the logic for generating sequence of values, but for parsing an existing sequence.
 
-Cartesian products are accessible through the `operator*` on datasets:
-
-
-[endsect]
-
-
-[section Joins]
-A ['join] is the concatenation of two datasets. These datasets are required to have compatible types. Joins are accessible through
-the `operator+` on datasets:
-
-``
-int arr1[] = {1, 2};
-int arr2[] = {7, 19};
-__BOOST_CHECK_EQUAL__( (data::make( arr1 ) + data::make( arr2 )).size(), 4);
-``
-
-[note
-The `join` functionality is implemented in the class [classref boost::unit_test::data::monomorphic::join].
-]
-
-[endsect]
-
-[section Zips]
-The ['zip] function returns a dataset of tuples, where the i-th tuple contains the i-th element from each of the argument datasets.
-The size of the zipped dataset is as follow:
-
-* if one of the dataset is of size 1 (singleton) or of infinite size, the final zip size is governed by the other dataset.
-* otherwise the datasets are required to have the same size
-
-Zips are accessible through the `operator^` on datasets:
-
-[table:id_example_dataset_zipop Custom predicate support using __BOOST_LEVEL_PREDICATE__
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [``
-#include <boost/test/unit_test.hpp>
-
-#if BOOST_PP_VARIADICS
-
-#include <boost/test/data/test_case.hpp>
-#include <boost/test/data/monomorphic.hpp>
-namespace data=boost::unit_test::data;
-
-int samples1[] = {1,2};
-char const* samples2[] = {"qwerty","asdfg"};
-
-__BOOST_DATA_TEST_CASE__( test_name, data::make(samples1)^samples2, integer_values, string_value)
-{
-  std::cout << integer_values << ", " << string_value << std::endl;
-}
-#endif
-``
-    ]
-    [
-``
-1, qwerty
-2, asdfg
-``
-    ]
-  ]
-]
-
-
-[endsect]
-
-[endsect] [/ operations on dataset]
-
-
-
-
-[section Datasets generators]
-Several ['generators] are implemented in __UTF__. The purpose are:
-
-* to ease the generation of data, even in large scale
-* to improve the readability and expressiveness of the test cases
-
+[endsect] [/ datasets from stl]
 
 
 [section Ranges]
@@ -277,6 +206,89 @@ The details of the named value parameters is given in the table below.
 
 
 [endsect] [/ Datasets generators]
+
+
+[section Operations on dataset]
+As mentioned earlier, one of the major aspects of using the __UTF__ datasets lies in the number of operations provided
+for their combination.
+ 
+[section Cartesian products]
+The Cartesian product, or ['grid], combines two datasets to form a new dataset of higher dimension. The iteration over
+the resulting datasets creates pairs of values with types respective to the initial datasets.
+
+Cartesian products are accessible through the `operator*` on datasets:
+
+
+[endsect]
+
+
+[section Joins]
+A ['join] is the concatenation of two datasets. These datasets are required to have compatible types. Joins are accessible through
+the `operator+` on datasets:
+
+``
+int arr1[] = {1, 2};
+int arr2[] = {7, 19};
+__BOOST_CHECK_EQUAL__( (data::make( arr1 ) + data::make( arr2 )).size(), 4);
+``
+
+[note
+The `join` functionality is implemented in the class [classref boost::unit_test::data::monomorphic::join].
+]
+
+[endsect]
+
+[section Zips]
+The ['zip] function returns a dataset of tuples, where the i-th tuple contains the i-th element from each of the argument datasets.
+The size of the zipped dataset is as follow:
+
+* if one of the dataset is of size 1 (singleton) or of infinite size, the final zip size is governed by the other dataset.
+* otherwise the datasets are required to have the same size
+
+Zips are accessible through the `operator^` on datasets:
+
+[table:id_example_dataset_zipop Custom predicate support using __BOOST_LEVEL_PREDICATE__
+  [
+    [Code]
+    [Output]
+  ]
+  [
+    [``
+#include <boost/test/unit_test.hpp>
+
+#if BOOST_PP_VARIADICS
+
+#include <boost/test/data/test_case.hpp>
+#include <boost/test/data/monomorphic.hpp>
+namespace data=boost::unit_test::data;
+
+int samples1[] = {1,2};
+char const* samples2[] = {"qwerty","asdfg"};
+
+__BOOST_DATA_TEST_CASE__( test_name, data::make(samples1)^samples2, integer_values, string_value)
+{
+  std::cout << integer_values << ", " << string_value << std::endl;
+}
+#endif
+``
+    ]
+    [
+``
+1, qwerty
+2, asdfg
+``
+    ]
+  ]
+]
+
+
+[endsect]
+
+[endsect] [/ operations on dataset]
+
+
+
+
 
 [endsect] [/ datasets]
 
