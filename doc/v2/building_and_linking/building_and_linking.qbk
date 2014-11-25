@@ -55,4 +55,4 @@ like the floating point comparison or the logged expectations testing, are defin
 [/ reference of the macros]
 [include link_reference.qbk]
 
-[endsect] [/section:building_utf]
+[endsect] [/section:build]

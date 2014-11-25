@@ -187,7 +187,21 @@
 <namespace name="unit_test">
 <namespace name="data">
 <namespace name="monomorphic">
-<struct name="traits"><template>
+<class name="dataset"><template>
+      <template-type-parameter name="T"/>
+    </template><class name="iterator"><typedef name="ref_type"><type><classname>monomorphic::traits</classname>&lt; T &gt;::ref_type</type></typedef>
+<method-group name="public member functions">
+<method name="operator*" cv="= 0" specifiers="virtual"><type>ref_type</type></method>
+<method name="operator++" cv="= 0" specifiers="virtual"><type>void</type></method>
+</method-group>
+<destructor/>
+</class><typedef name="data_type"><type>T</type></typedef>
+<typedef name="iter_ptr"><type>boost::shared_ptr&lt; <classname>iterator</classname> &gt;</type></typedef>
+<method-group name="public member functions">
+<method name="size" cv="const = 0" specifiers="virtual"><type><classname>data::size_t</classname></type></method>
+<method name="begin" cv="const = 0" specifiers="virtual"><type>iter_ptr</type></method>
+</method-group>
+</class><struct name="traits"><template>
       <template-type-parameter name="T"/>
     </template><typedef name="ref_type"><type>T const &amp;</type></typedef>
 <method-group name="public static functions">
@@ -214,21 +228,7 @@
           <template-type-parameter name="Action"/>
         </template><parameter name="arg"><paramtype>ref_type</paramtype></parameter><parameter name="action"><paramtype>Action const &amp;</paramtype></parameter></method>
 </method-group>
-</struct-specialization><class name="dataset"><template>
-      <template-type-parameter name="T"/>
-    </template><class name="iterator"><typedef name="ref_type"><type><classname>monomorphic::traits</classname>&lt; T &gt;::ref_type</type></typedef>
-<method-group name="public member functions">
-<method name="operator*" cv="= 0" specifiers="virtual"><type>ref_type</type></method>
-<method name="operator++" cv="= 0" specifiers="virtual"><type>void</type></method>
-</method-group>
-<destructor/>
-</class><typedef name="data_type"><type>T</type></typedef>
-<typedef name="iter_ptr"><type>boost::shared_ptr&lt; <classname>iterator</classname> &gt;</type></typedef>
-<method-group name="public member functions">
-<method name="size" cv="const = 0" specifiers="virtual"><type><classname>data::size_t</classname></type></method>
-<method name="begin" cv="const = 0" specifiers="virtual"><type>iter_ptr</type></method>
-</method-group>
-</class>
+</struct-specialization>
 
 
 
@@ -761,7 +761,10 @@
 <namespace name="unit_test">
 <namespace name="data">
 <namespace name="monomorphic">
-<class name="join"><template>
+<struct-specialization name="is_dataset"><template>
+      <template-type-parameter name="DS1"/>
+      <template-type-parameter name="DS2"/>
+    </template><specialization><template-arg>join&lt; DS1</template-arg><template-arg>DS2 &gt;</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization><class name="join"><template>
       <template-type-parameter name="DS1"/>
       <template-type-parameter name="DS2"/>
     </template><inherit access="public">boost::unit_test::data::monomorphic::dataset&lt; boost::decay&lt; DS1 &gt;::type::data_type &gt;</inherit><purpose>Defines a new dataset from the concatenation of two datasets. </purpose><description><para>The size of the resulting dataset is the sum of the two underlying datasets. </para></description><struct name="iterator"><inherit access="public">boost::unit_test::data::monomorphic::dataset&lt; T &gt;::iterator</inherit><method-group name="public member functions">
@@ -776,10 +779,7 @@
 </method-group>
 <constructor><parameter name="ds1"><paramtype>DS1 &amp;&amp;</paramtype></parameter><parameter name="ds2"><paramtype>DS2 &amp;&amp;</paramtype></parameter></constructor>
 <constructor><parameter name="j"><paramtype><classname>join</classname> &amp;&amp;</paramtype></parameter></constructor>
-</class><struct-specialization name="is_dataset"><template>
-      <template-type-parameter name="DS1"/>
-      <template-type-parameter name="DS2"/>
-    </template><specialization><template-arg>join&lt; DS1</template-arg><template-arg>DS2 &gt;</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization><namespace name="result_of">
+</class><namespace name="result_of">
 <struct name="join"><template>
       <template-type-parameter name="DS1Gen"/>
       <template-type-parameter name="DS2Gen"/>
@@ -867,7 +867,9 @@
 <namespace name="unit_test">
 <namespace name="data">
 <namespace name="monomorphic">
-<class name="singleton"><template>
+<struct-specialization name="is_dataset"><template>
+      <template-type-parameter name="T"/>
+    </template><specialization><template-arg>singleton&lt; T &gt;</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization><class name="singleton"><template>
       <template-type-parameter name="T"/>
     </template><inherit access="public">boost::unit_test::data::monomorphic::dataset&lt; boost::decay&lt; T &gt;::type &gt;</inherit><purpose>Models a single element data set. </purpose><struct name="iterator"><inherit access="public">boost::unit_test::data::monomorphic::dataset&lt; T &gt;::iterator</inherit><method-group name="public member functions">
 <method name="operator*" specifiers="virtual"><type>base::data_type const &amp;</type></method>
@@ -882,9 +884,7 @@
 </method-group>
 <constructor specifiers="explicit"><parameter name="value"><paramtype>T &amp;&amp;</paramtype></parameter></constructor>
 <constructor><parameter name="s"><paramtype><classname>singleton</classname> &amp;&amp;</paramtype></parameter></constructor>
-</class><struct-specialization name="is_dataset"><template>
-      <template-type-parameter name="T"/>
-    </template><specialization><template-arg>singleton&lt; T &gt;</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization>
+</class>
 
 
 
@@ -959,7 +959,10 @@
 <namespace name="unit_test">
 <namespace name="data">
 <namespace name="monomorphic">
-<class name="zip"><template>
+<struct-specialization name="is_dataset"><template>
+      <template-type-parameter name="DS1"/>
+      <template-type-parameter name="DS2"/>
+    </template><specialization><template-arg>zip&lt; DS1</template-arg><template-arg>DS2 &gt;</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization><class name="zip"><template>
       <template-type-parameter name="DS1"/>
       <template-type-parameter name="DS2"/>
     </template><purpose>Zip datasets. </purpose><struct name="iterator"><inherit access="public">boost::unit_test::data::monomorphic::dataset&lt; T &gt;::iterator</inherit><typedef name="ref_type"><type><classname>monomorphic::traits</classname>&lt; T &gt;::ref_type</type></typedef>
@@ -975,10 +978,7 @@
 </method-group>
 <constructor><parameter name="ds1"><paramtype>DS1 &amp;&amp;</paramtype></parameter><parameter name="ds2"><paramtype>DS2 &amp;&amp;</paramtype></parameter><parameter name="size"><paramtype><classname>data::size_t</classname></paramtype></parameter></constructor>
 <constructor><parameter name="j"><paramtype><classname>zip</classname> &amp;&amp;</paramtype></parameter></constructor>
-</class><struct-specialization name="is_dataset"><template>
-      <template-type-parameter name="DS1"/>
-      <template-type-parameter name="DS2"/>
-    </template><specialization><template-arg>zip&lt; DS1</template-arg><template-arg>DS2 &gt;</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization><namespace name="result_of">
+</class><namespace name="result_of">
 <struct name="zip"><template>
       <template-type-parameter name="DS1Gen"/>
       <template-type-parameter name="DS2Gen"/>
@@ -1248,7 +1248,7 @@
 <para>user's config for Boost.Test debugging support </para><para>This file is intended to be edited by end user to specify varios macros, which configure debugger interface Alterntively you can set these parameters in your own sources/makefiles </para></header>
 <header name="boost/test/execution_monitor.hpp">
 <para>Defines public interface of the Execution Monitor and related classes. </para><namespace name="boost">
-<class name="execution_exception"><purpose>This class is used to report any kind of an failure during execution of a monitored function inside of <classname alt="boost::execution_monitor">execution_monitor</classname>. </purpose><description><para>The instance of this class is thrown out of execution_monitor::execute invocation when failure is detected. Regardless of a kind of failure occured the instance will provide a uniform way to catch and report it.</para><para>One important design rationale for this class is that we should be ready to work after fatal memory corruptions or out of memory conditions. To facilitate this class never allocates any memory and assumes that strings it refers to are either some constants or live in a some kind of persistent (preallocated) memory. </para></description><struct name="location"><purpose>Simple model for the location of failure in a source code. </purpose><data-member name="m_file_name"><type>const_string</type><purpose>File name. </purpose></data-member>
+<class name="execution_aborted"><purpose>This is a trivial default constructible class. Use it to report graceful abortion of a monitored function execution. </purpose></class><class name="execution_exception"><purpose>This class is used to report any kind of an failure during execution of a monitored function inside of <classname alt="boost::execution_monitor">execution_monitor</classname>. </purpose><description><para>The instance of this class is thrown out of execution_monitor::execute invocation when failure is detected. Regardless of a kind of failure occured the instance will provide a uniform way to catch and report it.</para><para>One important design rationale for this class is that we should be ready to work after fatal memory corruptions or out of memory conditions. To facilitate this class never allocates any memory and assumes that strings it refers to are either some constants or live in a some kind of persistent (preallocated) memory. </para></description><struct name="location"><purpose>Simple model for the location of failure in a source code. </purpose><data-member name="m_file_name"><type>const_string</type><purpose>File name. </purpose></data-member>
 <data-member name="m_line_num"><type>size_t</type><purpose>Line number. </purpose></data-member>
 <data-member name="m_function"><type>const_string</type><purpose>Function name. </purpose></data-member>
 <method-group name="public member functions">
@@ -1291,7 +1291,7 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 <method-group name="private member functions">
 <method name="catch_signals"><type>int</type><parameter name="F"><paramtype>boost::function&lt; int()&gt; const &amp;</paramtype></parameter></method>
 </method-group>
-</class><class name="execution_aborted"><purpose>This is a trivial default constructible class. Use it to report graceful abortion of a monitored function execution. </purpose></class><class name="system_error"><data-member name="p_errno"><type>unit_test::readonly_property&lt; long &gt;</type></data-member>
+</class><class name="system_error"><data-member name="p_errno"><type>unit_test::readonly_property&lt; long &gt;</type></data-member>
 <data-member name="p_failed_exp"><type>unit_test::readonly_property&lt; char const * &gt;</type></data-member>
 <method-group name="public member functions">
 </method-group>
@@ -1316,10 +1316,10 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 </struct><struct name="internal_error"><inherit access="public">runtime_error</inherit><purpose>This exception type is used to report internal Boost.Test framework errors. </purpose><method-group name="public member functions">
 </method-group>
 <constructor><parameter name="m"><paramtype>const_string</paramtype></parameter></constructor>
-</struct><struct name="setup_error"><inherit access="public">runtime_error</inherit><purpose>This exception type is used to report test module setup errors. </purpose><method-group name="public member functions">
+</struct><struct name="nothing_to_test"/><struct name="setup_error"><inherit access="public">runtime_error</inherit><purpose>This exception type is used to report test module setup errors. </purpose><method-group name="public member functions">
 </method-group>
 <constructor><parameter name="m"><paramtype>const_string</paramtype></parameter></constructor>
-</struct><struct name="test_being_aborted"/><struct name="nothing_to_test"/><namespace name="impl">
+</struct><struct name="test_being_aborted"/><namespace name="impl">
 <function name="apply_filters"><type>void</type><parameter name=""><paramtype>test_unit_id</paramtype></parameter></function>
 </namespace>
 <function name="init"><type>void</type><parameter name="init_func"><paramtype>init_unit_test_func</paramtype><description><para>test module initialization routine </para></description></parameter><parameter name="argc"><paramtype>int</paramtype><description><para>command line arguments collection </para></description></parameter><parameter name="argv"><paramtype>char *</paramtype><description><para>command line arguments collection </para></description></parameter><purpose>This funcion performs initialization of the framework monostate. </purpose><description><para>It needs to be called every time before the test is started. 
@@ -1637,7 +1637,11 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 <header name="boost/test/results_collector.hpp">
 <para>defines testing result collector components </para><para>Defines class results_collector_t that is responsible for gathering test results and class test_results for presenting this information to end-user </para><namespace name="boost">
 <namespace name="unit_test">
-<class name="test_results"><purpose>Collection of attributes constituting test unit results. </purpose><description><para>This class is a collection of attributes describing testing results. The atributes presented as public properties on an instance of the class. In addition summary conclusion methods are presented to generate simple answer to pass/fail question </para></description><data-member name="p_assertions_passed"><type>counter_prop</type></data-member>
+<class name="results_collector_t"><inherit access="public">test_observer</inherit><inherit access="public">singleton&lt; results_collector_t &gt;</inherit><purpose>This class implements test observer interface to collect the result of test unit execution. </purpose><method-group name="public member functions">
+<method name="results" cv="const"><type><classname>test_results</classname> const &amp;</type><parameter name="tu_id"><paramtype>test_unit_id</paramtype><description><para>id of a test unit </para></description></parameter><purpose>Results access per test unit. </purpose><description><para>
+</para></description></method>
+</method-group>
+</class><class name="test_results"><purpose>Collection of attributes constituting test unit results. </purpose><description><para>This class is a collection of attributes describing testing results. The atributes presented as public properties on an instance of the class. In addition summary conclusion methods are presented to generate simple answer to pass/fail question </para></description><data-member name="p_assertions_passed"><type>counter_prop</type></data-member>
 <data-member name="p_assertions_failed"><type>counter_prop</type></data-member>
 <data-member name="p_warnings_failed"><type>counter_prop</type></data-member>
 <data-member name="p_expected_failures"><type>counter_prop</type></data-member>
@@ -1655,10 +1659,6 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 <method name="clear"><type>void</type></method>
 </method-group>
 <constructor/>
-</class><class name="results_collector_t"><inherit access="public">test_observer</inherit><inherit access="public">singleton&lt; results_collector_t &gt;</inherit><purpose>This class implements test observer interface to collect the result of test unit execution. </purpose><method-group name="public member functions">
-<method name="results" cv="const"><type><classname>test_results</classname> const &amp;</type><parameter name="tu_id"><paramtype>test_unit_id</paramtype><description><para>id of a test unit </para></description></parameter><purpose>Results access per test unit. </purpose><description><para>
-</para></description></method>
-</method-group>
 </class>
 
 
@@ -1748,10 +1748,8 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 <header name="boost/test/tree/test_unit.hpp">
 <para>Defines <classname alt="boost::unit_test::test_unit">test_unit</classname>, <classname alt="boost::unit_test::test_case">test_case</classname>, <classname alt="boost::unit_test::test_suite">test_suite</classname> and <classname alt="boost::unit_test::master_test_suite_t">master_test_suite_t</classname>. </para><namespace name="boost">
 <namespace name="unit_test">
-<class name="test_unit"><enum name="@0"><enumvalue name="type"><default>= TUT_ANY</default></enumvalue></enum>
-<typedef name="id_list"><type>std::list&lt; test_unit_id &gt;</type></typedef>
-<typedef name="fixture_list"><type>std::list&lt; test_unit_fixture_ptr &gt;</type></typedef>
-<typedef name="decorator_base"><type>decorator::for_test_unit_ptr</type></typedef>
+<class name="master_test_suite_t"><inherit access="public">boost::unit_test::test_suite</inherit><data-member name="argc"><type>int</type></data-member>
+<data-member name="argv"><type>char **</type></data-member>
 <data-member name="p_type"><type>readonly_property&lt; test_unit_type &gt;</type></data-member>
 <data-member name="p_type_name"><type>readonly_property&lt; const_string &gt;</type></data-member>
 <data-member name="p_file_name"><type>readonly_property&lt; const_string &gt;</type></data-member>
@@ -1767,6 +1765,11 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 <data-member name="p_decorators"><type>readwrite_property&lt; decorator_base &gt;</type></data-member>
 <data-member name="p_fixtures"><type>readwrite_property&lt; fixture_list &gt;</type></data-member>
 <method-group name="public member functions">
+<method name="add"><type>void</type><parameter name="tu"><paramtype><classname>test_unit</classname> *</paramtype></parameter><parameter name="expected_failures"><paramtype>counter_t</paramtype><default>0</default></parameter><parameter name="timeout"><paramtype>unsigned</paramtype><default>0</default></parameter><purpose>Adds a test unit to a test suite, with possibility to specify the timeout and the expected failures. </purpose></method>
+<method name="add"><type>void</type><parameter name="gen"><paramtype><classname>test_unit_generator</classname> const &amp;</paramtype></parameter><parameter name="timeout"><paramtype>unsigned</paramtype><default>0</default></parameter></method>
+<method name="remove"><type>void</type><parameter name="id"><paramtype>test_unit_id</paramtype></parameter><purpose>Removes a test from the test suite. </purpose></method>
+<method name="get" cv="const"><type>test_unit_id</type><parameter name="tu_name"><paramtype>const_string</paramtype></parameter></method>
+<method name="size" cv="const"><type>std::size_t</type></method>
 <method name="depends_on"><type>void</type><parameter name="tu"><paramtype><classname>test_unit</classname> *</paramtype></parameter></method>
 <method name="check_dependencies" cv="const"><type>bool</type></method>
 <method name="add_label"><type>void</type><parameter name="l"><paramtype>const_string</paramtype></parameter></method>
@@ -1776,17 +1779,12 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 <method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>test_unit_id</paramtype></parameter><parameter name=""><paramtype>(<classname>test_suite</classname>)</paramtype></parameter></method>
 <method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>id_list</paramtype></parameter><parameter name=""><paramtype>(<classname>test_unit</classname>)</paramtype></parameter></method>
 </method-group>
-<method-group name="protected member functions">
-</method-group>
-<destructor/>
-<constructor><parameter name="tu_name"><paramtype>const_string</paramtype></parameter><parameter name="tc_file"><paramtype>const_string</paramtype></parameter><parameter name="tc_line"><paramtype>std::size_t</paramtype></parameter><parameter name="t"><paramtype>test_unit_type</paramtype></parameter></constructor>
-<constructor specifiers="explicit"><parameter name="module_name"><paramtype>const_string</paramtype></parameter></constructor>
-</class><class name="test_unit_generator"><method-group name="public member functions">
-<method name="next" cv="const = 0" specifiers="virtual"><type><classname>test_unit</classname> *</type></method>
-</method-group>
-<method-group name="protected member functions">
-</method-group>
-<destructor/>
+<constructor/>
+<enum name="@2"><enumvalue name="type"><default>= TUT_SUITE</default></enumvalue></enum>
+<enum name="@0"><enumvalue name="type"><default>= TUT_ANY</default></enumvalue></enum>
+<typedef name="id_list"><type>std::list&lt; test_unit_id &gt;</type></typedef>
+<typedef name="fixture_list"><type>std::list&lt; test_unit_fixture_ptr &gt;</type></typedef>
+<typedef name="decorator_base"><type>decorator::for_test_unit_ptr</type></typedef>
 </class><class name="test_case"><inherit access="public">boost::unit_test::test_unit</inherit><enum name="@1"><enumvalue name="type"><default>= TUT_CASE</default></enumvalue></enum>
 <enum name="@0"><enumvalue name="type"><default>= TUT_ANY</default></enumvalue></enum>
 <typedef name="id_list"><type>std::list&lt; test_unit_id &gt;</type></typedef>
@@ -1862,8 +1860,10 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 <data-member name="p_enabled" specifiers="mutable"><type>readwrite_property&lt; bool &gt;</type></data-member>
 <data-member name="p_decorators"><type>readwrite_property&lt; decorator_base &gt;</type></data-member>
 <data-member name="p_fixtures"><type>readwrite_property&lt; fixture_list &gt;</type></data-member>
-</class><class name="master_test_suite_t"><inherit access="public">boost::unit_test::test_suite</inherit><data-member name="argc"><type>int</type></data-member>
-<data-member name="argv"><type>char **</type></data-member>
+</class><class name="test_unit"><enum name="@0"><enumvalue name="type"><default>= TUT_ANY</default></enumvalue></enum>
+<typedef name="id_list"><type>std::list&lt; test_unit_id &gt;</type></typedef>
+<typedef name="fixture_list"><type>std::list&lt; test_unit_fixture_ptr &gt;</type></typedef>
+<typedef name="decorator_base"><type>decorator::for_test_unit_ptr</type></typedef>
 <data-member name="p_type"><type>readonly_property&lt; test_unit_type &gt;</type></data-member>
 <data-member name="p_type_name"><type>readonly_property&lt; const_string &gt;</type></data-member>
 <data-member name="p_file_name"><type>readonly_property&lt; const_string &gt;</type></data-member>
@@ -1879,11 +1879,6 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 <data-member name="p_decorators"><type>readwrite_property&lt; decorator_base &gt;</type></data-member>
 <data-member name="p_fixtures"><type>readwrite_property&lt; fixture_list &gt;</type></data-member>
 <method-group name="public member functions">
-<method name="add"><type>void</type><parameter name="tu"><paramtype><classname>test_unit</classname> *</paramtype></parameter><parameter name="expected_failures"><paramtype>counter_t</paramtype><default>0</default></parameter><parameter name="timeout"><paramtype>unsigned</paramtype><default>0</default></parameter><purpose>Adds a test unit to a test suite, with possibility to specify the timeout and the expected failures. </purpose></method>
-<method name="add"><type>void</type><parameter name="gen"><paramtype><classname>test_unit_generator</classname> const &amp;</paramtype></parameter><parameter name="timeout"><paramtype>unsigned</paramtype><default>0</default></parameter></method>
-<method name="remove"><type>void</type><parameter name="id"><paramtype>test_unit_id</paramtype></parameter><purpose>Removes a test from the test suite. </purpose></method>
-<method name="get" cv="const"><type>test_unit_id</type><parameter name="tu_name"><paramtype>const_string</paramtype></parameter></method>
-<method name="size" cv="const"><type>std::size_t</type></method>
 <method name="depends_on"><type>void</type><parameter name="tu"><paramtype><classname>test_unit</classname> *</paramtype></parameter></method>
 <method name="check_dependencies" cv="const"><type>bool</type></method>
 <method name="add_label"><type>void</type><parameter name="l"><paramtype>const_string</paramtype></parameter></method>
@@ -1893,12 +1888,17 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 <method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>test_unit_id</paramtype></parameter><parameter name=""><paramtype>(<classname>test_suite</classname>)</paramtype></parameter></method>
 <method name="BOOST_READONLY_PROPERTY"><type>typedef</type><parameter name=""><paramtype>id_list</paramtype></parameter><parameter name=""><paramtype>(<classname>test_unit</classname>)</paramtype></parameter></method>
 </method-group>
-<constructor/>
-<enum name="@2"><enumvalue name="type"><default>= TUT_SUITE</default></enumvalue></enum>
-<enum name="@0"><enumvalue name="type"><default>= TUT_ANY</default></enumvalue></enum>
-<typedef name="id_list"><type>std::list&lt; test_unit_id &gt;</type></typedef>
-<typedef name="fixture_list"><type>std::list&lt; test_unit_fixture_ptr &gt;</type></typedef>
-<typedef name="decorator_base"><type>decorator::for_test_unit_ptr</type></typedef>
+<method-group name="protected member functions">
+</method-group>
+<destructor/>
+<constructor><parameter name="tu_name"><paramtype>const_string</paramtype></parameter><parameter name="tc_file"><paramtype>const_string</paramtype></parameter><parameter name="tc_line"><paramtype>std::size_t</paramtype></parameter><parameter name="t"><paramtype>test_unit_type</paramtype></parameter></constructor>
+<constructor specifiers="explicit"><parameter name="module_name"><paramtype>const_string</paramtype></parameter></constructor>
+</class><class name="test_unit_generator"><method-group name="public member functions">
+<method name="next" cv="const = 0" specifiers="virtual"><type><classname>test_unit</classname> *</type></method>
+</method-group>
+<method-group name="protected member functions">
+</method-group>
+<destructor/>
 </class>
 <function name="make_test_case"><type><classname>test_case</classname> *</type><parameter name="test_func"><paramtype>boost::function&lt; void()&gt; const &amp;</paramtype></parameter><parameter name="tc_name"><paramtype>const_string</paramtype></parameter><parameter name="tc_file"><paramtype>const_string</paramtype></parameter><parameter name="tc_line"><paramtype>std::size_t</paramtype></parameter></function>
 <function name="make_test_case"><type><classname>test_case</classname> *</type><template>
@@ -1943,19 +1943,19 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 <header name="boost/test/unit_test_log_formatter.hpp">
 <para>Defines unit test log formatter interface. </para><para>You can define a class with implements this interface and use an instance of it as a Unit Test Framework log formatter </para><namespace name="boost">
 <namespace name="unit_test">
-<struct name="log_entry_data"><purpose>Collection of log entry attributes. </purpose><data-member name="m_file_name"><type>std::string</type><purpose>log entry file name </purpose></data-member>
+<struct name="log_checkpoint_data"><purpose>Collection of log checkpoint attributes. </purpose><data-member name="m_file_name"><type>const_string</type><purpose>log checkpoint file name </purpose></data-member>
+<data-member name="m_line_num"><type>std::size_t</type><purpose>log checkpoint file name </purpose></data-member>
+<data-member name="m_message"><type>std::string</type><purpose>log checkpoint message </purpose></data-member>
+<method-group name="public member functions">
+<method name="clear"><type>void</type></method>
+</method-group>
+</struct><struct name="log_entry_data"><purpose>Collection of log entry attributes. </purpose><data-member name="m_file_name"><type>std::string</type><purpose>log entry file name </purpose></data-member>
 <data-member name="m_line_num"><type>std::size_t</type><purpose>log entry line number </purpose></data-member>
 <data-member name="m_level"><type>log_level</type><purpose>log entry level </purpose></data-member>
 <method-group name="public member functions">
 <method name="clear"><type>void</type></method>
 </method-group>
 <constructor/>
-</struct><struct name="log_checkpoint_data"><purpose>Collection of log checkpoint attributes. </purpose><data-member name="m_file_name"><type>const_string</type><purpose>log checkpoint file name </purpose></data-member>
-<data-member name="m_line_num"><type>std::size_t</type><purpose>log checkpoint file name </purpose></data-member>
-<data-member name="m_message"><type>std::string</type><purpose>log checkpoint message </purpose></data-member>
-<method-group name="public member functions">
-<method name="clear"><type>void</type></method>
-</method-group>
 </struct><class name="unit_test_log_formatter"><purpose>Abstract Unit Test Framework log formatter interface. </purpose><description><para>During the test module execution Unit Test Framework can report messages about success or failure of assertions, which test suites are being run and more (specifically which messages are reported depends on log level threashold selected by the user). All these messages constitute Unit Test Framework log. There are many ways (formats) to present these messages to the user. Boost.Test comes with two formats: "Compiler-like log format" and "XML based log format". Former is intended for human consumption and later is intended for processing by automated regression test systems. If you want to produce some other format you need to implement class with specific interface and use method unit_test_log_t::set_formatter during a test module initialization to set an active formatter. The class <classname alt="boost::unit_test::unit_test_log_formatter">unit_test_log_formatter</classname> defines this interface.</para><para>This interface requires you to format all possible messages being produced in the log. These includes error messages about failed assertions, messages about caught exceptions and information messages about test units being started/ended. All the methods in this interface takes a reference to standard stream as a first argument. This is where final messages needs to be directed to. Also you are givn all the informaion necessary to produce a message. </para></description><enum name="log_entry_types"><enumvalue name="BOOST_UTL_ET_INFO"><purpose>Information message from the framework. </purpose></enumvalue><enumvalue name="BOOST_UTL_ET_MESSAGE"><purpose>Information message from the user. </purpose></enumvalue><enumvalue name="BOOST_UTL_ET_WARNING"><purpose>Warning (non error) condition notification message. </purpose></enumvalue><enumvalue name="BOOST_UTL_ET_ERROR"><purpose>Non fatal error notification message. </purpose></enumvalue><enumvalue name="BOOST_UTL_ET_FATAL_ERROR"><purpose>Fatal error notification message. </purpose></enumvalue><purpose>Types of log entries (messages written into a log) </purpose></enum>
 <method-group name="public member functions">
 <method name="log_start" cv="= 0" specifiers="virtual"><type>void</type><parameter name="os"><paramtype>std::ostream &amp;</paramtype><description><para>output stream to write a messages to </para></description></parameter><parameter name="test_cases_amount"><paramtype>counter_t</paramtype><description><para>total test case amount to be run </para></description></parameter><purpose>Invoked at the begining of test module execution. </purpose><description><para>
@@ -2124,10 +2124,32 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 <header name="boost/test/utils/named_params.hpp">
 <namespace name="boost">
 <namespace name="nfp">
-<struct name="named_parameter"><template>
+<struct name="is_named_params"><template>
+      <template-type-parameter name="T"/>
+    </template><inherit access="public">false_</inherit></struct><struct-specialization name="is_named_params"><template>
       <template-type-parameter name="T"/>
       <template-type-parameter name="unique_id"/>
-      <template-type-parameter name="RefType"/>
+      <template-type-parameter name="ReferenceType"/>
+    </template><specialization><template-arg>named_parameter&lt; T</template-arg><template-arg>unique_id</template-arg><template-arg>ReferenceType &gt;</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization><struct-specialization name="is_named_params"><template>
+      <template-type-parameter name="NP"/>
+      <template-type-parameter name="Rest"/>
+    </template><specialization><template-arg>nfp_detail::named_parameter_combine&lt; NP</template-arg><template-arg>Rest &gt;</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization><struct name="keyword"><template>
+      <template-type-parameter name="unique_id"/>
+      <template-nontype-parameter name="required"><type>bool</type><default>false</default></template-nontype-parameter>
+    </template><typedef name="id"><type>unique_id</type></typedef>
+<method-group name="public member functions">
+</method-group>
+<copy-assignment cv="const"><type><classname>named_parameter</classname>&lt; T const, unique_id &gt;</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="t"><paramtype>T const &amp;</paramtype></parameter></copy-assignment>
+<copy-assignment cv="const"><type><classname>named_parameter</classname>&lt; T, unique_id &gt;</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="t"><paramtype>T &amp;</paramtype></parameter></copy-assignment>
+<copy-assignment cv="const"><type><classname>named_parameter</classname>&lt; char const *, unique_id, char const * &gt;</type><parameter name="t"><paramtype>char const *</paramtype></parameter></copy-assignment>
+</struct><struct name="named_parameter"><template>
+      <template-type-parameter name="T"/>
+      <template-type-parameter name="unique_id"/>
+      <template-type-parameter name="ReferenceType"><default>T&amp;</default></template-type-parameter>
     </template><typedef name="nil_t"><type><emphasis>unspecified</emphasis></type></typedef>
 <typedef name="data_type"><type>T</type></typedef>
 <typedef name="ref_type"><type>ReferenceType</type></typedef>
@@ -2153,68 +2175,12 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
 </method-group>
 <constructor specifiers="explicit"><parameter name="v"><paramtype>ref_type</paramtype></parameter></constructor>
 <constructor><parameter name="np"><paramtype><classname>named_parameter</classname> const &amp;</paramtype></parameter></constructor>
-</struct><struct name="keyword"><template>
-      <template-type-parameter name="unique_id"/>
-      <template-nontype-parameter name="required"><type>bool</type></template-nontype-parameter>
-    </template><typedef name="id"><type>unique_id</type></typedef>
-<method-group name="public member functions">
-</method-group>
-<copy-assignment cv="const"><type><classname>named_parameter</classname>&lt; T const, unique_id &gt;</type><template>
-          <template-type-parameter name="T"/>
-        </template><parameter name="t"><paramtype>T const &amp;</paramtype></parameter></copy-assignment>
-<copy-assignment cv="const"><type><classname>named_parameter</classname>&lt; T, unique_id &gt;</type><template>
-          <template-type-parameter name="T"/>
-        </template><parameter name="t"><paramtype>T &amp;</paramtype></parameter></copy-assignment>
-<copy-assignment cv="const"><type><classname>named_parameter</classname>&lt; char const *, unique_id, char const * &gt;</type><parameter name="t"><paramtype>char const *</paramtype></parameter></copy-assignment>
-</struct><struct name="typed_keyword"><template>
-      <template-type-parameter name="T"/>
-      <template-type-parameter name="unique_id"/>
-      <template-nontype-parameter name="required"><type>bool</type><default>false</default></template-nontype-parameter>
-    </template><inherit access="public">boost::nfp::keyword&lt; unique_id, required &gt;</inherit><method-group name="public member functions">
-</method-group>
-<copy-assignment cv="const"><type><classname>named_parameter</classname>&lt; T const, unique_id &gt;</type><parameter name="t"><paramtype>T const &amp;</paramtype></parameter></copy-assignment>
-<copy-assignment cv="const"><type><classname>named_parameter</classname>&lt; T, unique_id &gt;</type><parameter name="t"><paramtype>T &amp;</paramtype></parameter></copy-assignment>
-<typedef name="id"><type>unique_id</type></typedef>
-</struct><struct-specialization name="typed_keyword"><template>
-      <template-type-parameter name="unique_id"/>
-    </template><specialization><template-arg>bool</template-arg><template-arg>unique_id</template-arg><template-arg>false</template-arg></specialization><inherit access="public">boost::nfp::keyword&lt; unique_id, false &gt;</inherit><inherit access="public">boost::nfp::named_parameter&lt; bool, unique_id, bool &gt;</inherit><typedef name="id"><type>unique_id</type></typedef>
-<typedef name="nil_t"><type><emphasis>unspecified</emphasis></type></typedef>
-<typedef name="data_type"><type>bool</type></typedef>
-<typedef name="ref_type"><type>ReferenceType</type></typedef>
-<method-group name="public member functions">
-<method name="operator!" cv="const"><type><classname>named_parameter</classname>&lt; bool, unique_id, bool &gt;</type></method>
-<method name="operator[]" cv="const"><type>ref_type</type><parameter name=""><paramtype><classname>keyword</classname>&lt; unique_id, true &gt;</paramtype></parameter></method>
-<method name="operator[]" cv="const"><type>ref_type</type><parameter name=""><paramtype><classname>keyword</classname>&lt; unique_id, false &gt;</paramtype></parameter></method>
-<method name="operator[]" cv="const"><type>nil_t</type><parameter name=""><paramtype><classname>keyword</classname>&lt; UnknownId, false &gt;</paramtype></parameter></method>
-<method name="has" cv="const"><type>bool</type><parameter name=""><paramtype><classname>keyword</classname>&lt; unique_id, false &gt;</paramtype></parameter></method>
-<method name="has" cv="const"><type>bool</type><parameter name=""><paramtype><classname>keyword</classname>&lt; UnknownId, false &gt;</paramtype></parameter></method>
-<method name="erase" cv="const"><type>void</type><parameter name=""><paramtype><classname>keyword</classname>&lt; unique_id, false &gt;</paramtype></parameter></method>
-<method name="erase" cv="const"><type>void</type><parameter name=""><paramtype><classname>keyword</classname>&lt; UnknownId, false &gt;</paramtype></parameter></method>
-<method name="apply_to" cv="const"><type>void</type><parameter name="V"><paramtype>Visitor &amp;</paramtype></parameter></method>
-<method name="operator," cv="const"><type>named_parameter_combine&lt; NP, <classname>named_parameter</classname>&lt; bool, unique_id, ReferenceType &gt; &gt;</type><parameter name="np"><paramtype>NP const &amp;</paramtype></parameter></method>
-</method-group>
-<constructor/>
-</struct-specialization><struct name="is_named_params"><template>
-      <template-type-parameter name="T"/>
-    </template><inherit access="public">false_</inherit></struct><struct-specialization name="is_named_params"><template>
-      <template-type-parameter name="T"/>
-      <template-type-parameter name="unique_id"/>
-      <template-type-parameter name="ReferenceType"/>
-    </template><specialization><template-arg>named_parameter&lt; T</template-arg><template-arg>unique_id</template-arg><template-arg>ReferenceType &gt;</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization><struct-specialization name="is_named_params"><template>
-      <template-type-parameter name="NP"/>
-      <template-type-parameter name="Rest"/>
-    </template><specialization><template-arg>nfp_detail::named_parameter_combine&lt; NP</template-arg><template-arg>Rest &gt;</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization><struct name="param_type"><template>
+</struct><struct name="param_type"><template>
       <template-type-parameter name="Params"/>
       <template-type-parameter name="KeywordType"/>
       <template-type-parameter name="DefaultType"><default>void</default></template-type-parameter>
     </template><typedef name="type"><type>DefaultType</type></typedef>
 </struct><struct-specialization name="param_type"><template>
-      <template-type-parameter name="NP"/>
-      <template-type-parameter name="Rest"/>
-      <template-type-parameter name="Keyword"/>
-      <template-type-parameter name="DefaultType"/>
-    </template><specialization><template-arg>nfp_detail::named_parameter_combine&lt; NP</template-arg><template-arg>Rest &gt;</template-arg><template-arg>Keyword</template-arg><template-arg>DefaultType</template-arg></specialization><inherit access="public">boost::nfp::param_type&lt; Rest, Keyword, DefaultType &gt;</inherit><typedef name="type"><type>DefaultType</type></typedef>
-</struct-specialization><struct-specialization name="param_type"><template>
       <template-type-parameter name="T"/>
       <template-type-parameter name="unique_id"/>
       <template-type-parameter name="ReferenceType"/>
@@ -2229,6 +2195,40 @@ em.register_exception_translator&lt;MyException&gt;( myExceptTr );
       <template-nontype-parameter name="required"><type>bool</type></template-nontype-parameter>
       <template-type-parameter name="DefaultType"/>
     </template><specialization><template-arg>nfp_detail::named_parameter_combine&lt; named_parameter&lt; T</template-arg><template-arg>unique_id</template-arg><template-arg>ReferenceType &gt;</template-arg><template-arg>Rest &gt;</template-arg><template-arg>keyword&lt; unique_id</template-arg><template-arg>required &gt;</template-arg><template-arg>DefaultType</template-arg></specialization><typedef name="type"><type>boost::remove_cv&lt; T &gt;::type</type></typedef>
+</struct-specialization><struct-specialization name="param_type"><template>
+      <template-type-parameter name="NP"/>
+      <template-type-parameter name="Rest"/>
+      <template-type-parameter name="Keyword"/>
+      <template-type-parameter name="DefaultType"/>
+    </template><specialization><template-arg>nfp_detail::named_parameter_combine&lt; NP</template-arg><template-arg>Rest &gt;</template-arg><template-arg>Keyword</template-arg><template-arg>DefaultType</template-arg></specialization><inherit access="public">boost::nfp::param_type&lt; Rest, Keyword, DefaultType &gt;</inherit><typedef name="type"><type>DefaultType</type></typedef>
+</struct-specialization><struct name="typed_keyword"><template>
+      <template-type-parameter name="T"/>
+      <template-type-parameter name="unique_id"/>
+      <template-nontype-parameter name="required"><type>bool</type><default>false</default></template-nontype-parameter>
+    </template><inherit access="public">boost::nfp::keyword&lt; unique_id, required &gt;</inherit><method-group name="public member functions">
+</method-group>
+<copy-assignment cv="const"><type><classname>named_parameter</classname>&lt; T const, unique_id &gt;</type><parameter name="t"><paramtype>T const &amp;</paramtype></parameter></copy-assignment>
+<copy-assignment cv="const"><type><classname>named_parameter</classname>&lt; T, unique_id &gt;</type><parameter name="t"><paramtype>T &amp;</paramtype></parameter></copy-assignment>
+<typedef name="id"><type>unique_id</type></typedef>
+</struct><struct-specialization name="typed_keyword"><template>
+      <template-type-parameter name="unique_id"/>
+    </template><specialization><template-arg>bool</template-arg><template-arg>unique_id</template-arg><template-arg>false</template-arg></specialization><inherit access="public">boost::nfp::keyword&lt; unique_id, false &gt;</inherit><inherit access="public">boost::nfp::named_parameter&lt; bool, unique_id, bool &gt;</inherit><typedef name="id"><type>unique_id</type></typedef>
+<typedef name="nil_t"><type><emphasis>unspecified</emphasis></type></typedef>
+<typedef name="data_type"><type>bool</type></typedef>
+<typedef name="ref_type"><type>bool</type></typedef>
+<method-group name="public member functions">
+<method name="operator!" cv="const"><type><classname>named_parameter</classname>&lt; bool, unique_id, bool &gt;</type></method>
+<method name="operator[]" cv="const"><type>ref_type</type><parameter name=""><paramtype><classname>keyword</classname>&lt; unique_id, true &gt;</paramtype></parameter></method>
+<method name="operator[]" cv="const"><type>ref_type</type><parameter name=""><paramtype><classname>keyword</classname>&lt; unique_id, false &gt;</paramtype></parameter></method>
+<method name="operator[]" cv="const"><type>nil_t</type><parameter name=""><paramtype><classname>keyword</classname>&lt; UnknownId, false &gt;</paramtype></parameter></method>
+<method name="has" cv="const"><type>bool</type><parameter name=""><paramtype><classname>keyword</classname>&lt; unique_id, false &gt;</paramtype></parameter></method>
+<method name="has" cv="const"><type>bool</type><parameter name=""><paramtype><classname>keyword</classname>&lt; UnknownId, false &gt;</paramtype></parameter></method>
+<method name="erase" cv="const"><type>void</type><parameter name=""><paramtype><classname>keyword</classname>&lt; unique_id, false &gt;</paramtype></parameter></method>
+<method name="erase" cv="const"><type>void</type><parameter name=""><paramtype><classname>keyword</classname>&lt; UnknownId, false &gt;</paramtype></parameter></method>
+<method name="apply_to" cv="const"><type>void</type><parameter name="V"><paramtype>Visitor &amp;</paramtype></parameter></method>
+<method name="operator," cv="const"><type>named_parameter_combine&lt; NP, <classname>named_parameter</classname>&lt; bool, unique_id, bool &gt; &gt;</type><parameter name="np"><paramtype>NP const &amp;</paramtype></parameter></method>
+</method-group>
+<constructor/>
 </struct-specialization><function name="optionally_assign"><type>void</type><template>
           <template-type-parameter name="T"/>
         </template><parameter name=""><paramtype>T &amp;</paramtype></parameter><parameter name=""><paramtype><emphasis>unspecified</emphasis></paramtype></parameter></function>

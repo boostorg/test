@@ -1,6 +1,6 @@
 [section:test_case_generation Generation of test case parameters]
 
-In some circumstance, one would like to run a [link boost_test.tests_organization.test_cases.test_organization_unary parametrized] 
+In some circumstance, one would like to run a [link boost_test.users_guide.tests_organization.test_cases.param_test parametrized] 
 test over a large set of parameters. __BOOST_PARAM_TEST_CASE__ provides an easy solution when these parameters can be described in 
 some collection. However, this solution has also limitations
 

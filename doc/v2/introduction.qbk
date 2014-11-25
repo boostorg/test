@@ -52,8 +52,8 @@ include:
 
 The __UTF__ design is based on above rationale and provides versatile facilities to:
 
-* Simplify writing test cases by using various [link boost_test.testing_tools testing tools].
-* Organize test cases into a [link boost_test.tests_organization test tree].
+* Simplify writing test cases by using various [link boost_test.users_guide.testing_tools Testing tools].
+* Organize test cases into a [link boost_test.users_guide.tests_organization test tree].
 * Relieve you from messy error detection, reporting duties and framework runtime parameters processing.
 
 The __UTF__ is intended to be used both for a simple and non trivial testing. It is not intended to be used
@@ -140,7 +140,7 @@ than enough to build our own unique test file into an appropriate test module.
   # under C/C++/General/include directories, add $`boost_installation_prefix/include`
   # under Link/General/Additional library paths, add $`boost_installation_prefix/lib`
 
-A nice property on Windows is [link boost_test.building_utf.link_references.link_boost_test_no_lib auto-linking], 
+A nice property on Windows is [link boost_test.beyond_basics.build.link_references.link_boost_test_no_lib auto-linking], 
 so you do not need to specify the library `boost_unit_test_framework` to the
 linker. 
 
@@ -190,15 +190,7 @@ You should now be convinced that starting using the __UTF__ is straightforward. 
 a lot of functionalities that you will discover when needed. The next section will help you jump to the part of the documentation
 that best suits your needs. 
 
-
-
 [endsect] [/ 5mn starter]
-
-
-
-[/ ##################################################################### ]
-[section How to read this documentation?]
-
 
 [endsect] [/ Introduction]
 
