@@ -25,7 +25,7 @@ as it follows from its name, the single header: `#include <boost/test/included/u
 and there is no need to link with any library. There are several ways to perform 
 the initialization, but the simplest way is this:
 ``
-  #define BOOST_TEST_MODULE test module name
+  #define __BOOST_TEST_MODULE__ test module name
   #include <boost/test/included/unit_test.hpp>
 ``
 BOOST_TEST_MODULE macro needs to be defined *before* the include and should be set to 
@@ -45,7 +45,7 @@ need to add following line to all translation units in a test module:
 ``
 and *only one* translation unit should include following lines
 ``
-  #define BOOST_TEST_MODULE test module name
+  #define __BOOST_TEST_MODULE__ test module name
   #include <boost/test/unit_test.hpp>
 ``
 BOOST_TEST_MODULE macro needs to be defined *before* the include and should be set to 
@@ -61,22 +61,24 @@ this [/TOFIX] section.
 [h3:shared_lib Shared library usage variant]
 In the project with large number of test modules the static library variant of the __UTF__ may
 cause you to waste a lot of disk space. The solution is to link test module dynamically with the 
-__UTF__ built [/TOFIX make a link] as a shared library. This usage variant entails two steps. 
-First you need to add following lines to all translation units in a test module:
-``
-  #define BOOST_TEST_DYN_LINK
-  #include <boost/test/unit_test.hpp>
-``
-and *only one* translation unit should include following lines
-``
-  #define BOOST_TEST_MODULE test module name
-  #define BOOST_TEST_DYN_LINK
-  #include <boost/test/unit_test.hpp>
-``
-BOOST_TEST_MODULE macro needs to be defined *before* the include and should be set to 
-test module name. This name can include spaces and does not need to be wrapped in quotes. 
+__UTF__ [link boost_test.users_guide.build_boost_test built] as a shared library. 
+This usage variant entails two steps. 
 
-The second step is to link with the __UTF__ shared library.
+# First you need to add following lines to all translation units in a test module:
+  ``
+    #define __BOOST_TEST_DYN_LINK__
+    #include <boost/test/unit_test.hpp>
+  ``
+  and *only one* translation unit should include following lines
+  ``
+    #define __BOOST_TEST_MODULE__ test module name
+    #define __BOOST_TEST_DYN_LINK__
+    #include <boost/test/unit_test.hpp>
+  ``
+  __BOOST_TEST_MODULE__ macro needs to be defined *before* the include and should be set to 
+  test module name. This name can include spaces and does not need to be wrapped in quotes. 
+
+# The second step is to link with the __UTF__ shared library.
 
 The flip of this usage variant is that you will need to make sure the __UTF__ shared library
 is accessible at runtime to a test module.
@@ -85,5 +87,32 @@ Shared library usage variant facilitates custom test runners. For more informati
 check this [/TOFIX] section.
 
 [endsect] [/Usage Variants]
+
+
+
+
+
+[/ ##################################################################### ]
+[section:build_boost_test Building boost.test]
+
+Building the __UTF__ is in fact quite easy.
+
+[info By default, the static and dynamic variant will be built for your operating system]
+```
+> cd boost_path
+> boostrap.bat
+> b2 --with-test --prefix=``$``boost_installation_prefix install
+```
+
+or for Unix operating system (including OSX)
+```
+> cd boost_path
+> ./boostrap.sh
+> ./b2 --with-test --prefix=``$``boost_installation_prefix install
+```
+
+More documentation can be found [@http://www.boost.org/more/getting_started/index.html here]. 
+
+[ensect] [/ building boost test]
 
 [/ EOF]
