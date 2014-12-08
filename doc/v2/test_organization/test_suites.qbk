@@ -12,7 +12,7 @@ In addition the __UTF__ presents a notion of __section_master_test_suite__. The 
 reason to learn about this component is that it provides an ability to access command line arguments supplied 
 to a test module.
 
-[#ref_BOOST_AUTO_TEST_SUITE][h3 Test suites with automated registration]
+[#ref_BOOST_AUTO_TEST_SUITE][h3 Automated registration]
 The solution the __UTF__ presents for automated test suite creation and registration is designed to facilitate
 multiple points of definition, arbitrary test suites depth and smooth integration with automated test case creation 
 and registration. This facility should significantly simplify a test tree construction process in comparison with 
