@@ -63,37 +63,16 @@ with production code, but some of the Boost.Test interfaces can be, including ..
 
 
 [/ ##################################################################### ]
-[section The 5mn starter guide]
+[section:5mn_starter The 5mn starter guide]
 This section shows a step-by-step guide for writing your very first test, in less than 5mn. 
 
-[h3 Building boost.test]
-Before being able to do anything, you have to build boost.test. 
-
-```
-> cd boost_path
-> boostrap.bat
-> b2 --with-test --prefix=``$``boost_installation_prefix install
-```
-
-or for Unix operating system (including OSX)
-```
-> cd boost_path
-> ./boostrap.sh
-> ./b2 --with-test --prefix=``$``boost_installation_prefix install
-```
-
-More documentation can be found [@http://www.boost.org/more/getting_started/index.html here]. Now you are ready
-to build against the __UTF__.
-
-
-[h3 Writing your first test]
+[h3 Writing and building your first test]
 Let's start by creating the minimal skeleton for our [link ref_test_module test module]. This minimal skeleton in the file `test_file.cpp`, 
 looks like this:
 
 ``
-#define __BOOST_TEST_DYN_LINK__
-#define __BOOST_TEST_MAIN__
-#include <boost/test/unit_test.hpp>
+#define __BOOST_TEST_MAIN__ 
+#include <boost/test/included/unit_test.hpp>
 
 __BOOST_AUTO_TEST_CASE__(first_test)
 {
@@ -105,14 +84,12 @@ __BOOST_AUTO_TEST_CASE__(first_test)
 `` 
 
 The command/macro __BOOST_AUTO_TEST_CASE__ declares a test named `first_test`, which in turn will run the content of `first_test` inside the 
-controlled testing environment. This test checks that `true` is `true` and that `i` equals `1`, often useful. 
+controlled testing environment. This test checks that `true` is `true` and that `i` equals `1` and should succeed obviously. 
 
 Before continuing in adding value to the test module itself, let's now build the test module contained in [*an unique]
-[footnote with more than one file, one line should be changed] file. For building the test module, we have two more tools: the compiler and 
-the linker, which should be configured appropriately:
-
-* configure the compiler to find the header file `boost/test/unit_test.hpp`.
-* configure the linker to find the boost.test library that were previously compiled.
+[footnote with more than one file, one line should be changed] file. For building this specific test module, we just have to
+indicate the header location to the compiler [footnote to remain plain and simple in this example, we used the 
+[link boost_test.users_guide.usage_variants.single_header single-header] variant of __UTF__]. 
 
 We will see now three common use cases.
 
@@ -121,10 +98,20 @@ We will see now three common use cases.
 ```
 g++ -o test_executable \
     -I ``$``boost_installation_prefix/include \
-    -L ``$``boost_installation_prefix/lib \
-    -l boost_unit_test_framework \
     test_file.cpp
 ```
+
+If you haven't seen any error message, you can run the test:
+```
+./test_executable
+```
+
+and it shoud show something like:
+[pre
+Running 1 test case...
+
+*** No errors detected
+]
 
 The command line is similar for `clang`. 
 As you can see, the previous example is not exactly an example to follow for bigger projects, but this is more
@@ -136,39 +123,30 @@ than enough to build our own unique test file into an appropriate test module.
 
 # open Visual and create an empty C++ console Win32 project
 # add the file `test_file.cpp`
-# go to the properties of the project,
-  # under C/C++/General/include directories, add $`boost_installation_prefix/include`
-  # under Link/General/Additional library paths, add $`boost_installation_prefix/lib`
+# open the properties of the project, go under C/C++/General/include directories and add $`boost_installation_prefix/include`
 
-A nice property on Windows is [link boost_test.beyond_basics.build.link_references.link_boost_test_no_lib auto-linking], 
-so you do not need to specify the library `boost_unit_test_framework` to the
-linker. 
+Build and run the binary (directly from Visual or from a command line), and that's it!
 
 [h4 Using CMake]
 Let's be more independent of the platform, and use [@http://www.cmake.org cmake]. Let's paste the following content in a `CMakeLists.txt` 
 at the same location than our previous test file `test_file.cpp`:
 
 [pre
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 2.8.7)
 project(my_first_test)
 enable_testing()
 
-# indicates relevant version
-set(Boost_ADDITIONAL_VERSIONS "1.58" "1.58.0")
-
-# finds boost, triggers an error otherwise
-find_package(Boost 1.58 REQUIRED COMPONENTS unit_test_framework)
+# indicates the location of the boost installation tree.
+# hard-coded for our simple example.
+set(BOOST_INCLUDE_DIRS $boost_installation_prefix/include)
 
 # creates the executable
 add_executable(test_executable test_file.cpp)
 # indicates the include paths
-target_include_directories(test_executable PRIVATE ${Boost_INCLUDE_DIRS})
-# indicates the link paths
-target_link_libraries(test_executable ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+target_include_directories(test_executable PRIVATE ${BOOST_INCLUDE_DIRS})
 
 # declares a test with our executable
 add_test(NAME test1 COMMAND test_executable)
-
 ]
 
 We will now create the build directory for this project (separate directory), configure and build the project,
@@ -178,14 +156,13 @@ as follow:
 > mkdir build /*< we create a directory dedicated to the build, to avoid any pollution of the sources with the temporary
                   build files >*/
 > cd build
-> cmake -DBOOST_ROOT=``$``boost_installation_prefix .. /*< configuration of the project, the `BOOST_ROOT` configuration element indicates the 
-                                                           Boost module of `cmake` where to find our installation >*/
+> cmake  .. /*< configuration of the project >*/
 > cmake --build . /*< this command builds the project, cmake drives a native tool that is configured on the 
                       previous command line >*/
 > ctest           /*< runs the tests declared in the project and prints a report >*/
 ```
 
-[h4 Really less than 5mn]
+[h3 Really less than 5mn]
 You should now be convinced that starting using the __UTF__ is straightforward. As any framework, __UTF__ also provides 
 a lot of functionalities that you will discover when needed. The next section will help you jump to the part of the documentation
 that best suits your needs. 
