@@ -3,8 +3,21 @@
 
 [section:link_boost_test_main_macro `BOOST_TEST_MAIN`]
 
+[caution This macro should 
+
+# be defined before any inclusion directive to __UTF__ headers
+# be defined exactly for one compilation unit of your test module
+
+]
 
 [endsect]
+
+[section:link_boost_test_module_macro `BOOST_TEST_MODULE`]
+Defines the name of the master test suite. This macro should be defined before any inclusion of __UTF__ headers.
+An example may be found [link ref_BOOST_TEST_MODULE here].
+
+[endsect]
+
 
 [section:link_boost_test_alternative_init_macro `BOOST_TEST_ALTERNATIVE_INIT_API`]
 
@@ -52,11 +65,7 @@ int main(int argc, char* argv[])
 
 [endsect]
 
-[section:link_boost_test_module_macro `BOOST_TEST_MODULE`]
-Defines the name of the master test suite. This macro should be defined before any inclusion of __UTF__ headers.
-An example may be found [link ref_BOOST_TEST_MODULE here].
 
-[endsect]
 
 
 
