@@ -27,9 +27,15 @@ of these variants are provided.
 
 The __UTF__ supports four different usage variants:
 
-# The static library variant
-# The dynamic library variant
-# The single-header variant
+# The single-header variant: all __UTF__ is contained in header-only source files and there is no particular set-up for linking your test module,
+  which makes this configuration very simple.
+  While suitable for small set-up contained in an unique file, the compilation of all __UTF__ headers is done per test module, which
+  may be rather slow, and the code is duplicated in each compilation unit, which is sometime not desirable as a lot of code may be factorized 
+  out in a shared library.
+# The static library variant: the code is not compiled in all compilation unit anymore, but since the link is against the static libraries
+  of the __UTF__, it also gets duplicated among several test modules.
+# The dynamic library variant: this is the most appropriate set-up when you have a lot of test modules, as the redundant code of the __UTF__
+  resides in a shared library to which you test module is linked against.
 # The external test runner variant
 
 Unlike the Buridan's donkey though, you shouldn't have problems deciding which one to use, since there are
