@@ -1,0 +1,33 @@
+[section Reference]
+
+
+
+[table
+  [
+    [Macro]
+    [Short description]
+  ] 
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_TEST_SUITE__]
+    [Manual creation of a test suite instance]
+  ]
+  
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_AUTO_TEST_SUITE__]
+    [Automatic declaration of a test suite]
+  ]
+  [/ ###############################################################################################]
+  [
+    [__BOOST_AUTO_TEST_SUITE_END__]
+    [Automatic declaration of a test suite]
+  ]
+
+]
+
+
+
+[endsect] [/reference test organization]
