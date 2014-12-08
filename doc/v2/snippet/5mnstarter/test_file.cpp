@@ -1,4 +1,4 @@
-#define BOOST_TEST_MODULE my_first_test
+#define BOOST_TEST_MAIN
 #include <boost/test/included/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(first_test)
