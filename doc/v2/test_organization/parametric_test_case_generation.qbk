@@ -58,7 +58,7 @@ Hence the dataset implements the notion of /sequence/.
 The descriptive power of the datasets in __UTF__ comes from
 
 * the available built-in [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators /dataset generators/]
-* the operations they provide for combining different datasets 
+* the [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.operations operations] they provide for combining different datasets 
 * their interface with other type of collections (`stl` containers, `C` arrays)
 
 
@@ -66,6 +66,11 @@ The descriptive power of the datasets in __UTF__ comes from
  datasets representing collections of different types may be combined together.
  ]
 
+
+ 
+[/ ##################################################################################################################################  ]
+[/ Main code import for this section ]
+[import ../snippet/dataset_1/test_file.cpp]
 
 
 
@@ -78,7 +83,10 @@ Several ['generators] for datasets are implemented in __UTF__:
 * [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.ranges ranges] of value
 * random number distributions
 
-While the `stl` and `C-array` generators are merely a view on existing collection
+`stl` and `C-array` generators are merely a dataset view on existing collection, while ranges and random number sequences are 
+describing new datasets. 
+
+
 
 [h4:c_arrays Datasets from C arrays]
 This type of datasets does not contains the logic for generating the sequence of values, but contains the logic for parsing an existing
@@ -91,17 +99,27 @@ As for `C` arrays, this type of datasets does not contain the logic for generati
 
 
 
+
+[/ ##################################################################################################################################  ]
 [h4:ranges Ranges]
 A range is a sequence of equally spaced values. An optional `begin` and `step` can be given. 
 The range initialisation supports named values. 
 
+
+
+It is possible to construct a range in various ways:
 ``
-void generate_ranges()
-{
-  using namespace boost::unit_test;
-  generated_by< data::xrange_t<double> > r_double = data::xrange( data::step = 0.5, data::end = 3 );
-}
+#include <boost/test/data/test_case.hpp>
+#include <boost/test/data/monomorphic.hpp>
+
+auto range1 = data::xrange( (data::step = 0.5, data::end = 3 ) ); // Constructs with named values, starting at 0
+auto range2 = data::xrange( begin, end );
+auto range3 = data::xrange( end );
+auto range4 = data::xrange( end, (data::begin=0.5) ); // named value after `end`
+auto range5 = data::xrange( begin, end, step );  // start < stop required
 ``
+
+[tip In order to use the named values, these should be declared inside parenthesis]
 
 [h5 Parameters]
 The details of the named value parameters is given in the table below.
@@ -136,12 +154,17 @@ The details of the named value parameters is given in the table below.
   ]  
 ]
 
+[h5 Example]
+As previous test declarations on datasets, the macro __BOOST_DATA_TEST_CASE__ is used the following way:
 
-[tip ranges are implemented in [classref boost::unit_test::data::monomorphic::xrange_t], ]
+[bt_example example59..Declaring a test with a range]
+
+[h5 Reference]
+Ranges are implemented in [classref boost::unit_test::data::monomorphic::xrange_t], and the range factory is given by [funcref boost::unit_test::data::xrange].
 
 
 
-
+[/ ##################################################################################################################################  ]
 [h4 Random value generators]
 
 [classref boost::unit_test::data::monomorphic::random_t]
@@ -211,7 +234,7 @@ The details of the named value parameters is given in the table below.
 
 
 [/ ##################################################################################################################################  ]
-[section Operations on dataset]
+[section:operations Operations on dataset]
 As mentioned earlier, one of the major aspects of using the __UTF__ datasets lies in the number of operations provided
 for their combination.
  
@@ -246,9 +269,20 @@ The ['zip] function returns a dataset of tuples, where the i-th tuple contains t
 The size of the zipped dataset is as follow:
 
 * if one of the dataset is of size 1 (singleton) or of infinite size, the final zip size is governed by the other dataset.
-* otherwise the datasets are required to have the same size
+* otherwise the datasets are required to have the same size. An exception will be thrown at runtime if this constraint is not met. 
 
-Zips are accessible through the `operator^` on datasets:
+Zips are accessible through the `operator^` on datasets.
+
+It is possible to combine more than two datasets for zipping, and the order does not matter. The following zips are equivalent:
+
+``
+
+`` 
+
+
+
+
+
 
 [table:id_example_dataset_zipop Custom predicate support using __BOOST_LEVEL_PREDICATE__
   [
@@ -296,8 +330,20 @@ __BOOST_DATA_TEST_CASE__( test_name, data::make(samples1)^samples2, integer_valu
 The dataset framework comes with a new test-case declaration macro:
 
 ``
-BOOST_DATA_TEST_CASE
+BOOST_DATA_TEST_CASE(test_case_name, dataset) { /* test body */ }
+BOOST_DATA_TEST_CASE(test_case_name, dataset, var1, ...) { /* test body */ }
 ``
+
+The first form of the macro above declares automatically a variable named `sample` in the body of the test case, which takes the values of elements in the dataset. An example would be:
+[snippet_dataset1_1]
+
+If specified, the name of the variable `sample` may be replaced by the first parameter take comes after the dataset:
+[snippet_dataset1_2]
+
+
+In the body of a test case declared using this macro, one or several variables take the value of the dataset:
+
+* 
 
 
 [endsect]
