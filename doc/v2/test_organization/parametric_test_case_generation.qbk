@@ -80,8 +80,8 @@ Several ['generators] for datasets are implemented in __UTF__:
 
 * [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.stl `stl`] containers and 
   [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.c_arrays `C` array] like datasets
-* [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.ranges ranges] of value
-* random number distributions
+* [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.ranges ranges] or sequences of values
+* datasets made of [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.random random numbers] and following a particular distribution
 
 `stl` and `C-array` generators are merely a dataset view on existing collection, while ranges and random number sequences are 
 describing new datasets. 
@@ -113,10 +113,10 @@ It is possible to construct a range in various ways:
 #include <boost/test/data/monomorphic.hpp>
 
 auto range1 = data::xrange( (data::step = 0.5, data::end = 3 ) ); // Constructs with named values, starting at 0
-auto range2 = data::xrange( begin, end );
-auto range3 = data::xrange( end );
-auto range4 = data::xrange( end, (data::begin=0.5) ); // named value after `end`
-auto range5 = data::xrange( begin, end, step );  // start < stop required
+auto range2 = data::xrange( begin, end ); // begin < end required
+auto range5 = data::xrange( begin, end, step );  // begin < end required
+auto range3 = data::xrange( end ); // begin=0, end cannot be <= 0, see above
+auto range4 = data::xrange( end, (data::begin=1) ); // named value after end
 ``
 
 [tip In order to use the named values, these should be declared inside parenthesis]
@@ -165,7 +165,7 @@ Ranges are implemented in [classref boost::unit_test::data::monomorphic::xrange_
 
 
 [/ ##################################################################################################################################  ]
-[h4 Random value generators]
+[h4:random Random value generators]
 
 [classref boost::unit_test::data::monomorphic::random_t]
 
