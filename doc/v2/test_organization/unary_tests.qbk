@@ -1,4 +1,4 @@
-[#ref_BOOST_PARAM_TEST_CASE][section:param_test Parameterized test cases]
+[#ref_BOOST_PARAM_TEST_CASE][section:param_test Parametrized test cases]
 
 Some tests are required to be repeated for a series of different input parameters. One way to achieve this is
 manually register a test case for each parameter as in the previous examples. You can also invoke a test function with
@@ -18,7 +18,7 @@ void combined_test()
 ``
 
 The __UTF__ presents a better solution for this problem: the unary function based test case, also referred as
-['parameterized test case]. The unary test function can be a free function, unary functor (for example created
+['parametrized test case]. The unary test function can be a free function, unary functor (for example created
 with `boost::bind`) or unary method of a class with bound test class instance). The test function is converted
 into test case using the macro `BOOST_PARAM_TEST_CASE`. The macro expects a collection of parameters (passed as
 two input iterators) and an unary test function:
@@ -39,12 +39,12 @@ All sub test case names are deduced from the macro argument `test_function`. If 
 names, you have to use the underlying [headerref boost/test/parameterized_test.hpp `make_test_case`] interface instead. Both test cases creation and
 registration are performed in the test module initialization function.
 
-The parameterized test case facility is preferable to the approach in the example above, since execution of
+The parametrized test case facility is preferable to the approach in the example above, since execution of
 each sub test case is guarded and counted independently. It produces a better test log/results report (in
 example above in case of failure you can't say which parameter is at fault) and allows you to test against
 all parameters even if one of them causes termination a particular sub test case.
 
-In comparison with a manual test case registration for each parameter approach the parameterized test case
+In comparison with a manual test case registration for each parameter approach the parametrized test case
 facility is more concise and easily extendible.
 
 In following simple example the same test, implemented in `free_test_function`, is
