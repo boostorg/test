@@ -99,39 +99,54 @@ check this [/TOFIX] section.
 In case you would like to use the shared or static variants of the __UTF__, the __UTF__ needs to be built. 
 Building the __UTF__ is in fact quite easy.
 
-In the sequel,
+In the sequel, we define
 
-* `$boost_path` refers to the location where the boost archive was deflated
-* `$boost_installation_prefix` refers to the location where you want to install the __UTF__
+* `'$'boost_path` refers to the location where the boost archive was deflated
+* ` ``$``boost_installation_prefix` refers to the location where you want to install the __UTF__
 
-[info By default, the static and dynamic variant will be built for your operating system]
+[/ not true
+ [note By default, the static and dynamic variant will be built for your operating system]
+]
 
 More documentation about Boost's build system can be found [@http://www.boost.org/more/getting_started/index.html here]. 
 
 [h3 Windows]
-You need to have a compilation toolchain. [Visual Studio Express] is such one, freely available from the 
+
+You need to have a compilation toolchain. /Visual Studio Express/ is such one, freely available from the 
 Microsoft website. Once installed, 
 
-For building 32bits libraries, type:
+[h4 Static variant]
+For building 32bits libraries, open a console window and enter the following commands:
 ```
-> cd $boost_path
+> cd ``$``boost_path
 > boostrap.bat
-> b2 --with-test --prefix=``$``boost_installation_prefix install
+> b2 address-model=32 architecture=x86 --with-test --link=static --prefix=``$``boost_installation_prefix install
 ```
 
-For building 64bits libraries, type:
+For building 64bits libraries, the commands become:
 ```
-> cd $boost_path
+> cd ``$``boost_path
 > boostrap.bat
-> b2 address-model=64 architecture=x86 --with-test --prefix=``$``boost_installation_prefix install
+> b2 address-model=64 architecture=x86 --with-test --link=static --prefix=``$``boost_installation_prefix install
 ```
+
+[h4 Shared library variant]
+In order to build the shared library variant, the directive `--link=static` should be replaced by `--link=shared` on the above command lines. 
+For instance, for 64bits builds, the commands become:
+
+```
+> cd ``$``boost_path
+> boostrap.bat
+> b2 address-model=64 architecture=x86 --with-test --link=shared --prefix=``$``boost_installation_prefix install
+```
+
 
 
 
 [h3 Linux/OSX]
 For Unix/Linux/OSX operating system, the build of the __UTF__ is very similar to the one on Windows:
 ```
-> cd $boost_path
+> cd ``$``boost_path
 > ./boostrap.sh
 > ./b2 --with-test --prefix=``$``boost_installation_prefix install
 ```
