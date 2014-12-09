@@ -49,13 +49,16 @@ you can see from the output both `test_case1` and `test_case2` reside in the sam
 [bt_example example53..Test suite extension using automated registration facility]
 
 [h3 Test suites with manual registration]
-To create a test suite manually you need to create an instance of [classref boost::unit_test::test_suite] class, register
-it in test tree and populate it with test cases (or lower level test suites).
+To create a test suite manually you need to 
+
+# create an instance of [classref boost::unit_test::test_suite] class, 
+# register it in test tree, and
+# populate it with test cases (or lower level test suites).
 
 [#ref_test_case_registration][h4 Test unit registration interface]
 
 
-The __UTF__ models the notion of test case container - test suite - using class `boost::unit_test::test_suite`. For
+The __UTF__ models the notion of test case container - test suite - using class [classref boost::unit_test::test_suite]. For
 complete class interface reference check advanced section of this documentation. Here you should only be
 interested in a single test unit registration interface:
 
@@ -76,15 +79,12 @@ default no errors are expected.
 The third optional parameter - `timeout` - defines the timeout value for the test unit. As of now the __UTF__
 isn't able to set a timeout for the test suite execution, so this parameter makes sense only for test case
 registration. By default no timeout is set. See the method
-`boost::execution_monitor::execute` for more details about the timeout value.
-[memberref boost::unit_test::test_suite::add boost::unit_test::test_suite::add]
-[classref boost::unit_test::test_suite test_suite].
-[/ TODO link to this function ]
+[memberref boost::execution_monitor::execute] for more details about the timeout value. [warning is the reference 
+good? It looks to me that [memberref boost::unit_test::test_suite::add] is better]
 
-To register group of test units in one function call, the `boost::unit_test::test_suite` provides another `add`
-interface covered in the advanced section of this documentation.
+To register group of test units in one function call, the [classref boost::unit_test::test_suite `test_suite`] class provides another 
+[memberref boost::unit_test::test_suite::add `add`] interface covered in the advanced section of this documentation.
 
-[warning find the related advanced doc]
 
 [#ref_BOOST_TEST_SUITE][h4 Test suite instance construction]
 
