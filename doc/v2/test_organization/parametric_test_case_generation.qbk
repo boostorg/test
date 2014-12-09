@@ -245,14 +245,18 @@ Cartesian products are accessible through the `operator*` on datasets:
 
 
 [section Joins]
-A ['join] is the concatenation of two datasets. These datasets are required to have compatible types. Joins are accessible through
-the `operator+` on datasets:
+A ['join] is the concatenation of two datasets, available through `operator+`.
+
+* the datasets are required to have compatible types
+* joining two datasets does not change the arity of their element
 
 ``
 int arr1[] = {1, 2};
 int arr2[] = {7, 19};
 __BOOST_CHECK_EQUAL__( (data::make( arr1 ) + data::make( arr2 )).size(), 4);
 ``
+
+[bt_example example62..Example of join usage on datasets]
 
 [note
 The `join` functionality is implemented in the class [classref boost::unit_test::data::monomorphic::join].
@@ -282,7 +286,6 @@ yields to the same tuples independently of the positions of the parenthesis. Hen
        boost::unit_test::xrange(4, 6)
 `` 
 
-[h5 Example]
 [bt_example example61..Example of zip usage on datasets]
 
 
