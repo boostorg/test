@@ -151,7 +151,7 @@ private:
 
 /// Records context frame message
 
-/// Some context frames are sticky - they can only explicetly cleared by specifying context id. Other (non sticky) context frames cleared after every assertion.
+/// Some context frames are sticky - they can only explicitly cleared by specifying context id. Other (non sticky) context frames cleared after every assertion.
 /// @param[in] context_descr context frame message
 /// @param[in] sticky is this sticky frame or not
 /// @returns id of the newly created frame
