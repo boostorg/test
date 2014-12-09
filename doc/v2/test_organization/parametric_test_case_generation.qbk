@@ -43,17 +43,11 @@ some collection. However, this solution has also limitations
   test for some points around (0,1), but will fail to provide an *asymptotical behaviour* of the function close to this point. 
 
 
-The __UTF__ provides a facility in order to ease the description and the generations of the class of inputs. 
+The __UTF__ provides a facility in order to ease the description and the generations of the class of inputs, through the notion of *datasets*. 
 
 The unit test toolbox is augmented with one new registration macro: __BOOST_DATA_TEST_CASE__. 
 
-[section Datasets]
-The descriptive power of the datasets in __UTF__ comes from
-
-* the operations they provide for combining different datasets 
-* the available built-in /dataset generators/
-* their interface with other type of collections (`stl` containers, `C` arrays)
-
+[h3 Datasets]
 A [classref boost::unit_test::data::monomorphic::dataset dataset] is a collection of elements, that 
 
 * is forward iterable
@@ -61,31 +55,43 @@ A [classref boost::unit_test::data::monomorphic::dataset dataset] is a collectio
 
 Hence the dataset implements the notion of /sequence/. 
 
+The descriptive power of the datasets in __UTF__ comes from
+
+* the available built-in [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators /dataset generators/]
+* the operations they provide for combining different datasets 
+* their interface with other type of collections (`stl` containers, `C` arrays)
+
+
 [tip Only "monomorphic" datasets are supported, which means that all elements of a dataset have the same type. However as we will see, 
  datasets representing collections of different types may be combined together.
  ]
 
-[section Creating datasets]
+
+
+
+[/ ##################################################################################################################################  ]
+[section:generators Datasets generators]
 Several ['generators] for datasets are implemented in __UTF__:
 
-* `stl` containers and `C` array like datasets
-* ranges
-* random values distributions
+* [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.stl `stl`] containers and 
+  [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.c_arrays `C` array] like datasets
+* [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.ranges ranges] of value
+* random number distributions
 
-[section Datasets from `C` arrays]
+While the `stl` and `C-array` generators are merely a view on existing collection
+
+[h4:c_arrays Datasets from C arrays]
 This type of datasets does not contains the logic for generating the sequence of values, but contains the logic for parsing an existing
 sequence.
 
-[endsect] [/ datasets from C arrays]
 
-
-[section Datasets from `stl` containers]
+[h4:stl Datasets from stl containers]
 As for `C` arrays, this type of datasets does not contain the logic for generating sequence of values, but for parsing an existing sequence.
 
-[endsect] [/ datasets from stl]
 
 
-[section Ranges]
+
+[h4:ranges Ranges]
 A range is a sequence of equally spaced values. An optional `begin` and `step` can be given. 
 The range initialisation supports named values. 
 
@@ -134,10 +140,9 @@ The details of the named value parameters is given in the table below.
 [tip ranges are implemented in [classref boost::unit_test::data::monomorphic::xrange_t], ]
 
 
-[endsect]
 
 
-[section Random value generators]
+[h4 Random value generators]
 
 [classref boost::unit_test::data::monomorphic::random_t]
 
@@ -200,14 +205,12 @@ The details of the named value parameters is given in the table below.
 
 
 
-
-
-[endsect] [/ random]
-
-
 [endsect] [/ Datasets generators]
 
 
+
+
+[/ ##################################################################################################################################  ]
 [section Operations on dataset]
 As mentioned earlier, one of the major aspects of using the __UTF__ datasets lies in the number of operations provided
 for their combination.
@@ -288,9 +291,6 @@ __BOOST_DATA_TEST_CASE__( test_name, data::make(samples1)^samples2, integer_valu
 
 
 
-
-
-[endsect] [/ datasets]
 
 [section:datasets_auto_registration Declaring test case with datasets]
 The dataset framework comes with a new test-case declaration macro:
