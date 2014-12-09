@@ -1,6 +1,8 @@
 [section:checkpoints Checkpoints]
 
-Checkpoints may be used to control the state of the running test with more granularity. 
+Checkpoints may be used to indicate the state of the running test with more granularity in case a fatal 
+error occurs during the test. The checkpoints are also convenient for checks in loops as they might provide
+more information about the occurrence of a failure. 
 
 [/ -------------------------------------------------------------------------------------------------- ]
 [h3 Named checkpoints]

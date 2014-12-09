@@ -63,7 +63,8 @@
 
 [def __BOOST_TEST_CHECKPOINT__            [link boost_test.users_guide.test_output.reference.test_output_macro_checkpoint `BOOST_TEST_CHECKPOINT`]]
 [def __BOOST_TEST_PASSPOINT__             [link boost_test.users_guide.test_output.reference.test_output_macro_passpoint  `BOOST_TEST_PASSPOINT`]]
-[def __BOOST_TEST_MESSAGE__               [link boost_test.users_guide.test_output.test_output_macro_message    `BOOST_TEST_MESSAGE`]]
+[def __BOOST_TEST_MESSAGE__               [link boost_test.users_guide.test_output.reference.test_output_macro_message    `BOOST_TEST_MESSAGE`]]
+[def __BOOST_TEST_DONT_PRINT_LOG_VALUE__  [link boost_test.users_guide.test_output.reference.test_output_macro_disable_type `BOOST_TEST_DONT_PRINT_LOG_VALUE`]]
 
 
 [/ Assertions ]

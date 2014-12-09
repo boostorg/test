@@ -119,7 +119,7 @@ macros for this purpose:
 
 
 
-[endsect] [/test_output]
+[endsect] [/ test log output]
 
 
 
@@ -132,8 +132,11 @@ parameter __param_output_format__.
 
 [endsect] [/section:log_runtime_config]
 
-[/ -------------------------------------------------------------------------------------------------- ]
 
+
+
+
+[/ -------------------------------------------------------------------------------------------------- ]
 [section:testing_tool_output_disable Disabling automatic printing for specific types]
 
 Most of the __testing_tools__ print values of their arguments to the output
@@ -153,9 +156,12 @@ failing to compile:
 
 [endsect] [/section:testing_tool_output_disable]
 
-[/ -------------------------------------------------------------------------------------------------- ]
 
-[section:test_output_macro_message `BOOST_TEST_MESSAGE`]
+
+
+
+[/ -------------------------------------------------------------------------------------------------- ]
+[section:test_output_macro_message Custom messages]
 The macro __BOOST_TEST_MESSAGE__ is intended to be used for the purpose of injecting an additional message into the
 __UTF__ test log. These messages are not intended to indicate any error or warning conditions, but rather as
 information/status notifications. The macro signature is as follows:
@@ -175,6 +181,10 @@ with in a manner similar to standard `std::iostream` operation.
 [endsect] [/section:test_output_macro_message]
 
 
+
+
+[/ -------------------------------------------------------------------------------------------------- ]
+
 [include checkpoints.qbk]
 [include logging_floating_point.qbk]
 [include log_format.qbk]
@@ -188,5 +198,5 @@ with in a manner similar to standard `std::iostream` operation.
 [include progress_display.qbk]
 [include reference.qbk]
 
-[endsect] 
+[endsect]  [/test_output]
 
