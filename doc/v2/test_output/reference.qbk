@@ -1,0 +1,47 @@
+[section:reference Reference]
+
+
+[table
+  [
+    [Macro]
+    [Short description]
+  ] 
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_TEST_MESSAGE__]
+    [Custom message output]
+  ]
+  [
+    [BOOST_TEST_DONT_PRINT_LOG_VALUE]
+    [Disabling the printing of a specific type in case of test failure]
+  ]
+  [
+    [__BOOST_TEST_CHECKPOINT__]
+    [Indicates a named checkpoint that will be printed in case of failure]
+  ]
+  [
+    [__BOOST_TEST_PASSPOINT__]
+    [Indicates an unnamed checkpoint that will be printed in case of failure]
+  ]
+  
+  
+  
+]
+
+
+
+[/ -------------------------------------------------------------------------------------------------- ]
+[section:test_output_macro_checkpoint `BOOST_TEST_CHECKPOINT`]
+
+[endsect]
+
+
+
+[section:test_output_macro_passpoint `BOOST_TEST_PASSPOINT`]
+
+[endsect]
+
+
+
+[endsect] 

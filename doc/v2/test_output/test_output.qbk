@@ -124,7 +124,7 @@ macros for this purpose:
 
 
 [/ -------------------------------------------------------------------------------------------------- ]
-[section:log_runtime_config Configuring the verbosity of the logs]
+[section:log_runtime_config Verbosity of the logs]
 
 The active log level threshold can be configured at runtime using the parameter __param_log_level__. 
 The test log output format can be selected using either parameter __param_log_format__ or the
@@ -174,45 +174,9 @@ with in a manner similar to standard `std::iostream` operation.
 
 [endsect] [/section:test_output_macro_message]
 
-[/ -------------------------------------------------------------------------------------------------- ]
-[section:test_output_macro_checkpoint `BOOST_TEST_CHECKPOINT`]
 
-
-The macro __BOOST_TEST_CHECKPOINT__ is intended to be used to inject [*named] checkpoint position. The
-macro signature is as follows:
-
-``
-  __BOOST_TEST_CHECKPOINT__(checkoint_message);
-``
-
-The message formatted at the checkpoint position is saved and reported by the exception logging functions (if any
-occurs). Similarly to the __BOOST_TEST_MESSAGE__ the message can be formatted from any standard
-output stream compliant components.
-
-[bt_example example22..__BOOST_TEST_CHECKPOINT__ usage]
-
-[endsect] [/section:test_output_macro_checkpoint]
-
-[/ -------------------------------------------------------------------------------------------------- ]
-[section:test_output_macro_passpoint `BOOST_TEST_PASSPOINT`]
-
-The macro __BOOST_TEST_PASSPOINT__ is intended to be used to inject an [*unnamed] checkpoint position. The
-macro signature is as follows:
-
-``
-  __BOOST_TEST_PASSPOINT__();
-``
-
-Unlike the macro __BOOST_TEST_CHECKPOINT__ this macro doesn't require any message to be
-supplied with it. It's just a simple "been there" marker that records file name and line number
-code passes through.
-
-[bt_example example23..__BOOST_TEST_PASSPOINT__ usage]
-
-[endsect] [/section:test_output_macro_passpoint]
-
+[include checkpoints.qbk]
 [include logging_floating_point.qbk]
-
 [include log_format.qbk]
 [include compilation_options.qbk]
 
@@ -222,6 +186,7 @@ code passes through.
 [endsect]
 
 [include progress_display.qbk]
+[include reference.qbk]
 
 [endsect] 
 
