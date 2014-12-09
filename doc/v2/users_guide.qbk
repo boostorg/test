@@ -35,7 +35,7 @@ Next you'll learn how to understand and manipulate the __UTF__ output in a __tes
 At that point you should be able to build and run most simple test modules and almost inevitable find a need
 to configure how the test module is executed. Whether you want to change output format, select which test 
 case to run or run test cases in random order these and may other runtime configuration parameters are 
-described in [*Runtime configuration] section.
+described in [link boost_test.users_guide.runtime_config Runtime configuration] section.
 
 One of the first non trivial things you might want to add to your test module is test fixture. Fixture
 support is covered in __section_test_fixture__ section. Usually the default test module initialization
