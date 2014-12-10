@@ -22,6 +22,9 @@
 
 #include <boost/noncopyable.hpp>
 
+#include <map>
+#include <set>
+
 //____________________________________________________________________________//
 
 #ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
@@ -36,9 +39,10 @@
 #endif
 
 
-#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
+#ifndef BOOST_NO_CXX11_DECLTYPE
 
 // some broken compilers do not implement properly decltype on expressions
+// partial implementation of is_forward_iterable when decltype not available
 struct not_fwd_iterable_1 {
   typedef int const_iterator;
   typedef int value_type;
@@ -67,6 +71,15 @@ BOOST_AUTO_TEST_CASE( test_forward_iterable_concept )
     BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
     BOOST_CHECK_MESSAGE(boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
   }
+
+  {
+    // should also work for references
+    typedef std::vector<int>& type;
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
 
   {
     typedef std::list<int> type;

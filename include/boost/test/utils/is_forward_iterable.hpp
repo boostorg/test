@@ -117,8 +117,10 @@ namespace ut_detail {
 
 template<typename T> 
 struct is_forward_iterable  { 
-  typedef mpl::bool_<ut_detail::is_forward_iterable_impl<T>::value> type;
-  enum { value = ut_detail::is_forward_iterable_impl<T>::value };
+  typedef typename std::remove_reference<T>::type T_ref;
+  typedef ut_detail::is_forward_iterable_impl<T_ref> is_fwd_it_t;
+  typedef mpl::bool_<is_fwd_it_t::value> type;
+  enum { value = is_fwd_it_t::value };
 }; 
 
 #endif
