@@ -14,7 +14,7 @@
 
 // Boost.Test
 #define BOOST_TEST_MODULE Boost.Test assertion consruction test
-#include <boost/test/unit_test.hpp>
+#include <boost/test/included/unit_test.hpp>
 #include <boost/test/tools/assertion.hpp>
 #ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
 #include <boost/test/tools/detail/expression_holder.hpp>
@@ -34,6 +34,102 @@
 #   define EXPR_TYPE( E, expr ) auto const& E = assertion::seed() ->* expr
 #   define BOOST_TEST_FWD( a )  BOOST_TEST( a )
 #endif
+
+
+#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
+
+// some broken compilers do not implement properly decltype on expressions
+struct not_fwd_iterable_1 {
+  typedef int const_iterator;
+  typedef int value_type;
+
+  bool size();
+};
+
+struct not_fwd_iterable_2 {
+  typedef int const_iterator;
+  typedef int value_type;
+
+  bool begin();
+};
+
+struct not_fwd_iterable_3 {
+  typedef int value_type;
+  bool begin();
+  bool size();
+};
+
+BOOST_AUTO_TEST_CASE( test_forward_iterable_concept )
+{
+  {
+    typedef std::vector<int> type;
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+  {
+    typedef std::list<int> type;
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+  {
+    typedef std::map<int, int> type;
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+  {
+    typedef std::set<int, int> type;
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+
+  {
+    typedef float type;
+    BOOST_CHECK_MESSAGE(!boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+  {
+    typedef not_fwd_iterable_1 type;
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+  {
+    typedef not_fwd_iterable_2 type;
+    BOOST_CHECK_MESSAGE(!boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+  {
+    typedef not_fwd_iterable_3 type;
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+  {
+    typedef char type;
+    BOOST_CHECK_MESSAGE(!boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+
+}
+#endif
+
+
 
 BOOST_AUTO_TEST_CASE( test_basic_value_expression_construction )
 {
