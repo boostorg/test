@@ -195,7 +195,10 @@ compare_collections( Lhs const& lhs, Rhs const& rhs )
             continue;
 
         pr = false;
-        pr.message() << "\nMismatch in a position " << pos << ": "  << *left << OP::revert() << *right;
+        pr.message() << "\nMismatch in a position " << pos << ": "  
+          << tt_detail::print_helper(*left) 
+          << OP::revert() 
+          << tt_detail::print_helper(*right);
     }
 
     return pr;
