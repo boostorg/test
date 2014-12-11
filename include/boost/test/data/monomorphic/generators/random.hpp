@@ -15,7 +15,7 @@
 // Boost.Test
 #include <boost/test/data/config.hpp>
 
-#if (!defined(BOOST_NO_0X_HDR_RANDOM) && !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)) || defined(BOOST_TEST_DOXYGEN_DOC__)
+#if (!defined(BOOST_NO_CXX11_HDR_RANDOM) && !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)) || defined(BOOST_TEST_DOXYGEN_DOC__)
 
 #include <boost/test/data/monomorphic/generate.hpp>
 #include <boost/test/data/monomorphic/generators/keywords.hpp>
@@ -167,7 +167,7 @@ random( Params const& params )
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // (!defined(BOOST_NO_0X_HDR_RANDOM) && !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)) || defined(BOOST_TEST_DOXYGEN_DOC__)
+#endif // (!defined(BOOST_NO_CXX11_HDR_RANDOM) && !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)) || defined(BOOST_TEST_DOXYGEN_DOC__)
 
 
 #endif // BOOST_TEST_DATA_MONOMORPHIC_GENERATORS_RANDOM_HPP_101512GER
