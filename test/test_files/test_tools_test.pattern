@@ -48,8 +48,8 @@
 485: error: in "test_BOOST_REQUIRE_PREDICATE": not aborted
 487: fatal error: in "test_BOOST_REQUIRE_PREDICATE": critical check less_equal<int>()( arg2, arg1 ) has failed for ( 2, 1 )
 508: error: in "test_BOOST_CHECK_EQUAL_COLLECTIONS": check { testlist.begin(), testlist.end() } == { pattern, pattern+7 } has failed. 
-Mismatch in position 2: 4 != 3
-Mismatch in position 5: 7 != 6
+Mismatch at position 2: 4 != 3
+Mismatch at position 5: 7 != 6
 509: error: in "test_BOOST_CHECK_EQUAL_COLLECTIONS": check { testlist.begin(), testlist.end() } == { pattern, pattern+2 } has failed. 
 Collections size mismatch: 7 != 2
 518: error: in "test_BOOST_CHECK_BITWISE_EQUAL": check (char)0x06 =.= (char)0x16 has failed. 

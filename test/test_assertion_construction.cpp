@@ -14,7 +14,7 @@
 
 // Boost.Test
 #define BOOST_TEST_MODULE Boost.Test assertion consruction test
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <boost/test/tools/assertion.hpp>
 #ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
 #include <boost/test/tools/detail/expression_holder.hpp>
@@ -586,7 +586,7 @@ BOOST_AUTO_TEST_CASE( collection_comparison )
         EXPR_TYPE( E,  v < l );
         predicate_result const& res = E.evaluate();
         BOOST_TEST_FWD( !res );
-        BOOST_TEST_FWD( res.message() == ". \nMismatch in position 0: 1 >= 1\nMismatch in position 2: 3 >= 2" );
+        BOOST_TEST_FWD( res.message() == ". \nMismatch at position 0: 1 >= 1\nMismatch at position 2: 3 >= 2" );
     }
 
     {
@@ -615,7 +615,7 @@ BOOST_AUTO_TEST_CASE( collection_comparison )
         EXPR_TYPE( E,  v >= l );
         predicate_result const& res = E.evaluate();
         BOOST_TEST_FWD( !res );
-        BOOST_TEST_FWD( res.message() == ". \nMismatch in position 1: 2 < 3");
+        BOOST_TEST_FWD( res.message() == ". \nMismatch at position 1: 2 < 3");
     }
 
     {
