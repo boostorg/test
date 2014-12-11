@@ -57,7 +57,7 @@ namespace tt=boost::test_tools;
 //____________________________________________________________________________//
 
 // thanks to http://stackoverflow.com/questions/9226400/portable-printing-of-exponent-of-a-double-to-c-iostreams
-#ifdef BOOST_MSVC
+#if defined(BOOST_MSVC) && (BOOST_MSVC < 1900)
 struct ScientificNotationExponentOutputNormalizer {
     ScientificNotationExponentOutputNormalizer() : m_old_format(_set_output_format(_TWO_DIGIT_EXPONENT)) {}
 
