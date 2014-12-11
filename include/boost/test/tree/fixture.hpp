@@ -90,9 +90,9 @@ private:
 class function_based_fixture : public test_unit_fixture { 
 public:
     // Constructor
-    function_based_fixture( boost::function<void ()> const& setup, boost::function<void ()> const& teardown )
-    : m_setup( setup )
-    , m_teardown( teardown )
+    function_based_fixture( boost::function<void ()> const& setup_, boost::function<void ()> const& teardown_ )
+    : m_setup( setup_ )
+    , m_teardown( teardown_ )
     {
     }
 
