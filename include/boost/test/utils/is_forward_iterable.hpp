@@ -76,7 +76,7 @@ namespace ut_detail {
   struct has_member_size {
   private:
     struct nil_t;
-    template<typename T> static auto  test(T*) -> decltype( boost::declval<T>().size() );
+    template<typename U> static auto  test(U*) -> decltype( boost::declval<U>().size() );
     template<typename>   static nil_t test(...);
 
   public:
@@ -87,7 +87,7 @@ namespace ut_detail {
   struct has_member_begin {
   private:
     struct nil_t;
-    template<typename T>  static auto  test(T*) -> decltype( boost::declval<T>().begin() );
+    template<typename U>  static auto  test(U*) -> decltype( boost::declval<U>().begin() );
     template<typename>    static nil_t test(...);
   public:
     static bool const value = !std::is_same< decltype(test<T>(nullptr)), nil_t>::value;
