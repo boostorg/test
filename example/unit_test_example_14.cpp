@@ -4,7 +4,8 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
-
+//
+// ***************************************************************************
 
 #define BOOST_TEST_TOOL_REPORT_WARN_FAILURE( assertion_descr ) \
     std::cout << "Condition " << assertion_descr << " is not satisfied\n"

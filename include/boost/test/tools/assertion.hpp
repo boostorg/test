@@ -195,7 +195,10 @@ compare_collections( Lhs const& lhs, Rhs const& rhs )
             continue;
 
         pr = false;
-        pr.message() << "\nMismatch in position " << pos << ": "  << *left << OP::revert() << *right;
+        pr.message() << "\nMismatch at position " << pos << ": "  
+          << tt_detail::print_helper(*left) 
+          << OP::revert() 
+          << tt_detail::print_helper(*right);
     }
 
     return pr;
@@ -451,7 +454,7 @@ public:
     // Disabled operators
     template<typename T>
     ExprType&
-    operator ||( T const& rhs )
+    operator ||( T const& /*rhs*/ )
     {
         BOOST_MPL_ASSERT_MSG(false, CANT_USE_LOGICAL_OPERATOR_OR_WITHIN_THIS_TESTING_TOOL, () );
 
@@ -460,7 +463,7 @@ public:
 
     template<typename T>
     ExprType&
-    operator &&( T const& rhs )
+    operator &&( T const& /*rhs*/ )
     {
         BOOST_MPL_ASSERT_MSG(false, CANT_USE_LOGICAL_OPERATOR_AND_WITHIN_THIS_TESTING_TOOL, () );
 
@@ -541,8 +544,8 @@ public:
 private:
     template<typename U>
     static void format_message( wrap_stringstream& ostr, U const& v )   { ostr << "[(bool)" << v << " is false]"; }
-    static void format_message( wrap_stringstream& ostr, bool v )       {}
-    static void format_message( wrap_stringstream& ostr, assertion_result const& v ) {}
+    static void format_message( wrap_stringstream& /*ostr*/, bool /*v*/ )       {}
+    static void format_message( wrap_stringstream& /*ostr*/, assertion_result const& /*v*/ ) {}
 
     // Data members
     T                           m_value;

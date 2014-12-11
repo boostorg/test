@@ -13,14 +13,46 @@
 // ***************************************************************************
 
 // Boost.Test
+
+#include <boost/test/data/monomorphic/singleton.hpp>
 #include <boost/test/data/monomorphic/collection.hpp>
 
 #include <boost/test/unit_test.hpp>
 namespace data=boost::unit_test::data;
 
 #include "test_datasets.hpp"
+#include <vector>
+#include <list>
 
 //____________________________________________________________________________//
+
+
+#ifndef BOOST_NO_CXX11_DECLTYPE
+
+template <typename>
+struct forwarded_to_collection : std::false_type {};
+
+template <typename T>
+struct forwarded_to_collection< data::monomorphic::collection<T> > : std::true_type {};
+
+
+BOOST_AUTO_TEST_CASE( test_forwarded_to_collection)
+{
+  {
+    std::vector<int> samples1;
+    BOOST_CHECK_MESSAGE(boost::unit_test::is_forward_iterable<decltype(samples1)>::value, "forward iterable");
+    BOOST_CHECK_MESSAGE((forwarded_to_collection<decltype(data::make( samples1 ))>::value), 
+                         "not properly forwarded to a collection");
+  }
+  {
+    int samples1(0);
+    BOOST_CHECK_MESSAGE(!boost::unit_test::is_forward_iterable<decltype(samples1)>::value, "forward iterable");
+    BOOST_CHECK_MESSAGE(!(forwarded_to_collection<decltype(data::make( samples1 ))>::value), 
+                         "not properly forwarded to a collection");
+  }
+}
+#endif
+
 
 BOOST_AUTO_TEST_CASE( test_collection )
 {

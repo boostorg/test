@@ -376,8 +376,9 @@ public:
     {
         m_custom_translators = m_custom_translators->erase( m_custom_translators, tag );
     }
+#ifndef BOOST_NO_RTTI
     /// @brief Erases custom exception translator based on an exception type
-    
+    ///
     /// tparam ExceptionType Exception type for which you want to erase the translator
     template<typename ExceptionType>
     void        erase_exception_translator( boost::type<ExceptionType>* = 0 )
@@ -385,6 +386,7 @@ public:
         m_custom_translators = m_custom_translators->erase<ExceptionType>( m_custom_translators );
     }
     //@}
+#endif
 
 private:
     // implementation helpers

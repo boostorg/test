@@ -601,12 +601,12 @@ output_test_stream::match_pattern( bool flush_stream )
 
                     std::string::size_type counter = suffix_size;
                     while( --counter ) {
-                        char c = m_pimpl->get_char();
+                        char c2 = m_pimpl->get_char();
 
                         if( m_pimpl->m_pattern.fail() || m_pimpl->m_pattern.eof() )
                             break;
 
-                        result.message() << c;
+                        result.message() << c2;
                     }
 
                     result.message() << "...";

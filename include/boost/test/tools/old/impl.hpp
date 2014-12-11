@@ -207,7 +207,10 @@ struct equal_coll_impl {
         for( ; left_begin != left_end && right_begin != right_end; ++left_begin, ++right_begin, ++pos ) {
             if( *left_begin != *right_begin ) {
                 pr = false;
-                pr.message() << "\nMismatch in position " << pos << ": "  << *left_begin << " != " << *right_begin;
+                pr.message() << "\nMismatch at position " << pos << ": "  
+                  << ::boost::test_tools::tt_detail::print_helper(*left_begin) 
+                  << " != " 
+                  << ::boost::test_tools::tt_detail::print_helper(*right_begin);
             }
         }
 
