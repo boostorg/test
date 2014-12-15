@@ -13,6 +13,8 @@
 #include <vector>
 #include <map>
 
+namespace data = boost::unit_test::data;
+
 std::vector<int> generate_vector()
 {
   std::vector<int> out;
