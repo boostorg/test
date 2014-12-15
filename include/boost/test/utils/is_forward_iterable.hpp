@@ -22,6 +22,8 @@
 // STL
 #include <list>
 #include <vector>
+#include <map>
+#include <set>
 
 #else
 
@@ -45,7 +47,7 @@ namespace unit_test {
 // **************             is_forward_iterable              ************** //
 // ************************************************************************** //
 
-#ifdef BOOST_NO_CXX11_DECLTYPE
+#if defined(BOOST_NO_CXX11_DECLTYPE) || defined(BOOST_NO_CXX11_NULLPTR) || defined(BOOST_NO_CXX11_TRAILING_RESULT_TYPES)
 template<typename T>
 struct is_forward_iterable : public mpl::false_ {};
 
@@ -55,11 +57,17 @@ struct is_forward_iterable<T const> : public is_forward_iterable<T> {};
 template<typename T>
 struct is_forward_iterable<T&> : public is_forward_iterable<T> {};
 
-template<typename T>
-struct is_forward_iterable<std::vector<T> > : public mpl::true_ {};
+template<typename T, typename A>
+struct is_forward_iterable< std::vector<T, A> > : public mpl::true_ {};
 
-template<typename T>
-struct is_forward_iterable<std::list<T> > : public mpl::true_ {};
+template<typename T, typename A>
+struct is_forward_iterable< std::list<T, A> > : public mpl::true_ {};
+
+template<typename K, typename V, typename C, typename A>
+struct is_forward_iterable< std::map<K, V, C, A> > : public mpl::true_ {};
+
+template<typename K, typename C, typename A>
+struct is_forward_iterable< std::set<K, C, A> > : public mpl::true_ {};
 
 #else
 
