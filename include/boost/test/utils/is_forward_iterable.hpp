@@ -88,7 +88,7 @@ namespace ut_detail {
   template <class T>
   struct has_member_size {
   private:
-    struct nil_t;
+    struct nil_t {};
     template<typename U> static auto  test(U*) -> decltype( boost::declval<U>().size() );
     template<typename>   static nil_t test(...);
 
@@ -99,7 +99,7 @@ namespace ut_detail {
   template <class T>
   struct has_member_begin {
   private:
-    struct nil_t;
+    struct nil_t {};
     template<typename U>  static auto  test(U*) -> decltype( boost::declval<U>().begin() );
     template<typename>    static nil_t test(...);
   public:
