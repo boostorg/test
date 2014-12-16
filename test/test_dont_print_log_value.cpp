@@ -21,15 +21,15 @@
 
 struct MyClass
 {
-    bool operator==(MyClass const&) const
-    {
-        return true;
-    }
+  bool operator==(MyClass const&) const
+  {
+    return true;
+  }
     
-    bool operator!=(MyClass const&) const
-    {
-        return false;
-    }    
+  bool operator!=(MyClass const&) const
+  {
+    return false;
+  }    
 };
 
 typedef ::std::vector<MyClass> MyClassVec;
