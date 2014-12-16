@@ -96,6 +96,7 @@ sequence.
 [h4:stl Datasets from stl containers]
 As for `C` arrays, this type of datasets does not contain the logic for generating sequence of values, but for parsing an existing sequence.
 
+[tip C++11 implementation enables the dataset generation from any container that implements the forward iterator concept]
 
 
 
