@@ -103,7 +103,16 @@ BOOST_AUTO_TEST_CASE( test_collection )
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     int exp_copy_count = 0;
 #else
+
+
+    //BOOST_WORKAROUND(<#symbol#>, <#test#>)
+    
+#ifdef BOOST_CLANG
+    int exp_copy_count = 2;
+#else
     int exp_copy_count = 4;
+#endif
+    
 #endif
 
     copy_count::value() = 0;
