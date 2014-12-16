@@ -182,7 +182,7 @@ The selection of the distribution may be given by the parameter `boost::unit_tes
 
 The following defines a random value generator with Gaussian distribution (mean 5, sigma 2).
 ``
-auto rdgen = __random_3__(data::distribution = std::normal_distribution<>(5.,2));
+auto rdgen = random( (data::distribution = std::normal_distribution<>(5.,2)) );
 ``
 
 [h5 Setting the seed]
@@ -190,7 +190,7 @@ In order to be able to reproduce a failure within a randomized parameter test ca
 set in order to generate the same sequence of random values.
 
 ``
-auto rdgen = __random_3__(data::seed = 100UL);
+auto rdgen = random( (data::seed = 100UL) );
 ``
 
 
