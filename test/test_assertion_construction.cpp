@@ -38,8 +38,8 @@
 #   define BOOST_TEST_FWD( a )  BOOST_TEST( a )
 #endif
 
-
-#ifndef BOOST_NO_CXX11_DECLTYPE
+// internal define
+#ifndef BOOST_TEST_FWD_ITERABLE_CXX03
 
 // some broken compilers do not implement properly decltype on expressions
 // partial implementation of is_forward_iterable when decltype not available
