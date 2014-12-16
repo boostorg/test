@@ -92,15 +92,12 @@ private:
 
 } // namespace monomorphic
 
-//! @brief Returns an infinite sequence of random (real) numbers. 
+//! @brief Returns an infinite sequence of random numbers. 
 //!
-//! The generator uses the default distribution, which is uniform in [0, 1).
-//!
-//! @param begin Generates random numbers in the given interval: the generator uses the default distribution, which is uniform (in [begin, end) for real numbers, and in 
-//! [begin, end] for integers).
-//! @param end
-//! 
-//! @param params parameter of the random distribution that can be set: 
+//! * <tt>auto d = random();</tt> The generator uses the default distribution, which is uniform in [0, 1).
+//! * <tt>auto d = random(begin, end);</tt> Generates random numbers in the given interval: the generator uses the default distribution, which is uniform (in [begin, end) for real numbers, and in 
+//!   [begin, end] for integers).
+//! * <tt>auto d = random(param);</tt> Generates random numbers using the settings inside the parameter @c param : 
 //!   - distribution
 //!   - seed
 //!   - random number generator engine
