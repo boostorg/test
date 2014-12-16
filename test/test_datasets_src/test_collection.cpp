@@ -103,10 +103,9 @@ BOOST_AUTO_TEST_CASE( test_collection )
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     int exp_copy_count = 0;
 #else
-
-
     //BOOST_WORKAROUND(<#symbol#>, <#test#>)
-    
+    // clang/darwin has apparently a non standard constructor for std::vector
+    // in c++03 mode    
 #ifdef BOOST_CLANG
     int exp_copy_count = 2;
 #else
