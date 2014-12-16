@@ -15,7 +15,12 @@
 #ifndef BOOST_TEST_IS_FORWARD_ITERABLE_HPP_110612GER
 #define BOOST_TEST_IS_FORWARD_ITERABLE_HPP_110612GER
 
-#ifdef BOOST_NO_CXX11_DECLTYPE
+#if defined(BOOST_NO_CXX11_DECLTYPE) || defined(BOOST_NO_CXX11_NULLPTR) || defined(BOOST_NO_CXX11_TRAILING_RESULT_TYPES)
+  #define BOOST_TEST_FWD_ITERABLE_CXX03
+#endif
+
+
+#if defined(BOOST_TEST_FWD_ITERABLE_CXX03)
 // Boost
 #include <boost/mpl/bool.hpp>
 
@@ -47,7 +52,7 @@ namespace unit_test {
 // **************             is_forward_iterable              ************** //
 // ************************************************************************** //
 
-#if defined(BOOST_NO_CXX11_DECLTYPE) || defined(BOOST_NO_CXX11_NULLPTR) || defined(BOOST_NO_CXX11_TRAILING_RESULT_TYPES)
+#if defined(BOOST_TEST_FWD_ITERABLE_CXX03)
 template<typename T>
 struct is_forward_iterable : public mpl::false_ {};
 
