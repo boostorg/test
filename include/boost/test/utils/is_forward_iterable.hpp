@@ -136,7 +136,7 @@ struct is_forward_iterable  {
   enum { value = is_fwd_it_t::value };
 }; 
 
-#endif
+#endif /* defined(BOOST_TEST_FWD_ITERABLE_CXX03) */
 
 } // namespace unit_test
 } // namespace boost
