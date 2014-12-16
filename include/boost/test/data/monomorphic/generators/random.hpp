@@ -95,6 +95,15 @@ private:
 //! @brief Returns an infinite sequence of random (real) numbers. 
 //!
 //! The generator uses the default distribution, which is uniform in [0, 1).
+//!
+//! @param begin Generates random numbers in the given interval: the generator uses the default distribution, which is uniform (in [begin, end) for real numbers, and in 
+//! [begin, end] for integers).
+//! @param end
+//! 
+//! @param params parameter of the random distribution that can be set: 
+//!   - distribution
+//!   - seed
+//!   - random number generator engine
 inline monomorphic::generated_by<monomorphic::random_t<>>
 random()
 {
@@ -104,10 +113,10 @@ random()
 //____________________________________________________________________________//
 
 
-//! @brief Returns an infinite sequence of random numbers, in the given interval. 
-//!
-//! The generator uses the default distribution, which is uniform (in [begin, end) for real numbers, and in 
-//! [begin, end] for integers).
+
+/*!
+ * @overload boost::unit_test::data::random()
+ */
 template<typename SampleType>
 inline monomorphic::generated_by<monomorphic::random_t<SampleType>>
 random( SampleType begin, SampleType end )
@@ -131,10 +140,9 @@ struct random_gen_type {
 
 }
 
-//! Generates a random sequence from the parameters.
-//!
-//! Parameters that can be set are
-//! - distribution
+/*!
+ * @overload boost::unit_test::data::random()
+ */
 template<typename Params>
 inline monomorphic::generated_by<typename ds_detail::random_gen_type<Params>::type>
 random( Params const& params )
