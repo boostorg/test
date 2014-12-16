@@ -33,6 +33,7 @@
 #include <boost/bind.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
+#include <boost/test/tools/detail/print_helper.hpp>
 
 //____________________________________________________________________________//
 
@@ -126,7 +127,7 @@ make_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_l
 // ************************************************************************** //
 
 #define BOOST_DATA_TEST_CASE_PARAM(r, _, i, param)  (BOOST_PP_CAT(Arg, i) const& param)
-#define BOOST_DATA_TEST_CONTEXT(r, _, param)  << BOOST_STRINGIZE(param) << " = " << param << "; "
+#define BOOST_DATA_TEST_CONTEXT(r, _, param)  << BOOST_STRINGIZE(param) << " = " << boost::test_tools::tt_detail::print_helper(param) << "; "
 
 #define BOOST_DATA_TEST_CASE_PARAMS( params )                           \
     BOOST_PP_SEQ_ENUM(                                                  \

@@ -72,7 +72,7 @@ std::vector<int> generate_vector()
   return out;
 }
 
-typedef const std::pair<const int, int> pair_int;
+typedef std::pair<const int, int> pair_int;
 BOOST_TEST_DONT_PRINT_LOG_VALUE( pair_int );
 
 const std::vector<int> v = generate_vector();
@@ -97,6 +97,6 @@ std::map<int, int> generate_map()
 const std::map<int, int> m = generate_map();
 BOOST_DATA_TEST_CASE( test_case_2, data::make(m), var1)
 {
-  std::cout << var1->first << " -- " << var1->second << std::endl;
+  std::cout << var1.first << " -- " << var1.second << std::endl;
   BOOST_CHECK(true);
 }
