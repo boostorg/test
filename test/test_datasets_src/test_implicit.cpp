@@ -82,6 +82,7 @@ BOOST_AUTO_TEST_CASE( test_implicit_join )
 
 //____________________________________________________________________________//
 
+#ifndef BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE
 BOOST_AUTO_TEST_CASE( test_implicit_zip )
 {
 #ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
@@ -90,12 +91,9 @@ BOOST_AUTO_TEST_CASE( test_implicit_zip )
     BOOST_TEST( (ds ^ 1).size() == 1 );
 #endif
 
-#ifndef BOOST_NO_CXX11_HDR_TUPLE
     BOOST_TEST( (1 ^ data::make( 5 )).size() == 1 );
     BOOST_TEST( (data::make( 5 ) ^ 1).size() == 1 );
-#endif
 }
+#endif
 
-//____________________________________________________________________________//
 
-// EOF

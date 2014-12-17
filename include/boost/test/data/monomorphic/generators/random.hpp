@@ -18,7 +18,10 @@
 // Boost.Test
 #include <boost/test/data/config.hpp>
 
-#ifndef BOOST_NO_CXX11_HDR_RANDOM
+
+
+
+#ifndef BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE
 
 #include <boost/test/data/monomorphic/generate.hpp>
 #include <boost/test/data/monomorphic/generators/keywords.hpp>
@@ -158,7 +161,7 @@ random( Params const& params )
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_NO_CXX11_HDR_RANDOM
+#endif // BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE
 
 
 #endif // BOOST_TEST_DATA_MONOMORPHIC_GENERATORS_RANDOM_HPP_101512GER

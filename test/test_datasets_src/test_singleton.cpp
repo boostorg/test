@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : tests singleton dataset
+/// @file
+/// @brief tests singleton dataset
 // ***************************************************************************
 
 // Boost.Test

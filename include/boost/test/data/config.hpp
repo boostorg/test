@@ -21,6 +21,20 @@
 // STL
 #include <stdexcept> // for std::logic_error
 
+
+// availability on features
+#ifdef BOOST_NO_CXX11_HDR_RANDOM
+//! Defined when the random dataset feature is not available
+#define BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE
+
+//! Defined when grid composition of datasets is not available
+#define BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE
+
+//! Defined when zip composition of datasets is not available
+#define BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE
+#endif
+
+
 //____________________________________________________________________________//
 
 #define BOOST_TEST_DS_ERROR( msg ) throw std::logic_error( msg )

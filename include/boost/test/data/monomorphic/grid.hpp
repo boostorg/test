@@ -17,12 +17,13 @@
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_GRID_HPP_101512GER
 #define BOOST_TEST_DATA_MONOMORPHIC_GRID_HPP_101512GER
 
-#ifndef BOOST_NO_CXX11_HDR_TUPLE
-
 // Boost.Test
 #include <boost/test/data/config.hpp>
-#include <boost/test/data/monomorphic/dataset.hpp>
 
+
+#ifndef BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE
+
+#include <boost/test/data/monomorphic/dataset.hpp>
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
@@ -215,7 +216,7 @@ operator*( DS1&& ds1, DS2&& ds2 )
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_NO_CXX11_HDR_TUPLE
+#endif // BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE
 
 #endif // BOOST_TEST_DATA_MONOMORPHIC_GRID_HPP_101512GER
 

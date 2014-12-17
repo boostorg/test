@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_CASE( test_forwarded_to_collection)
 #endif
 
 
-BOOST_AUTO_TEST_CASE( test_collection )
+BOOST_AUTO_TEST_CASE( test_collection_sizes )
 {
     BOOST_TEST( data::make( std::vector<int>() ).size() == 0 );
     BOOST_TEST( data::make( std::vector<int>( 3 ) ).size() == 3 );
@@ -77,13 +77,17 @@ BOOST_AUTO_TEST_CASE( test_collection )
     ic.m_value = 0;
     data::for_each_sample( data::make( std::vector<int>( 3 ) ), ic, 1 );
     BOOST_TEST( ic.m_value == 1 );
+}
 
+
+#if !defined(BOOST_NO_CXX11_LAMBDAS) && !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
+BOOST_AUTO_TEST_CASE( test_collection )
+{
     std::vector<int> samples1;
     samples1.push_back(5);
     samples1.push_back(567);
     samples1.push_back(13);
 
-#ifndef BOOST_NO_CXX11_LAMBDAS
     int c = 0;
     data::for_each_sample( data::make( samples1 ), [&c,samples1](int i) {
         BOOST_TEST( i == samples1[c++] );
@@ -98,12 +102,16 @@ BOOST_AUTO_TEST_CASE( test_collection )
     data::for_each_sample( data::make( samples2 ), [&it](char const* str ) {
         BOOST_TEST( str == *it++ );
     });
+}
 #endif
+
+
+BOOST_AUTO_TEST_CASE( test_collection_copies )
+{
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     int exp_copy_count = 0;
 #else
-    //BOOST_WORKAROUND(<#symbol#>, <#test#>)
     // clang/darwin has apparently a non standard constructor for std::vector
     // in c++03 mode    
 #ifdef BOOST_CLANG
@@ -143,6 +151,3 @@ BOOST_AUTO_TEST_CASE( test_collection )
 #endif
 }
 
-//____________________________________________________________________________//
-
-// EOF

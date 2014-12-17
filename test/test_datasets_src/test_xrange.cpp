@@ -60,9 +60,9 @@ BOOST_AUTO_TEST_CASE( test_single_range )
 #endif
 }
 
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
 BOOST_AUTO_TEST_CASE( test_range_join )
 {
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     auto ds = data::xrange( 1, 4 ) + data::xrange( 7, 11 );
 
     BOOST_TEST( ds.size() == 7 );
@@ -79,9 +79,7 @@ BOOST_AUTO_TEST_CASE( test_range_join )
     data::for_each_sample( ds, [&c,exp](int a) {
         BOOST_TEST( a == exp[c++] );
     });
-#endif
 }
+#endif
 
-//____________________________________________________________________________//
 
-// EOF

@@ -14,10 +14,10 @@
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
-
-#ifndef BOOST_NO_CXX11_HDR_TUPLE
-
 #include <boost/test/data/monomorphic/zip.hpp>
+
+#ifndef BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE
+
 #include <boost/test/data/monomorphic/singleton.hpp>
 #include <boost/test/data/monomorphic/array.hpp>
 #include <boost/test/data/monomorphic/collection.hpp>
@@ -25,7 +25,7 @@ namespace data=boost::unit_test::data;
 
 #include "test_datasets.hpp"
 
-BOOST_AUTO_TEST_CASE( test_mono_zip )
+BOOST_AUTO_TEST_CASE( test_mono_zip_sizes )
 {
     BOOST_TEST( (data::make( 1 ) ^ data::make( 5 )).size() == 1 );
     BOOST_TEST( (data::make( std::vector<int>(2) ) ^ data::make( std::list<float>(2) )).size() == 2 );
@@ -34,7 +34,12 @@ BOOST_AUTO_TEST_CASE( test_mono_zip )
 
     BOOST_TEST( (data::make( std::vector<int>(3) ) ^ data::make( std::list<std::string>(3) ) ^ data::make( 5 )).size() == 3 );
     BOOST_TEST( (data::make( std::vector<int>(1) ) ^ data::make( std::list<int>(3) ) ^ data::make( 5 )).size() == 3 );
+}
 
+
+#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && !defined(BOOST_NO_CXX11_LAMBDAS)
+BOOST_AUTO_TEST_CASE( test_mono_zip )
+{
     int arr1[]         = {1,2};
     char const* arr2[] = {"a","b"};
     int* exp1 = arr1;
@@ -138,9 +143,6 @@ BOOST_AUTO_TEST_CASE( test_mono_zip )
     data::for_each_sample( ds3, check_arg_type<std::tuple<copy_count,copy_count>>() );
     BOOST_TEST( copy_count::value() == 0 );
 }
+#endif // !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && !defined(BOOST_NO_CXX11_LAMBDAS)
 
-//____________________________________________________________________________//
-
-#endif // BOOST_NO_CXX11_HDR_TUPLE
-
-// EOF
+#endif // BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE

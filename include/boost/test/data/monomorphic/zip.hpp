@@ -15,12 +15,12 @@
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_ZIP_HPP_102211GER
 #define BOOST_TEST_DATA_MONOMORPHIC_ZIP_HPP_102211GER
 
-#ifndef BOOST_NO_CXX11_HDR_TUPLE
+#include <boost/test/data/config.hpp>
+
+#ifndef BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE
 
 // Boost.Test
-#include <boost/test/data/config.hpp>
 #include <boost/test/data/monomorphic/dataset.hpp>
-
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
@@ -225,7 +225,7 @@ operator^( DS1&& ds1, DS2&& ds2 )
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_NO_CXX11_HDR_TUPLE
+#endif // BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE
 
 #endif // BOOST_TEST_DATA_MONOMORPHIC_ZIP_HPP_102211GER
 

@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : tests monomorphic join
+/// @file
+/// @brief tests monomorphic join
 // ***************************************************************************
 
 // Boost.Test
@@ -150,6 +147,3 @@ BOOST_AUTO_TEST_CASE( test_mono_join )
 #endif
 }
 
-//____________________________________________________________________________//
-
-// EOF
