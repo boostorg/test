@@ -92,17 +92,23 @@ private:
 
 } // namespace monomorphic
 
+
 //! @brief Returns an infinite sequence of random numbers. 
 //!
-//! * <tt>auto d = random();</tt> The generator uses the default distribution, which is uniform in [0, 1).
-//! * <tt>auto d = random(begin, end);</tt> Generates random numbers in the given interval: the generator uses the default distribution, which is uniform (in [begin, end) for real numbers, and in 
-//!   [begin, end] for integers).
-//! * <tt>auto d = random(param);</tt> Generates random numbers using the settings inside the parameter @c param : 
+//! - <tt>auto d = random()</tt>\n
+//!   The generator uses the default distribution, which is uniform in [0, 1)
+//! - <tt>auto d = random(begin, end)</tt>\n
+//!   Generates random numbers in the given interval: the generator uses the default distribution, which is uniform (in [begin, end) for real numbers, and in 
+//!   [begin, end] for integers)
+//! - <tt>auto d = random(param)</tt>\n
+//!   Generates random numbers using the settings inside the parameter @c param : 
 //!   - distribution
 //!   - seed
 //!   - random number generator engine
-inline monomorphic::generated_by<monomorphic::random_t<>>
-random()
+//!
+//! @return an object that implements the dataset API.
+template <typename T>
+inline monomorphic::generated_by< monomorphic::random_t<> > random()
 {
     return monomorphic::generated_by<monomorphic::random_t<>>( monomorphic::random_t<>() );
 }
@@ -111,11 +117,9 @@ random()
 
 
 
-/*!
- * @overload boost::unit_test::data::random()
- */
+/// @overload boost::unit_test::data::random()
 template<typename SampleType>
-inline monomorphic::generated_by<monomorphic::random_t<SampleType>>
+inline monomorphic::generated_by< monomorphic::random_t<SampleType> >
 random( SampleType begin, SampleType end )
 {
     typedef monomorphic::random_t<SampleType> Gen;
@@ -137,9 +141,8 @@ struct random_gen_type {
 
 }
 
-/*!
- * @overload boost::unit_test::data::random()
- */
+
+/// @overload boost::unit_test::data::random()
 template<typename Params>
 inline monomorphic::generated_by<typename ds_detail::random_gen_type<Params>::type>
 random( Params const& params )
