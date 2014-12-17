@@ -5,7 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file unit_test_log_formatter.hpp @brief Defines unit test log formatter interface
+/// @file 
+/// @brief Defines unit test log formatter interface
 ///
 /// You can define a class with implements this interface and use an instance of it
 /// as a Unit Test Framework log formatter

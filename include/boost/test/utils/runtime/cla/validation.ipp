@@ -5,7 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//! @file input validation helpers implementation
+//! @file 
+//! @brief Input validation helpers implementation
 // ***************************************************************************
 
 #ifndef BOOST_RT_CLA_VALIDATION_IPP_070604GER

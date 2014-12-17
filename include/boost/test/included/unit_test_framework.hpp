@@ -5,7 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  Description : deprecated
+/// @file
+/// @deprecated
 // ***************************************************************************
 
 #include <boost/test/included/unit_test.hpp>

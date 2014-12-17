@@ -7,7 +7,7 @@
 //
 //!@file 
 //!@brief Deprecated header. 
-//!@deprecated Use #include <boost/test/tools/output_test_stream.hpp> instead
+//!@deprecated Use boost/test/tools/output_test_stream.hpp instead
 // ***************************************************************************
 
 // Boost.Test

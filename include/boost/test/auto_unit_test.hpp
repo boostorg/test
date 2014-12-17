@@ -7,7 +7,7 @@
 //
 //! @file
 //! @brief Deprecated header. 
-//! @deprecated Use #include <boost/test/unit_test.hpp> instead.
+//! @deprecated Use @c boost/test/unit_test.hpp instead.
 // ***************************************************************************
 
 #ifndef BOOST_TEST_AUTO_UNIT_TEST_HPP_071894GER

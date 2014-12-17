@@ -5,7 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file test/unit_test.hpp @brief Entry point into the Unit Test Framework
+/// @file
+/// @brief Entry point into the Unit Test Framework
 ///
 /// This header sould be the only header necessary to include to start using the framework
 // ***************************************************************************

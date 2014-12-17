@@ -5,7 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file unit_test_parameters.hpp @brief Provides access to various Unit Test Framework runtime parameters
+/// @file
+/// @brief Provides access to various Unit Test Framework runtime parameters
 ///
 /// Primarily for use by the framework itself
 // ***************************************************************************

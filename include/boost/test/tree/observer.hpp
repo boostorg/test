@@ -5,7 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file observer.hpp @brief defines abstract interface for test observer
+//!@file 
+//!@brief defines abstract interface for test observer
 // ***************************************************************************
 
 #ifndef BOOST_TEST_TEST_OBSERVER_HPP_021005GER

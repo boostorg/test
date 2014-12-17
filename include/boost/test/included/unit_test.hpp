@@ -5,7 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//!@file included (vs. linked) version of Unit Test Framework
+//!@file 
+//!@brief Included (vs. linked) version of Unit Test Framework
 // ***************************************************************************
 
 #ifndef BOOST_INCLUDED_UNIT_TEST_FRAMEWORK_HPP_071894GER
