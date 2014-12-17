@@ -12,7 +12,7 @@
 //  Description : defines range generator
 // ***************************************************************************
 
-#ifndef BOOST_TEST_DATA_MONOMORPHIC_GENERATORS_XRANGE_HPP_112011GER
+#ifndef BOOST_TEST_DATA_MONOMORPHIC_GENERATORS_RANDOM_HPP_101512GER
 #define BOOST_TEST_DATA_MONOMORPHIC_GENERATORS_RANDOM_HPP_101512GER
 
 // Boost.Test
