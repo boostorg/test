@@ -45,7 +45,6 @@ BOOST_DATA_TEST_CASE( test_case_interface_02, samples2, str )
 
 //____________________________________________________________________________//
 
-#ifndef BOOST_NO_CXX11_DECLTYPE
 
 int samples3[] = {7,9};
 int index3 = 0;
