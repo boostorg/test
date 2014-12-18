@@ -72,6 +72,7 @@ BOOST_AUTO_TEST_CASE( test_range_join )
     data::for_each_sample( ds, ic );
     BOOST_TEST( ic.m_value == 7 );
 
+#ifndef BOOST_NO_CXX11_LAMBDAS
     int arr[] = {1,2,3,7,8,9,10};
     int* exp = arr;
     int c = 0;
@@ -79,6 +80,7 @@ BOOST_AUTO_TEST_CASE( test_range_join )
     data::for_each_sample( ds, [&c,exp](int a) {
         BOOST_TEST( a == exp[c++] );
     });
+#endif
 }
 #endif
 
