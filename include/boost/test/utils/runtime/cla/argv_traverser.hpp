@@ -71,6 +71,9 @@ public:
     bool            handle_mismatch();
 
 private:
+    void            next_token( bool initial_token );
+
+private:
     // Data members
     dstring                 m_buffer;
     cstring                 m_work_buffer;
