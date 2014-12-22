@@ -13,5 +13,8 @@
 # [ticket 9539] Floating-point comparison algorithms aren't formatted correctly
 # [ticket 9581] Squassabia reference link gives 404 not found
 # [ticket 10318] Minor documentation fix
+# [ticket 10888] Assertion failures don't show up in the errors pane in VS 2010, VS 2012 or VS 2013
+# [ticket 5374] Errors from Boost.Test are no more shown in the Error list in VS2010
+
 
 [endsect]
