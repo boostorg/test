@@ -32,6 +32,8 @@
 namespace boost {
 namespace debug {
 
+#ifdef BOOST_TEST_HAS_DEBUG_SUPPORT
+
 // ************************************************************************** //
 // **************  check if program is running under debugger  ************** //
 // ************************************************************************** //
@@ -70,6 +72,8 @@ std::string BOOST_TEST_DECL set_debugger( unit_test::const_string dbg_id, dbg_st
 // ************************************************************************** //
 
 bool BOOST_TEST_DECL attach_debugger( bool break_or_continue = true );
+
+#endif
 
 // ************************************************************************** //
 // **************   switch on/off detect memory leaks feature  ************** //

@@ -388,8 +388,10 @@ exception_safety_tester::assertion_result( unit_test::assertion_result ar )
 void
 exception_safety_tester::failure_point()
 {
+#ifdef BOOST_TEST_HAS_DEBUG_SUPPORT
     if( m_exec_path_counter == m_break_exec_path )
         debug::debugger_break();
+#endif
     
     throw unique_exception();
 }
