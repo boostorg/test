@@ -192,6 +192,7 @@
 [/=============================================================================]
 
 [include tutorials/tutorials.qbk]
+[include examples.qbk]
 
 [/=============================================================================]
 
@@ -199,6 +200,7 @@
 [include closing_chapters/glossary.qbk]
 [include closing_chapters/change_log.qbk]
 [include closing_chapters/acknowledgments.qbk]
+
 
 [/ EOF]
 
