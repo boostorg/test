@@ -28,9 +28,10 @@ two input iterators) and an unary test function:
 ``
  
 
-`BOOST_PARAM_TEST_CASE` creates an instance of the test case generator. When passed to the method `test_suite::add`,
-the generator produces a separate sub test case for each parameter in the parameters collection and registers
-it immediately in a test suite. Each test case is based on a test function with the parameter bound by value,
+`BOOST_PARAM_TEST_CASE` creates an instance of the test case generator. When passed to the method 
+[memberref boost::unit_test::test_suite::add `test_suite::add`], the generator produces a separate sub test case
+for each parameter in the parameters collection and registers it immediately in a test suite. 
+Each test case is based on a test function with the parameter bound by value,
 even if the test function expects a parameter by reference. The fact that parameter value is stored along with
 bound test function releases you from necessity to manage parameters lifetime. For example, they can be defined
 in the test module initialization function scope.
