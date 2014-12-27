@@ -119,6 +119,7 @@
 [def __BOOST_TEST_SUITE__                     [link ref_BOOST_TEST_SUITE `BOOST_TEST_SUITE`]]
 [def __BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ [link ref_BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES `BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES`]]
 
+
 [/ fixtures]
 [def __BOOST_FIXTURE_TEST_CASE__          [link ref_fixture_test_case     `BOOST_FIXTURE_TEST_CASE`]]
 [def __BOOST_FIXTURE_TEST_SUITE__         [link ref_fixture_test_suite    `BOOST_FIXTURE_TEST_SUITE`]]
@@ -129,7 +130,7 @@
 
 
 [/ parametrized test cases]
-[def __BOOST_DATA_TEST_CASE__         [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.datasets_auto_registration `BOOST_DATA_TEST_CASE`]]
+[def __BOOST_DATA_TEST_CASE__         [link boost_test.users_guide.tests_organization.test_org_reference.test_org_boost_test_dataset `BOOST_DATA_TEST_CASE`]]
 
 
 [/ runtime/cla parameters]

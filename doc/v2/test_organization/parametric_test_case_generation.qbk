@@ -308,7 +308,7 @@ BOOST_DATA_TEST_CASE(test_case_name, dataset, var1, ...) { /* test body */ }
 The first form of the macro above declares automatically a variable named `sample` in the body of the test case, which takes the values of elements in the dataset. An example would be:
 [snippet_dataset1_1]
 
-If specified, the name of the variable `sample` may be replaced by the first parameter take comes after the dataset:
+If specified, the name of the variable `sample` may be replaced by the first parameter that comes after the dataset:
 [snippet_dataset1_2]
 
 
