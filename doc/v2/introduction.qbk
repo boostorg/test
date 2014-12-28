@@ -72,20 +72,20 @@ Let's start by creating the minimal skeleton for our [link ref_test_module test 
 looks like this:
 
 ``
-#define __BOOST_TEST_MAIN__ 
+#define __BOOST_TEST_MODULE__ My Test
 #include <boost/test/included/unit_test.hpp>
 
 __BOOST_AUTO_TEST_CASE__(first_test)
 {
-  __BOOST_CHECK__(true);
+  __BOOST_TEST__(true);
   
   int i = 1;
-  __BOOST_CHECK_EQUAL__(i, 1);
+  __BOOST_TEST__(i == 2);
 }
 `` 
 
 The command/macro __BOOST_AUTO_TEST_CASE__ declares a test named `first_test`, which in turn will run the content of `first_test` inside the 
-controlled testing environment. This test checks that `true` is `true` and that `i` equals `1` and should succeed obviously. 
+controlled testing environment. This test checks that `true` is `true` and that `i` equals `2` and should succeed first test and fail second. 
 
 Before continuing in adding value to the test module itself, let's now build the test module contained in [*an unique]
 [footnote with more than one file, one line should be changed] file. For building this specific test module, we just have to

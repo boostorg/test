@@ -6,7 +6,7 @@
  /]
 
 [/ ##################################################################### ]
-[section:beyond_basics The __UTF__: Advanced Scenarios Guide]
+[section:adv_scenarios The __UTF__: Advanced Usage Scenarios]
 
 Usually the default test module initialization
 will work just fine, but if you want to implement some custom initialization or change how default 

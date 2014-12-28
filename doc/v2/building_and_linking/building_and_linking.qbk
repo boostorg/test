@@ -65,7 +65,7 @@ There are two tasks should be performed before actual testing is able to start:
   initialization of the code under test and custom tune-up of the __UTF__ parameters (for example the test log or the
   test results report output streams redirection, some command line parameters passed to the test module, etc.).
 
-The part of the __UTF__ dedicated for this purpose is called [link boost_test.beyond_basics.build.module_initialization ['the test module initialization]] function. 
+The part of the __UTF__ dedicated for this purpose is called [link boost_test.adv_scenarios.build.module_initialization ['the test module initialization]] function. 
 
 [note Note that alternatively to ['module initialization], global __section_test_fixture__ may be employed.]
 

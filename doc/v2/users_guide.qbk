@@ -40,7 +40,7 @@ case to run or run test cases in random order these and may other runtime config
 described in [link boost_test.users_guide.runtime_config Runtime configuration] section.
 
 If you can't find answer to your questions here or if you believe you need even more configuration options, 
-please continue to [link boost_test.beyond_basics Advanced Scenarios Guide]
+please continue to [link boost_test.adv_scenarios Advanced Scenarios Guide]
 
 [/ intro into usage variants]
 [include usage_variants.qbk]

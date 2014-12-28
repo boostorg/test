@@ -8,7 +8,7 @@
 
 [section:dynamic_lib_variant Dynamic library variant]
 
-In the project with large number of test modules [link boost_test.beyond_basics.build.usage_variants.static_lib_variant the static library variant] of the __UTF__ 
+In the project with large number of test modules [link boost_test.adv_scenarios.build.usage_variants.static_lib_variant the static library variant] of the __UTF__ 
 may cause you to waste a lot of disk space, since the __UTF__ is linked statically with every test module. The solution is 
 to link with the __UTF__ built into a dynamic library (dynamic library variant of the __UTF__). 
 
