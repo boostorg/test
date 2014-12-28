@@ -50,7 +50,7 @@ The unit test toolbox is augmented with one new registration macro: __BOOST_DATA
 [h3 Datasets]
 A [classref boost::unit_test::data::monomorphic::dataset dataset] is a collection of elements, that 
 
-* is forward iterable
+* is forward iterable.
 * can be queried for its `size`, which in turn can be infinite. 
 
 Hence the dataset implements the notion of /sequence/. 
@@ -61,10 +61,15 @@ The descriptive power of the datasets in __UTF__ comes from
 * the [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.operations operations] they provide for combining different datasets 
 * their interface with other type of collections (`stl` containers, `C` arrays)
 
-
 [tip Only "monomorphic" datasets are supported, which means that all elements of a dataset have the same type. However as we will see, 
  datasets representing collections of different types may be combined together.
  ]
+
+As an additional property, the datasets also provide information on the arity of their elements: since the datasets are monomorphic but may be 
+combined by /zip/-like operations which increase their arity, the arity property is used for consistency checks and for providing enough 
+variables in the body of the dataset driven test-cases.
+
+
 
 
  
@@ -96,7 +101,7 @@ sequence.
 [h4:stl Datasets from stl containers]
 As for `C` arrays, this type of datasets does not contain the logic for generating sequence of values, but for parsing an existing sequence.
 
-[tip C++11 implementation enables the dataset generation from any container that implements the forward iterator concept]
+[tip C++11 implementation enables the dataset generation from any container which iterator implements the forward iterator concept]
 
 
 
@@ -246,10 +251,8 @@ Cartesian products are accessible through the `operator*` on datasets:
 
 
 [section Joins]
-A ['join] is the concatenation of two datasets, available through `operator+`.
-
-* the datasets are required to have compatible types
-* joining two datasets does not change the arity of their element
+A ['join] is the concatenation of two datasets, available through `operator+`. The datasets are required to have compatible types.
+Joining two datasets does not change the arity of their elements.
 
 ``
 int arr1[] = {1, 2};
@@ -266,13 +269,13 @@ The `join` functionality is implemented in the class [classref boost::unit_test:
 [endsect]
 
 [section Zips]
-The ['zip] function returns a dataset of tuples, where the i-th tuple contains the i-th element from each of the argument datasets.
+The ['zip] function returns a dataset of tuples, where the `i`-th tuple contains the `i`-th element from each of the argument datasets.
 The size of the zipped dataset is as follow:
 
 * if one of the dataset is of size 1 (singleton) or of infinite size, the final zip size is governed by the other dataset.
 * otherwise the datasets are required to have the same size. An exception will be thrown at runtime if this constraint is not met. 
 
-Zips are accessible through the `operator^` on datasets.
+Zips are accessible through the `operator^` on datasets. The zip operation increases the arity of the dataset by one.
 
 It is possible to combine more than two datasets for zipping: the `operator^` is associative and the datasets created
 yields to the same tuples independently of the positions of the parenthesis. Hence, the following zips are equivalent:
@@ -315,6 +318,8 @@ If specified, the name of the variable `sample` may be replaced by the first par
 In the body of a test case declared using this macro, one or several variables take the value of the dataset:
 
 * 
+
+[caution The macro `BOOST_DATA_TEST_CASE` is available only for compilers with support on variadic macros.]
 
 
 [endsect]
