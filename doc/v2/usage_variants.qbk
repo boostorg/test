@@ -73,15 +73,16 @@ and *only one* translation unit should include following lines
   #define BOOST_TEST_DYN_LINK
   #include <boost/test/unit_test.hpp>
 ``
-BOOST_TEST_MODULE macro needs to be defined *before* the include and should be set to 
-test module name. This name can include spaces and does not need to be wrapped in quotes. 
+BOOST_TEST_MODULE and BOOST_TEST_DYN_LINK macros needs to be defined *before* the include. 
+BOOST_TEST_MODULE should be set to test module name. This name can include spaces and does 
+not need to be wrapped in quotes. 
 
 The second step is to link with the __UTF__ shared library.
 
-The flip of this usage variant is that you will need to make sure the __UTF__ shared library
+The flip side of this usage variant is that you will need to make sure the __UTF__ shared library
 is accessible at runtime to a test module.
 
-Shared library usage variant facilitates custom test runners. For more information about this 
+In addition shared library usage variant facilitates custom test runners. For more information about this 
 check this [/TOFIX] section.
 
 [endsect] [/Usage Variants]

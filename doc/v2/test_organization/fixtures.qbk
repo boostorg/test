@@ -10,21 +10,19 @@ Though these tasks are encountered in many if not all test cases, what makes a t
 repetition. Where a normal test case implementation does all preparatory and cleanup work itself, a test fixture
 allows this to be implemented in a separate reusable unit.
 
-With introduction of e[*X]treme [*P]rogramming (XP), the testing style, that require test setup/cleanup repetition, is
-becoming more and more popular. Single XP adopted test modules may contain hundreds of single assertion test cases,
+With introduction of e[*X]treme [*P]rogramming (XP), the testing style, that require test setup/cleanup repetition,
+has become even more popular. Single XP adopted test modules may contain hundreds of single assertion test cases,
 many requiring very similar test setup/cleanup. This is the problem that the test fixture is designed to solve.
 
 In practice a test fixture usually is a combination of setup and teardown functions, associated with test case.
 The former serves the purposes of test setup; the later is dedicated to the cleanup tasks. Ideally it's
 preferable that a test module author is able to define variables used in fixtures on the stack and the same time
 is able to refer to them directly in test case.
-
  
 It's important to understand that C++ provides a way to implement a straightforward test fixture solution
 that almost satisfies our requirements without any extra support from the test framework. This may explain why
 test fixtures support was introduced in the __UTF__ somewhat late in its life cycle. Here is how simple test module
 with such a fixture may look like:
- 
 
 [/snippet5 deleted content below]
 

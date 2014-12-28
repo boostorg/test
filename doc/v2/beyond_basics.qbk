@@ -6,7 +6,19 @@
  /]
 
 [/ ##################################################################### ]
-[section:beyond_basics The __UTF__: beyond basics]
+[section:beyond_basics The __UTF__: Advanced Scenarios Guide]
+
+Usually the default test module initialization
+will work just fine, but if you want to implement some custom initialization or change how default 
+initialization behaves you need to first look in [*Test module initialization] section. Here you'll learn
+about various options the __UTF__ provides for you to customize this behaviour.
+
+Finally you might want to learn about how the __UTF__ implements entry points into the test modules. This
+is especially important if you intend to implement the `main` function yourself and not use the one 
+provided by the __UTF__. The [*Test runners] section covers this subject. Different usage variants employ
+slightly different approached to implementing test module entry points and presents slightly different
+interfaces. This section intended for advanced user some of the details of the implementation are described
+there.
 
 [/ build and link with boost.test]
 [include building_and_linking/building_and_linking.qbk]
@@ -17,8 +29,6 @@
 [xinclude doxygen_reference_generated_doc.xml]
 
 [/=============================================================================]
-
-[include usage_recommandations.qbk]
 
 [endsect] [/beyond basics]
 

@@ -6,7 +6,7 @@
  /]
 
 [/ ##################################################################### ]
-[section:users_guide The __UTF__ User's Guide]
+[section:users_guide The __UTF__: User's Guide]
 
 Without further ado, I'd like to start ... but where? It's not obvious what is the best order to describe
 the framework. One can use bottom up approach, starting with with basics and going up to cover real 
@@ -30,25 +30,17 @@ The next step, probably the most important for you, is to start writing test cas
 suites and implement your checks. First two topics are covered in 
 [link boost_test.users_guide.tests_organization Tests organization] section, while
 __testing_tools__ section arms you with rich set of tools enough to implement almost arbitrary check you need.
+[link boost_test.users_guide.tests_organization.fixtures Here] you will also learn about adding fixtures to your 
+test units.
 
 Next you'll learn how to understand and manipulate the __UTF__ output in a __test_outputs__ section. 
 At that point you should be able to build and run most simple test modules and almost inevitable find a need
 to configure how the test module is executed. Whether you want to change output format, select which test 
 case to run or run test cases in random order these and may other runtime configuration parameters are 
-described in [*Runtime configuration] section.
+described in [link boost_test.users_guide.runtime_config Runtime configuration] section.
 
-One of the first non trivial things you might want to add to your test module is test fixture. Fixture
-support is covered in __section_test_fixture__ section. Usually the default test module initialization
-will work just fine, but if you want to implement some custom initialization or change how default 
-initialization behaves you need to first look in [*Test module initialization] section. Here you'll learn
-about various options the __UTF__ provides for you to customize this behaviour.
-
-Finally you might want to learn about how the __UTF__ implements entry points into the test modules. This
-is especially important if you intend to implement the `main` function yourself and not use the one 
-provided by the __UTF__. The [*Test runners] section covers this subject. Different usage variants employ
-slightly different approached to implementing test module entry points and presents slightly different
-interfaces. This section intended for advanced user some of the details of the implementation are described
-there.
+If you can't find answer to your questions here or if you believe you need even more configuration options, 
+please continue to [link boost_test.beyond_basics Advanced Scenarios Guide]
 
 [/ intro into usage variants]
 [include usage_variants.qbk]
