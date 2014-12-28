@@ -1,3 +1,10 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
 [section:static_lib_variant Static library variant]
 The __UTF__ can be built into a static library. If you opt to link a test module with the [*standalone static library],
 this usage is called the static library variant of the __UTF__.

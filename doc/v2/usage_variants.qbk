@@ -17,6 +17,7 @@ The __UTF__ supports three different usage variants:
 In most cases you shouldn't have problems deciding which one to use, since there are
 clear reasons why would you prefer each one. Following sections should help you with the decision.
 
+[/ ##################################################################### ]
 [h3:single_header Single-header usage variant]
 
 If you prefer to avoid the compilation of standalone library, you should use the 
@@ -36,6 +37,7 @@ test modules with a single translation unit.
 
 For more details on customization for this usage variant you can check this [/TOFIX] section
 
+[/ ##################################################################### ]
 [h3:static_lib Static library usage variant]
 For most users, who has an access to prebuild static library [footnote these files are distributed with the packaging systems on Linux and OSX for instance] 
 of the __UTF__ or can build [/TOFIX make a link] it themselves, 
@@ -59,6 +61,7 @@ with __UTF__, which might be something you interested to avoid. Also this usage 
 limited options for test runners. For more information about these configuration options check 
 this [/TOFIX] section.
 
+[/ ##################################################################### ]
 [h3:shared_lib Shared library usage variant]
 In the project with large number of test modules the static library variant of the __UTF__ may
 cause you to waste a lot of disk space. The solution is to link test module dynamically with the 
@@ -86,6 +89,11 @@ is accessible at runtime to a test module.
 
 Shared library usage variant facilitates custom test runners. For more information about this 
 check this [/TOFIX] section.
+[warning to fix section]
+
+[caution On Windows, the test module and the __UTF__ shared library should link to the same CRT. Not doing
+ so (for instance __UTF__ shared library in /release/ mode while the test module is in /debug/) will
+ lead to crashes.]
 
 [endsect] [/Usage Variants]
 
