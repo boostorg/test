@@ -110,8 +110,9 @@ If you haven't seen any error message, you can run the test:
 and it shoud show something like:
 [pre
 Running 1 test case...
+test_file.cpp(9): error: in "first_test": check i == 2 has failed [1 != 2]
 
-*** No errors detected
+*** 1 failure detected in test module "My Test"
 ]
 
 The command line is similar for `clang`. 
@@ -150,23 +151,24 @@ target_include_directories(test_executable PRIVATE ${BOOST_INCLUDE_DIRS})
 add_test(NAME test1 COMMAND test_executable)
 ]
 
-We will now create the build directory for this project (separate directory), configure and build the project,
-as follow:
+We will now create the build directory for this project (separate directory), 
+configure and build the project, as follow:
 ```
 > cd ``$``test_path
-> mkdir build /*< we create a directory dedicated to the build, to avoid any pollution of the sources with the temporary
-                  build files >*/
+> mkdir build     /*< we create a directory dedicated to the build, to avoid 
+                      any pollution of the sources with the temporary
+                      build files >*/
 > cd build
-> cmake  .. /*< configuration of the project >*/
-> cmake --build . /*< this command builds the project, cmake drives a native tool that is configured on the 
-                      previous command line >*/
+> cmake  ..       /*< configuration of the project >*/
+> cmake --build . /*< this command builds the project, cmake drives a native 
+                      tool that is configured on the previous command line >*/
 > ctest           /*< runs the tests declared in the project and prints a report >*/
 ```
 
 [h3 Really less than 5mn]
-You should now be convinced that starting using the __UTF__ is straightforward. As any framework, __UTF__ also provides 
-a lot of functionalities that you will discover when needed. The next section will help you jump to the part of the documentation
-that best suits your needs. 
+We hope you are now convinced that starting using the __UTF__ is easy and straightforward. 
+The __UTF__ provides a lot of features that you can discover when needed. The next 
+section will help you to navigate to the part of the documentation that best suits your needs. 
 
 [endsect] [/ 5mn starter]
 
