@@ -140,9 +140,15 @@ public:
 
     // test unit list management
 
-    //! Adds a test unit to a test suite, with possibility to specify the timeout and the expected failures.
+    /*!@brief Adds a test unit to a test suite.
+     *
+     * It is possible to specify the timeout and the expected failures.
+     */
     void            add( test_unit* tu, counter_t expected_failures = 0, unsigned timeout = 0 );
-    //! @overload boost::unit_test::test_suite::add
+
+    //  boost::unit_test::test_suite::add( test_unit* tu, counter_t expected_failures = 0, unsigned timeout = 0 )
+
+    /// @overload
     void            add( test_unit_generator const& gen, unsigned timeout = 0 );
     
     //! Removes a test from the test suite.
