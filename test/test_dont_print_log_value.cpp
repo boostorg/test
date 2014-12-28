@@ -49,7 +49,8 @@ BOOST_AUTO_TEST_CASE(collection_of_objects)
   BOOST_CHECK_EQUAL_COLLECTIONS(actual.begin(), actual.end(), expected.begin(), expected.end());
 }
 
-// this one tests for contexts
+#if BOOST_PP_VARIADICS
+// this one tests for contexts printing in dataset tests
 vector_dummy_class generate_vector()
 {
   vector_dummy_class out;
@@ -60,7 +61,9 @@ vector_dummy_class generate_vector()
 }
 
 vector_dummy_class v = generate_vector();
-BOOST_DATA_TEST_CASE( test_data_case, boost::unit_test::data::make(v), var1)
+BOOST_DATA_TEST_CASE( test_data_case, boost::unit_test::data::make(v))
 {
   BOOST_CHECK(true);
 }
+#endif
+
