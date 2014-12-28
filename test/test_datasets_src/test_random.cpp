@@ -5,13 +5,14 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//!@file tests singleton dataset
+//! @file 
+//! @brief tests singleton dataset
 // ***************************************************************************
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
 
-#if !defined(BOOST_NO_0X_HDR_RANDOM) && \
+#if !defined(BOOST_NO_CXX11_HDR_RANDOM) && \
     !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && \
     !defined(BOOST_NO_CXX11_LAMBDAS)
 
@@ -132,7 +133,7 @@ BOOST_AUTO_TEST_CASE( test_parameterized_init )
 
 //____________________________________________________________________________//
 
-#endif // BOOST_NO_0X_HDR_RANDOM
+#endif // !defined(BOOST_NO_CXX11_HDR_RANDOM) && !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && !defined(BOOST_NO_CXX11_LAMBDAS)
 
 
 // EOF

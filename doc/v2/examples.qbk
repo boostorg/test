@@ -1,0 +1,33 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ / Copyright (c) 2013-2014 Raffi Enficiaud
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+[section:boost_test_examples Examples]
+
+
+
+[variablelist List of examples
+    [
+      [Manual declaration of a free test function] 
+      [
+       * Source : [@../examples/example01.cpp =example01.cpp=]
+       * Output : [@../examples/example01.output =example01.output=]
+      ]
+    ]
+    [
+      [Manual declaration of a test in a member function] 
+      [
+       * Source : [@../examples/example02.cpp =example02.cpp=]
+       * Output : [@../examples/example02.output =example02.output=]
+      ]
+    ]
+]
+
+
+
+
+[endsect] [/ section examples]

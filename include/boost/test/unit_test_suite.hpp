@@ -73,8 +73,8 @@ BOOST_AUTO_TU_REGISTRAR( BOOST_JOIN( end_suite, __LINE__ ) )( 1 );      \
 // ************************************************************************** //
 // **************    BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES    ************** //
 // ************************************************************************** //
-// deprecated; use decorator instead
 
+/// @deprecated use decorator instead
 #define BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES( test_name, n )          \
 BOOST_TEST_DECORATOR( boost::unit_test::expected_failures( n ) )
 /**/

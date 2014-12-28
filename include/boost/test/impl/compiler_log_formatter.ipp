@@ -140,7 +140,7 @@ compiler_log_formatter::log_exception_start( std::ostream& output, log_checkpoin
     {
         BOOST_TEST_SCOPE_SETCOLOR( output, term_attr::BLINK, term_color::RED );
 
-        output << "fatal error in \"" << (loc.m_function.is_empty() ? test_phase_identifier() : loc.m_function ) << "\": "
+        output << "fatal error: in \"" << (loc.m_function.is_empty() ? test_phase_identifier() : loc.m_function ) << "\": "
                << ex.what();
     }
 

@@ -77,7 +77,7 @@ operator<<( unit_test::lazy_ostream const&, tolerance_manip<FPT> const& )   { re
 
 template<typename FPT>
 inline check_type
-operator<<( assertion_type const& at, tolerance_manip<FPT> const& )         { return CHECK_BUILT_ASSERTION; }
+operator<<( assertion_type const& /*at*/, tolerance_manip<FPT> const& )         { return CHECK_BUILT_ASSERTION; }
 
 //____________________________________________________________________________//
  

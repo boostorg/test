@@ -17,3 +17,5 @@ doc/v2/html/boost/
 doc/v2/html/boost_test/
 doc/v2/html/index.html
 doc/v2/html/standalone_HTML.manifest
+test_executable
+doc/v2/snippet/dataset_1/build/

@@ -93,7 +93,7 @@ struct nil {
 
     // Visitation support
     template<typename Visitor>
-    void            apply_to( Visitor& V ) const {}
+    void            apply_to( Visitor& /*v*/ ) const {}
 
     static nil&     inst() { static nil s_inst; return s_inst; }
 private:

@@ -92,7 +92,7 @@ namespace boost {
 /// There are several other parameters of the monitored environment can be configured by setting appropriate properties of the Execution Monitor.
 ///
 /// All symbols in the Execution Monitor implementation are located in the namespace boost. To use the Execution Monitor you need to:
-/// -# #include <boost/test/execution_monitor.hpp>
+/// -# include @c boost/test/execution_monitor.hpp
 /// -# Make an instance of execution_monitor.
 /// -# Optionally register custom exception translators for exception classes which require special processing.
 ///
@@ -376,8 +376,9 @@ public:
     {
         m_custom_translators = m_custom_translators->erase( m_custom_translators, tag );
     }
+#ifndef BOOST_NO_RTTI
     /// @brief Erases custom exception translator based on an exception type
-    
+    ///
     /// tparam ExceptionType Exception type for which you want to erase the translator
     template<typename ExceptionType>
     void        erase_exception_translator( boost::type<ExceptionType>* = 0 )
@@ -385,6 +386,7 @@ public:
         m_custom_translators = m_custom_translators->erase<ExceptionType>( m_custom_translators );
     }
     //@}
+#endif
 
 private:
     // implementation helpers

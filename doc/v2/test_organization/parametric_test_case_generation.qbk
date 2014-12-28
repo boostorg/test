@@ -43,130 +43,89 @@ some collection. However, this solution has also limitations
   test for some points around (0,1), but will fail to provide an *asymptotical behaviour* of the function close to this point. 
 
 
-The __UTF__ provides a facility in order to ease the description and the generations of the class of inputs. 
+The __UTF__ provides a facility in order to ease the description and the generations of the class of inputs, through the notion of *datasets*. 
 
 The unit test toolbox is augmented with one new registration macro: __BOOST_DATA_TEST_CASE__. 
 
-[section Datasets]
-The descriptive power of the datasets in __UTF__ comes from
-
-* the operations they provide for combining different datasets 
-* the available /dataset generators/
-* their interface with other type of collections
-
+[h3 Datasets]
 A [classref boost::unit_test::data::monomorphic::dataset dataset] is a collection of elements, that 
 
-* is forward iterable
+* is forward iterable.
 * can be queried for its `size`, which in turn can be infinite. 
 
 Hence the dataset implements the notion of /sequence/. 
 
-[info Only "monomorphic" datasets are supported, which means that all elements of a dataset have the same type. However as we will see, 
+The descriptive power of the datasets in __UTF__ comes from
+
+* the available built-in [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators /dataset generators/]
+* the [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.operations operations] they provide for combining different datasets 
+* their interface with other type of collections (`stl` containers, `C` arrays)
+
+[tip Only "monomorphic" datasets are supported, which means that all elements of a dataset have the same type. However as we will see, 
  datasets representing collections of different types may be combined together.
  ]
 
+As an additional property, the datasets also provide information on the arity of their elements: since the datasets are monomorphic but may be 
+combined by /zip/-like operations which increase their arity, the arity property is used for consistency checks and for providing enough 
+variables in the body of the dataset driven test-cases.
 
 
-[section Operations on dataset]
-As mentioned earlier, one of the major aspects of using the __UTF__ datasets lies in the number of operations provided
-for their combination.
+
+
  
-[section Cartesian products]
-The Cartesian product, or ['grid], combines two datasets to form a new dataset of higher dimension. The iteration over
-the resulting datasets creates pairs of values with types respective to the initial datasets.
-
-Cartesian products are accessible through the `operator*` on datasets:
+[/ ##################################################################################################################################  ]
+[/ Main code import for this section ]
+[import ../snippet/dataset_1/test_file.cpp]
 
 
-[endsect]
+
+[/ ##################################################################################################################################  ]
+[section:generators Datasets generators]
+Several ['generators] for datasets are implemented in __UTF__:
+
+* [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.stl `stl`] containers and 
+  [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.c_arrays `C` array] like datasets
+* [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.ranges ranges] or sequences of values
+* datasets made of [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.random random numbers] and following a particular distribution
+
+`stl` and `C-array` generators are merely a dataset view on existing collection, while ranges and random number sequences are 
+describing new datasets. 
 
 
-[section Joins]
-A ['join] is the concatenation of two datasets. These datasets are required to have compatible types. Joins are accessible through
-the `operator+` on datasets:
 
-``
-int arr1[] = {1, 2};
-int arr2[] = {7, 19};
-__BOOST_CHECK_EQUAL__( (data::make( arr1 ) + data::make( arr2 )).size(), 4);
-``
-
-[note
-The `join` functionality is implemented in the class [classref boost::unit_test::data::monomorphic::join].
-]
-
-[endsect]
-
-[section Zips]
-The ['zip] function returns a dataset of tuples, where the i-th tuple contains the i-th element from each of the argument datasets.
-The size of the zipped dataset is as follow:
-
-* if one of the dataset is of size 1 (singleton) or of infinite size, the final zip size is governed by the other dataset.
-* otherwise the datasets are required to have the same size
-
-Zips are accessible through the `operator^` on datasets:
-
-[table:id_example_dataset_zipop Custom predicate support using __BOOST_LEVEL_PREDICATE__
-  [
-    [Code]
-    [Output]
-  ]
-  [
-    [``
-#include <boost/test/unit_test.hpp>
-
-#if BOOST_PP_VARIADICS
-
-#include <boost/test/data/test_case.hpp>
-#include <boost/test/data/monomorphic.hpp>
-namespace data=boost::unit_test::data;
-
-int samples1[] = {1,2};
-char const* samples2[] = {"qwerty","asdfg"};
-
-__BOOST_DATA_TEST_CASE__( test_name, data::make(samples1)^samples2, integer_values, string_value)
-{
-  std::cout << integer_values << ", " << string_value << std::endl;
-}
-#endif
-``
-    ]
-    [
-``
-1, qwerty
-2, asdfg
-``
-    ]
-  ]
-]
+[h4:c_arrays Datasets from C arrays]
+This type of datasets does not contains the logic for generating the sequence of values, but contains the logic for parsing an existing
+sequence.
 
 
-[endsect]
+[h4:stl Datasets from stl containers]
+As for `C` arrays, this type of datasets does not contain the logic for generating sequence of values, but for parsing an existing sequence.
 
-[endsect] [/ operations on dataset]
+[tip C++11 implementation enables the dataset generation from any container which iterator implements the forward iterator concept]
 
 
 
 
-[section Datasets generators]
-Several ['generators] are implemented in __UTF__. The purpose are:
-
-* to ease the generation of data, even in large scale
-* to improve the readability and expressiveness of the test cases
-
-
-
-[section Ranges]
+[/ ##################################################################################################################################  ]
+[h4:ranges Ranges]
 A range is a sequence of equally spaced values. An optional `begin` and `step` can be given. 
 The range initialisation supports named values. 
 
+
+
+It is possible to construct a range in various ways:
 ``
-void generate_ranges()
-{
-  using namespace boost::unit_test;
-  generated_by< data::xrange_t<double> > r_double = data::xrange( data::step = 0.5, data::end = 3 );
-}
+#include <boost/test/data/test_case.hpp>
+#include <boost/test/data/monomorphic.hpp>
+
+auto range1 = data::xrange( (data::step = 0.5, data::end = 3 ) ); // Constructs with named values, starting at 0
+auto range2 = data::xrange( begin, end ); // begin < end required
+auto range5 = data::xrange( begin, end, step );  // begin < end required
+auto range3 = data::xrange( end ); // begin=0, end cannot be <= 0, see above
+auto range4 = data::xrange( end, (data::begin=1) ); // named value after end
 ``
+
+[tip In order to use the named values, these should be declared inside parenthesis]
 
 [h5 Parameters]
 The details of the named value parameters is given in the table below.
@@ -202,13 +161,18 @@ The details of the named value parameters is given in the table below.
 ]
 
 
-[tip ranges are implemented in [classref boost::unit_test::data::monomorphic::xrange_t], ]
+[h5 Example]
+As previous test declarations on datasets, the macro __BOOST_DATA_TEST_CASE__ is used the following way:
+
+[bt_example example59..Declaring a test with a range]
+
+[h5 Reference]
+Ranges are implemented in [classref boost::unit_test::data::monomorphic::xrange_t], and the range factory is given by [funcref boost::unit_test::data::xrange].
 
 
-[endsect]
 
-
-[section Random value generators]
+[/ ##################################################################################################################################  ]
+[h4:random Random value generators]
 
 [classref boost::unit_test::data::monomorphic::random_t]
 
@@ -218,17 +182,12 @@ A factory for creating datasets with this random generator is given by
 [warning the random value generators are available only for C++11 capable compilers.]
 
 
-[def __random_1__ [funcref boost::unit_test::data::random boost::unit_test::data::random]]
-[def __random_2__ [funcref boost::unit_test::data::random\(t,t\) boost::unit_test::data::random]]
-[def __random_3__ [funcref boost::unit_test::data::random\(t\) boost::unit_test::data::random]]
-
-
 [h5 Choosing the distribution]
 The selection of the distribution may be given by the parameter `boost::unit_test::data::distribution`
 
 The following defines a random value generator with Gaussian distribution (mean 5, sigma 2).
 ``
-auto rdgen = __random_3__(data::distribution = std::normal_distribution<>(5.,2));
+auto rdgen = random( (data::distribution = std::normal_distribution<>(5.,2)) );
 ``
 
 [h5 Setting the seed]
@@ -236,7 +195,7 @@ In order to be able to reproduce a failure within a randomized parameter test ca
 set in order to generate the same sequence of random values.
 
 ``
-auto rdgen = __random_3__(data::seed = 100UL);
+auto rdgen = random( (data::seed = 100UL) );
 ``
 
 
@@ -271,21 +230,96 @@ The details of the named value parameters is given in the table below.
 
 
 
-
-
-[endsect] [/ random]
-
-
 [endsect] [/ Datasets generators]
 
-[endsect] [/ datasets]
+
+
+
+[/ ##################################################################################################################################  ]
+[section:operations Operations on dataset]
+As mentioned earlier, one of the major aspects of using the __UTF__ datasets lies in the number of operations provided
+for their combination.
+ 
+[section Cartesian products]
+The Cartesian product, or ['grid], combines two datasets to form a new dataset of higher dimension. The iteration over
+the resulting datasets creates pairs of values with types respective to the initial datasets.
+
+Cartesian products are accessible through the `operator*` on datasets:
+
+
+[endsect]
+
+
+[section Joins]
+A ['join] is the concatenation of two datasets, available through `operator+`. The datasets are required to have compatible types.
+Joining two datasets does not change the arity of their elements.
+
+``
+int arr1[] = {1, 2};
+int arr2[] = {7, 19};
+__BOOST_CHECK_EQUAL__( (data::make( arr1 ) + data::make( arr2 )).size(), 4);
+``
+
+[bt_example example62..Example of join usage on datasets]
+
+[note
+The `join` functionality is implemented in the class [classref boost::unit_test::data::monomorphic::join].
+]
+
+[endsect]
+
+[section Zips]
+The ['zip] function returns a dataset of tuples, where the `i`-th tuple contains the `i`-th element from each of the argument datasets.
+The size of the zipped dataset is as follow:
+
+* if one of the dataset is of size 1 (singleton) or of infinite size, the final zip size is governed by the other dataset.
+* otherwise the datasets are required to have the same size. An exception will be thrown at runtime if this constraint is not met. 
+
+Zips are accessible through the `operator^` on datasets. The zip operation increases the arity of the dataset by one.
+
+It is possible to combine more than two datasets for zipping: the `operator^` is associative and the datasets created
+yields to the same tuples independently of the positions of the parenthesis. Hence, the following zips are equivalent:
+
+``
+ (boost::unit_test::xrange(2) ^ boost::unit_test::xrange(2, 4))
+    ^ boost::unit_test::xrange(4, 6)
+ = boost::unit_test::xrange(2) ^ 
+    ( boost::unit_test::xrange(2, 4) ^ boost::unit_test::xrange(4, 6) )
+ = boost::unit_test::xrange(2) ^ 
+     boost::unit_test::xrange(2, 4) ^ 
+       boost::unit_test::xrange(4, 6)
+`` 
+
+[bt_example example61..Example of zip usage on datasets]
+
+
+[endsect] [/ zip operation on datasets]
+
+[endsect] [/ operations on dataset]
+
+
+
 
 [section:datasets_auto_registration Declaring test case with datasets]
 The dataset framework comes with a new test-case declaration macro:
 
 ``
-BOOST_DATA_TEST_CASE
+BOOST_DATA_TEST_CASE(test_case_name, dataset) { /* test body */ }
+BOOST_DATA_TEST_CASE(test_case_name, dataset, var1, ...) { /* test body */ }
 ``
+
+The first form of the macro above declares automatically a variable named `sample` in the body of the test case, which takes the values of elements in the dataset. An example would be:
+[snippet_dataset1_1]
+
+If specified, the name of the variable `sample` may be replaced by the first parameter that comes after the dataset:
+[snippet_dataset1_2]
+
+
+In the body of a test case declared using this macro, one or several variables take the value of the dataset:
+
+* 
+
+[caution The macro `BOOST_DATA_TEST_CASE` is available only for compilers with support on variadic macros.]
 
 
 [endsect]

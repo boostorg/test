@@ -57,7 +57,7 @@ namespace tt=boost::test_tools;
 //____________________________________________________________________________//
 
 // thanks to http://stackoverflow.com/questions/9226400/portable-printing-of-exponent-of-a-double-to-c-iostreams
-#ifdef BOOST_MSVC
+#if defined(BOOST_MSVC) && (BOOST_MSVC < 1900)
 struct ScientificNotationExponentOutputNormalizer {
     ScientificNotationExponentOutputNormalizer() : m_old_format(_set_output_format(_TWO_DIGIT_EXPONENT)) {}
 
@@ -636,7 +636,7 @@ public:
     int         operator&()     { return 10; }
 };
 
-#ifndef BOOST_NO_DECLTYPE
+#ifndef BOOST_NO_CXX11_DECLTYPE
 #define BOOST_TEST_FWD_1(P,M) BOOST_TEST(P)
 #define BOOST_TEST_FWD_2(P,M) BOOST_TEST(P,M)
 #define BOOST_TEST_FWD_3(P,A,M) BOOST_TEST(P,A)

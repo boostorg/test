@@ -1,0 +1,131 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ / Copyright (c) 2014 Raffi Enficiaud
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+[section:test_org_reference Reference]
+
+
+
+[table
+  [
+    [Macro]
+    [Short description]
+  ] 
+  
+  [/ ###############################################################################################]
+  [/ Test cases]
+  [
+    [__BOOST_TEST_CASE__]
+    [Manual registration of a test case]
+  ]
+  [
+    [__BOOST_AUTO_TEST_CASE__]
+    [Automatic declaration and registration of a test case]
+  ]
+  [
+    [__BOOST_PARAM_TEST_CASE__]
+    [Automatic declaration and registration of a test case with a collection of parameters]
+  ]
+  [
+    [__BOOST_AUTO_TEST_CASE_TEMPLATE__]
+    [Automatic declaration and registration of a typed test case]
+  ]
+  [
+    [__BOOST_TEST_CASE_TEMPLATE__]
+    [Registration of a typed test case with an `boost::mpl` like sequence of types]
+  ]
+  [
+    [__BOOST_TEST_CASE_TEMPLATE_FUNCTION__]
+    [Declaration of the body of a typed test case]
+  ]
+  
+  
+  [
+    [__BOOST_DATA_TEST_CASE__]
+    [Declaration of the body of a test case on datasets]
+  ]
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  
+  
+  
+  
+  [/ ###############################################################################################]
+  [/ Test suites]
+  [
+    [__BOOST_TEST_SUITE__]
+    [Manual creation of a test suite instance]
+  ]
+  [
+    [__BOOST_AUTO_TEST_SUITE__]
+    [Automatic declaration of a test suite]
+  ]
+  [
+    [__BOOST_AUTO_TEST_SUITE_END__]
+    [Automatic declaration of a test suite]
+  ]
+
+  
+  [/ ###############################################################################################]
+  [/ Fixtures]
+  [
+    [__BOOST_FIXTURE_TEST_CASE__]
+    [Declares a test case with a fixture]
+  ]
+  [
+    [__BOOST_FIXTURE_TEST_SUITE__]
+    [Declares a fixture for a test suite (the setup/teardown is called for each test of the test suite)]
+  ]
+  [
+    [__BOOST_GLOBAL_FIXTURE__]
+    [Declares a fixture globally to the test module]
+  ]
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+]
+
+
+[/ Test suites ###############################################################################################]
+[section:test_org_boost_test_suite `BOOST_TEST_SUITE`]
+
+[endsect] [/test_org_boost_test_suite]
+
+[section:test_org_boost_auto_test_suite `BOOST_AUTO_TEST_SUITE`]
+
+[endsect] [/test_org_boost_auto_test_suite]
+
+[section:test_org_boost_auto_test_suite_end `BOOST_AUTO_TEST_SUITE_END`]
+
+[endsect] [/test_org_boost_auto_test_suite_end]
+
+
+
+[section:test_org_boost_test_dataset `BOOST_DATA_TEST_CASE`]
+
+See [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.datasets_auto_registration here].
+
+[endsect] [/test_org_boost_test_dataset]
+
+
+
+
+[endsect] [/reference test organization]

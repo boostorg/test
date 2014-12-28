@@ -17,6 +17,7 @@ The __UTF__ supports three different usage variants:
 In most cases you shouldn't have problems deciding which one to use, since there are
 clear reasons why would you prefer each one. Following sections should help you with the decision.
 
+[/ ##################################################################### ]
 [h3:single_header Single-header usage variant]
 
 If you prefer to avoid the compilation of standalone library, you should use the 
@@ -25,10 +26,10 @@ as it follows from its name, the single header: `#include <boost/test/included/u
 and there is no need to link with any library. There are several ways to perform 
 the initialization, but the simplest way is this:
 ``
-  #define BOOST_TEST_MODULE test module name
+  #define __BOOST_TEST_MODULE__ test module name
   #include <boost/test/included/unit_test.hpp>
 ``
-BOOST_TEST_MODULE macro needs to be defined *before* the include and should be set to 
+__BOOST_TEST_MODULE__ macro needs to be defined *before* the include and should be set to 
 test module name. This name can include spaces and does not need to be wrapped in quotes. 
 
 The limitation of single header variant is that you can only implement this way 
@@ -36,54 +37,66 @@ test modules with a single translation unit.
 
 For more details on customization for this usage variant you can check this [/TOFIX] section
 
+[/ ##################################################################### ]
 [h3:static_lib Static library usage variant]
-For most users, who has an access to prebuild static library of the __UTF__ or can build [/TOFIX make a link] it themself, 
-following usage can be most versatile and simple approach. This usage variant entails two steps. First you 
-need to add following line to all translation units in a test module:
-``
-  #include <boost/test/unit_test.hpp>
-``
-and *only one* translation unit should include following lines
-``
-  #define BOOST_TEST_MODULE test module name
-  #include <boost/test/unit_test.hpp>
-``
-BOOST_TEST_MODULE macro needs to be defined *before* the include and should be set to 
-test module name. This name can include spaces and does not need to be wrapped in quotes. 
+For most users, who has an access to prebuild static library [footnote these files are distributed 
+with the packaging systems on Linux and OSX for instance] of the __UTF__ or can build [/TOFIX make a link] 
+it themselves, following usage can be most versatile and simple approach. This usage variant 
+entails two steps. 
 
-The second step is to link with the __UTF__ static library.
+# First you need to add following line to all translation units in a test module:
+  ``
+    #include <boost/test/unit_test.hpp>
+  ``
+  and *only one* translation unit should include following lines
+  ``
+    #define __BOOST_TEST_MODULE__ test module name
+    #include <boost/test/unit_test.hpp>
+  ``
+  __BOOST_TEST_MODULE__ macro needs to be defined *before* the include and should be set to 
+  test module name. This name can include spaces and does not need to be wrapped in quotes. 
+# The second step is to link with the __UTF__ static library.
 
 The flip side of this usage variant is that each test module is going to be statically linked
-with __UTF__, which might be something you interrested to avoid. Also this usage variant has 
+with __UTF__, which might be something you interested to avoid. Also this usage variant has 
 limited options for test runners. For more information about these configuration options check 
 this [/TOFIX] section.
 
+[/ ##################################################################### ]
 [h3:shared_lib Shared library usage variant]
 In the project with large number of test modules the static library variant of the __UTF__ may
 cause you to waste a lot of disk space. The solution is to link test module dynamically with the 
-__UTF__ built [/TOFIX make a link] as a shared library. This usage variant entails two steps. 
-First you need to add following lines to all translation units in a test module:
-``
-  #define BOOST_TEST_DYN_LINK
-  #include <boost/test/unit_test.hpp>
-``
-and *only one* translation unit should include following lines
-``
-  #define BOOST_TEST_MODULE test module name
-  #define BOOST_TEST_DYN_LINK
-  #include <boost/test/unit_test.hpp>
-``
-BOOST_TEST_MODULE and BOOST_TEST_DYN_LINK macros needs to be defined *before* the include. 
-BOOST_TEST_MODULE should be set to test module name. This name can include spaces and does 
-not need to be wrapped in quotes. 
+__UTF__ [link boost_test.users_guide.build_boost_test built] as a shared library. 
+This usage variant entails two steps. 
 
-The second step is to link with the __UTF__ shared library.
+# First you need to add following lines to all translation units in a test module:
+  ``
+    #define __BOOST_TEST_DYN_LINK__
+    #include <boost/test/unit_test.hpp>
+  ``
+  and *only one* translation unit should include following lines
+  ``
+    #define __BOOST_TEST_MODULE__ test module name
+    #define __BOOST_TEST_DYN_LINK__
+    #include <boost/test/unit_test.hpp>
+  ``
+  BOOST_TEST_MODULE and BOOST_TEST_DYN_LINK macros needs to be defined *before* the include. 
+  BOOST_TEST_MODULE should be set to test module name. This name can include spaces and does 
+  not need to be wrapped in quotes. 
+
+# The second step is to link with the __UTF__ shared library.
 
 The flip side of this usage variant is that you will need to make sure the __UTF__ shared library
 is accessible at runtime to a test module.
 
 In addition shared library usage variant facilitates custom test runners. For more information about this 
 check this [/TOFIX] section.
+
+[warning to fix section]
+
+[caution On Windows, the test module and the __UTF__ shared library should link to the same CRT. Not doing
+ so (for instance __UTF__ shared library in /release/ mode while the test module is in /debug/) will
+ lead to crashes.]
 
 [endsect] [/Usage Variants]
 

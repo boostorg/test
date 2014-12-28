@@ -119,6 +119,11 @@ struct make_xrange {
 
 //____________________________________________________________________________//
 
+//! Creates an xrange [begin, end) with given step.
+//!
+//! The step size cannot be null.
+//! Creates an xrange [0, end) with unit step. "0" is the 0 of the SampleType, as returned by SampleType default constructor.
+//! Creates an xrange [begin, end) with unit step
 template<typename SampleType, typename Params>
 inline monomorphic::generated_by<monomorphic::xrange_t<SampleType> >
 xrange( Params const& params )
@@ -128,9 +133,7 @@ xrange( Params const& params )
 
 //____________________________________________________________________________//
 
-//! Creates an xrange [0, end) with unit step.
-//!
-//! "0" is the 0 of the SampleType, as returned by SampleType default constructor.
+/// @overload boost::unit_test::data::xrange()
 template<typename SampleType>
 inline monomorphic::generated_by<monomorphic::xrange_t<SampleType> >
 xrange( SampleType const& end_val )
@@ -140,6 +143,7 @@ xrange( SampleType const& end_val )
 
 //____________________________________________________________________________//
 
+/// @overload boost::unit_test::data::xrange()
 template<typename SampleType, typename Params>
 inline typename enable_if_c<nfp::is_named_params<Params>::value,monomorphic::generated_by<monomorphic::xrange_t<SampleType> > >::type
 xrange( SampleType const& end_val, Params const& params )
@@ -150,7 +154,7 @@ xrange( SampleType const& end_val, Params const& params )
 
 //____________________________________________________________________________//
 
-//! Creates an xrange [begin, end) with unit step
+/// @overload boost::unit_test::data::xrange()
 template<typename SampleType>
 inline monomorphic::generated_by<monomorphic::xrange_t<SampleType> >
 xrange( SampleType const& begin_val, SampleType const& end_val )
@@ -161,9 +165,9 @@ xrange( SampleType const& begin_val, SampleType const& end_val )
 
 //____________________________________________________________________________//
 
-//! Creates an xrange [begin, end) with given step.
-//!
-//! The step size cannot be null.
+
+
+/// @overload boost::unit_test::data::xrange()
 template<typename SampleType,typename StepType>
 inline monomorphic::generated_by<monomorphic::xrange_t<SampleType> >
 xrange( SampleType const& begin_val, SampleType const& end_val, StepType const& step_val )

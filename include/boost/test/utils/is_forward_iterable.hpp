@@ -15,13 +15,20 @@
 #ifndef BOOST_TEST_IS_FORWARD_ITERABLE_HPP_110612GER
 #define BOOST_TEST_IS_FORWARD_ITERABLE_HPP_110612GER
 
-#ifdef BOOST_NO_CXX11_DECLTYPE
+#if defined(BOOST_NO_CXX11_DECLTYPE) || defined(BOOST_NO_CXX11_NULLPTR) || defined(BOOST_NO_CXX11_TRAILING_RESULT_TYPES)
+  #define BOOST_TEST_FWD_ITERABLE_CXX03
+#endif
+
+
+#if defined(BOOST_TEST_FWD_ITERABLE_CXX03)
 // Boost
 #include <boost/mpl/bool.hpp>
 
 // STL
 #include <list>
 #include <vector>
+#include <map>
+#include <set>
 
 #else
 
@@ -45,7 +52,7 @@ namespace unit_test {
 // **************             is_forward_iterable              ************** //
 // ************************************************************************** //
 
-#ifdef BOOST_NO_CXX11_DECLTYPE
+#if defined(BOOST_TEST_FWD_ITERABLE_CXX03)
 template<typename T>
 struct is_forward_iterable : public mpl::false_ {};
 
@@ -55,41 +62,78 @@ struct is_forward_iterable<T const> : public is_forward_iterable<T> {};
 template<typename T>
 struct is_forward_iterable<T&> : public is_forward_iterable<T> {};
 
-template<typename T>
-struct is_forward_iterable<std::vector<T> > : public mpl::true_ {};
+template<typename T, typename A>
+struct is_forward_iterable< std::vector<T, A> > : public mpl::true_ {};
 
-template<typename T>
-struct is_forward_iterable<std::list<T> > : public mpl::true_ {};
+template<typename T, typename A>
+struct is_forward_iterable< std::list<T, A> > : public mpl::true_ {};
+
+template<typename K, typename V, typename C, typename A>
+struct is_forward_iterable< std::map<K, V, C, A> > : public mpl::true_ {};
+
+template<typename K, typename C, typename A>
+struct is_forward_iterable< std::set<K, C, A> > : public mpl::true_ {};
 
 #else
 
 namespace ut_detail {
 
-template<typename T>
-struct is_present : public mpl::true_ {};
+  
+  template<typename T>
+  struct is_present : public mpl::true_ {};
 
-struct is_forward_iterable_impl {
-    template<typename T>
-    static typename std::enable_if<
-        is_present<typename T::const_iterator>::value            &&
-        is_present<typename T::value_type>::value                &&
-        is_present<decltype(boost::declval<T>().size())>::value  &&
-        is_present<decltype(boost::declval<T>().begin())>::value &&
-        !is_same<typename remove_cv<typename T::value_type>::type,char>::value &&
-        !is_same<typename remove_cv<typename T::value_type>::type,wchar_t>::value
-    , mpl::true_>::type
-    test(int);
 
-    template<typename> 
-    static std::false_type  test(...); 
-}; 
+  // some compiler do not implement properly decltype non expression involving members (eg. VS2013)
+  // a workaround is to use -> decltype syntax.
+  template <class T>
+  struct has_member_size {
+  private:
+    struct nil_t {};
+    template<typename U> static auto  test(U*) -> decltype( boost::declval<U>().size() );
+    template<typename>   static nil_t test(...);
+
+  public:
+    static bool const value = !std::is_same< decltype(test<T>(nullptr)), nil_t>::value;
+  };
+
+  template <class T>
+  struct has_member_begin {
+  private:
+    struct nil_t {};
+    template<typename U>  static auto  test(U*) -> decltype( boost::declval<U>().begin() );
+    template<typename>    static nil_t test(...);
+  public:
+    static bool const value = !std::is_same< decltype(test<T>(nullptr)), nil_t>::value;
+  };
+
+
+  template <class T, class enabled = void>
+  struct is_forward_iterable_impl : std::false_type
+  {};
+
+  template <class T>
+  struct is_forward_iterable_impl<
+    T, 
+    typename std::enable_if<
+      is_present<typename T::const_iterator>::value &&
+      is_present<typename T::value_type>::value &&
+      has_member_size<T>::value &&
+      has_member_begin<T>::value &&
+      !is_same<typename remove_cv<typename T::value_type>::type,char>::value &&
+      !is_same<typename remove_cv<typename T::value_type>::type,wchar_t>::value
+      >::type 
+    > : std::true_type
+  {};
+
 
 } // namespace ut_detail
 
 template<typename T> 
-struct is_forward_iterable { 
-    typedef decltype(ut_detail::is_forward_iterable_impl::test<typename std::remove_reference<T>::type>(0)) type;
-    enum { value = type::value };
+struct is_forward_iterable  { 
+  typedef typename std::remove_reference<T>::type T_ref;
+  typedef ut_detail::is_forward_iterable_impl<T_ref> is_fwd_it_t;
+  typedef mpl::bool_<is_fwd_it_t::value> type;
+  enum { value = is_fwd_it_t::value };
 }; 
 
 #endif

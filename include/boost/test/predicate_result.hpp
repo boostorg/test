@@ -5,9 +5,9 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file predicate_result.hpp @brief Deprecated header
-///
-/// Use #include <boost/test/tools/assertion_result.hpp> instead
+/// @file 
+/// @brief Deprecated header
+/// @deprecated Use boost/test/tools/assertion_result.hpp instead
 // ***************************************************************************
 
 // Boost.Test

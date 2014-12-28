@@ -69,7 +69,8 @@ specification:
 This function was intended to initialize and return a master test suite. The null value was considered an initialization 
 error. The current design of the __UTF__ maintains master test suite instance internally and does not treat the `null` result 
 value as an initialization error. In fact it's recommended to return `null` value always and register test units in the 
-master test suite using the regular `test_suite::add` interface (see [link ref_BOOST_TEST_CASE here] for an example). 
+master test suite using the regular [memberref boost::unit_test::test_suite::add `test_suite::add`] 
+interface (see [link ref_BOOST_TEST_CASE here] for an example). 
 The only way to indicate an initialization error is to throw a [classref boost::unit_test::framework::setup_error] exception.
 
 The initialization function parameters `argc`, `argv` provide the command line arguments specified during test
@@ -110,7 +111,8 @@ specification:
 ``
 
 The result value of this function indicates whether or not initialization was successful. To register test
-units in a master test suite use the `test_suite::add` interface (see [link ref_BOOST_TEST_CASE here] for an example). 
+units in a master test suite use the [memberref boost::unit_test::test_suite::add `test_suite::add`] 
+interface (see [link ref_BOOST_TEST_CASE here] for an example). 
 To access command line arguments use the __section_master_test_suite__ interface. 
 It's guarantied that any framework-specific command line arguments are excluded.
 [endsect] [/ alternative init function]

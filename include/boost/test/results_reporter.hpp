@@ -5,7 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file results_reporter.hpp @brief defines testing result reporter interfaces
+/// @file 
+/// @brief defines testing result reporter interfaces
 ///
 /// This file defines interfaces that are responsible for results reporting. Interface is presented in a form of 
 /// free standing function implemented in namespace result_reporter

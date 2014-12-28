@@ -5,7 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file unit_test_monitor.hpp @brief defines specific version of execution monitor used to managed run unit of test cases
+/// @file 
+/// @brief defines specific version of execution monitor used to managed run unit of test cases
 ///
 /// Translates execution exception into error level
 // ***************************************************************************

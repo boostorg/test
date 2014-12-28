@@ -5,7 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//!@file Facilities to perform exception safety tests
+//!@file 
+//!Facilities to perform exception safety tests
 // ***************************************************************************
 
 #ifndef BOOST_TEST_EXCEPTION_SAFETY_HPP_111705GER

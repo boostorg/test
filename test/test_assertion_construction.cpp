@@ -22,6 +22,9 @@
 
 #include <boost/noncopyable.hpp>
 
+#include <map>
+#include <set>
+
 //____________________________________________________________________________//
 
 #ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
@@ -34,6 +37,110 @@
 #   define EXPR_TYPE( E, expr ) auto const& E = assertion::seed() ->* expr
 #   define BOOST_TEST_FWD( a )  BOOST_TEST( a )
 #endif
+
+// internal define
+#ifndef BOOST_TEST_FWD_ITERABLE_CXX03
+
+// some broken compilers do not implement properly decltype on expressions
+// partial implementation of is_forward_iterable when decltype not available
+struct not_fwd_iterable_1 {
+  typedef int const_iterator;
+  typedef int value_type;
+
+  bool size();
+};
+
+struct not_fwd_iterable_2 {
+  typedef int const_iterator;
+  typedef int value_type;
+
+  bool begin();
+};
+
+struct not_fwd_iterable_3 {
+  typedef int value_type;
+  bool begin();
+  bool size();
+};
+
+BOOST_AUTO_TEST_CASE( test_forward_iterable_concept )
+{
+  {
+    typedef std::vector<int> type;
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+  {
+    // should also work for references, but from is_forward_iterable
+    typedef std::vector<int>& type;
+    BOOST_CHECK_MESSAGE(boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+
+  {
+    typedef std::list<int> type;
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+  {
+    typedef std::map<int, int> type;
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+  {
+    typedef std::set<int, int> type;
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+
+  {
+    typedef float type;
+    BOOST_CHECK_MESSAGE(!boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+  {
+    typedef not_fwd_iterable_1 type;
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+  {
+    typedef not_fwd_iterable_2 type;
+    BOOST_CHECK_MESSAGE(!boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+  {
+    typedef not_fwd_iterable_3 type;
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+  {
+    typedef char type;
+    BOOST_CHECK_MESSAGE(!boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+
+}
+#endif
+
+
 
 BOOST_AUTO_TEST_CASE( test_basic_value_expression_construction )
 {
@@ -66,7 +173,7 @@ BOOST_AUTO_TEST_CASE( test_basic_value_expression_construction )
         BOOST_TEST_FWD( res );
     }
 
-#ifndef BOOST_NO_DECLTYPE
+#ifndef BOOST_NO_CXX11_DECLTYPE
     {
         EXPR_TYPE( E,  "abc" );
         predicate_result const& res = E.evaluate();
@@ -136,7 +243,7 @@ BOOST_AUTO_TEST_CASE( test_comparison_expression )
 
 //____________________________________________________________________________//
 
-#ifndef BOOST_NO_DECLTYPE
+#ifndef BOOST_NO_CXX11_DECLTYPE
 
 BOOST_AUTO_TEST_CASE( test_arithmetic_ops )
 {
@@ -194,7 +301,7 @@ BOOST_AUTO_TEST_CASE( test_arithmetic_ops )
 
 //____________________________________________________________________________//
 
-#endif // BOOST_NO_DECLTYPE
+#endif // BOOST_NO_CXX11_DECLTYPE
 
 struct Testee {
     static int s_copy_counter;
@@ -348,7 +455,7 @@ BOOST_AUTO_TEST_CASE( test_pointers )
         BOOST_TEST_FWD( res.message() == " [(bool)Testee is false]" );
     }
 
-#ifndef BOOST_NO_DECLTYPE
+#ifndef BOOST_NO_CXX11_DECLTYPE
     {
         Testee obj;
         Testee* ptr =&obj;
@@ -479,7 +586,7 @@ BOOST_AUTO_TEST_CASE( collection_comparison )
         EXPR_TYPE( E,  v < l );
         predicate_result const& res = E.evaluate();
         BOOST_TEST_FWD( !res );
-        BOOST_TEST_FWD( res.message() == ". \nMismatch in position 0: 1 >= 1\nMismatch in position 2: 3 >= 2" );
+        BOOST_TEST_FWD( res.message() == ". \nMismatch at position 0: 1 >= 1\nMismatch at position 2: 3 >= 2" );
     }
 
     {
@@ -508,7 +615,7 @@ BOOST_AUTO_TEST_CASE( collection_comparison )
         EXPR_TYPE( E,  v >= l );
         predicate_result const& res = E.evaluate();
         BOOST_TEST_FWD( !res );
-        BOOST_TEST_FWD( res.message() == ". \nMismatch in position 1: 2 < 3");
+        BOOST_TEST_FWD( res.message() == ". \nMismatch at position 1: 2 < 3");
     }
 
     {

@@ -68,8 +68,6 @@ The macro __BOOST_TEST_CASE_TEMPLATE_FUNCTION__ requires two arguments:
   BOOST_TEST_CASE_TEMPLATE_FUNCTION(test_case_name, type_name);
 ``
 
-[warning Is this snippet really useful??]
-[/ snippet 3 deleted and copied below]
 ``
 BOOST_TEST_CASE_TEMPLATE_FUNCTION( test_case_name, type_name )
 {
@@ -80,7 +78,6 @@ BOOST_TEST_CASE_TEMPLATE_FUNCTION( test_case_name, type_name )
 The macro __BOOST_TEST_CASE_TEMPLATE_FUNCTION__ is intended to be used in place of nullary function template
 signature:
 
-[/snippet4 deleted]
 ``
 template <typename type_name>
 void test_case_name()
@@ -106,7 +103,7 @@ The names passed to both macros should be the same.
 ``
 
 __BOOST_TEST_CASE_TEMPLATE__ creates an instance of the test case generator. When passed to the method
-`test_suite::add`, the generator produces a separate sub test case for each type in the supplied collection of
+[memberref boost::unit_test::test_suite::add `test_suite::add`], the generator produces a separate sub test case for each type in the supplied collection of
 types and registers it immediately in the test suite. Each test case is based on the test case template body
 instantiated with a particular test type.
 
