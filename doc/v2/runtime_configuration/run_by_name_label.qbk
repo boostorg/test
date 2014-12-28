@@ -21,19 +21,19 @@ Let's consider following test module consisting from several test suites and tes
 #include <boost/test/included/unit_test.hpp>
 
 __BOOST_AUTO_TEST_CASE__( testA ) {}
-__BOOST_AUTO_TEST_CASE__( testB ) {}
+BOOST_AUTO_TEST_CASE( testB ) {}
 
-BOOST_AUTO_TEST_SUITE( s1 )
-  __BOOST_AUTO_TEST_CASE__( test1 ) {}
-  __BOOST_AUTO_TEST_CASE__( lest2 ) {}
-BOOST_AUTO_TEST_SUITE_END()
+__BOOST_AUTO_TEST_SUITE__( s1 )
+  BOOST_AUTO_TEST_CASE( test1 ) {}
+  BOOST_AUTO_TEST_CASE( lest2 ) {}
+__BOOST_AUTO_TEST_SUITE_END__()
 
 BOOST_AUTO_TEST_SUITE( s2 )
-  __BOOST_AUTO_TEST_CASE__( test1 ) {}
-  __BOOST_AUTO_TEST_CASE__( test11 ){}
+  BOOST_AUTO_TEST_CASE( test1 ) {}
+  BOOST_AUTO_TEST_CASE( test11 ){}
   
   BOOST_AUTO_TEST_SUITE( in )
-    __BOOST_AUTO_TEST_CASE__( test ){}
+    BOOST_AUTO_TEST_CASE( test ){}
   BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 ``
@@ -108,7 +108,7 @@ Leaving test suite "example"
   
   [
     [Run a specific test inside a test tree using `/`]
-    [[pre __param_run_test__=<hlevel1>/<hlevel2>/.../<test-case>]]
+    [[pre __param_run_test__=<hlevel1>'''/'''<hlevel2>'''/'''...'''/'''<test-case>]]
     [
 
 [pre
@@ -206,12 +206,11 @@ Leaving test suite "example"
 
 *** No errors detected
 ]
-[warning quickbook is escaping things there, FIX IT]
 
-Finally, the __UTF__ allows to match specific substring in test unit names.
+The __UTF__ allows to match specific substring in test unit names.
 
 [pre
-$ example --log_level=test_suite --__param_run_test__=s1/*est*
+$ example --log_level=test_suite --__param_run_test__=s1/'''*'''est'''*'''
 Running 2 test cases...
 Entering test suite "example"
 Entering test suite "s1"
@@ -226,5 +225,38 @@ Leaving test suite "example"
 
 *** No errors detected
 ]
+
+Finally, it is possible to negate the previous expressions by prefixing the test name expression with '''!'''. 
+In the following example, the tests that are executed are not the ones that are under =s1= *and* ending with a `1`:
+
+[warning Raffi to test and maybe fix the output]
+
+[pre
+$ example --log_level=test_suite --__param_run_test__=!s1/'''*'''1
+Running 2 test cases...
+Entering test suite "example"
+Entering test suite "s1"
+Entering test case "lest2"
+Test case lest2 doesn't include any assertions
+Leaving test case "lest2"
+Leaving test suite "s1"
+Entering test suite "s2"
+Entering test case "test1"
+Test case test1 doesn't include any assertions
+Leaving test case "test1"
+Entering test case "test11"
+Test case test11 doesn't include any assertions
+Leaving test case "test11"
+Entering test suite "in"
+Entering test case "test"
+Test case test doesn't include any assertions
+Leaving test case "test"
+Leaving test suite "in"
+Leaving test suite "s2"
+Leaving test suite "example"
+
+*** No errors detected
+]
+
 
 [endsect]
