@@ -50,19 +50,7 @@
   [
     [__BOOST_DATA_TEST_CASE__]
     [Declaration of the body of a test case on datasets]
-  ]
-  
-  
-  
-  
-  
-  
-    
-  
-  
-  
-  
-  
+  ]  
   
   [/ ###############################################################################################]
   [/ Test suites]
@@ -111,27 +99,27 @@
 Creates a test case for manual registration. The registration in the test tree should be performed manually.
 
 See [link ref_BOOST_TEST_CASE here] for more details.
-[endsect]
+[endsect] [/section:test_org_boost_test_case]
 
 [section:test_org_boost_auto_test_case `BOOST_AUTO_TEST_CASE`]
 Declares and registers automatically a test case. 
 
 See [link ref_BOOST_AUTO_TEST_CASE here] for more details.
-[endsect]
+[endsect] [/section:test_org_boost_auto_test_case]
 
 
 [section:test_org_boost_test_case_expected_failure `BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES`]
 Indicates the number of failures for a test case. 
 
 See [link ref_BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES here] for more details.
-[endsect]
+[endsect] [/section:test_org_boost_test_case_expected_failure]
 
 
 [section:test_org_boost_test_case_auto_template `BOOST_AUTO_TEST_CASE_TEMPLATE`]
 Declares and registers automatically a typed test case. 
 
 See [link ref_BOOST_AUTO_TEST_CASE_TEMPLATE here] for more details.
-[endsect]
+[endsect] [/section:test_org_boost_test_case_auto_template]
 
 
 [section:test_org_boost_test_case_template `BOOST_TEST_CASE_TEMPLATE`]
@@ -139,20 +127,21 @@ Creates a typed test case. The test case should have been declared with the macr
 The registration in the test tree should be performed manually.
 
 See [link ref_BOOST_TEST_CASE_TEMPLATE here] for more details.
-[endsect]
+[endsect] [/section:test_org_boost_test_case_template]
 
 [section:test_org_boost_test_case_template_function `BOOST_TEST_CASE_TEMPLATE`]
 Declares a typed test case. The registration in the test tree should be performed manually, using the macro 
 __BOOST_TEST_CASE_TEMPLATE__.
 
 See [link ref_BOOST_TEST_CASE_TEMPLATE here] for more details.
-[endsect]
+[endsect] [/section:test_org_boost_test_case_template_function]
 
 [section:test_org_boost_test_case_parameter `BOOST_PARAM_TEST_CASE`]
 Declares and registers automatically a test case with one parameter. 
 
 See [link ref_BOOST_PARAM_TEST_CASE here] for more details.
-[endsect]
+[endsect] [/section:test_org_boost_test_case_parameter]
+
 
 [section:test_org_boost_test_dataset `BOOST_DATA_TEST_CASE`]
 Declares and registers a test case on a dataset.
@@ -164,28 +153,58 @@ BOOST_DATA_TEST_CASE(test_case_name, dataset, var1, ...)
 
 See [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.datasets_auto_registration here] for more details.
 
-[endsect] [/test_org_boost_test_dataset]
+[endsect] [/section:test_org_boost_test_dataset]
 
 
 
 [/ Test suites ###############################################################################################]
 [section:test_org_boost_test_suite `BOOST_TEST_SUITE`]
-Creates a test suite for manual registration. 
+Creates a test suite. The created test suite should be added to the test tree manually.
 
 See [link ref_BOOST_TEST_SUITE here] for more details.
-[endsect] [/test_org_boost_test_suite]
+[endsect] [/section:test_org_boost_test_suite]
 
 [section:test_org_boost_auto_test_suite `BOOST_AUTO_TEST_SUITE`]
 Indicates the beginning of a test suite. Test suites can be nested. 
 
 See [link ref_BOOST_AUTO_TEST_SUITE here] for more details.
-[endsect] [/test_org_boost_auto_test_suite]
+[endsect] [/section:test_org_boost_auto_test_suite]
 
 [section:test_org_boost_auto_test_suite_end `BOOST_AUTO_TEST_SUITE_END`]
-Indicates the end of a test suite. Test suites can be nested, this macro should appear as many times as there is a 
+Indicates the end of a test suite. Test suites can be nested. This macro should appear as many times as there is a 
 __BOOST_AUTO_TEST_SUITE__. 
 
-[endsect] [/test_org_boost_auto_test_suite_end]
+See [link ref_BOOST_AUTO_TEST_SUITE here] for more details.
+[endsect] [/section:test_org_boost_auto_test_suite_end]
+
+
+
+[/ Fixtures ###############################################################################################]
+[section:test_org_boost_test_case_fixture `BOOST_FIXTURE_TEST_CASE`]
+Declares and registers a test case that uses a fixture. The class implementing the fixture should have the appropriate 
+[link boost_test.users_guide.tests_organization.fixtures.model interface].
+As any fixture, it is possible to have test assertions in the fixture class.
+
+See [link boost_test.users_guide.tests_organization.fixtures.case here] for more details.
+[endsect] [/section:test_org_boost_test_case_fixture]
+
+
+[section:test_org_boost_test_suite_fixture `BOOST_FIXTURE_TEST_SUITE`]
+Declares and registers a test suite that uses a fixture. Each test case in the test suite uses the fixture. 
+The class implementing the fixture should have the appropriate [link boost_test.users_guide.tests_organization.fixtures.model interface].
+As any fixture, it is possible to have test assertions in the fixture class.
+
+See [link boost_test.users_guide.tests_organization.fixtures.suite here] for more details.
+[endsect] [/section:test_org_boost_test_case_fixture]
+
+[section:test_org_boost_global_fixture `BOOST_GLOBAL_FIXTURE`]
+Declares and registers a global fixture. The global fixture is called before any of the test case in the test tree is executed.
+The class implementing the fixture should have the appropriate [link boost_test.users_guide.tests_organization.fixtures.model interface]. 
+As any fixture, it is possible to have test assertions in the global fixture.
+
+
+See [link boost_test.users_guide.tests_organization.fixtures.global here] for more details.
+[endsect] [/section:test_org_boost_test_case_fixture]
 
 
 
