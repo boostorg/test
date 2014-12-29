@@ -1,3 +1,10 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
 [section:test_suite Test suite]
 If you consider test cases as leaves on the test tree, the test suite can be considered as branch and the master
 test suite as a trunk. Unlike real trees though, our tree in many cases consists only of leaves attached

@@ -1,3 +1,12 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ / Copyright (c) 2013-2014 Raffi Enficiaud
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+
 [section:test_cases Test cases]
 A test case has to be constructed based on some kind of
 function and registered in a test tree, so that the test runner knows how to invoke it. There are different
