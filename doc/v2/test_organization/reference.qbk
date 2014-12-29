@@ -108,13 +108,13 @@
 
 [/ Test cases ###############################################################################################]
 [section:test_org_boost_test_case `BOOST_TEST_CASE`]
-Creates a test case for manual registration. 
+Creates a test case for manual registration. The registration in the test tree should be performed manually.
 
 See [link ref_BOOST_TEST_CASE here] for more details.
 [endsect]
 
 [section:test_org_boost_auto_test_case `BOOST_AUTO_TEST_CASE`]
-Declares an automatically registered test case. 
+Declares and registers automatically a test case. 
 
 See [link ref_BOOST_AUTO_TEST_CASE here] for more details.
 [endsect]
@@ -125,6 +125,47 @@ Indicates the number of failures for a test case.
 
 See [link ref_BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES here] for more details.
 [endsect]
+
+
+[section:test_org_boost_test_case_auto_template `BOOST_AUTO_TEST_CASE_TEMPLATE`]
+Declares and registers automatically a typed test case. 
+
+See [link ref_BOOST_AUTO_TEST_CASE_TEMPLATE here] for more details.
+[endsect]
+
+
+[section:test_org_boost_test_case_template `BOOST_TEST_CASE_TEMPLATE`]
+Creates a typed test case. The test case should have been declared with the macro __BOOST_TEST_CASE_TEMPLATE_FUNCTION__.
+The registration in the test tree should be performed manually.
+
+See [link ref_BOOST_TEST_CASE_TEMPLATE here] for more details.
+[endsect]
+
+[section:test_org_boost_test_case_template_function `BOOST_TEST_CASE_TEMPLATE`]
+Declares a typed test case. The registration in the test tree should be performed manually, using the macro 
+__BOOST_TEST_CASE_TEMPLATE__.
+
+See [link ref_BOOST_TEST_CASE_TEMPLATE here] for more details.
+[endsect]
+
+[section:test_org_boost_test_case_parameter `BOOST_PARAM_TEST_CASE`]
+Declares and registers automatically a test case with one parameter. 
+
+See [link ref_BOOST_PARAM_TEST_CASE here] for more details.
+[endsect]
+
+[section:test_org_boost_test_dataset `BOOST_DATA_TEST_CASE`]
+Declares and registers a test case on a dataset.
+
+``
+BOOST_DATA_TEST_CASE(test_case_name, dataset)
+BOOST_DATA_TEST_CASE(test_case_name, dataset, var1, ...)
+``
+
+See [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.datasets_auto_registration here] for more details.
+
+[endsect] [/test_org_boost_test_dataset]
+
 
 
 [/ Test suites ###############################################################################################]
@@ -148,17 +189,6 @@ __BOOST_AUTO_TEST_SUITE__.
 
 
 
-[section:test_org_boost_test_dataset `BOOST_DATA_TEST_CASE`]
-Declares a test case on a dataset.
-
-``
-BOOST_DATA_TEST_CASE(test_case_name, dataset)
-BOOST_DATA_TEST_CASE(test_case_name, dataset, var1, ...)
-``
-
-See [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.datasets_auto_registration here] for more details.
-
-[endsect] [/test_org_boost_test_dataset]
 
 
 
