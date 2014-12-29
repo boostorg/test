@@ -1,4 +1,10 @@
-[/ ############################################################ Output streams]
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
 [section:output_stream_testing Output streams testing tool]
 
 How do you perform correctness test for ``operator<< ( std::ostream &, ... )``

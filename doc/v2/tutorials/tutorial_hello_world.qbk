@@ -1,3 +1,10 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
 [section:hello Hello the testing world!]
 How should a test program report errors? Displaying an error message is an obvious possibility:
 

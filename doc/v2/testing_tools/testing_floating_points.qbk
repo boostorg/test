@@ -1,7 +1,13 @@
-[/ ############################################################ Floating points]
-[section:testing_floating_points Floating-point testing]
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ / Copyright (c) 2013-2014 Raffi Enficiaud
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
 
-[note Have you seen that the current doc in boost.org skipped all the math ??]
+
+[section:testing_floating_points Floating-point testing]
 
 In most cases it is unreasonable to use an `operator==(...)` for a floating-point values equality check.
 The simple, absolute value comparison based, solution for a floating-point values `u`,

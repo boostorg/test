@@ -1,3 +1,10 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
 [section:module_initialization Test module initialization]
 
 As explained in the introductory material, the ['module initialization] part of the __UTF__ prepares the test module for execution,
