@@ -147,6 +147,8 @@
 [def __param_save_pattern__           [link ref_param_save_patterm `save_patterm`]]
 
 [/=============================================================================]
+[/ templates ]
+
 
 [template bt_example[name descr]
 
@@ -165,6 +167,28 @@
   ]
 ]
 ] [/ end bt_example]
+
+
+[/ ### template for the example page  ]
+[template bt_example_page[name descr]
+
+[section [descr]] 
+
+[import examples/example[name].cpp]
+[import examples/example[name].output]
+
+[heading Source]
+[example_code]
+
+[heading Output]
+[example_output]
+
+[endsect]
+
+] [/ end bt_example_page]
+
+
+
 
 [/=============================================================================]
 

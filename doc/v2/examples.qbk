@@ -9,25 +9,11 @@
 [section:boost_test_examples Examples]
 
 
+[bt_example_page 01..Manual declaration of a free test function]
 
-[variablelist List of examples
-    [
-      [Manual declaration of a free test function] 
-      [
-       * Source : [@../examples/example01.cpp =example01.cpp=]
-       * Output : [@../examples/example01.output =example01.output=]
-      ]
-    ]
-    [
-      [Manual declaration of a test in a member function] 
-      [
-       * Source : [@../examples/example02.cpp =example02.cpp=]
-       * Output : [@../examples/example02.output =example02.output=]
-      ]
-    ]
-]
+[bt_example_page 02..Manual declaration of a test in a member function]
 
-
+[bt_example_page 03..Manual declaration of a test in a member function (2)]
 
 
 [endsect] [/ section examples]
