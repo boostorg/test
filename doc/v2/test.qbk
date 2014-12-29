@@ -43,7 +43,6 @@
 [def __section_master_test_suite__        [link boost_test.users_guide.tests_organization.test_suite.master_test_suite Master Test Suite]]
 [def __section_test_fixture__             [link boost_test.users_guide.tests_organization.fixtures Fixtures]]
 [def __section_test_cases__               [link boost_test.users_guide.tests_organization.test_cases Test cases]]
-[def __section_parameterized_test__       [link boost_test.users_guide.tests_organization.test_cases.param_test Parametrized test]]
 
 [def __testing_tools__                    [link boost_test.users_guide.testing_tools Testing tools]]
 [def __floating_points_testing_tools__    [link boost_test.users_guide.testing_tools.testing_floating_points Floating point comparison algorithms]]

@@ -139,7 +139,7 @@ See [link ref_BOOST_TEST_CASE_TEMPLATE here] for more details.
 [section:test_org_boost_test_case_parameter `BOOST_PARAM_TEST_CASE`]
 Declares and registers automatically a test case with one parameter. 
 
-See [link ref_BOOST_PARAM_TEST_CASE here] for more details.
+See [link boost_test.users_guide.tests_organization.test_cases.param_test here] for more details.
 [endsect] [/section:test_org_boost_test_case_parameter]
 
 
