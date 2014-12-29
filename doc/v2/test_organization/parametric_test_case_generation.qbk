@@ -73,8 +73,8 @@ The descriptive power of the datasets in __UTF__ comes from
  datasets representing collections of different types may be combined together.
  ]
 
-As an additional property, the datasets also provide information on the arity of their elements: since the datasets are monomorphic but may be 
-combined by /zip/-like operations which increase their arity, the arity property is used for consistency checks and for providing enough 
+As an additional property, datasets also provide information on the arity of their elements. Datasets are monomorphic but may be 
+combined by operations that change their arity (eg. /zip/). The arity property is used for consistency checks and for providing enough 
 variables in the body of the dataset driven test-cases.
 
 
@@ -84,6 +84,35 @@ variables in the body of the dataset driven test-cases.
 [/ ##################################################################################################################################  ]
 [/ Main code import for this section ]
 [import ../snippet/dataset_1/test_file.cpp]
+
+
+
+
+[/ ##################################################################################################################################  ]
+[section:datasets_auto_registration Declaring test case with datasets]
+The dataset framework comes with a new test-case declaration macro:
+
+``
+BOOST_DATA_TEST_CASE(test_case_name, dataset) { /* test body */ }
+BOOST_DATA_TEST_CASE(test_case_name, dataset, var1, ...) { /* test body */ }
+``
+
+The first form of the macro above declares automatically a variable `sample` in the body of the test case, 
+which takes the values of elements in the dataset. An example would be:
+[snippet_dataset1_1]
+
+If specified, the name of the variable `sample` may be replaced by the first parameter that comes after the dataset:
+[snippet_dataset1_2]
+
+Any number of variables can be added after the second form of the macro. 
+
+[tip The number of variables in the body of the test should match the arity of the dataset. A compilation
+ error will be raised otherwise]
+
+[caution The macro `BOOST_DATA_TEST_CASE` is available only for compilers with support for variadic macros.]
+
+
+[endsect]
 
 
 
@@ -100,14 +129,17 @@ Several ['generators] for datasets are implemented in __UTF__:
 describing new datasets. 
 
 
-
+[/ ##################################################################################################################################  ]
 [h4:c_arrays Datasets from C arrays]
-This type of datasets does not contains the logic for generating the sequence of values, but contains the logic for parsing an existing
-sequence.
+This type of datasets does not contains the logic for generating the sequence of values, and is used as a wrapper on an existing
+sequence contained in a `C` array.
 
 
+[/ ##################################################################################################################################  ]
 [h4:stl Datasets from stl containers]
-As for `C` arrays, this type of datasets does not contain the logic for generating sequence of values, but for parsing an existing sequence.
+As for `C` arrays, this type of datasets does not contain the logic for generating sequence of values, and are used for parsing an existing sequence.
+
+
 
 [tip C++11 implementation enables the dataset generation from any container which iterator implements the forward iterator concept]
 
@@ -248,14 +280,14 @@ The details of the named value parameters is given in the table below.
 As mentioned earlier, one of the major aspects of using the __UTF__ datasets lies in the number of operations provided
 for their combination.
  
-[section Cartesian products]
+[heading Cartesian products]
 The Cartesian product, or ['grid], combines two datasets to form a new dataset of higher dimension. The iteration over
 the resulting datasets creates pairs of values with types respective to the initial datasets.
 
 Cartesian products are accessible through the `operator*` on datasets:
 
 
-[endsect]
+
 
 
 [section Joins]
@@ -308,28 +340,6 @@ yields to the same tuples independently of the positions of the parenthesis. Hen
 
 
 
-[section:datasets_auto_registration Declaring test case with datasets]
-The dataset framework comes with a new test-case declaration macro:
 
-``
-BOOST_DATA_TEST_CASE(test_case_name, dataset) { /* test body */ }
-BOOST_DATA_TEST_CASE(test_case_name, dataset, var1, ...) { /* test body */ }
-``
-
-The first form of the macro above declares automatically a variable named `sample` in the body of the test case, which takes the values of elements in the dataset. An example would be:
-[snippet_dataset1_1]
-
-If specified, the name of the variable `sample` may be replaced by the first parameter that comes after the dataset:
-[snippet_dataset1_2]
-
-
-In the body of a test case declared using this macro, one or several variables take the value of the dataset:
-
-* 
-
-[caution The macro `BOOST_DATA_TEST_CASE` is available only for compilers with support on variadic macros.]
-
-
-[endsect]
 
 [endsect]
