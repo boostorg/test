@@ -20,7 +20,7 @@
 # [ticket 9539] Floating-point comparison algorithms aren't formatted correctly
 # [ticket 9581] Squassabia reference link gives 404 not found
 # [ticket 10318] Minor documentation fix
-# [ticket 10888] Assertion failures don't show up in the errors pane in VS 2010, VS 2012 or VS 2013
+# [ticket 10888] Assertion failures don't show up in the errors pane in VS 2010, VS 2012 or VS 2013 (duplicate)
 # [ticket 4587] Broken link in website
 # [ticket 4806] Invalid link (examples not showing up in documentation)
 # [ticket 4911] ENH: boost.test output the exception real type name.
@@ -39,5 +39,8 @@
 # [ticket 5729] Missing static_cast in fpt_limits
 # [ticket 5870] The warning stack is not maintained
 # [ticket 5972] Support program option to only dump the test-tree in text to output stream
+# [ticket 6002] Failed to completely redirect TestLog to file (duplicate)
+# [ticket 6071] Boost Test (Boost 1.46.0) GCC 4.6.1 error: ambiguous overload for ‘operator[]’
+# [ticket 6074] warnings-as-errors not usable with Boost.test in release mode
 
 [endsect]
