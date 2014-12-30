@@ -119,11 +119,30 @@ struct make_xrange {
 
 //____________________________________________________________________________//
 
-//! Creates an xrange [begin, end) with given step.
+//! Creates a range (sequence) dataset.
 //!
-//! The step size cannot be null.
-//! Creates an xrange [0, end) with unit step. "0" is the 0 of the SampleType, as returned by SampleType default constructor.
-//! Creates an xrange [begin, end) with unit step
+//! The following overloads are available:
+//! @code
+//! auto d = xrange();
+//! auto d = xrange(end_val);
+//! auto d = xrange(end_val, param);
+//! auto d = xrange(begin_val, end_val);
+//! auto d = xrange(begin_val, end_val, step_val);
+//! auto d = xrange(param);
+//! @endcode
+//! 
+//! - @c begin_val indicates the start of the sequence (default to 0). 
+//! - @c end_val is the end of the sequence. If ommited, the dataset has infinite size.\n
+//! - @c step_val is the step between two consecutive elements of the sequence, and defaults to 1.\n
+//! - @c param is the named parameters that describe the sequence. The following parameters are accepted:
+//!   - @c begin: same meaning @c begin_val
+//!   - @c end: same meaning as @c end_val
+//!   - @c step: same meaning as @c step_val
+//! 
+//!
+//! The returned value is an object that implements the dataset API.
+//!
+//! @note the step size cannot be null.
 template<typename SampleType, typename Params>
 inline monomorphic::generated_by<monomorphic::xrange_t<SampleType> >
 xrange( Params const& params )

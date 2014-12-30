@@ -95,18 +95,26 @@ private:
 
 //! @brief Returns an infinite sequence of random numbers. 
 //!
-//! - <tt>auto d = random()</tt>\n
-//!   The generator uses the default distribution, which is uniform in [0, 1)
-//! - <tt>auto d = random(begin, end)</tt>\n
-//!   Generates random numbers in the given interval: the generator uses the default distribution, which is uniform (in [begin, end) for real numbers, and in 
-//!   [begin, end] for integers)
-//! - <tt>auto d = random(param)</tt>\n
-//!   Generates random numbers using the settings inside the parameter @c param : 
-//!   - distribution
-//!   - seed
-//!   - random number generator engine
+//! The following overloads are available:
+//! @code
+//! auto d = random();
+//! auto d = random(begin, end);
+//! auto d = random(params);
+//! @endcode
+//! 
+//!   
+//! - The first overload uses the default distribution, which is uniform in [0, 1) and which elements 
+//!   are @c double type. 
+//! - The second overload generates numbers in the given interval. The distribution is uniform (in [begin, end) 
+//!   for real numbers, and in [begin, end] for integers). The type of the distribution is deduced from the type
+//!   of the @c begin and @c end parameters.
+//! - The third overload generates numbers using the named parameter inside @c params , which are:
+//!   - @c distribution: the distribution used
+//!   - @c seed: the seed for generating the values
+//!   - @c engine: the random number generator engine
 //!
-//! @return an object that implements the dataset API.
+//! The function returns an object that implements the dataset API.
+//! @note This function is available only on C++11 capable compilers.
 template <typename T>
 inline monomorphic::generated_by< monomorphic::random_t<> > random()
 {
