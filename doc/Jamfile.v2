@@ -83,7 +83,7 @@ doxygen doxygen_reference_generated_doc
         <doxygen:param>EXPAND_ONLY_PREDEF=YES
         <doxygen:param>SEARCH_INCLUDES=YES
         <doxygen:param>INCLUDE_PATH=$(BOOST_ROOT)/libs/test/include
-        <doxygen:param>EXAMPLE_PATH=$(BOOST_ROOT)/libs/test/doc/v2/examples
+        <doxygen:param>EXAMPLE_PATH=$(BOOST_ROOT)/libs/test/doc/examples
         <doxygen:param>BRIEF_MEMBER_DESC=YES
         <doxygen:param>REPEAT_BRIEF=YES
         <doxygen:param>ALWAYS_DETAILED_SEC=YES
@@ -98,7 +98,7 @@ doxygen doxygen_reference_generated_doc
 ########################################################################
 # HTML documentation for $(BOOST_ROOT)/doc/html
 
-xml test_doc
+xml test_doc_qbk
   :
     test.qbk
   ;
@@ -109,9 +109,9 @@ path-constant images_location : html ;
 
 boostbook standalone
   :
-    test_doc
+    test_doc_qbk
   :
-    <xsl:param>boost.root=../../../../..
+    <xsl:param>boost.root=../../..
     <xsl:param>html.stylesheet=boostbook.css
     <xsl:param>chapter.autolabel=0
     <xsl:param>toc.max.depth=10
