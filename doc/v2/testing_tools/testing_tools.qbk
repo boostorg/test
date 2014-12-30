@@ -1,3 +1,10 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
 [section:testing_tools Testing tools]
 The __UTF__'s supplies a toolbox of testing tools to ease creation and maintenance of test programs and
 provide a  uniform error reporting mechanism. The toolbox supplied in most part in a form of macro and function

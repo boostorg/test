@@ -1,4 +1,10 @@
-[/ ##################################################################### ]
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
 [section:build_boost_test Building the __UTF__]
 
 In case you would like to use the shared or static variants of the __UTF__, the __UTF__ needs to be built. 
@@ -6,8 +12,8 @@ Building the __UTF__ is in fact quite easy.
 
 In the sequel, we define
 
-* `'$'boost_path` refers to the location where the boost archive was deflated
-* `'$'boost_installation_prefix` refers to the location where you want to install the __UTF__
+* $`boost_path` refers to the location where the boost archive was deflated
+* $`boost_installation_prefix` refers to the location where you want to install the __UTF__
 
 [/ not true
  [note By default, the static and dynamic variant will be built for your operating system]
@@ -67,7 +73,7 @@ There are two tasks should be performed before actual testing is able to start:
 
 The part of the __UTF__ dedicated for this purpose is called [link boost_test.adv_scenarios.build.module_initialization ['the test module initialization]] function. 
 
-[note Note that alternatively to ['module initialization], global __section_test_fixture__ may be employed.]
+[note Note that alternatively to ['module initialization], global [link boost_test.users_guide.tests_organization.fixtures fixtures] may be employed.]
 
 The ['module initialization] and the way the test module is linked against the __UTF__ are closely related. The method used to link 
 against the __UTF__ are often lead by considerations external to the tests themselves (compilation time, size of the generated binaries, etc). However,

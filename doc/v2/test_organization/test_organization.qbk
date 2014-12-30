@@ -1,3 +1,11 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ / Copyright (c) 2013-2014 Raffi Enficiaud
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
 [section:tests_organization Test organization]
 
 If you look at many legacy test modules, big chance is that it's implemented as one big test function that
@@ -13,14 +21,16 @@ disadvantages in single test function approach:
 * No summary of how different subsystems of the tested unit performed under in the test.
 
 The above points should make it clear that it's preferable to split [link ref_test_module test module] into smaller units.
-These units are __section_test_cases__.
+These units are [link boost_test.users_guide.tests_organization.test_cases Test cases].
 
-To solve test tree creation problem the __UTF__ provides facilities for __section_test_suite__ creation. 
+To solve test tree creation problem the __UTF__ provides facilities for 
+[link boost_test.users_guide.tests_organization.test_suite test suite] creation. 
 In some cases it's desirable to allow some ['expected] failures in test case without failing a
 test module. To support this request The __UTF__ allows specifying the number of
 [link boost_test.users_guide.tests_organization.expected_failures expected failures] in a test case.
 
-When several tests shares the same set-up (environment, test data preparation, etc.), the __section_test_fixture__ comes into play. 
+When several tests shares the same set-up (environment, test data preparation, etc.), the 
+[link boost_test.users_guide.tests_organization.fixtures Fixtures] comes into play. 
 In the __UTF__, fixtures can be defined at the test case or the test suite level.
 
 [include test_cases.qbk]

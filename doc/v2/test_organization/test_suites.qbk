@@ -1,3 +1,10 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
 [section:test_suite Test suite]
 If you consider test cases as leaves on the test tree, the test suite can be considered as branch and the master
 test suite as a trunk. Unlike real trees though, our tree in many cases consists only of leaves attached
@@ -8,9 +15,10 @@ test suite creation and registration facilities:
 # Test suite with automated registration
 # Manually registered test suite
 
-In addition the __UTF__ presents a notion of __section_master_test_suite__. The most important
-reason to learn about this component is that it provides an ability to access command line arguments supplied 
-to a test module.
+In addition the __UTF__ presents a notion of the 
+[link boost_test.users_guide.tests_organization.test_suite.master_test_suite Master Test Suite]. 
+The most important reason to learn about this component is that it provides an ability to access 
+command line arguments supplied to a test module.
 
 [#ref_BOOST_AUTO_TEST_SUITE][h3 Automated registration]
 The solution the __UTF__ presents for automated test suite creation and registration is designed to facilitate

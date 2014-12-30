@@ -1,4 +1,10 @@
-[/ -------------------------------------------------------------------------------------------------- ]
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
 [section:log_human_readable_format Human readable log format]
 
 The human readable log format is designed to closely match an errors description produced by the Microsoft family

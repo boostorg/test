@@ -1,3 +1,10 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
 [section:test_organization_nullary Non-parametrized test cases]
 
 The most widely used are test cases based on a /nullary/ function (functions without parameters). These include nullary free functions, nullary
@@ -82,7 +89,7 @@ The example below employs the alternative test module initialization function sp
 [bt_example example05..Binary free function bound to set of different parameter pairs]
 
 The __UTF__ also presents an alternative method for parametrized test case creation, which is covered in 
-[link ref_BOOST_PARAM_TEST_CASE next section].
+[link boost_test.users_guide.tests_organization.test_cases.param_test this] section.
 
 [endsect]
 
