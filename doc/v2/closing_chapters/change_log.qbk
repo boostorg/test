@@ -42,5 +42,7 @@
 # [ticket 6002] Failed to completely redirect TestLog to file (duplicate)
 # [ticket 6071] Boost Test (Boost 1.46.0) GCC 4.6.1 error: ambiguous overload for ‘operator[]’
 # [ticket 6074] warnings-as-errors not usable with Boost.test in release mode
+# [ticket 7410] Test Units (Cases and Suites) in Boost.Test do not capture __FILE__ and __LINE__ at declaration point making it impossible to provide source file linking using external test management tools
+
 
 [endsect]
