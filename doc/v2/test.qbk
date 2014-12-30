@@ -39,13 +39,11 @@
 [def __part_faq__                         [link boost_test.section_faq FAQ]]
 
 [/ content in the test organization]
-[def __section_test_suite__               [link boost_test.users_guide.tests_organization.test_suite Test suite]]
+[def __section_test_suite__               [link boost_test.users_guide.tests_organization.test_suite test suite]]
 [def __section_master_test_suite__        [link boost_test.users_guide.tests_organization.test_suite.master_test_suite Master Test Suite]]
-[def __section_test_fixture__             [link boost_test.users_guide.tests_organization.fixtures Fixtures]]
-[def __section_test_cases__               [link boost_test.users_guide.tests_organization.test_cases Test cases]]
-[def __section_parameterized_test__       [link boost_test.users_guide.tests_organization.test_cases.param_test Parametrized test]]
-
-[def __testing_tools__                    [link boost_test.users_guide.testing_tools Testing tools]]
+[def __section_test_fixture__             [link boost_test.users_guide.tests_organization.fixtures fixtures]]
+[def __section_test_cases__               [link boost_test.users_guide.tests_organization.test_cases test cases]]
+[def __section_parameterized_test__       [link boost_test.users_guide.tests_organization.test_cases.param_test parametrized test]]
 [def __floating_points_testing_tools__    [link boost_test.users_guide.testing_tools.testing_floating_points Floating point comparison algorithms]]
 
 [def __test_outputs__                     [link boost_test.users_guide.test_output test outputs]]

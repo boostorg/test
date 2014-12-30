@@ -77,14 +77,9 @@ Boost   : $BOOST_VERSION]] ]
     [`<Message content>`]]
 ]
 
-
-Advanced __testing_tools__ may produce more complicated error messages.
+Advanced [link boost_test.users_guide.testing_tools testing tools] may produce more complicated error messages.
 
 [endsect] [/ human readable report]
-
-
-
-
 
 [/ -------------------------------------------------------------------------------------------------- ]
 [section:log_xml_format XML based log output format]

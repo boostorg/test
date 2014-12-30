@@ -8,8 +8,6 @@
 
 [section:test_org_reference Reference]
 
-
-
 [table
   [
     [Macro]
@@ -42,24 +40,10 @@
     [__BOOST_TEST_CASE_TEMPLATE_FUNCTION__]
     [Declaration of the body of a typed test case]
   ]
-  
-  
   [
     [__BOOST_DATA_TEST_CASE__]
     [Declaration of the body of a test case on datasets]
   ]
-  
-  
-  
-  
-  
-  
-    
-  
-  
-  
-  
-  
   
   [/ ###############################################################################################]
   [/ Test suites]
@@ -92,17 +76,7 @@
     [Declares a fixture globally to the test module]
   ]
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
 ]
-
 
 [/ Test suites ###############################################################################################]
 [section:test_org_boost_test_suite `BOOST_TEST_SUITE`]
@@ -117,15 +91,10 @@
 
 [endsect] [/test_org_boost_auto_test_suite_end]
 
-
-
 [section:test_org_boost_test_dataset `BOOST_DATA_TEST_CASE`]
 
 See [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.datasets_auto_registration here].
 
 [endsect] [/test_org_boost_test_dataset]
-
-
-
 
 [endsect] [/reference test organization]

@@ -108,7 +108,7 @@ registration is performed in the test module initialization function.
 
 The example below creates a test tree, which can be represented by the following hierarchy:
 
-[$../img/class-hier.jpg]
+[$images/class-hier.jpg]
 
 [bt_example example11..Manually registered test suites]
 

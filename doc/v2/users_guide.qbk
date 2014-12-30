@@ -29,9 +29,10 @@ variants are covered in section dedicated to [link boost_test.users_guide.usage_
 The next step, probably the most important for you, is to start writing test cases, bind them in test 
 suites and implement your checks. First two topics are covered in 
 [link boost_test.users_guide.tests_organization Tests organization] section, while
-__testing_tools__ section arms you with rich set of tools enough to implement almost arbitrary check you need.
-[link boost_test.users_guide.tests_organization.fixtures Here] you will also learn about adding fixtures to your 
-test units.
+[link boost_test.users_guide.testing_tools testing tools] section arms you with 
+rich set of tools enough to implement almost arbitrary check you need. 
+[link boost_test.users_guide.tests_organization.fixtures Here] you will also learn about 
+adding fixtures to your test units.
 
 Next you'll learn how to understand and manipulate the __UTF__ output in a __test_outputs__ section. 
 At that point you should be able to build and run most simple test modules and almost inevitable find a need
