@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2012.
+//  (C) Copyright Gennadiy Rozental 2001-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -38,10 +38,15 @@ namespace test_tools {
 // **************                assertion_result              ************** //
 // ************************************************************************** //
 
+//!@brief Type used for predicate assertions.
 class BOOST_TEST_DECL assertion_result {
+
+    //!@internal
+    //!@{
     typedef unit_test::const_string      const_string;
     struct dummy { void nonnull() {} };
     typedef void (dummy::*safe_bool)();
+    //!@}
 
 public:
     // Constructor

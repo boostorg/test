@@ -1,15 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2005-2012.
+//  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines simple text based progress monitor
+/// @file 
+/// @brief defines simple text based progress monitor
 // ***************************************************************************
 
 #ifndef BOOST_TEST_PROGRESS_MONITOR_HPP_020105GER
@@ -33,9 +30,11 @@ namespace unit_test {
 // **************                progress_monitor              ************** //
 // ************************************************************************** //
 
+/// This class implements test observer interface and updates test progress as test units finish or get aborted
 class BOOST_TEST_DECL progress_monitor_t : public test_observer, public singleton<progress_monitor_t> {
 public:
-    // test observer interface
+    /// @name Test observer interface
+    /// @{
     virtual void    test_start( counter_t test_cases_amount );
     virtual void    test_aborted();
 
@@ -43,9 +42,12 @@ public:
     virtual void    test_unit_skipped( test_unit const& );
 
     virtual int     priority() { return 3; }
+    /// @}
     
-    // configuration
+    /// @name Configuration
+    /// @{
     void            set_stream( std::ostream& );
+    /// @}
 
 private:
     BOOST_TEST_SINGLETON_CONS( progress_monitor_t )

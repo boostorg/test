@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2012.
+//  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Use, modification, and distribution are subject to the 
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -148,8 +148,11 @@ private:
 
 #ifndef BOOST_RT_PARAM_OFFLINE
 
-#  define BOOST_RT_PARAM_INLINE inline
-#  include <boost/test/utils/runtime/cla/parser.ipp>
+#ifndef BOOST_RT_PARAM_INLINE
+  #define BOOST_RT_PARAM_INLINE inline
+#endif
+
+#include <boost/test/utils/runtime/cla/parser.ipp>
 
 #endif
 

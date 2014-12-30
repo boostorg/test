@@ -1,15 +1,13 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision: -1 $
-//
-//  Description : defines test_unit, test_case, test_suite, master_test_suite_t
+/// @file
+/// Defines @ref boost::unit_test::test_unit "test_unit", @ref boost::unit_test::test_case "test_case", 
+/// @ref boost::unit_test::test_suite "test_suite" and @ref boost::unit_test::master_test_suite_t "master_test_suite_t"
 // ***************************************************************************
 
 #ifndef BOOST_TEST_TREE_TEST_UNIT_HPP_100211GER
@@ -132,6 +130,7 @@ private:
 // **************                  test_suite                  ************** //
 // ************************************************************************** //
 
+//! Class representing test suites
 class BOOST_TEST_DECL test_suite : public test_unit {
 public:
     enum { type = TUT_SUITE };
@@ -140,10 +139,22 @@ public:
     explicit        test_suite( const_string ts_name, const_string ts_file, std::size_t ts_line );
 
     // test unit list management
+
+    /*!@brief Adds a test unit to a test suite.
+     *
+     * It is possible to specify the timeout and the expected failures.
+     */
     void            add( test_unit* tu, counter_t expected_failures = 0, unsigned timeout = 0 );
+
+    //  boost::unit_test::test_suite::add( test_unit* tu, counter_t expected_failures = 0, unsigned timeout = 0 )
+
+    /// @overload
     void            add( test_unit_generator const& gen, unsigned timeout = 0 );
+    
+    //! Removes a test from the test suite.
     void            remove( test_unit_id id );
 
+    
     // access methods
     test_unit_id    get( const_string tu_name ) const;
     std::size_t     size() const { return m_members.size(); }

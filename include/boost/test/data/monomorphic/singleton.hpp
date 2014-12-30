@@ -1,15 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines single element monomorphic dataset
+///@file
+///Defines single element monomorphic dataset
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_SINGLETON_HPP_102211GER
@@ -31,8 +28,8 @@ namespace monomorphic {
 // ************************************************************************** //
 // **************                    singleton                  ************** //
 // ************************************************************************** //
-// Models single element data set
 
+/// Models a single element data set
 template<typename T>
 class singleton : public monomorphic::dataset<typename boost::decay<T>::type> {
     typedef monomorphic::dataset<typename boost::decay<T>::type> base;

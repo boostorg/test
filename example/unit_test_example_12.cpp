@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2012.
+//  (C) Copyright Gennadiy Rozental 2001-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -125,9 +125,9 @@ public:
     void            test( hash_function_test_data const& test_data )
     {
         if( test_data.exp_value == (unsigned long)-1 )
-            BOOST_CHECK_THROW( m_function_under_test( test_data.orig_string ), std::runtime_error )
+            BOOST_CHECK_THROW( m_function_under_test( test_data.orig_string ), std::runtime_error );
         else if( test_data.exp_value == (unsigned long)-2 )
-            BOOST_CHECK_THROW( m_function_under_test( test_data.orig_string ), std::out_of_range )
+            BOOST_CHECK_THROW( m_function_under_test( test_data.orig_string ), std::out_of_range );
         else {
             BOOST_TEST_MESSAGE( "Testing: " << test_data.orig_string );
             BOOST_CHECK_EQUAL( m_function_under_test( test_data.orig_string ), test_data.exp_value );
@@ -165,6 +165,8 @@ struct massive_hash_function_test : test_suite {
 
         add( make_test_case( &hash_function_tester::test, 
                              "hash_function_tester",
+                             __FILE__,
+                             __LINE__,
                              instance,
                              test_data_store.begin(),
                              test_data_store.end() ) );

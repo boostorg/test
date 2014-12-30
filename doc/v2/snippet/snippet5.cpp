@@ -1,11 +1,11 @@
 struct MyFixture {
-     MyFixture() { i = new int; *i = 0 }
-     ~ MyFixture() { delete i; }
+   MyFixture() { i = new int; *i = 0 }
+   ~ MyFixture() { delete i; }
 
-    int* i;
+  int* i;
 };
 
-BOOST_AUTO_TEST_CASE( test_case1 )
+__BOOST_AUTO_TEST_CASE__( test_case1 )
 {
     MyFixture f;
 

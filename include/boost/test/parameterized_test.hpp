@@ -1,15 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2001-2012.
+//  (C) Copyright Gennadiy Rozental 2001-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : generators and helper macros for parameterized tests
+//!@file 
+//!@brief generators and helper macros for parameterized tests
 // ***************************************************************************
 
 #ifndef BOOST_TEST_PARAMETERIZED_TEST_HPP_021102GER

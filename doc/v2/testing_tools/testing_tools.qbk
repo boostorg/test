@@ -1,0 +1,26 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+[section:testing_tools Testing tools]
+The __UTF__'s supplies a toolbox of testing tools to ease creation and maintenance of test programs and
+provide a  uniform error reporting mechanism. The toolbox supplied in most part in a form of macro and function
+declarations. While the functions can be called directly, the usual way to use testing tools is via convenience
+macros. All macros arguments are calculated once, so it's safe to pass complex expressions in their place.
+All tools automatically supply an error location: a file name and a line number. The testing tools are intended
+for unit test code rather than library or production code, where throwing exceptions, using `assert()`,
+`boost::concept_check` or `BOOST_STATIC_ASSERT()` may be more suitable
+ways to detect and report errors. 
+
+For a list of all supplied testing tools and usage examples, see the [link boost_test.users_guide.testing_tools.testing_tool_ref reference].
+
+[include assertions_severity_levels.qbk]
+[include custom_predicates.qbk]
+[include testing_output_streams.qbk]
+[include testing_floating_points.qbk]
+[include testing_tools_reference.qbk]
+
+[endsect] [/ testing tools]

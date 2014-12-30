@@ -1,15 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines monomorphic dataset based on zipping of 2 other monomorphic datasets
+/// @file
+/// Defines monomorphic dataset based on zipping of 2 other monomorphic datasets
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_ZIP_HPP_102211GER
@@ -81,6 +78,7 @@ struct zip_traits<std::tuple<T1,T2>,T3> {
 // **************                       zip                    ************** //
 // ************************************************************************** //
 
+//! Zip datasets
 template<typename DS1, typename DS2>
 class zip : public monomorphic::dataset<typename ds_detail::zip_traits<typename boost::decay<DS1>::type::data_type,
                                                                        typename boost::decay<DS2>::type::data_type>::type> {

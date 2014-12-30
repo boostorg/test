@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -32,6 +32,9 @@ namespace monomorphic {
 // **************                      join                    ************** //
 // ************************************************************************** //
 
+//! Defines a new dataset from the concatenation of two datasets
+//!
+//! The size of the resulting dataset is the sum of the two underlying datasets.
 template<typename DS1, typename DS2>
 class join : public monomorphic::dataset<typename boost::decay<DS1>::type::data_type> {
     typedef typename boost::decay<DS1>::type::data_type T;

@@ -1,0 +1,77 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+
+[section:dynamic_lib_variant Dynamic library variant]
+
+In the project with large number of test modules [link boost_test.adv_scenarios.build.usage_variants.static_lib_variant the static library variant] of the __UTF__ 
+may cause you to waste a lot of disk space, since the __UTF__ is linked statically with every test module. The solution is 
+to link with the __UTF__ built into a dynamic library (dynamic library variant of the __UTF__). 
+
+This variant requires you to define the flag `__BOOST_TEST_DYN_LINK__`
+either in a makefile or before the header `boost/test/unit_test.hpp` inclusion.
+
+The test runner supplied with this variant requires you to implement the [link ref_test_module test module]
+initialization function that matches the alternative initialization function signature. The __UTF__
+provides an ability to automatically generate an empty test module initialization function with correct signature 
+if no custom initialization is required by a test module through the definition of the __BOOST_TEST_MAIN__ macro.
+
+[warning __BOOST_TEST_DYN_LINK__ may be defined if the macro `BOOST_ALL_DYN_LINK` is defined]
+
+[warning In order to be able to run a test built with the dynamic variant, the operating system should be able
+ to find the dynamic library of the __UTF__. This means, for example on Linux and MacOSX respectively, setting the environment 
+ variable `LD_LIBRARY_PATH` or `DYLD_LIBRARY_PATH` properly prior to the execution of the test module.]
+ 
+ 
+[section:dynamic_lib_variant_minimal_example Minimal example]
+A trivial example of dynamic variant of the __UTF__ would be the following:
+``
+#define __BOOST_TEST_DYN_LINK__
+#define __BOOST_TEST_MAIN__
+#include <boost/test/unit_test.hpp>
+
+BOOST_AUTO_TEST_CASE(my_test)
+{
+  BOOST_CHECK(true);
+}
+``
+
+Behind the scenes:
+
+* __BOOST_TEST_DYN_LINK__ tells the compiler/linker to dynamically link against the __UTF__
+* __BOOST_TEST_MAIN__ generates a `main` entry point to the test module executable, as well as a generic test registration
+  function, which registers all tests declared with the macros __BOOST_AUTO_TEST_CASE__, __BOOST_FIXTURE_TEST_CASE__, 
+  __BOOST_AUTO_TEST_CASE_TEMPLATE__ or __BOOST_PARAM_TEST_CASE__ .
+
+
+[endsect] [/ section:dynamic_lib_variant_minimal_example]
+
+
+
+[section:dynamic_lib_variant_multiple_source_files Multiple source files]
+The macro __BOOST_TEST_MAIN__ defines a `main` function and an automated registration of the tests. If the test module contains
+several files, only one `main` and one registration function should be defined, which also means that __BOOST_TEST_MAIN__
+should be defined in one compilation unit only.
+
+[endsect] [/ section:dynamic_lib_variant_multiple_source_files]
+
+
+[section:dynamic_lib_variant_manual_registration Manual test registration]
+The automatic generation of the test module works well with auto-registrated tests 
+(explained in detail in __section_test_cases__ section), but needs some tweaking for tests registered manually. 
+
+In that case, __BOOST_TEST_NO_MAIN__ may be defined in order to prevent the generation of the test module initialisation. 
+[tip Another advantage of defining __BOOST_TEST_NO_MAIN__ is that the code for the test module initialisation would then 
+be independant against the static/dynamic variant of the __UTF__]
+
+[note The name of the test module initialization function is not enforced, since the function is passed as an argument to the test runner.
+]
+
+
+[endsect] [/ section:dynamic_lib_variant_manual_registration]
+
+[endsect] [/ section:dynamic_lib_variant]

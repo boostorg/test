@@ -1,0 +1,200 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+[section:fixtures Fixtures]
+In general terms a test fixture or test context is the collection of one or more of the following items, required
+to perform the test:
+ 
+* preconditions
+* particular states of tested unites
+* necessary cleanup procedures
+
+Though these tasks are encountered in many if not all test cases, what makes a test fixture different is
+repetition. Where a normal test case implementation does all preparatory and cleanup work itself, a test fixture
+allows this to be implemented in a separate reusable unit.
+
+With introduction of e[*X]treme [*P]rogramming (XP), the testing style, that require test setup/cleanup repetition,
+has become even more popular. Single XP adopted test modules may contain hundreds of single assertion test cases,
+many requiring very similar test setup/cleanup. This is the problem that the test fixture is designed to solve.
+
+In practice a test fixture usually is a combination of setup and teardown functions, associated with test case.
+The former serves the purposes of test setup; the later is dedicated to the cleanup tasks. Ideally it's
+preferable that a test module author is able to define variables used in fixtures on the stack and the same time
+is able to refer to them directly in test case.
+ 
+It's important to understand that C++ provides a way to implement a straightforward test fixture solution
+that almost satisfies our requirements without any extra support from the test framework. This may explain why
+test fixtures support was introduced in the __UTF__ somewhat late in its life cycle. Here is how simple test module
+with such a fixture may look like:
+
+[/snippet5 deleted content below]
+
+``
+struct MyFixture {
+  MyFixture()   { i = new int; *i = 0 }
+  ~MyFixture()  { delete i; }
+ 
+  int* i;
+};
+
+__BOOST_AUTO_TEST_CASE__( test_case1 )
+{
+  MyFixture f;
+  // do something involving f.i
+}
+
+__BOOST_AUTO_TEST_CASE__( test_case2 )
+{
+  MyFixture f;
+  // do something involving f.i
+}
+``
+
+
+This is a generic solution that can be used to implement any kind of shared setup or cleanup procedure. Still
+there are several more or less minor practical issues with this pure C++ based fixtures solution:
+
+* We need to add a fixture declaration statement into each test case manually.
+* Objects defined in fixture are references with `<fixture-instance-name>` prefix.
+* There is no place to execute a ['global] fixture, which performs ['global] setup/cleanup
+  procedures before and after testing.
+
+
+While there is little the __UTF__ can do to address these issues for manually registered test units, it's
+possible to resolve them for test units that are automatically registered. To do this the __UTF__ defines a
+[link boost_test.users_guide.tests_organization.fixtures.model generic fixture model] - fixed interfaces that both setup and
+teardown fixture functions should comply to. Based on the generic fixture model, the __UTF__ presents solution for
+the following tasks:
+
+* per test case fixture automation
+* shared test suite level fixture
+* ['global] fixture support
+
+[/ ###################################################################################### ]
+[section:model Generic fixture model]
+The __UTF__ defines the generic fixture model as follows:
+
+``
+struct <fixture-name>{
+  <fixture-name>();      // setup function
+  ~<fixture-name>();     // teardown function
+};
+``
+
+In other words a fixture is expected to be implemented as a class where the class constructor serves as a setup
+method and class destructor serves as teardown method. The __UTF__ opted to avoid explicit names in fixture
+interface for setup and teardown methods, since is considered most natural in C++ for tasks similar to RAII and
+coincides with the pure C++ solution discusses earlier.
+
+[caution The above interface prevents you to report errors in the teardown procedure using an exception. It does make
+    sense though: if somehow more than one fixture is assigned to a test unit, you want all teardown procedures to
+    run, even if some may experience problems.
+]
+[endsect] [/section generic fixture]
+
+
+
+[/ ###################################################################################### ]
+[section:case Per test case fixture]
+
+To automate the task of assigning a fixture for the test case, for test case creation use the macro
+__BOOST_FIXTURE_TEST_CASE__ in place of the macro __BOOST_AUTO_TEST_CASE__:
+
+``
+  BOOST_FIXTURE_TEST_CASE(test_case_name, fixture_name);
+``
+
+The only difference from the macro __BOOST_AUTO_TEST_CASE__ is the presence of an extra argument
+- fixture name. Unlike the pure C++ solution you have direct access to the public and protected members of the
+fixture, though you still need to refer to the fixture name in every test case.
+
+[note You can't access private members of fixture, but then why would you make anything private?]
+
+[bt_example example18..Per test case fixture]
+
+In this example only `test_case1` and `test_case2` have fixture `F` assigned. In the next section you going to see
+what can be done if all test cases in a test suite require the same fixture.
+
+[endsect] [/ per test case]
+
+
+[/ ###################################################################################### ]
+[section:suite Test suite level fixture]
+
+If all test cases in a test require the same fixture (you can group test cases in the test suite based on a
+fixture required) you can make another step toward an automation of a test fixture assignment. To assign the
+same shared fixture for all test cases in a test suite, use the macro __BOOST_FIXTURE_TEST_SUITE__ in place of the
+macro __BOOST_AUTO_TEST_SUITE__ for automated test suite creation and registration.
+
+``
+  BOOST_FIXTURE_TEST_SUITE(suite_name, fixure_name);
+``
+
+Once again the only difference from the macro __BOOST_AUTO_TEST_SUITE__ usage is the presence of
+an extra argument - the fixture name. And now, you not only have direct access to the public and protected members
+of the fixture, but also do not need to refer to the fixture name in test case definition. All test cases assigned
+the same fixture automatically.
+
+[tip If necessary you can reset the fixture for a particular test case with the use of the macro
+    __BOOST_FIXTURE_TEST_CASE__.
+]
+
+[note The fixture assignment is ['deep]. In other words unless reset by another
+    __BOOST_FIXTURE_TEST_SUITE__ or __BOOST_FIXTURE_TEST_CASE__ definition the
+    same fixture is assigned to all test cases of a test suite, including ones that belong to the sub test suites.
+]
+
+[bt_example example19..Test suite level fixture]
+
+[caution The fixture constructor and destructor is called for each test cases (the state of the 
+         fixture is not shared among the test cases).]
+
+[endsect] [/ testsuite fixtures]
+
+
+
+[/ ###################################################################################### ]
+[section:global Global fixture]
+
+Any global initialization that needs to be performed every time testing begins or a global cleanup that is to be
+performed once testing is finished is called a global fixture. The __UTF__ global fixture design is based on a
+generic test fixture model and is supported by the utility class `boost::unit_test::global_fixture`. The global
+fixture design allows any number of global fixtures to be defined in any test file that constitutes a test module.
+Though some initialization can be implemented in the test module initialization function, there are several 
+reasons to prefer the global fixture approach:
+
+* There is no place for cleanup/teardown operations in the initialization function.
+* Unlike the initialization function, the global fixture setup method invocation is guarded by the execution
+  monitor. That means that all uncaught errors that occur during initialization are properly reported.
+* Any number of different global fixtures can be defined, which allows you to split initialization code by
+  category.
+* The fixture allows you to place matching setup/teardown code in close vicinity in your test module code.
+* If the whole test tree is constructed automatically the initialization function is empty and auto-generated by
+  the __UTF__. To introduce the initialization function can be more work than the use of a global fixture facility,
+  while global fixture is more to the point.
+* Since all fixtures follow the same generic model you can easily switch from local per test case fixtures to
+  the global one.
+* If you are using the interactive test runner (non-supplied yet) global test fixtures are applied to every run,
+  while an initialization function is executed only once during a test module startup (just make sure that
+   it's what you really want).
+
+To define a global test module fixture you need to implement a class that matched generic fixture model and
+passed it as an argument to the macro __BOOST_GLOBAL_FIXTURE__.
+
+``
+  BOOST_GLOBAL_FIXTURE(fixure_name);
+``
+
+The statement, that performs global fixture definition, has to reside at a test file scope.
+
+[bt_example example20..Global fixture]
+
+[endsect] [/section Global fixtures]
+
+[endsect] [/ section fixtures]
+
+[/EOF]

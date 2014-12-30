@@ -1,0 +1,71 @@
+[section:reference Reference]
+
+
+[table
+  [
+    [Macro]
+    [Short description]
+  ] 
+  
+  [/ ###############################################################################################]
+  [
+    [__BOOST_TEST_MESSAGE__]
+    [Custom message output]
+  ]
+  [
+    [__BOOST_TEST_DONT_PRINT_LOG_VALUE__]
+    [Disabling the printing of a specific type in case of test failure]
+  ]
+  [
+    [__BOOST_TEST_CHECKPOINT__]
+    [Indicates a named checkpoint that will be printed in case of failure]
+  ]
+  [
+    [__BOOST_TEST_PASSPOINT__]
+    [Indicates an unnamed checkpoint that will be printed in case of failure]
+  ]
+  
+  
+  
+]
+
+
+
+[/ -------------------------------------------------------------------------------------------------- ]
+[section:test_output_macro_checkpoint `BOOST_TEST_CHECKPOINT`]
+Sets up a named check point. 
+
+[tip See the [link boost_test.users_guide.test_output.checkpoints checkpoint] section for more details.]
+[endsect]
+
+
+
+[section:test_output_macro_passpoint `BOOST_TEST_PASSPOINT`]
+Sets up an unnamed check point. 
+
+[tip See the [link boost_test.users_guide.test_output.checkpoints checkpoint] section for more details.]
+[endsect]
+
+
+
+[section:test_output_macro_message `BOOST_TEST_MESSAGE`]
+Outputs a custom message into the test log.
+
+[tip See the [link boost_test.users_guide.test_output.test_output_macro_message corresponding] section for more details.]
+
+[endsect]
+
+
+[section:test_output_macro_disable_type `BOOST_TEST_DONT_PRINT_LOG_VALUE`]
+Disables the automatic printing of a value. This macro is relevant 
+
+* a type is used in a comparison assertion (such as __BOOST_LEVEL_GE__ for instance)
+* when the type being compared does not implement a suitable `operator <<` for streaming out the value into the 
+  test log stream
+
+[tip See the [link boost_test.users_guide.test_output.testing_tool_output_disable corresponding] section for more details.]
+
+
+[endsect]
+
+[endsect] 

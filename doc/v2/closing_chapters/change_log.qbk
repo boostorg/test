@@ -1,0 +1,48 @@
+[/
+ / Copyright (c) 2013-2014 Raffi Enficiaud
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+[section Change log]
+
+[h4 Boost release XXX]
+
+# [ticket 2717] BOOST_<level>_EQUAL_COLLECTION docs typo
+# [ticket 3392] Boost::Test: Wrong contents for documentation of the BOOST_TEST_PASSPOINT macro
+# [ticket 4434] BOOST_AUTO_EST_CASE typos in docs
+# [ticket 8862] Boost.Test typo in documentation
+# [ticket 9179] Documentation: broken link (unable to find =const_string.hpp/const_string_test.cpp=)
+# [ticket 9272] boost::test BOOST_<level>_GT documentation bug
+# [ticket 9409] Some source code examples are missing
+# [ticket 9537] const_string_test example fails
+# [ticket 9539] Floating-point comparison algorithms aren't formatted correctly
+# [ticket 9581] Squassabia reference link gives 404 not found
+# [ticket 10318] Minor documentation fix
+# [ticket 10888] Assertion failures don't show up in the errors pane in VS 2010, VS 2012 or VS 2013 (duplicate)
+# [ticket 4587] Broken link in website
+# [ticket 4806] Invalid link (examples not showing up in documentation)
+# [ticket 4911] ENH: boost.test output the exception real type name.
+# [ticket 4923] Missing semicolon in documentation example
+# [ticket 4924] Minor typo in Boost::Test docs
+# [ticket 4982] Boost.Test has misspelled Gennadiy Rozental e-mail address
+# [ticket 5008] Boost.Test does not do checkpointing of entry/exit of test cases
+# [ticket 5036] Boost.Test VC memory leak report should direct to stderr
+# [ticket 5262] Run tests by name utility doesn't support negation
+# [ticket 5374] Errors from Boost.Test are no more shown in the Error list in VS2010
+# [ticket 5412] XML formatter in test library processes strings with subsequences `]]>` incorrectly
+# [ticket 5563] using a test macro in a global fixture crashes Boost.Test
+# [ticket 5582] There is a memory leak in the BOOST_AUTO_TEST_CASE_TEMPLATE
+# [ticket 5599] boost::test documentation gives poor instruction
+# [ticket 5718] broken link to unit testing framework examples
+# [ticket 5729] Missing static_cast in fpt_limits
+# [ticket 5870] The warning stack is not maintained
+# [ticket 5972] Support program option to only dump the test-tree in text to output stream
+# [ticket 6002] Failed to completely redirect TestLog to file (duplicate)
+# [ticket 6071] Boost Test (Boost 1.46.0) GCC 4.6.1 error: ambiguous overload for ‘operator[]’
+# [ticket 6074] warnings-as-errors not usable with Boost.test in release mode
+# [ticket 7410] Test Units (Cases and Suites) in Boost.Test do not capture __FILE__ and __LINE__ at declaration point making it impossible to provide source file linking using external test management tools
+
+
+[endsect]

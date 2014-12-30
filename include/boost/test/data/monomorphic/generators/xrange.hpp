@@ -1,15 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines range generator
+///@file
+///Defines range generator
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_GENERATORS_XRANGE_HPP_112011GER
@@ -43,6 +40,8 @@ namespace monomorphic {
 // **************             monomorphic::xrange_t            ************** //
 // ************************************************************************** //
 
+
+//! Implements the range dataset generator.
 template<typename SampleType, typename StepType=SampleType>
 class xrange_t {
 public:
@@ -120,6 +119,30 @@ struct make_xrange {
 
 //____________________________________________________________________________//
 
+//! Creates a range (sequence) dataset.
+//!
+//! The following overloads are available:
+//! @code
+//! auto d = xrange();
+//! auto d = xrange(end_val);
+//! auto d = xrange(end_val, param);
+//! auto d = xrange(begin_val, end_val);
+//! auto d = xrange(begin_val, end_val, step_val);
+//! auto d = xrange(param);
+//! @endcode
+//! 
+//! - @c begin_val indicates the start of the sequence (default to 0). 
+//! - @c end_val is the end of the sequence. If ommited, the dataset has infinite size.\n
+//! - @c step_val is the step between two consecutive elements of the sequence, and defaults to 1.\n
+//! - @c param is the named parameters that describe the sequence. The following parameters are accepted:
+//!   - @c begin: same meaning @c begin_val
+//!   - @c end: same meaning as @c end_val
+//!   - @c step: same meaning as @c step_val
+//! 
+//!
+//! The returned value is an object that implements the dataset API.
+//!
+//! @note the step size cannot be null.
 template<typename SampleType, typename Params>
 inline monomorphic::generated_by<monomorphic::xrange_t<SampleType> >
 xrange( Params const& params )
@@ -129,6 +152,7 @@ xrange( Params const& params )
 
 //____________________________________________________________________________//
 
+/// @overload boost::unit_test::data::xrange()
 template<typename SampleType>
 inline monomorphic::generated_by<monomorphic::xrange_t<SampleType> >
 xrange( SampleType const& end_val )
@@ -138,6 +162,7 @@ xrange( SampleType const& end_val )
 
 //____________________________________________________________________________//
 
+/// @overload boost::unit_test::data::xrange()
 template<typename SampleType, typename Params>
 inline typename enable_if_c<nfp::is_named_params<Params>::value,monomorphic::generated_by<monomorphic::xrange_t<SampleType> > >::type
 xrange( SampleType const& end_val, Params const& params )
@@ -148,6 +173,7 @@ xrange( SampleType const& end_val, Params const& params )
 
 //____________________________________________________________________________//
 
+/// @overload boost::unit_test::data::xrange()
 template<typename SampleType>
 inline monomorphic::generated_by<monomorphic::xrange_t<SampleType> >
 xrange( SampleType const& begin_val, SampleType const& end_val )
@@ -158,6 +184,9 @@ xrange( SampleType const& begin_val, SampleType const& end_val )
 
 //____________________________________________________________________________//
 
+
+
+/// @overload boost::unit_test::data::xrange()
 template<typename SampleType,typename StepType>
 inline monomorphic::generated_by<monomorphic::xrange_t<SampleType> >
 xrange( SampleType const& begin_val, SampleType const& end_val, StepType const& step_val )
