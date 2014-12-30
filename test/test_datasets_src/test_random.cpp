@@ -6,7 +6,7 @@
 //  See http://www.boost.org/libs/test for the library home page.
 //
 //! @file 
-//! @brief tests singleton dataset
+//! @brief tests random dataset
 // ***************************************************************************
 
 // Boost.Test

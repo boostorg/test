@@ -116,164 +116,6 @@ Any number of variables can be added after the second form of the macro.
 
 
 
-[/ ##################################################################################################################################  ]
-[section:generators Datasets generators]
-Several ['generators] for datasets are implemented in __UTF__:
-
-* [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.stl `stl`] containers and 
-  [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.c_arrays `C` array] like datasets
-* [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.ranges ranges] or sequences of values
-* datasets made of [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.random random numbers] and following a particular distribution
-
-`stl` and `C-array` generators are merely a dataset view on existing collection, while ranges and random number sequences are 
-describing new datasets. 
-
-
-[/ ##################################################################################################################################  ]
-[h4:c_arrays Datasets from C arrays]
-This type of datasets does not contains the logic for generating the sequence of values, and is used as a wrapper on an existing
-sequence contained in a `C` array.
-
-
-[/ ##################################################################################################################################  ]
-[h4:stl Datasets from stl containers]
-As for `C` arrays, this type of datasets does not contain the logic for generating sequence of values, and are used for parsing an existing sequence.
-
-
-
-[tip C++11 implementation enables the dataset generation from any container which iterator implements the forward iterator concept]
-
-
-
-
-[/ ##################################################################################################################################  ]
-[h4:ranges Ranges]
-A range is a sequence of equally spaced values. An optional `begin` and `step` can be given. 
-The range initialisation supports named values. 
-
-
-
-It is possible to construct a range in various ways:
-``
-#include <boost/test/data/test_case.hpp>
-#include <boost/test/data/monomorphic.hpp>
-
-auto range1 = data::xrange( (data::step = 0.5, data::end = 3 ) ); // Constructs with named values, starting at 0
-auto range2 = data::xrange( begin, end ); // begin < end required
-auto range5 = data::xrange( begin, end, step );  // begin < end required
-auto range3 = data::xrange( end ); // begin=0, end cannot be <= 0, see above
-auto range4 = data::xrange( end, (data::begin=1) ); // named value after end
-``
-
-[tip In order to use the named values, these should be declared inside parenthesis]
-
-[h5 Parameters]
-The details of the named value parameters is given in the table below.
-[table:id_range_parameter_table Range parameters
-  [
-    [Name]
-    [Default]
-    [Description]
-  ]
-  [
-    [`begin`]
-    [0]
-    [Number indicating the beginning of the generated range. The `begin` value is included in set of values returned
-     by the generator.
-    ]
-  ]
-
-  [
-    [`end`]
-    [+ infinity]
-    [Number indicating the end of the generated range. The `end` value is not included in set of values returned
-     by the generator. If omitted, the generator has infinite size. 
-    ]
-  ]
-  
-  [
-    [`step`]
-    [1]
-    [Strictly positive number indicating the step between two consecutive elements of the generated range. 
-     The default type is the same as the input type.
-    ]
-  ]  
-]
-
-
-[h5 Example]
-As previous test declarations on datasets, the macro __BOOST_DATA_TEST_CASE__ is used the following way:
-
-[bt_example example59..Declaring a test with a range]
-
-[h5 Reference]
-Ranges are implemented in [classref boost::unit_test::data::monomorphic::xrange_t], and the range factory is given by [funcref boost::unit_test::data::xrange].
-
-
-
-[/ ##################################################################################################################################  ]
-[h4:random Random value generators]
-
-[classref boost::unit_test::data::monomorphic::random_t]
-
-A factory for creating datasets with this random generator is given by 
-[funcref boost::unit_test::data::random()]
-
-[warning the random value generators are available only for C++11 capable compilers.]
-
-
-[h5 Choosing the distribution]
-The selection of the distribution may be given by the parameter `boost::unit_test::data::distribution`
-
-The following defines a random value generator with Gaussian distribution (mean 5, sigma 2).
-``
-auto rdgen = random( (data::distribution = std::normal_distribution<>(5.,2)) );
-``
-
-[h5 Setting the seed]
-In order to be able to reproduce a failure within a randomized parameter test case, the seed that generated the failure may be
-set in order to generate the same sequence of random values.
-
-``
-auto rdgen = random( (data::seed = 100UL) );
-``
-
-
-[h5 Parameters]
-The details of the named value parameters is given in the table below.
-[table:id_range_parameter_table Range parameters
-  [
-    [Parameter name]
-    [Default]
-    [Description]
-  ]
-  [
-    [`seed`]
-    [(not set)]
-    [Seed for the generation of the random sequence.]
-  ]
-
-  [
-    [`distribution`]
-    [Uniform]
-    [Distribution instance for generating the random number sequences. The `end` value is not included in set of values returned
-     by the generator for real values, and is included for integers. If omitted, the generator has infinite size. ]
-  ]
-  
-  [
-    [`engine`]
-    [`std::default_random_engine`]
-    [Random number generator engine.]
-  ]  
-]
-
-
-
-
-[endsect] [/ Datasets generators]
-
-
-
 
 [/ ##################################################################################################################################  ]
 [section:operations Operations on dataset]
@@ -336,6 +178,154 @@ yields to the same tuples independently of the positions of the parenthesis. Hen
 [endsect] [/ zip operation on datasets]
 
 [endsect] [/ operations on dataset]
+
+
+
+[/ ##################################################################################################################################  ]
+[section:generators Datasets generators]
+Several ['generators] for datasets are implemented in __UTF__:
+
+* [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.stl `stl`] containers and 
+  [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.c_arrays `C` array] like datasets
+* [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.ranges ranges] or sequences of values
+* datasets made of [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.random random numbers] and following a particular distribution
+
+`stl` and `C-array` generators are merely a dataset view on existing collection, while ranges and random number sequences are 
+describing new datasets. 
+
+
+[/ ##################################################################################################################################  ]
+[h4:c_arrays Datasets from C arrays]
+This type of datasets does not contains the logic for generating the sequence of values, and is used as a wrapper on an existing
+sequence contained in a `C` array.
+
+
+
+
+[/ ##################################################################################################################################  ]
+[h4:stl Datasets from stl containers]
+As for `C` arrays, this type of datasets does not contain the logic for generating sequence of values, and are used for parsing an existing sequence.
+
+
+
+[tip C++11 implementation enables the dataset generation from any container which iterator implements the forward iterator concept]
+
+
+
+
+[/ ##################################################################################################################################  ]
+[h4:ranges Ranges]
+A range is a dataset that implements a sequence of equally spaced values, defined by a /start/, and /end/ and a /step/. 
+
+It is possible to construct a range using the factory [funcref boost::unit_test::data::xrange], available in the overloads below:
+
+``
+#include <boost/test/data/test_case.hpp>
+#include <boost/test/data/monomorphic.hpp>
+
+auto range1 = data::xrange( (data::step = 0.5, data::end = 3 ) ); // Constructs with named values, starting at 0
+auto range2 = data::xrange( begin, end ); // begin < end required
+auto range5 = data::xrange( begin, end, step );  // begin < end required
+auto range3 = data::xrange( end ); // begin=0, end cannot be <= 0, see above
+auto range4 = data::xrange( end, (data::begin=1) ); // named value after end
+``
+
+[tip The named value parameters should be declared inside parenthesis]
+
+[h5 Parameters]
+The details of the named value parameters is given in the table below.
+[table:id_range_parameter_table Range parameters
+  [
+    [Name]
+    [Default]
+    [Description]
+  ]
+  [
+    [`begin`]
+    [0]
+    [Beginning of the generated sequence. The `begin` value is included in set of values returned
+     by the generator.
+    ]
+  ]
+
+  [
+    [`end`]
+    [+ infinity]
+    [End of the generated sequence. The `end` value is not included in set of values returned
+     by the generator. If omitted, the generator has infinite size. 
+    ]
+  ]
+  
+  [
+    [`step`]
+    [1]
+    [Strictly positive number indicating the step between two consecutive elements of the generated range. 
+     The default type is the same as the input type.
+    ]
+  ]  
+]
+
+[bt_example example59..Declaring a test with a range]
+
+
+
+[/ ##################################################################################################################################  ]
+[h4:random Random value dataset]
+
+This type of dataset generates a sequence of random numbers following a given /distribution/. The /seed/ and the /engine/ may also be 
+specified. 
+
+[warning the random value generators are available only for C++11 capable compilers.]
+
+It is possible to construct a random sequence using the factory [funcref boost::unit_test::data::random], available in the overloads below:
+
+``
+auto rdgen = random(); // uniform distribution (real) on [0, 1)
+auto rdgen = random(1, 17); // uniform distribution (integer) on [1, 17]
+// Default random generator engine, Gaussian distribution (mean=5, sigma=2) and seed set to 100.
+auto rdgen = random( (data::seed = 100UL, 
+                      data::distribution = std::normal_distribution<>(5.,2)) ); 
+``
+
+Since the generated datasets will have infinite size, the sequence size should be narrowed by combining the dataset with another
+one through eg. a /zip/ operation. 
+
+[tip In order to be able to reproduce a failure within a randomized parameter test case, the seed that generated the failure may be
+set in order to generate the same sequence of random values.]
+
+[h5 Parameters]
+The details of the named value parameters is given in the table below.
+[table:id_range_parameter_table Range parameters
+  [
+    [Parameter name]
+    [Default]
+    [Description]
+  ]
+  [
+    [`seed`]
+    [(not set)]
+    [Seed for the generation of the random sequence.]
+  ]
+  [
+    [`distribution`]
+    [Uniform]
+    [Distribution instance for generating the random number sequences. The `end` value is not included in set of values returned
+     by the generator for real values, and is included for integers. ]
+  ]
+  [
+    [`engine`]
+    [`std::default_random_engine`]
+    [Random number generator engine.]
+  ]  
+]
+
+[bt_example example63..Declaring a test with a random sequence]
+
+
+[endsect] [/ Datasets generators]
+
+
+
 
 
 
