@@ -103,13 +103,14 @@ private:
 //! @endcode
 //! 
 //!   
-//! - The first overload uses the default distribution, which is uniform in [0, 1) and which elements 
-//!   are @c double type. 
+//! - The first overload uses the default distribution, which is uniform and which elements 
+//!   are @c double type (the values are in [0, 1) ). 
 //! - The second overload generates numbers in the given interval. The distribution is uniform (in [begin, end) 
 //!   for real numbers, and in [begin, end] for integers). The type of the distribution is deduced from the type
 //!   of the @c begin and @c end parameters.
 //! - The third overload generates numbers using the named parameter inside @c params , which are:
-//!   - @c distribution: the distribution used
+//!   - @c distribution: the distribution used. In this overload, since the type of the samples cannot be deduced, 
+//!     the samples are of type @c double and the distribution is uniform real in [0, 1).
 //!   - @c seed: the seed for generating the values
 //!   - @c engine: the random number generator engine
 //!
