@@ -83,7 +83,7 @@ The only way to indicate an initialization error is to throw a [classref boost::
 The initialization function parameters `argc`, `argv` provide the command line arguments specified during test
 module invocation. It's guarantied that any framework-specific command line arguments are excluded. To be
 consistant with the ['simplified] initialization function specification it's recommended though to access the
-command line arguments using the __section_master_test_suite__ interface.
+command line arguments using the [link boost_test.users_guide.tests_organization.test_suite.master_test_suite master test suite] interface.
 
 [endsect] [/ legacy init function]
 

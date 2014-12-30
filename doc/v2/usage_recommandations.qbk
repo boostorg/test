@@ -27,7 +27,6 @@ function is defined you will be able to unroll the stack and see where error act
 If you writing unit test for generic reusable component you may have a need to test it against set of different 
 template parameter types . Most probably you will end up with a code like this:
 
-[/ snippet6 deleted]
 ``
 template<typename TestType>
 void specific_type_test( TestType* = 0 )
@@ -66,7 +65,7 @@ different IDEs.
 I found it most convenient to put test program execution as a post-build step in compilation. To do so use 
 project property page:
 
-[$../img/post_build_event.jpg]
+[$images/post_build_event.jpg]
      
 Full command you need in "Command Line" field is:
      
@@ -78,7 +77,7 @@ Note that both report level and result code are suppressed. This way the only ou
 command are possible runtime errors. But the best part is that you could jump through these errors using usual 
 keyboard shortcuts/mouse clicks you use for compilation error analysis:
      
-[$../img/post_build_out.jpg]
+[$images/post_build_out.jpg]
 
 [h4 If you got fatal exception somewhere within test case, make debugger break at the point the failure by adding 
     extra command line argument]
@@ -90,7 +89,7 @@ run you test, to get more information of error location add
 ``
 to the test run command line:
      
-[$../img/run_args.jpg]
+[$images/run_args.jpg]
     
 
 Now run the test again under debugger and it will break at the point of failure.
