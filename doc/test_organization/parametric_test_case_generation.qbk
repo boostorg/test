@@ -167,6 +167,10 @@ The following properties hold:
 * as for /zip/, there is no need the dataset to have the same type of elements.
 
 
+[caution Cartesian product is not available for the compiler if the macro [macroref BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE `BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE`] 
+ is set]
+
+
 [endsect]
 
 
@@ -333,6 +337,11 @@ The details of the named value parameters is given in the table below.
 ]
 
 [bt_example example63..Declaring a test with a random sequence]
+
+
+[caution Random dataset is not available for the compiler if the macro [macroref BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE `BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE`] 
+ is set]
+
 
 
 [endsect] [/ Datasets generators]
