@@ -1,5 +1,6 @@
 #
-# Copyright (c) 2003-2013
+# Copyright (c) 2003-2014 Gennadiy Rozental 
+# Copyright (c) 2013-2014 Raffi Enficiaud
 #
 # Distributed under the Boost Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -7,6 +8,7 @@
 
 using quickbook ;
 using doxygen ;
+using boostbook ;
 
 ########################################################################
 # Standalone HTML documentation
@@ -83,7 +85,7 @@ doxygen doxygen_reference_generated_doc
         <doxygen:param>EXPAND_ONLY_PREDEF=YES
         <doxygen:param>SEARCH_INCLUDES=YES
         <doxygen:param>INCLUDE_PATH=$(BOOST_ROOT)/libs/test/include
-        <doxygen:param>EXAMPLE_PATH=$(BOOST_ROOT)/libs/test/doc/v2/examples
+        <doxygen:param>EXAMPLE_PATH=$(BOOST_ROOT)/libs/test/doc/examples
         <doxygen:param>BRIEF_MEMBER_DESC=YES
         <doxygen:param>REPEAT_BRIEF=YES
         <doxygen:param>ALWAYS_DETAILED_SEC=YES
@@ -111,7 +113,7 @@ boostbook standalone
   :
     test_doc
   :
-    <xsl:param>boost.root=../../../../..
+    <xsl:param>boost.root=../../../..
     <xsl:param>html.stylesheet=boostbook.css
     <xsl:param>chapter.autolabel=0
     <xsl:param>toc.max.depth=10

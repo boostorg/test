@@ -7,6 +7,10 @@
  
 [section:param_test Parametrized test cases]
 
+[caution the functionalities presented on this page have been superceeded by the 
+ [link boost_test.users_guide.tests_organization.test_cases.test_case_generation Data-driven test case] framework.]
+
+
 Some tests are required to be repeated for a series of different input parameters. One way to achieve this is
 manually register a test case for each parameter as in the previous examples. You can also invoke a test function with
 all parameters manually from within your test case, like this:

@@ -6,7 +6,7 @@
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
-[section:test_case_generation Generation of test case parameters]
+[section:test_case_generation Data-driven test cases]
 
 In some circumstance, one would like to run a [link boost_test.users_guide.tests_organization.test_cases.param_test parametrized] 
 test over a large set of parameters. __BOOST_PARAM_TEST_CASE__ provides an easy solution when these parameters can be described in 
@@ -121,34 +121,6 @@ Any number of variables can be added after the second form of the macro.
 [section:operations Operations on dataset]
 As mentioned earlier, one of the major aspects of using the __UTF__ datasets lies in the number of operations provided
 for their combination.
- 
-[heading Cartesian products]
-The Cartesian product, or ['grid], combines two datasets to form a new dataset of higher dimension. The iteration over
-the resulting datasets creates pairs of values with types respective to the initial datasets.
-
-Cartesian products are accessible through the `operator*` on datasets:
-
-
-
-
-
-[section Joins]
-A ['join] is the concatenation of two datasets, available through `operator+`. The datasets are required to have compatible types.
-Joining two datasets does not change the arity of their elements.
-
-``
-int arr1[] = {1, 2};
-int arr2[] = {7, 19};
-__BOOST_CHECK_EQUAL__( (data::make( arr1 ) + data::make( arr2 )).size(), 4);
-``
-
-[bt_example example62..Example of join usage on datasets]
-
-[note
-The `join` functionality is implemented in the class [classref boost::unit_test::data::monomorphic::join].
-]
-
-[endsect]
 
 [section Zips]
 The ['zip] function returns a dataset of tuples, where the `i`-th tuple contains the `i`-th element from each of the argument datasets.
@@ -165,17 +137,55 @@ yields to the same tuples independently of the positions of the parenthesis. Hen
 ``
  (boost::unit_test::xrange(2) ^ boost::unit_test::xrange(2, 4))
     ^ boost::unit_test::xrange(4, 6)
- = boost::unit_test::xrange(2) ^ 
+ == boost::unit_test::xrange(2) ^ 
     ( boost::unit_test::xrange(2, 4) ^ boost::unit_test::xrange(4, 6) )
- = boost::unit_test::xrange(2) ^ 
+ == boost::unit_test::xrange(2) ^ 
      boost::unit_test::xrange(2, 4) ^ 
        boost::unit_test::xrange(4, 6)
 `` 
 
-[bt_example example61..Example of zip usage on datasets]
+[bt_example example61..Example of zip on datasets]
 
 
 [endsect] [/ zip operation on datasets]
+
+
+
+[section Cartesian products]
+The cartesian product, or ['grid], combines two datasets in order to form a new dataset of higher /dimension/. Each /dimension/
+then spans the content of its source dataset, while the other dimensions are fixed. Cartesian products are accessible through the 
+`operator*` on datasets.
+
+The following properties hold:
+
+* the arity of the dataset is increased by one, 
+* the size of the resulting dataset is the product of the datasets, 
+* the operation is associative, and it is possible to combine more than two datasets in one expression,
+* as for /zip/, there is no need the dataset to have the same type of elements.
+
+
+[endsect]
+
+
+[section Joins]
+A ['join] is the concatenation of two datasets, available through `operator+`. The datasets are required to have compatible types.
+
+The following properties hold:
+
+* joining two datasets does not change the arity of their elements,
+* the size of the returned dataset is the sum of the size of the joined datasets,
+* the operation is associative, and it is possible to combine more than two datasets in one expression.
+  ``
+  int arr1[] = {1, 2};
+  int arr2[] = {7, 19};
+  __BOOST_CHECK_EQUAL__( (data::make( arr1 ) + data::make( arr2 )).size(), 4);
+  ``
+
+[bt_example example62..Example of join on datasets]
+
+
+[endsect]
+
 
 [endsect] [/ operations on dataset]
 
