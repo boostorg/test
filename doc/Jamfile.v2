@@ -100,7 +100,7 @@ doxygen doxygen_reference_generated_doc
 ########################################################################
 # HTML documentation for $(BOOST_ROOT)/doc/html
 
-xml test_doc_qbk
+xml test_doc
   :
     test.qbk
   ;
@@ -111,9 +111,9 @@ path-constant images_location : html ;
 
 boostbook standalone
   :
-    test_doc_qbk
+    test_doc
   :
-    <xsl:param>boost.root=../../..
+    <xsl:param>boost.root=../../../..
     <xsl:param>html.stylesheet=boostbook.css
     <xsl:param>chapter.autolabel=0
     <xsl:param>toc.max.depth=10
