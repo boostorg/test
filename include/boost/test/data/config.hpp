@@ -19,8 +19,9 @@
 #include <stdexcept> // for std::logic_error
 
 
-// availability on features
-#ifdef BOOST_NO_CXX11_HDR_RANDOM
+// availability on features: preprocessed by doxygen
+
+#if defined(BOOST_NO_CXX11_HDR_RANDOM) || defined(BOOST_TEST_DOXYGEN_DOC__)
 //! Defined when the random dataset feature is not available
 #define BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE
 
@@ -29,6 +30,7 @@
 
 //! Defined when zip composition of datasets is not available
 #define BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE
+
 #endif
 
 

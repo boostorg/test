@@ -144,6 +144,9 @@ yields to the same tuples independently of the positions of the parenthesis. Hen
        boost::unit_test::xrange(4, 6)
 `` 
 
+[caution Zip operation is not available for the compiler if the macro [macroref BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE `BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE`] 
+ is set]
+
 [bt_example example61..Example of zip on datasets]
 
 
