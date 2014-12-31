@@ -249,9 +249,9 @@ compiler_log_formatter::print_prefix( std::ostream& output, const_string file_na
 //____________________________________________________________________________//
 
 void
-compiler_log_formatter::entry_context_start( std::ostream& output )
+compiler_log_formatter::entry_context_start( std::ostream& output, log_level l )
 {
-    output << "\nFailure occurred in a following context:";
+    output << (l == log_successful_tests ? "\nAssertion" : "\nFailure" ) << " occurred in a following context:";
 }
 
 //____________________________________________________________________________//

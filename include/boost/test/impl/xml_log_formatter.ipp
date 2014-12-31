@@ -185,7 +185,7 @@ xml_log_formatter::log_entry_finish( std::ostream& ostr )
 //____________________________________________________________________________//
 
 void
-xml_log_formatter::entry_context_start( std::ostream& ostr )
+xml_log_formatter::entry_context_start( std::ostream& ostr, log_level )
 {
     if( !m_value_closed ) {
         ostr << BOOST_TEST_L( "]]>" );

@@ -209,8 +209,9 @@ public:
     /// Context consists of multiple "scopes" identified by description messages assigned by the test module using 
     /// BOOST_TEST_INFO/BOOST_TEST_CONTEXT statements.
     /// @param[in] os   output stream to write a messages into
+    /// @param[in] l    entry log_leveg, to be used to fine tue the message 
     /// @see log_entry_context, entry_context_finish
-    virtual void        entry_context_start( std::ostream& os ) = 0;
+    virtual void        entry_context_start( std::ostream& os, log_level l ) = 0;
 
     /// Invoked by Unit Test Framework to report log entry context "scope" description
 

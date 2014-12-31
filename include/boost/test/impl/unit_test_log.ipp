@@ -220,7 +220,7 @@ unit_test_log_t::exception_caught( execution_exception const& ex )
 
         s_log_impl().m_log_formatter->log_exception_start( s_log_impl().stream(), s_log_impl().m_checkpoint_data, ex );
 
-        log_entry_context();
+        log_entry_context( l );
 
         s_log_impl().m_log_formatter->log_exception_finish( s_log_impl().stream() );
     }
@@ -272,7 +272,7 @@ unit_test_log_t&
 unit_test_log_t::operator<<( log::end const& )
 {
     if( s_log_impl().m_entry_in_progress ) {
-        log_entry_context();
+        log_entry_context( s_log_impl().m_entry_data.m_level );
 
         s_log_impl().m_log_formatter->log_entry_finish( s_log_impl().stream() );
 
@@ -371,7 +371,7 @@ unit_test_log_t::operator<<( lazy_ostream const& value )
 //____________________________________________________________________________//
 
 void
-unit_test_log_t::log_entry_context()
+unit_test_log_t::log_entry_context( log_level l )
 {
     framework::context_generator const& context = framework::get_context();
     if( context.is_empty() ) 
@@ -379,7 +379,7 @@ unit_test_log_t::log_entry_context()
 
     const_string frame;
 
-    s_log_impl().m_log_formatter->entry_context_start( s_log_impl().stream() );
+    s_log_impl().m_log_formatter->entry_context_start( s_log_impl().stream(), l );
 
     while( !(frame=context.next()).is_empty() )
         s_log_impl().m_log_formatter->log_entry_context( s_log_impl().stream(), frame );

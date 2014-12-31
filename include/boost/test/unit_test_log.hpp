@@ -121,7 +121,7 @@ public:
 private:
     // Implementation helpers
     bool                log_entry_start();
-    void                log_entry_context();
+    void                log_entry_context( log_level l );
     void                clear_entry_context();
 
     BOOST_TEST_SINGLETON_CONS( unit_test_log_t )

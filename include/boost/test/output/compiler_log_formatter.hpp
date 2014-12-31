@@ -50,7 +50,7 @@ public:
     void    log_entry_value( std::ostream&, lazy_ostream const& value );
     void    log_entry_finish( std::ostream& );
 
-    void    entry_context_start( std::ostream& );
+    void    entry_context_start( std::ostream&, log_level );
     void    log_entry_context( std::ostream&, const_string );
     void    entry_context_finish( std::ostream& );
 
