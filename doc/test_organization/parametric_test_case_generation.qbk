@@ -276,8 +276,9 @@ The details of the named value parameters is given in the table below.
   [
     [`step`]
     [1]
-    [Strictly positive number indicating the step between two consecutive elements of the generated range. 
-     The default type is the same as the input type.
+    [Number indicating the step between two consecutive elements of the generated range. 
+     The default type is the same as the input type. This value should not be 0. It should be of the same
+     sign as `end-begin`.
     ]
   ]  
 ]

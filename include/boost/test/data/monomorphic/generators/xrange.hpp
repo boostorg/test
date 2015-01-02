@@ -142,7 +142,7 @@ struct make_xrange {
 //!
 //! The returned value is an object that implements the dataset API.
 //!
-//! @note the step size cannot be null.
+//! @note the step size cannot be null, and it should be positive if @c begin_val < @c end_val, negative otherwise.
 template<typename SampleType, typename Params>
 inline monomorphic::generated_by<monomorphic::xrange_t<SampleType> >
 xrange( Params const& params )
