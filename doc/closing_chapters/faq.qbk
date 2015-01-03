@@ -75,7 +75,7 @@ Yes. Starting with Boost 1.34.0.
 
 [h3 How to set up a cmake project using __UTF__ (extended)]
 
-Following the [link boost_test.intro.5mn_starter 5mn starter guide], it is very easy to set up a cmake project using __UTF__.
+Following the [link boost_test.intro.5min_starter 5min starter guide], it is very easy to set up a cmake project using __UTF__.
 In the case you are using the [link boost_test.users_guide.usage_variants.shared_lib shared libraries] variant of __UTF__, 
 some modifications should be done in your CMakeLists.txt. 
 
