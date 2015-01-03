@@ -22,3 +22,4 @@ doc/snippet/dataset_1/build/
 doxygen_reference_generated_doc.xml
 standalonedoc_HTML.manifest
 doc/html/*.html
+doc/examples/build
