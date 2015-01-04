@@ -60,6 +60,7 @@ doxygen doxygen_reference_generated_doc
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/zip.hpp
       
       # datasets generators
+      $(BOOST_ROOT)/libs/test/include/boost/test/data/config.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators/keywords.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators/random.hpp

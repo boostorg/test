@@ -65,9 +65,9 @@ still testing
 struct A
 0x14
   20
-0: fatal error in "test_BOOST_TEST_CHECKPOINT": C string: some error
+0: fatal error: in "test_BOOST_TEST_CHECKPOINT": C string: some error
 559: last checkpoint: Going to do a silly things
-0: fatal error in "test_BOOST_TEST_PASSPOINT": unknown type
+0: fatal error: in "test_BOOST_TEST_PASSPOINT": unknown type
 570: last checkpoint
 596: error: in "test_context_logging": check false has failed
 Failure occurred in a following context:

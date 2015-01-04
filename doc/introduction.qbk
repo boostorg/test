@@ -64,8 +64,8 @@ with production code, but some of the Boost.Test interfaces can be, including ..
 
 
 [/ ##################################################################### ]
-[section:5mn_starter The 5mn starter guide]
-This section shows a step-by-step guide for writing your very first test, in less than 5mn. 
+[section:5min_starter The 5min starter guide]
+This section shows a step-by-step guide for writing your very first test, in less than 5min. 
 
 [h3 Writing and building your first test]
 Let's start by creating the minimal skeleton for our [link ref_test_module test module]. This minimal skeleton in the file `test_file.cpp`, 
@@ -165,12 +165,12 @@ configure and build the project, as follow:
 > ctest           /*< runs the tests declared in the project and prints a report >*/
 ```
 
-[h3 Really less than 5mn]
+[h3 Really less than 5min]
 We hope you are now convinced that starting using the __UTF__ is easy and straightforward. 
 The __UTF__ provides a lot of features that you can discover when needed. The next 
 section will help you to navigate to the part of the documentation that best suits your needs. 
 
-[endsect] [/ 5mn starter]
+[endsect] [/ 5min starter]
 
 [endsect] [/ Introduction]
 

@@ -144,6 +144,9 @@ yields to the same tuples independently of the positions of the parenthesis. Hen
        boost::unit_test::xrange(4, 6)
 `` 
 
+[caution Zip operation is not available for the compiler if the macro [macroref BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE `BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE`] 
+ is set]
+
 [bt_example example61..Example of zip on datasets]
 
 
@@ -162,6 +165,10 @@ The following properties hold:
 * the size of the resulting dataset is the product of the datasets, 
 * the operation is associative, and it is possible to combine more than two datasets in one expression,
 * as for /zip/, there is no need the dataset to have the same type of elements.
+
+
+[caution Cartesian product is not available for the compiler if the macro [macroref BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE `BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE`] 
+ is set]
 
 
 [endsect]
@@ -269,8 +276,9 @@ The details of the named value parameters is given in the table below.
   [
     [`step`]
     [1]
-    [Strictly positive number indicating the step between two consecutive elements of the generated range. 
-     The default type is the same as the input type.
+    [Number indicating the step between two consecutive elements of the generated range. 
+     The default type is the same as the input type. This value should not be 0. It should be of the same
+     sign as `end-begin`.
     ]
   ]  
 ]
@@ -330,6 +338,11 @@ The details of the named value parameters is given in the table below.
 ]
 
 [bt_example example63..Declaring a test with a random sequence]
+
+
+[caution Random dataset is not available for the compiler if the macro [macroref BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE `BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE`] 
+ is set]
+
 
 
 [endsect] [/ Datasets generators]
