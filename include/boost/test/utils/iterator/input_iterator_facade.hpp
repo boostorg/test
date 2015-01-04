@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : Input iterator facade 
+//!@file
+//! Input iterator facade 
 // ***************************************************************************
 
 #ifndef BOOST_INPUT_ITERATOR_FACADE_HPP_071894GER
