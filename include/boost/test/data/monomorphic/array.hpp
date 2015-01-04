@@ -29,6 +29,7 @@ namespace monomorphic {
 // **************                     array                    ************** //
 // ************************************************************************** //
 
+/// Dataset view of an C array
 template<typename T>
 class array : public monomorphic::dataset<T> {
     typedef monomorphic::dataset<T> base;
@@ -72,14 +73,16 @@ private:
 
 //____________________________________________________________________________//
 
+// An array is a dataset
 template<typename T>
 struct is_dataset<array<T> > : mpl::true_ {};
 
 } // namespace monomorphic
 
+
+//! @overload boost::unit_test::data::make
 template<typename T, std::size_t size>
-inline monomorphic::array<T>
-make( T (&a)[size] )
+inline monomorphic::array<T> make( T (&a)[size] )
 {
     return monomorphic::array<T>( a, size );
 }
