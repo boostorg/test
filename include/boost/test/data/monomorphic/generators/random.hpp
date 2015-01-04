@@ -82,6 +82,7 @@ public:
     {
         return m_distribution( m_engine );
     }
+    void                reset()             {}
     template<typename SeedType>
     void seed( SeedType&& seed )            { m_engine.seed( std::forward<SeedType>( seed ) ); }
 
