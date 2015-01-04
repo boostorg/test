@@ -7,8 +7,7 @@
 //
 //!@file 
 //!@brief Defines Unit Test Framework monostate interfaces.
-//! The Unit Test framework is based on Monostate design patern. These interfaces are used to operate 
-//! on the monostate.
+//! The framework interfaces are based on Monostate design patern. 
 // ***************************************************************************
 
 #ifndef BOOST_TEST_FRAMEWORK_HPP_020805GER
