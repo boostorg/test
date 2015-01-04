@@ -40,12 +40,12 @@
 
 [def __auto_linking__                     [link ref_pem_auto_link automatic linking]]
 
-[def __BOOST_TEST_ALTERNATIVE_INIT_API__  [link boost_test.adv_scenarios.build.link_references.link_boost_test_alternative_init_macro `BOOST_TEST_ALTERNATIVE_INIT_API`]]
-[def __BOOST_TEST_MAIN__                  [link boost_test.adv_scenarios.build.link_references.link_boost_test_main_macro             `BOOST_TEST_MAIN`]]
-[def __BOOST_TEST_DYN_LINK__              [link boost_test.adv_scenarios.build.link_references.link_boost_test_dyn_link               `BOOST_TEST_DYN_LINK`]]
-[def __BOOST_TEST_NO_LIB__                [link boost_test.adv_scenarios.build.link_references.link_boost_test_no_lib                 `BOOST_TEST_NO_LIB`]]
-[def __BOOST_TEST_NO_MAIN__               [link boost_test.adv_scenarios.build.link_references.link_boost_test_no_main                `BOOST_TEST_NO_MAIN`]]
-[def __BOOST_TEST_MODULE__                [link boost_test.adv_scenarios.build.link_references.link_boost_test_module_macro           `BOOST_TEST_MODULE`]]
+[def __BOOST_TEST_ALTERNATIVE_INIT_API__  [link boost_test.adv_scenarios.build_lib.link_references.link_boost_test_alternative_init_macro `BOOST_TEST_ALTERNATIVE_INIT_API`]]
+[def __BOOST_TEST_MAIN__                  [link boost_test.adv_scenarios.build_lib.link_references.link_boost_test_main_macro             `BOOST_TEST_MAIN`]]
+[def __BOOST_TEST_DYN_LINK__              [link boost_test.adv_scenarios.build_lib.link_references.link_boost_test_dyn_link               `BOOST_TEST_DYN_LINK`]]
+[def __BOOST_TEST_NO_LIB__                [link boost_test.adv_scenarios.build_lib.link_references.link_boost_test_no_lib                 `BOOST_TEST_NO_LIB`]]
+[def __BOOST_TEST_NO_MAIN__               [link boost_test.adv_scenarios.build_lib.link_references.link_boost_test_no_main                `BOOST_TEST_NO_MAIN`]]
+[def __BOOST_TEST_MODULE__                [link boost_test.adv_scenarios.build_lib.link_references.link_boost_test_module_macro           `BOOST_TEST_MODULE`]]
 
 [def __BOOST_TEST_CHECKPOINT__            [link boost_test.users_guide.test_output.reference.test_output_macro_checkpoint `BOOST_TEST_CHECKPOINT`]]
 [def __BOOST_TEST_PASSPOINT__             [link boost_test.users_guide.test_output.reference.test_output_macro_passpoint  `BOOST_TEST_PASSPOINT`]]
