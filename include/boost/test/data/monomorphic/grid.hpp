@@ -18,7 +18,7 @@
 #include <boost/test/data/config.hpp>
 
 
-#ifndef BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE
+#if !defined(BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE) || defined(BOOST_TEST_DOXYGEN_DOC__)
 
 #include <boost/test/data/monomorphic/dataset.hpp>
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -81,6 +81,10 @@ struct grid_traits<std::tuple<T1,T2>,T3> {
 // **************                       grid                    ************** //
 // ************************************************************************** //
 
+
+//! Implements the dataset resulting from a cartesian product/grid operation on datasets.
+//!
+//! The arity of the resulting dataset is the sum of the arity of its operands. 
 template<typename DS1, typename DS2>
 class grid : public monomorphic::dataset<typename ds_detail::grid_traits<typename boost::decay<DS1>::type::data_type,
                                                                          typename boost::decay<DS2>::type::data_type>::type> {
@@ -130,13 +134,13 @@ class grid : public monomorphic::dataset<typename ds_detail::grid_traits<typenam
 public:
     enum { arity = boost::decay<DS1>::type::arity + boost::decay<DS2>::type::arity };
 
-    // Constructor
+    //! Constructor
     grid( DS1&& ds1, DS2&& ds2 ) 
     : m_ds1( std::forward<DS1>( ds1 ) )
     , m_ds2( std::forward<DS2>( ds2 ) )
     {}
 
-    // Move constructor
+    //! Move constructor
     grid( grid&& j ) 
     : m_ds1( std::forward<DS1>( j.m_ds1 ) )
     , m_ds2( std::forward<DS2>( j.m_ds2 ) )
@@ -154,6 +158,7 @@ private:
 
 //____________________________________________________________________________//
 
+// A grid dataset is a dataset
 template<typename DS1, typename DS2>
 struct is_dataset<grid<DS1,DS2> > : mpl::true_ {};
 
@@ -161,6 +166,7 @@ struct is_dataset<grid<DS1,DS2> > : mpl::true_ {};
 
 namespace result_of {
 
+/// Result type of the grid operation on dataset. 
 template<typename DS1Gen, typename DS2Gen>
 struct grid {
     typedef monomorphic::grid<typename DS1Gen::type,typename DS2Gen::type> type;
@@ -170,6 +176,9 @@ struct grid {
 
 //____________________________________________________________________________//
 
+
+
+//! Grid operation
 template<typename DS1, typename DS2>
 inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && is_dataset<DS2>::value, 
                                         result_of::grid<mpl::identity<DS1>,mpl::identity<DS2>>
@@ -181,8 +190,7 @@ operator*( DS1&& ds1, DS2&& ds2 )
     return grid<DS1,DS2>( std::forward<DS1>( ds1 ),  std::forward<DS2>( ds2 ) );
 }
 
-//____________________________________________________________________________//
-
+//! @overload boost::unit_test::data::operator*
 template<typename DS1, typename DS2>
 inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && !is_dataset<DS2>::value, 
                                         result_of::grid<mpl::identity<DS1>,data::result_of::make<DS2>>
@@ -192,8 +200,7 @@ operator*( DS1&& ds1, DS2&& ds2 )
     return std::forward<DS1>(ds1) * data::make(std::forward<DS2>(ds2));
 }
 
-//____________________________________________________________________________//
-
+//! @overload boost::unit_test::data::operator*
 template<typename DS1, typename DS2>
 inline typename boost::lazy_enable_if_c<!is_dataset<DS1>::value && is_dataset<DS2>::value, 
                                         result_of::grid<data::result_of::make<DS1>,mpl::identity<DS2>>

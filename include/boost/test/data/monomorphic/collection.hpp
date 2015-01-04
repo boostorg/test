@@ -29,6 +29,8 @@ namespace monomorphic {
 // **************                  collection                  ************** //
 // ************************************************************************** //
 
+
+//!@brief Dataset from a forward iterable container (collection)
 template<typename C>
 class collection : public monomorphic::dataset<typename boost::decay<C>::type::value_type> {
     typedef typename boost::decay<C>::type col_type;
@@ -80,11 +82,13 @@ private:
 
 //____________________________________________________________________________//
 
+//! A collection from a forward iterable container is a dataset.
 template<typename C>
 struct is_dataset<collection<C> > : mpl::true_ {};
 
 } // namespace monomorphic
 
+//! @overload boost::unit_test::data::make
 template<typename C>
 inline monomorphic::collection<typename BOOST_TEST_ENABLE_IF<is_forward_iterable<C>::value,C>::type>
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES

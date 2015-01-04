@@ -39,6 +39,8 @@ namespace data {
 
 namespace monomorphic {
 
+
+#if !defined(BOOST_TEST_DOXYGEN_DOC__)
 template<typename T>
 struct traits;
 
@@ -53,6 +55,7 @@ class collection;
 
 template<typename T>
 class array;
+#endif
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 #  define BOOST_TEST_ENABLE_IF std::enable_if
@@ -64,16 +67,15 @@ class array;
 // **************            monomorphic::is_dataset           ************** //
 // ************************************************************************** //
 
+//! Helper metafunction indicating if the specified type is a dataset.
 template<typename DS>
 struct is_dataset : mpl::false_ {};
 
-//____________________________________________________________________________//
-
+//! A reference to a dataset is a dataset
 template<typename DS>
 struct is_dataset<DS&> : is_dataset<DS> {};
 
-//____________________________________________________________________________//
-
+//! A const dataset is a dataset
 template<typename DS>
 struct is_dataset<DS const> : is_dataset<DS> {};
 
@@ -87,6 +89,10 @@ struct is_dataset<DS const> : is_dataset<DS> {};
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 
+
+//! @brief Creates a dataset from a value, a collection or an array
+//!
+//! This function has several overloads.
 template<typename DS>
 inline typename BOOST_TEST_ENABLE_IF<monomorphic::is_dataset<DS>::value,DS>::type
 make(DS&& ds)
@@ -94,8 +100,8 @@ make(DS&& ds)
     return std::forward<DS>( ds );
 }
 
-//____________________________________________________________________________//
 
+// fwrd declaration for singletons
 template<typename T>
 inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
                                      !monomorphic::is_dataset<T>::value, 
@@ -103,16 +109,15 @@ inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value &&
 >::type
 make( T&& v );
 
-//____________________________________________________________________________//
-
+// fwrd declaration for collections
 template<typename C>
 inline monomorphic::collection<typename BOOST_TEST_ENABLE_IF<unit_test::is_forward_iterable<C>::value,C>::type>
 make( C&& c );
 
-//____________________________________________________________________________//
 
 #else
 
+//! @overload boost::unit_test:data::make
 template<typename DS>
 inline typename BOOST_TEST_ENABLE_IF<monomorphic::is_dataset<DS>::value,DS const&>::type
 make(DS const& ds)
@@ -120,8 +125,7 @@ make(DS const& ds)
     return ds;
 }
 
-//____________________________________________________________________________//
-
+// fwrd declaration for singletons
 template<typename T>
 inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
                                      !monomorphic::is_dataset<T>::value, 
@@ -129,8 +133,8 @@ inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value &&
 >::type
 make( T const& v );
 
-//____________________________________________________________________________//
 
+// fwrd declaration for collections
 template<typename C>
 inline monomorphic::collection<typename BOOST_TEST_ENABLE_IF<unit_test::is_forward_iterable<C>::value,C>::type>
 make( C const& c );
@@ -169,11 +173,16 @@ struct make
 
 #endif // BOOST_NO_CXX11_DECLTYPE
 
+
 //____________________________________________________________________________//
 
 } // namespace data
 } // namespace unit_test
 } // namespace boost
+
+
+
+
 
 #include <boost/test/detail/enable_warnings.hpp>
 

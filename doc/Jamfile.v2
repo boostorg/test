@@ -46,6 +46,7 @@ doxygen doxygen_reference_generated_doc
       $(BOOST_ROOT)/libs/test/include/boost/test/execution_monitor.hpp
       
       # datasets
+      $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/fwd.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/dataset.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/test_case.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/size.hpp
