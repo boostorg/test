@@ -171,6 +171,9 @@ The following properties hold:
  is set]
 
 
+[/ [bt_example example64..Example of cartesian product] ]
+
+
 [endsect]
 
 
@@ -202,6 +205,7 @@ The following properties hold:
 [section:generators Datasets generators]
 Several ['generators] for datasets are implemented in __UTF__:
 
+* [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.singletons Singletons]
 * [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.stl `stl`] containers and 
   [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.c_arrays `C` array] like datasets
 * [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.ranges ranges] or sequences of values
@@ -209,6 +213,10 @@ Several ['generators] for datasets are implemented in __UTF__:
 
 `stl` and `C-array` generators are merely a dataset view on existing collection, while ranges and random number sequences are 
 describing new datasets. 
+
+
+[/ ##################################################################################################################################  ]
+[h4:singletons Singletons]
 
 
 [/ ##################################################################################################################################  ]
