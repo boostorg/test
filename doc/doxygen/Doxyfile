@@ -152,7 +152,7 @@ FULL_PATH_NAMES        = YES
 # will be relative from the directory where doxygen is started.
 # This tag requires that the tag FULL_PATH_NAMES is set to YES.
 
-STRIP_FROM_PATH        = ../../../include
+STRIP_FROM_PATH        = ../../include
 
 # The STRIP_FROM_INC_PATH tag can be used to strip a user-defined part of the
 # path mentioned in the documentation of a class, which tells the reader which
@@ -753,13 +753,13 @@ WARN_LOGFILE           = warnings.log
 # spaces.
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = ../../../include/boost/test \
-                         ../../../include/boost/test/tree \
-                         ../../../include/boost/test/tools \
-                         ../../../include/boost/test/included \
-                         ../../../include/boost/test/data \
-                         ../../../include/boost/test/data/monomorphic \
-                         ../../../include/boost/test/data/monomorphic/generators
+INPUT                  = ../../include/boost/test \
+                         ../../include/boost/test/tree \
+                         ../../include/boost/test/tools \
+                         ../../include/boost/test/included \
+                         ../../include/boost/test/data \
+                         ../../include/boost/test/data/monomorphic \
+                         ../../include/boost/test/data/monomorphic/generators
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses

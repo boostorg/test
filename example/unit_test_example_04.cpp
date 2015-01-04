@@ -16,10 +16,15 @@ struct suite_fixture {
     suite_fixture()     { BOOST_TEST_MESSAGE( "Running some test suite setup" ); }
     ~suite_fixture()    { BOOST_TEST_MESSAGE( "Running some test suite teardown" ); }
 };
+struct suite_fixture2 {
+    suite_fixture2()    { BOOST_TEST_MESSAGE( "Running some more test suite setup" ); }
+    ~suite_fixture2()   { BOOST_TEST_MESSAGE( "Running some more test suite teardown" ); }
+};
 
 // automatically registered test cases could be organized in test suites
 BOOST_TEST_DECORATOR(
 + unittest::fixture<suite_fixture>()
++ unittest::fixture<suite_fixture2>()
 )
 BOOST_AUTO_TEST_SUITE( my_suite1 )
 
@@ -89,8 +94,10 @@ BOOST_AUTO_TEST_SUITE( internal_suite )
 // this test case belongs to my_suite2:internal_suite test suite
 
 BOOST_TEST_DECORATOR(
-- unittest::timeout( 100 )
 - unittest::expected_failures( 1 )
+)
+BOOST_TEST_DECORATOR(
+- unittest::timeout( 100 )
 )
 BOOST_AUTO_TEST_CASE( my_test5 )
 {

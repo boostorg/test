@@ -65,7 +65,7 @@ this [/TOFIX] section.
 [h3:shared_lib Shared library usage variant]
 In the project with large number of test modules the static library variant of the __UTF__ may
 cause you to waste a lot of disk space. The solution is to link test module dynamically with the 
-__UTF__ [link boost_test.adv_scenarios.build_boost_test built] as a shared library. 
+__UTF__ [link boost_test.adv_scenarios.build_lib built] as a shared library. 
 This usage variant entails two steps. 
 
 # First you need to add following lines to all translation units in a test module:

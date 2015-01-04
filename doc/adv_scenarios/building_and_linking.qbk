@@ -5,9 +5,9 @@
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
-[section:build_boost_test Building the __UTF__]
+[section:build_lib Building the __UTF__]
 
-In case you would like to use the shared or static variants of the __UTF__, the __UTF__ needs to be built. 
+In case you would like to use the shared or static variants of the __UTF__, the library needs to be built. 
 Building the __UTF__ is in fact quite easy.
 
 In the sequel, we define
@@ -31,14 +31,16 @@ For building 32bits libraries, open a console window and enter the following com
 ```
 > cd ``$``boost_path
 > boostrap.bat
-> b2 address-model=32 architecture=x86 --with-test --link=static --prefix=``$``boost_installation_prefix install
+> b2 address-model=32 architecture=x86 --with-test --link=static \
+>                     --prefix=``$``boost_installation_prefix install
 ```
 
 For building 64bits libraries, the commands become:
 ```
 > cd ``$``boost_path
 > boostrap.bat
-> b2 address-model=64 architecture=x86 --with-test --link=static --prefix=``$``boost_installation_prefix install
+> b2 address-model=64 architecture=x86 --with-test --link=static \
+>                    --prefix=``$``boost_installation_prefix install
 ```
 
 [h4 Shared library variant]
@@ -58,8 +60,6 @@ For Unix/Linux/OSX operating system, the build of the __UTF__ is very similar to
 > ./boostrap.sh
 > ./b2 --with-test --prefix=``$``boost_installation_prefix install
 ```
-
-[endsect] [/ building boost test]
 
 [section:build Building a test module with the __UTF__]
 
@@ -81,6 +81,7 @@ the functions of the ['module initialization] involved in, say static and dynami
 the __UTF__ handles several different variants of linking, and indirectly the tools for proper ['module initialization] corresponding to each
 of these variants are provided.
 
+[endsect] [/ building boost test]
 
 [/ ######################################################## ]
 [include module_initialization.qbk]
