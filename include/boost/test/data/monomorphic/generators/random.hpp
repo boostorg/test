@@ -18,7 +18,7 @@
 
 
 
-#ifndef BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE
+#if !defined(BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE) || defined(BOOST_TEST_DOXYGEN_DOC__)
 
 #include <boost/test/data/monomorphic/generate.hpp>
 #include <boost/test/data/monomorphic/generators/keywords.hpp>
