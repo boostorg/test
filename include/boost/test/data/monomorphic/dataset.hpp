@@ -89,13 +89,21 @@ struct traits<std::tuple<T1,T2,T3>> {
 // **************             monomorphic::dataset             ************** //
 // ************************************************************************** //
 
+//!@brief Dataset base class
+//!
+//! This class defines the dataset concept, which is an implementation of a sequence. 
+//! Each dataset should implement
+//! - the @c size
+//! - the @c begin function, which provides a forward iterator on the beginning of the sequence. The returned
+//!   iterator should be incrementable a number of times corresponding to the returned size. 
+//! 
 template<typename T>
 class dataset {
 public:
-    // type of the data in this dataset
+    //! Type of the data in this dataset
     typedef T data_type;
 
-    // type of dataset iterator
+    //! Type of dataset iterator
     class iterator {
     public:
         typedef typename monomorphic::traits<T>::ref_type ref_type;
@@ -107,11 +115,13 @@ public:
         virtual void        operator++() = 0;
     };
 
+    //! Type of the iterator
     typedef boost::shared_ptr<iterator> iter_ptr;
 
-    // dataset size
+    //! Dataset size
     virtual data::size_t    size() const = 0;
-    // iterator to use to iterate over this dataset
+
+    //! Iterator to use to iterate over this dataset
     virtual iter_ptr        begin() const = 0;
 };
 
