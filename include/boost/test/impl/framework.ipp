@@ -376,8 +376,9 @@ public:
     {
         // if run error is critical skip teardown, who knows what the state of the program at this point
         if( !unit_test_monitor.is_critical_error( run_result ) ) {
-            // execute teardown fixtures if any
-            BOOST_TEST_FOREACH( test_unit_fixture_ptr, F, tu.p_fixtures.get() ) {
+            // execute teardown fixtures if any in reverse order
+
+            BOOST_TEST_REVERSE_FOREACH( test_unit_fixture_ptr, F, tu.p_fixtures.get() ) {
                 run_result = unit_test_monitor.execute_and_translate( boost::bind( &test_unit_fixture::teardown, F ), 0 );
 
                 if( unit_test_monitor.is_critical_error( run_result ) )
