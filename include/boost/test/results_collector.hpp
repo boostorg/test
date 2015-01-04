@@ -95,7 +95,7 @@ public:
 
 class BOOST_TEST_DECL results_collector_t : public test_observer, public singleton<results_collector_t> {
 public:
-    /// @name test_observer interface implementation
+
     virtual void        test_start( counter_t test_cases_amount );
 
     virtual void        test_unit_start( test_unit const& );
@@ -107,7 +107,6 @@ public:
     virtual void        exception_caught( execution_exception const& );
 
     virtual int         priority() { return 2; }
-    /// @}
     
     /// Results access per test unit
 
