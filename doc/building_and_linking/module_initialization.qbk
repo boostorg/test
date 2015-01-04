@@ -129,7 +129,7 @@ It's guarantied that any framework-specific command line arguments are excluded.
 
 
 [/ ###################################################################################################### ]
-[section:module_initialisation_automated Automated generation]
+[section:module_initialisation_automated Automated initialization generation]
 
 To automatically generate an empty test module initialization function you need to define 
 __BOOST_TEST_MAIN__ before including the

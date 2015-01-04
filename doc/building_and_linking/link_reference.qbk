@@ -10,6 +10,10 @@
 
 [section:link_boost_test_main_macro `BOOST_TEST_MAIN`]
 
+When defined, this macro creates a stub for the test module initialisation (the main entry part). This 
+macro also expands properly into a `main` function in case the shared library variant of the __UTF__ is used.
+
+
 [caution This macro should 
 
 # be defined before any inclusion directive to __UTF__ headers
@@ -17,10 +21,20 @@
 
 ]
 
+[tip The macro __BOOST_TEST_MODULE__ should be prefered]
+
 [endsect]
 
 [section:link_boost_test_module_macro `BOOST_TEST_MODULE`]
-Defines the name of the master test suite. This macro should be defined before any inclusion of __UTF__ headers.
+Serves the same purpose as the macro __BOOST_TEST_MAIN__ but, in addition, defines the name of the master test suite. 
+
+[caution As __BOOST_TEST_MAIN__, this macro should 
+
+# be defined before any inclusion directive to __UTF__ headers
+# be defined exactly for one compilation unit of your test module
+
+]
+
 An example may be found [link ref_BOOST_TEST_MODULE here].
 
 [endsect]
