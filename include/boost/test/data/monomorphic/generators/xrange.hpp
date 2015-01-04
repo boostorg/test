@@ -48,8 +48,10 @@ public:
     typedef SampleType data_type;
 
     xrange_t( SampleType const& begin, StepType const& step, data::size_t size )
-    : m_curr( begin )
+    : m_begin( begin )
+    , m_curr( begin )
     , m_step( step )
+    , m_index( 0 )
     , m_size( size )
     {}
 
@@ -57,19 +59,28 @@ public:
     data::size_t    capacity() const { return m_size; }
     SampleType      next() 
     {
-        BOOST_TEST_DS_ASSERT( m_size != 0, "No more elements in range" );
+        if( m_index == m_size )
+            return m_curr;
 
         SampleType res = m_curr;
 
         m_curr += m_step;
-        --m_size;
+        ++m_index;
 
         return res;
     }
+    void                reset()
+    {
+        m_curr  = m_begin;
+        m_index = 0;
+    }
+
 private:
     // Data members
+    SampleType      m_begin;
     SampleType      m_curr;
     StepType        m_step;
+    data::size_t    m_index;
     data::size_t    m_size;
 };
 

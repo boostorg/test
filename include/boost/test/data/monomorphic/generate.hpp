@@ -45,11 +45,16 @@ class generated_by : public monomorphic::dataset<typename Generator::data_type> 
         // Constructor
         explicit    iterator( Generator& gen )
         : m_gen( gen )
-        {}
+        {
+            if(m_gen.capacity() > 0) {
+                m_gen.reset();
+                ++*this;
+            }
+        }
 
         // forward iterator interface 
-        virtual T const&    operator*()     { m_curr_sample = m_gen.next(); return m_curr_sample; }
-        virtual void        operator++()    {}
+        virtual T const&    operator*()     { return m_curr_sample; }
+        virtual void        operator++()    { m_curr_sample = m_gen.next(); }
 
     private:
         // Data members
