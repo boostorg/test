@@ -33,6 +33,10 @@
 # [ticket 3938] doc: incorrect macro name
 # [ticket 3964] Documentation for BOOST_<level>_CLOSE_FRACTION is incorrect
 # [ticket 3978] Failed to completely redirect TestLog to file, bugfix appended
+# [ticket 3979] <boost/test/exception_safety.hpp> requires additional includes
+# [ticket 4161] spelling mistakes...
+# [ticket 4275] Documentation error Boost.Test (duplicates #2717)
+# [ticket 4389] Enable boost_test to run specific tests with any required dependent tests.
 # [ticket 4434] BOOST_AUTO_EST_CASE typos in docs
 # [ticket 4587] Broken link in website
 # [ticket 4806] Invalid link (examples not showing up in documentation)
