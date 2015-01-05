@@ -76,9 +76,7 @@ private:
     T               m_value;
 };
 
-//
-
- a singleton is a dataset
+// a singleton is a dataset
 template<typename T>
 struct is_dataset<singleton<T> > : mpl::true_ {};
 
