@@ -93,7 +93,7 @@ variables in the body of the dataset driven test-cases.
 The dataset framework comes with a new test-case declaration macro:
 
 ``
-BOOST_DATA_TEST_CASE(test_case_name, dataset) { /* test body */ }
+__BOOST_DATA_TEST_CASE__(test_case_name, dataset) { /* test body */ }
 BOOST_DATA_TEST_CASE(test_case_name, dataset, var1, ...) { /* test body */ }
 ``
 
@@ -109,7 +109,7 @@ Any number of variables can be added after the second form of the macro.
 [tip The number of variables in the body of the test should match the arity of the dataset. A compilation
  error will be raised otherwise]
 
-[caution The macro `BOOST_DATA_TEST_CASE` is available only for compilers with support for variadic macros.]
+[caution The macro __BOOST_DATA_TEST_CASE__ is available only for compilers with support for variadic macros.]
 
 
 [endsect]
@@ -121,6 +121,17 @@ Any number of variables can be added after the second form of the macro.
 [section:operations Operations on dataset]
 As mentioned earlier, one of the major aspects of using the __UTF__ datasets lies in the number of operations provided
 for their combination.
+
+For that purpose, three operators are provided:
+
+* zips with `operator^` on datasets
+* joins with `operator+`
+* and grids or cartesian products with `operator*`
+
+[tip All these operators are associative, which enables their combination without parenthesis. However, the precedence rule on the 
+operators for the language still apply. ]
+
+
 
 [section Zips]
 The ['zip] function returns a dataset of tuples, where the `i`-th tuple contains the `i`-th element from each of the argument datasets.
@@ -170,8 +181,10 @@ The following properties hold:
 [caution Cartesian product is not available for the compiler if the macro [macroref BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE `BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE`] 
  is set]
 
+In the following example, the random number generator is the second dataset. Its state is evaluated 6 times (3 times for the first `xrange` - first dimension -
+and twice for the second `xrange` - second dimension - to which it is zipped). Note that the state of the random engine is not copied between two successive evaluations of the first dimension.
 
-[/ [bt_example example64..Example of cartesian product] ]
+[bt_example example64..Example of cartesian product]
 
 
 [endsect]
@@ -206,7 +219,7 @@ The following properties hold:
 Several ['generators] for datasets are implemented in __UTF__:
 
 * [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.singletons Singletons]
-* [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.stl `stl`] containers and 
+* [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.stl `forward iterable`] containers and 
   [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.c_arrays `C` array] like datasets
 * [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.ranges ranges] or sequences of values
 * datasets made of [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.random random numbers] and following a particular distribution
@@ -219,7 +232,7 @@ describing new datasets.
 [h4:singletons Singletons]
 
 A singleton is a dataset containing a unique value. The size and arity of such a dataset is 1.
-The singleton is constructible through the free function [function boost::unit_test::data::make]. 
+The singleton is constructible through the free function [funcref boost::unit_test::data::make]. 
 
 ```
 namespace data = boost::unit_test::data;
@@ -245,12 +258,13 @@ sequence contained in a `C` array.
 
 
 [/ ##################################################################################################################################  ]
-[h4:stl Datasets from stl containers]
+[h4:stl Datasets from forward iterable containers]
 As for `C` arrays, this type of datasets does not contain the logic for generating sequence of values, and are used for parsing an existing sequence.
 
 
 
-[tip C++11 implementation enables the dataset generation from any container which iterator implements the forward iterator concept]
+[tip C++11 implementation enables the dataset generation from any container which iterator implements the forward iterator concept. 
+ For C++03, the feature is enabled on most STL containers.]
 
 
 
