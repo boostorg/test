@@ -1,0 +1,40 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+[section:decorators Decorators]
+
+[note This is just a stub page. The content will be provided soon...]
+
+Decorators provide a way to configure certain aspects of a test case, like floating-point precision or required fixtures.
+
+``
+#include <boost/test/unit_test.hpp>
+namespace unittest = boost::unit_test;
+
+struct MyFixture {
+  MyFixture() {}
+  ~MyFixture() {}
+};
+
+BOOST_TEST_DECORATOR(
+  + unittest::fixture<MyFixture>()
+)
+__BOOST_AUTO_TEST_CASE__( test_case1 )
+{
+  BOOST_TEST(true);
+}
+``
+
+Test case `test_case1` is ['decorated] with ['attribute] `fixture`. Just before the test case starts, `MyFixture()` will be called, and just after it finishes, `~MyFixture()` will be called.
+
+
+[note Decorators are not available in the [link boost_test.users_guide.usage_variants.single_header single-header variant] of the __UTF__.]
+
+
+[endsect] [/ section decorators]
+
+[/EOF]
