@@ -6,7 +6,7 @@
 //  See http://www.boost.org/libs/test for the library home page.
 //
 ///@file
-///Defines monomorphic dataset based on stl sequence
+///Defines monomorphic dataset based on forward iterable sequence
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_COLLECTION_HPP_102211GER
@@ -31,6 +31,12 @@ namespace monomorphic {
 
 
 //!@brief Dataset from a forward iterable container (collection)
+//!
+//! This dataset is applicable to any container implementing a forward iterator. Note that 
+//! container with one element will be considered as singletons. 
+//! This dataset is constructible with the @ref boost::unit_test::data::make function. 
+//!
+//! For compilers supporting r-value references, the collection is moved instead of copied. 
 template<typename C>
 class collection : public monomorphic::dataset<typename boost::decay<C>::type::value_type> {
     typedef typename boost::decay<C>::type col_type;
@@ -59,16 +65,19 @@ public:
     enum { arity = 1 };
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-    // Constructor
+    //! Constructor
+    //! The collection is moved
     explicit                collection( C&& col ) : m_col( std::forward<C>(col) ) {}
 
-    // Move constructor
+    //! Move constructor
     collection( collection&& c ) : m_col( std::forward<C>( c.m_col ) ) {}
 #else
+    //! Constructor
+    //! The collection is copied
     explicit                collection( C const& col ) : m_col( col ) {}
 #endif
 
-    // Access methods
+    //! Returns the underlying collection
     C const&                col() const             { return m_col; }
 
     // dataset interface
