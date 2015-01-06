@@ -9,6 +9,14 @@
 
 [h4 Boost release XXX]
 
+[h5 New major features]
+
+* data driven test cases: supersedes the parametric test case (unary test cases)
+* command line option for negating expressions with !
+* color output with __param_color_output__
+* test bed listing with __param_list_content__
+
+[h5 Bugfixes and feature requests]
 # [ticket 2018] Error in the documentation chapter "Runtime parameters reference"
 # [ticket 2450] equations in Floating-point comparison algorithms html are not rendered properly
 # [ticket 2717] BOOST_<level>_EQUAL_COLLECTION docs typo
@@ -16,7 +24,7 @@
 # [ticket 3182] _CrtSetReportFile can be used to redirect memory leaks report
 # [ticket 3316] Access violation when trying to log from init_tests_func
 # [ticket 3392] Boost::Test: Wrong contents for documentation of the BOOST_TEST_PASSPOINT macro
-# [ticket 3402] Invalid define name in docummentation (duplicate of #2717)
+# [ticket 3402] Invalid define name in docummentation (duplicates #2717)
 # [ticket 3445] incorreect link in the docs
 # [ticket 3463] GT is GREAT!
 # [ticket 3542] Bug in documentation of detect_memory_leak parameter (duplicates #2018)
@@ -56,7 +64,7 @@
 # [ticket 5729] Missing static_cast in fpt_limits
 # [ticket 5870] The warning stack is not maintained
 # [ticket 5972] Support program option to only dump the test-tree in text to output stream
-# [ticket 6002] Failed to completely redirect TestLog to file (duplicate)
+# [ticket 6002] Failed to completely redirect TestLog to file (duplicates)
 # [ticket 6071] Boost Test (Boost 1.46.0) GCC 4.6.1 error: ambiguous overload for ‘operator[]’
 # [ticket 6074] warnings-as-errors not usable with Boost.test in release mode
 # [ticket 6712] Eliminate warnings with GCC
@@ -71,7 +79,7 @@
 # [ticket 9539] Floating-point comparison algorithms aren't formatted correctly
 # [ticket 9581] Squassabia reference link gives 404 not found
 # [ticket 10318] Minor documentation fix
-# [ticket 10888] Assertion failures don't show up in the errors pane in VS 2010, VS 2012 or VS 2013 (duplicate)
+# [ticket 10888] Assertion failures don't show up in the errors pane in VS 2010, VS 2012 or VS 2013 (duplicates)
 
 
 

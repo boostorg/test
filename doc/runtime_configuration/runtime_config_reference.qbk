@@ -7,7 +7,7 @@
  /]
 
 
-[section Reference]
+[section:rt_param_reference Reference]
 
 Each parameter specification includes: 
 
@@ -63,7 +63,7 @@ acceptable values list. All values are case sensitive and are required to exactl
 
   [/ ###############################################################################################]
   [
-    [__param_param_color_output__]
+    [__param_color_output__]
     [Produce colour output]
   ]  
 
@@ -157,6 +157,12 @@ acceptable values list. All values are case sensitive and are required to exactl
     [Provides parameters for testing output streams.]
   ]
   
+  
+  [/ ###############################################################################################]
+  [
+    [__param_list_content__]
+    [List the tests that will be ran.]
+  ]
 ]
 
 [/ ###############################################################################################]
@@ -608,6 +614,18 @@ You can use this parameter to switch between these modes, by passing the paramet
 
   BOOST_TEST_SAVE_PATTERN
 
-[endsect] [/save_patterm]  
+[endsect] [/save_patterm] 
+
+[/ ###############################################################################################]
+[section:param_list_content `list_content`]
+
+Lists the content of the tests that would be ran. If set on the command line, no test will be ran and the content
+of the test bed will be printed, one test per line.
+
+[h4 Environment variable]
+  
+  BOOST_TEST_LIST_CONTENT
+
+[endsect]
 
 [endsect] [/ runtime parameters reference]
