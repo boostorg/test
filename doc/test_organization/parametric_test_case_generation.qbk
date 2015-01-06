@@ -231,22 +231,15 @@ describing new datasets.
 [/ ##################################################################################################################################  ]
 [h4:singletons Singletons]
 
-A singleton is a dataset containing a unique value. The size and arity of such a dataset is 1.
+A singleton is a dataset containing a unique value. The size and arity of such a dataset is 1. This value can be
+
+* either consumed once
+* or repeated as many times as needed in a zip operation
+
 The singleton is constructible through the function [funcref boost::unit_test::data::make]. 
 
-```
-namespace data = boost::unit_test::data;
-BOOST_AUTO_TEST_CASE( test_singleton )
-{
-  auto ds1 = data::make(1);
-  auto it = ds1.begin();
-  for(std::size_t s(ds1.size()); s > 0; s--, ++it)
-  {
-    std::cout << *it << std::endl;
-  }
-}
+[bt_example example65..Singleton]
 
-```
 
 
 [/ ##################################################################################################################################  ]
