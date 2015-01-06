@@ -92,7 +92,23 @@ struct is_dataset<DS const> : is_dataset<DS> {};
 
 //! @brief Creates a dataset from a value, a collection or an array
 //!
-//! This function has several overloads.
+//! This function has several overloads:
+//! @code
+//! // returns ds if ds is already a dataset
+//! template <typename DS> DS make(DS&& ds); 
+//!
+//! // creates a singleton dataset, for non forward iterable and non dataset type T
+//! // (a C string is not considered as a sequence).
+//! template <typename T> monomorphic::singleton<T> make(T&& v); 
+//! monomorphic::singleton<char*> make( char* str );
+//! monomorphic::singleton<char const*> make( char const* str );
+//!
+//! // creates a collection dataset, for forward iterable and non dataset type C
+//! template <typename C> monomorphic::collection<C> make(C && c);
+//!
+//! // creates an array dataset
+//! template<typename T, std::size_t size> monomorphic::array<T> make( T (&a)[size] );
+//! @endcode
 template<typename DS>
 inline typename BOOST_TEST_ENABLE_IF<monomorphic::is_dataset<DS>::value,DS>::type
 make(DS&& ds)
@@ -101,23 +117,27 @@ make(DS&& ds)
 }
 
 
+// warning: doxygen is apparently unable to handle @overloads from different files, so if the overloads
+// below are not declared with @overload in THIS file, they do not appear in the documentation.
+
 // fwrd declaration for singletons
+//! @overload boost::unit_test::data::make()
 template<typename T>
 inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
                                      !monomorphic::is_dataset<T>::value, 
-                                     monomorphic::singleton<T>
->::type
+                                     monomorphic::singleton<T> >::type
 make( T&& v );
 
-// fwrd declaration for collections
+
+//! @overload boost::unit_test::data::make()
 template<typename C>
 inline monomorphic::collection<typename BOOST_TEST_ENABLE_IF<unit_test::is_forward_iterable<C>::value,C>::type>
 make( C&& c );
 
 
-#else
+#else  // !BOOST_NO_CXX11_RVALUE_REFERENCES
 
-//! @overload boost::unit_test:data::make
+//! @overload boost::unit_test:data::make()
 template<typename DS>
 inline typename BOOST_TEST_ENABLE_IF<monomorphic::is_dataset<DS>::value,DS const&>::type
 make(DS const& ds)
@@ -125,37 +145,46 @@ make(DS const& ds)
     return ds;
 }
 
+
 // fwrd declaration for singletons
+//! @overload boost::unit_test::data::make()
 template<typename T>
 inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
                                      !monomorphic::is_dataset<T>::value, 
-                                     monomorphic::singleton<T>
->::type
+                                     monomorphic::singleton<T> >::type
 make( T const& v );
 
 
 // fwrd declaration for collections
+//! @overload boost::unit_test::data::make()
 template<typename C>
 inline monomorphic::collection<typename BOOST_TEST_ENABLE_IF<unit_test::is_forward_iterable<C>::value,C>::type>
 make( C const& c );
 
 //____________________________________________________________________________//
 
-#endif // BOOST_NO_CXX11_RVALUE_REFERENCES
 
+
+#endif // !BOOST_NO_CXX11_RVALUE_REFERENCES
+
+
+
+
+// fwrd declarations
+//! @overload boost::unit_test::data::make()
 template<typename T, std::size_t size>
 inline monomorphic::array<T>
 make( T (&a)[size] );
 
-//____________________________________________________________________________//
-
+//! @overload boost::unit_test::data::make()
 inline monomorphic::singleton<char*>
 make( char* str );
 
-//____________________________________________________________________________//
-
+//! @overload boost::unit_test::data::make()
 inline monomorphic::singleton<char const*>
 make( char const* str );
+
+
 
 //____________________________________________________________________________//
 
@@ -163,6 +192,7 @@ make( char const* str );
 
 namespace result_of {
 
+//! Result of the make call.
 template<typename DS>
 struct make
 {

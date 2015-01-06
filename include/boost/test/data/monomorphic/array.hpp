@@ -73,14 +73,14 @@ private:
 
 //____________________________________________________________________________//
 
-// An array is a dataset
+//! An array dataset is a dataset
 template<typename T>
 struct is_dataset<array<T> > : mpl::true_ {};
 
 } // namespace monomorphic
 
 
-//! @overload boost::unit_test::data::make
+//! @overload boost::unit_test::data::make()
 template<typename T, std::size_t size>
 inline monomorphic::array<T> make( T (&a)[size] )
 {
