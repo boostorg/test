@@ -117,7 +117,7 @@ make(DS&& ds)
 }
 
 
-// warning: doxygen is apparently unable to handle @overloads from different files, so if the overloads
+// warning: doxygen is apparently unable to handle @overload from different files, so if the overloads
 // below are not declared with @overload in THIS file, they do not appear in the documentation.
 
 // fwrd declaration for singletons
