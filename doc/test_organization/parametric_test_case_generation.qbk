@@ -232,7 +232,7 @@ describing new datasets.
 [h4:singletons Singletons]
 
 A singleton is a dataset containing a unique value. The size and arity of such a dataset is 1.
-The singleton is constructible through the free function [funcref boost::unit_test::data::make]. 
+The singleton is constructible through the function [funcref boost::unit_test::data::make]. 
 
 ```
 namespace data = boost::unit_test::data;
@@ -254,7 +254,11 @@ BOOST_AUTO_TEST_CASE( test_singleton )
 This type of datasets does not contains the logic for generating the sequence of values, and is used as a wrapper on an existing
 sequence contained in a `C` array.
 
+Such datasets are simply constructed from an overload of the [funcref boost::unit_test::data::make `make`] function, as follows:
 
+``
+
+``
 
 
 [/ ##################################################################################################################################  ]
@@ -332,7 +336,9 @@ The details of the named value parameters is given in the table below.
 This type of dataset generates a sequence of random numbers following a given /distribution/. The /seed/ and the /engine/ may also be 
 specified. 
 
-[warning the random value generators are available only for C++11 capable compilers.]
+[caution the random value generators are available only for C++11 capable compilers. The 
+ feature is not available for the compiler if the macro [macroref BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE `BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE`] 
+ is set]
 
 It is possible to construct a random sequence using the factory [funcref boost::unit_test::data::random], available in the overloads below:
 
@@ -377,11 +383,6 @@ The details of the named value parameters is given in the table below.
 ]
 
 [bt_example example63..Declaring a test with a random sequence]
-
-
-[caution Random dataset is not available for the compiler if the macro [macroref BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE `BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE`] 
- is set]
-
 
 
 [endsect] [/ Datasets generators]

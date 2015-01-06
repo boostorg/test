@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : enhanced result for test predicate that include message explaining failure
+/// @file
+/// Enhanced result for test predicate that include message explaining failure
 // ***************************************************************************
 
 #ifndef BOOST_TEST_PREDICATE_RESULT_HPP_012705GER
@@ -42,11 +39,13 @@ namespace test_tools {
 class BOOST_TEST_DECL assertion_result {
 
     //!@internal
-    //!@{
     typedef unit_test::const_string      const_string;
+    
+    //!@internal
     struct dummy { void nonnull() {} };
+    
+    //!@internal
     typedef void (dummy::*safe_bool)();
-    //!@}
 
 public:
     // Constructor
