@@ -257,12 +257,13 @@ Such datasets are simply constructed from an overload of the [funcref boost::uni
 [/ ##################################################################################################################################  ]
 [h4:stl Datasets from forward iterable containers]
 As for `C` arrays, this type of datasets does not contain the logic for generating sequence of values, and are used for parsing an existing sequence.
-
+The arity is 1 and the size is the same as the one of the container.
 
 
 [tip C++11 implementation enables the dataset generation from any container which iterator implements the forward iterator concept. 
  For C++03, the feature is enabled on most STL containers.]
 
+[bt_example example67..Dataset from `std::vector` and `std::map`]
 
 
 
