@@ -19,7 +19,9 @@ BOOST_DATA_TEST_CASE(
   bdata::make(2),
   singleton)
 {
-  std::cout << "test 1: " << singleton << std::endl;
+  std::cout 
+    << "test 1: " 
+    << singleton << std::endl;
   BOOST_CHECK(singleton == 2);
 }
 
@@ -28,10 +30,9 @@ BOOST_DATA_TEST_CASE(
   bdata::xrange(3) ^ bdata::make(2),
   xr, singleton)
 {
-  std::cout << "test 2: " 
-    << xr << " / " 
-    << singleton 
-    << std::endl;
+  std::cout 
+    << "test 2: " 
+    << xr << ", " << singleton << std::endl;
   BOOST_CHECK(singleton == 2);
 }
 //]

@@ -236,6 +236,9 @@ A singleton is a dataset containing a unique value. The size and arity of such a
 * either consumed once
 * or repeated as many times as needed in a zip operation
 
+As mentionned in /zip/, when zipped with a distribution of infinite size, the resulting dataset will have
+a size of 1.
+
 The singleton is constructible through the function [funcref boost::unit_test::data::make]. 
 
 [bt_example example65..Singleton]
