@@ -129,7 +129,7 @@ The registration in the test tree should be performed manually.
 See [link ref_BOOST_TEST_CASE_TEMPLATE here] for more details.
 [endsect] [/section:test_org_boost_test_case_template]
 
-[section:test_org_boost_test_case_template_function `BOOST_TEST_CASE_TEMPLATE`]
+[section:test_org_boost_test_case_template_function `BOOST_TEST_CASE_TEMPLATE_FUNCTION`]
 Declares a typed test case. The registration in the test tree should be performed manually, using the macro 
 __BOOST_TEST_CASE_TEMPLATE__.
 
