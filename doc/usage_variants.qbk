@@ -79,8 +79,8 @@ This usage variant entails two steps.
     #define __BOOST_TEST_DYN_LINK__
     #include <boost/test/unit_test.hpp>
   ``
-  BOOST_TEST_MODULE and BOOST_TEST_DYN_LINK macros needs to be defined *before* the include. 
-  BOOST_TEST_MODULE should be set to test module name. This name can include spaces and does 
+  `BOOST_TEST_MODULE` and `BOOST_TEST_DYN_LINK` macros needs to be defined *before* the include. 
+  `BOOST_TEST_MODULE` should be set to test module name. This name can include spaces and does 
   not need to be wrapped in quotes. 
 
 # The second step is to link with the __UTF__ shared library.
