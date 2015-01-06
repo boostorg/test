@@ -248,14 +248,11 @@ The singleton is constructible through the function [funcref boost::unit_test::d
 [/ ##################################################################################################################################  ]
 [h4:c_arrays Datasets from C arrays]
 This type of datasets does not contains the logic for generating the sequence of values, and is used as a wrapper on an existing
-sequence contained in a `C` array.
+sequence contained in a `C` array. The arity is 1 and the size is the size of the array.
 
-Such datasets are simply constructed from an overload of the [funcref boost::unit_test::data::make `make`] function, as follows:
+Such datasets are simply constructed from an overload of the [funcref boost::unit_test::data::make `make`] function.
 
-``
-
-``
-
+[bt_example example66..Array]
 
 [/ ##################################################################################################################################  ]
 [h4:stl Datasets from forward iterable containers]
