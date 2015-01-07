@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2012.
+//  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -601,12 +601,12 @@ output_test_stream::match_pattern( bool flush_stream )
 
                     std::string::size_type counter = suffix_size;
                     while( --counter ) {
-                        char c = m_pimpl->get_char();
+                        char c2 = m_pimpl->get_char();
 
                         if( m_pimpl->m_pattern.fail() || m_pimpl->m_pattern.eof() )
                             break;
 
-                        result.message() << c;
+                        result.message() << c2;
                     }
 
                     result.message() << "...";

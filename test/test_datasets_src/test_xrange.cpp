@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011.
+//  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -60,9 +60,9 @@ BOOST_AUTO_TEST_CASE( test_single_range )
 #endif
 }
 
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
 BOOST_AUTO_TEST_CASE( test_range_join )
 {
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     auto ds = data::xrange( 1, 4 ) + data::xrange( 7, 11 );
 
     BOOST_TEST( ds.size() == 7 );
@@ -72,6 +72,7 @@ BOOST_AUTO_TEST_CASE( test_range_join )
     data::for_each_sample( ds, ic );
     BOOST_TEST( ic.m_value == 7 );
 
+#ifndef BOOST_NO_CXX11_LAMBDAS
     int arr[] = {1,2,3,7,8,9,10};
     int* exp = arr;
     int c = 0;
@@ -81,7 +82,6 @@ BOOST_AUTO_TEST_CASE( test_range_join )
     });
 #endif
 }
+#endif
 
-//____________________________________________________________________________//
 
-// EOF

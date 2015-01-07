@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2012.
+//  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Use, modification, and distribution are subject to the 
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -26,6 +26,7 @@
 
 // Boost
 #include <boost/shared_ptr.hpp>
+#include <boost/function.hpp>
 
 namespace boost {
 
@@ -98,7 +99,7 @@ class config_file_iterator : public unit_test::input_iterator_facade<config_file
     typedef unit_test::input_iterator_facade<config_file_iterator,cstring,cstring> base;
 public:
     // Public typedefs
-    typedef boost::function<cstring ()>   command_handler;
+    typedef boost::function<void (cstring)>   command_handler;
 
     // Constructors
                     config_file_iterator() {}

@@ -1,15 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2005-2012.
+//  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines abstract interface for test observer
+//!@file 
+//!@brief defines abstract interface for test observer
 // ***************************************************************************
 
 #ifndef BOOST_TEST_TEST_OBSERVER_HPP_021005GER
@@ -51,6 +48,7 @@ public:
         case AR_PASSED: assertion_result( true ); break;
         case AR_FAILED: assertion_result( false ); break;
         case AR_TRIGGERED: break;
+        default: break;
         }
     }
     virtual void    exception_caught( execution_exception const& ) {}

@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2012.
+//  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Use, modification, and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -24,7 +24,7 @@
 #include <boost/test/detail/config.hpp>
 #include <boost/test/interaction/interaction_based.hpp>
 #include <boost/test/interaction/mock_object.hpp>
-#include <boost/test/framework.hpp>     // for setup_error
+#include <boost/test/framework.hpp>     // for BOOST_TEST_SETUP_ASSERT
 
 #include <boost/test/detail/suppress_warnings.hpp>
 

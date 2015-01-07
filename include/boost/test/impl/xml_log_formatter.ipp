@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2012.
+//  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -187,7 +187,7 @@ xml_log_formatter::log_entry_finish( std::ostream& ostr )
 //____________________________________________________________________________//
 
 void
-xml_log_formatter::entry_context_start( std::ostream& ostr )
+xml_log_formatter::entry_context_start( std::ostream& ostr, log_level )
 {
     if( !m_value_closed ) {
         ostr << BOOST_TEST_L( "]]>" );

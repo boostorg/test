@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011.
+//  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -13,16 +13,48 @@
 // ***************************************************************************
 
 // Boost.Test
+
+#include <boost/test/data/monomorphic/singleton.hpp>
 #include <boost/test/data/monomorphic/collection.hpp>
 
 #include <boost/test/unit_test.hpp>
 namespace data=boost::unit_test::data;
 
 #include "test_datasets.hpp"
+#include <vector>
+#include <list>
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( test_collection )
+
+#ifndef BOOST_NO_CXX11_DECLTYPE
+
+template <typename>
+struct forwarded_to_collection : std::false_type {};
+
+template <typename T>
+struct forwarded_to_collection< data::monomorphic::collection<T> > : std::true_type {};
+
+
+BOOST_AUTO_TEST_CASE( test_forwarded_to_collection)
+{
+  {
+    std::vector<int> samples1;
+    BOOST_CHECK_MESSAGE(boost::unit_test::is_forward_iterable<decltype(samples1)>::value, "forward iterable");
+    BOOST_CHECK_MESSAGE((forwarded_to_collection<decltype(data::make( samples1 ))>::value), 
+                         "not properly forwarded to a collection");
+  }
+  {
+    int samples1(0);
+    BOOST_CHECK_MESSAGE(!boost::unit_test::is_forward_iterable<decltype(samples1)>::value, "forward iterable");
+    BOOST_CHECK_MESSAGE(!(forwarded_to_collection<decltype(data::make( samples1 ))>::value), 
+                         "not properly forwarded to a collection");
+  }
+}
+#endif
+
+
+BOOST_AUTO_TEST_CASE( test_collection_sizes )
 {
     BOOST_TEST( data::make( std::vector<int>() ).size() == 0 );
     BOOST_TEST( data::make( std::vector<int>( 3 ) ).size() == 3 );
@@ -45,13 +77,17 @@ BOOST_AUTO_TEST_CASE( test_collection )
     ic.m_value = 0;
     data::for_each_sample( data::make( std::vector<int>( 3 ) ), ic, 1 );
     BOOST_TEST( ic.m_value == 1 );
+}
 
+
+#if !defined(BOOST_NO_CXX11_LAMBDAS) && !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
+BOOST_AUTO_TEST_CASE( test_collection )
+{
     std::vector<int> samples1;
     samples1.push_back(5);
     samples1.push_back(567);
     samples1.push_back(13);
 
-#ifndef BOOST_NO_CXX11_LAMBDAS
     int c = 0;
     data::for_each_sample( data::make( samples1 ), [&c,samples1](int i) {
         BOOST_TEST( i == samples1[c++] );
@@ -66,12 +102,24 @@ BOOST_AUTO_TEST_CASE( test_collection )
     data::for_each_sample( data::make( samples2 ), [&it](char const* str ) {
         BOOST_TEST( str == *it++ );
     });
+}
 #endif
+
+
+BOOST_AUTO_TEST_CASE( test_collection_copies )
+{
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     int exp_copy_count = 0;
 #else
+    // clang/darwin has apparently a non standard constructor for std::vector
+    // in c++03 mode    
+#ifdef BOOST_CLANG
+    int exp_copy_count = 2;
+#else
     int exp_copy_count = 4;
+#endif
+    
 #endif
 
     copy_count::value() = 0;
@@ -103,6 +151,3 @@ BOOST_AUTO_TEST_CASE( test_collection )
 #endif
 }
 
-//____________________________________________________________________________//
-
-// EOF

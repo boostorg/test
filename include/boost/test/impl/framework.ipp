@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2012.
+//  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -377,8 +377,9 @@ public:
     {
         // if run error is critical skip teardown, who knows what the state of the program at this point
         if( !unit_test_monitor.is_critical_error( run_result ) ) {
-            // execute teardown fixtures if any
-            BOOST_TEST_FOREACH( test_unit_fixture_ptr, F, tu.p_fixtures.get() ) {
+            // execute teardown fixtures if any in reverse order
+
+            BOOST_TEST_REVERSE_FOREACH( test_unit_fixture_ptr, F, tu.p_fixtures.get() ) {
                 run_result = unit_test_monitor.execute_and_translate( boost::bind( &test_unit_fixture::teardown, F ), 0 );
 
                 if( unit_test_monitor.is_critical_error( run_result ) )
@@ -853,18 +854,6 @@ deregister_observer( test_observer& to )
 //____________________________________________________________________________//
 
 // ************************************************************************** //
-// **************                reset_observer                ************** //
-// ************************************************************************** //
-
-void
-reset_observers()
-{
-    s_frk_impl().m_observers.clear();
-}
-
-//____________________________________________________________________________//
-
-// ************************************************************************** //
 // **************                  add_context                 ************** //
 // ************************************************************************** //
 
@@ -896,11 +885,13 @@ struct frame_with_id {
     int     m_id;
 };
 
+//____________________________________________________________________________//
+
 void
 clear_context( int frame_id )
 {
     if( frame_id == -1 ) {   // clear all non sticky frames
-        for( int i=s_frk_impl().m_context.size()-1; i>=0; i-- )
+        for( int i=static_cast<int>(s_frk_impl().m_context.size())-1; i>=0; i-- )
             if( !s_frk_impl().m_context[i].is_sticky )
                 s_frk_impl().m_context.erase( s_frk_impl().m_context.begin()+i );
     }

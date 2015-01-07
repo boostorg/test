@@ -1,0 +1,149 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+[section:module_initialization Test module initialization]
+
+As explained in the introductory material, the ['module initialization] part of the __UTF__ prepares the test module for execution,
+including:
+
+* the construction of the test tree
+* some optional custom initialisations
+
+[caution 
+The elementary question one should ask himself is the following: 
+[:["Is there really a need for implementing the module initialisation by yourself?]]
+]
+
+The argument against the implementation of a custom ['module initialization] are the following:
+
+* The test tree can be easily and efficiently constructed automatically (covered in details in 
+  [link boost_test.users_guide.tests_organization Tests organization] section).
+* __UTF__ also provides means to [link boost_test.adv_scenarios.build_lib.link_references.link_boost_test_module_macro rename] the ['master test suite].
+* Most of the command line parameters, except the ones used by the __UTF__, may be accessed through the ['master test suite]
+* [link boost_test.users_guide.tests_organization.fixtures.global Global fixtures] may provide ['states] that can be accessed during the lifetime of the tests, 
+  with proper and controlled initialization and release. This approach covers several use case that might need the tweaking of the 
+  initialization functions, adding the robustness of the __UTF__ in the initialization and release themselves.
+* If the test module is old and the need for ['module initialization] is just driven by legacy code, then considering updating this
+  part might be a good choice.
+  
+From the points above, if the need for ['module initialization] is not there anymore, then you may jump directly 
+to the [link boost_test.adv_scenarios.build_lib.module_initialization.module_initialisation_automated automated section] directly.
+
+[section Custom module initialisation]
+
+[heading A bit of history]
+Original design of the __UTF__ supported the manual test tree construction only. Later versions introduced the
+automated registration of test units. In later versions of the __UTF__ the original initialization function
+specification became inconvenient and unnecessary unsafe, and the alternative initialization function specification
+was introduced. This change is not backward compatible. 
+
+These initialisation functions are refered to as [*legacy] and [*alternative/simplified] respectively.
+
+* The test runners supplied with the static library and
+  single-header variants of the __UTF__ by default still require original/legacy initialization function, but
+  support [link boost_test.adv_scenarios.build_lib.link_references.link_boost_test_alternative_init_macro compilation flags] that switch to the alternative/simplified
+  one. 
+* The test runner supplied with dynamic library variant of the __UTF__ requires the simplified initialisation and doesn't support
+  legacy one. 
+  
+The legacy initialization function is, at its name suggest, deprecated. 
+
+
+[important 
+The initialization function invocation is monitored by the __UTF__ the same way as all the test cases. An unexpected 
+exception or system error detected during initialization function invocation is treated as initialization error and 
+is reported as such. 
+]
+
+[/ ###################################################################################################### ]
+[section Legacy initialization function]
+
+[warning In this section, the [*legacy] initialisation function is described. For new code, consider using the 
+ simplified initialisation function.]
+
+The original design of the __UTF__ initialization required you to implement the function with the following
+specification:
+
+``
+  boost::unit_test::test_suite* init_unit_test_suite(int argc, char* argv[]);
+``
+
+
+This function was intended to initialize and return a master test suite. The null value was considered an initialization 
+error. The current design of the __UTF__ maintains master test suite instance internally and does not treat the `null` result 
+value as an initialization error. In fact it's recommended to return `null` value always and register test units in the 
+master test suite using the regular [memberref boost::unit_test::test_suite::add `test_suite::add`] 
+interface (see [link ref_BOOST_TEST_CASE here] for an example). 
+The only way to indicate an initialization error is to throw a [classref boost::unit_test::framework::setup_error] exception.
+
+The initialization function parameters `argc`, `argv` provide the command line arguments specified during test
+module invocation. It's guarantied that any framework-specific command line arguments are excluded. To be
+consistant with the ['simplified] initialization function specification it's recommended though to access the
+command line arguments using the [link boost_test.users_guide.tests_organization.test_suite.master_test_suite master test suite] interface.
+
+[endsect] [/ legacy init function]
+
+[/ ###################################################################################################### ]
+[section Switching from legacy to simplified]
+
+The test runner interface needs to refer to the initialization function signature. The __UTF__ provides the `typedef` 
+that resolves to proper signature in all configurations:
+
+``
+namespace boost {
+  namespace unit_test {
+#ifdef __BOOST_TEST_ALTERNATIVE_INIT_API__
+    typedef bool        (*init_unit_test_func)();
+#else
+    typedef test_suite* (*init_unit_test_func)( int, char* [] );
+#endif
+  }
+}
+``
+
+[endsect] [/ signatures]
+
+
+
+[/ ###################################################################################################### ]
+[section Simplified initialization function]
+The alternative design of the __UTF__ initialization requires you to implement a function with the following
+specification:
+``
+  bool init_unit_test();
+``
+
+The result value of this function indicates whether or not initialization was successful. To register test
+units in a master test suite use the [memberref boost::unit_test::test_suite::add `test_suite::add`] 
+interface (see [link ref_BOOST_TEST_CASE here] for an example). 
+To access command line arguments use the __section_master_test_suite__ interface. 
+It's guarantied that any framework-specific command line arguments are excluded.
+[endsect] [/ alternative init function]
+
+
+[endsect]
+
+
+[/ ###################################################################################################### ]
+[section:module_initialisation_automated Automated initialization generation]
+
+To automatically generate an empty test module initialization function you need to define 
+__BOOST_TEST_MAIN__ before including the
+``boost/test/unit_test.hpp`` header. The value of this define is ignored.
+Alternatively you can define the macro __BOOST_TEST_MODULE__ to be equal to 
+any string (not necessarily in quotes). This macro causes the same result as 
+__BOOST_TEST_MAIN__, and in addition the macro value becomes the name of the 
+master test suite.
+
+[important
+For a test module consisting of multiple source files you have to define these flags in a single test file only.
+Otherwise you end up with multiple instances of the initialization function.
+]
+   
+[endsect] [/ automated generation]
+
+[endsect] [/ test module initialisation]

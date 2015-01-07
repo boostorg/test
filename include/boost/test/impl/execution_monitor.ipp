@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2012.
+//  (C) Copyright Gennadiy Rozental 2001-2014.
 //  (C) Copyright Beman Dawes and Ullrich Koethe 1995-2001.
 //  Use, modification, and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
@@ -81,9 +81,9 @@ using std::va_list;
 #  endif
 
 #  if defined(UNDER_CE) && BOOST_WORKAROUND(_MSC_VER,  < 1500 )
-	 typedef void* uintptr_t;
-#  elif defined(UNDER_CE)	 
-#	 include <crtdefs.h>
+   typedef void* uintptr_t;
+#  elif defined(UNDER_CE) 
+#  include <crtdefs.h>
 #  endif
 
 #  if !defined(NDEBUG) && defined(_MSC_VER) && !defined(UNDER_CE)

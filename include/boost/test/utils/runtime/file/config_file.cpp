@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2012.
+//  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Use, modification, and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -60,7 +60,7 @@ operator<<( std::ostream& os, parameter const& p )
 param_namespace::param_namespace( cstring name, param_namespace const* parent )
 : p_parent( parent )
 {
-    assign_op( p_name.value, name );
+    assign_op( p_name.value, name, 0 );
 }
 
 //____________________________________________________________________________//

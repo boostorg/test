@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011.
+//  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -27,11 +27,11 @@ BOOST_AUTO_TEST_CASE( test_array )
     BOOST_TEST( data::make( arr2 ).size() == 2 );
 
     int arr3[] = {7,11,13,17};
-    int* ptr3 = arr3;
     data::for_each_sample( data::make( arr3 ), check_arg_type<int>() );
 
 #ifndef BOOST_NO_CXX11_LAMBDAS
     int c = 0;
+    int* ptr3 = arr3;
     data::for_each_sample( data::make( arr3 ), [&c,ptr3](int i) {
         BOOST_TEST( i == ptr3[c++] );
     });

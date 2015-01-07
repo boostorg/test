@@ -1,23 +1,20 @@
-//  (C) Copyright Gennadiy Rozental 2011.
+//  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : tests singleton dataset
+//! @file 
+//! @brief tests random dataset
 // ***************************************************************************
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
-
-#ifndef BOOST_NO_0X_HDR_RANDOM
-
 #include <boost/test/data/monomorphic/generators/random.hpp>
+
+#ifndef BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE
+
 #include <boost/test/data/monomorphic/zip.hpp>
 #include <boost/test/data/monomorphic/array.hpp>
 #include <boost/test/data/monomorphic/grid.hpp>
@@ -132,9 +129,6 @@ BOOST_AUTO_TEST_CASE( test_parameterized_init )
                                 std::minstd_rand>::value ));
 }
 
-//____________________________________________________________________________//
-
-#endif // BOOST_NO_0X_HDR_RANDOM
+#endif // BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE
 
 
-// EOF

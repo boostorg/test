@@ -1,15 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2001-2012.
+//  (C) Copyright Gennadiy Rozental 2001-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines Unit Test Framework public API
+/// @file
+/// @brief Defines Unit Test Framework public API
 // ***************************************************************************
 
 #ifndef BOOST_TEST_UNIT_TEST_SUITE_HPP_071894GER
@@ -76,8 +73,8 @@ BOOST_AUTO_TU_REGISTRAR( BOOST_JOIN( end_suite, __LINE__ ) )( 1 );      \
 // ************************************************************************** //
 // **************    BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES    ************** //
 // ************************************************************************** //
-// deprecated; use decorator instead
 
+/// @deprecated use decorator instead
 #define BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES( test_name, n )          \
 BOOST_TEST_DECORATOR( boost::unit_test::expected_failures( n ) )
 /**/

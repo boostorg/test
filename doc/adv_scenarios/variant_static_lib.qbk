@@ -1,0 +1,23 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+[section:static_lib_variant Static library variant]
+The __UTF__ can be built into a static library. If you opt to link a test module with the [*standalone static library],
+this usage is called the static library variant of the __UTF__.
+
+The test runner supplied with this variant required you to implement the [link ref_test_module test module]
+initialization function that matches one of the two specifications depending on the compilation flag
+__BOOST_TEST_ALTERNATIVE_INIT_API__. If flag isn't defined you are required
+to match the original specification. If you define the flag __BOOST_TEST_ALTERNATIVE_INIT_API__ during a test module compilation you 
+are required to use the alternative initialization function specification. The __UTF__ provides an ability to
+[*automatically generate] an empty test module  [/ <link linkend="utf.user-guide.initialization.auto-generation">]
+initialization function with correct specification if no custom initialization is required by a test module.
+
+[note If you opted to use an alternative initialization API, for a test module to be able to link with prebuilt library, 
+the flag `__BOOST_TEST_ALTERNATIVE_INIT_API__` has to be defined both during library and a test module compilation.]
+
+[endsect] [/ section:static_lib_variant]

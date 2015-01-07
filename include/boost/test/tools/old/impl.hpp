@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -207,7 +207,10 @@ struct equal_coll_impl {
         for( ; left_begin != left_end && right_begin != right_end; ++left_begin, ++right_begin, ++pos ) {
             if( *left_begin != *right_begin ) {
                 pr = false;
-                pr.message() << "\nMismatch in a position " << pos << ": "  << *left_begin << " != " << *right_begin;
+                pr.message() << "\nMismatch at position " << pos << ": "  
+                  << ::boost::test_tools::tt_detail::print_helper(*left_begin) 
+                  << " != " 
+                  << ::boost::test_tools::tt_detail::print_helper(*right_begin);
             }
         }
 
@@ -256,7 +259,7 @@ struct bitwise_equal_impl {
         for( std::size_t counter = 0; counter < total_bits; ++counter ) {
             if( ( left & ( leftOne << counter ) ) != ( right & ( rightOne << counter ) ) ) {
                 pr = false;
-                pr.message() << "\nMismatch in a position " << counter;
+                pr.message() << "\nMismatch in position " << counter;
             }
         }
 

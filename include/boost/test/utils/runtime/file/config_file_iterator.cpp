@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2012.
+//  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Use, modification, and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -71,7 +71,7 @@ struct symbol_to_value_map : std::map<cstring, ValueType> {
 
         m_name_store.erase( it );
 
-        erase( name );
+        this->erase( name );
     }
 
 private:
@@ -562,18 +562,18 @@ config_file_iterator::construct()
 void
 config_file_iterator::load( cstring file_name )
 {
-    m_pimpl->m_curr_level.reset( new include_level( file_name, m_pimpl->m_path_separators ) );
-    m_pimpl->m_buffer.reset( new char[m_pimpl->m_buffer_size] );
+  m_pimpl->m_curr_level.reset( new include_level( file_name, m_pimpl->m_path_separators ) );
+  m_pimpl->m_buffer.reset( new char[m_pimpl->m_buffer_size] );
 
-    register_command_handler( m_pimpl->m_include_kw, bind( &Impl::process_include, m_pimpl.get(), _1 ) );
-    register_command_handler( m_pimpl->m_define_kw, bind( &Impl::process_define, m_pimpl.get(), _1 ) );
-    register_command_handler( m_pimpl->m_undef_kw, bind( &Impl::process_undef, m_pimpl.get(), _1 ) );
-    register_command_handler( m_pimpl->m_ifdef_kw, bind( &Impl::process_ifdef, m_pimpl.get(), _1 ) );
-    register_command_handler( m_pimpl->m_ifndef_kw, bind( &Impl::process_ifndef, m_pimpl.get(), _1 ) );
-    register_command_handler( m_pimpl->m_else_kw, bind( &Impl::process_else, m_pimpl.get(), _1 ) );
-    register_command_handler( m_pimpl->m_endif_kw, bind( &Impl::process_endif, m_pimpl.get(), _1 ) );
+  register_command_handler( m_pimpl->m_include_kw, boost::bind( &Impl::process_include, m_pimpl.get(), _1 ) );
+  register_command_handler( m_pimpl->m_define_kw, boost::bind( &Impl::process_define, m_pimpl.get(), _1 ) );
+  register_command_handler( m_pimpl->m_undef_kw, boost::bind( &Impl::process_undef, m_pimpl.get(), _1 ) );
+  register_command_handler( m_pimpl->m_ifdef_kw, boost::bind( &Impl::process_ifdef, m_pimpl.get(), _1 ) );
+  register_command_handler( m_pimpl->m_ifndef_kw, boost::bind( &Impl::process_ifndef, m_pimpl.get(), _1 ) );
+  register_command_handler( m_pimpl->m_else_kw, boost::bind( &Impl::process_else, m_pimpl.get(), _1 ) );
+  register_command_handler( m_pimpl->m_endif_kw, boost::bind( &Impl::process_endif, m_pimpl.get(), _1 ) );
 
-    init();
+  init();
 }
 
 //____________________________________________________________________________//

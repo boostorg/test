@@ -1,29 +1,25 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines monomorphic dataset based on zipping of 2 other monomorphic datasets
+/// @file
+/// Defines monomorphic dataset based on zipping of 2 other monomorphic datasets
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_ZIP_HPP_102211GER
 #define BOOST_TEST_DATA_MONOMORPHIC_ZIP_HPP_102211GER
 
-#ifndef BOOST_NO_CXX11_HDR_TUPLE
+#include <boost/test/data/config.hpp>
+
+#if !defined(BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE) || defined(BOOST_TEST_DOXYGEN_DOC__)
 
 // Boost.Test
-#include <boost/test/data/config.hpp>
 #include <boost/test/data/monomorphic/dataset.hpp>
-
 #include <boost/test/detail/suppress_warnings.hpp>
 
-//____________________________________________________________________________//
 
 namespace boost {
 namespace unit_test {
@@ -31,6 +27,9 @@ namespace data {
 namespace monomorphic {
 
 namespace ds_detail {
+
+
+//____________________________________________________________________________//
 
 // !! ?? variadic template implementation; use forward_as_tuple?
 template<typename T1, typename T2>
@@ -81,6 +80,10 @@ struct zip_traits<std::tuple<T1,T2>,T3> {
 // **************                       zip                    ************** //
 // ************************************************************************** //
 
+//! Zip datasets
+//! 
+//! A zip of two datasets is a dataset whose arity is the sum of the operand datasets arity. The size is given by
+//! the function creating the instance (see @c operator^ on datasets). 
 template<typename DS1, typename DS2>
 class zip : public monomorphic::dataset<typename ds_detail::zip_traits<typename boost::decay<DS1>::type::data_type,
                                                                        typename boost::decay<DS2>::type::data_type>::type> {
@@ -116,14 +119,16 @@ class zip : public monomorphic::dataset<typename ds_detail::zip_traits<typename 
 public:
     enum { arity = boost::decay<DS1>::type::arity + boost::decay<DS2>::type::arity };
 
-    // Constructor
+    //! Constructor
+    //!
+    //! The datasets are moved and not copied.
     zip( DS1&& ds1, DS2&& ds2, data::size_t size ) 
     : m_ds1( std::forward<DS1>( ds1 ) )
     , m_ds2( std::forward<DS2>( ds2 ) )
     , m_size( size )
     {}
 
-    // Move constructor
+    //! Move constructor
     zip( zip&& j ) 
     : m_ds1( std::forward<DS1>( j.m_ds1 ) )
     , m_ds2( std::forward<DS2>( j.m_ds2 ) )
@@ -143,6 +148,7 @@ private:
 
 //____________________________________________________________________________//
 
+//! Zipped datasets results in a dataset.
 template<typename DS1, typename DS2>
 struct is_dataset<zip<DS1,DS2> > : mpl::true_ {};
 
@@ -150,6 +156,7 @@ struct is_dataset<zip<DS1,DS2> > : mpl::true_ {};
 
 namespace ds_detail {
 
+//! Handles the sise of the resulting zipped dataset.
 template<typename DS1, typename DS2>
 inline data::size_t
 zip_size( DS1&& ds1, DS2&& ds2 )
@@ -175,6 +182,7 @@ zip_size( DS1&& ds1, DS2&& ds2 )
 
 namespace result_of {
 
+//! Result type of the zip operator.
 template<typename DS1Gen, typename DS2Gen>
 struct zip {
     typedef monomorphic::zip<typename DS1Gen::type,typename DS2Gen::type> type;
@@ -182,8 +190,11 @@ struct zip {
 
 } // namespace result_of
 
+
 //____________________________________________________________________________//
 
+
+//! Overload operator for zip support
 template<typename DS1, typename DS2>
 inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && is_dataset<DS2>::value, 
                                         result_of::zip<mpl::identity<DS1>,mpl::identity<DS2>>
@@ -193,8 +204,7 @@ operator^( DS1&& ds1, DS2&& ds2 )
     return zip<DS1,DS2>( std::forward<DS1>( ds1 ),  std::forward<DS2>( ds2 ), ds_detail::zip_size( ds1, ds2 ) );
 }
 
-//____________________________________________________________________________//
-
+//! @overload boost::unit_test::data::monomorphic::operator^()
 template<typename DS1, typename DS2>
 inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && !is_dataset<DS2>::value, 
                                         result_of::zip<mpl::identity<DS1>,data::result_of::make<DS2>>
@@ -204,8 +214,7 @@ operator^( DS1&& ds1, DS2&& ds2 )
     return std::forward<DS1>(ds1) ^ data::make(std::forward<DS2>(ds2));
 }
 
-//____________________________________________________________________________//
-
+//! @overload boost::unit_test::data::monomorphic::operator^()
 template<typename DS1, typename DS2>
 inline typename boost::lazy_enable_if_c<!is_dataset<DS1>::value && is_dataset<DS2>::value, 
                                         result_of::zip<data::result_of::make<DS1>,mpl::identity<DS2>>
@@ -225,7 +234,7 @@ operator^( DS1&& ds1, DS2&& ds2 )
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_NO_CXX11_HDR_TUPLE
+#endif // BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE
 
 #endif // BOOST_TEST_DATA_MONOMORPHIC_ZIP_HPP_102211GER
 

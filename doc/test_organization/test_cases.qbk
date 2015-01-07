@@ -1,0 +1,54 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ / Copyright (c) 2013-2014 Raffi Enficiaud
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+
+[section:test_cases Test cases]
+A test case has to be constructed based on some kind of
+function and registered in a test tree, so that the test runner knows how to invoke it. There are different
+possible designs for the test case construction problem: inheritance from the predefined base class, specifically
+named member function and so on. The __UTF__ opted to avoid classed altogether and to use the 
+least intrusive ['generic callback] approach.
+
+The facility the __UTF__ provides requires specific function signature, and allows
+adopting any function or function object that matches the signature as a test case. The signatures the __UTF__
+supports are:
+
+* Nullary function: 
+* Unary function: 
+* Nullary function template
+
+Generic test case construction design used by the __UTF__ causes the test case implementation (test function body)
+and test case creation/registration points to be remote. As a result you may forget to register the test case
+and it's never going to be executed, even though it's present in test file. To alleviate this issue
+the __UTF__ presents facilities for automated (in place) test case creation and registration in the test tree. These
+facilities sacrifice some generality and work for selected test function signatures only. But the result is that
+library users are relieved from the necessity to manually register test cases. These facilities are the most
+user-friendly and are recommended to be used whenever possible. In addition they support automated registration
+of test suites, thus allowing whole test tree to be created without any use of manual registration.
+
+The single test module may mix both automated and manual test case
+registration. In other words, within the same test module you can have both test cases implemented remotely and
+registered manually in the test module initialization function and test cases that are registered automatically at
+implementation point.
+
+
+[/ ############################################# ]
+[include nullary_tests.qbk]
+
+[/ ############################################# ]
+[include unary_tests.qbk]
+
+[/ ############################################# ] 
+[include typed_parametrized_tests.qbk]
+
+[/ ############################################# ] 
+[include parametric_test_case_generation.qbk]
+
+[endsect] [/ test cases]
+
+[/EOF]

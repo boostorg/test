@@ -1,15 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines test case family based on data generator
+//!@file 
+//!@brief test case family based on data generator
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_TEST_CASE_HPP_102211GER
@@ -36,6 +33,7 @@
 #include <boost/bind.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
+#include <boost/test/tools/detail/print_helper.hpp>
 
 //____________________________________________________________________________//
 
@@ -129,7 +127,7 @@ make_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_l
 // ************************************************************************** //
 
 #define BOOST_DATA_TEST_CASE_PARAM(r, _, i, param)  (BOOST_PP_CAT(Arg, i) const& param)
-#define BOOST_DATA_TEST_CONTEXT(r, _, param)  << BOOST_STRINGIZE(param) << " = " << param << "; "
+#define BOOST_DATA_TEST_CONTEXT(r, _, param)  << BOOST_STRINGIZE(param) << " = " << boost::test_tools::tt_detail::print_helper(param) << "; "
 
 #define BOOST_DATA_TEST_CASE_PARAMS( params )                           \
     BOOST_PP_SEQ_ENUM(                                                  \
@@ -154,7 +152,7 @@ BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     boost::unit_test::data::ds_detail::make_test_case_gen<test_name>(   \
           BOOST_STRINGIZE( test_name ),                                 \
           __FILE__, __LINE__,                                           \
-          data::make(dataset) ),                                        \
+          boost::unit_test::data::make(dataset) ),                      \
     boost::unit_test::decorator::collector::instance() );               \
                                                                         \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                 \

@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011.
+//  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -49,7 +49,13 @@ BOOST_AUTO_TEST_CASE( test_implicit_for_each )
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     BOOST_TEST( copy_count::value() == 0 );
 #else
+    // clang/darwin has apparently a non standard constructor for std::vector
+    // in c++03 mode
+#ifdef BOOST_CLANG
+    BOOST_TEST( copy_count::value() == 2 );
+#else
     BOOST_TEST( copy_count::value() == 4 );
+#endif
 #endif
 
     copy_count::value() = 0;
@@ -76,6 +82,7 @@ BOOST_AUTO_TEST_CASE( test_implicit_join )
 
 //____________________________________________________________________________//
 
+#ifndef BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE
 BOOST_AUTO_TEST_CASE( test_implicit_zip )
 {
 #ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
@@ -84,12 +91,9 @@ BOOST_AUTO_TEST_CASE( test_implicit_zip )
     BOOST_TEST( (ds ^ 1).size() == 1 );
 #endif
 
-#ifndef BOOST_NO_CXX11_HDR_TUPLE
     BOOST_TEST( (1 ^ data::make( 5 )).size() == 1 );
     BOOST_TEST( (data::make( 5 ) ^ 1).size() == 1 );
-#endif
 }
+#endif
 
-//____________________________________________________________________________//
 
-// EOF

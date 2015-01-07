@@ -1,15 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines dataset join operation
+//! @file
+//! Defines dataset join operation
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_JOIN_HPP_112711GER
@@ -32,6 +29,10 @@ namespace monomorphic {
 // **************                      join                    ************** //
 // ************************************************************************** //
 
+//! Defines a new dataset from the concatenation of two datasets
+//!
+//! The size of the resulting dataset is the sum of the two underlying datasets. The arity of the datasets
+//! should match. 
 template<typename DS1, typename DS2>
 class join : public monomorphic::dataset<typename boost::decay<DS1>::type::data_type> {
     typedef typename boost::decay<DS1>::type::data_type T;
@@ -99,6 +100,7 @@ private:
 
 //____________________________________________________________________________//
 
+// A joined dataset  is a dataset.
 template<typename DS1, typename DS2>
 struct is_dataset<join<DS1,DS2> > : mpl::true_ {};
 
@@ -106,6 +108,7 @@ struct is_dataset<join<DS1,DS2> > : mpl::true_ {};
 
 namespace result_of {
 
+//! Result type of the join operation on datasets.
 template<typename DS1Gen, typename DS2Gen>
 struct join {
     typedef monomorphic::join<typename DS1Gen::type,typename DS2Gen::type> type;

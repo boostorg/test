@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2012.
+//  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Use, modification, and distribution are subject to the 
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -76,6 +76,7 @@ private:
 class parser {
 public:
     typedef std::list<parameter_ptr>::const_iterator param_iterator;
+    typedef std::list<parameter_ptr>::size_type param_size_type;
 
     // Constructor
     explicit            parser( cstring program_name = cstring() );
@@ -100,7 +101,7 @@ public:
     // parameters access
     param_iterator      first_param() const;
     param_iterator      last_param() const;
-    unsigned            num_params() const  { return m_parameters.size(); }
+    param_size_type     num_params() const  { return m_parameters.size(); }
     void                reset();
 
     // arguments access
@@ -147,8 +148,11 @@ private:
 
 #ifndef BOOST_RT_PARAM_OFFLINE
 
-#  define BOOST_RT_PARAM_INLINE inline
-#  include <boost/test/utils/runtime/cla/parser.ipp>
+#ifndef BOOST_RT_PARAM_INLINE
+  #define BOOST_RT_PARAM_INLINE inline
+#endif
+
+#include <boost/test/utils/runtime/cla/parser.ipp>
 
 #endif
 

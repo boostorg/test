@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -127,7 +127,7 @@ label::do_apply( test_unit& tu )
 void
 expected_failures::do_apply( test_unit& tu )
 {
-    tu.increase_exp_fail( m_exp_fail );
+    tu.increase_exp_fail( static_cast<unsigned int>(m_exp_fail) );
 }
 
 //____________________________________________________________________________//

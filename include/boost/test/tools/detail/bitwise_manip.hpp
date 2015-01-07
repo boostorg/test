@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -69,7 +69,7 @@ bitwise_compare(Lhs const& lhs, Rhs const& rhs, E const& expr )
                 pr.message() << "]. Bitwise comparison failed";
                 pr = false;
             }
-            pr.message() << "\nMismatch in a position " << counter;
+            pr.message() << "\nMismatch in position " << counter;
         }
     }
 

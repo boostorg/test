@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2012.
+//  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -138,7 +138,7 @@ compiler_log_formatter::log_exception_start( std::ostream& output, log_checkpoin
     {
         BOOST_TEST_SCOPE_SETCOLOR( output, term_attr::BLINK, term_color::RED );
 
-        output << "fatal error in \"" << (loc.m_function.is_empty() ? test_phase_identifier() : loc.m_function ) << "\": "
+        output << "fatal error: in \"" << (loc.m_function.is_empty() ? test_phase_identifier() : loc.m_function ) << "\": "
                << ex.what();
     }
 
@@ -247,9 +247,9 @@ compiler_log_formatter::print_prefix( std::ostream& output, const_string file_na
 //____________________________________________________________________________//
 
 void
-compiler_log_formatter::entry_context_start( std::ostream& output )
+compiler_log_formatter::entry_context_start( std::ostream& output, log_level l )
 {
-    output << "\nFailure occurred in a following context:";
+    output << (l == log_successful_tests ? "\nAssertion" : "\nFailure" ) << " occurred in a following context:";
 }
 
 //____________________________________________________________________________//

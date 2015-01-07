@@ -1,15 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines single element monomorphic dataset
+/// @file
+/// Defines single element monomorphic dataset
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_SINGLETON_HPP_102211GER
@@ -31,8 +28,8 @@ namespace monomorphic {
 // ************************************************************************** //
 // **************                    singleton                  ************** //
 // ************************************************************************** //
-// Models single element data set
 
+/// Models a single element data set
 template<typename T>
 class singleton : public monomorphic::dataset<typename boost::decay<T>::type> {
     typedef monomorphic::dataset<typename boost::decay<T>::type> base;
@@ -40,7 +37,9 @@ class singleton : public monomorphic::dataset<typename boost::decay<T>::type> {
 
     struct iterator : public base::iterator {
         // Constructor
-        explicit            iterator( singleton<T> const& owner ) : m_owner( owner ) {}
+        explicit            iterator( singleton<T> const& owner ) 
+        : m_owner( owner ) 
+        {}
 
         // forward iterator interface 
         virtual typename base::data_type const&
@@ -55,10 +54,10 @@ public:
     enum { arity = 1 };
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-    // Constructor
+    //! Constructor
     explicit                singleton( T&& value ) : m_value( std::forward<T>( value ) ) {}
 
-    // Move constructor
+    //! Move constructor
     singleton( singleton&& s ) : m_value( std::forward<T>( s.m_value ) ) {}
 #else
     // Constructor
@@ -77,13 +76,15 @@ private:
     T               m_value;
 };
 
-//____________________________________________________________________________//
-
+// a singleton is a dataset
 template<typename T>
 struct is_dataset<singleton<T> > : mpl::true_ {};
 
 } // namespace monomorphic
 
+
+
+/// @overload boost::unit_test::data::make()
 template<typename T>
 inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
                                      !monomorphic::is_dataset<T>::value, 
@@ -101,10 +102,9 @@ make( T const& v )
 }
 #endif
 
-//____________________________________________________________________________//
 
-inline monomorphic::singleton<char*>
-make( char* str )
+/// @overload boost::unit_test::data::make
+inline monomorphic::singleton<char*> make( char* str )
 {
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     return monomorphic::singleton<char*>( std::move(str) );
@@ -113,10 +113,9 @@ make( char* str )
 #endif
 }
 
-//____________________________________________________________________________//
 
-inline monomorphic::singleton<char const*>
-make( char const* str )
+/// @overload boost::unit_test::data::make
+inline monomorphic::singleton<char const*> make( char const* str )
 {
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     return monomorphic::singleton<char const*>( std::move(str) );
@@ -125,7 +124,7 @@ make( char const* str )
 #endif
 }
 
-//____________________________________________________________________________//
+
 
 } // namespace data
 } // namespace unit_test

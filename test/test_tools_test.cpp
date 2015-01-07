@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2012.
+//  (C) Copyright Gennadiy Rozental 2001-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -57,7 +57,7 @@ namespace tt=boost::test_tools;
 //____________________________________________________________________________//
 
 // thanks to http://stackoverflow.com/questions/9226400/portable-printing-of-exponent-of-a-double-to-c-iostreams
-#ifdef BOOST_MSVC
+#if defined(BOOST_MSVC) && (BOOST_MSVC < 1900)
 struct ScientificNotationExponentOutputNormalizer {
     ScientificNotationExponentOutputNormalizer() : m_old_format(_set_output_format(_TWO_DIGIT_EXPONENT)) {}
 
@@ -636,7 +636,7 @@ public:
     int         operator&()     { return 10; }
 };
 
-#ifndef BOOST_NO_DECLTYPE
+#ifndef BOOST_NO_CXX11_DECLTYPE
 #define BOOST_TEST_FWD_1(P,M) BOOST_TEST(P)
 #define BOOST_TEST_FWD_2(P,M) BOOST_TEST(P,M)
 #define BOOST_TEST_FWD_3(P,A,M) BOOST_TEST(P,A)
@@ -721,8 +721,8 @@ TEST_CASE( test_BOOST_TEST_collection_comp )
     l.push_back( 3 );
     l.push_back( 2 );
 
-    BOOST_TEST_FWD_1( v <= l, "check v <= l has failed.\nMismatch in a position 2: 3 > 2" );
-    BOOST_TEST_FWD_1( v == l, "check v == l has failed.\nMismatch in a position 1: 2 != 3\nMismatch in a position 2: 3 != 2" );
+    BOOST_TEST_FWD_1( v <= l, "check v <= l has failed.\nMismatch in position 2: 3 > 2" );
+    BOOST_TEST_FWD_1( v == l, "check v == l has failed.\nMismatch in position 1: 2 != 3\nMismatch in position 2: 3 != 2" );
 }
 
 //____________________________________________________________________________//

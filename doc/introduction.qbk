@@ -1,0 +1,177 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ / Copyright (c) 2013-2014 Raffi Enficiaud
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+[section:intro Introduction]
+
+[role epigraph Test everything that could possibly break]
+[role epigraph --XP maxim]
+
+[role epigraph 
+   The acceptance test makes the customer satisfied
+   that the software provides the business value that
+   makes them willing to pay for it. The unit test makes
+   the programmer satisfied that the software does what 
+   the programmer thinks it does
+]
+[role epigraph --XP maxim]
+
+What is the first thing you need to do when you start working on new library/class/program? That's right -
+you need to start with the unit test module (I hope you all gave this answer!). Occasionally, you may get 
+away with simple test implemented using `assert`s, but any professional developer soon finds this approach
+lacking. It becomes clear that it's too time-consuming and tedious for simple, but repetitive unit testing 
+tasks and it's too inflexible for most non-trivial ones.
+
+The Boost.Test library provides both an easy to use and flexible set of interfaces for writing test 
+programs, organizing tests into simple test cases and test suites, and controlling their runtime execution. 
+Some of Boost.Test's interfaces are also useful in production (non-test) environments. 
+
+[/ ##################################################################### ]
+[h3 Rationale]
+
+Unit testing tasks arise during many different stages of software development: from initial project 
+implementation to its maintenance and later revisions. These tasks differ in their complexity and purpose 
+and accordingly are approached differently by different developers. The wide spectrum of tasks in a problem
+domain cause many requirements (sometimes conflicting) to be placed on a unit testing framework. These
+include:
+
+* Writing a unit test module should be simple and obvious for new users.
+* The framework should allow advanced users to perform non-trivial tests.
+* Test module should be able to have many small test cases and developer should be able to group them into 
+  test suites.
+* At the beginning of the development users want to see verbose and descriptive error message, whereas 
+  during the regression testing they just want to know if any tests failed.
+* For a small test modules run time should prevail over compilation time: user don't want to wait a minute
+  to compile a test that takes a second to run.
+* For long and complex tests users want to be able to see the test progress.
+* Simplest tests shouldn't require an external library.
+* For long term usage users of a unit test framework should be able to build it as a standalone library.
+
+The __UTF__ design is based on above rationale and provides versatile facilities to:
+
+* Simplify writing test cases by using various [link boost_test.users_guide.testing_tools Testing tools].
+* Organize test cases into a [link boost_test.users_guide.tests_organization test tree].
+* Relieve you from messy error detection, reporting duties and framework runtime parameters processing.
+
+The __UTF__ is intended to be used both for a simple and non trivial testing. It is not intended to be used
+with production code, but some of the Boost.Test interfaces can be, including ... 
+
+[warning TOFIX]
+
+
+[/ ##################################################################### ]
+[section:5min_starter The 5min starter guide]
+This section shows a step-by-step guide for writing your very first test, in less than 5min. 
+
+[h3 Writing and building your first test]
+Let's start by creating the minimal skeleton for our [link ref_test_module test module]. This minimal skeleton in the file `test_file.cpp`, 
+looks like this:
+
+``
+#define __BOOST_TEST_MODULE__ My Test
+#include <boost/test/included/unit_test.hpp>
+
+__BOOST_AUTO_TEST_CASE__(first_test)
+{
+  __BOOST_TEST__(true);
+  
+  int i = 1;
+  __BOOST_TEST__(i == 2);
+}
+`` 
+
+The command/macro __BOOST_AUTO_TEST_CASE__ declares a test named `first_test`, which in turn will run the content of `first_test` inside the 
+controlled testing environment. This test checks that `true` is `true` and that `i` equals `2` and should succeed first test and fail second. 
+
+Before continuing in adding value to the test module itself, let's now build the test module contained in [*an unique]
+[footnote with more than one file, one line should be changed] file. For building this specific test module, we just have to
+indicate the header location to the compiler [footnote to remain plain and simple in this example, we used the 
+[link boost_test.users_guide.usage_variants.single_header single-header] variant of __UTF__]. 
+
+We will see now three common use cases.
+
+[h4 Using GCC/Clang]
+
+```
+g++ -o test_executable \
+    -I ``$``boost_installation_prefix/include \
+    test_file.cpp
+```
+
+If you haven't seen any error message, you can run the test:
+```
+./test_executable
+```
+
+and it shoud show something like:
+[pre
+Running 1 test case...
+test_file.cpp(9): error: in "first_test": check i == 2 has failed [1 != 2]
+
+*** 1 failure detected in test module "My Test"
+]
+
+The command line is similar for `clang`. 
+As you can see, the previous example is not exactly an example to follow for bigger projects, but this is more
+than enough to build our own unique test file into an appropriate test module. 
+
+
+
+[h4 Using Visual Studio]
+
+# open Visual and create an empty C++ console Win32 project
+# add the file `test_file.cpp`
+# open the properties of the project, go under C/C++/General/include directories and add $`boost_installation_prefix/include`
+
+Build and run the binary (directly from Visual or from a command line), and that's it!
+
+[h4 Using CMake]
+Let's be more independent of the platform, and use [@http://www.cmake.org cmake]. Let's paste the following content in a `CMakeLists.txt` 
+at the same location than our previous test file `test_file.cpp`:
+
+[pre
+cmake_minimum_required(VERSION 2.8.7)
+project(my_first_test)
+enable_testing()
+
+# indicates the location of the boost installation tree.
+# hard-coded for our simple example.
+set(BOOST_INCLUDE_DIRS $boost_installation_prefix/include)
+
+# creates the executable
+add_executable(test_executable test_file.cpp)
+# indicates the include paths
+target_include_directories(test_executable PRIVATE ${BOOST_INCLUDE_DIRS})
+
+# declares a test with our executable
+add_test(NAME test1 COMMAND test_executable)
+]
+
+We will now create the build directory for this project (separate directory), 
+configure and build the project, as follow:
+```
+> cd ``$``test_path
+> mkdir build     /*< we create a directory dedicated to the build, to avoid 
+                      any pollution of the sources with the temporary
+                      build files >*/
+> cd build
+> cmake  ..       /*< configuration of the project >*/
+> cmake --build . /*< this command builds the project, cmake drives a native 
+                      tool that is configured on the previous command line >*/
+> ctest           /*< runs the tests declared in the project and prints a report >*/
+```
+
+[h3 Really less than 5min]
+We hope you are now convinced that starting using the __UTF__ is easy and straightforward. 
+The __UTF__ provides a lot of features that you can discover when needed. The next 
+section will help you to navigate to the part of the documentation that best suits your needs. 
+
+[endsect] [/ 5min starter]
+
+[endsect] [/ Introduction]
+
+[/ EOF]
