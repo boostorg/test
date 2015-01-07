@@ -9,31 +9,31 @@
 
 [note This is just a stub page. The content will be provided soon...]
 
-Decorators provide a way to configure certain aspects of a test case, like floating-point precision or required fixtures.
+Decorators provide a way to configure certain aspects of a test unit.
 
 ``
 #include <boost/test/unit_test.hpp>
-namespace unittest = boost::unit_test;
-
-struct MyFixture {
-  MyFixture() {}
-  ~MyFixture() {}
-};
+namespace utf = boost::unit_test;
 
 BOOST_TEST_DECORATOR(
-  + unittest::fixture<MyFixture>()
+  + utf::label("trivial")
 )
-__BOOST_AUTO_TEST_CASE__( test_case1 )
+BOOST_AUTO_TEST_CASE( test_case1 )
 {
   BOOST_TEST(true);
 }
 ``
 
-Test case `test_case1` is ['decorated] with ['attribute] `fixture`. Just before the test case starts, `MyFixture()` will be called, and just after it finishes, `~MyFixture()` will be called.
-
+Test unit `test_case1` has one associated ['decorator:] `label`. This means that when test units will be executed selectively by label, this test unit will match to label "trivial".
 
 [note Decorators are not available in the [link boost_test.users_guide.usage_variants.single_header single-header variant] of the __UTF__.]
 
+[h3 Suite-level decorators]
+
+TBD...
+
+[section:available_decorators Available decorators]
+[endsect]
 
 [endsect] [/ section decorators]
 
