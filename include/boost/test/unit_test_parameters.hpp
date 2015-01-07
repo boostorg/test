@@ -42,6 +42,7 @@ BOOST_TEST_DECL bool                    catch_sys_errors();
 BOOST_TEST_DECL bool                    color_output();
 BOOST_TEST_DECL bool                    detect_fp_exceptions();
 BOOST_TEST_DECL long                    detect_memory_leaks();
+BOOST_TEST_DECL bool                    deprecated_timer_format();
 BOOST_TEST_DECL bool                    list_content();
 BOOST_TEST_DECL output_format           log_format();
 BOOST_TEST_DECL unit_test::log_level    log_level();

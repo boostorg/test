@@ -152,28 +152,29 @@ namespace runtime_config {
 namespace {
 
 // framework parameters and corresponding command-line arguments
-std::string AUTO_START_DBG    = "auto_start_dbg";
-std::string BREAK_EXEC_PATH   = "break_exec_path";
-std::string BUILD_INFO        = "build_info";
-std::string CATCH_SYS_ERRORS  = "catch_system_errors";
-std::string COLOR_OUTPUT      = "color_output";
-std::string DETECT_FP_EXCEPT  = "detect_fp_exceptions";
-std::string DETECT_MEM_LEAKS  = "detect_memory_leaks";
-std::string LIST_CONTENT      = "list_content";
-std::string LOG_FORMAT        = "log_format";
-std::string LOG_LEVEL         = "log_level";
-std::string LOG_SINK          = "log_sink";
-std::string OUTPUT_FORMAT     = "output_format";
-std::string RANDOM_SEED       = "random";
-std::string REPORT_FORMAT     = "report_format";
-std::string REPORT_LEVEL      = "report_level";
-std::string REPORT_SINK       = "report_sink";
-std::string RESULT_CODE       = "result_code";
-std::string TESTS_TO_RUN      = "run_test";
-std::string SAVE_TEST_PATTERN = "save_pattern";
-std::string SHOW_PROGRESS     = "show_progress";
-std::string USE_ALT_STACK     = "use_alt_stack";
-std::string WAIT_FOR_DEBUGGER = "wait_for_debugger";
+std::string AUTO_START_DBG          = "auto_start_dbg";
+std::string BREAK_EXEC_PATH         = "break_exec_path";
+std::string BUILD_INFO              = "build_info";
+std::string CATCH_SYS_ERRORS        = "catch_system_errors";
+std::string COLOR_OUTPUT            = "color_output";
+std::string DETECT_FP_EXCEPT        = "detect_fp_exceptions";
+std::string DETECT_MEM_LEAKS        = "detect_memory_leaks";
+std::string DEPRECATED_TIMER_FORMAT = "deprecated_timer_format";
+std::string LIST_CONTENT            = "list_content";
+std::string LOG_FORMAT              = "log_format";
+std::string LOG_LEVEL               = "log_level";
+std::string LOG_SINK                = "log_sink";
+std::string OUTPUT_FORMAT           = "output_format";
+std::string RANDOM_SEED             = "random";
+std::string REPORT_FORMAT           = "report_format";
+std::string REPORT_LEVEL            = "report_level";
+std::string REPORT_SINK             = "report_sink";
+std::string RESULT_CODE             = "result_code";
+std::string TESTS_TO_RUN            = "run_test";
+std::string SAVE_TEST_PATTERN       = "save_pattern";
+std::string SHOW_PROGRESS           = "show_progress";
+std::string USE_ALT_STACK           = "use_alt_stack";
+std::string WAIT_FOR_DEBUGGER       = "wait_for_debugger";
 
 static const_string
 parameter_2_env_var( const_string param_name )
@@ -182,28 +183,29 @@ parameter_2_env_var( const_string param_name )
     static mtype s_mapping;
 
     if( s_mapping.empty() ) {
-        s_mapping[AUTO_START_DBG]       = "BOOST_TEST_AUTO_START_DBG";
-        s_mapping[BREAK_EXEC_PATH]      = "BOOST_TEST_BREAK_EXEC_PATH";
-        s_mapping[BUILD_INFO]           = "BOOST_TEST_BUILD_INFO";
-        s_mapping[CATCH_SYS_ERRORS]     = "BOOST_TEST_CATCH_SYSTEM_ERRORS";
-        s_mapping[COLOR_OUTPUT]         = "BOOST_TEST_COLOR_OUTPUT";
-        s_mapping[DETECT_FP_EXCEPT]     = "BOOST_TEST_DETECT_FP_EXCEPTIONS";
-        s_mapping[DETECT_MEM_LEAKS]     = "BOOST_TEST_DETECT_MEMORY_LEAK";
-        s_mapping[LIST_CONTENT]         = "BOOST_TEST_LIST_CONTENT";
-        s_mapping[LOG_FORMAT]           = "BOOST_TEST_LOG_FORMAT";
-        s_mapping[LOG_LEVEL]            = "BOOST_TEST_LOG_LEVEL";
-        s_mapping[LOG_SINK]             = "BOOST_TEST_LOG_SINK";
-        s_mapping[OUTPUT_FORMAT]        = "BOOST_TEST_OUTPUT_FORMAT";
-        s_mapping[RANDOM_SEED]          = "BOOST_TEST_RANDOM";
-        s_mapping[REPORT_FORMAT]        = "BOOST_TEST_REPORT_FORMAT";
-        s_mapping[REPORT_LEVEL]         = "BOOST_TEST_REPORT_LEVEL";
-        s_mapping[REPORT_SINK]          = "BOOST_TEST_REPORT_SINK";
-        s_mapping[RESULT_CODE]          = "BOOST_TEST_RESULT_CODE";
-        s_mapping[TESTS_TO_RUN]         = "BOOST_TESTS_TO_RUN";
-        s_mapping[SAVE_TEST_PATTERN]    = "BOOST_TEST_SAVE_PATTERN";
-        s_mapping[SHOW_PROGRESS]        = "BOOST_TEST_SHOW_PROGRESS";
-        s_mapping[USE_ALT_STACK]        = "BOOST_TEST_USE_ALT_STACK";
-        s_mapping[WAIT_FOR_DEBUGGER]    = "BOOST_TEST_WAIT_FOR_DEBUGGER";
+        s_mapping[AUTO_START_DBG]           = "BOOST_TEST_AUTO_START_DBG";
+        s_mapping[BREAK_EXEC_PATH]          = "BOOST_TEST_BREAK_EXEC_PATH";
+        s_mapping[BUILD_INFO]               = "BOOST_TEST_BUILD_INFO";
+        s_mapping[CATCH_SYS_ERRORS]         = "BOOST_TEST_CATCH_SYSTEM_ERRORS";
+        s_mapping[COLOR_OUTPUT]             = "BOOST_TEST_COLOR_OUTPUT";
+        s_mapping[DETECT_FP_EXCEPT]         = "BOOST_TEST_DETECT_FP_EXCEPTIONS";
+        s_mapping[DETECT_MEM_LEAKS]         = "BOOST_TEST_DETECT_MEMORY_LEAK";
+        s_mapping[DEPRECATED_TIMER_FORMAT]  = "BOOST_TEST_DEPRECATED_TIMER_FORMAT";
+        s_mapping[LIST_CONTENT]             = "BOOST_TEST_LIST_CONTENT";
+        s_mapping[LOG_FORMAT]               = "BOOST_TEST_LOG_FORMAT";
+        s_mapping[LOG_LEVEL]                = "BOOST_TEST_LOG_LEVEL";
+        s_mapping[LOG_SINK]                 = "BOOST_TEST_LOG_SINK";
+        s_mapping[OUTPUT_FORMAT]            = "BOOST_TEST_OUTPUT_FORMAT";
+        s_mapping[RANDOM_SEED]              = "BOOST_TEST_RANDOM";
+        s_mapping[REPORT_FORMAT]            = "BOOST_TEST_REPORT_FORMAT";
+        s_mapping[REPORT_LEVEL]             = "BOOST_TEST_REPORT_LEVEL";
+        s_mapping[REPORT_SINK]              = "BOOST_TEST_REPORT_SINK";
+        s_mapping[RESULT_CODE]              = "BOOST_TEST_RESULT_CODE";
+        s_mapping[TESTS_TO_RUN]             = "BOOST_TESTS_TO_RUN";
+        s_mapping[SAVE_TEST_PATTERN]        = "BOOST_TEST_SAVE_PATTERN";
+        s_mapping[SHOW_PROGRESS]            = "BOOST_TEST_SHOW_PROGRESS";
+        s_mapping[USE_ALT_STACK]            = "BOOST_TEST_USE_ALT_STACK";
+        s_mapping[WAIT_FOR_DEBUGGER]        = "BOOST_TEST_WAIT_FOR_DEBUGGER";
     }
 
     mtype::const_iterator it = s_mapping.find( param_name );
@@ -288,6 +290,9 @@ init( int& argc, char** argv )
               << cla::named_parameter<std::string>( DETECT_MEM_LEAKS )
                 - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,cla::optional_value,
                    cla::description = "Allows to switch between catching and ignoring memory leaks")
+              << cla::named_parameter<std::string>( DEPRECATED_TIMER_FORMAT )
+                - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,cla::optional_value,
+                   cla::description = "Forces HRF output for timing information to mimic the deprecated boost timer output")
               << cla::dual_name_parameter<unit_test::output_format>( LOG_FORMAT + "|f" )
                 - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,
                    cla::description = "Specifies log format")
@@ -495,6 +500,14 @@ bool
 detect_fp_exceptions()
 {
     return retrieve_parameter( DETECT_FP_EXCEPT, s_cla_parser, false );
+}
+
+//____________________________________________________________________________//
+
+bool
+deprecated_timer_format()
+{
+    return retrieve_parameter( DEPRECATED_TIMER_FORMAT, s_cla_parser, false );
 }
 
 //____________________________________________________________________________//

@@ -377,6 +377,24 @@ Leaving test suite "example"
     </descr>
    </refentry>
 
+   <refentry name="deprecated_timer_format">
+    <name>Use the deprecated timer format for output</name>
+    <env>BOOST_TEST_DEPRECATED_TIMER_FORMAT</env>
+    <cla>deprecated_timer_format</cla>
+    <vals>
+     <simplelist>
+      <member><emphasis role="bold">no</emphasis></member>
+      <member>yes</member>
+     </simplelist>
+    </vals>
+    <descr>
+     <simpara>
+      This ensures timer test output matches the format produced for the deprecated Boost.Timer class. Otherwise
+      updated output will be displayed that provides Wall, User and System times.
+     </simpara>
+    </descr>
+   </refentry>
+
    <refentry name="log_format">
     <name>The log format</name>
     <env>BOOST_TEST_LOG_FORMAT</env>
