@@ -153,18 +153,17 @@ BOOST_DATA_TEST_CASE(test_case_name, dataset, var1) { /* datasets of arity 1 */ 
 BOOST_DATA_TEST_CASE(test_case_name, dataset, var1, ..., varN) { /* datasets of arity N */ }
 ``
 
-The first form of the macro above declares automatically a variable `sample` in the body of the test case, 
-which takes the values of samples currently executed in the test body. Example:
+The first form of the macro is for datasets of arity 1. The value of the sample being executed by the test body is available through the automatic variable `sample`
+(`xrange` is as its name suggests a range of values):
 [snippet_dataset1_1]
 
-If specified, the name of the variable `sample` can be replaced by the first parameter that comes after the dataset:
+The second form is also for datasets of arity 1, but instead of the variable `sample`, the current sample is brought into `var1`:
 [snippet_dataset1_2]
 
-Finally, the third form with `N` variables is for datasets of arity `N`. Each of the variables `var1`, ..., `varN` corresponds
-to the index 1, ... `N` of the /polymorphic tuple/ that is the sample. 
+The third form is an extension of the previous form for datasets of arity `N`. The sample being a polymorphic tuple, each of the variables `var1`, ..., `varN` corresponds
+to the index 1, ... `N` of the the sample. 
 
-For a dataset of arity `N`, there should be exactly `N` variables `varX` except for the case of arity 1, for which an implicit variable `sample`
-is declared (optional). 
+The arity of the dataset and the number of variables should be exactly the same, the first form being a shortcut for the case of arity 1. 
 
 [tip A compilation-time check is performed on the coherence of the arity of the dataset and the number of variables `var1`... `varN`. ]
 
