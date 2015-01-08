@@ -7,33 +7,459 @@
 
 [section:decorators Decorators]
 
-[note This is just a stub page. The content will be provided soon...]
-
-Decorators provide a way to configure certain aspects of a test case, like floating-point precision or required fixtures.
+Decorators provide a way to configure certain aspects of a test unit.
 
 ``
 #include <boost/test/unit_test.hpp>
-namespace unittest = boost::unit_test;
-
-struct MyFixture {
-  MyFixture() {}
-  ~MyFixture() {}
-};
+namespace utf = boost::unit_test;
 
 BOOST_TEST_DECORATOR(
-  + unittest::fixture<MyFixture>()
+  + utf::label("trivial")
 )
-__BOOST_AUTO_TEST_CASE__( test_case1 )
+BOOST_AUTO_TEST_CASE( test_case1 )
 {
   BOOST_TEST(true);
 }
+
+BOOST_TEST_DECORATOR(
+  + utf::label("trivial")
+  + utf::label("cmp")
+  + utf::description("testing equality of ones")
+)
+BOOST_AUTO_TEST_CASE( test_case2 )
+{
+  BOOST_TEST(1 == 1);
+}
 ``
 
-Test case `test_case1` is ['decorated] with ['attribute] `fixture`. Just before the test case starts, `MyFixture()` will be called, and just after it finishes, `~MyFixture()` will be called.
-
+Test unit `test_case1` has one associated ['decorator:] `label`. This means that when test units are executed selectively by label, this test unit will match to label "trivial". Test unit `test_case2` has three associated decorators: two of type `label` and one of type `description`. 
 
 [note Decorators are not available in the [link boost_test.users_guide.usage_variants.single_header single-header variant] of the __UTF__.]
 
+[h3 Suite-level decorators]
+
+It is also possible to decorate test suites. 
+
+``
+#include <boost/test/unit_test.hpp>
+namespace utf = boost::unit_test;
+
+BOOST_TEST_DECORATOR(
+  + utf::label("trivial")
+)
+BOOST_AUTO_TEST_SUITE( suite1 )
+
+  BOOST_AUTO_TEST_CASE( test_case1 )
+  {
+    BOOST_TEST(true);
+  }
+
+  BOOST_AUTO_TEST_CASE( test_case2 )
+  {
+    BOOST_TEST(1 == 1);
+  }
+
+BOOST_AUTO_TEST_SUITE_END()
+``
+
+The meaning of such decoration is that it applies to every test unit inside the suite. In the case above both tests `suite1/test_case1` and `suite1/test_case2` have tag "trivial".
+
+A decorator applies to every test unit in the suite, even if the scope of a given suite is opened twice:
+
+``
+#include <boost/test/unit_test.hpp>
+namespace utf = boost::unit_test;
+
+BOOST_AUTO_TEST_SUITE( suite1 )
+
+  BOOST_AUTO_TEST_CASE( test_case1 )
+  {
+    BOOST_TEST(true);
+  }
+
+BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_TEST_DECORATOR(
+  + utf::label("trivial")
+)
+BOOST_AUTO_TEST_SUITE( suite1 )
+
+  BOOST_AUTO_TEST_CASE( test_case2 )
+  {
+    BOOST_TEST(1 == 1);
+  }
+
+BOOST_AUTO_TEST_SUITE_END()
+``
+
+In the above case, both tests `suite1.test_case1` and `suite1/test_case2` have tag "trivial".
+
+In case the scope of the suite is opened twice in the same file with different decorator sets, the last decorator set is in effect:
+
+``
+#include <boost/test/unit_test.hpp>
+namespace utf = boost::unit_test;
+
+BOOST_TEST_DECORATOR(
+  + utf::label("trivial")
+)
+BOOST_AUTO_TEST_SUITE( suite1 )
+
+  BOOST_AUTO_TEST_CASE( test_case1 )
+  {
+    BOOST_TEST(true);
+  }
+
+BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_TEST_DECORATOR(
+  + utf::label("simple")
+)
+BOOST_AUTO_TEST_SUITE( suite1 )
+
+  BOOST_AUTO_TEST_CASE( test_case2 )
+  {
+    BOOST_TEST(1 == 1);
+  }
+
+BOOST_AUTO_TEST_SUITE_END()
+``
+
+In the above case, both tests `suite1/test_case1` and `suite1/test_case2` have tag "simple".
+
+In case the scope of the suite is opened twice in two different translation units with different decorator sets, it is unspecified which of the two sets is in effect. This mechanism is tied to the order of initialization of global objects.
+
+[tip It is therefore recommended that you either make sure that each time the test suite scope is opened, it has the same decorator set, or you identify a ['privileged] opening of the suite and decorate it, while keeping all the other openings undecorated.]
+
+[/ ##########################################################################]
+
+[section:available_decorators Available decorators]
+
+[h3 label]
+
+``
+label(const_string label_name);
+``
+
+Decorator `label` associates a test unit with label `label_name`. This is useful when one wants to execute test units selectively by label. It is possible to associate more than one label with a test unit.
+
+[table
+  [[Code] [Output]]
+  [
+    [``
+    #define BOOST_TEST_MODULE example
+    #include <boost/test/unit_test.hpp>
+
+    namespace utf = boost::unit_test;
+
+    BOOST_TEST_DECORATOR(
+      + utf::label("l1")
+    )
+    BOOST_AUTO_TEST_CASE( test_case1 )
+    {
+      BOOST_TEST(false);
+    }
+
+    BOOST_TEST_DECORATOR(
+      + utf::label("l1")
+      + utf::label("l2" )
+    )
+    BOOST_AUTO_TEST_CASE( test_case2 )
+    {
+      BOOST_TEST(false);
+    }
+
+    BOOST_AUTO_TEST_CASE( test_case3 )
+    {
+      BOOST_TEST(false);
+    }
+    ``]
+    [``
+    > example
+    Running 3 test cases...
+    test.cpp(11): error: in "test_case1": check false has failed
+    test.cpp(20): error: in "test_case2": check false has failed
+    test.cpp(25): error: in "test_case3": check false has failed
+
+    *** 3 failures detected in test module "example"
+ 
+ 
+    > example --run_test=@l1
+    Running 2 test cases...
+    test.cpp(11): error: in "test_case1": check false has failed
+    test.cpp(20): error: in "test_case2": check false has failed
+
+    *** 2 failures detected in test module "example"
+ 
+ 
+    > example --run_test=@l2
+    Running 1 test case...
+    test.cpp(20): error: in "test_case2": check false has failed
+
+    *** 1 failure detected in test module "example"
+    ``]
+  ]
+]
+
+[h3 enable_if / disable_if]
+
+``
+enable_if(bool condition);
+disable_if(bool condition);
+``
+
+Decorator `enable_if` disables the test unit from being run if the value of a `condition` evaluates to `false` upon test registration. Decorator `disable_if(c)` behaves the same as `enable_if(!c)`.
+
+[table
+  [[Code] [Output]]
+  [
+    [``
+    #define BOOST_TEST_MODULE example
+    #include <boost/test/unit_test.hpp>
+
+    namespace utf = boost::unit_test;
+    const int I = 1;
+
+    BOOST_TEST_DECORATOR(
+      + utf::enable_if(I == 1)
+    )
+    BOOST_AUTO_TEST_CASE( test_case1 )
+    {
+      BOOST_TEST(false);
+    }
+
+    BOOST_TEST_DECORATOR(
+      + utf::disable_if(I == 1)
+    )
+    BOOST_AUTO_TEST_CASE( test_case2 )
+    {
+      BOOST_TEST(false);
+    }
+    ``]
+    [``
+    > example
+    Running 1 test case...
+    test.cpp(12): error: in "test_case1": check false has failed
+
+    *** 1 failure detected in test module "example"
+    ``]
+  ]
+]
+
+[h3 depends_on]
+
+``
+depeneds_on(const_string dependent_test_name);
+``
+
+Decorator `depends_on` disables the test unit from being run if the test unit marked as its dependency, is either disabled or is executed and marked as failed. 
+
+[table
+  [[Code] [Output]]
+  [
+    [``
+    #define BOOST_TEST_MODULE example
+    #include <boost/test/unit_test.hpp>
+
+    namespace utf = boost::unit_test;
+
+    BOOST_AUTO_TEST_CASE( test_case1 )
+    {
+      BOOST_TEST(true);
+    }
+
+    BOOST_TEST_DECORATOR(
+      + utf::enable_if(false)
+    )
+    BOOST_AUTO_TEST_CASE( test_case2 )
+    {
+      BOOST_TEST(false);
+    }
+
+    BOOST_TEST_DECORATOR(
+      + utf::depends_on("test_case1")
+    )
+    BOOST_AUTO_TEST_CASE( test_case3 )
+    {
+      BOOST_TEST(false);
+    }
+
+    BOOST_TEST_DECORATOR(
+      + utf::depends_on("test_case3")
+    )
+    BOOST_AUTO_TEST_CASE( test_case4 )
+    {
+      BOOST_TEST(false);
+    }
+
+    BOOST_TEST_DECORATOR(
+      + utf::depends_on("test_case2")
+    )
+    BOOST_AUTO_TEST_CASE( test_case5 )
+    {
+      BOOST_TEST(false);
+    }
+    ``]
+    [``
+    > example
+    Running 3 test cases...
+    test.cpp(24): error: in "test_case3": check false has failed
+
+    *** 1 failure detected in test module "example"
+    
+    > example --list_content
+    test_case1
+    test_case3
+    test_case4
+    ``]
+  ]
+]
+
+In the above scenario, `test_case2` is not even listed because it is disabled; `test_case5` is not listed because it depends on a disabled test unit. `test_case4` is listed but not executed because it depends on `test_case3`, which failed.
+
+
+[h3 expected_failures]
+
+``
+expected_failures(counter_t number);
+``
+
+Decorator `expected_failures` defines the number of expected failures that will be reported upon program execution. At suite level this defines the number of expected failures per suite. The total number of expected failures per suite is the sum of per-suite decorator and per-test decorators inside the suite:
+
+[table
+  [[Code] [Output]]
+  [
+    [``
+    #define BOOST_TEST_MODULE example
+    #include <boost/test/unit_test.hpp>
+
+    namespace utf = boost::unit_test;
+
+    BOOST_TEST_DECORATOR(
+      + utf::expected_failures(2)
+    )
+    BOOST_AUTO_TEST_SUITE( suite1 )
+
+      BOOST_TEST_DECORATOR(
+        + utf::expected_failures(1)
+      )
+      BOOST_AUTO_TEST_CASE( test_case1 )
+      {
+        BOOST_TEST(false);
+        BOOST_TEST(false);
+      }
+      
+      BOOST_AUTO_TEST_CASE( test_case2 )
+      {
+        BOOST_TEST(false);
+        BOOST_TEST(false);
+      }
+
+    BOOST_AUTO_TEST_SUITE_END()
+    ``]
+    [``
+    > example --report_level=detailed
+    Running 2 test cases...
+    test.cpp(16): error: in "test_case1": check false has failed
+    test.cpp(17): error: in "test_case1": check false has failed
+    test.cpp(22): error: in "test_case2": check false has failed
+    test.cpp(23): error: in "test_case2": check false has failed
+
+    Test module "example" failed with:
+      2 test cases out of 2 failed
+      4 assertions out of 4 failed
+      3 expected failures
+
+      Test suite "suite1" failed with:
+        2 test cases out of 2 failed
+        4 assertions out of 4 failed
+        3 expected failures
+
+        Test case "test_case1" failed with:
+          2 assertions out of 2 failed
+          1 expected failure
+
+        Test case "test_case2" failed with:
+          2 assertions out of 2 failed
+    ``]
+  ]
+]
+
+
+[h3 fixture]
+
+``
+fixture(const boost::function<void()>& setup, const boost::function<void()>& teardown = {});
+
+template <typename Fx>
+  fixture<Fx>();
+  
+template <typename Fx, typename Arg>
+  fixture<Fx>(const Arg& arg);
+``
+
+Decorator `fixture` specifies a pair of functions (like `set_up` and `tear_down`) to be called before and after the corresponding test unit. At the suite level the `set_up` function is called once -- before the suite execution starts and `tear_down` function is called once -- after the suite execution ends. It comes in three forms. First expects two functions for set-up and tear-down (the second one can be skipped). The second expects a `DefaultConstructible` class. Its default constructor will be used as set-up function and its destructor as a tear-down function. Third requires a class with one-argument public constructor. Argument `arg` is forwarded to the constructor and this is the set-up function, its destructor is the tear-down function. There is no way to get access to the members of these fixtures from within the test unit or test suite.
+
+[table
+  [[Code] [Output]]
+  [
+    [``
+    #include <iostream>
+    #define BOOST_TEST_MODULE example
+    #include <boost/test/unit_test.hpp>
+
+    namespace utf = boost::unit_test;
+
+    struct Fx
+    {
+      std::string s;
+      Fx(std::string s = "") : s(s) { std::cout << "set up " << s << std::endl; }
+      ~Fx() { std::cout << "tear down " << s << std::endl; }
+    };
+
+    void setup() { std::cout << "set up fun" << std::endl; }
+    void teardown() { std::cout << "tear down fun" << std::endl; }
+
+    BOOST_TEST_DECORATOR(
+      + utf::fixture<Fx>(std::string("FX"))
+      + utf::fixture<Fx>(std::string("FX2"))
+    )
+    BOOST_AUTO_TEST_SUITE( suite1 )
+
+      BOOST_TEST_DECORATOR(
+        + utf::fixture(&setup, &teardown)
+      )
+      BOOST_AUTO_TEST_CASE( test_case1 )
+      {
+        BOOST_TEST(false);
+      }
+      
+      BOOST_AUTO_TEST_CASE( test_case2 )
+      {
+        BOOST_TEST(false);
+      }
+
+    BOOST_AUTO_TEST_SUITE_END()
+    ``]
+    [``
+    > example
+    Running 2 test cases...
+    set up FX
+    set up FX2
+    set up fun
+    test.cpp(28): error: in "test_case1": check false has failed
+    tear down fun
+    test.cpp(33): error: in "test_case2": check false has failed
+    tear down FX2
+    tear down FX
+
+    *** 2 failures detected in test module "example"
+    ``]
+  ]
+]
+
+
+[endsect] [/ section available_decorators]
 
 [endsect] [/ section decorators]
 
