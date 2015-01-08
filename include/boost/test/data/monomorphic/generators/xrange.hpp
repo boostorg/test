@@ -41,7 +41,11 @@ namespace monomorphic {
 // ************************************************************************** //
 
 
-//! Implements the range dataset generator.
+/*!@brief Generator for the range sequences
+ *
+ * This class implements the generator concept (see @ref boost::unit_test::data::generated_by) for implementing
+ * a range like sequence of numbers.
+ */
 template<typename SampleType, typename StepType=SampleType>
 class xrange_t {
 public:
