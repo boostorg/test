@@ -121,7 +121,7 @@ The descriptive power of the datasets in __UTF__ comes from
 * the available built-in [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators /dataset generators/]
 
 [tip Only "monomorphic" datasets are supported, which means that all samples in a dataset have the same type and same arity 
- [footnote polymorphic datasets will be considered in the future. Their need is mainly driven by the replacement of the [link boost_test.users_guide.tests_organization.test_organization_templates typed parametrized test cases] by the dataset-like API.]
+ [footnote polymorphic datasets will be considered in the future. Their need is mainly driven by the replacement of the [link boost_test.users_guide.tests_organization.test_cases.test_organization_templates typed parametrized test cases] by the dataset-like API.]
  . 
  ]
 
@@ -175,7 +175,7 @@ are samples in the dataset given as argument. Each test case runs on exactly *on
 Exactly as regular test cases, each test - or each sample - is executed within the test body in a /guarded manner/: 
 
 * the test execution are independent: if an error occurs for one sample, the reminder samples execution is not affected
-* in case of error, the [link boost_test.users_guide.tests_organization.context context] within which the error occurred is reported in the [link boost_test.test_output log]. 
+* in case of error, the [link boost_test.users_guide.tests_organization.context context] within which the error occurred is reported in the [link boost_test.users_guide.test_output log]. 
   This context contains the sample for which the test failed, which would ease the debugging. 
 
 
