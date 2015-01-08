@@ -246,7 +246,7 @@ The following properties hold:
 * the arity of the resulting dataset is the sum of the arities of the operand datasets, 
 * the size of the resulting dataset is the product of the datasets, 
 * the operation is associative, and it is possible to combine more than two datasets in one expression,
-* as for /zip/, there is no need the dataset to have the same type of elements.
+* as for /zip/, there is no need the dataset to have the same type of samples.
 
 [caution If the /grid/ operation is not supported for your compiler, the macro [macroref BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE `BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE`] 
  will be automatically set by the __UTF__] 
@@ -265,7 +265,7 @@ A ['join] is the concatenation of two datasets, available through `operator+`. T
 
 The following properties hold:
 
-* joining two datasets does not change the arity of their elements,
+* joining two datasets does not change the arity of their samples,
 * the size of the returned dataset is the sum of the size of the joined datasets,
 * the operation is associative, and it is possible to combine more than two datasets in one expression.
   ``
@@ -383,7 +383,7 @@ The details of the named value parameters is given in the table below.
   [
     [`step`]
     [1]
-    [Number indicating the step between two consecutive elements of the generated range. 
+    [Number indicating the step between two consecutive samples of the generated range. 
      The default type is the same as the input type. This value should not be 0. It should be of the same
      sign as `end-begin`.
     ]
