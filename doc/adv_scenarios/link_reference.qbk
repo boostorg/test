@@ -21,7 +21,7 @@ macro also expands properly into a `main` function in case the shared library va
 
 ]
 
-[tip The macro __BOOST_TEST_MODULE__ should be prefered]
+[tip The macro __BOOST_TEST_MODULE__ should be preferred]
 
 [endsect]
 
