@@ -8,16 +8,45 @@
 
 [section:test_case_generation Data-driven test cases]
 
-In some circumstance, one would like to run a [link boost_test.users_guide.tests_organization.test_cases.param_test parametrized] 
-test over a large set of parameters. __BOOST_PARAM_TEST_CASE__ provides an easy solution when these parameters can be described in 
-some collection. However, this solution has also limitations
 
-* Suppose we have a parametrized test on `func1`, on which we test `N` parameters. We know a few values on which `func1` has a deterministic behaviour and we test that: 
+[h4 Why data-driven test cases?]
+Some tests are required to be repeated for a series of different input parameters. One way to achieve this is
+manually register a test case for each parameter. You can also invoke a test function with
+all parameters manually from within your test case, like this:
+
+``
+void single_test( int i )
+{
+  BOOST_CHECK( /* test assertion */ );
+}
+
+void combined_test()
+{
+  int params[] = { 1, 2, 3, 4, 5 };
+  std::for_each( params, params+5, &single_test );
+}
+``
+
+The approach above has several drawbacks:
+
+* the logic for running the tests is inside a test itself: `single_test` in the above example is ran from the test case `combined_test` while its execution would be better
+  handled by the __UTF__
+* in case of fatal failure for one of the values in `param` array above (say a failure in __BOOST_REQUIRE__), the test `combined_test` is aborted and the next test-case in the test tree is executed. 
+* in case of failure, the reporting is not accurate enough: the test should certainly be reran during debugging sessions by a human or additional logic for reporting should be implemented
+  in the test itself.
+
+
+
+[h4 Parameter generation, scalability and composition]
+In some circumstance, one would like to run a parametrized test over an /arbitrary large/ set of values. Enumerating the parameters by hand is not a solution that scales well,
+especially when these parameters can be described in another function that generates these values. However, this solution has also limitations
+
+* *Scalability*: suppose we have a test case on `func1`, on which we test `N` parameters. We know a few values on which `func1` has a deterministic behaviour and we test that: 
   in this setting `N` is necessarily finite and usually small.  How would we extend or scale `N` easily? One solution is to be able to 
   generate new parameters, and to be able to define a test on the *class* of possible inputs for `func1` on which the function should have the same defined behaviour. 
-  In some extent, the inputs of the parametrized test is a sample of the possible inputs of `func1`, and working on the class of inputs gives more flexibility and power 
+  In some extent, the inputs of the parametrized test is a excerpt of the possible inputs of `func1`, and working on the class of inputs gives more flexibility and power 
   to the test. 
-* Suppose we already have a parametrized tests for two functions `func1` and `func2`, taking as argument the types `T1` and `T2` respectively. Now we like to test a new functions `func3` that 
+* *Composition*: suppose we already have test cases for two functions `func1` and `func2`, taking as argument the types `T1` and `T2` respectively. Now we would like to test a new functions `func3` that 
   takes as argument a type `T3` containing `T1` and `T2`, and calling `func1` and `func2` through a known algorithm. An example of such a setting would be
   `` 
   // Returns the log of x
@@ -45,38 +74,62 @@ some collection. However, this solution has also limitations
   * `func3` inherits from the preconditions of `fast_log` and `fast_inv`: it is defined in `(0, +infinity)` and in `[-C, +C] - {1}` for `field1` and `field2` respectively (`C`
      being a constant arbitrarily big).
   * as defined above, `func3` should be close to 1 everywhere on its definition domain. 
-  * we would like to reuse the tests of `fast_log` and `fast_inv` in `func3` and assert that `func3` is well defined over an arbitrary large definition domain. 
+  * we would like to reuse the properties of `fast_log` and `fast_inv` in the compound function `func3` and assert that `func3` is well defined over an arbitrary large definition domain. 
   
-  Having parametrized tests on `func3` hardly tells us about the possible numerical properties or instabilities close to the point `{field1 = 0, field2 = 1}`.  Indeed, the parametrized test may 
-  test for some points around (0,1), but will fail to provide an *asymptotical behaviour* of the function close to this point. 
+  Having parametrized tests on `func3` hardly tells us about the possible numerical properties or instabilities close to the point `{field1 = 0, field2 = 1}`. 
+  Indeed, the parametrized test may test for some points around (0,1), but will fail to provide an *asymptotical behaviour* of the function close to this point. 
 
 
-The __UTF__ provides a facility in order to ease the description and the generations of the class of inputs, through the notion of *datasets*. 
+[h4 Data driven tests in the Boost.Test framework]
+The facilities provided by the __UTF__ addressed the issues described above:
 
-The unit test toolbox is augmented with one new registration macro: __BOOST_DATA_TEST_CASE__. 
+* the notion of *datasets* eases the description of the class of inputs for test cases. The datasets also implement several operations that 
+  enable their combinations to create new, more complex datasets,
+* a single macro, __BOOST_DATA_TEST_CASE__, is used for the declaration and registration of a test case over a collection of values (samples),
+* each test case, associated to a unique value, is executed independently from others. These tests are guarded in the same way regular test cases are, which makes
+  the execution of the tests over each sample of a dataset isolated, robust, repeatable and ease the debugging,
+* several datasets generating functions are provided by the __UTF__
 
-[h3 Datasets]
-A [classref boost::unit_test::data::monomorphic::dataset dataset] is a collection of elements, that 
 
-* is forward iterable.
-* can be queried for its `size`, which in turn can be infinite. 
+This part is organized as follow:
+
+# [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.datasets First] the notion of *dataset* and *sample* will be introduced
+# then the declaration and registration of the data-driven test cases is explained,
+# the /operations/ on datasets are detailed
+# and finally the built-in dataset generators 
+
+
+[/ ##################################################################################################################################  ]
+[section Datasets]
+
+To define properly datasets, the notion of *sample* should be introduced first. A *sample* is defined as /polymorphic tuple/. 
+The size of the tuple will be by definition the *arity* of the sample itself. 
+
+A [classref boost::unit_test::data::monomorphic::dataset dataset] is a /collection of samples/, that 
+
+* is forward iterable,
+* can be queried for its `size`, which in turn can be infinite,
+* has an arity that is the arity of the samples it contains. 
 
 Hence the dataset implements the notion of /sequence/. 
 
 The descriptive power of the datasets in __UTF__ comes from
 
-* the available built-in [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators /dataset generators/]
+* the [classref boost::unit_test::data::monomorphic::dataset interface] for creating a custom datasets, which is quite simple,
 * the [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.operations operations] they provide for combining different datasets 
 * their interface with other type of collections (`stl` containers, `C` arrays)
+* the available built-in [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators /dataset generators/]
 
-[tip Only "monomorphic" datasets are supported, which means that all elements of a dataset have the same type. However as we will see, 
- datasets representing collections of different types may be combined together.
+[tip Only "monomorphic" datasets are supported, which means that all samples in a dataset have the same type and same arity 
+ [footnote polymorphic datasets will be considered in the future. Their need is mainly driven by the replacement of the [link boost_test.users_guide.tests_organization.test_organization_templates typed parametrized test cases] by the dataset-like API.]
+ . 
  ]
 
-As an additional property, datasets also provide information on the arity of their elements. Datasets are monomorphic but may be 
-combined by operations that change their arity (eg. /zip/). The arity property is used for consistency checks and for providing enough 
-variables in the body of the dataset driven test-cases.
+ 
+As we will see in the next sections, datasets representing collections of different types may be combined together (eg. /zip/ or /grid/). 
+These operations result in new datasets, in which the samples are of an augmented type. 
 
+[endsect] [/ datasets]
 
 
 
