@@ -161,9 +161,11 @@ The second form is also for datasets of arity 1, but instead of the variable `sa
 [snippet_dataset1_2]
 
 The third form is an extension of the previous form for datasets of arity `N`. The sample being a polymorphic tuple, each of the variables `var1`, ..., `varN` corresponds
-to the index 1, ... `N` of the the sample. 
+to the index 1, ... `N` of the the sample:
+[snippet_dataset1_3]
 
-The arity of the dataset and the number of variables should be exactly the same, the first form being a shortcut for the case of arity 1. 
+
+The arity of the dataset and the number of variables should be exactly the same, the first form being a short-cut for the case of arity 1. 
 
 [tip A compilation-time check is performed on the coherence of the arity of the dataset and the number of variables `var1`... `varN`. ]
 
