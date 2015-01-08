@@ -155,8 +155,8 @@ yields to the same tuples independently of the positions of the parenthesis. Hen
        boost::unit_test::xrange(4, 6)
 `` 
 
-[caution Zip operation is not available for the compiler if the macro [macroref BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE `BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE`] 
- is set]
+[caution If the /zip/ operation is not supported for your compiler, the macro [macroref BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE `BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE`] 
+ will be automatically set by the __UTF__]
 
 [bt_example example61..Example of zip on datasets]
 
@@ -177,10 +177,9 @@ The following properties hold:
 * the operation is associative, and it is possible to combine more than two datasets in one expression,
 * as for /zip/, there is no need the dataset to have the same type of elements.
 
-
-[caution Cartesian product is not available for the compiler if the macro [macroref BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE `BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE`] 
- is set]
-
+[caution If the /grid/ operation is not supported for your compiler, the macro [macroref BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE `BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE`] 
+ will be automatically set by the __UTF__] 
+ 
 In the following example, the random number generator is the second dataset. Its state is evaluated 6 times (3 times for the first `xrange` - first dimension -
 and twice for the second `xrange` - second dimension - to which it is zipped). Note that the state of the random engine is not copied between two successive evaluations of the first dimension.
 
@@ -330,10 +329,13 @@ The details of the named value parameters is given in the table below.
 This type of dataset generates a sequence of random numbers following a given /distribution/. The /seed/ and the /engine/ may also be 
 specified. 
 
-[caution the random value generators are available only for C++11 capable compilers. The 
- feature is not available for the compiler if the macro [macroref BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE `BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE`] 
- is set]
 
+[caution The random value generator is available only for C++11 capable compilers. If this feature is not supported for your compiler, 
+ the macro [macroref BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE `BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE`] 
+ will be automatically set by the __UTF__] 
+
+ 
+ 
 It is possible to construct a random sequence using the factory [funcref boost::unit_test::data::random], available in the overloads below:
 
 ``
