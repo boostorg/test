@@ -106,6 +106,8 @@
 [def __BOOST_AUTO_TEST_SUITE_END__              [link boost_test.users_guide.tests_organization.test_org_reference.test_org_boost_auto_test_suite_end `BOOST_AUTO_TEST_SUITE_END`]]
 [def __BOOST_TEST_SUITE__                       [link boost_test.users_guide.tests_organization.test_org_reference.test_org_boost_test_suite `BOOST_TEST_SUITE`]]
 [def __BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ [link boost_test.users_guide.tests_organization.test_org_reference.test_org_boost_test_case_expected_failure `BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES`]]
+[/ decorator]
+[def __BOOST_TEST_DECORATOR__                   [link boost_test.users_guide.tests_organization.test_org_reference.test_org_boost_test_decorator `BOOST_TEST_DECORATOR`]]
 [/ fixtures]
 [def __BOOST_FIXTURE_TEST_CASE__                [link boost_test.users_guide.tests_organization.test_org_reference.test_org_boost_test_case_fixture     `BOOST_FIXTURE_TEST_CASE`]]
 [def __BOOST_FIXTURE_TEST_SUITE__               [link boost_test.users_guide.tests_organization.test_org_reference.test_org_boost_test_suite_fixture    `BOOST_FIXTURE_TEST_SUITE`]]

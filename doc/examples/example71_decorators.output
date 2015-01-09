@@ -1,0 +1,25 @@
+//[example_output
+> example --report_level=detailed
+Running 2 test cases...
+test.cpp(16): error: in "test_case1": check false has failed
+test.cpp(17): error: in "test_case1": check false has failed
+test.cpp(22): error: in "test_case2": check false has failed
+test.cpp(23): error: in "test_case2": check false has failed
+
+Test module "example" failed with:
+  2 test cases out of 2 failed
+  4 assertions out of 4 failed
+  3 expected failures
+
+  Test suite "suite1" failed with:
+    2 test cases out of 2 failed
+    4 assertions out of 4 failed
+    3 expected failures
+
+    Test case "test_case1" failed with:
+      2 assertions out of 2 failed
+      1 expected failure
+
+    Test case "test_case2" failed with:
+      2 assertions out of 2 failed
+//]

@@ -1,0 +1,6 @@
+//[example_output
+> example --run_test=@trivial
+Running 2 test cases...
+
+*** No errors detected
+//]

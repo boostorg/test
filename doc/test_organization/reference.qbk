@@ -67,6 +67,12 @@
     [Automatic declaration of a test suite]
   ]
 
+  [/ ###############################################################################################]
+  [/ Decorator]
+  [
+    [__BOOST_TEST_DECORATOR__]
+    [Adds decorators to a test unit or a test suite]
+  ]
   
   [/ ###############################################################################################]
   [/ Fixtures]
@@ -203,7 +209,12 @@ __BOOST_AUTO_TEST_SUITE__.
 See [link ref_BOOST_AUTO_TEST_SUITE here] for more details.
 [endsect] [/section:test_org_boost_auto_test_suite_end]
 
+[/ Decorator ##############################################################################################]
+[section:test_org_boost_test_decorator `BOOST_TEST_DECORATOR`]
+Defines ['decorators] for a test unit or a test suite. 
 
+See [link ref_BOOST_TEST_DECORATOR here] for more details.
+[endsect] [/section:test_org_boost_test_decorator]
 
 [/ Fixtures ###############################################################################################]
 [section:test_org_boost_test_case_fixture `BOOST_FIXTURE_TEST_CASE`]
