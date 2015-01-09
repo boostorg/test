@@ -43,7 +43,7 @@ In case the scope of the suite is opened twice in two different translation unit
 
 [section:available_decorators Available decorators]
 
-[h3 label]
+[#ref_decorator_label][h3 label]
 
 ``
 label(const_string label_name);
