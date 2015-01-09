@@ -14,56 +14,72 @@
 
 namespace bdata = boost::unit_test::data;
 
-// Generates a Fibonacci sequence
-std::vector<float> fibonacci() {
-  std::vector<float> ret(8);
-  ret[0] = 0;
-  ret[1] = 1;
+// Dataset generating a Fibonacci sequence
+class fibonacci_dataset : public bdata::monomorphic::dataset<int>
+{
+  typedef bdata::monomorphic::dataset<int> base;
   
-  for(std::size_t s(2); s < ret.size(); s++)
+  struct iterator : base::iterator
   {
-    ret[s] = ret[s-1] + ret[s-2];
-  }
-  return ret;
-}
+    typedef typename bdata::monomorphic::traits<int>::ref_type ref_type;
+    int a;
+    int b; // b is the output
+    
+    iterator() : a(0), b(0) 
+    {}
+    
+    ref_type operator*()
+    {
+      return b;
+    }
+    
+    virtual void operator++()
+    {
+      a = a + b;
+      std::swap(a, b);
+      
+      if(!b)
+        b = 1;
+    }
+  };
+  
+public:
 
+  typedef int data_type;
+  enum { arity = 1 };
+
+  fibonacci_dataset()
+  {
+  }
+  
+  // size is infinite
+  bdata::size_t size() const
+  {
+    return bdata::size_t(true);
+  }
+  
+  // iterator
+  virtual iter_ptr begin() const
+  { 
+    return boost::make_shared<iterator>(); 
+  }
+};
+
+namespace boost { namespace unit_test { namespace data { namespace monomorphic {
+  // registering fibonacci_dataset as a proper dataset
+  template <>
+  struct is_dataset<fibonacci_dataset> : boost::mpl::true_ {};
+}}}}
+
+// Creating a test-driven dataset 
 BOOST_DATA_TEST_CASE( 
   test_case_snippet_1, 
-  bdata::make(fibonacci()),
-  array_element)
+  fibonacci_dataset() ^ bdata::xrange(10),
+  fib_sample, index)
 {
   std::cout << "test 1: " 
-    << array_element 
+    << fib_sample 
     << std::endl;
-  BOOST_CHECK(array_element <= 13);
+  BOOST_CHECK(fib_sample <= 13);
 }
 
-
-// Generates a map from a vector
-std::map<std::string, float> vect_2_str(std::vector<float> v) 
-{
-  std::map<std::string, float> out;
-  for(std::size_t s(0); s < v.size(); s++)
-  {
-    std::ostringstream o;
-    o << v[s];
-    out[o.str()] = v[s];
-  }
-  return out;
-}
-
-typedef std::pair<const std::string, float> pair_map_t;
-BOOST_TEST_DONT_PRINT_LOG_VALUE( pair_map_t );
-
-BOOST_DATA_TEST_CASE( 
-  test_case_snippet_2, 
-  bdata::make(vect_2_str(fibonacci())),
-  array_element)
-{
-  std::cout << "test 2: \"" 
-    << array_element.first << "\", "
-    << array_element.second
-    << std::endl;
-  BOOST_CHECK(array_element.second <= 13);
-}
-//]
