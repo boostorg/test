@@ -9,6 +9,7 @@ message(STATUS "$BOOST_ROOT = ${BOOST_ROOT}")
 set(EXAMPLES_SRC
     example64.cpp
     example68.cpp
+    example69.cpp
     )
 
 foreach(example_file IN LISTS EXAMPLES_SRC)
