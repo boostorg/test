@@ -7,6 +7,74 @@
 
 [section:context Contexts]
 
+Contexts are a facility provided by the __UTF__ in order to be able to trace the location of assertions better. To grasp the idea, consider the following example:
+
+``
+BOOST_AUTO_TEST_CASE(dummy)
+{
+  for(int i = 0; i < 10; i++)
+  {
+    BOOST_CHECK( (i % 3) == 0);
+  }
+}
+``
+
+In case of failure, in order to see in the logs at which point of the loop the failure occured, we need some extra information in the assertion:
+
+``
+BOOST_CHECK( (i % 3) == 0);
+``
+
+replaced by
+
+`` 
+BOOST_CHECK_MESSAGE( (i % 3) == 0, "Failure occured for i = " << i);
+``
+
+We see in this trivial example that a context, which is the variable `i` in this case, should be acknownledged by the assertion `BOOST_CHECK` in a particular way. In 
+the approach above, this is done by adding a message to the assertion itself. 
+
+What if the context is more complex than that?
+In case the complexity of the context increases, the fact that the assertion and the context is tightly coupled as the approach above is difficult to maintain:
+
+``
+void some_complex_function(int a, int b)
+{
+  if(a == 0)
+  {
+    BOOST_CHECK_MESSAGE(b == 1, "failure in case a == 0");
+  }
+  else if(b == 1)
+  {
+    BOOST_CHECK_MESSAGE(a == 1, "failure in case b == 1 and a != 0");
+  }
+}
+
+BOOST_AUTO_TEST_CASE(dummy)
+{
+  for(int i = 0; i < 10; i++)
+  {
+    some_complex_function( (i / 3), (i % 3) );
+  }
+
+}
+``
+
+So *loose* coupling between the context of an assertion and the assertion point is a property that is desirable.
+
+
+
+
+
+``
+BOOST_TEST_INFO("context to stack")
+``
+
+``
+BOOST_TEST_CONTEXT("scoped context to stack")
+``
+
+
 
 [endsect] [/ contexts ]
 
