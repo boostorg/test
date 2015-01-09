@@ -215,16 +215,12 @@ The size of the zipped dataset is as follow:
 Zips are accessible through the `operator^` on datasets. The zip operation increases the arity of the dataset by one.
 
 It is possible to combine more than two datasets for zipping: the `operator^` is associative and the datasets created
-yields to the same tuples independently of the positions of the parenthesis. Hence, the following zips are equivalent:
+yields to the same tuples independently of the positions of the parenthesis. Hence, the following zips are equivalent for any datasets `dsa`, `dsb` and `dsc`:
 
 ``
- (boost::unit_test::xrange(2) ^ boost::unit_test::xrange(2, 4))
-    ^ boost::unit_test::xrange(4, 6)
- == boost::unit_test::xrange(2) ^ 
-    ( boost::unit_test::xrange(2, 4) ^ boost::unit_test::xrange(4, 6) )
- == boost::unit_test::xrange(2) ^ 
-     boost::unit_test::xrange(2, 4) ^ 
-       boost::unit_test::xrange(4, 6)
+ ( dsa ^ dsb ) ^ dsc
+ == dsa ^ ( dsb ^ dsc )
+ == dsa ^ dsb ^ dsc
 `` 
 
 [caution If the /zip/ operation is not supported for your compiler, the macro [macroref BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE `BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE`] 
@@ -262,18 +258,29 @@ and twice for the second `xrange` - second dimension - to which it is zipped). N
 
 
 [section Joins]
-A ['join] is the concatenation of two datasets, available through `operator+`. The datasets are required to have compatible types.
+A ['join], noted `+`, is an operation on two datasets `dsa` and `dsb` of same arity and compatible types, resulting in the *concatenation* of these two datasets `dsa` and `dsb`
+from the left to the right order of the symbol `+`: 
+
+``
+dsa = (a_1, a_2, ... a_i)
+dsb = (b_1, b_2, ... b_j)
+dsa + dsb = (a_1, a_2, ... a_i, b_1, b_2, ... b_j)
+``
 
 The following properties hold:
 
-* joining two datasets does not change the arity of their samples,
+* the resulting dataset is of same arity as the operand datasets,
 * the size of the returned dataset is the sum of the size of the joined datasets,
-* the operation is associative, and it is possible to combine more than two datasets in one expression.
+* the operation is associative, and it is possible to combine more than two datasets in one expression. The following joins are equivalent for any datasets `dsa`, `dsb` and `dsc`:
   ``
-  int arr1[] = {1, 2};
-  int arr2[] = {7, 19};
-  __BOOST_CHECK_EQUAL__( (data::make( arr1 ) + data::make( arr2 )).size(), 4);
+  ( dsa + dsb ) + dsc 
+  == dsa + ( dsb + dsc )
+  == dsa + dsb + dsc 
   ``
+
+[warning In the expression `dsa + dsb`, `dsa` and/or `dsb` can be of infinite size. The resulting dataset will have an infinite size as well. If `dsa` is infinite, the content of 
+ `dsb` will never be reached. ]
+
 
 [bt_example example62..Example of join on datasets]
 

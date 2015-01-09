@@ -7,7 +7,7 @@
  
 [section:param_test Parametrized test cases]
 
-[caution the functionalities presented on this page have been superceeded by the 
+[caution the functionalities presented on this page have been superseded by the 
  [link boost_test.users_guide.tests_organization.test_cases.test_case_generation Data-driven test case] framework.]
 
 

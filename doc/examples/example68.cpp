@@ -17,6 +17,12 @@ namespace bdata = boost::unit_test::data;
 // Dataset generating a Fibonacci sequence
 class fibonacci_dataset : public bdata::monomorphic::dataset<int>
 {
+public:
+  // Samples type is int
+  typedef int data_type;
+  enum { arity = 1 };
+
+private:
   typedef bdata::monomorphic::dataset<int> base;
   
   struct iterator : base::iterator
@@ -44,13 +50,8 @@ class fibonacci_dataset : public bdata::monomorphic::dataset<int>
   };
   
 public:
-
-  typedef int data_type;
-  enum { arity = 1 };
-
   fibonacci_dataset()
-  {
-  }
+  {}
   
   // size is infinite
   bdata::size_t size() const
