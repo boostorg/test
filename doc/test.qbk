@@ -144,6 +144,9 @@
 [def __param_save_pattern__           [link ref_param_save_patterm `save_patterm`]]
 [def __param_list_content__           [link boost_test.users_guide.runtime_config.rt_param_reference.param_list_content `list_content`]]
 
+[/ decorators]
+[def __decorator_label__              [link ref_decorator_label `label`]] 
+
 [/=============================================================================]
 [/ templates ]
 
