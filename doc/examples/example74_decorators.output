@@ -1,0 +1,24 @@
+//[example_output
+> example
+Running 3 test cases...
+test.cpp(11): error: in "test_case1": check false has failed
+test.cpp(20): error: in "test_case2": check false has failed
+test.cpp(25): error: in "test_case3": check false has failed
+
+*** 3 failures detected in test module "example"
+
+
+> example --run_test=@l1
+Running 2 test cases...
+test.cpp(11): error: in "test_case1": check false has failed
+test.cpp(20): error: in "test_case2": check false has failed
+
+*** 2 failures detected in test module "example"
+
+
+> example --run_test=@l2
+Running 1 test case...
+test.cpp(20): error: in "test_case2": check false has failed
+
+*** 1 failure detected in test module "example"
+//]
