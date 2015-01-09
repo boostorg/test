@@ -46,6 +46,8 @@ BOOST_TEST_DECL bool                    color_output();
 BOOST_TEST_DECL bool                    detect_fp_exceptions();
 /// Should we detect memory leaks (>0)? And if yes, which specific memory allocation should we break.
 BOOST_TEST_DECL long                    detect_memory_leaks();
+/// Enable output of deprecated timer format?
+BOOST_TEST_DECL bool                    deprecated_timer_format();
 /// Print content of test tree?
 BOOST_TEST_DECL bool                    list_content();
 /// Which output format to use

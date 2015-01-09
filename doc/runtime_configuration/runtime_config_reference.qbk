@@ -136,8 +136,15 @@ acceptable values list. All values are case sensitive and are required to exactl
     [__param_detect_fp_exceptions__]
     [Traps floating point exceptions (on supported platforms).]
   ]
-  
-  
+
+
+  [/ ###############################################################################################]
+  [
+    [__param_deprecated_timer_format__]
+    [Enables output of the deprecated timer format.]
+  ]
+
+
   [/ ###############################################################################################]
   [
     [__param_log_sink__]
@@ -548,7 +555,25 @@ Dnables/disable hardware traps for the floating point exception (if supported).
 
   BOOST_TEST_DETECT_FP_EXCEPTIONS
 
-[endsect] [/detect_fp_exceptions]  
+[endsect] [/detect_fp_exceptions]
+
+[/ ###############################################################################################]
+[#ref_param_deprecated_timer_format][section `deprecated_timer_format`]
+
+Enables the deprecated timer format
+
+Enables/disables the output of the deprecated timer format for times when using the HRF format.
+
+[h4 Acceptable values]
+
+* [*no] (default)
+* yes
+
+[h4 Environment variable]
+
+  BOOST_TEST_DEPRECATED_TIMER_FORMAT
+
+[endsect] [/deprecated_timer_format]
 
 [/ ###############################################################################################]
 [#ref_param_log_sink][section `log_sink`]
