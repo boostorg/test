@@ -129,6 +129,8 @@ The descriptive power of the datasets in __UTF__ comes from
 As we will see in the next sections, datasets representing collections of different types may be combined together (eg. /zip/ or /grid/). 
 These operations result in new datasets, in which the samples are of an augmented type. 
 
+[tip This [link boost_test.boost_test_examples.example_ref68 example] implements a dataset generating a Fibonacci sequence]
+
 [endsect] [/ datasets]
 
 
@@ -178,8 +180,6 @@ Exactly as regular test cases, each test - or each sample - is executed within t
 * the test execution are independent: if an error occurs for one sample, the reminder samples execution is not affected
 * in case of error, the [link boost_test.users_guide.tests_organization.context context] within which the error occurred is reported in the [link boost_test.users_guide.test_output log]. 
   This context contains the sample for which the test failed, which would ease the debugging. 
-
-[tip This [boost_test.boost_test_examples.example_ref68 example] implements a dataset generating a Fibonacci sequence]
 
 [caution The macro __BOOST_DATA_TEST_CASE__ is available only for compilers with support for variadic macros.]
 
