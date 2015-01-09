@@ -8,7 +8,7 @@
 /// @file
 /// @brief Entry point into the Unit Test Framework
 ///
-/// This header sould be the only header necessary to include to start using the framework
+/// This header should be the only header necessary to include to start using the framework
 // ***************************************************************************
 
 #ifndef BOOST_TEST_UNIT_TEST_HPP_071894GER
