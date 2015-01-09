@@ -67,6 +67,12 @@
     [Automatic declaration of a test suite]
   ]
 
+  [/ ###############################################################################################]
+  [/ Decorator]
+  [
+    [__BOOST_TEST_DECORATOR__]
+    [Adds decorators to a test unit or a test suite]
+  ]
   
   [/ ###############################################################################################]
   [/ Fixtures]
