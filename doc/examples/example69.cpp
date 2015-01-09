@@ -10,44 +10,61 @@
 #include <boost/test/included/unit_test.hpp>
 #include <sstream>
 
-namespace bdata = boost::unit_test::data;
 
+void func2()
+{
+  BOOST_TEST_INFO( "[context] func2" );
+  BOOST_CHECK( false );
+}
+
+void func1()
+{
+  BOOST_TEST_INFO( "[context] func1" );
+  func2();
+}
+
+void func3(int i)
+{
+  if(i < 0)
+  {
+    BOOST_TEST_CONTEXT( "[context] i negative branch") 
+    {
+      func2();
+      return;
+    }
+  }
+  
+  BOOST_TEST(i != 1);
+}
 
 BOOST_AUTO_TEST_CASE( test_context_logging )
 {
-  BOOST_TEST_INFO( "some context" );
-  BOOST_CHECK( false );
+  BOOST_TEST_INFO( "context consumed by the next assertion" );
+  BOOST_CHECK( true );
 
-  int i = 12;
-  BOOST_TEST_INFO( "some more context: " << i );
-  BOOST_CHECK( false );
+  int a = 1;
+  int b = 1;
+  BOOST_TEST_INFO( "checking a != b [" << a << "!=" << b << "]" );
+  BOOST_TEST( a != b );
 
-  BOOST_TEST_INFO( "info 1" );
-  BOOST_TEST_INFO( "info 2" );
-  BOOST_TEST_INFO( "info 3" );
-  BOOST_CHECK( false );
 
-  BOOST_TEST_CONTEXT( "some sticky context" ) 
+  BOOST_TEST_INFO( "stacking" );
+  func1();
+  
+  // no context, consumed by the test in func2
+  BOOST_CHECK( false );
+  
+  BOOST_TEST_INFO( "*** consumed by first assertion (failing or not) ***" );
+  BOOST_TEST_CONTEXT( "[context] shown every time (sticky)") 
   {
-    BOOST_CHECK( false );
-
-    BOOST_TEST_INFO( "more context" );
-    BOOST_CHECK( false );
-
-    BOOST_TEST_INFO( "different subcontext" );
-    BOOST_CHECK( false );
-  }
-
-  BOOST_TEST_CONTEXT( "outer context" ) 
-  {
-    BOOST_CHECK( false );
-
-    BOOST_TEST_CONTEXT( "inner context" ) 
+    for(int i = -1; i < 2; i++)
     {
-      BOOST_CHECK( false );
+      BOOST_TEST_CONTEXT( "[context] calling func3( " << i << " )")
+      {
+        func3(i);
+      }
     }
-
-    BOOST_CHECK( false );
   }
+
 }
 //]
