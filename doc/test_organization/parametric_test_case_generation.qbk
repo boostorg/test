@@ -41,12 +41,18 @@ The approach above has several drawbacks:
 In some circumstance, one would like to run a parametrized test over an /arbitrary large/ set of values. Enumerating the parameters by hand is not a solution that scales well,
 especially when these parameters can be described in another function that generates these values. However, this solution has also limitations
 
-* *Generating functions*:  
-* *Scalability*: suppose we have a test case on `func1`, on which we test `N` parameters. We know a few values on which `func1` has a deterministic behaviour and we test that: 
-  in this setting `N` is necessarily finite and usually small.  How would we extend or scale `N` easily? One solution is to be able to 
-  generate new parameters, and to be able to define a test on the *class* of possible inputs for `func1` on which the function should have the same defined behaviour. 
-  In some extent, the inputs of the parametrized test is a excerpt of the possible inputs of `func1`, and working on the class of inputs gives more flexibility and power 
+* *Generating functions*: suppose we have a function `func(float f)`, where `f` is any number in [0, 1]. We are not interested that much in the exact value, but we would like to test
+  `func`. What about, instead of writing the `f` for which `func` will be tested against, we choose randomly `f` in [0, 1]? And also what about instead of having only one 
+  value for `f`, we run the test on arbitrarily many numbers? We easily understand from this small example that tests requiring parameters are more powerful when, instead 
+  of writing down constant values in the test, a generating function is provided. 
+
+* *Scalability*: suppose we have a test case on `func1`, on which we test `N` values written as constant in the test file. 
+  What does the test ensure? We have the guaranty that `func1` is working on these `N` values. Yet in this setting `N` is necessarily finite and usually small. 
+  How would we extend or scale `N` easily? One solution is to be able to 
+  generate new values, and to be able to define a test on the *class* of possible inputs for `func1` on which the function should have a defined behaviour. 
+  To some extent, `N` constant written down in the test are just an excerpt of the possible inputs of `func1`, and working on the class of inputs gives more flexibility and power 
   to the test. 
+
 * *Composition*: suppose we already have test cases for two functions `func1` and `func2`, taking as argument the types `T1` and `T2` respectively. Now we would like to test a new functions `func3` that 
   takes as argument a type `T3` containing `T1` and `T2`, and calling `func1` and `func2` through a known algorithm. An example of such a setting would be
   `` 
@@ -212,7 +218,7 @@ The resulting dataset samples order follows the left to right order against the 
 ``
 dsa = (a_1, a_2, ... a_i)
 dsb = (b_1, b_2, ... b_i)
-dsa * dsb = ( (a_1, b_1), (a_2, b_2) ... (a_i, b_i) )
+dsa ^ dsb = ( (a_1, b_1), (a_2, b_2) ... (a_i, b_i) )
 ``
 
 The following properties hold:
@@ -228,6 +234,7 @@ The following properties hold:
 
 
 A particular handling of the size is performed if `dsa` and `dsb` are of different size. The rule is as follow:
+
 * if the both zipped datasets have the same size, this is the size of the resulting dataset (this size can then be infinite). 
 * otherwise if one of the dataset is of size 1 (singleton) or of infinite size, the resulting size is governed by the other dataset.
 * otherwise an exception is thrown at runtime
