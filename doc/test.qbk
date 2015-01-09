@@ -168,7 +168,7 @@
 [/ ### template for the example page  ]
 [template bt_example_page[name descr]
 
-[section [descr]] 
+[section:example_ref[name] [descr]] 
 
 [import examples/example[name].cpp]
 [import examples/example[name].output]

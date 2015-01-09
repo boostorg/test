@@ -179,6 +179,7 @@ Exactly as regular test cases, each test - or each sample - is executed within t
 * in case of error, the [link boost_test.users_guide.tests_organization.context context] within which the error occurred is reported in the [link boost_test.users_guide.test_output log]. 
   This context contains the sample for which the test failed, which would ease the debugging. 
 
+[tip This [boost_test.boost_test_examples.example_ref68 example] implements a dataset generating a Fibonacci sequence]
 
 [caution The macro __BOOST_DATA_TEST_CASE__ is available only for compilers with support for variadic macros.]
 
