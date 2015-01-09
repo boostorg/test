@@ -41,6 +41,7 @@ The approach above has several drawbacks:
 In some circumstance, one would like to run a parametrized test over an /arbitrary large/ set of values. Enumerating the parameters by hand is not a solution that scales well,
 especially when these parameters can be described in another function that generates these values. However, this solution has also limitations
 
+* *Generating functions*:  
 * *Scalability*: suppose we have a test case on `func1`, on which we test `N` parameters. We know a few values on which `func1` has a deterministic behaviour and we test that: 
   in this setting `N` is necessarily finite and usually small.  How would we extend or scale `N` easily? One solution is to be able to 
   generate new parameters, and to be able to define a test on the *class* of possible inputs for `func1` on which the function should have the same defined behaviour. 
@@ -205,23 +206,32 @@ operators for the language still apply. ]
 
 
 [section Zips]
-The ['zip] function returns a dataset of tuples, where the `i`-th tuple contains the `i`-th sample from each of the argument datasets.
-The size of the zipped dataset is as follow:
+A ['zip], denoted `^` , is an operation on two datasets `dsa` and `dsb` of same arity and same size, resulting in a dataset where the `k`-th sample of `dsa` is paired with the corresponding `k`-th sample of `dsb`.
+The resulting dataset samples order follows the left to right order against the symbol `^`. 
 
+``
+dsa = (a_1, a_2, ... a_i)
+dsb = (b_1, b_2, ... b_i)
+dsa * dsb = ( (a_1, b_1), (a_2, b_2) ... (a_i, b_i) )
+``
+
+The following properties hold:
+
+* the arity of the resulting dataset is the sum of the arities of the operand datasets, 
+* the size of the resulting dataset is the product of the sizes of the datasets, exception made for the case the operand datasets size mismatch (see below),
+* the operation is associative, and it is possible to combine more than two datasets in one expression,
+  ``
+   ( dsa ^ dsb ) ^ dsc
+   == dsa ^ ( dsb ^ dsc )
+   == dsa ^ dsb ^ dsc
+  `` 
+
+
+A particular handling of the size is performed if `dsa` and `dsb` are of different size. The rule is as follow:
 * if the both zipped datasets have the same size, this is the size of the resulting dataset (this size can then be infinite). 
 * otherwise if one of the dataset is of size 1 (singleton) or of infinite size, the resulting size is governed by the other dataset.
 * otherwise an exception is thrown at runtime
 
-Zips are accessible through the `operator^` on datasets. The zip operation increases the arity of the dataset by one.
-
-It is possible to combine more than two datasets for zipping: the `operator^` is associative and the datasets created
-yields to the same tuples independently of the positions of the parenthesis. Hence, the following zips are equivalent for any datasets `dsa`, `dsb` and `dsc`:
-
-``
- ( dsa ^ dsb ) ^ dsc
- == dsa ^ ( dsb ^ dsc )
- == dsa ^ dsb ^ dsc
-`` 
 
 [caution If the /zip/ operation is not supported for your compiler, the macro [macroref BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE `BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE`] 
  will be automatically set by the __UTF__]
@@ -233,15 +243,22 @@ yields to the same tuples independently of the positions of the parenthesis. Hen
 
 
 
-[section Cartesian products]
-The Cartesian product, or ['grid], combines two datasets in order to form a new dataset of higher /dimension/. Each /dimension/
-then spans the content of its source dataset, while the other dimensions are fixed. Cartesian products are accessible through the 
-`operator*` on datasets.
+[section Grid (Cartesian products)]
+A ['grid], denoted `*` , is an operation on two any datasets `dsa` and `dsb` resulting in a dataset where each sample of `dsa` is paired with each sample of `dsb`
+exactly once. The resulting dataset samples order follows the left to right order against the symbol `*`. The rightmost dataset samples are iterated first. 
+
+``
+dsa = (a_1, a_2, ... a_i)
+dsb = (b_1, b_2, ... b_j)
+dsa * dsb = ((a_1, b_1), (a_1, b_2) ... (a_1, b_j), (a_2, b_1), ... (a_2, b_j) ... (a_i, b_1), ... (a_i, b_j))
+``
+
+The grid hence is similar to the mathematical notion of Cartesian product [footnote if the sequence is viewed as a set]. 
 
 The following properties hold:
 
 * the arity of the resulting dataset is the sum of the arities of the operand datasets, 
-* the size of the resulting dataset is the product of the datasets, 
+* the size of the resulting dataset is the product of the sizes of the datasets, 
 * the operation is associative, and it is possible to combine more than two datasets in one expression,
 * as for /zip/, there is no need the dataset to have the same type of samples.
 
@@ -258,7 +275,7 @@ and twice for the second `xrange` - second dimension - to which it is zipped). N
 
 
 [section Joins]
-A ['join], noted `+`, is an operation on two datasets `dsa` and `dsb` of same arity and compatible types, resulting in the *concatenation* of these two datasets `dsa` and `dsb`
+A ['join], denoted `+`, is an operation on two datasets `dsa` and `dsb` of same arity and compatible types, resulting in the *concatenation* of these two datasets `dsa` and `dsb`
 from the left to the right order of the symbol `+`: 
 
 ``
