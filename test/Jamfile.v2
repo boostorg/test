@@ -8,8 +8,6 @@
 
 project
     : requirements
-      <library>/boost/system//boost_system
-      <library>/boost/timer//boost_timer
     ;
 
 
