@@ -43,9 +43,9 @@
 <li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.build_info', id339462 ); return false;">build_info</a></li>
 <li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.catch_system_errors', id339462 ); return false;">catch_system_errors</a></li>
 <li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.color_output', id339462 ); return false;">color_output</a></li>
+<li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.deprecated_timer_format', id339462 ); return false;">deprecated_timer_format</a></li>
 <li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.detect_fp_exceptions', id339462 ); return false;">detect_fp_exceptions</a></li>
 <li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.detect_memory_leaks', id339462 ); return false;">detect_memory_leaks</a></li>
-<li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.deprecated_timer_format', id339462 ); return false;">deprecated_timer_format</a></li>
 <li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.log_format', id339462 ); return false;">log_format</a></li>
 <li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.log_level', id339462 ); return false;">log_level</a></li>
 <li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.log_sink', id339462 ); return false;">log_sink</a></li>
@@ -58,6 +58,7 @@
 <li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.run_test', id339462 ); return false;">run_test</a></li>
 <li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.save_patterm', id339462 ); return false;">save_patterm</a></li>
 <li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.show_progress', id339462 ); return false;">show_progress</a></li>
+<li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.suppress_timer_output', id339462 ); return false;">suppress_timer_output</a></li>
 <li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.use_alt_stack', id339462 ); return false;">use_alt_stack</a></li>
 </ul></td>
 <td class="content" valign="top">
@@ -242,6 +243,44 @@
 </table>
 <br>
 </div></div>
+<div class="entry" id="utf.user-guide.runtime-config.parameters.deprecated_timer_format"><div class="segmentedlist">
+<table class="seglistitem">
+<tr class="seg">
+<td><strong><nobr><span class="segtitle">Parameter Name</span></nobr></strong></td>
+<td>: </td>
+<td><span class="emphasis"><em>Force the timer output format to match the deprecated Boost.Timer</em></span></td>
+</tr>
+<tr class="seg">
+<td><strong><nobr><span class="segtitle">Environment variable name</span></nobr></strong></td>
+<td>: </td>
+<td><code class="varname">BOOST_TEST_DEPRECATED_TIMER_FORMAT</code></td>
+</tr>
+<tr class="seg">
+<td><strong><nobr><span class="segtitle">Command line argument name</span></nobr></strong></td>
+<td>: </td>
+<td><em class="parameter"><code>deprecated_timer_format</code></em></td>
+</tr>
+<tr class="seg">
+<td><strong><nobr><span class="segtitle">Acceptable Values</span></nobr></strong></td>
+<td>: </td>
+<td><table border="0" summary="Simple list" class="simplelist">
+<tr><td><span class="bold"><strong>no</strong></span></td></tr>
+<tr><td>yes</td></tr>
+</table></td>
+</tr>
+<tr class="seg">
+<td><strong><nobr><span class="segtitle">Description</span></nobr></strong></td>
+<td>: </td>
+<td><p>
+      Specifying this option forces any timer output to match that provided by the deprecated Boost.Timer
+      class. If you use scripts that parse either the HRF or XML output for Boost.Test and find you are no
+      longer able to parse the output correctly then enabling this feature should allow your scripts to
+      work as before. Disabled by default.
+     </p></td>
+</tr>
+</table>
+<br>
+</div></div>
 <div class="entry" id="utf.user-guide.runtime-config.parameters.detect_fp_exceptions"><div class="segmentedlist">
 <table class="seglistitem">
 <tr class="seg">
@@ -313,44 +352,6 @@
       do that from the command line - only when you are under debugger). Note: if your test program produces memory
       leaks notifications, they are combined with allocation number values you could use to set a breakpoint.
       Currently only applies to MS family of compilers in debug builds.
-     </p></td>
-</tr>
-</table>
-<br>
-</div></div>
-<div class="entry" id="utf.user-guide.runtime-config.parameters.deprecated_timer_format"><div class="segmentedlist">
-<table class="seglistitem">
-<tr class="seg">
-<td><strong><nobr><span class="segtitle">Parameter Name</span></nobr></strong></td>
-<td>: </td>
-<td><span class="emphasis"><em>Force the timer output format to match the deprecated Boost.Timer</em></span></td>
-</tr>
-<tr class="seg">
-<td><strong><nobr><span class="segtitle">Environment variable name</span></nobr></strong></td>
-<td>: </td>
-<td><code class="varname">BOOST_TEST_DEPRECATED_TIMER_FORMAT</code></td>
-</tr>
-<tr class="seg">
-<td><strong><nobr><span class="segtitle">Command line argument name</span></nobr></strong></td>
-<td>: </td>
-<td><em class="parameter"><code>deprecated_timer_format</code></em></td>
-</tr>
-<tr class="seg">
-<td><strong><nobr><span class="segtitle">Acceptable Values</span></nobr></strong></td>
-<td>: </td>
-<td><table border="0" summary="Simple list" class="simplelist">
-<tr><td><span class="bold"><strong>no</strong></span></td></tr>
-<tr><td>yes</td></tr>
-</table></td>
-</tr>
-<tr class="seg">
-<td><strong><nobr><span class="segtitle">Description</span></nobr></strong></td>
-<td>: </td>
-<td><p>
-      Specifying this option forces any timer output to match that provided by the deprecated Boost.Timer
-      class. If you use scripts that parse either the HRF or XML output for Boost.Test and find you are no
-      longer able to parse the output correctly then enabling this feature should allow your scripts to
-      work as before. Disabled by default.
      </p></td>
 </tr>
 </table>
@@ -838,6 +839,43 @@
 <td><strong><nobr><span class="segtitle">Description</span></nobr></strong></td>
 <td>: </td>
 <td><p>makes the framework to print progress information.</p></td>
+</tr>
+</table>
+<br>
+</div></div>
+<div class="entry" id="utf.user-guide.runtime-config.parameters.suppress_timer_output"><div class="segmentedlist">
+<table class="seglistitem">
+<tr class="seg">
+<td><strong><nobr><span class="segtitle">Parameter Name</span></nobr></strong></td>
+<td>: </td>
+<td><span class="emphasis"><em>Suppress test time output</em></span></td>
+</tr>
+<tr class="seg">
+<td><strong><nobr><span class="segtitle">Environment variable name</span></nobr></strong></td>
+<td>: </td>
+<td><code class="varname">BOOST_TEST_SUPPRESS_TIMER_OUTPUT</code></td>
+</tr>
+<tr class="seg">
+<td><strong><nobr><span class="segtitle">Command line argument name</span></nobr></strong></td>
+<td>: </td>
+<td><em class="parameter"><code>suppress_timer_output</code></em></td>
+</tr>
+<tr class="seg">
+<td><strong><nobr><span class="segtitle">Acceptable Values</span></nobr></strong></td>
+<td>: </td>
+<td><table border="0" summary="Simple list" class="simplelist">
+<tr><td><span class="bold"><strong>no</strong></span></td></tr>
+<tr><td>yes</td></tr>
+</table></td>
+</tr>
+<tr class="seg">
+<td><strong><nobr><span class="segtitle">Description</span></nobr></strong></td>
+<td>: </td>
+<td><p>
+      Specifying this argument suppresses the display of test times. This can be useful
+      if you want to pattern match on the raw test output as test times will not add
+      any variations to different test runs.
+     </p></td>
 </tr>
 </table>
 <br>

@@ -157,9 +157,9 @@ std::string BREAK_EXEC_PATH         = "break_exec_path";
 std::string BUILD_INFO              = "build_info";
 std::string CATCH_SYS_ERRORS        = "catch_system_errors";
 std::string COLOR_OUTPUT            = "color_output";
+std::string DEPRECATED_TIMER_FORMAT = "deprecated_timer_format";
 std::string DETECT_FP_EXCEPT        = "detect_fp_exceptions";
 std::string DETECT_MEM_LEAKS        = "detect_memory_leaks";
-std::string DEPRECATED_TIMER_FORMAT = "deprecated_timer_format";
 std::string LIST_CONTENT            = "list_content";
 std::string LOG_FORMAT              = "log_format";
 std::string LOG_LEVEL               = "log_level";
@@ -173,6 +173,7 @@ std::string RESULT_CODE             = "result_code";
 std::string TESTS_TO_RUN            = "run_test";
 std::string SAVE_TEST_PATTERN       = "save_pattern";
 std::string SHOW_PROGRESS           = "show_progress";
+std::string SUPPRESS_TIMER_OUTPUT   = "suppress_timer_output";
 std::string USE_ALT_STACK           = "use_alt_stack";
 std::string WAIT_FOR_DEBUGGER       = "wait_for_debugger";
 
@@ -188,9 +189,9 @@ parameter_2_env_var( const_string param_name )
         s_mapping[BUILD_INFO]               = "BOOST_TEST_BUILD_INFO";
         s_mapping[CATCH_SYS_ERRORS]         = "BOOST_TEST_CATCH_SYSTEM_ERRORS";
         s_mapping[COLOR_OUTPUT]             = "BOOST_TEST_COLOR_OUTPUT";
+        s_mapping[DEPRECATED_TIMER_FORMAT]  = "BOOST_TEST_DEPRECATED_TIMER_FORMAT";
         s_mapping[DETECT_FP_EXCEPT]         = "BOOST_TEST_DETECT_FP_EXCEPTIONS";
         s_mapping[DETECT_MEM_LEAKS]         = "BOOST_TEST_DETECT_MEMORY_LEAK";
-        s_mapping[DEPRECATED_TIMER_FORMAT]  = "BOOST_TEST_DEPRECATED_TIMER_FORMAT";
         s_mapping[LIST_CONTENT]             = "BOOST_TEST_LIST_CONTENT";
         s_mapping[LOG_FORMAT]               = "BOOST_TEST_LOG_FORMAT";
         s_mapping[LOG_LEVEL]                = "BOOST_TEST_LOG_LEVEL";
@@ -204,6 +205,7 @@ parameter_2_env_var( const_string param_name )
         s_mapping[TESTS_TO_RUN]             = "BOOST_TESTS_TO_RUN";
         s_mapping[SAVE_TEST_PATTERN]        = "BOOST_TEST_SAVE_PATTERN";
         s_mapping[SHOW_PROGRESS]            = "BOOST_TEST_SHOW_PROGRESS";
+        s_mapping[SUPPRESS_TIMER_OUTPUT]    = "BOOST_TEST_SUPPRESS_TIMER_OUTPUT";
         s_mapping[USE_ALT_STACK]            = "BOOST_TEST_USE_ALT_STACK";
         s_mapping[WAIT_FOR_DEBUGGER]        = "BOOST_TEST_WAIT_FOR_DEBUGGER";
     }
@@ -284,15 +286,15 @@ init( int& argc, char** argv )
               << cla::dual_name_parameter<bool>( COLOR_OUTPUT + "|x" )
                 - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,
                    cla::description = "Allows to switch between catching and ignoring system errors (signals)")
+              << cla::named_parameter<bool>( DEPRECATED_TIMER_FORMAT )
+                - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,
+                   cla::description = "Forces HRF output for timing information to mimic the deprecated boost timer output")
               << cla::named_parameter<bool>( DETECT_FP_EXCEPT )
                 - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,
                    cla::description = "Allows to switch between catching and ignoring floating point exceptions")
               << cla::named_parameter<std::string>( DETECT_MEM_LEAKS )
                 - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,cla::optional_value,
                    cla::description = "Allows to switch between catching and ignoring memory leaks")
-              << cla::named_parameter<std::string>( DEPRECATED_TIMER_FORMAT )
-                - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,cla::optional_value,
-                   cla::description = "Forces HRF output for timing information to mimic the deprecated boost timer output")
               << cla::dual_name_parameter<unit_test::output_format>( LOG_FORMAT + "|f" )
                 - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,
                    cla::description = "Specifies log format")
@@ -330,6 +332,9 @@ init( int& argc, char** argv )
               << cla::dual_name_parameter<bool>( SHOW_PROGRESS + "|p" )
                 - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,
                    cla::description = "Turns on progress display")
+              << cla::named_parameter<bool>( SUPPRESS_TIMER_OUTPUT )
+                - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,
+                   cla::description = "Suppresses the display of timer output when a test completes")
               << cla::dual_name_parameter<bool>( LIST_CONTENT + "|j" )
                 - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,cla::optional_value,
                    cla::description = "Lists the content of test tree - names of all test suites and test cases")
@@ -508,6 +513,14 @@ bool
 deprecated_timer_format()
 {
     return retrieve_parameter( DEPRECATED_TIMER_FORMAT, s_cla_parser, false );
+}
+
+//____________________________________________________________________________//
+
+bool
+suppress_timer_output()
+{
+    return retrieve_parameter( SUPPRESS_TIMER_OUTPUT, s_cla_parser, false );
 }
 
 //____________________________________________________________________________//
