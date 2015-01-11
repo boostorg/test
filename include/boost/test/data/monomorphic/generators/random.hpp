@@ -56,6 +56,11 @@ struct default_distribution {
 // **************                   random_t                   ************** //
 // ************************************************************************** //
 
+/*!@brief Generator for the random sequences
+ *
+ * This class implements the generator concept (see @ref boost::unit_test::data::generated_by) for implementing
+ * a random number generator.
+ */
 template<typename SampleType        = double, 
          typename DistributionType  = typename ds_detail::default_distribution<SampleType>::type,
          typename EngineType        = std::default_random_engine>
@@ -83,6 +88,8 @@ public:
         return m_distribution( m_engine );
     }
     void                reset()             {}
+    
+    //! Sets the seed of the pseudo-random number engine.
     template<typename SeedType>
     void seed( SeedType&& seed )            { m_engine.seed( std::forward<SeedType>( seed ) ); }
 

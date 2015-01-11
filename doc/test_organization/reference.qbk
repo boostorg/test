@@ -67,6 +67,12 @@
     [Automatic declaration of a test suite]
   ]
 
+  [/ ###############################################################################################]
+  [/ Decorator]
+  [
+    [__BOOST_TEST_DECORATOR__]
+    [Adds decorators to a test unit]
+  ]
   
   [/ ###############################################################################################]
   [/ Fixtures]
@@ -144,12 +150,38 @@ See [link boost_test.users_guide.tests_organization.test_cases.param_test here] 
 
 
 [section:test_org_boost_test_dataset `BOOST_DATA_TEST_CASE`]
-Declares and registers a test case on a dataset.
+Declares and registers a data-driven test case, using a particular dataset. 
+
+Several forms of the macro are available.
+
 
 ``
 BOOST_DATA_TEST_CASE(test_case_name, dataset)
-BOOST_DATA_TEST_CASE(test_case_name, dataset, var1, ...)
+{
+  BOOST_TEST(sample != 0);
+}
 ``
+should be used for datasets with arity 1. In the body of the test case, the samples of the dataset are taken by the variable `sample`.
+
+``
+BOOST_DATA_TEST_CASE(test_case_name, dataset, var1)
+{
+  BOOST_TEST(var1 != 0);
+}
+``
+same as the first form, but the samples are taken by the variable `var1` instead of the variable `sample`
+
+
+``
+BOOST_DATA_TEST_CASE(test_case_name, dataset, var1, var2..., varN)
+{
+  BOOST_TEST(var1 != 0);
+  //...
+  BOOST_TEST(varN != 0);
+}
+
+``
+same as the second form, but for dataset of arity `N`. 
 
 See [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.datasets_auto_registration here] for more details.
 
@@ -177,7 +209,12 @@ __BOOST_AUTO_TEST_SUITE__.
 See [link ref_BOOST_AUTO_TEST_SUITE here] for more details.
 [endsect] [/section:test_org_boost_auto_test_suite_end]
 
+[/ Decorator ##############################################################################################]
+[section:test_org_boost_test_decorator `BOOST_TEST_DECORATOR`]
+Defines ['decorators] for a test unit. 
 
+See [link ref_BOOST_TEST_DECORATOR here] for more details.
+[endsect] [/section:test_org_boost_test_decorator]
 
 [/ Fixtures ###############################################################################################]
 [section:test_org_boost_test_case_fixture `BOOST_FIXTURE_TEST_CASE`]

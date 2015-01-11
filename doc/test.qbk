@@ -106,6 +106,8 @@
 [def __BOOST_AUTO_TEST_SUITE_END__              [link boost_test.users_guide.tests_organization.test_org_reference.test_org_boost_auto_test_suite_end `BOOST_AUTO_TEST_SUITE_END`]]
 [def __BOOST_TEST_SUITE__                       [link boost_test.users_guide.tests_organization.test_org_reference.test_org_boost_test_suite `BOOST_TEST_SUITE`]]
 [def __BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ [link boost_test.users_guide.tests_organization.test_org_reference.test_org_boost_test_case_expected_failure `BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES`]]
+[/ decorator]
+[def __BOOST_TEST_DECORATOR__                   [link boost_test.users_guide.tests_organization.test_org_reference.test_org_boost_test_decorator `BOOST_TEST_DECORATOR`]]
 [/ fixtures]
 [def __BOOST_FIXTURE_TEST_CASE__                [link boost_test.users_guide.tests_organization.test_org_reference.test_org_boost_test_case_fixture     `BOOST_FIXTURE_TEST_CASE`]]
 [def __BOOST_FIXTURE_TEST_SUITE__               [link boost_test.users_guide.tests_organization.test_org_reference.test_org_boost_test_suite_fixture    `BOOST_FIXTURE_TEST_SUITE`]]
@@ -143,6 +145,9 @@
 [def __param_save_pattern__            [link ref_param_save_patterm `save_patterm`]]
 [def __param_list_content__            [link boost_test.users_guide.runtime_config.rt_param_reference.param_list_content `list_content`]]
 
+[/ decorators]
+[def __decorator_label__              [link ref_decorator_label `label`]] 
+
 [/=============================================================================]
 [/ templates ]
 
@@ -169,7 +174,7 @@
 [/ ### template for the example page  ]
 [template bt_example_page[name descr]
 
-[section [descr]] 
+[section:example_ref[name] [descr]] 
 
 [import examples/example[name].cpp]
 [import examples/example[name].output]

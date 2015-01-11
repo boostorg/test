@@ -8,16 +8,52 @@
 
 [section:test_case_generation Data-driven test cases]
 
-In some circumstance, one would like to run a [link boost_test.users_guide.tests_organization.test_cases.param_test parametrized] 
-test over a large set of parameters. __BOOST_PARAM_TEST_CASE__ provides an easy solution when these parameters can be described in 
-some collection. However, this solution has also limitations
 
-* Suppose we have a parametrized test on `func1`, on which we test `N` parameters. We know a few values on which `func1` has a deterministic behaviour and we test that: 
-  in this setting `N` is necessarily finite and usually small.  How would we extend or scale `N` easily? One solution is to be able to 
-  generate new parameters, and to be able to define a test on the *class* of possible inputs for `func1` on which the function should have the same defined behaviour. 
-  In some extent, the inputs of the parametrized test is a sample of the possible inputs of `func1`, and working on the class of inputs gives more flexibility and power 
+[h4 Why data-driven test cases?]
+Some tests are required to be repeated for a series of different input parameters. One way to achieve this is
+manually register a test case for each parameter. You can also invoke a test function with
+all parameters manually from within your test case, like this:
+
+``
+void single_test( int i )
+{
+  BOOST_CHECK( /* test assertion */ );
+}
+
+void combined_test()
+{
+  int params[] = { 1, 2, 3, 4, 5 };
+  std::for_each( params, params+5, &single_test );
+}
+``
+
+The approach above has several drawbacks:
+
+* the logic for running the tests is inside a test itself: `single_test` in the above example is ran from the test case `combined_test` while its execution would be better
+  handled by the __UTF__
+* in case of fatal failure for one of the values in `param` array above (say a failure in __BOOST_REQUIRE__), the test `combined_test` is aborted and the next test-case in the test tree is executed. 
+* in case of failure, the reporting is not accurate enough: the test should certainly be reran during debugging sessions by a human or additional logic for reporting should be implemented
+  in the test itself.
+
+
+
+[h4 Parameter generation, scalability and composition]
+In some circumstance, one would like to run a parametrized test over an /arbitrary large/ set of values. Enumerating the parameters by hand is not a solution that scales well,
+especially when these parameters can be described in another function that generates these values. However, this solution has also limitations
+
+* *Generating functions*: suppose we have a function `func(float f)`, where `f` is any number in [0, 1]. We are not interested that much in the exact value, but we would like to test
+  `func`. What about, instead of writing the `f` for which `func` will be tested against, we choose randomly `f` in [0, 1]? And also what about instead of having only one 
+  value for `f`, we run the test on arbitrarily many numbers? We easily understand from this small example that tests requiring parameters are more powerful when, instead 
+  of writing down constant values in the test, a generating function is provided. 
+
+* *Scalability*: suppose we have a test case on `func1`, on which we test `N` values written as constant in the test file. 
+  What does the test ensure? We have the guaranty that `func1` is working on these `N` values. Yet in this setting `N` is necessarily finite and usually small. 
+  How would we extend or scale `N` easily? One solution is to be able to 
+  generate new values, and to be able to define a test on the *class* of possible inputs for `func1` on which the function should have a defined behaviour. 
+  To some extent, `N` constant written down in the test are just an excerpt of the possible inputs of `func1`, and working on the class of inputs gives more flexibility and power 
   to the test. 
-* Suppose we already have a parametrized tests for two functions `func1` and `func2`, taking as argument the types `T1` and `T2` respectively. Now we like to test a new functions `func3` that 
+
+* *Composition*: suppose we already have test cases for two functions `func1` and `func2`, taking as argument the types `T1` and `T2` respectively. Now we would like to test a new functions `func3` that 
   takes as argument a type `T3` containing `T1` and `T2`, and calling `func1` and `func2` through a known algorithm. An example of such a setting would be
   `` 
   // Returns the log of x
@@ -45,38 +81,64 @@ some collection. However, this solution has also limitations
   * `func3` inherits from the preconditions of `fast_log` and `fast_inv`: it is defined in `(0, +infinity)` and in `[-C, +C] - {1}` for `field1` and `field2` respectively (`C`
      being a constant arbitrarily big).
   * as defined above, `func3` should be close to 1 everywhere on its definition domain. 
-  * we would like to reuse the tests of `fast_log` and `fast_inv` in `func3` and assert that `func3` is well defined over an arbitrary large definition domain. 
+  * we would like to reuse the properties of `fast_log` and `fast_inv` in the compound function `func3` and assert that `func3` is well defined over an arbitrary large definition domain. 
   
-  Having parametrized tests on `func3` hardly tells us about the possible numerical properties or instabilities close to the point `{field1 = 0, field2 = 1}`.  Indeed, the parametrized test may 
-  test for some points around (0,1), but will fail to provide an *asymptotical behaviour* of the function close to this point. 
+  Having parametrized tests on `func3` hardly tells us about the possible numerical properties or instabilities close to the point `{field1 = 0, field2 = 1}`. 
+  Indeed, the parametrized test may test for some points around (0,1), but will fail to provide an *asymptotical behaviour* of the function close to this point. 
 
 
-The __UTF__ provides a facility in order to ease the description and the generations of the class of inputs, through the notion of *datasets*. 
+[h4 Data driven tests in the Boost.Test framework]
+The facilities provided by the __UTF__ addressed the issues described above:
 
-The unit test toolbox is augmented with one new registration macro: __BOOST_DATA_TEST_CASE__. 
+* the notion of *datasets* eases the description of the class of inputs for test cases. The datasets also implement several operations that 
+  enable their combinations to create new, more complex datasets,
+* a single macro, __BOOST_DATA_TEST_CASE__, is used for the declaration and registration of a test case over a collection of values (samples),
+* each test case, associated to a unique value, is executed independently from others. These tests are guarded in the same way regular test cases are, which makes
+  the execution of the tests over each sample of a dataset isolated, robust, repeatable and ease the debugging,
+* several datasets generating functions are provided by the __UTF__
 
-[h3 Datasets]
-A [classref boost::unit_test::data::monomorphic::dataset dataset] is a collection of elements, that 
 
-* is forward iterable.
-* can be queried for its `size`, which in turn can be infinite. 
+This part is organized as follow:
+
+# [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.datasets First] the notion of *dataset* and *sample* will be introduced
+# then the declaration and registration of the data-driven test cases is explained,
+# the /operations/ on datasets are detailed
+# and finally the built-in dataset generators 
+
+
+[/ ##################################################################################################################################  ]
+[section Datasets]
+
+To define properly datasets, the notion of *sample* should be introduced first. A *sample* is defined as /polymorphic tuple/. 
+The size of the tuple will be by definition the *arity* of the sample itself. 
+
+A [classref boost::unit_test::data::monomorphic::dataset dataset] is a /collection of samples/, that 
+
+* is forward iterable,
+* can be queried for its `size`, which in turn can be infinite,
+* has an arity that is the arity of the samples it contains. 
 
 Hence the dataset implements the notion of /sequence/. 
 
 The descriptive power of the datasets in __UTF__ comes from
 
-* the available built-in [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators /dataset generators/]
+* the [classref boost::unit_test::data::monomorphic::dataset interface] for creating a custom datasets, which is quite simple,
 * the [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.operations operations] they provide for combining different datasets 
 * their interface with other type of collections (`stl` containers, `C` arrays)
+* the available built-in [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators /dataset generators/]
 
-[tip Only "monomorphic" datasets are supported, which means that all elements of a dataset have the same type. However as we will see, 
- datasets representing collections of different types may be combined together.
+[tip Only "monomorphic" datasets are supported, which means that all samples in a dataset have the same type and same arity 
+ [footnote polymorphic datasets will be considered in the future. Their need is mainly driven by the replacement of the [link boost_test.users_guide.tests_organization.test_cases.test_organization_templates typed parametrized test cases] by the dataset-like API.]
+ . 
  ]
 
-As an additional property, datasets also provide information on the arity of their elements. Datasets are monomorphic but may be 
-combined by operations that change their arity (eg. /zip/). The arity property is used for consistency checks and for providing enough 
-variables in the body of the dataset driven test-cases.
+ 
+As we will see in the next sections, datasets representing collections of different types may be combined together (eg. /zip/ or /grid/). 
+These operations result in new datasets, in which the samples are of an augmented type. 
 
+[tip This [link boost_test.boost_test_examples.example_ref68 example] implements a dataset generating a Fibonacci sequence]
+
+[endsect] [/ datasets]
 
 
 
@@ -89,28 +151,44 @@ variables in the body of the dataset driven test-cases.
 
 
 [/ ##################################################################################################################################  ]
-[section:datasets_auto_registration Declaring test case with datasets]
-The dataset framework comes with a new test-case declaration macro:
+[section:datasets_auto_registration Declaring and registering test cases with datasets]
+In order to declare and register a data-driven test-case, the macro __BOOST_DATA_TEST_CASE__ should be used. This macro is variadic and can be used 
+in the following forms:
+
 
 ``
-__BOOST_DATA_TEST_CASE__(test_case_name, dataset) { /* test body */ }
-BOOST_DATA_TEST_CASE(test_case_name, dataset, var1, ...) { /* test body */ }
+__BOOST_DATA_TEST_CASE__(test_case_name, dataset) { /* dataset1 of arity 1 */ }
+BOOST_DATA_TEST_CASE(test_case_name, dataset, var1) { /* datasets of arity 1 */ }
+BOOST_DATA_TEST_CASE(test_case_name, dataset, var1, ..., varN) { /* datasets of arity N */ }
 ``
 
-The first form of the macro above declares automatically a variable `sample` in the body of the test case, 
-which takes the values of elements in the dataset. An example would be:
+The first form of the macro is for datasets of arity 1. The value of the sample being executed by the test body is available through the automatic variable `sample`
+(`xrange` is as its name suggests a range of values):
 [snippet_dataset1_1]
 
-If specified, the name of the variable `sample` may be replaced by the first parameter that comes after the dataset:
+The second form is also for datasets of arity 1, but instead of the variable `sample`, the current sample is brought into `var1`:
 [snippet_dataset1_2]
 
-Any number of variables can be added after the second form of the macro. 
+The third form is an extension of the previous form for datasets of arity `N`. The sample being a polymorphic tuple, each of the variables `var1`, ..., `varN` corresponds
+to the index 1, ... `N` of the the sample:
+[snippet_dataset1_3]
 
-[tip The number of variables in the body of the test should match the arity of the dataset. A compilation
- error will be raised otherwise]
+
+The arity of the dataset and the number of variables should be exactly the same, the first form being a short-cut for the case of arity 1. 
+
+[tip A compilation-time check is performed on the coherence of the arity of the dataset and the number of variables `var1`... `varN`. ]
+
+
+It should be emphasised that this macro does not declares a test case, such as __BOOST_AUTO_TEST_CASE__, but declares and registers as many test cases as there 
+are samples in the dataset given as argument. Each test case runs on exactly *one* sample of the dataset. 
+
+Exactly as regular test cases, each test - or each sample - is executed within the test body in a /guarded manner/: 
+
+* the test execution are independent: if an error occurs for one sample, the reminder samples execution is not affected
+* in case of error, the [link boost_test.users_guide.tests_organization.context context] within which the error occurred is reported in the [link boost_test.users_guide.test_output log]. 
+  This context contains the sample for which the test failed, which would ease the debugging. 
 
 [caution The macro __BOOST_DATA_TEST_CASE__ is available only for compilers with support for variadic macros.]
-
 
 [endsect]
 
@@ -126,7 +204,7 @@ For that purpose, three operators are provided:
 
 * zips with `operator^` on datasets
 * joins with `operator+`
-* and grids or cartesian products with `operator*`
+* and grids or Cartesian products with `operator*`
 
 [tip All these operators are associative, which enables their combination without parenthesis. However, the precedence rule on the 
 operators for the language still apply. ]
@@ -134,29 +212,36 @@ operators for the language still apply. ]
 
 
 [section Zips]
-The ['zip] function returns a dataset of tuples, where the `i`-th tuple contains the `i`-th element from each of the argument datasets.
-The size of the zipped dataset is as follow:
-
-* if one of the dataset is of size 1 (singleton) or of infinite size, the final zip size is governed by the other dataset.
-* otherwise the datasets are required to have the same size. An exception will be thrown at runtime if this constraint is not met. 
-
-Zips are accessible through the `operator^` on datasets. The zip operation increases the arity of the dataset by one.
-
-It is possible to combine more than two datasets for zipping: the `operator^` is associative and the datasets created
-yields to the same tuples independently of the positions of the parenthesis. Hence, the following zips are equivalent:
+A ['zip], denoted `^` , is an operation on two datasets `dsa` and `dsb` of same arity and same size, resulting in a dataset where the `k`-th sample of `dsa` is paired with the corresponding `k`-th sample of `dsb`.
+The resulting dataset samples order follows the left to right order against the symbol `^`. 
 
 ``
- (boost::unit_test::xrange(2) ^ boost::unit_test::xrange(2, 4))
-    ^ boost::unit_test::xrange(4, 6)
- == boost::unit_test::xrange(2) ^ 
-    ( boost::unit_test::xrange(2, 4) ^ boost::unit_test::xrange(4, 6) )
- == boost::unit_test::xrange(2) ^ 
-     boost::unit_test::xrange(2, 4) ^ 
-       boost::unit_test::xrange(4, 6)
-`` 
+dsa = (a_1, a_2, ... a_i)
+dsb = (b_1, b_2, ... b_i)
+dsa ^ dsb = ( (a_1, b_1), (a_2, b_2) ... (a_i, b_i) )
+``
 
-[caution Zip operation is not available for the compiler if the macro [macroref BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE `BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE`] 
- is set]
+The following properties hold:
+
+* the arity of the resulting dataset is the sum of the arities of the operand datasets, 
+* the size of the resulting dataset is the product of the sizes of the datasets, exception made for the case the operand datasets size mismatch (see below),
+* the operation is associative, and it is possible to combine more than two datasets in one expression,
+  ``
+   ( dsa ^ dsb ) ^ dsc
+   == dsa ^ ( dsb ^ dsc )
+   == dsa ^ dsb ^ dsc
+  `` 
+
+
+A particular handling of the size is performed if `dsa` and `dsb` are of different size. The rule is as follow:
+
+* if the both zipped datasets have the same size, this is the size of the resulting dataset (this size can then be infinite). 
+* otherwise if one of the dataset is of size 1 (singleton) or of infinite size, the resulting size is governed by the other dataset.
+* otherwise an exception is thrown at runtime
+
+
+[caution If the /zip/ operation is not supported for your compiler, the macro [macroref BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE `BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE`] 
+ will be automatically set by the __UTF__]
 
 [bt_example example61..Example of zip on datasets]
 
@@ -165,44 +250,61 @@ yields to the same tuples independently of the positions of the parenthesis. Hen
 
 
 
-[section Cartesian products]
-The cartesian product, or ['grid], combines two datasets in order to form a new dataset of higher /dimension/. Each /dimension/
-then spans the content of its source dataset, while the other dimensions are fixed. Cartesian products are accessible through the 
-`operator*` on datasets.
+[section Grid (Cartesian products)]
+A ['grid], denoted `*` , is an operation on two any datasets `dsa` and `dsb` resulting in a dataset where each sample of `dsa` is paired with each sample of `dsb`
+exactly once. The resulting dataset samples order follows the left to right order against the symbol `*`. The rightmost dataset samples are iterated first. 
+
+``
+dsa = (a_1, a_2, ... a_i)
+dsb = (b_1, b_2, ... b_j)
+dsa * dsb = ((a_1, b_1), (a_1, b_2) ... (a_1, b_j), (a_2, b_1), ... (a_2, b_j) ... (a_i, b_1), ... (a_i, b_j))
+``
+
+The grid hence is similar to the mathematical notion of Cartesian product [footnote if the sequence is viewed as a set]. 
 
 The following properties hold:
 
-* the arity of the dataset is increased by one, 
-* the size of the resulting dataset is the product of the datasets, 
+* the arity of the resulting dataset is the sum of the arities of the operand datasets, 
+* the size of the resulting dataset is the product of the sizes of the datasets, 
 * the operation is associative, and it is possible to combine more than two datasets in one expression,
-* as for /zip/, there is no need the dataset to have the same type of elements.
+* as for /zip/, there is no need the dataset to have the same type of samples.
 
-
-[caution Cartesian product is not available for the compiler if the macro [macroref BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE `BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE`] 
- is set]
-
+[caution If the /grid/ operation is not supported for your compiler, the macro [macroref BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE `BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE`] 
+ will be automatically set by the __UTF__] 
+ 
 In the following example, the random number generator is the second dataset. Its state is evaluated 6 times (3 times for the first `xrange` - first dimension -
 and twice for the second `xrange` - second dimension - to which it is zipped). Note that the state of the random engine is not copied between two successive evaluations of the first dimension.
 
-[bt_example example64..Example of cartesian product]
+[bt_example example64..Example of Cartesian product]
 
 
 [endsect]
 
 
 [section Joins]
-A ['join] is the concatenation of two datasets, available through `operator+`. The datasets are required to have compatible types.
+A ['join], denoted `+`, is an operation on two datasets `dsa` and `dsb` of same arity and compatible types, resulting in the *concatenation* of these two datasets `dsa` and `dsb`
+from the left to the right order of the symbol `+`: 
+
+``
+dsa = (a_1, a_2, ... a_i)
+dsb = (b_1, b_2, ... b_j)
+dsa + dsb = (a_1, a_2, ... a_i, b_1, b_2, ... b_j)
+``
 
 The following properties hold:
 
-* joining two datasets does not change the arity of their elements,
+* the resulting dataset is of same arity as the operand datasets,
 * the size of the returned dataset is the sum of the size of the joined datasets,
-* the operation is associative, and it is possible to combine more than two datasets in one expression.
+* the operation is associative, and it is possible to combine more than two datasets in one expression. The following joins are equivalent for any datasets `dsa`, `dsb` and `dsc`:
   ``
-  int arr1[] = {1, 2};
-  int arr2[] = {7, 19};
-  __BOOST_CHECK_EQUAL__( (data::make( arr1 ) + data::make( arr2 )).size(), 4);
+  ( dsa + dsb ) + dsc 
+  == dsa + ( dsb + dsc )
+  == dsa + dsb + dsc 
   ``
+
+[warning In the expression `dsa + dsb`, `dsa` and/or `dsb` can be of infinite size. The resulting dataset will have an infinite size as well. If `dsa` is infinite, the content of 
+ `dsb` will never be reached. ]
+
 
 [bt_example example62..Example of join on datasets]
 
@@ -236,7 +338,7 @@ A singleton is a dataset containing a unique value. The size and arity of such a
 * either consumed once
 * or repeated as many times as needed in a zip operation
 
-As mentionned in /zip/, when zipped with a distribution of infinite size, the resulting dataset will have
+As mentioned in /zip/, when zipped with a distribution of infinite size, the resulting dataset will have
 a size of 1.
 
 The singleton is constructible through the function [funcref boost::unit_test::data::make]. 
@@ -313,7 +415,7 @@ The details of the named value parameters is given in the table below.
   [
     [`step`]
     [1]
-    [Number indicating the step between two consecutive elements of the generated range. 
+    [Number indicating the step between two consecutive samples of the generated range. 
      The default type is the same as the input type. This value should not be 0. It should be of the same
      sign as `end-begin`.
     ]
@@ -330,10 +432,13 @@ The details of the named value parameters is given in the table below.
 This type of dataset generates a sequence of random numbers following a given /distribution/. The /seed/ and the /engine/ may also be 
 specified. 
 
-[caution the random value generators are available only for C++11 capable compilers. The 
- feature is not available for the compiler if the macro [macroref BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE `BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE`] 
- is set]
 
+[caution The random value generator is available only for C++11 capable compilers. If this feature is not supported for your compiler, 
+ the macro [macroref BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE `BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE`] 
+ will be automatically set by the __UTF__] 
+
+ 
+ 
 It is possible to construct a random sequence using the factory [funcref boost::unit_test::data::random], available in the overloads below:
 
 ``

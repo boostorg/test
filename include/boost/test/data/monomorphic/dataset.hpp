@@ -100,10 +100,10 @@ struct traits<std::tuple<T1,T2,T3>> {
 template<typename T>
 class dataset {
 public:
-    //! Type of the data in this dataset
+    //! Type of the samples in this dataset
     typedef T data_type;
 
-    //! Type of dataset iterator
+    //! Interface of the dataset iterator
     class iterator {
     public:
         typedef typename monomorphic::traits<T>::ref_type ref_type;
