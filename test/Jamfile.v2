@@ -1,6 +1,6 @@
 #  (C) Copyright Gennadiy Rozental 2001-2014.
-#  Use, modification, and distribution are subject to the 
-#  Boost Software License, Version 1.0. (See accompanying file 
+#  Use, modification, and distribution are subject to the
+#  Boost Software License, Version 1.0. (See accompanying file
 #  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 #  See http://www.boost.org/libs/test for the library home page.
@@ -15,9 +15,9 @@ rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file * : source
 {
    source_files ?= $(test-name).cpp ;
    return [ $(test-rule) $(source_files) ../build//$(lib-name) $(extra-libs)
-            : --suppress_timer_output
+            : --deprecated_timer_format
             : $(pattern_file)
-            : #<stlport-iostream>on 
+            : #<stlport-iostream>on
               # Activating -pedantic finds more gotchas
               # Unfortunately, this warns about the use of "long long" in gcc's own stdlib
               # So deactivate those warnings again
@@ -39,9 +39,9 @@ rule test-btl-lib-c11 ( test-rule : test-name : lib-name ? : pattern_file * : so
 {
    source_files ?= $(test-name).cpp ;
    return [ $(test-rule) $(source_files) ../build//$(lib-name) $(extra-libs)
-            : --suppress_timer_output
+            : --deprecated_timer_format
             : $(pattern_file)
-            : #<stlport-iostream>on 
+            : #<stlport-iostream>on
               # Activating -pedantic finds more gotchas
               # Unfortunately, this warns about the use of "long long" in gcc's own stdlib
               # So deactivate those warnings again
@@ -68,9 +68,9 @@ rule test-btl-lib-mt ( test-rule : test-name : lib-name ? : pattern_file * : sou
    source_files ?= $(test-name).cpp ;
 
    return [ $(test-rule) $(source_files) ../build//$(lib-name) $(extra-libs)
-            : --suppress_timer_output
+            : --deprecated_timer_format
             : $(pattern_file)
-            : #<stlport-iostream>on 
+            : #<stlport-iostream>on
               # Activating -pedantic finds more gotchas
               # Unfortunately, this warns about the use of "long long" in gcc's own stdlib
               # So deactivate those warnings again
@@ -83,7 +83,7 @@ rule test-btl-lib-mt ( test-rule : test-name : lib-name ? : pattern_file * : sou
               <toolset>gcc-4.5:<cxxflags>-std=gnu++0x
               <toolset>gcc-4.7:<cxxflags>-std=gnu++11
               <toolset>clang:<cxxflags>-Wno-c99-extensions
-              <toolset>clang:<cxxflags>-Wno-variadic-macros              
+              <toolset>clang:<cxxflags>-Wno-variadic-macros
               <define>BOOST_TEST_NO_AUTO_LINK=1 # requirements
               <threading>multi
               <warnings>all
@@ -138,8 +138,8 @@ test-suite "multithreaded_test"
           [ test-btl-lib-mt run : sync_access_test          : boost_unit_test_framework/<link>static : : : /boost/thread//boost_thread/<link>static ]
         ;
 
-# A target that runs all the tests 
-alias test : basics_test prg_exec_monitor_test unit_test_framework_test ; 
-  
-# Only run tests when explicitly requested 
+# A target that runs all the tests
+alias test : basics_test prg_exec_monitor_test unit_test_framework_test ;
+
+# Only run tests when explicitly requested
 # explicit test basics_test prg_exec_monitor_test unit_test_framework_test ;
