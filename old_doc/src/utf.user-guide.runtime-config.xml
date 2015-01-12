@@ -337,6 +337,24 @@ Leaving test suite "example"
     </descr>
    </refentry>
 
+   <refentry name="deprecated_timer_format">
+    <name>Use the deprecated timer format for output</name>
+    <env>BOOST_TEST_DEPRECATED_TIMER_FORMAT</env>
+    <cla>deprecated_timer_format</cla>
+    <vals>
+     <simplelist>
+      <member><emphasis role="bold">no</emphasis></member>
+      <member>yes</member>
+     </simplelist>
+    </vals>
+    <descr>
+     <simpara>
+      This ensures timer test output matches the format produced for the deprecated Boost.Timer class. Otherwise
+      updated output will be displayed that provides Wall, User and System times.
+     </simpara>
+    </descr>
+   </refentry>
+
    <refentry name="detect_fp_exceptions">
     <name>[Do not] trap floating point exceptions</name>
     <env>BOOST_TEST_DETECT_FP_EXCEPTIONS</env>
@@ -644,7 +662,7 @@ Leaving test suite "example"
      <simpara>makes the framework to print progress information.</simpara>
     </descr>
    </refentry>
-   
+
    <refentry name="use_alt_stack">
     <name>Use alternative stack</name>
     <env>BOOST_TEST_USE_ALT_STACK</env>

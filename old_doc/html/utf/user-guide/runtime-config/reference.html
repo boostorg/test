@@ -43,6 +43,7 @@
 <li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.build_info', id339462 ); return false;">build_info</a></li>
 <li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.catch_system_errors', id339462 ); return false;">catch_system_errors</a></li>
 <li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.color_output', id339462 ); return false;">color_output</a></li>
+<li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.deprecated_timer_format', id339462 ); return false;">deprecated_timer_format</a></li>
 <li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.detect_fp_exceptions', id339462 ); return false;">detect_fp_exceptions</a></li>
 <li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.detect_memory_leaks', id339462 ); return false;">detect_memory_leaks</a></li>
 <li><a href="#" onclick="id339462 = select_form_page( 'utf.user-guide.runtime-config.parameters.log_format', id339462 ); return false;">log_format</a></li>
@@ -236,6 +237,44 @@
 <td><p>
       The <acronym class="acronym">UTF</acronym> is able to produce color output on systems which supports it. To enable this behavior set the parameter to 
       'yes'. By default the output produces in not colored.
+     </p></td>
+</tr>
+</table>
+<br>
+</div></div>
+<div class="entry" id="utf.user-guide.runtime-config.parameters.deprecated_timer_format"><div class="segmentedlist">
+<table class="seglistitem">
+<tr class="seg">
+<td><strong><nobr><span class="segtitle">Parameter Name</span></nobr></strong></td>
+<td>: </td>
+<td><span class="emphasis"><em>Force the timer output format to match the deprecated Boost.Timer</em></span></td>
+</tr>
+<tr class="seg">
+<td><strong><nobr><span class="segtitle">Environment variable name</span></nobr></strong></td>
+<td>: </td>
+<td><code class="varname">BOOST_TEST_DEPRECATED_TIMER_FORMAT</code></td>
+</tr>
+<tr class="seg">
+<td><strong><nobr><span class="segtitle">Command line argument name</span></nobr></strong></td>
+<td>: </td>
+<td><em class="parameter"><code>deprecated_timer_format</code></em></td>
+</tr>
+<tr class="seg">
+<td><strong><nobr><span class="segtitle">Acceptable Values</span></nobr></strong></td>
+<td>: </td>
+<td><table border="0" summary="Simple list" class="simplelist">
+<tr><td><span class="bold"><strong>no</strong></span></td></tr>
+<tr><td>yes</td></tr>
+</table></td>
+</tr>
+<tr class="seg">
+<td><strong><nobr><span class="segtitle">Description</span></nobr></strong></td>
+<td>: </td>
+<td><p>
+      Specifying this option forces any timer output to match that provided by the deprecated Boost.Timer
+      class. If you use scripts that parse either the HRF or XML output for Boost.Test and find you are no
+      longer able to parse the output correctly then enabling this feature should allow your scripts to
+      work as before. Disabled by default.
      </p></td>
 </tr>
 </table>

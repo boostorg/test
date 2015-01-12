@@ -21,6 +21,8 @@
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
+#include <boost/test/utils/timer.hpp>
+
 //____________________________________________________________________________//
 
 namespace boost {
@@ -39,7 +41,7 @@ public:
     void    log_build_info( std::ostream& );
 
     void    test_unit_start( std::ostream&, test_unit const& tu );
-    void    test_unit_finish( std::ostream&, test_unit const& tu, unsigned long elapsed );
+    void    test_unit_finish( std::ostream&, test_unit const& tu, elapsed_t elapsed );
     void    test_unit_skipped( std::ostream&, test_unit const& tu );
 
     void    log_exception_start( std::ostream&, log_checkpoint_data const&, execution_exception const& ex );

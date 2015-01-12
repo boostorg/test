@@ -19,6 +19,8 @@
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/unit_test_log_formatter.hpp>
 
+#include <boost/test/utils/timer.hpp>
+
 // STL
 #include <cstddef> // std::size_t
 
@@ -42,7 +44,7 @@ public:
     void    log_build_info( std::ostream& );
 
     void    test_unit_start( std::ostream&, test_unit const& tu );
-    void    test_unit_finish( std::ostream&, test_unit const& tu, unsigned long elapsed );
+    void    test_unit_finish( std::ostream&, test_unit const& tu, elapsed_t elapsed );
     void    test_unit_skipped( std::ostream&, test_unit const& tu );
 
     void    log_exception_start( std::ostream&, log_checkpoint_data const&, execution_exception const& ex );

@@ -41,8 +41,9 @@
 #include <boost/test/utils/foreach.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
 
+#include <boost/test/utils/timer.hpp>
+
 // Boost
-#include <boost/timer.hpp>
 #include <boost/bind.hpp>
 
 // STL
@@ -372,7 +373,7 @@ public:
         return true;
     }
 
-    void            test_unit_finish( test_unit const& tu, unit_test_monitor_t::error_level run_result, unsigned long elapsed )
+    void            test_unit_finish( test_unit const& tu, unit_test_monitor_t::error_level run_result, elapsed_t elapsed )
     {
         // if run error is critical skip teardown, who knows what the state of the program at this point
         if( !unit_test_monitor.is_critical_error( run_result ) ) {
@@ -413,9 +414,12 @@ public:
         m_curr_test_case = tc.p_id;
 
         // execute the test case body
-        boost::timer tc_timer;
+        timer_t tc_timer;
         unit_test_monitor_t::error_level run_result = unit_test_monitor.execute_and_translate( tc.p_test_func, tc.p_timeout );
-        unsigned long elapsed = static_cast<unsigned long>( tc_timer.elapsed() * 1e6 );
+
+        tc_timer.stop();
+        elapsed_t elapsed = tc_timer.elapsed();
+
 
         // cleanup leftover context
         m_context.clear();
@@ -434,7 +438,7 @@ public:
 
     void            test_suite_finish( test_suite const& ts )
     {
-        test_unit_finish( ts, unit_test_monitor_t::test_ok, 0 );
+        test_unit_finish( ts, unit_test_monitor_t::test_ok, elapsed_t() );
     }
 
     //////////////////////////////////////////////////////////////////
