@@ -163,8 +163,7 @@ acceptable values list. All values are case sensitive and are required to exactl
     [__param_save_pattern__]
     [Provides parameters for testing output streams.]
   ]
-  
-  
+
   [/ ###############################################################################################]
   [
     [__param_list_content__]
@@ -639,7 +638,7 @@ You can use this parameter to switch between these modes, by passing the paramet
 
   BOOST_TEST_SAVE_PATTERN
 
-[endsect] [/save_patterm] 
+[endsect] [/save_patterm]
 
 [/ ###############################################################################################]
 [section:param_list_content `list_content`]

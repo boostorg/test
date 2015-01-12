@@ -157,9 +157,9 @@ std::string BREAK_EXEC_PATH         = "break_exec_path";
 std::string BUILD_INFO              = "build_info";
 std::string CATCH_SYS_ERRORS        = "catch_system_errors";
 std::string COLOR_OUTPUT            = "color_output";
+std::string DEPRECATED_TIMER_FORMAT = "deprecated_timer_format";
 std::string DETECT_FP_EXCEPT        = "detect_fp_exceptions";
 std::string DETECT_MEM_LEAKS        = "detect_memory_leaks";
-std::string DEPRECATED_TIMER_FORMAT = "deprecated_timer_format";
 std::string LIST_CONTENT            = "list_content";
 std::string LOG_FORMAT              = "log_format";
 std::string LOG_LEVEL               = "log_level";
@@ -188,9 +188,9 @@ parameter_2_env_var( const_string param_name )
         s_mapping[BUILD_INFO]               = "BOOST_TEST_BUILD_INFO";
         s_mapping[CATCH_SYS_ERRORS]         = "BOOST_TEST_CATCH_SYSTEM_ERRORS";
         s_mapping[COLOR_OUTPUT]             = "BOOST_TEST_COLOR_OUTPUT";
+        s_mapping[DEPRECATED_TIMER_FORMAT]  = "BOOST_TEST_DEPRECATED_TIMER_FORMAT";
         s_mapping[DETECT_FP_EXCEPT]         = "BOOST_TEST_DETECT_FP_EXCEPTIONS";
         s_mapping[DETECT_MEM_LEAKS]         = "BOOST_TEST_DETECT_MEMORY_LEAK";
-        s_mapping[DEPRECATED_TIMER_FORMAT]  = "BOOST_TEST_DEPRECATED_TIMER_FORMAT";
         s_mapping[LIST_CONTENT]             = "BOOST_TEST_LIST_CONTENT";
         s_mapping[LOG_FORMAT]               = "BOOST_TEST_LOG_FORMAT";
         s_mapping[LOG_LEVEL]                = "BOOST_TEST_LOG_LEVEL";
@@ -284,15 +284,15 @@ init( int& argc, char** argv )
               << cla::dual_name_parameter<bool>( COLOR_OUTPUT + "|x" )
                 - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,
                    cla::description = "Allows to switch between catching and ignoring system errors (signals)")
+              << cla::named_parameter<bool>( DEPRECATED_TIMER_FORMAT )
+                - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,
+                   cla::description = "Forces HRF output for timing information to mimic the deprecated boost timer output")
               << cla::named_parameter<bool>( DETECT_FP_EXCEPT )
                 - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,
                    cla::description = "Allows to switch between catching and ignoring floating point exceptions")
               << cla::named_parameter<std::string>( DETECT_MEM_LEAKS )
                 - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,cla::optional_value,
                    cla::description = "Allows to switch between catching and ignoring memory leaks")
-              << cla::named_parameter<std::string>( DEPRECATED_TIMER_FORMAT )
-                - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,cla::optional_value,
-                   cla::description = "Forces HRF output for timing information to mimic the deprecated boost timer output")
               << cla::dual_name_parameter<unit_test::output_format>( LOG_FORMAT + "|f" )
                 - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,
                    cla::description = "Specifies log format")

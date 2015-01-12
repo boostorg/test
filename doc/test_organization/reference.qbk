@@ -71,7 +71,7 @@
   [/ Decorator]
   [
     [__BOOST_TEST_DECORATOR__]
-    [Adds decorators to a test unit or a test suite]
+    [Adds decorators to a test unit]
   ]
   
   [/ ###############################################################################################]
@@ -211,7 +211,7 @@ See [link ref_BOOST_AUTO_TEST_SUITE here] for more details.
 
 [/ Decorator ##############################################################################################]
 [section:test_org_boost_test_decorator `BOOST_TEST_DECORATOR`]
-Defines ['decorators] for a test unit or a test suite. 
+Defines ['decorators] for a test unit. 
 
 See [link ref_BOOST_TEST_DECORATOR here] for more details.
 [endsect] [/section:test_org_boost_test_decorator]
