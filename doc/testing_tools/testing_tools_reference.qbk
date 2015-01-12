@@ -535,7 +535,7 @@ See also:
 
 These tools are used to check that supplied value is small enough. The "smallness" is defined by absolute value
 of the tolerance supplied as a second argument. Use these tools with caution. To compare to values on closeness 
-it's preferable to use __BOOST_<level>_CLOSE__ tools instead.
+it's preferable to use __BOOST_LEVEL_CLOSE__ tools instead.
 
 The first parameter is the value to check. The second parameter is the tolerance.
 
