@@ -164,13 +164,6 @@ acceptable values list. All values are case sensitive and are required to exactl
     [Provides parameters for testing output streams.]
   ]
 
-
-  [/ ###############################################################################################]
-  [
-    [__param_suppress_timer_output__]
-    [Suppress test time output.]
-  ]
-
   [/ ###############################################################################################]
   [
     [__param_list_content__]
@@ -646,25 +639,6 @@ You can use this parameter to switch between these modes, by passing the paramet
   BOOST_TEST_SAVE_PATTERN
 
 [endsect] [/save_patterm]
-
-[/ ###############################################################################################]
-[#ref_param_suppress_timer_output][section `suppress_timer_output`]
-
-Suppresses writing of test time output.
-
-Suppresses the output testing times. This is useful if you want to pattern match on test output but
-the test times make that difficult.
-
-[h4 Acceptable values]
-
-* [*no] (default)
-* yes
-
-[h4 Environment variable]
-
-  BOOST_TEST_SUPPRESS_TIMER_OUTPUT
-
-[endsect] [/suppress_timer_output]
 
 [/ ###############################################################################################]
 [section:param_list_content `list_content`]

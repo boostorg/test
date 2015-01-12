@@ -663,25 +663,6 @@ Leaving test suite "example"
     </descr>
    </refentry>
 
-   <refentry name="suppress_timer_format">
-    <name>Suppress test time output</name>
-    <env>BOOST_TEST_SUPPRESS_TIMER_OUTPUT</env>
-    <cla>suppress_timer_output</cla>
-    <vals>
-     <simplelist>
-      <member><emphasis role="bold">no</emphasis></member>
-      <member>yes</member>
-     </simplelist>
-    </vals>
-    <descr>
-     <simpara>
-      Specifying this argument suppresses the display of test times. This can be useful
-      if you want to pattern match on the raw test output as test times will not add
-      any variations to different test runs.
-     </simpara>
-    </descr>
-   </refentry>
-
    <refentry name="use_alt_stack">
     <name>Use alternative stack</name>
     <env>BOOST_TEST_USE_ALT_STACK</env>

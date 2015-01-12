@@ -74,8 +74,6 @@ BOOST_TEST_DECL bool                    save_pattern();
 BOOST_TEST_DECL bool                    show_build_info();
 /// Tells Unit Test Framework to show test progress (forces specific log level)
 BOOST_TEST_DECL bool                    show_progress();
-/// Suppress test time output
-BOOST_TEST_DECL bool                    suppress_timer_output();
 /// Specific test units to run/exclude
 BOOST_TEST_DECL std::list<std::string> const& test_to_run();
 /// Should execution monitor use alternative stack for signal handling

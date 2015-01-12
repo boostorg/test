@@ -173,7 +173,6 @@ std::string RESULT_CODE             = "result_code";
 std::string TESTS_TO_RUN            = "run_test";
 std::string SAVE_TEST_PATTERN       = "save_pattern";
 std::string SHOW_PROGRESS           = "show_progress";
-std::string SUPPRESS_TIMER_OUTPUT   = "suppress_timer_output";
 std::string USE_ALT_STACK           = "use_alt_stack";
 std::string WAIT_FOR_DEBUGGER       = "wait_for_debugger";
 
@@ -205,7 +204,6 @@ parameter_2_env_var( const_string param_name )
         s_mapping[TESTS_TO_RUN]             = "BOOST_TESTS_TO_RUN";
         s_mapping[SAVE_TEST_PATTERN]        = "BOOST_TEST_SAVE_PATTERN";
         s_mapping[SHOW_PROGRESS]            = "BOOST_TEST_SHOW_PROGRESS";
-        s_mapping[SUPPRESS_TIMER_OUTPUT]    = "BOOST_TEST_SUPPRESS_TIMER_OUTPUT";
         s_mapping[USE_ALT_STACK]            = "BOOST_TEST_USE_ALT_STACK";
         s_mapping[WAIT_FOR_DEBUGGER]        = "BOOST_TEST_WAIT_FOR_DEBUGGER";
     }
@@ -332,9 +330,6 @@ init( int& argc, char** argv )
               << cla::dual_name_parameter<bool>( SHOW_PROGRESS + "|p" )
                 - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,
                    cla::description = "Turns on progress display")
-              << cla::named_parameter<bool>( SUPPRESS_TIMER_OUTPUT )
-                - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,
-                   cla::description = "Suppresses the display of timer output when a test completes")
               << cla::dual_name_parameter<bool>( LIST_CONTENT + "|j" )
                 - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,cla::optional_value,
                    cla::description = "Lists the content of test tree - names of all test suites and test cases")
@@ -513,14 +508,6 @@ bool
 deprecated_timer_format()
 {
     return retrieve_parameter( DEPRECATED_TIMER_FORMAT, s_cla_parser, false );
-}
-
-//____________________________________________________________________________//
-
-bool
-suppress_timer_output()
-{
-    return retrieve_parameter( SUPPRESS_TIMER_OUTPUT, s_cla_parser, false );
 }
 
 //____________________________________________________________________________//

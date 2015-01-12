@@ -71,11 +71,9 @@ inline bool has_time( const elapsed_t& elapsed )
 {
     if( runtime_config::deprecated_timer_format() )
     {
-        return      !runtime_config::suppress_timer_output()
-                &&  ( elapsed.user != 0 || elapsed.system != 0 );
+        return elapsed.user != 0 || elapsed.system != 0 ;
     }
-    return      !runtime_config::suppress_timer_output()
-            &&  ( elapsed.wall != 0 || elapsed.user != 0 || elapsed.system != 0 );
+    return elapsed.wall != 0 || elapsed.user != 0 || elapsed.system != 0;
 
 }
 
