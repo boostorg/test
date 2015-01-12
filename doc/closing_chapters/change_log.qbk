@@ -15,6 +15,8 @@
 * command line option for negating expressions with !
 * color output with __param_color_output__
 * test bed listing with __param_list_content__
+* now having a more accurate timing (see [ticket 7397]) for the tests. Old format is still available through the command line option __param_deprecated_timer_format__
+  in case you experience problems with the new output. 
 
 [h5 Bugfixes and feature requests]
 # [ticket 2018] Error in the documentation chapter "Runtime parameters reference"
@@ -70,6 +72,7 @@
 # [ticket 6712] Eliminate warnings with GCC
 # [ticket 6748] Link in the documentation points to wrong page
 # [ticket 7046] Output full error message, not just 512 chars
+# [ticket 7397] Boost.Test, since boost 1.48 is using the deprecated Boost.Timer class - it should be updated to use the new class
 # [ticket 7410] Test Units (Cases and Suites) in Boost.Test do not capture __FILE__ and __LINE__ at declaration point making it impossible to provide source file linking using external test management tools
 # [ticket 8862] Boost.Test typo in documentation
 # [ticket 9179] Documentation: broken link (unable to find =const_string.hpp/const_string_test.cpp=)

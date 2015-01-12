@@ -559,9 +559,29 @@ Dnables/disable hardware traps for the floating point exception (if supported).
 [/ ###############################################################################################]
 [#ref_param_deprecated_timer_format][section `deprecated_timer_format`]
 
-Enables the deprecated timer format
+Enables the deprecated timer format.
 
-Enables/disables the output of the deprecated timer format for times when using the HRF format.
+
+Enables/disables the output of the deprecated timer format for times when using the HRF format. The WallTime, UserTime
+and SystemTime are now flushed to the output log in *nanoseconds*, while with the `--deprecated_timer_format` option,
+the TestingTime is written to the log in *microseconds*. 
+We have basically `CpuTime = UserTime + SystemTime`, and `CpuTime` and `TestingTime` are the same value expressed in nano and 
+microseconds respectively. 
+
+
+
+The XML format is not affected by this option, and the output will be
+
+``
+<TestingTime>500000</TestingTime>
+<CpuTime>500000000</CpuTime>
+<WallTime>527163615</WallTime>
+<UserTime>450000000</UserTime>
+<SystemTime>50000000</SystemTime>
+``
+
+
+
 
 [h4 Acceptable values]
 
