@@ -7,6 +7,7 @@ set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/../../../..)
 message(STATUS "$BOOST_ROOT = ${BOOST_ROOT}")
 
 set(EXAMPLES_SRC
+    example12.cpp
     example64.cpp
     example68.cpp
     example69.cpp
