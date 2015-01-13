@@ -28,8 +28,8 @@ project boost/test
                    <link>shared,<toolset>msvc:<cxxflags>-wd4275
                    
                    # Adding a dependency on boost/timer as the headers need to be there in case of the 
-                   # header-only usage variant
-                   <use>/boost/timer//boost_timer
+                   # header-only usage variant, and the library is dependent on boost.timer anyway
+                   <link>/boost/timer//boost_timer
     ;
 
 PRG_EXEC_MON_SOURCES =
