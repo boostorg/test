@@ -29,7 +29,7 @@ project boost/test
                    
                    # Adding a dependency on boost/timer as the headers need to be there in case of the 
                    # header-only usage variant, and the library is dependent on boost.timer anyway
-                   <link>/boost/timer//boost_timer
+                   <library>/boost/timer//boost_timer
     ;
 
 PRG_EXEC_MON_SOURCES =
