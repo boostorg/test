@@ -46,7 +46,7 @@ struct this_test_log_formatter : public boost::unit_test::output::compiler_log_f
         output << line << ": ";
     }
 
-    void test_unit_finish( std::ostream& output, test_unit const& tu, elapsed_t  )
+    void test_unit_finish( std::ostream& output, test_unit const& tu, unsigned long )
     {
         output << "Leaving test " << tu.p_type_name << " \"" << tu.p_name << "\"" << std::endl;
     }
