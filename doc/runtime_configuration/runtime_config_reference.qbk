@@ -136,15 +136,8 @@ acceptable values list. All values are case sensitive and are required to exactl
     [__param_detect_fp_exceptions__]
     [Traps floating point exceptions (on supported platforms).]
   ]
-
-
-  [/ ###############################################################################################]
-  [
-    [__param_deprecated_timer_format__]
-    [Enables output of the deprecated timer format.]
-  ]
-
-
+  
+  
   [/ ###############################################################################################]
   [
     [__param_log_sink__]
@@ -163,7 +156,8 @@ acceptable values list. All values are case sensitive and are required to exactl
     [__param_save_pattern__]
     [Provides parameters for testing output streams.]
   ]
-
+  
+  
   [/ ###############################################################################################]
   [
     [__param_list_content__]
@@ -554,45 +548,7 @@ Dnables/disable hardware traps for the floating point exception (if supported).
 
   BOOST_TEST_DETECT_FP_EXCEPTIONS
 
-[endsect] [/detect_fp_exceptions]
-
-[/ ###############################################################################################]
-[#ref_param_deprecated_timer_format][section `deprecated_timer_format`]
-
-Enables the deprecated timer format.
-
-
-Enables/disables the output of the deprecated timer format for times when using the HRF format. The WallTime, UserTime
-and SystemTime are now flushed to the output log in *nanoseconds*, while with the `--deprecated_timer_format` option,
-the TestingTime is written to the log in *microseconds*. 
-We have basically `CpuTime = UserTime + SystemTime`, and `CpuTime` and `TestingTime` are the same value expressed in nano and 
-microseconds respectively. 
-
-
-
-The XML format is not affected by this option, and the output will be
-
-``
-<TestingTime>500000</TestingTime>
-<CpuTime>500000000</CpuTime>
-<WallTime>527163615</WallTime>
-<UserTime>450000000</UserTime>
-<SystemTime>50000000</SystemTime>
-``
-
-
-
-
-[h4 Acceptable values]
-
-* [*no] (default)
-* yes
-
-[h4 Environment variable]
-
-  BOOST_TEST_DEPRECATED_TIMER_FORMAT
-
-[endsect] [/deprecated_timer_format]
+[endsect] [/detect_fp_exceptions]  
 
 [/ ###############################################################################################]
 [#ref_param_log_sink][section `log_sink`]
@@ -658,7 +614,7 @@ You can use this parameter to switch between these modes, by passing the paramet
 
   BOOST_TEST_SAVE_PATTERN
 
-[endsect] [/save_patterm]
+[endsect] [/save_patterm] 
 
 [/ ###############################################################################################]
 [section:param_list_content `list_content`]

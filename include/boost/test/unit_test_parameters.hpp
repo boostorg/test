@@ -42,8 +42,6 @@ BOOST_TEST_DECL const_string            break_exec_path();
 BOOST_TEST_DECL bool                    catch_sys_errors();
 /// Should we try to produce color output?
 BOOST_TEST_DECL bool                    color_output();
-/// Enable output of deprecated timer format?
-BOOST_TEST_DECL bool                    deprecated_timer_format();
 /// Should we detect floating point exceptions?
 BOOST_TEST_DECL bool                    detect_fp_exceptions();
 /// Should we detect memory leaks (>0)? And if yes, which specific memory allocation should we break.
