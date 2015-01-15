@@ -54,6 +54,8 @@
 
 
 [/ Assertions ]
+[def __BOOST_TEST__                       [link boost_test.users_guide.testing_tools.testing_tool_ref.assertion_boost_test_super_macro `BOOST_TEST`]]
+
 [def __BOOST_LEVEL__                      [link boost_test.users_guide.testing_tools.testing_tool_ref.assertion_boost_level `BOOST_<level>`]]
 [def __BOOST_CHECK__                      [link boost_test.users_guide.testing_tools.testing_tool_ref.assertion_boost_level `BOOST_CHECK`]]
 [def __BOOST_REQUIRE__                    [link boost_test.users_guide.testing_tools.testing_tool_ref.assertion_boost_level `BOOST_REQUIRE`]]
