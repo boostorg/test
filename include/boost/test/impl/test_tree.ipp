@@ -28,10 +28,9 @@
 #include <boost/test/utils/foreach.hpp>
 
 #include <boost/test/unit_test_parameters.hpp>
-#include <boost/test/utils/timer.hpp>
 
 // Boost
-// none
+#include <boost/timer.hpp>
 
 // STL
 #include <algorithm>

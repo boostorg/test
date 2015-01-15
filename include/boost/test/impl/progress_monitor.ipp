@@ -20,14 +20,13 @@
 
 #include <boost/test/unit_test_parameters.hpp>
 #include <boost/test/utils/setcolor.hpp>
-#include <boost/test/utils/timer.hpp>
-#include <boost/test/utils/progress.hpp>
 
 #include <boost/test/tree/test_unit.hpp>
 #include <boost/test/tree/test_case_counter.hpp>
 #include <boost/test/tree/traverse.hpp>
 
 // Boost
+#include <boost/progress.hpp>
 #include <boost/scoped_ptr.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -80,7 +79,7 @@ progress_monitor_t::test_aborted()
 //____________________________________________________________________________//
 
 void
-progress_monitor_t::test_unit_finish( test_unit const& tu, elapsed_t )
+progress_monitor_t::test_unit_finish( test_unit const& tu, unsigned long )
 {
     BOOST_TEST_SCOPE_SETCOLOR( *s_pm_impl().m_stream, term_attr::BRIGHT, term_color::MAGENTA );
 

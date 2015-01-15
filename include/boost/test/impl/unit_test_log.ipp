@@ -28,8 +28,6 @@
 #include <boost/test/output/compiler_log_formatter.hpp>
 #include <boost/test/output/xml_log_formatter.hpp>
 
-#include <boost/test/utils/timer.hpp>
-
 // Boost
 #include <boost/scoped_ptr.hpp>
 #include <boost/io/ios_state.hpp>
@@ -179,7 +177,7 @@ unit_test_log_t::test_unit_start( test_unit const& tu )
 //____________________________________________________________________________//
 
 void
-unit_test_log_t::test_unit_finish( test_unit const& tu, elapsed_t elapsed )
+unit_test_log_t::test_unit_finish( test_unit const& tu, unsigned long elapsed )
 {
     if( s_log_impl().m_threshold_level > log_test_units )
         return;
