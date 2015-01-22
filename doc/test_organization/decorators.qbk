@@ -9,7 +9,7 @@
 
 Decorators provide a way to configure certain aspects of a test unit.
 
-[bt_example example76_decorators..Test unit decorators]
+[bt_example example70_decorators..Test unit decorators]
 
 Test case `test_case1` has one associated ['decorator:] `label`. This means that when test units are executed selectively by label, this test case will match to label "trivial". Test case `test_case2` has three associated decorators: two of type `label` and one of type `description`. 
 
@@ -19,19 +19,19 @@ Test case `test_case1` has one associated ['decorator:] `label`. This means that
 
 It is also possible to decorate test suites. 
 
-[bt_example example77_decorators..Test suite decorators]
+[bt_example example71_decorators..Test suite decorators]
 
 The meaning of such decoration is that it applies to every test unit inside the suite. In the case above both test cases `suite1/test_case1` and `suite1/test_case2` have tag "trivial".
 
 A decorator applies to every test unit in the suite, even if the scope of a given suite is opened twice:
 
-[bt_example example78_decorators..Decorators on multiple suite openings]
+[bt_example example72_decorators..Decorators on multiple suite openings]
 
 In the above case, both test cases `suite1.test_case1` and `suite1/test_case2` have tag "trivial".
 
 In case the scope of the suite is opened twice in the same file with different decorator sets, the last decorator set is in effect:
 
-[bt_example example79_decorators..Different decorators on multiple suite openings]
+[bt_example example73_decorators..Different decorators on multiple suite openings]
 
 In the above case, both test cases `suite1/test_case1` and `suite1/test_case2` have tag "simple". Tag "trivial" has been overwritten.
 
@@ -74,7 +74,7 @@ depeneds_on(const_string dependent_test_name);
 
 Decorator `depends_on` disables the test unit from being run if the test unit marked as its dependency, is either disabled or is executed and marked as failed. 
 
-[bt_example example70_decorators..Decorator depends_on]
+[bt_example example76_decorators..Decorator depends_on]
 
 In the above scenario, `test_case2` is not even listed because it is disabled; `test_case5` is not listed because it depends on a disabled test unit. `test_case4` is listed but not executed because it depends on `test_case3`, which failed.
 
@@ -87,7 +87,7 @@ expected_failures(counter_t number);
 
 Decorator `expected_failures` defines the number of expected failures that will be reported upon program execution. At suite level this defines the number of expected failures per suite. The total number of expected failures per suite is the sum of per-suite decorator and per-test decorators inside the suite:
 
-[bt_example example71_decorators..Decorator expected_failures]
+[bt_example example77_decorators..Decorator expected_failures]
 
 
 [h3 timeout]
@@ -98,9 +98,12 @@ timeout(unsigned seconds);
 
 Decorator `timeout` specifies time (in seconds) that sets the maximum allowed duration of a test case. If this time is exceeded the test unit is forced to stop and is reported as failure.
 
-[bt_example example72_decorators..Decorator timeout]
+[bt_example example78_decorators..Decorator timeout]
+
+Applied at test suite level, this decorator has no effect.
 
 [caution Decorator `timeout` has no effect on Windows build. This feature is not implemented on Windows yet.]
+
 
 [h3 fixture]
 
@@ -116,7 +119,7 @@ template <typename Fx, typename Arg>
 
 Decorator `fixture` specifies a pair of functions (like `set_up` and `tear_down`) to be called before and after the corresponding test unit. At the suite level the `set_up` function is called once -- before the suite execution starts and `tear_down` function is called once -- after the suite execution ends. It comes in three forms. First expects two functions for set-up and tear-down (the second one can be skipped). The second expects a `DefaultConstructible` class. Its default constructor will be used as set-up function and its destructor as a tear-down function. Third requires a class with one-argument public constructor. Argument `arg` is forwarded to the constructor and this is the set-up function, its destructor is the tear-down function. There is no way to get access to the members of these fixtures from within the test case or test suite.
 
-[bt_example example73_decorators..Decorator fixture]
+[bt_example example79_decorators..Decorator fixture]
 
 [endsect] [/ section available_decorators]
 

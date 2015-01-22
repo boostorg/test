@@ -1,14 +1,10 @@
 //[example_output
-> example
-Running 2 test cases...
-set up FX
-set up FX2
-set up fun
-test.cpp(28): error: in "test_case1": check false has failed
-tear down fun
-test.cpp(33): error: in "test_case2": check false has failed
-tear down FX2
-tear down FX
+> example73 --run_test=@trivial
+Test setup error: no test cases matching filter
 
-*** 2 failures detected in test module "example"
+
+> example73 --run_test=@simple
+Running 2 test cases...
+
+*** No errors detected
 //]

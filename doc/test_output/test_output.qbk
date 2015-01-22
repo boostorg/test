@@ -196,6 +196,7 @@ with in a manner similar to standard `std::iostream` operation.
 [/ -------------------------------------------------------------------------------------------------- ]
 
 [include checkpoints.qbk]
+[include contexts.qbk]
 [include logging_floating_point.qbk]
 [include log_format.qbk]
 [include compilation_options.qbk]

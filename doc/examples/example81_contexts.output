@@ -1,5 +1,5 @@
 //[example_output
-> example
+> example81
 Running 1 test case...
 test.cpp(20): error: in "test_case1": check 1 != 1 has failed
 Failure occurred in a following context:
@@ -13,5 +13,5 @@ Failure occurred in a following context:
     Beta
 test.cpp(29): error: in "test_case1": check 5 != 5 has failed
 
-*** 4 failures detected in test module "example"
+*** 4 failures detected in test module "example81"
 //]
