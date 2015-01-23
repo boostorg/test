@@ -185,7 +185,7 @@ are samples in the dataset given as argument. Each test case runs on exactly *on
 Exactly as regular test cases, each test - or each sample - is executed within the test body in a /guarded manner/: 
 
 * the test execution are independent: if an error occurs for one sample, the reminder samples execution is not affected
-* in case of error, the [link boost_test.users_guide.tests_organization.context context] within which the error occurred is reported in the [link boost_test.users_guide.test_output log]. 
+* in case of error, the [link boost_test.users_guide.test_output.contexts context] within which the error occurred is reported in the [link boost_test.users_guide.test_output log]. 
   This context contains the sample for which the test failed, which would ease the debugging. 
 
 [caution The macro __BOOST_DATA_TEST_CASE__ is available only for compilers with support for variadic macros.]

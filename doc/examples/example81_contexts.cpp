@@ -6,7 +6,7 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 //[example_code
-#define BOOST_TEST_MODULE example
+#define BOOST_TEST_MODULE example81
 #include <boost/test/included/unit_test.hpp>
 
 void test()
