@@ -6,11 +6,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $$Revision$
-//
-//  Description : implements main function for Test Execution Monitor.
+/// @file
+/// @brief Implements main function for Test Execution Monitor.
 // ***************************************************************************
 
 #ifndef BOOST_TEST_TEST_MAIN_IPP_012205GER
