@@ -8,4 +8,35 @@
 [section:boost_test_super_macro `BOOST_TEST` or the Swiss Army knife]
 
 
+* `BOOST_TEST_WARN`
+* `BOOST_TEST_CHECK` or just `BOOST_TEST`
+* `BOOST_TEST_REQUIRE`
+
+[section Acceptable expressions]
+
+[endsect] [/ expressions]
+
+
+[section Optional failure message]
+
+[endsect] [/ message]
+
+
+
+[section Comparing collections]
+
+[endsect] [/ collections]
+
+
+[section Comparing floating points]
+
+[tip Consider using decorators for setting the tolerance of the comparisons
+
+ [warning put the link]
+]
+
+
+[endsect] [/ floating points]
+
+
 [endsect] [/ boost_test_super_macro]
