@@ -128,6 +128,7 @@ operator>>( std::istream& in, unit_test::output_format& of )
         "HRF", unit_test::OF_CLF,
         "CLF", unit_test::OF_CLF,
         "XML", unit_test::OF_XML,
+        "DOT", unit_test::OF_DOT,
 
         unit_test::OF_INVALID
         );
@@ -255,7 +256,7 @@ retrieve_parameter( const_string parameter_name, cla::parser const& s_cla_parser
 
 //____________________________________________________________________________//
 
-} // local namespace 
+} // local namespace
 
 void
 init( int& argc, char** argv )
@@ -325,7 +326,7 @@ init( int& argc, char** argv )
               << cla::dual_name_parameter<bool>( SHOW_PROGRESS + "|p" )
                 - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,
                    cla::description = "Turns on progress display")
-              << cla::dual_name_parameter<bool>( LIST_CONTENT + "|j" )
+              << cla::dual_name_parameter<unit_test::output_format>( LIST_CONTENT + "|j" )
                 - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,cla::optional_value,
                    cla::description = "Lists the content of test tree - names of all test suites and test cases")
               << cla::named_parameter<bool>( USE_ALT_STACK )
@@ -359,7 +360,7 @@ init( int& argc, char** argv )
     }
     catch( rt::logic_error const& ex ) {
         std::ostringstream err;
-        
+
         err << "Fail to process runtime parameters: " << ex.msg() << std::endl;
         s_cla_parser.usage( err );
 
@@ -435,10 +436,10 @@ show_build_info()
 
 //____________________________________________________________________________//
 
-bool
+output_format
 list_content()
 {
-    return retrieve_parameter( LIST_CONTENT, s_cla_parser, false );
+    return retrieve_parameter( LIST_CONTENT, s_cla_parser, unit_test::OF_INVALID, unit_test::OF_CLF );
 }
 
 //____________________________________________________________________________//
@@ -446,11 +447,11 @@ list_content()
 bool
 catch_sys_errors()
 {
-    return retrieve_parameter( CATCH_SYS_ERRORS, s_cla_parser, 
+    return retrieve_parameter( CATCH_SYS_ERRORS, s_cla_parser,
 #ifdef BOOST_TEST_DEFAULTS_TO_CORE_DUMP
         false
 #else
-        true 
+        true
 #endif
         );
 }
@@ -521,8 +522,8 @@ report_sink()
     std::string sink_name = retrieve_parameter( REPORT_SINK, s_cla_parser, s_empty );
 
     if( sink_name.empty() || sink_name == "stderr" )
-        return &std::cerr;    
-    
+        return &std::cerr;
+
     if( sink_name == "stdout" )
         return &std::cout;
 
@@ -538,10 +539,10 @@ log_sink()
     std::string sink_name = retrieve_parameter( LOG_SINK, s_cla_parser, s_empty );
 
     if( sink_name.empty() || sink_name == "stdout" )
-        return &std::cout;    
+        return &std::cout;
 
     if( sink_name == "stderr" )
-        return &std::cerr;    
+        return &std::cerr;
 
     static std::ofstream log_file( sink_name.c_str() );
     return &log_file;

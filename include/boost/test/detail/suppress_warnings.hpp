@@ -5,7 +5,7 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//!@file 
+//!@file
 //!@brief suppress some warnings
 // ***************************************************************************
 

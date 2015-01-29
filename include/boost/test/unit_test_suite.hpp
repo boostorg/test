@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -238,7 +238,7 @@ init_unit_test_suite( int, char* [] )   {
 #ifdef BOOST_TEST_MODULE
     using namespace ::boost::unit_test;
     assign_op( framework::master_test_suite().p_name.value, BOOST_TEST_STRINGIZE( BOOST_TEST_MODULE ).trim( "\"" ), 0 );
-    
+
 #endif
 
 #ifdef BOOST_TEST_ALTERNATIVE_INIT_API

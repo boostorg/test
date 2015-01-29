@@ -145,7 +145,7 @@ class mock_object : public Base {
 public:
     static mock_object& prototype()
     {
-        static mock_object p( reinterpret_cast<dummy*>(0) ); 
+        static mock_object p( reinterpret_cast<dummy*>(0) );
         return p;
     }
 

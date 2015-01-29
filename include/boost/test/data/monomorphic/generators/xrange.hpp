@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -61,7 +61,7 @@ public:
 
     // Generator interface
     data::size_t    capacity() const { return m_size; }
-    SampleType      next() 
+    SampleType      next()
     {
         if( m_index == m_size )
             return m_curr;
@@ -145,15 +145,15 @@ struct make_xrange {
 //! auto d = xrange(begin_val, end_val, step_val);
 //! auto d = xrange(param);
 //! @endcode
-//! 
-//! - @c begin_val indicates the start of the sequence (default to 0). 
+//!
+//! - @c begin_val indicates the start of the sequence (default to 0).
 //! - @c end_val is the end of the sequence. If ommited, the dataset has infinite size.\n
 //! - @c step_val is the step between two consecutive elements of the sequence, and defaults to 1.\n
 //! - @c param is the named parameters that describe the sequence. The following parameters are accepted:
 //!   - @c begin: same meaning @c begin_val
 //!   - @c end: same meaning as @c end_val
 //!   - @c step: same meaning as @c step_val
-//! 
+//!
 //!
 //! The returned value is an object that implements the dataset API.
 //!

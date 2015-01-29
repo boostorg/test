@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -53,7 +53,7 @@ struct access_to_invalid_parameter {};
 
 //____________________________________________________________________________//
 
-inline void 
+inline void
 report_access_to_invalid_parameter(bool v)
 {
     if(v)
@@ -99,7 +99,7 @@ struct nil {
 private:
     nil() {}
 };
-    
+
 // ************************************************************************** //
 // **************             named_parameter_base             ************** //
 // ************************************************************************** //
@@ -118,7 +118,7 @@ struct named_parameter_base {
 // ************************************************************************** //
 
 template<typename NP, typename Rest = nil>
-struct named_parameter_combine 
+struct named_parameter_combine
 : Rest
 , named_parameter_base<named_parameter_combine<NP,Rest> > {
     typedef typename NP::ref_type  res_type;
@@ -179,7 +179,7 @@ struct named_parameter
     typedef unique_id       id;
 
     // Constructor
-    explicit        named_parameter( ref_type v ) 
+    explicit        named_parameter( ref_type v )
     : m_value( v )
     , m_erased( false )
     {}

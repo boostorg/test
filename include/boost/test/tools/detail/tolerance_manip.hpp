@@ -53,7 +53,7 @@ operator%( FPT v, tolerance_manip_delay const& )
 {
     BOOST_STATIC_ASSERT( is_floating_point<FPT>::value );
 
-    return tolerance_manip<FPT>( v * static_cast<FPT>(0.01) ); 
+    return tolerance_manip<FPT>( v * static_cast<FPT>(0.01) );
 }
 
 //____________________________________________________________________________//
@@ -80,7 +80,7 @@ inline check_type
 operator<<( assertion_type const& /*at*/, tolerance_manip<FPT> const& )         { return CHECK_BUILT_ASSERTION; }
 
 //____________________________________________________________________________//
- 
+
 } // namespace tt_detail
 
 template<typename FPT>

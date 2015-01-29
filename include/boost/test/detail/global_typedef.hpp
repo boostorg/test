@@ -1,11 +1,11 @@
 //  (C) Copyright Gennadiy Rozental 2001-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//!@file 
+//!@file
 //!@brief some trivial global typedefs
 // ***************************************************************************
 
@@ -41,7 +41,11 @@ enum report_level  { INV_REPORT_LEVEL, CONFIRMATION_REPORT, SHORT_REPORT, DETAIL
 
 //____________________________________________________________________________//
 
-enum output_format { OF_INVALID, OF_CLF /* compiler log format */, OF_XML /* OF_XML */ };
+enum output_format { OF_INVALID,
+                     OF_CLF, ///< compiler log format
+                     OF_XML, ///< XML format for report and log,
+                     OF_DOT  ///< dot format for output content 
+};
 
 //____________________________________________________________________________//
 
@@ -73,16 +77,16 @@ test_id_2_unit_type( test_unit_id id )
 
 //____________________________________________________________________________//
 
-// helper templates to prevent ODR violations 
-template<class T> 
-struct static_constant { 
-    static T value; 
-}; 
+// helper templates to prevent ODR violations
+template<class T>
+struct static_constant {
+    static T value;
+};
 
-template<class T> 
-T static_constant<T>::value; 
+template<class T>
+T static_constant<T>::value;
 
-//____________________________________________________________________________// 
+//____________________________________________________________________________//
 
 } // namespace ut_detail
 

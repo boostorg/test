@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -91,12 +91,12 @@ struct traits<std::tuple<T1,T2,T3>> {
 
 //!@brief Dataset base class
 //!
-//! This class defines the dataset concept, which is an implementation of a sequence. 
+//! This class defines the dataset concept, which is an implementation of a sequence.
 //! Each dataset should implement
 //! - the @c size
 //! - the @c begin function, which provides a forward iterator on the beginning of the sequence. The returned
-//!   iterator should be incrementable a number of times corresponding to the returned size. 
-//! 
+//!   iterator should be incrementable a number of times corresponding to the returned size.
+//!
 template<typename T>
 class dataset {
 public:
@@ -110,7 +110,7 @@ public:
 
         virtual             ~iterator() {}
 
-        // forward iterator interface 
+        // forward iterator interface
         virtual ref_type    operator*() = 0;
         virtual void        operator++() = 0;
     };

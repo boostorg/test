@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2005-2014.
-//  Use, modification, and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
+//  Use, modification, and distribution are subject to the
+//  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -34,7 +34,7 @@ namespace cla {
 // **************              string_name_policy              ************** //
 // ************************************************************************** //
 
-BOOST_RT_PARAM_INLINE 
+BOOST_RT_PARAM_INLINE
 string_name_policy::string_name_policy()
 : basic_naming_policy( rtti::type_id<string_name_policy>() )
 , m_guess_name( false )
@@ -80,16 +80,16 @@ string_name_policy::conflict_with( identification_policy const& id ) const
                 ((m_guess_name    && (mm_pos.second == snp.p_name->end()) ) ||  // that match other guy and I am guessing
                 (snp.m_guess_name && (mm_pos.first  == p_name->end()) ));       // or me and the other guy is
     }
-    
+
     if( id.p_type_id == rtti::type_id<char_name_policy>() ) {
         char_name_policy const& cnp = static_cast<char_name_policy const&>( id );
 
-        return m_guess_name                 && 
-               (p_prefix == cnp.p_prefix)   && 
+        return m_guess_name                 &&
+               (p_prefix == cnp.p_prefix)   &&
                unit_test::first_char( cstring( p_name ) ) == unit_test::first_char( cstring( cnp.p_name ) );
     }
-    
-    return false;    
+
+    return false;
 }
 
 #ifdef BOOST_MSVC
@@ -107,7 +107,7 @@ string_name_policy::match_name( argv_traverser& tr ) const
     cstring in = tr.input();
 
     std::pair<cstring::iterator,dstring::const_iterator> mm_pos;
-    
+
     mm_pos = unit_test::mismatch( in.begin(), in.end(), p_name->begin(), p_name->end() );
 
     if( mm_pos.first == in.begin() )

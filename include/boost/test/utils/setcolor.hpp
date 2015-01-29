@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2009-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -33,21 +33,21 @@ namespace unit_test {
 // **************                    term_attr                 ************** //
 // ************************************************************************** //
 
-struct term_attr { enum _ { 
+struct term_attr { enum _ {
     NORMAL    = 0,
     BRIGHT    = 1,
     DIM       = 2,
     UNDERLINE = 4,
     BLINK     = 5,
     REVERSE   = 7,
-    CROSSOUT  = 9 
+    CROSSOUT  = 9
 }; };
 
 // ************************************************************************** //
 // **************                   term_color                 ************** //
 // ************************************************************************** //
 
-struct term_color { enum _ { 
+struct term_color { enum _ {
     BLACK    = 0,
     RED      = 1,
     GREEN    = 2,
@@ -66,8 +66,8 @@ struct term_color { enum _ {
 class setcolor {
 public:
     // Constructor
-    explicit    setcolor( term_attr::_  attr = term_attr::NORMAL, 
-                          term_color::_ fg   = term_color::ORIGINAL, 
+    explicit    setcolor( term_attr::_  attr = term_attr::NORMAL,
+                          term_color::_ fg   = term_color::ORIGINAL,
                           term_color::_ bg   = term_color::ORIGINAL )
     {
         m_command_size = std::sprintf( m_control_command, "%c[%d;%d;%dm", 0x1B, attr, fg + 30, bg + 40 );
@@ -92,8 +92,8 @@ private:
 struct scope_setcolor {
     scope_setcolor() : m_os( 0 ) {}
     explicit    scope_setcolor( std::ostream& os,
-                                term_attr::_  attr = term_attr::NORMAL, 
-                                term_color::_ fg   = term_color::ORIGINAL, 
+                                term_attr::_  attr = term_attr::NORMAL,
+                                term_color::_ fg   = term_color::ORIGINAL,
                                 term_color::_ bg   = term_color::ORIGINAL )
     : m_os( &os )
     {

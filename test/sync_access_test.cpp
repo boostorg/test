@@ -21,7 +21,6 @@
 #include <boost/bind.hpp>
 #include <boost/ref.hpp>
 
-
 using namespace boost;
 namespace ut = boost::unit_test;
 
@@ -35,8 +34,9 @@ static void thread_function(boost::barrier& b)
     BOOST_TEST(1 ==0); /// produce the fault
 }
 
-BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES( test_multiple_assertion_faults, 100 )
-
+BOOST_TEST_DECORATOR(
+- ut::expected_failures(100)
+)
 /// test function which creates threads
 BOOST_AUTO_TEST_CASE( test_multiple_assertion_faults )
 {

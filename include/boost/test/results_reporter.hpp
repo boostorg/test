@@ -1,14 +1,14 @@
 //  (C) Copyright Gennadiy Rozental 2001-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file 
+/// @file
 /// @brief defines testing result reporter interfaces
 ///
-/// This file defines interfaces that are responsible for results reporting. Interface is presented in a form of 
+/// This file defines interfaces that are responsible for results reporting. Interface is presented in a form of
 /// free standing function implemented in namespace result_reporter
 // ***************************************************************************
 
@@ -37,7 +37,7 @@ namespace results_reporter {
 ///
 /// This is abstract interface for the report formatter used by results reporter routines.
 /// You can define a custom formatter by implementing this interface and setting the formatter using set_format function.
-/// This is usually done during test module initialization 
+/// This is usually done during test module initialization
 // ************************************************************************** //
 
 class BOOST_TEST_DECL format {
@@ -61,13 +61,13 @@ public:
 /// Sets reporting level
 
 /// There are only four possible levels for results report:
-/// - confirmation report (boost::unit_test::CONFIRMATION_REPORT). This report level only produces short confirmation 
+/// - confirmation report (boost::unit_test::CONFIRMATION_REPORT). This report level only produces short confirmation
 ///   message about test module pass/fail status
-/// - short report (boost::unit_test::SHORT_REPORT). This report level produces short summary report for failed/passed 
+/// - short report (boost::unit_test::SHORT_REPORT). This report level produces short summary report for failed/passed
 ///   assertions and test units.
-/// - detailed report (boost::unit_test::DETAILED_REPORT). This report level produces detailed report per test unit for 
+/// - detailed report (boost::unit_test::DETAILED_REPORT). This report level produces detailed report per test unit for
 ///   passed/failed assertions and uncaught exceptions
-/// - no report (boost::unit_test::NO_REPORT). This report level produces no results report. This is used for test modules 
+/// - no report (boost::unit_test::NO_REPORT). This report level produces no results report. This is used for test modules
 ///   running as part of some kind of continues integration framework
 /// @param[in] l report level
 BOOST_TEST_DECL void    set_level( report_level l );
@@ -86,15 +86,15 @@ BOOST_TEST_DECL void    set_stream( std::ostream& );
 /// @param[in] of one of the presefined enumeration values for output formats
 BOOST_TEST_DECL void    set_format( output_format of );
 
-/// Sets custom report formatter 
+/// Sets custom report formatter
 
-/// The framework takes ownership of the pointer passed as an argument. So this should be a pointer to 
+/// The framework takes ownership of the pointer passed as an argument. So this should be a pointer to
 /// a heap allocated object
 /// @param[in] f pointer to heap allocated instance of custom report formatter class
 BOOST_TEST_DECL void    set_format( results_reporter::format* f );
 
 /// @brief Access to configured results reporter stream
-/// 
+///
 /// Use this stream to report additional information abut test module execution
 BOOST_TEST_DECL std::ostream& get_stream();
 
@@ -105,7 +105,7 @@ BOOST_TEST_DECL std::ostream& get_stream();
 // ************************************************************************** //
 
 BOOST_TEST_DECL void    make_report( report_level l = INV_REPORT_LEVEL, test_unit_id = INV_TEST_UNIT_ID );
-inline void             confirmation_report( test_unit_id id = INV_TEST_UNIT_ID )   
+inline void             confirmation_report( test_unit_id id = INV_TEST_UNIT_ID )
 { make_report( CONFIRMATION_REPORT, id ); }
 inline void             short_report( test_unit_id id = INV_TEST_UNIT_ID )
 { make_report( SHORT_REPORT, id ); }

@@ -1,11 +1,11 @@
 //  (C) Copyright Gennadiy Rozental 2001-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//!@file 
+//!@file
 //!@brief algorithms for comparing floating point values
 // ***************************************************************************
 
@@ -30,7 +30,7 @@
 //____________________________________________________________________________//
 
 namespace boost {
-namespace math { 
+namespace math {
 namespace fpc {
 
 // ************************************************************************** //
@@ -51,7 +51,7 @@ namespace fpc_detail {
 // FPT is Floating-Point Type: float, double, long double or User-Defined.
 template<typename FPT>
 inline FPT
-fpt_abs( FPT fpv ) 
+fpt_abs( FPT fpv )
 {
     return fpv < static_cast<FPT>(0) ? -fpv : fpv;
 }
@@ -107,12 +107,12 @@ struct tolerance_traits {
     static ToleranceType    actual_tolerance( FPT fraction_tolerance )
     {
         return static_cast<ToleranceType>( fraction_tolerance );
-    } 
+    }
     template<typename FPT>
     static FPT              fraction_tolerance( ToleranceType tolerance )
     {
         return static_cast<FPT>(tolerance);
-    } 
+    }
 };
 
 //____________________________________________________________________________//
@@ -137,7 +137,7 @@ struct tolerance_traits<percent_tolerance_t<FPT> > {
     template<typename FPT2>
     static FPT2 fraction_tolerance( percent_tolerance_t<FPT> tolerance )
     {
-        return static_cast<FPT2>(tolerance.m_value)*static_cast<FPT2>(0.01); 
+        return static_cast<FPT2>(tolerance.m_value)*static_cast<FPT2>(0.01);
     }
 };
 
@@ -167,7 +167,7 @@ percent_tolerance( FPT v )
 template<typename FPT1, typename FPT2>
 struct comp_supertype {
     // deduce "better" type from types of arguments being compared
-    // if one type is floating and the second integral we use floating type and 
+    // if one type is floating and the second integral we use floating type and
     // value of integral type is promoted to the floating. The same for float and double
     // But we don't want to compare two values of integral types using this tool.
     typedef typename numeric::conversion_traits<FPT1,FPT2>::supertype type;
@@ -186,7 +186,7 @@ public:
 
     // Constructor
     template<typename ToleranceType>
-    explicit    close_at_tolerance( ToleranceType tolerance, fpc::strength fpc_strength = FPC_STRONG ) 
+    explicit    close_at_tolerance( ToleranceType tolerance, fpc::strength fpc_strength = FPC_STRONG )
     : m_fraction_tolerance( tolerance_traits<ToleranceType>::template fraction_tolerance<FPT>( tolerance ) )
     , m_strength( fpc_strength )
     {
@@ -204,9 +204,9 @@ public:
         FPT diff              = fpc_detail::fpt_abs( left - right );
         FPT fraction_of_right = fpc_detail::safe_fpt_division( diff, fpc_detail::fpt_abs( right ) );
         FPT fraction_of_left  = fpc_detail::safe_fpt_division( diff, fpc_detail::fpt_abs( left ) );
-        
+
         bool res( m_strength == FPC_STRONG
-            ? (fraction_of_right <= m_fraction_tolerance && fraction_of_left <= m_fraction_tolerance) 
+            ? (fraction_of_right <= m_fraction_tolerance && fraction_of_left <= m_fraction_tolerance)
             : (fraction_of_right <= m_fraction_tolerance || fraction_of_left <= m_fraction_tolerance) );
 
         if( res )

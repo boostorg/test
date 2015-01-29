@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -94,7 +94,7 @@ public:
 
     virtual void        test_unit_start( test_unit const& );
     virtual void        test_unit_finish( test_unit const&, unsigned long elapsed );
-    virtual void        test_unit_skipped( test_unit const& );
+    virtual void        test_unit_skipped( test_unit const&, const_string );
 
     virtual void        exception_caught( execution_exception const& ex );
 
@@ -110,7 +110,7 @@ public:
     void                set_checkpoint( const_string file, std::size_t line_num, const_string msg = const_string() );
 
     // entry logging
-    unit_test_log_t&    operator<<( log::begin const& );        // begin entry 
+    unit_test_log_t&    operator<<( log::begin const& );        // begin entry
     unit_test_log_t&    operator<<( log::end const& );          // end entry
     unit_test_log_t&    operator<<( log_level );                // set entry level
     unit_test_log_t&    operator<<( const_string );             // log entry value

@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -178,26 +178,24 @@ private:
 };
 
 // ************************************************************************** //
-// **************        decorator::enable_if/disable_if       ************** //
+// **************    decorator::enable_if/enabled/disabled     ************** //
 // ************************************************************************** //
 
-class BOOST_TEST_DECL enable_if : public decorator::for_test_unit {
-public:
-    explicit                enable_if( bool condition ) : m_condition( condition ) {}
+class BOOST_TEST_DECL enable_if_impl : public decorator::for_test_unit {
+protected:
+    void                    apply_impl( test_unit& tu, bool condition );
+};
 
+template<bool condition>
+class enable_if : public enable_if_impl {
 private:
     // decorator::for_test_unit interface
-    virtual void            do_apply( test_unit& tu );
-    virtual for_test_unit*  do_clone() const            { return new enable_if( m_condition ); }
-
-    // Data members
-    bool                    m_condition;
+    virtual void            do_apply( test_unit& tu )   { this->apply_impl( tu, condition ); }
+    virtual for_test_unit*  do_clone() const            { return new enable_if<condition>(); }
 };
 
-class BOOST_TEST_DECL disable_if : public enable_if {
-public:
-    explicit    disable_if( bool condition ) : enable_if( !condition ) {}
-};
+typedef enable_if<true> enabled;
+typedef enable_if<false> disabled;
 
 // ************************************************************************** //
 // **************              decorator::fixture              ************** //
@@ -253,7 +251,8 @@ using decorator::timeout;
 using decorator::description;
 using decorator::depends_on;
 using decorator::enable_if;
-using decorator::disable_if;
+using decorator::enabled;
+using decorator::disabled;
 using decorator::fixture;
 
 } // namespace unit_test

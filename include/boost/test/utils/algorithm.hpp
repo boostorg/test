@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2004-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -50,7 +50,7 @@ mismatch( InputIter1 first1, InputIter1 last1,
 /// @brief this algorithm search through two collections for first mismatch position that get returned as a pair
 /// of iterators, first pointing to the mismatch position in first collection, second iterator in second one. This algorithms
 /// uses supplied predicate for collection elements comparison
-/// 
+///
 /// @param first1 - first collection begin iterator
 /// @param last1 - first collection end iterator
 /// @param first2 - second collection begin iterator
@@ -80,7 +80,7 @@ mismatch( InputIter1 first1, InputIter1 last1,
 /// @param last2 - second collection end iterator
 template<class ForwardIterator1, class ForwardIterator2>
 inline ForwardIterator1
-find_first_not_of( ForwardIterator1 first1, ForwardIterator1 last1, 
+find_first_not_of( ForwardIterator1 first1, ForwardIterator1 last1,
                    ForwardIterator2 first2, ForwardIterator2 last2 )
 {
     while( first1 != last1 ) {
@@ -94,7 +94,7 @@ find_first_not_of( ForwardIterator1 first1, ForwardIterator1 last1,
 
 //____________________________________________________________________________//
 
-/// @brief this algorithm search through first collection for first element that does not satisfy binary 
+/// @brief this algorithm search through first collection for first element that does not satisfy binary
 /// predicate in conjunction will any element in second collection
 ///
 /// @param first1 - first collection begin iterator
@@ -104,8 +104,8 @@ find_first_not_of( ForwardIterator1 first1, ForwardIterator1 last1,
 /// @param pred - predicate to be used for search
 template<class ForwardIterator1, class ForwardIterator2, class Predicate>
 inline ForwardIterator1
-find_first_not_of( ForwardIterator1 first1, ForwardIterator1 last1, 
-                   ForwardIterator2 first2, ForwardIterator2 last2, 
+find_first_not_of( ForwardIterator1 first1, ForwardIterator1 last1,
+                   ForwardIterator2 first2, ForwardIterator2 last2,
                    Predicate pred )
 {
     while( first1 != last1 ) {
@@ -127,7 +127,7 @@ find_first_not_of( ForwardIterator1 first1, ForwardIterator1 last1,
 /// @param last2 - second collection end iterator
 template<class BidirectionalIterator1, class ForwardIterator2>
 inline BidirectionalIterator1
-find_last_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1, 
+find_last_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
               ForwardIterator2 first2, ForwardIterator2 last2 )
 {
     if( first1 == last1 || first2 == last2 )
@@ -141,7 +141,7 @@ find_last_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 
 //____________________________________________________________________________//
 
-/// @brief this algorithm search through first collection for last element that satisfy binary 
+/// @brief this algorithm search through first collection for last element that satisfy binary
 /// predicate in conjunction will at least one element in second collection
 ///
 /// @param first1 - first collection begin iterator
@@ -151,8 +151,8 @@ find_last_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 /// @param pred - predicate to be used for search
 template<class BidirectionalIterator1, class ForwardIterator2, class Predicate>
 inline BidirectionalIterator1
-find_last_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1, 
-              ForwardIterator2 first2, ForwardIterator2 last2, 
+find_last_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
+              ForwardIterator2 first2, ForwardIterator2 last2,
               Predicate pred )
 {
     if( first1 == last1 || first2 == last2 )
@@ -174,7 +174,7 @@ find_last_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 /// @param last2 - second collection end iterator
 template<class BidirectionalIterator1, class ForwardIterator2>
 inline BidirectionalIterator1
-find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1, 
+find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
                   ForwardIterator2 first2, ForwardIterator2 last2 )
 {
     if( first1 == last1 || first2 == last2 )
@@ -188,7 +188,7 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 
 //____________________________________________________________________________//
 
-/// @brief this algorithm search through first collection for last element that does not satisfy binary 
+/// @brief this algorithm search through first collection for last element that does not satisfy binary
 /// predicate in conjunction will any element in second collection
 ///
 /// @param first1 - first collection begin iterator
@@ -198,8 +198,8 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 /// @param pred - predicate to be used for search
 template<class BidirectionalIterator1, class ForwardIterator2, class Predicate>
 inline BidirectionalIterator1
-find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1, 
-                  ForwardIterator2 first2, ForwardIterator2 last2, 
+find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
+                  ForwardIterator2 first2, ForwardIterator2 last2,
                   Predicate pred )
 {
     if( first1 == last1 || first2 == last2 )

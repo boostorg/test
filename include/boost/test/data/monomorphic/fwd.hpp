@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2012-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -95,11 +95,11 @@ struct is_dataset<DS const> : is_dataset<DS> {};
 //! This function has several overloads:
 //! @code
 //! // returns ds if ds is already a dataset
-//! template <typename DS> DS make(DS&& ds); 
+//! template <typename DS> DS make(DS&& ds);
 //!
 //! // creates a singleton dataset, for non forward iterable and non dataset type T
 //! // (a C string is not considered as a sequence).
-//! template <typename T> monomorphic::singleton<T> make(T&& v); 
+//! template <typename T> monomorphic::singleton<T> make(T&& v);
 //! monomorphic::singleton<char*> make( char* str );
 //! monomorphic::singleton<char const*> make( char const* str );
 //!
@@ -123,8 +123,8 @@ make(DS&& ds)
 // fwrd declaration for singletons
 //! @overload boost::unit_test::data::make()
 template<typename T>
-inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
-                                     !monomorphic::is_dataset<T>::value, 
+inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value &&
+                                     !monomorphic::is_dataset<T>::value,
                                      monomorphic::singleton<T> >::type
 make( T&& v );
 
@@ -149,8 +149,8 @@ make(DS const& ds)
 // fwrd declaration for singletons
 //! @overload boost::unit_test::data::make()
 template<typename T>
-inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
-                                     !monomorphic::is_dataset<T>::value, 
+inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value &&
+                                     !monomorphic::is_dataset<T>::value,
                                      monomorphic::singleton<T> >::type
 make( T const& v );
 

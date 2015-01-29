@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -29,11 +29,11 @@ namespace BOOST_RT_PARAM_NAMESPACE {
 namespace environment {
 
 template<typename T>
-class variable;  
+class variable;
 
 class variable_base;
 variable_base var( cstring var_name );
-  
+
 template<typename T>
 inline variable<T>
   var( cstring var_name );

@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -37,7 +37,7 @@ namespace BOOST_RT_PARAM_NAMESPACE {
 // **************             runtime::logic_error             ************** //
 // ************************************************************************** //
 
-class logic_error 
+class logic_error
 #ifdef BOOST_RT_PARAM_EXCEPTION_INHERIT_STD
 : public std::exception
 #endif
@@ -46,7 +46,7 @@ class logic_error
 public:
     // Constructor // !! could we eliminate shared_ptr
     explicit    logic_error( cstring msg ) : m_msg( new dstring( msg.begin(), msg.size() ) ) {}
-    ~logic_error() BOOST_NOEXCEPT_OR_NOTHROW 
+    ~logic_error() BOOST_NOEXCEPT_OR_NOTHROW
     {}
 
     dstring const&   msg() const                    { return *m_msg; }

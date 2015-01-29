@@ -26,6 +26,7 @@
 
 // Boost
 #include <boost/bind.hpp>
+#include <boost/noncopyable.hpp>
 
 // STL
 #include <iostream>

@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2005-2014.
-//  Use, modification, and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
+//  Use, modification, and distribution are subject to the
+//  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -77,7 +77,7 @@ argv_traverser::remainder( int& argc, char_type** argv )
     while(pos < m_remainder_size ) {
         argv[argc++] = m_remainder.get() + pos;
 
-        pos = std::find( m_remainder.get() + pos, m_remainder.get() + m_remainder_size, 
+        pos = std::find( m_remainder.get() + pos, m_remainder.get() + m_remainder_size,
                          BOOST_RT_PARAM_LITERAL( ' ' ) ) - m_remainder.get();
         m_remainder[pos++] = BOOST_RT_PARAM_LITERAL( '\0' );
     }

@@ -132,7 +132,7 @@ format_report( OutStream& os, assertion_result const& pr, unit_test::lazy_ostrea
     switch( ct ) {
     case CHECK_PRED:
         os << prefix << assertion_descr << suffix;
-        
+
         if( !pr.has_empty_message() )
             os << ". " << pr.message();
         break;
@@ -155,16 +155,16 @@ format_report( OutStream& os, assertion_result const& pr, unit_test::lazy_ostrea
             os << prefix << "'" << assertion_descr << "'" << suffix;
         else
             os << assertion_descr;
-        
+
         if( !pr.has_empty_message() )
             os << ". " << pr.message();
         break;
 
-    case CHECK_EQUAL: 
-    case CHECK_NE: 
-    case CHECK_LT: 
-    case CHECK_LE: 
-    case CHECK_GT: 
+    case CHECK_EQUAL:
+    case CHECK_NE:
+    case CHECK_LT:
+    case CHECK_LE:
+    case CHECK_GT:
     case CHECK_GE: {
         char const*         arg1_descr  = va_arg( args, char const* );
         lazy_ostream const* arg1_val    = va_arg( args, lazy_ostream const* );
@@ -175,7 +175,7 @@ format_report( OutStream& os, assertion_result const& pr, unit_test::lazy_ostrea
 
         if( tl != PASS )
             os << " [" << *arg1_val << rever_str[ct-CHECK_EQUAL] << *arg2_val << "]" ;
-        
+
         if( !pr.has_empty_message() )
             os << ". " << pr.message();
         break;
@@ -205,10 +205,10 @@ format_report( OutStream& os, assertion_result const& pr, unit_test::lazy_ostrea
         /* toler_descr = */               va_arg( args, char const* );
         lazy_ostream const* toler_val   = va_arg( args, lazy_ostream const* );
 
-        os << "absolute value of " << arg1_descr << "{" << *arg1_val << "}" 
+        os << "absolute value of " << arg1_descr << "{" << *arg1_val << "}"
                                    << ( tl == PASS ? " doesn't exceed " : " exceeds " )
                                    << *toler_val;
-        
+
         if( !pr.has_empty_message() )
             os << ". " << pr.message();
         break;
@@ -229,17 +229,17 @@ format_report( OutStream& os, assertion_result const& pr, unit_test::lazy_ostrea
         os << "( ";
         for( std::size_t i = 0; i < num_args; ++i ) {
             os << args_copy[i].first;
-            
+
             if( i != num_args-1 )
                 os << ", ";
         }
         os << " )" << suffix;
-                        
+
         if( tl != PASS ) {
             os << " for ( ";
             for( std::size_t i = 0; i < num_args; ++i ) {
                 os << *args_copy[i].second;
-                
+
                 if( i != num_args-1 )
                     os << ", ";
             }
@@ -257,7 +257,7 @@ format_report( OutStream& os, assertion_result const& pr, unit_test::lazy_ostrea
         char const* right_begin_descr   = va_arg( args, char const* );
         char const* right_end_descr     = va_arg( args, char const* );
 
-        os << prefix << "{ " << left_begin_descr  << ", " << left_end_descr  << " } == { " 
+        os << prefix << "{ " << left_begin_descr  << ", " << left_end_descr  << " } == { "
                              << right_begin_descr << ", " << right_end_descr << " }"
            << suffix;
 
@@ -271,7 +271,7 @@ format_report( OutStream& os, assertion_result const& pr, unit_test::lazy_ostrea
         char const* right_descr   = va_arg( args, char const* );
 
         os << prefix << left_descr  << " =.= " << right_descr << suffix;
-        
+
         if( !pr.has_empty_message() )
             os << ". " << pr.message();
         break;
@@ -282,11 +282,11 @@ format_report( OutStream& os, assertion_result const& pr, unit_test::lazy_ostrea
 //____________________________________________________________________________//
 
 bool
-report_assertion( assertion_result const&   ar, 
+report_assertion( assertion_result const&   ar,
                   lazy_ostream const&       assertion_descr,
-                  const_string              file_name, 
+                  const_string              file_name,
                   std::size_t               line_num,
-                  tool_level                tl, 
+                  tool_level                tl,
                   check_type                ct,
                   std::size_t               num_args, ... )
 {
@@ -301,7 +301,7 @@ report_assertion( assertion_result const&   ar,
     log_level    ll;
     char const*  prefix;
     char const*  suffix;
-       
+
     switch( tl ) {
     case PASS:
         ll      = log_successful_tests;
@@ -348,7 +348,7 @@ report_assertion( assertion_result const&   ar,
     case CHECK:
         framework::assertion_result( AR_FAILED );
         return false;
-        
+
     case REQUIRE:
         framework::assertion_result( AR_FAILED );
 
@@ -366,7 +366,7 @@ assertion_result
 format_assertion_result( const_string expr_val, const_string details )
 {
     assertion_result res(false);
-    
+
     bool starts_new_line = first_char( expr_val ) == '\n';
 
     if( !starts_new_line && !expr_val.is_empty() )
@@ -389,7 +389,7 @@ format_assertion_result( const_string expr_val, const_string details )
 
 //____________________________________________________________________________//
 
-BOOST_TEST_DECL std::string 
+BOOST_TEST_DECL std::string
 prod_report_format( assertion_result const& ar, unit_test::lazy_ostream const& assertion_descr, check_type ct, std::size_t num_args, ... )
 {
     std::ostringstream msg_buff;
@@ -612,7 +612,7 @@ output_test_stream::match_pattern( bool flush_stream )
                     result.message() << "...";
 
                     // skip rest of the bytes. May help for further matching
-                    m_pimpl->m_pattern.ignore( 
+                    m_pimpl->m_pattern.ignore(
                         static_cast<std::streamsize>( m_pimpl->m_synced_string.length() - i - suffix_size) );
                     break;
                 }

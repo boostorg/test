@@ -34,7 +34,7 @@ struct it_pair {
     typedef It const_iterator;
     typedef typename std::iterator_traits<It>::value_type value_type;
 
-    it_pair( It const& b, It const& e ) : m_begin( b ), m_size( 0 ) 
+    it_pair( It const& b, It const& e ) : m_begin( b ), m_size( 0 )
     {
         It tmp = b;
         while( tmp != e ) { ++m_size; ++tmp; }

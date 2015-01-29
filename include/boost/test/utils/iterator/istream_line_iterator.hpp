@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2004-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : 
+//  Description :
 // ***************************************************************************
 
 #ifndef BOOST_ISTREAM_LINE_ITERATOR_HPP_071894GER
@@ -58,7 +58,7 @@ public:
         this->init();
     }
     explicit basic_istream_line_iterator( istream_type& input )
-    : m_input_stream( &input ) 
+    : m_input_stream( &input )
     , m_delimeter( input.widen( '\n' ) )
     {
         this->init();

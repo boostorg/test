@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2004-2014.
-//  Use, modification, and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
+//  Use, modification, and distribution are subject to the
+//  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : implements offline model of program environment 
+//  Description : implements offline model of program environment
 // ***************************************************************************
 
 #include <boost/test/utils/runtime/config.hpp>

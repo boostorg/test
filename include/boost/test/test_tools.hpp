@@ -1,11 +1,11 @@
 //  (C) Copyright Gennadiy Rozental 2001-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file 
+/// @file
 /// @brief test tools compatibility header
 ///
 /// This file is used to select the test tools implementation and includes all the necessary headers
@@ -14,11 +14,13 @@
 #ifndef BOOST_TEST_TOOLS_HPP_111812GER
 #define BOOST_TEST_TOOLS_HPP_111812GER
 
+#include <boost/preprocessor/config/config.hpp>
+
 // Boost.Test
 //#define BOOST_TEST_NO_OLD_TOOLS
 
 #if !BOOST_PP_VARIADICS
-#define BOOST_TEST_NO_NEW_TOOLS
+#  define BOOST_TEST_NO_NEW_TOOLS
 #endif
 
 // #define BOOST_TEST_TOOLS_UNDER_DEBUGGER

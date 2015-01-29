@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -96,21 +96,22 @@ xml_log_formatter::test_unit_finish( std::ostream& ostr, test_unit const& tu, un
 {
     if( tu.p_type == TUT_CASE )
         ostr << "<TestingTime>" << elapsed << "</TestingTime>";
-        
+
     ostr << "</" << tu_type_name( tu ) << ">";
 }
 
 //____________________________________________________________________________//
 
 void
-xml_log_formatter::test_unit_skipped( std::ostream& ostr, test_unit const& tu )
+xml_log_formatter::test_unit_skipped( std::ostream& ostr, test_unit const& tu, const_string reason )
 {
     ostr << "<" << tu_type_name( tu )
          << " name"    << attr_value() << tu.p_name.get()
          << " skipped" << attr_value() << "yes"
+         << " reason"  << attr_value() << reason
          << "/>";
 }
-    
+
 //____________________________________________________________________________//
 
 void
@@ -193,7 +194,7 @@ xml_log_formatter::entry_context_start( std::ostream& ostr, log_level )
     }
 
     ostr << BOOST_TEST_L( "<Context>" );
-   
+
 }
 
 //____________________________________________________________________________//

@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -42,7 +42,7 @@ class array : public monomorphic::dataset<T> {
         , m_singleton( size == 1 )
         {}
 
-        // forward iterator interface 
+        // forward iterator interface
         virtual T const&    operator*()     { return *m_it; }
         virtual void        operator++()    { if( !m_singleton ) ++m_it; }
 
@@ -62,7 +62,7 @@ public:
     {}
 
     // dataset interface
-    virtual data::size_t    size() const            { return m_size; } 
+    virtual data::size_t    size() const            { return m_size; }
     virtual iter_ptr        begin() const           { return boost::make_shared<iterator>( m_arr, m_size ); }
 
 private:

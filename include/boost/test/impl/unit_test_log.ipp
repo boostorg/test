@@ -56,7 +56,7 @@ entry_value_collector::operator<<( lazy_ostream const& v ) const
 
 //____________________________________________________________________________//
 
-entry_value_collector const& 
+entry_value_collector const&
 entry_value_collector::operator<<( const_string v ) const
 {
     unit_test_log << v;
@@ -193,7 +193,7 @@ unit_test_log_t::test_unit_finish( test_unit const& tu, unsigned long elapsed )
 //____________________________________________________________________________//
 
 void
-unit_test_log_t::test_unit_skipped( test_unit const& tu )
+unit_test_log_t::test_unit_skipped( test_unit const& tu, const_string reason )
 {
     if( s_log_impl().m_threshold_level > log_test_units )
         return;
@@ -201,7 +201,7 @@ unit_test_log_t::test_unit_skipped( test_unit const& tu )
     if( s_log_impl().m_entry_in_progress )
         *this << log::end();
 
-    s_log_impl().m_log_formatter->test_unit_skipped( s_log_impl().stream(), tu );
+    s_log_impl().m_log_formatter->test_unit_skipped( s_log_impl().stream(), tu, reason );
 }
 
 //____________________________________________________________________________//
@@ -243,7 +243,7 @@ set_unix_slash( char in )
 {
     return in == '\\' ? '/' : in;
 }
-    
+
 unit_test_log_t&
 unit_test_log_t::operator<<( log::begin const& b )
 {
@@ -309,7 +309,7 @@ unit_test_log_t::operator()( log_level l )
 bool
 unit_test_log_t::log_entry_start()
 {
-    if( s_log_impl().m_entry_in_progress ) 
+    if( s_log_impl().m_entry_in_progress )
         return true;
 
     switch( s_log_impl().m_entry_data.m_level ) {
@@ -374,7 +374,7 @@ void
 unit_test_log_t::log_entry_context( log_level l )
 {
     framework::context_generator const& context = framework::get_context();
-    if( context.is_empty() ) 
+    if( context.is_empty() )
         return;
 
     const_string frame;
@@ -426,10 +426,15 @@ unit_test_log_t::set_format( output_format log_format )
     if( s_log_impl().m_entry_in_progress )
         return;
 
-    if( log_format == OF_CLF )
+    switch( log_format ) {
+    default:
+    case OF_CLF:
         set_formatter( new output::compiler_log_formatter );
-    else
+        break;
+    case OF_XML:
         set_formatter( new output::xml_log_formatter );
+        break;
+    }
 }
 
 //____________________________________________________________________________//

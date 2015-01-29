@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2012-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -39,8 +39,8 @@
 #include <boost/type_traits/remove_cv.hpp>
 
 // STL
-#include <utility> 
-#include <type_traits> 
+#include <utility>
+#include <type_traits>
 
 #endif
 //____________________________________________________________________________//
@@ -78,7 +78,7 @@ struct is_forward_iterable< std::set<K, C, A> > : public mpl::true_ {};
 
 namespace ut_detail {
 
-  
+
   template<typename T>
   struct is_present : public mpl::true_ {};
 
@@ -113,7 +113,7 @@ namespace ut_detail {
 
   template <class T>
   struct is_forward_iterable_impl<
-    T, 
+    T,
     typename std::enable_if<
       is_present<typename T::const_iterator>::value &&
       is_present<typename T::value_type>::value &&
@@ -121,20 +121,20 @@ namespace ut_detail {
       has_member_begin<T>::value &&
       !is_same<typename remove_cv<typename T::value_type>::type,char>::value &&
       !is_same<typename remove_cv<typename T::value_type>::type,wchar_t>::value
-      >::type 
+      >::type
     > : std::true_type
   {};
 
 
 } // namespace ut_detail
 
-template<typename T> 
-struct is_forward_iterable  { 
+template<typename T>
+struct is_forward_iterable  {
   typedef typename std::remove_reference<T>::type T_ref;
   typedef ut_detail::is_forward_iterable_impl<T_ref> is_fwd_it_t;
   typedef mpl::bool_<is_fwd_it_t::value> type;
   enum { value = is_fwd_it_t::value };
-}; 
+};
 
 #endif /* defined(BOOST_TEST_FWD_ITERABLE_CXX03) */
 

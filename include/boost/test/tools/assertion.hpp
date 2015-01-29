@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -185,7 +185,7 @@ compare_collections( Lhs const& lhs, Rhs const& rhs )
         pr.message() << "Collections size mismatch: " << lhs.size() << " != " << rhs.size();
         return pr;
     }
-        
+
     typename Lhs::const_iterator left  = lhs.begin();
     typename Rhs::const_iterator right = rhs.begin();
     std::size_t                  pos   = 0;
@@ -195,9 +195,9 @@ compare_collections( Lhs const& lhs, Rhs const& rhs )
             continue;
 
         pr = false;
-        pr.message() << "\nMismatch at position " << pos << ": "  
-          << tt_detail::print_helper(*left) 
-          << OP::revert() 
+        pr.message() << "\nMismatch at position " << pos << ": "
+          << tt_detail::print_helper(*left)
+          << OP::revert()
           << tt_detail::print_helper(*right);
     }
 
@@ -323,7 +323,7 @@ struct compare_fpv<op::NE<Lhs,Rhs>,FPT> {
     compare( Lhs const& lhs, Rhs const& rhs )
     {
         fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_STRONG );
-        
+
         assertion_result ar( !P( lhs, rhs ) );
         if( !ar )
             ar.message() << "Relative difference is within tolerance ["

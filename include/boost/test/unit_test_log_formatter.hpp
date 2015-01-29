@@ -1,11 +1,11 @@
 //  (C) Copyright Gennadiy Rozental 2003-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file 
+/// @file
 /// @brief Defines unit test log formatter interface
 ///
 /// You can define a class with implements this interface and use an instance of it
@@ -75,16 +75,16 @@ struct BOOST_TEST_DECL log_checkpoint_data
 /// Abstract Unit Test Framework log formatter interface
 
 /// During the test module execution Unit Test Framework can report messages about success or failure of assertions,
-/// which test suites are being run and more (specifically which messages are reported depends on log level threashold selected by the user).
-/// All these messages constitute Unit Test Framework log. There are many ways (formats) to present these messages to the user. Boost.Test comes with 
-/// two formats: "Compiler-like log format" and "XML based log format". Former is intended for human consumption and later is intended for processing 
-/// by automated regression test systems. If you want to produce some other format you need to implement class with specific interface and use 
-/// method unit_test_log_t::set_formatter during a test module initialization to set an active formatter. The class unit_test_log_formatter defines this 
-/// interface. 
+/// which test suites are being run and more (specifically which messages are reported depends on log level threshold selected by the user).
+/// All these messages constitute Unit Test Framework log. There are many ways (formats) to present these messages to the user. Boost.Test comes with
+/// two formats: "Compiler-like log format" and "XML based log format". Former is intended for human consumption and later is intended for processing
+/// by automated regression test systems. If you want to produce some other format you need to implement class with specific interface and use
+/// method unit_test_log_t::set_formatter during a test module initialization to set an active formatter. The class unit_test_log_formatter defines this
+/// interface.
 ///
-/// This interface requires you to format all possible messages being produced in the log. These includes error messages about failed assertions, messages 
+/// This interface requires you to format all possible messages being produced in the log. These includes error messages about failed assertions, messages
 /// about caught exceptions and information messages about test units being started/ended. All the methods in this interface takes a reference to standard
-/// stream as a first argument. This is where final messages needs to be directed to. Also you are givn all the informaion necessary to produce a message.
+/// stream as a first argument. This is where final messages needs to be directed to. Also you are given all the information necessary to produce a message.
 class BOOST_TEST_DECL unit_test_log_formatter {
 public:
     /// Types of log entries (messages written into a log)
@@ -100,7 +100,7 @@ public:
 
     // @name Test start/finish
 
-    /// Invoked at the begining of test module execution
+    /// Invoked at the beginning of test module execution
 
     /// @param[in] os   output stream to write a messages to
     /// @param[in] test_cases_amount total test case amount to be run
@@ -113,7 +113,7 @@ public:
     /// @see log_start
     virtual void        log_finish( std::ostream& os ) = 0;
 
-    /// Invoked when Unit Test Framework build information is requested 
+    /// Invoked when Unit Test Framework build information is requested
 
     /// @param[in] os   output stream to write a messages into
     virtual void        log_build_info( std::ostream& os ) = 0;
@@ -140,14 +140,22 @@ public:
 
     /// @param[in] os   output stream to write a messages into
     /// @param[in] tu   skipped test unit
-    virtual void        test_unit_skipped( std::ostream& os, test_unit const& tu ) = 0;
+    /// @param[in] reason explanation why was it skipped
+    virtual void        test_unit_skipped( std::ostream& os, test_unit const& tu, const_string reason )
+    {
+        test_unit_skipped( os, tu );
+    }
+
+    /// Deprecated version of this interface
+    virtual void        test_unit_skipped( std::ostream& os, test_unit const& tu ) {}
+
     // @}
 
     // @name Uncaught exception report
 
     /// Invoked when Unit Test Framework detects uncaught exception
 
-    /// Call to this function starts uncaught exception report. It is going to followed by context information. Report is finilized by call to 
+    /// Call to this function starts uncaught exception report. It is going to followed by context information. Report is finalized by call to
     /// log_exception_finish.
     /// @param[in] os   output stream to write a messages into
     /// @param[in] lcd  information about the last checkpoint before the exception was triggered
@@ -157,7 +165,7 @@ public:
 
     /// Invoked when Unit Test Framework detects uncaught exception
 
-    /// Call to this function finishes uncaught exception report. 
+    /// Call to this function finishes uncaught exception report.
     /// @param[in] os   output stream to write a messages into
     /// @see log_exception_start
     virtual void        log_exception_finish( std::ostream& os ) = 0;
@@ -168,7 +176,7 @@ public:
     /// Invoked by Unit Test Framework to start new log entry
 
     /// Call to this function starts new log entry. It is followed by series of log_entry_value calls and finally call to log_entry_finish.
-    /// A log entry may consist of one or more values being reported. Some of these values will be plain strings, while others can be complicated 
+    /// A log entry may consist of one or more values being reported. Some of these values will be plain strings, while others can be complicated
     /// expressions in a form of "lazy" expression template lazy_ostream.
     /// @param[in] os   output stream to write a messages into
     /// @param[in] led  log entry attributes
@@ -186,8 +194,8 @@ public:
 
     /// Invoked by Unit Test Framework to report a log entry content
 
-    /// This is one of two ovrloaded methods to report log entry content. This one is used to report some complicated expression passed as
-    /// an expression template lazy_ostream. In most cases default implementation provided by the framework should work as is (it just converts 
+    /// This is one of two overloaded methods to report log entry content. This one is used to report some complicated expression passed as
+    /// an expression template lazy_ostream. In most cases default implementation provided by the framework should work as is (it just converts
     /// the lazy expression into a string.
     /// @param[in] os   output stream to write a messages into
     /// @param[in] value log entry "lazy" value
@@ -205,11 +213,11 @@ public:
 
     /// Invoked by Unit Test Framework to start log entry context report
 
-    /// Unit Test Framewrk logs for failed assertons and uncaught exceptions context if one was defined by a test mofule. 
-    /// Context consists of multiple "scopes" identified by description messages assigned by the test module using 
+    /// Unit Test Framework logs for failed assertions and uncaught exceptions context if one was defined by a test module.
+    /// Context consists of multiple "scopes" identified by description messages assigned by the test module using
     /// BOOST_TEST_INFO/BOOST_TEST_CONTEXT statements.
     /// @param[in] os   output stream to write a messages into
-    /// @param[in] l    entry log_leveg, to be used to fine tue the message 
+    /// @param[in] l    entry log_leveg, to be used to fine tune the message
     /// @see log_entry_context, entry_context_finish
     virtual void        entry_context_start( std::ostream& os, log_level l ) = 0;
 

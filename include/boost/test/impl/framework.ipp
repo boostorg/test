@@ -48,8 +48,10 @@
 // STL
 #include <map>
 #include <set>
+#include <unordered_set>
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
 
 #ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::time; using ::srand; }
@@ -61,14 +63,17 @@ namespace std { using ::time; using ::srand; }
 
 namespace boost {
 namespace unit_test {
+namespace framework {
 
 // ************************************************************************** //
 // **************            test_init call wrapper            ************** //
 // ************************************************************************** //
 
-namespace ut_detail {
+namespace impl {
 
-void
+typedef std::unordered_set<test_unit_id> tu_id_set;
+
+static void
 invoke_init_func( init_unit_test_func init_func )
 {
 #ifdef BOOST_TEST_ALTERNATIVE_INIT_API
@@ -85,8 +90,6 @@ invoke_init_func( init_unit_test_func init_func )
 // ************************************************************************** //
 // **************                  name_filter                 ************** //
 // ************************************************************************** //
-
-typedef std::list<std::pair<test_unit_id,bool> > tu_enable_list;
 
 class name_filter : public test_tree_visitor {
     struct component {
@@ -115,7 +118,7 @@ class name_filter : public test_tree_visitor {
         bool            pass( test_unit const& tu ) const
         {
             const_string name( tu.p_name );
-    
+
             switch( m_kind ) {
             default:
             case SFK_ALL:
@@ -138,16 +141,16 @@ class name_filter : public test_tree_visitor {
 
 public:
     // Constructor
-    name_filter( tu_enable_list& tu_to_enable, const_string tc_to_run ) : m_tu_to_enable( tu_to_enable ), m_depth( 0 )
+    name_filter( test_unit_id_list& targ_list, const_string filter_expr ) : m_targ_list( targ_list ), m_depth( 0 )
     {
 #ifdef BOOST_TEST_SUPPORT_TOKEN_ITERATOR
-        string_token_iterator tit( tc_to_run, (dropped_delimeters = "/", kept_delimeters = dt_none) );
+        string_token_iterator tit( filter_expr, (dropped_delimeters = "/", kept_delimeters = dt_none) );
 
         while( tit != string_token_iterator() ) {
-            m_components.push_back( std::vector<component>( string_token_iterator( *tit, (dropped_delimeters = ",", kept_delimeters = dt_none)  ), 
+            m_components.push_back( std::vector<component>( string_token_iterator( *tit, (dropped_delimeters = ",", kept_delimeters = dt_none) ),
                                                             string_token_iterator() ) );
 
-            ++tit;           
+            ++tit;
         }
 #endif
     }
@@ -171,18 +174,19 @@ private:
     {
         // make sure we only accept test cases if we match last component of the filter
         if( m_depth == m_components.size() && filter_unit( tc ) )
-            m_tu_to_enable.push_back( std::make_pair( tc.p_id, false ) ); // found a test case; add it to enable list without children
+            m_targ_list.push_back( tc.p_id ); // found a test case
     }
     virtual bool    test_suite_start( test_suite const& ts )
     {
-        if( filter_unit( ts ) ) {
-            if( m_depth < m_components.size() ) {
-                ++m_depth;
-                return true;
-            }
+        if( !filter_unit( ts ) )
+            return false;
 
-            m_tu_to_enable.push_back( std::make_pair( ts.p_id, true ) ); // found a test suite; add it to enable list with children and stop recursion
+        if( m_depth < m_components.size() ) {
+            ++m_depth;
+            return true;
         }
+
+        m_targ_list.push_back( ts.p_id ); // found a test suite
 
         return false;
     }
@@ -195,7 +199,7 @@ private:
     typedef std::vector<std::vector<component> > components_per_level;
 
     components_per_level    m_components;
-    tu_enable_list&         m_tu_to_enable;
+    test_unit_id_list&      m_targ_list;
     unsigned                m_depth;
 };
 
@@ -205,8 +209,8 @@ private:
 
 class label_filter : public test_tree_visitor {
 public:
-    label_filter( tu_enable_list& tu_to_enable, const_string label )
-    : m_tu_to_enable( tu_to_enable )
+    label_filter( test_unit_id_list& targ_list, const_string label )
+    : m_targ_list( targ_list )
     , m_label( label )
     {}
 
@@ -216,7 +220,7 @@ private:
     {
         if( tu.has_label( m_label ) ) {
             // found a test unit; add it to list of tu to enable with children and stop recursion in case of suites
-            m_tu_to_enable.push_back( std::make_pair( tu.p_id, tu.p_type == TUT_SUITE ) );
+            m_targ_list.push_back( tu.p_id );
             return false;
         }
 
@@ -224,114 +228,123 @@ private:
     }
 
     // Data members
-    tu_enable_list& m_tu_to_enable;
-    const_string    m_label;
+    test_unit_id_list&  m_targ_list;
+    const_string        m_label;
 };
 
 // ************************************************************************** //
-// **************                 change_status                ************** //
+// **************                set_run_status                ************** //
 // ************************************************************************** //
 
-class change_status : public test_tree_visitor {
+class set_run_status : public test_tree_visitor {
 public:
-    explicit        change_status( bool enable_or_disable ) 
-    : m_new_status( enable_or_disable )
-    , m_made_change( false )
+    explicit set_run_status( test_unit::run_status rs, test_unit_id_list* dep_collector = 0 )
+    : m_new_status( rs )
+    , m_dep_collector( dep_collector )
     {}
-
-    bool            made_change() const { return m_made_change; }
 
 private:
     // test_tree_visitor interface
     virtual bool    visit( test_unit const& tu )
     {
-        if( tu.p_enabled.get() ^ m_new_status ) {
-            tu.p_enabled.value  = m_new_status;
-            m_made_change       = true;
-        }
-        return true;
-    }
+        const_cast<test_unit&>(tu).p_run_status.value = m_new_status == test_unit::RS_INVALID ? tu.p_default_status : m_new_status;
 
-    // Data members
-    bool            m_new_status;
-    bool            m_made_change;
-};
-
-// ************************************************************************** //
-// **************                 change_status                ************** //
-// ************************************************************************** //
-
-class remove_disabled : public test_tree_visitor {
-public:
-    explicit        remove_disabled( bool remove_from_tree ) 
-    : m_remove_from_tree( remove_from_tree )
-    , m_made_change( false )
-    {}
-
-    bool            made_change() const { return m_made_change; }
-
-private:
-    // test_tree_visitor interface
-    virtual bool    visit( test_unit const& tu )
-    {
-        if( !m_remove_from_tree && !tu.p_enabled )
-            return false;
-
-        // check if any of dependencies are disabled
-        if( tu.p_enabled ) {
+        if( m_dep_collector ) {
             BOOST_TEST_FOREACH( test_unit_id, dep_id, tu.p_dependencies.get() ) {
                 test_unit const& dep = framework::get( dep_id, TUT_ANY );
 
-                if( !dep.p_enabled ) {
-                    BOOST_TEST_MESSAGE( "Disable test " << tu.p_type_name << ' ' << tu.p_name << 
-                                        " since it depends on disabled test " << dep.p_type_name << ' ' << dep.p_name );
+                if( dep.p_run_status == tu.p_run_status )
+                    continue;
 
-                    tu.p_enabled.value = false;
-                    m_made_change      = true;
-                    break;
-                }
+                BOOST_TEST_MESSAGE( "Including test " << dep.p_type_name << ' ' << dep.full_name() <<
+                                    " as a dependency of test " << tu.p_type_name << ' ' << tu.full_name() );
+
+                m_dep_collector->push_back( dep_id );
             }
         }
-
-        // if this test unit is disabled - disable all subunits and remove it from the tree if requested
-        if( !tu.p_enabled ) {
-            if( tu.p_type == TUT_SUITE ) {
-                ut_detail::change_status disabler( false );
-                traverse_test_tree( tu.p_id, disabler, true );
-                m_made_change |= disabler.made_change();
-            }
-
-            if( m_remove_from_tree )
-                framework::get<test_suite>( tu.p_parent_id ).remove( tu.p_id );
-        }
-
-        return tu.p_enabled;
+        return true;
     }
 
     // Data members
-    bool m_remove_from_tree;
-    bool m_made_change;
+    test_unit::run_status   m_new_status;
+    test_unit_id_list*      m_dep_collector;
 };
 
-} // namespace ut_detail
-
 // ************************************************************************** //
-// **************                   framework                  ************** //
+// **************                 parse_filters                ************** //
 // ************************************************************************** //
 
-class framework_impl : public test_tree_visitor {
+static void
+add_filtered_test_units( const_string filter, test_unit_id_list& targ )
+{
+    test_unit_id master_tu_id = master_test_suite().p_id;
+
+    // Choose between two kinds of filters
+    if( filter[0] == '@' ) {
+        filter.trim_left( 1 );
+        label_filter lf( targ, filter );
+        traverse_test_tree( master_tu_id, lf, true );
+    }
+    else {
+        name_filter nf( targ, filter );
+        traverse_test_tree( master_tu_id, nf, true );
+    }
+}
+
+//____________________________________________________________________________//
+
+static bool
+parse_filters( test_unit_id_list& tu_to_enable, test_unit_id_list& tu_to_disable )
+{
+    // 10. collect tu to enable and disable based on filters
+    bool had_selector_filter = false;
+
+    BOOST_TEST_FOREACH( const_string, filter, runtime_config::test_to_run() ) {
+        BOOST_TEST_SETUP_ASSERT( !filter.is_empty(), "Invalid filter specification" );
+
+        enum { SELECTOR, ENABLER, DISABLER } filter_type = SELECTOR;
+
+        // 11. Deduce filter type
+        if( filter[0] == '!' || filter[0] == '+' ) {
+            filter_type = filter[0] == '+' ? DISABLER : ENABLER;
+            filter.trim_left( 1 );
+            BOOST_TEST_SETUP_ASSERT( !filter.is_empty(), "Invalid filter specification" );
+        }
+
+        had_selector_filter |= filter_type == SELECTOR;
+
+        // 12. Add test units to corresponding list
+        switch( filter_type ) {
+        case SELECTOR:
+        case ENABLER:  add_filtered_test_units( filter, tu_to_enable ); break;
+        case DISABLER: add_filtered_test_units( filter, tu_to_disable ); break;
+        }
+    }
+
+    return had_selector_filter;
+}
+
+//____________________________________________________________________________//
+
+} // namespace impl
+} // namespace framework
+
+// ************************************************************************** //
+// **************                framework_state               ************** //
+// ************************************************************************** //
+
+class framework_state {
 public:
-    framework_impl()
+    framework_state()
     : m_curr_test_case( INV_TEST_UNIT_ID )
     , m_next_test_case_id( MIN_TEST_CASE_ID )
     , m_next_test_suite_id( MIN_TEST_SUITE_ID )
-    , m_is_initialized( false )
     , m_test_in_progress( false )
     , m_context_idx( 0 )
     {
     }
 
-    ~framework_impl() { clear(); }
+    ~framework_state() { clear(); }
 
     void            clear()
     {
@@ -346,48 +359,271 @@ public:
                 delete static_cast<test_case const*>(tu_ptr);
         }
     }
-                                    
+
     void            set_tu_id( test_unit& tu, test_unit_id id ) { tu.p_id.value = id; }
 
-    // test_tree_visitor interface implementation
-    bool            test_unit_start( test_unit const& tu )
-    {
-        if( !tu.check_dependencies() ) {
-            BOOST_TEST_FOREACH( test_observer*, to, m_observers )
-                to->test_unit_skipped( tu );
+    //////////////////////////////////////////////////////////////////
 
-            return false;
+    // Validates the dependency grapha ade duces the dependency rank for each test unit
+    counter_t       validate_dependency_graph( test_unit_id tu_id,
+                                               framework::impl::tu_id_set& visited_cache,
+                                               framework::impl::tu_id_set& current_stack )
+    {
+        // already visited
+        if( visited_cache.find( tu_id ) != visited_cache.end() ) {
+            test_unit& tu = framework::get( tu_id, TUT_ANY );
+
+            if( current_stack.find( tu_id ) != current_stack.end() )
+                throw framework::setup_error( "Dependency loop detected including the test unit " + tu.full_name() );
+
+            return tu.p_dependency_rank;
         }
 
-        // notify all observers
+        // add into cache and stack
+        visited_cache.insert( tu_id );
+        current_stack.insert( tu_id );
+
+        test_unit& tu = framework::get( tu_id, TUT_ANY );
+
+        // go through list of children, collate them into the multimap per dependency rank
+        // my dep rank should be at least as big as all of the children
+        if( tu.p_type == TUT_SUITE ) {
+            test_suite& ts = static_cast<test_suite&>(tu);
+
+            BOOST_TEST_FOREACH( test_unit_id, chld_id, ts.m_members ) {
+                counter_t chld_rank = validate_dependency_graph( chld_id, visited_cache, current_stack );
+                if( chld_rank > ts.p_dependency_rank )
+                    ts.p_dependency_rank.value = chld_rank;
+
+                ts.m_ranked_members.insert( std::make_pair( chld_rank, chld_id ) );
+            }
+        }
+
+        // go through list of dependencies
+        // my dep rank should be at least one more than biggest of the dependencies
+        BOOST_TEST_FOREACH( test_unit_id, dep_id, tu.p_dependencies.get() ) {
+            counter_t dep_rank = validate_dependency_graph( dep_id, visited_cache, current_stack );
+            if( dep_rank >= tu.p_dependency_rank )
+                tu.p_dependency_rank.value = dep_rank + 1;
+        }
+
+        // no loops detected
+        current_stack.erase(tu_id);
+
+        return tu.p_dependency_rank;
+    }
+
+    //////////////////////////////////////////////////////////////////
+
+    // Finalize default run status:
+    //  1) inherit run status from parent where applicable
+    //  2) if any of test units in test suite enabled enable it as well
+    bool            finalize_default_run_status( test_unit_id tu_id, test_unit::run_status parent_status )
+    {
+        test_unit& tu = framework::get( tu_id, TUT_ANY );
+
+        if( tu.p_default_status == test_suite::RS_INHERIT )
+            tu.p_default_status.value = parent_status;
+
+        // go through list of children
+        if( tu.p_type == TUT_SUITE ) {
+            bool has_enabled_child = false;
+            BOOST_TEST_FOREACH( test_unit_id, chld_id, static_cast<test_suite const&>(tu).m_members )
+                has_enabled_child |= finalize_default_run_status( chld_id, tu.p_default_status );
+
+            tu.p_default_status.value = has_enabled_child ? test_suite::RS_ENABLED : test_suite::RS_DISABLED;
+        }
+
+        return tu.p_default_status == test_suite::RS_ENABLED;
+    }
+
+    //////////////////////////////////////////////////////////////////
+
+    bool            finalize_run_status( test_unit_id tu_id )
+    {
+        test_unit& tu = framework::get( tu_id, TUT_ANY );
+
+        // go through list of children
+        if( tu.p_type == TUT_SUITE ) {
+            bool has_enabled_child = false;
+            BOOST_TEST_FOREACH( test_unit_id, chld_id, static_cast<test_suite const&>(tu).m_members )
+                has_enabled_child |= finalize_run_status( chld_id );
+
+            tu.p_run_status.value = has_enabled_child ? test_suite::RS_ENABLED : test_suite::RS_DISABLED;
+        }
+
+        return tu.is_enabled();
+    }
+
+    //////////////////////////////////////////////////////////////////
+
+    void            deduce_run_status( test_unit_id master_tu_id )
+    {
+        using namespace framework::impl;
+        test_unit_id_list tu_to_enable;
+        test_unit_id_list tu_to_disable;
+
+        // 10. If there are any filters supplied, figure out lists of test units to enable/disable
+        bool had_selector_filter = !runtime_config::test_to_run().empty() &&
+                                   parse_filters( tu_to_enable, tu_to_disable );
+
+        // 20. Set the stage: either use default run status or disable all test units
+        set_run_status setter( had_selector_filter ? test_unit::RS_DISABLED : test_unit::RS_INVALID );
+        traverse_test_tree( master_tu_id, setter, true );
+
+        // 30. Apply all selectors and enablers.
+        while( !tu_to_enable.empty() ) {
+            test_unit& tu = framework::get( tu_to_enable.back(), TUT_ANY );
+
+            tu_to_enable.pop_back();
+
+            // 35. Ignore test units which already enabled
+            if( tu.is_enabled() )
+                continue;
+
+            // set new status and add all dependencies into tu_to_enable
+            set_run_status setter( test_unit::RS_ENABLED, &tu_to_enable );
+            traverse_test_tree( tu.p_id, setter, true );
+        }
+
+        // 40. Apply all disablers
+        while( !tu_to_disable.empty() ) {
+            test_unit const& tu = framework::get( tu_to_disable.back(), TUT_ANY );
+
+            tu_to_disable.pop_back();
+
+            // 35. Ignore test units which already disabled
+            if( !tu.is_enabled() )
+                continue;
+
+            set_run_status setter( test_unit::RS_DISABLED );
+            traverse_test_tree( tu.p_id, setter, true );
+        }
+
+        // 50. Make sure parents of enabled test units are also enabled
+        finalize_run_status( master_tu_id );
+    }
+
+    //////////////////////////////////////////////////////////////////
+
+    typedef unit_test_monitor_t::error_level execution_result;
+
+    // Executed the test tree with the root at specified test unit
+    execution_result execute_test_tree( test_unit_id tu_id )
+    {
+        test_unit const& tu = framework::get( tu_id, TUT_ANY );
+
+        execution_result result = unit_test_monitor_t::test_ok;
+
+        if( !tu.is_enabled() )
+            return result;
+
+        // 10. Check preconditions, including successful execution of dependencies
+        test_tools::assertion_result const precondition_res = tu.check_preconditions();
+        if( !precondition_res ) {
+            // notify all observers about skipped test unit
+            BOOST_TEST_FOREACH( test_observer*, to, m_observers )
+                to->test_unit_skipped( tu, precondition_res.message() );
+
+            return unit_test_monitor_t::precondition_failure;
+        }
+
+        // 20. Notify all observers about the start of the test unit
         BOOST_TEST_FOREACH( test_observer*, to, m_observers )
             to->test_unit_start( tu );
 
-        // first execute setup fixtures if any; any failure here leads to test unit abortion
+        // 30. Execute setup fixtures if any; any failure here leads to test unit abortion
         BOOST_TEST_FOREACH( test_unit_fixture_ptr, F, tu.p_fixtures.get() ) {
-            if( unit_test_monitor.execute_and_translate( boost::bind( &test_unit_fixture::setup, F ), 0 ) != unit_test_monitor_t::test_ok )
-                return false;
+            result = unit_test_monitor.execute_and_translate( boost::bind( &test_unit_fixture::setup, F ), 0 );
+            if( result != unit_test_monitor_t::test_ok )
+                break;
         }
 
-        return true;
-    }
+        // This is the time we are going to spend executing the test unit
+        unsigned long elapsed = 0;
 
-    void            test_unit_finish( test_unit const& tu, unit_test_monitor_t::error_level run_result, unsigned long elapsed )
-    {
+        if( result == unit_test_monitor_t::test_ok ) {
+            // 40. We are going to time the execution
+            boost::timer tc_timer;
+
+            if( tu.p_type == TUT_SUITE ) {
+                test_suite const& ts = static_cast<test_suite const&>( tu );
+
+                if( runtime_config::random_seed() == 0 ) {
+                    typedef std::pair<counter_t,test_unit_id> value_type;
+
+                    BOOST_TEST_FOREACH( value_type, chld, ts.m_ranked_members ) {
+                        result = (std::min)( result, execute_test_tree( chld.second ) );
+
+                        if( unit_test_monitor.is_critical_error( result ) )
+                            break;
+                    }
+                }
+                else {
+                    // Go through ranges of chldren with the same dependency rank and shuuffle them
+                    // independently. Execute each subtree in this order
+                    test_unit_id_list members_with_the_same_rank;
+
+                    typedef test_suite::members_per_rank::const_iterator it_type;
+                    it_type it = ts.m_ranked_members.begin();
+                    while( it != ts.m_ranked_members.end() ) {
+                        members_with_the_same_rank.clear();
+
+                        std::pair<it_type,it_type> range = ts.m_ranked_members.equal_range( it->first );
+                        it = range.first;
+                        while( it != range.second ) {
+                            members_with_the_same_rank.push_back( it->second );
+                            it++;
+                        }
+
+                        std::random_shuffle( members_with_the_same_rank.begin(), members_with_the_same_rank.end() );
+
+                        BOOST_TEST_FOREACH( test_unit_id, chld, members_with_the_same_rank ) {
+                            result = (std::min)( result, execute_test_tree( chld ) );
+
+                            if( unit_test_monitor.is_critical_error( result ) )
+                                break;
+                        }
+                    }
+                }
+
+                elapsed = static_cast<unsigned long>( tc_timer.elapsed() * 1e6 );
+            }
+            else { // TUT_CASE
+                test_case const& tc = static_cast<test_case const&>( tu );
+
+                // setup contexts
+                m_context_idx = 0;
+
+                // setup current test case
+                test_unit_id bkup = m_curr_test_case;
+                m_curr_test_case = tc.p_id;
+
+                // execute the test case body
+                result = unit_test_monitor.execute_and_translate( tc.p_test_func, tc.p_timeout );
+                elapsed = static_cast<unsigned long>( tc_timer.elapsed() * 1e6 );
+
+                // cleanup leftover context
+                m_context.clear();
+
+                // restore state and abort if necessary
+                m_curr_test_case = bkup;
+            }
+        }
+
         // if run error is critical skip teardown, who knows what the state of the program at this point
-        if( !unit_test_monitor.is_critical_error( run_result ) ) {
+        if( !unit_test_monitor.is_critical_error( result ) ) {
             // execute teardown fixtures if any in reverse order
-
             BOOST_TEST_REVERSE_FOREACH( test_unit_fixture_ptr, F, tu.p_fixtures.get() ) {
-                run_result = unit_test_monitor.execute_and_translate( boost::bind( &test_unit_fixture::teardown, F ), 0 );
+                result = (std::min)( result, unit_test_monitor.execute_and_translate( boost::bind( &test_unit_fixture::teardown, F ), 0 ) );
 
-                if( unit_test_monitor.is_critical_error( run_result ) )
+                if( unit_test_monitor.is_critical_error( result ) )
                     break;
             }
         }
 
         // notify all observers about abortion
-        if( unit_test_monitor.is_critical_error( run_result ) ) {
+        if( unit_test_monitor.is_critical_error( result ) ) {
             BOOST_TEST_FOREACH( test_observer*, to, m_observers )
                 to->test_aborted();
         }
@@ -396,48 +632,11 @@ public:
         BOOST_TEST_REVERSE_FOREACH( test_observer*, to, m_observers )
             to->test_unit_finish( tu, elapsed );
 
-        if( unit_test_monitor.is_critical_error( run_result ) )
-            throw framework::test_being_aborted();
-    }
-
-    // test_tree_visitor interface implementation
-    void            visit( test_case const& tc )
-    {
-        // all the setup work
-        if( !test_unit_start( tc ) )
-            return;
-
-        // setup contexts
-        m_context_idx = 0;
-        test_unit_id bkup = m_curr_test_case;
-        m_curr_test_case = tc.p_id;
-
-        // execute the test case body
-        boost::timer tc_timer;
-        unit_test_monitor_t::error_level run_result = unit_test_monitor.execute_and_translate( tc.p_test_func, tc.p_timeout );
-        unsigned long elapsed = static_cast<unsigned long>( tc_timer.elapsed() * 1e6 );
-
-        // cleanup leftover context
-        m_context.clear();
-
-        // restore state and abort if necessary
-        m_curr_test_case = bkup;
-
-        // all the teardown work
-        test_unit_finish( tc, run_result, elapsed );
-    }
-
-    bool            test_suite_start( test_suite const& ts )
-    {
-        return test_unit_start( ts );
-    }
-
-    void            test_suite_finish( test_suite const& ts )
-    {
-        test_unit_finish( ts, unit_test_monitor_t::test_ok, 0 );
+        return result;
     }
 
     //////////////////////////////////////////////////////////////////
+
     struct priority_order {
         bool operator()( test_observer* lhs, test_observer* rhs ) const
         {
@@ -445,6 +644,7 @@ public:
         }
     };
 
+    // Data members
     typedef std::map<test_unit_id,test_unit*>       test_unit_store;
     typedef std::set<test_observer*,priority_order> observer_store;
     struct context_frame {
@@ -469,7 +669,6 @@ public:
     test_unit_id    m_next_test_case_id;
     test_unit_id    m_next_test_suite_id;
 
-    bool            m_is_initialized;
     bool            m_test_in_progress;
 
     observer_store  m_observers;
@@ -481,163 +680,20 @@ public:
 
 //____________________________________________________________________________//
 
+namespace framework {
+namespace impl {
 namespace {
 
 #if defined(__CYGWIN__)
-framework_impl& s_frk_impl() { static framework_impl* the_inst = 0; if(!the_inst) the_inst = new framework_impl; return *the_inst; }
+framework_state& s_frk_state() { static framework_state* the_inst = 0; if(!the_inst) the_inst = new framework_state; return *the_inst; }
 #else
-framework_impl& s_frk_impl() { static framework_impl the_inst; return the_inst; }
+framework_state& s_frk_state() { static framework_state the_inst; return the_inst; }
 #endif
 
 } // local namespace
-
-//____________________________________________________________________________//
-
-namespace framework {
-
-// ************************************************************************** //
-// **************                 apply_filters                ************** //
-// ************************************************************************** //
-
-namespace impl {
-void
-apply_filters( test_unit_id master_tu_id )
-{
-    if( runtime_config::test_to_run().empty() ) {
-        // enable all test units for this run
-        ut_detail::change_status enabler( true );
-        traverse_test_tree( master_tu_id, enabler, true );
-    }
-    else {
-        // 10. collect tu to enable and disable based on filters
-        ut_detail::tu_enable_list tu_to_enable;
-        ut_detail::tu_enable_list tu_to_disable;
-        bool had_enable_filter = false;
-
-        BOOST_TEST_FOREACH( const_string, filter, runtime_config::test_to_run() ) {
-            BOOST_TEST_SETUP_ASSERT( !filter.is_empty(), "Invalid filter specification" );
-
-            bool enable_or_disable = true;
-
-            // 11. Decide if this "enabler" or "disabler" filter
-            if( filter[0] == '!' ) {
-                enable_or_disable = false;
-                filter.trim_left( 1 );
-                BOOST_TEST_SETUP_ASSERT( !filter.is_empty(), "Invalid filter specification" );
-            }
-
-            if( enable_or_disable )
-                had_enable_filter = true;
-
-            // 12. Choose between name filter and label filter
-            if( filter[0] == '@' ) {
-                filter.trim_left( 1 );
-                ut_detail::label_filter lf( enable_or_disable ? tu_to_enable : tu_to_disable, filter );
-                traverse_test_tree( master_tu_id, lf, true );
-            }
-            else {
-                ut_detail::name_filter nf( enable_or_disable ? tu_to_enable : tu_to_disable, filter );
-                traverse_test_tree( master_tu_id, nf, true );
-            }
-        }
-
-        // 15. At this point we collected 2 lists: tu to enable and tu to disable
-        //     If first list is not empty we'll disable all tu and only enable those we need
-        //     otherwise we enable all
-        //     If second list is not empty we'll go through tree based on whatever is currently 
-        //     enabled and disable units from second list
-
-        ut_detail::change_status change_status( tu_to_enable.empty() && !had_enable_filter );
-        traverse_test_tree( master_tu_id, change_status, true );
-
-        // 20. enable tu collected along with their parents, dependencies and children where necessary
-        while( !tu_to_enable.empty() ) {
-            std::pair<test_unit_id,bool>    data = tu_to_enable.front();
-            test_unit const&                tu   = framework::get( data.first, TUT_ANY );
-
-            tu_to_enable.pop_front();
-
-            if( tu.p_enabled ) 
-                continue;
-
-            // 21. enable tu
-            tu.p_enabled.value = true;
-
-            // 22. master test suite - we are done
-            if( tu.p_id == master_tu_id )
-                continue;
-
-            // 23. add parent to the list (without children)
-            if( !framework::get( tu.p_parent_id, TUT_ANY ).p_enabled )
-                tu_to_enable.push_back( std::make_pair( tu.p_parent_id, false ) );
-
-            // 24. add dependencies to the list (with children)
-            BOOST_TEST_FOREACH( test_unit_id, dep_id, tu.p_dependencies.get() ) {
-                test_unit const& dep = framework::get( dep_id, TUT_ANY );
-
-                if( !dep.p_enabled ) {
-                    BOOST_TEST_MESSAGE( "Including test " << dep.p_type_name << ' ' << dep.p_name << 
-                                        " as a dependacy of test " << tu.p_type_name << ' ' << tu.p_name );
-
-                    tu_to_enable.push_back( std::make_pair( dep_id, true ) );
-                }
-            }
-
-            // 25. add all children to the list recursively
-            if( data.second && tu.p_type == TUT_SUITE ) {
-                class collect_disabled : public test_tree_visitor {
-                public:
-                    explicit        collect_disabled( ut_detail::tu_enable_list& tu_to_enable ) : m_tu_to_enable( tu_to_enable ) {}
-
-                private:
-                    // test_tree_visitor interface
-                    virtual bool    visit( test_unit const& tu )
-                    {
-                        if( !tu.p_enabled )
-                            m_tu_to_enable.push_back( std::make_pair( tu.p_id, false ) );
-
-                        return true;
-                    }
-
-                    // Data members
-                    ut_detail::tu_enable_list& m_tu_to_enable;
-                } V( tu_to_enable );
-
-                traverse_test_tree( tu.p_id, V, true );
-            }
-        }
-
-        // 30. disable tu collected along with their parents, dependents and children where necessary
-        bool made_change = false;
-
-        // 31. First go through the collected list and disable all tu along with their children
-        while( !tu_to_disable.empty() ) {
-            std::pair<test_unit_id,bool>    data = tu_to_disable.front();
-            test_unit const&                tu   = framework::get( data.first, TUT_ANY );
-
-            tu_to_disable.pop_front();
-
-            if( !tu.p_enabled ) 
-                continue;
-
-            ut_detail::change_status disabler( false );
-            traverse_test_tree( tu.p_id, disabler, true );
-            made_change |= disabler.made_change();
-        }
-
-        // 32. Now disable all tu which depends on disabled
-        while( made_change ) {
-            ut_detail::remove_disabled rd( false );
-
-            traverse_test_tree( master_tu_id, rd, true );
-            made_change = rd.made_change();
-        } 
-    }
-}
-
-//____________________________________________________________________________//
-
 } // namespace impl
+
+//____________________________________________________________________________//
 
 // ************************************************************************** //
 // **************                framework::init               ************** //
@@ -646,40 +702,54 @@ apply_filters( test_unit_id master_tu_id )
 void
 init( init_unit_test_func init_func, int argc, char* argv[] )
 {
+    // 10. Set up runtime parameters
     runtime_config::init( argc, argv );
 
-    // set the log level and format
+    // 20. Set the desired log level and format
     unit_test_log.set_threshold_level( runtime_config::log_level() );
     unit_test_log.set_format( runtime_config::log_format() );
 
-    // set the report level and format
+    // 30. Set the desired report level and format
     results_reporter::set_level( runtime_config::report_level() );
     results_reporter::set_format( runtime_config::report_format() );
 
-    // register default observers
+    // 40. Register default test observers
     register_observer( results_collector );
     register_observer( unit_test_log );
 
     if( runtime_config::show_progress() )
         register_observer( progress_monitor );
 
+    // 50. Set up memory leak detection
     if( runtime_config::detect_memory_leaks() > 0 ) {
         debug::detect_memory_leaks( true, runtime_config::memory_leaks_report_file() );
         debug::break_memory_alloc( runtime_config::detect_memory_leaks() );
     }
 
-    // init master unit test suite
+    // 60. Initialize master unit test suite
     master_test_suite().argc = argc;
     master_test_suite().argv = argv;
 
+    using namespace impl;
+
+    // 70. Invoke test module initialization routine
     try {
-        s_frk_impl().m_aux_em.vexecute( boost::bind( &ut_detail::invoke_init_func, init_func ) );
+        s_frk_state().m_aux_em.vexecute( boost::bind( &impl::invoke_init_func, init_func ) );
     }
     catch( execution_exception const& ex )  {
         throw setup_error( ex.what() );
     }
+}
 
-    // Apply all decorators to the auto test units
+//____________________________________________________________________________//
+
+void
+finalize_setup_phase( test_unit_id master_tu_id )
+{
+    if( master_tu_id == INV_TEST_UNIT_ID )
+        master_tu_id = master_test_suite().p_id;
+
+    // 10. Apply all decorators to the auto test units
     class apply_decorators : public test_tree_visitor {
     private:
         // test_tree_visitor interface
@@ -691,35 +761,23 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
             return true;
         }
     } ad;
-    traverse_test_tree( master_test_suite().p_id, ad, true );
+    traverse_test_tree( master_tu_id, ad, true );
 
-    // Let's see if anything was disabled during construction. These test units and anything 
-    // that depends on them are removed from the test tree
-    bool made_change = false;
-    do {
-        ut_detail::remove_disabled rd( true );
-        traverse_test_tree( master_test_suite().p_id, rd, true );
-
-        made_change = rd.made_change();
-    } while( made_change );
-
-    // apply all name and label filters
-    impl::apply_filters( master_test_suite().p_id );
-
-    // We are Done!
-    s_frk_impl().m_is_initialized = true;
+    // 20. Finalize setup phase
+    impl::tu_id_set visited_cache;
+    impl::tu_id_set current_stack;
+    impl::s_frk_state().validate_dependency_graph( master_tu_id, visited_cache, current_stack );
+    impl::s_frk_state().finalize_default_run_status( master_tu_id, test_unit::RS_INVALID );
 }
 
-//____________________________________________________________________________//
-
 // ************************************************************************** //
-// **************                is_initialized                ************** //
+// **************               test_in_progress               ************** //
 // ************************************************************************** //
 
 bool
-is_initialized()
+test_in_progress()
 {
-    return  s_frk_impl().m_is_initialized;
+    return impl::s_frk_state().m_test_in_progress;
 }
 
 //____________________________________________________________________________//
@@ -748,7 +806,7 @@ shutdown()
       delete pNode;
    }
 #  if BOOST_WORKAROUND(BOOST_MSVC,  < 1600 )
-#undef _Next 
+#undef _Next
 #undef _MemPtr
 #endif
 #  endif
@@ -765,16 +823,16 @@ register_test_unit( test_case* tc )
 {
     BOOST_TEST_SETUP_ASSERT( tc->p_id == INV_TEST_UNIT_ID, BOOST_TEST_L( "test case already registered" ) );
 
-    test_unit_id new_id = s_frk_impl().m_next_test_case_id;
+    test_unit_id new_id = impl::s_frk_state().m_next_test_case_id;
 
     BOOST_TEST_SETUP_ASSERT( new_id != MAX_TEST_CASE_ID, BOOST_TEST_L( "too many test cases" ) );
 
-    typedef framework_impl::test_unit_store::value_type map_value_type;
+    typedef framework_state::test_unit_store::value_type map_value_type;
 
-    s_frk_impl().m_test_units.insert( map_value_type( new_id, tc ) );
-    s_frk_impl().m_next_test_case_id++;
+    impl::s_frk_state().m_test_units.insert( map_value_type( new_id, tc ) );
+    impl::s_frk_state().m_next_test_case_id++;
 
-    s_frk_impl().set_tu_id( *tc, new_id );
+    impl::s_frk_state().set_tu_id( *tc, new_id );
 }
 
 //____________________________________________________________________________//
@@ -788,15 +846,15 @@ register_test_unit( test_suite* ts )
 {
     BOOST_TEST_SETUP_ASSERT( ts->p_id == INV_TEST_UNIT_ID, BOOST_TEST_L( "test suite already registered" ) );
 
-    test_unit_id new_id = s_frk_impl().m_next_test_suite_id;
+    test_unit_id new_id = impl::s_frk_state().m_next_test_suite_id;
 
     BOOST_TEST_SETUP_ASSERT( new_id != MAX_TEST_SUITE_ID, BOOST_TEST_L( "too many test suites" ) );
 
-    typedef framework_impl::test_unit_store::value_type map_value_type;
-    s_frk_impl().m_test_units.insert( map_value_type( new_id, ts ) );
-    s_frk_impl().m_next_test_suite_id++;
+    typedef framework_state::test_unit_store::value_type map_value_type;
+    impl::s_frk_state().m_test_units.insert( map_value_type( new_id, ts ) );
+    impl::s_frk_state().m_next_test_suite_id++;
 
-    s_frk_impl().set_tu_id( *ts, new_id );
+    impl::s_frk_state().set_tu_id( *ts, new_id );
 }
 
 //____________________________________________________________________________//
@@ -808,7 +866,7 @@ register_test_unit( test_suite* ts )
 void
 deregister_test_unit( test_unit* tu )
 {
-    s_frk_impl().m_test_units.erase( tu->p_id );
+    impl::s_frk_state().m_test_units.erase( tu->p_id );
 }
 
 //____________________________________________________________________________//
@@ -820,7 +878,7 @@ deregister_test_unit( test_unit* tu )
 void
 clear()
 {
-    s_frk_impl().clear();
+    impl::s_frk_state().clear();
 }
 
 //____________________________________________________________________________//
@@ -832,7 +890,7 @@ clear()
 void
 register_observer( test_observer& to )
 {
-    s_frk_impl().m_observers.insert( &to );
+    impl::s_frk_state().m_observers.insert( &to );
 }
 
 //____________________________________________________________________________//
@@ -844,7 +902,7 @@ register_observer( test_observer& to )
 void
 deregister_observer( test_observer& to )
 {
-    s_frk_impl().m_observers.erase( &to );
+    impl::s_frk_state().m_observers.erase( &to );
 }
 
 //____________________________________________________________________________//
@@ -858,9 +916,9 @@ add_context( ::boost::unit_test::lazy_ostream const& context_descr, bool sticky 
 {
     std::stringstream buffer;
     context_descr( buffer );
-    int res_idx  = s_frk_impl().m_context_idx++;
+    int res_idx  = impl::s_frk_state().m_context_idx++;
 
-    s_frk_impl().m_context.push_back( framework_impl::context_frame( buffer.str(), res_idx, sticky ) );
+    impl::s_frk_state().m_context.push_back( framework_state::context_frame( buffer.str(), res_idx, sticky ) );
 
     return res_idx;
 }
@@ -874,7 +932,7 @@ add_context( ::boost::unit_test::lazy_ostream const& context_descr, bool sticky 
 struct frame_with_id {
     explicit frame_with_id( int id ) : m_id( id ) {}
 
-    bool    operator()( framework_impl::context_frame const& f )
+    bool    operator()( framework_state::context_frame const& f )
     {
         return f.frame_id == m_id;
     }
@@ -887,17 +945,17 @@ void
 clear_context( int frame_id )
 {
     if( frame_id == -1 ) {   // clear all non sticky frames
-        for( int i=static_cast<int>(s_frk_impl().m_context.size())-1; i>=0; i-- )
-            if( !s_frk_impl().m_context[i].is_sticky )
-                s_frk_impl().m_context.erase( s_frk_impl().m_context.begin()+i );
+        for( int i=static_cast<int>(impl::s_frk_state().m_context.size())-1; i>=0; i-- )
+            if( !impl::s_frk_state().m_context[i].is_sticky )
+                impl::s_frk_state().m_context.erase( impl::s_frk_state().m_context.begin()+i );
     }
- 
-    else { // clear specific frame
-        framework_impl::context_data::iterator it = 
-            std::find_if( s_frk_impl().m_context.begin(), s_frk_impl().m_context.end(), frame_with_id( frame_id ) );
 
-        if( it != s_frk_impl().m_context.end() ) // really an internal error if this is not true
-            s_frk_impl().m_context.erase( it );
+    else { // clear specific frame
+        framework_state::context_data::iterator it =
+            std::find_if( impl::s_frk_state().m_context.begin(), impl::s_frk_state().m_context.end(), frame_with_id( frame_id ) );
+
+        if( it != impl::s_frk_state().m_context.end() ) // really an internal error if this is not true
+            impl::s_frk_state().m_context.erase( it );
     }
 }
 
@@ -922,7 +980,7 @@ get_context()
 bool
 context_generator::is_empty() const
 {
-    return s_frk_impl().m_context.empty();
+    return impl::s_frk_state().m_context.empty();
 }
 
 //____________________________________________________________________________//
@@ -930,7 +988,7 @@ context_generator::is_empty() const
 const_string
 context_generator::next() const
 {
-    return m_curr_frame < s_frk_impl().m_context.size() ? s_frk_impl().m_context[m_curr_frame++].descr : const_string();
+    return m_curr_frame < impl::s_frk_state().m_context.size() ? impl::s_frk_state().m_context[m_curr_frame++].descr : const_string();
 }
 
 //____________________________________________________________________________//
@@ -942,10 +1000,10 @@ context_generator::next() const
 master_test_suite_t&
 master_test_suite()
 {
-    if( !s_frk_impl().m_master_test_suite )
-        s_frk_impl().m_master_test_suite = new master_test_suite_t;
+    if( !impl::s_frk_state().m_master_test_suite )
+        impl::s_frk_state().m_master_test_suite = new master_test_suite_t;
 
-    return *s_frk_impl().m_master_test_suite;
+    return *impl::s_frk_state().m_master_test_suite;
 }
 
 //____________________________________________________________________________//
@@ -957,15 +1015,15 @@ master_test_suite()
 test_suite&
 current_auto_test_suite( test_suite* ts, bool push_or_pop )
 {
-    if( s_frk_impl().m_auto_test_suites.empty() )
-        s_frk_impl().m_auto_test_suites.push_back( &framework::master_test_suite() );
+    if( impl::s_frk_state().m_auto_test_suites.empty() )
+        impl::s_frk_state().m_auto_test_suites.push_back( &framework::master_test_suite() );
 
     if( !push_or_pop )
-        s_frk_impl().m_auto_test_suites.pop_back();
+        impl::s_frk_state().m_auto_test_suites.pop_back();
     else if( ts )
-        s_frk_impl().m_auto_test_suites.push_back( ts );
+        impl::s_frk_state().m_auto_test_suites.push_back( ts );
 
-    return *s_frk_impl().m_auto_test_suites.back();
+    return *impl::s_frk_state().m_auto_test_suites.back();
 }
 
 //____________________________________________________________________________//
@@ -977,7 +1035,7 @@ current_auto_test_suite( test_suite* ts, bool push_or_pop )
 test_case const&
 current_test_case()
 {
-    return get<test_case>( s_frk_impl().m_curr_test_case );
+    return get<test_case>( impl::s_frk_state().m_curr_test_case );
 }
 
 //____________________________________________________________________________//
@@ -985,7 +1043,7 @@ current_test_case()
 test_unit_id
 current_test_case_id()
 {
-    return s_frk_impl().m_curr_test_case;
+    return impl::s_frk_state().m_curr_test_case;
 }
 
 //____________________________________________________________________________//
@@ -997,7 +1055,7 @@ current_test_case_id()
 test_unit&
 get( test_unit_id id, test_unit_type t )
 {
-    test_unit* res = s_frk_impl().m_test_units[id];
+    test_unit* res = impl::s_frk_state().m_test_units[id];
 
     if( (res->p_type & t) == 0 )
         throw internal_error( "Invalid test unit type" );
@@ -1017,22 +1075,25 @@ run( test_unit_id id, bool continue_test )
     if( id == INV_TEST_UNIT_ID )
         id = master_test_suite().p_id;
 
+    // Figure out run status for execution phase
+    impl::s_frk_state().deduce_run_status( id );
+
     test_case_counter tcc;
     traverse_test_tree( id, tcc );
 
-    BOOST_TEST_SETUP_ASSERT( tcc.p_count != 0 , runtime_config::test_to_run().empty() 
-        ? BOOST_TEST_L( "test tree is empty" ) 
-        : BOOST_TEST_L( "no test cases matching filter" ) );
+    BOOST_TEST_SETUP_ASSERT( tcc.p_count != 0 , runtime_config::test_to_run().empty()
+        ? BOOST_TEST_L( "test tree is empty" )
+        : BOOST_TEST_L( "no test cases matching filter or all test cases were disabled" ) );
 
-    bool    call_start_finish   = !continue_test || !s_frk_impl().m_test_in_progress;
-    bool    was_in_progress     = s_frk_impl().m_test_in_progress;
+    bool    was_in_progress     = framework::test_in_progress();
+    bool    call_start_finish   = !continue_test || !was_in_progress;
 
-    s_frk_impl().m_test_in_progress = true;
+    impl::s_frk_state().m_test_in_progress = true;
 
     if( call_start_finish ) {
-        BOOST_TEST_FOREACH( test_observer*, to, s_frk_impl().m_observers ) {
+        BOOST_TEST_FOREACH( test_observer*, to, impl::s_frk_state().m_observers ) {
             try {
-                s_frk_impl().m_aux_em.vexecute( boost::bind( &test_observer::test_start, to, tcc.p_count ) );
+                impl::s_frk_state().m_aux_em.vexecute( boost::bind( &test_observer::test_start, to, tcc.p_count ) );
             }
             catch( execution_exception const& ex )  {
                 throw setup_error( ex.what() );
@@ -1054,19 +1115,14 @@ run( test_unit_id id, bool continue_test )
         std::srand( runtime_config::random_seed() );
     }
 
-    try {
-        traverse_test_tree( id, s_frk_impl() );
-    }
-    catch( framework::test_being_aborted const& ) {
-        // abort already reported
-    }
+    impl::s_frk_state().execute_test_tree( id );
 
     if( call_start_finish ) {
-        BOOST_TEST_REVERSE_FOREACH( test_observer*, to, s_frk_impl().m_observers )
+        BOOST_TEST_REVERSE_FOREACH( test_observer*, to, impl::s_frk_state().m_observers )
             to->test_finish();
     }
 
-    s_frk_impl().m_test_in_progress = was_in_progress;
+    impl::s_frk_state().m_test_in_progress = was_in_progress;
 }
 
 //____________________________________________________________________________//
@@ -1086,7 +1142,7 @@ run( test_unit const* tu, bool continue_test )
 void
 assertion_result( unit_test::assertion_result ar )
 {
-    BOOST_TEST_FOREACH( test_observer*, to, s_frk_impl().m_observers )
+    BOOST_TEST_FOREACH( test_observer*, to, impl::s_frk_state().m_observers )
         to->assertion_result( ar );
 }
 
@@ -1099,7 +1155,7 @@ assertion_result( unit_test::assertion_result ar )
 void
 exception_caught( execution_exception const& ex )
 {
-    BOOST_TEST_FOREACH( test_observer*, to, s_frk_impl().m_observers )
+    BOOST_TEST_FOREACH( test_observer*, to, impl::s_frk_state().m_observers )
         to->exception_caught( ex );
 }
 
@@ -1112,7 +1168,7 @@ exception_caught( execution_exception const& ex )
 void
 test_unit_aborted( test_unit const& tu )
 {
-    BOOST_TEST_FOREACH( test_observer*, to, s_frk_impl().m_observers )
+    BOOST_TEST_FOREACH( test_observer*, to, impl::s_frk_state().m_observers )
         to->test_unit_aborted( tu );
 }
 

@@ -1,12 +1,12 @@
 //  (C) Copyright Gennadiy Rozental 2001-2014.
 //  (C) Copyright Beman Dawes 2001.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//!@file 
+//!@file
 //!@brief Defines public interface of the Execution Monitor and related classes
 // ***************************************************************************
 
@@ -58,7 +58,7 @@
 
 #else // based on ISO C standard
 
-#if !defined(BOOST_NO_FENV_H) 
+#if !defined(BOOST_NO_FENV_H)
   #include <boost/detail/fenv.hpp>
 #endif
 
@@ -71,24 +71,24 @@ namespace boost {
 /// @defgroup ExecutionMonitor Function Execution Monitor
 /// @{
 /// @section Intro Introduction
-/// Sometimes we need to call a function and make sure that no user or system originated exceptions are being thrown by it. Uniform exception reporting 
+/// Sometimes we need to call a function and make sure that no user or system originated exceptions are being thrown by it. Uniform exception reporting
 /// is also may be convenient. That's the purpose of the Boost.Test's Execution Monitor.
 ///
-/// The Execution Monitor is a lower-level component of the Boost Test Library. It is the base for implementing all other Boost.Test components, but also 
-/// can be used standalone to get controlled execution of error-prone functions with a uniform error notification. The Execution Monitor calls a user-supplied 
+/// The Execution Monitor is a lower-level component of the Boost Test Library. It is the base for implementing all other Boost.Test components, but also
+/// can be used standalone to get controlled execution of error-prone functions with a uniform error notification. The Execution Monitor calls a user-supplied
 /// function in a controlled environment, relieving users from messy error detection.
 ///
-/// The Execution Monitor usage is demonstrated in the example exec_mon_example. 
+/// The Execution Monitor usage is demonstrated in the example exec_mon_example.
 ///
 /// @section DesignRationale Design Rationale
-/// 
+///
 /// The Execution Monitor design assumes that it can be used when no (or almost no) memory available. Also the Execution Monitor is intended to be portable to as many platforms as possible.
 ///
 /// @section UserGuide User's guide
-/// The Execution Monitor is designed to solve the problem of executing potentially dangerous function that may result in any number of error conditions, 
-/// in monitored environment that should prevent any undesirable exceptions to propagate out of function call and produce consistent result report for all outcomes. 
-/// The Execution Monitor is able to produce informative report for all standard C++ exceptions and intrinsic types. All other exceptions are reported as unknown. 
-/// If you prefer different message for your exception type or need to perform any action, the Execution Monitor supports custom exception translators. 
+/// The Execution Monitor is designed to solve the problem of executing potentially dangerous function that may result in any number of error conditions,
+/// in monitored environment that should prevent any undesirable exceptions to propagate out of function call and produce consistent result report for all outcomes.
+/// The Execution Monitor is able to produce informative report for all standard C++ exceptions and intrinsic types. All other exceptions are reported as unknown.
+/// If you prefer different message for your exception type or need to perform any action, the Execution Monitor supports custom exception translators.
 /// There are several other parameters of the monitored environment can be configured by setting appropriate properties of the Execution Monitor.
 ///
 /// All symbols in the Execution Monitor implementation are located in the namespace boost. To use the Execution Monitor you need to:
@@ -102,39 +102,39 @@ namespace boost {
 /// - int ()
 /// - void ()
 ///
-/// This function is expected to be self sufficient part of your appplication. You can't pass any arguments to this function directly. Instead you 
+/// This function is expected to be self sufficient part of your application. You can't pass any arguments to this function directly. Instead you
 /// should bind them into executable nullary function using bind function (either standard or boost variant). Neither you can return any other value,
 /// but an integer result code. If necessary you can bind output parameters by reference or use some other more complicated nullary functor, which
 /// maintains state. This includes class methods, static class methods etc.
 ///
-/// To start the monitored function, invoke the method execution_monitor::execute and pass the monitored function as an argument. If the call succeeds, 
+/// To start the monitored function, invoke the method execution_monitor::execute and pass the monitored function as an argument. If the call succeeds,
 /// the method returns the result code produced by the monitored function. If any of the following conditions occur:
 /// - Uncaught C++ exception
 /// - Hardware or software signal, trap, or other exception
 /// - Timeout reached
 /// - Debug assert event occurred (under Microsoft Visual C++ or compatible compiler)
 ///
-/// then the method throws the execution_exception. The exception contains unique error_code value identifying the error condition and the detailed message 
+/// then the method throws the execution_exception. The exception contains unique error_code value identifying the error condition and the detailed message
 /// that can be used to report the error.
 ///
 /// @subsection Reporting Errors reporting and translation
 ///
-/// If you need to report an error inside monitored function execution you have to throw an exception. Do not use the execution_exception - it's not intended 
+/// If you need to report an error inside monitored function execution you have to throw an exception. Do not use the execution_exception - it's not intended
 /// to be used for this purpose. The simplest choice is to use one of the following C++ types as an exception:
 /// - C string
 /// - std:string
 /// - any exception class in std::exception hierarchy
 /// - boost::exception
 ///
-/// execution_monitor will catch and report these types of exceptions. If exception is thrown which is unknown to execution_monitor, it can only 
-/// report the fact of the exception. So in case if you prefer to use your own exception types or can't govern what exceptions are generated by monitored 
-/// function and would like to see proper error message in a report, execution_monitor can be configured with custom "translator" routine, which will have 
-/// a chance to either record the fact of the exception itself or translate it into one of standard excptions and rethrow (or both). The translator routine 
-/// is registered per exception type and is invoked when exception of this class (or one inhereted from it) is thrown inside monitored routine. You can 
-/// register as many independent translators as you like. See execution_monitor::register_exception_translator specification for requirements on translator 
+/// execution_monitor will catch and report these types of exceptions. If exception is thrown which is unknown to execution_monitor, it can only
+/// report the fact of the exception. So in case if you prefer to use your own exception types or can't govern what exceptions are generated by monitored
+/// function and would like to see proper error message in a report, execution_monitor can be configured with custom "translator" routine, which will have
+/// a chance to either record the fact of the exception itself or translate it into one of standard exceptions and rethrow (or both). The translator routine
+/// is registered per exception type and is invoked when exception of this class (or one inherited from it) is thrown inside monitored routine. You can
+/// register as many independent translators as you like. See execution_monitor::register_exception_translator specification for requirements on translator
 /// function.
 ///
-/// Finally, if you need to abort the monitored function execution without reporting any errors, you can throw an exception execution_aborted. As a result 
+/// Finally, if you need to abort the monitored function execution without reporting any errors, you can throw an exception execution_aborted. As a result
 /// the execution is aborted and zero result code is produced by the method execution_monitor::execute.
 ///
 /// @subsection Parameters Supported parameters
@@ -170,7 +170,7 @@ public:
     virtual int operator()( boost::function<int ()> const& F ) = 0;
 
     // erases specific translator holder from the chain
-    translator_holder_base_ptr erase( translator_holder_base_ptr this_, const_string tag ) 
+    translator_holder_base_ptr erase( translator_holder_base_ptr this_, const_string tag )
     {
         if( m_next )
             m_next = m_next->erase( m_next, tag );
@@ -198,16 +198,16 @@ protected:
 } // namespace detail
 
 // ************************************************************************** //
-/// @class execution_exception 
+/// @class execution_exception
 /// @brief This class is used to report any kind of an failure during execution of a monitored function inside of execution_monitor
 ///
-/// The instance of this class is thrown out of execution_monitor::execute invocation when failure is detected. Regardless of a kind of failure occured
+/// The instance of this class is thrown out of execution_monitor::execute invocation when failure is detected. Regardless of a kind of failure occurred
 /// the instance will provide a uniform way to catch and report it.
-/// 
-/// One important design rationale for this class is that we should be ready to work after fatal memory corruptions or out of memory conditions. To facilitate 
+///
+/// One important design rationale for this class is that we should be ready to work after fatal memory corruptions or out of memory conditions. To facilitate
 /// this class never allocates any memory and assumes that strings it refers to are either some constants or live in a some kind of persistent (preallocated) memory.
 // ************************************************************************** //
-    
+
 class BOOST_TEST_DECL execution_exception {
     typedef boost::unit_test::const_string const_string;
 public:
@@ -225,7 +225,7 @@ public:
     /// just a system_exception. Fatal errors are so likely to have corrupted
     /// machine state (like a stack overflow or addressing exception) that it
     /// is unreasonable to continue execution.
-    ///        
+    ///
     /// @note(2) These errors include Unix signals and Windows structured
     /// exceptions. They are often initiated by hardware traps.
     enum error_code {
@@ -237,8 +237,8 @@ public:
         user_fatal_error       = 220, ///< user reported fatal error
         system_fatal_error     = 225  ///< see note (2) above
     };
-    
-    /// Simple model for the location of failure in a source code 
+
+    /// Simple model for the location of failure in a source code
     struct BOOST_TEST_DECL location {
         explicit    location( char const* file_name = 0, size_t line_num = 0, char const* func = 0 );
 
@@ -250,7 +250,7 @@ public:
     /// @name Constructors
 
     /// Constructs instance based on message, location and error code
-    
+
     /// @param[in] ec           error code
     /// @param[in] what_msg     error message
     /// @param[in] location     error location
@@ -258,11 +258,11 @@ public:
 
     /// @name Access methods
 
-    /// Exception error code    
+    /// Exception error code
     error_code      code() const    { return m_error_code; }
-    /// Exception message    
+    /// Exception message
     const_string    what() const    { return m_what; }
-    /// Exception location    
+    /// Exception location
     location const& where() const   { return m_location; }
     ///@}
 
@@ -276,10 +276,10 @@ private:
 // ************************************************************************** //
 /// Function execution monitor
 
-/// This class is used to uniformly detect and report an occurrence of several types of signals and exceptions, reducing various 
-/// errors to a uniform execution_exception that is returned to a caller. 
+/// This class is used to uniformly detect and report an occurrence of several types of signals and exceptions, reducing various
+/// errors to a uniform execution_exception that is returned to a caller.
 ///
-/// The executiom_monitor behavior can be customised through a set of public parameters (properties) associated with the execution_monitor instance. 
+/// The executiom_monitor behavior can be customized through a set of public parameters (properties) associated with the execution_monitor instance.
 /// All parameters are implemented as public unit_test::readwrite_property data members of the class execution_monitor.
 // ************************************************************************** //
 
@@ -292,42 +292,42 @@ public:
 
     /// Should monitor catch system errors.
     ///
-    /// The @em p_catch_system_errors property is a boolean flag (default value is true) specifying whether or not execution_monitor should trap system 
+    /// The @em p_catch_system_errors property is a boolean flag (default value is true) specifying whether or not execution_monitor should trap system
     /// errors/system level exceptions/signals, which would cause program to crash in a regular case (without execution_monitor).
-    /// Set this property to false, for example, if you wish to force coredump file creation. The Unit Test Framework provides a 
+    /// Set this property to false, for example, if you wish to force coredump file creation. The Unit Test Framework provides a
     /// runtime parameter @c \-\-catch_system_errors=yes to alter the behavior in monitored test cases.
-    unit_test::readwrite_property<bool> p_catch_system_errors; 
+    unit_test::readwrite_property<bool> p_catch_system_errors;
 
     ///  Should monitor try to attach debugger in case of caught system error.
     ///
-    /// The @em p_auto_start_dbg property is a boolean flag (default value is false) specifying whether or not execution_monitor should try to attach debugger 
+    /// The @em p_auto_start_dbg property is a boolean flag (default value is false) specifying whether or not execution_monitor should try to attach debugger
     /// in case system error is caught.
     unit_test::readwrite_property<bool> p_auto_start_dbg;
 
 
     ///  Specifies the seconds that elapse before a timer_error occurs.
     ///
-    /// The @em p_timeout property is an integer timeout (in seconds) for monitored function execution. Use this parameter to monitor code with possible deadlocks 
+    /// The @em p_timeout property is an integer timeout (in seconds) for monitored function execution. Use this parameter to monitor code with possible deadlocks
     /// or indefinite loops. This feature is only available for some operating systems (not yet Microsoft Windows).
     unit_test::readwrite_property<int>  p_timeout;
 
     ///  Should monitor use alternative stack for the signal catching.
     ///
-    /// The @em p_use_alt_stack property is a boolean flag (default value is false) specifying whether or not execution_monitor should use an alternative stack 
-    /// for the sigaction based signal catching. When enabled the signals are delivered to the execution_monitor on a stack different from current execution 
+    /// The @em p_use_alt_stack property is a boolean flag (default value is false) specifying whether or not execution_monitor should use an alternative stack
+    /// for the sigaction based signal catching. When enabled the signals are delivered to the execution_monitor on a stack different from current execution
     /// stack, which is safer in case if it is corrupted by monitored function. For more details on alternative stack handling see appropriate manuals.
     unit_test::readwrite_property<bool> p_use_alt_stack;
 
     /// Should monitor try to detect hardware floating point exceptions (!= 0), and which specific exception to catch.
     ///
-    /// The @em p_detect_fp_exceptions property is a boolean flag (default value is false) specifying whether or not execution_monitor should install hardware 
+    /// The @em p_detect_fp_exceptions property is a boolean flag (default value is false) specifying whether or not execution_monitor should install hardware
     /// traps for the floating point exception on platforms where it's supported.
     unit_test::readwrite_property<unsigned> p_detect_fp_exceptions;
 
 
     // @name Monitoring entry points
 
-    /// @brief Execution monitor entry point for functions returning integer value 
+    /// @brief Execution monitor entry point for functions returning integer value
     ///
     /// This method executes supplied function F inside a try/catch block and also may include other unspecified platform dependent error detection code.
     ///
@@ -337,18 +337,18 @@ public:
     /// @param[in] F  Function to monitor
     /// @returns  value returned by function call F().
     /// @see vexecute
-    int         execute( boost::function<int ()> const& F ); 
+    int         execute( boost::function<int ()> const& F );
 
-    /// @brief Execution monitor entry point for functions returning void 
+    /// @brief Execution monitor entry point for functions returning void
     ///
-    /// This method is semantically identical to execution_monitor::execute, but des not produce any result code.
+    /// This method is semantically identical to execution_monitor::execute, but des't produce any result code.
     /// @param[in] F  Function to monitor
     /// @see execute
-    void         vexecute( boost::function<void ()> const& F ); 
+    void         vexecute( boost::function<void ()> const& F );
     // @}
 
     // @name Exception translator registration
-        
+
     /// @brief Registers custom (user supplied) exception translator
 
     /// This method template registers a translator for an exception type specified as a first template argument. For example
@@ -356,9 +356,9 @@ public:
     ///    void myExceptTr( MyException const& ex ) { /*do something with the exception here*/}
     ///    em.register_exception_translator<MyException>( myExceptTr );
     /// @endcode
-    /// The translator should be any unary function/functor object which accepts MyException const&. This can be free standing function 
-    /// or bound class method. The second argument is an optional string tag you can associate with this translator routine. The only reason 
-    /// to specify the tag is if you plan to erase the translator eventually. This can be usefull in scenario when you reuse the same 
+    /// The translator should be any unary function/functor object which accepts MyException const&. This can be free standing function
+    /// or bound class method. The second argument is an optional string tag you can associate with this translator routine. The only reason
+    /// to specify the tag is if you plan to erase the translator eventually. This can be useful in scenario when you reuse the same
     /// execution_monitor instance to monitor different routines and need to register a translator specific to the routine being monitored.
     /// While it is possible to erase the translator based on an exception type it was registered for, tag string provides simpler way of doing this.
     /// @tparam ExceptionType type of the exception we register a translator for
@@ -421,7 +421,7 @@ public:
         }
     }
 #ifndef BOOST_NO_RTTI
-    virtual translator_holder_base_ptr erase( translator_holder_base_ptr this_, std::type_info const& ti ) 
+    virtual translator_holder_base_ptr erase( translator_holder_base_ptr this_, std::type_info const& ti )
     {
         return ti == typeid(ExceptionType) ? m_next : this_;
     }
@@ -438,7 +438,7 @@ template<typename ExceptionType, typename ExceptionTranslator>
 void
 execution_monitor::register_exception_translator( ExceptionTranslator const& tr, const_string tag, boost::type<ExceptionType>* )
 {
-    m_custom_translators.reset( 
+    m_custom_translators.reset(
         new detail::translator_holder<ExceptionType,ExceptionTranslator>( tr, m_custom_translators, tag ) );
 }
 
@@ -458,8 +458,8 @@ public:
     // Constructor
     explicit    system_error( char const* exp );
 
-    unit_test::readonly_property<long>          p_errno; 
-    unit_test::readonly_property<char const*>   p_failed_exp; 
+    unit_test::readonly_property<long>          p_errno;
+    unit_test::readonly_property<char const*>   p_failed_exp;
 };
 
 #define BOOST_TEST_SYS_ASSERT( exp ) if( (exp) ) ; else throw ::boost::system_error( BOOST_STRINGIZE( exp ) )
@@ -481,7 +481,7 @@ enum masks {
     BOOST_FPE_UNDERFLOW = EM_UNDERFLOW|EM_DENORMAL,
 
     BOOST_FPE_ALL       = MCW_EM,
-#elif defined(BOOST_NO_FENV_H) || defined(BOOST_CLANG) 
+#elif defined(BOOST_NO_FENV_H) || defined(BOOST_CLANG)
     BOOST_FPE_ALL       = 1,
 #else
     BOOST_FPE_DIVBYZERO = FE_DIVBYZERO,

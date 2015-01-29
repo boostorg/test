@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2005-2014.
-//  Use, modification, and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
+//  Use, modification, and distribution are subject to the
+//  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -30,7 +30,7 @@ namespace cla {
 // **************               char_name_policy               ************** //
 // ************************************************************************** //
 
-BOOST_RT_PARAM_INLINE 
+BOOST_RT_PARAM_INLINE
 char_name_policy::char_name_policy()
 : basic_naming_policy( rtti::type_id<char_name_policy>() )
 {
@@ -42,7 +42,7 @@ char_name_policy::char_name_policy()
 BOOST_RT_PARAM_INLINE bool
 char_name_policy::conflict_with( identification_policy const& id ) const
 {
-    return id.p_type_id == p_type_id && 
+    return id.p_type_id == p_type_id &&
            p_name == static_cast<char_name_policy const&>( id ).p_name;
 }
 

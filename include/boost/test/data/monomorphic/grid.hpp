@@ -1,13 +1,13 @@
 //  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
 ///@file
 /// Defines monomorphic dataset n+m dimentional *. Samples in this
-/// dataset is grid of elements in DS1 and DS2. There will be total 
+/// dataset is grid of elements in DS1 and DS2. There will be total
 /// |DS1| * |DS2| samples
 // ***************************************************************************
 
@@ -51,7 +51,7 @@ template<typename T1, typename T2,typename T3>
 struct grid_traits<T1,std::tuple<T2,T3>> {
     typedef std::tuple<T1,T2,T3> type;
     typedef typename monomorphic::traits<type>::ref_type ref_type;
-    
+
     static ref_type
     tuple_merge(T1 const& a1, std::tuple<T2 const&,T3 const&> const& a2)
     {
@@ -84,7 +84,7 @@ struct grid_traits<std::tuple<T1,T2>,T3> {
 
 //! Implements the dataset resulting from a cartesian product/grid operation on datasets.
 //!
-//! The arity of the resulting dataset is the sum of the arity of its operands. 
+//! The arity of the resulting dataset is the sum of the arity of its operands.
 template<typename DS1, typename DS2>
 class grid : public monomorphic::dataset<typename ds_detail::grid_traits<typename boost::decay<DS1>::type::data_type,
                                                                          typename boost::decay<DS2>::type::data_type>::type> {
@@ -109,7 +109,7 @@ class grid : public monomorphic::dataset<typename ds_detail::grid_traits<typenam
         , m_ds2_pos( 0 )
         {}
 
-        // forward iterator interface 
+        // forward iterator interface
         virtual ref_type    operator*()     { return ds_detail::grid_traits<T1,T2>::tuple_merge( **m_iter1, **m_iter2 ); }
         virtual void        operator++()
         {
@@ -135,19 +135,19 @@ public:
     enum { arity = boost::decay<DS1>::type::arity + boost::decay<DS2>::type::arity };
 
     //! Constructor
-    grid( DS1&& ds1, DS2&& ds2 ) 
+    grid( DS1&& ds1, DS2&& ds2 )
     : m_ds1( std::forward<DS1>( ds1 ) )
     , m_ds2( std::forward<DS2>( ds2 ) )
     {}
 
     //! Move constructor
-    grid( grid&& j ) 
+    grid( grid&& j )
     : m_ds1( std::forward<DS1>( j.m_ds1 ) )
     , m_ds2( std::forward<DS2>( j.m_ds2 ) )
     {}
 
     // dataset interface
-    virtual data::size_t    size() const    { return m_ds1.size() * m_ds2.size(); } 
+    virtual data::size_t    size() const    { return m_ds1.size() * m_ds2.size(); }
     virtual iter_ptr        begin() const   { return boost::make_shared<iterator>( m_ds1.begin(), m_ds2 ); }
 
 private:
@@ -166,7 +166,7 @@ struct is_dataset<grid<DS1,DS2> > : mpl::true_ {};
 
 namespace result_of {
 
-/// Result type of the grid operation on dataset. 
+/// Result type of the grid operation on dataset.
 template<typename DS1Gen, typename DS2Gen>
 struct grid {
     typedef monomorphic::grid<typename DS1Gen::type,typename DS2Gen::type> type;
@@ -180,7 +180,7 @@ struct grid {
 
 //! Grid operation
 template<typename DS1, typename DS2>
-inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && is_dataset<DS2>::value, 
+inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && is_dataset<DS2>::value,
                                         result_of::grid<mpl::identity<DS1>,mpl::identity<DS2>>
 >::type
 operator*( DS1&& ds1, DS2&& ds2 )
@@ -192,7 +192,7 @@ operator*( DS1&& ds1, DS2&& ds2 )
 
 //! @overload boost::unit_test::data::operator*
 template<typename DS1, typename DS2>
-inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && !is_dataset<DS2>::value, 
+inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && !is_dataset<DS2>::value,
                                         result_of::grid<mpl::identity<DS1>,data::result_of::make<DS2>>
 >::type
 operator*( DS1&& ds1, DS2&& ds2 )
@@ -202,7 +202,7 @@ operator*( DS1&& ds1, DS2&& ds2 )
 
 //! @overload boost::unit_test::data::operator*
 template<typename DS1, typename DS2>
-inline typename boost::lazy_enable_if_c<!is_dataset<DS1>::value && is_dataset<DS2>::value, 
+inline typename boost::lazy_enable_if_c<!is_dataset<DS1>::value && is_dataset<DS2>::value,
                                         result_of::grid<data::result_of::make<DS1>,mpl::identity<DS2>>
 >::type
 operator*( DS1&& ds1, DS2&& ds2 )

@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -178,7 +178,7 @@ depends_on::do_apply( test_unit& tu )
             throw framework::setup_error( std::string( "incorrect dependency specification " ) + m_dependency );
 
         dep = &framework::get( next_id, TUT_ANY );
-        ++tit;           
+        ++tit;
     }
 
     tu.depends_on( dep );
@@ -188,13 +188,13 @@ depends_on::do_apply( test_unit& tu )
 //____________________________________________________________________________//
 
 // ************************************************************************** //
-// **************        decorator::enable_if/disable_if       ************** //
+// **************    decorator::enable_if/enabled/disabled     ************** //
 // ************************************************************************** //
 
 void
-enable_if::do_apply( test_unit& tu )
+enable_if_impl::apply_impl( test_unit& tu, bool condition )
 {
-    tu.p_enabled.value = m_condition;
+    tu.p_default_status.value = condition ? test_unit::RS_ENABLED : test_unit::RS_DISABLED;
 }
 
 //____________________________________________________________________________//

@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -102,17 +102,17 @@ public:
     static manager&     instance() { return *instance_ptr(); }
 
     // Mock objects interface hooks
-    virtual void        exception_point( const_string /*file*/, 
-                                         std::size_t /*line_num*/, 
+    virtual void        exception_point( const_string /*file*/,
+                                         std::size_t /*line_num*/,
                                          const_string /*descr*/ ){}
-    virtual bool        decision_point( const_string /*file*/, 
+    virtual bool        decision_point( const_string /*file*/,
                                         std::size_t /*line_num*/ )          { return true; }
-    virtual unsigned    enter_scope( const_string /*file*/, 
+    virtual unsigned    enter_scope( const_string /*file*/,
                                      std::size_t /*line_num*/,
                                      const_string /*scope_name*/){ return 0; }
     virtual void        leave_scope( unsigned )                             {}
-    virtual void        allocated( const_string /*file*/, 
-                                   std::size_t /*line_num*/, 
+    virtual void        allocated( const_string /*file*/,
+                                   std::size_t /*line_num*/,
                                    void* /*p*/, std::size_t /*s*/ )         {}
     virtual void        freed( void* /*p*/ )                                {}
     virtual void        data_flow( const_string /*d*/ )                     {}
@@ -140,7 +140,7 @@ public:
 
 protected:
     manager();
-#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) 
+#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
 public:
 #endif
     BOOST_TEST_PROTECTED_VIRTUAL ~manager();
@@ -176,7 +176,7 @@ public:
 // ************************************************************************** //
 
 struct location {
-    location( const_string file, std::size_t line ) 
+    location( const_string file, std::size_t line )
     : m_file_name( file )
     , m_line_num( line )
     {}
@@ -214,7 +214,7 @@ operator new( std::size_t s, ::boost::itest::location const& l )
         ::boost::itest::manager::instance().allocated( l.m_file_name, l.m_line_num, res, s );
     else
         throw std::bad_alloc();
-        
+
     return res;
 }
 
@@ -229,7 +229,7 @@ operator new[]( std::size_t s, ::boost::itest::location const& l )
         ::boost::itest::manager::instance().allocated( l.m_file_name, l.m_line_num, res, s );
     else
         throw std::bad_alloc();
-        
+
     return res;
 }
 

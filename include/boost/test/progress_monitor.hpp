@@ -1,11 +1,11 @@
 //  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file 
+/// @file
 /// @brief defines simple text based progress monitor
 // ***************************************************************************
 
@@ -39,11 +39,11 @@ public:
     virtual void    test_aborted();
 
     virtual void    test_unit_finish( test_unit const&, unsigned long );
-    virtual void    test_unit_skipped( test_unit const& );
+    virtual void    test_unit_skipped( test_unit const&, const_string );
 
     virtual int     priority() { return 3; }
     /// @}
-    
+
     /// @name Configuration
     /// @{
     void            set_stream( std::ostream& );

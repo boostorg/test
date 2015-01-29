@@ -54,27 +54,27 @@ manager::~manager()
 }
 
 //____________________________________________________________________________//
-    
+
 manager*
 manager::instance_ptr( bool reset, manager* new_ptr )
 {
     static manager dummy( 0 );
-    
+
     static manager* ptr = &dummy;
-    
+
     if( reset ) {
         if( new_ptr ) {
             BOOST_TEST_SETUP_ASSERT( ptr == &dummy, BOOST_TEST_L( "Can't run two interation based test the same time" ) );
-                
+
             ptr = new_ptr;
         }
         else
             ptr = &dummy;
     }
-    
+
     return ptr;
 }
-    
+
 }  // namespace itest
 }  // namespace boost
 

@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2005-2014.
-//  Use, modification, and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
+//  Use, modification, and distribution are subject to the
+//  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -31,7 +31,7 @@ namespace cla {
 // **************               dual_name_policy               ************** //
 // ************************************************************************** //
 
-BOOST_RT_PARAM_INLINE 
+BOOST_RT_PARAM_INLINE
 dual_name_policy::dual_name_policy()
 {
     m_primary.accept_modifier( prefix = BOOST_RT_PARAM_CSTRING_LITERAL( "--" ) );
@@ -47,7 +47,7 @@ inline void
 split( string_name_policy& snp, char_name_policy& cnp, cstring src, K const& k )
 {
     cstring::iterator sep = std::find( src.begin(), src.end(), BOOST_RT_PARAM_LITERAL( '|' ) );
-    
+
     if( sep != src.begin() )
         snp.accept_modifier( k = cstring( src.begin(), sep ) );
 

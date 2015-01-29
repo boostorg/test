@@ -42,7 +42,7 @@ test_count( utf::test_suite* master_ts, char const** argv, int argc, unsigned ex
         BOOST_TEST_INFO( argv[2] );
 
     utf::runtime_config::init( argc, (char**)argv );
-    utf::framework::impl::apply_filters( master_ts->p_id );
+    utf::framework::finalize_setup_phase( master_ts->p_id );
 
     utf::test_case_counter tcc;
     utf::traverse_test_tree( master_ts->p_id, tcc );

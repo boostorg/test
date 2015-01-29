@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -41,8 +41,8 @@ public:
     BOOST_READONLY_PROPERTY( counter_t, (test_case_counter)) p_count;
 private:
     // test tree visitor interface
-    virtual void    visit( test_case const& tc )                { if( tc.p_enabled ) ++p_count.value; }
-    virtual bool    test_suite_start( test_suite const& ts )    { return ts.p_enabled; }
+    virtual void    visit( test_case const& tc )                { if( tc.is_enabled() ) ++p_count.value; }
+    virtual bool    test_suite_start( test_suite const& ts )    { return ts.is_enabled(); }
 };
 
 } // namespace unit_test

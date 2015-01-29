@@ -85,12 +85,12 @@ inline void
 print_escaped_cdata( std::ostream& where_to, const_string value )
 {
     static const_string cdata_end( "]]>" );
-    
+
     const_string::size_type pos = value.find( cdata_end );
     if( pos == const_string::npos )
         where_to << value;
     else {
-        where_to << value.substr( 0, pos+2 ) << cdata_end 
+        where_to << value.substr( 0, pos+2 ) << cdata_end
                  << BOOST_TEST_L( "<![CDATA[" ) << value.substr( pos+2 );
     }
 }
