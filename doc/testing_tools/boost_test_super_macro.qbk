@@ -7,6 +7,16 @@
 
 [section:boost_test_super_macro `BOOST_TEST` or the Swiss Army knife]
 
+Once a test case has been declared, the body of this test should be written. A test case is a 
+sequence of operations in which *assertions* are inserted. Those assertions run /statements/ that verify the integrity 
+of the pre and post conditions of the operations. Assertions have different incidences on the test itself:
+
+- requirements: this is the strongest level of the assertion. The test stops if the statement in the assertion fails. This
+  type of assertions should be used when the reminder of the 
+- basic checks: 
+- warnings: 
+
+A unique interface for assertions is 
 
 * `BOOST_TEST_WARN`
 * `BOOST_TEST_CHECK` or just `BOOST_TEST`
