@@ -74,9 +74,16 @@ BOOST_AUTO_TEST_CASE( test1 )
 
 //____________________________________________________________________________//
 
+boost::test_tools::assertion_result
+do_it( bt::test_unit_id )
+{
+   return false;
+}
+
 BOOST_TEST_DECORATOR(
 - bt::enabled()
 - bt::description( "initially enabled case s2/t2")
+- bt::precondition(do_it)
 )
 BOOST_AUTO_TEST_CASE( test2 )
 {
