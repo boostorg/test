@@ -121,10 +121,12 @@ BOOST_AUTO_TEST_CASE( name )                                        \
                                              #name,                 \
                                              __FILE__,              \
                                              __LINE__ );            \
+    impl->p_default_status.value = ut::test_unit::RS_ENABLED;       \
                                                                     \
     ut::unit_test_log.set_stream( ots() );                          \
     ut::unit_test_log.set_threshold_level( ut::log_nothing );       \
     ut::unit_test_log.set_formatter( new shorten_lf );              \
+    ut::framework::finalize_setup_phase( impl->p_id );              \
     ut::framework::run( impl );                                     \
                                                                     \
     ut::unit_test_log.set_threshold_level(                          \
@@ -133,7 +135,7 @@ BOOST_AUTO_TEST_CASE( name )                                        \
             : ut::log_all_errors );                                 \
     ut::unit_test_log.set_format( ut::runtime_config::log_format());\
     ut::unit_test_log.set_stream( std::cout );                      \
-    BOOST_TEST( ots().match_pattern() );                            \
+    BOOST_CHECK( ots().match_pattern() );                           \
 }                                                                   \
                                                                     \
 void name ## _impl()                                                \
