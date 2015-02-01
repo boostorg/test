@@ -23,9 +23,12 @@
 
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 
+#include <boost/test/tools/assertion_result.hpp>
+
 // Boost
 #include <boost/shared_ptr.hpp>
 #include <boost/function/function0.hpp>
+#include <boost/function/function1.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -243,6 +246,25 @@ fixture( boost::function<void()> const& setup, boost::function<void()> const& te
 
 //____________________________________________________________________________//
 
+// ************************************************************************** //
+// **************            decorator::depends_on             ************** //
+// ************************************************************************** //
+
+class BOOST_TEST_DECL precondition : public decorator::for_test_unit {
+public:
+    typedef boost::function<test_tools::assertion_result (test_unit_id)>   predicate_t;
+
+    explicit                precondition( predicate_t p ) : m_precondition( p ) {}
+
+private:
+    // decorator::for_test_unit interface
+    virtual void            do_apply( test_unit& tu );
+    virtual for_test_unit*  do_clone() const            { return new precondition( m_precondition ); }
+
+    // Data members
+    predicate_t             m_precondition;
+};
+
 } // namespace decorator
 
 using decorator::label;
@@ -254,6 +276,7 @@ using decorator::enable_if;
 using decorator::enabled;
 using decorator::disabled;
 using decorator::fixture;
+using decorator::precondition;
 
 } // namespace unit_test
 } // namespace boost

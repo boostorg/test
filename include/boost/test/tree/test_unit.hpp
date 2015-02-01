@@ -27,6 +27,7 @@
 
 // Boost
 #include <boost/function/function0.hpp>
+#include <boost/function/function1.hpp>
 
 // STL
 #include <list>
@@ -52,11 +53,20 @@ public:
     enum { type = TUT_ANY };
     enum run_status { RS_DISABLED, RS_ENABLED, RS_INHERIT, RS_INVALID };
 
-    typedef std::list<test_unit_id>             id_list;
-    typedef std::list<test_unit_fixture_ptr>    fixture_list;
+    typedef std::list<test_unit_id>                                     id_list;
+    typedef std::list<test_unit_fixture_ptr>                            fixture_list_t;
+    typedef BOOST_READONLY_PROPERTY(test_unit_id,(framework_state))     id_t;
+    typedef BOOST_READONLY_PROPERTY(test_unit_id,(test_suite))          parent_id_t;
+    typedef BOOST_READONLY_PROPERTY(id_list,(test_unit))                id_list_t;
+    typedef decorator::for_test_unit_ptr                                decorator_t;
+    typedef BOOST_READONLY_PROPERTY(std::list<std::string>,(test_unit)) label_list_t;
 
-    // dependencies management
+    typedef boost::function<test_tools::assertion_result (test_unit_id)>   precondition_t;
+    typedef BOOST_READONLY_PROPERTY(std::list<precondition_t>,(test_unit)) precond_list_t;
+
+    // preconditions management
     void                                depends_on( test_unit* tu );
+    void                                add_precondition( precondition_t const& );
     test_tools::assertion_result        check_preconditions() const;
 
     // labels management
@@ -69,20 +79,16 @@ public:
     std::string                         full_name() const;
 
     // Public r/o properties
-    typedef BOOST_READONLY_PROPERTY(test_unit_id,(framework_state))     id_t;
-    typedef BOOST_READONLY_PROPERTY(test_unit_id,(test_suite))          parent_id_t;
-    typedef BOOST_READONLY_PROPERTY(id_list,(test_unit))                id_list_t;
-    typedef decorator::for_test_unit_ptr                                decorator_base;
-    typedef BOOST_READONLY_PROPERTY(std::list<std::string>,(test_unit)) label_list_t;
-
     readonly_property<test_unit_type>   p_type;                 ///< type for this test unit
     readonly_property<const_string>     p_type_name;            ///< "case"/"suite"/"module"
     readonly_property<const_string>     p_file_name;
     readonly_property<std::size_t>      p_line_num;
     id_t                                p_id;                   ///< unique id for this test unit
     parent_id_t                         p_parent_id;            ///< parent test suite id
-    id_list_t                           p_dependencies;         ///< list of test units this one depends on
     label_list_t                        p_labels;               ///< list of labels associated with this test unit
+
+    id_list_t                           p_dependencies;         ///< list of test units this one depends on
+    precond_list_t                      p_preconditions;        ///< user supplied preconditions for this test unit; 
 
     // Public r/w properties
     readwrite_property<std::string>     p_name;                 ///< name for this test unit
@@ -95,8 +101,8 @@ public:
 
     readwrite_property<counter_t>       p_dependency_rank;      ///< run status assigned to this unit before execution phase after applying all filters
 
-    readwrite_property<decorator_base>  p_decorators;           ///< automatically assigned decorators; execution is delayed till framework::finalize_setup_phase function
-    readwrite_property<fixture_list>    p_fixtures;             ///< fixtures associated with this test unit
+    readwrite_property<decorator_t>     p_decorators;           ///< automatically assigned decorators; execution is delayed till framework::finalize_setup_phase function
+    readwrite_property<fixture_list_t>  p_fixtures;             ///< fixtures associated with this test unit
 
 protected:
     ~test_unit();

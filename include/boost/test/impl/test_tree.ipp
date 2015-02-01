@@ -104,6 +104,14 @@ test_unit::depends_on( test_unit* tu )
 
 //____________________________________________________________________________//
 
+void
+test_unit::add_precondition( precondition_t const& pc )
+{
+    p_preconditions.value.push_back( pc );
+}
+
+//____________________________________________________________________________//
+
 test_tools::assertion_result
 test_unit::check_preconditions() const
 {
@@ -128,6 +136,12 @@ test_unit::check_preconditions() const
             res.message() << "dependency test " << dep.p_type_name << " \"" << dep.full_name() << "\" has skipped test cases";
             return res;
         }
+    }
+
+    BOOST_TEST_FOREACH( precondition_t, precondition, p_preconditions.get() ) {
+        test_tools::assertion_result res = precondition( p_id );
+        if( !res )
+            return res;
     }
 
     return true;
