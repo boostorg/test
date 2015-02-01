@@ -275,10 +275,8 @@ private:
 // ************************************************************************** //
 
 static void
-add_filtered_test_units( const_string filter, test_unit_id_list& targ )
+add_filtered_test_units( test_unit_id master_tu_id, const_string filter, test_unit_id_list& targ )
 {
-    test_unit_id master_tu_id = master_test_suite().p_id;
-
     // Choose between two kinds of filters
     if( filter[0] == '@' ) {
         filter.trim_left( 1 );
@@ -294,7 +292,7 @@ add_filtered_test_units( const_string filter, test_unit_id_list& targ )
 //____________________________________________________________________________//
 
 static bool
-parse_filters( test_unit_id_list& tu_to_enable, test_unit_id_list& tu_to_disable )
+parse_filters( test_unit_id master_tu_id, test_unit_id_list& tu_to_enable, test_unit_id_list& tu_to_disable )
 {
     // 10. collect tu to enable and disable based on filters
     bool had_selector_filter = false;
@@ -306,7 +304,7 @@ parse_filters( test_unit_id_list& tu_to_enable, test_unit_id_list& tu_to_disable
 
         // 11. Deduce filter type
         if( filter[0] == '!' || filter[0] == '+' ) {
-            filter_type = filter[0] == '+' ? DISABLER : ENABLER;
+            filter_type = filter[0] == '+' ? ENABLER : DISABLER;
             filter.trim_left( 1 );
             BOOST_TEST_SETUP_ASSERT( !filter.is_empty(), "Invalid filter specification" );
         }
@@ -316,8 +314,8 @@ parse_filters( test_unit_id_list& tu_to_enable, test_unit_id_list& tu_to_disable
         // 12. Add test units to corresponding list
         switch( filter_type ) {
         case SELECTOR:
-        case ENABLER:  add_filtered_test_units( filter, tu_to_enable ); break;
-        case DISABLER: add_filtered_test_units( filter, tu_to_disable ); break;
+        case ENABLER:  add_filtered_test_units( master_tu_id, filter, tu_to_enable ); break;
+        case DISABLER: add_filtered_test_units( master_tu_id, filter, tu_to_disable ); break;
         }
     }
 
@@ -465,7 +463,7 @@ public:
 
         // 10. If there are any filters supplied, figure out lists of test units to enable/disable
         bool had_selector_filter = !runtime_config::test_to_run().empty() &&
-                                   parse_filters( tu_to_enable, tu_to_disable );
+                                   parse_filters( master_tu_id, tu_to_enable, tu_to_disable );
 
         // 20. Set the stage: either use default run status or disable all test units
         set_run_status setter( had_selector_filter ? test_unit::RS_DISABLED : test_unit::RS_INVALID );
@@ -691,6 +689,15 @@ framework_state& s_frk_state() { static framework_state the_inst; return the_ins
 #endif
 
 } // local namespace
+
+void
+setup_for_execution( test_unit const& tu )
+{
+    s_frk_state().deduce_run_status( tu.p_id );
+}
+ 
+//____________________________________________________________________________//
+
 } // namespace impl
 
 //____________________________________________________________________________//
