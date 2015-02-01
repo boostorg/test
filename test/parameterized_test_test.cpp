@@ -49,6 +49,15 @@ void test1( int i )
 
 //____________________________________________________________________________//
 
+static void 
+setup_tree( ut::test_suite* master_tu )
+{
+    master_tu->p_default_status.value = ut::test_unit::RS_ENABLED;
+    ut::framework::finalize_setup_phase( master_tu->p_id );
+}
+        
+//____________________________________________________________________________//
+
 BOOST_AUTO_TEST_CASE( test_case1 )
 {
     onullstream_type    null_output;
@@ -58,6 +67,7 @@ BOOST_AUTO_TEST_CASE( test_case1 )
     int test_data[] = { 2, 2, 2 };
     test->add( BOOST_PARAM_TEST_CASE( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
+    setup_tree( test );
     ut::framework::run( test );
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
@@ -77,6 +87,7 @@ BOOST_AUTO_TEST_CASE( test_case2 )
     int test_data[] = { 1, 2, 2 };    
     test->add( BOOST_PARAM_TEST_CASE( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
+    setup_tree( test );
     ut::framework::run( test );
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
@@ -96,6 +107,7 @@ BOOST_AUTO_TEST_CASE( test_case3 )
     int test_data[] = { 1, 1, 2 };    
     test->add( BOOST_PARAM_TEST_CASE( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
+    setup_tree( test );
     ut::framework::run( test );
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
@@ -115,6 +127,7 @@ BOOST_AUTO_TEST_CASE( test_case4 )
     int test_data[] = { 1, 1, 1 };    
     test->add( BOOST_PARAM_TEST_CASE( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
+    setup_tree( test );
     ut::framework::run( test );
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
@@ -134,6 +147,7 @@ BOOST_AUTO_TEST_CASE( test_case5 )
     int test_data[] = { 6, 6, 6 };    
     test->add( BOOST_PARAM_TEST_CASE( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
+    setup_tree( test );
     ut::framework::run( test );
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
@@ -154,6 +168,7 @@ BOOST_AUTO_TEST_CASE( test_case6 )
     int test_data[] = { 0, 3, 9 };    
     test->add( BOOST_PARAM_TEST_CASE( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
+    setup_tree( test );
     ut::framework::run( test );
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
@@ -173,6 +188,7 @@ BOOST_AUTO_TEST_CASE( test_case7 )
     int test_data[] = { 2, 3, 9 };
     test->add( BOOST_PARAM_TEST_CASE( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
+    setup_tree( test );
     ut::framework::run( test );
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
@@ -192,6 +208,7 @@ BOOST_AUTO_TEST_CASE( test_case8 )
     int test_data[] = { 3, 2, 6 };    
     test->add( BOOST_PARAM_TEST_CASE( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
+    setup_tree( test );
     ut::framework::run( test );
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
