@@ -162,6 +162,8 @@ BOOST_AUTO_TEST_CASE( test_errors_handling )
     output_test_stream test_output( pattern_file_name, !runtime_config::save_pattern() );
 
     test_case* test = BOOST_TEST_CASE( &error_on_demand );
+    test->p_default_status.value = test_unit::RS_ENABLED;
+    framework::finalize_setup_phase( test->p_id );
 
     // for each log level
     for( log_level level = log_successful_tests;
