@@ -18,6 +18,7 @@
 #include <boost/test/unit_test_parameters.hpp>
 #include <boost/test/tree/test_case_counter.hpp>
 #include <boost/test/tree/traverse.hpp>
+#include <boost/test/debug.hpp>
 
 namespace utf = boost::unit_test;
 
@@ -42,7 +43,8 @@ test_count( utf::test_suite* master_ts, char const** argv, int argc, unsigned ex
         BOOST_TEST_INFO( argv[2] );
 
     utf::runtime_config::init( argc, (char**)argv );
-    utf::framework::finalize_setup_phase( master_ts->p_id );
+    //boost::debug::debugger_break();
+    utf::framework::impl::setup_for_execution( *master_ts );
 
     utf::test_case_counter tcc;
     utf::traverse_test_tree( master_ts->p_id, tcc );
@@ -69,7 +71,10 @@ BOOST_AUTO_TEST_CASE( test_run_by_name )
     master_ts->add( BOOST_TEST_CASE( &Blongname ) );
     master_ts->add( ts2 );
 
+    master_ts->p_default_status.value = utf::test_unit::RS_ENABLED;
+    utf::framework::finalize_setup_phase( master_ts->p_id );
     {
+        utf::framework::impl::setup_for_execution( *master_ts );
         utf::test_case_counter tcc;
         utf::traverse_test_tree( master_ts->p_id, tcc );
         BOOST_TEST( tcc.p_count == 9U );
@@ -311,6 +316,10 @@ BOOST_AUTO_TEST_CASE( test_run_by_label )
     master_ts->add( BOOST_TEST_CASE( &Blongname ) );
     master_ts->add( ts2 );
 
+
+    master_ts->p_default_status.value = utf::test_unit::RS_ENABLED;
+    utf::framework::finalize_setup_phase( master_ts->p_id );
+
     {
         char const* argv[] = { "a.exe", "--run=@L1" };
         test_count( master_ts, argv, sizeof(argv), 3 );
@@ -399,6 +408,9 @@ BOOST_AUTO_TEST_CASE( test_dependency_handling )
     master_ts->add( ts3 );
     master_ts->add( ts4 );
 
+    master_ts->p_default_status.value = utf::test_unit::RS_ENABLED;
+    utf::framework::finalize_setup_phase( master_ts->p_id );
+
     {
         char const* argv[] = { "a.exe", "--run=ts2/C" };
         test_count( master_ts, argv, sizeof(argv), 1 );
@@ -431,12 +443,12 @@ BOOST_AUTO_TEST_CASE( test_dependency_handling )
 
     {
         char const* argv[] = { "a.exe", "--run=!ts3/F" };
-        test_count( master_ts, argv, sizeof(argv), 4 );
+        test_count( master_ts, argv, sizeof(argv), 5 );
     }
 
     {
         char const* argv[] = { "a.exe", "--run=!*/ts1" };
-        test_count( master_ts, argv, sizeof(argv), 3 );
+        test_count( master_ts, argv, sizeof(argv), 4 );
     }
 }
 
