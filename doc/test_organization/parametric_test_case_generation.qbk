@@ -202,13 +202,42 @@ for their combination.
 
 For that purpose, three operators are provided:
 
-* zips with `operator^` on datasets
 * joins with `operator+`
+* zips with `operator^` on datasets
 * and grids or Cartesian products with `operator*`
 
 [tip All these operators are associative, which enables their combination without parenthesis. However, the precedence rule on the 
 operators for the language still apply. ]
 
+[section Joins]
+A ['join], denoted `+`, is an operation on two datasets `dsa` and `dsb` of same arity and compatible types, resulting in the *concatenation* of these two datasets `dsa` and `dsb`
+from the left to the right order of the symbol `+`: 
+
+``
+dsa = (a_1, a_2, ... a_i)
+dsb = (b_1, b_2, ... b_j)
+dsa + dsb = (a_1, a_2, ... a_i, b_1, b_2, ... b_j)
+``
+
+The following properties hold:
+
+* the resulting dataset is of same arity as the operand datasets,
+* the size of the returned dataset is the sum of the size of the joined datasets,
+* the operation is associative, and it is possible to combine more than two datasets in one expression. The following joins are equivalent for any datasets `dsa`, `dsb` and `dsc`:
+  ``
+  ( dsa + dsb ) + dsc 
+  == dsa + ( dsb + dsc )
+  == dsa + dsb + dsc 
+  ``
+
+[warning In the expression `dsa + dsb`, `dsa` and/or `dsb` can be of infinite size. The resulting dataset will have an infinite size as well. If `dsa` is infinite, the content of 
+ `dsb` will never be reached. ]
+
+
+[bt_example example62..Example of join on datasets]
+
+
+[endsect]
 
 
 [section Zips]
@@ -224,7 +253,8 @@ dsa ^ dsb = ( (a_1, b_1), (a_2, b_2) ... (a_i, b_i) )
 The following properties hold:
 
 * the arity of the resulting dataset is the sum of the arities of the operand datasets, 
-* the size of the resulting dataset is the product of the sizes of the datasets, exception made for the case the operand datasets size mismatch (see below),
+* the size of the resulting dataset is equal to the size of the datasets (since they are supposed to be of the same size), 
+  exception made for the case the operand datasets size mismatch (see below),
 * the operation is associative, and it is possible to combine more than two datasets in one expression,
   ``
    ( dsa ^ dsb ) ^ dsc
@@ -281,35 +311,6 @@ and twice for the second `xrange` - second dimension - to which it is zipped). N
 [endsect]
 
 
-[section Joins]
-A ['join], denoted `+`, is an operation on two datasets `dsa` and `dsb` of same arity and compatible types, resulting in the *concatenation* of these two datasets `dsa` and `dsb`
-from the left to the right order of the symbol `+`: 
-
-``
-dsa = (a_1, a_2, ... a_i)
-dsb = (b_1, b_2, ... b_j)
-dsa + dsb = (a_1, a_2, ... a_i, b_1, b_2, ... b_j)
-``
-
-The following properties hold:
-
-* the resulting dataset is of same arity as the operand datasets,
-* the size of the returned dataset is the sum of the size of the joined datasets,
-* the operation is associative, and it is possible to combine more than two datasets in one expression. The following joins are equivalent for any datasets `dsa`, `dsb` and `dsc`:
-  ``
-  ( dsa + dsb ) + dsc 
-  == dsa + ( dsb + dsc )
-  == dsa + dsb + dsc 
-  ``
-
-[warning In the expression `dsa + dsb`, `dsa` and/or `dsb` can be of infinite size. The resulting dataset will have an infinite size as well. If `dsa` is infinite, the content of 
- `dsb` will never be reached. ]
-
-
-[bt_example example62..Example of join on datasets]
-
-
-[endsect]
 
 
 [endsect] [/ operations on dataset]
