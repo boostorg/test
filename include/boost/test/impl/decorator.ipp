@@ -41,11 +41,7 @@ collector::collector( for_test_unit const& D )
     m_tu_decorator.reset( D.clone() );
 
     if( instance() != NULL ) {
-        for_test_unit_ptr leaf = m_tu_decorator;
-        while( leaf->m_next )
-            leaf = leaf->m_next;
-
-        leaf->m_next = instance()->m_tu_decorator;
+        append_existing( instance()->m_tu_decorator );
         instance()->m_tu_decorator.reset();
     }
 
@@ -67,9 +63,24 @@ collector::instance()
 void
 collector::store_in( test_unit& tu )
 {
+    if( tu.p_decorators.get() )
+        append_existing( tu.p_decorators );
+
     tu.p_decorators.value = m_tu_decorator;
     m_tu_decorator.reset();
     instance() = 0;
+}
+
+//____________________________________________________________________________//
+
+void
+collector::append_existing( for_test_unit_ptr decorator )
+{
+    for_test_unit_ptr leaf = m_tu_decorator;
+    while( leaf->m_next )
+        leaf = leaf->m_next;
+
+    leaf->m_next = decorator;
 }
 
 //____________________________________________________________________________//

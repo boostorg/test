@@ -56,6 +56,8 @@ public:
     void                    store_in( test_unit& tu );
 
 private:
+    void                    append_existing( for_test_unit_ptr decorator );
+
     // Data members
     for_test_unit_ptr       m_tu_decorator;
 };
