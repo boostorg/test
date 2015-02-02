@@ -1,12 +1,12 @@
 //[example_output
-> example --run_test=@trivial
-Running 2 test cases...
+> example76
+Running 3 test cases...
+test.cpp(24): error: in "test_case3": check false has failed
 
-*** No errors detected
+*** 1 failure detected in test module "example76"
 
-
-> example --run_test=@cmp
-Running 1 test case...
-
-*** No errors detected
+> example76 --list_content
+test_case1
+test_case3
+test_case4
 //]
