@@ -136,7 +136,7 @@ The descriptive power of the datasets in __UTF__ comes from
 As we will see in the next sections, datasets representing collections of different types may be combined together (eg. /zip/ or /grid/). 
 These operations result in new datasets, in which the samples are of an augmented type. 
 
-[tip This [link boost_test.boost_test_examples.example_ref68 example] implements a dataset generating a Fibonacci sequence]
+[tip This [link boost_test.boost_test_examples.example_refexample68 example] implements a dataset generating a Fibonacci sequence]
 
 [endsect] [/ datasets]
 
