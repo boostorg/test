@@ -35,7 +35,6 @@ The Boost Test Library's Unit Test Framework is designed to automate those tasks
 relieves users from messy error detection and reporting duties. Users could use supplied testing tools to perform 
 complex validation tasks. Let's take a look on the following simple test program:
 
-[/ snippet10 deleted]
 ``
 #include <my_class.hpp>
 
