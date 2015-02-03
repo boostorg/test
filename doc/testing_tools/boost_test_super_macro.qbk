@@ -9,18 +9,31 @@
 
 Once a test case has been declared, the body of this test should be written. A test case is a 
 sequence of operations in which *assertions* are inserted. Those assertions run /statements/ that verify the integrity 
-of the pre and post conditions of the operations. Assertions have different incidences on the test itself:
+of the pre and post conditions of the operations. There are three kind of assertions, having different meaning on the
+consistency of the test case:
 
-- requirements: this is the strongest level of the assertion. The test stops if the statement in the assertion fails. This
-  type of assertions should be used when the reminder of the 
-- basic checks: 
-- warnings: 
+* requirements: this is the strongest level of the assertions. The test case execution stops if the statement in the assertion fails. This
+  type of assertions should be used when the reminder of the test-case relies heavily on this requirement (example: an object 
+  allocated on the heap is tested, but the factory returns `NULL`). 
+* basic checks: this is the most commonly used assertion level. If the statements evaluates to `false`, the test case is 
+  flagged as failed but its execution continues. 
+* warnings: this is the lowest level of the assertions. The test case execution continues and a warning message is logged. 
+  The warning does not change the success status of a test case.
+  
+These three levels of assertions are reported into the test log and test output, as described in details in the 
+[link boost_test.users_guide.testing_tools.tools_assertion_severity_level severity levels] section. The granularity of the
+report depends on the current [link boost_test.users_guide.runtime_config.rt_param_reference.param_log_level log level] and 
+[link boost_test.users_guide.runtime_config.rt_param_reference.param_report_level report level].
 
-A unique interface for assertions is 
+A unique interface for assertions is given by the variants of the `BOOST_TEST` assertion:
 
-* `BOOST_TEST_WARN`
-* `BOOST_TEST_CHECK` or just `BOOST_TEST`
+
 * `BOOST_TEST_REQUIRE`
+* `BOOST_TEST_CHECK` or just `BOOST_TEST`
+* `BOOST_TEST_WARN`
+
+As their name suggests, these assertions are, in order, for requirement, checks and warnings.
+
 
 [section Acceptable expressions]
 
