@@ -1,0 +1,13 @@
+//[example_output
+> decorator_04
+Running 1 test case...
+decorator_04.cpp(25): error: in "suite1/test2": check 2 != 2 has failed [2 == 2]
+
+*** 1 failure is detected in the test module "decorator_04"
+
+
+> decorator_04 --list_content
+suite1*[0]
+    test1 [0]
+    test2*[0]
+//]

@@ -143,9 +143,13 @@
 [def __param_report_sink__            [link ref_param_report_sink `report_sink`]]
 [def __param_save_pattern__           [link ref_param_save_patterm `save_patterm`]]
 [def __param_list_content__           [link boost_test.users_guide.runtime_config.rt_param_reference.param_list_content `list_content`]]
+[def __default_run_status__           [link ref_default_run_status ['default run status]]]
 
 [/ decorators]
-[def __decorator_label__              [link ref_decorator_label `label`]] 
+[def __decorator_label__              [link boost_test.users_guide.tests_organization.decorators.decorator_label `label`]] 
+[def __decorator_enabled__            [link boost_test.users_guide.tests_organization.decorators.decorator_enabled `enabled`]]
+[def __decorator_disabled__           [link boost_test.users_guide.tests_organization.decorators.decorator_enabled `disabled`]]
+[def __decorator_enable_if__          [link boost_test.users_guide.tests_organization.decorators.decorator_enable_if `enable_if`]]
 
 [/=============================================================================]
 [/ templates ]
@@ -173,7 +177,7 @@
 [/ ### template for the example page  ]
 [template bt_example_page[name descr]
 
-[section:example_ref[name] [descr]] 
+[section:ref_[name] [descr]] 
 
 [import examples/[name].cpp]
 [import examples/[name].output]
