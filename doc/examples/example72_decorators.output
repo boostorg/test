@@ -1,8 +1,6 @@
 //[example_output
-> example
-Running 1 test case...
-unknown location(0): fatal error: in "test_case1": signal: SIGALRM (timeout while executing function)
-test.cpp(9): last checkpoint: "test_case1" entry.
+> example72 --run_test=@trivial
+Running 2 test cases...
 
-*** 1 failure detected in test module "example"
+*** No errors detected
 //]

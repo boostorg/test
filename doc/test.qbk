@@ -175,8 +175,8 @@
 
 [section:example_ref[name] [descr]] 
 
-[import examples/example[name].cpp]
-[import examples/example[name].output]
+[import examples/[name].cpp]
+[import examples/[name].output]
 
 [heading Source]
 [example_code]
