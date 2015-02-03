@@ -1,0 +1,31 @@
+[/
+ / Copyright (c) 2015 Andrzej Krzemienski
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+ 
+[section:test_unit_filtering Test unit filtering]
+
+The __UTF__ offers a number of ways to run only a subset of all test cases registered in the test tree.
+
+[#ref_default_run_status][h3 Default run status]
+
+Each test unit (either test case or test suite) has an associated ['default run status]. It can assume one of the three values:
+
+# ['true] -- this means that, unless some runtime parameters specify otherwise, the test unit is designated to be run.
+# ['false] -- this means that, unless some runtime parameters specify otherwise, the test unit is designated ['not] to be run.
+# ['inherit] -- this means that the test unit's default run status is the same as that of its immediate parent test unit. This is applied recursively.
+
+Initially, the master test suite is has default run status set to ['true]. All other test units have default run status set to ['inherit]. This implies that, unless no additional configuration is applied, all tests are designated to be run.
+
+You can set a different default run status in any test unit by using [link boost_test.users_guide.tests_organization.decorators decorators]: __decorator_disabled__, __decorator_enabled__ and __decorator_enable_if__. The default run status is set once, upon testing program initialization, and cannot be changed. The disabled tests are not executed by default, but are still present in the test tree, and are listed along with other tests when you use command-line argument __param_list_content__. 
+
+[bt_example decorator_20..decorator enable_if]
+
+TODO. More ways of filtering test units to be described soon...
+
+[/----------------------------------------------]
+
+[endsect] [/ section:test_unit_filtering]

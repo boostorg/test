@@ -1,0 +1,12 @@
+//[example_output
+> decorator_05
+Running 1 test case...
+decorator_05.cpp(20): error: in "test_io": check 1 != 1 has failed [1 == 1]
+
+*** 1 failure is detected in the test module "decorator_05"
+
+
+> decorator_05 --list_content
+test_io*[0]
+test_db [0]
+//]

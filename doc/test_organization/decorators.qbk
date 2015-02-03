@@ -7,13 +7,11 @@
 
 [#ref_BOOST_TEST_DECORATOR][section:decorators Decorators]
 
-Decorators provide a way to configure certain aspects of a test unit.
+Decorators provide a way to configure certain aspects of an automatically registered test unit.
 
 [bt_example example70_decorators..Test unit decorators]
 
 Test case `test_case1` has one associated ['decorator:] `label`. This means that when test units are executed selectively by label, this test case will match to label "trivial". Test case `test_case2` has three associated decorators: two of type `label` and one of type `description`. 
-
-[note Decorators are not available in the [link boost_test.users_guide.usage_variants.single_header single-header variant] of the __UTF__.]
 
 [h3 Suite-level decorators]
 
@@ -39,11 +37,9 @@ In case the scope of the suite is opened twice in two different translation unit
 
 [tip It is therefore recommended that you either make sure that each time the test suite scope is opened, it has the same decorator set, or you identify a ['privileged] opening of the suite and decorate only it, while keeping all the other openings undecorated.]
 
-[/ ##########################################################################]
+[/=================================================================]
 
-[section:available_decorators Available decorators]
-
-[#ref_decorator_label][h3 label]
+[section:decorator_label label]
 
 ``
 label(const_string label_name);
@@ -52,21 +48,39 @@ label(const_string label_name);
 Decorator `label` associates a test unit with label `label_name`. This is useful when one wants to execute test units selectively by label. It is possible to associate more than one label with a test unit. Decorating a test suite with label `L` is equivalent to decorating every test unit inside with `L`.
 
 [bt_example example74_decorators..Decorator label]
+[endsect] [/ section label]
 
+[/-----------------------------------------------------------------]
 
-[h3 enable_if / disable_if]
+[section:decorator_enabled enabled / disabled]
 
 ``
-enable_if(bool condition);
-disable_if(bool condition);
+enabled();
+disabled();
 ``
 
-Decorator `enable_if` disables the test unit from being run if the value of a `condition` evaluates to `false` upon test registration. Decorator `disable_if(c)` behaves the same as `enable_if(!c)`.
+Decorator `disabled` indicates that the test unit's __default_run_status__ is ['false]. This means that that test cases inside this test unit will not be run by default, unless otherwise specified. Decorator `enabled` indicates that the test unit's default run status is ['true]. This means that that test cases inside this test unit will be run by default, unless otherwise specified.
 
-[bt_example example75_decorators..Decorator enable_if]
+[bt_example decorator_04..decorators enabled and disabled]
 
+[endsect] [/ section:decorator_enabled]
 
-[h3 depends_on]
+[/-----------------------------------------------------------------]
+
+[section:decorator_enable_if enable_if]
+
+``
+template <bool Condition> enable_if();
+``
+
+Decorator `enable_if` indicates that the test unit's __default_run_status__ is either ['true] or ['false], depending on the value of `Condition`. his means that that test cases inside this test unit will or will not be run by default. 
+
+[bt_example decorator_05..decorator enable_if]
+[endsect] [/ section enable_if]
+
+[/-----------------------------------------------------------------]
+
+[section:depends_on depends_on]
 
 ``
 depeneds_on(const_string dependent_test_name);
@@ -78,8 +92,10 @@ Decorator `depends_on` disables the test unit from being run if the test unit ma
 
 In the above scenario, `test_case2` is not even listed because it is disabled; `test_case5` is not listed because it depends on a disabled test unit. `test_case4` is listed but not executed because it depends on `test_case3`, which failed.
 
+[endsect] [/ section depends_on]
 
-[h3 expected_failures]
+
+[section:expected_failures expected_failures]
 
 ``
 expected_failures(counter_t number);
@@ -89,8 +105,10 @@ Decorator `expected_failures` defines the number of expected failures that will 
 
 [bt_example example77_decorators..Decorator expected_failures]
 
+[endsect] [/ section expected_failures]
 
-[h3 timeout]
+
+[section:timeout timeout]
 
 ``
 timeout(unsigned seconds);
@@ -104,8 +122,9 @@ Applied at test suite level, this decorator has no effect.
 
 [caution Decorator `timeout` has no effect on Windows build. This feature is not implemented on Windows yet.]
 
+[endsect] [/ section timeout]
 
-[h3 fixture]
+[section:fixture fixture]
 
 ``
 fixture(const boost::function<void()>& setup, const boost::function<void()>& teardown = {});
@@ -121,7 +140,7 @@ Decorator `fixture` specifies a pair of functions (like `set_up` and `tear_down`
 
 [bt_example example79_decorators..Decorator fixture]
 
-[endsect] [/ section available_decorators]
+[endsect] [/ section fixture]
 
 [endsect] [/ section decorators]
 

@@ -40,12 +40,12 @@ __BOOST_AUTO_TEST_SUITE__( s1 )
 __BOOST_AUTO_TEST_SUITE_END__()
 
 BOOST_AUTO_TEST_SUITE( s2 )
-  __BOOST_TEST_DECORATOR__( +utf::__decorator_label__("l1") )
+  __BOOST_TEST_DECORATOR__( -utf::__decorator_label__("l1") )
   BOOST_AUTO_TEST_CASE( test1 ) {}
   BOOST_AUTO_TEST_CASE( test11 ){}
   
   BOOST_AUTO_TEST_SUITE( in )
-    BOOST_TEST_DECORATOR( +utf::label("l1") )
+    BOOST_TEST_DECORATOR( -utf::label("l1") )
     BOOST_AUTO_TEST_CASE( test ){}
   BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
