@@ -15,7 +15,8 @@ for unit test code rather than library or production code, where throwing except
 `boost::concept_check` or `BOOST_STATIC_ASSERT()` may be more suitable
 ways to detect and report errors. 
 
-For a list of all supplied testing tools and usage examples, see the [link boost_test.users_guide.testing_tools.testing_tool_ref reference].
+For a list of all supplied testing tools and usage examples, see the 
+[link boost_test.users_guide.testing_tools.testing_tool_ref reference].
 
 [include boost_test_super_macro.qbk]
 [include assertions_severity_levels.qbk]
