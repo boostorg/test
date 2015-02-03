@@ -24,7 +24,4 @@ BOOST_AUTO_TEST_CASE( test1 )
   BOOST_TEST(b == b + 1, fpc::percent_tolerance( 100 ))
 
 }
-
-
-
 //]
