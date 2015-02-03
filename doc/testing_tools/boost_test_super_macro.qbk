@@ -40,9 +40,8 @@ A unique interface for assertions is
 
 [section Comparing floating points]
 
-[tip Consider using decorators for setting the tolerance of the comparisons
-
- [warning put the link]
+[tip Consider using [link boost_test.users_guide.tests_organization.decorators decorators] 
+  for setting the tolerance of the comparisons
 ]
 
 
