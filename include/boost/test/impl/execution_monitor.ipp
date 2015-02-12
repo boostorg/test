@@ -49,6 +49,8 @@
 #include <cstdio>               // for vsnprintf
 #include <cstdarg>              // for varargs
 
+#include <iostream>              // for varargs
+
 #ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::strerror; using ::strlen; using ::strncat; }
 #endif

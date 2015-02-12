@@ -48,10 +48,8 @@
 // STL
 #include <map>
 #include <set>
-#include <unordered_set>
 #include <cstdlib>
 #include <ctime>
-#include <iostream>
 
 #ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::time; using ::srand; }
@@ -71,7 +69,7 @@ namespace framework {
 
 namespace impl {
 
-typedef std::unordered_set<test_unit_id> tu_id_set;
+typedef std::set<test_unit_id> tu_id_set;
 
 static void
 invoke_init_func( init_unit_test_func init_func )
@@ -506,17 +504,30 @@ public:
 
     typedef unit_test_monitor_t::error_level execution_result;
 
-    // Executed the test tree with the root at specified test unit
-    execution_result execute_test_tree( test_unit_id tu_id )
+      // Executed the test tree with the root at specified test unit
+    execution_result execute_test_tree( test_unit_id tu_id, int timeout = -1 )
     {
         test_unit const& tu = framework::get( tu_id, TUT_ANY );
+
+        // 5. Figure out timeout for this test unit
+        if( timeout < 0 || (tu.p_timeout >= 0 && timeout > tu.p_timeout) )
+            timeout = tu.p_timeout;
 
         execution_result result = unit_test_monitor_t::test_ok;
 
         if( !tu.is_enabled() )
             return result;
 
-        // 10. Check preconditions, including successful execution of dependencies
+        // 10. Check preconditions, including zero time left for execution and
+        // successful execution of all dependencies
+        if( timeout == 0 ) {
+            // notify all observers about skipped test unit
+            BOOST_TEST_FOREACH( test_observer*, to, m_observers )
+                to->test_unit_skipped( tu, "timeout for the test suite is exceeded" );
+
+            return unit_test_monitor_t::os_timeout;
+        }
+
         test_tools::assertion_result const precondition_res = tu.check_preconditions();
         if( !precondition_res ) {
             // notify all observers about skipped test unit
@@ -542,7 +553,7 @@ public:
 
         if( result == unit_test_monitor_t::test_ok ) {
             // 40. We are going to time the execution
-            boost::timer tc_timer;
+            boost::timer tu_timer;
 
             if( tu.p_type == TUT_SUITE ) {
                 test_suite const& ts = static_cast<test_suite const&>( tu );
@@ -551,7 +562,13 @@ public:
                     typedef std::pair<counter_t,test_unit_id> value_type;
 
                     BOOST_TEST_FOREACH( value_type, chld, ts.m_ranked_members ) {
-                        result = (std::min)( result, execute_test_tree( chld.second ) );
+                        int chld_timeout = -1;
+                        if( timeout > 0 ) {
+                           int elapsed_so_far = tu_timer.elapsed(); // rounding to number of whole seconds
+                           chld_timeout = (std::max)( timeout-elapsed_so_far, 0 );
+                        }
+
+                        result = (std::min)( result, execute_test_tree( chld.second, chld_timeout ) );
 
                         if( unit_test_monitor.is_critical_error( result ) )
                             break;
@@ -577,7 +594,13 @@ public:
                         std::random_shuffle( members_with_the_same_rank.begin(), members_with_the_same_rank.end() );
 
                         BOOST_TEST_FOREACH( test_unit_id, chld, members_with_the_same_rank ) {
-                            result = (std::min)( result, execute_test_tree( chld ) );
+                            int chld_timeout = -1;
+                            if( timeout > 0 ) {
+                              int elapsed_so_far = tu_timer.elapsed(); // rounding to number of whole seconds
+                              chld_timeout = (std::max)( timeout-elapsed_so_far, 0 );
+                            }
+
+                            result = (std::min)( result, execute_test_tree( chld, chld_timeout ) );
 
                             if( unit_test_monitor.is_critical_error( result ) )
                                 break;
@@ -585,7 +608,7 @@ public:
                     }
                 }
 
-                elapsed = static_cast<unsigned long>( tc_timer.elapsed() * 1e6 );
+                elapsed = static_cast<unsigned long>( tu_timer.elapsed() * 1e6 );
             }
             else { // TUT_CASE
                 test_case const& tc = static_cast<test_case const&>( tu );
@@ -598,8 +621,8 @@ public:
                 m_curr_test_case = tc.p_id;
 
                 // execute the test case body
-                result = unit_test_monitor.execute_and_translate( tc.p_test_func, tc.p_timeout );
-                elapsed = static_cast<unsigned long>( tc_timer.elapsed() * 1e6 );
+                result = unit_test_monitor.execute_and_translate( tc.p_test_func, timeout );
+                elapsed = static_cast<unsigned long>( tu_timer.elapsed() * 1e6 );
 
                 // cleanup leftover context
                 m_context.clear();
