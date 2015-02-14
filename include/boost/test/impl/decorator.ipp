@@ -205,6 +205,10 @@ depends_on::do_apply( test_unit& tu )
 void
 enable_if_impl::apply_impl( test_unit& tu, bool condition )
 {
+    BOOST_TEST_SETUP_ASSERT(tu.p_default_status == test_unit::RS_INHERIT,
+                            "Can't apply multiple enabled/disabled decorators "
+                            "to the same test unit " + tu.full_name());
+
     tu.p_default_status.value = condition ? test_unit::RS_ENABLED : test_unit::RS_DISABLED;
 }
 

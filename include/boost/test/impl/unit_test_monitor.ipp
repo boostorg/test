@@ -34,7 +34,7 @@ namespace unit_test {
 // ************************************************************************** //
 
 unit_test_monitor_t::error_level
-unit_test_monitor_t::execute_and_translate( boost::function<void ()> const& func, unsigned timeout )
+unit_test_monitor_t::execute_and_translate( boost::function<void ()> const& func, int timeout )
 {
     try {
         p_catch_system_errors.value     = runtime_config::catch_sys_errors();

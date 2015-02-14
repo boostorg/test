@@ -107,7 +107,7 @@ private:
             m_os << ",label=\"" << tu.p_name << "\"];\n";
         else {
             m_os << ",label=\"" << tu.p_name << "|" << tu.p_file_name << "(" << tu.p_line_num << ")";
-            if( tu.p_timeout != 0  )
+            if( tu.p_timeout > 0  )
                 m_os << "|timeout=" << tu.p_timeout;
             if( tu.p_expected_failures != 0  )
                 m_os << "|expected failures=" << tu.p_expected_failures;

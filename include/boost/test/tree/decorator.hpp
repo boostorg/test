@@ -137,7 +137,7 @@ private:
 
 class BOOST_TEST_DECL timeout : public decorator::for_test_unit {
 public:
-    explicit                timeout( unsigned t ) : m_timeout( t ) {}
+    explicit                timeout( int t ) : m_timeout( t ) {}
 
 private:
     // decorator::for_test_unit interface
@@ -145,7 +145,7 @@ private:
     virtual for_test_unit*  do_clone() const            { return new timeout( m_timeout ); }
 
     // Data members
-    unsigned                m_timeout;
+    int                     m_timeout;
 };
 
 // ************************************************************************** //

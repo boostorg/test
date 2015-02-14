@@ -93,7 +93,7 @@ public:
     // Public r/w properties
     readwrite_property<std::string>     p_name;                 ///< name for this test unit
     readwrite_property<std::string>     p_description;          ///< description for this test unit
-    readwrite_property<unsigned>        p_timeout;              ///< timeout for the test unit execution
+    readwrite_property<int>             p_timeout;              ///< timeout for the test unit execution in seconds
     readwrite_property<counter_t>       p_expected_failures;    ///< number of expected failures in this test unit
 
     readwrite_property<run_status>      p_default_status;       ///< run status obtained by this unit during setup phase
@@ -166,12 +166,12 @@ public:
      *
      * It is possible to specify the timeout and the expected failures.
      */
-    void            add( test_unit* tu, counter_t expected_failures = 0, unsigned timeout = 0 );
+    void            add( test_unit* tu, counter_t expected_failures = 0, int timeout = -1 );
 
     //  boost::unit_test::test_suite::add( test_unit* tu, counter_t expected_failures = 0, unsigned timeout = 0 )
 
     /// @overload
-    void            add( test_unit_generator const& gen, unsigned timeout = 0 );
+    void            add( test_unit_generator const& gen, int timeout = -1 );
 
     //! Removes a test from the test suite.
     void            remove( test_unit_id id );
