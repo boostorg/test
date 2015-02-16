@@ -20,6 +20,7 @@
 
 // Boost
 #include <boost/shared_ptr.hpp>
+#include <boost/scoped_ptr.hpp>
 #include <boost/function/function0.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -52,15 +53,15 @@ template<typename F, typename Arg=void>
 class class_based_fixture : public test_unit_fixture {
 public:
     // Constructor
-    explicit class_based_fixture( Arg const& arg ) : m_inst( 0 ), m_arg( arg ) {}
+    explicit class_based_fixture( Arg const& arg ) : m_inst(), m_arg( arg ) {}
 
 private:
     // Fixture interface
-    virtual void    setup()         { m_inst = new F( m_arg ); }
-    virtual void    teardown()      { delete m_inst; }
+    virtual void    setup()         { m_inst.reset( new F( m_arg ) ); }
+    virtual void    teardown()      { m_inst.reset(); }
 
     // Data members
-    F*              m_inst;
+    scoped_ptr<F>   m_inst;
     Arg             m_arg;
 };
 
@@ -74,11 +75,11 @@ public:
 
 private:
     // Fixture interface
-    virtual void    setup()         { m_inst = new F; }
-    virtual void    teardown()      { delete m_inst; }
+    virtual void    setup()         { m_inst.reset( new F ); }
+    virtual void    teardown()      { m_inst.reset(); }
 
     // Data members
-    F*              m_inst;
+    scoped_ptr<F>   m_inst;
 };
 
 //____________________________________________________________________________//
@@ -98,8 +99,8 @@ public:
 
 private:
     // Fixture interface
-    virtual void    setup()         { if( m_setup ) m_setup(); }
-    virtual void    teardown()      { if( m_teardown ) m_teardown(); }
+    virtual void                setup()     { if( m_setup ) m_setup(); }
+    virtual void                teardown()  { if( m_teardown ) m_teardown(); }
 
     // Data members
     boost::function<void ()>    m_setup;

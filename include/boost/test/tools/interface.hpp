@@ -24,10 +24,7 @@
 #include <boost/test/tools/detail/expression_holder.hpp>
 #endif
 
-// Boost
-#include <boost/preprocessor/control/iif.hpp>
-#include <boost/preprocessor/comparison/equal.hpp>
-#include <boost/preprocessor/variadic/size.hpp>
+#include <boost/test/detail/pp_variadic.hpp>
 
 // STL
 #ifdef BOOST_TEST_NO_OLD_TOOLS
@@ -52,14 +49,6 @@
 #define BOOST_TEST_BUILD_ASSERTION( P )                         \
     auto const& E = ::boost::test_tools::assertion::seed()->*P  \
 /**/
-#endif
-
-//____________________________________________________________________________//
-
-#if BOOST_PP_VARIADICS_MSVC
-#  define BOOST_TEST_INVOKE_VARIADIC( tool, ... ) BOOST_PP_CAT( tool (__VA_ARGS__), )
-#else
-#  define BOOST_TEST_INVOKE_VARIADIC( tool, ... ) tool (__VA_ARGS__)
 #endif
 
 //____________________________________________________________________________//
@@ -154,30 +143,18 @@ do {                                                                        \
 
 //____________________________________________________________________________//
 
-#define BOOST_TEST_WARN( ... )              BOOST_TEST_INVOKE_VARIADIC(     \
-    BOOST_PP_IIF(                                                           \
-        BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),1),              \
-        BOOST_TEST_TOOL_UNIV,                                               \
-        BOOST_TEST_TOOL_UNIV_EX), WARN, __VA_ARGS__ )                       \
+#define BOOST_TEST_WARN( ... )              BOOST_TEST_INVOKE_IF_N_ARGS(    \
+    2, BOOST_TEST_TOOL_UNIV, BOOST_TEST_TOOL_UNIV_EX, WARN, __VA_ARGS__ )   \
 /**/
-#define BOOST_TEST_CHECK( ... )             BOOST_TEST_INVOKE_VARIADIC(     \
-    BOOST_PP_IIF(                                                           \
-        BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),1),              \
-        BOOST_TEST_TOOL_UNIV,                                               \
-        BOOST_TEST_TOOL_UNIV_EX), CHECK, __VA_ARGS__ )                      \
+#define BOOST_TEST_CHECK( ... )             BOOST_TEST_INVOKE_IF_N_ARGS(    \
+    2, BOOST_TEST_TOOL_UNIV, BOOST_TEST_TOOL_UNIV_EX, CHECK, __VA_ARGS__ )  \
 /**/
-#define BOOST_TEST_REQUIRE( ... )           BOOST_TEST_INVOKE_VARIADIC(     \
-    BOOST_PP_IIF(                                                           \
-        BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),1),              \
-        BOOST_TEST_TOOL_UNIV,                                               \
-        BOOST_TEST_TOOL_UNIV_EX), REQUIRE, __VA_ARGS__ )                    \
+#define BOOST_TEST_REQUIRE( ... )           BOOST_TEST_INVOKE_IF_N_ARGS(    \
+    2, BOOST_TEST_TOOL_UNIV, BOOST_TEST_TOOL_UNIV_EX, REQUIRE, __VA_ARGS__ )\
 /**/
 
-#define BOOST_TEST( ... )                   BOOST_TEST_INVOKE_VARIADIC(     \
-    BOOST_PP_IIF(                                                           \
-        BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),1),              \
-        BOOST_TEST_TOOL_UNIV,                                               \
-        BOOST_TEST_TOOL_UNIV_EX), CHECK, __VA_ARGS__ )                      \
+#define BOOST_TEST( ... )                   BOOST_TEST_INVOKE_IF_N_ARGS(    \
+    2, BOOST_TEST_TOOL_UNIV, BOOST_TEST_TOOL_UNIV_EX, CHECK, __VA_ARGS__ )  \
 /**/
 
 //____________________________________________________________________________//

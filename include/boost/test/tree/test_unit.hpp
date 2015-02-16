@@ -30,7 +30,6 @@
 #include <boost/function/function1.hpp>
 
 // STL
-#include <list>
 #include <vector>
 #include <string>
 #include <map>
@@ -53,16 +52,16 @@ public:
     enum { type = TUT_ANY };
     enum run_status { RS_DISABLED, RS_ENABLED, RS_INHERIT, RS_INVALID };
 
-    typedef std::list<test_unit_id>                                     id_list;
-    typedef std::list<test_unit_fixture_ptr>                            fixture_list_t;
-    typedef BOOST_READONLY_PROPERTY(test_unit_id,(framework_state))     id_t;
-    typedef BOOST_READONLY_PROPERTY(test_unit_id,(test_suite))          parent_id_t;
-    typedef BOOST_READONLY_PROPERTY(id_list,(test_unit))                id_list_t;
-    typedef decorator::for_test_unit_ptr                                decorator_t;
-    typedef BOOST_READONLY_PROPERTY(std::list<std::string>,(test_unit)) label_list_t;
+    typedef std::vector<test_unit_id>                                       id_list;
+    typedef std::vector<test_unit_fixture_ptr>                              fixture_list_t;
+    typedef BOOST_READONLY_PROPERTY(test_unit_id,(framework_state))         id_t;
+    typedef BOOST_READONLY_PROPERTY(test_unit_id,(test_suite))              parent_id_t;
+    typedef BOOST_READONLY_PROPERTY(id_list,(test_unit))                    id_list_t;
+    typedef std::vector<decorator::base_ptr>                                decor_list_t;
+    typedef BOOST_READONLY_PROPERTY(std::vector<std::string>,(test_unit))   label_list_t;
 
-    typedef boost::function<test_tools::assertion_result (test_unit_id)>   precondition_t;
-    typedef BOOST_READONLY_PROPERTY(std::list<precondition_t>,(test_unit)) precond_list_t;
+    typedef boost::function<test_tools::assertion_result (test_unit_id)>    precondition_t;
+    typedef BOOST_READONLY_PROPERTY(std::vector<precondition_t>,(test_unit)) precond_list_t;
 
     // preconditions management
     void                                depends_on( test_unit* tu );
@@ -101,7 +100,7 @@ public:
 
     readwrite_property<counter_t>       p_dependency_rank;      ///< run status assigned to this unit before execution phase after applying all filters
 
-    readwrite_property<decorator_t>     p_decorators;           ///< automatically assigned decorators; execution is delayed till framework::finalize_setup_phase function
+    readwrite_property<decor_list_t>    p_decorators;           ///< automatically assigned decorators; execution is delayed till framework::finalize_setup_phase function
     readwrite_property<fixture_list_t>  p_fixtures;             ///< fixtures associated with this test unit
 
 protected:
@@ -168,10 +167,11 @@ public:
      */
     void            add( test_unit* tu, counter_t expected_failures = 0, int timeout = -1 );
 
-    //  boost::unit_test::test_suite::add( test_unit* tu, counter_t expected_failures = 0, unsigned timeout = 0 )
-
     /// @overload
     void            add( test_unit_generator const& gen, int timeout = -1 );
+
+    /// @overload
+    void            add( test_unit_generator const& gen, decorator::collector& decorators );
 
     //! Removes a test from the test suite.
     void            remove( test_unit_id id );

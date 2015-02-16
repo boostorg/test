@@ -143,20 +143,20 @@ Mismatch at position 2: 3 != 2
 764: error: in "test_BOOST_TEST_fpv_comp": check d1-1e-5 != 0. has failed [1e-05 - 1e-05 == 0]. Absolute value is within tolerance [|1e-06| < 0.0001]
 765: error: in "test_BOOST_TEST_fpv_comp": check 0. != 1e-5-d1 has failed [0 == -1e-06]. Absolute value is within tolerance [|-1e-06| < 0.0001]
 766: error: in "test_BOOST_TEST_fpv_comp": check d2-1e-5 < 0. has failed [1e-05 - 1e-05 >= 0]. Absolute value exceeds tolerance [|1.01e-06| > 1e-06]
-809: error: in "test_BOOST_TEST_cstring_comp": check str1 == str2 has failed [test1 != test12]
-810: error: in "test_BOOST_TEST_cstring_comp": check str1 == str3 has failed [test1 != test2]
-811: error: in "test_BOOST_TEST_cstring_comp": check str3 == str2 has failed [test2 != test12]
-812: error: in "test_BOOST_TEST_cstring_comp": check str1 == str4 has failed [test1 != test3]
-813: error: in "test_BOOST_TEST_cstring_comp": check str3 == str4 has failed [test2 != test3]
-814: error: in "test_BOOST_TEST_cstring_comp": check str1 == str5 has failed [test1 != null string]
-816: error: in "test_BOOST_TEST_cstring_comp": check str1 != (str6+1) has failed [test1 == test1]
-817: error: in "test_BOOST_TEST_cstring_comp": check str5 != str5 has failed [null string == null string]
-819: error: in "test_BOOST_TEST_cstring_comp": check str3 < str1 has failed [test2 >= test1]
-820: error: in "test_BOOST_TEST_cstring_comp": check str1 >= str2 has failed [test1 < test12]
-831: error: in "test_BOOST_TEST_bitwise": check a == b has failed [171 != 136]. Bitwise comparison failed
+805: error: in "test_BOOST_TEST_cstring_comp": check str1 == str2 has failed [test1 != test12]
+806: error: in "test_BOOST_TEST_cstring_comp": check str1 == str3 has failed [test1 != test2]
+807: error: in "test_BOOST_TEST_cstring_comp": check str3 == str2 has failed [test2 != test12]
+808: error: in "test_BOOST_TEST_cstring_comp": check str1 == str4 has failed [test1 != test3]
+809: error: in "test_BOOST_TEST_cstring_comp": check str3 == str4 has failed [test2 != test3]
+810: error: in "test_BOOST_TEST_cstring_comp": check str1 == str5 has failed [test1 != null string]
+812: error: in "test_BOOST_TEST_cstring_comp": check str1 != (str6+1) has failed [test1 == test1]
+813: error: in "test_BOOST_TEST_cstring_comp": check str5 != str5 has failed [null string == null string]
+815: error: in "test_BOOST_TEST_cstring_comp": check str3 < str1 has failed [test2 >= test1]
+816: error: in "test_BOOST_TEST_cstring_comp": check str1 >= str2 has failed [test1 < test12]
+827: error: in "test_BOOST_TEST_bitwise": check a == b has failed [171 != 136]. Bitwise comparison failed
 Mismatch in position 0
 Mismatch in position 1
 Mismatch in position 5
-832: error: in "test_BOOST_TEST_bitwise": check c == b has failed [138 != 136]. Bitwise comparison failed
+828: error: in "test_BOOST_TEST_bitwise": check c == b has failed [138 != 136]. Bitwise comparison failed
 Mismatch in position 1
 Operands bit sizes mismatch: 16 != 32

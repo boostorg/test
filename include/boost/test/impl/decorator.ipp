@@ -23,7 +23,6 @@
 #if BOOST_TEST_SUPPORT_TOKEN_ITERATOR
 #include <boost/test/utils/iterator/token_iterator.hpp>
 #endif
-
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
@@ -36,26 +35,12 @@ namespace decorator {
 // **************             decorator::collector             ************** //
 // ************************************************************************** //
 
-collector::collector( for_test_unit const& D )
+collector&
+collector::operator*( base const& d )
 {
-    m_tu_decorator.reset( D.clone() );
+    m_tu_decorators.push_back( d.clone() );
 
-    if( instance() != NULL ) {
-        append_existing( instance()->m_tu_decorator );
-        instance()->m_tu_decorator.reset();
-    }
-
-    instance() = this;
-}
-
-//____________________________________________________________________________//
-
-collector*&
-collector::instance()
-{
-    static collector* s_instance = 0;
-
-    return s_instance;
+    return *this;
 }
 
 //____________________________________________________________________________//
@@ -63,68 +48,35 @@ collector::instance()
 void
 collector::store_in( test_unit& tu )
 {
-    if( tu.p_decorators.get() )
-        append_existing( tu.p_decorators );
-
-    tu.p_decorators.value = m_tu_decorator;
-    m_tu_decorator.reset();
-    instance() = 0;
+    tu.p_decorators.value.insert( tu.p_decorators.value.end(), m_tu_decorators.begin(), m_tu_decorators.end() );
 }
 
 //____________________________________________________________________________//
 
 void
-collector::append_existing( for_test_unit_ptr decorator )
+collector::reset()
 {
-    for_test_unit_ptr leaf = m_tu_decorator;
-    while( leaf->m_next )
-        leaf = leaf->m_next;
-
-    leaf->m_next = decorator;
+    m_tu_decorators.clear();
 }
 
 //____________________________________________________________________________//
 
 // ************************************************************************** //
-// **************           decorator::for_test_unit           ************** //
+// **************               decorator::base                ************** //
 // ************************************************************************** //
 
-for_test_unit const&
-for_test_unit::operator+( for_test_unit const& rhs ) const
+collector&
+base::operator*() const
 {
-    rhs.m_next.reset( clone() );
-
-    return rhs;
+    return collector::instance() * *this;
 }
-
-//____________________________________________________________________________//
-
-void
-for_test_unit::apply( test_unit& tu )
-{
-    if( m_next )
-        m_next->apply( tu );
-    do_apply( tu );
-}
-
-//____________________________________________________________________________//
-
-for_test_unit*
-for_test_unit::clone() const
-{
-    for_test_unit* res = do_clone();
-    res->m_next = m_next;
-    return res;
-}
-
-//____________________________________________________________________________//
 
 // ************************************************************************** //
 // **************               decorator::label               ************** //
 // ************************************************************************** //
 
 void
-label::do_apply( test_unit& tu )
+label::apply( test_unit& tu )
 {
     tu.add_label( m_label );
 }
@@ -136,7 +88,7 @@ label::do_apply( test_unit& tu )
 // ************************************************************************** //
 
 void
-expected_failures::do_apply( test_unit& tu )
+expected_failures::apply( test_unit& tu )
 {
     tu.increase_exp_fail( static_cast<unsigned int>(m_exp_fail) );
 }
@@ -148,7 +100,7 @@ expected_failures::do_apply( test_unit& tu )
 // ************************************************************************** //
 
 void
-timeout::do_apply( test_unit& tu )
+timeout::apply( test_unit& tu )
 {
     tu.p_timeout.value = m_timeout;
 }
@@ -160,7 +112,7 @@ timeout::do_apply( test_unit& tu )
 // ************************************************************************** //
 
 void
-description::do_apply( test_unit& tu )
+description::apply( test_unit& tu )
 {
     tu.p_description.value += m_description;
 }
@@ -172,7 +124,7 @@ description::do_apply( test_unit& tu )
 // ************************************************************************** //
 
 void
-depends_on::do_apply( test_unit& tu )
+depends_on::apply( test_unit& tu )
 {
 #if !BOOST_TEST_SUPPORT_TOKEN_ITERATOR
     throw setup_error( "depends_on decorator is not supported on this platform" );
@@ -219,7 +171,7 @@ enable_if_impl::apply_impl( test_unit& tu, bool condition )
 // ************************************************************************** //
 
 void
-fixture_t::do_apply( test_unit& tu )
+fixture_t::apply( test_unit& tu )
 {
     tu.p_fixtures.value.push_back( m_impl );
 }
@@ -231,7 +183,7 @@ fixture_t::do_apply( test_unit& tu )
 // ************************************************************************** //
 
 void
-precondition::do_apply( test_unit& tu )
+precondition::apply( test_unit& tu )
 {
     tu.add_precondition( m_precondition );
 }

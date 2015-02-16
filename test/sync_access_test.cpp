@@ -34,11 +34,9 @@ static void thread_function(boost::barrier& b)
     BOOST_TEST(1 ==0); /// produce the fault
 }
 
-BOOST_TEST_DECORATOR(
-- ut::expected_failures(100)
-)
 /// test function which creates threads
-BOOST_AUTO_TEST_CASE( test_multiple_assertion_faults )
+BOOST_AUTO_TEST_CASE( test_multiple_assertion_faults,
+* ut::expected_failures(100))
 {
     boost::thread_group tg;      // thread group to manage all threads
     boost::barrier      b(100);  // memory barrier, which should block all threads

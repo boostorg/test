@@ -258,8 +258,22 @@ void
 test_suite::add( test_unit_generator const& gen, int timeout )
 {
     test_unit* tu;
-    while((tu = gen.next(), tu))
+    while(tu = gen.next())
         add( tu, 0, timeout );
+}
+
+//____________________________________________________________________________//
+
+void
+test_suite::add( test_unit_generator const& gen, decorator::collector& decorators )
+{
+    test_unit* tu;
+    while(tu = gen.next()) {
+        decorators.store_in( *tu );
+        add( tu, 0 );
+    }
+
+    decorators.reset();
 }
 
 //____________________________________________________________________________//
@@ -372,17 +386,17 @@ normalize_test_case_name( const_string name )
 // **************           auto_test_unit_registrar           ************** //
 // ************************************************************************** //
 
-auto_test_unit_registrar::auto_test_unit_registrar( test_case* tc, decorator::collector* decorators, counter_t exp_fail )
+auto_test_unit_registrar::auto_test_unit_registrar( test_case* tc, decorator::collector& decorators, counter_t exp_fail )
 {
     framework::current_auto_test_suite().add( tc, exp_fail );
 
-    if( decorators )
-        decorators->store_in( *tc );
+    decorators.store_in( *tc );
+    decorators.reset();
 }
 
 //____________________________________________________________________________//
 
-auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name, const_string ts_file, std::size_t ts_line, decorator::collector* decorators )
+auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name, const_string ts_file, std::size_t ts_line, decorator::collector& decorators )
 {
     test_unit_id id = framework::current_auto_test_suite().get( ts_name );
 
@@ -397,20 +411,17 @@ auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name, const_
         framework::current_auto_test_suite().add( ts );
     }
 
-    if( decorators )
-        decorators->store_in( *ts );
+    decorators.store_in( *ts );
+    decorators.reset();
 
     framework::current_auto_test_suite( ts );
 }
 
 //____________________________________________________________________________//
 
-auto_test_unit_registrar::auto_test_unit_registrar( test_unit_generator const& tc_gen, decorator::collector* /*decorators*/ )
+auto_test_unit_registrar::auto_test_unit_registrar( test_unit_generator const& tc_gen, decorator::collector& decorators )
 {
-    framework::current_auto_test_suite().add( tc_gen );
-
-    // !! ?? if( decorators )
-    // decorators->store_in( *tc );
+    framework::current_auto_test_suite().add( tc_gen, decorators );
 }
 
 //____________________________________________________________________________//

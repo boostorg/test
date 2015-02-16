@@ -768,10 +768,8 @@ TEST_CASE( test_BOOST_TEST_fpv_comp )
 
 //____________________________________________________________________________//
 
-BOOST_TEST_DECORATOR(
-+ut::tolerance(1e-3)
-)
-BOOST_AUTO_TEST_CASE( test_BOOST_TEST_fpv_comp_using_decorator )
+BOOST_AUTO_TEST_CASE( test_BOOST_TEST_fpv_comp_using_decorator,
+* ut::tolerance(1e-3))
 {
     BOOST_TEST( tt::fpc_tolerance<double>() == 1e-3 );
 
@@ -783,10 +781,8 @@ BOOST_AUTO_TEST_CASE( test_BOOST_TEST_fpv_comp_using_decorator )
 
 //____________________________________________________________________________//
 
-BOOST_TEST_DECORATOR(
-+ut::tolerance( tt::fpc::percent_tolerance( 1. ) )
-)
-BOOST_AUTO_TEST_CASE( test_BOOST_TEST_fpv_comp_using_decorator_2 )
+BOOST_AUTO_TEST_CASE( test_BOOST_TEST_fpv_comp_using_decorator_2,
+* ut::tolerance( tt::fpc::percent_tolerance( 1. ) ))
 {
     BOOST_TEST( tt::fpc_tolerance<double>() == 1e-2 );
 

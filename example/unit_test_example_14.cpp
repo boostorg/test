@@ -6,6 +6,7 @@
 //  See http://www.boost.org/libs/test for the library home page.
 //
 // ***************************************************************************
+// DOES NOT WORK; to be fixed
 
 #define BOOST_TEST_TOOL_REPORT_WARN_FAILURE( assertion_descr ) \
     std::cout << "Condition " << assertion_descr << " is not satisfied\n"

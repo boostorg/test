@@ -564,7 +564,7 @@ public:
                     BOOST_TEST_FOREACH( value_type, chld, ts.m_ranked_members ) {
                         int chld_timeout = -1;
                         if( timeout > 0 ) {
-                           int elapsed_so_far = tu_timer.elapsed(); // rounding to number of whole seconds
+                           int elapsed_so_far = static_cast<int>(tu_timer.elapsed()); // rounding to number of whole seconds
                            chld_timeout = (std::max)( timeout-elapsed_so_far, 0 );
                         }
 
@@ -596,7 +596,7 @@ public:
                         BOOST_TEST_FOREACH( test_unit_id, chld, members_with_the_same_rank ) {
                             int chld_timeout = -1;
                             if( timeout > 0 ) {
-                              int elapsed_so_far = tu_timer.elapsed(); // rounding to number of whole seconds
+                              int elapsed_so_far = static_cast<int>(tu_timer.elapsed()); // rounding to number of whole seconds
                               chld_timeout = (std::max)( timeout-elapsed_so_far, 0 );
                             }
 
@@ -785,8 +785,8 @@ finalize_setup_phase( test_unit_id master_tu_id )
         // test_tree_visitor interface
         virtual bool    visit( test_unit const& tu )
         {
-            if( tu.p_decorators.get() )
-                tu.p_decorators.get()->apply( const_cast<test_unit&>(tu) );
+            BOOST_TEST_FOREACH( decorator::base_ptr, d, tu.p_decorators.get() )
+                d->apply( const_cast<test_unit&>(tu) );
 
             return true;
         }
