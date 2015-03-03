@@ -26,6 +26,7 @@
 // Boost
 #include <boost/optional.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/type_index.hpp>
 
 // STL
 // !! could we eliminate these includes?
@@ -45,7 +46,7 @@ template<typename T>
 struct interpret_argument_value_impl {
     static bool _( cstring source, boost::optional<T>& res )
     {
-        BOOST_RT_PARAM_TRACE( "In interpret_argument_value_impl<" << typeid(T).name() << ">" );
+        BOOST_RT_PARAM_TRACE( "In interpret_argument_value_impl<" << boost::typeindex::type_id<T>().pretty_name() << ">" );
 
         res = lexical_cast<T>( source );
 

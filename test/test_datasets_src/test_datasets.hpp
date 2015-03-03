@@ -18,6 +18,7 @@
 // Boost
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/is_convertible.hpp>
+#include <boost/type_index.hpp>
 
 #include <iostream>
 #include <vector>
@@ -155,7 +156,7 @@ struct print_sample {
     template<typename T>
     void    operator()( T const& sample ) const
     {
-        std::cout << "S has type: " << typeid(T).name() << " and value " << sample << std::endl;
+        std::cout << "S has type: " << boost::typeindex::type_id<T>().pretty_name() << " and value " << sample << std::endl;
     }
 };
 
