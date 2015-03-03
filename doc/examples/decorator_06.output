@@ -1,0 +1,24 @@
+//[example_output
+> decorator_06 --report_level=detailed
+Running 4 test cases...
+decorator_06.cpp(14): error: in "test2": check 2 != 2 has failed [2 == 2]
+decorator_06.cpp(35): error: in "test3": check 3 != 3 has failed [3 == 3]
+
+Test module "decorator_06" has failed with:
+  1 test case out of 4 passed
+  2 test cases out of 4 failed
+  1 test case out of 4 skipped
+  1 assertion out of 3 passed
+  2 assertions out of 3 failed
+
+  Test case "test1" has passed with:
+    1 assertion out of 1 passed
+
+  Test case "test2" has failed with:
+    1 assertion out of 1 failed
+
+  Test case "test3" has failed with:
+    1 assertion out of 1 failed
+
+  Test case "test4" was skipped
+//]
