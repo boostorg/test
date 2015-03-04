@@ -24,6 +24,7 @@
 #include <boost/type.hpp>
 #include <boost/cstdlib.hpp>
 #include <boost/function/function0.hpp>
+#include <boost/type_index.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -177,17 +178,15 @@ public:
 
         return m_tag == tag ? m_next : this_;
     }
-#ifndef BOOST_NO_RTTI
-    virtual translator_holder_base_ptr erase( translator_holder_base_ptr this_, std::type_info const& ) = 0;
+    virtual translator_holder_base_ptr erase( translator_holder_base_ptr this_, boost::typeindex::type_info const& ) = 0;
     template<typename ExceptionType>
     translator_holder_base_ptr erase( translator_holder_base_ptr this_, boost::type<ExceptionType>* = 0 )
     {
         if( m_next )
             m_next = m_next->erase<ExceptionType>( m_next );
 
-        return erase( this_, typeid(ExceptionType) );
+        return erase( this_, boost::typeindex::type_id<ExceptionType>() );
     }
-#endif
 
 protected:
     // Data members
@@ -420,12 +419,10 @@ public:
             return boost::exit_exception_failure;
         }
     }
-#ifndef BOOST_NO_RTTI
-    virtual translator_holder_base_ptr erase( translator_holder_base_ptr this_, std::type_info const& ti ) 
+    virtual translator_holder_base_ptr erase( translator_holder_base_ptr this_, boost::typeindex::type_info const& ti ) 
     {
-        return ti == typeid(ExceptionType) ? m_next : this_;
+        return ti == boost::typeindex::type_id<ExceptionType>() ? m_next : this_;
     }
-#endif
 
 private:
     // Data members

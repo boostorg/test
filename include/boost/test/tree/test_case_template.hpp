@@ -33,12 +33,7 @@
 #include <boost/type.hpp>
 #include <boost/type_traits/is_const.hpp>
 #include <boost/function/function0.hpp>
-
-#ifndef BOOST_NO_RTTI
-#include <typeinfo> // for typeid
-#else
-#include <boost/current_function.hpp>
-#endif
+#include <boost/type_index.hpp>
 
 // STL
 #include <string>   // for std::string
@@ -82,11 +77,7 @@ struct generate_test_case_4_type {
         std::string full_name;
         assign_op( full_name, m_test_case_name, 0 );
         full_name += '<';
-#ifndef BOOST_NO_RTTI
-         full_name += typeid(TestType).name();
-#else
-        full_name += BOOST_CURRENT_FUNCTION;
-#endif
+        full_name += boost::typeindex::type_id<TestType>().pretty_name();
         if( boost::is_const<TestType>::value )
             full_name += " const";
         full_name += '>';
