@@ -150,6 +150,8 @@
 [def __decorator_enabled__            [link boost_test.users_guide.tests_organization.decorators.decorator_enabled `enabled`]]
 [def __decorator_disabled__           [link boost_test.users_guide.tests_organization.decorators.decorator_enabled `disabled`]]
 [def __decorator_enable_if__          [link boost_test.users_guide.tests_organization.decorators.decorator_enable_if `enable_if`]]
+[def __decorator_depends_on__         [link boost_test.users_guide.tests_organization.decorators.decorator_depends_on `depends_on`]]
+[def __decorator_precondition__       [link boost_test.users_guide.tests_organization.decorators.decorator_precondition `precondition`]]
 
 [/=============================================================================]
 [/ templates ]
