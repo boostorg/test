@@ -47,7 +47,7 @@ label(const_string label_name);
 
 Decorator `label` associates a test unit with label `label_name`. This is useful when one wants to execute test units selectively by label. It is possible to associate more than one label with a test unit. Decorating a test suite with label `L` is equivalent to decorating every test unit inside with `L`.
 
-[bt_example example74_decorators..Decorator label]
+[bt_example example74_decorators..decorator label]
 [endsect] [/ section label]
 
 [/-----------------------------------------------------------------]
@@ -86,23 +86,23 @@ Decorator `-enable_if<true>()` is equivalent to decorator `-enabled()`. Similarl
 
 [/-----------------------------------------------------------------]
 
-[section:depends_on depends_on]
+[section:decorator_depends_on depends_on]
 
 ``
 depeneds_on(const_string dependent_test_name);
 ``
 
-Decorator `depends_on` disables the test unit from being run if the test unit marked as its dependency, is either disabled or is executed and marked as failed. 
+Decorator `depends_on` associates the decorated test case (call it `B`) with another test case (call it `A`) specified by name. This affects the processing the test tree in two ways. First, test case `A` is ordered to be run before `B`, irrespective of the order in which they were declared or added to the test tree. Second, the execution of `B` is skipped if `A` is either disabled or skipped or is executed and marked as failed. 
 
-[bt_example example76_decorators..Decorator depends_on]
+[bt_example decorator_08..decorator depends_on]
 
-In the above scenario, `test_case2` is not even listed because it is disabled; `test_case5` is not listed because it depends on a disabled test unit. `test_case4` is listed but not executed because it depends on `test_case3`, which failed.
+In the above scenario, test case `test3` is run (and fails) because `s1/test1` has been run and succeeded; `test4` is skipped because `test3` has failed; `test5` is skipped because `s1/test2` is disabled.
 
-[endsect] [/ section depends_on]
+[endsect] [/ section decorator_depends_on]
 
 [/-----------------------------------------------------------------]
 
-[section:precondition precondition]
+[section:decorator_precondition precondition]
 
 [def __class_assertion_result__ [classref boost::test_tools::assertion_result test_tools::assertion_result]]
 ``
@@ -116,7 +116,7 @@ Decorator `precondition` associates a ['predicate] with a test unit. Before the 
 
 In the example above, the user defined a custom predicate `if_either` that evaluates to `true` if at least one of the two specified tests passed. (It assumes that the tests are registered in the specific order.) Test case `test3` has a precondition that at either `test1` or `test2` passed. The precondition is satisfied, therefore `test3` is run (and fails). Test case `test4` has a precondition that either `test2` or `test3` passed. Since they both failed, the precondition is not satisfied, therefore `test4` is skipped.
  
-[endsect] [/ section precondition]
+[endsect] [/ section decorator_precondition]
 
 [/-----------------------------------------------------------------]
 
@@ -145,7 +145,7 @@ expected_failures(counter_t number);
 
 Decorator `expected_failures` defines the number of expected failures that will be reported upon program execution. At suite level this defines the number of expected failures per suite. The total number of expected failures per suite is the sum of per-suite decorator and per-test decorators inside the suite:
 
-[bt_example example77_decorators..Decorator expected_failures]
+[bt_example example77_decorators..decorator expected_failures]
 
 [endsect] [/ section expected_failures]
 
@@ -158,7 +158,7 @@ timeout(unsigned seconds);
 
 Decorator `timeout` specifies time (in seconds) that sets the maximum allowed duration of a test case. If this time is exceeded the test unit is forced to stop and is reported as failure.
 
-[bt_example example78_decorators..Decorator timeout]
+[bt_example example78_decorators..decorator timeout]
 
 Applied at test suite level, this decorator has no effect.
 
@@ -180,9 +180,29 @@ template <typename Fx, typename Arg>
 
 Decorator `fixture` specifies a pair of functions (like `set_up` and `tear_down`) to be called before and after the corresponding test unit. At the suite level the `set_up` function is called once -- before the suite execution starts and `tear_down` function is called once -- after the suite execution ends. It comes in three forms. First expects two functions for set-up and tear-down (the second one can be skipped). The second expects a `DefaultConstructible` class. Its default constructor will be used as set-up function and its destructor as a tear-down function. Third requires a class with one-argument public constructor. Argument `arg` is forwarded to the constructor and this is the set-up function, its destructor is the tear-down function. There is no way to get access to the members of these fixtures from within the test case or test suite.
 
-[bt_example example79_decorators..Decorator fixture]
+[bt_example example79_decorators..decorator fixture]
 
 [endsect] [/ section fixture]
+
+[/-----------------------------------------------------------------]
+
+
+[section:description tolerance]
+
+``
+template <typename FPT>
+  tolerance(FPT eps);
+
+template <typename FPT>
+  tolerance(test_tools::fpc::percent_tolerance_t<FPT> eps)  
+``
+
+Decorator `tolerance` specifies the default comparison tolerance for floating point type `FTP` in the decorated test unit. The default tolerance only applies to a particular type, so it makes sense to provide more than one `tolerance` decorator if we are comparing different floating point types. For more details see __floating_points_testing_tools__. The variant with `percent_tolerance` uses value `eps * .01` as tolerance.
+
+[bt_example decorator_11..decorator tolerance]
+
+In the above example,  in `test1`, checks on `double`s fail because they differ by more what tolerance for `double`s specifies. In `test2` the tolerance for `double`s is greater and therefore the checks succeed. In `test3`, we specify only tolerance for type `float`, and since the checks use type `double` the specified tolerance does not apply. Tolerance in `test4` is equivalent to that in `test1`, therefore its checks also fail. Tolerance in `test5` is equivalent to that in `test2`, therefore its checks also succeed.
+[endsect] [/ section tolerance]
 
 [endsect] [/ section decorators]
 

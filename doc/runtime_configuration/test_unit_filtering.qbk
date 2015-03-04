@@ -18,11 +18,18 @@ Each test unit (either test case or test suite) has an associated ['default run 
 # ['false] -- this means that, unless some runtime parameters specify otherwise, the test unit is designated ['not] to be run.
 # ['inherit] -- this means that the test unit's default run status is the same as that of its immediate parent test unit. This is applied recursively.
 
-Initially, the master test suite is has default run status set to ['true]. All other test units have default run status set to ['inherit]. This implies that, unless no additional configuration is applied, all tests are designated to be run.
+Initially, the master test suite has default run status set to ['true]. All other test units have default run status set to ['inherit]. This implies that, unless any additional configuration is applied, all tests are designated to be run.
 
 You can set a different default run status in any test unit by using [link boost_test.users_guide.tests_organization.decorators decorators]: __decorator_disabled__, __decorator_enabled__ and __decorator_enable_if__. The default run status is set once, upon testing program initialization, and cannot be changed. The disabled tests are not executed by default, but are still present in the test tree, and are listed along with other tests when you use command-line argument __param_list_content__. 
 
-[bt_example decorator_20..decorator enable_if]
+[bt_example decorator_20..default run status]
+
+[#ref_dynamic_test_dependency][h3 Dynamic test dependencies]
+
+Additionally, it is possible to statically associate a test unit with a condition. This associated condition is evaluated immediately before executing the test unit. If the condition is met, the test unit is executed. Otherwise, the test unit is ['skipped]. It is possible to add two dependencies:
+
+# Upon another test unit. In this case the decorated test case is skipped if the test unit specified in the dependency is either failed or skipped or disabled. This can be declared with decorator __decorator_depends_on__.
+# Upon an arbitrary predicate. This can be declared with decorator __decorator_precondition__.
 
 TODO. More ways of filtering test units to be described soon...
 
