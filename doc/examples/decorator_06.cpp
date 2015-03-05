@@ -14,19 +14,19 @@ namespace tt = boost::test_tools;
 
 BOOST_AUTO_TEST_CASE(test1)
 {
-    BOOST_TEST( 1 == 1 );
+    BOOST_TEST(true);
 }
 
 BOOST_AUTO_TEST_CASE(test2)
 {
-    BOOST_TEST( 2 != 2 );
+    BOOST_TEST(false);
 }
 
 struct if_either
 {
   std::string tc1, tc2;
   if_either(std::string t1, std::string t2) : tc1(t1), tc2(t2) {}
-  
+
   tt::assertion_result operator()(utf::test_unit_id)
   {
     auto& master = utf::framework::master_test_suite();
@@ -34,17 +34,24 @@ struct if_either
     auto& test1_result = collector.results(master.get(tc1));
     auto& test2_result = collector.results(master.get(tc2));
 
-    return test1_result.passed() || test2_result.passed();
+    if (test1_result.passed() || test2_result.passed())
+      return true;
+    
+    tt::assertion_result ans(false);
+    ans.message() << "neither " << tc1 << " nor " << tc2 << " passed";
+    return ans;
   }
 };
 
-BOOST_AUTO_TEST_CASE(test3, *utf::precondition(if_either("test1", "test2")))
+BOOST_AUTO_TEST_CASE(test3,
+  *utf::precondition(if_either("test1", "test2")))
 {
-    BOOST_TEST( 3 != 3 );
+    BOOST_TEST(false);
 }
 
-BOOST_AUTO_TEST_CASE(test4, *utf::precondition(if_either("test2", "test3")))
+BOOST_AUTO_TEST_CASE(test4,
+  *utf::precondition(if_either("test2", "test3")))
 {
-    BOOST_TEST( 4 != 4 );
+    BOOST_TEST(false);
 }
 //]
