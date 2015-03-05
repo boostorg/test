@@ -374,11 +374,24 @@ log when nothing is logged a test output stream.
 [/ ###############################################################################################]
 [#ref_param_run_test][section `run_test`]
 
-Specifies the tests to run. 
+Specifies the tests to run. It can be specified more than once.
       
 [h4 Acceptable values]
 
-See the related [link boost_test.users_guide.runtime_config.run_by_name_label documentation] for the format of the acceptable values.
+The following grammar productions describe the syntax of allowed values:
+
+```
+value         ::= relative_spec? test_set
+relative_spec ::= '+' | '!'
+test_set      ::= label | path
+label         ::= '@' identifier
+path          ::= (suite '/')? patern_list
+patern_list   ::= (pattern ',')* pattern
+suite         ::= (pattern '/')* pattern
+pattern       ::= '*'? identifier '*'?
+```
+
+Regarding the meaning of these values [link ref_command_line_control see here].
 
 [h4 Environment variable]
 
@@ -619,7 +632,7 @@ You can use this parameter to switch between these modes, by passing the paramet
 [/ ###############################################################################################]
 [section:param_list_content `list_content`]
 
-Lists the content of the tests that would be ran. If set on the command line, no test will be ran and the content
+Lists the content of the tests that would be run. If set on the command line, no test will be ran and the content
 of the test bed will be printed, one test per line.
 
 [h4 Environment variable]
