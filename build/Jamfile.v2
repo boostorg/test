@@ -7,7 +7,6 @@
 project boost/test 
     : source-location ../src
     : requirements <link>shared:<define>BOOST_TEST_DYN_LINK=1
-                   <toolset>msvc:<asynch-exceptions>on
                    <toolset>borland:<cxxflags>-w-8080
                    # Disable Warning about boost::noncopyable not being exported
                    <link>shared,<toolset>msvc:<cxxflags>-wd4275
@@ -110,13 +109,9 @@ lib boost_unit_test_framework
     <link>shared:<define>BOOST_TEST_DYN_LINK=1
   ;
 
-alias minimal : : : :
-                   <toolset>msvc:<asynch-exceptions>on
-       ;
+alias minimal ;
 
-alias included : : : :
-                   <toolset>msvc:<asynch-exceptions>on
-       ;
+alias included ;
 
 boost-install boost_prg_exec_monitor 
               boost_test_exec_monitor
