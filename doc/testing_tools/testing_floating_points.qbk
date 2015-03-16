@@ -47,14 +47,14 @@ inequations [link equ2 (2)] and [link equ3 (3)] where all underflow, overflow co
 
 [#equ4]
 ``
-   abs(u - v)/abs(u) <= epsilon * abs(u)
-&& abs(u - v)/abs(v) <= epsilon * abs(v); // (4)
+   abs(u - v)/abs(u) <= epsilon
+&& abs(u - v)/abs(v) <= epsilon; // (4)
 ``
 
 [#equ5]
 ``
-   abs(u - v)/abs(u) <= epsilon * abs(u)
-|| abs(u - v)/abs(v) <= epsilon * abs(v); // (5)
+   abs(u - v)/abs(u) <= epsilon
+|| abs(u - v)/abs(v) <= epsilon; // (5)
 ``
 
 Checks based on equations [link equ4 (4)] and [link equ5 (5)] are implemented by two predicates with
@@ -126,7 +126,8 @@ For more reading about floating-point comparison see references below.
 [variablelist Books
   [
     [[#KnuthII]The art of computer programming (vol II)]
-    [Donald. E. Knuth, 1998, Addison-Wesley Longman, Inc., ISBN 0-201-89684-2, Addison-Wesley Professional; 3rd edition]
+    [Donald. E. Knuth, 1998, Addison-Wesley Longman, Inc., ISBN 0-201-89684-2, Addison-Wesley Professional; 3rd edition. 
+     (The relevant equations are in §4.2.2, Eq. 36 and 37.)]
   ]
   [
     [Rounding near zero, in [@http://www.amazon.com/Advanced-Arithmetic-Digital-Computer-Kulisch/dp/3211838708 Advanced Arithmetic for the Digital Computer]]
