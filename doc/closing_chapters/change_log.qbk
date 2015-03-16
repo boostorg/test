@@ -83,6 +83,7 @@
 # [ticket 9581] Squassabia reference link gives 404 not found
 # [ticket 10318] Minor documentation fix
 # [ticket 10888] Assertion failures don't show up in the errors pane in VS 2010, VS 2012 or VS 2013 (duplicates)
+# [ticket 11107] A lot of warnings on MSVC due to protected destructor being non-virtual
 
 
 
