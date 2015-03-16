@@ -47,14 +47,14 @@ inequations [link equ2 (2)] and [link equ3 (3)] where all underflow, overflow co
 
 [#equ4]
 ``
-   abs(u - v)/abs(u) <= epsilon * abs(u)
-&& abs(u - v)/abs(v) <= epsilon * abs(v); // (4)
+   abs(u - v)/abs(u) <= epsilon
+&& abs(u - v)/abs(v) <= epsilon; // (4)
 ``
 
 [#equ5]
 ``
-   abs(u - v)/abs(u) <= epsilon * abs(u)
-|| abs(u - v)/abs(v) <= epsilon * abs(v); // (5)
+   abs(u - v)/abs(u) <= epsilon
+|| abs(u - v)/abs(v) <= epsilon; // (5)
 ``
 
 Checks based on equations [link equ4 (4)] and [link equ5 (5)] are implemented by two predicates with
