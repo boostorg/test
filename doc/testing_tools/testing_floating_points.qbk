@@ -126,7 +126,8 @@ For more reading about floating-point comparison see references below.
 [variablelist Books
   [
     [[#KnuthII]The art of computer programming (vol II)]
-    [Donald. E. Knuth, 1998, Addison-Wesley Longman, Inc., ISBN 0-201-89684-2, Addison-Wesley Professional; 3rd edition]
+    [Donald. E. Knuth, 1998, Addison-Wesley Longman, Inc., ISBN 0-201-89684-2, Addison-Wesley Professional; 3rd edition. 
+     The relevant equations are in §4.2.2, Eq. 36 and 37.]
   ]
   [
     [Rounding near zero, in [@http://www.amazon.com/Advanced-Arithmetic-Digital-Computer-Kulisch/dp/3211838708 Advanced Arithmetic for the Digital Computer]]
