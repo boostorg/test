@@ -210,11 +210,7 @@ public:
             ? (fraction_of_right <= m_fraction_tolerance && fraction_of_left <= m_fraction_tolerance) 
             : (fraction_of_right <= m_fraction_tolerance || fraction_of_left <= m_fraction_tolerance) );
 
-        if( res )
-            m_failed_fraction = (fraction_of_right > m_fraction_tolerance ? fraction_of_right : fraction_of_left);
-        else
-            m_failed_fraction = (fraction_of_right > m_fraction_tolerance ? fraction_of_right : fraction_of_left);
-
+        m_failed_fraction = (fraction_of_right > m_fraction_tolerance ? fraction_of_right : fraction_of_left);
         return res;
     }
 
