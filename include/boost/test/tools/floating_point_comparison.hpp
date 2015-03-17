@@ -171,7 +171,8 @@ struct comp_supertype {
     // value of integral type is promoted to the floating. The same for float and double
     // But we don't want to compare two values of integral types using this tool.
     typedef typename numeric::conversion_traits<FPT1,FPT2>::supertype type;
-    BOOST_STATIC_ASSERT( !is_integral<type>::value );
+    BOOST_STATIC_ASSERT_MSG( !is_integral<type>::value, "Only floating-point types can be compared!");
+
 };
 
 // ************************************************************************** //
@@ -190,7 +191,7 @@ public:
     : m_fraction_tolerance( tolerance_traits<ToleranceType>::template fraction_tolerance<FPT>( tolerance ) )
     , m_strength( fpc_strength )
     {
-        BOOST_ASSERT( m_fraction_tolerance >= 0 ); // no reason for tolerance to be negative
+        BOOST_ASSERT_MSG( m_fraction_tolerance >= 0, "tolerance must not be negative!" ); // no reason for tolerance to be negative
     }
 
     // Access methods
