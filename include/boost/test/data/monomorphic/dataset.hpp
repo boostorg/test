@@ -102,6 +102,9 @@ class dataset {
 public:
     //! Type of the samples in this dataset
     typedef T data_type;
+    
+    virtual ~dataset() 
+    {}
 
     //! Interface of the dataset iterator
     class iterator {
