@@ -202,7 +202,7 @@ public:
     // Action method
     bool                operator()( FPT left, FPT right ) const
     {
-        FPT diff              = fpc_detail::fpt_abs( left - right );
+        FPT diff              = fpc_detail::fpt_abs<FPT>( left - right );
         FPT fraction_of_right = fpc_detail::safe_fpt_division( diff, fpc_detail::fpt_abs( right ) );
         FPT fraction_of_left  = fpc_detail::safe_fpt_division( diff, fpc_detail::fpt_abs( left ) );
         
