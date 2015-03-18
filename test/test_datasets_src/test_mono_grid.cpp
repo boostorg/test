@@ -35,6 +35,17 @@ BOOST_AUTO_TEST_CASE( test_mono_grid_size_and_composition )
   BOOST_TEST( (data::make( std::vector<int>(1) ) * data::make( std::list<int>(3) ) * data::make( 5 )).size() == 3 );
 }
 
+#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
+BOOST_AUTO_TEST_CASE( test_mono_grid_with_xrange )
+{
+  auto ds1 = data::make(1);
+  auto ds2 = data::xrange(5);
+  
+  BOOST_TEST( (ds1 * ds2).size() == 5 );
+  BOOST_TEST( (ds1 * ds2).size() == 5 );
+}
+#endif
+
 #if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && !defined(BOOST_NO_CXX11_LAMBDAS)
 BOOST_AUTO_TEST_CASE( test_mono_grid_cpp11_features )
 {
@@ -43,7 +54,6 @@ BOOST_AUTO_TEST_CASE( test_mono_grid_cpp11_features )
   int* exp1 = arr1;
   char const** exp2 = arr2;
   invocation_count ic;
-
 
   auto samples1 = data::make( arr1 ) * data::make( arr2 );
 
