@@ -133,6 +133,9 @@ test-suite "unit_test_framework_test"
 
           # tests disabling the printing of special types, also in collections, trac 9390 
           [ test-btl-lib run : test_dont_print_log_value    : boost_unit_test_framework ]
+
+          # test for multiprecision / trac 11054
+          [ test-btl-lib run : test_fp_multiprecision_close_fraction : boost_unit_test_framework ]
         ;
 
 test-suite "multithreaded_test"

@@ -171,7 +171,8 @@ struct comp_supertype {
     // value of integral type is promoted to the floating. The same for float and double
     // But we don't want to compare two values of integral types using this tool.
     typedef typename numeric::conversion_traits<FPT1,FPT2>::supertype type;
-    BOOST_STATIC_ASSERT( !is_integral<type>::value );
+    BOOST_STATIC_ASSERT_MSG( !is_integral<type>::value, "Only floating-point types can be compared!");
+
 };
 
 // ************************************************************************** //
@@ -190,7 +191,7 @@ public:
     : m_fraction_tolerance( tolerance_traits<ToleranceType>::template fraction_tolerance<FPT>( tolerance ) )
     , m_strength( fpc_strength )
     {
-        BOOST_ASSERT( m_fraction_tolerance >= 0 ); // no reason for tolerance to be negative
+        BOOST_ASSERT_MSG( m_fraction_tolerance >= 0, "tolerance must not be negative!" ); // no reason for tolerance to be negative
     }
 
     // Access methods
@@ -201,7 +202,7 @@ public:
     // Action method
     bool                operator()( FPT left, FPT right ) const
     {
-        FPT diff              = fpc_detail::fpt_abs( left - right );
+        FPT diff              = fpc_detail::fpt_abs<FPT>( left - right );
         FPT fraction_of_right = fpc_detail::safe_fpt_division( diff, fpc_detail::fpt_abs( right ) );
         FPT fraction_of_left  = fpc_detail::safe_fpt_division( diff, fpc_detail::fpt_abs( left ) );
         
@@ -209,11 +210,7 @@ public:
             ? (fraction_of_right <= m_fraction_tolerance && fraction_of_left <= m_fraction_tolerance) 
             : (fraction_of_right <= m_fraction_tolerance || fraction_of_left <= m_fraction_tolerance) );
 
-        if( res )
-            m_failed_fraction = (fraction_of_right > m_fraction_tolerance ? fraction_of_right : fraction_of_left);
-        else
-            m_failed_fraction = (fraction_of_right > m_fraction_tolerance ? fraction_of_right : fraction_of_left);
-
+        m_failed_fraction = (fraction_of_right > m_fraction_tolerance ? fraction_of_right : fraction_of_left);
         return res;
     }
 
