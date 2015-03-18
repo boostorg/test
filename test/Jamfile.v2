@@ -130,6 +130,8 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib-c11 run : test_datasets_cxx11          : boost_unit_test_framework : : [ glob test_datasets_src/*.cpp ] : ]
           # [ test-btl-lib run : config_file_iterator_test    : boost_unit_test_framework/<link>static ]
           # [ test-btl-lib run : config_file_test             : boost_unit_test_framework/<link>static ]
+
+          # tests disabling the printing of special types, also in collections, trac 9390 
           [ test-btl-lib run : test_dont_print_log_value    : boost_unit_test_framework ]
         ;
 
