@@ -35,7 +35,7 @@ As their name suggests, these assertions are, in order, for /requirement/, /chec
 
 [section Acceptable expressions]
 
-`BOOST_TEST` uses some tricks with C++ operator overloading in order to perform its magic. This is why some operations 
+`BOOST_TEST` uses some tricks with C++ operator overloading in order to perform its magic. This is why some expressions 
 are in fact not possible, such as:
 
 - ternary operations

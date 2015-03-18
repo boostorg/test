@@ -18,12 +18,24 @@ set(EXAMPLES_SRC
     example12.cpp
     example64.cpp
     example68.cpp
+    )
 
+# source files needing variadic macros
+set(EXAMPLES_VARIADIC_MACROS_SRC
     boost_test_macro1.cpp
     boost_test_macro2.cpp
     )
+    
+if(CMAKE_CXX_COMPILER_ID STREQUAL Clang)
+  set_source_files_properties(${EXAMPLES_VARIADIC_MACROS_SRC}
+                              PROPERTIES 
+                                COMPILE_FLAGS -std=c++11)
+endif()
 
-foreach(example_file IN LISTS EXAMPLES_SRC)
+set(ALL_SRC ${EXAMPLES_SRC} ${EXAMPLES_VARIADIC_MACROS_SRC})
+
+
+foreach(example_file IN LISTS ALL_SRC)
 
   get_filename_component(example_project ${example_file} NAME_WE)
 
@@ -34,7 +46,6 @@ foreach(example_file IN LISTS EXAMPLES_SRC)
 
   # declares a test with our executable
   add_test(NAME test-${example_project} COMMAND test_${example_project})
-
 
 endforeach(example_file)
 

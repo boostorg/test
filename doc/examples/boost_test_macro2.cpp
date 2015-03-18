@@ -14,6 +14,6 @@ BOOST_AUTO_TEST_CASE( test_floating_points )
 {
   namespace fpc = boost::math::fpc;
   int a = 13;
-  BOOST_TEST(a == a + 1, fpc::percent_tolerance( 100 ))
+  BOOST_TEST(a == a + 1, fpc::percent_tolerance( 100./13 ));
 }
 //]
