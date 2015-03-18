@@ -27,15 +27,18 @@ report depends on the current [link boost_test.users_guide.runtime_config.rt_par
 
 A unique interface is given by the variants of the `BOOST_TEST` assertion:
 
-
 * `BOOST_TEST_REQUIRE`
 * `BOOST_TEST_CHECK` or just `BOOST_TEST`
 * `BOOST_TEST_WARN`
 
-As their name suggests, these assertions are, in order, for requirement, checks and warnings.
-
+As their name suggests, these assertions are, in order, for /requirement/, /checks/ and /warnings/.
 
 [section Acceptable expressions]
+
+`BOOST_TEST` uses some tricks with C++ operator overloading in order to perform its magic. This is why some operations 
+are in fact not possible, such as:
+
+- ternary operations
 
 [endsect] [/ expressions]
 
