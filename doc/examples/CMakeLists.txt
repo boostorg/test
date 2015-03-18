@@ -18,7 +18,9 @@ set(EXAMPLES_SRC
     example12.cpp
     example64.cpp
     example68.cpp
-    example69.cpp
+
+    boost_test_macro1.cpp
+    boost_test_macro2.cpp
     )
 
 foreach(example_file IN LISTS EXAMPLES_SRC)

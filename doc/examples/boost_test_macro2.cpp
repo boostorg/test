@@ -6,17 +6,14 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 //[example_code
-#define BOOST_TEST_MODULE boost_test_macro1
+#define BOOST_TEST_MODULE boost_test_macro2
 #include <boost/test/included/unit_test.hpp>
 #include <sstream>
 
-BOOST_AUTO_TEST_CASE( test1 )
+BOOST_AUTO_TEST_CASE( test_floating_points )
 {
-  int a = 1;
-  int b = 1;
-  BOOST_TEST(a == b);
-  BOOST_TEST(a < b + 1);
-  BOOST_TEST(b => a);
-  BOOST_TEST(!(b => b + 1));
+  namespace fpc = boost::math::fpc;
+  int a = 13;
+  BOOST_TEST(a == a + 1, fpc::percent_tolerance( 100 ))
 }
 //]
