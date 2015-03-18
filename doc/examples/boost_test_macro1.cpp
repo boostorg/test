@@ -10,13 +10,13 @@
 #include <boost/test/included/unit_test.hpp>
 #include <sstream>
 
-BOOST_AUTO_TEST_CASE( test1 )
+BOOST_AUTO_TEST_CASE( test_basic_operations )
 {
   int a = 1;
   int b = 1;
   BOOST_TEST(a == b);
   BOOST_TEST(a < b + 1);
-  BOOST_TEST(b => a);
-  BOOST_TEST(!(b => b + 1));
+  BOOST_TEST(b >= a);
+  BOOST_TEST(!(b >= b + 1));
 }
 //]
