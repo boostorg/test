@@ -20,6 +20,8 @@
 #include <boost/test/data/monomorphic/singleton.hpp>
 #include <boost/test/data/monomorphic/array.hpp>
 #include <boost/test/data/monomorphic/collection.hpp>
+#include <boost/test/data/monomorphic/generators/xrange.hpp>
+
 namespace data = boost::unit_test::data;
 
 #include "test_datasets.hpp"
