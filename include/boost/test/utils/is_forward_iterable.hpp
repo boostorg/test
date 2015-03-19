@@ -59,9 +59,6 @@ struct is_forward_iterable<T const> : public is_forward_iterable<T> {};
 template<typename T>
 struct is_forward_iterable<T&> : public is_forward_iterable<T> {};
 
-template<typename T, std::size_t size>
-struct is_forward_iterable<T [size]> : public mpl::true_ {};
-
 template<typename T, typename A>
 struct is_forward_iterable< std::vector<T, A> > : public mpl::true_ {};
 

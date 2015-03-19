@@ -137,7 +137,7 @@ BOOST_AUTO_TEST_CASE( test_forward_iterable_concept )
   }
 
   {
-    typedef int (&)[] type;
+    typedef int type[10];
     BOOST_CHECK_MESSAGE(!boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
     BOOST_CHECK_MESSAGE(!boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
     BOOST_CHECK_MESSAGE(boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
@@ -160,7 +160,7 @@ BOOST_AUTO_TEST_CASE( test_forward_iterable_concept )
   
   {
     typedef int type[3];
-    BOOST_CHECK_MESSAGE(boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
   }  
 }
 
