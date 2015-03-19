@@ -131,7 +131,8 @@ make( T&& v );
 
 //! @overload boost::unit_test::data::make()
 template<typename C>
-inline monomorphic::collection<typename BOOST_TEST_ENABLE_IF<unit_test::is_forward_iterable<C>::value,C>::type>
+inline typename BOOST_TEST_ENABLE_IF<is_forward_iterable<C>::value, 
+                                     monomorphic::collection<C> >::type
 make( C&& c );
 
 
