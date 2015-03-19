@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines the is_forward_iterable collection type trait
+/// @file
+/// Defines the is_forward_iterable collection type trait
 // ***************************************************************************
 
 #ifndef BOOST_TEST_IS_FORWARD_ITERABLE_HPP_110612GER
@@ -61,6 +58,9 @@ struct is_forward_iterable<T const> : public is_forward_iterable<T> {};
 
 template<typename T>
 struct is_forward_iterable<T&> : public is_forward_iterable<T> {};
+
+template<typename T, std::size_t size>
+struct is_forward_iterable<T [size]> : public mpl::true_ {};
 
 template<typename T, typename A>
 struct is_forward_iterable< std::vector<T, A> > : public mpl::true_ {};
