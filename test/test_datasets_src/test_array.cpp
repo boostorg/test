@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : tests C array based dataset
+/// @file
+/// Tests C array based dataset
 // ***************************************************************************
 
 // Boost.Test
@@ -62,6 +59,18 @@ BOOST_AUTO_TEST_CASE( test_array )
     BOOST_TEST( copy_count::value() == 0 );
 }
 
-//____________________________________________________________________________//
-
-// EOF
+BOOST_AUTO_TEST_CASE( test_array_make_type )
+{
+    int arr1[] = {1,2,3};
+    
+    typedef data::result_of::make<int [3]>::type dataset_array_type;
+    dataset_array_type res = data::make( arr1 );
+    BOOST_TEST( res.size() == 3 );
+    
+    
+    double const arr2[] = {7.4,3.2};
+    typedef data::result_of::make<double const [2]>::type dataset_array_double_type;
+    dataset_array_double_type res2 = data::make( arr2 );
+    
+    BOOST_TEST( res2.size() == 2 );
+}
