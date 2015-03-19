@@ -131,7 +131,8 @@ make( T&& v );
 
 //! @overload boost::unit_test::data::make()
 template<typename C>
-inline monomorphic::collection<typename BOOST_TEST_ENABLE_IF<unit_test::is_forward_iterable<C>::value,C>::type>
+inline typename BOOST_TEST_ENABLE_IF<is_forward_iterable<C>::value, 
+                                     monomorphic::collection<C> >::type
 make( C&& c );
 
 
@@ -158,7 +159,8 @@ make( T const& v );
 // fwrd declaration for collections
 //! @overload boost::unit_test::data::make()
 template<typename C>
-inline monomorphic::collection<typename BOOST_TEST_ENABLE_IF<unit_test::is_forward_iterable<C>::value,C>::type>
+inline typename BOOST_TEST_ENABLE_IF<unit_test::is_forward_iterable<C>::value, 
+                                     monomorphic::collection<C> >::type
 make( C const& c );
 
 //____________________________________________________________________________//
@@ -188,20 +190,79 @@ make( char const* str );
 
 //____________________________________________________________________________//
 
-#ifndef BOOST_NO_CXX11_DECLTYPE
+
 
 namespace result_of {
 
+#ifndef BOOST_NO_CXX11_DECLTYPE
 //! Result of the make call.
 template<typename DS>
 struct make
 {
     typedef decltype(data::make(boost::declval<DS>())) type;
 };
+#else
+
+// explicit specialisation, cumbersome
+
+template <typename DS, typename Enable = void>
+struct make;
+
+template <typename DS>
+struct make<
+         DS const&, 
+         typename BOOST_TEST_ENABLE_IF<monomorphic::is_dataset<DS>::value>::type
+         >
+{
+    typedef DS const& type;
+};
+
+template <typename T>
+struct make<
+         T, 
+         typename BOOST_TEST_ENABLE_IF< !is_forward_iterable<T>::value && 
+                                        !monomorphic::is_dataset<T>::value &&
+                                        !boost::is_array<T>::value
+                                      >::type
+         >
+{
+    typedef monomorphic::singleton<T> type;
+};
+
+template <typename C>  
+struct make<
+         C, 
+         typename BOOST_TEST_ENABLE_IF< is_forward_iterable<C>::value>::type
+         >
+{
+    typedef monomorphic::collection<C> type;
+};
+
+
+template <typename T, std::size_t size>  
+struct make<T [size]>
+{
+    typedef monomorphic::array<T> type;
+};
+
+template <>  
+struct make<char*>
+{
+    typedef monomorphic::singleton<char*> type;
+};
+
+template <>  
+struct make<char const*>
+{
+    typedef monomorphic::singleton<char const*> type;
+};
+
+#endif // BOOST_NO_CXX11_DECLTYPE
+
 
 } // namespace result_of
 
-#endif // BOOST_NO_CXX11_DECLTYPE
+
 
 
 //____________________________________________________________________________//
