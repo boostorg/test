@@ -182,6 +182,9 @@ template<typename T, std::size_t size>
 inline monomorphic::array<T>
 make( T (&a)[size] );
 
+// apparently some compilers (eg clang-3.4 on linux) have trouble understanding
+// the previous line for T being const
+//! @overload boost::unit_test::data::make()
 template<typename T, std::size_t size>
 inline monomorphic::array<T>
 make( T const (&)[size] );
