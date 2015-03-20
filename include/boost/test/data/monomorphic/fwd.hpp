@@ -124,7 +124,8 @@ make(DS&& ds)
 //! @overload boost::unit_test::data::make()
 template<typename T>
 inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
-                                     !monomorphic::is_dataset<T>::value, 
+                                     !monomorphic::is_dataset<T>::value &&
+                                     !boost::is_array<T>::value, 
                                      monomorphic::singleton<T> >::type
 make( T&& v );
 
@@ -151,7 +152,8 @@ make(DS const& ds)
 //! @overload boost::unit_test::data::make()
 template<typename T>
 inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
-                                     !monomorphic::is_dataset<T>::value, 
+                                     !monomorphic::is_dataset<T>::value &&
+                                     !boost::is_array<T>::value, 
                                      monomorphic::singleton<T> >::type
 make( T const& v );
 
@@ -159,7 +161,7 @@ make( T const& v );
 // fwrd declaration for collections
 //! @overload boost::unit_test::data::make()
 template<typename C>
-inline typename BOOST_TEST_ENABLE_IF<unit_test::is_forward_iterable<C>::value, 
+inline typename BOOST_TEST_ENABLE_IF<is_forward_iterable<C>::value, 
                                      monomorphic::collection<C> >::type
 make( C const& c );
 
@@ -177,6 +179,10 @@ make( C const& c );
 template<typename T, std::size_t size>
 inline monomorphic::array<T>
 make( T (&a)[size] );
+
+template<typename T, std::size_t size>
+inline monomorphic::array<T>
+make( T const (&)[size] );
 
 //! @overload boost::unit_test::data::make()
 inline monomorphic::singleton<char*>
@@ -220,9 +226,9 @@ struct make<
 template <typename T>
 struct make<
          T, 
-         typename BOOST_TEST_ENABLE_IF< !is_forward_iterable<T>::value && 
-                                        !monomorphic::is_dataset<T>::value &&
-                                        !boost::is_array<T>::value
+         typename BOOST_TEST_ENABLE_IF< (!is_forward_iterable<T>::value && 
+                                         !monomorphic::is_dataset<T>::value &&
+                                         !boost::is_array<T>::value)
                                       >::type
          >
 {

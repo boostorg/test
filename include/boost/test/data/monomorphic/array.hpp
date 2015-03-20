@@ -87,6 +87,15 @@ inline monomorphic::array<T> make( T (&a)[size] )
     return monomorphic::array<T>( a, size );
 }
 
+//! @overload boost::unit_test::data::make()
+template<typename T, std::size_t size>
+inline monomorphic::array<T> make( T const (&a)[size] )
+{
+    return monomorphic::array<T>( a, size );
+}
+
+
+
 //____________________________________________________________________________//
 
 } // namespace data
