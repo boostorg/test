@@ -114,7 +114,7 @@ BOOST_AUTO_TEST_CASE( test_collection_copies )
 #else
     // clang/darwin has apparently a non standard constructor for std::vector
     // in c++03 mode    
-#ifdef BOOST_CLANG
+#if defined(BOOST_CLANG) && __APPLE__
     int exp_copy_count = 2;
 #else
     int exp_copy_count = 4;

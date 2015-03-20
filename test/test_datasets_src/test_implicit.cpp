@@ -51,8 +51,8 @@ BOOST_AUTO_TEST_CASE( test_implicit_for_each )
 #else
     // clang/darwin has apparently a non standard constructor for std::vector
     // in c++03 mode
-#ifdef BOOST_CLANG
-    BOOST_TEST( copy_count::value() == 2 );
+#if defined(BOOST_CLANG) && __APPLE__ 
+    BOOST_CHECK_MESSAGE( copy_count::value() == 2, BOOST_PLATFORM );
 #else
     BOOST_TEST( copy_count::value() == 4 );
 #endif
