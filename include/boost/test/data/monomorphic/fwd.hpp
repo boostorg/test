@@ -18,9 +18,11 @@
 
 #include <boost/test/utils/is_forward_iterable.hpp>
 
+
 // Boost
 #ifdef BOOST_NO_CXX11_RVALUE_REFERENCES
 #include <boost/utility/enable_if.hpp>
+#include <boost/type_traits/remove_const.hpp>
 #else
 #include <boost/utility/declval.hpp>
 #endif
@@ -248,7 +250,7 @@ struct make<
 template <typename T, std::size_t size>  
 struct make<T [size]>
 {
-    typedef monomorphic::array<T> type;
+    typedef monomorphic::array<typename boost::remove_const<T>::type> type;
 };
 
 template <>  
