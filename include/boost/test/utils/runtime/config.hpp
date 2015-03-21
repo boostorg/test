@@ -34,6 +34,10 @@
 #include <string>
 #include <cstdlib>
 
+#ifdef __SUNPRO_CC
+  #include <stdlib.h>
+#endif
+
 //____________________________________________________________________________//
 
 #ifndef BOOST_RT_PARAM_CUSTOM_STRING
@@ -44,7 +48,7 @@
 #  endif
 #endif
 
-#include <stdlib.h>
+
 
 namespace boost {
 
