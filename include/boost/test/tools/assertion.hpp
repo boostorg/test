@@ -28,7 +28,6 @@
 #include <boost/utility/declval.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/remove_reference.hpp>
-#include <boost/type_traits/is_floating_point.hpp>
 
 // STL
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
@@ -350,8 +349,8 @@ struct compare_fpv<op::NE<Lhs,Rhs>,FPT> {
 #define DEFINE_FPV_COMPARISON( oper, name, rev )                    \
 template<typename Lhs,typename Rhs>                                 \
 struct name<Lhs,Rhs,typename boost::enable_if_c<                    \
-    is_floating_point<Lhs>::value &&                                \
-    is_floating_point<Rhs>::value>::type> {                         \
+    (boost::math::fpc::traits::is_floating_point_comparable<Lhs>::value && \
+     boost::math::fpc::traits::is_floating_point_comparable<Rhs>::value) >::type> { \
         typedef typename numeric::conversion_traits<Lhs,Rhs         \
     >::supertype FPT;                                               \
     typedef name<Lhs,Rhs> OP;                                       \

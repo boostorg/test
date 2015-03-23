@@ -281,7 +281,7 @@ struct comp_supertype {
     // value of integral type is promoted to the floating. The same for float and double
     // But we don't want to compare two values of integral types using this tool.
     typedef typename numeric::conversion_traits<FPT1,FPT2>::supertype type;
-    BOOST_STATIC_ASSERT( !is_integral<type>::value );
+    BOOST_STATIC_ASSERT_MSG( !is_integral<type>::value, "Only floating-point types can be compared!");
 };
 
 } // namespace tt_detail

@@ -133,7 +133,10 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : test_dont_print_log_value    : boost_unit_test_framework ]
 
           # test for multiprecision / trac 11054
-          [ test-btl-lib run : test_fp_multiprecision_close_fraction : boost_unit_test_framework ]
+          [ test-btl-lib run      : test_fp_multiprecision_close_fraction : boost_unit_test_framework : : 
+              test_fp_multiprecision_close_fraction.cpp ]
+          [ test-btl-lib-c11 run  : test_fp_multiprecision_close_fraction_new_api : boost_unit_test_framework  : : 
+              test_fp_multiprecision_close_fraction.cpp ]
         ;
 
 test-suite "multithreaded_test"

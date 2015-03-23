@@ -21,6 +21,7 @@
 #include <boost/numeric/conversion/conversion_traits.hpp> // for numeric::conversion_traits
 #include <boost/static_assert.hpp>
 #include <boost/assert.hpp>
+#include <boost/type_traits/is_floating_point.hpp>
 
 // STL
 #include <iosfwd>
@@ -41,6 +42,14 @@ enum strength {
     FPC_STRONG, // "Very close"   - equation 1' in docs, the default
     FPC_WEAK    // "Close enough" - equation 2' in docs.
 };
+
+
+namespace traits {
+  template <class T>
+  struct is_floating_point_comparable : boost::is_floating_point<T>::type
+  {};
+}
+
 
 // ************************************************************************** //
 // **************                    details                   ************** //
