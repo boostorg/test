@@ -161,21 +161,6 @@ percent_tolerance( FPT v )
 //____________________________________________________________________________//
 
 // ************************************************************************** //
-// **************                 fp_comp_type                 ************** //
-// ************************************************************************** //
-
-template<typename FPT1, typename FPT2>
-struct comp_supertype {
-    // deduce "better" type from types of arguments being compared
-    // if one type is floating and the second integral we use floating type and 
-    // value of integral type is promoted to the floating. The same for float and double
-    // But we don't want to compare two values of integral types using this tool.
-    typedef typename numeric::conversion_traits<FPT1,FPT2>::supertype type;
-    BOOST_STATIC_ASSERT_MSG( !is_integral<type>::value, "Only floating-point types can be compared!");
-
-};
-
-// ************************************************************************** //
 // **************             close_at_tolerance               ************** //
 // ************************************************************************** //
 
@@ -190,6 +175,7 @@ public:
     explicit    close_at_tolerance( ToleranceType tolerance, fpc::strength fpc_strength = FPC_STRONG ) 
     : m_fraction_tolerance( tolerance_traits<ToleranceType>::template fraction_tolerance<FPT>( tolerance ) )
     , m_strength( fpc_strength )
+    , m_failed_fraction()
     {
         BOOST_ASSERT_MSG( m_fraction_tolerance >= 0, "tolerance must not be negative!" ); // no reason for tolerance to be negative
     }
@@ -210,7 +196,9 @@ public:
             ? (fraction_of_right <= m_fraction_tolerance && fraction_of_left <= m_fraction_tolerance) 
             : (fraction_of_right <= m_fraction_tolerance || fraction_of_left <= m_fraction_tolerance) );
 
-        m_failed_fraction = (fraction_of_right > m_fraction_tolerance ? fraction_of_right : fraction_of_left);
+        if( !res )
+            m_failed_fraction = (fraction_of_right > m_fraction_tolerance ? fraction_of_right : fraction_of_left);
+
         return res;
     }
 
@@ -220,19 +208,6 @@ private:
     fpc::strength       m_strength;
     mutable FPT         m_failed_fraction;
 };
-
-// ************************************************************************** //
-// **************                 is_close_to                  ************** //
-// ************************************************************************** //
-
-template<typename FPT1, typename FPT2, typename ToleranceType>
-inline bool
-is_close_to( FPT1 left, FPT2 right, ToleranceType tolerance )
-{
-    return fpc::close_at_tolerance<typename fpc::comp_supertype<FPT1,FPT2>::type>( tolerance, FPC_STRONG )( left, right );
-}
-
-//____________________________________________________________________________//
 
 // ************************************************************************** //
 // **************            small_with_tolerance              ************** //
