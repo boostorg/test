@@ -222,7 +222,25 @@ While using manual absolute test case specification ignores the default run stat
 [bt_example decorator_21..run_test and dynamic dependencies]
 
 
-TODO. More ways of filtering test units to be described soon...
+[#ref_command_line_control_enablers][h4 Relative specification]
+
+Term 'relative' in this context means that the configuration is based on either the default run status of the test units or by the command-line override specified by the ['absolute specification]; and atop of this, we additionally either enable some disabled test units or disable some enabled tests units. The relative specification is controlled by command-line argument __param_run_test__, with the value using similar syntax as in the absolute specification, but preceded with either character `'!'` for disabling enabled test units or with character `'+'` for enabling the disabled test units. this can be summarized with the following table:
+
+[table
+ [ [command][specification type][semantics] ]
+ [ [[pre > test_program --__param_run_test__=!<absolute_spec>]][disabler][Enabled test units that match `<absolute_spec>` become disabled.] ]
+ [ [[pre > test_program --__param_run_test__=+<absolute_spec>]][enabler][Disabled test units that match `<absolute_spec>` as well as their upstream dependencies become enabled.] ]
+]
+
+The ['enabler] specification is used to enable a set of test units which are initially disabled.
+[bt_example decorator_22..command-line enabler]
+
+Conversely, the ['disabler] specification is used to disable a set of test units which are initially enabled.
+[bt_example decorator_23..command-line disabler]
+
+If there are both an enabler and disabler on one command line that specify the same test, the test becomes disabled. I.e., the disabler takes the precedence over the enabler. 
+
+[note While enabler additionally enables the upstream dependencies (introduced with decorator __decorator_depends_on__), disabler does not disable them. Therefore when you enable and then disable the same test, you do not disable its upstream dependencies.]
 
 [/----------------------------------------------]
 
