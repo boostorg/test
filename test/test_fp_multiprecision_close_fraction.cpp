@@ -164,13 +164,12 @@ Output:
 
   Description: Autorun "J:\Cpp\big_number\Debug\test_cpp_float_close_fraction.exe"
   Running 1 test case...
-  
+
   a = 1.0000000000000000000000000000000000000000000000000,
   b = 1.0000000000000000000000000000000000000000000000001,
   eps = 1.0000000000000000000000000000000000000000000000000e-49
-  
-  *** No errors detected
 
+  *** No errors detected
 
 */
 
