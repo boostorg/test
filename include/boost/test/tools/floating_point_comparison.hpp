@@ -18,9 +18,9 @@
 
 // Boost
 #include <boost/limits.hpp>  // for std::numeric_limits
+#include <boost/numeric/conversion/conversion_traits.hpp> // for numeric::conversion_traits
 #include <boost/static_assert.hpp>
 #include <boost/assert.hpp>
-#include <boost/type_traits/is_floating_point.hpp>
 
 // STL
 #include <iosfwd>
@@ -34,17 +34,6 @@ namespace math {
 namespace fpc {
 
 // ************************************************************************** //
-// **************              fpc::tolerance_based            ************** //
-// ************************************************************************** //
-
-template<typename T>
-struct tolerance_based : mpl::bool_<
-    is_floating_point<T>::value ||
-    std::numeric_limits<T>::is_specialized &&
-    !std::numeric_limits<T>::is_integer &&
-    !std::numeric_limits<T>::is_exact> {};
-
-// ************************************************************************** //
 // **************                 fpc::strength                ************** //
 // ************************************************************************** //
 
@@ -52,37 +41,6 @@ enum strength {
     FPC_STRONG, // "Very close"   - equation 1' in docs, the default
     FPC_WEAK    // "Close enough" - equation 2' in docs.
 };
-
-
-// ************************************************************************** //
-// **************         tolerance presentation types         ************** //
-// ************************************************************************** //
-
-template<typename FPT>
-struct percent_tolerance_t {
-    explicit    percent_tolerance_t( FPT v ) : m_value( v ) {}
-
-    FPT m_value;
-};
-
-//____________________________________________________________________________//
-
-template<typename FPT>
-inline std::ostream& operator<<( std::ostream& out, percent_tolerance_t<FPT> t )
-{
-    return out << t.m_value;
-}
-
-//____________________________________________________________________________//
-
-template<typename FPT>
-inline percent_tolerance_t<FPT>
-percent_tolerance( FPT v )
-{
-    return percent_tolerance_t<FPT>( v );
-}
-
-//____________________________________________________________________________//
 
 // ************************************************************************** //
 // **************                    details                   ************** //
@@ -137,25 +95,70 @@ safe_fpt_division( FPT f1, FPT f2 )
 
 //____________________________________________________________________________//
 
-template<typename FPT, typename ToleranceType>
-inline FPT
-fraction_tolerance( ToleranceType tolerance )
-{
-  return static_cast<FPT>(tolerance);
-} 
+} // namespace fpc_detail
+
+// ************************************************************************** //
+// **************         tolerance presentation types         ************** //
+// ************************************************************************** //
+
+template<typename ToleranceType>
+struct tolerance_traits {
+    template<typename FPT>
+    static ToleranceType    actual_tolerance( FPT fraction_tolerance )
+    {
+        return static_cast<ToleranceType>( fraction_tolerance );
+    } 
+    template<typename FPT>
+    static FPT              fraction_tolerance( ToleranceType tolerance )
+    {
+        return static_cast<FPT>(tolerance);
+    } 
+};
 
 //____________________________________________________________________________//
 
-template<typename FPT2, typename FPT>
-inline FPT2
-fraction_tolerance( percent_tolerance_t<FPT> tolerance )
+template<typename FPT>
+struct percent_tolerance_t {
+    explicit    percent_tolerance_t( FPT v ) : m_value( v ) {}
+
+    FPT m_value;
+};
+
+//____________________________________________________________________________//
+
+template<typename FPT>
+struct tolerance_traits<percent_tolerance_t<FPT> > {
+    template<typename FPT2>
+    static percent_tolerance_t<FPT> actual_tolerance( FPT2 fraction_tolerance )
+    {
+        return percent_tolerance_t<FPT>( fraction_tolerance * static_cast<FPT2>(100.) );
+    }
+
+    template<typename FPT2>
+    static FPT2 fraction_tolerance( percent_tolerance_t<FPT> tolerance )
+    {
+        return static_cast<FPT2>(tolerance.m_value)*static_cast<FPT2>(0.01); 
+    }
+};
+
+//____________________________________________________________________________//
+
+template<typename FPT>
+inline std::ostream& operator<<( std::ostream& out, percent_tolerance_t<FPT> t )
 {
-    return static_cast<FPT2>(tolerance.m_value)*static_cast<FPT2>(0.01); 
+    return out << t.m_value;
 }
 
 //____________________________________________________________________________//
 
-} // namespace fpc_detail
+template<typename FPT>
+inline percent_tolerance_t<FPT>
+percent_tolerance( FPT v )
+{
+    return percent_tolerance_t<FPT>( v );
+}
+
+//____________________________________________________________________________//
 
 // ************************************************************************** //
 // **************             close_at_tolerance               ************** //
@@ -170,7 +173,7 @@ public:
     // Constructor
     template<typename ToleranceType>
     explicit    close_at_tolerance( ToleranceType tolerance, fpc::strength fpc_strength = FPC_STRONG ) 
-    : m_fraction_tolerance( fpc_detail::fraction_tolerance<FPT>( tolerance ) )
+    : m_fraction_tolerance( tolerance_traits<ToleranceType>::template fraction_tolerance<FPT>( tolerance ) )
     , m_strength( fpc_strength )
     , m_failed_fraction()
     {
@@ -188,7 +191,7 @@ public:
         FPT diff              = fpc_detail::fpt_abs<FPT>( left - right );
         FPT fraction_of_right = fpc_detail::safe_fpt_division( diff, fpc_detail::fpt_abs( right ) );
         FPT fraction_of_left  = fpc_detail::safe_fpt_division( diff, fpc_detail::fpt_abs( left ) );
-
+        
         bool res( m_strength == FPC_STRONG
             ? (fraction_of_right <= m_fraction_tolerance && fraction_of_left <= m_fraction_tolerance) 
             : (fraction_of_right <= m_fraction_tolerance || fraction_of_left <= m_fraction_tolerance) );

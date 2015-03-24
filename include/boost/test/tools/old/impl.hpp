@@ -25,7 +25,6 @@
 
 // Boost
 #include <boost/limits.hpp>
-#include <boost/numeric/conversion/conversion_traits.hpp> // for numeric::conversion_traits
 #include <boost/type_traits/is_array.hpp>
 
 #include <boost/preprocessor/repetition/repeat.hpp>
