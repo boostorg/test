@@ -15,7 +15,6 @@
 #define BOOST_LIB_DIAGNOSTIC "on"// Show library file details.
 
 #include <boost/test/unit_test.hpp>
-#include <boost/test/floating_point_comparison.hpp> // Extra test tool for FP comparison.
 
 #include <iostream>
 #include <limits>
@@ -46,7 +45,7 @@ if desired, as shown below.
 */
 
 using namespace boost::multiprecision;
-    
+namespace tt = boost::test_tools;
 
 /*`Now `cpp_dec_float_50_noet` or `cpp_dec_float_50_et` 
 can be used as a direct replacement for built-in types like `double` etc.
@@ -67,10 +66,9 @@ BOOST_AUTO_TEST_CASE(cpp_float_test_check_close_noet)
 
   std::cout <<"a = " << a << ",\nb = " << b << ",\neps = " << eps << std::endl;
 
-  BOOST_CHECK_CLOSE(a, b, eps * 100); // Expected to pass (because tolerance is as percent).
-  BOOST_CHECK_CLOSE_FRACTION(a, b, eps); // Expected to pass (because tolerance is as fraction).
+  BOOST_TEST( a == b, tt::tolerance( tt::fpc::percent_tolerance( eps * 100 ) ) );
+  BOOST_TEST( a == b, tt::tolerance( eps ) );
 
-  
 //] [/expression_template_1]git
 
 } // BOOST_AUTO_TEST_CASE(cpp_float_test_check_close)
@@ -90,8 +88,8 @@ BOOST_AUTO_TEST_CASE(cpp_float_test_check_close_et)
 
   std::cout << "a = " << a << ",\nb = " << b << ",\neps = " << eps << std::endl;
 
-  BOOST_CHECK_CLOSE(a, b, eps * 100); // Expected to pass (because tolerance is as percent).
-  BOOST_CHECK_CLOSE_FRACTION(a, b, eps); // Expected to pass (because tolerance is as fraction).
+  BOOST_TEST( a == b, tt::tolerance( tt::fpc::percent_tolerance( (cpp_dec_float_50_et)(eps * 100) ) ) );
+  BOOST_TEST( a == b, tt::tolerance( eps ) );
 
   /*`Using `cpp_dec_float_50` with the default expression template use switched on,
   the compiler error message for `BOOST_CHECK_CLOSE_FRACTION(a, b, eps); would be:
@@ -108,13 +106,12 @@ Output:
 
   Description: Autorun "J:\Cpp\big_number\Debug\test_cpp_float_close_fraction.exe"
   Running 1 test case...
-  
+
   a = 1.0000000000000000000000000000000000000000000000000,
   b = 1.0000000000000000000000000000000000000000000000001,
   eps = 1.0000000000000000000000000000000000000000000000000e-49
-  
-  *** No errors detected
 
+  *** No errors detected
 
 */
 
