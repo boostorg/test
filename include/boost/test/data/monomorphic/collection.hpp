@@ -99,7 +99,8 @@ struct is_dataset<collection<C> > : mpl::true_ {};
 
 //! @overload boost::unit_test::data::make()
 template<typename C>
-inline monomorphic::collection<typename BOOST_TEST_ENABLE_IF<is_forward_iterable<C>::value,C>::type>
+inline typename BOOST_TEST_ENABLE_IF<is_forward_iterable<C>::value, 
+                                     monomorphic::collection<C> >::type
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 make( C&& c )
 {

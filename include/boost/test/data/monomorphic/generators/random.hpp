@@ -126,16 +126,13 @@ private:
 //!   - @c engine: the random number generator engine
 //!
 //! The function returns an object that implements the dataset API.
-//! @note This function is available only on C++11 capable compilers.
-template <typename T>
+//! @note This function is available only for C++11 capable compilers.
 inline monomorphic::generated_by< monomorphic::random_t<> > random()
 {
     return monomorphic::generated_by<monomorphic::random_t<>>( monomorphic::random_t<>() );
 }
 
 //____________________________________________________________________________//
-
-
 
 /// @overload boost::unit_test::data::random()
 template<typename SampleType>

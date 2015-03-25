@@ -12,6 +12,7 @@
 //  Description : tests implicit interfaces
 // ***************************************************************************
 
+
 // Boost.Test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/data/monomorphic/singleton.hpp>
@@ -43,19 +44,13 @@ BOOST_AUTO_TEST_CASE( test_implicit_for_each )
     data::for_each_sample( std::list<double>( 2 ), ic, 1 );
     BOOST_TEST( ic.m_value == 1 );
 
-    copy_count::value() = 0;
     std::vector<copy_count> samples1( 2 );
+    copy_count::value() = 0; // we do not test the construction of the vector
     data::for_each_sample( samples1, check_arg_type<copy_count>() );
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     BOOST_TEST( copy_count::value() == 0 );
 #else
-    // clang/darwin has apparently a non standard constructor for std::vector
-    // in c++03 mode
-#ifdef BOOST_CLANG
-    BOOST_TEST( copy_count::value() == 2 );
-#else
-    BOOST_TEST( copy_count::value() == 4 );
-#endif
+    BOOST_TEST( copy_count::value() == static_cast<int>(samples1.size()) );
 #endif
 
     copy_count::value() = 0;

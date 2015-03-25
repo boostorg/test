@@ -260,7 +260,7 @@ struct bitwise_equal_impl {
         for( std::size_t counter = 0; counter < total_bits; ++counter ) {
             if( ( left & ( leftOne << counter ) ) != ( right & ( rightOne << counter ) ) ) {
                 pr = false;
-                pr.message() << "\nMismatch in position " << counter;
+                pr.message() << "\nMismatch at position " << counter;
             }
         }
 

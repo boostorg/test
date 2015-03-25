@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines the is_forward_iterable collection type trait
+/// @file
+/// Defines the is_forward_iterable collection type trait
 // ***************************************************************************
 
 #ifndef BOOST_TEST_IS_FORWARD_ITERABLE_HPP_110612GER

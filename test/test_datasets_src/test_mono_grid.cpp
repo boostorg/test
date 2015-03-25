@@ -20,6 +20,8 @@
 #include <boost/test/data/monomorphic/singleton.hpp>
 #include <boost/test/data/monomorphic/array.hpp>
 #include <boost/test/data/monomorphic/collection.hpp>
+#include <boost/test/data/monomorphic/generators/xrange.hpp>
+
 namespace data = boost::unit_test::data;
 
 #include "test_datasets.hpp"
@@ -35,6 +37,17 @@ BOOST_AUTO_TEST_CASE( test_mono_grid_size_and_composition )
   BOOST_TEST( (data::make( std::vector<int>(1) ) * data::make( std::list<int>(3) ) * data::make( 5 )).size() == 3 );
 }
 
+#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
+BOOST_AUTO_TEST_CASE( test_mono_grid_with_xrange )
+{
+  auto ds1 = data::make(1);
+  auto ds2 = data::xrange(5);
+  
+  BOOST_TEST( (ds1 * ds2).size() == 5 );
+  BOOST_TEST( (ds1 * ds2).size() == 5 );
+}
+#endif
+
 #if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && !defined(BOOST_NO_CXX11_LAMBDAS)
 BOOST_AUTO_TEST_CASE( test_mono_grid_cpp11_features )
 {
@@ -43,7 +56,6 @@ BOOST_AUTO_TEST_CASE( test_mono_grid_cpp11_features )
   int* exp1 = arr1;
   char const** exp2 = arr2;
   invocation_count ic;
-
 
   auto samples1 = data::make( arr1 ) * data::make( arr2 );
 
@@ -148,11 +160,21 @@ BOOST_AUTO_TEST_CASE( test_mono_grid_number_of_copies_auto )
   data::for_each_sample( ds1 * (ds1 * ds2), check_arg_type<std::tuple<copy_count,copy_count,copy_count>>() );
   BOOST_TEST( copy_count::value() == 0 );
 
+
+  copy_count::value() = 0;
+  int std_vector_constructor_count = 0;
+  {
+    std::vector<copy_count> v(2); // we cannot do better than std::vector constructor
+    std_vector_constructor_count = copy_count::value()/2;
+  }
+
+
+
   copy_count::value() = 0;
   auto ds3 = data::make( make_copy_count_collection() ) * data::make( make_copy_count_collection() );
   BOOST_TEST( ds3.size() == 9 );
   data::for_each_sample( ds3, check_arg_type<std::tuple<copy_count,copy_count>>() );
-  BOOST_TEST( copy_count::value() == 0 );
+  BOOST_TEST( copy_count::value() == std_vector_constructor_count *2 *3);
 }
 #endif // !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
 

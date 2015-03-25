@@ -87,7 +87,8 @@ struct is_dataset<singleton<T> > : mpl::true_ {};
 /// @overload boost::unit_test::data::make()
 template<typename T>
 inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
-                                     !monomorphic::is_dataset<T>::value, 
+                                     !monomorphic::is_dataset<T>::value &&
+                                     !boost::is_array< typename boost::remove_reference<T>::type >::value, 
                                      monomorphic::singleton<T>
 >::type
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
