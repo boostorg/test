@@ -375,7 +375,7 @@ public:                                                             \
                                                                     \
         bool direct_res = eval_direct( lhs, rhs );                  \
                                                                     \
-        if(direct_res && op_detail::compare_fpv<OP,FPT>::cmp_direct \
+        if((direct_res && op_detail::compare_fpv<OP,FPT>::cmp_direct) \
             || fpc_tolerance<FPT>() == FPT())                       \
             return direct_res;                                      \
                                                                     \
