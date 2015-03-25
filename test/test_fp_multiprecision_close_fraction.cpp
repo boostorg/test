@@ -35,32 +35,19 @@ typedef boost::multiprecision::number<
    boost::multiprecision::et_on> cpp_dec_float_50_et;
 
 
-namespace boost { namespace math { namespace fpc { namespace traits {
-
-  //template <>
-  //struct is_floating_point_comparable< cpp_dec_float_50_noet > : boost::mpl::true_ {};
-
-  //template <>
-  //struct is_floating_point_comparable< cpp_dec_float_50_et > : boost::mpl::true_ {};
-
+namespace boost { namespace math { namespace fpc { 
 
   template <class A, boost::multiprecision::expression_template_option B>
-  struct is_floating_point_comparable< boost::multiprecision::number<
+  struct tolerance_based< boost::multiprecision::number<
    A, 
    B > > : boost::mpl::true_ {};
 
-/*  template <class A, bool B>
-  struct is_floating_point_comparable< boost::multiprecision::number<
-   A, 
-   B > > : boost::mpl::true_ {};
-  */
-  
   template <class tag, class Arg1, class Arg2, class Arg3, class Arg4>
-  struct is_floating_point_comparable< 
+  struct tolerance_based< 
     boost::multiprecision::detail::expression<
       tag, Arg1, Arg2, Arg3, Arg4> > : boost::mpl::true_ {};
 
-} } } }
+} } }
 
 
 
