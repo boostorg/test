@@ -160,11 +160,21 @@ BOOST_AUTO_TEST_CASE( test_mono_grid_number_of_copies_auto )
   data::for_each_sample( ds1 * (ds1 * ds2), check_arg_type<std::tuple<copy_count,copy_count,copy_count>>() );
   BOOST_TEST( copy_count::value() == 0 );
 
+
+  copy_count::value() = 0;
+  int std_vector_constructor_count = 0;
+  {
+    std::vector<copy_count> v(2); // we cannot do better than std::vector constructor
+    std_vector_constructor_count = copy_count::value()/2;
+  }
+
+
+
   copy_count::value() = 0;
   auto ds3 = data::make( make_copy_count_collection() ) * data::make( make_copy_count_collection() );
   BOOST_TEST( ds3.size() == 9 );
   data::for_each_sample( ds3, check_arg_type<std::tuple<copy_count,copy_count>>() );
-  BOOST_TEST( copy_count::value() == 0 );
+  BOOST_TEST( copy_count::value() == std_vector_constructor_count *2 *3);
 }
 #endif // !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
 
