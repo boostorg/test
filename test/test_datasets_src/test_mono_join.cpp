@@ -140,10 +140,17 @@ BOOST_AUTO_TEST_CASE( test_mono_join )
     BOOST_TEST( copy_count::value() == 0 );
 
     copy_count::value() = 0;
+    int std_vector_constructor_count = 0;
+    {
+      std::vector<copy_count> v(2); // we cannot do better than std::vector constructor
+      std_vector_constructor_count = copy_count::value()/2;
+    }
+
+    copy_count::value() = 0;
     auto ds3 = data::make( make_copy_count_collection() ) + data::make( make_copy_count_collection() );
     BOOST_TEST( ds3.size() == 6 );
     data::for_each_sample( ds3, check_arg_type<copy_count>() );
-    BOOST_TEST( copy_count::value() == 0 );
+    BOOST_TEST( copy_count::value() == std_vector_constructor_count * 2 * 3 );
 #endif
 }
 
