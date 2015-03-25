@@ -40,9 +40,9 @@ namespace fpc {
 template<typename T>
 struct tolerance_based : mpl::bool_<
     is_floating_point<T>::value ||
-    std::numeric_limits<T>::is_specialized &&
+    (std::numeric_limits<T>::is_specialized &&
     !std::numeric_limits<T>::is_integer &&
-    !std::numeric_limits<T>::is_exact> {};
+    !std::numeric_limits<T>::is_exact) > {};
 
 // ************************************************************************** //
 // **************                 fpc::strength                ************** //
