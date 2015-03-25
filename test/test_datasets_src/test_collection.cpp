@@ -109,45 +109,56 @@ BOOST_AUTO_TEST_CASE( test_collection )
 BOOST_AUTO_TEST_CASE( test_collection_copies )
 {
 
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    // number of copies due to the dataset make
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
     int exp_copy_count = 0;
 #else
-    // clang/darwin has apparently a non standard constructor for std::vector
-    // in c++03 mode    
-#if defined(BOOST_CLANG) && __APPLE__
-    int exp_copy_count = 2;
-#else
-    int exp_copy_count = 4;
-#endif
-    
+    int exp_copy_count = 1;
 #endif
 
+    // number of copies due to the vector constructor
     copy_count::value() = 0;
+    int std_vector_constructor_count = 0;
+    {
+      std::vector<copy_count> v(2); // we cannot do better than std::vector constructor
+      std_vector_constructor_count = copy_count::value()/2;
+    }
+
+    copy_count::value() = 0;
+    int std_list_constructor_count = 0;
+    {
+      std::list<copy_count> v(2); // we cannot do better than std::vector constructor
+      std_list_constructor_count = copy_count::value()/2;
+    }
+
+    copy_count::value() = 0;
+
     data::for_each_sample( data::make( std::vector<copy_count>( 2 ) ), check_arg_type<copy_count>() );
-    BOOST_TEST( copy_count::value() == exp_copy_count );
+    BOOST_TEST( copy_count::value() == (exp_copy_count + std_vector_constructor_count) * 2);
+    BOOST_CHECK_EQUAL(copy_count::value(), (exp_copy_count + std_vector_constructor_count) * 2); 
 
     copy_count::value() = 0;
     std::vector<copy_count> samples3( 2 );
     data::for_each_sample( data::make( samples3 ), check_arg_type<copy_count>() );
-    BOOST_TEST( copy_count::value() == exp_copy_count );
+    BOOST_TEST( copy_count::value() == (exp_copy_count + std_vector_constructor_count) * 2);
 
     copy_count::value() = 0;
     std::vector<copy_count> const samples4( 2 );
     data::for_each_sample( data::make( samples4 ), check_arg_type<copy_count>() );
-    BOOST_TEST( copy_count::value() == exp_copy_count );
+    BOOST_TEST( copy_count::value() == (exp_copy_count + std_vector_constructor_count) * 2);
 
 #ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
     copy_count::value() = 0;
     auto ds1 = data::make( make_copy_count_collection() );
     BOOST_TEST( ds1.size() == 3 );
+    BOOST_TEST( copy_count::value() == (exp_copy_count + std_vector_constructor_count) * 3);
     data::for_each_sample( ds1, check_arg_type<copy_count>() );
-    BOOST_TEST( copy_count::value() == exp_copy_count );
 
     copy_count::value() = 0;
     auto ds2 = data::make( make_copy_count_const_collection() );
     BOOST_TEST( ds2.size() == 3 );
     data::for_each_sample( ds2, check_arg_type<copy_count>() );
-    BOOST_TEST( copy_count::value() == 3 ); // !! ?? no const rvalue rev constructor for std::list
+    BOOST_TEST( copy_count::value() == (exp_copy_count + std_list_constructor_count + 1) * 3 ); // no rvalue constructor for the dataset
 #endif
 }
 
