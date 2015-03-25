@@ -53,10 +53,10 @@ Mismatch at position 5: 7 != 6
 509: error: in "test_BOOST_CHECK_EQUAL_COLLECTIONS": check { testlist.begin(), testlist.end() } == { pattern, pattern+2 } has failed. 
 Collections size mismatch: 7 != 2
 518: error: in "test_BOOST_CHECK_BITWISE_EQUAL": check (char)0x06 =.= (char)0x16 has failed. 
-Mismatch in position 4
+Mismatch at position 4
 521: warning: in "test_BOOST_CHECK_BITWISE_EQUAL": condition (char)0x26 =.= (char)0x04 is not satisfied. 
-Mismatch in position 1
-Mismatch in position 5
+Mismatch at position 1
+Mismatch at position 5
 524: fatal error: in "test_BOOST_CHECK_BITWISE_EQUAL": critical check (char)0x26 =.= (int)0x26 has failed. 
 Operands bit sizes mismatch: 8 != 32
 still testing
@@ -129,10 +129,10 @@ Failure occurred in a following context:
 702: info: check true has passed
 704: error: in "test_BOOST_TEST_basic_arithmetic_op": This message reported instead including 1 and 2
 724: error: in "test_BOOST_TEST_collection_comp": check v <= l has failed. 
-Mismatch in position 2: 3 > 2
+Mismatch at position 2: 3 > 2
 725: error: in "test_BOOST_TEST_collection_comp": check v == l has failed. 
-Mismatch in position 1: 2 != 3
-Mismatch in position 2: 3 != 2
+Mismatch at position 1: 2 != 3
+Mismatch at position 2: 3 != 2
 746: error: in "test_BOOST_TEST_fpv_comp": check d1 == d2 has failed [1e-05 != 1e-05]
 748: error: in "test_BOOST_TEST_fpv_comp": check d1 == d2 has failed [1e-05 != 1e-05]. Relative difference exceeds tolerance [0.000908265 > 1e-07]
 750: error: in "test_BOOST_TEST_fpv_comp": check d1 != f1 has failed [1e-05 == 1.10000001e-05]. Relative difference is within tolerance [7.81041e-09 < 1e-07]
@@ -154,9 +154,9 @@ Mismatch in position 2: 3 != 2
 816: error: in "test_BOOST_TEST_cstring_comp": check str3 < str1 has failed [test2 >= test1]
 817: error: in "test_BOOST_TEST_cstring_comp": check str1 >= str2 has failed [test1 < test12]
 828: error: in "test_BOOST_TEST_bitwise": check a == b has failed [171 != 136]. Bitwise comparison failed
-Mismatch in position 0
-Mismatch in position 1
-Mismatch in position 5
+Mismatch at position 0
+Mismatch at position 1
+Mismatch at position 5
 829: error: in "test_BOOST_TEST_bitwise": check c == b has failed [138 != 136]. Bitwise comparison failed
-Mismatch in position 1
+Mismatch at position 1
 Operands bit sizes mismatch: 16 != 32
