@@ -31,7 +31,6 @@ that almost satisfies our requirements without any extra support from the test f
 test fixtures support was introduced in the __UTF__ somewhat late in its life cycle. Here is how simple test module
 with such a fixture may look like:
 
-[/snippet5 deleted content below]
 
 ``
 struct MyFixture {

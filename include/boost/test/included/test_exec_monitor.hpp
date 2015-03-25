@@ -5,11 +5,9 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
 //
-//  Version     : $Revision$
-//
-//  Description : included (vs. linked) version of Test Execution Monitor
+/// @file
+/// @brief Included (vs. linked) version of Test Execution Monitor
 // ***************************************************************************
 
 #ifndef BOOST_INCLUDED_TEST_EXEC_MONITOR_HPP_071894GER

@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2012-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at
+//  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -18,12 +18,15 @@
 
 #include <boost/test/utils/is_forward_iterable.hpp>
 
+
 // Boost
 #ifdef BOOST_NO_CXX11_RVALUE_REFERENCES
 #include <boost/utility/enable_if.hpp>
+#include <boost/type_traits/add_const.hpp>
 #else
 #include <boost/utility/declval.hpp>
 #endif
+#include <boost/type_traits/remove_const.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
@@ -95,11 +98,11 @@ struct is_dataset<DS const> : is_dataset<DS> {};
 //! This function has several overloads:
 //! @code
 //! // returns ds if ds is already a dataset
-//! template <typename DS> DS make(DS&& ds);
+//! template <typename DS> DS make(DS&& ds); 
 //!
 //! // creates a singleton dataset, for non forward iterable and non dataset type T
 //! // (a C string is not considered as a sequence).
-//! template <typename T> monomorphic::singleton<T> make(T&& v);
+//! template <typename T> monomorphic::singleton<T> make(T&& v); 
 //! monomorphic::singleton<char*> make( char* str );
 //! monomorphic::singleton<char const*> make( char const* str );
 //!
@@ -123,15 +126,17 @@ make(DS&& ds)
 // fwrd declaration for singletons
 //! @overload boost::unit_test::data::make()
 template<typename T>
-inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value &&
-                                     !monomorphic::is_dataset<T>::value,
+inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
+                                     !monomorphic::is_dataset<T>::value &&
+                                     !boost::is_array< typename boost::remove_reference<T>::type >::value, 
                                      monomorphic::singleton<T> >::type
 make( T&& v );
 
 
 //! @overload boost::unit_test::data::make()
 template<typename C>
-inline monomorphic::collection<typename BOOST_TEST_ENABLE_IF<unit_test::is_forward_iterable<C>::value,C>::type>
+inline typename BOOST_TEST_ENABLE_IF<is_forward_iterable<C>::value, 
+                                     monomorphic::collection<C> >::type
 make( C&& c );
 
 
@@ -149,8 +154,9 @@ make(DS const& ds)
 // fwrd declaration for singletons
 //! @overload boost::unit_test::data::make()
 template<typename T>
-inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value &&
-                                     !monomorphic::is_dataset<T>::value,
+inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
+                                     !monomorphic::is_dataset<T>::value &&
+                                     !boost::is_array< typename boost::remove_reference<T>::type >::value, 
                                      monomorphic::singleton<T> >::type
 make( T const& v );
 
@@ -158,7 +164,8 @@ make( T const& v );
 // fwrd declaration for collections
 //! @overload boost::unit_test::data::make()
 template<typename C>
-inline monomorphic::collection<typename BOOST_TEST_ENABLE_IF<unit_test::is_forward_iterable<C>::value,C>::type>
+inline typename BOOST_TEST_ENABLE_IF<is_forward_iterable<C>::value, 
+                                     monomorphic::collection<C> >::type
 make( C const& c );
 
 //____________________________________________________________________________//
@@ -173,8 +180,21 @@ make( C const& c );
 // fwrd declarations
 //! @overload boost::unit_test::data::make()
 template<typename T, std::size_t size>
-inline monomorphic::array<T>
+inline monomorphic::array< typename boost::remove_const<T>::type >
 make( T (&a)[size] );
+
+// apparently some compilers (eg clang-3.4 on linux) have trouble understanding
+// the previous line for T being const
+//! @overload boost::unit_test::data::make()
+template<typename T, std::size_t size>
+inline monomorphic::array< typename boost::remove_const<T>::type >
+make( T const (&)[size] );
+
+template<typename T, std::size_t size>
+inline monomorphic::array< typename boost::remove_const<T>::type >
+make( T a[size] );
+
+
 
 //! @overload boost::unit_test::data::make()
 inline monomorphic::singleton<char*>
@@ -188,20 +208,92 @@ make( char const* str );
 
 //____________________________________________________________________________//
 
-#ifndef BOOST_NO_CXX11_DECLTYPE
+
 
 namespace result_of {
 
+#ifndef BOOST_NO_CXX11_DECLTYPE
 //! Result of the make call.
 template<typename DS>
 struct make
 {
     typedef decltype(data::make(boost::declval<DS>())) type;
 };
+#else
+
+// explicit specialisation, cumbersome
+
+template <typename DS, typename Enable = void>
+struct make;
+
+template <typename DS>
+struct make<
+         DS const&, 
+         typename BOOST_TEST_ENABLE_IF<monomorphic::is_dataset<DS>::value>::type
+         >
+{
+    typedef DS const& type;
+};
+
+template <typename T>
+struct make<
+         T, 
+         typename BOOST_TEST_ENABLE_IF< (!is_forward_iterable<T>::value && 
+                                         !monomorphic::is_dataset<T>::value &&
+                                         !boost::is_array< typename boost::remove_reference<T>::type >::value)
+                                      >::type
+         >
+{
+    typedef monomorphic::singleton<T> type;
+};
+
+template <typename C>  
+struct make<
+         C, 
+         typename BOOST_TEST_ENABLE_IF< is_forward_iterable<C>::value>::type
+         >
+{
+    typedef monomorphic::collection<C> type;
+};
+
+#if 1 
+template <typename T, std::size_t size>  
+struct make<T [size]>
+{
+    typedef monomorphic::array<typename boost::remove_const<T>::type> type;
+};
+#endif
+
+template <typename T, std::size_t size>  
+struct make<T (&)[size]>
+{
+    typedef monomorphic::array<typename boost::remove_const<T>::type> type;
+};
+
+template <typename T, std::size_t size>  
+struct make<T const (&)[size]>
+{
+    typedef monomorphic::array<typename boost::remove_const<T>::type> type;
+};
+
+template <>  
+struct make<char*>
+{
+    typedef monomorphic::singleton<char*> type;
+};
+
+template <>  
+struct make<char const*>
+{
+    typedef monomorphic::singleton<char const*> type;
+};
+
+#endif // BOOST_NO_CXX11_DECLTYPE
+
 
 } // namespace result_of
 
-#endif // BOOST_NO_CXX11_DECLTYPE
+
 
 
 //____________________________________________________________________________//

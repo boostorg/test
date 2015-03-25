@@ -136,8 +136,35 @@ BOOST_AUTO_TEST_CASE( test_forward_iterable_concept )
     BOOST_CHECK_MESSAGE(!boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
   }
 
-
+  {
+    // tables are not in the forward_iterable concept
+    typedef int type[10];
+    BOOST_CHECK_MESSAGE(!boost::unit_test::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(!boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
 }
+#else // BOOST_TEST_FWD_ITERABLE_CXX03
+
+BOOST_AUTO_TEST_CASE( test_forward_iterable_concept )
+{
+  {
+    typedef std::vector<int> type;
+    BOOST_CHECK_MESSAGE(boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+
+  {
+    // should also work for references, but from is_forward_iterable
+    typedef std::vector<int>& type;
+    BOOST_CHECK_MESSAGE(boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }
+  
+  {
+    typedef int type[3];
+    BOOST_CHECK_MESSAGE(!boost::unit_test::is_forward_iterable< type >::value, "is_forward_iterable failed");
+  }  
+}
+
 #endif
 
 

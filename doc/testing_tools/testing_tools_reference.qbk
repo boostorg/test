@@ -18,6 +18,12 @@
   
   [/ ###############################################################################################]
   [
+    [__BOOST_TEST__]
+    [General purpose assertion macro (does not work with ternary assertions).]
+  ]
+  
+  [/ ###############################################################################################]
+  [
     [__BOOST_LEVEL__]
     [Simple validation of a boolean predicate value.]
   ]
@@ -138,6 +144,20 @@
   
   
 ]
+
+[/ ###############################################################################################]
+[section:assertion_boost_test_super_macro `BOOST_TEST`]
+
+
+``
+  BOOST_TEST(predicate);
+``
+
+[caution The macro does not work with ternary operations in `predicate`, as the macro uses operator overloading
+ internally, and ternary operations are not overloadable. ]
+
+[endsect]
+
 
 [/ ###############################################################################################]
 [#ref_BOOST_level][section:assertion_boost_level `BOOST_<level>`]

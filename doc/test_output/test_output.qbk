@@ -6,7 +6,7 @@
  /]
 
 
-[#ref_test_outputs][section:test_output Controlling outputs]
+[section:test_output Controlling outputs]
 The output produced by a test module is one of the major assets the __UTF__ brings to users. In comparison with any
 kind of manual/assert based solution the __UTF__ provide following services:
 
@@ -25,7 +25,7 @@ kind of manual/assert based solution the __UTF__ provide following services:
   directed to the standard output. Once testing is completed the __UTF__ may produce a summary test report with
   different levels of detail. The test report is by default directed to the standard error output.]
 [Flexibility in what is shown in the output[br]
-The __UTF__ provides the ability to configure what if shown in both the test log and the test report. The
+The __UTF__ provides the ability to configure what is shown in both the test log and the test report. The
   configuration is supported both at runtime, during test module invocation and at compile time from within a
   test module.]
 [Flexibility in how output is formatted[br]
@@ -35,8 +35,9 @@ The __UTF__ provides the ability to configure the format of the test module outp
 ]
 
 [tip More details about the class implementing the formatting of the logs can be found in the following reference sections.
-[classref boost::unit_test::unit_test_log_formatter] defines the interface for all loggers. Included HRF and XML interfaces derive from this class.[br]
-[classref boost::unit_test::test_results] defines the information carried by the tests to provide reports and logs.
+
+* [classref boost::unit_test::unit_test_log_formatter] defines the interface for all loggers. Built-in HRF and XML interfaces derive from this class
+* [classref boost::unit_test::test_results] defines the information carried by the tests to provide reports and logs.
 ]
   
 [section Test log output]
@@ -62,7 +63,7 @@ the list of all levels in order of increasing 'importance':
     ]
     [
       [General information]
-      [This category includes general information massages produced in most cases by a test module author using the
+      [This category includes general information messages produced in most cases by a test module author using the
        macro __BOOST_TEST_MESSAGE__]
     ]
     [
@@ -196,6 +197,7 @@ with in a manner similar to standard `std::iostream` operation.
 [/ -------------------------------------------------------------------------------------------------- ]
 
 [include checkpoints.qbk]
+[include contexts.qbk]
 [include logging_floating_point.qbk]
 [include log_format.qbk]
 [include compilation_options.qbk]

@@ -21,11 +21,11 @@
 [h5 Bugfixes and feature requests]
 # [ticket 2018] Error in the documentation chapter "Runtime parameters reference"
 # [ticket 2450] equations in Floating-point comparison algorithms html are not rendered properly
-# [ticket 2717] BOOST_<level>_EQUAL_COLLECTION docs typo
+# [ticket 2717] `BOOST_<level>_EQUAL_COLLECTION` docs typo
 # [ticket 2759] Typos in test new-year-resolution.html
 # [ticket 3182] _CrtSetReportFile can be used to redirect memory leaks report
 # [ticket 3316] Access violation when trying to log from init_tests_func
-# [ticket 3392] Boost::Test: Wrong contents for documentation of the BOOST_TEST_PASSPOINT macro
+# [ticket 3392] Boost::Test: Wrong contents for documentation of the `BOOST_TEST_PASSPOINT` macro
 # [ticket 3402] Invalid define name in docummentation (duplicates #2717)
 # [ticket 3445] incorreect link in the docs
 # [ticket 3463] GT is GREAT!
@@ -39,15 +39,15 @@
 # [ticket 3811] global namespace polution
 # [ticket 3834] doc: probably incorrect HTML rendering (duplicates #2450)
 # [ticket 3896] erroneous documentation in boost test commandline parameter description
-# [ticket 3932] Error in BOOST_<level>_GT description (duplicates #3463)
+# [ticket 3932] Error in `BOOST_<level>_GT` description (duplicates #3463)
 # [ticket 3938] doc: incorrect macro name
-# [ticket 3964] Documentation for BOOST_<level>_CLOSE_FRACTION is incorrect
+# [ticket 3964] Documentation for `BOOST_<level>_CLOSE_FRACTION` is incorrect
 # [ticket 3978] Failed to completely redirect TestLog to file, bugfix appended
 # [ticket 3979] <boost/test/exception_safety.hpp> requires additional includes
 # [ticket 4161] spelling mistakes...
 # [ticket 4275] Documentation error Boost.Test (duplicates #2717)
 # [ticket 4389] Enable boost_test to run specific tests with any required dependent tests.
-# [ticket 4434] BOOST_AUTO_EST_CASE typos in docs
+# [ticket 4434] `BOOST_AUTO_EST_CASE` typos in docs
 # [ticket 4587] Broken link in website
 # [ticket 4806] Invalid link (examples not showing up in documentation)
 # [ticket 4911] ENH: boost.test output the exception real type name.
@@ -60,7 +60,7 @@
 # [ticket 5374] Errors from Boost.Test are no more shown in the Error list in VS2010
 # [ticket 5412] XML formatter in test library processes strings with subsequences `]]>` incorrectly
 # [ticket 5563] using a test macro in a global fixture crashes Boost.Test
-# [ticket 5582] There is a memory leak in the BOOST_AUTO_TEST_CASE_TEMPLATE
+# [ticket 5582] There is a memory leak in the `BOOST_AUTO_TEST_CASE_TEMPLATE`
 # [ticket 5599] boost::test documentation gives poor instruction
 # [ticket 5718] broken link to unit testing framework examples
 # [ticket 5729] Missing static_cast in fpt_limits
@@ -73,16 +73,18 @@
 # [ticket 6748] Link in the documentation points to wrong page
 # [ticket 7046] Output full error message, not just 512 chars
 # [ticket 7397] Boost.Test, since boost 1.48 is using the deprecated Boost.Timer class - it should be updated to use the new class
-# [ticket 7410] Test Units (Cases and Suites) in Boost.Test do not capture __FILE__ and __LINE__ at declaration point making it impossible to provide source file linking using external test management tools
+# [ticket 7410] Test Units (Cases and Suites) in Boost.Test do not capture `__FILE__` and `__LINE__` at declaration point making it impossible to provide source file linking using external test management tools
 # [ticket 8862] Boost.Test typo in documentation
 # [ticket 9179] Documentation: broken link (unable to find =const_string.hpp/const_string_test.cpp=)
-# [ticket 9272] boost::test BOOST_<level>_GT documentation bug
+# [ticket 9272] boost::test `BOOST_<level>_GT` documentation bug
+# [ticket 9390] Incomplete `BOOST_TEST_DONT_PRINT_LOG_VALUE`
 # [ticket 9409] Some source code examples are missing
 # [ticket 9537] const_string_test example fails
 # [ticket 9539] Floating-point comparison algorithms aren't formatted correctly
 # [ticket 9581] Squassabia reference link gives 404 not found
 # [ticket 10318] Minor documentation fix
 # [ticket 10888] Assertion failures don't show up in the errors pane in VS 2010, VS 2012 or VS 2013 (duplicates)
+# [ticket 11054] Floating-point comparison of multiprecision values fails if expression template is on
 
 
 

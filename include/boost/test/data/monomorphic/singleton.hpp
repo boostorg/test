@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at
+//  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -37,11 +37,11 @@ class singleton : public monomorphic::dataset<typename boost::decay<T>::type> {
 
     struct iterator : public base::iterator {
         // Constructor
-        explicit            iterator( singleton<T> const& owner )
-        : m_owner( owner )
+        explicit            iterator( singleton<T> const& owner ) 
+        : m_owner( owner ) 
         {}
 
-        // forward iterator interface
+        // forward iterator interface 
         virtual typename base::data_type const&
                             operator*()     { return m_owner.value(); }
         virtual void        operator++()    {}
@@ -86,8 +86,9 @@ struct is_dataset<singleton<T> > : mpl::true_ {};
 
 /// @overload boost::unit_test::data::make()
 template<typename T>
-inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value &&
-                                     !monomorphic::is_dataset<T>::value,
+inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
+                                     !monomorphic::is_dataset<T>::value &&
+                                     !boost::is_array< typename boost::remove_reference<T>::type >::value, 
                                      monomorphic::singleton<T>
 >::type
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES

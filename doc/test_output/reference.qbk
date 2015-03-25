@@ -1,3 +1,11 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ / Copyright (c) 2015 Raffi Enficiaud
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+ 
 [section:reference Reference]
 
 
@@ -24,7 +32,14 @@
     [__BOOST_TEST_PASSPOINT__]
     [Indicates an unnamed checkpoint that will be printed in case of failure]
   ]
-  
+  [
+    [__BOOST_TEST_INFO__]
+    [Defines a message to be printed as part of the context of the first encountered assertion, if it fails]
+  ]
+  [
+    [__BOOST_TEST_CONTEXT__]
+    [Defines a scope and a message to be printed as part of the context of every failed assertion within the scope]
+  ]
   
   
 ]
@@ -55,6 +70,13 @@ Outputs a custom message into the test log.
 
 [endsect]
 
+[section:test_output_macro_info `BOOST_TEST_INFO`]
+Defines a message to be printed as part of the context of the first encountered assertion, if it fails. For more details see [link boost_test.users_guide.test_output.contexts here].
+[endsect]
+
+[section:test_output_macro_context `BOOST_TEST_CONTEXT`]
+Defines a scope and a message to be printed as part of the context of every failed assertion within the scope. For more details see [link boost_test.users_guide.test_output.contexts here].
+[endsect]
 
 [section:test_output_macro_disable_type `BOOST_TEST_DONT_PRINT_LOG_VALUE`]
 Disables the automatic printing of a value. This macro is relevant 

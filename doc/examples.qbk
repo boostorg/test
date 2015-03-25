@@ -17,4 +17,10 @@
 
 [bt_example_page example68..Dataset generating a Fibonacci sequence]
 
+[bt_example_page example80_contexts..Adding assertion-bound context]
+
+[bt_example_page example81_contexts..Adding scope-bound context]
+
+[bt_example_page example82_contexts..Mixing scope- and assertion-bound contexts]
+
 [endsect] [/ section examples]

@@ -186,4 +186,3 @@ BOOST_AUTO_TEST_CASE( search_test )
   BOOST_CHECK_EQUAL( cs.find_last_of( "st" ), cs.begin() + 5 );
 }
 
-// EOF

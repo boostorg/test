@@ -21,7 +21,7 @@
 #include <boost/test/unit_test_parameters.hpp>
 #include <boost/test/output/compiler_log_formatter.hpp>
 #include <boost/test/framework.hpp>
-
+#include <boost/core/noncopyable.hpp>
 #include <boost/test/detail/suppress_warnings.hpp>
 
 // Boost
@@ -724,8 +724,8 @@ TEST_CASE( test_BOOST_TEST_collection_comp )
     l.push_back( 3 );
     l.push_back( 2 );
 
-    BOOST_TEST_FWD_1( v <= l, "check v <= l has failed.\nMismatch in position 2: 3 > 2" );
-    BOOST_TEST_FWD_1( v == l, "check v == l has failed.\nMismatch in position 1: 2 != 3\nMismatch in position 2: 3 != 2" );
+    BOOST_TEST_FWD_1( v <= l, "check v <= l has failed.\nMismatch at position 2: 3 > 2" );
+    BOOST_TEST_FWD_1( v == l, "check v == l has failed.\nMismatch at position 1: 2 != 3\nMismatch at position 2: 3 != 2" );
 }
 
 //____________________________________________________________________________//
