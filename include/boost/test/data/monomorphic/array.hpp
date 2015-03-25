@@ -82,18 +82,23 @@ struct is_dataset<array<T> > : mpl::true_ {};
 
 //! @overload boost::unit_test::data::make()
 template<typename T, std::size_t size>
-inline monomorphic::array<T> make( T (&a)[size] )
+inline monomorphic::array< typename boost::remove_const<T>::type > make( T (&a)[size] )
 {
-    return monomorphic::array<T>( a, size );
+    return monomorphic::array< typename boost::remove_const<T>::type >( a, size );
 }
 
 //! @overload boost::unit_test::data::make()
 template<typename T, std::size_t size>
-inline monomorphic::array<T> make( T const (&a)[size] )
+inline monomorphic::array< typename boost::remove_const<T>::type > make( T const (&a)[size] )
 {
     return monomorphic::array<T>( a, size );
 }
 
+template<typename T, std::size_t size>
+inline monomorphic::array< typename boost::remove_const<T>::type > make( T a[size] )
+{
+    return monomorphic::array<T>( a, size );
+}
 
 
 //____________________________________________________________________________//

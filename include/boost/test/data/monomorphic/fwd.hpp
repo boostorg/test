@@ -22,10 +22,11 @@
 // Boost
 #ifdef BOOST_NO_CXX11_RVALUE_REFERENCES
 #include <boost/utility/enable_if.hpp>
-#include <boost/type_traits/remove_const.hpp>
+#include <boost/type_traits/add_const.hpp>
 #else
 #include <boost/utility/declval.hpp>
 #endif
+#include <boost/type_traits/remove_const.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
@@ -127,7 +128,7 @@ make(DS&& ds)
 template<typename T>
 inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
                                      !monomorphic::is_dataset<T>::value &&
-                                     !boost::is_array<T>::value, 
+                                     !boost::is_array< typename boost::remove_reference<T>::type >::value, 
                                      monomorphic::singleton<T> >::type
 make( T&& v );
 
@@ -155,7 +156,7 @@ make(DS const& ds)
 template<typename T>
 inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
                                      !monomorphic::is_dataset<T>::value &&
-                                     !boost::is_array<T>::value, 
+                                     !boost::is_array< typename boost::remove_reference<T>::type >::value, 
                                      monomorphic::singleton<T> >::type
 make( T const& v );
 
@@ -179,15 +180,21 @@ make( C const& c );
 // fwrd declarations
 //! @overload boost::unit_test::data::make()
 template<typename T, std::size_t size>
-inline monomorphic::array<T>
+inline monomorphic::array< typename boost::remove_const<T>::type >
 make( T (&a)[size] );
 
 // apparently some compilers (eg clang-3.4 on linux) have trouble understanding
 // the previous line for T being const
 //! @overload boost::unit_test::data::make()
 template<typename T, std::size_t size>
-inline monomorphic::array<T>
+inline monomorphic::array< typename boost::remove_const<T>::type >
 make( T const (&)[size] );
+
+template<typename T, std::size_t size>
+inline monomorphic::array< typename boost::remove_const<T>::type >
+make( T a[size] );
+
+
 
 //! @overload boost::unit_test::data::make()
 inline monomorphic::singleton<char*>
@@ -233,7 +240,7 @@ struct make<
          T, 
          typename BOOST_TEST_ENABLE_IF< (!is_forward_iterable<T>::value && 
                                          !monomorphic::is_dataset<T>::value &&
-                                         !boost::is_array<T>::value)
+                                         !boost::is_array< typename boost::remove_reference<T>::type >::value)
                                       >::type
          >
 {
@@ -249,9 +256,22 @@ struct make<
     typedef monomorphic::collection<C> type;
 };
 
-
+#if 1 
 template <typename T, std::size_t size>  
 struct make<T [size]>
+{
+    typedef monomorphic::array<typename boost::remove_const<T>::type> type;
+};
+#endif
+
+template <typename T, std::size_t size>  
+struct make<T (&)[size]>
+{
+    typedef monomorphic::array<typename boost::remove_const<T>::type> type;
+};
+
+template <typename T, std::size_t size>  
+struct make<T const (&)[size]>
 {
     typedef monomorphic::array<typename boost::remove_const<T>::type> type;
 };
