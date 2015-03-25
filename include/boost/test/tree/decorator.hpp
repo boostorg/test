@@ -83,7 +83,7 @@ public:
     virtual base_ptr        clone() const = 0;
 
 protected:
-    ~base() {}
+    virtual ~base() {}
 };
 
 // ************************************************************************** //
