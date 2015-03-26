@@ -60,12 +60,25 @@ BOOST_AUTO_TU_REGISTRAR( suite_name )(                                  \
         boost::unit_test::decorator::collector::instance() )            \
 /**/
 
+#if BOOST_PP_VARIADICS
 #define BOOST_AUTO_TEST_SUITE( ... )                                    \
     BOOST_TEST_INVOKE_IF_N_ARGS( 1,                                     \
         BOOST_AUTO_TEST_SUITE_NO_DECOR,                                 \
         BOOST_AUTO_TEST_SUITE_WITH_DECOR,                               \
         __VA_ARGS__)                                                    \
 /**/
+
+#else /* BOOST_PP_VARIADICS */
+
+#define BOOST_AUTO_TEST_SUITE( suite_name )                             \
+    BOOST_AUTO_TEST_SUITE_NO_DECOR( suite_name )                        \
+/**/
+
+#define BOOST_AUTO_TEST_SUITE_D( suite_name, decorators )               \
+    BOOST_AUTO_TEST_SUITE_WITH_DECOR( suite_name, decorators)           \
+/**/
+
+#endif /* BOOST_PP_VARIADICS */
 
 // ************************************************************************** //
 // **************            BOOST_FIXTURE_TEST_SUITE          ************** //
@@ -81,12 +94,27 @@ typedef F BOOST_AUTO_TEST_CASE_FIXTURE;                                 \
 typedef F BOOST_AUTO_TEST_CASE_FIXTURE;                                 \
 /**/
 
+#if BOOST_PP_VARIADICS
+
 #define BOOST_FIXTURE_TEST_SUITE( ... )                                 \
     BOOST_TEST_INVOKE_IF_N_ARGS( 2,                                     \
         BOOST_FIXTURE_TEST_SUITE_NO_DECOR,                              \
         BOOST_FIXTURE_TEST_SUITE_WITH_DECOR,                            \
         __VA_ARGS__)                                                    \
 /**/
+
+#else /* BOOST_PP_VARIADICS */
+
+#define BOOST_FIXTURE_TEST_SUITE( suite_name, F  )                      \
+   BOOST_FIXTURE_TEST_SUITE_NO_DECOR( suite_name, F )                   \
+/**/
+
+#define BOOST_FIXTURE_TEST_SUITE_D( suite_name, F, decorators  )        \
+   BOOST_FIXTURE_TEST_SUITE_WITH_DECOR( suite_name, F, decorators )     \
+/**/
+
+#endif /* BOOST_PP_VARIADICS */
+
 
 // ************************************************************************** //
 // **************           BOOST_AUTO_TEST_SUITE_END          ************** //
@@ -138,12 +166,26 @@ BOOST_FIXTURE_TEST_CASE_WITH_DECOR( test_name, F,                       \
     boost::unit_test::decorator::collector::instance() )                \
 /**/
 
+#if BOOST_PP_VARIADICS
+
 #define BOOST_FIXTURE_TEST_CASE( ... )                                  \
     BOOST_TEST_INVOKE_IF_N_ARGS( 2,                                     \
         BOOST_FIXTURE_TEST_CASE_NO_DECOR,                               \
         BOOST_FIXTURE_TEST_CASE_WITH_DECOR,                             \
          __VA_ARGS__)                                                   \
 /**/
+
+#else /* BOOST_PP_VARIADICS */
+
+#define BOOST_FIXTURE_TEST_CASE( test_name, F )                         \
+     BOOST_FIXTURE_TEST_CASE_NO_DECOR(test_name, F)                     \
+/**/
+
+#define BOOST_FIXTURE_TEST_CASE_D( test_name, F, decorators )           \
+     BOOST_FIXTURE_TEST_CASE_WITH_DECOR(test_name, F, decorators)       \
+/**/
+
+#endif /* BOOST_PP_VARIADICS */
 
 // ************************************************************************** //
 // **************             BOOST_AUTO_TEST_CASE             ************** //
@@ -159,12 +201,27 @@ BOOST_FIXTURE_TEST_CASE_WITH_DECOR( test_name, F,                       \
         BOOST_AUTO_TEST_CASE_FIXTURE, decorators )                      \
 /**/
 
+#if BOOST_PP_VARIADICS
+
 #define BOOST_AUTO_TEST_CASE( ... )                                     \
     BOOST_TEST_INVOKE_IF_N_ARGS( 1,                                     \
         BOOST_AUTO_TEST_CASE_NO_DECOR,                                  \
         BOOST_AUTO_TEST_CASE_WITH_DECOR,                                \
          __VA_ARGS__)                                                   \
 /**/
+
+#else /* BOOST_PP_VARIADICS */
+
+#define BOOST_AUTO_TEST_CASE( test_name )                               \
+    BOOST_AUTO_TEST_CASE_NO_DECOR( test_name )                          \
+/**/
+
+#define BOOST_AUTO_TEST_CASE_D( test_name, decorators )                 \
+    BOOST_AUTO_TEST_CASE_WITH_DECOR( test_name, decorators )            \
+/**/
+
+
+#endif /* BOOST_PP_VARIADICS */
 
 // ************************************************************************** //
 // **************       BOOST_FIXTURE_TEST_CASE_TEMPLATE       ************** //

@@ -25,7 +25,13 @@ using namespace boost::unit_test;
 
 BOOST_AUTO_TEST_SUITE( S1 )
 
-BOOST_AUTO_TEST_CASE( tc1, * expected_failures(1) ) { BOOST_ERROR(""); }
+#if BOOST_PP_VARIADICS
+BOOST_AUTO_TEST_CASE( tc1, * expected_failures(1) ) 
+#else
+BOOST_AUTO_TEST_CASE_D( tc1, * expected_failures(1) ) 
+#endif
+{ BOOST_ERROR(""); }
+
 BOOST_AUTO_TEST_CASE( tc2 ) {}
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -51,7 +57,12 @@ BOOST_AUTO_TEST_CASE( tc2 ) {}
 
 BOOST_AUTO_TEST_SUITE( S21 )
 
-BOOST_AUTO_TEST_CASE( tc1, * expected_failures(1) ) { BOOST_ERROR( "" ); }
+#if BOOST_PP_VARIADICS
+BOOST_AUTO_TEST_CASE( tc1, * expected_failures(1) ) 
+#else
+BOOST_AUTO_TEST_CASE_D( tc1, * expected_failures(1) ) 
+#endif
+{ BOOST_ERROR( "" ); }
 
 BOOST_AUTO_TEST_SUITE_END()
 
@@ -138,7 +149,7 @@ BOOST_AUTO_TEST_CASE( manual_test_suite_creation )
     if( pos != const_string::npos )
         fn.trim_left( pos+1 );
     BOOST_TEST( fn == const_string( "test_tree_management_test.cpp" ) );
-    BOOST_TEST( ts1->p_line_num == 127U );
+    BOOST_TEST( ts1->p_line_num == 138U );
 
     BOOST_TEST( ts1->p_expected_failures == 0U );
     BOOST_TEST( ts1->p_timeout == -1 );

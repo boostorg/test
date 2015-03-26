@@ -19,6 +19,8 @@
 
 //____________________________________________________________________________//
 
+#if BOOST_PP_VARIADICS
+
 #if BOOST_PP_VARIADICS_MSVC
 #  define BOOST_TEST_INVOKE_VARIADIC( tool, ... ) BOOST_PP_CAT( tool (__VA_ARGS__), )
 #else
@@ -39,6 +41,8 @@
 /**/
 
 //____________________________________________________________________________//
+
+#endif  /* BOOST_PP_VARIADICS */
 
 #endif // BOOST_TEST_PP_VARIADIC_HPP_021515GER
 

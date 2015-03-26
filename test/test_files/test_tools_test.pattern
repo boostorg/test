@@ -50,14 +50,14 @@
 511: error: in "test_BOOST_CHECK_EQUAL_COLLECTIONS": check { testlist.begin(), testlist.end() } == { pattern, pattern+7 } has failed. 
 Mismatch at position 2: 4 != 3
 Mismatch at position 5: 7 != 6
-509: error: in "test_BOOST_CHECK_EQUAL_COLLECTIONS": check { testlist.begin(), testlist.end() } == { pattern, pattern+2 } has failed. 
+512: error: in "test_BOOST_CHECK_EQUAL_COLLECTIONS": check { testlist.begin(), testlist.end() } == { pattern, pattern+2 } has failed. 
 Collections size mismatch: 7 != 2
-518: error: in "test_BOOST_CHECK_BITWISE_EQUAL": check (char)0x06 =.= (char)0x16 has failed. 
+521: error: in "test_BOOST_CHECK_BITWISE_EQUAL": check (char)0x06 =.= (char)0x16 has failed. 
 Mismatch at position 4
-521: warning: in "test_BOOST_CHECK_BITWISE_EQUAL": condition (char)0x26 =.= (char)0x04 is not satisfied. 
+524: warning: in "test_BOOST_CHECK_BITWISE_EQUAL": condition (char)0x26 =.= (char)0x04 is not satisfied. 
 Mismatch at position 1
 Mismatch at position 5
-524: fatal error: in "test_BOOST_CHECK_BITWISE_EQUAL": critical check (char)0x26 =.= (int)0x26 has failed. 
+527: fatal error: in "test_BOOST_CHECK_BITWISE_EQUAL": critical check (char)0x26 =.= (int)0x26 has failed. 
 Operands bit sizes mismatch: 8 != 32
 still testing
 1+1=2
@@ -66,97 +66,98 @@ struct A
 0x14
   20
 0: fatal error: in "test_BOOST_TEST_CHECKPOINT": C string: some error
-559: last checkpoint: Going to do a silly things
+562: last checkpoint: Going to do a silly things
 0: fatal error: in "test_BOOST_TEST_PASSPOINT": unknown type
-570: last checkpoint
-596: error: in "test_context_logging": check false has failed
+573: last checkpoint
+599: error: in "test_context_logging": check false has failed
 Failure occurred in a following context:
     some context
-600: error: in "test_context_logging": check false has failed
+603: error: in "test_context_logging": check false has failed
 Failure occurred in a following context:
     some more context: 12
-605: error: in "test_context_logging": check false has failed
+608: error: in "test_context_logging": check false has failed
 Failure occurred in a following context:
     info 1
     info 2
     info 3
-608: error: in "test_context_logging": check false has failed
-Failure occurred in a following context:
-    some sticky context
 611: error: in "test_context_logging": check false has failed
 Failure occurred in a following context:
     some sticky context
-    more context
 614: error: in "test_context_logging": check false has failed
 Failure occurred in a following context:
     some sticky context
-    different subcontext
-618: error: in "test_context_logging": check false has failed
+    more context
+617: error: in "test_context_logging": check false has failed
 Failure occurred in a following context:
-    outer context
+    some sticky context
+    different subcontext
 621: error: in "test_context_logging": check false has failed
 Failure occurred in a following context:
     outer context
-    inner context
 624: error: in "test_context_logging": check false has failed
 Failure occurred in a following context:
     outer context
-653: info: check true has passed
-654: error: in "test_BOOST_TEST_basic_arithmetic_op": check false has failed
-657: info: check bc has passed
-661: error: in "test_BOOST_TEST_basic_arithmetic_op": check i == 2 has failed [1 != 2]
-662: error: in "test_BOOST_TEST_basic_arithmetic_op": check i != 1 has failed [1 == 1]
-663: error: in "test_BOOST_TEST_basic_arithmetic_op": check i > 2 has failed [1 <= 2]
-664: error: in "test_BOOST_TEST_basic_arithmetic_op": check i < 1 has failed [1 >= 1]
-665: error: in "test_BOOST_TEST_basic_arithmetic_op": check i <= 0 has failed [1 > 0]
-666: error: in "test_BOOST_TEST_basic_arithmetic_op": check i >= 5 has failed [1 < 5]
-669: error: in "test_BOOST_TEST_basic_arithmetic_op": check i+j >= 5 has failed [1 + 2 < 5]
-670: error: in "test_BOOST_TEST_basic_arithmetic_op": check j-i == 2 has failed [2 - 1 != 2]
-673: error: in "test_BOOST_TEST_basic_arithmetic_op": check *p == 2 has failed [1 != 2]
-675: error: in "test_BOOST_TEST_basic_arithmetic_op": check j-*p == 0 has failed [2 - 1 != 0]
-677: info: check ( i > 5, true ) has passed
-681: error: in "test_BOOST_TEST_basic_arithmetic_op": check FooType() has failed [(bool)0 is false]
-682: error: in "test_BOOST_TEST_basic_arithmetic_op": check *F has failed [(bool)0 is false]
-683: error: in "test_BOOST_TEST_basic_arithmetic_op": check **F has failed [(bool)0 is false]
-684: error: in "test_BOOST_TEST_basic_arithmetic_op": check ***F has failed [(bool)0 is false]
-685: error: in "test_BOOST_TEST_basic_arithmetic_op": check &F > 100 has failed [10 <= 100]
-686: error: in "test_BOOST_TEST_basic_arithmetic_op": check &*F > 100 has failed [10 <= 100]
-688: error: in "test_BOOST_TEST_basic_arithmetic_op": check (i == 1) & (j == 1) has failed [true & false]
-689: error: in "test_BOOST_TEST_basic_arithmetic_op": check (i == 2) | (j == 1) has failed [false | false]
-691: error: in "test_BOOST_TEST_basic_arithmetic_op": check ( i == 1 && j == 1 ) has failed
-692: error: in "test_BOOST_TEST_basic_arithmetic_op": check ( i == 2 || j == 1 ) has failed
-696: info: check true has passed
-702: info: check true has passed
-704: error: in "test_BOOST_TEST_basic_arithmetic_op": This message reported instead including 1 and 2
-724: error: in "test_BOOST_TEST_collection_comp": check v <= l has failed. 
+    inner context
+627: error: in "test_context_logging": check false has failed
+Failure occurred in a following context:
+    outer context
+656: info: check true has passed
+657: error: in "test_BOOST_TEST_basic_arithmetic_op": check false has failed
+660: info: check bc has passed
+664: error: in "test_BOOST_TEST_basic_arithmetic_op": check i == 2 has failed [1 != 2]
+665: error: in "test_BOOST_TEST_basic_arithmetic_op": check i != 1 has failed [1 == 1]
+666: error: in "test_BOOST_TEST_basic_arithmetic_op": check i > 2 has failed [1 <= 2]
+667: error: in "test_BOOST_TEST_basic_arithmetic_op": check i < 1 has failed [1 >= 1]
+668: error: in "test_BOOST_TEST_basic_arithmetic_op": check i <= 0 has failed [1 > 0]
+669: error: in "test_BOOST_TEST_basic_arithmetic_op": check i >= 5 has failed [1 < 5]
+672: error: in "test_BOOST_TEST_basic_arithmetic_op": check i+j >= 5 has failed [1 + 2 < 5]
+673: error: in "test_BOOST_TEST_basic_arithmetic_op": check j-i == 2 has failed [2 - 1 != 2]
+676: error: in "test_BOOST_TEST_basic_arithmetic_op": check *p == 2 has failed [1 != 2]
+678: error: in "test_BOOST_TEST_basic_arithmetic_op": check j-*p == 0 has failed [2 - 1 != 0]
+680: info: check ( i > 5, true ) has passed
+684: error: in "test_BOOST_TEST_basic_arithmetic_op": check FooType() has failed [(bool)0 is false]
+685: error: in "test_BOOST_TEST_basic_arithmetic_op": check *F has failed [(bool)0 is false]
+686: error: in "test_BOOST_TEST_basic_arithmetic_op": check **F has failed [(bool)0 is false]
+687: error: in "test_BOOST_TEST_basic_arithmetic_op": check ***F has failed [(bool)0 is false]
+688: error: in "test_BOOST_TEST_basic_arithmetic_op": check &F > 100 has failed [10 <= 100]
+689: error: in "test_BOOST_TEST_basic_arithmetic_op": check &*F > 100 has failed [10 <= 100]
+691: error: in "test_BOOST_TEST_basic_arithmetic_op": check (i == 1) & (j == 1) has failed [true & false]
+692: error: in "test_BOOST_TEST_basic_arithmetic_op": check (i == 2) | (j == 1) has failed [false | false]
+694: error: in "test_BOOST_TEST_basic_arithmetic_op": check ( i == 1 && j == 1 ) has failed
+695: error: in "test_BOOST_TEST_basic_arithmetic_op": check ( i == 2 || j == 1 ) has failed
+699: info: check true has passed
+705: info: check true has passed
+707: error: in "test_BOOST_TEST_basic_arithmetic_op": This message reported instead including 1 and 2
+727: error: in "test_BOOST_TEST_collection_comp": check v <= l has failed. 
 Mismatch at position 2: 3 > 2
-725: error: in "test_BOOST_TEST_collection_comp": check v == l has failed. 
+728: error: in "test_BOOST_TEST_collection_comp": check v == l has failed. 
 Mismatch at position 1: 2 != 3
 Mismatch at position 2: 3 != 2
-746: error: in "test_BOOST_TEST_fpv_comp": check d1 == d2 has failed [1e-05 != 1e-05]
-748: error: in "test_BOOST_TEST_fpv_comp": check d1 == d2 has failed [1e-05 != 1e-05]. Relative difference exceeds tolerance [0.000908265 > 1e-07]
-750: error: in "test_BOOST_TEST_fpv_comp": check d1 != f1 has failed [1e-05 == 1.10000001e-05]. Relative difference is within tolerance [7.81041e-09 < 1e-07]
-754: error: in "test_BOOST_TEST_fpv_comp": check d1 > d2 has failed [1e-05 <= 1e-05]
-755: error: in "test_BOOST_TEST_fpv_comp": check d1+1./1e20 > d2 has failed [1e-05 + 1e-20 <= 1e-05]. Relative difference exceeds tolerance [0.000908265 > 1e-07]
-757: error: in "test_BOOST_TEST_fpv_comp": check d2 <= d1 has failed [1e-05 > 1e-05]. Relative difference exceeds tolerance [0.000909091 > 1e-07]
-760: error: in "test_BOOST_TEST_fpv_comp": check d1-1e-5 == 0. has failed [1e-05 - 1e-05 != 0]. Absolute value exceeds tolerance [|1e-06| > 1e-07]
-761: error: in "test_BOOST_TEST_fpv_comp": check d1-1e-5 != 0. has failed [1e-05 - 1e-05 == 0]. Absolute value is within tolerance [|1e-06| < 0.0001]
-762: error: in "test_BOOST_TEST_fpv_comp": check 0. != 1e-5-d1 has failed [0 == -1e-06]. Absolute value is within tolerance [|-1e-06| < 0.0001]
-763: error: in "test_BOOST_TEST_fpv_comp": check d2-1e-5 < 0. has failed [1e-05 - 1e-05 >= 0]. Absolute value exceeds tolerance [|1.01e-06| > 1e-06]
-806: error: in "test_BOOST_TEST_cstring_comp": check str1 == str2 has failed [test1 != test12]
-807: error: in "test_BOOST_TEST_cstring_comp": check str1 == str3 has failed [test1 != test2]
-808: error: in "test_BOOST_TEST_cstring_comp": check str3 == str2 has failed [test2 != test12]
-809: error: in "test_BOOST_TEST_cstring_comp": check str1 == str4 has failed [test1 != test3]
-810: error: in "test_BOOST_TEST_cstring_comp": check str3 == str4 has failed [test2 != test3]
-811: error: in "test_BOOST_TEST_cstring_comp": check str1 == str5 has failed [test1 != null string]
-813: error: in "test_BOOST_TEST_cstring_comp": check str1 != (str6+1) has failed [test1 == test1]
-814: error: in "test_BOOST_TEST_cstring_comp": check str5 != str5 has failed [null string == null string]
-816: error: in "test_BOOST_TEST_cstring_comp": check str3 < str1 has failed [test2 >= test1]
-817: error: in "test_BOOST_TEST_cstring_comp": check str1 >= str2 has failed [test1 < test12]
-828: error: in "test_BOOST_TEST_bitwise": check a == b has failed [171 != 136]. Bitwise comparison failed
+749: error: in "test_BOOST_TEST_fpv_comp": check d1 == d2 has failed [1e-05 != 1e-05]
+751: error: in "test_BOOST_TEST_fpv_comp": check d1 == d2 has failed [1e-05 != 1e-05]. Relative difference exceeds tolerance [0.000908265 > 1e-07]
+753: error: in "test_BOOST_TEST_fpv_comp": check d1 != f1 has failed [1e-05 == 1.10000001e-05]. Relative difference is within tolerance [7.81041e-09 < 1e-07]
+757: error: in "test_BOOST_TEST_fpv_comp": check d1 > d2 has failed [1e-05 <= 1e-05]
+758: error: in "test_BOOST_TEST_fpv_comp": check d1+1./1e20 > d2 has failed [1e-05 + 1e-20 <= 1e-05]. Relative difference exceeds tolerance [0.000908265 > 1e-07]
+760: error: in "test_BOOST_TEST_fpv_comp": check d2 <= d1 has failed [1e-05 > 1e-05]. Relative difference exceeds tolerance [0.000909091 > 1e-07]
+763: error: in "test_BOOST_TEST_fpv_comp": check d1-1e-5 == 0. has failed [1e-05 - 1e-05 != 0]. Absolute value exceeds tolerance [|1e-06| > 1e-07]
+764: error: in "test_BOOST_TEST_fpv_comp": check d1-1e-5 != 0. has failed [1e-05 - 1e-05 == 0]. Absolute value is within tolerance [|1e-06| < 0.0001]
+765: error: in "test_BOOST_TEST_fpv_comp": check 0. != 1e-5-d1 has failed [0 == -1e-06]. Absolute value is within tolerance [|-1e-06| < 0.0001]
+766: error: in "test_BOOST_TEST_fpv_comp": check d2-1e-5 < 0. has failed [1e-05 - 1e-05 >= 0]. Absolute value exceeds tolerance [|1.01e-06| > 1e-06]
+805: error: in "test_BOOST_TEST_cstring_comp": check str1 == str2 has failed [test1 != test12]
+806: error: in "test_BOOST_TEST_cstring_comp": check str1 == str3 has failed [test1 != test2]
+807: error: in "test_BOOST_TEST_cstring_comp": check str3 == str2 has failed [test2 != test12]
+808: error: in "test_BOOST_TEST_cstring_comp": check str1 == str4 has failed [test1 != test3]
+809: error: in "test_BOOST_TEST_cstring_comp": check str3 == str4 has failed [test2 != test3]
+810: error: in "test_BOOST_TEST_cstring_comp": check str1 == str5 has failed [test1 != null string]
+812: error: in "test_BOOST_TEST_cstring_comp": check str1 != (str6+1) has failed [test1 == test1]
+813: error: in "test_BOOST_TEST_cstring_comp": check str5 != str5 has failed [null string == null string]
+815: error: in "test_BOOST_TEST_cstring_comp": check str3 < str1 has failed [test2 >= test1]
+816: error: in "test_BOOST_TEST_cstring_comp": check str1 >= str2 has failed [test1 < test12]
+827: error: in "test_BOOST_TEST_bitwise": check a == b has failed [171 != 136]. Bitwise comparison failed
 Mismatch at position 0
 Mismatch at position 1
 Mismatch at position 5
-829: error: in "test_BOOST_TEST_bitwise": check c == b has failed [138 != 136]. Bitwise comparison failed
+828: error: in "test_BOOST_TEST_bitwise": check c == b has failed [138 != 136]. Bitwise comparison failed
+Mismatch at position 1
 Mismatch at position 1
 Operands bit sizes mismatch: 16 != 32
