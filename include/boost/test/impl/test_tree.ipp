@@ -258,7 +258,7 @@ void
 test_suite::add( test_unit_generator const& gen, int timeout )
 {
     test_unit* tu;
-    while(tu = gen.next())
+    while((tu = gen.next()) != 0)
         add( tu, 0, timeout );
 }
 
@@ -268,7 +268,7 @@ void
 test_suite::add( test_unit_generator const& gen, decorator::collector& decorators )
 {
     test_unit* tu;
-    while(tu = gen.next()) {
+    while((tu = gen.next()) != 0) {
         decorators.store_in( *tu );
         add( tu, 0 );
     }
