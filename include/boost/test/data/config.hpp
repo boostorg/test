@@ -25,6 +25,11 @@
 //! Defined when the random dataset feature is not available
 #define BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE
 
+#endif
+
+
+#if defined(BOOST_NO_CXX11_HDR_TUPLE) || defined(BOOST_TEST_DOXYGEN_DOC__)
+
 //! Defined when grid composition of datasets is not available
 #define BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE
 
@@ -32,7 +37,6 @@
 #define BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE
 
 #endif
-
 
 //____________________________________________________________________________//
 
