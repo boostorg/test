@@ -324,10 +324,11 @@ struct compare_fpv<op::NE<Lhs,Rhs>,FPT> {
     {
         fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_STRONG );
 
-        assertion_result ar( !P( lhs, rhs ) );
+        assertion_result ar( P( lhs, rhs, true ) );
         if( !ar )
             ar.message() << "Relative difference is within tolerance ["
                          << P.failed_fraction() << " < " << fpc_tolerance<FPT>() << ']';
+
         return ar;
     }
 
