@@ -21,6 +21,8 @@
 #include <boost/static_assert.hpp>
 #include <boost/assert.hpp>
 #include <boost/type_traits/is_floating_point.hpp>
+#include <boost/utility/enable_if.hpp>
+
 
 // STL
 #include <iosfwd>
@@ -37,12 +39,43 @@ namespace fpc {
 // **************              fpc::tolerance_based            ************** //
 // ************************************************************************** //
 
-template<typename T>
-struct tolerance_based : mpl::bool_<
+
+//!@internal
+//! Protects the instanciation of std::numeric_limits from non-supported types (eg. T=array)
+template <
+  typename T, 
+  bool enabled>
+struct tolerance_based_delegate;
+
+template <typename T>
+struct tolerance_based_delegate<T, false> : mpl::false_
+{};
+
+template <typename T>
+struct tolerance_based_delegate<T, true>
+  : mpl::bool_<
     is_floating_point<T>::value ||
-    (std::numeric_limits<T>::is_specialized &&
-    !std::numeric_limits<T>::is_integer &&
-    !std::numeric_limits<T>::is_exact) > {};
+    (
+      (std::numeric_limits<T>::is_specialized &&
+      !std::numeric_limits<T>::is_integer &&
+      (std::numeric_limits<T>::min_exponent != std::numeric_limits<T>::max_exponent))
+    ) > 
+{};  
+
+
+/*!@brief Indicates if a type can be compared using a tolerance scheme
+ *
+ * This is a metafunction that should evaluate to mpl::true_ if the type
+ * T can be compared using a tolerance based method, typically for floating point
+ * types. 
+ *
+ * This metafunction can be specialized further to declare user types that are 
+ * floating point (eg. boost.multiprecision).
+ */
+template <typename T>
+struct tolerance_based : tolerance_based_delegate<T, !is_array<T>::value >::type {};
+
+
 
 // ************************************************************************** //
 // **************                 fpc::strength                ************** //
