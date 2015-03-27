@@ -159,5 +159,4 @@ Mismatch at position 1
 Mismatch at position 5
 828: error: in "test_BOOST_TEST_bitwise": check c == b has failed [138 != 136]. Bitwise comparison failed
 Mismatch at position 1
-Mismatch at position 1
 Operands bit sizes mismatch: 16 != 32
