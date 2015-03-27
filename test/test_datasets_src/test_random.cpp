@@ -38,13 +38,17 @@ BOOST_AUTO_TEST_CASE( test_default )
     data::for_each_sample( ds, ic, 10 );
     BOOST_TEST( ic.m_value == 10 );
 
+#ifndef BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE
     ic.m_value = 0;
     int arr[] = {1,2,3,4,5};
     data::for_each_sample( ds^arr, ic );
     BOOST_TEST( ic.m_value == 5 );
+#endif
 
+#ifndef BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE
     BOOST_CHECK_THROW( ds * arr, std::logic_error );
     BOOST_CHECK_THROW( arr * ds, std::logic_error );
+#endif
 }
 
 //____________________________________________________________________________//
