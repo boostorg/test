@@ -37,9 +37,10 @@ namespace fpc {
 // **************                 fpc::strength                ************** //
 // ************************************************************************** //
 
+//! Method for comparison of floating point numbers
 enum strength {
-    FPC_STRONG, // "Very close"   - equation 1' in docs, the default
-    FPC_WEAK    // "Close enough" - equation 2' in docs.
+    FPC_STRONG, //!< "Very close"   - equation 2' in docs, the default
+    FPC_WEAK    //!< "Close enough" - equation 3' in docs.
 };
 
 // ************************************************************************** //
@@ -179,6 +180,19 @@ struct comp_supertype {
 // **************             close_at_tolerance               ************** //
 // ************************************************************************** //
 
+
+/*!@brief Helper function object for comparing floating points
+ * @internal
+ *
+ * This function object is used to compare floating points with a tolerance and to store the 
+ * part failing the tolerance (@ref close_at_tolerance::failed_fraction).
+ *
+ * The methods for comparing floating points are detailed in the documentation. The method is chosen
+ * by the fpc::strength given at construction. The 
+ *
+ * If the comparison is part of a negation, the @c negate should be provided to the @c operator() instead
+ * 
+ */
 template<typename FPT>
 class close_at_tolerance {
 public:
@@ -199,18 +213,48 @@ public:
     fpc::strength       strength() const            { return m_strength; }
     FPT                 failed_fraction() const     { return m_failed_fraction; }
 
-    // Action method
-    bool                operator()( FPT left, FPT right ) const
+    /*! Compares two floating points according to comparison method and against a tolerance.
+     *
+     *  @param[in] left first floating point to be compared
+     *  @param[in] right second floating point to be compared
+     *  @param[in] negate if true, indicates that this comparison is part of a negation. This is used 
+     *             to store the part of the comparison that is failing (for the reports).
+     *
+     * For the comparison method "close enough", the failing fraction is stored. If both fractions are failing
+     * the minimum of those fractions is stored. For the comparison method "very close", the minimum of those
+     * fraction is stored.
+     */
+    bool                operator()( FPT left, FPT right, bool negate = false ) const
     {
         FPT diff              = fpc_detail::fpt_abs<FPT>( left - right );
         FPT fraction_of_right = fpc_detail::safe_fpt_division( diff, fpc_detail::fpt_abs( right ) );
         FPT fraction_of_left  = fpc_detail::safe_fpt_division( diff, fpc_detail::fpt_abs( left ) );
         
-        bool res( m_strength == FPC_STRONG
-            ? (fraction_of_right <= m_fraction_tolerance && fraction_of_left <= m_fraction_tolerance) 
-            : (fraction_of_right <= m_fraction_tolerance || fraction_of_left <= m_fraction_tolerance) );
+        bool method_is_strong = (m_strength == FPC_STRONG) ^ negate;
 
-        m_failed_fraction = (fraction_of_right > m_fraction_tolerance ? fraction_of_right : fraction_of_left);
+        bool res = method_is_strong ? 
+              (fraction_of_right <= m_fraction_tolerance && fraction_of_left <= m_fraction_tolerance) 
+            : (fraction_of_right <= m_fraction_tolerance || fraction_of_left <= m_fraction_tolerance);
+
+        res ^= negate;
+
+        if( !res )
+        {
+          if(method_is_strong)
+          {
+            m_failed_fraction = std::min(fraction_of_left, fraction_of_right);
+          }
+          else
+          {
+            // if they fail both, we show the minimum
+            m_failed_fraction = (fraction_of_right > m_fraction_tolerance ? 
+                ( (fraction_of_left > m_fraction_tolerance) ? 
+                    std::min(fraction_of_left, fraction_of_right) 
+                    : fraction_of_right) 
+                : fraction_of_left);
+          }
+        }
+
         return res;
     }
 
