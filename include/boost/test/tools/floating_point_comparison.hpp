@@ -242,14 +242,14 @@ public:
         {
           if(method_is_strong)
           {
-            m_failed_fraction = std::min(fraction_of_left, fraction_of_right);
+            m_failed_fraction = (std::min)(fraction_of_left, fraction_of_right);
           }
           else
           {
             // if they fail both, we show the minimum
             m_failed_fraction = (fraction_of_right > m_fraction_tolerance ? 
                 ( (fraction_of_left > m_fraction_tolerance) ? 
-                    std::min(fraction_of_left, fraction_of_right) 
+                    (std::min)(fraction_of_left, fraction_of_right) 
                     : fraction_of_right) 
                 : fraction_of_left);
           }
