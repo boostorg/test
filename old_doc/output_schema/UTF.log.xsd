@@ -35,7 +35,7 @@
 		<xs:sequence>
 			<xs:element name="LastCheckpoint" type="LogEntry">
 				<xs:annotation>
-					<xs:documentation>Location of last checkpoint before exception occured</xs:documentation>
+					<xs:documentation>Location of last checkpoint before exception occurred</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -69,17 +69,17 @@
 					</xs:element>
 					<xs:element name="Error" type="LogEntry">
 						<xs:annotation>
-							<xs:documentation>Log entry corresponding to  the non-fatal error occured during test execution</xs:documentation>
+							<xs:documentation>Log entry corresponding to  the non-fatal error occurred during test execution</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="FatalError" type="LogEntry">
 						<xs:annotation>
-							<xs:documentation>Log entry corresponding to  the fatal error occured during test execution</xs:documentation>
+							<xs:documentation>Log entry corresponding to  the fatal error occurred during test execution</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="Exception" type="ExceptionEntry">
 						<xs:annotation>
-							<xs:documentation>Log entry corresponding to  an exception occured during test execution</xs:documentation>
+							<xs:documentation>Log entry corresponding to  an exception occurred during test execution</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 				</xs:choice>
