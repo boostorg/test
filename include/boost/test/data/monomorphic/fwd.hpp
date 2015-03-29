@@ -152,7 +152,7 @@ make(DS const& ds)
 
 
 // fwrd declaration for singletons
-#if (defined(BOOST_MSVC) && (BOOST_MSVC >= 1600)) || defined(BOOST_TEST_DOXYGEN_DOC__)
+#if !(defined(BOOST_MSVC) && (BOOST_MSVC < 1600))
 //! @overload boost::unit_test::data::make()
 template<typename T>
 inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
