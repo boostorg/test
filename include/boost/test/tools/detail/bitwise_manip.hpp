@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision: 74248 $
-//
-//  Description : bitwose comparison manipulator implementation
+//! @file
+//! Bitwise comparison manipulator implementation
 // ***************************************************************************
 
 #ifndef BOOST_TEST_TOOLS_DETAIL_BITWISE_MANIP_HPP_012705GER
@@ -36,6 +33,7 @@ namespace test_tools {
 // **************        bitwise comparison manipulator        ************** //
 // ************************************************************************** //
 
+//! Bitwise comparison manipulator
 struct bitwise {};
 
 //____________________________________________________________________________//
@@ -47,11 +45,10 @@ operator<<( unit_test::lazy_ostream const&, bitwise )   { return 0; }
 
 namespace tt_detail {
 
-/*!@brief Precise bit comparison of two operands
+/*!@brief Bitwise comparison of two operands
  *
- * This class constructs an assertion_result that contains extended information 
- * on the bitwise comparison of two operands. In particular the location of the mismatches
- * (if any) are printed in the assertion result. 
+ * This class constructs an @ref assertion_result that contains precise bit comparison information.
+ * In particular the location of the mismatches (if any) are printed in the assertion result. 
  */
 template<typename Lhs, typename Rhs, typename E>
 inline assertion_result
@@ -94,6 +91,10 @@ bitwise_compare(Lhs const& lhs, Rhs const& rhs, E const& expr )
 
 //____________________________________________________________________________//
 
+//! Returns an assertion_result using the bitwise comparison out of an expression
+//!
+//! This is used as a modifer of the normal operator<< on expressions to use the
+//! bitwise comparison. 
 template<typename T1, typename T2, typename T3, typename T4>
 inline assertion_result
 operator<<(assertion_evaluate_t<assertion::binary_expr<T1,T2,assertion::op::EQ<T3,T4> > > const& ae, bitwise )
