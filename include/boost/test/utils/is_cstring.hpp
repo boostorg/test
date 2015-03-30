@@ -38,6 +38,9 @@ struct is_cstring_impl : public mpl::false_ {};
 template<typename T>
 struct is_cstring_impl<T const*> : public is_cstring_impl<T*> {};
 
+template<typename T>
+struct is_cstring_impl<T const* const> : public is_cstring_impl<T*> {};
+
 template<>
 struct is_cstring_impl<char*> : public mpl::true_ {};
 
