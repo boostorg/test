@@ -152,6 +152,7 @@ make(DS const& ds)
 
 
 // fwrd declaration for singletons
+#if (defined(BOOST_MSVC) && (BOOST_MSVC >= 1600)) || defined(BOOST_TEST_DOXYGEN_DOC__)
 //! @overload boost::unit_test::data::make()
 template<typename T>
 inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
@@ -159,6 +160,7 @@ inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value &&
                                      !boost::is_array< typename boost::remove_reference<T>::type >::value, 
                                      monomorphic::singleton<T> >::type
 make( T const& v );
+#endif
 
 
 // fwrd declaration for collections
