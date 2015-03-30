@@ -72,7 +72,7 @@ struct tolerance_based : tolerance_based_delegate<T, !is_array<T>::value >::type
 // **************                 fpc::strength                ************** //
 // ************************************************************************** //
 
-//! Method for comparison of floating point numbers
+//! Method for comparing floating point numbers
 enum strength {
     FPC_STRONG, //!< "Very close"   - equation 2' in docs, the default
     FPC_WEAK    //!< "Close enough" - equation 3' in docs.
@@ -191,7 +191,6 @@ fraction_tolerance( percent_tolerance_t<FPT> tolerance )
  *
  * This predicate is used to compare floating point numbers. In addition the comparison produces maximum 
  * related differnce, which can be used to generate detailed error message
- *
  * The methods for comparing floating points are detailed in the documentation. The method is chosen
  * by the @ref boost::math::fpc::strength given at construction.
  */
