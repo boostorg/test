@@ -73,6 +73,9 @@ doxygen doxygen_reference_generated_doc
       $(BOOST_ROOT)/libs/test/include/boost/test/tools/floating_point_comparison.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/tools/detail/tolerance_manip.hpp
       
+      # BOOST_TEST related functions
+      $(BOOST_ROOT)/libs/test/include/boost/test/tools/detail/bitwise_manip.hpp
+      
       # others
       $(BOOST_ROOT)/libs/test/include/boost/test/unit_test_parameters.hpp
     :
