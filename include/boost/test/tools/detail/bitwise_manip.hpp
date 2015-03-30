@@ -95,6 +95,8 @@ bitwise_compare(Lhs const& lhs, Rhs const& rhs, E const& expr )
 //!
 //! This is used as a modifer of the normal operator<< on expressions to use the
 //! bitwise comparison. 
+//!
+//! @note Available only for compilers supporting the @c auto declaration. 
 template<typename T1, typename T2, typename T3, typename T4>
 inline assertion_result
 operator<<(assertion_evaluate_t<assertion::binary_expr<T1,T2,assertion::op::EQ<T3,T4> > > const& ae, bitwise )
