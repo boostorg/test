@@ -14,6 +14,8 @@
 #ifndef BOOST_TEST_TOOLS_HPP_111812GER
 #define BOOST_TEST_TOOLS_HPP_111812GER
 
+#include <boost/preprocessor/config/config.hpp>
+
 // Boost.Test
 //#define BOOST_TEST_NO_OLD_TOOLS
 

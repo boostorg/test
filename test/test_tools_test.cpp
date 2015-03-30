@@ -21,7 +21,7 @@
 #include <boost/test/unit_test_parameters.hpp>
 #include <boost/test/output/compiler_log_formatter.hpp>
 #include <boost/test/framework.hpp>
-
+#include <boost/core/noncopyable.hpp>
 #include <boost/test/detail/suppress_warnings.hpp>
 
 // Boost
