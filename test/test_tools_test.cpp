@@ -824,7 +824,7 @@ TEST_CASE( test_BOOST_TEST_bitwise )
     int a = 0xAB;
     int b = 0x88;
     short c = 0x8A;
-
+    // decltype is needed for this to work. Not the case for eg. MSVC 2008.
     BOOST_TEST_FWD_3( a == b, tt::bitwise(),  "check a == b has failed [171 != 136]. Bitwise comparison failed\nMismatch at position 0\nMismatch at position 1\nMismatch at position 5" );
     BOOST_TEST_FWD_3( c == b, tt::bitwise(), "check c == b has failed [138 != 136]. Bitwise comparison failed\nMismatch at position 1\nOperands bit sizes mismatch: 16 != 32" );
 }
