@@ -721,8 +721,8 @@ TEST_CASE( test_BOOST_TEST_collection_comp )
     l.push_back( 3 );
     l.push_back( 2 );
 
-    BOOST_TEST_FWD_1( v <= l, "check v <= l has failed.\nMismatch at position 2: 3 > 2" );
-    BOOST_TEST_FWD_1( v == l, "check v == l has failed.\nMismatch at position 1: 2 != 3\nMismatch at position 2: 3 != 2" );
+    BOOST_TEST_FWD_1( v <= l, "check v <= l has failed. \nMismatch at position 2: 3 > 2" );
+    BOOST_TEST_FWD_1( v == l, "check v == l has failed. \nMismatch at position 1: 2 != 3\nMismatch at position 2: 3 != 2" );
 }
 
 //____________________________________________________________________________//
@@ -825,8 +825,8 @@ TEST_CASE( test_BOOST_TEST_bitwise )
     int b = 0x88;
     short c = 0x8A;
 
-    BOOST_TEST( a == b, tt::bitwise() );
-    BOOST_TEST( c == b, tt::bitwise() );
+    BOOST_TEST_FWD_3( a == b, tt::bitwise(),  "check a == b has failed [171 != 136]. Bitwise comparison failed\nMismatch at position 0\nMismatch at position 1\nMismatch at position 5" );
+    BOOST_TEST_FWD_3( c == b, tt::bitwise(), "check c == b has failed [138 != 136]. Bitwise comparison failed\nMismatch at position 1\nOperands bit sizes mismatch: 16 != 32" );
 }
 
 //____________________________________________________________________________//
