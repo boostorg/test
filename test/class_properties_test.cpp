@@ -133,8 +133,13 @@ BOOST_AUTO_TEST_CASE( test_readonly_property )
 
     BOOST_TEST( p_b->foo() == 1 );
 
-    BOOST_TEST( (p_one ^ 3) == 2 );
-    BOOST_TEST( p_two / 2 == 1 );
+    BOOST_TEST( (p_one ^ 3) == 2 ); // ^ has lower precedence than ==
+#ifndef BOOST_NO_CXX11_DECLTYPE
+    BOOST_TEST( p_two / 2 == 1 ); // / has higher precedence than ==
+#else
+    BOOST_TEST( (p_two / 2) == 1 ); // / has higher precedence than ==
+    // but the result of operator/ is not defined in this case 
+#endif
 
     BOOST_TEST( !p_b_ptr );
 
