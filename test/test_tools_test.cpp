@@ -752,15 +752,15 @@ TEST_CASE( test_BOOST_TEST_fpv_comp )
     BOOST_TEST( tt::fpc_tolerance<float>() == 0 );
 
     BOOST_TEST( d1 > d2 );
-    BOOST_TEST_FWD_3( d1+1./1e20 > d2,  1e-5% tt::tolerance(), "check d1+1./1e20 > d2 has failed [1e-005 + 1e-020 <= 1e-005]. Relative difference exceeds tolerance [0.000908265 > 1e-007]" );
+    BOOST_TEST_FWD_3( d1+1./1e20 > d2,  1e-5% tt::tolerance(), "check d1+1./1e20 > d2 has failed [1e-05 + 1e-20 <= 1e-05]. Relative difference exceeds tolerance [0.000908265 > 1e-07]" );
     BOOST_TEST( tt::fpc_tolerance<double>() == 0 );
     BOOST_TEST( d2 <= d1, tt::tolerance( tt::fpc::percent_tolerance( 1e-5 ) ) );
     BOOST_TEST( tt::fpc_tolerance<double>() == 0 );
 
-    BOOST_TEST_FWD_3( d1-1e-5 == 0., tt::tolerance( 1e-7 ), "check d1-1e-5 == 0. has failed [1e-005 - 1e-005 != 0]. Absolute value exceeds tolerance [|1e-006| > 1e-007]" );
-    BOOST_TEST_FWD_3( d1-1e-5 != 0., tt::tolerance( 1e-4 ), "check d1-1e-5 != 0. has failed [1e-005 - 1e-005 == 0]. Absolute value is within tolerance [|1e-006| < 0.0001]" );
-    BOOST_TEST_FWD_3( 0. != 1e-5-d1, tt::tolerance( 1e-4 ), "check 0. != 1e-5-d1 has failed [0 == -1e-006]. Absolute value is within tolerance [|-1e-006| < 0.0001]" );
-    BOOST_TEST_FWD_3( d2-1e-5 < 0., tt::tolerance( 1e-6 ), "check d2-1e-5 < 0. has failed [1e-005 - 1e-005 >= 0]. Absolute value exceeds tolerance [|1.01e-006| > 1e-006]" );
+    BOOST_TEST_FWD_3( d1-1e-5 == 0., tt::tolerance( 1e-7 ), "check d1-1e-5 == 0. has failed [1e-05 - 1e-05 != 0]. Absolute value exceeds tolerance [|1e-06| > 1e-07]" );
+    BOOST_TEST_FWD_3( d1-1e-5 != 0., tt::tolerance( 1e-4 ), "check d1-1e-5 != 0. has failed [1e-05 - 1e-05 == 0]. Absolute value is within tolerance [|1e-06| < 0.0001]" );
+    BOOST_TEST_FWD_3( 0. != 1e-5-d1, tt::tolerance( 1e-4 ), "check 0. != 1e-5-d1 has failed [0 == -1e-06]. Absolute value is within tolerance [|-1e-06| < 0.0001]" );
+    BOOST_TEST_FWD_3( d2-1e-5 < 0., tt::tolerance( 1e-6 ), "check d2-1e-5 < 0. has failed [1e-05 - 1e-05 >= 0]. Absolute value exceeds tolerance [|1.01e-06| > 1e-06]" );
 }
 
 //____________________________________________________________________________//
