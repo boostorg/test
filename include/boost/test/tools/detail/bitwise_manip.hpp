@@ -47,6 +47,12 @@ operator<<( unit_test::lazy_ostream const&, bitwise )   { return 0; }
 
 namespace tt_detail {
 
+/*!@brief Precise bit comparison of two operands
+ *
+ * This class constructs an assertion_result that contains extended information 
+ * on the bitwise comparison of two operands. In particular the location of the mismatches
+ * (if any) are printed in the assertion result. 
+ */
 template<typename Lhs, typename Rhs, typename E>
 inline assertion_result
 bitwise_compare(Lhs const& lhs, Rhs const& rhs, E const& expr )
