@@ -10,17 +10,13 @@
 
 #define BOOST_TEST_MODULE test_windows_headers
 
-#ifdef _WIN32
+#include <boost/config.hpp> 
+#ifdef BOOST_WINDOWS
 #include <windows.h>
 #endif
 
 #include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp> // Extra test tool for FP comparison.
-
-using namespace boost;
-namespace ut = boost::unit_test;
-using namespace boost::test_tools;
-
 
 BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES( test, 2 )
 
