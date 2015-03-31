@@ -149,7 +149,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( test_CHECK_CLOSE_FRACTION, FPT, test_types )
     CHECK_NOT_CLOSE( 1, 1.0002, 1.1e-4 );
 
 #undef CHECK_CLOSE
-#undef CHECK_NOT_CLOSE                        
+#undef CHECK_NOT_CLOSE
 }
 
 //____________________________________________________________________________//

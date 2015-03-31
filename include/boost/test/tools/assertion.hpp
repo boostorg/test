@@ -296,7 +296,7 @@ struct compare_fpv {
         assertion_result ar( P( lhs, rhs ) );
         if( !ar )
             ar.message() << "Relative difference exceeds tolerance ["
-                         << P.failed_fraction() << " > " << P.fraction_tolerance() << ']';
+                         << P.max_rel_diff() << " > " << P.fraction_tolerance() << ']';
         return ar;
     }
 
@@ -324,10 +324,10 @@ struct compare_fpv<op::NE<Lhs,Rhs>,FPT> {
     {
         fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_STRONG );
 
-        assertion_result ar( P( lhs, rhs, true ) );
+        assertion_result ar( !P( lhs, rhs ) );
         if( !ar )
             ar.message() << "Relative difference is within tolerance ["
-                         << P.failed_fraction() << " < " << fpc_tolerance<FPT>() << ']';
+                         << P.max_rel_diff() << " < " << fpc_tolerance<FPT>() << ']';
 
         return ar;
     }

@@ -21,8 +21,8 @@
 #include <boost/static_assert.hpp>
 #include <boost/assert.hpp>
 #include <boost/type_traits/is_floating_point.hpp>
+#include <boost/type_traits/is_array.hpp>
 #include <boost/utility/enable_if.hpp>
-
 
 // STL
 #include <iosfwd>
@@ -32,7 +32,7 @@
 //____________________________________________________________________________//
 
 namespace boost {
-namespace math { 
+namespace math {
 namespace fpc {
 
 // ************************************************************************** //
@@ -42,40 +42,31 @@ namespace fpc {
 
 //!@internal
 //! Protects the instanciation of std::numeric_limits from non-supported types (eg. T=array)
-template <
-  typename T, 
-  bool enabled>
+template <typename T, bool enabled>
 struct tolerance_based_delegate;
 
 template <typename T>
-struct tolerance_based_delegate<T, false> : mpl::false_
-{};
+struct tolerance_based_delegate<T, false> : mpl::false_ {};
 
 template <typename T>
 struct tolerance_based_delegate<T, true>
-  : mpl::bool_<
+: mpl::bool_<
     is_floating_point<T>::value ||
-    (
-      (std::numeric_limits<T>::is_specialized &&
-      !std::numeric_limits<T>::is_integer &&
-      (std::numeric_limits<T>::min_exponent != std::numeric_limits<T>::max_exponent))
-    ) > 
-{};  
+    (std::numeric_limits<T>::is_specialized && std::numeric_limits<T>::is_exact)>
+{};
 
 
 /*!@brief Indicates if a type can be compared using a tolerance scheme
  *
  * This is a metafunction that should evaluate to mpl::true_ if the type
  * T can be compared using a tolerance based method, typically for floating point
- * types. 
+ * types.
  *
- * This metafunction can be specialized further to declare user types that are 
+ * This metafunction can be specialized further to declare user types that are
  * floating point (eg. boost.multiprecision).
  */
 template <typename T>
 struct tolerance_based : tolerance_based_delegate<T, !is_array<T>::value >::type {};
-
-
 
 // ************************************************************************** //
 // **************                 fpc::strength                ************** //
@@ -196,17 +187,13 @@ fraction_tolerance( percent_tolerance_t<FPT> tolerance )
 // ************************************************************************** //
 
 
-/*!@brief Helper function object for comparing floating points
- * @internal
+/*!@brief Predicate for comparing floating point numbers
  *
- * This function object is used to compare floating points with a tolerance and to store the 
- * part failing the tolerance (@ref close_at_tolerance::failed_fraction).
+ * This predicate is used to compare floating point numbers. In addition the comparison produces maximum 
+ * related differnce, which can be used to generate detailed error message
  *
  * The methods for comparing floating points are detailed in the documentation. The method is chosen
- * by the fpc::strength given at construction. The 
- *
- * If the comparison is part of a negation, the @c negate should be provided to the @c operator() instead
- * 
+ * by the fpc::strength given at construction.
  */
 template<typename FPT>
 class close_at_tolerance {
@@ -219,7 +206,7 @@ public:
     explicit    close_at_tolerance( ToleranceType tolerance, fpc::strength fpc_strength = FPC_STRONG ) 
     : m_fraction_tolerance( fpc_detail::fraction_tolerance<FPT>( tolerance ) )
     , m_strength( fpc_strength )
-    , m_failed_fraction()
+    , m_max_rel_diff()
     {
         BOOST_ASSERT_MSG( m_fraction_tolerance >= 0, "tolerance must not be negative!" ); // no reason for tolerance to be negative
     }
@@ -227,49 +214,28 @@ public:
     // Access methods
     FPT                 fraction_tolerance() const  { return m_fraction_tolerance; }
     fpc::strength       strength() const            { return m_strength; }
-    FPT                 failed_fraction() const     { return m_failed_fraction; }
+    FPT                 max_rel_diff() const        { return m_max_rel_diff; }
 
-    /*! Compares two floating points according to comparison method and against a tolerance.
+    /*! Compares two floating point numbers a and b such that their "left" relative difference |a-b|/a and/or
+     * "right" relative difference |a-b|/b does not exceed specified relative (fraction) tolerance.
      *
-     *  @param[in] left first floating point to be compared
-     *  @param[in] right second floating point to be compared
-     *  @param[in] negate if true, indicates that this comparison is part of a negation. This is used 
-     *             to store the part of the comparison that is failing (for the reports).
+     *  @param[in] left first floating point number to be compared
+     *  @param[in] right second floating point number to be compared
      *
-     * For the comparison method "close enough", the failing fraction is stored. If both fractions are failing
-     * the minimum of those fractions is stored. For the comparison method "very close", the minimum of those
-     * fraction is stored.
+     * Most offending fraction (relative difference) is stored, so it can later be reported
      */
-    bool                operator()( FPT left, FPT right, bool negate = false ) const
+    bool                operator()( FPT left, FPT right ) const
     {
         FPT diff              = fpc_detail::fpt_abs<FPT>( left - right );
         FPT fraction_of_right = fpc_detail::safe_fpt_division( diff, fpc_detail::fpt_abs( right ) );
         FPT fraction_of_left  = fpc_detail::safe_fpt_division( diff, fpc_detail::fpt_abs( left ) );
 
-        bool method_is_strong = (m_strength == FPC_STRONG) ^ negate;
+        m_max_rel_diff = (std::max)( fraction_of_left, fraction_of_right );
+        FPT min_rel_diff = (std::min)( fraction_of_left, fraction_of_right );
 
-        bool res = method_is_strong ? 
-              (fraction_of_right <= m_fraction_tolerance && fraction_of_left <= m_fraction_tolerance) 
-            : (fraction_of_right <= m_fraction_tolerance || fraction_of_left <= m_fraction_tolerance);
-
-        res ^= negate;
-
-        if( !res )
-        {
-          if(method_is_strong)
-          {
-            m_failed_fraction = std::min(fraction_of_left, fraction_of_right);
-          }
-          else
-          {
-            // if they fail both, we show the minimum
-            m_failed_fraction = (fraction_of_right > m_fraction_tolerance ? 
-                ( (fraction_of_left > m_fraction_tolerance) ? 
-                    std::min(fraction_of_left, fraction_of_right) 
-                    : fraction_of_right) 
-                : fraction_of_left);
-          }
-        }
+        bool res = m_strength == FPC_STRONG
+            ? m_max_rel_diff <= m_fraction_tolerance
+            : min_rel_diff   <= m_fraction_tolerance;
 
         return res;
     }
@@ -278,7 +244,7 @@ private:
     // Data members
     FPT                 m_fraction_tolerance;
     fpc::strength       m_strength;
-    mutable FPT         m_failed_fraction;
+    mutable FPT         m_max_rel_diff;
 };
 
 // ************************************************************************** //
