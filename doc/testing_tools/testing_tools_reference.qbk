@@ -164,8 +164,12 @@
 
 The full documentation of this macro is located [link boost_test.users_guide.testing_tools.boost_test_super_macro here].
 
-* `"failure message"` is a C-string printed in case of failure. See [link boost_test.users_guide.testing_tools.boost_test_super_macro.options.option_message here].
-* `floating_point_comparison_manipulation` is one of the floating point comparison manipulator. See [link boost_test.users_guide.testing_tools.boost_test_super_macro.options.floating_point here].
+* `"failure message"` is a C-string printed in case of failure. See [link boost_test.users_guide.testing_tools.boost_test_super_macro.options.option_message this section] for 
+  more details.
+* `floating_point_comparison_manipulation` is one of the floating point comparison manipulators. See [link boost_test.users_guide.testing_tools.boost_test_super_macro.options.floating_point this section]
+   for more details.
+* [classref boost::test_tools::bitwise] is a manipulator indicating that the comparison should be performed bitwise. See 
+  [link boost_test.users_guide.testing_tools.boost_test_super_macro.options.bitwise this section] for more details
 
 [h3 Restrictions on the acceptable statements]
 There are some restrictions on the supported statements. Those are explained [link boost_test.users_guide.testing_tools.boost_test_super_macro.acceptable_statements here].
