@@ -42,9 +42,9 @@ As their name suggests, these assertions are, in order, for /requirement/, /chec
 The __BOOST_TEST__ assertion uses some tricks with C++ operator overloading in order to perform its magic. This is why some expressions 
 are in fact not possible, such as:
 
-* ternary operations
+* statements containing ternary conditions: those statement should be surrounded by parenthesis
+* statements containing comas: 
 * coumpound statements containing more than one sequence point
-* statements containing comas,
 
 
 
@@ -114,11 +114,8 @@ Sometimes these information are not informative enough.
 The tag [classref boost::test_tools::bitwise] can be provided to the __BOOST_TEST__ macro in order to have an extended bitwise comparison
 of the operands. 
 
-The predicate used for comparison ([funcref boost::test_tools::tt_detail::bitwise_compare `bitwise_compare`]) gives extended information
-on the locations where the two operands do not match. 
-
 ```
-BOOST_AUTOR_TEST_CASE(test)
+BOOST_AUTO_TEST_CASE(test)
 {
   namespace tt = boost::test_tools;
   int a = 0xAB;
@@ -126,6 +123,9 @@ BOOST_AUTOR_TEST_CASE(test)
   BOOST_TEST( a == b, tt::bitwise() );
 }
 ```
+
+The predicate used for comparison ([funcref boost::test_tools::tt_detail::bitwise_compare `bitwise_compare`]) gives extended information
+on the locations where the two operands do not match. 
 
 [endsect] [/ bit sequences]
 
@@ -136,8 +136,9 @@ BOOST_AUTOR_TEST_CASE(test)
 [caution this feature is not available for non C++11 compilers (requires variadic macros and support of `auto` and `decltype`).
   Consider using [link boost_test.users_guide.tests_organization.decorators decorators] for setting the tolerance of the comparisons.]
 
+
 ```
-BOOST_AUTOR_TEST_CASE(test)
+BOOST_AUTO_TEST_CASE(test)
 {
   namespace tt = boost::test_tools;
   double d1 = 1.1e-5;
