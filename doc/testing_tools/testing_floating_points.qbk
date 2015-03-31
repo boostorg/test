@@ -68,8 +68,8 @@ implements an algorithm based on equation [link equ1 (1)] in the
 binary predicate [classref boost::math::fpc::small_with_tolerance `small_with_tolerance`].
 
 On top of the generic, flexible predicates the __UTF__ implements macro based family of tools
-__BOOST_CHECK_CLOSE__ and __BOOST_CHECK_SMALL__. These tools limit the check
-flexibility to strong-only checks, but automate failed check arguments reporting.
+__BOOST_TEST__, __BOOST_CHECK_CLOSE__ [footnote deprecated] and __BOOST_CHECK_SMALL__ [footnote deprecated]. These tools limit the check
+flexibility to strong-only checks (Equ.[link equ4 (4)]), but automate failed check arguments reporting.
 
 [h3 Tolerance selection considerations]
 
