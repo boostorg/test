@@ -58,7 +58,7 @@ struct default_distribution {
 
 /*!@brief Generator for the random sequences
  *
- * This class implements the generator concept (see @ref boost::unit_test::data::generated_by) for implementing
+ * This class implements the generator concept (see @ref boost::unit_test::data::monomorphic::generated_by) for implementing
  * a random number generator.
  */
 template<typename SampleType        = double, 
