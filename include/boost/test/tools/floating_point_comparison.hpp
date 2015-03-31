@@ -40,7 +40,7 @@ namespace fpc {
 // ************************************************************************** //
 
 
-//!@internal
+//! @internal
 //! Protects the instanciation of std::numeric_limits from non-supported types (eg. T=array)
 template <typename T, bool enabled>
 struct tolerance_based_delegate;
@@ -193,7 +193,7 @@ fraction_tolerance( percent_tolerance_t<FPT> tolerance )
  * related differnce, which can be used to generate detailed error message
  *
  * The methods for comparing floating points are detailed in the documentation. The method is chosen
- * by the fpc::strength given at construction.
+ * by the boost::math::fpc::strength given at construction.
  */
 template<typename FPT>
 class close_at_tolerance {
@@ -251,6 +251,12 @@ private:
 // **************            small_with_tolerance              ************** //
 // ************************************************************************** //
 
+
+/*!@brief Predicate for comparing floating point numbers against 0
+ *
+ * Serves the same purpose as boost::math::fpc::close_at_tolerance, but used when one
+ * of the operand is null. 
+ */
 template<typename FPT>
 class small_with_tolerance {
 public:
