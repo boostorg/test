@@ -57,6 +57,8 @@ inequations [link equ2 (2)] and [link equ3 (3)] where all underflow, overflow co
 || abs(u - v)/abs(v) <= epsilon; // (5)
 ``
 
+[h3 Implementation]
+
 Checks based on equations [link equ4 (4)] and [link equ5 (5)] is implemented by the binary predicate 
 [classref boost::math::fpc::close_at_tolerance `close_at_tolerance`]. The method for comparison (Equ [link equ4 (4)] or [link equ5 (5)]) as well as the
 epsilon are selected at construction. This predicate reports the tolerance to set to make the test successful.
@@ -68,8 +70,16 @@ implements an algorithm based on equation [link equ1 (1)] in the
 binary predicate [classref boost::math::fpc::small_with_tolerance `small_with_tolerance`].
 
 On top of the generic, flexible predicates the __UTF__ implements macro based family of tools
-__BOOST_TEST__, __BOOST_CHECK_CLOSE__ [footnote deprecated] and __BOOST_CHECK_SMALL__ [footnote deprecated]. These tools limit the check
+__BOOST_TEST__ [footnote in particular [link boost_test.users_guide.testing_tools.boost_test_super_macro.options.floating_point this section] ], 
+__BOOST_CHECK_CLOSE__ [footnote deprecated] and __BOOST_CHECK_SMALL__ [footnote deprecated]. These tools limit the check
 flexibility to strong-only checks (Equ.[link equ4 (4)]), but automate failed check arguments reporting.
+
+Finally, if the type is not a native floating point type (such as one of the multiprecision libraries), the __UTF__ still tries
+to detect that the type is suitable for comparisons using the tolerance scheme explained above. This detection involves
+`std::numeric_limits`. If it turns out that this automatic detection does not work for a specific type, it is then
+possible to specialise the meta-class [classref boost::math::fpc::tolerance_based] for this specific type to derive from 
+`boost::mpl::true_`.
+
 
 [h3 Tolerance selection considerations]
 
