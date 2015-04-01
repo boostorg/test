@@ -35,7 +35,7 @@ namespace test_tools {
 // **************                assertion_result              ************** //
 // ************************************************************************** //
 
-//!@brief Type used for predicate assertions.
+//!@brief Type used for storing the result of an assertion.
 class BOOST_TEST_DECL assertion_result {
 
     //!@internal
