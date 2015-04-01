@@ -53,9 +53,27 @@ are in fact not possible, such as:
 
 [section:collections Collection comparison]
 
+Collections are automatically detected and compared using the appropriate methods. 
+
+
+[info 
+The concept of collection is a sequence of elements that (C++11):
+
+* that has `size` and `begin` member functions, as well as fields `const_iterator` and `value_type`
+* and `value_type` is not of type `char` or `wchar_t`
+
+For C++03, the collection should be explicitly indicated. Standard containers of the `STL` are already indicated as collections. 
+
+The detection of the collection is delegated to the class [classref boost::unit_test::is_forward_iterable]. It is possible to specialize
+this class further to flag a type as forward iterable [footnote relevant only for C++03, as the fields and member functions are 
+detected automatically on C++11]
+]
+
 [endsect] [/ collections]
 
 [section:strings String comparison]
+
+In case the statement contains the comparison of strings, or `char*` arrays, those are promoted to `std::string` like classes. 
 
 [endsect] [/ string]
 
