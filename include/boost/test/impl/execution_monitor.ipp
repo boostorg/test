@@ -63,6 +63,7 @@ using std::va_list;
 // to use vsnprintf 
 #if defined(__QNXNTO__) 
 #  include <stdio.h> 
+using std::va_list;
 #endif
 
 #ifdef BOOST_SEH_BASED_SIGNAL_HANDLING
