@@ -201,7 +201,7 @@ protected:
 /// @class execution_exception 
 /// @brief This class is used to report any kind of an failure during execution of a monitored function inside of execution_monitor
 ///
-/// The instance of this class is thrown out of execution_monitor::execute invocation when failure is detected. Regardless of a kind of failure occured
+/// The instance of this class is thrown out of execution_monitor::execute invocation when failure is detected. Regardless of a kind of failure occurred
 /// the instance will provide a uniform way to catch and report it.
 /// 
 /// One important design rationale for this class is that we should be ready to work after fatal memory corruptions or out of memory conditions. To facilitate 
