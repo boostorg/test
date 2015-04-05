@@ -185,7 +185,7 @@ compare_collections( Lhs const& lhs, Rhs const& rhs )
         pr.message() << "Collections size mismatch: " << lhs.size() << " != " << rhs.size();
         return pr;
     }
-        
+
     typename Lhs::const_iterator left  = lhs.begin();
     typename Rhs::const_iterator right = rhs.begin();
     std::size_t                  pos   = 0;
@@ -296,7 +296,7 @@ struct compare_fpv {
         assertion_result ar( P( lhs, rhs ) );
         if( !ar )
             ar.message() << "Relative difference exceeds tolerance ["
-                         << P.max_rel_diff() << " > " << P.fraction_tolerance() << ']';
+                         << P.tested_rel_diff() << " > " << P.fraction_tolerance() << ']';
         return ar;
     }
 
@@ -322,12 +322,12 @@ struct compare_fpv<op::NE<Lhs,Rhs>,FPT> {
     static assertion_result
     compare( Lhs const& lhs, Rhs const& rhs )
     {
-        fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_STRONG );
+        fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_WEAK );
 
         assertion_result ar( !P( lhs, rhs ) );
         if( !ar )
             ar.message() << "Relative difference is within tolerance ["
-                         << P.max_rel_diff() << " < " << fpc_tolerance<FPT>() << ']';
+                         << P.tested_rel_diff() << " < " << fpc_tolerance<FPT>() << ']';
 
         return ar;
     }
@@ -632,7 +632,6 @@ public:
         return value_expr<T>( v );
     }
 #endif
-
 };
 
 #undef BOOST_TEST_FOR_EACH_CONST_OP

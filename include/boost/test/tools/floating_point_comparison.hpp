@@ -206,7 +206,7 @@ public:
     explicit    close_at_tolerance( ToleranceType tolerance, fpc::strength fpc_strength = FPC_STRONG ) 
     : m_fraction_tolerance( fpc_detail::fraction_tolerance<FPT>( tolerance ) )
     , m_strength( fpc_strength )
-    , m_max_rel_diff()
+    , m_tested_rel_diff()
     {
         BOOST_ASSERT_MSG( m_fraction_tolerance >= 0, "tolerance must not be negative!" ); // no reason for tolerance to be negative
     }
@@ -214,7 +214,7 @@ public:
     // Access methods
     FPT                 fraction_tolerance() const  { return m_fraction_tolerance; }
     fpc::strength       strength() const            { return m_strength; }
-    FPT                 max_rel_diff() const        { return m_max_rel_diff; }
+    FPT                 tested_rel_diff() const     { return m_tested_rel_diff; }
 
     /*! Compares two floating point numbers a and b such that their "left" relative difference |a-b|/a and/or
      * "right" relative difference |a-b|/b does not exceed specified relative (fraction) tolerance.
@@ -230,21 +230,19 @@ public:
         FPT fraction_of_right = fpc_detail::safe_fpt_division( diff, fpc_detail::fpt_abs( right ) );
         FPT fraction_of_left  = fpc_detail::safe_fpt_division( diff, fpc_detail::fpt_abs( left ) );
 
-        m_max_rel_diff = (std::max)( fraction_of_left, fraction_of_right );
+        FPT max_rel_diff = (std::max)( fraction_of_left, fraction_of_right );
         FPT min_rel_diff = (std::min)( fraction_of_left, fraction_of_right );
 
-        bool res = m_strength == FPC_STRONG
-            ? m_max_rel_diff <= m_fraction_tolerance
-            : min_rel_diff   <= m_fraction_tolerance;
+        m_tested_rel_diff = m_strength == FPC_STRONG ? max_rel_diff : min_rel_diff;
 
-        return res;
+        return m_tested_rel_diff <= m_fraction_tolerance;
     }
 
 private:
     // Data members
     FPT                 m_fraction_tolerance;
     fpc::strength       m_strength;
-    mutable FPT         m_max_rel_diff;
+    mutable FPT         m_tested_rel_diff;
 };
 
 // ************************************************************************** //

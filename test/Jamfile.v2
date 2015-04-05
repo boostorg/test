@@ -47,7 +47,7 @@ rule test-btl-lib-c11 ( test-rule : test-name : lib-name ? : pattern_file * : so
               # So deactivate those warnings again
               <toolset>gcc:<cxxflags>-pedantic
               <toolset>gcc:<cxxflags>-Wno-long-long
-              #<toolset>gcc:<cxxflags>-std=gnu++0x
+              <toolset>gcc:<cxxflags>-std=c++11
               <toolset>gcc-4.4:<cxxflags>-std=c++0x
               <toolset>gcc-4.5:<cxxflags>-std=c++0x
               <toolset>gcc-4.6:<cxxflags>-std=c++0x
@@ -86,7 +86,7 @@ rule test-btl-lib-mt ( test-rule : test-name : lib-name ? : pattern_file * : sou
               <toolset>gcc-4.5:<cxxflags>-std=gnu++0x
               <toolset>gcc-4.7:<cxxflags>-std=gnu++11
               <toolset>clang:<cxxflags>-Wno-c99-extensions
-              <toolset>clang:<cxxflags>-Wno-variadic-macros              
+              <toolset>clang:<cxxflags>-Wno-variadic-macros
               <define>BOOST_TEST_NO_AUTO_LINK=1 # requirements
               <threading>multi
               <warnings>all
@@ -119,7 +119,7 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : output_test_stream_test      : boost_unit_test_framework ]
           [ test-btl-lib run : result_report_test           : boost_unit_test_framework : test_files/result_report_test.pattern ]
           [ test-btl-lib run : parameterized_test_test      : boost_unit_test_framework ]
-          [ test-btl-lib run : test_fp_comparisons          : boost_unit_test_framework ]
+          [ test-btl-lib-c11 run : test_fp_comparisons          : boost_unit_test_framework ]
           [ test-btl-lib run : test_tools_test              : boost_unit_test_framework : test_files/test_tools_test.pattern ]
           [ test-btl-lib run : test_case_template_test      : boost_unit_test_framework ]
           [ test-btl-lib run : custom_exception_test        : boost_unit_test_framework/<link>static ]
@@ -134,7 +134,7 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : test_assertion_construction  : boost_unit_test_framework/<link>static ]
           [ test-btl-lib run : test_datasets                : boost_unit_test_framework : : [ glob test_datasets_src/*.cpp ] : ]
           [ test-btl-lib-c11 run : test_datasets_cxx11      : boost_unit_test_framework : : [ glob test_datasets_src/*.cpp ] : ]
-          
+
           # [ test-btl-lib run : config_file_iterator_test    : boost_unit_test_framework/<link>static ]
           # [ test-btl-lib run : config_file_test             : boost_unit_test_framework/<link>static ]
 
@@ -142,9 +142,9 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : test_dont_print_log_value    : boost_unit_test_framework ]
 
           # test for multiprecision / trac 11054
-          [ test-btl-lib run      : test_fp_multiprecision_close_fraction : boost_unit_test_framework : : 
+          [ test-btl-lib run      : test_fp_multiprecision_close_fraction : boost_unit_test_framework : :
               test_fp_multiprecision_close_fraction.cpp ]
-          [ test-btl-lib-c11 run  : test_fp_multiprecision_close_fraction_new_api : boost_unit_test_framework  : : 
+          [ test-btl-lib-c11 run  : test_fp_multiprecision_close_fraction_new_api : boost_unit_test_framework  : :
               test_fp_multiprecision_close_fraction.cpp ]
         ;
 

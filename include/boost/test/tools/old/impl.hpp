@@ -306,7 +306,7 @@ struct BOOST_TEST_DECL check_is_close_t {
         assertion_result ar( pred( left, right ) );
 
         if( !ar )
-            ar.message() << pred.max_rel_diff();
+            ar.message() << pred.tested_rel_diff();
 
         return ar;
     }
