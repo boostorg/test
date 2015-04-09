@@ -52,7 +52,7 @@ template <typename T>
 struct tolerance_based_delegate<T, true>
 : mpl::bool_<
     is_floating_point<T>::value ||
-    (std::numeric_limits<T>::is_specialized && std::numeric_limits<T>::is_exact)>
+    (!std::numeric_limits<T>::is_integer && std::numeric_limits<T>::is_specialized && std::numeric_limits<T>::is_exact)>
 {};
 
 
