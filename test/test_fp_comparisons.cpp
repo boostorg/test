@@ -162,6 +162,8 @@ BOOST_AUTO_TEST_CASE( test_type_mismatch )
     BOOST_CHECK_CLOSE( 2.1, 2.f, 6. );
 }
 
+
+#if !defined(BOOST_TEST_NO_VARIADIC)
 BOOST_TEST_DECORATOR( expected_failures( 4 ) )
 
 BOOST_AUTO_TEST_CASE( test_strong_weak )
@@ -173,6 +175,7 @@ BOOST_AUTO_TEST_CASE( test_strong_weak )
     BOOST_TEST(1./3 != 1./2, tt::tolerance(0.4));  // will fail 1/3 < 0.4
     BOOST_TEST(1./3 != 1./2, tt::tolerance(1./3));
 }
+#endif
 
 //____________________________________________________________________________//
 
