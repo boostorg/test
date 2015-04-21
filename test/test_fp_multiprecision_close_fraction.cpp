@@ -35,6 +35,7 @@ typedef boost::multiprecision::number<
    boost::multiprecision::et_on> cpp_dec_float_50_et;
 
 
+#if 0
 namespace boost { namespace math { namespace fpc { 
 
   template <class A, boost::multiprecision::expression_template_option B>
@@ -48,7 +49,7 @@ namespace boost { namespace math { namespace fpc {
       tag, Arg1, Arg2, Arg3, Arg4> > : boost::mpl::true_ {};
 
 } } }
-
+#endif
 
 
 
