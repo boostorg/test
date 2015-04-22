@@ -1,6 +1,6 @@
 #
-# Copyright (c) 2003-2014 Gennadiy Rozental 
-# Copyright (c) 2013-2014 Raffi Enficiaud
+# Copyright (c) 2003-2015 Gennadiy Rozental 
+# Copyright (c) 2013-2015 Raffi Enficiaud
 #
 # Distributed under the Boost Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -70,6 +70,8 @@ doxygen doxygen_reference_generated_doc
       # utils
       $(BOOST_ROOT)/libs/test/include/boost/test/utils/algorithm.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/utils/named_params.hpp
+      $(BOOST_ROOT)/libs/test/include/boost/test/tools/floating_point_comparison.hpp
+      $(BOOST_ROOT)/libs/test/include/boost/test/tools/detail/tolerance_manip.hpp
       
       # others
       $(BOOST_ROOT)/libs/test/include/boost/test/unit_test_parameters.hpp
@@ -95,6 +97,7 @@ doxygen doxygen_reference_generated_doc
         <doxygen:param>CASE_SENSE_NAMES=YES
         <doxygen:param>INTERNAL_DOCS=NO
         <doxygen:param>SUBGROUPING=YES
+        <doxygen:param>SHORT_NAMES=YES
     ;
 
 
