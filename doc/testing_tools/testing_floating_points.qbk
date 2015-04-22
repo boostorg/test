@@ -59,8 +59,7 @@ inequations [link equ2 (2)] and [link equ3 (3)] where all underflow, overflow co
 
 Checks based on equations [link equ4 (4)] and [link equ5 (5)] is implemented by the binary predicate 
 [classref boost::math::fpc::close_at_tolerance `close_at_tolerance`]. The method for comparison (Equ [link equ4 (4)] or [link equ5 (5)]) as well as the
-epsilon are selected at construction. This predicate reports then the most offending fraction in case
-of failed assertion. 
+epsilon are selected at construction. This predicate reports the tolerance to set to make the test successful.
 
 While equations [link equ4 (4)] and [link equ5 (5)] in general are preferred for the general floating
 point comparison check over equation [link equ1 (1)], they are
