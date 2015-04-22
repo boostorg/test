@@ -26,6 +26,7 @@
 using namespace boost;
 using namespace boost::unit_test;
 using namespace boost::test_tools;
+namespace tt=boost::test_tools;
 
 bool not_func( bool argb ) { return !argb; }
 
@@ -149,7 +150,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( test_CHECK_CLOSE_FRACTION, FPT, test_types )
     CHECK_NOT_CLOSE( 1, 1.0002, 1.1e-4 );
 
 #undef CHECK_CLOSE
-#undef CHECK_NOT_CLOSE                        
+#undef CHECK_NOT_CLOSE
 }
 
 //____________________________________________________________________________//
@@ -160,6 +161,21 @@ BOOST_AUTO_TEST_CASE( test_type_mismatch )
     BOOST_CHECK_CLOSE( 2.1, 2., 6. );
     BOOST_CHECK_CLOSE( 2.1, 2.f, 6. );
 }
+
+
+#if !defined(BOOST_TEST_NO_VARIADIC)
+BOOST_TEST_DECORATOR( expected_failures( 4 ) )
+
+BOOST_AUTO_TEST_CASE( test_strong_weak )
+{
+    BOOST_TEST(1./3 == 1./2, tt::tolerance(1.));
+    BOOST_TEST(1./3 == 1./2, tt::tolerance(0.4));  // will fail 1/2 > 0.4
+    BOOST_TEST(1./3 == 1./2, tt::tolerance(1./3)); // will fail; both 1/3 and 1/2 > 1/3
+    BOOST_TEST(1./3 != 1./2, tt::tolerance(1.));   // will fail; both 1/3 and 1/2 < 1
+    BOOST_TEST(1./3 != 1./2, tt::tolerance(0.4));  // will fail 1/3 < 0.4
+    BOOST_TEST(1./3 != 1./2, tt::tolerance(1./3));
+}
+#endif
 
 //____________________________________________________________________________//
 

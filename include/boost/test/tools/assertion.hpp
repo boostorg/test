@@ -24,11 +24,11 @@
 #include <boost/test/tools/fpc_tolerance.hpp>
 
 // Boost
+#include <boost/numeric/conversion/conversion_traits.hpp> // for numeric::conversion_traits
 #include <boost/mpl/assert.hpp>
 #include <boost/utility/declval.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/remove_reference.hpp>
-#include <boost/type_traits/is_floating_point.hpp>
 
 // STL
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
@@ -185,7 +185,7 @@ compare_collections( Lhs const& lhs, Rhs const& rhs )
         pr.message() << "Collections size mismatch: " << lhs.size() << " != " << rhs.size();
         return pr;
     }
-        
+
     typename Lhs::const_iterator left  = lhs.begin();
     typename Rhs::const_iterator right = rhs.begin();
     std::size_t                  pos   = 0;
@@ -296,7 +296,7 @@ struct compare_fpv {
         assertion_result ar( P( lhs, rhs ) );
         if( !ar )
             ar.message() << "Relative difference exceeds tolerance ["
-                         << P.failed_fraction() << " > " << P.fraction_tolerance() << ']';
+                         << P.tested_rel_diff() << " > " << P.fraction_tolerance() << ']';
         return ar;
     }
 
@@ -322,12 +322,12 @@ struct compare_fpv<op::NE<Lhs,Rhs>,FPT> {
     static assertion_result
     compare( Lhs const& lhs, Rhs const& rhs )
     {
-        fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_STRONG );
-        
-        assertion_result ar( P( lhs, rhs, true ) );
+        fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_WEAK );
+
+        assertion_result ar( !P( lhs, rhs ) );
         if( !ar )
             ar.message() << "Relative difference is within tolerance ["
-                         << P.failed_fraction() << " < " << fpc_tolerance<FPT>() << ']';
+                         << P.tested_rel_diff() << " < " << fpc_tolerance<FPT>() << ']';
 
         return ar;
     }
@@ -351,8 +351,8 @@ struct compare_fpv<op::NE<Lhs,Rhs>,FPT> {
 #define DEFINE_FPV_COMPARISON( oper, name, rev )                    \
 template<typename Lhs,typename Rhs>                                 \
 struct name<Lhs,Rhs,typename boost::enable_if_c<                    \
-    is_floating_point<Lhs>::value &&                                \
-    is_floating_point<Rhs>::value>::type> {                         \
+    (fpc::tolerance_based<Lhs>::value &&                            \
+     fpc::tolerance_based<Rhs>::value)>::type> {                    \
         typedef typename numeric::conversion_traits<Lhs,Rhs         \
     >::supertype FPT;                                               \
     typedef name<Lhs,Rhs> OP;                                       \
@@ -632,7 +632,6 @@ public:
         return value_expr<T>( v );
     }
 #endif
-
 };
 
 #undef BOOST_TEST_FOR_EACH_CONST_OP

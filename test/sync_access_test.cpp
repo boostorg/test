@@ -21,7 +21,6 @@
 #include <boost/bind.hpp>
 #include <boost/ref.hpp>
 
-
 using namespace boost;
 namespace ut = boost::unit_test;
 

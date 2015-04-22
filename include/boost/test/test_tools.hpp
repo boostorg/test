@@ -47,4 +47,8 @@
 #  include <boost/test/tools/detail/tolerance_manip.hpp>
 #endif
 
+#if !BOOST_PP_VARIADICS || ((__cplusplus >= 201103L) && BOOST_NO_CXX11_VARIADIC_MACROS)
+#define BOOST_TEST_NO_VARIADIC
+#endif
+
 #endif // BOOST_TEST_TOOLS_HPP_111812GER

@@ -25,6 +25,7 @@
 
 // Boost
 #include <boost/limits.hpp>
+#include <boost/numeric/conversion/conversion_traits.hpp> // for numeric::conversion_traits
 #include <boost/type_traits/is_array.hpp>
 
 #include <boost/preprocessor/repetition/repeat.hpp>
@@ -281,7 +282,7 @@ struct comp_supertype {
     // value of integral type is promoted to the floating. The same for float and double
     // But we don't want to compare two values of integral types using this tool.
     typedef typename numeric::conversion_traits<FPT1,FPT2>::supertype type;
-    BOOST_STATIC_ASSERT( !is_integral<type>::value );
+    BOOST_STATIC_ASSERT_MSG( !is_integral<type>::value, "Only floating-point types can be compared!");
 };
 
 } // namespace tt_detail
@@ -305,7 +306,7 @@ struct BOOST_TEST_DECL check_is_close_t {
         assertion_result ar( pred( left, right ) );
 
         if( !ar )
-            ar.message() << pred.failed_fraction();
+            ar.message() << pred.tested_rel_diff();
 
         return ar;
     }

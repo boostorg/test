@@ -20,9 +20,7 @@
 #include <boost/test/tools/detail/indirections.hpp>
 
 #include <boost/test/tools/fpc_tolerance.hpp>
-
-// Boost
-#include <boost/type_traits/is_floating_point.hpp>
+#include <boost/test/tools/floating_point_comparison.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -38,7 +36,7 @@ namespace tt_detail {
 
 template<typename FPT>
 struct tolerance_manip {
-    explicit    tolerance_manip( FPT tol ) : m_value( tol ) {}
+    explicit tolerance_manip( FPT const & tol ) : m_value( tol ) {}
 
     FPT m_value;
 };
@@ -51,9 +49,10 @@ template<typename FPT>
 inline tolerance_manip<FPT>
 operator%( FPT v, tolerance_manip_delay const& )
 {
-    BOOST_STATIC_ASSERT( is_floating_point<FPT>::value );
+    BOOST_STATIC_ASSERT_MSG( (fpc::tolerance_based<FPT>::value), 
+                             "tolerance only for floating points" );
 
-    return tolerance_manip<FPT>( v * static_cast<FPT>(0.01) ); 
+    return tolerance_manip<FPT>( static_cast<FPT>(v * 0.01) ); 
 }
 
 //____________________________________________________________________________//
@@ -87,7 +86,8 @@ template<typename FPT>
 inline tt_detail::tolerance_manip<FPT>
 tolerance( FPT v )
 {
-    BOOST_STATIC_ASSERT( is_floating_point<FPT>::value );
+    BOOST_STATIC_ASSERT_MSG( (fpc::tolerance_based<FPT>::value), 
+                             "tolerance only for floating points" );
 
     return tt_detail::tolerance_manip<FPT>( v );
 }
@@ -98,9 +98,10 @@ template<typename FPT>
 inline tt_detail::tolerance_manip<FPT>
 tolerance( fpc::percent_tolerance_t<FPT> v )
 {
-    BOOST_STATIC_ASSERT( is_floating_point<FPT>::value );
+    BOOST_STATIC_ASSERT_MSG( (fpc::tolerance_based<FPT>::value), 
+                             "tolerance only for floating points" );
 
-    return tt_detail::tolerance_manip<FPT>( v.m_value * static_cast<FPT>(0.01) );
+    return tt_detail::tolerance_manip<FPT>( static_cast<FPT>(v.m_value * 0.01) );
 }
 
 //____________________________________________________________________________//
