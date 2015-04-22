@@ -35,6 +35,9 @@ typedef boost::multiprecision::number<
    boost::multiprecision::et_on> cpp_dec_float_50_et;
 
 
+// there is no need for this anymore, however this could be defined by 
+// the user in order to support additional types for floating point
+// comparison.
 #if 0
 namespace boost { namespace math { namespace fpc { 
 

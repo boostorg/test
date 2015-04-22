@@ -193,7 +193,7 @@ fraction_tolerance( percent_tolerance_t<FPT> tolerance )
  * related differnce, which can be used to generate detailed error message
  *
  * The methods for comparing floating points are detailed in the documentation. The method is chosen
- * by the boost::math::fpc::strength given at construction.
+ * by the @ref boost::math::fpc::strength given at construction.
  */
 template<typename FPT>
 class close_at_tolerance {
@@ -212,8 +212,13 @@ public:
     }
 
     // Access methods
+    //! Returns the tolerance
     FPT                 fraction_tolerance() const  { return m_fraction_tolerance; }
+    
+    //! Returns the comparison method
     fpc::strength       strength() const            { return m_strength; }
+    
+    //! Returns the failing fraction
     FPT                 tested_rel_diff() const     { return m_tested_rel_diff; }
 
     /*! Compares two floating point numbers a and b such that their "left" relative difference |a-b|/a and/or
@@ -222,7 +227,10 @@ public:
      *  @param[in] left first floating point number to be compared
      *  @param[in] right second floating point number to be compared
      *
-     * Most offending fraction (relative difference) is stored, so it can later be reported
+     * What is reported by @c tested_rel_diff in case of failure depends on the comparison method:
+     * - for @c FPC_STRONG: the max of the two fractions
+     * - for @c FPC_WEAK: the min of the two fractions
+     * The rationale behind is to report the tolerance to set in order to make a test pass.
      */
     bool                operator()( FPT left, FPT right ) const
     {
