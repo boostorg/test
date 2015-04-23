@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_SUITE( S1 )
 #if BOOST_PP_VARIADICS
 BOOST_AUTO_TEST_CASE( tc1, * expected_failures(1) ) 
 #else
-BOOST_TEST_DECORATOR( * ut::expected_failures(1) ) BOOST_AUTO_TEST_CASE( tc1 ) /* on the same line, otherwise some test below should be updated */
+BOOST_TEST_DECORATOR(*boost::unit_test::expected_failures(1)) BOOST_AUTO_TEST_CASE( tc1 ) /* on the same line, otherwise some test below should be updated */
 #endif
 { BOOST_ERROR(""); }
 
@@ -60,7 +60,7 @@ BOOST_AUTO_TEST_SUITE( S21 )
 #if BOOST_PP_VARIADICS
 BOOST_AUTO_TEST_CASE( tc1, * expected_failures(1) ) 
 #else
-BOOST_TEST_DECORATOR(* ut::expected_failures(1)) BOOST_AUTO_TEST_CASE( tc1 ) /* on the same line, otherwise some test below should be updated (the test is sensitive to line numbers) */
+BOOST_TEST_DECORATOR(*boost::unit_test::expected_failures(1)) BOOST_AUTO_TEST_CASE( tc1 ) /* on the same line, otherwise some test below should be updated (the test is sensitive to line numbers) */
 #endif
 { BOOST_ERROR( "" ); }
 
