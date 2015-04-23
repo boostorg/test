@@ -164,7 +164,7 @@ BOOST_AUTO_TEST_CASE( test_type_mismatch )
 
 
 #if !defined(BOOST_TEST_NO_VARIADIC)
-BOOST_TEST_DECORATOR( expected_failures( 4 ) )
+BOOST_TEST_DECORATOR( * expected_failures( 4 ) )
 
 BOOST_AUTO_TEST_CASE( test_strong_weak )
 {
