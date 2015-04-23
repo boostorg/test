@@ -74,9 +74,6 @@ BOOST_AUTO_TU_REGISTRAR( suite_name )(                                  \
     BOOST_AUTO_TEST_SUITE_NO_DECOR( suite_name )                        \
 /**/
 
-#define BOOST_AUTO_TEST_SUITE_D( suite_name, decorators )               \
-    BOOST_AUTO_TEST_SUITE_WITH_DECOR( suite_name, decorators)           \
-/**/
 
 #endif /* BOOST_PP_VARIADICS */
 
@@ -109,9 +106,6 @@ typedef F BOOST_AUTO_TEST_CASE_FIXTURE;                                 \
    BOOST_FIXTURE_TEST_SUITE_NO_DECOR( suite_name, F )                   \
 /**/
 
-#define BOOST_FIXTURE_TEST_SUITE_D( suite_name, F, decorators  )        \
-   BOOST_FIXTURE_TEST_SUITE_WITH_DECOR( suite_name, F, decorators )     \
-/**/
 
 #endif /* BOOST_PP_VARIADICS */
 
@@ -181,9 +175,6 @@ BOOST_FIXTURE_TEST_CASE_WITH_DECOR( test_name, F,                       \
      BOOST_FIXTURE_TEST_CASE_NO_DECOR(test_name, F)                     \
 /**/
 
-#define BOOST_FIXTURE_TEST_CASE_D( test_name, F, decorators )           \
-     BOOST_FIXTURE_TEST_CASE_WITH_DECOR(test_name, F, decorators)       \
-/**/
 
 #endif /* BOOST_PP_VARIADICS */
 
@@ -214,10 +205,6 @@ BOOST_FIXTURE_TEST_CASE_WITH_DECOR( test_name, F,                       \
 
 #define BOOST_AUTO_TEST_CASE( test_name )                               \
     BOOST_AUTO_TEST_CASE_NO_DECOR( test_name )                          \
-/**/
-
-#define BOOST_AUTO_TEST_CASE_D( test_name, decorators )                 \
-    BOOST_AUTO_TEST_CASE_WITH_DECOR( test_name, decorators )            \
 /**/
 
 
