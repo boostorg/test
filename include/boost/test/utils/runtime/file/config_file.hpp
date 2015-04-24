@@ -65,7 +65,7 @@ namespace {
 nfp::typed_keyword<cstring, struct value_marker_t>          value_marker;
 nfp::typed_keyword<cstring, struct value_delimeter_t>       value_delimeter;
 nfp::typed_keyword<cstring, struct namespace_delimeter_t>   namespace_delimeter;
-} // local namespace 
+} // local namespace
 
 // ************************************************************************** //
 // **************        runtime::file::param_namespace        ************** //
@@ -126,7 +126,7 @@ protected:
     explicit                param_namespace( cstring name, param_namespace const* parent = 0 );
 
 private:
-    void                    load_impl( config_file_iterator cf_it, 
+    void                    load_impl( config_file_iterator cf_it,
                                        cstring value_marker_, cstring value_delimeter_, cstring namespace_delimeter_ );
 
     // Data members

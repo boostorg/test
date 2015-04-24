@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : implements model of program environment 
+//  Description : implements model of program environment
 // ***************************************************************************
 
 #ifndef BOOST_RT_ENV_ENVIRONMENT_IPP_062904GER
@@ -57,9 +57,9 @@ new_var_record( cstring var_name )
 
     // create and return new record
     variable_data& new_var_data = s_registry()[key];
-    
+
     new_var_data.m_var_name = key;
-    
+
     return new_var_data;
 }
 
@@ -75,8 +75,8 @@ find_var_record( cstring var_name )
 
 //____________________________________________________________________________//
 
-#ifdef BOOST_MSVC 
-#pragma warning(push) 
+#ifdef BOOST_MSVC
+#pragma warning(push)
 #pragma warning(disable:4996) // getenv
 #endif
 
@@ -87,8 +87,8 @@ sys_read_var( cstring var_name )
     return BOOST_RT_PARAM_GETENV( var_name.begin() );
 }
 
-#ifdef BOOST_MSVC 
-#pragma warning(pop) 
+#ifdef BOOST_MSVC
+#pragma warning(pop)
 #endif
 //____________________________________________________________________________//
 
@@ -108,7 +108,7 @@ var( cstring var_name )
     rt_env_detail::variable_data* vd = rt_env_detail::find_var_record( var_name );
 
     BOOST_RT_PARAM_VALIDATE_LOGIC( !!vd,
-                                   BOOST_RT_PARAM_LITERAL( "First access to the environment variable " ) 
+                                   BOOST_RT_PARAM_LITERAL( "First access to the environment variable " )
                                         << var_name << BOOST_RT_PARAM_LITERAL( " should be typed" ) );
 
     return variable_base( *vd );

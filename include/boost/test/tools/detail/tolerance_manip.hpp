@@ -79,7 +79,7 @@ inline check_type
 operator<<( assertion_type const& /*at*/, tolerance_manip<FPT> const& )         { return CHECK_BUILT_ASSERTION; }
 
 //____________________________________________________________________________//
- 
+
 } // namespace tt_detail
 
 template<typename FPT>

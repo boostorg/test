@@ -75,7 +75,7 @@ template<typename FPT>
 inline fixture_t
 tolerance( FPT v )
 {
-    return fixture_t( test_unit_fixture_ptr( 
+    return fixture_t( test_unit_fixture_ptr(
         new unit_test::class_based_fixture<test_tools::local_fpc_tolerance<FPT>,FPT>( v ) ) );
 }
 
@@ -85,7 +85,7 @@ template<typename FPT>
 inline fixture_t
 tolerance( test_tools::fpc::percent_tolerance_t<FPT> v )
 {
-    return fixture_t( test_unit_fixture_ptr( 
+    return fixture_t( test_unit_fixture_ptr(
         new unit_test::class_based_fixture<test_tools::local_fpc_tolerance<FPT>,FPT>( v.m_value * static_cast<FPT>(0.01) ) ) );
 }
 

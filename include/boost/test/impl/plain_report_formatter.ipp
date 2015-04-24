@@ -105,23 +105,23 @@ plain_report_formatter::test_unit_report_start( test_unit const& tu, std::ostrea
     const_string descr;
 
     if( tr.passed() )
-        descr = "passed";
+        descr = "has passed";
     else if( tr.p_skipped )
-        descr = "skipped";
+        descr = "was skipped";
     else if( tr.p_aborted )
-        descr = "aborted";
+        descr = "was aborted";
     else
-        descr = "failed";
+        descr = "has failed";
 
     ostr << std::setw( m_indent ) << ""
-         << "Test " << tu.p_type_name << ' ' << quote() << tu.p_name << ' ' << descr;
+         << "Test " << tu.p_type_name << ' ' << quote() << tu.full_name() << ' ' << descr;
 
     if( tr.p_skipped ) {
-        ostr << " due to " << (tu.check_dependencies() ? "test aborting\n" : "failed dependancy\n" );
+        ostr  << "\n";
         m_indent += 2;
         return;
     }
-    
+
     counter_t total_assertions  = tr.p_assertions_passed + tr.p_assertions_failed;
     counter_t total_tc          = tr.p_test_cases_passed + tr.p_test_cases_warned + tr.p_test_cases_failed + tr.p_test_cases_skipped;
 
@@ -140,7 +140,7 @@ plain_report_formatter::test_unit_report_start( test_unit const& tu, std::ostrea
     print_stat_value( ostr, tr.p_assertions_failed , m_indent, total_assertions, "assertion", "failed" );
     print_stat_value( ostr, tr.p_warnings_failed   , m_indent, 0               , "warning"  , "failed" );
     print_stat_value( ostr, tr.p_expected_failures , m_indent, 0               , "failure"  , "expected" );
-    
+
     ostr << '\n';
 }
 
@@ -158,36 +158,42 @@ void
 plain_report_formatter::do_confirmation_report( test_unit const& tu, std::ostream& ostr )
 {
     test_results const& tr = results_collector.results( tu.p_id );
-    
+
     if( tr.passed() ) {
         BOOST_TEST_SCOPE_SETCOLOR( ostr, term_attr::BRIGHT, term_color::GREEN );
 
         ostr << "*** No errors detected\n";
         return;
     }
-        
-    BOOST_TEST_SCOPE_SETCOLOR( ostr, term_attr::BRIGHT, term_color::RED );
-        
-    if( tr.p_skipped ) {
-        ostr << "*** Test " << tu.p_type_name << " skipped due to " 
-             << (tu.check_dependencies() ? "test aborting\n" : "failed dependancy\n" );
-        return;
-    }
 
-    if( tr.p_assertions_failed == 0 ) {
-        ostr << "*** errors detected in test " << tu.p_type_name << " " << quote() << tu.p_name
+    BOOST_TEST_SCOPE_SETCOLOR( ostr, term_attr::BRIGHT, term_color::RED );
+
+    if( tr.p_skipped ) {
+        ostr << "*** The test " << tu.p_type_name << ' ' << quote() << tu.full_name() << " was skipped"
              << "; see standard output for details\n";
         return;
     }
 
+    if( tr.p_aborted ) {
+        ostr << "*** The test " << tu.p_type_name << ' ' << quote() << tu.full_name() << " was aborted"
+             << "; see standard output for details\n";
+    }
+
+    if( tr.p_assertions_failed == 0 ) {
+        if( !tr.p_aborted )
+            ostr << "*** Errors were detected in the test " << tu.p_type_name << ' ' << quote() << tu.full_name()
+                 << "; see standard output for details\n";
+        return;
+    }
+
     counter_t num_failures = tr.p_assertions_failed;
-    
-    ostr << "*** " << num_failures << " failure" << ( num_failures != 1 ? "s" : "" ) << " detected";
-    
+
+    ostr << "*** " << num_failures << " failure" << ( num_failures != 1 ? "s are" : " is" ) << " detected";
+
     if( tr.p_expected_failures > 0 )
-        ostr << " (" << tr.p_expected_failures << " failure" << ( tr.p_expected_failures != 1 ? "s" : "" ) << " expected)";
-    
-    ostr << " in test " << tu.p_type_name << " " << quote() << tu.p_name << "\n";
+        ostr << " (" << tr.p_expected_failures << " failure" << ( tr.p_expected_failures != 1 ? "s are" : " is" ) << " expected)";
+
+    ostr << " in the test " << tu.p_type_name << " " << quote() << tu.full_name() << "\n";
 }
 
 //____________________________________________________________________________//

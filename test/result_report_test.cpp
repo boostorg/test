@@ -83,10 +83,15 @@ void check( output_test_stream& output, output_format report_format, test_unit_i
 
 //____________________________________________________________________________//
 
-void check( output_test_stream& output, test_unit_id id )
+void check( output_test_stream& output, test_suite* ts )
 {
-    check( output, OF_CLF, id );
-    check( output, OF_XML, id );
+    ts->p_default_status.value = test_unit::RS_ENABLED;
+    
+    framework::finalize_setup_phase( ts->p_id );
+    framework::run( ts );
+
+    check( output, OF_CLF, ts->p_id );
+    check( output, OF_XML, ts->p_id );
 }
 
 //____________________________________________________________________________//
@@ -145,25 +150,19 @@ BOOST_AUTO_TEST_CASE( test_result_reports )
         ts_main->add( ts_2 );
         ts_main->add( ts_3 );
 
-    framework::run( ts_1 );
-    check( test_output, ts_1->p_id );
+    check( test_output, ts_1 );
 
-    framework::run( ts_1b );
-    check( test_output, ts_1b->p_id );
+    check( test_output, ts_1b );
 
-    framework::run( ts_1c );
-    check( test_output, ts_1c->p_id );
+    check( test_output, ts_1c );
 
-    framework::run( ts_2 );
-    check( test_output, ts_2->p_id );
+    check( test_output, ts_2 );
 
-    framework::run( ts_3 );
-    check( test_output, ts_3->p_id );
+    check( test_output, ts_3 );
 
     ts_3->depends_on( tc1 );
 
-    framework::run( ts_main );
-    check( test_output, ts_main->p_id );
+    check( test_output, ts_main );
 
     results_reporter::set_stream( std::cout );
 }

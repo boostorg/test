@@ -15,7 +15,8 @@ project libs/test/example
     : requirements 
       <toolset>msvc-6.5:<link>static 
       <toolset>clang:<cxxflags>-Wno-c99-extensions
-      <toolset>clang:<cxxflags>-Wno-variadic-macros  
+      <toolset>clang:<cxxflags>-Wno-variadic-macros
+#      <toolset>msvc:<cxxflags>/P
     ;
 
 # Define aliases for the needed libs to get shorter names
@@ -54,7 +55,8 @@ test-suite boost_test_examples
     [ run-fail unit_test_example_11.cpp unit_test_framework/<link>static ]
     [ link     unit_test_example_12.cpp unit_test_framework/<link>static ]
     [ run      unit_test_example_13.cpp ]
-    [ run      unit_test_example_14.cpp unit_test_framework ]
+    [ run-fail unit_test_example_15.cpp ]
+
 
     [ run      est_example1.cpp unit_test_framework ]
     [ run-fail est_example2.cpp unit_test_framework ]
@@ -68,5 +70,5 @@ test-suite boost_test_examples
     [ run-fail external_main_example_1.cpp unit_test_framework ]
     [ run-fail external_main_example_2.cpp unit_test_framework ]
     [ run-fail external_main_example_3.cpp ]
-    [ run-fail dyn_ut_example.cpp unit_test_framework ]
+    [ run-fail filtering_example.cpp unit_test_framework/<link>static ]
 ;

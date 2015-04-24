@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -92,7 +92,7 @@ struct generate_test_case_4_type {
         full_name += '>';
 
         m_holder.m_test_cases.push_back( new test_case( full_name,
-                                                        m_test_case_file, 
+                                                        m_test_case_file,
                                                         m_test_case_line,
                                                         test_case_template_invoker<TestCaseTemplate,TestType>() ) );
     }
@@ -124,7 +124,7 @@ public:
     {
         if( m_test_cases.empty() )
             return 0;
-    
+
         test_unit* res = m_test_cases.front();
         m_test_cases.pop_front();
 

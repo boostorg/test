@@ -1,13 +1,13 @@
 //  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//!@file 
-//!@brief Defines Unit Test Framework monostate interfaces.
-//! The framework interfaces are based on Monostate design patern. 
+//!@file
+//!@brief Defines Unit Test Framework mono-state interfaces.
+//! The framework interfaces are based on Monostate design pattern.
 // ***************************************************************************
 
 #ifndef BOOST_TEST_FRAMEWORK_HPP_020805GER
@@ -47,24 +47,29 @@ typedef test_suite* (*init_unit_test_func)( int, char* [] );
 // **************                   framework                  ************** //
 // ************************************************************************** //
 
-/// Namespace of the Unit Test Framework monostate
+/// Namespace of the Unit Test Framework mono-state
 namespace framework {
 
 /// @name Unit Test Framework initialization and shutdown
 /// @{
 
-/// @brief This funcion performs initialization of the framework monostate. 
+/// @brief This function performs initialization of the framework mono-state.
 ///
 /// It needs to be called every time before the test is started.
 /// @param[in] init_func test module initialization routine
 /// @param[in] argc command line arguments collection
 /// @param[in] argv command line arguments collection
-BOOST_TEST_DECL void    init( init_unit_test_func init_func, int argc, char* argv[] );
+BOOST_TEST_DECL void                init( init_unit_test_func init_func, int argc, char* argv[] );
 
-/// This function tells if the framework monostate is initialized
-BOOST_TEST_DECL bool    is_initialized();
+/// This function applies all the decorators and figures out default run status. This argument facilitates an 
+/// ability of the test cases to prepare some other test units (primarily used internally for self testing)
+/// @param[in] tu Optional id of the test unit representing root of test tree. If absent, master test suite is used
+BOOST_TEST_DECL void                finalize_setup_phase( test_unit_id tu = INV_TEST_UNIT_ID);
 
-/// This function shuts down the framework and clears up its monostate.
+/// This function returns true when testing is in progress (setup is finished)
+BOOST_TEST_DECL bool                test_in_progress();
+
+/// This function shuts down the framework and clears up its mono-state.
 ///
 /// It needs to be at the very end of test module execution
 BOOST_TEST_DECL void    shutdown();
@@ -75,9 +80,9 @@ BOOST_TEST_DECL void    shutdown();
 
 /// Provides both read and write access to current "leaf" auto test suite during the test unit registration phase.
 ///
-/// During auto-registration phase the framework maintain a FIFO queue of test units being registered. New test units become children 
-/// of the current "leaf" test suite and if this is test suite it is pushed back into queue and becomes a new leaf. 
-/// When test suite registration is completed, a test suite is poped from the back of the queue. Only automatically registered test suites
+/// During auto-registration phase the framework maintain a FIFO queue of test units being registered. New test units become children
+/// of the current "leaf" test suite and if this is test suite it is pushed back into queue and becomes a new leaf.
+/// When test suite registration is completed, a test suite is popped from the back of the queue. Only automatically registered test suites
 /// should be added to this queue. Master test suite is always a zero element in this queue, so if no other test suites are registered
 /// all test cases are added to master test suite.
 
@@ -88,33 +93,33 @@ BOOST_TEST_DECL void    shutdown();
 /// @param[in] ts test suite to push back to the queue
 /// @param[in] push_or_pop should we push ts to the queue or pop leaf test suite instead
 /// @returns a reference to the currently active/"leaf" test suite
-BOOST_TEST_DECL test_suite&          current_auto_test_suite( test_suite* ts = 0, bool push_or_pop = true );
+BOOST_TEST_DECL test_suite&         current_auto_test_suite( test_suite* ts = 0, bool push_or_pop = true );
 
 /// This function add new test case into the global collection of test units the framework aware of.
 
-/// This function also assignes unique test unit id for every test case. Later on one can use this id to locate 
+/// This function also assignes unique test unit id for every test case. Later on one can use this id to locate
 /// the test case if necessary. This is the way for the framework to maintain weak references between test units.
 /// @param[in]  tc  test case to register
-BOOST_TEST_DECL void    register_test_unit( test_case* tc );
+BOOST_TEST_DECL void                register_test_unit( test_case* tc );
 
 /// This function add new test suite into the global collection of test units the framework aware of.
 
-/// This function also assignes unique test unit id for every test suite. Later on one can use this id to locate 
+/// This function also assignes unique test unit id for every test suite. Later on one can use this id to locate
 /// the test case if necessary. This is the way for the framework to maintain weak references between test units.
 /// @param[in]  ts  test suite to register
-BOOST_TEST_DECL void    register_test_unit( test_suite* ts );
+BOOST_TEST_DECL void                register_test_unit( test_suite* ts );
 
 /// This function removes the test unit from the collection of known test units and destroys the test unit object.
 
-/// This function also assignes unique test unit id for every test case. LAter on one can use this id to located 
+/// This function also assigns unique test unit id for every test case. Later on one can use this id to located
 /// the test case if necessary. This is the way for the framework to maintain weak references between test units.
 /// @param[in]  tu  test unit to deregister
-BOOST_TEST_DECL void    deregister_test_unit( test_unit* tu );
+BOOST_TEST_DECL void                deregister_test_unit( test_unit* tu );
 
-// This function clears up the framework monostate. 
+// This function clears up the framework mono-state.
 
 /// Afer this call the framework can be reinitialized to perform a second test run during the same program lifetime
-BOOST_TEST_DECL void    clear();
+BOOST_TEST_DECL void                clear();
 /// @}
 
 /// @name Test observer registration
@@ -123,11 +128,11 @@ BOOST_TEST_DECL void    clear();
 
 /// Observer lifetime should exceed the the testing execution timeframe
 /// @param[in]  to  test observer object to add
-BOOST_TEST_DECL void    register_observer( test_observer& to );
+BOOST_TEST_DECL void                register_observer( test_observer& to );
 
-/// Excldes the observer object form the framework's list of test objecrvers
+/// Excldes the observer object form the framework's list of test observers
 /// @param[in]  to  test observer object to exclude
-BOOST_TEST_DECL void    deregister_observer( test_observer& to );
+BOOST_TEST_DECL void                deregister_observer( test_observer& to );
 
 /// @}
 
@@ -158,14 +163,14 @@ BOOST_TEST_DECL int                 add_context( lazy_ostream const& context_des
 /// Erases context frame (when test exits context scope)
 
 /// If context_id is passed clears that specific context frame identified by this id, otherwise clears all non sticky contexts
-BOOST_TEST_DECL void                clear_context( int context_id = -1 );
+BOOST_TEST_DECL void    clear_context( int context_id = -1 );
 /// Produces an instance of small "delegate" object, which facilitates access to collected context
 BOOST_TEST_DECL context_generator   get_context();
 /// @}
 
 /// @name Access to registered test units
 /// @{
-/// This function provides access to the master test suite. 
+/// This function provides access to the master test suite.
 
 /// There is only only master test suite per test module.
 /// @returns a reference the master test suite instance
@@ -187,7 +192,7 @@ BOOST_TEST_DECL test_unit_id        current_test_case_id(); /* safe version of a
 /// @param[in]  tu_id    id of a test unit to locate
 /// @param[in]  tu_type  type of a test unit to locate
 /// @returns located test unit
-BOOST_TEST_DECL test_unit&  get( test_unit_id tu_id, test_unit_type tu_type );
+BOOST_TEST_DECL test_unit&          get( test_unit_id tu_id, test_unit_type tu_type );
 
 /// This function template provides access to a typed test unit by id
 
@@ -195,7 +200,7 @@ BOOST_TEST_DECL test_unit&  get( test_unit_id tu_id, test_unit_type tu_type );
 /// @tparam UnitType compile time type of test unit to get (test_suite or test_case)
 /// @param  id id of test unit to get
 template<typename UnitType>
-inline UnitType&            get( test_unit_id id )
+inline UnitType&                    get( test_unit_id id )
 {
     return static_cast<UnitType&>( get( id, static_cast<test_unit_type>(UnitType::type) ) );
 }
@@ -206,30 +211,29 @@ inline UnitType&            get( test_unit_id id )
 
 /// Initiates test execution
 
-/// This function is used to start the test execution from a specific "root" test unit. 
-/// If no root provided, test is started from master test suite. This second argument facilitates an ability of the test cases to 
-/// start some other test units (primirilly used internally for self testing)
+/// This function is used to start the test execution from a specific "root" test unit.
+/// If no root provided, test is started from master test suite. This second argument facilitates an ability of the test cases to
+/// start some other test units (primarily used internally for self testing)
 /// @param[in] tu Optional id of the test unit or test unit itself from which the test is started. If absent, master test suite is used
 /// @param[in] continue_test true == continue test if it was already started, false == restart the test from scratch regardless
-BOOST_TEST_DECL void    run( test_unit_id tu = INV_TEST_UNIT_ID, bool continue_test = true );
+BOOST_TEST_DECL void                run( test_unit_id tu = INV_TEST_UNIT_ID, bool continue_test = true );
 /// Initiates test execution. Same as other overload
-BOOST_TEST_DECL void    run( test_unit const* tu, bool continue_test = true );
+BOOST_TEST_DECL void                run( test_unit const* tu, bool continue_test = true );
 /// @}
 
 /// @name Test events dispatchers
 /// @{
 /// Reports results of assertion to all test observers
-BOOST_TEST_DECL void    assertion_result( unit_test::assertion_result ar );
+BOOST_TEST_DECL void                assertion_result( unit_test::assertion_result ar );
 /// Reports uncaught exception to all test observers
-BOOST_TEST_DECL void    exception_caught( execution_exception const& );
+BOOST_TEST_DECL void                exception_caught( execution_exception const& );
 /// Reports aborted test unit to all test observers
-BOOST_TEST_DECL void    test_unit_aborted( test_unit const& );
+BOOST_TEST_DECL void                test_unit_aborted( test_unit const& );
 /// @}
 
-namespace impl { // publisized to facilitate internal unit test only
-
-void                    apply_filters( test_unit_id );
-
+namespace impl {
+// exclusively for self test
+BOOST_TEST_DECL void                setup_for_execution( test_unit const& );
 } // namespace impl
 
 // ************************************************************************** //
@@ -249,10 +253,6 @@ struct BOOST_TEST_DECL setup_error : public std::runtime_error {
 };
 
 #define BOOST_TEST_SETUP_ASSERT( cond, msg ) if( cond ) {} else throw unit_test::framework::setup_error( msg )
-
-//____________________________________________________________________________//
-
-struct BOOST_TEST_DECL test_being_aborted {};
 
 //____________________________________________________________________________//
 

@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2005-2014.
-//  Use, modification, and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
+//  Use, modification, and distribution are subject to the
+//  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -106,7 +106,7 @@ public:
 
     // arguments access
     const_argument_ptr  operator[]( cstring string_id ) const;
-    cstring             get( cstring string_id ) const;    
+    cstring             get( cstring string_id ) const;
 
     template<typename T>
     T const&            get( cstring string_id ) const

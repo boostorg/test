@@ -136,7 +136,7 @@ private:
 
     // Data members
     bool        m_internal_activity;
-    
+
     unsigned    m_exception_point_counter;
     unsigned    m_forced_exception_point;
 
@@ -145,7 +145,7 @@ private:
 
     unsigned    m_exec_path_counter;
     unsigned    m_break_exec_path;
-    
+
     bool        m_invairant_failed;
     registry    m_memory_in_use;
 };
@@ -174,19 +174,19 @@ exception_safety_tester::exception_safety_tester( const_string test_name )
 
     if( !runtime_config::break_exec_path().is_empty() ) {
         using namespace unit_test;
-        
-        string_token_iterator tit( runtime_config::break_exec_path(), 
+
+        string_token_iterator tit( runtime_config::break_exec_path(),
                                    (dropped_delimeters = ":",kept_delimeters = " ") );
-        
+
         const_string test_to_break = *tit;
-        
+
         if( test_to_break == test_name ) {
             ++tit;
-            
+
             m_break_exec_path = lexical_cast<unsigned>( *tit );
         }
     }
-    
+
     m_internal_activity = false;
 }
 
@@ -195,7 +195,7 @@ exception_safety_tester::exception_safety_tester( const_string test_name )
 exception_safety_tester::~exception_safety_tester()
 {
     m_internal_activity = true;
-    
+
     framework::deregister_observer( *this );
 }
 
@@ -390,12 +390,12 @@ exception_safety_tester::failure_point()
 {
     if( m_exec_path_counter == m_break_exec_path )
         debug::debugger_break();
-    
+
     throw unique_exception();
 }
 
 //____________________________________________________________________________//
-    
+
 namespace {
 
 inline void
@@ -443,7 +443,7 @@ format_execution_path( wrap_stringstream& formatter, ExecPathIt it, ExecPathIt e
         case EPP_ALLOC:
             if( it->m_alloc.ptr ) {
                 format_location( formatter, *it, indent );
-                formatter << "Allocated memory block 0x" << std::uppercase << it->m_alloc.ptr 
+                formatter << "Allocated memory block 0x" << std::uppercase << it->m_alloc.ptr
                           << ", " << it->m_alloc.size << " bytes long: <";
 
                 unsigned i;

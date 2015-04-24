@@ -55,6 +55,7 @@ test_results::passed() const
     return  !p_skipped                                  &&
             p_test_cases_failed == 0                    &&
             p_assertions_failed <= p_expected_failures  &&
+            p_test_cases_skipped == 0                   &&
             !p_aborted;
 }
 
@@ -99,11 +100,11 @@ test_results::clear()
     p_test_cases_skipped.value  = 0;
     p_test_cases_aborted.value  = 0;
     p_aborted.value             = false;
-    p_skipped.value             = true;
+    p_skipped.value             = false;
 }
 
 //____________________________________________________________________________//
-    
+
 // ************************************************************************** //
 // **************               results_collector              ************** //
 // ************************************************************************** //
@@ -135,9 +136,8 @@ results_collector_t::test_unit_start( test_unit const& tu )
     test_results& tr = s_rc_impl().m_results_store[tu.p_id];
 
     tr.clear();
-    
-    tr.p_expected_failures.value    = tu.p_expected_failures;
-    tr.p_skipped.value              = false;
+
+    tr.p_expected_failures.value = tu.p_expected_failures;
 }
 
 //____________________________________________________________________________//
@@ -162,6 +162,7 @@ public:
         else {
             if( tr.p_aborted )
                 m_tr.p_test_cases_aborted.value++;
+
             m_tr.p_test_cases_failed.value++;
         }
     }
@@ -169,10 +170,9 @@ public:
     {
         if( m_ts.p_id == ts.p_id )
             return true;
-        else {
-            m_tr += results_collector.results( ts.p_id );
-            return false;
-        }
+
+        m_tr += results_collector.results( ts.p_id );
+        return false;
     }
 
 private:
@@ -193,32 +193,33 @@ results_collector_t::test_unit_finish( test_unit const& tu, unsigned long )
     }
     else {
         test_results const& tr = s_rc_impl().m_results_store[tu.p_id];
-        
+
         bool num_failures_match = tr.p_aborted || tr.p_assertions_failed >= tr.p_expected_failures;
         if( !num_failures_match )
-            BOOST_TEST_MESSAGE( "Test case " << tu.p_name << " has fewer failures than expected" );
+            BOOST_TEST_MESSAGE( "Test case " << tu.full_name() << " has fewer failures than expected" );
 
         bool check_any_assertions = tr.p_aborted || (tr.p_assertions_failed != 0) || (tr.p_assertions_passed != 0);
         if( !check_any_assertions )
-            BOOST_TEST_MESSAGE( "Test case " << tu.p_name << " did not check any assertions" );
+            BOOST_TEST_MESSAGE( "Test case " << tu.full_name() << " did not check any assertions" );
     }
 }
 
 //____________________________________________________________________________//
 
 void
-results_collector_t::test_unit_skipped( test_unit const& tu )
+results_collector_t::test_unit_skipped( test_unit const& tu, const_string /*reason*/ )
 {
+    test_results& tr = s_rc_impl().m_results_store[tu.p_id];
+
+    tr.clear();
+
+    tr.p_skipped.value = true;
+
     if( tu.p_type == TUT_SUITE ) {
         test_case_counter tcc;
         traverse_test_tree( tu, tcc );
 
-        test_results& tr = s_rc_impl().m_results_store[tu.p_id];
-
-        tr.clear();
-    
-        tr.p_skipped.value              = true;
-        tr.p_test_cases_skipped.value   = tcc.p_count;
+        tr.p_test_cases_skipped.value = tcc.p_count;
     }
 }
 

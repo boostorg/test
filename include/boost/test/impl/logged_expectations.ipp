@@ -57,7 +57,7 @@ struct expectations_logger : itest::manager {
     virtual void        allocated( const_string, std::size_t, void*, std::size_t s );
     virtual void        data_flow( const_string d );
     virtual std::string return_value( const_string default_value );
-    
+
 private:
     // Data members
     bool            m_test_or_log;
@@ -90,13 +90,13 @@ expectations_logger::expectations_logger( const_string log_file_name, bool test_
 
     if( m_test_or_log ) {
         std::string line;
-        
+
         std::getline( m_log_file, line, LINE_SEP );
-        
+
         const_string cline( line );
         string_token_iterator tit( cline, (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
 
-        BOOST_CHECK( *tit == FILE_SIG ); 
+        BOOST_CHECK( *tit == FILE_SIG );
         ++tit;
         BOOST_CHECK( *tit == ELOG_VER );
     }
@@ -112,47 +112,47 @@ expectations_logger::decision_point( const_string, std::size_t )
 {
     if( m_test_or_log ) {
         std::string line;
-        
+
         std::getline( m_log_file, line, LINE_SEP );
-        
+
         const_string cline( line );
         string_token_iterator tit( cline, (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
-        
-        BOOST_CHECK( *tit == DP_SIG ); 
+
+        BOOST_CHECK( *tit == DP_SIG );
         ++tit;
         return lexical_cast<bool>( *tit );
     }
     else {
         m_log_file << DP_SIG << CLMN_SEP << std::boolalpha << true << LINE_SEP;
-        
+
         return true;
     }
 }
 
 //____________________________________________________________________________//
-    
+
 unsigned
 expectations_logger::enter_scope( const_string, std::size_t, const_string scope_name )
 {
     if( m_test_or_log ) {
         std::string line;
-        
+
         std::getline( m_log_file, line, LINE_SEP );
-        
+
         const_string cline( line );
         string_token_iterator tit( cline, (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
-        
-        BOOST_CHECK( *tit == SCOPE_SIG ); 
+
+        BOOST_CHECK( *tit == SCOPE_SIG );
         ++tit;
         BOOST_CHECK( *tit == scope_name );
     }
     else {
         m_log_file << SCOPE_SIG << CLMN_SEP << scope_name << LINE_SEP;
     }
-    
+
     return 0;
 }
-    
+
 //____________________________________________________________________________//
 
 void
@@ -160,12 +160,12 @@ expectations_logger::allocated( const_string, std::size_t, void*, std::size_t s 
 {
     if( m_test_or_log ) {
         std::string line;
-        
+
         std::getline( m_log_file, line, LINE_SEP );
-        
+
         const_string cline( line );
         string_token_iterator tit( cline, (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
-        
+
         BOOST_CHECK( *tit == ALLOC_SIG );
         ++tit;
         BOOST_CHECK( lexical_cast<std::size_t>( *tit ) == s );
@@ -182,12 +182,12 @@ expectations_logger::data_flow( const_string d )
 {
     if( m_test_or_log ) {
         std::string line;
-        
+
         std::getline( m_log_file, line, LINE_SEP );
-        
+
         const_string cline( line );
         string_token_iterator tit( cline, (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
-        
+
         BOOST_CHECK( *tit == DATA_SIG );
         ++tit;
         BOOST_CHECK( *tit == d );
@@ -204,26 +204,26 @@ expectations_logger::return_value( const_string default_value )
 {
     if( m_test_or_log ) {
         std::string line;
-        
+
         std::getline( m_log_file, line, LINE_SEP );
-        
+
         const_string cline( line );
         string_token_iterator tit( cline, (dropped_delimeters = CLMN_SEP, kept_delimeters = dt_none));
-        
+
         BOOST_CHECK( *tit == RETURN_SIG );
         ++tit;
-        
+
         return std::string( tit->begin(), tit->size() );
     }
     else {
         m_log_file << RETURN_SIG << CLMN_SEP << default_value << LINE_SEP;
-                                 
+
         return std::string();
     }
 }
 
 //____________________________________________________________________________//
-    
+
 // ************************************************************************** //
 // **************           logged expectations test           ************** //
 // ************************************************************************** //

@@ -26,6 +26,7 @@
 #include <boost/test/tree/global_fixture.hpp>
 
 #include <boost/test/utils/foreach.hpp>
+#include <boost/test/utils/basic_cstring/io.hpp>
 
 #include <boost/test/unit_test_parameters.hpp>
 
@@ -57,8 +58,13 @@ test_unit::test_unit( const_string name, const_string file_name, std::size_t lin
 , p_file_name( file_name )
 , p_line_num( line_num )
 , p_id( INV_TEST_UNIT_ID )
+, p_parent_id( INV_TEST_UNIT_ID )
 , p_name( std::string( name.begin(), name.size() ) )
-, p_enabled( true )
+, p_timeout( -1 )
+, p_expected_failures( 0 )
+, p_default_status( RS_INHERIT )
+, p_run_status( RS_INVALID )
+, p_dependency_rank(0)
 {
 }
 
@@ -69,8 +75,13 @@ test_unit::test_unit( const_string module_name )
 , p_type_name( "module" )
 , p_line_num( 0 )
 , p_id( INV_TEST_UNIT_ID )
+, p_parent_id( INV_TEST_UNIT_ID )
 , p_name( std::string( module_name.begin(), module_name.size() ) )
-, p_enabled( true )
+, p_timeout( -1 )
+, p_expected_failures( 0 )
+, p_default_status( RS_INHERIT )
+, p_run_status( RS_INVALID )
+, p_dependency_rank(0)
 {
 }
 
@@ -93,12 +104,44 @@ test_unit::depends_on( test_unit* tu )
 
 //____________________________________________________________________________//
 
-bool
-test_unit::check_dependencies() const
+void
+test_unit::add_precondition( precondition_t const& pc )
 {
-    BOOST_TEST_FOREACH( test_unit_id, tu_id, p_dependencies.get() ) {
-        if( !unit_test::results_collector.results( tu_id ).passed() )
-            return false;
+    p_preconditions.value.push_back( pc );
+}
+
+//____________________________________________________________________________//
+
+test_tools::assertion_result
+test_unit::check_preconditions() const
+{
+    BOOST_TEST_FOREACH( test_unit_id, dep_id, p_dependencies.get() ) {
+        test_unit const& dep = framework::get( dep_id, TUT_ANY );
+
+        if( !dep.is_enabled() ) {
+            test_tools::assertion_result res(false);
+            res.message() << "dependency test " << dep.p_type_name << " \"" << dep.full_name() << "\" is disabled";
+            return res;
+        }
+
+        test_results const& test_rslt = unit_test::results_collector.results( dep_id );
+        if( !test_rslt.passed() ) {
+            test_tools::assertion_result res(false);
+            res.message() << "dependency test " << dep.p_type_name << " \"" << dep.full_name() << "\" has failed";
+            return res;
+        }
+
+        if( test_rslt.p_test_cases_skipped > 0 ) {
+            test_tools::assertion_result res(false);
+            res.message() << "dependency test " << dep.p_type_name << " \"" << dep.full_name() << "\" has skipped test cases";
+            return res;
+        }
+    }
+
+    BOOST_TEST_FOREACH( precondition_t, precondition, p_preconditions.get() ) {
+        test_tools::assertion_result res = precondition( p_id );
+        if( !res )
+            return res;
     }
 
     return true;
@@ -111,8 +154,24 @@ test_unit::increase_exp_fail( unsigned num )
 {
     p_expected_failures.value += num;
 
-    if( p_parent_id != 0 )
+    if( p_parent_id != INV_TEST_UNIT_ID )
         framework::get<test_suite>( p_parent_id ).increase_exp_fail( num );
+}
+
+//____________________________________________________________________________//
+
+std::string
+test_unit::full_name() const
+{
+    if( p_parent_id == INV_TEST_UNIT_ID || p_parent_id == framework::master_test_suite().p_id )
+        return p_name;
+
+    std::string res = framework::get<test_suite>( p_parent_id ).full_name();
+    res.append("/");
+
+    res.append( p_name );
+
+    return res;
 }
 
 //____________________________________________________________________________//
@@ -120,7 +179,7 @@ test_unit::increase_exp_fail( unsigned num )
 void
 test_unit::add_label( const_string l )
 {
-    m_labels.push_back( std::string() + l );
+    p_labels.value.push_back( std::string() + l );
 }
 
 //____________________________________________________________________________//
@@ -128,7 +187,7 @@ test_unit::add_label( const_string l )
 bool
 test_unit::has_label( const_string l ) const
 {
-    return std::find( m_labels.begin(), m_labels.end(), l ) != m_labels.end();
+    return std::find( p_labels->begin(), p_labels->end(), l ) != p_labels->end();
 }
 
 //____________________________________________________________________________//
@@ -178,9 +237,9 @@ test_suite::test_suite( const_string module_name )
 //____________________________________________________________________________//
 
 void
-test_suite::add( test_unit* tu, counter_t expected_failures, unsigned timeout )
+test_suite::add( test_unit* tu, counter_t expected_failures, int timeout )
 {
-    if( timeout != 0 )
+    if( timeout > 0 )
         tu->p_timeout.value = timeout;
 
     m_members.push_back( tu->p_id );
@@ -196,11 +255,25 @@ test_suite::add( test_unit* tu, counter_t expected_failures, unsigned timeout )
 //____________________________________________________________________________//
 
 void
-test_suite::add( test_unit_generator const& gen, unsigned timeout )
+test_suite::add( test_unit_generator const& gen, int timeout )
 {
     test_unit* tu;
-    while((tu = gen.next(), tu))
+    while((tu = gen.next()) != 0)
         add( tu, 0, timeout );
+}
+
+//____________________________________________________________________________//
+
+void
+test_suite::add( test_unit_generator const& gen, decorator::collector& decorators )
+{
+    test_unit* tu;
+    while((tu = gen.next()) != 0) {
+        decorators.store_in( *tu );
+        add( tu, 0 );
+    }
+
+    decorators.reset();
 }
 
 //____________________________________________________________________________//
@@ -208,7 +281,7 @@ test_suite::add( test_unit_generator const& gen, unsigned timeout )
 void
 test_suite::remove( test_unit_id id )
 {
-    std::vector<test_unit_id>::iterator it = std::find( m_members.begin(), m_members.end(), id );
+    test_unit_id_list::iterator it = std::find( m_members.begin(), m_members.end(), id );
 
     if( it != m_members.end() )
         m_members.erase( it );
@@ -233,11 +306,12 @@ test_suite::get( const_string tu_name ) const
 // **************               master_test_suite              ************** //
 // ************************************************************************** //
 
-master_test_suite_t::master_test_suite_t() 
+master_test_suite_t::master_test_suite_t()
 : test_suite( "Master Test Suite" )
 , argc( 0 )
 , argv( 0 )
 {
+    p_default_status.value = RS_ENABLED;
 }
 
 // ************************************************************************** //
@@ -247,7 +321,7 @@ master_test_suite_t::master_test_suite_t()
 void
 traverse_test_tree( test_case const& tc, test_tree_visitor& V, bool ignore_status )
 {
-    if( tc.p_enabled || ignore_status )
+    if( tc.is_enabled() || ignore_status )
         V.visit( tc );
 }
 
@@ -256,35 +330,26 @@ traverse_test_tree( test_case const& tc, test_tree_visitor& V, bool ignore_statu
 void
 traverse_test_tree( test_suite const& suite, test_tree_visitor& V, bool ignore_status )
 {
-    if( (!ignore_status && !suite.p_enabled) || !V.test_suite_start( suite ) )
+    // skip disabled test suite unless we asked to ignore this condition
+    if( !ignore_status && !suite.is_enabled() )
         return;
 
-    try {
-        if( runtime_config::random_seed() == 0 ) {
-            unsigned total_members = suite.m_members.size();
-            for( unsigned i=0; i < total_members; ) {
-                // this statement can remove the test unit from this list
-                traverse_test_tree( suite.m_members[i], V, ignore_status );
-                if( total_members > suite.m_members.size() )
-                    total_members = suite.m_members.size();
-                else
-                    ++i;
-            }
-        }
-        else {
-            std::vector<test_unit_id> members( suite.m_members );
-            std::random_shuffle( members.begin(), members.end() );
-            BOOST_TEST_FOREACH( test_unit_id, id, members )
-                traverse_test_tree( id, V, ignore_status );
-        }
-        
-    } catch( framework::test_being_aborted const& ) {
-        V.test_suite_finish( suite );
-        framework::test_unit_aborted( suite );
+    // Invoke test_suite_start callback
+    if( !V.test_suite_start( suite ) )
+        return;
 
-        throw;
+    // Recurse into children
+    unsigned total_members = suite.m_members.size();
+    for( unsigned i=0; i < total_members; ) {
+        // this statement can remove the test unit from this list
+        traverse_test_tree( suite.m_members[i], V, ignore_status );
+        if( total_members > suite.m_members.size() )
+            total_members = suite.m_members.size();
+        else
+            ++i;
     }
 
+    // Invoke test_suite_finish callback
     V.test_suite_finish( suite );
 }
 
@@ -321,17 +386,17 @@ normalize_test_case_name( const_string name )
 // **************           auto_test_unit_registrar           ************** //
 // ************************************************************************** //
 
-auto_test_unit_registrar::auto_test_unit_registrar( test_case* tc, decorator::collector* decorators, counter_t exp_fail )
+auto_test_unit_registrar::auto_test_unit_registrar( test_case* tc, decorator::collector& decorators, counter_t exp_fail )
 {
     framework::current_auto_test_suite().add( tc, exp_fail );
 
-    if( decorators )
-        decorators->store_in( *tc );
+    decorators.store_in( *tc );
+    decorators.reset();
 }
 
 //____________________________________________________________________________//
 
-auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name, const_string ts_file, std::size_t ts_line, decorator::collector* decorators )
+auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name, const_string ts_file, std::size_t ts_line, decorator::collector& decorators )
 {
     test_unit_id id = framework::current_auto_test_suite().get( ts_name );
 
@@ -346,20 +411,17 @@ auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name, const_
         framework::current_auto_test_suite().add( ts );
     }
 
-    if( decorators )
-        decorators->store_in( *ts );
+    decorators.store_in( *ts );
+    decorators.reset();
 
     framework::current_auto_test_suite( ts );
 }
 
 //____________________________________________________________________________//
 
-auto_test_unit_registrar::auto_test_unit_registrar( test_unit_generator const& tc_gen, decorator::collector* /*decorators*/ )
+auto_test_unit_registrar::auto_test_unit_registrar( test_unit_generator const& tc_gen, decorator::collector& decorators )
 {
-    framework::current_auto_test_suite().add( tc_gen );
-
-    // !! ?? if( decorators )
-    // decorators->apply( *tc );
+    framework::current_auto_test_suite().add( tc_gen, decorators );
 }
 
 //____________________________________________________________________________//
@@ -380,7 +442,7 @@ auto_test_unit_registrar::auto_test_unit_registrar( int )
 global_fixture::global_fixture()
 {
     framework::register_observer( *this );
-} 
+}
 
 //____________________________________________________________________________//
 

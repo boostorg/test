@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2005-2014.
-//  Use, modification, and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
+//  Use, modification, and distribution are subject to the
+//  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -41,7 +41,7 @@ public:
     virtual bool    conflict_with( identification_policy const& ) const     { return false; }
     virtual cstring id_2_report() const                                     { return m_name; }
     virtual void    usage_info( format_stream& fs ) const
-    { 
+    {
         if( !m_name.empty() )
             fs << BOOST_RT_PARAM_LITERAL( '<' ) << m_name << BOOST_RT_PARAM_LITERAL( '>' );
         else

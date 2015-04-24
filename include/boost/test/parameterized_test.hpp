@@ -1,11 +1,11 @@
 //  (C) Copyright Gennadiy Rozental 2001-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//!@file 
+//!@file
 //!@brief generators and helper macros for parameterized tests
 // ***************************************************************************
 
@@ -54,7 +54,7 @@ template<typename ParamType, typename ParamIter>
 class param_test_case_generator : public test_unit_generator {
 public:
     param_test_case_generator( boost::function<void (ParamType)> const& test_func,
-                               const_string                             tc_name, 
+                               const_string                             tc_name,
                                const_string                             tc_file,
                                std::size_t                              tc_line,
                                ParamIter                                par_begin,
@@ -113,7 +113,7 @@ struct user_param_tc_method_invoker {
 template<typename ParamType, typename ParamIter>
 inline ut_detail::param_test_case_generator<ParamType,ParamIter>
 make_test_case( boost::function<void (ParamType)> const& test_func,
-                const_string                             tc_name, 
+                const_string                             tc_name,
                 const_string                             tc_file,
                 std::size_t                              tc_line,
                 ParamIter                                par_begin,
@@ -128,7 +128,7 @@ template<typename ParamType, typename ParamIter>
 inline ut_detail::param_test_case_generator<
     BOOST_DEDUCED_TYPENAME remove_const<BOOST_DEDUCED_TYPENAME remove_reference<ParamType>::type>::type,ParamIter>
 make_test_case( void (*test_func)( ParamType ),
-                const_string  tc_name, 
+                const_string  tc_name,
                 const_string  tc_file,
                 std::size_t   tc_line,
                 ParamIter     par_begin,
@@ -152,8 +152,8 @@ make_test_case( void (UserTestCase::*test_method )( ParamType ),
                 ParamIter                              par_end )
 {
     typedef BOOST_DEDUCED_TYPENAME remove_const<BOOST_DEDUCED_TYPENAME remove_reference<ParamType>::type>::type param_value_type;
-    return ut_detail::param_test_case_generator<param_value_type,ParamIter>( 
-               ut_detail::user_param_tc_method_invoker<UserTestCase,ParamType>( user_test_case, test_method ), 
+    return ut_detail::param_test_case_generator<param_value_type,ParamIter>(
+               ut_detail::user_param_tc_method_invoker<UserTestCase,ParamType>( user_test_case, test_method ),
                tc_name,
                tc_file,
                tc_line,

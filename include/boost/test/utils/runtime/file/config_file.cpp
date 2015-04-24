@@ -133,7 +133,7 @@ get_param_value( param_namespace const& where_from,
 
         return res;
     }
-    
+
     param_namespace const* sns = get_param_subns( where_from, name_part1 );
 
     return sns ? get_param_value( *sns, name_part2, name_part3, name_part4, name_part5 )
@@ -153,8 +153,8 @@ get_requ_param_value( param_namespace const& where_from,
     boost::optional<cstring> v = get_param_value( where_from, name_part1, name_part2, name_part3, name_part4, name_part5 );
 
 #define APPEND_PART( part ) (part.is_empty() ? "" : "::") << (part.is_empty() ? cstring() : part)
-    BOOST_RT_PARAM_VALIDATE_LOGIC( !!v, BOOST_RT_PARAM_LITERAL( "Required parameter " ) 
-                                        << name_part1 
+    BOOST_RT_PARAM_VALIDATE_LOGIC( !!v, BOOST_RT_PARAM_LITERAL( "Required parameter " )
+                                        << name_part1
                                         << APPEND_PART( name_part2 )
                                         << APPEND_PART( name_part3 )
                                         << APPEND_PART( name_part4 )
@@ -186,7 +186,7 @@ get_param_subns( param_namespace const& where_from, cstring namespace_name )
 //____________________________________________________________________________//
 
 void
-param_namespace::load_impl( config_file_iterator cf_it, 
+param_namespace::load_impl( config_file_iterator cf_it,
                             cstring value_marker, cstring value_delimeter, cstring namespace_delimeter )
 {
     using namespace unit_test;

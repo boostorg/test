@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -81,9 +81,9 @@ struct zip_traits<std::tuple<T1,T2>,T3> {
 // ************************************************************************** //
 
 //! Zip datasets
-//! 
+//!
 //! A zip of two datasets is a dataset whose arity is the sum of the operand datasets arity. The size is given by
-//! the function creating the instance (see @c operator^ on datasets). 
+//! the function creating the instance (see @c operator^ on datasets).
 template<typename DS1, typename DS2>
 class zip : public monomorphic::dataset<typename ds_detail::zip_traits<typename boost::decay<DS1>::type::data_type,
                                                                        typename boost::decay<DS2>::type::data_type>::type> {
@@ -106,7 +106,7 @@ class zip : public monomorphic::dataset<typename ds_detail::zip_traits<typename 
         , m_iter2( iter2 )
         {}
 
-        // forward iterator interface 
+        // forward iterator interface
         virtual ref_type    operator*()     { return ds_detail::zip_traits<T1,T2>::tuple_merge( **m_iter1, **m_iter2 ); }
         virtual void        operator++()    { ++(*m_iter1); ++(*m_iter2); }
 
@@ -122,21 +122,21 @@ public:
     //! Constructor
     //!
     //! The datasets are moved and not copied.
-    zip( DS1&& ds1, DS2&& ds2, data::size_t size ) 
+    zip( DS1&& ds1, DS2&& ds2, data::size_t size )
     : m_ds1( std::forward<DS1>( ds1 ) )
     , m_ds2( std::forward<DS2>( ds2 ) )
     , m_size( size )
     {}
 
     //! Move constructor
-    zip( zip&& j ) 
+    zip( zip&& j )
     : m_ds1( std::forward<DS1>( j.m_ds1 ) )
     , m_ds2( std::forward<DS2>( j.m_ds2 ) )
     , m_size( j.m_size )
     {}
 
     // dataset interface
-    virtual data::size_t    size() const    { return m_size; } 
+    virtual data::size_t    size() const    { return m_size; }
     virtual iter_ptr        begin() const   { return boost::make_shared<iterator>( m_ds1.begin(), m_ds2.begin() ); }
 
 private:
@@ -196,7 +196,7 @@ struct zip {
 
 //! Overload operator for zip support
 template<typename DS1, typename DS2>
-inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && is_dataset<DS2>::value, 
+inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && is_dataset<DS2>::value,
                                         result_of::zip<mpl::identity<DS1>,mpl::identity<DS2>>
 >::type
 operator^( DS1&& ds1, DS2&& ds2 )
@@ -206,7 +206,7 @@ operator^( DS1&& ds1, DS2&& ds2 )
 
 //! @overload boost::unit_test::data::monomorphic::operator^()
 template<typename DS1, typename DS2>
-inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && !is_dataset<DS2>::value, 
+inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && !is_dataset<DS2>::value,
                                         result_of::zip<mpl::identity<DS1>,data::result_of::make<DS2>>
 >::type
 operator^( DS1&& ds1, DS2&& ds2 )
@@ -216,7 +216,7 @@ operator^( DS1&& ds1, DS2&& ds2 )
 
 //! @overload boost::unit_test::data::monomorphic::operator^()
 template<typename DS1, typename DS2>
-inline typename boost::lazy_enable_if_c<!is_dataset<DS1>::value && is_dataset<DS2>::value, 
+inline typename boost::lazy_enable_if_c<!is_dataset<DS1>::value && is_dataset<DS2>::value,
                                         result_of::zip<data::result_of::make<DS1>,mpl::identity<DS2>>
 >::type
 operator^( DS1&& ds1, DS2&& ds2 )

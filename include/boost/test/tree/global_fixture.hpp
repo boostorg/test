@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -33,30 +33,30 @@ namespace unit_test {
 // **************                global_fixture                ************** //
 // ************************************************************************** //
 
-class BOOST_TEST_DECL global_fixture : public test_observer { 
-public: 
+class BOOST_TEST_DECL global_fixture : public test_observer {
+public:
     // Constructor
     global_fixture();
-}; 
+};
 
 //____________________________________________________________________________//
 
 namespace ut_detail {
 
-template<typename F> 
+template<typename F>
 struct global_fixture_impl : public global_fixture {
     // Constructor
     global_fixture_impl() : m_fixure( 0 )    {}
 
     // test observer interface
     virtual void    test_start( counter_t ) { m_fixure = new F; }
-    virtual void    test_finish()           { delete m_fixure; m_fixure = 0; } 
-    virtual void    test_aborted()          { delete m_fixure; m_fixure = 0; } 
+    virtual void    test_finish()           { delete m_fixure; m_fixure = 0; }
+    virtual void    test_aborted()          { delete m_fixure; m_fixure = 0; }
 
 private:
     // Data members
     F*  m_fixure;
-}; 
+};
 
 } // namespace ut_detail
 } // namespace unit_test

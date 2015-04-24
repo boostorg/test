@@ -64,7 +64,11 @@ BOOST_AUTO_TEST_CASE( test0_only_2 )
     ut::unit_test_log.set_stream( null_output );
 
     ut::test_suite* test = BOOST_TEST_SUITE( "" );
+
     test->add( BOOST_TEST_CASE_TEMPLATE( test0, only_2 ) );
+
+    test->p_default_status.value = ut::test_unit::RS_ENABLED;
+    ut::framework::finalize_setup_phase( test->p_id );
     ut::framework::run( test );
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
@@ -85,6 +89,8 @@ BOOST_AUTO_TEST_CASE( test0_one_to_ten )
     
     test->add( BOOST_TEST_CASE_TEMPLATE( test0, one_to_ten ) );
 
+    test->p_default_status.value = ut::test_unit::RS_ENABLED;
+    ut::framework::finalize_setup_phase( test->p_id );
     ut::framework::run( test );
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
@@ -105,6 +111,8 @@ BOOST_AUTO_TEST_CASE( test1_one_to_five )
     ut::unit_test_log.set_stream( null_output );
     test->add( BOOST_TEST_CASE_TEMPLATE( test1, one_to_five ) );
 
+    test->p_default_status.value = ut::test_unit::RS_ENABLED;
+    ut::framework::finalize_setup_phase( test->p_id );
     ut::framework::run( test );
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
@@ -124,6 +132,8 @@ BOOST_AUTO_TEST_CASE( test2_one_to_three )
     ut::unit_test_log.set_stream( null_output );
     test->add( BOOST_TEST_CASE_TEMPLATE( test2, one_to_three ) );
 
+    test->p_default_status.value = ut::test_unit::RS_ENABLED;
+    ut::framework::finalize_setup_phase( test->p_id );
     ut::framework::run( test );
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 

@@ -359,14 +359,14 @@ config_file_iterator::Impl::get_macro_value( cstring macro_name, bool ignore_mis
         env::get( macro_name, macro_value );
         #endif
 
-        BOOST_RT_PARAM_VALIDATE_LOGIC( macro_value || ignore_missing || !m_detect_missing_macro, 
+        BOOST_RT_PARAM_VALIDATE_LOGIC( macro_value || ignore_missing || !m_detect_missing_macro,
             BOOST_RT_PARAM_LITERAL( "Unknown macro \"" ) << macro_name << BOOST_RT_PARAM_LITERAL( "\"" ) );
-        
+
         if( !macro_value ) {
             if( !ignore_missing )
                 macro_value = cstring();
         }
-        else 
+        else
             m_symbols_table.add( macro_name, *macro_value );
 
         return macro_value;
@@ -606,31 +606,31 @@ void
 config_file_iterator::set_parameter( rtti::id_t id, cstring value )
 {
     BOOST_RTTI_SWITCH( id ) {
-        BOOST_RTTI_CASE( cfg_detail::path_separators_t ) 
+        BOOST_RTTI_CASE( cfg_detail::path_separators_t )
             assign_op( m_pimpl->m_path_separators        , value, 0 );
-        BOOST_RTTI_CASE( cfg_detail::sl_comment_delimeter_t ) 
+        BOOST_RTTI_CASE( cfg_detail::sl_comment_delimeter_t )
             assign_op( m_pimpl->m_sl_comment_delimeter   , value, 0 );
-        BOOST_RTTI_CASE( cfg_detail::command_delimeter_t ) 
+        BOOST_RTTI_CASE( cfg_detail::command_delimeter_t )
             assign_op( m_pimpl->m_command_delimeter      , value, 0 );
-        BOOST_RTTI_CASE( cfg_detail::line_beak_t ) 
+        BOOST_RTTI_CASE( cfg_detail::line_beak_t )
             assign_op( m_pimpl->m_line_beak              , value, 0 );
-        BOOST_RTTI_CASE( cfg_detail::macro_ref_begin_t ) 
+        BOOST_RTTI_CASE( cfg_detail::macro_ref_begin_t )
             assign_op( m_pimpl->m_macro_ref_begin        , value, 0 );
-        BOOST_RTTI_CASE( cfg_detail::macro_ref_end_t ) 
+        BOOST_RTTI_CASE( cfg_detail::macro_ref_end_t )
             assign_op( m_pimpl->m_macro_ref_end          , value, 0 );
-        BOOST_RTTI_CASE( cfg_detail::include_kw_t ) 
+        BOOST_RTTI_CASE( cfg_detail::include_kw_t )
             assign_op( m_pimpl->m_include_kw             , value, 0 );
-        BOOST_RTTI_CASE( cfg_detail::define_kw_t ) 
+        BOOST_RTTI_CASE( cfg_detail::define_kw_t )
             assign_op( m_pimpl->m_define_kw              , value, 0 );
-        BOOST_RTTI_CASE( cfg_detail::undef_kw_t ) 
+        BOOST_RTTI_CASE( cfg_detail::undef_kw_t )
             assign_op( m_pimpl->m_undef_kw               , value, 0 );
-        BOOST_RTTI_CASE( cfg_detail::ifdef_kw_t ) 
+        BOOST_RTTI_CASE( cfg_detail::ifdef_kw_t )
             assign_op( m_pimpl->m_ifdef_kw               , value, 0 );
-        BOOST_RTTI_CASE( cfg_detail::ifndef_kw_t ) 
+        BOOST_RTTI_CASE( cfg_detail::ifndef_kw_t )
             assign_op( m_pimpl->m_ifndef_kw              , value, 0 );
-        BOOST_RTTI_CASE( cfg_detail::else_kw_t ) 
+        BOOST_RTTI_CASE( cfg_detail::else_kw_t )
             assign_op( m_pimpl->m_else_kw                , value, 0 );
-        BOOST_RTTI_CASE( cfg_detail::endif_kw_t ) 
+        BOOST_RTTI_CASE( cfg_detail::endif_kw_t )
             assign_op( m_pimpl->m_endif_kw               , value, 0 );
     }
 }
@@ -641,7 +641,7 @@ void
 config_file_iterator::set_parameter( rtti::id_t id, bool value )
 {
     BOOST_RTTI_SWITCH( id ) {
-        BOOST_RTTI_CASE( cfg_detail::trim_leading_spaces_t ) 
+        BOOST_RTTI_CASE( cfg_detail::trim_leading_spaces_t )
             m_pimpl->m_trim_leading_spaces  = value;
         BOOST_RTTI_CASE( cfg_detail::trim_trailing_spaces_t )
             m_pimpl->m_trim_trailing_spaces = value;
@@ -658,7 +658,7 @@ void
 config_file_iterator::set_parameter( rtti::id_t id, char_type value )
 {
     BOOST_RTTI_SWITCH( id ) {
-        BOOST_RTTI_CASE( cfg_detail::line_delimeter_t ) 
+        BOOST_RTTI_CASE( cfg_detail::line_delimeter_t )
             m_pimpl->m_line_delimeter       = value;
     }
 }
@@ -669,7 +669,7 @@ void
 config_file_iterator::set_parameter( rtti::id_t id, std::size_t value )
 {
     BOOST_RTTI_SWITCH( id ) {
-        BOOST_RTTI_CASE( cfg_detail::buffer_size_t ) 
+        BOOST_RTTI_CASE( cfg_detail::buffer_size_t )
             m_pimpl->m_buffer_size          = value;
     }
 }

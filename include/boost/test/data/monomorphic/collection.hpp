@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -32,11 +32,11 @@ namespace monomorphic {
 
 //!@brief Dataset from a forward iterable container (collection)
 //!
-//! This dataset is applicable to any container implementing a forward iterator. Note that 
-//! container with one element will be considered as singletons. 
-//! This dataset is constructible with the @ref boost::unit_test::data::make function. 
+//! This dataset is applicable to any container implementing a forward iterator. Note that
+//! container with one element will be considered as singletons.
+//! This dataset is constructible with the @ref boost::unit_test::data::make function.
 //!
-//! For compilers supporting r-value references, the collection is moved instead of copied. 
+//! For compilers supporting r-value references, the collection is moved instead of copied.
 template<typename C>
 class collection : public monomorphic::dataset<typename boost::decay<C>::type::value_type> {
     typedef typename boost::decay<C>::type col_type;
@@ -51,7 +51,7 @@ class collection : public monomorphic::dataset<typename boost::decay<C>::type::v
         , m_singleton( owner.col().size() == 1 )
         {}
 
-        // forward iterator interface 
+        // forward iterator interface
         virtual T const&    operator*()     { return *m_iter; }
         virtual void        operator++()    { if( !m_singleton ) ++m_iter; }
 
@@ -81,7 +81,7 @@ public:
     C const&                col() const             { return m_col; }
 
     // dataset interface
-    virtual data::size_t    size() const            { return m_col.size(); } 
+    virtual data::size_t    size() const            { return m_col.size(); }
     virtual iter_ptr        begin() const           { return boost::make_shared<iterator>( *this ); }
 
 private:

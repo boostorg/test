@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -58,7 +58,7 @@ class generated_by : public monomorphic::dataset<typename Generator::data_type> 
             }
         }
 
-        // forward iterator interface 
+        // forward iterator interface
         virtual T const&    operator*()     { return m_curr_sample; }
         virtual void        operator++()    { m_curr_sample = m_gen.next(); }
 
@@ -90,7 +90,7 @@ public:
 
     //! Size of the underlying dataset
     data::size_t            size() const            { return m_generator.capacity(); }
-    
+
     //! Iterator on the beginning of the dataset
     virtual iter_ptr        begin() const           { return boost::make_shared<iterator>( boost::ref(const_cast<Generator&>(m_generator)) ); }
 

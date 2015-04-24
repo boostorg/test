@@ -29,16 +29,16 @@ extern int test_main( int argc, char* argv[] );    // prototype for user's test_
 
 struct test_main_caller {
     test_main_caller( int argc, char** argv ) : m_argc( argc ), m_argv( argv ) {}
-    
+
     void operator()() {
         int test_main_result = test_main( m_argc, m_argv );
 
         // translate a test_main non-success return into a test error
         BOOST_CHECK( test_main_result == 0 || test_main_result == boost::exit_success );
     }
-  
+
 private:
-    // Data members    
+    // Data members
     int      m_argc;
     char**   m_argv;
 };
@@ -50,11 +50,11 @@ private:
 ::boost::unit_test::test_suite*
 init_unit_test_suite( int argc, char* argv[] ) {
     using namespace ::boost::unit_test;
-    
+
     framework::master_test_suite().p_name.value = "Test Program";
-    
+
     framework::master_test_suite().add( BOOST_TEST_CASE( test_main_caller( argc, argv ) ) );
-    
+
     return 0;
 }
 

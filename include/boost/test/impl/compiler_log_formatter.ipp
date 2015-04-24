@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -45,12 +45,10 @@ namespace output {
 
 namespace {
 
-const_string
+std::string
 test_phase_identifier()
 {
-    return framework::is_initialized() 
-            ? const_string( framework::current_test_case().p_name.get() )
-            : BOOST_TEST_L( "Test setup" );
+    return framework::test_in_progress() ? framework::current_test_case().full_name() : std::string( "Test setup" );
 }
 
 } // local namespace
@@ -105,6 +103,8 @@ compiler_log_formatter::test_unit_finish( std::ostream& output, test_unit const&
 {
     BOOST_TEST_SCOPE_SETCOLOR( output, term_attr::BRIGHT, term_color::BLUE );
 
+    print_prefix( output, tu.p_file_name, tu.p_line_num );
+
     output << "Leaving test " << tu.p_type_name << " \"" << tu.p_name << "\"";
 
     if( elapsed > 0 ) {
@@ -121,13 +121,15 @@ compiler_log_formatter::test_unit_finish( std::ostream& output, test_unit const&
 //____________________________________________________________________________//
 
 void
-compiler_log_formatter::test_unit_skipped( std::ostream& output, test_unit const& tu )
+compiler_log_formatter::test_unit_skipped( std::ostream& output, test_unit const& tu, const_string reason )
 {
     BOOST_TEST_SCOPE_SETCOLOR( output, term_attr::BRIGHT, term_color::YELLOW );
 
-    output  << "Test " << tu.p_type_name << " \"" << tu.p_name << "\"" << "is skipped" << std::endl;
+    print_prefix( output, tu.p_file_name, tu.p_line_num );
+
+    output  << "Test " << tu.p_type_name << " \"" << tu.full_name() << "\"" << " is skipped because " << reason << std::endl;
 }
-    
+
 //____________________________________________________________________________//
 
 void

@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -32,7 +32,7 @@ namespace monomorphic {
 //! Defines a new dataset from the concatenation of two datasets
 //!
 //! The size of the resulting dataset is the sum of the two underlying datasets. The arity of the datasets
-//! should match. 
+//! should match.
 template<typename DS1, typename DS2>
 class join : public monomorphic::dataset<typename boost::decay<DS1>::type::data_type> {
     typedef typename boost::decay<DS1>::type::data_type T;
@@ -52,7 +52,7 @@ class join : public monomorphic::dataset<typename boost::decay<DS1>::type::data_
         , m_first_size( first_size )
         {}
 
-        // forward iterator interface 
+        // forward iterator interface
         virtual T const&    operator*()     { return m_first_size > 0 ? **m_it1 : **m_it2; }
         virtual void        operator++()    { m_first_size > 0 ? (--m_first_size,++(*m_it1)) : ++(*m_it2); }
 
@@ -74,7 +74,7 @@ public:
     {}
 
     // Move constructor
-    join( join&& j ) 
+    join( join&& j )
     : m_ds1( std::forward<DS1>( j.m_ds1 ) )
     , m_ds2( std::forward<DS2>( j.m_ds2 ) )
     {}
@@ -87,8 +87,8 @@ public:
 #endif
 
     // dataset interface
-    virtual data::size_t    size() const            { return m_ds1.size() + m_ds2.size(); } 
-    virtual iter_ptr        begin() const           { return boost::make_shared<iterator>( m_ds1.begin(), 
+    virtual data::size_t    size() const            { return m_ds1.size() + m_ds2.size(); }
+    virtual iter_ptr        begin() const           { return boost::make_shared<iterator>( m_ds1.begin(),
                                                                                            m_ds2.begin(),
                                                                                            m_ds1.size() ); }
 
@@ -116,10 +116,10 @@ struct join {
 
 } // namespace result_of
 
-//____________________________________________________________________________//    
+//____________________________________________________________________________//
 
 template<typename DS1, typename DS2>
-inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && is_dataset<DS2>::value, 
+inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && is_dataset<DS2>::value,
                                         result_of::join<mpl::identity<DS1>,mpl::identity<DS2> >
 >::type
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
@@ -139,7 +139,7 @@ operator+( DS1 const& ds1, DS2 const& ds2 )
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 
 template<typename DS1, typename DS2>
-inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && !is_dataset<DS2>::value, 
+inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && !is_dataset<DS2>::value,
                                         result_of::join<mpl::identity<DS1>,data::result_of::make<DS2> >
 >::type
 operator+( DS1&& ds1, DS2&& ds2 )
@@ -162,7 +162,7 @@ operator+( DS1 const& ds1, DS2 const& ds2 )
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 template<typename DS1, typename DS2>
-inline typename boost::lazy_enable_if_c<!is_dataset<DS1>::value && is_dataset<DS2>::value, 
+inline typename boost::lazy_enable_if_c<!is_dataset<DS1>::value && is_dataset<DS2>::value,
                                         result_of::join<data::result_of::make<DS1>,mpl::identity<DS2> >
 >::type
 operator+( DS1&& ds1, DS2&& ds2 )

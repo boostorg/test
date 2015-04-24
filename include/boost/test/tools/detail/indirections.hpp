@@ -84,7 +84,7 @@ inline assertion_type
 operator<<( assertion_type const& at, T const& ) { return at; }
 
 //____________________________________________________________________________//
- 
+
 } // namespace tt_detail
 } // namespace test_tools
 } // namespace boost

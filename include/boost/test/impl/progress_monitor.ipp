@@ -90,13 +90,13 @@ progress_monitor_t::test_unit_finish( test_unit const& tu, unsigned long )
 //____________________________________________________________________________//
 
 void
-progress_monitor_t::test_unit_skipped( test_unit const& tu )
+progress_monitor_t::test_unit_skipped( test_unit const& tu, const_string /*reason*/ )
 {
     BOOST_TEST_SCOPE_SETCOLOR( *s_pm_impl().m_stream, term_attr::BRIGHT, term_color::MAGENTA );
 
     test_case_counter tcc;
     traverse_test_tree( tu, tcc );
-    
+
     (*s_pm_impl().m_progress_display) += tcc.p_count;
 }
 
@@ -109,7 +109,7 @@ progress_monitor_t::set_stream( std::ostream& ostr )
 }
 
 //____________________________________________________________________________//
-    
+
 } // namespace unit_test
 } // namespace boost
 

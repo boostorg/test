@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -20,6 +20,7 @@
 
 // Boost
 #include <boost/shared_ptr.hpp>
+#include <boost/scoped_ptr.hpp>
 #include <boost/function/function0.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -33,14 +34,14 @@ namespace unit_test {
 // **************               test_unit_fixture              ************** //
 // ************************************************************************** //
 
-class BOOST_TEST_DECL test_unit_fixture { 
-public: 
+class BOOST_TEST_DECL test_unit_fixture {
+public:
     virtual ~test_unit_fixture() {}
 
     // Fixture interface
     virtual void    setup() = 0;
     virtual void    teardown() = 0;
-}; 
+};
 
 typedef shared_ptr<test_unit_fixture> test_unit_fixture_ptr;
 
@@ -49,37 +50,37 @@ typedef shared_ptr<test_unit_fixture> test_unit_fixture_ptr;
 // ************************************************************************** //
 
 template<typename F, typename Arg=void>
-class class_based_fixture : public test_unit_fixture { 
-public: 
+class class_based_fixture : public test_unit_fixture {
+public:
     // Constructor
-    explicit class_based_fixture( Arg const& arg ) : m_inst( 0 ), m_arg( arg ) {}
+    explicit class_based_fixture( Arg const& arg ) : m_inst(), m_arg( arg ) {}
 
 private:
     // Fixture interface
-    virtual void    setup()         { m_inst = new F( m_arg ); }
-    virtual void    teardown()      { delete m_inst; }
+    virtual void    setup()         { m_inst.reset( new F( m_arg ) ); }
+    virtual void    teardown()      { m_inst.reset(); }
 
     // Data members
-    F*              m_inst;
+    scoped_ptr<F>   m_inst;
     Arg             m_arg;
-}; 
+};
 
 //____________________________________________________________________________//
 
 template<typename F>
-class class_based_fixture<F,void> : public test_unit_fixture { 
-public: 
+class class_based_fixture<F,void> : public test_unit_fixture {
+public:
     // Constructor
     class_based_fixture() : m_inst( 0 ) {}
 
 private:
     // Fixture interface
-    virtual void    setup()         { m_inst = new F; }
-    virtual void    teardown()      { delete m_inst; }
+    virtual void    setup()         { m_inst.reset( new F ); }
+    virtual void    teardown()      { m_inst.reset(); }
 
     // Data members
-    F*              m_inst;
-}; 
+    scoped_ptr<F>   m_inst;
+};
 
 //____________________________________________________________________________//
 
@@ -87,7 +88,7 @@ private:
 // **************            function_based_fixture            ************** //
 // ************************************************************************** //
 
-class function_based_fixture : public test_unit_fixture { 
+class function_based_fixture : public test_unit_fixture {
 public:
     // Constructor
     function_based_fixture( boost::function<void ()> const& setup_, boost::function<void ()> const& teardown_ )
@@ -98,13 +99,13 @@ public:
 
 private:
     // Fixture interface
-    virtual void    setup()         { if( m_setup ) m_setup(); }
-    virtual void    teardown()      { if( m_teardown ) m_teardown(); }
+    virtual void                setup()     { if( m_setup ) m_setup(); }
+    virtual void                teardown()  { if( m_teardown ) m_teardown(); }
 
     // Data members
     boost::function<void ()>    m_setup;
     boost::function<void ()>    m_teardown;
-}; 
+};
 
 } // namespace unit_test
 } // namespace boost

@@ -49,6 +49,8 @@
 #include <cstdio>               // for vsnprintf
 #include <cstdarg>              // for varargs
 
+#include <iostream>              // for varargs
+
 #ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::strerror; using ::strlen; using ::strncat; }
 #endif
@@ -60,9 +62,9 @@ namespace std { using ::strerror; using ::strlen; using ::strncat; }
 using std::va_list;
 #endif
 
-// to use vsnprintf 
-#if defined(__QNXNTO__) 
-#  include <stdio.h> 
+// to use vsnprintf
+#if defined(__QNXNTO__)
+#  include <stdio.h>
 #endif
 
 #ifdef BOOST_SEH_BASED_SIGNAL_HANDLING
@@ -82,7 +84,7 @@ using std::va_list;
 
 #  if defined(UNDER_CE) && BOOST_WORKAROUND(_MSC_VER,  < 1500 )
    typedef void* uintptr_t;
-#  elif defined(UNDER_CE) 
+#  elif defined(UNDER_CE)
 #  include <crtdefs.h>
 #  endif
 
@@ -126,7 +128,7 @@ namespace { void _set_se_translator( void* ) {} }
 #  include <signal.h>
 #  include <setjmp.h>
 
-#  if defined(__FreeBSD__)  
+#  if defined(__FreeBSD__)
 
 #    include <osreldate.h>
 
@@ -143,12 +145,12 @@ namespace { void _set_se_translator( void* ) {} }
 
 #      define BOOST_TEST_LIMITED_SIGNAL_DETAILS
 
-#    endif 
-#  endif 
+#    endif
+#  endif
 
-#  if defined(__ANDROID__) 
-#    include <android/api-level.h> 
-#  endif 
+#  if defined(__ANDROID__)
+#    include <android/api-level.h>
+#  endif
 
 #  if !defined(__CYGWIN__) && !defined(__QNXNTO__) && (!defined(__ANDROID__) || __ANDROID_API__ >= 8)
 #    define BOOST_TEST_USE_ALT_STACK
@@ -222,12 +224,12 @@ report_error( execution_exception::error_code ec, boost::exception const* be, ch
     static const int REPORT_ERROR_BUFFER_SIZE = 4096;
     static char buf[REPORT_ERROR_BUFFER_SIZE];
 
-    BOOST_TEST_VSNPRINTF( buf, sizeof(buf)-1, format, *args ); 
+    BOOST_TEST_VSNPRINTF( buf, sizeof(buf)-1, format, *args );
     buf[sizeof(buf)-1] = 0;
 
     va_end( *args );
 
-    throw execution_exception( ec, buf, execution_exception::location( extract<throw_file>( be ), 
+    throw execution_exception( ec, buf, execution_exception::location( extract<throw_file>( be ),
                                                                        extract<throw_line>( be ),
                                                                        extract<throw_function>( be ) ) );
 }
@@ -421,10 +423,10 @@ system_signal_exception::report() const
                           "signal: co-processor error; address of failing instruction: 0x%08lx",
                           m_sig_info->si_addr );
             break;
-        default: 
-            report_error( execution_exception::system_fatal_error, 
-                          "signal: SIGILL, si_code: %d (illegal instruction; address of failing instruction: 0x%08lx)", 
-                          m_sig_info->si_addr, m_sig_info->si_code ); 
+        default:
+            report_error( execution_exception::system_fatal_error,
+                          "signal: SIGILL, si_code: %d (illegal instruction; address of failing instruction: 0x%08lx)",
+                          m_sig_info->si_addr, m_sig_info->si_code );
             break;
         }
         break;
@@ -566,11 +568,11 @@ system_signal_exception::report() const
             break;
 #endif
 #endif
-        default: 
-            report_error( execution_exception::system_error, 
-                          "signal: SIGPOLL, si_code: %d (asynchronous I/O event occured; band event %d)", 
-                          (int)m_sig_info->si_band, m_sig_info->si_code ); 
-            break; 
+        default:
+            report_error( execution_exception::system_error,
+                          "signal: SIGPOLL, si_code: %d (asynchronous I/O event occured; band event %d)",
+                          (int)m_sig_info->si_band, m_sig_info->si_code );
+            break;
         }
         break;
 
@@ -836,10 +838,10 @@ execution_monitor::catch_signals( boost::function<int ()> const& F )
     p_use_alt_stack.value = false;
 #endif
 
-    signal_handler local_signal_handler( p_catch_system_errors, 
+    signal_handler local_signal_handler( p_catch_system_errors,
                                          p_catch_system_errors || (p_detect_fp_exceptions != fpe::BOOST_FPE_OFF),
-                                         p_timeout, 
-                                         p_auto_start_dbg, 
+                                         p_timeout,
+                                         p_auto_start_dbg,
                                          !p_use_alt_stack ? 0 : m_alt_stack.get() );
 
     if( !sigsetjmp( signal_handler::jump_buffer(), 1 ) )
@@ -1075,13 +1077,13 @@ assert_reporting_function( int reportType, char* userMessage, int* )
 //____________________________________________________________________________//
 
 void BOOST_TEST_CALL_DECL
-invalid_param_handler( wchar_t const* /* expr */, 
-                       wchar_t const* /* func */, 
-                       wchar_t const* /* file */, 
+invalid_param_handler( wchar_t const* /* expr */,
+                       wchar_t const* /* func */,
+                       wchar_t const* /* file */,
                        unsigned int   /* line */,
                        uintptr_t      /* reserved */)
 {
-    detail::report_error( execution_exception::user_error, 
+    detail::report_error( execution_exception::user_error,
                           "Invalid parameter detected by C runtime library" );
 }
 
@@ -1102,7 +1104,7 @@ execution_monitor::catch_signals( boost::function<int ()> const& F )
     if( p_catch_system_errors ) {
         old_crt_hook = BOOST_TEST_CRT_SET_HOOK( &detail::assert_reporting_function );
 
-        old_iph = _set_invalid_parameter_handler( 
+        old_iph = _set_invalid_parameter_handler(
             reinterpret_cast<_invalid_parameter_handler>( &detail::invalid_param_handler ) );
     } else if( !p_detect_fp_exceptions ) {
 #if BOOST_WORKAROUND( BOOST_MSVC, <= 1310)
@@ -1111,9 +1113,9 @@ execution_monitor::catch_signals( boost::function<int ()> const& F )
     }
 
     detail::system_signal_exception SSE( this );
-    
+
     int ret_val = 0;
-    
+
     __try {
         __try {
             ret_val = detail::do_invoke( m_custom_translators, F );
@@ -1129,7 +1131,7 @@ execution_monitor::catch_signals( boost::function<int ()> const& F )
            _set_invalid_parameter_handler( old_iph );
         }
     }
-    
+
     return ret_val;
 }
 
@@ -1192,7 +1194,7 @@ execution_monitor::execute( boost::function<int ()> const& F )
       { detail::report_error( execution_exception::cpp_exception_error,
                               "C string: %s", ex ); }
     catch( std::string const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
+      { detail::report_error( execution_exception::cpp_exception_error,
                               "std::string: %s", ex.c_str() ); }
 
     //  std:: exceptions
@@ -1236,7 +1238,7 @@ execution_monitor::execute( boost::function<int ()> const& F )
 #undef CATCH_AND_REPORT_STD_EXCEPTION
 
     catch( boost::exception const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
+      { detail::report_error( execution_exception::cpp_exception_error,
                               &ex,
 #ifdef BOOST_NO_TYPEID
                               "unknown boost::exception" ); }
@@ -1246,7 +1248,7 @@ execution_monitor::execute( boost::function<int ()> const& F )
 
     // system errors
     catch( system_error const& ex )
-      { detail::report_error( execution_exception::cpp_exception_error, 
+      { detail::report_error( execution_exception::cpp_exception_error,
                               "system_error produced by: %s: %s", ex.p_failed_exp.get(), std::strerror( ex.p_errno ) ); }
     catch( detail::system_signal_exception const& ex )
       { ex.report(); }

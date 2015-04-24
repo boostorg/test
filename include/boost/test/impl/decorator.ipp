@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2011-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -23,7 +23,6 @@
 #if BOOST_TEST_SUPPORT_TOKEN_ITERATOR
 #include <boost/test/utils/iterator/token_iterator.hpp>
 #endif
-
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
@@ -36,30 +35,12 @@ namespace decorator {
 // **************             decorator::collector             ************** //
 // ************************************************************************** //
 
-collector::collector( for_test_unit const& D )
+collector&
+collector::operator*( base const& d )
 {
-    m_tu_decorator.reset( D.clone() );
+    m_tu_decorators.push_back( d.clone() );
 
-    if( instance() != NULL ) {
-        for_test_unit_ptr leaf = m_tu_decorator;
-        while( leaf->m_next )
-            leaf = leaf->m_next;
-
-        leaf->m_next = instance()->m_tu_decorator;
-        instance()->m_tu_decorator.reset();
-    }
-
-    instance() = this;
-}
-
-//____________________________________________________________________________//
-
-collector*&
-collector::instance()
-{
-    static collector* s_instance = 0;
-
-    return s_instance;
+    return *this;
 }
 
 //____________________________________________________________________________//
@@ -67,53 +48,35 @@ collector::instance()
 void
 collector::store_in( test_unit& tu )
 {
-    tu.p_decorators.value = m_tu_decorator;
-    m_tu_decorator.reset();
-    instance() = 0;
-}
-
-//____________________________________________________________________________//
-
-// ************************************************************************** //
-// **************           decorator::for_test_unit           ************** //
-// ************************************************************************** //
-
-for_test_unit const&
-for_test_unit::operator+( for_test_unit const& rhs ) const
-{
-    rhs.m_next.reset( clone() );
-
-    return rhs;
+    tu.p_decorators.value.insert( tu.p_decorators.value.end(), m_tu_decorators.begin(), m_tu_decorators.end() );
 }
 
 //____________________________________________________________________________//
 
 void
-for_test_unit::apply( test_unit& tu )
+collector::reset()
 {
-    if( m_next )
-        m_next->apply( tu );
-    do_apply( tu );
+    m_tu_decorators.clear();
 }
 
 //____________________________________________________________________________//
 
-for_test_unit*
-for_test_unit::clone() const
-{
-    for_test_unit* res = do_clone();
-    res->m_next = m_next;
-    return res;
-}
+// ************************************************************************** //
+// **************               decorator::base                ************** //
+// ************************************************************************** //
 
-//____________________________________________________________________________//
+collector&
+base::operator*() const
+{
+    return collector::instance() * *this;
+}
 
 // ************************************************************************** //
 // **************               decorator::label               ************** //
 // ************************************************************************** //
 
 void
-label::do_apply( test_unit& tu )
+label::apply( test_unit& tu )
 {
     tu.add_label( m_label );
 }
@@ -125,7 +88,7 @@ label::do_apply( test_unit& tu )
 // ************************************************************************** //
 
 void
-expected_failures::do_apply( test_unit& tu )
+expected_failures::apply( test_unit& tu )
 {
     tu.increase_exp_fail( static_cast<unsigned int>(m_exp_fail) );
 }
@@ -137,7 +100,7 @@ expected_failures::do_apply( test_unit& tu )
 // ************************************************************************** //
 
 void
-timeout::do_apply( test_unit& tu )
+timeout::apply( test_unit& tu )
 {
     tu.p_timeout.value = m_timeout;
 }
@@ -149,7 +112,7 @@ timeout::do_apply( test_unit& tu )
 // ************************************************************************** //
 
 void
-description::do_apply( test_unit& tu )
+description::apply( test_unit& tu )
 {
     tu.p_description.value += m_description;
 }
@@ -161,7 +124,7 @@ description::do_apply( test_unit& tu )
 // ************************************************************************** //
 
 void
-depends_on::do_apply( test_unit& tu )
+depends_on::apply( test_unit& tu )
 {
 #if !BOOST_TEST_SUPPORT_TOKEN_ITERATOR
     throw setup_error( "depends_on decorator is not supported on this platform" );
@@ -178,7 +141,7 @@ depends_on::do_apply( test_unit& tu )
             throw framework::setup_error( std::string( "incorrect dependency specification " ) + m_dependency );
 
         dep = &framework::get( next_id, TUT_ANY );
-        ++tit;           
+        ++tit;
     }
 
     tu.depends_on( dep );
@@ -188,13 +151,17 @@ depends_on::do_apply( test_unit& tu )
 //____________________________________________________________________________//
 
 // ************************************************************************** //
-// **************        decorator::enable_if/disable_if       ************** //
+// **************    decorator::enable_if/enabled/disabled     ************** //
 // ************************************************************************** //
 
 void
-enable_if::do_apply( test_unit& tu )
+enable_if_impl::apply_impl( test_unit& tu, bool condition )
 {
-    tu.p_enabled.value = m_condition;
+    BOOST_TEST_SETUP_ASSERT(tu.p_default_status == test_unit::RS_INHERIT,
+                            "Can't apply multiple enabled/disabled decorators "
+                            "to the same test unit " + tu.full_name());
+
+    tu.p_default_status.value = condition ? test_unit::RS_ENABLED : test_unit::RS_DISABLED;
 }
 
 //____________________________________________________________________________//
@@ -204,9 +171,21 @@ enable_if::do_apply( test_unit& tu )
 // ************************************************************************** //
 
 void
-fixture_t::do_apply( test_unit& tu )
+fixture_t::apply( test_unit& tu )
 {
     tu.p_fixtures.value.push_back( m_impl );
+}
+
+//____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************            decorator::depends_on             ************** //
+// ************************************************************************** //
+
+void
+precondition::apply( test_unit& tu )
+{
+    tu.add_precondition( m_precondition );
 }
 
 //____________________________________________________________________________//

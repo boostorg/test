@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2005-2014.
-//  Use, modification, and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
+//  Use, modification, and distribution are subject to the
+//  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -40,7 +40,7 @@ template<typename T, typename IdPolicy>
 class basic_parameter : private base_from_member<IdPolicy>, public typed_parameter<T> {
 public:
     // Constructors
-    explicit    basic_parameter( cstring n ) 
+    explicit    basic_parameter( cstring n )
     : base_from_member<IdPolicy>()
     , typed_parameter<T>( base_from_member<IdPolicy>::member )
     {

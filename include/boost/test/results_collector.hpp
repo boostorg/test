@@ -1,13 +1,13 @@
 //  (C) Copyright Gennadiy Rozental 2001-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
 /// @file results_collector.hpp @brief defines testing result collector components
 ///
-/// Defines class results_collector_t that is responsible for 
+/// Defines class results_collector_t that is responsible for
 /// gathering test results and class test_results for presenting this information to end-user
 // ***************************************************************************
 
@@ -35,7 +35,7 @@ namespace {
 // ************************************************************************** //
 /// First failed assertion debugger hook
 ///
-/// This function is a placeholder where user can set a breakpoint in debugger to catch the 
+/// This function is a placeholder where user can set a breakpoint in debugger to catch the
 /// very first assertion failure in each test case
 // ************************************************************************** //
 inline void first_failed_assertion() {}
@@ -44,7 +44,7 @@ inline void first_failed_assertion() {}
 // ************************************************************************** //
 /// @brief Collection of attributes constituting test unit results
 ///
-/// This class is a collection of attributes describing testing results. The atributes presented as public properties on 
+/// This class is a collection of attributes describing testing results. The atributes presented as public properties on
 /// an instance of the class. In addition summary conclusion methods are presented to generate simple answer to pass/fail question
 // ************************************************************************** //
 
@@ -72,13 +72,13 @@ public:
     /// @}
 
     /// @name Summary conclusion
-    
+
     /// Returns true if test unit passed
     bool            passed() const;
     /// Produces result code for the test unit execution
 
-    /// This methhod return one of the result codes defined in boost/cstdlib.hpp 
-    /// @returns boost::exit_success on success, boost::exit_exception_failure in case test unit was aborted for any reason 
+    /// This methhod return one of the result codes defined in boost/cstdlib.hpp
+    /// @returns boost::exit_success on success, boost::exit_exception_failure in case test unit was aborted for any reason
     ///          (incuding uncausght exception) and boost::exit_test_failure otherwise
     int             result_code() const;
     /// @}
@@ -100,14 +100,14 @@ public:
 
     virtual void        test_unit_start( test_unit const& );
     virtual void        test_unit_finish( test_unit const&, unsigned long );
-    virtual void        test_unit_skipped( test_unit const& );
+    virtual void        test_unit_skipped( test_unit const&, const_string );
     virtual void        test_unit_aborted( test_unit const& );
 
     virtual void        assertion_result( unit_test::assertion_result );
     virtual void        exception_caught( execution_exception const& );
 
     virtual int         priority() { return 2; }
-    
+
     /// Results access per test unit
 
     /// @param[in] tu_id id of a test unit

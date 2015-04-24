@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2009-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -34,7 +34,7 @@
 //____________________________________________________________________________//
 
 #ifndef BOOST_TEST_TOOL_REPORT_WARN_FAILURE
-#define BOOST_TEST_TOOL_REPORT_WARN_FAILURE( failure_descr ) 
+#define BOOST_TEST_TOOL_REPORT_WARN_FAILURE( failure_descr )
 #endif
 
 //____________________________________________________________________________//
@@ -93,7 +93,7 @@
 
 //____________________________________________________________________________//
 
-// 2 - assertion with no arguments; 
+// 2 - assertion with no arguments;
 #define BOOST_TEST_TOOL_IMPL2( P, assertion_descr, TL, CT, _ )                              \
     if( ::boost::test_tools::assertion_result const& pr = P )                               \
         ((void)0);                                                                          \
@@ -116,9 +116,9 @@ namespace tt_detail {
 // **************               prod_report_format             ************** //
 // ************************************************************************** //
 
-BOOST_TEST_DECL std::string 
-prod_report_format( assertion_result const& pr, 
-                    unit_test::lazy_ostream const& assertion_descr, 
+BOOST_TEST_DECL std::string
+prod_report_format( assertion_result const& pr,
+                    unit_test::lazy_ostream const& assertion_descr,
                     check_type ct, std::size_t num_args, ... );
 
 //____________________________________________________________________________//
@@ -143,7 +143,7 @@ prod_report_format( assertion_result const& pr,
  , char const* BOOST_JOIN( BOOST_JOIN( arg, m ), _descr )                           \
 /**/
 
-#define PRED_PARAMS( z, m, dummy ) BOOST_PP_COMMA_IF( m ) BOOST_JOIN( arg, m ) 
+#define PRED_PARAMS( z, m, dummy ) BOOST_PP_COMMA_IF( m ) BOOST_JOIN( arg, m )
 
 #define ARG_INFO( z, m, dummy )                                                     \
  , BOOST_JOIN( BOOST_JOIN( arg, m ), _descr )                                       \

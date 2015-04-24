@@ -26,6 +26,7 @@
 
 // Boost
 #include <boost/bind.hpp>
+#include <boost/noncopyable.hpp>
 
 // STL
 #include <iostream>
@@ -120,10 +121,12 @@ BOOST_AUTO_TEST_CASE( name )                                        \
                                              #name,                 \
                                              __FILE__,              \
                                              __LINE__ );            \
+    impl->p_default_status.value = ut::test_unit::RS_ENABLED;       \
                                                                     \
     ut::unit_test_log.set_stream( ots() );                          \
     ut::unit_test_log.set_threshold_level( ut::log_nothing );       \
     ut::unit_test_log.set_formatter( new shorten_lf );              \
+    ut::framework::finalize_setup_phase( impl->p_id );              \
     ut::framework::run( impl );                                     \
                                                                     \
     ut::unit_test_log.set_threshold_level(                          \
@@ -132,7 +135,7 @@ BOOST_AUTO_TEST_CASE( name )                                        \
             : ut::log_all_errors );                                 \
     ut::unit_test_log.set_format( ut::runtime_config::log_format());\
     ut::unit_test_log.set_stream( std::cout );                      \
-    BOOST_TEST( ots().match_pattern() );                            \
+    BOOST_CHECK( ots().match_pattern() );                           \
 }                                                                   \
                                                                     \
 void name ## _impl()                                                \
@@ -752,7 +755,7 @@ TEST_CASE( test_BOOST_TEST_fpv_comp )
     BOOST_TEST( tt::fpc_tolerance<float>() == 0 );
 
     BOOST_TEST( d1 > d2 );
-    BOOST_TEST_FWD_3( d1+1./1e20 > d2,  1e-5% tt::tolerance(), "check d1+1./1e20 > d2 has failed [1e-05 + 1e-20 <= 1e-05]. Relative difference exceeds tolerance [0.000908265 > 1e-07]" );
+    BOOST_TEST_FWD_3( d1+1./1e20 > d2,  1e-5% tt::tolerance(), "check d1+1./1e20 > d2 has failed [1e-05 + 1e-20 <= 1e-05]. Relative difference exceeds tolerance [0.000909091 > 1e-07]" );
     BOOST_TEST( tt::fpc_tolerance<double>() == 0 );
     BOOST_TEST( d2 <= d1, tt::tolerance( tt::fpc::percent_tolerance( 1e-5 ) ) );
     BOOST_TEST( tt::fpc_tolerance<double>() == 0 );
@@ -765,10 +768,8 @@ TEST_CASE( test_BOOST_TEST_fpv_comp )
 
 //____________________________________________________________________________//
 
-BOOST_TEST_DECORATOR(
-+ut::tolerance(1e-3)
-)
-BOOST_AUTO_TEST_CASE( test_BOOST_TEST_fpv_comp_using_decorator )
+BOOST_AUTO_TEST_CASE( test_BOOST_TEST_fpv_comp_using_decorator,
+* ut::tolerance(1e-3))
 {
     BOOST_TEST( tt::fpc_tolerance<double>() == 1e-3 );
 
@@ -780,10 +781,8 @@ BOOST_AUTO_TEST_CASE( test_BOOST_TEST_fpv_comp_using_decorator )
 
 //____________________________________________________________________________//
 
-BOOST_TEST_DECORATOR(
-+ut::tolerance( tt::fpc::percent_tolerance( 1. ) )
-)
-BOOST_AUTO_TEST_CASE( test_BOOST_TEST_fpv_comp_using_decorator_2 )
+BOOST_AUTO_TEST_CASE( test_BOOST_TEST_fpv_comp_using_decorator_2,
+* ut::tolerance( tt::fpc::percent_tolerance( 1. ) ))
 {
     BOOST_TEST( tt::fpc_tolerance<double>() == 1e-2 );
 
