@@ -10,7 +10,7 @@ In general terms a test fixture or test context is the collection of one or more
 to perform the test:
  
 * preconditions
-* particular states of tested unites
+* particular states of tested units
 * necessary cleanup procedures
 
 Though these tasks are encountered in many if not all test cases, what makes a test fixture different is
@@ -70,7 +70,8 @@ teardown fixture functions should comply to. Based on the generic fixture model,
 the following tasks:
 
 * per test case fixture automation
-* shared test suite level fixture
+* suite-level test case fixture automation
+* suite entry/exit fixture support
 * ['global] fixture support
 
 [/ ###################################################################################### ]
@@ -89,7 +90,7 @@ method and class destructor serves as teardown method. The __UTF__ opted to avoi
 interface for setup and teardown methods, since is considered most natural in C++ for tasks similar to RAII and
 coincides with the pure C++ solution discusses earlier.
 
-[caution The above interface prevents you to report errors in the teardown procedure using an exception. It does make
+[caution The above interface prevents you from reporting errors in the teardown procedure using an exception. It does make
     sense though: if somehow more than one fixture is assigned to a test unit, you want all teardown procedures to
     run, even if some may experience problems.
 ]
@@ -122,7 +123,7 @@ what can be done if all test cases in a test suite require the same fixture.
 
 
 [/ ###################################################################################### ]
-[section:suite Test suite level fixture]
+[section:suite Suite-level test case fixture]
 
 If all test cases in a test require the same fixture (you can group test cases in the test suite based on a
 fixture required) you can make another step toward an automation of a test fixture assignment. To assign the
@@ -147,7 +148,7 @@ the same fixture automatically.
     same fixture is assigned to all test cases of a test suite, including ones that belong to the sub test suites.
 ]
 
-[bt_example example19..Test suite level fixture]
+[bt_example fixture_02..Test suite level fixture]
 
 [caution The fixture constructor and destructor is called for each test cases (the state of the 
          fixture is not shared among the test cases).]
@@ -155,6 +156,17 @@ the same fixture automatically.
 [endsect] [/ testsuite fixtures]
 
 
+
+[/ ###################################################################################### ]
+[section:suite1 Test suite entry/exit fixture]
+
+It is possible to define a test suite entry/exit fixture, so that the setup function is called only once upon entering the test suite, prior to running any of its test cases; and similarly the teardown function is also called only once upon the test suite exit, after all the enclosed test cases have been run. This is achieved with the [link ref_BOOST_TEST_DECORATOR `decorator`] __decorator_fixture__.
+
+[bt_example fixture_03..Test suite entry/exit fixture]
+
+In case of this fixture type, however, it is not possible to access any members of the fixture object.
+
+[endsect] [/ testsuitentry fixtures]
 
 [/ ###################################################################################### ]
 [section:global Global fixture]
