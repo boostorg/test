@@ -1,11 +1,11 @@
 //[example_output
-> example70 --run_test=@trivial
+> decorator_01 --run_test=@trivial
 Running 2 test cases...
 
 *** No errors detected
 
 
-> example70 --run_test=@cmp
+> decorator_01 --run_test=@cmp
 Running 1 test case...
 
 *** No errors detected

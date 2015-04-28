@@ -1,5 +1,5 @@
 //[example_output
-> example71 --run_test=@trivial
+> decorator_02 --run_test=@trivial
 Running 2 test cases...
 
 *** No errors detected
