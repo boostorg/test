@@ -82,7 +82,7 @@ BOOST_AUTO_TU_REGISTRAR( suite_name )(                                  \
 // ************************************************************************** //
 
 #define BOOST_FIXTURE_TEST_SUITE_WITH_DECOR(suite_name, F, decorators)  \
-    BOOST_FIXTURE_TEST_SUITE_WITH_DECOR( suite_name, decorators )       \
+    BOOST_AUTO_TEST_SUITE_WITH_DECOR( suite_name, decorators )          \
 typedef F BOOST_AUTO_TEST_CASE_FIXTURE;                                 \
 /**/
 
