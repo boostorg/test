@@ -30,8 +30,9 @@ assertion within that test case can satisfy the expected failures quota. Meaning
 unexpected failure to occur to satisfy this quota.
 
 
-[note If an assertion at fault is fixed and passed, while an expected failures specification still present, the test
-    case is going to fail, since the number of failures is smaller than expected.
+[note If an assertion at fault is fixed and passed while an expected failures specification still present,
+      the number of failures becomes smaller than expected. The test is going to be reported as passed; instead,
+      a warning message will be issued.      
 ]
 
 [h3 Usage with manually registered test cases]
@@ -43,8 +44,10 @@ To set the value of expected failures for the manually registered test unit pass
 
 [#ref_BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES][h3 Usage with automatically registered test cases]
 
-To set the number of expected failures for the automatically registered test unit use the macro
-__BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ before the test case definition.
+To set the number of expected failures for the automatically registered test unit use decorator __decorator_expected_failures__.
+
+For backwards compatibility, you can also use macro
+__BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ [footnote deprecated] before the test case definition.
 
 ``
 BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES(test_case_name, number_of_expected_failures);

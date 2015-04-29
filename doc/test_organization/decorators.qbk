@@ -204,18 +204,21 @@ Decorator `description` attaches an arbitrary string to the test unit. All strin
 
 [/-----------------------------------------------------------------]
 
-[section:expected_failures expected_failures]
+[section:decorator_expected_failures expected_failures]
 
 ``
 expected_failures(counter_t number);
 ``
 
-Decorator `expected_failures` defines the number of expected failures that will be reported upon program execution. At suite level this defines the number of expected failures per suite. The total number of expected failures per suite is the sum of per-suite decorator and per-test decorators inside the suite:
+Decorator `expected_failures` defines the number of assertions that are expected to fail within the corresponding test unit. It is reported as failure when the number of failed assertions is greater than the declared expected number of failures. If the number of failed assertions is less than the number of expected failures a message is reported. The total number of expected failures for a given test suite `S` is the sum of the declared expected failures in `S` and the sum of expected failures in all nested test units:
 
-[bt_example example77_decorators..decorator expected_failures]
+[bt_example decorator_09..decorator expected_failures]
 
+In the above example, we first run all test cases with four failed assertions. The total number of expected failures is 3: 1 (for test `suite1`) + 2 (for `test1`). Because the expected failure count is exceeded, the error is reported. In the second case, we only run test case `suite1/test1`: two failures occur, two failures are expected, therefore no error is reported. For more information about expected failures see [link boost_test.users_guide.tests_organization.expected_failures here].
 [endsect] [/ section expected_failures]
 
+
+[/-----------------------------------------------------------------]
 
 [section:timeout timeout]
 
