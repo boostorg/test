@@ -1,14 +1,18 @@
 //[example_output
-> decorator_10 --log_level=message
+> decorator_10
 Running 2 test cases...
-set up FX
-set up FX2
-set up fun
-running test1
-tear down fun
-running test2
-tear down FX2
-tear down FX
+decorator_10.cpp(11): error: in "suite1/test1": check false has failed
+decorator_10.cpp(12): error: in "suite1/test1": check false has failed
+decorator_10.cpp(17): error: in "suite1/test2": check false has failed
+decorator_10.cpp(18): error: in "suite1/test2": check false has failed
+
+*** 4 failures are detected (3 failures are expected) in the test module "decorator_10"
+
+
+> decorator_10 --run_test=suite1/test1
+Running 1 test case...
+decorator_10.cpp(11): error: in "suite1/test1": check false has failed
+decorator_10.cpp(12): error: in "suite1/test1": check false has failed
 
 *** No errors detected
 //]

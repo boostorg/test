@@ -1,12 +1,8 @@
 //[example_output
 > decorator_11
-Running 5 test cases...
-decorator_11.cpp(9): error: in "test1": check 0.001 == 0.000 has failed [0.001 != 0]. Absolute value exceeds tolerance [|0.001| > 0.0005]
-decorator_11.cpp(10): error: in "test1": check 1.100 == 1.101 has failed [1.1000000000000001 != 1.101]. Relative difference exceeds tolerance [0.000908265 > 0.0005]
-decorator_11.cpp(21): error: in "test3": check 0.001 == 0.000 has failed [0.001 != 0]. Absolute value exceeds tolerance [|0.001| > 0]
-decorator_11.cpp(22): error: in "test3": check 1.100 == 1.101 has failed [1.1000000000000001 != 1.101]
-decorator_11.cpp(28): error: in "test4": check 0.001 == 0.000 has failed [0.001 != 0]. Absolute value exceeds tolerance [|0.001| > 0.0005]
-decorator_11.cpp(29): error: in "test4": check 1.100 == 1.101 has failed [1.1000000000000001 != 1.101]. Relative difference exceeds tolerance [0.000908265 > 0.0005]
+Running 1 test case...
+unknown location(0): fatal error: in "test1": signal: SIGALRM (timeout while executing function)
+decorator_11.cpp(5): last checkpoint: "test1" entry.
 
-*** 6 failures are detected in the test module "decorator_11"
+*** 1 failure detected in test module "decorator_11"
 //]
