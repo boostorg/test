@@ -52,21 +52,31 @@ are in fact not possible, such as:
 
 [section:collections Collection comparison]
 
-Collections are automatically detected and compared using the appropriate methods. 
+The __BOOST_TEST__ assertion detects the /collections/ and provides additional diagnostics in case of failure. 
+Collections are compared using a particular operator, applied on each element of both collections, in sequence.
+The sequence of comparisons is provided by the iterators of the respective collections. 
+In case of failure, the indices of the elements for which the comparison fails are returned.
 
+In order for the collections to be comparable, they should have the same number of elements.
 
+[caution the comparison is made over the elements returned by the collections iterators, using the operation appearing the in
+ __BOOST_TEST__ statement (`==`, `<` ...). The type returned by the dereference of the iterator should support the selected operator.]
 
-The concept of collection is a sequence of elements that (C++11):
+[bt_example boost_test_macro_collections..BOOST_TEST collection comparison support]
 
-* that has `size` and `begin` member functions, as well as fields `const_iterator` and `value_type`
-* and `value_type` is not of type `char` or `wchar_t`
+[h3 What is a collection?]
+A collection is a sequence of elements (C++11):
 
-For C++03, the collection should be explicitly indicated. Standard containers of the `STL` are already indicated as collections. 
+* that implements the member functions `size` and `begin`, as well as the fields `const_iterator` and `value_type`
+* and for which `value_type` is not of type `char` or `wchar_t`
 
-The detection of the collection is delegated to the class [classref boost::unit_test::is_forward_iterable]. It is possible to specialize
-this class further to flag a type as forward iterable [footnote relevant only for C++03, as the fields and member functions are 
-detected automatically on C++11].
+To that respect, C-arrays are *not* collections.
 
+The detection of the collection is delegated to the class [classref boost::unit_test::is_forward_iterable], which for C++11
+detects the required member functions and fields. However for C++03, the types being collections should be explicitly indicated
+to the __UTF__ by a specialization of [classref boost::unit_test::is_forward_iterable]. 
+
+Standard containers of the `STL` are already indicated as collections. 
 
 [endsect] [/ collections]
 
@@ -130,9 +140,7 @@ Sometimes these information are not informative enough.
 
 The tag [classref boost::test_tools::bitwise] can be provided to the __BOOST_TEST__ macro in order to have an extended bitwise comparison
 of the operands. The predicate used for comparison ([funcref boost::test_tools::tt_detail::bitwise_compare `bitwise_compare`]) 
-gives extended information
-on the locations where the two operands do not match. 
-
+gives extended information on the locations where the two operands do not match. 
 
 [bt_example boost_test_macro_bitwise..BOOST_TEST bitwise comparison]
 

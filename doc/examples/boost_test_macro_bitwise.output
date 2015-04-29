@@ -18,5 +18,4 @@ boost_test_macro_bitwise.cpp:13: Leaving test case "test_bitwise"; testing time:
 Leaving test module "boost_test_bitwise"; testing time: 772mks
 
 *** 3 failures are detected in the test module "boost_test_bitwise"
-
 //]
