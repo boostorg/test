@@ -6,14 +6,18 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 //[example_code
-#define BOOST_TEST_MODULE boost_test_macro2
+#define BOOST_TEST_MODULE boost_test_bitwise
 #include <boost/test/included/unit_test.hpp>
 #include <sstream>
 
-BOOST_AUTO_TEST_CASE( test_floating_points )
+BOOST_AUTO_TEST_CASE(test_bitwise)
 {
   namespace tt = boost::test_tools;
-  int a = 13;
-  BOOST_TEST(float(a) == float(a + 1), tt::tolerance<float>( 1./13 ));
+  int a = 0xAB;
+  BOOST_TEST( a == (a & ~1), tt::bitwise() );
+  BOOST_TEST( a == a + 1, tt::bitwise() );
+  BOOST_TEST( a != a + 1, tt::bitwise() );
+  int b = 0x88;
+  BOOST_TEST( a == b, tt::bitwise() );
 }
 //]

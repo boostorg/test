@@ -24,6 +24,7 @@ set(EXAMPLES_SRC
 set(EXAMPLES_VARIADIC_MACROS_SRC
     boost_test_macro1.cpp
     boost_test_macro2.cpp
+    boost_test_macro_bitwise.cpp
     )
     
 if(CMAKE_CXX_COMPILER_ID STREQUAL Clang)

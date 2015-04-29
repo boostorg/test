@@ -46,8 +46,7 @@ are in fact not possible, such as:
 * statements containing comas: those statements will be intercepted by the preprocessor
 * compound statements containing more than one sequence point
 
-
-
+[bt_example boost_test_macro1..BOOST_TEST acceptable expressions]
 
 [endsect] [/ acceptable expressions]
 
@@ -130,20 +129,15 @@ Sometimes these information are not informative enough.
 [caution this feature is not available for non C++11 compilers (the extended diagnostic is disabled).]
 
 The tag [classref boost::test_tools::bitwise] can be provided to the __BOOST_TEST__ macro in order to have an extended bitwise comparison
-of the operands. 
-
-```
-BOOST_AUTO_TEST_CASE(test)
-{
-  namespace tt = boost::test_tools;
-  int a = 0xAB;
-  int b = 0x88;
-  BOOST_TEST( a == b, tt::bitwise() );
-}
-```
-
-The predicate used for comparison ([funcref boost::test_tools::tt_detail::bitwise_compare `bitwise_compare`]) gives extended information
+of the operands. The predicate used for comparison ([funcref boost::test_tools::tt_detail::bitwise_compare `bitwise_compare`]) 
+gives extended information
 on the locations where the two operands do not match. 
+
+
+[bt_example boost_test_macro_bitwise..BOOST_TEST bitwise comparison]
+
+[note the indices start at the lowest value bit.]
+
 
 [endsect] [/ bit sequences]
 
@@ -154,6 +148,7 @@ on the locations where the two operands do not match.
 [caution this feature is not available for non C++11 compilers (requires variadic macros and support of `auto` and `decltype`).
   Consider using [link boost_test.users_guide.tests_organization.decorators decorators] for setting the tolerance of the comparisons.]
 
+__BOOST_TEST__ automatically detects expressions 
 
 ```
 BOOST_AUTO_TEST_CASE(test)
@@ -169,6 +164,9 @@ BOOST_AUTO_TEST_CASE(test)
 [h3 Supported manipulators]
 
 * [funcref boost::test_tools::tolerance] : indicates the tolerance, using Equ (2) indicated on [link boost_test.users_guide.testing_tools.testing_floating_points this page].
+  [bt_example boost_test_macro2..BOOST_TEST tolerance settings]
+  [caution The tolerance should be of the same type as of the first operand]
+  
 
 
 [endsect] [/ floating points]

@@ -1,0 +1,11 @@
+//[example_output
+> ./boost_test_macro2 --log_level=all
+Running 1 test case...
+Entering test module "boost_test_macro2"
+boost_test_macro2.cpp:13: Entering test case "test_floating_points"
+boost_test_macro2.cpp:17: info: check float(a) == float(a + 1) has passed
+boost_test_macro2.cpp:13: Leaving test case "test_floating_points"; testing time: 148mks
+Leaving test module "boost_test_macro2"; testing time: 236mks
+
+*** No errors detected
+//]
