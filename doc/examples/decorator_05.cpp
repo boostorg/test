@@ -8,21 +8,19 @@
 //[example_code
 #define BOOST_TEST_MODULE decorator_05
 #include <boost/test/included/unit_test.hpp>
-
 namespace utf = boost::unit_test;
 
-const bool io_implemented = true;
-const bool db_implemented = false;
+BOOST_AUTO_TEST_SUITE(suite1, *utf::disabled())
 
-BOOST_TEST_DECORATOR( -utf::enable_if<io_implemented>() )
-BOOST_AUTO_TEST_CASE(test_io)
-{
-  BOOST_TEST(1 != 1);
-}
+  BOOST_AUTO_TEST_CASE(test1)
+  {
+    BOOST_TEST(1 != 1);
+  }
 
-BOOST_TEST_DECORATOR( -utf::enable_if<db_implemented>() )
-BOOST_AUTO_TEST_CASE(test_db)
-{
-  BOOST_TEST(2 != 2);
-}
+  BOOST_AUTO_TEST_CASE(test2, *utf::enabled())
+  {
+    BOOST_TEST(2 != 2);
+  }
+
+BOOST_AUTO_TEST_SUITE_END()
 //]

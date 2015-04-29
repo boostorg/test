@@ -8,23 +8,23 @@
 //[example_code
 #define BOOST_TEST_MODULE decorator_04
 #include <boost/test/included/unit_test.hpp>
-
 namespace utf = boost::unit_test;
 
-BOOST_TEST_DECORATOR( -utf::disabled() )
-BOOST_AUTO_TEST_SUITE(suite1);
+BOOST_AUTO_TEST_CASE(test1,
+  * utf::label("l1"))
+{
+  BOOST_TEST(false);
+}
 
-  BOOST_AUTO_TEST_CASE(test1)
-  {
-    BOOST_TEST(1 != 1);
-  }
+BOOST_AUTO_TEST_CASE(test2,
+  * utf::label("l1")
+  * utf::label("l2"))
+{
+  BOOST_TEST(false);
+}
 
-  BOOST_TEST_DECORATOR( -utf::enabled() )
-  BOOST_AUTO_TEST_CASE(test2)
-  {
-    BOOST_TEST(2 != 2);
-  }
-
-BOOST_AUTO_TEST_SUITE_END();
-
+BOOST_AUTO_TEST_CASE(test3)
+{
+  BOOST_TEST(false);
+}
 //]

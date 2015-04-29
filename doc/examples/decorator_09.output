@@ -1,18 +1,5 @@
 //[example_output
-> decorator_09
-Running 2 test cases...
-decorator_09.cpp(11): error: in "suite1/test1": check false has failed
-decorator_09.cpp(12): error: in "suite1/test1": check false has failed
-decorator_09.cpp(17): error: in "suite1/test2": check false has failed
-decorator_09.cpp(18): error: in "suite1/test2": check false has failed
-
-*** 4 failures are detected (3 failures are expected) in the test module "decorator_09"
-
-
-> decorator_09 --run_test=suite1/test1
-Running 1 test case...
-decorator_09.cpp(11): error: in "suite1/test1": check false has failed
-decorator_09.cpp(12): error: in "suite1/test1": check false has failed
-
-*** No errors detected
+> decorator_09 --list_content
+test_1 : enable only when ODBC is available
+test_2*: descriptions add up
 //]

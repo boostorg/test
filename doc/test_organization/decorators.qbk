@@ -114,7 +114,7 @@ label(const_string label_name);
 
 Decorator `label` associates a test unit with label `label_name`. This is useful when one wants to execute test units selectively by label. It is possible to associate more than one label with a test unit. Decorating a test suite with label `L` is equivalent to decorating every test unit inside with `L`.
 
-[bt_example example74_decorators..decorator label]
+[bt_example decorator_04..decorator label]
 [endsect] [/ section label]
 
 [/-----------------------------------------------------------------]
@@ -128,7 +128,7 @@ disabled();
 
 Decorator `disabled` indicates that the test unit's __default_run_status__ is ['false]. This means that that test cases inside this test unit will not be run by default, unless otherwise specified. Decorator `enabled` indicates that the test unit's default run status is ['true]. This means that that test cases inside this test unit will be run by default, unless otherwise specified.
 
-[bt_example decorator_04..decorators enabled and disabled]
+[bt_example decorator_05..decorators enabled and disabled]
 
 Syntactically, it is possible to apply both decorators `enabled` and `disabled` to the same test unit. This is reported as set-up error when the test program is run.
 
@@ -144,9 +144,9 @@ template <bool Condition> enable_if();
 
 Decorator `enable_if` indicates that the test unit's __default_run_status__ is either ['true] or ['false], depending on the value of `Condition`. This means that that test cases inside this test unit will or will not be run by default. 
 
-[bt_example decorator_05..decorator enable_if]
+[bt_example decorator_06..decorator enable_if]
 
-Decorator `-enable_if<true>()` is equivalent to decorator `-enabled()`. Similarly, `-enable_if<false>()` is equivalent to decorator `-disabled()`. 
+Decorator `enable_if<true>()` is equivalent to decorator `enabled()`. Similarly, `enable_if<false>()` is equivalent to decorator `disabled()`. 
 
 [endsect] [/ section enable_if]
 
@@ -161,7 +161,7 @@ depeneds_on(const_string dependent_test_name);
 
 Decorator `depends_on` associates the decorated test case (call it `B`) with another test case (call it `A`) specified by name. This affects the processing the test tree in two ways. First, test case `A` is ordered to be run before `B`, irrespective of the order in which they were declared or added to the test tree. Second, the execution of `B` is skipped if `A` is either disabled or skipped or is executed and marked as failed. 
 
-[bt_example decorator_08..decorator depends_on]
+[bt_example decorator_07..decorator depends_on]
 
 In the above scenario, test case `test3` is run (and fails) because `s1/test1` has been run and succeeded; `test4` is skipped because `test3` has failed; `test5` is skipped because `s1/test2` is disabled.
 
@@ -179,7 +179,7 @@ precondition(predicate_t predicate);
 ``
 Decorator `precondition` associates a ['predicate] with a test unit. Before the test unit is executed, the predicate is evaluated with the test unit's ID passed as the argument. If it evaluates to `false`, execution of the test unit is skipped. Skipping the test suite means skipping the execution of every test unit inside.
 
-[bt_example decorator_06..decorator precondition]
+[bt_example decorator_08..decorator precondition]
 
 In the example above, the user defined a custom predicate `if_either` that evaluates to `true` if at least one of the two specified tests passed. (It assumes that the tests are registered in the specific order.) Test case `test3` has a precondition that at either `test1` or `test2` passed. The precondition is satisfied, therefore `test3` is run (and fails). Test case `test4` has a precondition that either `test2` or `test3` passed. Since they both failed, the precondition is not satisfied, therefore `test4` is skipped.
  
@@ -196,7 +196,7 @@ description(const_string message);
 
 Decorator `description` attaches an arbitrary string to the test unit. All strings attached to test units can be displayed when running a test program with parameter __param_list_content__. This can be used for conveying  information from the person who composes the test tree to the person who will be running the test program. Applying more than one decorator `description` to the same test unit means that the two (or more) strings will be concatenated.
 
-[bt_example decorator_07..decorator description]
+[bt_example decorator_09..decorator description]
 
 
 [endsect] [/ section description]
@@ -212,7 +212,7 @@ expected_failures(counter_t number);
 
 Decorator `expected_failures` defines the number of assertions that are expected to fail within the corresponding test unit. It is reported as failure when the number of failed assertions is greater than the declared expected number of failures. If the number of failed assertions is less than the number of expected failures a message is reported. The total number of expected failures for a given test suite `S` is the sum of the declared expected failures in `S` and the sum of expected failures in all nested test units:
 
-[bt_example decorator_09..decorator expected_failures]
+[bt_example decorator_10..decorator expected_failures]
 
 In the above example, we first run all test cases with four failed assertions. The total number of expected failures is 3: 1 (for test `suite1`) + 2 (for `test1`). Because the expected failure count is exceeded, the error is reported. In the second case, we only run test case `suite1/test1`: two failures occur, two failures are expected, therefore no error is reported. For more information about expected failures see [link boost_test.users_guide.tests_organization.expected_failures here].
 [endsect] [/ section expected_failures]
@@ -228,7 +228,7 @@ timeout(unsigned seconds);
 
 Decorator `timeout` specifies time (in seconds) that sets the maximum allowed duration of a test case. If this time is exceeded the test unit is forced to stop and is reported as failure.
 
-[bt_example example78_decorators..decorator timeout]
+[bt_example decorator_11..decorator timeout]
 
 Applied at test suite level, this decorator has no effect.
 
@@ -250,7 +250,7 @@ template <typename Fx, typename Arg>
 
 Decorator `fixture` specifies a pair of functions (like `set_up` and `tear_down`) to be called before and after the corresponding test unit. At the suite level the `set_up` function is called once -- before the suite execution starts and `tear_down` function is called once -- after the suite execution ends. It comes in three forms. First expects two functions for set-up and tear-down (the second one can be skipped). The second expects a `DefaultConstructible` class. Its default constructor will be used as set-up function and its destructor as a tear-down function. Third requires a class with one-argument public constructor. Argument `arg` is forwarded to the constructor and this is the set-up function, its destructor is the tear-down function. There is no way to get access to the members of these fixtures from within the test case or test suite.
 
-[bt_example decorator_10..decorator fixture]
+[bt_example decorator_12..decorator fixture]
 
 For other ways of using fixtures, see [link boost_test.users_guide.tests_organization.fixtures here].
 
@@ -271,7 +271,7 @@ template <typename FPT>
 
 Decorator `tolerance` specifies the default comparison tolerance for floating point type `FTP` in the decorated test unit. The default tolerance only applies to a particular type, so it makes sense to provide more than one `tolerance` decorator if we are comparing different floating point types. For more details see __floating_points_testing_tools__. The variant with `percent_tolerance` uses value `eps * .01` as tolerance.
 
-[bt_example decorator_11..decorator tolerance]
+[bt_example decorator_13..decorator tolerance]
 
 In the above example,  in `test1`, checks on `double`s fail because they differ by more what tolerance for `double`s specifies. In `test2` the tolerance for `double`s is greater and therefore the checks succeed. In `test3`, we specify only tolerance for type `float`, and since the checks use type `double` the specified tolerance does not apply. Tolerance in `test4` is equivalent to that in `test1`, therefore its checks also fail. Tolerance in `test5` is equivalent to that in `test2`, therefore its checks also succeed.
 [endsect] [/ section tolerance]

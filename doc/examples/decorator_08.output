@@ -1,24 +1,17 @@
 //[example_output
-> decorator_08 --report_level=detailed
+> decorator_08 --log_level=test_suite
 Running 4 test cases...
-decorator_08.cpp(10): error: in "test3": check false has failed
+Entering test module "decorator_08"
+decorator_08.cpp(6): Entering test case "test1"
+decorator_08.cpp(6): Leaving test case "test1"; testing time: 1ms
+decorator_08.cpp(11): Entering test case "test2"
+decorator_08.cpp(13): error: in "test2": check false has failed
+decorator_08.cpp(11): Leaving test case "test2"; testing time: 2ms
+decorator_08.cpp(39): Entering test case "test3"
+decorator_08.cpp(41): error: in "test3": check false has failed
+decorator_08.cpp(39): Leaving test case "test3"; testing time: 2ms
+decorator_08.cpp(45): Test case "test4" is skipped because test2 and test3 failed
+Leaving test module "decorator_08"; testing time: 16ms
 
-Test module "decorator_08" has failed with:
-  1 test case out of 4 passed
-  1 test case out of 4 failed
-  2 test cases out of 4 skipped
-  1 assertion out of 2 passed
-  1 assertion out of 2 failed
-
-  Test case "test3" has failed with:
-    1 assertion out of 1 failed
-
-  Test case "test4" was skipped
-  Test case "test5" was skipped
-  Test suite "s1" has passed with:
-    1 test case out of 1 passed
-    1 assertion out of 1 passed
-
-    Test case "s1/test1" has passed with:
-      1 assertion out of 1 passed
+*** 2 failures are detected in the test module "decorator_08"
 //]

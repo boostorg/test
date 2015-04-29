@@ -1,17 +1,12 @@
 //[example_output
-> decorator_06 --log_level=test_suite
-Running 4 test cases...
-Entering test module "decorator_06"
-decorator_06.cpp(7): Entering test case "test1"
-decorator_06.cpp(7): Leaving test case "test1"; testing time: 1ms
-decorator_06.cpp(12): Entering test case "test2"
-decorator_06.cpp(14): error: in "test2": check false has failed
-decorator_06.cpp(12): Leaving test case "test2"; testing time: 6ms
-decorator_06.cpp(39): Entering test case "test3"
-decorator_06.cpp(41): error: in "test3": check false has failed
-decorator_06.cpp(39): Leaving test case "test3"; testing time: 6ms
-decorator_06.cpp(45): Test case "test4" is skipped because neither test2 nor test3 passed
-Leaving test module "decorator_06"; testing time: 52ms
+> decorator_06
+Running 1 test case...
+decorator_06.cpp(11): error: in "test_io": check 1 != 1 has failed [1 == 1]
 
-*** 2 failures are detected in the test module "decorator_06"
+*** 1 failure is detected in the test module "decorator_06"
+
+
+> decorator_06 --list_content
+test_io*
+test_db
 //]
