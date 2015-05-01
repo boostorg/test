@@ -81,8 +81,11 @@ Standard containers of the `STL` are already indicated as collections.
 [endsect] [/ collections]
 
 [section:strings String comparison]
+In the general case, pointers are compared using their value. However when the pointers involved in the comparison
+are `char *` or `wchar_t *`, __BOOST_TEST__ consider that the element pointed to are null terminated `char` arrays and
+string comparison is used instead. 
 
-In case the statement contains the comparison of strings, or `char*` arrays, those are promoted to `std::string` like classes. 
+[bt_example boost_test_macro_string..BOOST_TEST string comparison]
 
 [endsect] [/ string]
 
