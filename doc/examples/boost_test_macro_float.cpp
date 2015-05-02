@@ -14,7 +14,11 @@ BOOST_AUTO_TEST_CASE( test_float )
   namespace tt = boost::test_tools;
   double d1 = 1.1e-5;
   double d2 = 1.101e-5;
-  BOOST_TEST( d1 == d2, tt::tolerance( 1e-7 ) ); // Tolerance using strong comparison (Equ (2)).
-  BOOST_TEST( d1 == d2, 1e-5 % tt::tolerance()); // tolerance set in percentage
+
+  // Tolerance using strong comparison (Equ (2)).
+  BOOST_TEST( d1 == d2, tt::tolerance( 1e-7 ) ); 
+
+  // tolerance set in percentage
+  BOOST_TEST( d1 == d2, 1e-5 % tt::tolerance()); 
 }
 //]
