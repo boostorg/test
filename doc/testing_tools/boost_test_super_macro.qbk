@@ -159,25 +159,17 @@ gives extended information on the locations where the two operands do not match.
 [caution this feature is not available for non C++11 compilers (requires variadic macros and support of `auto` and `decltype`).
   Consider using [link boost_test.users_guide.tests_organization.decorators decorators] for setting the tolerance of the comparisons.]
 
-__BOOST_TEST__ automatically detects expressions 
+__BOOST_TEST__ automatically detects expressions involving floating points and dispatch the expression to the 
+appropriate comparison methods. 
 
-```
-BOOST_AUTO_TEST_CASE(test)
-{
-  namespace tt = boost::test_tools;
-  double d1 = 1.1e-5;
-  double d2 = 1.101e-5;
-  BOOST_TEST( d1 == d2, tt::tolerance( 1e-7 ) ); // Tolerance using strong comparison (Equ (2)).
-  BOOST_TEST( d1 == d2, tolerance() % 1e-9 ); // tolerance set in percentage
-}
-```
+[bt_example boost_test_macro_float..BOOST_TEST bitwise comparison]
 
 [h3 Supported manipulators]
 
 * [funcref boost::test_tools::tolerance] : indicates the tolerance, using Equ (2) indicated on [link boost_test.users_guide.testing_tools.testing_floating_points this page].
   [bt_example boost_test_macro2..BOOST_TEST tolerance settings]
   [caution The tolerance should be of the same type as of the first operand]
-  
+* `% `[funcref boost::test_tools::tolerance]: indicates the tolerance in percentage
 
 
 [endsect] [/ floating points]

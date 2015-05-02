@@ -1,0 +1,12 @@
+//[example_output
+> ./boost_test_macro_float --log_level=all
+Running 1 test case...
+Entering test module "boost_test_float"
+boost_test_macro_float.cpp:12: Entering test case "test_float"
+boost_test_macro_float.cpp:17: error: in "test_float": check d1 == d2 has failed [1.1e-05 != 1.101e-05]. Relative difference exceeds tolerance [0.000909091 > 1e-07]
+boost_test_macro_float.cpp:18: error: in "test_float": check d1 == d2 has failed [1.1e-05 != 1.101e-05]. Relative difference exceeds tolerance [0.000909091 > 1e-11]
+boost_test_macro_float.cpp:12: Leaving test case "test_float"; testing time: 295mks
+Leaving test module "boost_test_float"; testing time: 388mks
+
+*** 2 failures are detected in the test module "boost_test_float"
+//]

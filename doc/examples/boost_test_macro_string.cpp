@@ -8,9 +8,6 @@
 //[example_code
 #define BOOST_TEST_MODULE boost_test_strings
 #include <boost/test/included/unit_test.hpp>
-#include <sstream>
-#include <map>
-#include <vector>
 
 BOOST_AUTO_TEST_CASE( test_pointers )
 {
