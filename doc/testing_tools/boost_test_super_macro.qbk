@@ -135,8 +135,6 @@ Sometimes these information are not informative enough.
 
 
 
-
-
 [section:bitwise Bitwise comparison]
 
 [caution this feature is not available for non C++11 compilers (the extended diagnostic is disabled).]
@@ -147,7 +145,7 @@ gives extended information on the locations where the two operands do not match.
 
 [bt_example boost_test_macro_bitwise..BOOST_TEST bitwise comparison]
 
-[note the indices start at the lowest value bit.]
+[note the indices start at least significant bit.]
 
 
 [endsect] [/ bit sequences]
@@ -164,9 +162,10 @@ appropriate comparison methods.
 
 [bt_example boost_test_macro_float..BOOST_TEST bitwise comparison]
 
-[h3 Supported manipulators]
+[h4 Supported manipulators]
 
-* [funcref boost::test_tools::tolerance] : indicates the tolerance, using Equ (2) indicated on [link boost_test.users_guide.testing_tools.testing_floating_points this page].
+* [funcref boost::test_tools::tolerance] : indicates the tolerance, using Equ (2) indicated on 
+  [link boost_test.users_guide.testing_tools.testing_floating_points this page].
   [bt_example boost_test_macro2..BOOST_TEST tolerance settings]
   [caution The tolerance should be of the same type as of the first operand]
 * `% `[funcref boost::test_tools::tolerance]: indicates the tolerance in percentage
