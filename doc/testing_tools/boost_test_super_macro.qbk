@@ -131,6 +131,9 @@ While perfectly exact and precise, the file name, test case name, line number of
 is partial with regards to the meaning of the failed statement. 
 Sometimes these information are not informative enough.
 
+[bt_example boost_test_macro_message..BOOST_TEST optional failure message]
+
+
 [endsect] [/ message]
 
 
