@@ -1,0 +1,14 @@
+//[example_output
+> ./boost_test_macro1 --log_level=all
+Running 1 test case...
+Entering test module "boost_test_macro1"
+boost_test_macro1.cpp:13: Entering test case "test_basic_operations"
+boost_test_macro1.cpp:17: info: check a == b has passed
+boost_test_macro1.cpp:18: info: check a < b + 1 has passed
+boost_test_macro1.cpp:19: info: check b >= a has passed
+boost_test_macro1.cpp:20: info: check !(b >= b + 1) has passed
+boost_test_macro1.cpp:13: Leaving test case "test_basic_operations"; testing time: 463mks
+Leaving test module "boost_test_macro1"; testing time: 642mks
+
+*** No errors detected
+//]

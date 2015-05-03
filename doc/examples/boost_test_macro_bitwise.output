@@ -1,0 +1,21 @@
+//[example_output
+> ./test_boost_test_macro_bitwise --log_level=all
+Running 1 test case...
+Entering test module "boost_test_bitwise"
+boost_test_macro_bitwise.cpp:13: Entering test case "test_bitwise"
+boost_test_macro_bitwise.cpp:17: error: in "test_bitwise": check a == (a & ~1) has failed [171 != 170]. Bitwise comparison failed
+Mismatch at position 0
+boost_test_macro_bitwise.cpp:18: error: in "test_bitwise": check a == a + 1 has failed [171 != 172]. Bitwise comparison failed
+Mismatch at position 0
+Mismatch at position 1
+Mismatch at position 2
+boost_test_macro_bitwise.cpp:19: info: check a != a + 1 has passed
+boost_test_macro_bitwise.cpp:21: error: in "test_bitwise": check a == b has failed [171 != 136]. Bitwise comparison failed
+Mismatch at position 0
+Mismatch at position 1
+Mismatch at position 5
+boost_test_macro_bitwise.cpp:13: Leaving test case "test_bitwise"; testing time: 627mks
+Leaving test module "boost_test_bitwise"; testing time: 772mks
+
+*** 3 failures are detected in the test module "boost_test_bitwise"
+//]

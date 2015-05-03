@@ -5,11 +5,11 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision: 74248 $
-//
-//  Description : FPC tolerance manipulator implementation
+//! @file
+//! @brief Floating point comparison tolerance manipulators
+//! 
+//! This file defines several manipulators for floating point comparison. These
+//! manipulators are intended to be used with BOOST_TEST.
 // ***************************************************************************
 
 #ifndef BOOST_TEST_TOOLS_DETAIL_TOLERANCE_MANIP_HPP_012705GER
@@ -82,6 +82,12 @@ operator<<( assertion_type const& /*at*/, tolerance_manip<FPT> const& )         
 
 } // namespace tt_detail
 
+
+/*! Tolerance manipulator
+ *
+ * These functions return a manipulator that can be used in conjunction with BOOST_TEST
+ * in order to specify the tolerance with which floating point comparisons are made.
+ */
 template<typename FPT>
 inline tt_detail::tolerance_manip<FPT>
 tolerance( FPT v )
@@ -94,6 +100,7 @@ tolerance( FPT v )
 
 //____________________________________________________________________________//
 
+//! @overload tolerance( FPT v )
 template<typename FPT>
 inline tt_detail::tolerance_manip<FPT>
 tolerance( fpc::percent_tolerance_t<FPT> v )
@@ -106,6 +113,7 @@ tolerance( fpc::percent_tolerance_t<FPT> v )
 
 //____________________________________________________________________________//
 
+//! @overload tolerance( FPT v )
 inline tt_detail::tolerance_manip_delay
 tolerance()
 {
