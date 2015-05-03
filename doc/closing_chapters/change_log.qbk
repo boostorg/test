@@ -15,8 +15,8 @@
 * command line option for negating expressions with !
 * color output with __param_color_output__
 * test bed listing with __param_list_content__
-* now having a more accurate timing (see [ticket 7397]) for the tests. Old format is still available through the command line option __param_deprecated_timer_format__
-  in case you experience problems with the new output. 
+[/* now having a more accurate timing (see [ticket 7397]) for the tests. Old format is still available through the command line option __param_deprecated_timer_format__
+  in case you experience problems with the new output. ]
 
 [h5 Bugfixes and feature requests]
 # [ticket 2018] Error in the documentation chapter "Runtime parameters reference"
