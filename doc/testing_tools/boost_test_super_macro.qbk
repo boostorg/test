@@ -8,30 +8,30 @@
 [section:boost_test_super_macro `BOOST_TEST` or the Swiss Army knife]
 
 Once a test case has been declared, the body of this test should be written. A test case is a 
-sequence of operations in which *assertions* are inserted. Those assertions run /statements/ that verify the integrity 
+sequence of operations in which *assertions* are inserted. Those assertions evaluate /statements/ that verify the integrity 
 of the pre and post conditions of the operations. There are three kind of assertions, having different meaning on the
 consistency of the test case:
 
-* requirements: this is the strongest level of the assertions. The test case execution stops if the statement in the assertion fails. This
-  type of assertions should be used when the reminder of the test-case relies heavily on this requirement (example: an object 
-  allocated on the heap is tested, but the factory returns `NULL`). 
-* basic checks: this is the most commonly used assertion level. If the statements evaluates to `false`, the test case is 
+* *requirements*: this is a strong condition for the operations following the assertion to be valid. 
+  This type of assertions should be used when a pre-condition for the test is not met or when the test-case cannot continue.
+  If such as assertion fails, the test case execution stops immediately, and the test-case is flagged as /failed/.
+* *checks*: this is the most commonly used assertion level. If the statement evaluates to `false`, the test case is 
   flagged as failed but its execution continues. 
-* warnings: this is the lowest level of the assertions. The test case execution continues and a warning message is logged. 
+* *warnings*: this is the lowest level of the assertions. The test case execution continues and a warning message is logged. 
   The warning does not change the success status of a test case.
   
-These three levels of assertions are reported into the test log and test output, as described in details in the 
+These three levels of assertions are reported into the test log and output, as described in details in the 
 [link boost_test.users_guide.testing_tools.tools_assertion_severity_level severity levels] section. The granularity of the
 report depends on the current [link boost_test.users_guide.runtime_config.rt_param_reference.param_log_level log level] and 
 [link boost_test.users_guide.runtime_config.rt_param_reference.param_report_level report level].
 
-A unique interface is given by the variants of the `BOOST_TEST` assertion:
+A unique interface is given by three variants of the `BOOST_TEST` assertion:
 
 * `BOOST_TEST_REQUIRE`
 * `BOOST_TEST_CHECK` or just `BOOST_TEST`
 * `BOOST_TEST_WARN`
 
-As their name suggests, these assertions are, in order, for /requirement/, /checks/ and /warnings/.
+As their name suggests these assertions are, in order, for /requirement/, /checks/ and /warnings/.
 
 [warning To get all the functionalities of `BOOST_TEST` family of assertions, a C++11 capable compiler is required, especially
  supporting the `auto` and `decltype` keywords and the variadic macros. The documentation focuses on these set of compilers. A 
@@ -52,8 +52,8 @@ are in fact not possible, such as:
 
 [section:collections Collection comparison]
 
-The __BOOST_TEST__ assertion detects the /collections/ and provides additional diagnostics in case of failure. 
-Collections are compared using a particular operator, applied on each element of both collections, in sequence.
+__BOOST_TEST__ automatically detects [link what_is_a_collection /collections/] of elements and provides additional diagnostics in case of failure. 
+Collections are compared using a specified operator, applied /in sequence/ on each element of both collections.
 The sequence of comparisons is provided by the iterators of the respective collections. 
 In case of failure, the indices of the elements for which the comparison fails are returned.
 
@@ -64,7 +64,7 @@ In order for the collections to be comparable, they should have the same number 
 
 [bt_example boost_test_macro_collections..BOOST_TEST collection comparison support]
 
-[h3 What is a collection?]
+[#what_is_a_collection][h3 What is a collection?]
 A collection is a sequence of elements (C++11):
 
 * that implements the member functions `size` and `begin`, as well as the fields `const_iterator` and `value_type`
@@ -76,14 +76,13 @@ The detection of the collection is delegated to the class [classref boost::unit_
 detects the required member functions and fields. However for C++03, the types being collections should be explicitly indicated
 to the __UTF__ by a specialization of [classref boost::unit_test::is_forward_iterable]. 
 
-Standard containers of the `STL` are already indicated as collections. 
+Standard containers of the `STL` are recognised as collections. 
 
 [endsect] [/ collections]
 
 [section:strings String comparison]
-In the general case, pointers are compared using their value. However when the pointers involved in the comparison
-are `char *` or `wchar_t *`, __BOOST_TEST__ consider that the element pointed to are null terminated `char` arrays and
-string comparison is used instead. 
+In the general case, pointers are compared using their value. However when type of the the pointers are `char*` or `wchar_t*`, 
+__BOOST_TEST__ promotes them as null terminated `char` arrays and string comparison is used instead. 
 
 [bt_example boost_test_macro_string..BOOST_TEST string comparison]
 
@@ -93,7 +92,7 @@ string comparison is used instead.
 
 The __BOOST_TEST__ assertion can be enriched with more control about the test or the diagnostic. In particular:
 
-* an optional message, printed in case of failure, can be added. 
+* an optional message, printed in case of failure and in place of the default message, can be added. 
 * tags can be added in order to have a more detailed diagnostic. Currently only the bitwise comparison tag is available
 * floating point tolerances can be controlled
 
@@ -155,24 +154,23 @@ gives extended information on the locations where the two operands do not match.
 
 
 
-[section:floating_point Comparing floating points]
+[section:floating_point Floating point comparison]
 
 [caution this feature is not available for non C++11 compilers (requires variadic macros and support of `auto` and `decltype`).
   Consider using [link boost_test.users_guide.tests_organization.decorators decorators] for setting the tolerance of the comparisons.]
 
 __BOOST_TEST__ automatically detects expressions involving floating points and dispatch the expression to the 
-appropriate comparison methods. 
+appropriate comparison methods. More control can be provided over the tolerance with which the comparisons are made by
+providing an optional [funcref boost::test_tools::tolerance] argument to __BOOST_TEST__. The tolerance might also be expressed
+in /percentage/ using `operator%` of this tolerance object, as in the examples below:
 
 [bt_example boost_test_macro_float..BOOST_TEST bitwise comparison]
 
-[h4 Supported manipulators]
+[note All floating point comparisons use Equ (2) on [link boost_test.users_guide.testing_tools.testing_floating_points this page].]
 
-* [funcref boost::test_tools::tolerance] : indicates the tolerance, using Equ (2) indicated on 
-  [link boost_test.users_guide.testing_tools.testing_floating_points this page].
-  [bt_example boost_test_macro2..BOOST_TEST tolerance settings]
-  [caution The tolerance should be of the same type as of the first operand]
-* `% `[funcref boost::test_tools::tolerance]: indicates the tolerance in percentage
-
+[caution The tolerance should be of the same type as of the first operand
+ [bt_example boost_test_macro2..BOOST_TEST tolerance settings]
+]
 
 [endsect] [/ floating points]
 
