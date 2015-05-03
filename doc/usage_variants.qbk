@@ -41,7 +41,7 @@ boost_test.adv_scenarios.build_lib.usage_variants.single_header_variant section]
 [h3:static_lib Static library usage variant]
 For most users, who has an access to prebuild static library [footnote these files are distributed 
 with the packaging systems on Linux and OSX for instance] of the __UTF__ or can 
-[link boost_test.adv_scenarios.build_lib build it] themselves, following usage can be most versatile
+[link boost_test.adv_scenarios.build_lib.build_utf build it] themselves, following usage can be most versatile
  and simple approach. This usage variant entails two steps. 
 
 # First you need to add following line to all translation units in a test module:
