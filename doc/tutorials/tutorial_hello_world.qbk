@@ -72,9 +72,6 @@ program shows several different ways to detect and report an error in the `add()
 [import ../snippet/snippet12.cpp]
 [snippet12]
 
-[warning check why there is a remaining TO FIX: all the coords in the source doc + why 
-TO FIX: some finishing statements here
-]
 
 [endsect] [/section:hello]
 

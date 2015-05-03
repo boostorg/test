@@ -89,9 +89,7 @@ The flip side of this usage variant is that you will need to make sure the __UTF
 is accessible at runtime to a test module.
 
 In addition shared library usage variant facilitates custom test runners. For more information about this 
-check this [/TOFIX] section.
-
-[warning to fix section]
+check this [link boost_test.adv_scenarios.build_lib.usage_variants.extern_test_runner_variant section].
 
 [caution On Windows, the test module and the __UTF__ shared library should link to the same CRT. Not doing
  so (for instance __UTF__ shared library in /release/ mode while the test module is in /debug/) will
