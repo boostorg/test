@@ -17,7 +17,7 @@ consistency of the test case:
   If such as assertion fails, the test case execution stops immediately, and the test-case is flagged as /failed/.
 * *checks*: this is the most commonly used assertion level. If the statement evaluates to `false`, the test case is 
   flagged as failed but its execution continues. 
-* *warnings*: this is the lowest level of the assertions. The test case execution continues and a warning message is logged. 
+* *warnings*: this is an assertion providing information. The test case execution continues and a warning message is logged. 
   The warning does not change the success status of a test case.
   
 These three levels of assertions are reported into the test log and output, as described in details in the 
@@ -57,10 +57,11 @@ Collections are compared using a specified operator, applied /in sequence/ on ea
 The sequence of comparisons is provided by the iterators of the respective collections. 
 In case of failure, the indices of the elements for which the comparison fails are returned.
 
-In order for the collections to be comparable, they should have the same number of elements.
+In order for the collections to be comparable, they should have the same number of elements. The comparison is made over
+all the elements returned by the collections iterators. The comparison used is the one in the
+ __BOOST_TEST__ statement (`==`, `<` ...).
 
-[caution the comparison is made over the elements returned by the collections iterators, using the operation appearing the in
- __BOOST_TEST__ statement (`==`, `<` ...). The type returned by the dereference of the iterator should support the selected operator.]
+[caution The type returned by the dereference of the iterator should support the specified comparison.]
 
 [bt_example boost_test_macro_collections..BOOST_TEST collection comparison support]
 
@@ -164,13 +165,12 @@ appropriate comparison methods. More control can be provided over the tolerance 
 providing an optional [funcref boost::test_tools::tolerance] argument to __BOOST_TEST__. The tolerance might also be expressed
 in /percentage/ using `operator%` of this tolerance object, as in the examples below:
 
-[bt_example boost_test_macro_float..BOOST_TEST bitwise comparison]
+[bt_example boost_test_macro_float..BOOST_TEST floating point comparison]
 
 [note All floating point comparisons use Equ (2) on [link boost_test.users_guide.testing_tools.testing_floating_points this page].]
 
-[caution The tolerance should be of the same type as of the first operand
- [bt_example boost_test_macro2..BOOST_TEST tolerance settings]
-]
+[caution A current caveat of the implementation requires the tolerance to be of the same type as of the first operand.]
+[bt_example boost_test_macro_float2..BOOST_TEST tolerance type]
 
 [endsect] [/ floating points]
 

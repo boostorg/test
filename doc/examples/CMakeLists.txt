@@ -28,6 +28,7 @@ set(EXAMPLES_VARIADIC_MACROS_SRC
     boost_test_macro_collections.cpp
     boost_test_macro_string.cpp
     boost_test_macro_float.cpp
+    boost_test_macro_float2.cpp
     boost_test_macro_message.cpp
     )
     
