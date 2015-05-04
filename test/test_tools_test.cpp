@@ -719,13 +719,20 @@ TEST_CASE( test_BOOST_TEST_collection_comp )
     v.push_back( 2 );
     v.push_back( 3 );
 
+    std::vector<int> v2 = v;
+
     std::list<int> l;
     l.push_back( 1 );
     l.push_back( 3 );
     l.push_back( 2 );
 
-    BOOST_TEST_FWD_1( v <= l, "check v <= l has failed. \nMismatch at position 2: 3 > 2" );
     BOOST_TEST_FWD_1( v == l, "check v == l has failed. \nMismatch at position 1: 2 != 3\nMismatch at position 2: 3 != 2" );
+    BOOST_TEST_FWD_1( v != v2, "check v == v2 has failed. \nAll elements of both collections are the same" );
+    BOOST_TEST_FWD_1( v < l,  "check v < l has failed. \nMismatch at position 2: 3 >= 2" );
+    BOOST_TEST_FWD_1( v > l,  "check v > l has failed. \nMismatch at position 1: 2 <= 3" );
+
+    BOOST_TEST_FWD_1( v <= l, "check v <= l has failed. \nMismatch at position 2: 3 > 2" );
+    BOOST_TEST_FWD_1( v >= l, "check v <= l has failed. \nMismatch at position 1: 2 < 3" );
 }
 
 //____________________________________________________________________________//

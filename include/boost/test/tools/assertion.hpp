@@ -174,35 +174,65 @@ BOOST_TEST_FOR_EACH_CONST_OP( DEFINE_CONST_OPER )
 
 namespace op_detail {
 
-template <typename OP, typename Lhs, typename Rhs>
-inline assertion_result
-compare_collections( Lhs const& lhs, Rhs const& rhs )
-{
-    assertion_result pr( true );
+template <typename Lhs, typename Rhs, typename OP>
+struct compare_collections {
+    static assertion_result
+    eval( Lhs const& lhs, Rhs const& rhs )
+    {
+        assertion_result pr( true );
 
-    if( lhs.size() != rhs.size() ) {
-        pr = false;
-        pr.message() << "Collections size mismatch: " << lhs.size() << " != " << rhs.size();
+        if( lhs.size() != rhs.size() ) {
+            pr = false;
+            pr.message() << "Collections size mismatch: " << lhs.size() << " != " << rhs.size();
+            return pr;
+        }
+
+        typename Lhs::const_iterator left  = lhs.begin();
+        typename Rhs::const_iterator right = rhs.begin();
+        std::size_t                  pos   = 0;
+
+        for( ; pos < lhs.size(); ++left, ++right, ++pos ) {
+            if( OP::eval( *left, *right ) )
+                continue;
+
+            pr = false;
+            pr.message() << "\nMismatch at position " << pos << ": "
+              << tt_detail::print_helper(*left)
+              << OP::revert()
+              << tt_detail::print_helper(*right);
+        }
+
         return pr;
     }
+};
 
-    typename Lhs::const_iterator left  = lhs.begin();
-    typename Rhs::const_iterator right = rhs.begin();
-    std::size_t                  pos   = 0;
+template <typename Lhs, typename Rhs>
+struct compare_collections<Lhs, Rhs, op::NE<typename Lhs::value_type, typename Rhs::value_type> > {
+    typedef op::NE<typename Lhs::value_type, typename Rhs::value_type> OP;
 
-    for( ; pos < lhs.size(); ++left, ++right, ++pos ) {
-        if( OP::eval( *left, *right ) )
-            continue;
+    static assertion_result
+    eval( Lhs const& lhs, Rhs const& rhs )
+    {
+        assertion_result pr( true );
+
+        if( lhs.size() != rhs.size() )
+            return pr;
+
+        typename Lhs::const_iterator left  = lhs.begin();
+        typename Rhs::const_iterator right = rhs.begin();
+        typename Lhs::const_iterator end   = lhs.end();
+
+        for( ; left != end; ++left, ++right ) {
+            if( OP::eval( *left, *right ) )
+                return pr;
+        }
 
         pr = false;
-        pr.message() << "\nMismatch at position " << pos << ": "
-          << tt_detail::print_helper(*left)
-          << OP::revert()
-          << tt_detail::print_helper(*right);
-    }
+        pr.message() << "\nAll elements of both collections are the same";
 
-    return pr;
-}
+        return pr;
+    }
+};
 
 } // namespace op_detail
 
@@ -265,7 +295,8 @@ public:                                                             \
     {                                                               \
         typedef name<typename Lhs::value_type,                      \
                      typename Rhs::value_type> OP;                  \
-        return op_detail::compare_collections<OP>(lhs, rhs);        \
+        typedef op_detail::compare_collections<Lhs, Rhs, OP> Comp;  \
+        return Comp::eval( lhs, rhs );                              \
     }                                                               \
                                                                     \
     template<typename PrevExprType>                                 \
