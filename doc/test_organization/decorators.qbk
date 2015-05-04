@@ -47,18 +47,23 @@ In the above example, the scope of test suite `suite1` is opened three times. Th
 three test cases and associated with two __decorator_label__ decorators. Therefore running tests by label `"trivial"` 
 as well as by label `"simple"` both result in executing all three test cases from the suite.
 
+[caution The above syntax for decorators requires that the compiler supports variadic macros (added in C++11). If you intend for your 
+test program to also work for compilers without variadic macros, use explicit decorator syntax, described below.]
 
-[h3 Compatibility with older compilers]
+[h3 Explicit decorator declaration]
 
-The syntax for decorators requires that the compiler supports variadic macros (added in C++11). If you intend for your 
-test program to compile also on compilers without variadic macros, it is recommended that you use the portable syntax. 
-This syntax is summarized in the following table:
+There is another way of associating a decorator set with test units. Macro __BOOST_TEST_DECORATOR__ indicates that its set of decorators is to be applied to the test unit or /test case sequence/ that immediately follows the declaration.
+
+[bt_example decorator_00..explicit decorator declaration]
+
+In the above example a decorator is applied to a [link boost_test.users_guide.tests_organization.test_cases.test_case_generation data-driven test case]. Macro __BOOST_DATA_TEST_CASE__ cannot take the decorator set as one of its arguments, therefore the explicit decorator declaration is used. Macro __BOOST_DATA_TEST_CASE__ generates a sequence of 4 test cases. The decorator set is applied to each of them.
+
+Another use case for the explicit decorator declaration is when you intend for your test program to compile also on compilers without variadic macros. In this case it is recommended that you use the more verbose syntax. 
+It is summarized in the following table:
 
 [table
-  [[Preferred syntax][Compatible syntax]]
-  [[```
-// test case registration
-  
+  [[Test unit to register][Concise syntax][Universal syntax]]
+  [[test case][```  
 BOOST_AUTO_TEST_CASE(test_case, *decor1() *decor2())
 {
   // assertions
@@ -71,9 +76,7 @@ BOOST_AUTO_TEST_CASE(test_case)
 }
   ```]]
   
-  [[```
-// test case with fixture registration
-  
+  [[test case with fixture][```
 BOOST_FIXTURE_TEST_CASE(test_case, Fx, *decor1() *decor2())
 {
   // assertions
@@ -86,9 +89,7 @@ BOOST_FIXTURE_TEST_CASE(test_case, Fx)
 }
   ```]]
   
-  [[```
-// test suite registration
-  
+  [[test suite][```
 BOOST_AUTO_TEST_SUITE(test_suite, *decor1() *decor2())
 
   // test units
@@ -103,9 +104,7 @@ BOOST_AUTO_TEST_SUITE(test_suite)
 BOOST_AUTO_TEST_SUITE_END() 
   ```]]
   
-[[```
-// test suite with fixture registration
-  
+[[test suite with fixture][``` 
 BOOST_FIXTURE_TEST_SUITE(test_suite, Fx, *decor1() *decor2())
 
   // test units
@@ -119,9 +118,19 @@ BOOST_FIXTURE_TEST_SUITE(test_suite, Fx)
 
 BOOST_AUTO_TEST_SUITE_END() 
   ```]]
+  
+[[data-driven test case][```
+// not doable
+  ```][```
+BOOST_TEST_DECORATOR(*decor1() *decor2())
+BOOST_DATA_TEST_CASE(test_case, data, var)
+{
+  // assertions
+}
+  ```]]
 ]
 
-Throughout the reminder of this documentation we use only the preferred syntax.
+Throughout the reminder of this documentation we use only the concise syntax.
 
 [/=================================================================]
 
