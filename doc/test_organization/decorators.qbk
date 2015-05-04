@@ -128,6 +128,26 @@ BOOST_DATA_TEST_CASE(test_case, data, var)
   // assertions
 }
   ```]]
+  
+[[test case template][```
+// not doable
+  ```][```
+BOOST_TEST_DECORATOR(*decor1() *decor2())
+__BOOST_AUTO_TEST_CASE_TEMPLATE__(test_case, T, type_list)
+{
+  // assertions
+}
+  ```]]
+  
+[[test case template with fixture][```
+// not doable
+  ```][```
+BOOST_TEST_DECORATOR(*decor1() *decor2())
+BOOST_FIXTURE_TEST_CASE_TEMPLATE(test_case, T, type_list, Fx)
+{
+  // assertions
+}
+  ```]]
 ]
 
 Throughout the reminder of this documentation we use only the concise syntax.
