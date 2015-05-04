@@ -5,8 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file
-/// Defines the is_forward_iterable collection type trait
+//! @file
+//! Defines the is_forward_iterable collection type trait
 // ***************************************************************************
 
 #ifndef BOOST_TEST_IS_FORWARD_ITERABLE_HPP_110612GER
@@ -49,7 +49,7 @@ namespace unit_test {
 // **************             is_forward_iterable              ************** //
 // ************************************************************************** //
 
-#if defined(BOOST_TEST_FWD_ITERABLE_CXX03)
+#if defined(BOOST_TEST_FWD_ITERABLE_CXX03) && !defined(BOOST_TEST_DOXYGEN_DOC__)
 template<typename T>
 struct is_forward_iterable : public mpl::false_ {};
 
@@ -125,7 +125,10 @@ namespace ut_detail {
 
 } // namespace ut_detail
 
-template<typename T>
+
+/*! Indicates that a specific type implements the forward iterable concept.
+ */
+template<typename T> 
 struct is_forward_iterable  {
   typedef typename std::remove_reference<T>::type T_ref;
   typedef ut_detail::is_forward_iterable_impl<T_ref> is_fwd_it_t;

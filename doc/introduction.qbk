@@ -57,11 +57,7 @@ The __UTF__ design is based on above rationale and provides versatile facilities
 * Organize test cases into a [link boost_test.users_guide.tests_organization test tree].
 * Relieve you from messy error detection, reporting duties and framework runtime parameters processing.
 
-The __UTF__ is intended to be used both for a simple and non trivial testing. It is not intended to be used
-with production code, but some of the Boost.Test interfaces can be, including ... 
-
-[warning TOFIX]
-
+The __UTF__ is intended to be used both for a simple and non trivial testing. 
 
 [/ ##################################################################### ]
 [section:5min_starter The 5min starter guide]
