@@ -10,10 +10,15 @@
 #include <boost/test/included/unit_test.hpp>
 #include <sstream>
 
-BOOST_AUTO_TEST_CASE( test_floating_points )
+BOOST_AUTO_TEST_CASE( test_compound1 )
 {
-  namespace tt = boost::test_tools;
-  int a = 13;
-  BOOST_TEST(float(a) == float(a + 1), tt::tolerance<float>( 1./13 ));
+  int a = 13, b = 1, c = 12;
+  BOOST_TEST(a - b == c);
+  BOOST_TEST(a == b + 12 == c + 1);
+  BOOST_TEST(a == b + 12);
+  BOOST_TEST(b + 12 == c + 1);
+
+  BOOST_TEST(a == b + 12 == true);
+  BOOST_TEST(a == b + 11 == false);
 }
 //]

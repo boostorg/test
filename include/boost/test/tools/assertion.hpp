@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision: 74663 $
-//
-//  Description : defines framework for automated assertion construction
+//!@file
+//!@brief Defines framework for automated assertion construction
 // ***************************************************************************
 
 #ifndef BOOST_TEST_TOOLS_ASSERTION_HPP_100911GER

@@ -19,4 +19,11 @@ BOOST_AUTO_TEST_CASE( test_basic_operations )
   BOOST_TEST(b >= a);
   BOOST_TEST(!(b >= b + 1));
 }
+
+BOOST_AUTO_TEST_CASE( test_logical_not_allowed )
+{
+  BOOST_TEST(true);
+  // UTF prevents the compilation
+  // BOOST_TEST(true && true);
+}
 //]

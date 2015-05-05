@@ -39,14 +39,46 @@ As their name suggests these assertions are, in order, for /requirement/, /check
 
 [section:acceptable_statements Acceptable statements]
 
-The __BOOST_TEST__ assertion uses some tricks with C++ operator overloading in order to perform its magic. This is why some expressions 
-are in fact not possible, such as:
+The __BOOST_TEST__ assertion uses some tricks with C++ operator overloading in order to perform its magic. This implementation
+gives flexibility to __BOOST_TEST__ at the cost of narrowing the supported statements. The unsupported statements are:
 
 * statements containing ternary conditions: those statement should be surrounded by parenthesis as they cannot be overloaded
 * statements containing comas: those statements will be intercepted by the preprocessor
-* compound statements containing more than one sequence point
-
+* compound statements containing any logical composition `||`, `&&`
+  
 [bt_example boost_test_macro1..BOOST_TEST acceptable expressions]
+
+An expression chain [footnote which *differs* from an expression tree] is constructed from the statement. 
+The chain is built from left to right, combining one binary operation with two operands. The following statements
+
+``
+BOOST_TEST(a op1 b op2 c op3 d);
+``
+
+# evaluates first `r1` as "`a op1 b`" and determines the resulting type `t1`
+# evaluates then `r2` as "`r1 op2 c`" and determines its type
+# etc.
+
+All in all, the statement above is seen as 
+
+  ((a op1 b) op2 c) op3 d
+
+which makes the following statement perfectly valid
+
+``
+  a == 12 == 42 == b
+``
+
+but might not have the desired effect: For instance the result of "`a == 12`" would be `bool`, which in turn evaluates 
+"`bool (true or false) == 42`".
+
+[bt_example boost_test_macro2..BOOST_TEST compound statements]
+
+The supported operations may be any of the binary overloadable operations in C++, except logical AND and OR, and COMA:
+  
+* binary comparisons: `==`, `!=`, `<`, `>`, `<=`, `>=`
+* arithmetic and bitwise compositions: `+`, `-`, `*`, `/`, `%`, `|`, `&`, `^`, `<<`, `>>`
+* assignements: `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `<<=`, `>>=`, `&=`, `^=`, `|=`
 
 [endsect] [/ acceptable expressions]
 
