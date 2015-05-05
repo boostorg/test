@@ -192,14 +192,16 @@ struct compare_collections {
         std::size_t                  pos   = 0;
 
         for( ; pos < lhs.size(); ++left, ++right, ++pos ) {
-            if( OP::eval( *left, *right ) )
+            assertion_result const ar = OP::eval( *left, *right );
+            if( ar )
                 continue;
 
             pr = false;
             pr.message() << "\nMismatch at position " << pos << ": "
-              << tt_detail::print_helper(*left)
-              << OP::revert()
-              << tt_detail::print_helper(*right);
+                         << tt_detail::print_helper(*left)
+                         << OP::revert()
+                         << tt_detail::print_helper(*right)
+                         << ". " << ar.message();
         }
 
         return pr;
@@ -228,7 +230,7 @@ struct compare_collections<Lhs, Rhs, op::NE<typename Lhs::value_type, typename R
         }
 
         pr = false;
-        pr.message() << "\nAll elements of both collections are the same";
+        pr.message() << "\nAll elements are matching";
 
         return pr;
     }
@@ -416,9 +418,9 @@ public:                                                             \
                                                                     \
     template<typename PrevExprType>                                 \
     static void                                                     \
-    report( std::ostream& ostr,                                     \
+    report( std::ostream&       ostr,                               \
             PrevExprType const& lhs,                                \
-            Rhs const& rhs )                                        \
+            Rhs const&          rhs )                               \
     {                                                               \
         lhs.report( ostr );                                         \
         ostr << revert()                                            \
