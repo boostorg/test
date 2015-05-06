@@ -1,0 +1,11 @@
+//[example_output
+> ./boost_test_macro_container_value_type --log_level=all
+Running 1 test case...
+Entering test module "boost_test_sequence_value_t"
+boost_test_macro_container_value_type.cpp:15: Entering test case "test_collections_maps"
+Test case test_collections_maps did not check any assertions
+boost_test_macro_container_value_type.cpp:15: Leaving test case "test_collections_maps"; testing time: 128mks
+Leaving test module "boost_test_sequence_value_t"; testing time: 331mks
+
+*** No errors detected
+//]

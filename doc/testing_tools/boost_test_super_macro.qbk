@@ -39,48 +39,131 @@ As their name suggests these assertions are, in order, for /requirement/, /check
 
 [section:acceptable_statements Acceptable statements]
 
-The __BOOST_TEST__ assertion uses some tricks with C++ operator overloading in order to perform its magic. This is why some expressions 
-are in fact not possible, such as:
+The __BOOST_TEST__ assertion uses some tricks with C++ operator overloading in order to perform its magic. This implementation
+gives flexibility to __BOOST_TEST__ at the cost of narrowing the supported statements. The unsupported statements are:
 
 * statements containing ternary conditions: those statement should be surrounded by parenthesis as they cannot be overloaded
 * statements containing comas: those statements will be intercepted by the preprocessor
-* compound statements containing more than one sequence point
-
+* compound statements containing any logical composition `||`, `&&`
+  
 [bt_example boost_test_macro1..BOOST_TEST acceptable expressions]
+
+An expression chain [footnote which *differs* from an expression tree] is constructed from the statement. 
+The chain is built from left to right, combining one binary operation with two operands. The following statements
+
+``
+BOOST_TEST(a op1 b op2 c op3 d);
+``
+
+# evaluates first `r1` as "`a op1 b`" and determines the resulting type `t1`
+# evaluates then `r2` as "`r1 op2 c`" and determines its type
+# etc.
+
+All in all, the statement above is seen as 
+
+  ((a op1 b) op2 c) op3 d
+
+which makes the following statement perfectly valid
+
+``
+  a == 12 == 42 == b
+``
+
+but might not have the desired effect: For instance the result of "`a == 12`" would be `bool`, which in turn evaluates 
+"`bool (true or false) == 42`".
+
+[bt_example boost_test_macro2..BOOST_TEST compound statements]
+
+The supported operations may be any of the binary overloadable operations in C++, except logical AND and OR, and COMA:
+  
+* binary comparisons: `==`, `!=`, `<`, `>`, `<=`, `>=`
+* arithmetic and bitwise compositions: `+`, `-`, `*`, `/`, `%`, `|`, `&`, `^`, `<<`, `>>`
+* assignements: `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `<<=`, `>>=`, `&=`, `^=`, `|=`
 
 [endsect] [/ acceptable expressions]
 
-[section:collections Collection comparison]
 
-__BOOST_TEST__ automatically detects [link what_is_a_collection /collections/] of elements and provides additional diagnostics in case of failure. 
-Collections are compared using a specified operator, applied /in sequence/ on each element of both collections.
-The sequence of comparisons is provided by the iterators of the respective collections. 
-In case of failure, the indices of the elements for which the comparison fails are returned.
+[/ ################################################ ]
+[section:collections Sequences comparison]
 
-In order for the collections to be comparable, they should have the same number of elements. The comparison is made over
-all the elements returned by the collections iterators. The comparison used is the one in the
- __BOOST_TEST__ statement (`==`, `<` ...).
+Instead of comparing one singular value against another, there is often the need to compare /sequences/ of values. 
+Most of the time, the test for the full sequences is achieves through loops.
 
-[caution The type returned by the dereference of the iterator should support the specified comparison.]
+__BOOST_TEST__ automatically detects [link what_is_a_sequence /containers/] that provide sequences of elements.
+Let's `c_a = (a_1,... a_n)` and `c_b = (b_1,... b_n)` be two containers of same size, but not necessarily of same type, and 
+let `op` be one of the [link boost_test.users_guide.testing_tools.boost_test_super_macro.acceptable_statements binary comparison operators].
 
-[bt_example boost_test_macro_collections..BOOST_TEST collection comparison support]
+``
+BOOST_TEST(c_a op c_b)
+``
 
-[#what_is_a_collection][h3 What is a collection?]
-A collection is a sequence of elements (C++11):
+is equivalent to
+
+``
+bool result(c_a.size() == c_b.size());
+if(result) 
+{
+  for(int i=0; i < c_a.size(); i++)
+  {
+    __BOOST_TEST_CONTEXT__("index" << i);
+    result &= a_i op b_i;
+  }
+}
+BOOST_TEST(result);
+``
+
+[warning this is fondamentally different from using the containers' overloaded comparison operators, such as 
+ ``bool operator==;``
+ The *default* behaviour of __BOOST_TEST__ is to compare elements by elements, in order, the containers in operands. If a test
+ of an overloaded operator `comp` is needed, the following syntax *with additional parenthesis* should be used
+ 
+ ``BOOST_TEST((c_a comp c_b))``
+ ]
+
+Sequences are compared using the specified operator `op`, evaluated on the left and right elements of the respective sequences,
+/in order/.
+The order of elements is given by the iterators of the respective containers [footnote the containers should yield the same
+sequences for a fixed set of elements they contain]. 
+In case of failure, the indices of the elements failing `op` are returned.
+
+[bt_example boost_test_macro_sequence..BOOST_TEST sequence comparison]
+
+[h3 Requirements]
+For the sequences to be comparable with __BOOST_TEST__, it is required 
+
+* that they should have the same number of elements
+* `op` should be one of the comparison operator `==`, `!=`, `<`, `<=`, `>`, `>=`
+* the `a_i op b_i` should be defined, where the type of `a_i` and `b_i` are the type returned by the dereference operator
+  of the respective collections:  
+  [bt_example boost_test_macro_container_value_type..BOOST_TEST comparison defined on elements]
+
+[caution the resulting type of "`c_a == c_b`" is an [classref boost::test_tools::assertion_result assertion_result]. It is not
+ possible to compose more that one comparison on the __BOOST_TEST__ statement:
+ 
+ `` 
+   __BOOST_TEST__(c_a == c_b == 42); // does not compile
+ ``]
+
+[#what_is_a_sequence][h3 What is a sequence?]
+A sequence is given by the iteration over a /forward iterable/ container. A forward iterable container is a container (C++11):
 
 * that implements the member functions `size` and `begin`, as well as the fields `const_iterator` and `value_type`
 * and for which `value_type` is not of type `char` or `wchar_t`
 
-To that respect, C-arrays are *not* collections.
+To that respect, C-arrays are *not* forward iterable containers:
+[bt_example boost_test_macro_container_c_array..BOOST_TEST C-arrays]
 
-The detection of the collection is delegated to the class [classref boost::unit_test::is_forward_iterable], which for C++11
-detects the required member functions and fields. However for C++03, the types being collections should be explicitly indicated
-to the __UTF__ by a specialization of [classref boost::unit_test::is_forward_iterable]. 
 
-Standard containers of the `STL` are recognised as collections. 
+The detection of the containers is delegated to the class [classref boost::unit_test::is_forward_iterable], which for C++11
+detects the required member functions and fields. However for C++03, the types providing the sequences should be explicitly indicated
+to the __UTF__ by a specialization of [classref boost::unit_test::is_forward_iterable]
+[footnote Standard containers of the `STL` are recognised as collections.]. 
 
-[endsect] [/ collections]
+[endsect] [/ sequences]
 
+
+
+[/ ################################################ ]
 [section:strings String comparison]
 In the general case, pointers are compared using their value. However when type of the the pointers are `char*` or `wchar_t*`, 
 __BOOST_TEST__ promotes them as null terminated `char` arrays and string comparison is used instead. 

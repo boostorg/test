@@ -6,24 +6,22 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 //[example_code
-#define BOOST_TEST_MODULE boost_test_macro1
+#define BOOST_TEST_MODULE boost_test_sequence_value_t
 #include <boost/test/included/unit_test.hpp>
 #include <sstream>
+#include <map>
+#include <vector>
 
-BOOST_AUTO_TEST_CASE( test_basic_operations )
+BOOST_AUTO_TEST_CASE( test_collections_maps )
 {
-  int a = 1;
-  int b = 1;
-  BOOST_TEST(a == b);
-  BOOST_TEST(a < b + 1);
-  BOOST_TEST(b >= a);
-  BOOST_TEST(!(b >= b + 1));
-}
-
-BOOST_AUTO_TEST_CASE( test_logical_not_allowed )
-{
-  BOOST_TEST(true);
-  // UTF prevents the compilation
-  // BOOST_TEST(true && true);
+  std::map<int, int> a;
+  std::map<long, int> b;
+  
+  a[0] = 1; 
+  b[0] = 1; 
+  
+  // std::map<int, int>::iterator::reference does not 
+  // implement operator== out of the box.
+  // BOOST_TEST(a == b);
 }
 //]

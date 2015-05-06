@@ -6,24 +6,16 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 //[example_code
-#define BOOST_TEST_MODULE boost_test_macro1
+#define BOOST_TEST_MODULE boost_test_container_c
 #include <boost/test/included/unit_test.hpp>
 #include <sstream>
+#include <map>
+#include <vector>
 
-BOOST_AUTO_TEST_CASE( test_basic_operations )
+BOOST_AUTO_TEST_CASE( test_collections_not_on_c_arrays )
 {
-  int a = 1;
-  int b = 1;
+  int a[] = {1, 2, 3};
+  int b[] = {1, 5, 3, 4};
   BOOST_TEST(a == b);
-  BOOST_TEST(a < b + 1);
-  BOOST_TEST(b >= a);
-  BOOST_TEST(!(b >= b + 1));
-}
-
-BOOST_AUTO_TEST_CASE( test_logical_not_allowed )
-{
-  BOOST_TEST(true);
-  // UTF prevents the compilation
-  // BOOST_TEST(true && true);
 }
 //]
