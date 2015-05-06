@@ -126,7 +126,7 @@ The order of elements is given by the iterators of the respective containers [fo
 sequences for a fixed set of elements they contain]. 
 In case of failure, the indices of the elements failing `op` are returned.
 
-[bt_example boost_test_macro_collections..BOOST_TEST sequence comparison]
+[bt_example boost_test_macro_sequence..BOOST_TEST sequence comparison]
 
 [h3 Requirements]
 For the sequences to be comparable with __BOOST_TEST__, it is required 
@@ -140,7 +140,7 @@ For the sequences to be comparable with __BOOST_TEST__, it is required
 [caution the resulting type of "`c_a == c_b`" is an [classref boost::test_tools::assertion_result assertion_result]. It is not
  possible to compose more that one comparison on the __BOOST_TEST__ statement:
  
- ``
+ `` 
    __BOOST_TEST__(c_a == c_b == 42); // does not compile
  ``]
 
