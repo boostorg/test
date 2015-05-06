@@ -174,17 +174,78 @@ BOOST_TEST_FOR_EACH_CONST_OP( DEFINE_CONST_OPER )
 
 namespace op_detail {
 
+template <typename OP, bool can_be_equal, bool prefer_shorter, 
+          typename Lhs, typename Rhs>
+inline assertion_result
+lexicographic_compare( Lhs const& lhs, Rhs const& rhs )
+{
+    assertion_result ar( true );
+
+    typename Lhs::const_iterator first1 = lhs.begin();
+    typename Rhs::const_iterator first2 = rhs.begin();
+    typename Lhs::const_iterator last1  = lhs.end();
+    typename Rhs::const_iterator last2  = rhs.end();
+    std::size_t                  pos    = 0;
+
+    for( ; (first1 != last1) && (first2 != last2); ++first1, ++first2, ++pos ) {
+        assertion_result const& element_ar = OP::eval(*first1, *first2);
+        if( !can_be_equal && element_ar )
+            return ar; // a < b
+
+        assertion_result const& reverse_ar = OP::eval(*first2, *first1);
+        if( element_ar && !reverse_ar )                     
+            return ar; // a<=b and !(b<=a) => a < b => return true
+        
+        if( element_ar || !reverse_ar ) 
+            continue; // (a<=b and b<=a) or (!(a<b) and !(b<a)) => a == b => keep looking                   
+
+        // !(a<=b) and b<=a => b < a => return false            
+        ar = false;
+        ar.message() << "\nFailure at position " << pos << ": "
+                     << tt_detail::print_helper(*first1)
+                     << OP::revert()
+                     << tt_detail::print_helper(*first2)
+                     << ". " << element_ar.message();
+        return ar;
+    }
+
+    
+    if( first1 != last1 ) {
+        if( prefer_shorter ) {
+            ar = false;
+            ar.message() << "\nFirst collection has extra trailing elements.";
+        }
+    }
+    else if( first2 != last2 ) {
+        if( !prefer_shorter ) {
+            ar = false;
+            ar.message() << "\nSecond collection has extra trailing elements.";
+        }
+    }
+    else if( !can_be_equal ) {
+        ar = false;
+        ar.message() << "\nCollections appear to be equal.";
+    }
+
+    return ar;
+}
+
 template <typename Lhs, typename Rhs, typename OP>
-struct compare_collections {
+struct compare_collections;
+
+template <typename Lhs, typename Rhs>
+struct compare_collections<Lhs, Rhs, op::EQ<typename Lhs::value_type, typename Rhs::value_type> > {
+    typedef op::EQ<typename Lhs::value_type, typename Rhs::value_type> OP;
+
     static assertion_result
     eval( Lhs const& lhs, Rhs const& rhs )
     {
-        assertion_result pr( true );
+        assertion_result ar( true );
 
         if( lhs.size() != rhs.size() ) {
-            pr = false;
-            pr.message() << "Collections size mismatch: " << lhs.size() << " != " << rhs.size();
-            return pr;
+            ar = false;
+            ar.message() << "Collections size mismatch: " << lhs.size() << " != " << rhs.size();
+            return ar;
         }
 
         typename Lhs::const_iterator left  = lhs.begin();
@@ -192,19 +253,19 @@ struct compare_collections {
         std::size_t                  pos   = 0;
 
         for( ; pos < lhs.size(); ++left, ++right, ++pos ) {
-            assertion_result const ar = OP::eval( *left, *right );
-            if( ar )
+            assertion_result const element_ar = OP::eval( *left, *right );
+            if( element_ar )
                 continue;
 
-            pr = false;
-            pr.message() << "\nMismatch at position " << pos << ": "
+            ar = false;
+            ar.message() << "\nMismatch at position " << pos << ": "
                          << tt_detail::print_helper(*left)
                          << OP::revert()
                          << tt_detail::print_helper(*right)
-                         << ". " << ar.message();
+                         << ". " << element_ar.message();
         }
 
-        return pr;
+        return ar;
     }
 };
 
@@ -215,10 +276,10 @@ struct compare_collections<Lhs, Rhs, op::NE<typename Lhs::value_type, typename R
     static assertion_result
     eval( Lhs const& lhs, Rhs const& rhs )
     {
-        assertion_result pr( true );
+        assertion_result ar( true );
 
         if( lhs.size() != rhs.size() )
-            return pr;
+            return ar;
 
         typename Lhs::const_iterator left  = lhs.begin();
         typename Rhs::const_iterator right = rhs.begin();
@@ -226,13 +287,57 @@ struct compare_collections<Lhs, Rhs, op::NE<typename Lhs::value_type, typename R
 
         for( ; left != end; ++left, ++right ) {
             if( OP::eval( *left, *right ) )
-                return pr;
+                return ar;
         }
 
-        pr = false;
-        pr.message() << "\nAll elements are matching";
+        ar = false;
+        ar.message() << "\nCollections appear to be equal";
 
-        return pr;
+        return ar;
+    }
+};
+
+template <typename Lhs, typename Rhs>
+struct compare_collections<Lhs, Rhs, op::LT<typename Lhs::value_type, typename Rhs::value_type> > {
+    typedef op::LT<typename Lhs::value_type, typename Rhs::value_type> OP;
+
+    static assertion_result
+    eval( Lhs const& lhs, Rhs const& rhs )
+    {
+        return op_detail::lexicographic_compare<OP, false, true>( lhs, rhs );
+    }
+};
+
+template <typename Lhs, typename Rhs>
+struct compare_collections<Lhs, Rhs, op::LE<typename Lhs::value_type, typename Rhs::value_type> > {
+    typedef op::LE<typename Lhs::value_type, typename Rhs::value_type> OP;
+
+    static assertion_result
+    eval( Lhs const& lhs, Rhs const& rhs )
+    {
+        return op_detail::lexicographic_compare<OP, true, true>( lhs, rhs );
+    }
+};
+
+template <typename Lhs, typename Rhs>
+struct compare_collections<Lhs, Rhs, op::GT<typename Lhs::value_type, typename Rhs::value_type> > {
+    typedef op::GT<typename Lhs::value_type, typename Rhs::value_type> OP;
+
+    static assertion_result
+    eval( Lhs const& lhs, Rhs const& rhs )
+    {
+        return op_detail::lexicographic_compare<OP, false, false>( lhs, rhs );
+    }
+};
+
+template <typename Lhs, typename Rhs>
+struct compare_collections<Lhs, Rhs, op::GE<typename Lhs::value_type, typename Rhs::value_type> > {
+    typedef op::GE<typename Lhs::value_type, typename Rhs::value_type> OP;
+
+    static assertion_result
+    eval( Lhs const& lhs, Rhs const& rhs )
+    {
+        return op_detail::lexicographic_compare<OP, true, false>( lhs, rhs );
     }
 };
 

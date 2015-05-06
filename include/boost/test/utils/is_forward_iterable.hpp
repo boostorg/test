@@ -75,10 +75,8 @@ struct is_forward_iterable< std::set<K, C, A> > : public mpl::true_ {};
 
 namespace ut_detail {
 
-
   template<typename T>
   struct is_present : public mpl::true_ {};
-
 
   // some compiler do not implement properly decltype non expression involving members (eg. VS2013)
   // a workaround is to use -> decltype syntax.
@@ -103,6 +101,15 @@ namespace ut_detail {
     static bool const value = !std::is_same< decltype(test<T>(nullptr)), nil_t>::value;
   };
 
+  template <class T>
+  struct has_member_end {
+  private:
+    struct nil_t {};
+    template<typename U>  static auto  test(U*) -> decltype( boost::declval<U>().end() );
+    template<typename>    static nil_t test(...);
+  public:
+    static bool const value = !std::is_same< decltype(test<T>(nullptr)), nil_t>::value;
+  };
 
   template <class T, class enabled = void>
   struct is_forward_iterable_impl : std::false_type
@@ -116,6 +123,7 @@ namespace ut_detail {
       is_present<typename T::value_type>::value &&
       has_member_size<T>::value &&
       has_member_begin<T>::value &&
+      has_member_end<T>::value &&
       !is_same<typename remove_cv<typename T::value_type>::type,char>::value &&
       !is_same<typename remove_cv<typename T::value_type>::type,wchar_t>::value
       >::type

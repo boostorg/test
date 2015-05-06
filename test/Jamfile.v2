@@ -25,7 +25,6 @@ rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file * : source
               <toolset>gcc:<cxxflags>-Wno-long-long
               <toolset>borland:<cxxflags>-w-8080
               <toolset>borland:<cxxflags>-w-8084
-              <toolset>msvc-6.5:<link>static
               <toolset>msvc-8.0:<define>_SCL_SECURE_NO_DEPRECATE
               <toolset>clang:<cxxflags>-Wno-c99-extensions
               <toolset>clang:<cxxflags>-Wno-variadic-macros
@@ -56,7 +55,6 @@ rule test-btl-lib-c11 ( test-rule : test-name : lib-name ? : pattern_file * : so
               <toolset>gcc-4.9:<cxxflags>-std=c++11
               <toolset>borland:<cxxflags>-w-8080
               <toolset>borland:<cxxflags>-w-8084
-              <toolset>msvc-6.5:<link>static
               <toolset>msvc-8.0:<define>_SCL_SECURE_NO_DEPRECATE
               <toolset>clang:<cxxflags>-Wno-c99-extensions
               <toolset>clang:<cxxflags>-Wno-variadic-macros
@@ -116,6 +114,7 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : errors_handling_test         : boost_unit_test_framework : test_files/errors_handling_test.pattern 
                                                                                           test_files/errors_handling_test.pattern2 ]
           [ test-btl-lib run : single_header_test ]
+          [ test-btl-lib-c11 run : test_collection_comparison : boost_unit_test_framework ]
           [ test-btl-lib run-fail : minimal_test ]
           [ test-btl-lib run : foreach_test ]
           [ test-btl-lib run : test_windows_headers         : boost_unit_test_framework ]
