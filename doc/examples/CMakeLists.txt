@@ -30,6 +30,9 @@ set(EXAMPLES_VARIADIC_MACROS_SRC
     boost_test_macro_float.cpp
     boost_test_macro_float2.cpp
     boost_test_macro_message.cpp
+    boost_test_macro_container_c_array.cpp
+    boost_test_macro_container_float.cpp
+    boost_test_macro_container_value_type.cpp
     )
     
 if(CMAKE_CXX_COMPILER_ID STREQUAL Clang)
