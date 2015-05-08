@@ -15,21 +15,7 @@ BOOST_AUTO_TEST_CASE( test_collections_vectors_floats )
   std::vector<float> a{0.1f, 0.2f, 0.3f};
   std::vector<double> b{0.11, 0.2, 0.29};
   
-  //BOOST_TEST(a == b); // nok: a[0] != b[0]
-  BOOST_TEST(a == b, 100.f % boost::test_tools::tolerance()); // not working
+  BOOST_TEST(a == b, 10. % boost::test_tools::tolerance()); // not working
 }
 
-#if 0
-BOOST_AUTO_TEST_CASE( test_collections_vectors2 )
-{
-  std::vector<int> a(3);
-  std::vector<long> b(3);
-  
-  a[0] = 1; a[1] = 2; a[2] = 3;
-  b[0] = 1; b[1] = 5; b[2] = 3;
-  BOOST_TEST(a == b); // nok: a[1] != b[1]
-  BOOST_TEST(a != b); // nok: a[0] == b[0] ...
-  BOOST_TEST(a == b == true); // ok
-}
-#endif
 //]
