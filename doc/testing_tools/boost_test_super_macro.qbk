@@ -172,15 +172,8 @@ __BOOST_TEST__ promotes them as null terminated `char` arrays and string compari
 
 [endsect] [/ string]
 
-[section:options Options to `BOOST_TEST`]
 
-The __BOOST_TEST__ assertion can be enriched with more control about the test or the diagnostic. In particular:
-
-* an optional message, printed in case of failure and in place of the default message, can be added. 
-* tags can be added in order to have a more detailed diagnostic. Currently only the bitwise comparison tag is available
-* floating point tolerances can be controlled
-
-
+[/ ################################################ ]
 [section:option_message Optional failure message]
 
 When an assertion fails, a message is logged containing:
@@ -220,7 +213,7 @@ Sometimes these information are not informative enough.
 [endsect] [/ message]
 
 
-
+[/ ################################################ ]
 [section:bitwise Bitwise comparison]
 
 [caution this feature is not available for non C++11 compilers (the extended diagnostic is disabled).]
@@ -237,7 +230,7 @@ gives extended information on the locations where the two operands do not match.
 [endsect] [/ bit sequences]
 
 
-
+[/ ################################################ ]
 [section:floating_point Floating point comparison]
 
 [caution this feature is not available for non C++11 compilers (requires variadic macros and support of `auto` and `decltype`).
@@ -257,7 +250,5 @@ in /percentage/ using `operator%` of this tolerance object, as in the examples b
 
 [endsect] [/ floating points]
 
-
-[endsect] [/ options to boost_test]
 
 [endsect] [/ boost_test_super_macro]
