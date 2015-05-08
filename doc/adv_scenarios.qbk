@@ -36,6 +36,7 @@ are not sufficient for your purposes.
 
 [/ build and link with boost.test]
 [include adv_scenarios/building_and_linking.qbk]
+[include adv_scenarios/customizing_key_components.qbk]
 
 [/=============================================================================]
 

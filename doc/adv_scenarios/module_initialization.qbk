@@ -30,10 +30,10 @@ The argument against the implementation of a custom ['module initialization] are
 * If the test module is old and the need for ['module initialization] is just driven by legacy code, then considering updating this
   part might be a good choice.
   
-From the points above, if the need for ['module initialization] is not there anymore, then you may jump directly 
-to the [link boost_test.adv_scenarios.build_lib.module_initialization.module_initialisation_automated automated section] directly.
+From the points above, if the need for ['module initialization] is not there any-more, then you may jump directly 
+to the [link boost_test.adv_scenarios.customizing_key_components.module_initialization.module_initialisation_automated automated section] directly.
 
-[section Custom module initialisation]
+[section:custom_module_init Custom module initialisation]
 
 [heading A bit of history]
 Original design of the __UTF__ supported the manual test tree construction only. Later versions introduced the
@@ -41,7 +41,7 @@ automated registration of test units. In later versions of the __UTF__ the origi
 specification became inconvenient and unnecessary unsafe, and the alternative initialization function specification
 was introduced. This change is not backward compatible. 
 
-These initialisation functions are refered to as [*legacy] and [*alternative/simplified] respectively.
+These initialisation functions are referred to as [*legacy] and [*alternative/simplified] respectively.
 
 * The test runners supplied with the static library and
   single-header variants of the __UTF__ by default still require original/legacy initialization function, but
