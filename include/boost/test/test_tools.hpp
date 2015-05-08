@@ -45,6 +45,8 @@
 
 #  include <boost/test/tools/detail/bitwise_manip.hpp>
 #  include <boost/test/tools/detail/tolerance_manip.hpp>
+#  include <boost/test/tools/detail/per_element_manip.hpp>
+#  include <boost/test/tools/detail/lexicographic_manip.hpp>
 #endif
 
 #if !BOOST_PP_VARIADICS || ((__cplusplus >= 201103L) && defined(BOOST_NO_CXX11_VARIADIC_MACROS))

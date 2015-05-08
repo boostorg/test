@@ -38,7 +38,7 @@ extern "C" {
 #ifdef BOOST_WINDOWS
 __declspec(dllexport)
 #endif
- bool
+bool
 init_unit_test()
 {
     framework::master_test_suite().p_name.value = "Test runner test";

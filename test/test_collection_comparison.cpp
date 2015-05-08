@@ -15,7 +15,8 @@
 // Boost.Test
 #define BOOST_TEST_MODULE Test collection`s comparisons
 #include <boost/test/unit_test.hpp>
-namespace tt=boost::test_tools;
+namespace tt = boost::test_tools;
+namespace ut = boost::unit_test;
 
 #define VALIDATE_OP( op )                           \
 {                                                   \
@@ -39,7 +40,7 @@ validate_comparisons(Col const& c1, Col const& c2 )
     VALIDATE_OP( >= )
 }
 
-BOOST_AUTO_TEST_CASE( test2 )
+BOOST_AUTO_TEST_CASE( test_against_overloaded_comp_op )
 {
     std::vector<int> a{1, 2, 3};
     std::vector<int> b{1, 3, 2};
@@ -52,6 +53,86 @@ BOOST_AUTO_TEST_CASE( test2 )
         validate_comparisons(a, c);
     BOOST_TEST_CONTEXT( "validating comparisons of a and d" )
         validate_comparisons(a, d);
+}
+
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_per_element_eq, * ut::expected_failures(2) )
+{
+    std::vector<int> a{1, 2, 3};
+    std::vector<int> b{1, 3, 2};
+
+    BOOST_TEST( a == b, tt::per_element() );
+}
+
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_per_element_ne, * ut::expected_failures(1) )
+{
+    std::vector<int> a{1, 2, 3};
+    std::vector<int> b{1, 3, 2};
+
+    BOOST_TEST( a != b, tt::per_element() );
+}
+
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_per_element_lt, * ut::expected_failures(2) )
+{
+    std::vector<int> a{1, 2, 3};
+    std::vector<int> b{1, 3, 2};
+
+    BOOST_TEST( a < b, tt::per_element() );
+}
+
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_per_element_ge, * ut::expected_failures(1) )
+{
+    std::vector<int> a{1, 2, 3};
+    std::vector<int> b{1, 3, 2};
+
+    BOOST_TEST( b >= a, tt::per_element() );
+}
+
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_lexicographic_lt )
+{
+    std::vector<int> a{1, 2, 3};
+    std::vector<int> b{1, 3, 2};
+
+    BOOST_TEST( a < b, tt::lexicographic() );
+}
+
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_lexicographic_le )
+{
+    std::vector<int> a{1, 2, 3};
+    std::vector<int> b{1, 3, 2};
+
+    BOOST_TEST( a <= b, tt::lexicographic() );
+}
+
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_lexicographic_gt )
+{
+    std::vector<int> a{1, 2, 3};
+    std::vector<int> b{1, 3, 2};
+
+    BOOST_TEST( b > a, tt::lexicographic() );
+}
+
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_lexicographic_ge )
+{
+    std::vector<int> a{1, 2, 3};
+    std::vector<int> b{1, 3, 2};
+
+    BOOST_TEST( b >= a, tt::lexicographic() );
 }
 
 //____________________________________________________________________________//
