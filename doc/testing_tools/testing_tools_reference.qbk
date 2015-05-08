@@ -152,7 +152,7 @@
 ``
   BOOST_TEST(statement);
   
-  // Prints a failure message, requires variadic macros
+  // replacement failure message, requires variadic macros
   BOOST_TEST(statement, "failure message");
   
   // Floating point comparison, requires variadic macros, auto and decltype
@@ -160,21 +160,40 @@
   
   // bitwise comparison, requires variadic macros, auto and decltype
   BOOST_TEST(statement, boost::test_tools::bitwise);
+
+  // element-wise comparison, for containers
+  BOOST_TEST(statement, boost::test_tools::per_element);
+  
+  // element-wise comparison, for containers
+  BOOST_TEST(statement, boost::test_tools::lexicographic);
+  
+  
+
 ``
 
 The full documentation of this macro is located [link boost_test.users_guide.testing_tools.boost_test_super_macro here].
 
-* `"failure message"` is a C-string printed in case of failure. See [link boost_test.users_guide.testing_tools.boost_test_super_macro.option_message this section] for 
+* `"failure message"` is a C-string printed in case of failure in place of the default message. 
+  See [link boost_test.users_guide.testing_tools.boost_test_super_macro.option_message this section] for 
   more details.
-* `floating_point_comparison_manipulation` is one of the floating point comparison manipulators. See [link boost_test.users_guide.testing_tools.boost_test_super_macro.floating_point this section]
+* `floating_point_comparison_manipulation` is one of the floating point comparison manipulators. 
+  See [link boost_test.users_guide.testing_tools.boost_test_super_macro.floating_point this section]
    for more details.
 * [classref boost::test_tools::bitwise] is a manipulator indicating that the comparison should be performed bitwise. See 
   [link boost_test.users_guide.testing_tools.boost_test_super_macro.bitwise this section] for more details
 * [classref boost::test_tools::bitwise] is a manipulator indicating that the comparison should be performed bitwise. See 
   [link boost_test.users_guide.testing_tools.boost_test_super_macro.bitwise this section] for more details
+* [classref boost::test_tools::per_element] is a manipulator indicating that the comparison should be performed on each element, in sequence, rather
+  than on containers. See 
+  [link boost_test.users_guide.testing_tools.boost_test_super_macro.bitwise this section] for more details
+  [warning FIXIT]
+* [classref boost::test_tools::lexicographic] is a manipulator indicating that the comparison should be performed with the lexicographical order. See 
+  [link boost_test.users_guide.testing_tools.boost_test_super_macro.bitwise this section] for more details
+  [warning FIXIT]
 
 [h3 Restrictions on the acceptable statements]
-There are some restrictions on the supported statements. Those are explained [link boost_test.users_guide.testing_tools.boost_test_super_macro.acceptable_statements here].
+There are some restrictions on the supported statements. Those are explained in details in
+[link boost_test.users_guide.testing_tools.boost_test_super_macro.acceptable_statements this] section.
 
 [endsect]
 
