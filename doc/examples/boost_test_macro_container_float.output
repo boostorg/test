@@ -1,11 +1,15 @@
-Running 2 test cases...
+//[example_output
+> ./boost_test_sequence_float --log_level=all
+Running 1 test case...
+Entering test module "boost_test_sequence_float"
+/Users/raffi/Personnel/boost_github/libs/test/doc/examples/boost_test_macro_container_float.cpp:13: Entering test case "test_collections_vectors_floats"
 /Users/raffi/Personnel/boost_github/libs/test/doc/examples/boost_test_macro_container_float.cpp:18: error: in "test_collections_vectors_floats": check a == b has failed. 
 Mismatch at position 0: 0.100000001 != 0.11. 
 Mismatch at position 1: 0.200000003 != 0.20000000000000001. 
 Mismatch at position 2: 0.300000012 != 0.28999999999999998. 
-/Users/raffi/Personnel/boost_github/libs/test/doc/examples/boost_test_macro_container_float.cpp:19: error: in "test_collections_vectors_floats": check a == b has failed. 
-Mismatch at position 0: 0.100000001 != 0.11. 
-Mismatch at position 1: 0.200000003 != 0.20000000000000001. 
-Mismatch at position 2: 0.300000012 != 0.28999999999999998. 
-/Users/raffi/Personnel/boost_github/libs/test/doc/examples/boost_test_macro_container_float.cpp:30: error: in "test_collections_vectors2": check a == b has failed. 
-Mismatch at position 1: 2 != 5. 
+/Users/raffi/Personnel/boost_github/libs/test/doc/examples/boost_test_macro_container_float.cpp:19: info: check a == b has passed
+/Users/raffi/Personnel/boost_github/libs/test/doc/examples/boost_test_macro_container_float.cpp:13: Leaving test case "test_collections_vectors_floats"; testing time: 305mks
+Leaving test module "boost_test_sequence_float"; testing time: 417mks
+
+*** 1 failure is detected in the test module "boost_test_sequence_float"
+//]
