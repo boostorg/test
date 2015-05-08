@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : defines the is_forward_iterable collection type trait
+//  Description : defines the is_cstring type trait
 // ***************************************************************************
 
 #ifndef BOOST_TEST_IS_CSTRING_HPP_112512GER
