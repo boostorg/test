@@ -18,6 +18,9 @@
 namespace tt = boost::test_tools;
 namespace ut = boost::unit_test;
 
+
+#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
+
 #define VALIDATE_OP( op )                           \
 {                                                   \
     BOOST_TEST_INFO( "validating operator " #op );  \
@@ -137,4 +140,11 @@ BOOST_AUTO_TEST_CASE( test_lexicographic_ge )
 
 //____________________________________________________________________________//
 
+#else /* auto support */
+
+// to avoid having an error for test tree empty
+BOOST_AUTO_TEST_CASE( dummy )
+{}
+
+#endif /* auto support */
 // EOF
