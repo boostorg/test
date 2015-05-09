@@ -30,7 +30,7 @@ namespace test_tools {
 // **************      per element comparison manipulator      ************** //
 // ************************************************************************** //
 
-//! Bitwise comparison manipulator
+//! Per element comparison manipulator, for containers
 struct per_element {};
 
 //____________________________________________________________________________//
