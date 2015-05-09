@@ -17,6 +17,7 @@
 
 // Boost
 #include <boost/type.hpp>
+#include <boost/type_traits/decay.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/utility/declval.hpp>
 #include <boost/type_traits/remove_reference.hpp>
@@ -195,11 +196,11 @@ public:
 
 #define ADD_OP_SUPPORT( oper, name, _ )                         \
     template<typename T>                                        \
-    binary_expr<ExprType,typename decay<T const>::type,         \
-        op::name<ValType,typename decay<T const>::type> >       \
+    binary_expr<ExprType,typename boost::decay<T const>::type,  \
+        op::name<ValType,typename boost::decay<T const>::type> > \
     operator oper( T const& rhs ) const                         \
     {                                                           \
-        typedef typename decay<T const>::type Rhs;              \
+        typedef typename boost::decay<T const>::type Rhs;       \
         return binary_expr<ExprType,Rhs,op::name<ValType,Rhs> > \
             ( *static_cast<ExprType const*>(this),              \
               rhs );                                            \
