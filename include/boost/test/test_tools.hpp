@@ -38,6 +38,9 @@
 #ifndef BOOST_TEST_NO_NEW_TOOLS
 #  include <boost/test/tools/interface.hpp>
 #  include <boost/test/tools/assertion.hpp>
+#  include <boost/test/tools/fpc_op.hpp>
+#  include <boost/test/tools/collection_comparison_op.hpp>
+#  include <boost/test/tools/cstring_comparison_op.hpp>
 
 #  include <boost/test/tools/detail/fwd.hpp>
 #  include <boost/test/tools/detail/print_helper.hpp>

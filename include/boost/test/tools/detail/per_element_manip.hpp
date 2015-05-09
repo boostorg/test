@@ -16,9 +16,8 @@
 #include <boost/test/tools/detail/fwd.hpp>
 #include <boost/test/tools/detail/indirections.hpp>
 
-#include <boost/test/tools/assertion_result.hpp>
 #include <boost/test/tools/assertion.hpp>
-#include <boost/test/tools/collection_comparison.hpp>
+#include <boost/test/tools/collection_comparison_op.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -31,7 +30,7 @@ namespace test_tools {
 // **************      per element comparison manipulator      ************** //
 // ************************************************************************** //
 
-//! Per element comparison manipulator, for containers
+//! Bitwise comparison manipulator
 struct per_element {};
 
 //____________________________________________________________________________//
