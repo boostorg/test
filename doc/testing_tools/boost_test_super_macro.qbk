@@ -80,7 +80,7 @@ The supported operations may be any of the binary overloadable operations in C++
   
 * binary comparisons: `==`, `!=`, `<`, `>`, `<=`, `>=`
 * arithmetic and bitwise compositions: `+`, `-`, `*`, `/`, `%`, `|`, `&`, `^`, `<<`, `>>`
-* assignements: `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `<<=`, `>>=`, `&=`, `^=`, `|=`
+* assignments: `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `<<=`, `>>=`, `&=`, `^=`, `|=`
 
 [endsect] [/ acceptable expressions]
 
@@ -114,7 +114,7 @@ BOOST_TEST(result);
 ``
 
 [#boost_test_coll_perelement][h3 Element-wise comparison]
-By specifiying the tag [classref boost::test_tools::per_element], the comparison of the elements of the containers
+By specifying the tag [classref boost::test_tools::per_element], the comparison of the elements of the containers
 will be performed per-element, in the sequence given by the forward iterators of the containers.
 
 In more details, let's `c_a = (a_1,... a_n)` and `c_b = (b_1,... b_n)` be two containers of same size, but not necessarily of same type, and 
@@ -139,7 +139,7 @@ if(result)
 BOOST_TEST(result);
 ``
 
-[warning this is fondamentally different from using the containers' default comparison operators (default behaviour).]
+[warning this is fundamentally different from using the containers' default comparison operators (default behaviour).]
 
 Sequences are compared using the specified operator `op`, evaluated on the left and right elements of the respective sequences,
 /in order/.
