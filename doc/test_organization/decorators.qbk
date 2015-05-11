@@ -343,7 +343,7 @@ For other ways of using fixtures, see [link boost_test.users_guide.tests_organiz
 [/-----------------------------------------------------------------]
 
 
-[section:description tolerance]
+[section:decorator_tolerance tolerance]
 
 ``
 template <typename FPT>
@@ -365,7 +365,7 @@ specifies. In `test2` the tolerance for `double`s is greater and therefore the c
 only tolerance for type `float`, and since the checks use type `double` the specified tolerance does not apply. Tolerance 
 in `test4` is equivalent to that in `test1`, therefore its checks also fail. Tolerance in `test5` is equivalent to 
 that in `test2`, therefore its checks also succeed.
-[endsect] [/ section tolerance]
+[endsect] [/ section decorator_tolerance]
 
 [endsect] [/ section decorators]
 
