@@ -1,0 +1,10 @@
+//[example_output
+> test_float_03
+Running 1 test case...
+test_float_03.cpp(12): error: in "test": check o1 == o2 has failed [ 1 !=  0.99]
+test_float_03.cpp(13): error: in "test": check o1 == d2 has failed [ 1 != 0.98999999999999999]
+test_float_03.cpp(14): error: in "test": check d1 == o2 has failed [1 !=  0.99]
+
+*** 3 failures are detected in the test module "test_float_03"
+
+//]
