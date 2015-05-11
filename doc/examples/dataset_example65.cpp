@@ -6,24 +6,33 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 //[example_code
-#define BOOST_TEST_MAIN
+#define BOOST_TEST_MODULE dataset_example65
 #include <boost/test/included/unit_test.hpp>
 #include <boost/test/data/test_case.hpp>
 #include <boost/test/data/monomorphic.hpp>
 
 namespace bdata = boost::unit_test::data;
 
-const char* arr[] = {"cat", "dog"};
 
 BOOST_DATA_TEST_CASE( 
-  test_case_snippet_1, 
-  bdata::xrange(2) ^ bdata::make(arr),
-  xr, array_element)
+  test1, 
+  bdata::make(2),
+  singleton)
 {
-  std::cout << "test 1: " 
-    << xr << ", " 
-    << array_element 
-    << std::endl;
-  BOOST_CHECK(array_element != std::string("mammoth"));
+  std::cout 
+    << "test 1: " 
+    << singleton << std::endl;
+  BOOST_TEST(singleton == 2);
+}
+
+BOOST_DATA_TEST_CASE( 
+  test2, 
+  bdata::xrange(3) ^ bdata::make(2),
+  xr, singleton)
+{
+  std::cout 
+    << "test 2: " 
+    << xr << ", " << singleton << std::endl;
+  BOOST_TEST(singleton == 2);
 }
 //]

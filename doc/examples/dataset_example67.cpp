@@ -6,7 +6,7 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 //[example_code
-#define BOOST_TEST_MAIN
+#define BOOST_TEST_MODULE example67
 #include <boost/test/included/unit_test.hpp>
 #include <boost/test/data/test_case.hpp>
 #include <boost/test/data/monomorphic.hpp>
@@ -28,14 +28,14 @@ std::vector<float> fibonacci() {
 }
 
 BOOST_DATA_TEST_CASE( 
-  test_case_snippet_1, 
+  test1, 
   bdata::make(fibonacci()),
   array_element)
 {
   std::cout << "test 1: " 
     << array_element 
     << std::endl;
-  BOOST_CHECK(array_element <= 13);
+  BOOST_TEST(array_element <= 13);
 }
 
 
@@ -56,7 +56,7 @@ typedef std::pair<const std::string, float> pair_map_t;
 BOOST_TEST_DONT_PRINT_LOG_VALUE( pair_map_t );
 
 BOOST_DATA_TEST_CASE( 
-  test_case_snippet_2, 
+  test2, 
   bdata::make(vect_2_str(fibonacci())),
   array_element)
 {
@@ -64,6 +64,6 @@ BOOST_DATA_TEST_CASE(
     << array_element.first << "\", "
     << array_element.second
     << std::endl;
-  BOOST_CHECK(array_element.second <= 13);
+  BOOST_TEST(array_element.second <= 13);
 }
 //]

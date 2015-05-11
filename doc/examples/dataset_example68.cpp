@@ -6,7 +6,7 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 //[example_code
-#define BOOST_TEST_MAIN
+#define BOOST_TEST_MODULE dataset_example68
 #include <boost/test/included/unit_test.hpp>
 #include <boost/test/data/test_case.hpp>
 #include <boost/test/data/monomorphic.hpp>
@@ -27,7 +27,7 @@ private:
   
   struct iterator : base::iterator
   {
-    typedef typename bdata::monomorphic::traits<int>::ref_type ref_type;
+    typedef bdata::monomorphic::traits<int>::ref_type ref_type;
     int a;
     int b; // b is the output
     
@@ -56,7 +56,7 @@ public:
   // size is infinite
   bdata::size_t size() const
   {
-    return bdata::size_t(true);
+    return bdata::BOOST_TEST_DS_INFINITE_SIZE;
   }
   
   // iterator
@@ -74,14 +74,14 @@ namespace boost { namespace unit_test { namespace data { namespace monomorphic {
 
 // Creating a test-driven dataset 
 BOOST_DATA_TEST_CASE( 
-  test_case_snippet_1, 
+  test1, 
   fibonacci_dataset() ^ bdata::xrange(10),
   fib_sample, index)
 {
   std::cout << "test 1: " 
     << fib_sample 
+    << " / index: " << index
     << std::endl;
-  BOOST_CHECK(fib_sample <= 13);
+  BOOST_TEST(fib_sample <= 13);
 }
-
 //]

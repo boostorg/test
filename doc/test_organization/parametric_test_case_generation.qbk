@@ -17,7 +17,7 @@ all parameters manually from within your test case, like this:
 ``
 void single_test( int i )
 {
-  BOOST_CHECK( /* test assertion */ );
+  __BOOST_TEST__( /* test assertion */ );
 }
 
 void combined_test()
@@ -87,6 +87,7 @@ especially when these parameters can be described in another function that gener
   Indeed, the parametrized test may test for some points around (0,1), but will fail to provide an *asymptotical behaviour* of the function close to this point. 
 
 
+
 [h4 Data driven tests in the Boost.Test framework]
 The facilities provided by the __UTF__ addressed the issues described above:
 
@@ -136,7 +137,7 @@ The descriptive power of the datasets in __UTF__ comes from
 As we will see in the next sections, datasets representing collections of different types may be combined together (eg. /zip/ or /grid/). 
 These operations result in new datasets, in which the samples are of an augmented type. 
 
-[tip This [link boost_test.boost_test_examples.ref_example68 example] implements a dataset generating a Fibonacci sequence]
+[tip This [link boost_test.boost_test_examples.ref_dataset_example68 example] implements a dataset generating a Fibonacci sequence]
 
 [endsect] [/ datasets]
 
@@ -234,7 +235,7 @@ The following properties hold:
  `dsb` will never be reached. ]
 
 
-[bt_example example62..Example of join on datasets]
+[bt_example dataset_example62..Example of join on datasets]
 
 
 [endsect]
@@ -273,7 +274,7 @@ A particular handling of the size is performed if `dsa` and `dsb` are of differe
 [caution If the /zip/ operation is not supported for your compiler, the macro [macroref BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE `BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE`] 
  will be automatically set by the __UTF__]
 
-[bt_example example61..Example of zip on datasets]
+[bt_example dataset_example61..Example of zip on datasets]
 
 
 [endsect] [/ zip operation on datasets]
@@ -305,7 +306,7 @@ The following properties hold:
 In the following example, the random number generator is the second dataset. Its state is evaluated 6 times (3 times for the first `xrange` - first dimension -
 and twice for the second `xrange` - second dimension - to which it is zipped). Note that the state of the random engine is not copied between two successive evaluations of the first dimension.
 
-[bt_example example64..Example of Cartesian product]
+[bt_example dataset_example64..Example of Cartesian product]
 
 
 [endsect]
@@ -344,7 +345,7 @@ a size of 1.
 
 The singleton is constructible through the function [funcref boost::unit_test::data::make]. 
 
-[bt_example example65..Singleton]
+[bt_example dataset_example65..Singleton]
 
 
 
@@ -355,7 +356,7 @@ sequence contained in a `C` array. The arity is 1 and the size is the size of th
 
 Such datasets are simply constructed from an overload of the [funcref boost::unit_test::data::make `make`] function.
 
-[bt_example example66..Array]
+[bt_example dataset_example66..Array]
 
 [/ ##################################################################################################################################  ]
 [h4:stl Datasets from forward iterable containers]
@@ -366,7 +367,7 @@ The arity is 1 and the size is the same as the one of the container.
 [tip C++11 implementation enables the dataset generation from any container which iterator implements the forward iterator concept. 
  For C++03, the feature is enabled on most STL containers.]
 
-[bt_example example67..Dataset from `std::vector` and `std::map`]
+[bt_example dataset_example67..Dataset from `std::vector` and `std::map`]
 
 
 
@@ -423,7 +424,7 @@ The details of the named value parameters is given in the table below.
   ]  
 ]
 
-[bt_example example59..Declaring a test with a range]
+[bt_example dataset_example59..Declaring a test with a range]
 
 
 
@@ -482,7 +483,7 @@ The details of the named value parameters is given in the table below.
   ]  
 ]
 
-[bt_example example63..Declaring a test with a random sequence]
+[bt_example dataset_example63..Declaring a test with a random sequence]
 
 
 [endsect] [/ Datasets generators]

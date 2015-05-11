@@ -6,7 +6,7 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 //[example_code
-#define BOOST_TEST_MAIN
+#define BOOST_TEST_MODULE dataset_example64
 #include <boost/test/included/unit_test.hpp>
 #include <boost/test/data/test_case.hpp>
 #include <boost/test/data/monomorphic.hpp>
@@ -15,16 +15,16 @@ namespace bdata = boost::unit_test::data;
 
 
 BOOST_DATA_TEST_CASE( 
-  test_case_snippet_1, 
+  test1, 
   bdata::xrange(2) * bdata::xrange(3), 
   xr1, xr2)
 {
   std::cout << "test 1: " << xr1 << ", " << xr2 << std::endl;
-  BOOST_CHECK(xr1 <= 2 && xr2 <= 3);
+  BOOST_TEST((xr1 <= 2 && xr2 <= 3));
 }
 
 BOOST_DATA_TEST_CASE( 
-  test_case_snippet_2, 
+  test2, 
   bdata::xrange(3)
   *
   ( bdata::random( 
@@ -37,6 +37,6 @@ BOOST_DATA_TEST_CASE(
     << xr << " / " 
     << random_sample << ", " << index
     << std::endl;
-  BOOST_CHECK(random_sample < 1.7); // 30% chance of failure
+  BOOST_TEST(random_sample < 1.7); // 30% chance of failure
 }
 //]
