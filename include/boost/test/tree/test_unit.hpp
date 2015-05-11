@@ -135,19 +135,12 @@ public:
 
     // Constructor
     test_case( const_string tc_name, boost::function<void ()> const& test_func );
-    test_case( const_string tc_name, 
-               const_string tc_file, 
-               std::size_t tc_line, 
-               boost::function<void ()> const& test_func,
-               size_t sample_index = 0 );
+    test_case( const_string tc_name, const_string tc_file, std::size_t tc_line, boost::function<void ()> const& test_func );
 
     // Public property
     typedef BOOST_READONLY_PROPERTY(boost::function<void ()>,(test_case))  test_func;
+
     test_func   p_test_func;
-
-
-    /// Index of the current sample in a dataset
-    readonly_property<std::size_t>      p_sample_index;
 
 private:
     friend class framework_state;

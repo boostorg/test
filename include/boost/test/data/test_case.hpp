@@ -87,8 +87,7 @@ public:
     {                                                                               \
         m_test_cases.push_back( new test_case( m_tc_name, m_tc_file, m_tc_line,     \
          boost::bind( &TestCase::template test_method<BOOST_PP_ENUM_PARAMS(arity,Arg)>, \
-         BOOST_PP_ENUM_PARAMS(arity, arg) ),                                        \
-         m_test_cases.size() ) );                                                   \
+         BOOST_PP_ENUM_PARAMS(arity, arg) ) ) );                                    \
     }                                                                               \
 
     BOOST_PP_REPEAT_FROM_TO(1, 4, TC_MAKE, _)
