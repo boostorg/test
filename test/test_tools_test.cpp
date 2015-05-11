@@ -712,6 +712,8 @@ TEST_CASE( test_BOOST_TEST_basic_arithmetic_op )
     // BOOST_TEST( i > 5 ? false : true );
 }
 
+BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE(std::vector<int>)
+
 TEST_CASE( test_BOOST_TEST_collection_comp )
 {
     std::vector<int> v;
@@ -721,7 +723,7 @@ TEST_CASE( test_BOOST_TEST_collection_comp )
 
     std::vector<int> v2 = v;
 
-    std::list<int> l;
+    std::vector<int> l;
     l.push_back( 1 );
     l.push_back( 3 );
     l.push_back( 2 );

@@ -22,10 +22,6 @@
 #include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/decay.hpp>
 
-// STL
-#include <vector>
-#include <list>
-
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
@@ -39,19 +35,14 @@ namespace assertion {
 // ************************************************************************** //
 
 template<typename T>
-struct specialized_eq_compare : public mpl::false_ {};
+struct specialized_compare : public mpl::false_ {};
 
-template<typename T>
-struct specialized_eq_compare<std::vector<T> > : public mpl::true_ {};
-template<typename T>
-struct specialized_eq_compare<std::list<T> > : public mpl::true_ {};
-
-template<typename T>
-struct specialized_rel_compare : public mpl::false_ {};
-template<typename T>
-struct specialized_rel_compare<std::vector<T> > : public mpl::true_ {};
-template<typename T>
-struct specialized_rel_compare<std::list<T> > : public mpl::true_ {};
+#define BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE(Col)          \
+namespace boost { namespace test_tools { namespace assertion {  \
+template<>                                                      \
+struct specialized_compare<Col> : public mpl::true_ {};         \
+}}}                                                             \
+/**/
 
 // ************************************************************************** //
 // **************            lexicographic_compare             ************** //
@@ -195,12 +186,12 @@ struct cctraits;
 
 template<typename Lhs, typename Rhs>
 struct cctraits<op::EQ<Lhs, Rhs> > {
-    typedef specialized_eq_compare<Lhs> is_specialized;
+    typedef specialized_compare<Lhs> is_specialized;
 };
 
 template<typename Lhs, typename Rhs>
 struct cctraits<op::NE<Lhs, Rhs> > {
-    typedef specialized_eq_compare<Lhs> is_specialized;
+    typedef specialized_compare<Lhs> is_specialized;
 };
 
 template<typename Lhs, typename Rhs>
@@ -208,7 +199,7 @@ struct cctraits<op::LT<Lhs, Rhs> > {
     static const bool can_be_equal = false;
     static const bool prefer_short = true;
 
-    typedef specialized_rel_compare<Lhs> is_specialized;
+    typedef specialized_compare<Lhs> is_specialized;
 };
 
 template<typename Lhs, typename Rhs>
@@ -216,7 +207,7 @@ struct cctraits<op::LE<Lhs, Rhs> > {
     static const bool can_be_equal = true;
     static const bool prefer_short = true;
 
-    typedef specialized_rel_compare<Lhs> is_specialized;
+    typedef specialized_compare<Lhs> is_specialized;
 };
 
 template<typename Lhs, typename Rhs>
@@ -224,7 +215,7 @@ struct cctraits<op::GT<Lhs, Rhs> > {
     static const bool can_be_equal = false;
     static const bool prefer_short = false;
 
-    typedef specialized_rel_compare<Lhs> is_specialized;
+    typedef specialized_compare<Lhs> is_specialized;
 };
 
 template<typename Lhs, typename Rhs>
@@ -232,7 +223,7 @@ struct cctraits<op::GE<Lhs, Rhs> > {
     static const bool can_be_equal = true;
     static const bool prefer_short = false;
 
-    typedef specialized_rel_compare<Lhs> is_specialized;
+    typedef specialized_compare<Lhs> is_specialized;
 };
 
 // ************************************************************************** //

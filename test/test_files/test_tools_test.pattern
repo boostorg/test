@@ -128,45 +128,39 @@ Failure occurred in a following context:
 699: info: check true has passed
 705: info: check true has passed
 707: error: in "test_BOOST_TEST_basic_arithmetic_op": This message reported instead including 1 and 2
-729: error: in "test_BOOST_TEST_collection_comp": check v == l has failed. 
+731: error: in "test_BOOST_TEST_collection_comp": check v == l has failed. 
 Mismatch at position 1: 2 != 3. 
 Mismatch at position 2: 3 != 2. 
-730: error: in "test_BOOST_TEST_collection_comp": check v != v2 has failed. 
-All elements are matching
-731: error: in "test_BOOST_TEST_collection_comp": check v < l has failed. 
-Mismatch at position 0: 1 >= 1. 
-Mismatch at position 2: 3 >= 2. 
-732: error: in "test_BOOST_TEST_collection_comp": check v > l has failed. 
-Mismatch at position 0: 1 <= 1. 
-Mismatch at position 1: 2 <= 3. 
-734: error: in "test_BOOST_TEST_collection_comp": check v <= l has failed. 
-Mismatch at position 2: 3 > 2. 
-735: error: in "test_BOOST_TEST_collection_comp": check v >= l has failed. 
-Mismatch at position 1: 2 < 3. 
-756: error: in "test_BOOST_TEST_fpv_comp": check d1 == d2 has failed [1e-05 != 1e-05]
-758: error: in "test_BOOST_TEST_fpv_comp": check d1 == d2 has failed [1e-05 != 1e-05]. Relative difference exceeds tolerance [0.000909091 > 1e-07]
-760: error: in "test_BOOST_TEST_fpv_comp": check d1 != f1 has failed [1e-05 == 1.10000001e-05]. Relative difference is within tolerance [7.81041e-09 < 1e-07]
-764: error: in "test_BOOST_TEST_fpv_comp": check d1 > d2 has failed [1e-05 <= 1e-05]
-765: error: in "test_BOOST_TEST_fpv_comp": check d1+1./1e20 > d2 has failed [1e-05 + 1e-20 <= 1e-05]. Relative difference exceeds tolerance [0.000909091 > 1e-07]
-767: error: in "test_BOOST_TEST_fpv_comp": check d2 <= d1 has failed [1e-05 > 1e-05]. Relative difference exceeds tolerance [0.000909091 > 1e-07]
-770: error: in "test_BOOST_TEST_fpv_comp": check d1-1e-5 == 0. has failed [1e-05 - 1e-05 != 0]. Absolute value exceeds tolerance [|1e-06| > 1e-07]
-771: error: in "test_BOOST_TEST_fpv_comp": check d1-1e-5 != 0. has failed [1e-05 - 1e-05 == 0]. Absolute value is within tolerance [|1e-06| < 0.0001]
-772: error: in "test_BOOST_TEST_fpv_comp": check 0. != 1e-5-d1 has failed [0 == -1e-06]. Absolute value is within tolerance [|-1e-06| < 0.0001]
-773: error: in "test_BOOST_TEST_fpv_comp": check d2-1e-5 < 0. has failed [1e-05 - 1e-05 >= 0]. Absolute value exceeds tolerance [|1.01e-06| > 1e-06]
-812: error: in "test_BOOST_TEST_cstring_comp": check str1 == str2 has failed [test1 != test12]
-813: error: in "test_BOOST_TEST_cstring_comp": check str1 == str3 has failed [test1 != test2]
-814: error: in "test_BOOST_TEST_cstring_comp": check str3 == str2 has failed [test2 != test12]
-815: error: in "test_BOOST_TEST_cstring_comp": check str1 == str4 has failed [test1 != test3]
-816: error: in "test_BOOST_TEST_cstring_comp": check str3 == str4 has failed [test2 != test3]
-817: error: in "test_BOOST_TEST_cstring_comp": check str1 == str5 has failed [test1 != null string]
-819: error: in "test_BOOST_TEST_cstring_comp": check str1 != (str6+1) has failed [test1 == test1]
-820: error: in "test_BOOST_TEST_cstring_comp": check str5 != str5 has failed [null string == null string]
-822: error: in "test_BOOST_TEST_cstring_comp": check str3 < str1 has failed [test2 >= test1]
-823: error: in "test_BOOST_TEST_cstring_comp": check str1 >= str2 has failed [test1 < test12]
-834: error: in "test_BOOST_TEST_bitwise": check a == b has failed [171 != 136]. Bitwise comparison failed
+732: error: in "test_BOOST_TEST_collection_comp": check v != v2 has failed. 
+Collections appear to be equal
+734: error: in "test_BOOST_TEST_collection_comp": check v > l has failed. 
+Failure at position 1: 2 <= 3. 
+737: error: in "test_BOOST_TEST_collection_comp": check v >= l has failed. 
+Failure at position 1: 2 < 3. 
+758: error: in "test_BOOST_TEST_fpv_comp": check d1 == d2 has failed [1e-05 != 1e-05]
+760: error: in "test_BOOST_TEST_fpv_comp": check d1 == d2 has failed [1e-05 != 1e-05]. Relative difference exceeds tolerance [0.000909091 > 1e-07]
+762: error: in "test_BOOST_TEST_fpv_comp": check d1 != f1 has failed [1e-05 == 1.10000001e-05]. Relative difference is within tolerance [7.81041e-09 < 1e-07]
+766: error: in "test_BOOST_TEST_fpv_comp": check d1 > d2 has failed [1e-05 <= 1e-05]
+767: error: in "test_BOOST_TEST_fpv_comp": check d1+1./1e20 > d2 has failed [1e-05 + 1e-20 <= 1e-05]. Relative difference exceeds tolerance [0.000909091 > 1e-07]
+769: error: in "test_BOOST_TEST_fpv_comp": check d2 <= d1 has failed [1e-05 > 1e-05]. Relative difference exceeds tolerance [0.000909091 > 1e-07]
+772: error: in "test_BOOST_TEST_fpv_comp": check d1-1e-5 == 0. has failed [1e-05 - 1e-05 != 0]. Absolute value exceeds tolerance [|1e-06| > 1e-07]
+773: error: in "test_BOOST_TEST_fpv_comp": check d1-1e-5 != 0. has failed [1e-05 - 1e-05 == 0]. Absolute value is within tolerance [|1e-06| < 0.0001]
+774: error: in "test_BOOST_TEST_fpv_comp": check 0. != 1e-5-d1 has failed [0 == -1e-06]. Absolute value is within tolerance [|-1e-06| < 0.0001]
+775: error: in "test_BOOST_TEST_fpv_comp": check d2-1e-5 < 0. has failed [1e-05 - 1e-05 >= 0]. Absolute value exceeds tolerance [|1.01e-06| > 1e-06]
+814: error: in "test_BOOST_TEST_cstring_comp": check str1 == str2 has failed [test1 != test12]
+815: error: in "test_BOOST_TEST_cstring_comp": check str1 == str3 has failed [test1 != test2]
+816: error: in "test_BOOST_TEST_cstring_comp": check str3 == str2 has failed [test2 != test12]
+817: error: in "test_BOOST_TEST_cstring_comp": check str1 == str4 has failed [test1 != test3]
+818: error: in "test_BOOST_TEST_cstring_comp": check str3 == str4 has failed [test2 != test3]
+819: error: in "test_BOOST_TEST_cstring_comp": check str1 == str5 has failed [test1 != null string]
+821: error: in "test_BOOST_TEST_cstring_comp": check str1 != (str6+1) has failed [test1 == test1]
+822: error: in "test_BOOST_TEST_cstring_comp": check str5 != str5 has failed [null string == null string]
+824: error: in "test_BOOST_TEST_cstring_comp": check str3 < str1 has failed [test2 >= test1]
+825: error: in "test_BOOST_TEST_cstring_comp": check str1 >= str2 has failed [test1 < test12]
+836: error: in "test_BOOST_TEST_bitwise": check a == b has failed [171 != 136]. Bitwise comparison failed
 Mismatch at position 0
 Mismatch at position 1
 Mismatch at position 5
-835: error: in "test_BOOST_TEST_bitwise": check c == b has failed [138 != 136]. Bitwise comparison failed
+837: error: in "test_BOOST_TEST_bitwise": check c == b has failed [138 != 136]. Bitwise comparison failed
 Mismatch at position 1
 Operands bit sizes mismatch: 16 != 32

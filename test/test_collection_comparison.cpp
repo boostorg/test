@@ -18,6 +18,8 @@
 namespace tt = boost::test_tools;
 namespace ut = boost::unit_test;
 
+BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE(std::vector<int>)
+
 #define VALIDATE_OP( op )                           \
 {                                                   \
     BOOST_TEST_INFO( "validating operator " #op );  \
