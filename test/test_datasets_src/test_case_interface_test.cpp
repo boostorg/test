@@ -23,6 +23,15 @@ namespace data=boost::unit_test::data;
 
 #include "test_datasets.hpp"
 
+//____________________________________________________________________________//
+// testing the dataset specific fields
+int samples0[] = {0,1,2};
+BOOST_DATA_TEST_CASE( test_case_interface_field_index, samples0 )
+{
+    BOOST_TEST( sample == boost::unit_test::framework::current_test_case().p_sample_index );
+}
+
+
 
 //____________________________________________________________________________//
 

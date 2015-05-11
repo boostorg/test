@@ -16,6 +16,7 @@
 #define BOOST_TEST_MODULE Boost.Test assertion consruction test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/tools/assertion.hpp>
+#include <boost/test/utils/is_forward_iterable.hpp>
 #ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
 #include <boost/test/tools/detail/expression_holder.hpp>
 #endif

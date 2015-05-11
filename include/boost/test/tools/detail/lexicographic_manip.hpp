@@ -30,7 +30,7 @@ namespace test_tools {
 // **************      per element comparison manipulator      ************** //
 // ************************************************************************** //
 
-//! Bitwise comparison manipulator
+//! Lexicographic comparison manipulator, for containers
 struct lexicographic {};
 
 //____________________________________________________________________________//
