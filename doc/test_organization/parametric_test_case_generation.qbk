@@ -17,7 +17,7 @@ all parameters manually from within your test case, like this:
 ``
 void single_test( int i )
 {
-  BOOST_CHECK( /* test assertion */ );
+  __BOOST_TEST__( /* test assertion */ );
 }
 
 void combined_test()
