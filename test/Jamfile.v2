@@ -164,16 +164,17 @@ test-suite "unit_test_framework_test"
           
           # examples in BOOST_TEST
           [ test-btl-lib-c11 run       : boost_test_macro1                  : : : ../doc/examples/boost_test_macro1.cpp ]
-          [ test-btl-lib-c11 run       : boost_test_macro2                  : : : ../doc/examples/boost_test_macro2.cpp ]
-          [ test-btl-lib-c11 run       : boost_test_macro_bitwise           : : : ../doc/examples/boost_test_macro_bitwise.cpp ]
-          [ test-btl-lib-c11 run       : boost_test_macro_container_c_array : : : ../doc/examples/boost_test_macro_container_c_array.cpp ]
-          [ test-btl-lib-c11 run       : boost_test_macro_container_float   : : : ../doc/examples/boost_test_macro_container_float.cpp ]
+          [ test-btl-lib-c11 run-fail  : boost_test_macro2                  : : : ../doc/examples/boost_test_macro2.cpp ]
+          [ test-btl-lib-c11 run-fail  : boost_test_macro_bitwise           : : : ../doc/examples/boost_test_macro_bitwise.cpp ]
+          [ test-btl-lib-c11 run-fail  : boost_test_macro_container_c_array : : : ../doc/examples/boost_test_macro_container_c_array.cpp ]
           [ test-btl-lib-c11 run       : boost_test_macro_container_value_type : : : ../doc/examples/boost_test_macro_container_value_type.cpp ]
-          [ test-btl-lib-c11 run       : boost_test_macro_float             : : : ../doc/examples/boost_test_macro_float.cpp ]
-          [ test-btl-lib-c11 run       : boost_test_macro_float2            : : : ../doc/examples/boost_test_macro_float2.cpp ]
-          [ test-btl-lib-c11 run       : boost_test_macro_message           : : : ../doc/examples/boost_test_macro_message.cpp ]
+          [ test-btl-lib-c11 run-fail  : test_float_01                      : : : ../doc/examples/test_float_01.cpp ]
+          [ test-btl-lib-c11 run-fail  : test_float_02                      : : : ../doc/examples/test_float_02.cpp ]
+          [ test-btl-lib-c11 run-fail  : test_float_03                      : : : ../doc/examples/test_float_03.cpp ]
+          [ test-btl-lib-c11 run       : test_float_04                      : : : ../doc/examples/test_float_04.cpp ]
+          [ test-btl-lib-c11 run-fail  : boost_test_macro_message           : : : ../doc/examples/boost_test_macro_message.cpp ]
           [ test-btl-lib-c11 run       : boost_test_macro_sequence          : : : ../doc/examples/boost_test_macro_sequence.cpp ]
-          [ test-btl-lib-c11 run       : boost_test_macro_string            : : : ../doc/examples/boost_test_macro_string.cpp ]
+          [ test-btl-lib-c11 run-fail  : boost_test_macro_string            : : : ../doc/examples/boost_test_macro_string.cpp ]
 
           
 
