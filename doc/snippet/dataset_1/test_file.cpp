@@ -11,26 +11,25 @@
 namespace data=boost::unit_test::data;
 
 
-#if 0
 //[snippet_dataset1_1
 BOOST_DATA_TEST_CASE( test_case_arity1_implicit, data::xrange(5) )
 {
-  BOOST_CHECK(sample <= 4 && sample >= 0);
+  BOOST_TEST((sample <= 4 && sample >= 0));
 }
 //]
 
 //[snippet_dataset1_2
 BOOST_DATA_TEST_CASE( test_case_arity1, data::xrange(5), my_var )
 {
-  BOOST_CHECK(my_var <= 4 && my_var >= 0);
+  BOOST_TEST((my_var <= 4 && my_var >= 0));
 }
 //]
 
 //[snippet_dataset1_3
 BOOST_DATA_TEST_CASE( test_case_arity2, data::xrange(2) ^ data::xrange(5), apples, potatoes)
 {
-  BOOST_CHECK(apples <= 1 && apples >= 0);
-  BOOST_CHECK(potatoes <= 4 && potatoes >= 0);
+  BOOST_TEST((apples <= 1 && apples >= 0));
+  BOOST_TEST((potatoes <= 4 && potatoes >= 0));
 }
 //]
 
@@ -55,8 +54,6 @@ BOOST_DATA_TEST_CASE( test_case_3, data::make(v), var1)
 }
 //]
 
-#endif
-
 
 #include <vector>
 #include <map>
@@ -77,7 +74,7 @@ const std::vector<int> v = generate_vector();
 BOOST_DATA_TEST_CASE( test_case_1, data::make(v), var1)
 {
   std::cout << var1 << std::endl;
-  BOOST_CHECK(true);
+  BOOST_TEST(true);
 }
 
 
@@ -96,5 +93,5 @@ const std::map<int, int> m = generate_map();
 BOOST_DATA_TEST_CASE( test_case_2, data::make(m), var1)
 {
   std::cout << var1.first << " -- " << var1.second << std::endl;
-  BOOST_CHECK(true);
+  BOOST_TEST(true);
 }

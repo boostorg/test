@@ -6,7 +6,7 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 //[example_code
-#define BOOST_TEST_MAIN
+#define BOOST_TEST_MODULE example66
 #include <boost/test/included/unit_test.hpp>
 #include <boost/test/data/test_case.hpp>
 #include <boost/test/data/monomorphic.hpp>
@@ -16,7 +16,7 @@ namespace bdata = boost::unit_test::data;
 const char* arr[] = {"cat", "dog"};
 
 BOOST_DATA_TEST_CASE( 
-  test_case_snippet_1, 
+  test1, 
   bdata::xrange(2) ^ bdata::make(arr),
   xr, array_element)
 {
@@ -24,6 +24,6 @@ BOOST_DATA_TEST_CASE(
     << xr << ", " 
     << array_element 
     << std::endl;
-  BOOST_CHECK(array_element != std::string("mammoth"));
+  BOOST_TEST(array_element != "mammoth");
 }
 //]

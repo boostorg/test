@@ -6,7 +6,7 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 //[example_code
-#define BOOST_TEST_MAIN
+#define BOOST_TEST_MODULE example65
 #include <boost/test/included/unit_test.hpp>
 #include <boost/test/data/test_case.hpp>
 #include <boost/test/data/monomorphic.hpp>
@@ -15,24 +15,24 @@ namespace bdata = boost::unit_test::data;
 
 
 BOOST_DATA_TEST_CASE( 
-  test_case_snippet_1, 
+  test1, 
   bdata::make(2),
   singleton)
 {
   std::cout 
     << "test 1: " 
     << singleton << std::endl;
-  BOOST_CHECK(singleton == 2);
+  BOOST_TEST(singleton == 2);
 }
 
 BOOST_DATA_TEST_CASE( 
-  test_case_snippet_2, 
+  test2, 
   bdata::xrange(3) ^ bdata::make(2),
   xr, singleton)
 {
   std::cout 
     << "test 2: " 
     << xr << ", " << singleton << std::endl;
-  BOOST_CHECK(singleton == 2);
+  BOOST_TEST(singleton == 2);
 }
 //]

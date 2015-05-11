@@ -152,6 +152,7 @@ test-suite "unit_test_framework_test"
               
               
           # examples in datasets
+          [ test-btl-lib-c11 run       : example67 : : : ../doc/examples/example67.cpp ]
           [ test-btl-lib-c11 run-fail  : example68 : : : ../doc/examples/example68.cpp ]
                     
         ;

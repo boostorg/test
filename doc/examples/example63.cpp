@@ -6,7 +6,7 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 //[example_code
-#define BOOST_TEST_MAIN
+#define BOOST_TEST_MODULE example63
 #include <boost/test/included/unit_test.hpp>
 #include <boost/test/data/test_case.hpp>
 #include <boost/test/data/monomorphic.hpp>
@@ -19,8 +19,9 @@ BOOST_DATA_TEST_CASE(
   bdata::random(1, 17) ^ bdata::xrange(7), 
   random_sample, index )
 {
-  std::cout << "test 1 " << random_sample << std::endl;
-  BOOST_CHECK(random_sample <= 17 && random_sample >= 1);
+  std::cout << "test 1 " << random_sample 
+            << "," << index << std::endl;
+  BOOST_TEST((random_sample <= 17 && random_sample >= 1));
 }
 
 BOOST_DATA_TEST_CASE( 
@@ -29,7 +30,8 @@ BOOST_DATA_TEST_CASE(
       ^ bdata::xrange(7),
   random_sample, index )
 {
-  std::cout << "test 2 " << random_sample << std::endl;
+  std::cout << "test 2 " << random_sample 
+            << "," << index << std::endl;
   BOOST_CHECK(random_sample < 1.7); // 30% chance of failure
 }
 //]
