@@ -161,6 +161,23 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib-c11 run       : dataset_example66 : : : ../doc/examples/dataset_example66.cpp ]
           [ test-btl-lib-c11 run       : dataset_example67 : : : ../doc/examples/dataset_example67.cpp ]
           [ test-btl-lib-c11 run-fail  : dataset_example68 : : : ../doc/examples/dataset_example68.cpp ]
+          
+          # examples in BOOST_TEST
+          [ test-btl-lib-c11 run       : boost_test_macro1                  : : : ../doc/examples/boost_test_macro1.cpp ]
+          [ test-btl-lib-c11 run       : boost_test_macro2                  : : : ../doc/examples/boost_test_macro2.cpp ]
+          [ test-btl-lib-c11 run       : boost_test_macro_bitwise           : : : ../doc/examples/boost_test_macro_bitwise.cpp ]
+          [ test-btl-lib-c11 run       : boost_test_macro_container_c_array : : : ../doc/examples/boost_test_macro_container_c_array.cpp ]
+          [ test-btl-lib-c11 run       : boost_test_macro_container_float   : : : ../doc/examples/boost_test_macro_container_float.cpp ]
+          [ test-btl-lib-c11 run       : boost_test_macro_container_value_type : : : ../doc/examples/boost_test_macro_container_value_type.cpp ]
+          [ test-btl-lib-c11 run       : boost_test_macro_float             : : : ../doc/examples/boost_test_macro_float.cpp ]
+          [ test-btl-lib-c11 run       : boost_test_macro_float2            : : : ../doc/examples/boost_test_macro_float2.cpp ]
+          [ test-btl-lib-c11 run       : boost_test_macro_message           : : : ../doc/examples/boost_test_macro_message.cpp ]
+          [ test-btl-lib-c11 run       : boost_test_macro_sequence          : : : ../doc/examples/boost_test_macro_sequence.cpp ]
+          [ test-btl-lib-c11 run       : boost_test_macro_string            : : : ../doc/examples/boost_test_macro_string.cpp ]
+
+          
+
+          
                     
         ;
         

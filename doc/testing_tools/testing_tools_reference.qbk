@@ -159,13 +159,13 @@
   BOOST_TEST(statement, floating_point_comparison_manipulation);
   
   // bitwise comparison, requires variadic macros, auto and decltype
-  BOOST_TEST(statement, boost::test_tools::bitwise);
+  BOOST_TEST(statement, boost::test_tools::bitwise() );
 
   // element-wise comparison, for containers
-  BOOST_TEST(statement, boost::test_tools::per_element);
+  BOOST_TEST(statement, boost::test_tools::per_element() );
   
   // element-wise comparison, for containers
-  BOOST_TEST(statement, boost::test_tools::lexicographic);
+  BOOST_TEST(statement, boost::test_tools::lexicographic() );
   
   
 

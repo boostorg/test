@@ -22,3 +22,28 @@ BOOST_AUTO_TEST_CASE( test_compound1 )
   BOOST_TEST(a == b + 11 == false);
 }
 //]
+
+int count = 0;
+struct my_type
+{
+  bool operator==(my_type const& ) const { return false; }
+  friend std::ostream& operator<<(std::ostream& o, my_type const& m)
+  {
+    o << count ++;
+    return o;
+  }
+};
+
+bool operator==(std::vector<my_type> const& l, std::vector<my_type> const& r)
+{
+  return true;
+}
+
+BOOST_AUTO_TEST_CASE( test_compound2 )
+{
+  std::vector<my_type> a(3);
+  std::vector<my_type> b(3);
+  
+  BOOST_TEST(a == b);
+  BOOST_TEST((a == b));
+}

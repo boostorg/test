@@ -5,7 +5,7 @@
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
-[section:boost_test_super_macro `BOOST_TEST` or the Swiss Army knife]
+[section:boost_test_super_macro BOOST_TEST or the Swiss Army knife]
 
 Once a test case has been declared, the body of this test should be written. A test case is a 
 sequence of operations in which *assertions* are inserted. Those assertions evaluate /statements/ that verify the integrity 
@@ -44,12 +44,14 @@ gives flexibility to __BOOST_TEST__ at the cost of narrowing the supported state
 
 * statements containing ternary conditions: those statement should be surrounded by parenthesis as they cannot be overloaded
 * statements containing comas: those statements will be intercepted by the preprocessor
-* compound statements containing any logical composition `||`, `&&`
+* compound statements containing any logical composition `||`, `&&`. Those are disabled intentionally.
   
 [bt_example boost_test_macro1..BOOST_TEST acceptable expressions]
 
-The expression tree is processed by the compiler, and a specific object is composed from the left of `statement`. 
-An expression chain [footnote which *differs* from an expression tree] is constructed from the statement, by left composition.
+The expression tree is processed by the compiler, and a specific object is composed from the left of `statement`. This left
+object composition has highest precedence. 
+An expression chain [footnote which *differs* from an expression tree] is constructed from the statement, starting with this left 
+composition. The operators precedences are applied by the language.
  
 The chain is built from left to right, combining one binary operation with two operands. The following statements
 
