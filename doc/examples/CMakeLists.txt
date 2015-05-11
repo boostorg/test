@@ -16,23 +16,23 @@ message(STATUS "$BOOST_ROOT = ${BOOST_ROOT}")
 
 set(EXAMPLES_SRC
     example12.cpp
-    example64.cpp
-    example68.cpp
+    dataset_example64.cpp
+    dataset_example68.cpp
     )
 
 # source files needing variadic macros
 set(EXAMPLES_VARIADIC_MACROS_SRC
     boost_test_macro1.cpp
     boost_test_macro2.cpp
+    boost_test_macro3.cpp
     boost_test_macro_bitwise.cpp
     boost_test_macro_string.cpp
-    boost_test_macro_float.cpp
-    boost_test_macro_float2.cpp
     boost_test_macro_message.cpp
     boost_test_macro_sequence.cpp
     boost_test_macro_container_c_array.cpp
-    boost_test_macro_container_float.cpp
     boost_test_macro_container_value_type.cpp
+    
+    test_float_04.cpp
     )
     
 if(CMAKE_CXX_COMPILER_ID STREQUAL Clang)

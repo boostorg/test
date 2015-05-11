@@ -1,16 +1,10 @@
 //[example_output
 > ./boost_test_macro2 --log_level=all
-Running 1 test case...
-Entering test module "boost_test_macro2"
-boost_test_macro2.cpp:13: Entering test case "test_compound1"
-boost_test_macro2.cpp:16: info: check a - b == c has passed
-boost_test_macro2.cpp:17: error: in "test_compound1": check a == b + 12 == c + 1 has failed [13 != 13 != 13]
-boost_test_macro2.cpp:18: info: check a == b + 12 has passed
-boost_test_macro2.cpp:19: info: check b + 12 == c + 1 has passed
-boost_test_macro2.cpp:21: info: check a == b + 12 == true has passed
-boost_test_macro2.cpp:22: info: check a == b + 11 == false has passed
-boost_test_macro2.cpp:13: Leaving test case "test_compound1"; testing time: 497mks
-Leaving test module "boost_test_macro2"; testing time: 640mks
+Running 2 test cases...
+boost_test_macro2.cpp:15: error: in "test_op_precedence": check a % b == c has failed [13 % 2 != 12]
+boost_test_macro2.cpp:16: error: in "test_op_precedence": check a == c % b has failed [13 != 0]
+boost_test_macro2.cpp:23: error: in "test_op_right_associative": check !a has failed
+boost_test_macro2.cpp:24: error: in "test_op_right_associative": check --a has failed [(bool)0 is false]
 
-*** 1 failure is detected in the test module "boost_test_macro2"
+*** 4 failures are detected in the test module "boost_test_macro2"
 //]

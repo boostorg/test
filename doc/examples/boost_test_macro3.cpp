@@ -6,21 +6,15 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 //[example_code
-#define BOOST_TEST_MODULE boost_test_macro2
+#define BOOST_TEST_MODULE boost_test_macro3
 #include <boost/test/included/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE( test_op_precedence )
+BOOST_AUTO_TEST_CASE( test_op_reportings )
 {
-  int a = 13, b = 2, c = 12;
-  BOOST_TEST(a % b == c);
-  BOOST_TEST(a == c % b);
-}
-
-BOOST_AUTO_TEST_CASE( test_op_right_associative )
-{
-  int a = 1;
-  BOOST_TEST(a);
-  BOOST_TEST(!a);
-  BOOST_TEST(--a);
+  int a = 13, b = 12;
+  BOOST_TEST(a == b);
+  BOOST_TEST(a < b);
+  BOOST_TEST(a - 1 < b);  
+  BOOST_TEST(b > a - 1);    
 }
 //]

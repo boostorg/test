@@ -37,52 +37,96 @@ As their name suggests these assertions are, in order, for /requirement/, /check
  supporting the `auto` and `decltype` keywords and the variadic macros. The documentation focuses on these set of compilers. A 
  limited support is provided for C++03 compilers.]
 
-[section:acceptable_statements Acceptable statements]
 
-The __BOOST_TEST__ assertion uses some tricks with C++ operator overloading in order to perform its magic. This implementation
-gives flexibility to __BOOST_TEST__ at the cost of narrowing the supported statements. The unsupported statements are:
+[/ ################################################ ]
+[section:acceptable_statements Acceptable statements and reporting capability]
+The general form of the `BOOST_TEST` macro is the following:
+
+  BOOST_TEST(statement);
+  BOOST_TEST(statement, optional_modifiers)
+
+The __BOOST_TEST__ assertion uses operator overloading in order to provide an enhanced reporting capability; at the cost 
+of narrowing the supported statements. The unsupported statements are:
 
 * statements containing ternary conditions: those statement should be surrounded by parenthesis as they cannot be overloaded
 * statements containing comas: those statements will be intercepted by the preprocessor
-* compound statements containing any logical composition `||`, `&&`. Those are disabled intentionally.
+* compound statements containing any logical composition `||`, `&&`. Those are disabled intentionally and should be surrounded
+  by parenthesis
   
+    BOOST_TEST((true || false));
+    
+  The full details are given in [link boost_test_reports this section].
+
+The `statement` might contain a full expression composed by several operations. `statement` should be castable to `bool`, 
+as if it would appear as argument to an `if` statement.
+
 [bt_example boost_test_macro1..BOOST_TEST acceptable expressions]
 
-The expression tree is processed by the compiler, and a specific object is composed from the left of `statement`. This left
-object composition has highest precedence. 
-An expression chain [footnote which *differs* from an expression tree] is constructed from the statement, starting with this left 
-composition. The operators precedences are applied by the language.
- 
-The chain is built from left to right, combining one binary operation with two operands. The following statements
-
-``
-BOOST_TEST(a op1 b op2 c op3 d);
-``
-
-# evaluates first `r1` as "`a op1 b`" and determines the resulting type `t1`
-# evaluates then `r2` as "`r1 op2 c`" and determines its type
-# etc.
-
-All in all, the statement above is seen as 
-
-  ((a op1 b) op2 c) op3 d
-
-which makes the following statement perfectly valid
-
-``
-  a == 12 == 42 == b
-``
-
-but might not have the desired effect: For instance the result of "`a == 12`" would be `bool`, which in turn evaluates 
-"`bool (true or false) == 42`".
-
-[bt_example boost_test_macro2..BOOST_TEST compound statements]
-
-The supported operations may be any of the binary overloadable operations in C++, except logical AND and OR, and COMA:
+`BOOST_TEST` provides additional details in case of failure for binary overloadable operations in C++, 
+except then ones mentioned above:
   
-* binary comparisons: `==`, `!=`, `<`, `>`, `<=`, `>=`
-* arithmetic and bitwise compositions: `+`, `-`, `*`, `/`, `%`, `|`, `&`, `^`, `<<`, `>>`
-* assignments: `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `<<=`, `>>=`, `&=`, `^=`, `|=`
+[table
+  [[Class of operation][operators]]
+  [[binary comparisons][`==`, `!=`, `<`, `>`, `<=`, `>=`]]
+  [[arithmetic compositions][`+`, `-`, `*`, `/`, `%`]]
+  [[bitwise compositions][`|`, `&`, `^`, `<<`, `>>`]]
+  [[assignments][`=`, `+=`, `-=`, `*=`, `/=`, `%=`, `<<=`, `>>=`, `&=`, `^=`, `|=`]]
+]  
+
+
+
+[#boost_test_reports][h3 Reported information]
+When an assertion fails, __BOOST_TEST__ reports details and values on the operands of `statement` that lead to the failure. 
+
+[bt_example boost_test_macro3..BOOST_TEST reporting]
+
+In the above example, the values of the operands are reported for inspection, which is more valuable as a copy
+of the full statement. However, we can observe that they are not treated symmetrically:
+
+* "`a - 1 < b`" reports "`13 - 1 >= 12`"
+* "`b > a - 1`" reports "`12 <= 12`"
+
+An expression is constructed from the `statement` appearing in the `BOOST_TEST` macro. This expression allows report such
+as "`13 - 1 >= 12`". In details, what happens is the following:
+
+# a special object, the `seed` of the expression, is composed 
+  from the left side of `statement`. This initial composition has highest precedence over the allowed operations. The expression below:
+
+    a op1 b op2 c op3 d
+  
+  is actually seen as
+  
+    ( seed a ) op1 b op2 c op3 d
+
+# The "`seed a`" evaluates to an `expression`. This expression has overloads for left to right associativity, and the 
+  operations `op1`, `op2` ... are /chained/ to the right of this expression object:
+  
+    a op1 b
+    
+  yields to the pseudo-code
+  
+    expression1 = seed a
+    expression2 = expression1->operator op1(b)
+
+# The C++ operators precedence rules apply in any case. What is seen by the expression is what is reachable from left to right
+  composition. Any other operation that happens before it reaches the expression right operand is seen as a single operand. 
+  Let's suppose `op2` below has higher precedence than `op1`, then 
+
+    a op1 b op2 c
+  
+  is equivalent to:
+  
+    ( seed a ) op1 (b op2 c)
+
+  such that the final expression can only see `(b op2 c)` to its right, for which no further detail can be provided in 
+  case of failure. This is also the case for right-to-left associative operators, such as `!`, `~`, etc.
+
+[tip Since the `expression` object is composed from left-to-right, it actually observes a chain of operations and
+ not the full expression tree.]
+
+The example below illustrates the construction of the left-to-right /chained/ expression.
+ 
+[bt_example boost_test_macro2..BOOST_TEST compound statements]
 
 [endsect] [/ acceptable expressions]
 
