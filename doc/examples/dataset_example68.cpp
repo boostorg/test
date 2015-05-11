@@ -6,7 +6,7 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 //[example_code
-#define BOOST_TEST_MODULE example68
+#define BOOST_TEST_MODULE dataset_example68
 #include <boost/test/included/unit_test.hpp>
 #include <boost/test/data/test_case.hpp>
 #include <boost/test/data/monomorphic.hpp>
@@ -80,8 +80,8 @@ BOOST_DATA_TEST_CASE(
 {
   std::cout << "test 1: " 
     << fib_sample 
+    << " / index: " << index
     << std::endl;
   BOOST_TEST(fib_sample <= 13);
 }
-
 //]

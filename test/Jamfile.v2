@@ -152,8 +152,15 @@ test-suite "unit_test_framework_test"
               
               
           # examples in datasets
-          [ test-btl-lib-c11 run       : example67 : : : ../doc/examples/example67.cpp ]
-          [ test-btl-lib-c11 run-fail  : example68 : : : ../doc/examples/example68.cpp ]
+          [ test-btl-lib-c11 run-fail  : dataset_example59 : : : ../doc/examples/dataset_example59.cpp ]
+          [ test-btl-lib-c11 run       : dataset_example61 : : : ../doc/examples/dataset_example61.cpp ]
+          [ test-btl-lib-c11 run       : dataset_example62 : : : ../doc/examples/dataset_example62.cpp ]
+          [ test-btl-lib-c11 run-fail  : dataset_example63 : : : ../doc/examples/dataset_example63.cpp ]
+          [ test-btl-lib-c11 run-fail  : dataset_example64 : : : ../doc/examples/dataset_example64.cpp ]
+          [ test-btl-lib-c11 run       : dataset_example65 : : : ../doc/examples/dataset_example65.cpp ]
+          [ test-btl-lib-c11 run       : dataset_example66 : : : ../doc/examples/dataset_example66.cpp ]
+          [ test-btl-lib-c11 run       : dataset_example67 : : : ../doc/examples/dataset_example67.cpp ]
+          [ test-btl-lib-c11 run-fail  : dataset_example68 : : : ../doc/examples/dataset_example68.cpp ]
                     
         ;
         
