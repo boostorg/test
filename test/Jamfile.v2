@@ -149,7 +149,14 @@ test-suite "unit_test_framework_test"
               test_fp_multiprecision_close_fraction.cpp ]
           [ test-btl-lib-c11 run  : test_fp_multiprecision_close_fraction_new_api : boost_unit_test_framework  : : 
               test_fp_multiprecision_close_fraction.cpp ]
+              
+              
+          # examples in datasets
+          [ test-btl-lib-c11 run-fail  : example68 : : : ../doc/examples/example68.cpp ]
+                    
         ;
+        
+        
 
 test-suite "multithreaded_test"
         :
