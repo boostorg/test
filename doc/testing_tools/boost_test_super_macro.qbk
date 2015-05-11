@@ -121,7 +121,7 @@ In more details, let's `c_a = (a_1,... a_n)` and `c_b = (b_1,... b_n)` be two co
 let `op` be one of the [link boost_test.users_guide.testing_tools.boost_test_super_macro.acceptable_statements binary comparison operators].
 
 ``
-BOOST_TEST(c_a op c_b, boost::test_tools::per_element() );
+__BOOST_TEST__(c_a op c_b, [classref boost::test_tools::per_element]() );
 ``
 
 is equivalent to
