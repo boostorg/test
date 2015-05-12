@@ -207,7 +207,7 @@ public:
     , m_strength( fpc_strength )
     , m_tested_rel_diff()
     {
-        BOOST_ASSERT_MSG( m_fraction_tolerance >= 0, "tolerance must not be negative!" ); // no reason for tolerance to be negative
+        BOOST_ASSERT_MSG( m_fraction_tolerance >= FPT(0), "tolerance must not be negative!" ); // no reason for tolerance to be negative
     }
 
     // Access methods
@@ -272,7 +272,7 @@ public:
     explicit    small_with_tolerance( FPT tolerance ) // <= absolute tolerance
     : m_tolerance( tolerance )
     {
-        BOOST_ASSERT( m_tolerance >= 0 ); // no reason for the tolerance to be negative
+        BOOST_ASSERT( m_tolerance >= FPT(0) ); // no reason for the tolerance to be negative
     }
 
     // Action method
