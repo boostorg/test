@@ -83,14 +83,15 @@ When an assertion fails, __BOOST_TEST__ reports details and values on the operan
 In the above example, the values of the operands are reported for inspection, which is more valuable as a copy
 of the full statement. However, we can observe that they are not treated symmetrically:
 
-* "`a - 1 < b`" reports "`13 - 1 >= 12`"
-* "`b > a - 1`" reports "`12 <= 12`"
+* "`a - 1 < b`" reports `"13 - 1 >= 12" failed`
+* "`b > a - 1`" reports `"12 <= 12" failed`
 
-An expression is constructed from the `statement` appearing in the `BOOST_TEST` macro. This expression allows report such
-as "`13 - 1 >= 12`". In details, what happens is the following:
+An expression is constructed from the `statement` appearing in the `BOOST_TEST` macro. This expression allows evaluation and reporting such
+as `"13 - 1 >= 12" failed` along with a copy of the `statement`, which contains more details than `"a - 1 < b" failed`. 
+In details, what happens is the following:
 
-# a special object, the `seed` of the expression, is composed 
-  from the left side of `statement`. This initial composition has highest precedence over the allowed operations. The expression below:
+# a special object, the `seed` of the expression, is composed from the left side of `statement`. 
+  This initial composition has highest precedence over the supported operations. The expression below:
 
     a op1 b op2 c op3 d
   
@@ -98,7 +99,8 @@ as "`13 - 1 >= 12`". In details, what happens is the following:
   
     ( seed a ) op1 b op2 c op3 d
 
-# The "`seed a`" evaluates to an `expression`. This expression has overloads for left to right associativity, and the 
+# The "`seed a`" returns an `expression` object that keep tracks of the type of `a`. This expression 
+  has overloads for left-to-right associativity, and the 
   operations `op1`, `op2` ... are /chained/ to the right of this expression object:
   
     a op1 b
@@ -107,6 +109,9 @@ as "`13 - 1 >= 12`". In details, what happens is the following:
   
     expression1 = seed a
     expression2 = expression1->operator op1(b)
+    
+  where `expression1` and `expression2` have internal type `decltype(a)` and `decltype(a op1 b)` respectively. As it can be 
+  observed in this example, the internal type allows for subsequent evaluation of the sub-expression `a` or `a op1 b`.
 
 # The C++ operators precedence rules apply in any case. What is seen by the expression is what is reachable from left to right
   composition. Any other operation that happens before it reaches the expression right operand is seen as a single operand. 
@@ -119,10 +124,14 @@ as "`13 - 1 >= 12`". In details, what happens is the following:
     ( seed a ) op1 (b op2 c)
 
   such that the final expression can only see `(b op2 c)` to its right, for which no further detail can be provided in 
-  case of failure. This is also the case for right-to-left associative operators, such as `!`, `~`, etc.
+  case of failure. This is also the case for /right-to-left/ associative operators, such as `!`, `~`, `-` (unary negation) etc.
+  
+  [tip Since the `expression` object is composed from left-to-right, it actually observes a chain of operations and
+    not the full expression tree.]
 
-[tip Since the `expression` object is composed from left-to-right, it actually observes a chain of operations and
- not the full expression tree.]
+# Once the full expression chain is built, it is evaluated as a chain of sub-expressions from left-to-right, exactly as the 
+  composition rule above. 
+
 
 The example below illustrates the construction of the left-to-right /chained/ expression.
  
