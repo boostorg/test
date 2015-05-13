@@ -94,6 +94,11 @@ rule test-btl-lib-mt ( test-rule : test-name : lib-name ? : pattern_file * : sou
           ] ;
 }
 
+rule test-btl-doc-example-as-test ( test-rule : test-name )
+{
+    return [ test-btl-lib-c11 $(test-rule)  : $(test-name) : : : ../doc/examples/$(test-name).cpp ] ;
+}
+
 test-suite "basics_test"
         :
           [ test-btl-lib run : class_properties_test : boost_unit_test_framework ]
@@ -152,34 +157,30 @@ test-suite "unit_test_framework_test"
               
               
           # examples in datasets
-          [ test-btl-lib-c11 run-fail  : dataset_example59 : : : ../doc/examples/dataset_example59.cpp ]
-          [ test-btl-lib-c11 run       : dataset_example61 : : : ../doc/examples/dataset_example61.cpp ]
-          [ test-btl-lib-c11 run       : dataset_example62 : : : ../doc/examples/dataset_example62.cpp ]
-          [ test-btl-lib-c11 run-fail  : dataset_example63 : : : ../doc/examples/dataset_example63.cpp ]
-          [ test-btl-lib-c11 run-fail  : dataset_example64 : : : ../doc/examples/dataset_example64.cpp ]
-          [ test-btl-lib-c11 run       : dataset_example65 : : : ../doc/examples/dataset_example65.cpp ]
-          [ test-btl-lib-c11 run       : dataset_example66 : : : ../doc/examples/dataset_example66.cpp ]
-          [ test-btl-lib-c11 run       : dataset_example67 : : : ../doc/examples/dataset_example67.cpp ]
-          [ test-btl-lib-c11 run-fail  : dataset_example68 : : : ../doc/examples/dataset_example68.cpp ]
+          [ test-btl-doc-example-as-test run-fail : dataset_example59 ]
+          [ test-btl-doc-example-as-test run      : dataset_example61 ]
+          [ test-btl-doc-example-as-test run      : dataset_example62 ]
+          [ test-btl-doc-example-as-test run-fail : dataset_example63 ]
+          [ test-btl-doc-example-as-test run-fail : dataset_example64 ]
+          [ test-btl-doc-example-as-test run      : dataset_example65 ]
+          [ test-btl-doc-example-as-test run      : dataset_example66 ]
+          [ test-btl-doc-example-as-test run      : dataset_example67 ]
+          [ test-btl-doc-example-as-test run-fail : dataset_example68 ]
           
           # examples in BOOST_TEST
-          [ test-btl-lib-c11 run       : boost_test_macro1                  : : : ../doc/examples/boost_test_macro1.cpp ]
-          [ test-btl-lib-c11 run-fail  : boost_test_macro2                  : : : ../doc/examples/boost_test_macro2.cpp ]
-          [ test-btl-lib-c11 run-fail  : boost_test_macro_bitwise           : : : ../doc/examples/boost_test_macro_bitwise.cpp ]
-          [ test-btl-lib-c11 run-fail  : boost_test_macro_container_c_array : : : ../doc/examples/boost_test_macro_container_c_array.cpp ]
-          [ test-btl-lib-c11 run       : boost_test_macro_container_value_type : : : ../doc/examples/boost_test_macro_container_value_type.cpp ]
-          [ test-btl-lib-c11 run-fail  : test_float_01                      : : : ../doc/examples/test_float_01.cpp ]
-          [ test-btl-lib-c11 run-fail  : test_float_02                      : : : ../doc/examples/test_float_02.cpp ]
-          [ test-btl-lib-c11 run-fail  : test_float_03                      : : : ../doc/examples/test_float_03.cpp ]
-          [ test-btl-lib-c11 run       : test_float_04                      : : : ../doc/examples/test_float_04.cpp ]
-          [ test-btl-lib-c11 run-fail  : boost_test_macro_message           : : : ../doc/examples/boost_test_macro_message.cpp ]
-          [ test-btl-lib-c11 run       : boost_test_macro_sequence          : : : ../doc/examples/boost_test_macro_sequence.cpp ]
-          [ test-btl-lib-c11 run-fail  : boost_test_macro_string            : : : ../doc/examples/boost_test_macro_string.cpp ]
+          [ test-btl-doc-example-as-test run      : boost_test_macro1                  ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_macro2                  ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_macro_bitwise           ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_macro_container_c_array ]
+          [ test-btl-doc-example-as-test run      : boost_test_macro_container_value_type ]
+          [ test-btl-doc-example-as-test run-fail : test_float_01                      ]
+          [ test-btl-doc-example-as-test run-fail : test_float_02                      ]
+          [ test-btl-doc-example-as-test run-fail : test_float_03                      ]
+          [ test-btl-doc-example-as-test run      : test_float_04                      ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_macro_message           ]
+          [ test-btl-doc-example-as-test run      : boost_test_macro_sequence          ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_macro_string            ]
 
-          
-
-          
-                    
         ;
         
         
