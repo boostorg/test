@@ -96,7 +96,7 @@ rule test-btl-lib-mt ( test-rule : test-name : lib-name ? : pattern_file * : sou
 
 rule test-btl-doc-example-as-test ( test-rule : test-name )
 {
-    return [ test-btl-lib-c11 $(test-rule)  : $(test-name) : : : ../doc/examples/$(test-name).cpp ] ;
+    return [ test-btl-lib-c11 $(test-rule)  : doc_$(test-name) : : : ../doc/examples/$(test-name).cpp ] ;
 }
 
 test-suite "basics_test"
