@@ -175,7 +175,7 @@ template<typename FPT2, typename FPT>
 inline FPT2
 fraction_tolerance( percent_tolerance_t<FPT> tolerance )
 {
-    return static_cast<FPT2>(tolerance.m_value)*static_cast<FPT2>(0.01); 
+    return FPT2(tolerance.m_value)*FPT2(0.01); 
 }
 
 //____________________________________________________________________________//
