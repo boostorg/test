@@ -265,7 +265,7 @@ public:
     {}
 #endif
 
-    // Specific expresson interface
+    // Specific expression interface
     T const&                    value() const
     {
         return m_value;
