@@ -113,8 +113,9 @@ In details, what happens is the following:
   where `expression1` and `expression2` have internal type `decltype(a)` and `decltype(a op1 b)` respectively. As it can be 
   observed in this example, the internal type allows for subsequent evaluation of the sub-expression `a` or `a op1 b`.
 
-# The C++ operators precedence rules apply in any case. What is seen by the expression is what is reachable from left to right
-  composition. Any other operation that happens before it reaches the expression right operand is seen as a single operand. 
+# The C++ operators precedence rules apply in any case. What is seen by the expression is what is reachable with left-to-right
+  composition. Any other operation that happens before it reaches the expression right operand is seen as a single operand and
+  is not developed further by the framework. 
   Let's suppose `op2` below has higher precedence than `op1`, then 
 
     a op1 b op2 c
@@ -123,8 +124,9 @@ In details, what happens is the following:
   
     ( seed a ) op1 (b op2 c)
 
-  such that the final expression can only see `(b op2 c)` to its right, for which no further detail can be provided in 
-  case of failure. This is also the case for /right-to-left/ associative operators, such as `!`, `~`, `-` (unary negation) etc.
+  In the above statement, the final expression can only see the result of `(b op2 c)` to its right, for which no further detail 
+  can be provided in case of failure. This is also the case for /right-to-left/ associative operators, such as `!`, `~`, `-` (unary negation) 
+  etc.
   
   [tip Since the `expression` object is composed from left-to-right, it actually observes a chain of operations and
     not the full expression tree.]
