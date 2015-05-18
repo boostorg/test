@@ -12,7 +12,9 @@
 BOOST_AUTO_TEST_CASE( test_op_precedence )
 {
   int a = 13, b = 2, c = 12;
+  // left term of == is expanded in the logs
   BOOST_TEST(a % b == c);
+  // right term of == is not expanded in the logs
   BOOST_TEST(a == c % b);
 }
 

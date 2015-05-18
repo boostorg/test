@@ -107,32 +107,43 @@ In details, what happens is the following:
     
   yields to the pseudo-code
   
-    expression1 = seed a
-    expression2 = expression1->operator op1(b)
+    expression1 = create-expression(a)
+    expression2 = create-expression(expression1, op1, b)
     
-  where `expression1` and `expression2` have internal type `decltype(a)` and `decltype(a op1 b)` respectively. As it can be 
-  observed in this example, the internal type allows for subsequent evaluation of the sub-expression `a` or `a op1 b`.
+  `expression1` and `expression2` keep track of their left and right operands, and the operation on those operands. The
+  expressions keep also track of the result type of the associated sub-expression. In the above example, `expression1` and `expression2` 
+  have result type `decltype(a)` and `decltype(a op1 b)` respectively. The result type allows for chaining 
+  sub-expressions.
 
 # The C++ operators precedence rules apply in any case. What is seen by the expression is what is reachable with left-to-right
-  composition. Any other operation that happens before it reaches the expression right operand is seen as a single operand and
-  is not developed further by the framework. 
+  composition. Any other operation that happens before it reaches the expression's right operand is not parsed as a sub-expression
+  and is seen as a single operand: the right operand is not developed further by the framework. 
   Let's suppose `op2` below has higher precedence than `op1`, then 
 
     a op1 b op2 c
   
   is equivalent to:
   
-    ( seed a ) op1 (b op2 c)
+    create-expression(create-expression(a), op1, (b op2 c))
 
   In the above statement, the final expression can only see the result of `(b op2 c)` to its right, for which no further detail 
-  can be provided in case of failure. This is also the case for /right-to-left/ associative operators, such as `!`, `~`, `-` (unary negation) 
+  can be provided in the logs. This is also the case for /right-to-left/ associative operators, such as `!`, `~`, `-` (unary negation) 
   etc.
   
-  [tip Since the `expression` object is composed from left-to-right, it actually observes a chain of operations and
+  [caution Since the `expression` object is composed from left-to-right, it actually observes a chain of operations and
     not the full expression tree.]
 
 # Once the full expression chain is built, it is evaluated as a chain of sub-expressions from left-to-right, exactly as the 
-  composition rule above. 
+  composition rule above. The evaluated elements are the ones of the expression itself. The expression
+  
+    a op1 b
+    
+  yields to the following evaluation chain:
+  
+    expression2.result = expression1.result op1 b
+    expression1.result = a
+    
+  The final expression of the statement is casted to a boolean, which is in turn evaluated by the __UTF__.
 
 
 The example below illustrates the construction of the left-to-right /chained/ expression.

@@ -170,6 +170,7 @@ test-suite "unit_test_framework_test"
           # examples in BOOST_TEST
           [ test-btl-doc-example-as-test run      : boost_test_macro1                  ]
           [ test-btl-doc-example-as-test run-fail : boost_test_macro2                  ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_macro3                  ]
           [ test-btl-doc-example-as-test run-fail : boost_test_macro_bitwise           ]
           [ test-btl-doc-example-as-test run-fail : boost_test_macro_container_c_array ]
           [ test-btl-doc-example-as-test run      : boost_test_macro_container_value_type ]
