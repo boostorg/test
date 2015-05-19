@@ -89,20 +89,7 @@ This is the part of test module that is responsible for cleanup operations.
 Matching setup and cleanup operations are frequently united into a single entity called test fixture.
 
 [#test_runner][h3 Test runner]
-This is an ['executive manager] that runs the show. The test runner's functionality should include
-the following interfaces and operations:
-
-* Entry point to a test module. This is usually either the function `main()` itself or single function that can be
-  invoked from it to start testing.
-* Initialize the __UTF__ based on runtime parameters
-* Select an output media for the test log and the test results report
-* Select test cases to execute based on runtime parameters
-* Execute all or selected test cases
-* Produce the test results report
-* Generate a test module result code.
-
-An advanced test runner may provide additional features, including interactive ['GUI] interfaces,
-test coverage and profiling support.
+This is an ['orchestrator] or a ['driver] that, given the test tree, ensures the test tree is initialized, tests are executed and necessary reports generated. For more information [link boost_test.adv_scenarios.test_module_runner_overview see here].
 
 [#test_log][h3 Test log]
 This is the record of all events that occur during the testing.
