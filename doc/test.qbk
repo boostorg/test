@@ -256,6 +256,7 @@
 [/ References]
 
 [section:utf_reference __UTF__ tools reference]
+[include test_organization/testorg_reference.qbk]
 [include testing_tools/testing_tools_reference.qbk]
 [endsect]
 

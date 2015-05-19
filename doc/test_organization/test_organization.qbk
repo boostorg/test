@@ -38,9 +38,7 @@ In the __UTF__, fixtures can be defined at the test case or the test suite level
 [include expected_failures.qbk]
 [include fixtures.qbk]
 [include decorators.qbk]
-
-[include testorg_reference.qbk]
-
+[include testorg_summary.qbk]
 
 
 [endsect] [/ test organization]
