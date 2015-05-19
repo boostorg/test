@@ -20,6 +20,7 @@
 #include <boost/limits.hpp>  // for std::numeric_limits
 #include <boost/static_assert.hpp>
 #include <boost/assert.hpp>
+#include <boost/mpl/bool.hpp>
 #include <boost/type_traits/is_floating_point.hpp>
 #include <boost/type_traits/is_array.hpp>
 #include <boost/utility/enable_if.hpp>
