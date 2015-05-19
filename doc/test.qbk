@@ -171,11 +171,14 @@
 [import ../examples/[name].output]
 [table
   [
-    [Code]
-    [Output]
+    [Comment][Code/Output]
   ]
   [
+    [[*Code]]
     [[example_code]]
+  ]
+  [
+    [[*Output]]
     [[example_output]]
   ]
 ]
