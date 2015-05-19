@@ -23,6 +23,7 @@ For a list of all supplied testing tools and usage examples, see the
 [include testing_floating_points.qbk]
 [include custom_predicates.qbk]
 [include testing_output_streams.qbk]
+[include testing_tools_summary.qbk]
 
 
 [endsect] [/ testing tools]
