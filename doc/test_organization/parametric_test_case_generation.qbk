@@ -98,13 +98,14 @@ The facilities provided by the __UTF__ addressed the issues described above:
   the execution of the tests over each sample of a dataset isolated, robust, repeatable and ease the debugging,
 * several datasets generating functions are provided by the __UTF__
 
+The remainder of this section covers the notions and feature provided by the __UTF__ about the data-driven test cases, in particular:
 
-This part is organized as follow:
-
-# [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.datasets First] the notion of *dataset* and *sample* will be introduced
-# then the declaration and registration of the data-driven test cases is explained,
-# the /operations/ on datasets are detailed
-# and finally the built-in dataset generators 
+# the notion of [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.datasets *dataset* and *sample*] is introduced
+# [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.datasets_auto_registration the declaration and registration]
+  of the data-driven test cases are explained,
+# the [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.operations /operations/] on datasets are detailed
+# and finally the built-in [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators dataset generators] 
+  are introduced.
 
 
 [/ ##################################################################################################################################  ]
