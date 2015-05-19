@@ -45,21 +45,4 @@ please continue to [link boost_test.adv_scenarios Advanced Scenarios Guide]
 
 [endsect] [/User's guide]
 
-[/ intro into usage variants]
-[include usage_variants.qbk]
-
-[/ organizing, generating and registering tests]
-[include test_organization/test_organization.qbk]
-
-[/ creating assertions]
-[include testing_tools/testing_tools.qbk]
-
-[/ controlling outputs]
-[include test_output/test_output.qbk]
-
-[/ command line + environment options]
-[include runtime_configuration/runtime_configuration.qbk]
-
-
-
 [/ EOF]

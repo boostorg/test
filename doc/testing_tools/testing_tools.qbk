@@ -20,9 +20,9 @@ For a list of all supplied testing tools and usage examples, see the
 
 [include boost_test_super_macro.qbk]
 [include assertions_severity_levels.qbk]
+[include testing_floating_points.qbk]
 [include custom_predicates.qbk]
 [include testing_output_streams.qbk]
-[include testing_floating_points.qbk]
-[include testing_tools_reference.qbk]
+
 
 [endsect] [/ testing tools]
