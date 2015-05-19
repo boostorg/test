@@ -145,7 +145,7 @@ See [link ref_BOOST_TEST_CASE_TEMPLATE here] for more details.
 [section:test_org_boost_test_case_parameter `BOOST_PARAM_TEST_CASE`]
 Declares and registers automatically a test case with one parameter. 
 
-See [link boost_test.users_guide.tests_organization.test_cases.param_test here] for more details.
+See [link boost_test.tests_organization.test_cases.param_test here] for more details.
 [endsect] [/section:test_org_boost_test_case_parameter]
 
 
@@ -183,7 +183,7 @@ BOOST_DATA_TEST_CASE(test_case_name, dataset, var1, var2..., varN)
 ``
 same as the second form, but for dataset of arity `N`. 
 
-See [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.datasets_auto_registration here] for more details.
+See [link boost_test.tests_organization.test_cases.test_case_generation.datasets_auto_registration here] for more details.
 
 [endsect] [/section:test_org_boost_test_dataset]
 
@@ -219,28 +219,28 @@ See [link ref_BOOST_TEST_DECORATOR here] for more details.
 [/ Fixtures ###############################################################################################]
 [section:test_org_boost_test_case_fixture `BOOST_FIXTURE_TEST_CASE`]
 Declares and registers a test case that uses a fixture. The class implementing the fixture should have the appropriate 
-[link boost_test.users_guide.tests_organization.fixtures.model interface].
+[link boost_test.tests_organization.fixtures.model interface].
 As any fixture, it is possible to have test assertions in the fixture class.
 
-See [link boost_test.users_guide.tests_organization.fixtures.case here] for more details.
+See [link boost_test.tests_organization.fixtures.case here] for more details.
 [endsect] [/section:test_org_boost_test_case_fixture]
 
 
 [section:test_org_boost_test_suite_fixture `BOOST_FIXTURE_TEST_SUITE`]
 Declares and registers a test suite that uses a fixture. Each test case in the test suite uses the fixture. 
-The class implementing the fixture should have the appropriate [link boost_test.users_guide.tests_organization.fixtures.model interface].
+The class implementing the fixture should have the appropriate [link boost_test.tests_organization.fixtures.model interface].
 As any fixture, it is possible to have test assertions in the fixture class.
 
-See [link boost_test.users_guide.tests_organization.fixtures.suite here] for more details.
+See [link boost_test.tests_organization.fixtures.suite here] for more details.
 [endsect] [/section:test_org_boost_test_case_fixture]
 
 [section:test_org_boost_global_fixture `BOOST_GLOBAL_FIXTURE`]
 Declares and registers a global fixture. The global fixture is called before any of the test case in the test tree is executed.
-The class implementing the fixture should have the appropriate [link boost_test.users_guide.tests_organization.fixtures.model interface]. 
+The class implementing the fixture should have the appropriate [link boost_test.tests_organization.fixtures.model interface]. 
 As any fixture, it is possible to have test assertions in the global fixture.
 
 
-See [link boost_test.users_guide.tests_organization.fixtures.global here] for more details.
+See [link boost_test.tests_organization.fixtures.global here] for more details.
 [endsect] [/section:test_org_boost_test_case_fixture]
 
 

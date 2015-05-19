@@ -83,7 +83,7 @@ Boost   : $BOOST_VERSION]] ]
     [`<Message content>`]]
 ]
 
-Advanced [link boost_test.users_guide.testing_tools testing tools] may produce more complicated error messages.
+Advanced [link boost_test.testing_tools testing tools] may produce more complicated error messages.
 
 [endsect] [/ human readable report]
 

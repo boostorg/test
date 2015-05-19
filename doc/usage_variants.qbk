@@ -9,9 +9,9 @@
 
 The __UTF__ supports three different usage variants:
 
-# [link boost_test.users_guide.usage_variants.single_header The single-header variant]
-# [link boost_test.users_guide.usage_variants.static_lib    The static library variant]
-# [link boost_test.users_guide.usage_variants.shared_lib    The shared library variant]
+# [link boost_test.usage_variants.single_header The single-header variant]
+# [link boost_test.usage_variants.static_lib    The static library variant]
+# [link boost_test.usage_variants.shared_lib    The shared library variant]
 
 In most cases you shouldn't have problems deciding which one to use, since there are
 clear reasons why would you prefer each one. Following sections should help you with the decision.

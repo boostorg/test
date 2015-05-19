@@ -24,7 +24,7 @@ run by hand of a knowledgeable person. So the __PEM__ wouldn't be worth using in
 Uniform error reporting can be also useful in test environments such as the Boost 
 regression tests. Be aware though in such case it might be preferable to use the 
 __UTF__, because it allows one to use the 
-[link boost_test.users_guide.testing_tools testing tools] and generate more detailed 
+[link boost_test.testing_tools testing tools] and generate more detailed 
 error information.
  
 [section Usage]

@@ -31,7 +31,7 @@ implement your own entry point into the test module (for example if you need to 
 __UTF__ interfaces involved in test runners operations. These are covered in the [*Test runners]
 section. Let me reiterate that you only need to this section if regular regular options for 
 customization of initialization logic like 
-[link boost_test.users_guide.tests_organization.fixtures fixtures] or [link boost_test.users_guide.tests_organization.decorators decorators]
+[link boost_test.tests_organization.fixtures fixtures] or [link boost_test.tests_organization.decorators decorators]
 are not sufficient for your purposes.
 
 [/ build and link with boost.test]

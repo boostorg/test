@@ -16,7 +16,7 @@ test suite creation and registration facilities:
 # Manually registered test suite
 
 In addition the __UTF__ presents a notion of the 
-[link boost_test.users_guide.tests_organization.test_suite.master_test_suite Master Test Suite]. 
+[link boost_test.tests_organization.test_suite.master_test_suite Master Test Suite]. 
 The most important reason to learn about this component is that it provides an ability to access 
 command line arguments supplied to a test module.
 
