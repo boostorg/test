@@ -157,15 +157,17 @@ The example below illustrates the construction of the left-to-right /chained/ ex
 [section:collections Sequences and collections comparison]
 
 Instead of comparing one singular value against another, there is often the need to compare /sequences/ or /sets/ of values. 
-Most of the time, the test for the full sequences is achieves through loops.
+Most of the time, the test for the full sequences is achieves through loops, or by using the native available operators 
+for which no addtional diagnostic is provided.
 
-__BOOST_TEST__ automatically detects [link what_is_a_sequence /containers/], and allows
-to specify an additional comparison method:
+__BOOST_TEST__ automatically detects *containers*, and let the user specify the comparison method:
 
-* using the /available/ [footnote either defined by the container or by the user] operator, which is mentioned as the 
+* using the /native/ [footnote either defined by the container or by the user] operator, which is mentioned as the 
   [link boost_test_coll_default_comp /default behaviour/].
 * using [link boost_test_coll_perelement element-wise] comparison
 * using [link boost_test_coll_default_lex lexicographical] comparison
+
+More details about what is considered to be a /containers/ is given [link what_is_a_sequence /here/].
 
 [#boost_test_coll_default_comp][h3 Default comparison]
 The default comparison dispatches to the existing overloaded operator. Given two containers `c_a` and `c_b`, 
@@ -249,13 +251,16 @@ order, for which the __UTF__ will provide additional information in case of fail
 ``
 BOOST_TEST(c_a op c_b, boost::test_tools::lexicographic() );
 ``
+The comparison is performed in the order given by forward iterators of the containers.
 
 [tip lexicographic comparison yields a total order on the containers: the statements `c_a < c_b` and 
  `c_b <= c_a` are mutually exclusive.]
 
 [bt_example boost_test_container_lex..BOOST_TEST container comparison using lexicographical order]
 
-[h4 Making lexicographic comparison the default]
+[/ TODO ]
+[/ [h4 Making lexicographic comparison the default] ]
+[/ TODO ]
 
 [h4 Requirements]
 
