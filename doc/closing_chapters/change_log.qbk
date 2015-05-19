@@ -12,7 +12,7 @@
 [h5 New major features]
 
 * __BOOST_TEST__ generic assertion
-* data driven test cases: supersedes the parametric test case (unary test cases)
+* [link boost_test.users_guide.tests_organization.test_cases.test_case_generation data driven test cases]: supersedes the parametric test case (unary test cases)
 * command line option for negating expressions with !
 * color output with __param_color_output__
 * test bed listing with __param_list_content__
