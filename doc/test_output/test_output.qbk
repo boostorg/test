@@ -208,7 +208,7 @@ with in a manner similar to standard `std::iostream` operation.
 [endsect]
 
 [include progress_display.qbk]
-[include testout_reference.qbk]
+[include testout_summary.qbk]
 
 [endsect]  [/test_output]
 
