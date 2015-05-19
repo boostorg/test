@@ -9,7 +9,7 @@
 #define BOOST_TEST_MODULE boost_test_sequence_per_element
 #include <boost/test/included/unit_test.hpp>
 #include <vector>
-
+#include <list>
 namespace tt = boost::test_tools;
 
 BOOST_AUTO_TEST_CASE( test_sequence_per_element )

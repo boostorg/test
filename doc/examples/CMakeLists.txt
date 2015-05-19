@@ -31,8 +31,8 @@ set(EXAMPLES_VARIADIC_MACROS_SRC
 
     boost_test_container_default.cpp
     boost_test_sequence_per_element.cpp
+    boost_test_container_lex.cpp
     boost_test_macro_container_c_array.cpp
-    boost_test_macro_container_value_type.cpp
     
     test_float_04.cpp
     )

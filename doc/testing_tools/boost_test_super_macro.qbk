@@ -159,7 +159,7 @@ The example below illustrates the construction of the left-to-right /chained/ ex
 Instead of comparing one singular value against another, there is often the need to compare /sequences/ or /sets/ of values. 
 Most of the time, the test for the full sequences is achieves through loops.
 
-__BOOST_TEST__ automatically detects [link what_is_a_sequence /containers/] that provide sequences of elements, and allows
+__BOOST_TEST__ automatically detects [link what_is_a_sequence /containers/], and allows
 to specify an additional comparison method:
 
 * using the /available/ [footnote either defined by the container or by the user] operator, which is mentioned as the 
@@ -196,7 +196,7 @@ Those sequences correspond to the content of the respective containers, in the o
 `op` be one of the [link boost_test.users_guide.testing_tools.boost_test_super_macro.acceptable_statements binary comparison operators].
 
 ``
-__BOOST_TEST__(c_a op c_b, boost::test_tools::per_element() );
+BOOST_TEST(c_a op c_b, boost::test_tools::per_element() );
 ``
 
 is equivalent to
@@ -236,15 +236,31 @@ For the sequences to be comparable element-wise, the following conditions should
   of the respective collections.
 
 [caution the resulting type of "`c_a == c_b`" is an [classref boost::test_tools::assertion_result assertion_result]. It is not
- possible to compose more that one comparison on the __BOOST_TEST__ statement:
+ possible to compose more that one comparison on the BOOST_TEST statement:
  
  `` 
-   __BOOST_TEST__(c_a == c_b == 42, boost::test_tools::per_element() ); // does not compile
+   BOOST_TEST(c_a == c_b == 42, boost::test_tools::per_element() ); // does not compile
  ``]
  
-[#boost_test_coll_default_lex][h3 Lexicographical comparison]
+[#boost_test_coll_default_lex][h3 Lexicographic comparison]
+By specifying the tag [classref boost::test_tools::lexicographic], the containers are compared using the /lexicographic/
+order, for which the __UTF__ will provide additional information in case of failure.
 
+``
+BOOST_TEST(c_a op c_b, boost::test_tools::lexicographic() );
+``
 
+[tip lexicographic comparison yields a total order on the containers: the statements `c_a < c_b` and 
+ `c_b <= c_a` are mutually exclusive.]
+
+[bt_example boost_test_container_lex..BOOST_TEST container comparison using lexicographical order]
+
+[h4 Making lexicographic comparison the default]
+
+[h4 Requirements]
+
+* the containers should be of the exact same type
+* `op` should be one of the ordered comparison operator `<`, `<=`, `>`, `>=`
 
 
 [#what_is_a_sequence][h3 What is a sequence?]
