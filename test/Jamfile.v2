@@ -171,16 +171,17 @@ test-suite "unit_test_framework_test"
           [ test-btl-doc-example-as-test run      : boost_test_macro1                  ]
           [ test-btl-doc-example-as-test run-fail : boost_test_macro2                  ]
           [ test-btl-doc-example-as-test run-fail : boost_test_macro3                  ]
-          [ test-btl-doc-example-as-test run-fail : boost_test_macro_bitwise           ]
-          [ test-btl-doc-example-as-test run-fail : boost_test_macro_container_c_array ]
-          [ test-btl-doc-example-as-test run      : boost_test_macro_container_value_type ]
           [ test-btl-doc-example-as-test run-fail : test_float_01                      ]
           [ test-btl-doc-example-as-test run-fail : test_float_02                      ]
           [ test-btl-doc-example-as-test run-fail : test_float_03                      ]
           [ test-btl-doc-example-as-test run      : test_float_04                      ]
-          [ test-btl-doc-example-as-test run-fail : boost_test_macro_message           ]
-          [ test-btl-doc-example-as-test run      : boost_test_macro_sequence          ]
-          [ test-btl-doc-example-as-test run-fail : boost_test_macro_string            ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_message                 ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_string                  ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_bitwise                 ]
+          # containers and sequences
+          [ test-btl-doc-example-as-test run-fail : boost_test_container_default       ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_sequence_per_element    ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_macro_container_c_array ]
 
         ;
         

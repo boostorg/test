@@ -25,10 +25,12 @@ set(EXAMPLES_VARIADIC_MACROS_SRC
     boost_test_macro1.cpp
     boost_test_macro2.cpp
     boost_test_macro3.cpp
-    boost_test_macro_bitwise.cpp
-    boost_test_macro_string.cpp
-    boost_test_macro_message.cpp
-    boost_test_macro_sequence.cpp
+    boost_test_bitwise.cpp
+    boost_test_string.cpp
+    boost_test_message.cpp
+
+    boost_test_container_default.cpp
+    boost_test_sequence_per_element.cpp
     boost_test_macro_container_c_array.cpp
     boost_test_macro_container_value_type.cpp
     
