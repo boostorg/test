@@ -31,7 +31,7 @@ The use of those tools is the recommanded approach.
 It is also possible to declare tests manually. In that regards, the design choices of __UTF__ were oriented to be the least intrusive
 and opted for a ['generic callback] approach, which signatures depends on the test case scenario. 
 
-[caution Generic test case construction design used by the __UTF__ causes the test case implementation (test function body)
+[caution Generic test case construction design used by the __UTF__ allows the test case implementation (test function body)
 and test case creation/registration points to be remote. As a result you may forget to register the test case
 and it's never going to be executed, even though it's present in test file. ]
 
