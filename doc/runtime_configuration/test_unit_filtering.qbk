@@ -215,7 +215,7 @@ suite_1/suite_2/test_2
   ]
 ]
 
-For the syntax productions describing the structure of `<test_set>` value see [link ref_param_run_test here].
+For the syntax productions describing the structure of `<test_set>` value see [link boost_test.utf_reference.rt_param_reference.run_test here].
 
 While using manual absolute test case specification ignores the default run status, it does not ignore the dynamic test dependencies. If test unit `B` depends on test unit `A` and test `B` is specified to be run by __param_run_test__, `A` is also run, even if it is not specified, and its failure may cause the execution of `B` to be skipped. Similarly, the failed check of the __decorator_precondition__ may cause the test selected test to be skipped.
 

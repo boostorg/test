@@ -35,6 +35,7 @@ parameter specification.
 All information about supported parameters is summarized below in the reference section.
 
 [include test_unit_filtering.qbk]
-[include runtime_config_reference.qbk]
+[include runtime_config_summary.qbk]
+
 
 [endsect] [/ runtime configuration]

@@ -22,8 +22,8 @@ consistency of the test case:
   
 These three levels of assertions are reported into the test log and output, as described in details in the 
 [link boost_test.testing_tools.tools_assertion_severity_level severity levels] section. The granularity of the
-report depends on the current [link boost_test.runtime_config.rt_param_reference.param_log_level log level] and 
-[link boost_test.runtime_config.rt_param_reference.param_report_level report level].
+report depends on the current [link boost_test.utf_reference.rt_param_reference.log_level log level] and 
+[link boost_test.utf_reference.rt_param_reference.report_level report level].
 
 A unique interface is given by three variants of the `BOOST_TEST` assertion:
 
