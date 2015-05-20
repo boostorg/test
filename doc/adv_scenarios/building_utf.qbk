@@ -8,7 +8,7 @@
 
 
 [section:build_utf Building the __UTF__]
-In case you would like to use the [link boost_test.users_guide.usage_variants.shared_lib shared library variant] or the [link boost_test.users_guide.usage_variants.static_lib static library variant] of the __UTF__, the library needs to be built. 
+In case you would like to use the [link boost_test.usage_variants.shared_lib shared library variant] or the [link boost_test.usage_variants.static_lib static library variant] of the __UTF__, the library needs to be built. 
 Building the __UTF__ is in fact quite easy.
 
 In the sequel, we define

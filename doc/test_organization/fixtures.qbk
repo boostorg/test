@@ -65,7 +65,7 @@ there are several more or less minor practical issues with this pure C++ based f
 
 While there is little the __UTF__ can do to address these issues for manually registered test units, it's
 possible to resolve them for test units that are automatically registered. To do this the __UTF__ defines a
-[link boost_test.users_guide.tests_organization.fixtures.model generic fixture model] - fixed interfaces that both setup and
+[link boost_test.tests_organization.fixtures.model generic fixture model] - fixed interfaces that both setup and
 teardown fixture functions should comply to. Based on the generic fixture model, the __UTF__ presents solution for
 the following tasks:
 

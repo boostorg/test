@@ -20,7 +20,7 @@ Each test unit (either test case or test suite) has an associated ['default run 
 
 Initially, the master test suite has default run status set to ['true]. All other test units have default run status set to ['inherit]. This implies that, unless any additional configuration is applied, all tests are designated to be run.
 
-You can set a different default run status in any test unit by using [link boost_test.users_guide.tests_organization.decorators decorators]: __decorator_disabled__, __decorator_enabled__ and __decorator_enable_if__. The default run status is set once, upon testing program initialization, and cannot be changed. The disabled tests are not executed by default, but are still present in the test tree, and are listed along with other tests when you use command-line argument __param_list_content__. 
+You can set a different default run status in any test unit by using [link boost_test.tests_organization.decorators decorators]: __decorator_disabled__, __decorator_enabled__ and __decorator_enable_if__. The default run status is set once, upon testing program initialization, and cannot be changed. The disabled tests are not executed by default, but are still present in the test tree, and are listed along with other tests when you use command-line argument __param_list_content__. 
 
 [bt_example decorator_20..default run status]
 

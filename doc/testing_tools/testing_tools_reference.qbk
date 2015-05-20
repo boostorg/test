@@ -7,143 +7,9 @@
  /]
 
 
-[section:testing_tool_ref Reference]
+[section:testing_tool_ref Testing tools]
 
 
-[table
-  [
-    [Assertions]
-    [Short description]
-  ] 
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_TEST__]
-    [General purpose assertion macro.]
-  ]
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL__]
-    [Simple validation of a boolean predicate value.]
-  ]
-
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_BITWISE_EQUAL__]
-    [Bitwise equality test of two elements.]
-  ]
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_EQUAL__]
-    [Equality test of two elements.]
-  ]
-
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_EQUAL_COLLECTIONS__]
-    [Element-wise equality test of two collections.]
-  ]
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_CLOSE__]
-    [Floating point comparison using a percentage of deviation.]
-  ]
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_CLOSE_FRACTION__]
-    [Floating point comparison using the fraction of the compared operands.]
-  ]
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_EXCEPTION__]
-    [Exception detection and validation check.]
-  ]
-
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_GE__]
-    [Comparison of two values (with convenient reporting).]
-  ]  
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_GT__]
-    [Comparison of two values (with convenient reporting).]
-  ]  
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_LE__]
-    [Comparison of two values (with convenient reporting).]
-  ]  
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_LT__]
-    [Comparison of two values (with convenient reporting).]
-  ]  
-    
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_MESSAGE__]
-    [Same as __BOOST_LEVEL__ with a custom message in case of failure.]
-  ]  
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_NE__]
-    [Comparison of two values (with convenient reporting).]
-  ]   
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_NO_THROW__]
-    [Checks an expression does not throw any exception.]
-  ]   
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_PREDICATE__]
-    [Checks a list of arguments against a predicate functor.]
-  ]   
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_SMALL__]
-    [Checks a value is small according to a tolerance.]
-  ]   
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_THROW__]
-    [Checks an expression throws a specific type of expression.]
-  ]   
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_ERROR__]
-    [Logs an error message, fails but does not abort the current test.]
-  ]   
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_FAIL__]
-    [Logs an error message, fails and aborts the current test.]
-  ]     
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_IS_DEFINED__]
-    [Checks at runtime whether or not the supplied preprocessor symbol is defined.]
-  ]   
-  
-  
-]
 
 [/ ###############################################################################################]
 [section:assertion_boost_test_super_macro `BOOST_TEST`]
@@ -171,18 +37,18 @@
 
 ``
 
-The full documentation of this macro is located [link boost_test.users_guide.testing_tools.boost_test_super_macro here].
+The full documentation of this macro is located [link boost_test.testing_tools.boost_test_super_macro here].
 
 * `"failure message"` is a C-string printed in case of failure in place of the default message. 
-  See [link boost_test.users_guide.testing_tools.boost_test_super_macro.option_message this section] for 
+  See [link boost_test.testing_tools.boost_test_super_macro.option_message this section] for 
   more details.
 * `floating_point_comparison_manipulation` is one of the floating point comparison manipulators. 
-  See [link boost_test.users_guide.testing_tools.boost_test_super_macro.floating_point this section]
+  See [link boost_test.testing_tools.boost_test_super_macro.floating_point this section]
    for more details.
 * [classref boost::test_tools::bitwise] is a manipulator indicating that the comparison should be performed bitwise. See 
-  [link boost_test.users_guide.testing_tools.boost_test_super_macro.bitwise this section] for more details
+  [link boost_test.testing_tools.boost_test_super_macro.bitwise this section] for more details
 * [classref boost::test_tools::bitwise] is a manipulator indicating that the comparison should be performed bitwise. See 
-  [link boost_test.users_guide.testing_tools.boost_test_super_macro.bitwise this section] for more details
+  [link boost_test.testing_tools.boost_test_super_macro.bitwise this section] for more details
 * [classref boost::test_tools::per_element] is a manipulator indicating that the comparison should be performed on each element, in sequence, rather
   than on containers. See 
   [link boost_test_coll_perelement this section] for more details
@@ -191,7 +57,7 @@ The full documentation of this macro is located [link boost_test.users_guide.tes
 
 [h3 Restrictions on the acceptable statements]
 There are some restrictions on the supported statements. Those are explained in details in
-[link boost_test.users_guide.testing_tools.boost_test_super_macro.acceptable_statements this] section.
+[link boost_test.testing_tools.boost_test_super_macro.acceptable_statements this] section.
 
 [endsect]
 
@@ -310,7 +176,7 @@ __BOOST_LEVEL_PREDICATE__ family of tools with explicit `check_is_close` invocat
 
 The first parameter is the ['left] compared value. The second parameter is the
 ['right] compared value. Last third parameter defines the tolerance for the comparison in
-[link boost_test.users_guide.testing_tools.testing_floating_points [*percentage units]].
+[link boost_test.testing_tools.testing_floating_points [*percentage units]].
 
 [note It is required for left and right parameters to be of the same floating point type. You will need to explicitly
       resolve any type mismatch to select which type to use for comparison.
@@ -347,7 +213,7 @@ To check for the weak relationship use __BOOST_LEVEL_PREDICATE__ family of tools
 
 The first parameter is the ['left] compared value. The second parameter is the
 ['right] compared value. Last third parameter defines the tolerance for the comparison as
-[link boost_test.users_guide.testing_tools.testing_floating_points [*fraction of absolute values being compared]].
+[link boost_test.testing_tools.testing_floating_points [*fraction of absolute values being compared]].
 
 [note It is required for left and right parameters to be of the same floating point type. You will need to explicitly
       resolve any type mismatch to select which type to use for comparison.]

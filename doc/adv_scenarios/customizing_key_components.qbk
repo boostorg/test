@@ -8,7 +8,7 @@
 
 [section:customizing_key_components Customizing key components of __UTF__]
 
-Typically, in order to use the __UTF__ efficiently, it is sufficient to declare the test units and select the desired build mode as described in section [link boost_test.users_guide.usage_variants Usage variants]. Occasionally, it is necessary to customize the framework in a more advanced fashion. The __UTF__ allows you to customize the three components:
+Typically, in order to use the __UTF__ efficiently, it is sufficient to declare the test units and select the desired build mode as described in section [link boost_test.usage_variants Usage variants]. Occasionally, it is necessary to customize the framework in a more advanced fashion. The __UTF__ allows you to customize the three components:
 
 # Test module /entry point/,
 # Test module /initialization routine/,

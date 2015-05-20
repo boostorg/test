@@ -127,11 +127,11 @@ boostbook standalone
     <xsl:param>boost.root=../../../..
     <xsl:param>html.stylesheet=boostbook.css
     <xsl:param>chapter.autolabel=0
-    <xsl:param>toc.max.depth=10
+    <xsl:param>toc.max.depth=3
     <xsl:param>toc.section.depth=10
     <xsl:param>chunk.section.depth=4
     <xsl:param>chunk.first.sections=1
-    <xsl:param>generate.section.toc.level=0
+    <xsl:param>generate.section.toc.level=3
     <format>pdf:<xsl:param>img.src.path=$(images_location)/
     <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/test/doc/html
     <dependency>doxygen_reference_generated_doc

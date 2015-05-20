@@ -22,7 +22,7 @@ For example:
 
 If an assertion designated by
 the tool passes, confirmation message can be printed in log output [footnote to manage what messages appear
-in the test log stream, set the proper [link boost_test.users_guide.test_output.log_runtime_config log level]].
+in the test log stream, set the proper [link boost_test.test_output.log_runtime_config log level]].
 If an assertion designated by the tool failed, depending on the level following
 will happened [footnote in some cases log message can be slightly different to reflect failed tool
 specifics]:

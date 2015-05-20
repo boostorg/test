@@ -89,7 +89,7 @@ The example below employs the alternative test module initialization function sp
 [bt_example example05..Binary free function bound to set of different parameter pairs]
 
 The __UTF__ also presents an alternative method for parametrized test case creation, which is covered in 
-[link boost_test.users_guide.tests_organization.test_cases.param_test this] section.
+[link boost_test.tests_organization.test_cases.param_test this] section.
 
 [endsect]
 

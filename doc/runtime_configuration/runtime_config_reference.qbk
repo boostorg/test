@@ -37,7 +37,7 @@ acceptable values list. All values are case sensitive and are required to exactl
   [/ ###############################################################################################]
   [
     [__param_show_progress__]
-    [Makes the framework to print progress information. More details [link boost_test.users_guide.test_output.test_output_progress here].]
+    [Makes the framework to print progress information. More details [link boost_test.test_output.test_output_progress here].]
   ]
   
 
@@ -169,7 +169,7 @@ acceptable values list. All values are case sensitive and are required to exactl
 
 [#ref_param_show_progress][section `show_progress`]
 
-Makes the framework to print progress information. More details [link boost_test.users_guide.test_output.test_output_progress here].
+Makes the framework to print progress information. More details [link boost_test.test_output.test_output_progress here].
 
 [h4 Acceptable values]
 

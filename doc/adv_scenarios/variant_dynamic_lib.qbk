@@ -62,7 +62,7 @@ should be defined in one compilation unit only.
 
 [section:dynamic_lib_variant_manual_registration Manual test registration]
 The automatic generation of the test module works well with auto-registrated tests 
-(explained in detail in [link boost_test.users_guide.tests_organization.test_cases Test cases] section), 
+(explained in detail in [link boost_test.tests_organization.test_cases Test cases] section), 
 but needs some tweaking for tests registered manually. 
 
 In that case, __BOOST_TEST_NO_MAIN__ may be defined in order to prevent the generation of the test module initialisation. 

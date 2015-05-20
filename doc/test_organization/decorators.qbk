@@ -56,7 +56,7 @@ There is another way of associating a decorator set with test units. Macro __BOO
 
 [bt_example decorator_00..explicit decorator declaration]
 
-In the above example a decorator is applied to a [link boost_test.users_guide.tests_organization.test_cases.test_case_generation data-driven test case]. Macro __BOOST_DATA_TEST_CASE__ cannot take the decorator set as one of its arguments, therefore the explicit decorator declaration is used. Macro __BOOST_DATA_TEST_CASE__ generates a sequence of 4 test cases. The decorator set is applied to each of them.
+In the above example a decorator is applied to a [link boost_test.tests_organization.test_cases.test_case_generation data-driven test case]. Macro __BOOST_DATA_TEST_CASE__ cannot take the decorator set as one of its arguments, therefore the explicit decorator declaration is used. Macro __BOOST_DATA_TEST_CASE__ generates a sequence of 4 test cases. The decorator set is applied to each of them.
 
 Another use case for the explicit decorator declaration is when you intend for your test program to compile also on compilers without variadic macros. In this case it is recommended that you use the more verbose syntax. 
 It is summarized in the following table:
@@ -290,7 +290,7 @@ sum of expected failures in all nested test units:
 In the above example, we first run all test cases with four failed assertions. The total number of expected failures 
 is 3: 1 (for test `suite1`) + 2 (for `test1`). Because the expected failure count is exceeded, the error is reported. 
 In the second case, we only run test case `suite1/test1`: two failures occur, two failures are expected, therefore no 
-error is reported. For more information about expected failures see [link boost_test.users_guide.tests_organization.expected_failures here].
+error is reported. For more information about expected failures see [link boost_test.tests_organization.expected_failures here].
 [endsect] [/ section expected_failures]
 
 
@@ -336,7 +336,7 @@ within the test case or test suite.
 
 [bt_example decorator_12..decorator fixture]
 
-For other ways of using fixtures, see [link boost_test.users_guide.tests_organization.fixtures here].
+For other ways of using fixtures, see [link boost_test.tests_organization.fixtures here].
 
 [endsect] [/ section fixture]
 
