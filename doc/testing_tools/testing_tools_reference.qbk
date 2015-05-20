@@ -30,11 +30,8 @@
   // element-wise comparison, for containers
   BOOST_TEST(statement, boost::test_tools::per_element() );
   
-  // element-wise comparison, for containers
+  // lexicographic comparison, for containers
   BOOST_TEST(statement, boost::test_tools::lexicographic() );
-  
-  
-
 ``
 
 The full documentation of this macro is located [link boost_test.testing_tools.boost_test_super_macro here].
@@ -47,12 +44,10 @@ The full documentation of this macro is located [link boost_test.testing_tools.b
    for more details.
 * [classref boost::test_tools::bitwise] is a manipulator indicating that the comparison should be performed bitwise. See 
   [link boost_test.testing_tools.boost_test_super_macro.bitwise this section] for more details
-* [classref boost::test_tools::bitwise] is a manipulator indicating that the comparison should be performed bitwise. See 
-  [link boost_test.testing_tools.boost_test_super_macro.bitwise this section] for more details
 * [classref boost::test_tools::per_element] is a manipulator indicating that the comparison should be performed on each element, in sequence, rather
   than on containers. See 
   [link boost_test_coll_perelement this section] for more details
-* [classref boost::test_tools::lexicographic] is a manipulator indicating that the comparison should be performed with the lexicographical order. See 
+* [classref boost::test_tools::lexicographic] is a manipulator indicating that the comparison should be performed with the lexicographic order. See 
   [link boost_test_coll_default_lex this section] for more details
 
 [h3 Restrictions on the acceptable statements]
