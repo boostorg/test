@@ -9,7 +9,7 @@
 [section:adv_scenarios Advanced Usage Scenarios]
 
 If you are reading this chapter, this means that the wide range of tools and interfaces covered 
-in the [link boost_test.users_guide User Guide] are not sufficient for the testing scenario
+in the previous sections are not sufficient for the testing scenario
 you have in mind. You are here to bend the __UTF__ to your will and ... we are not going to 
 stop you. Instead we'll try to guide you so that some dark corners do not look scary.  
 

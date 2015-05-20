@@ -6,7 +6,6 @@
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
-[section:intro Introduction]
 
 [role epigraph Test everything that could possibly break]
 [role epigraph --XP maxim]
@@ -167,7 +166,5 @@ The __UTF__ provides a lot of features that you can discover when needed. The ne
 section will help you to navigate to the part of the documentation that best suits your needs. 
 
 [endsect] [/ 5min starter]
-
-[endsect] [/ Introduction]
 
 [/ EOF]

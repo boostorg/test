@@ -6,7 +6,7 @@
  /]
 
 [/ ##################################################################### ]
-[section:users_guide The __UTF__: User's Guide]
+[section:users_guide How to read this documentation]
 
 Without further ado, I'd like to start ... but where? It's not obvious what is the best order to describe
 the framework. One can use bottom up approach, starting with with basics and going up to cover real 

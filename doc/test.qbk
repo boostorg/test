@@ -209,8 +209,10 @@
 [/=============================================================================]
 
 [/ introduction material and general presentation ]
-[include introduction.qbk]
-[include users_guide.qbk]
+[section:intro Introduction]
+[include introduction/introduction.qbk]
+[include introduction/how_to_read.qbk]
+[endsect]
 
 [/ ##### Users guide ##### ]
 [/ intro into usage variants]
