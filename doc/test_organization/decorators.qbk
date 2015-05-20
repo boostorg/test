@@ -52,13 +52,17 @@ test program to also work for compilers without variadic macros, use explicit de
 
 [h3 Explicit decorator declaration]
 
-There is another way of associating a decorator set with test units. Macro __BOOST_TEST_DECORATOR__ indicates that its set of decorators is to be applied to the test unit or /test case sequence/ that immediately follows the declaration.
+There is another way of associating a decorator set with test units. Macro __BOOST_TEST_DECORATOR__ indicates that its set 
+of decorators is to be applied to the test unit or /test case sequence/ that immediately follows the declaration.
 
 [bt_example decorator_00..explicit decorator declaration]
 
-In the above example a decorator is applied to a [link boost_test.tests_organization.test_cases.test_case_generation data-driven test case]. Macro __BOOST_DATA_TEST_CASE__ cannot take the decorator set as one of its arguments, therefore the explicit decorator declaration is used. Macro __BOOST_DATA_TEST_CASE__ generates a sequence of 4 test cases. The decorator set is applied to each of them.
+In the above example a decorator is applied to a [link boost_test.tests_organization.test_cases.test_case_generation data-driven test case]. 
+Macro __BOOST_DATA_TEST_CASE__ cannot take the decorator set as one of its arguments, therefore the explicit decorator declaration is used. 
+Macro __BOOST_DATA_TEST_CASE__ generates a sequence of 4 test cases. The decorator set is applied to each of them.
 
-Another use case for the explicit decorator declaration is when you intend for your test program to compile also on compilers without variadic macros. In this case it is recommended that you use the more verbose syntax. 
+Another use case for the explicit decorator declaration is when you intend for your test program to compile also on compilers without 
+variadic macros. In this case it is recommended that you use the more verbose syntax. 
 It is summarized in the following table:
 
 [table

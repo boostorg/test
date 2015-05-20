@@ -8,28 +8,32 @@
 
 
 [section:test_cases Test cases]
-A test case has to be constructed based on some kind of
-function and registered in a test tree, so that the test runner knows how to invoke it. There are different
-possible designs for the test case construction problem: inheritance from the predefined base class, specifically
-named member function and so on. The __UTF__ opted to avoid classed altogether and to use the 
-least intrusive ['generic callback] approach.
+A test case is a unit of execution that is ran by the [link test_runner test runner]. It contains instructions and 
+[link boost_test.testing_tools.boost_test_super_macro assertions], and its execution is monitored by the __UTF__. 
+Informations about the execution are recorded, and a log/report is produced. 
 
-The facility the __UTF__ provides requires specific function signature, and allows
-adopting any function or function object that matches the signature as a test case. The signatures the __UTF__
-supports are:
+The test runner should be informed of the test case in order to run it: the test case should be *registered* for its 
+inclusion into the /test tree/. 
 
-* Nullary function: 
-* Unary function: 
-* Nullary function template
+The __UTF__ covers the following test case scenarios:
 
-Generic test case construction design used by the __UTF__ causes the test case implementation (test function body)
+* *test cases without parameters*: those are similar to the run of a function in the controlled environment of the test runner.
+* *test cases with parameters*: this usage is intended to run the same function with potentially many different parameters,
+  each call with a different parameter being handled by the test runner.
+* *test cases on template*: the scenario is to test the same template implementation against several type.
+
+The test case have a different *declaration* for each of the above scenarios. 
+
+Several tools are provided for /declaring/ *and* /registering/ a test cases, automatically, at the same time and in-place. 
+The use of those tools is the recommanded approach. 
+
+[h4 Manual registration]
+It is also possible to declare tests manually. In that regards, the design choices of __UTF__ were oriented to be the least intrusive
+and opted for a ['generic callback] approach, which signatures depends on the test case scenario. 
+
+[caution Generic test case construction design used by the __UTF__ causes the test case implementation (test function body)
 and test case creation/registration points to be remote. As a result you may forget to register the test case
-and it's never going to be executed, even though it's present in test file. To alleviate this issue
-the __UTF__ presents facilities for automated (in place) test case creation and registration in the test tree. These
-facilities sacrifice some generality and work for selected test function signatures only. But the result is that
-library users are relieved from the necessity to manually register test cases. These facilities are the most
-user-friendly and are recommended to be used whenever possible. In addition they support automated registration
-of test suites, thus allowing whole test tree to be created without any use of manual registration.
+and it's never going to be executed, even though it's present in test file. ]
 
 The single test module may mix both automated and manual test case
 registration. In other words, within the same test module you can have both test cases implemented remotely and

@@ -8,7 +8,7 @@
 [section:param_test Parametrized test cases]
 
 [caution the functionalities presented on this page have been superseded by the 
- [link boost_test.tests_organization.test_cases.test_case_generation Data-driven test case] framework.]
+ [link boost_test.tests_organization.test_cases.test_case_generation Data-driven test case] facility.]
 
 
 Some tests are required to be repeated for a series of different input parameters. One way to achieve this is

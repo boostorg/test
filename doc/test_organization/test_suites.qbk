@@ -7,8 +7,8 @@
 
 [section:test_suite Test suite]
 If you consider test cases as leaves on the test tree, the test suite can be considered as branch and the master
-test suite as a trunk. Unlike real trees though, our tree in many cases consists only of leaves attached
-directly to the trunk. This is common for all test cases to reside directly in the master test suite. If you do
+test suite as a root. Unlike real trees though, our tree in many cases consists only of leaves attached
+directly to the root. This is common for all test cases to reside directly in the master test suite. If you do
 want to construct a hierarchical test suite structure the __UTF__ provides both manual and automated
 test suite creation and registration facilities:
 

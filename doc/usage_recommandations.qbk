@@ -19,7 +19,7 @@ to build (if not build yet), install and change you makefiles/project settings w
 form of shorter compilation time. Why do you need to make your compiler do the same work over and over again?
 
 [h4 If you use only free function based test cases advance to the automatic registration facility]
-It's really easy to switch to automatic registration. And you don't need to worry about forgotten test case 
+It's really easy to switch to automatic registration. And you don't need to worry about forgotten test cases.
 
 [h4 To find location of first error reported by test tool within reused template function, use special hook within framework headers]
 In some cases you are reusing the same template based code from within one test case (actually I recommend 

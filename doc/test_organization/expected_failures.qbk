@@ -7,6 +7,10 @@
  
 [section:expected_failures Expected failures specification]
 
+[caution the functionalities presented on this page have been superseded by the 
+ [link boost_test.tests_organization.decorators.decorator_expected_failures `expected_failures`] decorator.]
+
+
 While in a perfect world all test assertions should pass in order for a test module to pass, in some situations
 it is desirable to temporarily allow particular tests to fail. For example, where a particular feature is not
 implemented yet and one needs to prepare a library for the release or when particular test fails on some

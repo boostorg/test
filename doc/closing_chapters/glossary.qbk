@@ -32,7 +32,7 @@ Logically test body is a collection of [link test_assertion test assertions] wra
 
 [#test_tree][h3 Test tree]
 This is a hierarchical structure of [link test_suite test suites] (non-leaf nodes) and
-[link test_case test cases] (leaf nodes).
+[link test_case test cases] (leaf nodes). More details can be found [link boost_test.tests_organization here].
 
 [#test_unit][h3 Test unit]
 This is a collective name when referred to either a [link test_suite test suite] or
