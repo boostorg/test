@@ -17,8 +17,6 @@ Typically, in order to use the __UTF__ efficiently, it is sufficient to declare 
 TODO...
 
 [/ ######################################################## ]
-[include customizing_entry_point.qbk]
 [include module_initialization.qbk]
-[include customizing_test_runner.qbk]
 
 [endsect] [/section:customizing_key_components]

@@ -6,7 +6,7 @@
  /]
 
 [/ ##################################################################### ]
-[section:adv_scenarios The __UTF__: Advanced Usage Scenarios]
+[section:adv_scenarios Advanced Usage Scenarios]
 
 If you are reading this chapter, this means that the wide range of tools and interfaces covered 
 in the [link boost_test.users_guide User Guide] are not sufficient for the testing scenario
@@ -39,6 +39,9 @@ are not sufficient for your purposes.
 [include adv_scenarios/entry_point_overview.qbk]
 [include adv_scenarios/test_module_init_overview.qbk]
 [include adv_scenarios/test_module_runner_overview.qbk]
+[include adv_scenarios/single_header_customizations.qbk]
+[include adv_scenarios/static_lib_customizations.qbk]
+[include adv_scenarios/shared_lib_customizations.qbk]
 [include adv_scenarios/building_and_linking.qbk]
 [include adv_scenarios/customizing_key_components.qbk]
 
