@@ -170,17 +170,13 @@
 [import ../examples/[name].cpp]
 [import ../examples/[name].output]
 [table
-  [
-    [Comment][Code/Output]
-  ]
-  [
-    [[*Code]]
-    [[example_code]]
-  ]
-  [
-    [[*Output]]
-    [[example_output]]
-  ]
+  [[Code]]
+  [[[example_code]]]
+]
+
+[table
+  [[Output]]
+  [[[example_output]]]
 ]
 ] [/ end bt_example]
 
