@@ -48,7 +48,7 @@ int main( int, char* [] )
 There are several issues with above test.
 
 # You need to convert `is_valid` result in proper result code.
-# Would exception happen in test_object construction of method is_valid invocation, the program will crash.
+# Would exception happen in test_object construction of method `is_valid` invocation, the program will crash.
 # You won't see any output, would you run this test manually.
 
 The __UTF__ solves all these issues. To integrate with it above program needs to be changed to:
