@@ -120,12 +120,7 @@ __BOOST_AUTO_TEST_SUITE__.
 See [link ref_BOOST_AUTO_TEST_SUITE here] for more details.
 [endsect] [/section:test_org_boost_auto_test_suite_end]
 
-[/ Decorator ##############################################################################################]
-[section:test_org_boost_test_decorator `BOOST_TEST_DECORATOR`]
-Defines ['decorators] for a test unit. 
 
-See [link boost_test.tests_organization.decorators here] for more details.
-[endsect] [/section:test_org_boost_test_decorator]
 
 [/ Fixtures ###############################################################################################]
 [section:test_org_boost_test_case_fixture `BOOST_FIXTURE_TEST_CASE`]
@@ -157,6 +152,56 @@ See [link boost_test.tests_organization.fixtures.global here] for more details.
 
 
 
+
+[/ Decorators ##############################################################################################]
+[section:test_org_boost_test_decorator `BOOST_TEST_DECORATOR`]
+Defines ['decorators] for a test unit. 
+
+See [link boost_test.tests_organization.decorators here] for more details.
+[endsect] [/section:test_org_boost_test_decorator]
+
+
+[/-----------------------------------------------------------------]
+[section:decorator_description description (decorator)]
+
+``
+description(const_string message);
+``
+
+Attaches an arbitrary string to the test unit.
+See [link boost_test.tests_organization.semantic here] for more details.
+
+[endsect] [/ decorator description]
+
+
+
+
+[/-----------------------------------------------------------------]
+[section:decorator_enabled enabled / disabled (decorator)]
+
+``
+enabled();
+disabled();
+``
+
+Sets the test unit's __default_run_status__ to ['true] or ['false]. 
+See [link boost_test.tests_organization.enabling here] for more details.
+
+[endsect] [/ section:decorator_enabled]
+
+
+[/-----------------------------------------------------------------]
+[section:decorator_enable_if enable_if (decorator)]
+
+``
+template <bool Condition> enable_if();
+``
+Sets the test unit's __default_run_status__ to ['true] or ['false], depending on a compilation-time 
+constant.
+See [link boost_test.tests_organization.enabling here] for more details.
+
+
+[endsect] [/ section enable_if]
 
 
 

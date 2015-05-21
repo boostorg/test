@@ -150,13 +150,14 @@
 
 [/ decorators]
 [def __decorator_label__                        [link boost_test.tests_organization.tests_grouping.decorator_label `label`]] 
-[def __decorator_enabled__            [link boost_test.tests_organization.decorators.decorator_enabled `enabled`]]
-[def __decorator_disabled__           [link boost_test.tests_organization.decorators.decorator_enabled `disabled`]]
-[def __decorator_enable_if__          [link boost_test.tests_organization.decorators.decorator_enable_if `enable_if`]]
+[def __decorator_enabled__                      [link boost_test.utf_reference.test_org_reference.decorator_enabled `enabled`]]
+[def __decorator_disabled__                     [link boost_test.utf_reference.test_org_reference.decorator_enabled `disabled`]]
+[def __decorator_enable_if__                    [link boost_test.utf_reference.test_org_reference.decorator_enable_if `enable_if`]]
 [def __decorator_depends_on__                   [link boost_test.tests_organization.tests_dependencies.decorator_depends_on `depends_on`]]
 [def __decorator_precondition__                 [link boost_test.tests_organization.tests_dependencies.decorator_precondition `precondition`]]
 [def __decorator_fixture__            [link boost_test.tests_organization.decorators.decorator_fixture `fixture`]]
 [def __decorator_expected_failures__  [link boost_test.tests_organization.decorators.decorator_expected_failures `expected_failures`]]
+[def __decorator_description__                  [link boost_test.utf_reference.test_org_reference.decorator_description   `description`]]
 
 [/=============================================================================]
 [/ templates ]

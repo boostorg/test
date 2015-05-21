@@ -1,0 +1,31 @@
+[/
+ / Copyright (c) 2015 Raffi Enficiaud
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+
+[section:timeout Test case time-out]
+
+
+[/-----------------------------------------------------------------]
+
+[section:timeout timeout (decorator)]
+
+``
+timeout(unsigned seconds);
+``
+
+Decorator `timeout` specifies time (in seconds) that sets the maximum allowed duration of a test case. If this time is 
+exceeded the test unit is forced to stop and is reported as failure.
+
+[bt_example decorator_11..decorator timeout]
+
+Applied at test suite level, this decorator has no effect.
+
+[caution Decorator `timeout` has no effect on Windows build. This feature is not implemented on Windows yet.]
+
+[endsect] [/ section timeout]
+
+[endsect]

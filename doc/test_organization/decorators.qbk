@@ -163,61 +163,11 @@ Throughout the reminder of this documentation we use only the concise syntax.
 
 
 
-[section:decorator_enabled enabled / disabled]
-
-``
-enabled();
-disabled();
-``
-
-Decorator `disabled` indicates that the test unit's __default_run_status__ is ['false]. This means that that test cases 
-inside this test unit will not be run by default, unless otherwise specified. Decorator `enabled` indicates that the 
-test unit's default run status is ['true]. This means that that test cases inside this test unit will be run by default, 
-unless otherwise specified.
-
-[bt_example decorator_05..decorators enabled and disabled]
-
-Syntactically, it is possible to apply both decorators `enabled` and `disabled` to the same test unit. This is reported 
-as set-up error when the test program is run.
-
-[endsect] [/ section:decorator_enabled]
-
-[/-----------------------------------------------------------------]
-
-[section:decorator_enable_if enable_if]
-
-``
-template <bool Condition> enable_if();
-``
-
-Decorator `enable_if` indicates that the test unit's __default_run_status__ is either ['true] or ['false], depending on 
-the value of `Condition`. This means that that test cases inside this test unit will or will not be run by default. 
-
-[bt_example decorator_06..decorator enable_if]
-
-Decorator `enable_if<true>()` is equivalent to decorator `enabled()`. Similarly, `enable_if<false>()` is equivalent to 
-decorator `disabled()`. 
-
-[endsect] [/ section enable_if]
 
 
 
 
-[section:description description]
 
-``
-description(const_string message);
-``
-
-Decorator `description` attaches an arbitrary string to the test unit. All strings attached to test units can be 
-displayed when running a test program with parameter __param_list_content__. This can be used for conveying  information 
-from the person who composes the test tree to the person who will be running the test program. Applying more than one 
-decorator `description` to the same test unit means that the two (or more) strings will be concatenated.
-
-[bt_example decorator_09..decorator description]
-
-
-[endsect] [/ section description]
 
 
 [/-----------------------------------------------------------------]
@@ -243,24 +193,7 @@ error is reported. For more information about expected failures see [link boost_
 [endsect] [/ section expected_failures]
 
 
-[/-----------------------------------------------------------------]
 
-[section:timeout timeout]
-
-``
-timeout(unsigned seconds);
-``
-
-Decorator `timeout` specifies time (in seconds) that sets the maximum allowed duration of a test case. If this time is 
-exceeded the test unit is forced to stop and is reported as failure.
-
-[bt_example decorator_11..decorator timeout]
-
-Applied at test suite level, this decorator has no effect.
-
-[caution Decorator `timeout` has no effect on Windows build. This feature is not implemented on Windows yet.]
-
-[endsect] [/ section timeout]
 
 [section:decorator_fixture fixture]
 

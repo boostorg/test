@@ -58,6 +58,8 @@ These units are the *test cases*.
 [include fixtures.qbk]
 [include managing_tests_dependencies.qbk]
 [include logical_grouping.qbk]
+[include test_enabling_disabling.qbk]
+[include semantic.qbk]
 [include expected_failures.qbk]
 [include testorg_summary.qbk]
 
