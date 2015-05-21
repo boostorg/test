@@ -489,7 +489,7 @@ You can use this parameter to switch between these modes, by passing the paramet
 [/ ###############################################################################################]
 [section:list_content `list_content`]
 
-Lists the content of the tests that would be run. If set on the command line, no test will be ran and the content
+Lists the content of the tests that would be run. If set on the command line, no test will be run and the content
 of the test bed will be printed, one test per line.
 
 [h4 Environment variable]

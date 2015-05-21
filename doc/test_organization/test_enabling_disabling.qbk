@@ -9,7 +9,7 @@
 [section:enabling Enabling or disabling test unit execution]
 
 The __UTF__ provides a way for enabling or disabling a test unit execution. If a test case is disabled, it will not
-be ran by the test runner. If a test suite is disabled, its status is inherited by the test units under its subtree, unless 
+be run by the test runner. If a test suite is disabled, its status is inherited by the test units under its subtree, unless 
 otherwise specified.
 The run status can be overriden by the command line parameters: by providing the appropriate arguments to the command line,
 a disabled test may still be executed. The [link boost_test.runtime_config.test_unit_filtering test unit filtering] section 
