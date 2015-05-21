@@ -216,6 +216,19 @@ See [link boost_test.tests_organization.tests_grouping here] for more details.
 
 [endsect] [/ section label]
 
-[/-----------------------------------------------------------------]
 
+[/-----------------------------------------------------------------]
+[section:decorator_precondition precondition (decorator)]
+
+[def __class_assertion_result__ [classref boost::test_tools::assertion_result test_tools::assertion_result]]
+``
+typedef boost::function<__class_assertion_result__ (test_unit_id)> predicate_t;
+
+precondition(predicate_t predicate);
+``
+
+Associates a ['predicate] with a test unit that will determine its __default_run_status__ at run-time. 
+See [link boost_test.tests_organization.enabling here] for more details.
+
+[endsect] [/ section decorator_precondition]
 [endsect] [/reference test organization]

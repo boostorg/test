@@ -34,29 +34,7 @@ skipped because `test3` has failed; `test5` is skipped because `s1/test2` is dis
 
 [endsect] [/ section decorator_depends_on]
 
-[/-----------------------------------------------------------------]
 
-[section:decorator_precondition precondition (decorator)]
-
-[def __class_assertion_result__ [classref boost::test_tools::assertion_result test_tools::assertion_result]]
-``
-typedef boost::function<__class_assertion_result__ (test_unit_id)> predicate_t;
-
-precondition(predicate_t predicate);
-``
-Decorator `precondition` associates a ['predicate] with a test unit. Before the test unit is executed, the predicate 
-is evaluated with the test unit's ID passed as the argument. If it evaluates to `false`, execution of the test unit is 
-skipped. Skipping the test suite means skipping the execution of every test unit inside.
-
-[bt_example decorator_08..decorator precondition]
-
-In the example above, the user defined a custom predicate `if_either` that evaluates to `true` if at least one of the 
-two specified tests passed. (It assumes that the tests are registered in the specific order.) Test case `test3` has a 
-precondition that at either `test1` or `test2` passed. The precondition is satisfied, therefore `test3` is run 
-(and fails). Test case `test4` has a precondition that either `test2` or `test3` passed. Since they both failed, the 
-precondition is not satisfied, therefore `test4` is skipped.
- 
-[endsect] [/ section decorator_precondition]
 
 [/-----------------------------------------------------------------]
 
