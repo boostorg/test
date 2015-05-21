@@ -5,7 +5,7 @@
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
-[section:hello Hello the testing world!]
+[section:hello A testing framework, what for?]
 How should a test program report errors? Displaying an error message is an obvious possibility:
 
 [/snippet9 deleted]
@@ -69,10 +69,8 @@ Now, you not only receive uniform result code, even in case of exception, but al
 __BOOST_CHECK__ tool, would you choose to see it. Is there any other ways to perform checks? The following example test 
 program shows several different ways to detect and report an error in the `add()` function.
 
-[import ../snippet/snippet12.cpp]
+[import ../../snippet/snippet12.cpp]
 [snippet12]
 
 
 [endsect] [/section:hello]
-
-
