@@ -61,7 +61,7 @@ There are some restrictions on the supported statements. Those are explained in 
 [/ DECORATORS ###############################################################################################]
 [/-----------------------------------------------------------------]
 
-[section:decorator_expected_failures expected_failures]
+[section:decorator_expected_failures expected_failures (decorator)]
 
 ``
 expected_failures(counter_t number);
