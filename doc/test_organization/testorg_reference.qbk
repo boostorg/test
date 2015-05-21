@@ -124,7 +124,7 @@ See [link ref_BOOST_AUTO_TEST_SUITE here] for more details.
 [section:test_org_boost_test_decorator `BOOST_TEST_DECORATOR`]
 Defines ['decorators] for a test unit. 
 
-See [link ref_BOOST_TEST_DECORATOR here] for more details.
+See [link boost_test.tests_organization.decorators here] for more details.
 [endsect] [/section:test_org_boost_test_decorator]
 
 [/ Fixtures ###############################################################################################]

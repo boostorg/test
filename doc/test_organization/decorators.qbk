@@ -5,7 +5,7 @@
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
-[#ref_BOOST_TEST_DECORATOR][section:decorators Decorators]
+[section:decorators Decorators]
 
 Decorators is a mechanism for attaching various pieces of information to test units in a uniform manner. These pieces 
 of information affect how the test tree is processed during the execution of the program. They range from test unit 
@@ -26,8 +26,8 @@ has one associated ['decorator:] __decorator_label__. This means that when test 
 this test case will match to label `"trivial"`. Test case `test_case2` has three associated decorators: two of type 
 `label` and one of type `description`.
 
-
-[h3 Suite-level decorators]
+[/ ############################]
+[section Suite-level decorators]
 
 Similarly, it is possible to apply decorators to test suites. 
 
@@ -50,7 +50,10 @@ as well as by label `"simple"` both result in executing all three test cases fro
 [caution The above syntax for decorators requires that the compiler supports variadic macros (added in C++11). If you intend for your 
 test program to also work for compilers without variadic macros, use explicit decorator syntax, described below.]
 
-[h3 Explicit decorator declaration]
+[endsect]
+
+[/ ############################]
+[section Explicit decorator declaration]
 
 There is another way of associating a decorator set with test units. Macro __BOOST_TEST_DECORATOR__ indicates that its set 
 of decorators is to be applied to the test unit or /test case sequence/ that immediately follows the declaration.
@@ -156,22 +159,9 @@ BOOST_FIXTURE_TEST_CASE_TEMPLATE(test_case, T, type_list, Fx)
 
 Throughout the reminder of this documentation we use only the concise syntax.
 
-[/=================================================================]
+[endsect]
 
-[section:decorator_label label]
 
-``
-label(const_string label_name);
-``
-
-Decorator `label` associates a test unit with label `label_name`. This is useful when one wants to execute test units 
-selectively by label. It is possible to associate more than one label with a test unit. Decorating a test suite with 
-label `L` is equivalent to decorating every test unit inside with `L`.
-
-[bt_example decorator_04..decorator label]
-[endsect] [/ section label]
-
-[/-----------------------------------------------------------------]
 
 [section:decorator_enabled enabled / disabled]
 
@@ -211,51 +201,6 @@ decorator `disabled()`.
 [endsect] [/ section enable_if]
 
 
-[/-----------------------------------------------------------------]
-
-[section:decorator_depends_on depends_on]
-
-``
-depeneds_on(const_string dependent_test_name);
-``
-
-Decorator `depends_on` associates the decorated test case (call it `B`) with another test case (call it `A`) specified 
-by name. This affects the processing the test tree in two ways. First, test case `A` is ordered to be run before `B`, 
-irrespective of the order in which they were declared or added to the test tree. Second, the execution of `B` is 
-skipped if `A` is either disabled or skipped or is executed and marked as failed. 
-
-[bt_example decorator_07..decorator depends_on]
-
-In the above scenario, test case `test3` is run (and fails) because `s1/test1` has been run and succeeded; `test4` is 
-skipped because `test3` has failed; `test5` is skipped because `s1/test2` is disabled.
-
-[endsect] [/ section decorator_depends_on]
-
-[/-----------------------------------------------------------------]
-
-[section:decorator_precondition precondition]
-
-[def __class_assertion_result__ [classref boost::test_tools::assertion_result test_tools::assertion_result]]
-``
-typedef boost::function<__class_assertion_result__ (test_unit_id)> predicate_t;
-
-precondition(predicate_t predicate);
-``
-Decorator `precondition` associates a ['predicate] with a test unit. Before the test unit is executed, the predicate 
-is evaluated with the test unit's ID passed as the argument. If it evaluates to `false`, execution of the test unit is 
-skipped. Skipping the test suite means skipping the execution of every test unit inside.
-
-[bt_example decorator_08..decorator precondition]
-
-In the example above, the user defined a custom predicate `if_either` that evaluates to `true` if at least one of the 
-two specified tests passed. (It assumes that the tests are registered in the specific order.) Test case `test3` has a 
-precondition that at either `test1` or `test2` passed. The precondition is satisfied, therefore `test3` is run 
-(and fails). Test case `test4` has a precondition that either `test2` or `test3` passed. Since they both failed, the 
-precondition is not satisfied, therefore `test4` is skipped.
- 
-[endsect] [/ section decorator_precondition]
-
-[/-----------------------------------------------------------------]
 
 
 [section:description description]

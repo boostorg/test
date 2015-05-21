@@ -8,7 +8,7 @@
 [/ ##################################################################### ]
 [section:users_guide How to read this documentation]
 
-Without further ado, I'd like to start ... but where? It's not obvious what is the best order to describe
+Without further ado, we would like to start ... but where? It's not obvious what is the best order to describe
 the framework. One can use bottom up approach, starting with with basics and going up to cover real 
 interfaces based on them. The downside is that you'll have to dig through the multiple pages of information
 you may not never need in real life. One can follow the order of test program execution. From test 
@@ -18,31 +18,32 @@ initialization options may not necessarily be important for average user, while 
 is.
 
 Well ... This is a User's Guide after all. Let's go by what *you*, as a user, need to know to 
-successfully use the __UTF__. Thus I follow the order of decisions you have to make and order
+successfully use the __UTF__. Thus we follow the order of decisions you have to make and order
 of complexity of the problems you might encounter. If you find yourself faced with some unclear term feel 
-free to jump directly to the [link boost_test.section_glossary Glossary] section, where short definitions 
+free to jump directly to the [link boost_test.section_glossary glossary] section, where short definitions 
 for all used terms were collected. And if you want to jump right into coding the 
-[link boost_test.tutorials Tutorials] section would be a better place to start.
+[link boost_test.intro.5min_starter "the 5min starter guide"] would be a better place to start.
 
 The __UTF__ has several usage variants. And the first decision you have to make is which one to use. These
 variants are covered in section dedicated to [link boost_test.usage_variants Usage variants]. 
 The next step, probably the most important for you, is to start writing test cases, bind them in test 
 suites and implement your checks. First two topics are covered in 
-[link boost_test.tests_organization Tests organization] section, while
-[link boost_test.testing_tools testing tools] section arms you with 
+[link boost_test.tests_organization "Declaring and organizing tests"] section, while
+[link boost_test.testing_tools "Writing unit tests"] section arms you with 
 rich set of tools enough to implement almost arbitrary check you need. 
 [link boost_test.tests_organization.fixtures Here] you will also learn about 
 adding fixtures to your test units.
 
-Next you'll learn how to understand and manipulate the __UTF__ output in a __test_outputs__ section. 
+Next you'll learn how to understand and manipulate the __UTF__ output in the 
+[link boost_test.test_output "Controlling output"] section. 
 At that point you should be able to build and run most simple test modules and almost inevitable find a need
 to configure how the test module is executed. Whether you want to change output format, select which test 
 case to run or run test cases in random order these and may other runtime configuration parameters are 
 described in [link boost_test.runtime_config Runtime configuration] section.
 
 If you can't find answer to your questions here or if you believe you need even more configuration options, 
-please continue to [link boost_test.adv_scenarios Advanced Scenarios Guide]
+please continue to [link boost_test.adv_scenarios Advanced usage scenario].
 
-[endsect] [/User's guide]
+[endsect] [/ how to read]
 
 [/ EOF]

@@ -1,0 +1,30 @@
+[/
+ / Copyright (c) 2015 Raffi Enficiaud
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+[section:tests_grouping Grouping tests into logical units]
+
+
+
+[/=================================================================]
+
+[section:decorator_label label (decorator)]
+
+``
+label(const_string label_name);
+``
+
+Decorator `label` associates a test unit with label `label_name`. This is useful when one wants to execute test units 
+selectively by label. It is possible to associate more than one label with a test unit. Decorating a test suite with 
+label `L` is equivalent to decorating every test unit inside with `L`.
+
+[bt_example decorator_04..decorator label]
+[endsect] [/ section label]
+
+[/-----------------------------------------------------------------]
+
+
+[endsect]

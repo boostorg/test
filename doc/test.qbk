@@ -34,7 +34,6 @@
 
 [def __floating_points_testing_tools__    [link boost_test.testing_tools.testing_floating_points Floating point comparison algorithms]]
 
-[def __test_outputs__                     [link boost_test.test_output test outputs]]
 [def __runtime_configuration__            [link boost_test.runtime_config runtime configuration]]
 [def __output_test_stream_tool__          [link boost_test.testing_tools.output_stream_testing output test stream]]
 
@@ -150,12 +149,12 @@
 [def __default_run_status__                     [link ref_default_run_status ['default run status]]]
 
 [/ decorators]
-[def __decorator_label__              [link boost_test.tests_organization.decorators.decorator_label `label`]] 
+[def __decorator_label__                        [link boost_test.tests_organization.tests_grouping.decorator_label `label`]] 
 [def __decorator_enabled__            [link boost_test.tests_organization.decorators.decorator_enabled `enabled`]]
 [def __decorator_disabled__           [link boost_test.tests_organization.decorators.decorator_enabled `disabled`]]
 [def __decorator_enable_if__          [link boost_test.tests_organization.decorators.decorator_enable_if `enable_if`]]
-[def __decorator_depends_on__         [link boost_test.tests_organization.decorators.decorator_depends_on `depends_on`]]
-[def __decorator_precondition__       [link boost_test.tests_organization.decorators.decorator_precondition `precondition`]]
+[def __decorator_depends_on__                   [link boost_test.tests_organization.tests_dependencies.decorator_depends_on `depends_on`]]
+[def __decorator_precondition__                 [link boost_test.tests_organization.tests_dependencies.decorator_precondition `precondition`]]
 [def __decorator_fixture__            [link boost_test.tests_organization.decorators.decorator_fixture `fixture`]]
 [def __decorator_expected_failures__  [link boost_test.tests_organization.decorators.decorator_expected_failures `expected_failures`]]
 

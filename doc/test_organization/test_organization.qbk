@@ -23,10 +23,10 @@ disadvantages in single test function approach:
 The above points should make it clear that it's preferable to split a [link ref_test_module test module] into smaller units.
 These units are the *test cases*.
 
-[variablelist Section overview
+[variablelist Subjects covered by this section
   [
     [Declaration]
-    [The __UTF__ provides supports several methods for declaring a [link boost_test.tests_organization.test_cases test case].
+    [The __UTF__ supports several methods for declaring a [link boost_test.tests_organization.test_cases test case].
     Test cases might be implemented by free functions, function object, with or without parameters/data, and as template functions
     to be run against various types. ]
   ]
@@ -39,8 +39,8 @@ These units are the *test cases*.
   ]
   [
     [Attributes]
-    [It is possible to attach /attributes/ to test unit by using [link boost_test.tests_organization.decorators decorators].
-     Those attributes allow a fine grained control over several aspects of test-units, such as /labels/, /dependencies/, 
+    [It is possible to declare /attributes/ for test unit by using [link boost_test.tests_organization.decorators decorators].
+     Those attributes allow a fine grained control over several aspects of test-units, such as /logical grouping/, /dependencies/, 
      /expected failures/, etc.]
   ]
   [
@@ -56,6 +56,8 @@ These units are the *test cases*.
 [include test_suites.qbk]
 [include decorators.qbk]
 [include fixtures.qbk]
+[include managing_tests_dependencies.qbk]
+[include logical_grouping.qbk]
 [include expected_failures.qbk]
 [include testorg_summary.qbk]
 
