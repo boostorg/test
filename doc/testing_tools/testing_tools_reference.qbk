@@ -57,6 +57,28 @@ There are some restrictions on the supported statements. Those are explained in 
 [endsect]
 
 
+
+[/ DECORATORS ###############################################################################################]
+[/-----------------------------------------------------------------]
+
+[section:timeout timeout (decorator)]
+
+``
+timeout(unsigned seconds);
+``
+
+Specifies a time-out for a *test-case*, above which the test-case is forced to stop and reported as failing.
+See [link boost_test.testing_tools.timeout here] for more details.
+
+[endsect] [/ section timeout]
+
+
+
+
+
+
+
+[/ DEPRECATED API]
 [/ ###############################################################################################]
 [#ref_BOOST_level][section:assertion_boost_level `BOOST_<level>`]
 

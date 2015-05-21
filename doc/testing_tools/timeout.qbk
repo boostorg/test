@@ -6,26 +6,17 @@
  /]
 
 
-[section:timeout Test case time-out]
+[section:timeout Time-out for test cases]
 
-
-[/-----------------------------------------------------------------]
-
-[section:timeout timeout (decorator)]
-
-``
-timeout(unsigned seconds);
-``
-
-Decorator `timeout` specifies time (in seconds) that sets the maximum allowed duration of a test case. If this time is 
-exceeded the test unit is forced to stop and is reported as failure.
+The __UTF__ provides the decorator __decorator_timeout__ that specifies a time-out for a specific *test case*, 
+The argument time (in seconds) sets the maximum allowed duration of a test case. If this time is 
+exceeded the test case is forced to stop and is reported as failure.
 
 [bt_example decorator_11..decorator timeout]
 
-Applied at test suite level, this decorator has no effect.
+[note Applied at test suite level, this decorator has no effect.]
 
 [caution Decorator `timeout` has no effect on Windows build. This feature is not implemented on Windows yet.]
 
-[endsect] [/ section timeout]
 
 [endsect]
