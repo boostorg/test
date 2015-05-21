@@ -15,8 +15,8 @@ stop you. Instead we'll try to guide you so that some dark corners do not look s
 
 In most cases the __UTF__ is going to be supplied for you either as part of your system libraries
 or set of libraries used by your companies. Yet if you are facing the necessity to build your 
-own static or dynamic library of the __UTF__ or need to customize the build for any reason 
-[link boost_test.adv_scenarios.build_lib Build] section covers all the necessary steps.
+own static or dynamic library of the __UTF__ or need to customize the build for any reason, section
+[link boost_test.adv_scenarios.build_utf Building the __UTF__] covers all the necessary steps.
 
 To streamline the experience of setting up your test module, the __UTF__ provides some default 
 initialization logic for them. Usually the default test module initialization will work just fine,
@@ -42,8 +42,9 @@ are not sufficient for your purposes.
 [include adv_scenarios/single_header_customizations.qbk]
 [include adv_scenarios/static_lib_customizations.qbk]
 [include adv_scenarios/shared_lib_customizations.qbk]
-[include adv_scenarios/building_and_linking.qbk]
-[include adv_scenarios/customizing_key_components.qbk]
+[include adv_scenarios/external_test_runner.qbk]
+[include adv_scenarios/obsolete_init_func.qbk]
+[include adv_scenarios/link_reference.qbk]
 
 [/=============================================================================]
 

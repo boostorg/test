@@ -43,7 +43,7 @@ int main(int argc, char* argv[], char* envp[])
 ```]]
 ]
 
-[note The reason for defining __BOOST_TEST_ALTERNATIVE_INIT_API__ is described [link boost_test.adv_scenarios.customizing_key_components.old_custom_module_init here].]
+[note The reason for defining __BOOST_TEST_ALTERNATIVE_INIT_API__ is described [link boost_test.adv_scenarios.obsolete_init_func here].]
 
 
 [endsect] [/section:entry_point]
@@ -56,7 +56,7 @@ In the static library variant, customizing the main entry point is quite trouble
 > b2 --with-test link=static define=__BOOST_TEST_ALTERNATIVE_INIT_API__ install
 ```
 
-[warning This alteration of the static library will affect everybody else who is linking against the library. Consider using the [link boost_test.adv_scenarios.customizing_key_components.old_custom_module_init obsolete test initialization function], which requires no rebuilding. Alternatively, it may be less intrusive to switch to the [link boost_test.adv_scenarios.shared_lib_customizations shared library usage variant] instead.]
+[warning This alteration of the static library will affect everybody else who is linking against the library. Consider using the [link boost_test.adv_scenarios.obsolete_init_func obsolete test initialization function], which requires no rebuilding. Alternatively, it may be less intrusive to switch to the [link boost_test.adv_scenarios.shared_lib_customizations shared library usage variant] instead.]
 
 In one of the source files, you now have to define your custom initialization function with signature:
 
@@ -88,7 +88,7 @@ bool init_unit_test()
 ```]]
 ]
 
-[note The reason for defining __BOOST_TEST_ALTERNATIVE_INIT_API__ is described [link boost_test.adv_scenarios.customizing_key_components.old_custom_module_init here].]
+[note The reason for defining __BOOST_TEST_ALTERNATIVE_INIT_API__ is described [link boost_test.adv_scenarios.obsolete_init_func here].]
 
 
 [endsect] [/section:init_func]
