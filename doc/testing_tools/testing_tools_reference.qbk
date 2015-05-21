@@ -61,6 +61,19 @@ There are some restrictions on the supported statements. Those are explained in 
 [/ DECORATORS ###############################################################################################]
 [/-----------------------------------------------------------------]
 
+[section:decorator_expected_failures expected_failures]
+
+``
+expected_failures(counter_t number);
+``
+
+Indicates the expected failures for a test unit. 
+See [link boost_test.testing_tools.expected_failures here] for more details.
+
+[endsect] [/ section expected_failures]
+
+
+[/-----------------------------------------------------------------]
 [section:timeout timeout (decorator)]
 
 ``

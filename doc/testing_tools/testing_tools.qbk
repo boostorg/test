@@ -22,6 +22,7 @@ or the [link boost_test.utf_reference.testing_tool_ref reference].
 [include assertions_severity_levels.qbk]
 [include testing_floating_points.qbk]
 [include timeout.qbk]
+[include expected_failures.qbk]
 [include custom_predicates.qbk]
 [include testing_output_streams.qbk]
 
