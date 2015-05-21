@@ -8,21 +8,13 @@
 [section:tests_dependencies Managing test dependencies]
 
 Dependencies among tests are managed by means of [link boost_test.tests_organization.decorators decorators]. 
-Two types of dependencies can be handled by the __UTF__:
+Dependencies in the __UTF__ affect two dimensions of test units, which are:
 
-* the order of execution of the tests
-* the conditional run of a test dependending on the status or a function/predicate of the parent tests
+* the order of execution of these units
+* the execution of a test unit, which is conditionned by the state of its parents
 
 
-[/-----------------------------------------------------------------]
-
-[section:decorator_depends_on depends_on (decorator)]
-
-``
-depends_on(const_string dependent_test_name);
-``
-
-Decorator `depends_on` associates the decorated test case (call it `B`) with another test case (call it `A`) specified 
+The decorator __decorator_depends_on__ associates the decorated test case (call it `B`) with another test case (call it `A`) specified 
 by name. This affects the processing the test tree in two ways. First, test case `A` is ordered to be run before `B`, 
 irrespective of the order in which they were declared or added to the test tree. Second, the execution of `B` is 
 skipped if `A` is either disabled or skipped or is executed and marked as failed. 
@@ -32,7 +24,8 @@ skipped if `A` is either disabled or skipped or is executed and marked as failed
 In the above scenario, test case `test3` is run (and fails) because `s1/test1` has been run and succeeded; `test4` is 
 skipped because `test3` has failed; `test5` is skipped because `s1/test2` is disabled.
 
-[endsect] [/ section decorator_depends_on]
+
+
 
 
 

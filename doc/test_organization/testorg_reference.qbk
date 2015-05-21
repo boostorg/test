@@ -162,6 +162,20 @@ See [link boost_test.tests_organization.decorators here] for more details.
 
 
 [/-----------------------------------------------------------------]
+[section:decorator_depends_on depends_on (decorator)]
+
+``
+depends_on(const_string dependent_test_name);
+``
+
+Indicates a dependency from the decorated test unit (the child) to the designed test unit `dependent_test_name` (the parent).
+See [link boost_test.tests_organization.tests_dependencies here] for more details.
+
+[endsect] [/ section decorator_depends_on]
+
+
+
+[/-----------------------------------------------------------------]
 [section:decorator_description description (decorator)]
 
 ``
