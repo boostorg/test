@@ -5,35 +5,8 @@
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
-[section:module_initialization Test module initialization]
 
-As explained in the introductory material, the ['module initialization] part of the __UTF__ prepares the test module for execution,
-including:
-
-* the construction of the test tree
-* some optional custom initialisations
-
-[caution 
-The elementary question one should ask himself is the following: 
-[:["Is there really a need for implementing the module initialisation by yourself?]]
-]
-
-The argument against the implementation of a custom ['module initialization] are the following:
-
-* The test tree can be easily and efficiently constructed automatically (covered in details in 
-  [link boost_test.tests_organization Tests organization] section).
-* __UTF__ also provides means to [link boost_test.adv_scenarios.build_lib.link_references.link_boost_test_module_macro rename] the ['master test suite].
-* Most of the command line parameters, except the ones used by the __UTF__, may be accessed through the ['master test suite]
-* [link boost_test.tests_organization.fixtures.global Global fixtures] may provide ['states] that can be accessed during the lifetime of the tests, 
-  with proper and controlled initialization and release. This approach covers several use case that might need the tweaking of the 
-  initialization functions, adding the robustness of the __UTF__ in the initialization and release themselves.
-* If the test module is old and the need for ['module initialization] is just driven by legacy code, then considering updating this
-  part might be a good choice.
-  
-From the points above, if the need for ['module initialization] is not there any-more, then you may jump directly 
-to the [link boost_test.adv_scenarios.customizing_key_components.module_initialization.module_initialisation_automated automated section] directly.
-
-[section:custom_module_init Custom module initialisation]
+[section:old_custom_module_init Custom module initialisation]
 
 [heading A bit of history]
 Original design of the __UTF__ supported the manual test tree construction only. Later versions introduced the
@@ -126,24 +99,3 @@ It's guarantied that any framework-specific command line arguments are excluded.
 
 
 [endsect]
-
-
-[/ ###################################################################################################### ]
-[section:module_initialisation_automated Automated initialization generation]
-
-To automatically generate an empty test module initialization function you need to define 
-__BOOST_TEST_MAIN__ before including the
-``boost/test/unit_test.hpp`` header. The value of this define is ignored.
-Alternatively you can define the macro __BOOST_TEST_MODULE__ to be equal to 
-any string (not necessarily in quotes). This macro causes the same result as 
-__BOOST_TEST_MAIN__, and in addition the macro value becomes the name of the 
-master test suite.
-
-[important
-For a test module consisting of multiple source files you have to define these flags in a single test file only.
-Otherwise you end up with multiple instances of the initialization function.
-]
-   
-[endsect] [/ automated generation]
-
-[endsect] [/ test module initialisation]
