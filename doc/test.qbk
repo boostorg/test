@@ -149,7 +149,7 @@
 [def __default_run_status__                     [link ref_default_run_status ['default run status]]]
 
 [/ decorators]
-[def __decorator_label__                        [link boost_test.tests_organization.tests_grouping.decorator_label `label`]] 
+[def __decorator_label__                        [link boost_test.utf_reference.test_org_reference.decorator_label `label`]] 
 [def __decorator_enabled__                      [link boost_test.utf_reference.test_org_reference.decorator_enabled `enabled`]]
 [def __decorator_disabled__                     [link boost_test.utf_reference.test_org_reference.decorator_enabled `disabled`]]
 [def __decorator_enable_if__                    [link boost_test.utf_reference.test_org_reference.decorator_enable_if `enable_if`]]

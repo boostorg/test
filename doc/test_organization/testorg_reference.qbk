@@ -204,5 +204,18 @@ See [link boost_test.tests_organization.enabling here] for more details.
 [endsect] [/ section enable_if]
 
 
+[/-----------------------------------------------------------------]
+[section:decorator_label label (decorator)]
+
+``
+label(const_string label_name);
+``
+
+Associates a test unit with label `label_name`. It is possible to associate more than one label with a test unit. 
+See [link boost_test.tests_organization.tests_grouping here] for more details.
+
+[endsect] [/ section label]
+
+[/-----------------------------------------------------------------]
 
 [endsect] [/reference test organization]
