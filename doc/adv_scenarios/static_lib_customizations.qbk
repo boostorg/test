@@ -15,6 +15,8 @@ In the static library variant, customizing the main entry point is quite trouble
 > b2 --with-test link=static define=__BOOST_TEST_NO_MAIN__ define=__BOOST_TEST_ALTERNATIVE_INIT_API__ install
 ```
 
+[warning This removal of entry point definition from the static library will affect everybody else who is linking against the library. It may be less intrusive to switch to the [link boost_test.adv_scenarios.shared_lib_customizations shared library usage variant] instead.]
+
 In one of the source files, you now have to define your custom entry point, and invoke the default [link boost_test.adv_scenarios.test_module_runner_overview test runner] `unit_test_main` manually with the default [link boost_test.adv_scenarios.test_module_init_overview initialization function] `init_unit_test` as the first argument. There is no need to define __BOOST_TEST_NO_MAIN__ in your source code, but you need to define __BOOST_TEST_ALTERNATIVE_INIT_API__ in the main file:
 
 [table
@@ -34,12 +36,61 @@ int main(int argc, char* argv[], char* envp[])
 //
 // test cases
 //
+
+//
+// test cases
+//
 ```]]
 ]
 
-[note The reason for defining __BOOST_TEST_ALTERNATIVE_INIT_API__ is described [link boost_test.adv_scenarios.customizing_key_components.module_initialization.custom_module_init here].]
+[note The reason for defining __BOOST_TEST_ALTERNATIVE_INIT_API__ is described [link boost_test.adv_scenarios.customizing_key_components.old_custom_module_init here].]
 
 
 [endsect] [/section:entry_point]
+
+[section:init_func Customizing the module's initialization function]
+
+In the static library variant, customizing the main entry point is quite troublesome, because the default test runner compiled into the static library uses the obsolete initialization function signature. This requires you to rebuild the __UTF__ static library with the defined symbol __BOOST_TEST_ALTERNATIVE_INIT_API__. In the Boost root directory you need to invoke command
+
+```
+> b2 --with-test link=static define=__BOOST_TEST_ALTERNATIVE_INIT_API__ install
+```
+
+[warning This alteration of the static library will affect everybody else who is linking against the library. Consider using the [link boost_test.adv_scenarios.customizing_key_components.old_custom_module_init obsolete test initialization function], which requires no rebuilding. Alternatively, it may be less intrusive to switch to the [link boost_test.adv_scenarios.shared_lib_customizations shared library usage variant] instead.]
+
+In one of the source files, you now have to define your custom initialization function with signature:
+
+```
+bool init_unit_test();
+```
+
+The default [link boost_test.adv_scenarios.test_module_runner_overview test runner] will use it to initialize the test module. In your source code, you no longer define macro __BOOST_TEST_MODULE__; instead, you need to define __BOOST_TEST_ALTERNATIVE_INIT_API__ in the main file:
+
+[table
+[[In *exactly one* file][In all other files]]
+[[```#define BOOST_TEST_ALTERNATIVE_INIT_API
+#include <boost/test/unit_test.hpp>
+
+// init func:
+bool init_unit_test()
+{
+  return true;
+}
+```]
+[```#include <boost/test/unit_test.hpp>
+
+//
+// test cases
+//
+
+// test cases
+//
+```]]
+]
+
+[note The reason for defining __BOOST_TEST_ALTERNATIVE_INIT_API__ is described [link boost_test.adv_scenarios.customizing_key_components.old_custom_module_init here].]
+
+
+[endsect] [/section:init_func]
 
 [endsect] [/section:static_lib_customizations]

@@ -18,7 +18,7 @@ There are two tasks should be performed before actual testing is able to start:
   initialization of the code under test and custom tune-up of the __UTF__ parameters (for example the test log or the
   test results report output streams redirection, some command line parameters passed to the test module, etc.).
 
-The part of the __UTF__ dedicated for this purpose is called [link boost_test.adv_scenarios.customizing_key_components.module_initialization ['the test module initialization]] function. 
+The part of the __UTF__ dedicated for this purpose is called [link boost_test.adv_scenarios.test_module_init_overview ['the test module initialization]] function. 
 
 [note Note that alternatively to ['module initialization], global [link boost_test.tests_organization.fixtures fixtures] may be employed.]
 
@@ -61,7 +61,6 @@ like the floating point comparison or the logged expectations testing, are defin
 
 [include variant_static_lib.qbk]
 [include variant_dynamic_lib.qbk]
-[include variant_single_header.qbk]
 [include variant_external_runner.qbk]
 
 [endsect] [/section:usage_variants]

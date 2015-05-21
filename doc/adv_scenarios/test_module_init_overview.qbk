@@ -9,6 +9,11 @@
 
 In order for a unit test module to successfully link and execute, it has to have access to the ['test module's initialization function]. the module's initialization function is called only once during the execution of the program, just before the [link boost_test.adv_scenarios.test_module_runner_overview ['test module runner]] is run. By default, the __UTF__ provides a default definition of initialization function. The only thing you have to do is to instruct the framework in which translation unit (`cpp` file) it needs to provide the definition. You do it by defining macro __BOOST_TEST_MODULE__ in the designated file. The default implementation assigns the name to the [link ref_test_module test module] as well as the [link boost_test.tests_organization.test_suite.master_test_suite master test suite]. The name to be assigned is specified by the value of the macro __BOOST_TEST_MODULE__.
 
+[important
+For a test module consisting of multiple source files you have to define __BOOST_TEST_MODULE__ in a single test file only.
+Otherwise you end up with multiple instances of the initialization function.
+]
+
 There is practically no need to ever alter the default behaviour of the test module's initialization function. The __UTF__ provides superior tools for performing customization tasks:
 
 * for automatic registration of test cases and test suites in the test tree, see section [link boost_test.tests_organization Tests organization];
@@ -23,10 +28,12 @@ The default initialization function provided by the framework is defined with th
 bool init_unit_test();
 ```
 
+Return value `true` indicates a successful initialization. Value `false` indicates initialization failure.
+
 For overriding the default definition:
 
-* `see here`, for single header usage variant,
-* `see here`, for static library usage variant,
-* `see here`, for shared library usage variant.
+* [link boost_test.adv_scenarios.single_header_customizations.init_func see here], for single header usage variant,
+* [link boost_test.adv_scenarios.static_lib_customizations.init_func see here], for static library usage variant,
+* [link boost_test.adv_scenarios.shared_lib_customizations.init_func see here], for shared library usage variant.
 
 [endsect] [/section:test_module_init_overview]

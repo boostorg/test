@@ -21,7 +21,7 @@ In this variant, in one of the source files, you now have to define your custom 
 // entry point:
 int main(int argc, char* argv[], char* envp[])
 {
-  return utf::unit_test_main(init_unit_test, argc, argv);
+  return boost::unit_test::unit_test_main( &init_unit_test, argc, argv );
 }
 ```]
 [```#define BOOST_TEST_DYN_LINK
@@ -30,9 +30,53 @@ int main(int argc, char* argv[], char* envp[])
 //
 // test cases
 //
+
+//
+// test cases
+//
 ```]]
 ]
 
 [endsect] [/section:entry_point]
+
+[section:init_func Customizing the module's initialization function]
+
+In the shared-library variant, it is impossible to customize the initialization function without [link boost_test.adv_scenarios.shared_lib_customizations.entry_point customizing the entry point]. We have to customize both. In one of the source files, you now have to define your custom entry point and [link boost_test.adv_scenarios.test_module_init_overview initialization function] `init_unit_test`; next invoke the default [link boost_test.adv_scenarios.test_module_runner_overview test runner] `unit_test_main` manually with `init_unit_test` as argument. You ['do not] define __BOOST_TEST_MODULE__ in the main file:
+
+[table
+[[In *exactly one* file][In all other files]]
+[[```#define BOOST_TEST_DYN_LINK
+#include <boost/test/unit_test.hpp>
+
+// initialization function:
+bool init_unit_test()
+{
+  return true;
+}
+
+// entry point:
+int main(int argc, char* argv[])
+{
+  return boost::unit_test::unit_test_main( &init_unit_test, argc, argv );
+}
+```]
+[```#define BOOST_TEST_DYN_LINK
+#include <boost/test/unit_test.hpp>
+
+//
+// test cases
+//
+
+//
+// test cases
+//
+
+//
+// test cases
+//
+```]]
+]
+
+[endsect] [/section:init_func]
 
 [endsect] [/section:shared_lib_customizations]

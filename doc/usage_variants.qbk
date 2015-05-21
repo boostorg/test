@@ -34,8 +34,8 @@ test module name. This name can include spaces and does not need to be wrapped i
 The limitation of single header variant is that you can only implement this way 
 test modules with a single translation unit. 
 
-For more details on customization for this usage variant you can check this [link 
-boost_test.adv_scenarios.build_lib.usage_variants.single_header_variant section].
+For more details on customization for this usage variant you can check [link 
+boost_test.adv_scenarios.single_header_customizations this section].
 
 [/ ##################################################################### ]
 [h3:static_lib Static library usage variant]
@@ -60,7 +60,7 @@ with the packaging systems on Linux and OSX for instance] of the __UTF__ or can
 The flip side of this usage variant is that each test module is going to be statically linked
 with __UTF__, which might be something you interested to avoid. Also this usage variant has 
 limited options for test runners. For more information about these configuration options check 
-this [link boost_test.adv_scenarios.build_lib.usage_variants.static_lib_variant section].
+[link boost_test.adv_scenarios.static_lib_customizations this section].
 
 [/ ##################################################################### ]
 [h3:shared_lib Shared library usage variant]
@@ -90,7 +90,7 @@ The flip side of this usage variant is that you will need to make sure the __UTF
 is accessible at runtime to a test module.
 
 In addition shared library usage variant facilitates custom test runners. For more information about this 
-check this [link boost_test.adv_scenarios.build_lib.usage_variants.extern_test_runner_variant section].
+check [link boost_test.adv_scenarios.shared_lib_customizations this section].
 
 [caution On Windows, the test module and the __UTF__ shared library should link to the same CRT. Not doing
  so (for instance __UTF__ shared library in /release/ mode while the test module is in /debug/) will
