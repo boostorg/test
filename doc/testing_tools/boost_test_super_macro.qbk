@@ -254,7 +254,7 @@ that the execution of the test case provides is an important cue, for the follow
   * identify the test module that failed in case there are many
   * compile and run the test module to reproduce the error
   * identify the line of the code that failed, 
-  * fix the test directly if all these informations are enough, or start a debug session 
+  * fix the test directly if all the information is enough, or start a debug session 
 
 We can see from the scheme above that reproduction of an error is /costly/, since usually one tends to reproduce the error,
 which in turn induces at least the compilation of the test module. Also, a hidden cost is the lookup at the line of code
