@@ -13,12 +13,13 @@ Two types of dependencies can be handled by the __UTF__:
 * the order of execution of the tests
 * the conditional run of a test dependending on the status or a function/predicate of the parent tests
 
+
 [/-----------------------------------------------------------------]
 
 [section:decorator_depends_on depends_on (decorator)]
 
 ``
-depeneds_on(const_string dependent_test_name);
+depends_on(const_string dependent_test_name);
 ``
 
 Decorator `depends_on` associates the decorated test case (call it `B`) with another test case (call it `A`) specified 
