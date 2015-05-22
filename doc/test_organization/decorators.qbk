@@ -173,32 +173,7 @@ Throughout the reminder of this documentation we use only the concise syntax.
 
 
 
-[section:decorator_fixture fixture]
 
-``
-fixture(const boost::function<void()>& setup, const boost::function<void()>& teardown = {});
-
-template <typename Fx>
-  fixture<Fx>();
-  
-template <typename Fx, typename Arg>
-  fixture<Fx>(const Arg& arg);
-``
-
-Decorator `fixture` specifies a pair of functions (like `set_up` and `tear_down`) to be called before and after the 
-corresponding test unit. At the suite level the `set_up` function is called once -- before the suite execution starts 
-and `tear_down` function is called once -- after the suite execution ends. It comes in three forms. First expects two 
-functions for set-up and tear-down (the second one can be skipped). The second expects a `DefaultConstructible` class. 
-Its default constructor will be used as set-up function and its destructor as a tear-down function. Third requires a 
-class with one-argument public constructor. Argument `arg` is forwarded to the constructor and this is the set-up 
-function, its destructor is the tear-down function. There is no way to get access to the members of these fixtures from 
-within the test case or test suite.
-
-[bt_example decorator_12..decorator fixture]
-
-For other ways of using fixtures, see [link boost_test.tests_organization.fixtures here].
-
-[endsect] [/ section fixture]
 
 [/-----------------------------------------------------------------]
 
