@@ -240,7 +240,6 @@
 
 [include usage_recommandations.qbk]
 
-[/[include tutorials/tutorials.qbk]/]
 [include examples.qbk]
 
 [/=============================================================================]
