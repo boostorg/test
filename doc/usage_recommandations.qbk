@@ -56,12 +56,6 @@ of unit testing by automating some of the work, in addition every argument type 
 unit test monitor. As a result if one of types produce exception or non-fatal error you may still continue and 
 get results from testing with other types.
 
-[h4 Prefer __BOOST_CHECK_EQUAL__ to __BOOST_CHECK__]
-Even though __BOOST_CHECK__ tool is most generic and allows validating any `bool` convertible expression, I would 
-recommend using, if possible, more specific tools dedicated to the task. For example if you need you validate 
-some variable vs. some expected value use __BOOST_CHECK_EQUAL__ instead. The main advantage is that in case of 
-failure you will see the mismatched value - the information most useful for error identification. The same 
-applies to other tools supplied by the framework.
 
 [h3 IDE usage recommendations]
 
@@ -143,6 +137,8 @@ later on. Moreover you can  make Boost.Test to produce them in XML format using
 --__param_output_format__=XML
 ``
 and use some automated tool that will format this information as you like.
+
+[include tutorial_new_year_resolution.qbk]
 
 [endsect] [/ recommandations]
 

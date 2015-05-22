@@ -1,0 +1,62 @@
+[/
+ / Copyright (c) 2003-2014 Gennadiy Rozental 
+ / Copyright (c) 2013-2014 Raffi Enficiaud
+ / Copyright (c) 2015 Andrzej Krzemienski
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+ 
+[section:overview Framework overview]
+
+[h3:design_criteria Design criteria]
+
+Unit testing tasks arise during many different stages of software development: from initial project 
+implementation to its maintenance and later revisions. These tasks differ in their complexity and purpose 
+and accordingly are approached differently by different developers. The wide spectrum of tasks in a problem
+domain cause many requirements (sometimes conflicting) to be placed on a unit testing framework. These
+include:
+
+* Writing a [link ref_test_module unit test module] should be simple and obvious for new users.
+* The framework should allow advanced users to perform non-trivial tests.
+* Test module should be able to have many small test cases and developer should be able to group them into 
+  test suites.
+* At the beginning of the development users want to see verbose and descriptive error messages.
+* During the regression testing users just want to know if any tests failed.
+* For small test modules, their execution time should prevail over compilation time: user don't want to wait a minute
+  to compile a test that takes a second to run.
+* For long and complex tests users want to be able to see the testing progress.
+* Simplest tests shouldn't require an external library.
+* For long term usage users of the __UTF__ should be able to build it as a standalone library.
+
+The __UTF__ addresses the above expectations, and provides versatile facilities to:
+
+* Specify what behaviour you expect of the tested pieces (see section [link boost_test.testing_tools Testing tools])
+* Organize the [link test_case test cases] into a [link test_tree test tree] (see section [link boost_test.tests_organization Declaring and organizing tests]).
+* Detect different kinds of errors, failures, time-outs and report them in a uniform customizable way (see section [link boost_test.test_output Controlling output]). 
+
+[h3:why_framework Why do you need a framework?]
+
+While you can write a testing program yourself from scratch, the framework offers the following benefits:
+
+* You get an error report in a text format. Error reports are uniform and you can easily machine-analyse them.
+* Error reporting is separated from the testing code. You can easily change the error report format without affecting the testing code.
+* The framework automatically detects exceptions thrown by the tested components and time-outs, and reports them along other errors.
+* You can easily filter the test cases, and call only the desired ones. This does not require changing the testing code. 
+ 
+[h3:working_with_utf Working with the __UTF__]
+
+In this documentation we refer to a 'testing` program as [link ref_test_module ['test module]]. Typically, when writing a test module using the __UTF__ you will have to go through the following tasks:
+
+* Decide how you want to incorporate the __UTF__: `#include` it as a header-only library, or link with it as a static library,
+  or use it as a shared (or dynamically loaded) library. For details on this topic see section [link boost_test.usage_variants Usage variants].
+* Add a [link test_case test case] into a [link test_tree test tree]. For details, see section [link boost_test.tests_organization.test_cases Test cases].
+* Perform correctness checks of the tested unit. For details, see section [link boost_test.testing_tools Writing unit tests].
+* Perform the automated initialization of tested units before each test. For details, see section [link boost_test.tests_organization.fixtures Fixtures].
+* Customize the way test failures are reported. For details, see section [link boost_test.test_output Controlling output].
+* Control the run-time behaviour of the built test module (e.g., run only selected tests, change the output format). This is covered in section [link boost_test.runtime_config Runtime configuration].  
+
+[endsect][/ overview]
+
+[/ EOF]
