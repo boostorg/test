@@ -1,0 +1,22 @@
+[/
+ / Copyright (c) 2015 Boost test development team
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+
+[#boost_test_reports][section:reports Reported information]
+When an assertion fails, __BOOST_TEST__ reports details and values on the operands of `statement` that lead to the failure. 
+
+[bt_example boost_test_macro3..BOOST_TEST reporting]
+
+In the above example, the values of the operands are reported for inspection, which is more valuable as a copy
+of the full statement. However, we can observe that they are not treated symmetrically:
+
+* "`a - 1 < b`" reports `"13 - 1 >= 12" failed`
+* "`b > a - 1`" reports `"12 <= 12" failed`
+
+More details on how the __UTF__ parses the statement are given in [link boost_test.testing_tools.internal_details this] section.
+
+[endsect] [/ acceptable expressions]

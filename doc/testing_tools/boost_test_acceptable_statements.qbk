@@ -1,0 +1,48 @@
+[/
+ / Copyright (c) 2015 Boost test development team
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+ 
+ 
+
+[section:acceptable_statements Acceptable statements]
+The general form of the `BOOST_TEST` macro is the following:
+
+  BOOST_TEST(statement);
+  BOOST_TEST(statement, optional_modifiers)
+
+The __BOOST_TEST__ assertion uses operator overloading in order to provide an enhanced reporting capability; at the cost 
+of narrowing the supported statements. The unsupported statements are:
+
+* statements containing ternary conditions: those statement should be surrounded by parenthesis as they cannot be overloaded
+* statements containing comas: those statements will be intercepted by the preprocessor
+* compound statements containing any logical composition `||`, `&&`. Those are disabled intentionally and should be surrounded
+  by parenthesis
+  
+    BOOST_TEST((true || false));
+    
+  The full details are given in [link boost_test.testing_tools.internal_details this section].
+
+The `statement` might contain a full expression composed by several operations. `statement` is cast to a `bool`, 
+as if it would appear as argument to an `if` statement.
+
+[bt_example boost_test_macro1..BOOST_TEST acceptable expressions]
+
+`BOOST_TEST` provides additional details in case of failure for binary overloadable operations in C++, 
+except then ones mentioned above:
+  
+[table
+  [[Class of operation][operators]]
+  [[binary comparisons][`==`, `!=`, `<`, `>`, `<=`, `>=`]]
+  [[arithmetic compositions][`+`, `-`, `*`, `/`, `%`]]
+  [[bitwise compositions][`|`, `&`, `^`, `<<`, `>>`]]
+  [[assignments][`=`, `+=`, `-=`, `*=`, `/=`, `%=`, `<<=`, `>>=`, `&=`, `^=`, `|=`]]
+]  
+
+
+
+
+[endsect]

@@ -20,12 +20,18 @@ or the [link boost_test.utf_reference.testing_tool_ref reference].
 
 [include boost_test_super_macro.qbk]
 [include assertions_severity_levels.qbk]
+[include boost_test_acceptable_statements.qbk]
+[include boost_test_reported_information.qbk]
 [include testing_floating_points.qbk]
+[include boost_test_string_comparison.qbk]
+[include boost_test_collection_comparison.qbk]
+[include boost_test_bitwise_comparison.qbk]
 [include timeout.qbk]
 [include expected_failures.qbk]
 [include custom_predicates.qbk]
 [include testing_output_streams.qbk]
 
+[include boost_test_technical_details.qbk]
 [include testing_tools_summary.qbk]
 
 

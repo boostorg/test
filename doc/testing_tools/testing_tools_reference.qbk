@@ -7,7 +7,7 @@
  /]
 
 
-[section:testing_tool_ref Testing tools]
+[section:testing_tool_ref Reference API for writing tests]
 
 
 
@@ -43,7 +43,7 @@ The full documentation of this macro is located [link boost_test.testing_tools.b
   See [link boost_test.testing_tools.boost_test_super_macro.floating_point this section]
    for more details.
 * [classref boost::test_tools::bitwise] is a manipulator indicating that the comparison should be performed bitwise. See 
-  [link boost_test.testing_tools.boost_test_super_macro.bitwise this section] for more details
+  [link boost_test.testing_tools.bitwise this section] for more details
 * [classref boost::test_tools::per_element] is a manipulator indicating that the comparison should be performed on each element, in sequence, rather
   than on containers. See 
   [link boost_test_coll_perelement this section] for more details
@@ -52,7 +52,7 @@ The full documentation of this macro is located [link boost_test.testing_tools.b
 
 [h3 Restrictions on the acceptable statements]
 There are some restrictions on the supported statements. Those are explained in details in
-[link boost_test.testing_tools.boost_test_super_macro.acceptable_statements this] section.
+[link boost_test.testing_tools.acceptable_statements this] section.
 
 [endsect]
 
