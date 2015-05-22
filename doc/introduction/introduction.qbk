@@ -32,43 +32,37 @@ programs, organizing tests into simple test cases and test suites, and controlli
 Some of Boost.Test's interfaces are also useful in production (non-test) environments. 
 
 [/ ##################################################################### ]
-[h3 Rationale]
 
-Unit testing tasks arise during many different stages of software development: from initial project 
-implementation to its maintenance and later revisions. These tasks differ in their complexity and purpose 
-and accordingly are approached differently by different developers. The wide spectrum of tasks in a problem
-domain cause many requirements (sometimes conflicting) to be placed on a unit testing framework. These
-include:
+[h3 Starter example]
 
-* Writing a unit test module should be simple and obvious for new users.
-* The framework should allow advanced users to perform non-trivial tests.
-* Test module should be able to have many small test cases and developer should be able to group them into 
-  test suites.
-* At the beginning of the development users want to see verbose and descriptive error message, whereas 
-  during the regression testing they just want to know if any tests failed.
-* For a small test modules run time should prevail over compilation time: user don't want to wait a minute
-  to compile a test that takes a second to run.
-* For long and complex tests users want to be able to see the test progress.
-* Simplest tests shouldn't require an external library.
-* For long term usage users of a unit test framework should be able to build it as a standalone library.
+This is how a minimal single-file test program looks like:
 
-The __UTF__ design is based on above rationale and provides versatile facilities to:
+``
+#define __BOOST_TEST_MODULE__ My Test /*< Macro __BOOST_TEST_MODULE__ defines the name of our program, which will be used in messages. >*/
+#include <boost/test/included/unit_test.hpp> /*< This includes all the __UTF__ in a "single header mode"; it even defines function `main`, which will call the subsequently defined test cases. >*/
 
-* Simplify writing test cases by using various [link boost_test.testing_tools Testing tools].
-* Organize test cases into a [link boost_test.tests_organization test tree].
-* Relieve you from messy error detection, reporting duties and framework runtime parameters processing.
+__BOOST_AUTO_TEST_CASE__(first_test) /*< Macro __BOOST_AUTO_TEST_CASE__ declares a ['test case] named `first_test`, which in turn will run the content of `first_test` inside the 
+controlled testing environment.>*/
+{
+  int i = 1;
+  __BOOST_TEST__(i); /*< This test checks if `i` is non-zero. >*/
+  __BOOST_TEST__(i == 2); /*< This test checks if `i` has value `2` (something more than just evaluating the equality operator). >*/
+}
+`` 
 
-The __UTF__ is intended to be used both for a simple and non trivial testing. 
+When run, it produces the following output:
 
+[pre
+Running 1 test case...
+test_file.cpp(8): error: in "first_test": check i == 2 has failed [1 != 2]
+
+*** 1 failure is detected in the test module "My Test"
+]
 
 [/ ##################################################################### ]
 
-[include how_to_read.qbk]
-[include 5min_primer.qbk]
+[include overview.qbk]
 
-
-[include tutorials/tutorial_hello_world.qbk]
-[include tutorials/tutorial_new_year_resolution.qbk]
 
 [endsect]
 

@@ -21,8 +21,7 @@ Well ... This is a User's Guide after all. Let's go by what *you*, as a user, ne
 successfully use the __UTF__. Thus we follow the order of decisions you have to make and order
 of complexity of the problems you might encounter. If you find yourself faced with some unclear term feel 
 free to jump directly to the [link boost_test.section_glossary glossary] section, where short definitions 
-for all used terms were collected. And if you want to jump right into coding the 
-[link boost_test.intro.5min_starter "the 5min starter guide"] would be a better place to start.
+for all used terms were collected.
 
 The __UTF__ has several usage variants. And the first decision you have to make is which one to use. These
 variants are covered in section dedicated to [link boost_test.usage_variants Usage variants]. 
