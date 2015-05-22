@@ -5,7 +5,7 @@
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
-[section:summary Summary of available testing tools]
+[section:summary Summary of the API for writing tests]
 [table
   [
     [Assertions]
