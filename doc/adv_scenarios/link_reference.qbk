@@ -6,7 +6,7 @@
  /]
 
 
-[section:link_references Macros that control the build behaviours]
+[section:link_references Build scenarios and behaviours]
 
 [section:link_boost_test_main_macro `BOOST_TEST_MAIN`]
 

@@ -44,7 +44,6 @@ are not sufficient for your purposes.
 [include adv_scenarios/shared_lib_customizations.qbk]
 [include adv_scenarios/external_test_runner.qbk]
 [include adv_scenarios/obsolete_init_func.qbk]
-[include adv_scenarios/link_reference.qbk]
 
 [/=============================================================================]
 
