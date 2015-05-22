@@ -122,6 +122,12 @@
   
   [/ ###############################################################################################]
   [
+    [__BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__]
+    [Indicates the number of expected failures for a test case]
+  ]  
+  
+  [/ ###############################################################################################]
+  [
     [__BOOST_ERROR__]
     [Logs an error message, fails but does not abort the current test.]
   ]   

@@ -39,10 +39,6 @@
     [__BOOST_TEST_CASE_TEMPLATE_FUNCTION__]
     [Declaration of the body of a typed test case]
   ]
-  [
-    [__BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__]
-    [Indicates the number of expected failures for a test case]
-  ]
   
   [
     [__BOOST_DATA_TEST_CASE__]

@@ -535,6 +535,14 @@ See also:
 
 [endsect]
 
+
+[/ ###############################################################################################]
+[section:test_org_boost_test_case_expected_failure `BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES`]
+Indicates the number of failures for a test case. 
+
+See [link boost_test.testing_tools.expected_failures here] for more details.
+[endsect] [/ expected failures]
+
 [/ ###############################################################################################]
 [section:assertion_boost_error `BOOST_ERROR`]
 

@@ -90,6 +90,7 @@
 [def __BOOST_FAIL__                       [link boost_test.utf_reference.testing_tool_ref.assertion_boost_fail `BOOST_FAIL`]]
 [def __BOOST_IS_DEFINED__                 [link boost_test.utf_reference.testing_tool_ref.assertion_boost_is_defined `BOOST_IS_DEFINED`]]
 
+[def __BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ [link boost_test.utf_reference.testing_tool_ref.test_org_boost_test_case_expected_failure `BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES`]]
 
 [/ Assertions / floating point]
 [def __BOOST_LEVEL_SMALL__                [link boost_test.utf_reference.testing_tool_ref.assertion_boost_level_small `BOOST_<level>_SMALL`]]
@@ -111,7 +112,6 @@
 [def __BOOST_AUTO_TEST_SUITE__                  [link boost_test.utf_reference.test_org_reference.test_org_boost_auto_test_suite `BOOST_AUTO_TEST_SUITE`]]
 [def __BOOST_AUTO_TEST_SUITE_END__              [link boost_test.utf_reference.test_org_reference.test_org_boost_auto_test_suite_end `BOOST_AUTO_TEST_SUITE_END`]]
 [def __BOOST_TEST_SUITE__                       [link boost_test.utf_reference.test_org_reference.test_org_boost_test_suite `BOOST_TEST_SUITE`]]
-[def __BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ [link boost_test.utf_reference.test_org_reference.test_org_boost_test_case_expected_failure `BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES`]]
 [/ decorator]
 [def __BOOST_TEST_DECORATOR__                   [link boost_test.utf_reference.test_org_reference.test_org_boost_test_decorator `BOOST_TEST_DECORATOR`]]
 [/ fixtures]
