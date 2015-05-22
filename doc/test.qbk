@@ -254,7 +254,7 @@
 [/=============================================================================]
 [/ References]
 
-[section:utf_reference __UTF__ tools reference]
+[section:utf_reference __UTF__ API reference]
 [include test_organization/testorg_reference.qbk]
 [include testing_tools/testing_tools_reference.qbk]
 [include test_output/testout_reference.qbk]
