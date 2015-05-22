@@ -84,4 +84,47 @@
 
 ]
 
+
+[table
+  [
+    [Decorator]
+    [Short description]
+  ] 
+  
+  [
+    [__decorator_depends_on__]
+    [Creates a dependency (in the execution order and __default_run_status__) from one test case to another.]
+  ]
+  
+  [
+    [__decorator_description__]
+    [Attaches a semantic string to a test unit, that is visible from the command line interface.]
+  ]
+  
+  [
+    [__decorator_enabled__ , __decorator_disabled__]
+    [Enables or disables unconditionally a test unit. The action of these decorators may be overridden by the command line interface]
+  ]
+  
+  [
+    [__decorator_enable_if__]
+    [Enables conditionally a test unit. The action of these decorators may be overridden by the command line interface]
+  ]
+  
+  [
+    [__decorator_fixture__]
+    [Attaches a fixture to a test unit]
+  ]
+
+  [
+    [__decorator_label__]
+    [Labels a test unit to form a logical group]
+  ]
+
+  [
+    [__decorator_precondition__]
+    [Enables or disables a test unit based on a predicate evaluated just before the execution of the test case.]
+  ]
+
+]
 [endsect]

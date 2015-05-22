@@ -162,7 +162,10 @@
 [def __decorator_description__                  [link boost_test.utf_reference.test_org_reference.decorator_description   `description`]]
 
 [def __decorator_expected_failures__            [link boost_test.utf_reference.testing_tool_ref.decorator_expected_failures `expected_failures`]]
-[def __decorator_timeout__                      [link boost_test.utf_reference.testing_tool_ref.timeout   `timeout`]]
+[def __decorator_timeout__                      [link boost_test.utf_reference.testing_tool_ref.decorator_timeout `timeout`]]
+[def __decorator_tolerance__                    [link boost_test.utf_reference.testing_tool_ref.decorator_tolerance `tolerance`]]
+
+
 
 [/=============================================================================]
 [/ templates ]

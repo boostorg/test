@@ -162,46 +162,6 @@ Throughout the reminder of this documentation we use only the concise syntax.
 [endsect]
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-[/-----------------------------------------------------------------]
-
-
-[section:decorator_tolerance tolerance]
-
-``
-template <typename FPT>
-  tolerance(FPT eps);
-
-template <typename FPT>
-  tolerance(test_tools::fpc::percent_tolerance_t<FPT> eps)  
-``
-
-Decorator `tolerance` specifies the default comparison tolerance for floating point type `FTP` in the decorated test 
-unit. The default tolerance only applies to a particular type, so it makes sense to provide more than one `tolerance` 
-decorator if we are comparing different floating point types. For more details see __floating_points_testing_tools__. 
-The variant with `percent_tolerance` uses value `eps * .01` as tolerance.
-
-[bt_example decorator_13..decorator tolerance]
-
-In the above example,  in `test1`, checks on `double`s fail because they differ by more what tolerance for `double`s 
-specifies. In `test2` the tolerance for `double`s is greater and therefore the checks succeed. In `test3`, we specify 
-only tolerance for type `float`, and since the checks use type `double` the specified tolerance does not apply. Tolerance 
-in `test4` is equivalent to that in `test1`, therefore its checks also fail. Tolerance in `test5` is equivalent to 
-that in `test2`, therefore its checks also succeed.
-[endsect] [/ section decorator_tolerance]
-
 [endsect] [/ section decorators]
 
 [/EOF]

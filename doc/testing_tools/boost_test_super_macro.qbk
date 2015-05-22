@@ -298,7 +298,7 @@ Unless you specify otherwise, when two floating-point types are compared inside 
 the resulting check is not 'direct' (as implemented by operators `==` and `<` for these types),
 but uses [link boost_test.testing_tools.testing_floating_points comparison with tolerance] instead.
 The tolerance threshold used is the one defined per test case. See 
-[link boost_test.tests_organization.decorators.decorator_tolerance here] for setting test-case-local tolerance.
+the decorator __decorator_tolerance__ for setting test-case-local tolerance.
 
 If there is a need for customizing floating point comparison tolerance per single assertion, you can do it by providing a 
 second argument to __BOOST_TEST__. Such second argument is called a /manipulator/.
