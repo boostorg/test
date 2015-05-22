@@ -57,6 +57,8 @@ with the packaging systems on Linux and OSX for instance] of the __UTF__ or can
   test module name. This name can include spaces and does not need to be wrapped in quotes. 
 # The second step is to link with the __UTF__ static library.
 
+[note Header `<boost/test/unit_test.hpp>` is an 'aggregate' header: it includes most of the other headers that contains the Unit Test Framework definitions.]
+
 The flip side of this usage variant is that each test module is going to be statically linked
 with __UTF__, which might be something you interested to avoid. Also this usage variant has 
 limited options for test runners. For more information about these configuration options check 
@@ -66,7 +68,7 @@ limited options for test runners. For more information about these configuration
 [h3:shared_lib Shared library usage variant]
 In the project with large number of test modules the static library variant of the __UTF__ may
 cause you to waste a lot of disk space. The solution is to link test module dynamically with the 
-__UTF__ [link boost_test.adv_scenarios.build_lib built] as a shared library. 
+__UTF__ built as a shared library. 
 This usage variant entails two steps. 
 
 # First you need to add following lines to all translation units in a test module:

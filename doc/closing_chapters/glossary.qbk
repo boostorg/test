@@ -22,7 +22,7 @@ it's called ['multi-file test module]. Logically, each test module consists of f
  
 The test runner part is optional. If a test module is built as
 an executable, the test runner is built-in. If a test module is built as a dynamic library, it is run by an
-external test runner.
+[link boost_test.adv_scenarios.external_test_runner external test runner].
 
 
 [#test_body][h3 Test body]
