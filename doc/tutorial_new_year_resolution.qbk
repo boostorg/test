@@ -5,7 +5,7 @@
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
-[section:bt_and_tdd Test driven development with boost.test]
+[section:bt_and_tdd Test driven development with Boost.Test]
 
 Today is a momentous day - first day of new year. Today I am going to start a new life. I am going to stop eating a
 greasy food, start attending a fitness club and ... today I am going to test programs I am writing. I can start
@@ -20,7 +20,7 @@ read-only access to the preallocated character buffer. I will probably want `con
 interface similar to the class std::string. What will I do first? In my new life I will start with writing a test 
 module for future class `const_string`. It will look like this:
 
-[import ../../snippet/snippet13.cpp]
+[import snippet/snippet13.cpp]
 [snippet13]
  
 Now I can compile it and link with the unit test framework. Done! I have a working test program. It is empty, so
@@ -32,13 +32,13 @@ when I run the program it produces following output:
 Well, now it could be a good time to start a work on `const_string`. First thing I imagine would be good
 to have is a constructors and trivial access methods. So my class initial version looks like this:
 
-[import ../../snippet/snippet14.cpp]
+[import snippet/snippet14.cpp]
 [snippet14]
  
 Now I am able to write a first test case - constructors testing - and add it to a test suite. My test program became
 to look like this:
 
-[import ../../snippet/snippet15.cpp]
+[import snippet/snippet15.cpp]
 [snippet15]
  
 The constructors_test test case is intended to check a simple feature of the class `const_string`: an
@@ -58,12 +58,12 @@ and the unit test framework gives me the following report:
  
 Encouraged I am moving on and adding more access methods:
  
-[import ../../snippet/snippet16.cpp]
+[import snippet/snippet16.cpp]
 [snippet16]
 
 I added the new feature - I need a new test case to check it. As a result my test suite became to look like this:
  
-[import ../../snippet/snippet17.cpp]
+[import snippet/snippet17.cpp]
 [snippet17]
 
 
@@ -75,11 +75,11 @@ intended to do: check that the validation is working. A testing of a validation 
 important part of a unit testing and should not be left for a production stage. The data_access_test test case 
 passed and I am ready for the next step.
 
-[import ../../snippet/const_string.hpp]
-[import ../../snippet/const_string_test.cpp]
+[import snippet/const_string.hpp]
+[import snippet/const_string_test.cpp]
 
-Continuing my effort I am able to complete class `const_string` (see [@../../snippet/const_string.hpp Listing 1 =const_string.hpp=]) and testing module for it (see 
-[@../../snippet/const_string_test.cpp Listing 2 =const_string_test.cpp=]) that is checking all features that are presented 
+Continuing my effort I am able to complete class `const_string` (see [@snippet/const_string.hpp Listing 1 =const_string.hpp=]) and testing module for it (see 
+[@snippet/const_string_test.cpp Listing 2 =const_string_test.cpp=]) that is checking all features that are presented 
 in the class `const_string` specification.
  
 

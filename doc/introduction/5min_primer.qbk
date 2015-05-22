@@ -15,20 +15,17 @@ Let's start by creating the minimal skeleton for our [link ref_test_module test 
 looks like this:
 
 ``
-#define __BOOST_TEST_MODULE__ My Test
-#include <boost/test/included/unit_test.hpp>
+#define __BOOST_TEST_MODULE__ My Test /*< Macro __BOOST_TEST_MODULE__ defines the name of our program, which will be used in messages. >*/
+#include <boost/test/included/unit_test.hpp> /*< This includes all the __UTF__ in a "single header mode"; it even defines function `main`, which will call the subsequently defined test cases. >*/
 
-__BOOST_AUTO_TEST_CASE__(first_test)
+__BOOST_AUTO_TEST_CASE__(first_test) /*< Macro __BOOST_AUTO_TEST_CASE__ declares a ['test case] named `first_test`, which in turn will run the content of `first_test` inside the 
+controlled testing environment.>*/
 {
-  __BOOST_TEST__(true);
-  
   int i = 1;
-  __BOOST_TEST__(i == 2);
+  __BOOST_TEST__(i); /*< This test checks if `i` is non-zero. >*/
+  __BOOST_TEST__(i == 2); /*< This test checks if `i` has value `2` (something more than just evaluating the equality operator). >*/
 }
 `` 
-
-The command/macro __BOOST_AUTO_TEST_CASE__ declares a test named `first_test`, which in turn will run the content of `first_test` inside the 
-controlled testing environment. This test checks that `true` is `true` and that `i` equals `2` and should succeed first test and fail second. 
 
 Before continuing in adding value to the test module itself, let's now build the test module contained in [*an unique]
 [footnote with more than one file, one line should be changed] file. For building this specific test module, we just have to
@@ -53,9 +50,9 @@ If you haven't seen any error message, you can run the test:
 and it shoud show something like:
 [pre
 Running 1 test case...
-test_file.cpp(9): error: in "first_test": check i == 2 has failed [1 != 2]
+test_file.cpp(8): error: in "first_test": check i == 2 has failed [1 != 2]
 
-*** 1 failure detected in test module "My Test"
+*** 1 failure is detected in the test module "My Test"
 ]
 
 The command line is similar for `clang`. 
