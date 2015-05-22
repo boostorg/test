@@ -55,7 +55,7 @@ error is reported.
 
 
 
-
+[/-----------------------------------------------------------------]
 [#ref_BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES][h3 Usage with automatically registered test cases]
 
 [caution this usage is considered as deprecated. Please consider using the [link l_expected_failure `expected_failures`] 
@@ -75,6 +75,9 @@ test suite where __BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ resides.
 [bt_example example17..Expected failures specification for automatically registered test case]
 
 
+
+
+[/-----------------------------------------------------------------]
 [h3 Usage with manually registered test cases]
 
 [caution this usage is considered as deprecated. Please consider using the [link l_expected_failure `expected_failures`] 
