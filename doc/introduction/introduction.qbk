@@ -22,7 +22,7 @@
 [role epigraph --XP maxim]
 
 What is the first thing you need to do when you start working on new library/class/program? That's right -
-you need to start with the unit test module (I hope you all gave this answer!). Occasionally, you may get 
+you need to start with the unit test module (hopefully you all gave this answer!). Occasionally, you may get 
 away with simple test implemented using `assert`s, but any professional developer soon finds this approach
 lacking. It becomes clear that it's too time-consuming and tedious for simple, but repetitive unit testing 
 tasks and it's too inflexible for most non-trivial ones.
@@ -33,7 +33,7 @@ Some of Boost.Test's interfaces are also useful in production (non-test) environ
 
 [/ ##################################################################### ]
 
-[h3 Starter example]
+[h4 Starter example]
 
 This is how a minimal single-file test program looks like:
 

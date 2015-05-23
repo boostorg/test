@@ -1,16 +1,13 @@
 [/
- / Copyright (c) 2003-2014 Gennadiy Rozental 
- / Copyright (c) 2013-2014 Raffi Enficiaud
+ / Copyright (c) 2003-2015 Gennadiy Rozental 
+ / Copyright (c) 2013-2015 Raffi Enficiaud
  / Copyright (c) 2015 Andrzej Krzemienski
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
- 
-[section:overview Framework overview]
-
-[h3:design_criteria Design criteria]
+[section:design_rationale Design rationale]
 
 Unit testing tasks arise during many different stages of software development: from initial project 
 implementation to its maintenance and later revisions. These tasks differ in their complexity and purpose 
@@ -30,13 +27,13 @@ include:
 * Simplest tests shouldn't require an external library.
 * For long term usage users of the __UTF__ should be able to build it as a standalone library.
 
-The __UTF__ addresses the above expectations, and provides versatile facilities to:
+The __UTF__ satisfies the above expectations, and provides versatile facilities to:
 
-* Specify what behaviour you expect of the tested pieces (see section [link boost_test.testing_tools Testing tools])
-* Organize the [link test_case test cases] into a [link test_tree test tree] (see section [link boost_test.tests_organization Declaring and organizing tests]).
-* Detect different kinds of errors, failures, time-outs and report them in a uniform customizable way (see section [link boost_test.test_output Controlling output]). 
+* Easily specify all the expectations in the code being tested.
+* Organize these expectations into [link test_case test cases] and [link test_suite test suites].
+* Detect different kinds of errors, failures, time-outs and report them in a uniform customizable way. 
 
-[h3:why_framework Why do you need a framework?]
+[h4:why_framework Why do you need a framework?]
 
 While you can write a testing program yourself from scratch, the framework offers the following benefits:
 
@@ -44,19 +41,32 @@ While you can write a testing program yourself from scratch, the framework offer
 * Error reporting is separated from the testing code. You can easily change the error report format without affecting the testing code.
 * The framework automatically detects exceptions thrown by the tested components and time-outs, and reports them along other errors.
 * You can easily filter the test cases, and call only the desired ones. This does not require changing the testing code. 
+
+[endsect][/ design_rationale]
  
-[h3:working_with_utf Working with the __UTF__]
+[section:how_to_read How to read this documentation]
 
-In this documentation we refer to a 'testing` program as [link ref_test_module ['test module]]. Typically, when writing a test module using the __UTF__ you will have to go through the following tasks:
+This documentation is structured by what *you*, as a user, need to know to successfully use the __UTF__ and the order of decisions 
+you have to make and order of complexity of the problems you might encounter. If you ever find yourself facing with some unclear 
+term feel free to jump directly to the [link boost_test.section_glossary glossary] section, where short definitions for all used 
+terms were collected.
 
-* Decide how you want to incorporate the __UTF__: `#include` it as a header-only library, or link with it as a static library,
+Typically, when writing a test module using the __UTF__ you have to go through the following steps:
+
+* You decide how you want to incorporate the __UTF__: `#include` it as a header-only library, or link with it as a static library,
   or use it as a shared (or dynamically loaded) library. For details on this topic see section [link boost_test.usage_variants Usage variants].
-* Add a [link test_case test case] into a [link test_tree test tree]. For details, see section [link boost_test.tests_organization.test_cases Test cases].
-* Perform correctness checks of the tested unit. For details, see section [link boost_test.testing_tools Writing unit tests].
-* Perform the automated initialization of tested units before each test. For details, see section [link boost_test.tests_organization.fixtures Fixtures].
-* Customize the way test failures are reported. For details, see section [link boost_test.test_output Controlling output].
-* Control the run-time behaviour of the built test module (e.g., run only selected tests, change the output format). This is covered in section [link boost_test.runtime_config Runtime configuration].  
+* You add a [link test_case test case] into a [link test_tree test tree]. 
+  For details, see section [link boost_test.tests_organization.test_cases Test cases].
+* You perform correctness checks of the code under tested. For details, see section [link boost_test.testing_tools Writing unit tests].
+* You perform the initialization of code under test before each test case. 
+  For details, see section [link boost_test.tests_organization.fixtures Fixtures].
+* You might want to customize the way test failures are reported. For details, see section [link boost_test.test_output Controlling output].
+* You can control the run-time behaviour of the built test module (e.g., run only selected tests, change the output format). 
+  This is covered in section [link boost_test.runtime_config Runtime configuration].  
 
-[endsect][/ overview]
+If you can't find answer to your question in any of the section mentioned above or if you believe you need even more configuration options, 
+you can check [link boost_test.adv_scenarios Advanced usage scenarios] section.
+
+[endsect][/ how_to_read]
 
 [/ EOF]

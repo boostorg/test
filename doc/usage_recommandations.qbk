@@ -8,7 +8,7 @@
 [#ref_usage_recommendations][section Practical usage recommendations]
 
 On following pages collected tips and recommendations on how to use and apply the &utf; in your real life practice. 
-You don't necessarily need to follow them, but I found them handy.
+You don't necessarily need to follow them, but we found them handy.
 
 [h3 General]
    
@@ -22,8 +22,8 @@ form of shorter compilation time. Why do you need to make your compiler do the s
 It's really easy to switch to automatic registration. And you don't need to worry about forgotten test cases.
 
 [h4 To find location of first error reported by test tool within reused template function, use special hook within framework headers]
-In some cases you are reusing the same template based code from within one test case (actually I recommend 
-better solution in such case- see below). Now if an error gets reported by the test tool within that reused 
+In some cases you are reusing the same template based code from within one test case (actually we recommend 
+better solution in such case - see below). Now if an error gets reported by the test tool within that reused 
 code you may have difficulty locating were exactly error occurred. To address this issue you could either a add 
 __BOOST_TEST_MESSAGE__ statements in templated code that log current type id of template parameters or you can use special hook located in 
 `unit_test_result.hpp` called `first_failed_assertion()`. If you set a breakpoint right on the line where this 
@@ -129,7 +129,7 @@ argument and test log output by adding
 `` 
 
 argument, so that test module won't produce undesirable output no one is going to look at 
-anyway. I recommend relying only on result code that will be consistent for all test programs. An 
+anyway. We recommend relying only on result code that will be consistent for all test programs. An 
 alternative to my second recommendation is direct both log and report to separate file you could analyse 
 later on. Moreover you can  make Boost.Test to produce them in XML format using 
 
@@ -138,7 +138,8 @@ later on. Moreover you can  make Boost.Test to produce them in XML format using
 ``
 and use some automated tool that will format this information as you like.
 
-[include tutorial_new_year_resolution.qbk]
+[include tutorials/new_year_resolution.qbk]
+[include tutorials/hello_world.qbk]
 
 [endsect] [/ recommandations]
 
