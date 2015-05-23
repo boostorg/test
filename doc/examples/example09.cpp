@@ -12,7 +12,7 @@ using namespace boost::unit_test;
 
 BOOST_TEST_CASE_TEMPLATE_FUNCTION( my_test, T )
 {
-  BOOST_CHECK_EQUAL( sizeof(T), 4 );
+  BOOST_TEST( sizeof(T) == 4 );
 }
 
 test_suite* init_unit_test_suite( int argc, char* argv[] )

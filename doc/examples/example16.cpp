@@ -11,7 +11,7 @@ using namespace boost::unit_test;
 
 void free_test_function()
 {
-  BOOST_CHECK( 2 == 1 );
+  BOOST_TEST( 2 == 1 );
 }
 
 test_suite* init_unit_test_suite( int, char* [] )

@@ -7,10 +7,9 @@
 
 [section:decorators Decorators]
 
-Decorators is a mechanism for attaching various pieces of information to test units in a uniform manner. These pieces 
-of information affect how the test tree is processed during the execution of the program. They range from test unit 
-descriptions to floating-point tolerance or the number of expected failures. They are listed in detail in the following 
-sections.
+Decorator is a mechanism for updating various test unit attributes in a uniform manner. These atributes affect how the 
+test tree is processed during the execution of the program. They range from test unit descriptions to floating-point 
+tolerance or the number of expected failures. They are listed in detail in the following sections.
 
 A list of decorators can be associated with a given test case by providing the second argument to macro 
 __BOOST_AUTO_TEST_CASE__ or the third argument to macro __BOOST_FIXTURE_TEST_CASE__. Similarly, a list of decorators 
@@ -140,7 +139,7 @@ BOOST_DATA_TEST_CASE(test_case, data, var)
 // not doable
   ```][```
 BOOST_TEST_DECORATOR(*decor1() *decor2())
-__BOOST_AUTO_TEST_CASE_TEMPLATE__(test_case, T, type_list)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_case, T, type_list)
 {
   // assertions
 }

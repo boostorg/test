@@ -15,7 +15,7 @@ class test_class
 public:
   void test_method()
   {
-    BOOST_CHECK( true /* test assertion */ );
+    BOOST_TEST( false /* test assertion */ );
   }
 } tester;
 

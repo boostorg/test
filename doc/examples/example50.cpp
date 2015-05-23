@@ -28,7 +28,7 @@ BOOST_GLOBAL_FIXTURE( MyConfig );
 
 BOOST_AUTO_TEST_CASE( test_case )
 {
-  BOOST_CHECK( false );
+  BOOST_TEST( false );
 }
 
 //]

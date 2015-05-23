@@ -12,7 +12,7 @@ using namespace boost::unit_test;
 
 void free_test_function( int i )
 {
-  BOOST_CHECK( i < 4 /* test assertion */ );
+  BOOST_TEST( i < 4 /* test assertion */ );
 }
 
 test_suite* init_unit_test_suite( int argc, char* argv[] )

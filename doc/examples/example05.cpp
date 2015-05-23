@@ -13,7 +13,7 @@ using namespace boost::unit_test;
 
 void free_test_function( int i, int j )
 {
-  BOOST_CHECK( true /* test assertion */ );
+  BOOST_TEST( true /* test assertion */ );
 }
 
 bool init_function()

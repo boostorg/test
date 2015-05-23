@@ -29,6 +29,6 @@ BOOST_AUTO_TEST_CASE( test_list_comparison )
   l1.push_back( 1 );
   l1.push_back( 2 );
 
-  BOOST_CHECK( compare_lists( l1, l2 ) );
+  BOOST_TEST( compare_lists( l1, l2 ) );
 }
 //]

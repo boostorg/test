@@ -12,7 +12,7 @@ using namespace boost::unit_test;
 
 BOOST_AUTO_TEST_CASE( free_test_function )
 {
-  BOOST_CHECK( true /* test assertion */ );
+  BOOST_TEST( true /* test assertion */ );
 }
 
 test_suite* init_unit_test_suite( int argc, char* argv[] )

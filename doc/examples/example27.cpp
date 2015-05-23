@@ -19,7 +19,7 @@ int test_main( int, char *[] )             // note the name!
   // six ways to detect and report the same error:
 
   // continues on error
-  BOOST_CHECK( add( 2,2 ) == 4 );  /*<
+  BOOST_TEST( add( 2,2 ) == 4 );  /*<
                                     This approach uses the `BOOST_CHECK` tool, which displays an error message on std::cout that includes the
                                     expression that failed, the source file name, and the source file line number. It also increments the error count.
                                     At program termination, the error count will be displayed automatically by the __MTF__.

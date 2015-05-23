@@ -18,7 +18,7 @@ struct F {
 
 BOOST_FIXTURE_TEST_CASE( test_case1, F )
 {
-  BOOST_CHECK( i == 1 );
+  BOOST_TEST( i == 1 );
   ++i;
 }
 
@@ -29,6 +29,6 @@ BOOST_FIXTURE_TEST_CASE( test_case2, F )
 
 BOOST_AUTO_TEST_CASE( test_case3 )
 {
-  BOOST_CHECK( true );
+  BOOST_TEST( true );
 }
 //]

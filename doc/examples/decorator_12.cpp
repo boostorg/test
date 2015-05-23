@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_SUITE(suite1,
   * utf::fixture<Fx>(std::string("FX"))
   * utf::fixture<Fx>(std::string("FX2")))
 
-  BOOST_AUTO_TEST_CASE(test1, *utf::fixture(&setup, &teardown))
+  BOOST_AUTO_TEST_CASE(test1, * utf::fixture(&setup, &teardown))
   {
     BOOST_TEST_MESSAGE("running test1");
     BOOST_TEST(true);

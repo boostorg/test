@@ -25,13 +25,13 @@ BOOST_AUTO_TEST_CASE(test_1)
 }
  
 BOOST_AUTO_TEST_CASE(test_2,
-  *utf::depends_on("test_1"))
+  * utf::depends_on("test_1"))
 {
   BOOST_TEST(true);
 }
 
 BOOST_AUTO_TEST_CASE(test_3,
-  *utf::precondition(fail))
+  * utf::precondition(fail))
 {
   BOOST_TEST(true);
 }
