@@ -58,7 +58,7 @@
 
 
 [/ Assertions ]
-[def __BOOST_TEST__                       [link boost_test.utf_reference.testing_tool_ref.assertion_boost_test_super_macro `BOOST_TEST`]]
+[def __BOOST_TEST__                       [link boost_test.utf_reference.testing_tool_ref.assertion_boost_test_universal_macro `BOOST_TEST`]]
 [def __BOOST_TEST_REQUIRE__               `BOOST_TEST_REQUIRE`]
 
 [def __BOOST_LEVEL__                      [link boost_test.utf_reference.testing_tool_ref.assertion_boost_level `BOOST_<level>`]]

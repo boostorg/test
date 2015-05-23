@@ -18,7 +18,7 @@ ways to detect and report errors.
 For a list of all supplied testing tools and usage examples, see the [link boost_test.testing_tools.summary summary]
 or the [link boost_test.utf_reference.testing_tool_ref reference].
 
-[include boost_test_super_macro.qbk]
+[include boost_test_universal_macro.qbk]
 [include assertions_severity_levels.qbk]
 [include boost_test_acceptable_statements.qbk]
 [include boost_test_reported_information.qbk]

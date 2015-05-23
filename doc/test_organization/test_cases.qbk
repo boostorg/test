@@ -9,7 +9,7 @@
 
 [section:test_cases Test cases]
 A test case is a unit of execution that is run by the [link test_runner test runner]. It contains instructions and 
-[link boost_test.testing_tools.boost_test_super_macro assertions], and its execution is monitored by the __UTF__. 
+[link boost_test.testing_tools.boost_test_universal_macro assertions], and its execution is monitored by the __UTF__. 
 Information about the execution are recorded, and a log/report is produced. 
 
 The test runner should be informed of the test case in order to run it: the test case should be *registered* for its 
