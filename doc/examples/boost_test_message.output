@@ -2,10 +2,10 @@
 > ./boost_test_message --log_level=all
 Running 1 test case...
 Entering test module "boost_test_message"
-boost_test_message.cpp:12: Entering test case "test_message"
-boost_test_message.cpp:15: error: in "test_message": a should be equal to b: 1!=2
-boost_test_message.cpp:16: info: check 'value of a=1' has passed
-boost_test_message.cpp:12: Leaving test case "test_message"; testing time: 219mks
+test.cpp(12): Entering test case "test_message"
+test.cpp(15): error: in "test_message": a should be equal to b: 1!=2
+test.cpp(16): info: check 'value of a=1' has passed
+test.cpp(12): Leaving test case "test_message"; testing time: 219mks
 Leaving test module "boost_test_message"; testing time: 318mks
 
 *** 1 failure is detected in the test module "boost_test_message"

@@ -3,5 +3,5 @@
 Running 3 test cases...
 test.cpp(10): error in "my_test<unsigned char>": check sizeof(T) == 4 failed [1 != 4]
 
-*** 1 failure detected in test suite "Master Test Suite"
+*** 1 failures is detected in test suite "Master Test Suite"
 //]

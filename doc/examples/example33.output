@@ -6,5 +6,5 @@ Mismatch in a position 1
 Mismatch in a position 5                                                        
 Operands bit sizes mismatch: 8 != 32                                            
                                                                                 
-*** 1 failure detected in test suite "example" 
+*** 1 failures is detected in test suite "example" 
 //]

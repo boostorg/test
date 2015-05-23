@@ -11,21 +11,21 @@
 
 void test()
 {
-  BOOST_CHECK(2 != 2);
+  BOOST_TEST(2 != 2);
 }
 
 BOOST_AUTO_TEST_CASE(test_case1)
 {
   BOOST_TEST_CONTEXT("Alpha") {
-    BOOST_CHECK(1 != 1);
+    BOOST_TEST(1 != 1);
     test();
     
     BOOST_TEST_CONTEXT("Be" << "ta")
-      BOOST_CHECK(3 != 3);
+      BOOST_TEST(3 != 3);
       
-    BOOST_CHECK(4 == 4);
+    BOOST_TEST(4 == 4);
   }
   
-  BOOST_CHECK(5 != 5);
+  BOOST_TEST(5 != 5);
 }
 //]

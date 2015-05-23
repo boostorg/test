@@ -1,7 +1,7 @@
 //[example_output
 > decorator_07 --report_level=detailed
 Running 4 test cases...
-decorator_07.cpp(10): error: in "test3": check false has failed
+test.cpp(10): error: in "test3": check false has failed
 
 Test module "decorator_07" has failed with:
   1 test case out of 4 passed

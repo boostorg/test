@@ -8,5 +8,5 @@ setup fixture
 test.cpp(19): error in "test_case2": check i == 1 failed [0 != 1]
 teardown fixture
 
-*** 2 failures detected in test suite "example"
+*** 2 failures are detected in test suite "example"
 //]

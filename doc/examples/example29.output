@@ -5,5 +5,5 @@ test.cpp(16): error in "test": check output.match_pattern() failed. Mismatch at 
 ...5...
 ...4...
 
-*** 1 failure detected in test suite "example"
+*** 1 failures is detected in test suite "example"
 //]

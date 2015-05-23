@@ -2,5 +2,5 @@
 Running 1 test case...
 test.cpp(16): error in "test_list": check p1 == p2 failed [ != ]
 
-*** 1 failure detected in test suite "example"
+*** 1 failures is detected in test suite "example"
 //]

@@ -1,7 +1,7 @@
 //[example_output
 > decorator_06
 Running 1 test case...
-decorator_06.cpp(11): error: in "test_io": check 1 != 1 has failed [1 == 1]
+test.cpp(11): error: in "test_io": check 1 != 1 has failed [1 == 1]
 
 *** 1 failure is detected in the test module "decorator_06"
 

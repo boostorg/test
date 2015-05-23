@@ -1,7 +1,7 @@
 Running 1 test case...
-/Users/raffi/Personnel/boost_github/libs/test/doc/examples/boost_test_macro_sequence.cpp:18: error: in "test_collections_vectors": check a == b has failed. 
+test.cpp(18): error: in "test_collections_vectors": check a == b has failed. 
 Mismatch at position 1: 2 != 5. 
-/Users/raffi/Personnel/boost_github/libs/test/doc/examples/boost_test_macro_sequence.cpp:22: error: in "test_collections_vectors": check b >= c has failed. 
+test.cpp(22): error: in "test_collections_vectors": check b >= c has failed. 
 Second collection has extra trailing elements.
 
 *** 2 failures are detected in the test module "boost_test_sequence"
