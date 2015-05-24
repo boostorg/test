@@ -59,7 +59,7 @@ private:
     {
         m_os << std::setw( m_indent ) << "" << tu.p_name;
         m_os << (tu.p_default_status == test_unit::RS_ENABLED ? "*" : " ");
-        //m_os << '[' << tu.p_dependency_rank << ']';
+        //m_os << '[' << tu.p_sibling_rank << ']';
         if( !tu.p_description->empty() )
             m_os << ": " << tu.p_description;
 
