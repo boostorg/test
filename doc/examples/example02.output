@@ -1,7 +1,0 @@
-//[example_output
-> example
-Running 1 test case...
-test.cpp(18): error: in "boost::bind( &test_class::test_method, &tester )": check false has failed
-
-*** 1 failure is detected in the test module "Master Test Suite"
-//]
