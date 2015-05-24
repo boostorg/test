@@ -32,7 +32,7 @@ For building 32bits libraries, open a console window and enter the following com
 ```
 > cd ``$``boost_path
 > boostrap.bat
-> b2 address-model=32 architecture=x86 --with-test --link=static \
+> b2 address-model=32 architecture=x86 --with-test link=static \
 >                     --prefix=``$``boost_installation_prefix install
 ```
 
@@ -40,18 +40,18 @@ For building 64bits libraries, the commands become:
 ```
 > cd ``$``boost_path
 > boostrap.bat
-> b2 address-model=64 architecture=x86 --with-test --link=static \
+> b2 address-model=64 architecture=x86 --with-test link=static \
 >                    --prefix=``$``boost_installation_prefix install
 ```
 
 [h4 Shared library variant]
-In order to build the shared library variant, the directive `--link=static` should be replaced by `--link=shared` on the above command lines. 
+In order to build the shared library variant, the directive `link=static` should be replaced by `link=shared` on the above command lines. 
 For instance, for 64bits builds, the commands become:
 
 ```
 > cd ``$``boost_path
 > boostrap.bat
-> b2 address-model=64 architecture=x86 --with-test --link=shared --prefix=``$``boost_installation_prefix install
+> b2 address-model=64 architecture=x86 --with-test link=shared --prefix=``$``boost_installation_prefix install
 ```
 
 [h3 Linux/OSX]
