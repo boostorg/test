@@ -23,35 +23,39 @@ BOOST_AUTO_TEST_CASE( check_string_compare )
     char*       buf_ptr_ch      = buf_array_ch;
     std::string buf_str         = "abc";
 
-    BOOST_CHECK_EQUAL(buf_ptr_cch, buf_ptr_cch);
-    BOOST_CHECK_EQUAL(buf_ptr_cch, buf_array_cch);
-    BOOST_CHECK_EQUAL(buf_ptr_cch, buf_ptr_ch);
-    BOOST_CHECK_EQUAL(buf_ptr_cch, buf_array_ch);
-    BOOST_CHECK_EQUAL(buf_ptr_cch, buf_str);
+    BOOST_TEST((void*)buf_ptr_cch != (void*)buf_array_cch);
+    BOOST_TEST((void*)buf_ptr_cch != (void*)buf_array_ch);
+    BOOST_TEST((void*)buf_array_cch != (void*)buf_array_ch);
 
-    BOOST_CHECK_EQUAL(buf_array_cch, buf_ptr_cch);
-    BOOST_CHECK_EQUAL(buf_array_cch, buf_array_cch);
-    BOOST_CHECK_EQUAL(buf_array_cch, buf_ptr_ch);
-    BOOST_CHECK_EQUAL(buf_array_cch, buf_array_ch);
-    BOOST_CHECK_EQUAL(buf_array_cch, buf_str);
+    BOOST_TEST(buf_ptr_cch == buf_ptr_cch);
+    BOOST_TEST(buf_ptr_cch == buf_array_cch);
+    BOOST_TEST(buf_ptr_cch == buf_ptr_ch);
+    BOOST_TEST(buf_ptr_cch == buf_array_ch);
+    BOOST_TEST(buf_ptr_cch == buf_str);
 
-    BOOST_CHECK_EQUAL(buf_ptr_ch, buf_ptr_cch);
-    BOOST_CHECK_EQUAL(buf_ptr_ch, buf_array_cch);
-    BOOST_CHECK_EQUAL(buf_ptr_ch, buf_ptr_ch);
-    BOOST_CHECK_EQUAL(buf_ptr_ch, buf_array_ch);
-    BOOST_CHECK_EQUAL(buf_ptr_ch, buf_str);
+    BOOST_TEST(buf_array_cch == buf_ptr_cch);
+    BOOST_TEST(buf_array_cch == buf_array_cch);
+    BOOST_TEST(buf_array_cch == buf_ptr_ch);
+    BOOST_TEST(buf_array_cch == buf_array_ch);
+    BOOST_TEST(buf_array_cch == buf_str);
 
-    BOOST_CHECK_EQUAL(buf_array_ch, buf_ptr_cch);
-    BOOST_CHECK_EQUAL(buf_array_ch, buf_array_cch);
-    BOOST_CHECK_EQUAL(buf_array_ch, buf_ptr_ch);
-    BOOST_CHECK_EQUAL(buf_array_ch, buf_array_ch);
-    BOOST_CHECK_EQUAL(buf_array_ch, buf_str);
+    BOOST_TEST(buf_ptr_ch == buf_ptr_cch);
+    BOOST_TEST(buf_ptr_ch == buf_array_cch);
+    BOOST_TEST(buf_ptr_ch == buf_ptr_ch);
+    BOOST_TEST(buf_ptr_ch == buf_array_ch);
+    BOOST_TEST(buf_ptr_ch == buf_str);
+    
+    BOOST_TEST(buf_array_ch == buf_ptr_cch);
+    BOOST_TEST(buf_array_ch == buf_array_cch);
+    BOOST_TEST(buf_array_ch == buf_ptr_ch);
+    BOOST_TEST(buf_array_ch == buf_array_ch);
+    BOOST_TEST(buf_array_ch == buf_str);
 
-    BOOST_CHECK_EQUAL(buf_str, buf_ptr_cch);
-    BOOST_CHECK_EQUAL(buf_str, buf_array_cch);
-    BOOST_CHECK_EQUAL(buf_str, buf_ptr_ch);
-    BOOST_CHECK_EQUAL(buf_str, buf_array_ch);
-    BOOST_CHECK_EQUAL(buf_str, buf_str);
+    BOOST_TEST(buf_str == buf_ptr_cch);
+    BOOST_TEST(buf_str == buf_array_cch);
+    BOOST_TEST(buf_str == buf_ptr_ch);
+    BOOST_TEST(buf_str == buf_array_ch);
+    BOOST_TEST(buf_str == buf_str);
 }
 
 //____________________________________________________________________________//

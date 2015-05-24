@@ -25,7 +25,7 @@ include:
 * Simplest tests shouldn't require an external library.
 * For long term usage users of the __UTF__ should be able to build it as a standalone library.
 
-The __UTF__ satisfies the above expectations, and provides versatile facilities to:
+The __UTF__ satisfies the requirements above, and provides versatile facilities to:
 
 * Easily specify all the expectations in the code being tested.
 * Organize these expectations into [link test_case test cases] and [link test_suite test suites].

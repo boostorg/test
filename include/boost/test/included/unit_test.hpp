@@ -16,10 +16,7 @@
 #include <boost/test/impl/debug.ipp>
 #include <boost/test/impl/decorator.ipp>
 #include <boost/test/impl/framework.ipp>
-#include <boost/test/impl/exception_safety.ipp>
 #include <boost/test/impl/execution_monitor.ipp>
-#include <boost/test/impl/interaction_based.ipp>
-#include <boost/test/impl/logged_expectations.ipp>
 #include <boost/test/impl/plain_report_formatter.ipp>
 #include <boost/test/impl/progress_monitor.ipp>
 #include <boost/test/impl/results_collector.ipp>
