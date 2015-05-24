@@ -59,9 +59,9 @@ with the packaging systems on Linux and OSX for instance] of the __UTF__ or can
 
 [note Header `<boost/test/unit_test.hpp>` is an 'aggregate' header: it includes most of the other headers that contains the Unit Test Framework definitions.]
 
-The flip side of this usage variant is that each test module is going to be statically linked
-with __UTF__, which might be something you interested to avoid. Also this usage variant has 
-limited options for test runners. For more information about these configuration options check 
+The flip side of this usage variant is that each test module following this usage variant is going 
+to be statically linked with __UTF__, which might be something you interested to avoid (to save space 
+for example). For more information about these configuration options check 
 [link boost_test.adv_scenarios.static_lib_customizations this section].
 
 [/ ##################################################################### ]
