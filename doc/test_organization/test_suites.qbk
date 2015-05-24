@@ -171,9 +171,6 @@ parameters or as members of the master test suite. Both references point to the 
 uses the alternative initialization function specification can only access command line arguments through the
 master test suite.
 
-[note This interface for runtime parameter access is temporary. It's planned to be updated once runtime
-      parameters support is redesigned.
-]
 
 Returning to the free function example, let's modify initialization function to check for absence of any
 test module arguments.
