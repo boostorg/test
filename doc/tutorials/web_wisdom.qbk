@@ -7,8 +7,11 @@
 
 [section:web_wisdom Web Wisdom]
 
-If you can't find answer to the question you have on these pages it is quite possible someone already faced this or similar issues 
-and posted about this online. Here are just a few of the additional materials you can review:
+If you can't find answer to the question you have on these pages, it is quite possible someone already faced an issue similar to yours 
+and posted about this online. This page gathers a few of the additional materials you may review.
+
+[note The following material is provided "as is". The views, implementation or methods expressed are their respective authors and do not necessarily 
+ represent positions of the Boost.Test team.]
 
 * [@http://stackoverflow.com/search?q=boost+test Stack overflow Boost.Test related questions]
 * [@http://www.ibm.com/developerworks/aix/library/au-ctools1_boost/?S_TACT=105AGY20&S_CMP=HP Get to know the Boost unit test framework (from IBM)]
@@ -46,6 +49,6 @@ and posted about this online. Here are just a few of the additional materials yo
   [@http://blog.yastrebkov.com/2010/07/boost-test-setup-and-usage.html english])
 * [@http://www.ncbi.nlm.nih.gov/toolkit/doc/book/ch_boost/ Using the Boost Unit Test Framework]
 * [@http://endl.ch/content/gallio-adapter-boosttest Gallio adapter for Boost.Test]
-* [@http://sindicollo.blogspot.com/2008/11/boosttest.html Russian trunslation of small tutorial to Boost.Test]
+* [@http://sindicollo.blogspot.com/2008/11/boosttest.html Russian translation of small tutorial to Boost.Test]
 
 [endsect] [/section:web_wisdom]
