@@ -50,5 +50,6 @@ and posted about this online. This page gathers a few of the additional material
 * [@http://www.ncbi.nlm.nih.gov/toolkit/doc/book/ch_boost/ Using the Boost Unit Test Framework]
 * [@http://endl.ch/content/gallio-adapter-boosttest Gallio adapter for Boost.Test]
 * [@http://sindicollo.blogspot.com/2008/11/boosttest.html Russian translation of small tutorial to Boost.Test]
+* [@http://www.eld.leidenuniv.nl/~moene/Home/projects/testdox/boosttest/ Customizing the output log and report format]
 
 [endsect] [/section:web_wisdom]
