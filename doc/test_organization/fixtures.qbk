@@ -181,7 +181,7 @@ By using the decorator __decorator_fixture__, it is possible to:
 [/ ###################################################################################### ]
 [#test_case_fixture_subtree][h3 Fixture for a complete subtree]
 
-If all test cases in a test require the same fixture (you can group test cases in the test suite based on a
+If all test cases in a test sub tree require the same fixture (you can group test cases in a test suite based on a
 fixture required) you can make another step toward an automation of a test fixture assignment. To assign the
 same shared fixture for all test cases in a test suite, use the macro __BOOST_FIXTURE_TEST_SUITE__ in place of the
 macro __BOOST_AUTO_TEST_SUITE__ for automated test suite creation and registration.
@@ -195,8 +195,9 @@ an extra argument - the fixture name. And now, you not only have direct access t
 of the fixture, but also do not need to refer to the fixture name in test case definition. All test cases assigned
 the same fixture automatically.
 
-[tip If necessary you can reset the fixture for a particular test case with the use of the macro
-    __BOOST_FIXTURE_TEST_CASE__.
+[tip If necessary you can reset the fixture for a particular test case using the macro
+    __BOOST_FIXTURE_TEST_CASE__. Similarly you can reset the fixture for a particular sub 
+    test suite using __BOOST_FIXTURE_TEST_SUITE__.
 ]
 
 [note The fixture assignment is ['deep]. In other words unless reset by another

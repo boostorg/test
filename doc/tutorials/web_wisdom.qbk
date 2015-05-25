@@ -8,7 +8,9 @@
 [section:web_wisdom Web Wisdom]
 
 If you can't find answer to the question you have on these pages it is quite possible someone already faced this or similar issues 
-and posted about this online. Here are just a few of the additional materials you can review:
+and posted about this online. Here are just a few of the additional materials you can review. Please note that matirials represent 
+views and recomendations of their authors and their content can be outdated. Thus, it does not represent an official view of 
+Boost.Test team.
 
 * [@http://stackoverflow.com/search?q=boost+test Stack overflow Boost.Test related questions]
 * [@http://www.ibm.com/developerworks/aix/library/au-ctools1_boost/?S_TACT=105AGY20&S_CMP=HP Get to know the Boost unit test framework (from IBM)]
