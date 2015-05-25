@@ -573,7 +573,7 @@ See [link boost_test.testing_tools.expected_failures here] for more details.
   BOOST_ERROR(message);
 ``
 
-__BOOST_ERROR__ tool behave the same way as `__BOOST_CHECK_MESSAGE__(false, message)`. This tool is used for
+__BOOST_ERROR__ tool behave the same way as `__BOOST_TEST__(false, message)`. This tool is used for
 an unconditional error counter increasing and message logging. 
 
 The tool's only parameter is an error message to log.
@@ -582,7 +582,7 @@ The tool's only parameter is an error message to log.
 
 See also:
 
-* __BOOST_LEVEL__
+* __BOOST_TEST__
 
 [endsect]
 
@@ -594,7 +594,7 @@ See also:
   BOOST_FAIL(message);
 ``
 
-`__BOOST_FAIL__(message)` behave the same way as `__BOOST_REQUIRE_MESSAGE__(false, message)`. This tool is used for an
+`__BOOST_FAIL__(message)` behave the same way as `__BOOST_TEST_REQUIRE__(false, message)`. This tool is used for an
 unconditional error counter increasing, message logging and the current test case aborting. 
 
 The tool's only parameter is an error message to log.
@@ -603,8 +603,8 @@ The tool's only parameter is an error message to log.
 
 See also:
 
-* __BOOST_LEVEL__
-* __BOOST_LEVEL_MESSAGE__
+* __BOOST_TEST__
+* 
 
 [endsect]
 

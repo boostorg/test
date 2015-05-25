@@ -57,20 +57,13 @@
 
 [/ Assertions ]
 [def __BOOST_TEST__                       [link boost_test.utf_reference.testing_tool_ref.assertion_boost_test_universal_macro `BOOST_TEST`]]
-[def __BOOST_TEST_REQUIRE__               `BOOST_TEST_REQUIRE`]
+[def __BOOST_TEST_REQUIRE__               [link boost_test.utf_reference.testing_tool_ref.assertion_boost_test_universal_macro `BOOST_TEST_REQUIRE`]]
 
 [def __BOOST_LEVEL__                      [link boost_test.utf_reference.testing_tool_ref.assertion_boost_level `BOOST_<level>`]]
-[def __BOOST_CHECK__                      [link boost_test.utf_reference.testing_tool_ref.assertion_boost_level `BOOST_CHECK`]]
-[def __BOOST_REQUIRE__                    [link boost_test.utf_reference.testing_tool_ref.assertion_boost_level `BOOST_REQUIRE`]]
 
 [def __BOOST_LEVEL_MESSAGE__              [link boost_test.utf_reference.testing_tool_ref.assertion_boost_level_message `BOOST_<level>_MESSAGE`]]
-[def __BOOST_CHECK_MESSAGE__              [link boost_test.utf_reference.testing_tool_ref.assertion_boost_level_message `BOOST_CHECK_MESSAGE`]]
-[def __BOOST_REQUIRE_MESSAGE__            [link boost_test.utf_reference.testing_tool_ref.assertion_boost_level_message `BOOST_REQUIRE_MESSAGE`]]
 
 [def __BOOST_LEVEL_EQUAL__                [link boost_test.utf_reference.testing_tool_ref.assertion_boost_level_eq `BOOST_<level>_EQUAL`]]
-[def __BOOST_WARN_EQUAL__                 [link boost_test.utf_reference.testing_tool_ref.assertion_boost_level_eq `BOOST_WARN_EQUAL`]]
-[def __BOOST_CHECK_EQUAL__                [link boost_test.utf_reference.testing_tool_ref.assertion_boost_level_eq `BOOST_CHECK_EQUAL`]]
-[def __BOOST_REQUIRE_EQUAL__              [link boost_test.utf_reference.testing_tool_ref.assertion_boost_level_eq `BOOST_REQUIRE_EQUAL`]]
 
 [def __BOOST_LEVEL_PREDICATE__            [link boost_test.utf_reference.testing_tool_ref.assertion_boost_level_predicate `BOOST_<level>_PREDICATE`]]
 [def __BOOST_LEVEL_EQUAL_COLLECTIONS__    [link boost_test.utf_reference.testing_tool_ref.assertion_boost_level_eq_collections `BOOST_<level>_EQUAL_COLLECTIONS`]]

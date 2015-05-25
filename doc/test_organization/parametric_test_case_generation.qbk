@@ -30,7 +30,7 @@ The approach above has several drawbacks:
 
 * the logic for running the tests is inside a test itself: `single_test` in the above example is run from the test case `combined_test` while its execution would be better
   handled by the __UTF__
-* in case of fatal failure for one of the values in `param` array above (say a failure in __BOOST_REQUIRE__), the test `combined_test` is aborted and the next test-case in the test tree is executed. 
+* in case of fatal failure for one of the values in `param` array above (say a failure in __BOOST_TEST_REQUIRE__), the test `combined_test` is aborted and the next test-case in the test tree is executed. 
 * in case of failure, the reporting is not accurate enough: the test should certainly be reran during debugging sessions by a human or additional logic for reporting should be implemented
   in the test itself.
 

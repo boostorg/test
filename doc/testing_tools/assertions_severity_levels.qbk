@@ -8,7 +8,7 @@
 
 [section:tools_assertion_severity_level Assertion severity level]
 
-All the tools are supplied in three flavours/levels, from lowest to highest:
+Not only __BOOST_TEST__, but all the testing tools are supplied in three flavours/levels, from lowest to highest:
 
 # `WARN`
 # `CHECK` and
@@ -16,16 +16,15 @@ All the tools are supplied in three flavours/levels, from lowest to highest:
 
 For example: 
 
-* __BOOST_WARN_EQUAL__
-* __BOOST_CHECK_EQUAL__
-* __BOOST_REQUIRE_EQUAL__
+* BOOST_WARN_THROW
+* BOOST_CHECK_THROW
+* BOOST_REQUIRE_THROW
 
-If an assertion designated by
-the tool passes, confirmation message can be printed in log output [footnote to manage what messages appear
-in the test log stream, set the proper [link boost_test.test_output.log_runtime_config log level]].
-If an assertion designated by the tool failed, depending on the level following
-will happened [footnote in some cases log message can be slightly different to reflect failed tool
-specifics]:
+If an assertion designated by the tool passes, confirmation message can be printed in log output 
+[footnote to manage what messages appear in the test log stream, 
+ set the proper [link boost_test.test_output.log_runtime_config log level]].
+If an assertion designated by the tool failed, depending on the level following will happened 
+[footnote in some cases log message can be slightly different to reflect failed tool specifics]:
 
 [table:assertions_severity_levels Assertions severity levels
   [

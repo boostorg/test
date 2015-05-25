@@ -61,12 +61,12 @@ The __UTF__ solves all these issues. To integrate with it above program needs to
 __BOOST_AUTO_TEST_CASE__( my_test )
 {
   my_class test_object( "qwerty" );
-  BOOST_CHECK( test_object.is_valid() );
+  BOOST_TEST( test_object.is_valid() );
 }
 ``
  
 Now, you not only receive uniform result code, even in case of exception, but also nicely formatted output from
-__BOOST_CHECK__ tool, would you choose to see it. Is there any other ways to perform checks? The following example test 
+__BOOST_TEST__ tool, would you choose to see it. Is there any other ways to perform checks? The following example test 
 program shows several different ways to detect and report an error in the `add()` function.
 
 [import ../snippet/snippet12.cpp]
