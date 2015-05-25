@@ -134,16 +134,16 @@ public:                                                                 \
     static assertion_result                                             \
     eval( Lhs const& lhs, Rhs const& rhs)                               \
     {                                                                   \
-        if( lhs == Lhs() )                                              \
+        if( lhs == Lhs(0) )                                             \
             return compare_fpv_near_zero<Rhs>(rhs, (OP*)0);             \
                                                                         \
-        if( rhs == Rhs() )                                              \
+        if( rhs == Rhs(0) )                                             \
             return compare_fpv_near_zero<Lhs>(lhs, (OP*)0);             \
                                                                         \
         bool direct_res = eval_direct( lhs, rhs );                      \
                                                                         \
         if((direct_res && fpctraits<OP>::cmp_direct)                    \
-            || fpc_tolerance<FPT>() == FPT())                           \
+            || fpc_tolerance<FPT>() == FPT(0))                          \
             return direct_res;                                          \
                                                                         \
         return compare_fpv<FPT>(lhs, rhs, (OP*)0);                      \

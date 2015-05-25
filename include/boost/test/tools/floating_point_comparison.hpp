@@ -206,7 +206,7 @@ public:
     explicit    close_at_tolerance( ToleranceType tolerance, fpc::strength fpc_strength = FPC_STRONG ) 
     : m_fraction_tolerance( fpc_detail::fraction_tolerance<FPT>( tolerance ) )
     , m_strength( fpc_strength )
-    , m_tested_rel_diff()
+    , m_tested_rel_diff( 0 )
     {
         BOOST_ASSERT_MSG( m_fraction_tolerance >= FPT(0), "tolerance must not be negative!" ); // no reason for tolerance to be negative
     }
