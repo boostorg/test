@@ -18,7 +18,7 @@ The __BOOST_TEST__ assertion uses operator overloading in order to provide an en
 of narrowing the supported statements. The unsupported statements are:
 
 * statements containing ternary conditions: those statement should be surrounded by parenthesis as they cannot be overloaded
-* statements containing comas: those statements will be intercepted by the preprocessor
+* statements containing commas: those statements will be intercepted by the preprocessor
 * compound statements containing any logical composition `||`, `&&`. Those are disabled intentionally and should be surrounded
   by parenthesis
   
