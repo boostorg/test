@@ -4,7 +4,7 @@
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
-
+ 
 [library Boost.Test
     [quickbook 1.7]
     [copyright 2001 - 2015 Boost.Test team]
@@ -32,7 +32,7 @@
 
 [/ content in the test organization]
 
-[def __floating_points_testing_tools__    [link boost_test.testing_tools.extended_comparison.testing_floating_points Floating point comparison algorithms]]
+[def __floating_points_testing_tools__    [link boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory Floating point comparison algorithms]]
 [def __master_test_suite__                [link boost_test.tests_organization.test_suite.master_test_suite master test suite]]
 
 [def __runtime_configuration__            [link boost_test.runtime_config runtime configuration]]
