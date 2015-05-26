@@ -71,16 +71,16 @@ class array;
 // ************************************************************************** //
 
 //! Helper metafunction indicating if the specified type is a dataset.
-template<typename DS>
+template<typename D_S>
 struct is_dataset : mpl::false_ {};
 
 //! A reference to a dataset is a dataset
-template<typename DS>
-struct is_dataset<DS&> : is_dataset<DS> {};
+template<typename D_S>
+struct is_dataset<D_S&> : is_dataset<D_S> {};
 
 //! A const dataset is a dataset
-template<typename DS>
-struct is_dataset<DS const> : is_dataset<DS> {};
+template<typename D_S>
+struct is_dataset<D_S const> : is_dataset<D_S> {};
 
 //____________________________________________________________________________//
 
@@ -98,7 +98,7 @@ struct is_dataset<DS const> : is_dataset<DS> {};
 //! This function has several overloads:
 //! @code
 //! // returns ds if ds is already a dataset
-//! template <typename DS> DS make(DS&& ds); 
+//! template <typename D_S> D_S make(D_S&& ds); 
 //!
 //! // creates a singleton dataset, for non forward iterable and non dataset type T
 //! // (a C string is not considered as a sequence).
@@ -112,11 +112,11 @@ struct is_dataset<DS const> : is_dataset<DS> {};
 //! // creates an array dataset
 //! template<typename T, std::size_t size> monomorphic::array<T> make( T (&a)[size] );
 //! @endcode
-template<typename DS>
-inline typename BOOST_TEST_ENABLE_IF<monomorphic::is_dataset<DS>::value,DS>::type
-make(DS&& ds)
+template<typename D_S>
+inline typename BOOST_TEST_ENABLE_IF<monomorphic::is_dataset<D_S>::value,D_S>::type
+make(D_S&& ds)
 {
-    return std::forward<DS>( ds );
+    return std::forward<D_S>( ds );
 }
 
 
@@ -143,9 +143,9 @@ make( C&& c );
 #else  // !BOOST_NO_CXX11_RVALUE_REFERENCES
 
 //! @overload boost::unit_test:data::make()
-template<typename DS>
-inline typename BOOST_TEST_ENABLE_IF<monomorphic::is_dataset<DS>::value,DS const&>::type
-make(DS const& ds)
+template<typename D_S>
+inline typename BOOST_TEST_ENABLE_IF<monomorphic::is_dataset<D_S>::value,D_S const&>::type
+make(D_S const& ds)
 {
     return ds;
 }
@@ -216,25 +216,25 @@ namespace result_of {
 
 #ifndef BOOST_NO_CXX11_DECLTYPE
 //! Result of the make call.
-template<typename DS>
+template<typename D_S>
 struct make
 {
-    typedef decltype(data::make(boost::declval<DS>())) type;
+    typedef decltype(data::make(boost::declval<D_S>())) type;
 };
 #else
 
 // explicit specialisation, cumbersome
 
-template <typename DS, typename Enable = void>
+template <typename D_S, typename Enable = void>
 struct make;
 
-template <typename DS>
+template <typename D_S>
 struct make<
-         DS const&, 
-         typename BOOST_TEST_ENABLE_IF<monomorphic::is_dataset<DS>::value>::type
+         D_S const&, 
+         typename BOOST_TEST_ENABLE_IF<monomorphic::is_dataset<D_S>::value>::type
          >
 {
-    typedef DS const& type;
+    typedef D_S const& type;
 };
 
 template <typename T>
