@@ -112,7 +112,7 @@ compiler_log_formatter::test_unit_finish( std::ostream& output, test_unit const&
         if( elapsed % 1000 == 0 )
             output << elapsed/1000 << "ms";
         else
-            output << elapsed << "mks";
+            output << elapsed << "us";
     }
 
     output << std::endl;

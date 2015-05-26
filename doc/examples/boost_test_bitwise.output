@@ -14,8 +14,8 @@ test.cpp(21): error: in "test_bitwise": check a == b has failed [171 != 136]. Bi
 Mismatch at position 0
 Mismatch at position 1
 Mismatch at position 5
-test.cpp(13): Leaving test case "test_bitwise"; testing time: 627mks
-Leaving test module "boost_test_bitwise"; testing time: 772mks
+test.cpp(13): Leaving test case "test_bitwise"; testing time: 627us
+Leaving test module "boost_test_bitwise"; testing time: 772us
 
 *** 3 failures are detected in the test module "boost_test_bitwise"
 //]

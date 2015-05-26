@@ -43,7 +43,7 @@ Boost   : $BOOST_VERSION]] ]
     [`Entering test <test unit type> <test unit name>`] ]
 
   [ [On test unit end]
-    [threshold <= log_test_units; testing time is reported only if elapsed time is more than 1 mks.]
+    [threshold <= log_test_units; testing time is reported only if elapsed time is more than 1 us.]
     [`Leaving test <test unit type> <test unit name>; testing time <value>`] ]
 
   [ [On skipped test unit]
