@@ -5,8 +5,6 @@
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
- 
- 
 
 [section:acceptable_statements Acceptable statements]
 The general form of the `BOOST_TEST` macro is the following:
@@ -14,8 +12,30 @@ The general form of the `BOOST_TEST` macro is the following:
   BOOST_TEST(statement);
   BOOST_TEST(statement, optional_modifiers)
 
-The __BOOST_TEST__ assertion uses operator overloading in order to provide an enhanced reporting capability; at the cost 
-of narrowing the supported statements. The unsupported statements are:
+
+* `statement` above may be almost anything: in particular it might contain a full expression composed by several operations,
+* `statement` is cast to a `bool`, as if it would appear as argument to an `if` statement: this is the result of the assertion,
+* `optional_modifiers` may be: 
+  * a [link boost_test.testing_tools.reports custom message] printed in case of failure
+  * additional control over how comparisons are performed (floating point, collections, type of report)
+
+`BOOST_TEST` assertion uses operator overloading in order to provide an enhanced reporting capability, as
+shown on the example below:
+
+[bt_example boost_test_macro3..BOOST_TEST enhanced reporting]
+
+As it can be seen, additional details are provided in log. This is possible for almost all overloadable operators in C++:
+  
+[table
+  [[Class of operation][operators]]
+  [[binary comparisons][`==`, `!=`, `<`, `>`, `<=`, `>=`]]
+  [[arithmetic compositions][`+`, `-`, `*`, `/`, `%`]]
+  [[bitwise compositions][`|`, `&`, `^`, `<<`, `>>`]]
+  [[assignments][`=`, `+=`, `-=`, `*=`, `/=`, `%=`, `<<=`, `>>=`, `&=`, `^=`, `|=`]]
+]  
+
+
+There are a few constructions that are however unsupported, but adding an extra bracket usually solves that:
 
 * statements containing ternary conditions: those statement should be surrounded by parenthesis as they cannot be overloaded
 * statements containing commas: those statements will be intercepted by the preprocessor
@@ -26,21 +46,8 @@ of narrowing the supported statements. The unsupported statements are:
     
   The full details are given in [link boost_test.testing_tools.internal_details this section].
 
-The `statement` might contain a full expression composed by several operations. `statement` is cast to a `bool`, 
-as if it would appear as argument to an `if` statement.
-
 [bt_example boost_test_macro1..BOOST_TEST acceptable expressions]
 
-`BOOST_TEST` provides additional details in case of failure for binary overloadable operations in C++, 
-except then ones mentioned above:
-  
-[table
-  [[Class of operation][operators]]
-  [[binary comparisons][`==`, `!=`, `<`, `>`, `<=`, `>=`]]
-  [[arithmetic compositions][`+`, `-`, `*`, `/`, `%`]]
-  [[bitwise compositions][`|`, `&`, `^`, `<<`, `>>`]]
-  [[assignments][`=`, `+=`, `-=`, `*=`, `/=`, `%=`, `<<=`, `>>=`, `&=`, `^=`, `|=`]]
-]  
 
 
 
