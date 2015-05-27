@@ -16,6 +16,7 @@
 
 ``
   BOOST_TEST(statement);
+  BOOST_TEST_<level>(statement);
   
   // replacement failure message, requires variadic macros
   BOOST_TEST(statement, "failure message");
@@ -33,7 +34,16 @@
   BOOST_TEST(statement, boost::test_tools::lexicographic() );
 ``
 
-The full documentation of this macro is located [link boost_test.testing_tools.boost_test_universal_macro here].
+The full documentation of this macro is located [link boost_test.testing_tools.boost_test_universal_macro here]. 
+
+The macro is available in three variants, corresponding to different [link boost_test.testing_tools.tools_assertion_severity_level assertion severity levels]:
+
+``
+  BOOST_TEST 
+  BOOST_TEST_REQUIRE
+  BOOST_TEST_WARN
+``
+
 
 * `"failure message"` is a C-string printed in case of failure in place of the default message. 
   See [link boost_test.testing_tools.reports this section] for 

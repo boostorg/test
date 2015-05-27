@@ -15,7 +15,7 @@
   
   [/ ###############################################################################################]
   [
-    [__BOOST_TEST__]
+    [__BOOST_TEST__, `BOOST_TEST_REQUIRE`, `BOOST_TEST_WARN`]
     [General purpose assertion macro.]
   ]
   
