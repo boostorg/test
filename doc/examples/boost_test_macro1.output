@@ -7,11 +7,11 @@ test.cpp(17): info: check a == b has passed
 test.cpp(18): info: check a < b + 1 has passed
 test.cpp(19): info: check b >= a has passed
 test.cpp(20): info: check !(b >= b + 1) has passed
-test.cpp(13): Leaving test case "test_basic_operations"; testing time: 324us
+test.cpp(13): Leaving test case "test_basic_operations"; testing time: 26ms
 test.cpp(23): Entering test case "test_logical_not_allowed"
-test.cpp(25): info: check true has passed
-test.cpp(23): Leaving test case "test_logical_not_allowed"; testing time: 113us
-Leaving test module "boost_test_macro1"; testing time: 643us
+test.cpp(27): info: check (true && true) has passed
+test.cpp(23): Leaving test case "test_logical_not_allowed"; testing time: 7ms
+Leaving test module "boost_test_macro1"; testing time: 70ms
 
 *** No errors detected
 //]
