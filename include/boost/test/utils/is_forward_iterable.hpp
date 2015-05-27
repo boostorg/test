@@ -34,6 +34,8 @@
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/type_traits/remove_cv.hpp>
+#include <boost/test/utils/is_cstring.hpp>
+
 
 // STL
 #include <utility>
@@ -124,8 +126,7 @@ namespace ut_detail {
       has_member_size<T>::value &&
       has_member_begin<T>::value &&
       has_member_end<T>::value &&
-      !is_same<typename remove_cv<typename T::value_type>::type,char>::value &&
-      !is_same<typename remove_cv<typename T::value_type>::type,wchar_t>::value
+      !is_cstring<T>::value
       >::type
     > : std::true_type
   {};
