@@ -137,7 +137,7 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : test_assertion_construction  : boost_unit_test_framework/<link>static ]
           [ test-btl-lib run : test_datasets                : boost_unit_test_framework : : [ glob test_datasets_src/*.cpp ] : ]
           [ test-btl-lib-c11 run : test_datasets_cxx11      : boost_unit_test_framework : : [ glob test_datasets_src/*.cpp ] : ]
-          
+
           # [ test-btl-lib run : config_file_iterator_test    : boost_unit_test_framework/<link>static ]
           # [ test-btl-lib run : config_file_test             : boost_unit_test_framework/<link>static ]
 
@@ -149,8 +149,7 @@ test-suite "unit_test_framework_test"
               test_fp_multiprecision_close_fraction.cpp ]
           [ test-btl-lib-c11 run  : test_fp_multiprecision_close_fraction_new_api : boost_unit_test_framework  : : 
               test_fp_multiprecision_close_fraction.cpp ]
-              
-              
+
           # examples in datasets
           [ test-btl-lib-c11 run-fail  : dataset_example59 : : : ../doc/examples/dataset_example59.cpp ]
           [ test-btl-lib-c11 run       : dataset_example61 : : : ../doc/examples/dataset_example61.cpp ]
@@ -161,7 +160,7 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib-c11 run       : dataset_example66 : : : ../doc/examples/dataset_example66.cpp ]
           [ test-btl-lib-c11 run       : dataset_example67 : : : ../doc/examples/dataset_example67.cpp ]
           [ test-btl-lib-c11 run-fail  : dataset_example68 : : : ../doc/examples/dataset_example68.cpp ]
-          
+
           # examples in BOOST_TEST
           [ test-btl-lib-c11 run       : boost_test_macro1                  : : : ../doc/examples/boost_test_macro1.cpp ]
           [ test-btl-lib-c11 run-fail  : boost_test_macro2                  : : : ../doc/examples/boost_test_macro2.cpp ]
@@ -175,14 +174,7 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib-c11 run-fail  : boost_test_macro_message           : : : ../doc/examples/boost_test_macro_message.cpp ]
           [ test-btl-lib-c11 run       : boost_test_macro_sequence          : : : ../doc/examples/boost_test_macro_sequence.cpp ]
           [ test-btl-lib-c11 run-fail  : boost_test_macro_string            : : : ../doc/examples/boost_test_macro_string.cpp ]
-
-          
-
-          
-                    
         ;
-        
-        
 
 test-suite "multithreaded_test"
         :
@@ -191,6 +183,6 @@ test-suite "multithreaded_test"
 
 # A target that runs all the tests 
 alias test : basics_test prg_exec_monitor_test unit_test_framework_test ; 
-  
+
 # Only run tests when explicitly requested 
 # explicit test basics_test prg_exec_monitor_test unit_test_framework_test ;

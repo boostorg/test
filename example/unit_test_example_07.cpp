@@ -15,7 +15,7 @@
 struct F {
     F() : i( 9 ) { BOOST_TEST_MESSAGE( "setup fixture" ); }
     ~F()         { BOOST_TEST_MESSAGE( "teardown fixture" ); }
-   
+
     int i;
 };
 
