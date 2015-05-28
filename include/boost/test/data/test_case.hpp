@@ -47,22 +47,22 @@ namespace data {
 
 namespace ds_detail {
 
-template<typename TestCase,typename D_S>
+template<typename TestCase,typename DataSet>
 class test_case_gen : public test_unit_generator {
 public:
     // Constructor
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-    test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, D_S&& ds )
+    test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, DataSet&& ds )
     : m_tc_name( ut_detail::normalize_test_case_name( tc_name ) )
     {
-        data::for_each_sample( std::forward<D_S>( ds ), *this );
+        data::for_each_sample( std::forward<DataSet>( ds ), *this );
     }
     test_case_gen( test_case_gen&& gen )
     : m_tc_name( gen.m_tc_name )
     , m_test_cases( std::move(gen.m_test_cases) )
     {}
 #else
-    test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, D_S const& ds )
+    test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, DataSet const& ds )
     : m_tc_name( ut_detail::normalize_test_case_name( tc_name ) )
     {
         data::for_each_sample( ds, *this );
@@ -103,18 +103,18 @@ private:
 //____________________________________________________________________________//
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-template<typename TestCase,typename D_S>
-test_case_gen<TestCase,D_S>
-make_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, D_S&& ds )
+template<typename TestCase,typename DataSet>
+test_case_gen<TestCase,DataSet>
+make_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, DataSet&& ds )
 {
-    return test_case_gen<TestCase,D_S>( tc_name, tc_file, tc_line, std::forward<D_S>(ds) );
+    return test_case_gen<TestCase,DataSet>( tc_name, tc_file, tc_line, std::forward<DataSet>(ds) );
 }
 #else
-template<typename TestCase,typename D_S>
-test_case_gen<TestCase,D_S>
-make_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, D_S const& ds )
+template<typename TestCase,typename DataSet>
+test_case_gen<TestCase,DataSet>
+make_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, DataSet const& ds )
 {
-    return test_case_gen<TestCase,D_S>( tc_name, tc_file, tc_line, ds );
+    return test_case_gen<TestCase,DataSet>( tc_name, tc_file, tc_line, ds );
 }
 #endif
 
