@@ -46,6 +46,16 @@ struct fpctraits<op::NE<Lhs,Rhs> > {
     static const bool cmp_direct = false;
 };
 
+template <typename Lhs, typename Rhs>
+struct fpctraits<op::LT<Lhs,Rhs> > {
+    static const bool cmp_direct = false;
+};
+
+template <typename Lhs, typename Rhs>
+struct fpctraits<op::GT<Lhs,Rhs> > {
+    static const bool cmp_direct = false;
+};
+
 //____________________________________________________________________________//
 
 // ************************************************************************** //
@@ -111,6 +121,91 @@ compare_fpv_near_zero( Lhs const& fpv, op::NE<Lhs,Rhs>* )
         ar.message() << "Absolute value is within tolerance [|" << fpv << "| < "<< fpc_tolerance<FPT>() << ']';
     return ar;
 }
+
+//____________________________________________________________________________//
+
+template <typename FPT, typename Lhs, typename Rhs>
+inline assertion_result
+compare_fpv( Lhs const& lhs, Rhs const& rhs, op::LT<Lhs,Rhs>* )
+{
+    fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_WEAK );
+
+    bool is_lt = lhs < rhs;
+    bool is_different = !P( lhs, rhs );
+    assertion_result ar( is_lt && is_different );
+    if( !ar )
+    {
+        if(is_lt)
+        {
+            ar.message() << "Relative difference is within tolerance ["
+                         << P.tested_rel_diff() << " < " << fpc_tolerance<FPT>() << ']';
+        }
+    }
+
+    return ar;
+}
+
+template <typename FPT, typename Lhs, typename Rhs>
+inline assertion_result
+compare_fpv_near_zero( Lhs const& fpv, op::LT<Lhs,Rhs>* )
+{
+    fpc::small_with_tolerance<FPT> P( fpc_tolerance<FPT>() );
+    
+    bool is_above_zero = 0 < fpv;
+    bool is_not_zero   = !P( fpv );
+    assertion_result ar( is_above_zero && is_not_zero );
+    if( !ar )
+    {
+        if(!is_not_zero)
+        {
+            ar.message() << "Absolute value is within tolerance [|" << fpv << "| < "<< fpc_tolerance<FPT>() << ']';
+        }
+    }
+    return ar;
+}
+
+//____________________________________________________________________________//
+
+template <typename FPT, typename Lhs, typename Rhs>
+inline assertion_result
+compare_fpv( Lhs const& lhs, Rhs const& rhs, op::GT<Lhs,Rhs>* )
+{
+    fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_WEAK );
+
+    bool is_gt = lhs > rhs;
+    bool is_different = !P( lhs, rhs );
+    assertion_result ar( is_gt && is_different );
+    if( !ar )
+    {
+        if(is_gt)
+        {
+            ar.message() << "Relative difference is within tolerance ["
+                         << P.tested_rel_diff() << " < " << fpc_tolerance<FPT>() << ']';
+        }
+    }
+
+    return ar;
+}
+
+template <typename FPT, typename Lhs, typename Rhs>
+inline assertion_result
+compare_fpv_near_zero( Lhs const& fpv, op::GT<Lhs,Rhs>* )
+{
+    fpc::small_with_tolerance<FPT> P( fpc_tolerance<FPT>() );
+    
+    bool is_below_zero = 0 > fpv;
+    bool is_not_zero   = !P( fpv );
+    assertion_result ar( is_below_zero && is_not_zero );
+    if( !ar )
+    {
+        if(!is_not_zero)
+        {
+            ar.message() << "Absolute value is within tolerance [|" << fpv << "| < "<< fpc_tolerance<FPT>() << ']';
+        }
+    }
+    return ar;
+}
+
 
 //____________________________________________________________________________//
 
