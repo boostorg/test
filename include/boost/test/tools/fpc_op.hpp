@@ -19,7 +19,7 @@
 #include <boost/test/tools/fpc_tolerance.hpp>
 
 // Boost
-#include <boost/numeric/conversion/conversion_traits.hpp> // for numeric::conversion_traits
+#include <boost/type_traits/common_type.hpp>
 #include <boost/utility/enable_if.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -120,7 +120,7 @@ struct name<Lhs,Rhs,typename boost::enable_if_c<                        \
     (fpc::tolerance_based<Lhs>::value &&                                \
      fpc::tolerance_based<Rhs>::value)>::type> {                        \
 public:                                                                 \
-    typedef typename numeric::conversion_traits<Lhs,Rhs>::supertype FPT;\
+    typedef typename common_type<Lhs,Rhs>::type FPT;                    \
     typedef name<Lhs,Rhs> OP;                                           \
                                                                         \
     typedef assertion_result result_type;                               \
