@@ -23,6 +23,7 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/type_traits/is_floating_point.hpp>
 #include <boost/type_traits/is_array.hpp>
+#include <boost/type_traits/conditional.hpp>
 #include <boost/utility/enable_if.hpp>
 
 // STL
@@ -127,20 +128,37 @@ fpt_abs( FPT fpv )
 //____________________________________________________________________________//
 
 template<typename FPT>
-struct fpt_limits {
-    static FPT    min_value()
-    {
-        return std::numeric_limits<FPT>::is_specialized
-                    ? (std::numeric_limits<FPT>::min)()
-                    : static_cast<FPT>(0);
-    }
-    static FPT    max_value()
-    {
-        return std::numeric_limits<FPT>::is_specialized
-                    ? (std::numeric_limits<FPT>::max)()
-                    : static_cast<FPT>(1000000); // for our purposes it doesn't really matter what value is returned here
-    }
+struct fpt_limits_when_std_specialized
+{
+  static FPT    min_value()
+  {
+    return (std::numeric_limits<FPT>::min)();
+  }
+  static FPT    max_value()
+  {
+    return (std::numeric_limits<FPT>::max)();
+  }
 };
+
+template<typename FPT>
+struct fpt_limits_when_std_not_specialized
+{
+  static FPT    min_value()
+  {
+    return static_cast<FPT>(0);
+  }
+  static FPT    max_value()
+  {
+    return static_cast<FPT>(1000000); // for our purposes it doesn't really matter what value is returned here
+  }
+};
+
+template<typename FPT>
+struct fpt_limits : boost::conditional<std::numeric_limits<FPT>::is_specialized,
+                                       fpt_limits_when_std_specialized<FPT>,
+                                       fpt_limits_when_std_not_specialized<FPT>
+                                      >::type
+{};
 
 //____________________________________________________________________________//
 
