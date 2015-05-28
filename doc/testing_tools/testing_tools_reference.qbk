@@ -39,7 +39,7 @@ The full documentation of this macro is located [link boost_test.testing_tools.b
 The macro is available in three variants, corresponding to different [link boost_test.testing_tools.tools_assertion_severity_level assertion severity levels]:
 
 ``
-  BOOST_TEST 
+  BOOST_TEST // or BOOST_TEST_CHECK
   BOOST_TEST_REQUIRE
   BOOST_TEST_WARN
 ``
