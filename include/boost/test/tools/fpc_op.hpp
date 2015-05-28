@@ -79,9 +79,9 @@ compare_fpv( Lhs const& lhs, Rhs const& rhs, OP* )
 
 //____________________________________________________________________________//
 
-template <typename FPT, typename Lhs, typename OP>
+template <typename FPT, typename OP>
 inline assertion_result
-compare_fpv_near_zero( Lhs const& fpv, OP* )
+compare_fpv_near_zero( FPT const& fpv, OP* )
 {
     fpc::small_with_tolerance<FPT> P( fpc_tolerance<FPT>() );
 
@@ -112,7 +112,7 @@ compare_fpv( Lhs const& lhs, Rhs const& rhs, op::NE<Lhs,Rhs>* )
 
 template <typename FPT, typename Lhs, typename Rhs>
 inline assertion_result
-compare_fpv_near_zero( Lhs const& fpv, op::NE<Lhs,Rhs>* )
+compare_fpv_near_zero( FPT const& fpv, op::NE<Lhs,Rhs>* )
 {
     fpc::small_with_tolerance<FPT> P( fpc_tolerance<FPT>() );
 
@@ -128,40 +128,14 @@ template <typename FPT, typename Lhs, typename Rhs>
 inline assertion_result
 compare_fpv( Lhs const& lhs, Rhs const& rhs, op::LT<Lhs,Rhs>* )
 {
-    fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_WEAK );
-
-    bool is_lt = lhs < rhs;
-    bool is_different = !P( lhs, rhs );
-    assertion_result ar( is_lt && is_different );
-    if( !ar )
-    {
-        if(is_lt)
-        {
-            ar.message() << "Relative difference is within tolerance ["
-                         << P.tested_rel_diff() << " < " << fpc_tolerance<FPT>() << ']';
-        }
-    }
-
-    return ar;
+    return lhs >= rhs ? assertion_result( false ) : compare_fpv<FPT>( lhs, rhs, (op::NE<Lhs,Rhs>*)0 );
 }
 
 template <typename FPT, typename Lhs, typename Rhs>
 inline assertion_result
-compare_fpv_near_zero( Lhs const& fpv, op::LT<Lhs,Rhs>* )
+compare_fpv_near_zero( FPT const& fpv, op::LT<Lhs,Rhs>* )
 {
-    fpc::small_with_tolerance<FPT> P( fpc_tolerance<FPT>() );
-    
-    bool is_above_zero = 0 < fpv;
-    bool is_not_zero   = !P( fpv );
-    assertion_result ar( is_above_zero && is_not_zero );
-    if( !ar )
-    {
-        if(!is_not_zero)
-        {
-            ar.message() << "Absolute value is within tolerance [|" << fpv << "| < "<< fpc_tolerance<FPT>() << ']';
-        }
-    }
-    return ar;
+    return fpv >= 0 ? assertion_result( false ) : compare_fpv_near_zero( fpv, (op::NE<Lhs,Rhs>*)0 );
 }
 
 //____________________________________________________________________________//
@@ -170,40 +144,14 @@ template <typename FPT, typename Lhs, typename Rhs>
 inline assertion_result
 compare_fpv( Lhs const& lhs, Rhs const& rhs, op::GT<Lhs,Rhs>* )
 {
-    fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_WEAK );
-
-    bool is_gt = lhs > rhs;
-    bool is_different = !P( lhs, rhs );
-    assertion_result ar( is_gt && is_different );
-    if( !ar )
-    {
-        if(is_gt)
-        {
-            ar.message() << "Relative difference is within tolerance ["
-                         << P.tested_rel_diff() << " < " << fpc_tolerance<FPT>() << ']';
-        }
-    }
-
-    return ar;
+    return lhs <= rhs ? assertion_result( false ) : compare_fpv<FPT>( lhs, rhs, (op::NE<Lhs,Rhs>*)0 );
 }
 
 template <typename FPT, typename Lhs, typename Rhs>
 inline assertion_result
-compare_fpv_near_zero( Lhs const& fpv, op::GT<Lhs,Rhs>* )
+compare_fpv_near_zero( FPT const& fpv, op::GT<Lhs,Rhs>* )
 {
-    fpc::small_with_tolerance<FPT> P( fpc_tolerance<FPT>() );
-    
-    bool is_below_zero = 0 > fpv;
-    bool is_not_zero   = !P( fpv );
-    assertion_result ar( is_below_zero && is_not_zero );
-    if( !ar )
-    {
-        if(!is_not_zero)
-        {
-            ar.message() << "Absolute value is within tolerance [|" << fpv << "| < "<< fpc_tolerance<FPT>() << ']';
-        }
-    }
-    return ar;
+    return fpv <= 0 ? assertion_result( false ) : compare_fpv_near_zero( fpv, (op::NE<Lhs,Rhs>*)0 );
 }
 
 
@@ -230,10 +178,10 @@ public:                                                                 \
     eval( Lhs const& lhs, Rhs const& rhs)                               \
     {                                                                   \
         if( lhs == Lhs(0) )                                             \
-            return compare_fpv_near_zero<Rhs>(rhs, (OP*)0);             \
+            return compare_fpv_near_zero(rhs, (OP*)0);                  \
                                                                         \
         if( rhs == Rhs(0) )                                             \
-            return compare_fpv_near_zero<Lhs>(lhs, (OP*)0);             \
+            return compare_fpv_near_zero(lhs, (OP*)0);                  \
                                                                         \
         bool direct_res = eval_direct( lhs, rhs );                      \
                                                                         \
