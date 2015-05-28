@@ -53,7 +53,7 @@ the numeric value passed along the manipulator:
 [[`tolerance(float(0.5))`][tolerance for type `float` changed to 0.5]]
 [[`tolerance(0.5f)`][tolerance for type `float` changed to 0.5]]
 [[`tolerance(0.5L)`][tolerance for type `long double` changed to 0.5]]
-[[`tolerance(Decimal("0.5"))`][tolerance for a user-defined type `Decimal` changed to the value constructed value]]
+[[`tolerance(Decimal("0.5"))`][tolerance for a user-defined type `Decimal` changed to the supplied value]]
 [[`5.0% tolerance()`][tolerance for type `double` changed to 0.05 (`5.0 / 100`)]]
 [[`5.0f% tolerance()`][tolerance for type `float` changed to 0.05]]
 [[`Decimal("5.0")% tolerance()`][tolerance for type `Decimal` changed to value `(Decimal("5.0") / 100)`]]
@@ -257,12 +257,58 @@ For more reading about floating-point comparison see references below.
 
 [section:customizing_for_tolerance Enabling tolerance for user-defined types]
 
-The __UTF__ recognizes that a given type `T` is a floating-point type using the expression 
+The __UTF__ recognizes that a given type `T` is suitable for tolerance-based comparisons using the expression 
 [classref boost::math::fpc::tolerance_based]`<T>::value`. This meta-function already returns true for built-in 
-floating-point types as well as for user defined-types that specialize `std::numeric_limits`. You can also specialize 
-[classref boost::math::fpc::tolerance_based] for your type directly:
+floating-point types as well as any other types that match the following compile-time expression:
 
-[bt_example test_float_04..adapting user-defined types for tolerance-based comparison]
+```
+boost::is_floating_point<T>::value ||
+    ( std::numeric_limits<T>::is_specialized &&
+     !std::numeric_limits<T>::is_integer &&  
+     !std::numeric_limits<T>::is_exact)
+```
+
+If you require your type to also participate in tolerance-based comparisons, regardless of the above expression,
+you can just specialize [classref boost::math::fpc::tolerance_based] for your type directly, and derive it from
+`boost::true_type`. Your type does not even have to be a floating-point type provided that it models concept
+[link boost_test.testing_tools.extended_comparison.floating_point.customizing_for_tolerance.concept_tolerance_based `ToleranceCompatible`].
+
+[bt_example tolerance_03..adapting user-defined types for tolerance-based comparison]
+
+[h3:concept_tolerance_based Concept `ToleranceCompatible`]
+
+[h4 Refinment of]
+
+`MoveConstructible`, [@http://www.sgi.com/tech/stl/EqualityComparable.html `EqualityComparable`], [@http://www.sgi.com/tech/stl/LessThanComparable.html `LessThanComparable`]
+
+[h4 Notation]
+
+[table 
+  [[][]]
+  [[`T`][A type that is a model of `ToleranceCompatible`]]
+  [[`x`, `y`][objects of type `T`]]
+  [[`i`, `j`][objects of type `int`]]
+]
+
+[h4 Valid expressions]
+
+[table
+  [[Name][Expression][Return type]]
+  [[Conversion from `int`][`T j = i;`][]]
+  [[Addition][`x + y`][`T`]]
+  [[Subtraction][`x - y`][`T`]]
+  [[Negation][`-x`][`T`]]
+  [[Multiplication][`x * y`][`T`]]
+  [[Division][`x / y`[br]`x / i`][`T`]]
+  [[Mixed equality][`x == i`[br]`x != i`][`bool`]]
+  [[Mixed ordering][`x < i`[br]`x > i`[br]`x <= i`[br]`x >= i`][`bool`]]
+]
+
+[h4 Invariants]
+
+[table 
+  [[`T` and `int` consistency][`(x == T(i)) == (x == i)`[br]`(x != T(i)) == (x != i)`[br]`(x < T(i)) == (x < i)`[br]`(x > T(i)) == (x > i)`[br]`(x / T(i)) == (x / i)`[br]`(x * T(i)) == (x * i)`]]
+]
 
 [endsect] [/ customizing_for_tolerance]
 
