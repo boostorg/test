@@ -22,8 +22,8 @@ BOOST_AUTO_TEST_CASE( test_basic_operations )
 
 BOOST_AUTO_TEST_CASE( test_logical_not_allowed )
 {
-  BOOST_TEST(true);
-  // UTF prevents the compilation
+  // Boost Unit Test Framework prevents compilation of
   // BOOST_TEST(true && true);
+  BOOST_TEST((true && true)); // with extra brackets, it works as expected
 }
 //]

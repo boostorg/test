@@ -13,7 +13,7 @@
 namespace utf  = boost::unit_test;
 namespace data = boost::unit_test::data;
 
-BOOST_TEST_DECORATOR(*utf::description("with description"))
+BOOST_TEST_DECORATOR(* utf::description("with description"))
 BOOST_DATA_TEST_CASE(test_1, data::xrange(4))
 {
   BOOST_TEST(true);

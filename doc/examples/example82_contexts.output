@@ -20,5 +20,5 @@ Failure occurred in a following context:
     With parameter i = 1
     With parameter j = 0
 
-*** 4 failures detected in test module "example82"
+*** 4 failures are detected in the test module "example82"
 //]

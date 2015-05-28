@@ -12,6 +12,6 @@
 
 BOOST_AUTO_TEST_CASE( free_test_function )
 {
-  BOOST_CHECK( true /* test assertion */ );
+  BOOST_TEST( true /* test assertion */ );
 }
 //]

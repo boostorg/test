@@ -20,7 +20,7 @@ namespace ut = boost::unit_test;
 
 BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE(std::vector<int>)
 
-#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
+#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && !defined(BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX)
 
 #define VALIDATE_OP( op )                           \
 {                                                   \

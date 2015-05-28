@@ -6,6 +6,6 @@ Failure occurred in a following context:
     Gamma
     Delta
 
-*** 1 failure detected in test module "example80"
+*** 1 failures is detected in test module "example80"
 
 //]

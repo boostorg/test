@@ -1,12 +1,12 @@
 [/
- / Copyright (c) 2003-2014 Gennadiy Rozental 
+ / Copyright (c) 2003 Boost.Test team 
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
 
-[section:link_references Macros that control the build behaviours]
+[section:link_references Build scenarios and behaviours]
 
 [section:link_boost_test_main_macro `BOOST_TEST_MAIN`]
 

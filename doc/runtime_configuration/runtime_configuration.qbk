@@ -1,6 +1,5 @@
 [/
- / Copyright (c) 2003-2014 Gennadiy Rozental 
- / Copyright (c) 2013-2014 Raffi Enficiaud
+ / Copyright (c) 2003 Boost.Test team 
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -35,6 +34,7 @@ parameter specification.
 All information about supported parameters is summarized below in the reference section.
 
 [include test_unit_filtering.qbk]
-[include runtime_config_reference.qbk]
+[include runtime_config_summary.qbk]
+
 
 [endsect] [/ runtime configuration]

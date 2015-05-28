@@ -34,14 +34,14 @@ namespace ut = boost::unit_test;
 
 void test0( int i )
 {
-    BOOST_CHECK( i%2 == 0 );
+    BOOST_TEST( i%2 == 0 );
 }
 
 //____________________________________________________________________________//
 
 void test1( int i )
 {
-    BOOST_CHECK( i%2 == 0 );
+    BOOST_TEST( i%2 == 0 );
     if( i%3 == 0 ) {
         throw 124;
     }
@@ -72,8 +72,8 @@ BOOST_AUTO_TEST_CASE( test_case1 )
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
     ut::unit_test_log.set_stream( std::cout );
-    BOOST_CHECK( tr.p_assertions_failed == 0 );
-    BOOST_CHECK( !tr.p_aborted );
+    BOOST_TEST( tr.p_assertions_failed == 0 );
+    BOOST_TEST( !tr.p_aborted );
 }
 
 //____________________________________________________________________________//
@@ -92,8 +92,8 @@ BOOST_AUTO_TEST_CASE( test_case2 )
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
     ut::unit_test_log.set_stream( std::cout );
-    BOOST_CHECK( tr.p_assertions_failed == 1 );
-    BOOST_CHECK( !tr.p_aborted );
+    BOOST_TEST( tr.p_assertions_failed == 1 );
+    BOOST_TEST( !tr.p_aborted );
 }
 
 //____________________________________________________________________________//
@@ -112,8 +112,8 @@ BOOST_AUTO_TEST_CASE( test_case3 )
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
     ut::unit_test_log.set_stream( std::cout );
-    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)2 );
-    BOOST_CHECK( !tr.p_aborted );
+    BOOST_TEST( tr.p_assertions_failed == (std::size_t)2 );
+    BOOST_TEST( !tr.p_aborted );
 }
 
 //____________________________________________________________________________//
@@ -132,8 +132,8 @@ BOOST_AUTO_TEST_CASE( test_case4 )
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
     ut::unit_test_log.set_stream( std::cout );
-    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)3 );
-    BOOST_CHECK( !tr.p_aborted );
+    BOOST_TEST( tr.p_assertions_failed == (std::size_t)3 );
+    BOOST_TEST( !tr.p_aborted );
 }
 
 //____________________________________________________________________________//
@@ -152,9 +152,9 @@ BOOST_AUTO_TEST_CASE( test_case5 )
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
     ut::unit_test_log.set_stream( std::cout );
-    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)3 );
-    BOOST_CHECK( !tr.p_aborted );
-    BOOST_CHECK( !tr.passed() );
+    BOOST_TEST( tr.p_assertions_failed == (std::size_t)3 );
+    BOOST_TEST( !tr.p_aborted );
+    BOOST_TEST( !tr.passed() );
 }
 
 //____________________________________________________________________________//
@@ -173,8 +173,8 @@ BOOST_AUTO_TEST_CASE( test_case6 )
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
     ut::unit_test_log.set_stream( std::cout );
-    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)5 );
-    BOOST_CHECK( !tr.p_aborted );
+    BOOST_TEST( tr.p_assertions_failed == (std::size_t)5 );
+    BOOST_TEST( !tr.p_aborted );
 }
 
 //____________________________________________________________________________//
@@ -193,8 +193,8 @@ BOOST_AUTO_TEST_CASE( test_case7 )
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
     ut::unit_test_log.set_stream( std::cout );
-    BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)4 );
-    BOOST_CHECK( !tr.p_aborted );
+    BOOST_TEST( tr.p_assertions_failed == (std::size_t)4 );
+    BOOST_TEST( !tr.p_aborted );
 }
 
 //____________________________________________________________________________//
@@ -214,7 +214,7 @@ BOOST_AUTO_TEST_CASE( test_case8 )
 
     ut::unit_test_log.set_stream( std::cout );
     BOOST_CHECK_EQUAL( tr.p_assertions_failed, (std::size_t)3 );
-    BOOST_CHECK( !tr.p_aborted );
+    BOOST_TEST( !tr.p_aborted );
 }
 
 //____________________________________________________________________________//

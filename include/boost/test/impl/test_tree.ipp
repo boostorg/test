@@ -64,7 +64,7 @@ test_unit::test_unit( const_string name, const_string file_name, std::size_t lin
 , p_expected_failures( 0 )
 , p_default_status( RS_INHERIT )
 , p_run_status( RS_INVALID )
-, p_dependency_rank(0)
+, p_sibling_rank(0)
 {
 }
 
@@ -81,7 +81,7 @@ test_unit::test_unit( const_string module_name )
 , p_expected_failures( 0 )
 , p_default_status( RS_INHERIT )
 , p_run_status( RS_INVALID )
-, p_dependency_rank(0)
+, p_sibling_rank(0)
 {
 }
 
@@ -242,7 +242,7 @@ test_suite::add( test_unit* tu, counter_t expected_failures, int timeout )
     if( timeout > 0 )
         tu->p_timeout.value = timeout;
 
-    m_members.push_back( tu->p_id );
+    m_children.push_back( tu->p_id );
     tu->p_parent_id.value = p_id;
 
     if( tu->p_expected_failures != 0 )
@@ -281,10 +281,10 @@ test_suite::add( test_unit_generator const& gen, decorator::collector& decorator
 void
 test_suite::remove( test_unit_id id )
 {
-    test_unit_id_list::iterator it = std::find( m_members.begin(), m_members.end(), id );
+    test_unit_id_list::iterator it = std::find( m_children.begin(), m_children.end(), id );
 
-    if( it != m_members.end() )
-        m_members.erase( it );
+    if( it != m_children.end() )
+        m_children.erase( it );
 }
 
 //____________________________________________________________________________//
@@ -292,7 +292,7 @@ test_suite::remove( test_unit_id id )
 test_unit_id
 test_suite::get( const_string tu_name ) const
 {
-    BOOST_TEST_FOREACH( test_unit_id, id, m_members ) {
+    BOOST_TEST_FOREACH( test_unit_id, id, m_children ) {
         if( tu_name == framework::get( id, ut_detail::test_id_2_unit_type( id ) ).p_name.get() )
             return id;
     }
@@ -339,12 +339,12 @@ traverse_test_tree( test_suite const& suite, test_tree_visitor& V, bool ignore_s
         return;
 
     // Recurse into children
-    unsigned total_members = suite.m_members.size();
-    for( unsigned i=0; i < total_members; ) {
+    unsigned total_children = suite.m_children.size();
+    for( unsigned i=0; i < total_children; ) {
         // this statement can remove the test unit from this list
-        traverse_test_tree( suite.m_members[i], V, ignore_status );
-        if( total_members > suite.m_members.size() )
-            total_members = suite.m_members.size();
+        traverse_test_tree( suite.m_children[i], V, ignore_status );
+        if( total_children > suite.m_children.size() )
+            total_children = suite.m_children.size();
         else
             ++i;
     }

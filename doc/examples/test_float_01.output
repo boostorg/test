@@ -1,7 +1,7 @@
 //[example_output
 > test_float_01
 Running 1 test case...
-test_float_01.cpp(11): error: in "test": check d1 == d2 has failed [1 != 0.98999999999999999]
+test.cpp(11): error: in "test": check d1 == d2 has failed [1 != 0.98999999999999999]
 
 *** 1 failure is detected in the test module "test_float_01"
 //]

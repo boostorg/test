@@ -15,7 +15,7 @@ struct F {
   ~F() { BOOST_TEST_MESSAGE( "teardown fixture" ); }
 };
 
-BOOST_AUTO_TEST_SUITE(s, *utf::fixture<F>())
+BOOST_AUTO_TEST_SUITE(s, * utf::fixture<F>())
 
   BOOST_AUTO_TEST_CASE(test_case1)
   {

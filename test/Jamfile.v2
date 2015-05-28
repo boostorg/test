@@ -1,6 +1,6 @@
 #  (C) Copyright Gennadiy Rozental 2001-2014.
-#  Use, modification, and distribution are subject to the 
-#  Boost Software License, Version 1.0. (See accompanying file 
+#  Use, modification, and distribution are subject to the
+#  Boost Software License, Version 1.0. (See accompanying file
 #  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 #  See http://www.boost.org/libs/test for the library home page.
@@ -17,7 +17,7 @@ rule test-btl-lib ( test-rule : test-name : lib-name ? : pattern_file * : source
    return [ $(test-rule) $(source_files) ../build//$(lib-name) $(extra-libs)
             : #args
             : $(pattern_file)
-            : #<stlport-iostream>on 
+            : #<stlport-iostream>on
               # Activating -pedantic finds more gotchas
               # Unfortunately, this warns about the use of "long long" in gcc's own stdlib
               # So deactivate those warnings again
@@ -40,7 +40,7 @@ rule test-btl-lib-c11 ( test-rule : test-name : lib-name ? : pattern_file * : so
    return [ $(test-rule) $(source_files) ../build//$(lib-name) $(extra-libs)
             : #args
             : $(pattern_file)
-            : #<stlport-iostream>on 
+            : #<stlport-iostream>on
               # Activating -pedantic finds more gotchas
               # Unfortunately, this warns about the use of "long long" in gcc's own stdlib
               # So deactivate those warnings again
@@ -73,7 +73,7 @@ rule test-btl-lib-mt ( test-rule : test-name : lib-name ? : pattern_file * : sou
    return [ $(test-rule) $(source_files) ../build//$(lib-name) $(extra-libs)
             : #args
             : $(pattern_file)
-            : #<stlport-iostream>on 
+            : #<stlport-iostream>on
               # Activating -pedantic finds more gotchas
               # Unfortunately, this warns about the use of "long long" in gcc's own stdlib
               # So deactivate those warnings again
@@ -86,12 +86,17 @@ rule test-btl-lib-mt ( test-rule : test-name : lib-name ? : pattern_file * : sou
               <toolset>gcc-4.5:<cxxflags>-std=gnu++0x
               <toolset>gcc-4.7:<cxxflags>-std=gnu++11
               <toolset>clang:<cxxflags>-Wno-c99-extensions
-              <toolset>clang:<cxxflags>-Wno-variadic-macros              
+              <toolset>clang:<cxxflags>-Wno-variadic-macros
               <define>BOOST_TEST_NO_AUTO_LINK=1 # requirements
               <threading>multi
               <warnings>all
             : $(test-name)
           ] ;
+}
+
+rule test-btl-doc-example-as-test ( test-rule : test-name )
+{
+    return [ test-btl-lib-c11 $(test-rule)  : doc_$(test-name) : : : ../doc/examples/$(test-name).cpp ] ;
 }
 
 test-suite "basics_test"
@@ -111,7 +116,7 @@ test-suite "unit_test_framework_test"
         :
           # warning: sending all the test pattern files on the command line
           # this allows some runners with cross compilation to send the pattern files as well
-          [ test-btl-lib run : errors_handling_test         : boost_unit_test_framework : test_files/errors_handling_test.pattern 
+          [ test-btl-lib run : errors_handling_test         : boost_unit_test_framework : test_files/errors_handling_test.pattern
                                                                                           test_files/errors_handling_test.pattern2 ]
           [ test-btl-lib run : single_header_test ]
           [ test-btl-lib-c11 run : test_collection_comparison : boost_unit_test_framework ]
@@ -127,7 +132,7 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : test_case_template_test      : boost_unit_test_framework ]
           [ test-btl-lib run : custom_exception_test        : boost_unit_test_framework/<link>static ]
           [ test-btl-lib run : fixed_mapping_test           : boost_unit_test_framework ]
-          [ test-btl-lib run : ifstream_line_iterator_test  : boost_unit_test_framework : test_files/ifstream_line_iterator.tst1 
+          [ test-btl-lib run : ifstream_line_iterator_test  : boost_unit_test_framework : test_files/ifstream_line_iterator.tst1
                                                                                           test_files/ifstream_line_iterator.tst2 ]
           [ test-btl-lib run : algorithms_test              : boost_unit_test_framework/<link>static ]
           [ test-btl-lib run : token_iterator_test          : boost_unit_test_framework ]
@@ -137,43 +142,48 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : test_assertion_construction  : boost_unit_test_framework/<link>static ]
           [ test-btl-lib run : test_datasets                : boost_unit_test_framework : : [ glob test_datasets_src/*.cpp ] : ]
           [ test-btl-lib-c11 run : test_datasets_cxx11      : boost_unit_test_framework : : [ glob test_datasets_src/*.cpp ] : ]
+          [ test-btl-lib-c11 run : test_unit_order_test     : boost_unit_test_framework/<link>static ]
 
           # [ test-btl-lib run : config_file_iterator_test    : boost_unit_test_framework/<link>static ]
           # [ test-btl-lib run : config_file_test             : boost_unit_test_framework/<link>static ]
 
-          # tests disabling the printing of special types, also in collections / trac 9390 
+          # tests disabling the printing of special types, also in collections / trac 9390
           [ test-btl-lib run : test_dont_print_log_value    : boost_unit_test_framework ]
 
           # test for multiprecision / trac 11054
-          [ test-btl-lib run      : test_fp_multiprecision_close_fraction : boost_unit_test_framework : : 
+          [ test-btl-lib run      : test_fp_multiprecision_close_fraction : boost_unit_test_framework : :
               test_fp_multiprecision_close_fraction.cpp ]
-          [ test-btl-lib-c11 run  : test_fp_multiprecision_close_fraction_new_api : boost_unit_test_framework  : : 
+          [ test-btl-lib-c11 run  : test_fp_multiprecision_close_fraction_new_api : boost_unit_test_framework  : :
               test_fp_multiprecision_close_fraction.cpp ]
 
           # examples in datasets
-          [ test-btl-lib-c11 run-fail  : dataset_example59 : : : ../doc/examples/dataset_example59.cpp ]
-          [ test-btl-lib-c11 run       : dataset_example61 : : : ../doc/examples/dataset_example61.cpp ]
-          [ test-btl-lib-c11 run       : dataset_example62 : : : ../doc/examples/dataset_example62.cpp ]
-          [ test-btl-lib-c11 run-fail  : dataset_example63 : : : ../doc/examples/dataset_example63.cpp ]
-          [ test-btl-lib-c11 run-fail  : dataset_example64 : : : ../doc/examples/dataset_example64.cpp ]
-          [ test-btl-lib-c11 run       : dataset_example65 : : : ../doc/examples/dataset_example65.cpp ]
-          [ test-btl-lib-c11 run       : dataset_example66 : : : ../doc/examples/dataset_example66.cpp ]
-          [ test-btl-lib-c11 run       : dataset_example67 : : : ../doc/examples/dataset_example67.cpp ]
-          [ test-btl-lib-c11 run-fail  : dataset_example68 : : : ../doc/examples/dataset_example68.cpp ]
+          [ test-btl-doc-example-as-test run-fail : dataset_example59 ]
+          [ test-btl-doc-example-as-test run      : dataset_example61 ]
+          [ test-btl-doc-example-as-test run      : dataset_example62 ]
+          [ test-btl-doc-example-as-test run-fail : dataset_example63 ]
+          [ test-btl-doc-example-as-test run-fail : dataset_example64 ]
+          [ test-btl-doc-example-as-test run      : dataset_example65 ]
+          [ test-btl-doc-example-as-test run      : dataset_example66 ]
+          [ test-btl-doc-example-as-test run      : dataset_example67 ]
+          [ test-btl-doc-example-as-test run-fail : dataset_example68 ]
 
           # examples in BOOST_TEST
-          [ test-btl-lib-c11 run       : boost_test_macro1                  : : : ../doc/examples/boost_test_macro1.cpp ]
-          [ test-btl-lib-c11 run-fail  : boost_test_macro2                  : : : ../doc/examples/boost_test_macro2.cpp ]
-          [ test-btl-lib-c11 run-fail  : boost_test_macro_bitwise           : : : ../doc/examples/boost_test_macro_bitwise.cpp ]
-          [ test-btl-lib-c11 run-fail  : boost_test_macro_container_c_array : : : ../doc/examples/boost_test_macro_container_c_array.cpp ]
-          [ test-btl-lib-c11 run       : boost_test_macro_container_value_type : : : ../doc/examples/boost_test_macro_container_value_type.cpp ]
-          [ test-btl-lib-c11 run-fail  : test_float_01                      : : : ../doc/examples/test_float_01.cpp ]
-          [ test-btl-lib-c11 run-fail  : test_float_02                      : : : ../doc/examples/test_float_02.cpp ]
-          [ test-btl-lib-c11 run-fail  : test_float_03                      : : : ../doc/examples/test_float_03.cpp ]
-          [ test-btl-lib-c11 run       : test_float_04                      : : : ../doc/examples/test_float_04.cpp ]
-          [ test-btl-lib-c11 run-fail  : boost_test_macro_message           : : : ../doc/examples/boost_test_macro_message.cpp ]
-          [ test-btl-lib-c11 run       : boost_test_macro_sequence          : : : ../doc/examples/boost_test_macro_sequence.cpp ]
-          [ test-btl-lib-c11 run-fail  : boost_test_macro_string            : : : ../doc/examples/boost_test_macro_string.cpp ]
+          [ test-btl-doc-example-as-test run      : boost_test_macro1                  ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_macro2                  ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_macro3                  ]
+          [ test-btl-doc-example-as-test run-fail : test_float_01                      ]
+          [ test-btl-doc-example-as-test run-fail : test_float_02                      ]
+          [ test-btl-doc-example-as-test run-fail : test_float_03                      ]
+          [ test-btl-doc-example-as-test run      : test_float_04                      ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_message                 ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_string                  ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_bitwise                 ]
+
+          # containers and sequences
+          [ test-btl-doc-example-as-test run-fail : boost_test_container_default       ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_sequence_per_element    ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_container_lex           ]
+          [ test-btl-doc-example-as-test run-fail : boost_test_macro_container_c_array ]
         ;
 
 test-suite "multithreaded_test"
@@ -181,8 +191,8 @@ test-suite "multithreaded_test"
           [ test-btl-lib-mt run : sync_access_test          : boost_unit_test_framework/<link>static : : : /boost/thread//boost_thread/<link>static ]
         ;
 
-# A target that runs all the tests 
-alias test : basics_test prg_exec_monitor_test unit_test_framework_test ; 
+# A target that runs all the tests
+alias test : basics_test prg_exec_monitor_test unit_test_framework_test ;
 
-# Only run tests when explicitly requested 
+# Only run tests when explicitly requested
 # explicit test basics_test prg_exec_monitor_test unit_test_framework_test ;

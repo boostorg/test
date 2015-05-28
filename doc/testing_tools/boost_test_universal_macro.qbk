@@ -1,0 +1,41 @@
+[/
+ / Copyright (c) 2015 Boost.Test team
+ /
+ / Distributed under the Boost Software License, Version 1.0. (See accompanying
+ / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ /]
+
+[section:boost_test_universal_macro BOOST_TEST: universal and general purpose assertions]
+
+Once a test case has been declared, the body of this test should be written. A test case is a 
+sequence of operations in which *assertions* are inserted. Those assertions evaluate /statements/ that implement the expectation being validated, 
+and report failures and/or informations, depending on the [link boost_test.utf_reference.rt_param_reference.log_level log level]. 
+
+There are three kind of assertions, having different meaning on the consistency of the test case:
+
+* *requirements*: this is a strong condition for the operations following the assertion to be valid. 
+  This type of assertions should be used when a pre-condition for the test is not met or when the test-case cannot continue.
+  If such as assertion fails, the test case execution stops immediately, and the test-case is flagged as /failed/.
+* *checks*: this is the most commonly used assertion level. If the statement evaluates to `false`, the test case is 
+  flagged as failed but its execution continues. 
+* *warnings*: this is an assertion providing information. The test case execution continues and a warning message is logged. 
+  The warning does not change the success status of a test case.
+  
+These three levels of assertions are reported into the test log and output, as described in details in the 
+[link boost_test.testing_tools.tools_assertion_severity_level severity levels] section. The granularity of the
+report depends on the current [link boost_test.utf_reference.rt_param_reference.log_level log level] and 
+[link boost_test.utf_reference.rt_param_reference.report_level report level].
+
+A unique interface is given by three variants of the `BOOST_TEST` assertion:
+
+* `BOOST_TEST_REQUIRE`
+* `BOOST_TEST_CHECK` or just `BOOST_TEST`
+* `BOOST_TEST_WARN`
+
+As their name suggests these assertions are, in order, for /requirement/, /checks/ and /warnings/.
+
+[warning To get all the functionalities of `BOOST_TEST` family of assertions, a C++11 capable compiler is required, especially
+ supporting the `auto` and `decltype` keywords and the variadic macros. The documentation focuses on these set of compilers. A 
+ limited support is provided for C++03 compilers.]
+
+[endsect] [/ boost_test_universal_macro]

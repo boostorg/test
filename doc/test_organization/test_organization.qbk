@@ -1,12 +1,11 @@
 [/
- / Copyright (c) 2003-2014 Gennadiy Rozental 
- / Copyright (c) 2013-2014 Raffi Enficiaud
+ / Copyright (c) 2003 Boost.Test team 
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
-[section:tests_organization Test organization]
+[section:tests_organization Declaring and organizing tests]
 
 If you look at many legacy test modules, big chance is that it's implemented as one big test function that
 consists of a mixture of check and output statements. Is there anything wrong with it? Yes. There are various
@@ -20,27 +19,47 @@ disadvantages in single test function approach:
 * No way to perform only checks for a particular subsystem of the tested unit.
 * No summary of how different subsystems of the tested unit performed under in the test.
 
-The above points should make it clear that it's preferable to split [link ref_test_module test module] into smaller units.
-These units are [link boost_test.users_guide.tests_organization.test_cases Test cases].
+The above points should make it clear that it's preferable to split a [link ref_test_module test module] into smaller units.
+These units are the *test cases*.
 
-To solve test tree creation problem the __UTF__ provides facilities for 
-[link boost_test.users_guide.tests_organization.test_suite test suite] creation. 
-In some cases it's desirable to allow some ['expected] failures in test case without failing a
-test module. To support this request The __UTF__ allows specifying the number of
-[link boost_test.users_guide.tests_organization.expected_failures expected failures] in a test case.
-
-When several tests shares the same set-up (environment, test data preparation, etc.), the 
-[link boost_test.users_guide.tests_organization.fixtures Fixtures] comes into play. 
-In the __UTF__, fixtures can be defined at the test case or the test suite level.
+[variablelist Subjects covered by this section
+  [
+    [Declaration]
+    [The __UTF__ supports several methods for declaring a [link boost_test.tests_organization.test_cases test case].
+    Test cases can be implemented using free function like syntax or based on actual free function, function object, 
+    The can be defined with or without parameters/data, or as template functions to be run against various types. ]
+  ]
+  [ 
+    [Organization]
+    [The __UTF__ provides facilities to group several test cases into [link boost_test.tests_organization.test_suite test suites]. 
+    The test suites can be nested, and the set of test suites and test cases defines the /test tree/, where the leaves are the test cases.
+    Besides hierarhical structure the __UTF__ allows you to organize the test tree using /logical grouping/ and /dependencies/
+    and provides you with controls to utilize the defined test tree organization the way you want.]
+  ]
+  [
+    [Attributes]
+    [It is possible to specify test unit /attributes/ by using [link boost_test.tests_organization.decorators decorators].
+     Attributes are used for a fine grained control over various aspects of test module execution, such as /logical grouping/, 
+    /dependencies/, /expected failures/, etc.]
+  ]
+  [
+    [Setup/teardown test unit actions]
+    [When several tests shares the same set-up (environment, test data preparation, etc.), the 
+     [link boost_test.tests_organization.fixtures fixtures] comes into play. 
+     In the __UTF__, fixtures can be defined at the test case or the test suite level.
+    ]
+  ]
+]
 
 [include test_cases.qbk]
 [include test_suites.qbk]
-[include expected_failures.qbk]
-[include fixtures.qbk]
 [include decorators.qbk]
-
-[include reference.qbk]
-
+[include fixtures.qbk]
+[include managing_tests_dependencies.qbk]
+[include logical_grouping.qbk]
+[include test_enabling_disabling.qbk]
+[include semantic.qbk]
+[include testorg_summary.qbk]
 
 
 [endsect] [/ test organization]

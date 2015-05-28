@@ -32,6 +32,6 @@ BOOST_DATA_TEST_CASE(
 {
   std::cout << "test 2: " << random_sample 
             << ", " << index << std::endl;
-  BOOST_CHECK(random_sample < 1.7); // 30% chance of failure
+  BOOST_TEST(random_sample < 1.7); // 30% chance of failure
 }
 //]

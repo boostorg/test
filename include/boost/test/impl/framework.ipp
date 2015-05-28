@@ -62,14 +62,106 @@ namespace std { using ::time; using ::srand; }
 namespace boost {
 namespace unit_test {
 namespace framework {
+namespace impl {
+
+// ************************************************************************** //
+// **************            order detection helpers           ************** //
+// ************************************************************************** //
+
+struct order_info {
+    order_info() : depth(-1) {}
+
+    int                         depth;
+    std::vector<test_unit_id>   dependant_siblings;
+};
+
+typedef std::set<test_unit_id> tu_id_set;
+typedef std::map<test_unit_id,order_info> order_info_per_tu; // !! ?? unordered map
+
+//____________________________________________________________________________//
+
+static test_unit_id
+get_tu_parent( test_unit_id tu_id )
+{
+    return framework::get( tu_id, TUT_ANY ).p_parent_id;
+}
+
+//____________________________________________________________________________//
+
+static int
+tu_depth( test_unit_id tu_id, test_unit_id master_tu_id, order_info_per_tu& tuoi )
+{
+    if( tu_id == master_tu_id )
+        return 0;
+
+    order_info& info = tuoi[tu_id];
+    
+    if( info.depth == -1 )
+        info.depth = tu_depth( get_tu_parent( tu_id ), master_tu_id, tuoi ) + 1;
+
+    return info.depth;
+}
+
+//____________________________________________________________________________//
+
+static void
+collect_dependant_siblings( test_unit_id from, test_unit_id to, test_unit_id master_tu_id, order_info_per_tu& tuoi )
+{
+    int from_depth  = tu_depth( from, master_tu_id, tuoi );
+    int to_depth    = tu_depth( to, master_tu_id, tuoi );
+
+    while(from_depth > to_depth) {
+        from = get_tu_parent( from );
+        --from_depth;
+    }
+
+    while(from_depth < to_depth) {
+        to = get_tu_parent( to );
+        --to_depth;
+    }
+
+    while(true) {
+        test_unit_id from_parent = get_tu_parent( from );
+        test_unit_id to_parent = get_tu_parent( to );
+        if( from_parent == to_parent )
+            break;
+        from = from_parent;
+        to   = to_parent;
+    }
+
+    tuoi[from].dependant_siblings.push_back( to );
+}
+
+//____________________________________________________________________________//
+
+static counter_t
+assign_sibling_rank( test_unit_id tu_id, order_info_per_tu& tuoi )
+{
+    test_unit& tu = framework::get( tu_id, TUT_ANY );
+
+    if( tu.p_sibling_rank == -1 )
+        throw framework::setup_error( "Dependency loop detected including the test unit " + tu.full_name() );
+
+    if( tu.p_sibling_rank != 0 )
+        return tu.p_sibling_rank;
+
+    order_info const& info = tuoi[tu_id];
+
+    // indicate in progress
+    tu.p_sibling_rank.value = (counter_t)-1;
+
+    counter_t new_rank = 1;
+    BOOST_TEST_FOREACH( test_unit_id, sibling_id, info.dependant_siblings )
+        new_rank = (std::max)(new_rank, assign_sibling_rank( sibling_id, tuoi ) + 1);
+
+    return tu.p_sibling_rank.value = new_rank;
+}
+
+//____________________________________________________________________________//
 
 // ************************************************************************** //
 // **************            test_init call wrapper            ************** //
 // ************************************************************************** //
-
-namespace impl {
-
-typedef std::set<test_unit_id> tu_id_set;
 
 static void
 invoke_init_func( init_unit_test_func init_func )
@@ -323,15 +415,14 @@ parse_filters( test_unit_id master_tu_id, test_unit_id_list& tu_to_enable, test_
 //____________________________________________________________________________//
 
 } // namespace impl
-} // namespace framework
 
 // ************************************************************************** //
-// **************                framework_state               ************** //
+// **************               framework::state               ************** //
 // ************************************************************************** //
 
-class framework_state {
+class state {
 public:
-    framework_state()
+    state()
     : m_curr_test_case( INV_TEST_UNIT_ID )
     , m_next_test_case_id( MIN_TEST_CASE_ID )
     , m_next_test_suite_id( MIN_TEST_SUITE_ID )
@@ -340,7 +431,7 @@ public:
     {
     }
 
-    ~framework_state() { clear(); }
+    ~state() { clear(); }
 
     void            clear()
     {
@@ -360,53 +451,28 @@ public:
 
     //////////////////////////////////////////////////////////////////
 
-    // Validates the dependency grapha ade duces the dependency rank for each test unit
-    counter_t       validate_dependency_graph( test_unit_id tu_id,
-                                               framework::impl::tu_id_set& visited_cache,
-                                               framework::impl::tu_id_set& current_stack )
+    // Validates the dependency graph and deduces the sibling dependency rank for each child
+    void       deduce_siblings_order( test_unit_id tu_id, test_unit_id master_tu_id, impl::order_info_per_tu& tuoi )
     {
-        // already visited
-        if( visited_cache.find( tu_id ) != visited_cache.end() ) {
-            test_unit& tu = framework::get( tu_id, TUT_ANY );
-
-            if( current_stack.find( tu_id ) != current_stack.end() )
-                throw framework::setup_error( "Dependency loop detected including the test unit " + tu.full_name() );
-
-            return tu.p_dependency_rank;
-        }
-
-        // add into cache and stack
-        visited_cache.insert( tu_id );
-        current_stack.insert( tu_id );
-
         test_unit& tu = framework::get( tu_id, TUT_ANY );
 
-        // go through list of children, collate them into the multimap per dependency rank
-        // my dep rank should be at least as big as all of the children
-        if( tu.p_type == TUT_SUITE ) {
-            test_suite& ts = static_cast<test_suite&>(tu);
+        // collect all sibling dependancy from tu own list
+        BOOST_TEST_FOREACH( test_unit_id, dep_id, tu.p_dependencies.get() )
+            collect_dependant_siblings( tu_id, dep_id, master_tu_id, tuoi );
 
-            BOOST_TEST_FOREACH( test_unit_id, chld_id, ts.m_members ) {
-                counter_t chld_rank = validate_dependency_graph( chld_id, visited_cache, current_stack );
-                if( chld_rank > ts.p_dependency_rank )
-                    ts.p_dependency_rank.value = chld_rank;
+        if( tu.p_type != TUT_SUITE )
+            return;
 
-                ts.m_ranked_members.insert( std::make_pair( chld_rank, chld_id ) );
-            }
+        test_suite& ts = static_cast<test_suite&>(tu);
+
+        // recursive call to children first
+        BOOST_TEST_FOREACH( test_unit_id, chld_id, ts.m_children )
+            deduce_siblings_order( chld_id, master_tu_id, tuoi );
+
+        BOOST_TEST_FOREACH( test_unit_id, chld_id, ts.m_children ) {
+            counter_t rank = assign_sibling_rank( chld_id, tuoi );
+            ts.m_ranked_children.insert( std::make_pair( rank, chld_id ) );
         }
-
-        // go through list of dependencies
-        // my dep rank should be at least one more than biggest of the dependencies
-        BOOST_TEST_FOREACH( test_unit_id, dep_id, tu.p_dependencies.get() ) {
-            counter_t dep_rank = validate_dependency_graph( dep_id, visited_cache, current_stack );
-            if( dep_rank >= tu.p_dependency_rank )
-                tu.p_dependency_rank.value = dep_rank + 1;
-        }
-
-        // no loops detected
-        current_stack.erase(tu_id);
-
-        return tu.p_dependency_rank;
     }
 
     //////////////////////////////////////////////////////////////////
@@ -424,7 +490,7 @@ public:
         // go through list of children
         if( tu.p_type == TUT_SUITE ) {
             bool has_enabled_child = false;
-            BOOST_TEST_FOREACH( test_unit_id, chld_id, static_cast<test_suite const&>(tu).m_members )
+            BOOST_TEST_FOREACH( test_unit_id, chld_id, static_cast<test_suite const&>(tu).m_children )
                 has_enabled_child |= finalize_default_run_status( chld_id, tu.p_default_status );
 
             tu.p_default_status.value = has_enabled_child ? test_suite::RS_ENABLED : test_suite::RS_DISABLED;
@@ -442,7 +508,7 @@ public:
         // go through list of children
         if( tu.p_type == TUT_SUITE ) {
             bool has_enabled_child = false;
-            BOOST_TEST_FOREACH( test_unit_id, chld_id, static_cast<test_suite const&>(tu).m_members )
+            BOOST_TEST_FOREACH( test_unit_id, chld_id, static_cast<test_suite const&>(tu).m_children)
                 has_enabled_child |= finalize_run_status( chld_id );
 
             tu.p_run_status.value = has_enabled_child ? test_suite::RS_ENABLED : test_suite::RS_DISABLED;
@@ -561,7 +627,7 @@ public:
                 if( runtime_config::random_seed() == 0 ) {
                     typedef std::pair<counter_t,test_unit_id> value_type;
 
-                    BOOST_TEST_FOREACH( value_type, chld, ts.m_ranked_members ) {
+                    BOOST_TEST_FOREACH( value_type, chld, ts.m_ranked_children ) {
                         int chld_timeout = -1;
                         if( timeout > 0 ) {
                            int elapsed_so_far = static_cast<int>(tu_timer.elapsed()); // rounding to number of whole seconds
@@ -575,25 +641,25 @@ public:
                     }
                 }
                 else {
-                    // Go through ranges of chldren with the same dependency rank and shuuffle them
+                    // Go through ranges of chldren with the same dependency rank and shuffle them
                     // independently. Execute each subtree in this order
-                    test_unit_id_list members_with_the_same_rank;
+                    test_unit_id_list children_with_the_same_rank;
 
-                    typedef test_suite::members_per_rank::const_iterator it_type;
-                    it_type it = ts.m_ranked_members.begin();
-                    while( it != ts.m_ranked_members.end() ) {
-                        members_with_the_same_rank.clear();
+                    typedef test_suite::children_per_rank::const_iterator it_type;
+                    it_type it = ts.m_ranked_children.begin();
+                    while( it != ts.m_ranked_children.end() ) {
+                        children_with_the_same_rank.clear();
 
-                        std::pair<it_type,it_type> range = ts.m_ranked_members.equal_range( it->first );
+                        std::pair<it_type,it_type> range = ts.m_ranked_children.equal_range( it->first );
                         it = range.first;
                         while( it != range.second ) {
-                            members_with_the_same_rank.push_back( it->second );
+                            children_with_the_same_rank.push_back( it->second );
                             it++;
                         }
 
-                        std::random_shuffle( members_with_the_same_rank.begin(), members_with_the_same_rank.end() );
+                        std::random_shuffle( children_with_the_same_rank.begin(), children_with_the_same_rank.end() );
 
-                        BOOST_TEST_FOREACH( test_unit_id, chld, members_with_the_same_rank ) {
+                        BOOST_TEST_FOREACH( test_unit_id, chld, children_with_the_same_rank ) {
                             int chld_timeout = -1;
                             if( timeout > 0 ) {
                               int elapsed_so_far = static_cast<int>(tu_timer.elapsed()); // rounding to number of whole seconds
@@ -701,14 +767,13 @@ public:
 
 //____________________________________________________________________________//
 
-namespace framework {
 namespace impl {
 namespace {
 
 #if defined(__CYGWIN__)
-framework_state& s_frk_state() { static framework_state* the_inst = 0; if(!the_inst) the_inst = new framework_state; return *the_inst; }
+framework::state& s_frk_state() { static framework::state* the_inst = 0; if(!the_inst) the_inst = new framework::state; return *the_inst; }
 #else
-framework_state& s_frk_state() { static framework_state the_inst; return the_inst; }
+framework::state& s_frk_state() { static framework::state the_inst; return the_inst; }
 #endif
 
 } // local namespace
@@ -794,9 +859,8 @@ finalize_setup_phase( test_unit_id master_tu_id )
     traverse_test_tree( master_tu_id, ad, true );
 
     // 20. Finalize setup phase
-    impl::tu_id_set visited_cache;
-    impl::tu_id_set current_stack;
-    impl::s_frk_state().validate_dependency_graph( master_tu_id, visited_cache, current_stack );
+    impl::order_info_per_tu tuoi;
+    impl::s_frk_state().deduce_siblings_order( master_tu_id, master_tu_id, tuoi );
     impl::s_frk_state().finalize_default_run_status( master_tu_id, test_unit::RS_INVALID );
 }
 
@@ -857,7 +921,7 @@ register_test_unit( test_case* tc )
 
     BOOST_TEST_SETUP_ASSERT( new_id != MAX_TEST_CASE_ID, BOOST_TEST_L( "too many test cases" ) );
 
-    typedef framework_state::test_unit_store::value_type map_value_type;
+    typedef state::test_unit_store::value_type map_value_type;
 
     impl::s_frk_state().m_test_units.insert( map_value_type( new_id, tc ) );
     impl::s_frk_state().m_next_test_case_id++;
@@ -880,7 +944,8 @@ register_test_unit( test_suite* ts )
 
     BOOST_TEST_SETUP_ASSERT( new_id != MAX_TEST_SUITE_ID, BOOST_TEST_L( "too many test suites" ) );
 
-    typedef framework_state::test_unit_store::value_type map_value_type;
+    typedef state::test_unit_store::value_type map_value_type;
+
     impl::s_frk_state().m_test_units.insert( map_value_type( new_id, ts ) );
     impl::s_frk_state().m_next_test_suite_id++;
 
@@ -948,7 +1013,7 @@ add_context( ::boost::unit_test::lazy_ostream const& context_descr, bool sticky 
     context_descr( buffer );
     int res_idx  = impl::s_frk_state().m_context_idx++;
 
-    impl::s_frk_state().m_context.push_back( framework_state::context_frame( buffer.str(), res_idx, sticky ) );
+    impl::s_frk_state().m_context.push_back( state::context_frame( buffer.str(), res_idx, sticky ) );
 
     return res_idx;
 }
@@ -962,7 +1027,7 @@ add_context( ::boost::unit_test::lazy_ostream const& context_descr, bool sticky 
 struct frame_with_id {
     explicit frame_with_id( int id ) : m_id( id ) {}
 
-    bool    operator()( framework_state::context_frame const& f )
+    bool    operator()( state::context_frame const& f )
     {
         return f.frame_id == m_id;
     }
@@ -981,7 +1046,7 @@ clear_context( int frame_id )
     }
 
     else { // clear specific frame
-        framework_state::context_data::iterator it =
+        state::context_data::iterator it =
             std::find_if( impl::s_frk_state().m_context.begin(), impl::s_frk_state().m_context.end(), frame_with_id( frame_id ) );
 
         if( it != impl::s_frk_state().m_context.end() ) // really an internal error if this is not true

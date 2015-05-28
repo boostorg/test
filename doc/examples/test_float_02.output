@@ -1,10 +1,10 @@
 //[example_output
 > test_float_02
 Running 2 test cases...
-test_float_02.cpp(11): error: in "double_tolerance": check f1 == f2 has failed [1 != 0.99000001]
-test_float_02.cpp(21): error: in "float_tolerance": check d1 == d2 has failed [1 != 0.98999999999999999]
-test_float_02.cpp(23): error: in "float_tolerance": check f1 == d2 has failed [1 != 0.98999999999999999]
-test_float_02.cpp(24): error: in "float_tolerance": check d1 == f2 has failed [1 != 0.99000001]
+test.cpp(11): error: in "double_tolerance": check f1 == f2 has failed [1 != 0.99000001]
+test.cpp(21): error: in "float_tolerance": check d1 == d2 has failed [1 != 0.98999999999999999]
+test.cpp(23): error: in "float_tolerance": check f1 == d2 has failed [1 != 0.98999999999999999]
+test.cpp(24): error: in "float_tolerance": check d1 == f2 has failed [1 != 0.99000001]
 
 *** 4 failures are detected in the test module "test_float_02"
 //]

@@ -20,6 +20,7 @@
 #include <boost/limits.hpp>  // for std::numeric_limits
 #include <boost/static_assert.hpp>
 #include <boost/assert.hpp>
+#include <boost/mpl/bool.hpp>
 #include <boost/type_traits/is_floating_point.hpp>
 #include <boost/type_traits/is_array.hpp>
 #include <boost/utility/enable_if.hpp>
@@ -175,7 +176,7 @@ template<typename FPT2, typename FPT>
 inline FPT2
 fraction_tolerance( percent_tolerance_t<FPT> tolerance )
 {
-    return static_cast<FPT2>(tolerance.m_value)*static_cast<FPT2>(0.01); 
+    return FPT2(tolerance.m_value)*FPT2(0.01); 
 }
 
 //____________________________________________________________________________//
@@ -205,9 +206,9 @@ public:
     explicit    close_at_tolerance( ToleranceType tolerance, fpc::strength fpc_strength = FPC_STRONG ) 
     : m_fraction_tolerance( fpc_detail::fraction_tolerance<FPT>( tolerance ) )
     , m_strength( fpc_strength )
-    , m_tested_rel_diff()
+    , m_tested_rel_diff( 0 )
     {
-        BOOST_ASSERT_MSG( m_fraction_tolerance >= 0, "tolerance must not be negative!" ); // no reason for tolerance to be negative
+        BOOST_ASSERT_MSG( m_fraction_tolerance >= FPT(0), "tolerance must not be negative!" ); // no reason for tolerance to be negative
     }
 
     // Access methods
@@ -272,7 +273,7 @@ public:
     explicit    small_with_tolerance( FPT tolerance ) // <= absolute tolerance
     : m_tolerance( tolerance )
     {
-        BOOST_ASSERT( m_tolerance >= 0 ); // no reason for the tolerance to be negative
+        BOOST_ASSERT( m_tolerance >= FPT(0) ); // no reason for the tolerance to be negative
     }
 
     // Action method

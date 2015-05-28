@@ -1,13 +1,12 @@
 [/
- / Copyright (c) 2003-2014 Gennadiy Rozental 
- / Copyright (c) 2013-2014 Raffi Enficiaud
+ / Copyright (c) 2003 Boost.Test team 
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
 
-[section:rt_param_reference Reference]
+[section:rt_param_reference Runtime parameters reference]
 
 Each parameter specification includes: 
 
@@ -21,155 +20,12 @@ The default value for the parameter is bold in the
 acceptable values list. All values are case sensitive and are required to exactly match the parameter specification.
 
 
-[table
-  [
-    [Command]
-    [Short description]
-  ] 
-  
-  [/ ###############################################################################################]
-  [
-    [__param_auto_start_dbg__]
-    [Automatically attach debugger in case of system failure.]
-  ]
-  
-  
-  [/ ###############################################################################################]
-  [
-    [__param_show_progress__]
-    [Makes the framework to print progress information. More details [link boost_test.users_guide.test_output.test_output_progress here].]
-  ]
-  
-
-  [/ ###############################################################################################]
-  [
-    [__param_build_info__]
-    [Print build information.]
-  ]
-  
-  
-  [/ ###############################################################################################]
-  [
-    [__param_catch_system__]
-    [Catch system errors.]
-  ]
-  
-  [/ ###############################################################################################]
-  [
-    [__param_break_exec_path__]
-    [Break execution path]
-  ]    
-
-
-  [/ ###############################################################################################]
-  [
-    [__param_color_output__]
-    [Produce colour output]
-  ]  
-
-  [/ ###############################################################################################]
-  [
-    [__param_log_format__]
-    [Specifies the log format]
-  ]
-
-  [/ ###############################################################################################]
-  [
-    [__param_log_level__]
-    [Specifies the logging level of the __UTF__]
-  ]
-  
-  
-  [/ ###############################################################################################]
-  [
-    [__param_run_test__]
-    [Specifies which test units to run.]
-  ]
-  
-  
-  [/ ###############################################################################################]
-  [
-    [__param_output_format__]
-    [Specifies the log format and the report format.]
-  ]  
-  
-  [/ ###############################################################################################]
-  [
-    [__param_report_format__]
-    [Specifies the report format.]
-  ]
-
-  [/ ###############################################################################################]
-  [
-    [__param_result_code__]
-    [Make the framework return a result code indicating an error in the tests.]
-  ]
-  
-  [/ ###############################################################################################]
-  [
-    [__param_report_level__]
-    [The level of details carried by the __UTF__ report.]
-  ]
-  
-  [/ ###############################################################################################]
-  [
-    [__param_random__]
-    [Runs the tests in random order]
-  ]
-  
-  [/ ###############################################################################################]
-  [
-    [__param_detect_memory_leaks__]
-    [Detects memory leaks.]
-  ]
-  
-  
-  [/ ###############################################################################################]
-  [
-    [__param_use_alt_stack__]
-    [Uses an alternative stack for running tests (on supported platforms).]
-  ]
-  
-  
-  [/ ###############################################################################################]
-  [
-    [__param_detect_fp_exceptions__]
-    [Traps floating point exceptions (on supported platforms).]
-  ]
-  
-  
-  [/ ###############################################################################################]
-  [
-    [__param_log_sink__]
-    [Specifies the sink stream for logging.]
-  ]
-  
-  
-  [/ ###############################################################################################]
-  [
-    [__param_report_sink__]
-    [Specifies the sink stream for tests reports.]
-  ]
-  
-  [/ ###############################################################################################]
-  [
-    [__param_save_pattern__]
-    [Provides parameters for testing output streams.]
-  ]
-  
-  
-  [/ ###############################################################################################]
-  [
-    [__param_list_content__]
-    [List the tests that will be ran.]
-  ]
-]
 
 [/ ###############################################################################################]
 
-[#ref_param_show_progress][section `show_progress`]
+[section:show_progress `show_progress`]
 
-Makes the framework to print progress information. More details [link boost_test.users_guide.test_output.test_output_progress here].
+Makes the framework to print progress information. More details [link boost_test.test_output.test_output_progress here].
 
 [h4 Acceptable values]
 
@@ -184,7 +40,7 @@ Makes the framework to print progress information. More details [link boost_test
 
 [/ ###############################################################################################]
 
-[#ref_param_build_info][section `build_info`]
+[section:build_info `build_info`]
 
 Print build information that include: 
 
@@ -206,7 +62,7 @@ Print build information that include:
 
 [/ ###############################################################################################]
 
-[#ref_param_auto_dbg][section `auto_start_dbg`]
+[section:auto_dbg `auto_start_dbg`]
 
 Automatically attach debugger in case of system failure.
 
@@ -232,7 +88,7 @@ the [headerref boost/test/debug.hpp section dedicated to Boost.Test debug API], 
 
 
 [/ ###############################################################################################]
-[#ref_param_catch_system][section `catch_system_errors`]
+[section:catch_system `catch_system_errors`]
 
 Value "no" prohibits the framework from catching asynchronous system events. This could be used for test programs
 executed within GUI or to get a coredump for stack analysis. See [link ref_usage_recommendations usage recommendations] pages for more details.
@@ -249,7 +105,7 @@ executed within GUI or to get a coredump for stack analysis. See [link ref_usage
 [endsect] [/catch_system_errors]
 
 [/ ###############################################################################################]
-[#ref_param_break_exe_path][section `break_exec_path`]
+[section:break_exec_path `break_exec_path`]
 
 this runtime parameter is used by exception safety tester. By default exception safety tester only reports index of 
 execution path and  test case name where failure occurred. Using this parameter you can make the tester to break the 
@@ -266,7 +122,7 @@ execution right before entering this path.
 [endsect] [/break_exec_path]
 
 [/ ###############################################################################################]
-[#ref_param_color_output][section `color_output`]
+[section:color_output `color_output`]
 
 The __UTF__ is able to produce colour output on systems which supports it. To enable this behaviour set the parameter to 
 `yes`. By default the output produces in not coloured.
@@ -285,7 +141,7 @@ The __UTF__ is able to produce colour output on systems which supports it. To en
 [endsect] [/color_output]
 
 [/ ###############################################################################################]
-[#ref_param_log_format][section `log_format`]
+[section:log_format `log_format`]
 
 Allows selecting the __UTF__ log format from the list of formats supplied by the framework. To specify custom log
 format use the [link ref_log_formatter_api custom log formatting API].
@@ -305,7 +161,7 @@ format use the [link ref_log_formatter_api custom log formatting API].
 
 
 [/ ###############################################################################################]
-[#ref_param_log_level][section:param_log_level `log_level`]
+[section:log_level `log_level`]
 
 Allows setting the __UTF__ [link ref_log_level_explanations log level] in a range from a
 complete log, when all successful tests are confirmed and all test suite messages are included, to an empty
@@ -372,7 +228,7 @@ log when nothing is logged a test output stream.
 [endsect] [/log_level]
 
 [/ ###############################################################################################]
-[#ref_param_run_test][section `run_test`]
+[section:run_test `run_test`]
 
 Specifies the tests to run. It can be specified more than once.
       
@@ -400,7 +256,7 @@ Regarding the meaning of these values [link ref_command_line_control see here].
 [endsect] [/run_test]
   
 [/ ###############################################################################################]
-[#ref_param_output_format][section `output_format`]
+[section:output_format `output_format`]
 
 Combines an effect of __param_report_format__ and __param_log_format__ parameters. Has higher priority than either one of them if specified.      
       
@@ -418,7 +274,7 @@ Combines an effect of __param_report_format__ and __param_log_format__ parameter
 [endsect] [/output_format]   
 
 [/ ###############################################################################################]
-[#ref_param_report_format][section `report_format`]
+[section:report_format `report_format`]
 
 Allows selecting the __UTF__ report format from the list of formats supplied by the framework. To specify a custom report format use unit_test_report API.
 
@@ -438,7 +294,7 @@ Allows selecting the __UTF__ report format from the list of formats supplied by 
 [endsect] [/report_format]   
 
 [/ ###############################################################################################]
-[#ref_param_result_code][section `result_code`]
+[section:result_code `result_code`]
 
 Value "no" enforces the framework to always return zero result code. This could be used for test programs 
 executed within GUI. See the [link ref_usage_recommendations usage recommendations] section for more details.
@@ -455,7 +311,7 @@ executed within GUI. See the [link ref_usage_recommendations usage recommendatio
 [endsect] [/result_code]      
 
 [/ ###############################################################################################]
-[#ref_param_report_level][section:param_report_level `report_level`]
+[section:report_level `report_level`]
 
 Allows setting the level of details carried by the testing results report generated by the framework. Use value 
 "no" to eliminate the results report completely. See the 
@@ -475,7 +331,7 @@ Allows setting the level of details carried by the testing results report genera
 [endsect] [/report_level]      
 
 [/ ###############################################################################################]
-[#ref_param_random][section `random`]
+[section:random `random`]
 
 Runs the tests in random order.
 
@@ -497,7 +353,7 @@ it is used as a random seed. In other case random seed is generated based on cur
 [endsect] [/random]  
 
 [/ ###############################################################################################]
-[#ref_param_detect_memory_leaks][section `detect_memory_leaks`]
+[section:detect_memory_leaks `detect_memory_leaks`]
 
 Detect memory leaks.
 
@@ -524,7 +380,7 @@ leaks notifications, they are combined with allocation number values you could u
 [endsect] [/detect_memory_leaks]  
 
 [/ ###############################################################################################]
-[#ref_param_use_alt_stack][section `use_alt_stack`]
+[section:use_alt_stack `use_alt_stack`]
 
 Uses an alternative stack.
 
@@ -546,11 +402,11 @@ processing, on platforms where they are supported.
 [endsect] [/use_alt_stack]  
 
 [/ ###############################################################################################]
-[#ref_param_detect_fp_exceptions][section `detect_fp_exceptions`]
+[section:detect_fp_exceptions `detect_fp_exceptions`]
 
 Traps or not floating point exceptions.
 
-Dnables/disable hardware traps for the floating point exception (if supported).
+Enables/disable hardware traps for the floating point exception (if supported).
       
 [h4 Acceptable values]
 
@@ -564,7 +420,7 @@ Dnables/disable hardware traps for the floating point exception (if supported).
 [endsect] [/detect_fp_exceptions]  
 
 [/ ###############################################################################################]
-[#ref_param_log_sink][section `log_sink`]
+[section:log_sink `log_sink`]
 
 Sets the logging sink to the one specified.
 
@@ -587,7 +443,7 @@ This parameter allows to easily redirect the test logs. The parameter value is
 [endsect] [/log_sink]  
 
 [/ ###############################################################################################]
-[#ref_param_report_sink][section `report_sink`]
+[section:report_sink `report_sink`]
 
 Sets the report sink to the one specified.
 
@@ -606,7 +462,7 @@ This parameter allows to easily redirect the test result report. See __param_log
 [endsect] [/report_sink]  
 
 [/ ###############################################################################################]
-[#ref_param_save_patterm][section `save_patterm`]
+[section:save_pattern `save_pattern`]
 
 Provides parameters for testing output streams. See __output_test_stream_tool__ secton for details on these tests.
 
@@ -627,12 +483,12 @@ You can use this parameter to switch between these modes, by passing the paramet
 
   BOOST_TEST_SAVE_PATTERN
 
-[endsect] [/save_patterm] 
+[endsect] [/save_pattern] 
 
 [/ ###############################################################################################]
-[section:param_list_content `list_content`]
+[section:list_content `list_content`]
 
-Lists the content of the tests that would be run. If set on the command line, no test will be ran and the content
+Lists the content of the tests that would be run. If set on the command line, no test will be run and the content
 of the test bed will be printed, one test per line.
 
 [h4 Environment variable]

@@ -41,6 +41,10 @@
 namespace boost {
 namespace unit_test {
 
+namespace framework {
+class state;
+}
+
 // ************************************************************************** //
 // **************                   test_unit                  ************** //
 // ************************************************************************** //
@@ -54,7 +58,7 @@ public:
 
     typedef std::vector<test_unit_id>                                       id_list;
     typedef std::vector<test_unit_fixture_ptr>                              fixture_list_t;
-    typedef BOOST_READONLY_PROPERTY(test_unit_id,(framework_state))         id_t;
+    typedef BOOST_READONLY_PROPERTY(test_unit_id,(framework::state))        id_t;
     typedef BOOST_READONLY_PROPERTY(test_unit_id,(test_suite))              parent_id_t;
     typedef BOOST_READONLY_PROPERTY(id_list,(test_unit))                    id_list_t;
     typedef std::vector<decorator::base_ptr>                                decor_list_t;
@@ -98,7 +102,7 @@ public:
     readwrite_property<run_status>      p_default_status;       ///< run status obtained by this unit during setup phase
     readwrite_property<run_status>      p_run_status;           ///< run status assigned to this unit before execution phase after applying all filters
 
-    readwrite_property<counter_t>       p_dependency_rank;      ///< run status assigned to this unit before execution phase after applying all filters
+    readwrite_property<counter_t>       p_sibling_rank;         ///< rank of this test unit amoung siblings of the same parent
 
     readwrite_property<decor_list_t>    p_decorators;           ///< automatically assigned decorators; execution is delayed till framework::finalize_setup_phase function
     readwrite_property<fixture_list_t>  p_fixtures;             ///< fixtures associated with this test unit
@@ -143,7 +147,7 @@ public:
     test_func   p_test_func;
 
 private:
-    friend class framework_state;
+    friend class framework::state;
     ~test_case() {}
 };
 
@@ -179,7 +183,7 @@ public:
 
     // access methods
     test_unit_id    get( const_string tu_name ) const;
-    std::size_t     size() const { return m_members.size(); }
+    std::size_t     size() const { return m_children.size(); }
 
 protected:
     // Master test suite constructor
@@ -187,14 +191,14 @@ protected:
 
     friend BOOST_TEST_DECL
     void            traverse_test_tree( test_suite const&, test_tree_visitor&, bool );
-    friend class    framework_state;
+    friend class    framework::state;
     virtual         ~test_suite() {}
 
-    typedef std::multimap<counter_t,test_unit_id> members_per_rank;
+    typedef std::multimap<counter_t,test_unit_id> children_per_rank;
     // Data members
 
-    test_unit_id_list   m_members;
-    members_per_rank    m_ranked_members; ///< maps member dependency rank list of members with that rank
+    test_unit_id_list   m_children;
+    children_per_rank   m_ranked_children; ///< maps child sibling rank to list of children with that rank
 };
 
 // ************************************************************************** //

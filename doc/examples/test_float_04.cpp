@@ -19,7 +19,7 @@ namespace boost { namespace math { namespace fpc {
 
 BOOST_AUTO_TEST_CASE(test)
 {
-  int i1 = 1, i2 = 2;
+  int i1 = 1001, i2 = 1002;
 
   BOOST_TEST(i1 != i2);
   BOOST_TEST(i1 == i2, tt::tolerance(2));

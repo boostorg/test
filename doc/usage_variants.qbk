@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003-2014 Gennadiy Rozental 
+ / Copyright (c) 2003 Boost.Test team 
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -9,9 +9,9 @@
 
 The __UTF__ supports three different usage variants:
 
-# [link boost_test.users_guide.usage_variants.single_header The single-header variant]
-# [link boost_test.users_guide.usage_variants.static_lib    The static library variant]
-# [link boost_test.users_guide.usage_variants.shared_lib    The shared library variant]
+# [link boost_test.usage_variants.single_header The single-header variant]
+# [link boost_test.usage_variants.static_lib    The static library variant]
+# [link boost_test.usage_variants.shared_lib    The shared library variant]
 
 In most cases you shouldn't have problems deciding which one to use, since there are
 clear reasons why would you prefer each one. Following sections should help you with the decision.
@@ -34,14 +34,14 @@ test module name. This name can include spaces and does not need to be wrapped i
 The limitation of single header variant is that you can only implement this way 
 test modules with a single translation unit. 
 
-For more details on customization for this usage variant you can check this [link 
-boost_test.adv_scenarios.build_lib.usage_variants.single_header_variant section].
+For more details on customization for this usage variant you can check [link 
+boost_test.adv_scenarios.single_header_customizations this section].
 
 [/ ##################################################################### ]
 [h3:static_lib Static library usage variant]
 For most users, who has an access to prebuild static library [footnote these files are distributed 
 with the packaging systems on Linux and OSX for instance] of the __UTF__ or can 
-[link boost_test.adv_scenarios.build_lib.build_utf build it] themselves, following usage can be most versatile
+[link boost_test.adv_scenarios.build_utf build it] themselves, following usage can be most versatile
  and simple approach. This usage variant entails two steps. 
 
 # First you need to add following line to all translation units in a test module:
@@ -57,16 +57,18 @@ with the packaging systems on Linux and OSX for instance] of the __UTF__ or can
   test module name. This name can include spaces and does not need to be wrapped in quotes. 
 # The second step is to link with the __UTF__ static library.
 
-The flip side of this usage variant is that each test module is going to be statically linked
-with __UTF__, which might be something you interested to avoid. Also this usage variant has 
-limited options for test runners. For more information about these configuration options check 
-this [link boost_test.adv_scenarios.build_lib.usage_variants.static_lib_variant section].
+[note Header `<boost/test/unit_test.hpp>` is an 'aggregate' header: it includes most of the other headers that contains the Unit Test Framework definitions.]
+
+The flip side of this usage variant is that each test module following this usage variant is going 
+to be statically linked with __UTF__, which might be something you interested to avoid (to save space 
+for example). For more information about these configuration options check 
+[link boost_test.adv_scenarios.static_lib_customizations this section].
 
 [/ ##################################################################### ]
 [h3:shared_lib Shared library usage variant]
 In the project with large number of test modules the static library variant of the __UTF__ may
 cause you to waste a lot of disk space. The solution is to link test module dynamically with the 
-__UTF__ [link boost_test.adv_scenarios.build_lib built] as a shared library. 
+__UTF__ built as a shared library. 
 This usage variant entails two steps. 
 
 # First you need to add following lines to all translation units in a test module:
@@ -90,7 +92,7 @@ The flip side of this usage variant is that you will need to make sure the __UTF
 is accessible at runtime to a test module.
 
 In addition shared library usage variant facilitates custom test runners. For more information about this 
-check this [link boost_test.adv_scenarios.build_lib.usage_variants.extern_test_runner_variant section].
+check [link boost_test.adv_scenarios.shared_lib_customizations this section].
 
 [caution On Windows, the test module and the __UTF__ shared library should link to the same CRT. Not doing
  so (for instance __UTF__ shared library in /release/ mode while the test module is in /debug/) will

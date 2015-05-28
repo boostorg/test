@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003-2014 Gennadiy Rozental 
+ / Copyright (c) 2003 Boost.Test team 
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -43,7 +43,7 @@ Boost   : $BOOST_VERSION]] ]
     [`Entering test <test unit type> <test unit name>`] ]
 
   [ [On test unit end]
-    [threshold <= log_test_units; testing time is reported only if elapsed time is more than 1 mks.]
+    [threshold <= log_test_units; testing time is reported only if elapsed time is more than 1 us.]
     [`Leaving test <test unit type> <test unit name>; testing time <value>`] ]
 
   [ [On skipped test unit]
@@ -83,7 +83,7 @@ Boost   : $BOOST_VERSION]] ]
     [`<Message content>`]]
 ]
 
-Advanced [link boost_test.users_guide.testing_tools testing tools] may produce more complicated error messages.
+Advanced [link boost_test.testing_tools testing tools] may produce more complicated error messages.
 
 [endsect] [/ human readable report]
 

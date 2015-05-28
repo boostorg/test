@@ -163,7 +163,7 @@ BOOST_TEST_DECL int                 add_context( lazy_ostream const& context_des
 /// Erases context frame (when test exits context scope)
 
 /// If context_id is passed clears that specific context frame identified by this id, otherwise clears all non sticky contexts
-BOOST_TEST_DECL void    clear_context( int context_id = -1 );
+BOOST_TEST_DECL void                clear_context( int context_id = -1 );
 /// Produces an instance of small "delegate" object, which facilitates access to collected context
 BOOST_TEST_DECL context_generator   get_context();
 /// @}

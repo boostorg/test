@@ -120,7 +120,7 @@ element_compare( Lhs const& lhs, Rhs const& rhs )
 
     if( lhs.size() != rhs.size() ) {
         ar = false;
-        ar.message() << "Collections size mismatch: " << lhs.size() << " != " << rhs.size();
+        ar.message() << "\nCollections size mismatch: " << lhs.size() << " != " << rhs.size();
         return ar;
     }
 
@@ -328,14 +328,17 @@ compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::GE<L, R> >*
 #define DEFINE_COLLECTION_COMPARISON( oper, name, _ )               \
 template<typename Lhs,typename Rhs>                                 \
 struct name<Lhs,Rhs,typename boost::enable_if_c<                    \
-    is_same<typename decay<Lhs>::type,                              \
-            typename decay<Rhs>::type>::value &&                    \
-    unit_test::is_forward_iterable<Lhs>::value>::type> {            \
+    unit_test::is_forward_iterable<Lhs>::value &&                   \
+    unit_test::is_forward_iterable<Rhs>::value>::type> {            \
 public:                                                             \
     typedef assertion_result result_type;                           \
                                                                     \
     typedef name<Lhs, Rhs> OP;                                      \
-    typedef typename cctraits<OP>::is_specialized is_specialized;   \
+    typedef typename                                                \
+        mpl::if_c<is_same<typename decay<Lhs>::type,                \
+                          typename decay<Rhs>::type>::value,        \
+                  typename cctraits<OP>::is_specialized,            \
+                  mpl::false_>::type is_specialized;                \
                                                                     \
     typedef name<typename Lhs::value_type,                          \
                  typename Rhs::value_type> elem_op;                 \

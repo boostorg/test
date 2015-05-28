@@ -21,10 +21,10 @@ void test_operations(Processor& processor, int limit)
 {
   for (int i = 0; i < limit; ++i) {
     BOOST_TEST_CONTEXT("With parameter i = " << i) {
-      BOOST_CHECK(processor.op1(i));
+      BOOST_TEST(processor.op1(i));
       for (int j = 0; j < i; ++j) {
         BOOST_TEST_INFO("With parameter j = " << j);
-        BOOST_CHECK(processor.op2(i, j));
+        BOOST_TEST(processor.op2(i, j));
       }
     }
   }

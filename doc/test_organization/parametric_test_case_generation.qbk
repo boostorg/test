@@ -1,6 +1,5 @@
 [/
- / Copyright (c) 2003-2014 Gennadiy Rozental 
- / Copyright (c) 2013-2014 Raffi Enficiaud
+ / Copyright (c) 2003 Boost.Test team 
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -29,9 +28,9 @@ void combined_test()
 
 The approach above has several drawbacks:
 
-* the logic for running the tests is inside a test itself: `single_test` in the above example is ran from the test case `combined_test` while its execution would be better
+* the logic for running the tests is inside a test itself: `single_test` in the above example is run from the test case `combined_test` while its execution would be better
   handled by the __UTF__
-* in case of fatal failure for one of the values in `param` array above (say a failure in __BOOST_REQUIRE__), the test `combined_test` is aborted and the next test-case in the test tree is executed. 
+* in case of fatal failure for one of the values in `param` array above (say a failure in __BOOST_TEST_REQUIRE__), the test `combined_test` is aborted and the next test-case in the test tree is executed. 
 * in case of failure, the reporting is not accurate enough: the test should certainly be reran during debugging sessions by a human or additional logic for reporting should be implemented
   in the test itself.
 
@@ -98,13 +97,14 @@ The facilities provided by the __UTF__ addressed the issues described above:
   the execution of the tests over each sample of a dataset isolated, robust, repeatable and ease the debugging,
 * several datasets generating functions are provided by the __UTF__
 
+The remainder of this section covers the notions and feature provided by the __UTF__ about the data-driven test cases, in particular:
 
-This part is organized as follow:
-
-# [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.datasets First] the notion of *dataset* and *sample* will be introduced
-# then the declaration and registration of the data-driven test cases is explained,
-# the /operations/ on datasets are detailed
-# and finally the built-in dataset generators 
+# the notion of [link boost_test.tests_organization.test_cases.test_case_generation.datasets *dataset* and *sample*] is introduced
+# [link boost_test.tests_organization.test_cases.test_case_generation.datasets_auto_registration the declaration and registration]
+  of the data-driven test cases are explained,
+# the [link boost_test.tests_organization.test_cases.test_case_generation.operations /operations/] on datasets are detailed
+# and finally the built-in [link boost_test.tests_organization.test_cases.test_case_generation.generators dataset generators] 
+  are introduced.
 
 
 [/ ##################################################################################################################################  ]
@@ -124,12 +124,12 @@ Hence the dataset implements the notion of /sequence/.
 The descriptive power of the datasets in __UTF__ comes from
 
 * the [classref boost::unit_test::data::monomorphic::dataset interface] for creating a custom datasets, which is quite simple,
-* the [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.operations operations] they provide for combining different datasets 
+* the [link boost_test.tests_organization.test_cases.test_case_generation.operations operations] they provide for combining different datasets 
 * their interface with other type of collections (`stl` containers, `C` arrays)
-* the available built-in [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators /dataset generators/]
+* the available built-in [link boost_test.tests_organization.test_cases.test_case_generation.generators /dataset generators/]
 
 [tip Only "monomorphic" datasets are supported, which means that all samples in a dataset have the same type and same arity 
- [footnote polymorphic datasets will be considered in the future. Their need is mainly driven by the replacement of the [link boost_test.users_guide.tests_organization.test_cases.test_organization_templates typed parametrized test cases] by the dataset-like API.]
+ [footnote polymorphic datasets will be considered in the future. Their need is mainly driven by the replacement of the [link boost_test.tests_organization.test_cases.test_organization_templates typed parametrized test cases] by the dataset-like API.]
  . 
  ]
 
@@ -137,7 +137,9 @@ The descriptive power of the datasets in __UTF__ comes from
 As we will see in the next sections, datasets representing collections of different types may be combined together (eg. /zip/ or /grid/). 
 These operations result in new datasets, in which the samples are of an augmented type. 
 
-[tip This [link boost_test.boost_test_examples.ref_dataset_example68 example] implements a dataset generating a Fibonacci sequence]
+[/ TODO resurrect this example
+  [tip This [link boost_test.boost_test_examples.ref_dataset_example68 example] implements a dataset generating a Fibonacci sequence]
+]
 
 [endsect] [/ datasets]
 
@@ -186,7 +188,7 @@ are samples in the dataset given as argument. Each test case runs on exactly *on
 Exactly as regular test cases, each test - or each sample - is executed within the test body in a /guarded manner/: 
 
 * the test execution are independent: if an error occurs for one sample, the reminder samples execution is not affected
-* in case of error, the [link boost_test.users_guide.test_output.contexts context] within which the error occurred is reported in the [link boost_test.users_guide.test_output log]. 
+* in case of error, the [link boost_test.test_output.contexts context] within which the error occurred is reported in the [link boost_test.test_output log]. 
   This context contains the sample for which the test failed, which would ease the debugging. 
 
 [caution The macro __BOOST_DATA_TEST_CASE__ is available only for compilers with support for variadic macros.]
@@ -322,11 +324,11 @@ and twice for the second `xrange` - second dimension - to which it is zipped). N
 [section:generators Datasets generators]
 Several ['generators] for datasets are implemented in __UTF__:
 
-* [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.singletons Singletons]
-* [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.stl `forward iterable`] containers and 
-  [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.c_arrays `C` array] like datasets
-* [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.ranges ranges] or sequences of values
-* datasets made of [link boost_test.users_guide.tests_organization.test_cases.test_case_generation.generators.random random numbers] and following a particular distribution
+* [link boost_test.tests_organization.test_cases.test_case_generation.generators.singletons Singletons]
+* [link boost_test.tests_organization.test_cases.test_case_generation.generators.stl `forward iterable`] containers and 
+  [link boost_test.tests_organization.test_cases.test_case_generation.generators.c_arrays `C` array] like datasets
+* [link boost_test.tests_organization.test_cases.test_case_generation.generators.ranges ranges] or sequences of values
+* datasets made of [link boost_test.tests_organization.test_cases.test_case_generation.generators.random random numbers] and following a particular distribution
 
 `stl` and `C-array` generators are merely a dataset view on existing collection, while ranges and random number sequences are 
 describing new datasets. 

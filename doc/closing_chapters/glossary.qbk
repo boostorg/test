@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003-2014 Gennadiy Rozental 
+ / Copyright (c) 2003 Boost.Test team 
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -22,7 +22,7 @@ it's called ['multi-file test module]. Logically, each test module consists of f
  
 The test runner part is optional. If a test module is built as
 an executable, the test runner is built-in. If a test module is built as a dynamic library, it is run by an
-external test runner.
+[link boost_test.adv_scenarios.external_test_runner external test runner].
 
 
 [#test_body][h3 Test body]
@@ -32,7 +32,7 @@ Logically test body is a collection of [link test_assertion test assertions] wra
 
 [#test_tree][h3 Test tree]
 This is a hierarchical structure of [link test_suite test suites] (non-leaf nodes) and
-[link test_case test cases] (leaf nodes).
+[link test_case test cases] (leaf nodes). More details can be found [link boost_test.tests_organization here].
 
 [#test_unit][h3 Test unit]
 This is a collective name when referred to either a [link test_suite test suite] or
@@ -89,20 +89,7 @@ This is the part of test module that is responsible for cleanup operations.
 Matching setup and cleanup operations are frequently united into a single entity called test fixture.
 
 [#test_runner][h3 Test runner]
-This is an ['executive manager] that runs the show. The test runner's functionality should include
-the following interfaces and operations:
-
-* Entry point to a test module. This is usually either the function `main()` itself or single function that can be
-  invoked from it to start testing.
-* Initialize the __UTF__ based on runtime parameters
-* Select an output media for the test log and the test results report
-* Select test cases to execute based on runtime parameters
-* Execute all or selected test cases
-* Produce the test results report
-* Generate a test module result code.
-
-An advanced test runner may provide additional features, including interactive ['GUI] interfaces,
-test coverage and profiling support.
+This is an ['orchestrator] or a ['driver] that, given the test tree, ensures the test tree is initialized, tests are executed and necessary reports generated. For more information [link boost_test.adv_scenarios.test_module_runner_overview see here].
 
 [#test_log][h3 Test log]
 This is the record of all events that occur during the testing.

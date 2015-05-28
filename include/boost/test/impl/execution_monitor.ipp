@@ -570,7 +570,7 @@ system_signal_exception::report() const
 #endif
         default:
             report_error( execution_exception::system_error,
-                          "signal: SIGPOLL, si_code: %d (asynchronous I/O event occured; band event %d)",
+                          "signal: SIGPOLL, si_code: %d (asynchronous I/O event occurred; band event %d)",
                           (int)m_sig_info->si_band, m_sig_info->si_code );
             break;
         }

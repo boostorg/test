@@ -1,156 +1,22 @@
 [/
- / Copyright (c) 2003-2014 Gennadiy Rozental 
- / Copyright (c) 2013-2014 Raffi Enficiaud
+ / Copyright (c) 2003 Boost.Test team 
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
 
-[section:testing_tool_ref Reference]
+[section:testing_tool_ref Reference API for writing tests]
 
 
-[table
-  [
-    [Assertions]
-    [Short description]
-  ] 
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_TEST__]
-    [General purpose assertion macro.]
-  ]
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL__]
-    [Simple validation of a boolean predicate value.]
-  ]
-
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_BITWISE_EQUAL__]
-    [Bitwise equality test of two elements.]
-  ]
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_EQUAL__]
-    [Equality test of two elements.]
-  ]
-
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_EQUAL_COLLECTIONS__]
-    [Element-wise equality test of two collections.]
-  ]
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_CLOSE__]
-    [Floating point comparison using a percentage of deviation.]
-  ]
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_CLOSE_FRACTION__]
-    [Floating point comparison using the fraction of the compared operands.]
-  ]
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_EXCEPTION__]
-    [Exception detection and validation check.]
-  ]
-
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_GE__]
-    [Comparison of two values (with convenient reporting).]
-  ]  
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_GT__]
-    [Comparison of two values (with convenient reporting).]
-  ]  
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_LE__]
-    [Comparison of two values (with convenient reporting).]
-  ]  
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_LT__]
-    [Comparison of two values (with convenient reporting).]
-  ]  
-    
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_MESSAGE__]
-    [Same as __BOOST_LEVEL__ with a custom message in case of failure.]
-  ]  
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_NE__]
-    [Comparison of two values (with convenient reporting).]
-  ]   
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_NO_THROW__]
-    [Checks an expression does not throw any exception.]
-  ]   
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_PREDICATE__]
-    [Checks a list of arguments against a predicate functor.]
-  ]   
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_SMALL__]
-    [Checks a value is small according to a tolerance.]
-  ]   
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_LEVEL_THROW__]
-    [Checks an expression throws a specific type of expression.]
-  ]   
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_ERROR__]
-    [Logs an error message, fails but does not abort the current test.]
-  ]   
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_FAIL__]
-    [Logs an error message, fails and aborts the current test.]
-  ]     
-  
-  [/ ###############################################################################################]
-  [
-    [__BOOST_IS_DEFINED__]
-    [Checks at runtime whether or not the supplied preprocessor symbol is defined.]
-  ]   
-  
-  
-]
 
 [/ ###############################################################################################]
-[section:assertion_boost_test_super_macro `BOOST_TEST`]
+[section:assertion_boost_test_universal_macro `BOOST_TEST`]
 
 
 ``
   BOOST_TEST(statement);
+  BOOST_TEST_<level>(statement);
   
   // replacement failure message, requires variadic macros
   BOOST_TEST(statement, "failure message");
@@ -164,38 +30,101 @@
   // element-wise comparison, for containers
   BOOST_TEST(statement, boost::test_tools::per_element() );
   
-  // element-wise comparison, for containers
+  // lexicographic comparison, for containers
   BOOST_TEST(statement, boost::test_tools::lexicographic() );
-  
-  
-
 ``
 
-The full documentation of this macro is located [link boost_test.users_guide.testing_tools.boost_test_super_macro here].
+The full documentation of this macro is located [link boost_test.testing_tools.boost_test_universal_macro here]. 
+
+The macro is available in three variants, corresponding to different [link boost_test.testing_tools.tools_assertion_severity_level assertion severity levels]:
+
+``
+  BOOST_TEST 
+  BOOST_TEST_REQUIRE
+  BOOST_TEST_WARN
+``
+
 
 * `"failure message"` is a C-string printed in case of failure in place of the default message. 
-  See [link boost_test.users_guide.testing_tools.boost_test_super_macro.option_message this section] for 
+  See [link boost_test.testing_tools.reports this section] for 
   more details.
 * `floating_point_comparison_manipulation` is one of the floating point comparison manipulators. 
-  See [link boost_test.users_guide.testing_tools.boost_test_super_macro.floating_point this section]
+  See [link boost_test.testing_tools.boost_test_universal_macro this section]
    for more details.
 * [classref boost::test_tools::bitwise] is a manipulator indicating that the comparison should be performed bitwise. See 
-  [link boost_test.users_guide.testing_tools.boost_test_super_macro.bitwise this section] for more details
-* [classref boost::test_tools::bitwise] is a manipulator indicating that the comparison should be performed bitwise. See 
-  [link boost_test.users_guide.testing_tools.boost_test_super_macro.bitwise this section] for more details
+  [link boost_test.testing_tools.extended_comparison.bitwise this section] for more details
 * [classref boost::test_tools::per_element] is a manipulator indicating that the comparison should be performed on each element, in sequence, rather
   than on containers. See 
   [link boost_test_coll_perelement this section] for more details
-* [classref boost::test_tools::lexicographic] is a manipulator indicating that the comparison should be performed with the lexicographical order. See 
+* [classref boost::test_tools::lexicographic] is a manipulator indicating that the comparison should be performed with the lexicographic order. See 
   [link boost_test_coll_default_lex this section] for more details
 
 [h3 Restrictions on the acceptable statements]
 There are some restrictions on the supported statements. Those are explained in details in
-[link boost_test.users_guide.testing_tools.boost_test_super_macro.acceptable_statements this] section.
+[link boost_test.testing_tools.acceptable_statements this] section.
 
 [endsect]
 
 
+
+[/ DECORATORS ###############################################################################################]
+[/-----------------------------------------------------------------]
+
+[section:decorator_expected_failures expected_failures (decorator)]
+
+``
+expected_failures(counter_t number);
+``
+
+Indicates the expected failures for a test unit. 
+See [link boost_test.testing_tools.expected_failures here] for more details.
+
+[endsect] [/ section expected_failures]
+
+
+[/-----------------------------------------------------------------]
+[section:decorator_timeout timeout (decorator)]
+
+``
+timeout(unsigned seconds);
+``
+
+Specifies a time-out for a *test-case*, above which the test-case is forced to stop and reported as failing.
+See [link boost_test.testing_tools.timeout here] for more details.
+
+[endsect] [/ section timeout]
+
+
+[/-----------------------------------------------------------------]
+[section:decorator_tolerance tolerance (decorator)]
+
+``
+template <typename FPT>
+  tolerance(FPT eps);
+
+template <typename FPT>
+  tolerance(test_tools::fpc::percent_tolerance_t<FPT> eps)  
+``
+
+Decorator `tolerance` specifies the default comparison tolerance for floating point type `FTP` in the decorated test 
+unit. The default tolerance only applies to a particular type, so it makes sense to provide more than one `tolerance` 
+decorator if we are comparing different floating point types. For more details see __floating_points_testing_tools__. 
+The variant with `percent_tolerance` uses value `eps * .01` as tolerance.
+
+[bt_example decorator_13..decorator tolerance]
+
+In the above example,  in `test1`, checks on `double`s fail because they differ by more what tolerance for `double`s 
+specifies. In `test2` the tolerance for `double`s is greater and therefore the checks succeed. In `test3`, we specify 
+only tolerance for type `float`, and since the checks use type `double` the specified tolerance does not apply. Tolerance 
+in `test4` is equivalent to that in `test1`, therefore its checks also fail. Tolerance in `test5` is equivalent to 
+that in `test2`, therefore its checks also succeed.
+[endsect] [/ section decorator_tolerance]
+
+
+
+
+
+[/ DEPRECATED API]
 [/ ###############################################################################################]
 [#ref_BOOST_level][section:assertion_boost_level `BOOST_<level>`]
 
@@ -310,7 +239,7 @@ __BOOST_LEVEL_PREDICATE__ family of tools with explicit `check_is_close` invocat
 
 The first parameter is the ['left] compared value. The second parameter is the
 ['right] compared value. Last third parameter defines the tolerance for the comparison in
-[link boost_test.users_guide.testing_tools.testing_floating_points [*percentage units]].
+[link boost_test.testing_tools.extended_comparison.floating_point [*percentage units]].
 
 [note It is required for left and right parameters to be of the same floating point type. You will need to explicitly
       resolve any type mismatch to select which type to use for comparison.
@@ -347,7 +276,7 @@ To check for the weak relationship use __BOOST_LEVEL_PREDICATE__ family of tools
 
 The first parameter is the ['left] compared value. The second parameter is the
 ['right] compared value. Last third parameter defines the tolerance for the comparison as
-[link boost_test.users_guide.testing_tools.testing_floating_points [*fraction of absolute values being compared]].
+[link boost_test.testing_tools.extended_comparison.floating_point [*fraction of absolute values being compared]].
 
 [note It is required for left and right parameters to be of the same floating point type. You will need to explicitly
       resolve any type mismatch to select which type to use for comparison.]
@@ -639,6 +568,14 @@ See also:
 
 [endsect]
 
+
+[/ ###############################################################################################]
+[section:test_org_boost_test_case_expected_failure `BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES`]
+Indicates the number of failures for a test case. 
+
+See [link boost_test.testing_tools.expected_failures here] for more details.
+[endsect] [/ expected failures]
+
 [/ ###############################################################################################]
 [section:assertion_boost_error `BOOST_ERROR`]
 
@@ -646,7 +583,7 @@ See also:
   BOOST_ERROR(message);
 ``
 
-__BOOST_ERROR__ tool behave the same way as `__BOOST_CHECK_MESSAGE__(false, message)`. This tool is used for
+__BOOST_ERROR__ tool behave the same way as `__BOOST_TEST__(false, message)`. This tool is used for
 an unconditional error counter increasing and message logging. 
 
 The tool's only parameter is an error message to log.
@@ -655,7 +592,7 @@ The tool's only parameter is an error message to log.
 
 See also:
 
-* __BOOST_LEVEL__
+* __BOOST_TEST__
 
 [endsect]
 
@@ -667,7 +604,7 @@ See also:
   BOOST_FAIL(message);
 ``
 
-`__BOOST_FAIL__(message)` behave the same way as `__BOOST_REQUIRE_MESSAGE__(false, message)`. This tool is used for an
+`__BOOST_FAIL__(message)` behave the same way as `__BOOST_TEST_REQUIRE__(false, message)`. This tool is used for an
 unconditional error counter increasing, message logging and the current test case aborting. 
 
 The tool's only parameter is an error message to log.
@@ -676,8 +613,8 @@ The tool's only parameter is an error message to log.
 
 See also:
 
-* __BOOST_LEVEL__
-* __BOOST_LEVEL_MESSAGE__
+* __BOOST_TEST__
+* 
 
 [endsect]
 

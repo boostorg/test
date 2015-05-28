@@ -3,5 +3,5 @@
 Running 1 test case...
 test.cpp(10): error in "test": check i <= j failed [9 > 6]
 
-*** 1 failure detected in test suite "example"
+*** 1 failures is detected in test suite "example"
 //]

@@ -1,7 +1,7 @@
 //[example_output
 > decorator_05
 Running 1 test case...
-decorator_05.cpp(14): error: in "suite1/test2": check 2 != 2 has failed [2 == 2]
+test.cpp(14): error: in "suite1/test2": check 2 != 2 has failed [2 == 2]
 
 *** 1 failure is detected in the test module "decorator_05"
 
