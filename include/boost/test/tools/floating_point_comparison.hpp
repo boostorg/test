@@ -128,35 +128,23 @@ fpt_abs( FPT fpv )
 //____________________________________________________________________________//
 
 template<typename FPT>
-struct fpt_limits_when_std_specialized
+struct fpt_specialized_limits
 {
-  static FPT    min_value()
-  {
-    return (std::numeric_limits<FPT>::min)();
-  }
-  static FPT    max_value()
-  {
-    return (std::numeric_limits<FPT>::max)();
-  }
+  static FPT    min_value() { return (std::numeric_limits<FPT>::min)(); }
+  static FPT    max_value() { return (std::numeric_limits<FPT>::max)(); }
 };
 
 template<typename FPT>
-struct fpt_limits_when_std_not_specialized
+struct fpt_non_specialized_limits
 {
-  static FPT    min_value()
-  {
-    return static_cast<FPT>(0);
-  }
-  static FPT    max_value()
-  {
-    return static_cast<FPT>(1000000); // for our purposes it doesn't really matter what value is returned here
-  }
+  static FPT    min_value() { return static_cast<FPT>(0); }
+  static FPT    max_value() { return static_cast<FPT>(1000000); } // for our purposes it doesn't really matter what value is returned here
 };
 
 template<typename FPT>
 struct fpt_limits : boost::conditional<std::numeric_limits<FPT>::is_specialized,
-                                       fpt_limits_when_std_specialized<FPT>,
-                                       fpt_limits_when_std_not_specialized<FPT>
+                                       fpt_specialized_limits<FPT>,
+                                       fpt_non_specialized_limits<FPT>
                                       >::type
 {};
 
