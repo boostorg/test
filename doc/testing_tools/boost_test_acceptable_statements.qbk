@@ -7,10 +7,7 @@
 
 
 [section:acceptable_statements Acceptable statements]
-The general form of the `BOOST_TEST` macro is the following:
 
-  BOOST_TEST(statement);
-  BOOST_TEST(statement, optional_modifiers)
 
 
 * `statement` above may be almost anything: in particular it might contain a full expression composed by several operations,

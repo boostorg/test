@@ -7,35 +7,70 @@
 
 [section:boost_test_universal_macro BOOST_TEST: universal and general purpose assertions]
 
-Once a test case has been declared, the body of this test should be written. A test case is a 
-sequence of operations in which *assertions* are inserted. Those assertions evaluate /statements/ that implement the expectation being validated, 
-and report failures and/or informations, depending on the [link boost_test.utf_reference.rt_param_reference.log_level log level]. 
+The __UTF__ provides an almost unique interface to a great range of test-case scenarios, through the __BOOST_TEST__ 
+macro. The general form of `BOOST_TEST` is the following:
 
-There are three kind of assertions, having different meaning on the consistency of the test case:
+  BOOST_TEST(statement); 
+  BOOST_TEST_<level>(statement, optional_modifiers)
 
-* *requirements*: this is a strong condition for the operations following the assertion to be valid. 
-  This type of assertions should be used when a pre-condition for the test is not met or when the test-case cannot continue.
-  If such as assertion fails, the test case execution stops immediately, and the test-case is flagged as /failed/.
-* *checks*: this is the most commonly used assertion level. If the statement evaluates to `false`, the test case is 
-  flagged as failed but its execution continues. 
-* *warnings*: this is an assertion providing information. The test case execution continues and a warning message is logged. 
-  The warning does not change the success status of a test case.
-  
-These three levels of assertions are reported into the test log and output, as described in details in the 
-[link boost_test.testing_tools.tools_assertion_severity_level severity levels] section. The granularity of the
-report depends on the current [link boost_test.utf_reference.rt_param_reference.log_level log level] and 
-[link boost_test.utf_reference.rt_param_reference.report_level report level].
+The major features of this tool are:
 
-A unique interface is given by three variants of the `BOOST_TEST` assertion:
+* a great flexibility for `statement` which may be almost anything: full expression composed by several operations are supported
+  and handled,
+* an extended reporting capability in case of failure: not only `BOOST_TEST` reports the location of the failure and the `statement`, 
+  but also the values of the operands that permits a rapid identification of the issues related to the failed assertion, 
+* the possibility to control better the behaviour or the reports of the checks, in particular:
 
-* `BOOST_TEST_REQUIRE`
-* `BOOST_TEST_CHECK` or just `BOOST_TEST`
-* `BOOST_TEST_WARN`
-
-As their name suggests these assertions are, in order, for /requirement/, /checks/ and /warnings/.
+  * floating point comparison: the tolerance may be provided, either using 
+     `optional_modifiers` directly or /decorators/ (see [link boost_test.testing_tools.extended_comparison.floating_point here]
+     for more details),
+  * container/collection comparisons: different operations for comparison are provided out of the box,
+  * string comparison: C-strings operands are automatically detected and the comparisons are performed as if `std::string` objects
+    were used,
+  * optional failure message,
+  * bitwise comparison
 
 [warning To get all the functionalities of `BOOST_TEST` family of assertions, a C++11 capable compiler is required, especially
  supporting the `auto` and `decltype` keywords and the variadic macros. The documentation focuses on these set of compilers. A 
  limited support is provided for C++03 compilers.]
+
+
+[h3 Examples]
+`BOOST_TEST` assertion uses operator overloading in order to provide an enhanced reporting capability, as
+shown on the example below:
+
+[bt_example boost_test_macro3..BOOST_TEST enhanced reporting]
+
+As it can be seen, additional details are provided in log. This is possible for almost all overloadable operators in C++:
+  
+[table
+  [[Class of operation][operators]]
+  [[binary comparisons][`==`, `!=`, `<`, `>`, `<=`, `>=`]]
+  [[arithmetic compositions][`+`, `-`, `*`, `/`, `%`]]
+  [[bitwise compositions][`|`, `&`, `^`, `<<`, `>>`]]
+  [[assignments][`=`, `+=`, `-=`, `*=`, `/=`, `%=`, `<<=`, `>>=`, `&=`, `^=`, `|=`]]
+]  
+
+[h3 Uniform reporting]
+This tool is provided in three variants corresponding to the corresponding 
+[link boost_test.testing_tools.tools_assertion_severity_level severity levels]. These three levels of assertions are 
+reported into the test log and output, as described in details in the section. The granularity of the
+report depends on the current [link boost_test.utf_reference.rt_param_reference.log_level log level] and 
+[link boost_test.utf_reference.rt_param_reference.report_level report level].
+
+[h3 Limitations]
+There are a few constructions that are however unsupported, but adding an extra bracket usually solves that:
+
+* statements containing ternary conditions: those statement should be surrounded by parenthesis as they cannot be overloaded
+* statements containing commas: those statements will be intercepted by the preprocessor
+* compound statements containing any logical composition `||`, `&&`. Those are disabled intentionally and should be surrounded
+  by parenthesis
+  
+    BOOST_TEST((true || false));
+    
+  The full details are given in [link boost_test.testing_tools.internal_details this section].
+
+[bt_example boost_test_macro1..BOOST_TEST acceptable expressions]
+
 
 [endsect] [/ boost_test_universal_macro]
