@@ -134,10 +134,10 @@ public:                                                                 \
     static assertion_result                                             \
     eval( Lhs const& lhs, Rhs const& rhs)                               \
     {                                                                   \
-        if( lhs == Lhs(0) )                                             \
+        if( lhs == 0 )                                             \
             return compare_fpv_near_zero<Rhs>(rhs, (OP*)0);             \
                                                                         \
-        if( rhs == Rhs(0) )                                             \
+        if( rhs == 0 )                                             \
             return compare_fpv_near_zero<Lhs>(lhs, (OP*)0);             \
                                                                         \
         bool direct_res = eval_direct( lhs, rhs );                      \
