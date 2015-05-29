@@ -179,6 +179,7 @@ test-suite "unit_test_framework_test"
           [ test-btl-doc-example-as-test run-fail : tolerance_01 : [ requires cxx11_variadic_macros ] ]
           [ test-btl-doc-example-as-test run-fail : tolerance_02 : [ requires cxx11_variadic_macros ] ]
           [ test-btl-doc-example-as-test run-fail : tolerance_03 : [ requires cxx11_variadic_macros ] ]
+          [ test-btl-doc-example-as-test run-fail : tolerance_04 : [ requires cxx11_variadic_macros ] ]
           [ test-btl-doc-example-as-test run-fail : boost_test_message                 ]
           [ test-btl-doc-example-as-test run-fail : boost_test_string                  ]
           [ test-btl-doc-example-as-test run-fail : boost_test_bitwise                 ]

@@ -8,29 +8,25 @@
 //[example_code
 #define BOOST_TEST_MODULE tolerance_03
 #include <boost/test/included/unit_test.hpp>
-#include <boost/rational.hpp>
 namespace utf = boost::unit_test;
-namespace tt = boost::test_tools;
 
-namespace boost { namespace math { namespace fpc {
+double x = 10.000000;
+double d =  0.000001;
 
-  template <typename I>
-  struct tolerance_based< rational<I> > : boost::true_type{};
-  
-} } }
-
-typedef boost::rational<int> ratio;
-
-BOOST_AUTO_TEST_CASE(test1, * utf::tolerance(ratio(1, 1000)))
+BOOST_AUTO_TEST_CASE(passing, * utf::tolerance(0.0001))
 {
-  ratio x (1002, 100); // 10.02
-  ratio y (1001, 100); // 10.01
-  ratio z (1000, 100); // 10.00
-  
-  BOOST_TEST(x == y);  // irrelevant diff by default
-  BOOST_TEST(x == y, tt::tolerance(ratio(1, 2000)));
-  
-  BOOST_TEST(x != z);  // relevant diff by default
-  BOOST_TEST(x != z, tt::tolerance(ratio(2, 1000)));
+  BOOST_TEST(x == x + d); // equal with tolerance
+  BOOST_TEST(x >= x + d); // ==> greater-or-equal
+
+  BOOST_TEST(d == .0);    // small with tolerance
+}
+
+BOOST_AUTO_TEST_CASE(failing, * utf::tolerance(0.0001))
+{
+  BOOST_TEST(x - d <  x); // less, but still too close
+  BOOST_TEST(x - d != x); // unequal but too close
+
+  BOOST_TEST(d > .0);     // positive, but too small
+  BOOST_TEST(d < .0);     // not sufficiently negative
 }
 //]

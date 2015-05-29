@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003 Boost.Test team 
+ / Copyright (c) 2003-2015 Boost.Test team 
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -83,23 +83,29 @@ BOOST_AUTO_TEST_CASE(test, * utf::tolerance(0.02))
 }
 ``` 
 
+Finally, note that comparisons for tolerance are also applied to `operator<` with semantics 'less by more than some tolerance`,
+and other relational operators. Also, the tolerance-based comparisons are involved when a more complicated expression tree is
+processed within the assertion body:
+
+[bt_example tolerance_03..tolerance applied in more complex expressions]  
+
+[/############################################################################################]
+
+[section:floating_points_comparison_theory Tolerance-based algorithms]
 
 
-[section:floating_points_comparison_theory Theory]
-
-In most cases it is unreasonable to use an `operator==(...)` for a floating-point values equality check.
-The simple, absolute value comparison based, solution for a floating-point values `u`,
-`v` and a tolerance `epsilon`:
+The following is the most obvious way to compare two floating-point values `u` and `v` for being close at a given absolute tolerance `epsilon`:
 
 [#equ1]
 ``
    abs(u - v) <= epsilon; // (1)
 ``
 
+However, in many circumstances, this is not what we want. The same absolute tolerance value `0.01` may be too small to meaningfully compare
+two values of magnitude `10e12` and at the same time too little to meaningfully compare values of magnitude `10e-12`. For examples, see [link Squassabia].
 
-does not produce expected results in many circumstances - specifically for very small or very big values (see
-[link Squassabia] for examples). The __UTF__ implements floating-point comparison algorithm that is
-based on the more confident solution first presented in [link KnuthII Knuth]:
+We do not want to apply the same absolute tolerance for huge and tiny numbers. Instead, we would like to scale the `epsilon` with `u` and `v`.
+The __UTF__ implements floating-point comparison algorithm that is based on the solution presented in [link KnuthII Knuth]:
 
 [#equ2]
 ``
@@ -116,12 +122,11 @@ defines a ['very close with tolerance `epsilon`] relationship between `u` and `v
 
 defines a ['close enough with tolerance `epsilon`] relationship between `u` and `v`.
 
-Both relationships are commutative but are not transitive. The relationship defined by inequations
-[link equ2 (2)] is stronger that the relationship defined by inequations [link equ3 (3)] since [link equ2 (2)] necessarily implies [link equ3 (3)].
+Both relationships are commutative but are not transitive. The relationship defined in
+[link equ2 (2)] is stronger that the relationship defined in [link equ3 (3)] since [link equ2 (2)] necessarily implies [link equ3 (3)].
 
 The multiplication in the right side of inequations may cause an unwanted underflow condition. To prevent this, 
-the implementation is using modified version of the
-inequations [link equ2 (2)] and [link equ3 (3)] where all underflow, overflow conditions can be guarded safely:
+the implementation is using modified version of [link equ2 (2)] and [link equ3 (3)], which scales the checked difference rather than `epsilon`:
 
 [#equ4]
 ``
@@ -135,29 +140,42 @@ inequations [link equ2 (2)] and [link equ3 (3)] where all underflow, overflow co
 || abs(u - v)/abs(v) <= epsilon; // (5)
 ``
 
+This way all underflow and overflow conditions can be guarded safely. The above however, will not work when `v` or `u` is zero. In such cases the solution is to resort to [link equ1 (1)]. 
+
 [h3 Implementation]
 
-Checks based on equations [link equ4 (4)] and [link equ5 (5)] is implemented by the binary predicate 
-[classref boost::math::fpc::close_at_tolerance `close_at_tolerance`]. The method for comparison (Equ [link equ4 (4)] or [link equ5 (5)]) as well as the
-epsilon are selected at construction. This predicate reports the tolerance to set to make the test successful.
+Binary predicate [classref boost::math::fpc::close_at_tolerance `close_at_tolerance`] implements checks [link equ4 (4)] and [link equ5 (5)].
+The tolerance and the selection between [link equ4 (4)] and [link equ5 (5)] is determined during construction. Apart from the Boolean result,
+the predicate can also return the minimum tolerance to set to make the test successful.
 
-While equations [link equ4 (4)] and [link equ5 (5)] in general are preferred for the general floating
-point comparison check over equation [link equ1 (1)], they are
-unusable for the test on closeness to zero. The later check still might be useful in some cases and the __UTF__
-implements an algorithm based on equation [link equ1 (1)] in the
-binary predicate [classref boost::math::fpc::small_with_tolerance `small_with_tolerance`].
+Unary predicate [classref boost::math::fpc::small_with_tolerance `small_with_tolerance`] implements check [link equ1 (1)].
 
-On top of the generic, flexible predicates the __UTF__ implements macro based family of tools
-__BOOST_TEST__ [footnote in particular [link boost_test.testing_tools.extended_comparison.floating_point this section] ], 
-__BOOST_CHECK_CLOSE__ [footnote deprecated] and __BOOST_CHECK_SMALL__ [footnote deprecated]. These tools limit the check
-flexibility to strong-only checks (Equ.[link equ4 (4)]), but automate failed check arguments reporting.
+Assertion __BOOST_TEST__ (when comparing floating-point numbers) uses the following algorithm:
 
-Finally, if the type is not a native floating point type (such as one of the multiprecision libraries), the __UTF__ still tries
-to detect that the type is suitable for comparisons using the tolerance scheme explained above. This detection involves
-`std::numeric_limits`. If it turns out that this automatic detection does not work for a specific type, it is then
-possible to specialise the meta-class [classref boost::math::fpc::tolerance_based] for this specific type to derive from 
-`boost::mpl::true_`.
+* When either `u` or `v` is zero, evaluates [classref boost::math::fpc::small_with_tolerance `small_with_tolerance`] on the other.
+* When the specified tolerance is zero, preforms direct (native) comparison between `u` and `v`.
+* Otherwise, performs [classref boost::math::fpc::close_at_tolerance `close_at_tolerance`] using [link equ4 (4)].
 
+[note Therefore in order to check if a number is close to zero with tolerance, you need to type: 
+```
+BOOST_TEST(v == T(0), tt::tolerance(eps));
+```]
+
+The compatibility assertions __BOOST_LEVEL_CLOSE__ and __BOOST_LEVEL_CLOSE_FRACTION__ perform [classref boost::math::fpc::close_at_tolerance `close_at_tolerance`] using [link equ4 (4)].
+
+The compatibility assertion __BOOST_LEVEL_SMALL__ performs [classref boost::math::fpc::small_with_tolerance `small_with_tolerance`].
+
+[h4 Tolerance in `operator<`]
+
+Tolerance-based computations also apply to `operator<` and other relational operators. The semantics are defined as follows:
+
+* ['less-at-tolerance] <==> ['strictly-less] and not ['close-at-tolerance]
+* ['greater-at-tolerance] <==> ['strictly-greater] and not ['close-at-tolerance]
+* ['less-or-equal-at-tolerance] <==> ['strictly-less] or ['close-at-tolerance]
+* ['greater-or-equal-at-tolerance] <==> ['strictly-greater] or ['close-at-tolerance]
+
+[note This implies that the exactly one of these: `u < v`, `u == v`, `u > v`, passes with __BOOST_TEST__ at any given tolerance.]
+[caution Relation less-at-tolerance is not a Strict Weak Ordering; using it as predicate in `std::map` or any order-based STL algorithm would result in undefined behaviour.]
 
 [h3 Tolerance selection considerations]
 
@@ -222,7 +240,7 @@ For more reading about floating-point comparison see references below.
 
 [variablelist Periodicals
   [
-    [[#Squassabia][@http://www.adtmag.com/joop/carticle.aspx?ID=396
+    [[#Squassabia][@https://adtmag.com/articles/2000/03/16/comparing-floats-how-to-determine-if-floating-quantities-are-close-enough-once-a-tolerance-has-been.aspx
       Comparing Floats: How To Determine if Floating Quantities Are Close Enough Once a Tolerance Has Been Reached]]
     [Alberto Squassabia, in C++ Report (March 2000)]
   ]
@@ -273,7 +291,7 @@ you can just specialize [classref boost::math::fpc::tolerance_based] for your ty
 `boost::true_type`. Your type does not even have to be a floating-point type provided that it models concept
 [link boost_test.testing_tools.extended_comparison.floating_point.customizing_for_tolerance.concept_tolerance_based `ToleranceCompatible`].
 
-[bt_example tolerance_03..adapting user-defined types for tolerance-based comparison]
+[bt_example tolerance_04..adapting user-defined types for tolerance-based comparison]
 
 [h3:concept_tolerance_based Concept `ToleranceCompatible`]
 
@@ -298,7 +316,7 @@ you can just specialize [classref boost::math::fpc::tolerance_based] for your ty
   [[Addition][`x + y`][`T`]]
   [[Subtraction][`x - y`][`T`]]
   [[Negation][`-x`][`T`]]
-  [[Multiplication][`x * y`][`T`]]
+  [[Multiplication][`x * y`[br]`x * i`][`T`]]
   [[Division][`x / y`[br]`x / i`][`T`]]
   [[Mixed equality][`x == i`[br]`x != i`][`bool`]]
   [[Mixed ordering][`x < i`[br]`x > i`[br]`x <= i`[br]`x >= i`][`bool`]]
