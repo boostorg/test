@@ -22,6 +22,7 @@ set(EXAMPLES_SRC
 
 # source files needing variadic macros
 set(EXAMPLES_VARIADIC_MACROS_SRC
+    boost_test_macro_overview.cpp
     boost_test_macro1.cpp
     boost_test_macro2.cpp
     boost_test_macro3.cpp
@@ -33,8 +34,6 @@ set(EXAMPLES_VARIADIC_MACROS_SRC
     boost_test_sequence_per_element.cpp
     boost_test_container_lex.cpp
     boost_test_macro_container_c_array.cpp
-    
-    test_float_04.cpp
     )
     
 if(CMAKE_CXX_COMPILER_ID STREQUAL Clang)

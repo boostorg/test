@@ -59,9 +59,9 @@ The macro is available in three variants, corresponding to different [link boost
 * [classref boost::test_tools::lexicographic] is a manipulator indicating that the comparison should be performed with the lexicographic order. See 
   [link boost_test_coll_default_lex this section] for more details
 
-[h3 Restrictions on the acceptable statements]
-There are some restrictions on the supported statements. Those are explained in details in
-[link boost_test.testing_tools.acceptable_statements this] section.
+[h3 Limitations and workaround]
+There are some restrictions on the statements that are supported by this tool. Those are explained in details in
+[link boost_test_statement_limitations this] section.
 
 [endsect]
 

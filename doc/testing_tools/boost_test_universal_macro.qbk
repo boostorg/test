@@ -13,35 +13,41 @@ macro. The general form of `BOOST_TEST` is the following:
   BOOST_TEST(statement); 
   BOOST_TEST_<level>(statement, optional_modifiers)
 
+An example of use might be the following:
+
+[bt_example boost_test_macro_overview..BOOST_TEST overview]
+
 The major features of this tool are:
 
 * a great flexibility for `statement` which may be almost anything: full expression composed by several operations are supported
   and handled,
-* an extended reporting capability in case of failure: not only `BOOST_TEST` reports the location of the failure and the `statement`, 
+* an extended reporting capability in case of failure: not only `BOOST_TEST` reports the location of the failure and a copy of `statement` itself, 
   but also the values of the operands that permits a rapid identification of the issues related to the failed assertion, 
 * the possibility to control better the behaviour or the reports of the checks, in particular:
 
-  * floating point comparison: the tolerance may be provided, either using 
-     `optional_modifiers` directly or /decorators/ (see [link boost_test.testing_tools.extended_comparison.floating_point here]
+  * floating point comparison: the tolerance may be provided, either using the `BOOST_TEST` 
+     directly with `optional_modifiers`, or with /decorators/ (see [link boost_test.testing_tools.extended_comparison.floating_point here]
      for more details),
-  * container/collection comparisons: different operations for comparison are provided out of the box,
+  * container/collection comparisons: different operations for comparison are provided out of the box for comparing collection of 
+    elements (default, per-element, lexicographic), with extended diagnostic on failures (covered in 
+    [link boost_test.testing_tools.extended_comparison.collections this] section),
   * string comparison: C-strings operands are automatically detected and the comparisons are performed as if `std::string` objects
     were used,
   * optional failure message,
-  * bitwise comparison
+  * bitwise comparison, providing extended diagnostic in case of failure
 
 [warning To get all the functionalities of `BOOST_TEST` family of assertions, a C++11 capable compiler is required, especially
  supporting the `auto` and `decltype` keywords and the variadic macros. The documentation focuses on these set of compilers. A 
  limited support is provided for C++03 compilers.]
 
-
-[h3 Examples]
-`BOOST_TEST` assertion uses operator overloading in order to provide an enhanced reporting capability, as
-shown on the example below:
+[#boost_test_statement_overloads][h3 Complex statements]
+`BOOST_TEST` provides an enhanced reporting capability: additional details of the failing operands and operations are provided in the log, 
+as shown on the example below:
 
 [bt_example boost_test_macro3..BOOST_TEST enhanced reporting]
 
-As it can be seen, additional details are provided in log. This is possible for almost all overloadable operators in C++:
+`BOOST_TEST` parses the `statement` and constructs an expression out of it. `statement` may be a complex expressions 
+containing almost any of the overloadable operators in C++:
   
 [table
   [[Class of operation][operators]]
@@ -49,7 +55,9 @@ As it can be seen, additional details are provided in log. This is possible for 
   [[arithmetic compositions][`+`, `-`, `*`, `/`, `%`]]
   [[bitwise compositions][`|`, `&`, `^`, `<<`, `>>`]]
   [[assignments][`=`, `+=`, `-=`, `*=`, `/=`, `%=`, `<<=`, `>>=`, `&=`, `^=`, `|=`]]
-]  
+]
+
+`statement` is evaluated and cast to `bool`, as if it would appear as argument to an `if` statement: this is the result of the assertion
 
 [h3 Uniform reporting]
 This tool is provided in three variants corresponding to the corresponding 
@@ -58,7 +66,7 @@ reported into the test log and output, as described in details in the section. T
 report depends on the current [link boost_test.utf_reference.rt_param_reference.log_level log level] and 
 [link boost_test.utf_reference.rt_param_reference.report_level report level].
 
-[h3 Limitations]
+[#boost_test_statement_limitations][h3 Limitations & workaround]
 There are a few constructions that are however unsupported, but adding an extra bracket usually solves that:
 
 * statements containing ternary conditions: those statement should be surrounded by parenthesis as they cannot be overloaded
