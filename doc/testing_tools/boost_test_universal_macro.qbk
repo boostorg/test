@@ -78,7 +78,7 @@ There are a few constructions that are however unsupported, but adding an extra 
     
   The full details are given in [link boost_test.testing_tools.internal_details this section].
 
-[bt_example boost_test_macro1..BOOST_TEST acceptable expressions]
+[bt_example boost_test_macro_workaround..BOOST_TEST limitation and workaround]
 
 
 [endsect] [/ boost_test_universal_macro]

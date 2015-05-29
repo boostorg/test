@@ -23,7 +23,7 @@ set(EXAMPLES_SRC
 # source files needing variadic macros
 set(EXAMPLES_VARIADIC_MACROS_SRC
     boost_test_macro_overview.cpp
-    boost_test_macro1.cpp
+    boost_test_macro_workaround.cpp
     boost_test_macro2.cpp
     boost_test_macro3.cpp
     boost_test_bitwise.cpp
