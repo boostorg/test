@@ -46,6 +46,16 @@ struct fpctraits<op::NE<Lhs,Rhs> > {
     static const bool cmp_direct = false;
 };
 
+template <typename Lhs, typename Rhs>
+struct fpctraits<op::LT<Lhs,Rhs> > {
+    static const bool cmp_direct = false;
+};
+
+template <typename Lhs, typename Rhs>
+struct fpctraits<op::GT<Lhs,Rhs> > {
+    static const bool cmp_direct = false;
+};
+
 //____________________________________________________________________________//
 
 // ************************************************************************** //
@@ -69,9 +79,9 @@ compare_fpv( Lhs const& lhs, Rhs const& rhs, OP* )
 
 //____________________________________________________________________________//
 
-template <typename FPT, typename Lhs, typename OP>
+template <typename FPT, typename OP>
 inline assertion_result
-compare_fpv_near_zero( Lhs const& fpv, OP* )
+compare_fpv_near_zero( FPT const& fpv, OP* )
 {
     fpc::small_with_tolerance<FPT> P( fpc_tolerance<FPT>() );
 
@@ -102,7 +112,7 @@ compare_fpv( Lhs const& lhs, Rhs const& rhs, op::NE<Lhs,Rhs>* )
 
 template <typename FPT, typename Lhs, typename Rhs>
 inline assertion_result
-compare_fpv_near_zero( Lhs const& fpv, op::NE<Lhs,Rhs>* )
+compare_fpv_near_zero( FPT const& fpv, op::NE<Lhs,Rhs>* )
 {
     fpc::small_with_tolerance<FPT> P( fpc_tolerance<FPT>() );
 
@@ -111,6 +121,39 @@ compare_fpv_near_zero( Lhs const& fpv, op::NE<Lhs,Rhs>* )
         ar.message() << "Absolute value is within tolerance [|" << fpv << "| < "<< fpc_tolerance<FPT>() << ']';
     return ar;
 }
+
+//____________________________________________________________________________//
+
+template <typename FPT, typename Lhs, typename Rhs>
+inline assertion_result
+compare_fpv( Lhs const& lhs, Rhs const& rhs, op::LT<Lhs,Rhs>* )
+{
+    return lhs >= rhs ? assertion_result( false ) : compare_fpv<FPT>( lhs, rhs, (op::NE<Lhs,Rhs>*)0 );
+}
+
+template <typename FPT, typename Lhs, typename Rhs>
+inline assertion_result
+compare_fpv_near_zero( FPT const& fpv, op::LT<Lhs,Rhs>* )
+{
+    return fpv >= 0 ? assertion_result( false ) : compare_fpv_near_zero( fpv, (op::NE<Lhs,Rhs>*)0 );
+}
+
+//____________________________________________________________________________//
+
+template <typename FPT, typename Lhs, typename Rhs>
+inline assertion_result
+compare_fpv( Lhs const& lhs, Rhs const& rhs, op::GT<Lhs,Rhs>* )
+{
+    return lhs <= rhs ? assertion_result( false ) : compare_fpv<FPT>( lhs, rhs, (op::NE<Lhs,Rhs>*)0 );
+}
+
+template <typename FPT, typename Lhs, typename Rhs>
+inline assertion_result
+compare_fpv_near_zero( FPT const& fpv, op::GT<Lhs,Rhs>* )
+{
+    return fpv <= 0 ? assertion_result( false ) : compare_fpv_near_zero( fpv, (op::NE<Lhs,Rhs>*)0 );
+}
+
 
 //____________________________________________________________________________//
 
@@ -135,10 +178,10 @@ public:                                                                 \
     eval( Lhs const& lhs, Rhs const& rhs)                               \
     {                                                                   \
         if( lhs == 0 )                                                  \
-            return compare_fpv_near_zero<Rhs>(rhs, (OP*)0);             \
+            return compare_fpv_near_zero(rhs, (OP*)0);                  \
                                                                         \
         if( rhs == 0 )                                                  \
-            return compare_fpv_near_zero<Lhs>(lhs, (OP*)0);             \
+            return compare_fpv_near_zero(lhs, (OP*)0);                  \
                                                                         \
         bool direct_res = eval_direct( lhs, rhs );                      \
                                                                         \
