@@ -277,7 +277,7 @@ you can just specialize [classref boost::math::fpc::tolerance_based] for your ty
 
 [h3:concept_tolerance_based Concept `ToleranceCompatible`]
 
-[h4 Refinment of]
+[h4 Refinement of]
 
 `MoveConstructible`, [@http://www.sgi.com/tech/stl/EqualityComparable.html `EqualityComparable`], [@http://www.sgi.com/tech/stl/LessThanComparable.html `LessThanComparable`]
 
