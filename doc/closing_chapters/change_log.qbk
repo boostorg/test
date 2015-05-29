@@ -94,7 +94,7 @@
 # [ticket 10318] Minor documentation fix
 # [ticket 10888] Assertion failures don't show up in the errors pane in VS 2010, VS 2012 or VS 2013 (duplicates)
 # [ticket 11054] Floating-point comparison of multiprecision values fails if expression template is on
-
+# [ticket 11347] `DS` identifier causes test failures in `doc/examples/dataset_example*.cpp`
 
 
 [endsect]
