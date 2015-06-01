@@ -5,13 +5,13 @@
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
-[section:collections Sequences and collections comparison]
+[section:collections Collections comparison]
 
-Instead of comparing one singular value against another, there is often the need to compare /sequences/ or /sets/ of values. 
-Most of the time, the test for the full sequences is achieves through loops, or by using the native available operators 
+Instead of comparing one singular value against another, there is often the need to compare /collections/ of values. 
+Most of the time, these tests involves either loops, or natively available operators 
 for which no additional diagnostic is provided.
 
-__BOOST_TEST__ automatically detects *containers*, and let the user specify the comparison method:
+__BOOST_TEST__ provides additional support for this type of comparison, and let the user specify the comparison method:
 
 * using the /native/ [footnote either defined by the container or by the user] operator, which is mentioned as the 
   [link boost_test_coll_default_comp /default behaviour/].
