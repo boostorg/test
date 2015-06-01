@@ -156,6 +156,9 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib-c11 run  : test_fp_multiprecision_close_fraction_new_api : boost_unit_test_framework  : :
               test_fp_multiprecision_close_fraction.cpp ]
 
+          # output streams
+          [ test-btl-doc-example-as-test run-fail : example50 ]
+
           # examples in datasets
           [ test-btl-doc-example-as-test run-fail : dataset_example59 ]
           [ test-btl-doc-example-as-test run      : dataset_example61 ]
