@@ -27,7 +27,6 @@ or the [link boost_test.utf_reference.testing_tool_ref reference].
 
 [include assertions_severity_levels.qbk]
 [include boost_test_universal_macro.qbk]
-[/[include boost_test_acceptable_statements.qbk]]
 [include boost_test_reported_information.qbk]
 
 [section:extended_comparison Extended comparisons support]
