@@ -94,8 +94,8 @@ namespace ds_detail {
 
 template<typename SampleType, typename StepType=SampleType>
 struct make_xrange {
-    static StepType    abs( StepType s, mpl::true_* )   { return s; }
-    static StepType    abs( StepType s, mpl::false_* )  { return std::abs(s); }
+    static StepType    abs( StepType s, boost::true_type* )   { return s; }
+    static StepType    abs( StepType s, boost::false_type* )  { return std::abs(s); }
 
     typedef xrange_t<SampleType, StepType> range_gen;
 
