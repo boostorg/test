@@ -95,6 +95,6 @@
 # [ticket 10888] Assertion failures don't show up in the errors pane in VS 2010, VS 2012 or VS 2013 (duplicates)
 # [ticket 11054] Floating-point comparison of multiprecision values fails if expression template is on
 # [ticket 11347] `DS` identifier causes test failures in `doc/examples/dataset_example*.cpp`
-# [ticket 11359] BOOST_CHECK_EQUAL_COLLECTIONS: can't control output operator (duplicates #9390)
+# [ticket 11359] `BOOST_CHECK_EQUAL_COLLECTIONS`: can't control output operator (duplicates #9390)
 
 [endsect]
