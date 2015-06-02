@@ -103,7 +103,8 @@ struct _3cases {
 
 BOOST_FIXTURE_TEST_CASE( test_simple_order, _3cases )
 {
-    std::vector<ut::test_unit_id> expected_order{ master->p_id, tc1->p_id, tc2->p_id, tc3->p_id };
+    ut::test_unit_id order[] = {master->p_id, tc1->p_id, tc2->p_id, tc3->p_id};
+    std::vector<ut::test_unit_id> expected_order(order, order+4);
 
     test_run( expected_order );
 }
@@ -114,8 +115,9 @@ BOOST_FIXTURE_TEST_CASE( test_simple_dep1, _3cases )
 {
     tc1->depends_on( tc2 );
 
-    std::vector<ut::test_unit_id> expected_order{ master->p_id, tc2->p_id, tc3->p_id, tc1->p_id };
-
+    ut::test_unit_id order[] = {master->p_id, tc2->p_id, tc3->p_id, tc1->p_id};
+    std::vector<ut::test_unit_id> expected_order(order, order+4);
+    
     test_run( expected_order );
 }
 
@@ -126,7 +128,8 @@ BOOST_FIXTURE_TEST_CASE( test_simple_dep2, _3cases )
     tc1->depends_on( tc2 );
     tc2->depends_on( tc3 );
 
-    std::vector<ut::test_unit_id> expected_order{ master->p_id, tc3->p_id, tc2->p_id, tc1->p_id };
+    ut::test_unit_id order[] = {master->p_id, tc3->p_id, tc2->p_id, tc1->p_id};
+    std::vector<ut::test_unit_id> expected_order(order, order+4);
 
     test_run( expected_order );
 }
@@ -201,9 +204,10 @@ struct _2suites_4_cases {
 
 BOOST_FIXTURE_TEST_CASE( test_suite_normal_order, _2suites_4_cases )
 {
-    std::vector<ut::test_unit_id> expected_order{ master->p_id, 
-                                                  s1->p_id, tc1->p_id, tc2->p_id, 
-                                                  s2->p_id, tc3->p_id, tc4->p_id };
+    ut::test_unit_id order[] = { master->p_id, 
+                                 s1->p_id, tc1->p_id, tc2->p_id, 
+                                 s2->p_id, tc3->p_id, tc4->p_id };
+    std::vector<ut::test_unit_id> expected_order(order, order+7);
 
     test_run( expected_order );
 }
@@ -215,9 +219,10 @@ BOOST_FIXTURE_TEST_CASE( test_suite_simple_dep, _2suites_4_cases )
     tc1->depends_on( tc2 );
     tc3->depends_on( tc4 );
 
-    std::vector<ut::test_unit_id> expected_order{ master->p_id, 
-                                                  s1->p_id, tc2->p_id, tc1->p_id, 
-                                                  s2->p_id, tc4->p_id, tc3->p_id };
+    ut::test_unit_id order[] = { master->p_id, 
+                                 s1->p_id, tc2->p_id, tc1->p_id, 
+                                 s2->p_id, tc4->p_id, tc3->p_id };
+    std::vector<ut::test_unit_id> expected_order(order, order+7);
 
     test_run( expected_order );
 }
@@ -228,10 +233,10 @@ BOOST_FIXTURE_TEST_CASE( test_suite_cross_dep1, _2suites_4_cases )
 {
     tc1->depends_on( tc3 );
 
-    std::vector<ut::test_unit_id> expected_order{ master->p_id, 
-                                                  s2->p_id, tc3->p_id, tc4->p_id,
-                                                  s1->p_id, tc1->p_id, tc2->p_id 
-    };
+    ut::test_unit_id order[] = { master->p_id, 
+                                 s2->p_id, tc3->p_id, tc4->p_id, 
+                                 s1->p_id, tc1->p_id, tc2->p_id };
+    std::vector<ut::test_unit_id> expected_order(order, order+7);
 
     test_run( expected_order );
 }
@@ -242,12 +247,12 @@ BOOST_FIXTURE_TEST_CASE( test_suite_cross_dep2, _2suites_4_cases )
 {
     tc2->depends_on( tc4 );
     tc1->depends_on( tc2 );
+    
+    ut::test_unit_id order[] = { master->p_id, 
+                                 s2->p_id, tc3->p_id, tc4->p_id,
+                                 s1->p_id, tc2->p_id, tc1->p_id};
 
-    std::vector<ut::test_unit_id> expected_order{ master->p_id, 
-                                                  s2->p_id, tc3->p_id, tc4->p_id,
-                                                  s1->p_id, tc2->p_id, tc1->p_id 
-    };
-
+    std::vector<ut::test_unit_id> expected_order(order, order+7);
     test_run( expected_order );
 }
 
@@ -257,11 +262,11 @@ BOOST_FIXTURE_TEST_CASE( test_suite_on_suite_dep, _2suites_4_cases )
 {
     s1->depends_on( s2 );
 
-    std::vector<ut::test_unit_id> expected_order{ master->p_id, 
-                                                  s2->p_id, tc3->p_id, tc4->p_id,
-                                                  s1->p_id, tc1->p_id, tc2->p_id 
-    };
+    ut::test_unit_id order[] = { master->p_id, 
+                                 s2->p_id, tc3->p_id, tc4->p_id,
+                                 s1->p_id, tc1->p_id, tc2->p_id };
 
+    std::vector<ut::test_unit_id> expected_order(order, order+7);
     test_run( expected_order );
 }
 
@@ -270,12 +275,12 @@ BOOST_FIXTURE_TEST_CASE( test_suite_on_suite_dep, _2suites_4_cases )
 BOOST_FIXTURE_TEST_CASE( test_suite_on_case_dep, _2suites_4_cases )
 {
     s1->depends_on( tc3 );
+    
+    ut::test_unit_id order[] = { master->p_id, 
+                                 s2->p_id, tc3->p_id, tc4->p_id,
+                                 s1->p_id, tc1->p_id, tc2->p_id };
 
-    std::vector<ut::test_unit_id> expected_order{ master->p_id, 
-                                                  s2->p_id, tc3->p_id, tc4->p_id,
-                                                  s1->p_id, tc1->p_id, tc2->p_id 
-    };
-
+    std::vector<ut::test_unit_id> expected_order(order, order+7);
     test_run( expected_order );
 }
 
@@ -284,12 +289,11 @@ BOOST_FIXTURE_TEST_CASE( test_suite_on_case_dep, _2suites_4_cases )
 BOOST_FIXTURE_TEST_CASE( test_case_on_suite_dep, _2suites_4_cases )
 {
     tc1->depends_on( s2 );
+    ut::test_unit_id order[] = { master->p_id, 
+                                 s2->p_id, tc3->p_id, tc4->p_id,
+                                 s1->p_id, tc1->p_id, tc2->p_id };
 
-    std::vector<ut::test_unit_id> expected_order{ master->p_id, 
-                                                  s2->p_id, tc3->p_id, tc4->p_id,
-                                                  s1->p_id, tc1->p_id, tc2->p_id 
-    };
-
+    std::vector<ut::test_unit_id> expected_order(order, order+7);
     test_run( expected_order );
 }
 
