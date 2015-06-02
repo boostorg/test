@@ -138,6 +138,7 @@ test-suite "unit_test_framework_test"
           [ test-btl-lib run : algorithms_test              : boost_unit_test_framework/<link>static ]
           [ test-btl-lib run : token_iterator_test          : boost_unit_test_framework ]
           [ test-btl-lib run : boost_check_equal_str        : boost_unit_test_framework ]
+          [ test-btl-lib-c11 run : boost_check_equal_str_cxx11 : boost_unit_test_framework : : boost_check_equal_str.cpp ]
           [ test-btl-lib run : test_tree_management_test    : boost_unit_test_framework ]
           [ test-btl-lib run : run_by_name_label_test       : boost_unit_test_framework/<link>static ]
           [ test-btl-lib run : test_assertion_construction  : boost_unit_test_framework/<link>static ]

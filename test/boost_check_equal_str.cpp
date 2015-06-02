@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_CASE( check_is_cstring_concept )
   BOOST_TEST((bp::is_cstring<char *>::value));
 }
 
-
+#ifndef BOOST_TEST_NO_VARIADIC
 BOOST_AUTO_TEST_CASE( check_string_compare )
 {
     char const* buf_ptr_cch     = "abc";
@@ -68,7 +68,5 @@ BOOST_AUTO_TEST_CASE( check_string_compare )
     BOOST_TEST(buf_str == buf_array_ch);
     BOOST_TEST(buf_str == buf_str);
 }
+#endif
 
-//____________________________________________________________________________//
-
-// EOF
