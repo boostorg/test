@@ -467,17 +467,24 @@ This parameter allows to easily redirect the test result report. See __param_log
 Provides parameters for testing output streams. See __output_test_stream_tool__ secton for details on these tests.
 
 This parameter serves no particular purpose within the framework itself. It can be used by test modules relying 
-on `output_test_stream` to implement testing logic. `output_test_stream` has two modes of operation: 
+on [classref boost::test_tools::output_test_stream] to implement testing logic. `output_test_stream` has two modes of operation: 
 
 * save the pattern file 
-* and match against stored pattern. 
+* and match against a previously stored pattern file. 
 
 You can use this parameter to switch between these modes, by passing the parameter value to the `output_test_stream` constructor.
+The value of the command line parameter is available from the code like this:
+
+``
+bool is_save_pattern_flag_set = boost::unit_test::runtime_config::save_pattern();
+``
       
 [h4 Acceptable values]
 
 * [*no] (default)
 * yes
+
+Equivalent to ['yes] when called without any argument.
 
 [h4 Environment variable]
 

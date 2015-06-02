@@ -44,6 +44,9 @@ doxygen doxygen_reference_generated_doc
       # execution monitor source files
       $(BOOST_ROOT)/libs/test/include/boost/test/execution_monitor.hpp
       
+      # output test stream
+      $(BOOST_ROOT)/libs/test/include/boost/test/tools/output_test_stream.hpp
+      
       # datasets
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/fwd.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/dataset.hpp
