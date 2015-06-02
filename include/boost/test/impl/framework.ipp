@@ -46,6 +46,7 @@
 #include <boost/bind.hpp>
 
 // STL
+#include <limits>
 #include <map>
 #include <set>
 #include <cstdlib>
@@ -139,7 +140,7 @@ assign_sibling_rank( test_unit_id tu_id, order_info_per_tu& tuoi )
 {
     test_unit& tu = framework::get( tu_id, TUT_ANY );
 
-    if( tu.p_sibling_rank == -1 )
+    if( tu.p_sibling_rank == (std::numeric_limits<counter_t>::max)() )
         throw framework::setup_error( "Dependency loop detected including the test unit " + tu.full_name() );
 
     if( tu.p_sibling_rank != 0 )
@@ -148,7 +149,7 @@ assign_sibling_rank( test_unit_id tu_id, order_info_per_tu& tuoi )
     order_info const& info = tuoi[tu_id];
 
     // indicate in progress
-    tu.p_sibling_rank.value = (counter_t)-1;
+    tu.p_sibling_rank.value = (std::numeric_limits<counter_t>::max)();
 
     counter_t new_rank = 1;
     BOOST_TEST_FOREACH( test_unit_id, sibling_id, info.dependant_siblings )
