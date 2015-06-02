@@ -159,8 +159,8 @@ BOOST_AUTO_TEST_CASE( test_result_reports )
     check( test_output, ts_2 );
 
     check( test_output, ts_3 );
-
-    ts_3->depends_on( tc1 );
+    ts_1->add( BOOST_TEST_CASE( bad_foo ) );
+    ts_3->depends_on( ts_1 );
 
     check( test_output, ts_main );
 

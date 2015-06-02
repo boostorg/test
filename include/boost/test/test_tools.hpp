@@ -14,12 +14,17 @@
 #ifndef BOOST_TEST_TOOLS_HPP_111812GER
 #define BOOST_TEST_TOOLS_HPP_111812GER
 
+#include <boost/config.hpp>
 #include <boost/preprocessor/config/config.hpp>
+
+#if !BOOST_PP_VARIADICS || ((__cplusplus >= 201103L) && defined(BOOST_NO_CXX11_VARIADIC_MACROS))
+#define BOOST_TEST_NO_VARIADIC
+#endif
 
 // Boost.Test
 //#define BOOST_TEST_NO_OLD_TOOLS
 
-#if !BOOST_PP_VARIADICS
+#if defined(BOOST_TEST_NO_VARIADIC)
 #  define BOOST_TEST_NO_NEW_TOOLS
 #endif
 
@@ -52,8 +57,5 @@
 #  include <boost/test/tools/detail/lexicographic_manip.hpp>
 #endif
 
-#if !BOOST_PP_VARIADICS || ((__cplusplus >= 201103L) && defined(BOOST_NO_CXX11_VARIADIC_MACROS))
-#define BOOST_TEST_NO_VARIADIC
-#endif
 
 #endif // BOOST_TEST_TOOLS_HPP_111812GER

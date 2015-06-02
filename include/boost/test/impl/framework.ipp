@@ -141,7 +141,7 @@ assign_sibling_rank( test_unit_id tu_id, order_info_per_tu& tuoi )
     test_unit& tu = framework::get( tu_id, TUT_ANY );
 
     if( tu.p_sibling_rank == (std::numeric_limits<counter_t>::max)() )
-        throw framework::setup_error( "Dependency loop detected including the test unit " + tu.full_name() );
+        throw framework::setup_error( "Cyclic dependency detected involving test unit \"" + tu.full_name() + "\"");
 
     if( tu.p_sibling_rank != 0 )
         return tu.p_sibling_rank;

@@ -14,6 +14,17 @@
 
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
+#include <boost/test/utils/is_cstring.hpp>
+
+BOOST_AUTO_TEST_CASE( check_is_cstring_concept )
+{
+  namespace bp = boost::unit_test;
+  BOOST_TEST((bp::is_cstring<char const*>::value));
+  BOOST_TEST((bp::is_cstring<char const []>::value));
+  BOOST_TEST((bp::is_cstring<char []>::value));
+  BOOST_TEST((bp::is_cstring<char *>::value));
+}
+
 
 BOOST_AUTO_TEST_CASE( check_string_compare )
 {

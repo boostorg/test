@@ -30,8 +30,10 @@ namespace test_tools {
 namespace assertion {
 namespace op {
 
+
+
 // ************************************************************************** //
-// **************            lexicographic_compare             ************** //
+// **************               string_compare                 ************** //
 // ************************************************************************** //
 
 #define DEFINE_CSTRING_COMPARISON( oper, name, rev )                \
