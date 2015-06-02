@@ -5,6 +5,7 @@
 #
 #  See http://www.boost.org/libs/test for the library home page.
 
+import ../../config/checks/config : requires ;
 
 project
     : requirements
@@ -94,9 +95,9 @@ rule test-btl-lib-mt ( test-rule : test-name : lib-name ? : pattern_file * : sou
           ] ;
 }
 
-rule test-btl-doc-example-as-test ( test-rule : test-name )
+rule test-btl-doc-example-as-test ( test-rule : test-name : extra_options ? )
 {
-    return [ test-btl-lib-c11 $(test-rule)  : doc_$(test-name) : : : ../doc/examples/$(test-name).cpp ] ;
+    return [ test-btl-lib-c11 $(test-rule)  : doc_$(test-name) : : : ../doc/examples/$(test-name).cpp : : $(extra_options) ] ;
 }
 
 test-suite "basics_test"
@@ -172,9 +173,9 @@ test-suite "unit_test_framework_test"
           [ test-btl-doc-example-as-test run      : boost_test_macro_workaround        ]
           [ test-btl-doc-example-as-test run-fail : boost_test_macro2                  ]
           [ test-btl-doc-example-as-test run-fail : boost_test_macro3                  ]
-          [ test-btl-doc-example-as-test run-fail : tolerance_01                       ]
-          [ test-btl-doc-example-as-test run-fail : tolerance_02                       ]
-          [ test-btl-doc-example-as-test run-fail : tolerance_03                       ]
+          [ test-btl-doc-example-as-test run-fail : tolerance_01 : [ requires cxx11_variadic_macros ] ]
+          [ test-btl-doc-example-as-test run-fail : tolerance_02 : [ requires cxx11_variadic_macros ] ]
+          [ test-btl-doc-example-as-test run-fail : tolerance_03 : [ requires cxx11_variadic_macros ] ]
           [ test-btl-doc-example-as-test run-fail : boost_test_message                 ]
           [ test-btl-doc-example-as-test run-fail : boost_test_string                  ]
           [ test-btl-doc-example-as-test run-fail : boost_test_bitwise                 ]
