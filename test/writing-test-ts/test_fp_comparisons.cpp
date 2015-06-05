@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2014.
+//  (C) Copyright Gennadiy Rozental 2001-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -34,43 +34,31 @@ bool not_func( bool argb ) { return !argb; }
 
 typedef boost::mpl::list<float,double,long double> test_types;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE( test_BOOST_CHECK_CLOSE, FPT, test_types )
+BOOST_AUTO_TEST_CASE_TEMPLATE( test_fp_comparizon_with_percent_tolerance, FPT, test_types )
 {
 #define CHECK_CLOSE( first, second, e )     \
     fp1     = static_cast<FPT>(first);      \
     fp2     = static_cast<FPT>(second);     \
     epsilon = static_cast<FPT>(e);          \
                                             \
-    BOOST_CHECK_CLOSE( fp1, fp2, epsilon ); \
+    BOOST_TEST( fp1 == fp2, epsilon% tt::tolerance() ) \
 /**/
-
-#ifdef BOOST_TEST_NO_OLD_TOOLS
 
 #define CHECK_NOT_CLOSE( first, second, e ) \
     fp1     = static_cast<FPT>(first);      \
     fp2     = static_cast<FPT>(second);     \
     epsilon = static_cast<FPT>(e);          \
                                             \
-    BOOST_TEST( fp1 != fp2, fpc::percent_tolerance( epsilon ) ); \
-
-#else
-
-#define CHECK_NOT_CLOSE( first, second, e ) \
-    fp1     = static_cast<FPT>(first);      \
-    fp2     = static_cast<FPT>(second);     \
-    epsilon = static_cast<FPT>(e);          \
-                                            \
-    BOOST_TEST( !check_is_close( fp1, fp2, ::fpc::percent_tolerance( epsilon ) ) ); \
+    BOOST_TEST( fp1 != fp2, epsilon% tt::tolerance() ) \
 /**/
-#endif
 
     FPT fp1, fp2, epsilon;
 
     CHECK_CLOSE( 1, 1, 0 );
 
-    CHECK_NOT_CLOSE( 0, 1e-20, 1e-5 );
-    CHECK_NOT_CLOSE( 0, 1e-30, 1e-5 );
-    CHECK_NOT_CLOSE( 0, -1e-10, 0.1 );
+    CHECK_CLOSE( 0, 1e-20, 1e-5 );
+    CHECK_CLOSE( 0, 1e-30, 1e-5 );
+    CHECK_CLOSE( 0, -1e-10, 0.1 );
     CHECK_NOT_CLOSE( 0.123456, 0.123457, 1e-4 );
 
     CHECK_CLOSE( 0.123456, 0.123457, 1e-3 );
@@ -80,7 +68,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( test_BOOST_CHECK_CLOSE, FPT, test_types )
     CHECK_CLOSE( 1.23456e28, 1.23457e28, 1e-3 );
 
     CHECK_CLOSE( 1.23456e-10, 1.23457e-10, 1e-3 );
-    CHECK_NOT_CLOSE( 1.111e-10, 1.112e-10, 0.08999 );
+    CHECK_NOT_CLOSE( 1.111e-10, 1.112e-10, 0.0899 );
     CHECK_CLOSE( 1.112e-10, 1.111e-10, 0.1 );
 
     CHECK_CLOSE( 1, 1.0001, 1.1e-2 );
@@ -94,44 +82,32 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( test_BOOST_CHECK_CLOSE, FPT, test_types )
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE_TEMPLATE( test_CHECK_CLOSE_FRACTION, FPT, test_types )
+BOOST_AUTO_TEST_CASE_TEMPLATE( test_fp_comparizon_with_fraction_tolerance, FPT, test_types )
 {
 #define CHECK_CLOSE( first, second, e )     \
     fp1     = static_cast<FPT>(first);      \
     fp2     = static_cast<FPT>(second);     \
     epsilon = static_cast<FPT>(e);          \
                                             \
-    BOOST_CHECK_CLOSE( fp1, fp2, epsilon ); \
+    BOOST_TEST( fp1 == fp2, tt::tolerance(epsilon) ); \
 /**/
-
-#ifdef BOOST_TEST_NO_OLD_TOOLS
 
 #define CHECK_NOT_CLOSE( first, second, e ) \
     fp1     = static_cast<FPT>(first);      \
     fp2     = static_cast<FPT>(second);     \
     epsilon = static_cast<FPT>(e);          \
                                             \
-    BOOST_TEST( fp1 != fp2, epsilon );      \
-
-#else
-
-#define CHECK_NOT_CLOSE( first, second, e ) \
-    fp1     = static_cast<FPT>(first);      \
-    fp2     = static_cast<FPT>(second);     \
-    epsilon = static_cast<FPT>(e);          \
-                                            \
-    BOOST_TEST( !check_is_close( fp1, fp2, epsilon ) ); \
+    BOOST_TEST( fp1 != fp2, tt::tolerance(epsilon) ); \
 /**/
-#endif
 
 
     FPT fp1, fp2, epsilon;
 
     CHECK_CLOSE( 1, 1, 0 );
 
-    CHECK_NOT_CLOSE( 0, 1e-20, 1e-5 );
-    CHECK_NOT_CLOSE( 0, 1e-30, 1e-5 );
-    CHECK_NOT_CLOSE( 0, -1e-10, 0.1 );
+    CHECK_CLOSE( 0, 1e-20, 1e-5 );
+    CHECK_CLOSE( 0, 1e-30, 1e-5 );
+    CHECK_CLOSE( 0, -1e-10, 0.1 );
     CHECK_NOT_CLOSE( 0.123456, 0.123457, 1e-6 );
 
     CHECK_CLOSE( 0.123456, 0.123457, 1e-3 );
@@ -141,7 +117,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( test_CHECK_CLOSE_FRACTION, FPT, test_types )
     CHECK_CLOSE( 1.23456e28, 1.23457e28, 1e-3 );
 
     CHECK_CLOSE( 1.23456e-10, 1.23457e-10, 1e-3 );
-    CHECK_NOT_CLOSE( 1.111e-10, 1.112e-10, 0.0008999 );
+    CHECK_NOT_CLOSE( 1.111e-10, 1.112e-10, 0.000899 );
     CHECK_CLOSE( 1.112e-10, 1.111e-10, 0.1 );
 
     CHECK_CLOSE( 1, 1.0001, 1.1e-2 );
@@ -162,9 +138,7 @@ BOOST_AUTO_TEST_CASE( test_type_mismatch )
     BOOST_CHECK_CLOSE( 2.1, 2.f, 6. );
 }
 
-
-#if !defined(BOOST_TEST_NO_VARIADIC)
-
+//____________________________________________________________________________//
 
 BOOST_AUTO_TEST_CASE( test_strong_weak, * expected_failures( 4 ) )
 {
@@ -198,8 +172,8 @@ BOOST_AUTO_TEST_CASE(test_strict_order_operations_lt,
     BOOST_TEST(x != y); // fails
     BOOST_TEST(x <= y);
     BOOST_TEST(y <= x);
-    BOOST_TEST(x < y);  // fails
-    BOOST_TEST(y < x);  // fails
+    BOOST_TEST(x < y);  // fails  y ~= x
+    BOOST_TEST(y < x);  // fails, y > x
 }
 
 BOOST_AUTO_TEST_CASE(test_strict_order_operations_lt_0, 
@@ -213,7 +187,7 @@ BOOST_AUTO_TEST_CASE(test_strict_order_operations_lt_0,
     BOOST_TEST(x <= y); 
     BOOST_TEST(y <= x);     
     BOOST_TEST(x < y);  // fails, too close to 0
-    BOOST_TEST(y < x);  // fails, too close to 0
+    BOOST_TEST(y < x);  // fails, y > x
 }
 
 BOOST_AUTO_TEST_CASE(test_strict_order_operations_le, 
@@ -268,8 +242,6 @@ BOOST_AUTO_TEST_CASE(test_strict_order_operations_gt_0,
     BOOST_TEST(y > x);  // fails, too close to 0
 }
 
-#endif
-
 //____________________________________________________________________________//
 
 BOOST_AUTO_TEST_CASE( test_CHECK_SMALL )
@@ -277,9 +249,7 @@ BOOST_AUTO_TEST_CASE( test_CHECK_SMALL )
     BOOST_CHECK_SMALL( 1e-6, 1e-5 );
     BOOST_CHECK_SMALL( -1e-6, 1e-5 );
 
-#ifndef BOOST_TEST_NO_NEW_TOOLS
     BOOST_TEST( 1e-6 != 0., 1e-7 );
-#endif
 }
 
 //____________________________________________________________________________//

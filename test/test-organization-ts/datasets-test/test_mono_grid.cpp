@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2014.
+//  (C) Copyright Gennadiy Rozental 2011-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -12,11 +12,6 @@
 // Boost.Test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/data/monomorphic/grid.hpp>
-
-
-#ifndef BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE
-
-
 #include <boost/test/data/monomorphic/singleton.hpp>
 #include <boost/test/data/monomorphic/array.hpp>
 #include <boost/test/data/monomorphic/collection.hpp>
@@ -25,6 +20,8 @@
 namespace data = boost::unit_test::data;
 
 #include "test_datasets.hpp"
+
+//____________________________________________________________________________//
 
 BOOST_AUTO_TEST_CASE( test_mono_grid_size_and_composition )
 {
@@ -37,7 +34,8 @@ BOOST_AUTO_TEST_CASE( test_mono_grid_size_and_composition )
   BOOST_TEST( (data::make( std::vector<int>(1) ) * data::make( std::list<int>(3) ) * data::make( 5 )).size() == 3 );
 }
 
-#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
+//____________________________________________________________________________//
+
 BOOST_AUTO_TEST_CASE( test_mono_grid_with_xrange )
 {
   auto ds1 = data::make(1);
@@ -46,9 +44,9 @@ BOOST_AUTO_TEST_CASE( test_mono_grid_with_xrange )
   BOOST_TEST( (ds1 * ds2).size() == 5 );
   BOOST_TEST( (ds1 * ds2).size() == 5 );
 }
-#endif
 
-#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && !defined(BOOST_NO_CXX11_LAMBDAS)
+//____________________________________________________________________________//
+
 BOOST_AUTO_TEST_CASE( test_mono_grid_cpp11_features )
 {
   int arr1[]         = {1,2};
@@ -101,13 +99,11 @@ BOOST_AUTO_TEST_CASE( test_mono_grid_cpp11_features )
   });
 
 }
-#endif
 
+//____________________________________________________________________________//
 
 BOOST_AUTO_TEST_CASE( test_mono_grid_number_of_copies )
 {
-  const int value_to_check = 0;
-
   copy_count::value() = 0;
   data::for_each_sample( data::make( copy_count() ) * data::make( copy_count() ), check_arg_type<std::tuple<copy_count,copy_count>>() );
   BOOST_TEST( copy_count::value() == 0 );
@@ -123,8 +119,8 @@ BOOST_AUTO_TEST_CASE( test_mono_grid_number_of_copies )
   BOOST_TEST( copy_count::value() == 0 );
 }
 
+//____________________________________________________________________________//
 
-#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
 BOOST_AUTO_TEST_CASE( test_mono_grid_number_of_copies_auto )
 {
   auto ds1        = data::make( copy_count() );
@@ -160,7 +156,6 @@ BOOST_AUTO_TEST_CASE( test_mono_grid_number_of_copies_auto )
   data::for_each_sample( ds1 * (ds1 * ds2), check_arg_type<std::tuple<copy_count,copy_count,copy_count>>() );
   BOOST_TEST( copy_count::value() == 0 );
 
-
   copy_count::value() = 0;
   int std_vector_constructor_count = 0;
   {
@@ -168,15 +163,14 @@ BOOST_AUTO_TEST_CASE( test_mono_grid_number_of_copies_auto )
     std_vector_constructor_count = copy_count::value()/2;
   }
 
-
-
   copy_count::value() = 0;
   auto ds3 = data::make( make_copy_count_collection() ) * data::make( make_copy_count_collection() );
   BOOST_TEST( ds3.size() == 9 );
   data::for_each_sample( ds3, check_arg_type<std::tuple<copy_count,copy_count>>() );
   BOOST_TEST( copy_count::value() == std_vector_constructor_count *2 *3);
 }
-#endif // !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
 
-#endif // BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE
+//____________________________________________________________________________//
+
+// EOF
 

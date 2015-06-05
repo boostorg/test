@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2014.
+//  (C) Copyright Gennadiy Rozental 2001-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -43,13 +43,8 @@ using utf::const_string;
 
 namespace mpl = boost::mpl;
 
-#if defined(BOOST_NO_STD_WSTRING)
-typedef mpl::list1<char const>                                              base_const_char_types;
-typedef mpl::list2<char,unsigned char>                                      mutable_char_types;
-#else
 typedef mpl::list2<char const,wchar_t const>                                base_const_char_types;
 typedef mpl::list3<char,unsigned char,wchar_t>                              mutable_char_types;
-#endif
 typedef mpl::transform<mutable_char_types,boost::add_const<mpl::_1> >::type const_char_types;
 typedef mpl::joint_view<const_char_types,mutable_char_types>                char_types;
 typedef mpl::list2<char,const char>                                         io_test_types;
@@ -155,7 +150,6 @@ BOOST_TEST_CASE_TEMPLATE_FUNCTION( constructors_std_string_test, CharT )
 
 void array_construction_test()
 {
-#if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x600))
     const_string bcs_array[] = { "str1", "str2" };
 
     BOOST_TEST( const_string::traits_type::compare( bcs_array[0].begin(), "str1", bcs_array[0].size() ) == 0 );
@@ -163,7 +157,6 @@ void array_construction_test()
 
     const_string bcs( "abc" );
     BOOST_TEST( const_string::traits_type::compare( bcs.begin(), "abc", bcs.size() ) == 0 );
-#endif
 }
 
 //____________________________________________________________________________//
@@ -451,11 +444,9 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
     utf::test_suite* test= BOOST_TEST_SUITE("basic_cstring test");
 
     test->add( BOOST_TEST_CASE_TEMPLATE( constructors_test, char_types ) );
-#if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x551))
     test->add( BOOST_TEST_CASE_TEMPLATE( constructors_std_string_test, base_const_char_types ) );
     test->add( BOOST_TEST_CASE_TEMPLATE( asignment_std_string_test, base_const_char_types ) );
     test->add( BOOST_TEST_CASE_TEMPLATE( comparison_std_string_test, base_const_char_types ) );
-#endif
     test->add( BOOST_TEST_CASE( array_construction_test ) );
     test->add( BOOST_TEST_CASE_TEMPLATE( data_access_test, char_types ) );
     test->add( BOOST_TEST_CASE_TEMPLATE( size_test, char_types ) );

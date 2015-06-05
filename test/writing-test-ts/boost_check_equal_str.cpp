@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2014.
+//  (C) Copyright Gennadiy Rozental 2001-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : basic_cstring unit test
+//  Description : unit test for string comparison specializations
 // *****************************************************************************
 
 #define BOOST_TEST_MAIN
@@ -25,7 +25,8 @@ BOOST_AUTO_TEST_CASE( check_is_cstring_concept )
   BOOST_TEST((bp::is_cstring<char *>::value));
 }
 
-#ifndef BOOST_TEST_NO_VARIADIC
+//____________________________________________________________________________//
+
 BOOST_AUTO_TEST_CASE( check_string_compare )
 {
     char const* buf_ptr_cch     = "abc";
@@ -68,5 +69,7 @@ BOOST_AUTO_TEST_CASE( check_string_compare )
     BOOST_TEST(buf_str == buf_array_ch);
     BOOST_TEST(buf_str == buf_str);
 }
-#endif
 
+//____________________________________________________________________________//
+
+// EOF

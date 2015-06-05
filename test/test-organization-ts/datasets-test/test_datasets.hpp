@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2014.
+//  (C) Copyright Gennadiy Rozental 2011-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -12,8 +12,8 @@
 //  Description : datasets test helpers
 // ***************************************************************************
 
-#ifndef BOOST_TEST_TEST_DATASETS_HPP_120511ER
-#define BOOST_TEST_TEST_DATASETS_HPP_120511ER
+#ifndef BOOST_TEST_TEST_DATASETS_HPP
+#define BOOST_TEST_TEST_DATASETS_HPP
 
 // Boost
 #include <boost/type_traits/is_same.hpp>
@@ -23,22 +23,20 @@
 #include <vector>
 #include <list>
 
+//____________________________________________________________________________//
+
 class copy_count {
 public:
     copy_count() {}
     copy_count( copy_count const& ) { value()++; }
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     copy_count( copy_count&& ) {}
     copy_count( copy_count const&& ) {}
-#endif
 //    ~copy_count() { std::cout << "~copy_count" << std::endl; }
 
     static int& value()         { static int s_value; return s_value; };
 
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     static copy_count make()    { return std::move( copy_count() ); }
     static copy_count const make_const() { return std::move( copy_count() ); }
-#endif
 };
 
 //____________________________________________________________________________//
@@ -53,8 +51,6 @@ struct check_arg_type {
 };
 
 //____________________________________________________________________________//
-
-#ifndef BOOST_NO_CXX11_HDR_TUPLE
 
 template<typename T1, typename T2>
 struct check_arg_type<std::tuple<T1,T2>> {
@@ -81,8 +77,6 @@ struct check_arg_type<std::tuple<T1,T2,T3>> {
 
 //____________________________________________________________________________//
 
-#endif // BOOST_NO_CXX11_HDR_TUPLE
-
 template<typename T>
 struct check_arg_type_like {
     template<typename S>
@@ -93,8 +87,6 @@ struct check_arg_type_like {
 };
 
 //____________________________________________________________________________//
-
-#ifndef BOOST_NO_CXX11_HDR_TUPLE
 
 template<typename T1, typename T2>
 struct check_arg_type_like<std::tuple<T1,T2>> {
@@ -120,9 +112,6 @@ struct check_arg_type_like<std::tuple<T1,T2,T3>> {
 };
 
 //____________________________________________________________________________//
-
-#endif // BOOST_NO_CXX11_HDR_TUPLE
-
 
 struct invocation_count {
     invocation_count() : m_value( 0 ) {}
@@ -161,8 +150,6 @@ struct print_sample {
 
 //____________________________________________________________________________//
 
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-
 inline std::vector<copy_count>
 make_copy_count_collection()
 {
@@ -179,6 +166,4 @@ make_copy_count_const_collection()
 
 //____________________________________________________________________________//
 
-#endif // BOOST_NO_CXX11_RVALUE_REFERENCES
-
-#endif // BOOST_TEST_TEST_DATASETS_HPP_120511ER
+#endif // BOOST_TEST_TEST_DATASETS_HPP

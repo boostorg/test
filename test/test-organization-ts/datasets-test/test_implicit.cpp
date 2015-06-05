@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2014.
+//  (C) Copyright Gennadiy Rozental 2011-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -11,7 +11,6 @@
 //
 //  Description : tests implicit interfaces
 // ***************************************************************************
-
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
@@ -47,11 +46,7 @@ BOOST_AUTO_TEST_CASE( test_implicit_for_each )
     std::vector<copy_count> samples1( 2 );
     copy_count::value() = 0; // we do not test the construction of the vector
     data::for_each_sample( samples1, check_arg_type<copy_count>() );
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     BOOST_TEST( copy_count::value() == 0 );
-#else
-    BOOST_TEST( copy_count::value() == static_cast<int>(samples1.size()) );
-#endif
 
     copy_count::value() = 0;
     copy_count samples2[] = { copy_count(), copy_count() };
@@ -63,32 +58,28 @@ BOOST_AUTO_TEST_CASE( test_implicit_for_each )
 
 BOOST_AUTO_TEST_CASE( test_implicit_join )
 {
-#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
     auto ds = data::make( 5 );
     BOOST_TEST( (1 + ds).size() == 2 );
     BOOST_TEST( (ds + 1).size() == 2 );
-#endif
 
-#ifndef BOOST_NO_CXX11_DECLTYPE
     BOOST_TEST( (1 + data::make( 5 )).size() == 2 );
     BOOST_TEST( (data::make( 5 ) + 1).size() == 2 );
-#endif
 }
 
 //____________________________________________________________________________//
 
-#ifndef BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE
 BOOST_AUTO_TEST_CASE( test_implicit_zip )
 {
-#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
     auto ds = data::make( 5 );
     BOOST_TEST( (1 ^ ds).size() == 1 );
     BOOST_TEST( (ds ^ 1).size() == 1 );
-#endif
 
     BOOST_TEST( (1 ^ data::make( 5 )).size() == 1 );
     BOOST_TEST( (data::make( 5 ) ^ 1).size() == 1 );
 }
-#endif
+
+//____________________________________________________________________________//
+
+// EOF
 
 

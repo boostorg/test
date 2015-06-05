@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2014.
+//  (C) Copyright Gennadiy Rozental 2001-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -13,7 +13,7 @@
 // *****************************************************************************
 
 // Boost.Test
-#define BOOST_TEST_MAIN
+#define BOOST_TEST_MODULE ifstream_line_iterator unit test
 #include <boost/test/unit_test.hpp>
 
 #include <boost/test/utils/iterator/ifstream_line_iterator.hpp>
@@ -68,7 +68,6 @@ BOOST_AUTO_TEST_CASE( test_custom_delimeter )
 
     BOOST_CHECK( it == eoi ); 
 }
-
 
 //____________________________________________________________________________//
 

@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2014.
+//  (C) Copyright Gennadiy Rozental 2011-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -16,6 +16,8 @@ namespace data=boost::unit_test::data;
 
 #include "test_datasets.hpp"
 
+//____________________________________________________________________________//
+
 BOOST_AUTO_TEST_CASE( test_array )
 {
     int arr1[] = {1,2,3};
@@ -26,13 +28,11 @@ BOOST_AUTO_TEST_CASE( test_array )
     int arr3[] = {7,11,13,17};
     data::for_each_sample( data::make( arr3 ), check_arg_type<int>() );
 
-#ifndef BOOST_NO_CXX11_LAMBDAS
     int c = 0;
     int* ptr3 = arr3;
     data::for_each_sample( data::make( arr3 ), [&c,ptr3](int i) {
         BOOST_TEST( i == ptr3[c++] );
     });
-#endif
 
     invocation_count ic;
 
@@ -59,6 +59,8 @@ BOOST_AUTO_TEST_CASE( test_array )
     BOOST_TEST( copy_count::value() == 0 );
 }
 
+//____________________________________________________________________________//
+
 BOOST_AUTO_TEST_CASE( test_array_make_type )
 {
     int arr1[] = {1,2,3};
@@ -79,3 +81,7 @@ BOOST_AUTO_TEST_CASE( test_array_make_type )
     
     BOOST_TEST( res2.size() == 2 );
 }
+
+//____________________________________________________________________________//
+
+// EOF

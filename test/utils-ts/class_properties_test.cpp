@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2003-2014.
+//  (C) Copyright Gennadiy Rozental 2003-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -134,12 +134,7 @@ BOOST_AUTO_TEST_CASE( test_readonly_property )
     BOOST_TEST( p_b->foo() == 1 );
 
     BOOST_TEST( (p_one ^ 3) == 2 ); // ^ has lower precedence than ==
-#ifndef BOOST_NO_CXX11_DECLTYPE
     BOOST_TEST( p_two / 2 == 1 ); // / has higher precedence than ==
-#else
-    BOOST_TEST( (p_two / 2) == 1 ); // / has higher precedence than ==
-    // but the result of operator/ is not defined in this case 
-#endif
 
     BOOST_TEST( !p_b_ptr );
 

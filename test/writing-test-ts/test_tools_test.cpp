@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2014.
+//  (C) Copyright Gennadiy Rozental 2001-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -451,7 +451,7 @@ compare_lists( std::list<int> const& l1, std::list<int> const& l2 )
 
     return true;
 }
-#ifndef BOOST_TEST_NO_OLD_TOOLS
+
 TEST_CASE( test_BOOST_CHECK_PREDICATE )
 {
     BOOST_CHECK_PREDICATE( is_even, (14) );
@@ -491,7 +491,7 @@ TEST_CASE( test_BOOST_REQUIRE_PREDICATE )
 }
 
 //____________________________________________________________________________//
-#endif
+
 TEST_CASE( test_BOOST_CHECK_EQUAL_COLLECTIONS )
 {
     ut::unit_test_log.set_threshold_level( ( ut::log_all_errors ) );
@@ -630,24 +630,12 @@ TEST_CASE( test_context_logging )
 
 //____________________________________________________________________________//
 
-#ifndef BOOST_TEST_NO_NEW_TOOLS
-
 class FooType {
 public:
     FooType&    operator*()     { return *this; }
     operator    bool() const    { return false; }
     int         operator&()     { return 10; }
 };
-
-#ifndef BOOST_NO_CXX11_DECLTYPE
-#define BOOST_TEST_FWD_1(P,M) BOOST_TEST(P)
-#define BOOST_TEST_FWD_2(P,M) BOOST_TEST(P,M)
-#define BOOST_TEST_FWD_3(P,A,M) BOOST_TEST(P,A)
-#else
-#define BOOST_TEST_FWD_1(P,M) BOOST_ERROR( M );
-#define BOOST_TEST_FWD_2(P,M) BOOST_CHECK_MESSAGE( P, M );
-#define BOOST_TEST_FWD_3(P,A,M) BOOST_ERROR( M )
-#endif
 
 TEST_CASE( test_BOOST_TEST_basic_arithmetic_op )
 {
@@ -669,13 +657,13 @@ TEST_CASE( test_BOOST_TEST_basic_arithmetic_op )
     BOOST_TEST( i >= 5 );
 
     int j = 2;
-    BOOST_TEST_FWD_1( i+j >= 5, "check i+j >= 5 has failed [1 + 2 < 5]" );
-    BOOST_TEST_FWD_1( j-i == 2, "check j-i == 2 has failed [2 - 1 != 2]" );
+    BOOST_TEST( i+j >= 5 );
+    BOOST_TEST( j-i == 2 );
 
     int* p = &i;
     BOOST_TEST( *p == 2 );
 
-    BOOST_TEST_FWD_1( j-*p == 0, "check j-*p == 0 has failed [2 - 1 != 0]" );
+    BOOST_TEST( j-*p == 0 );
 
     BOOST_TEST(( i > 5, true ));
 
@@ -688,8 +676,8 @@ TEST_CASE( test_BOOST_TEST_basic_arithmetic_op )
     BOOST_TEST( &F > 100 );
     BOOST_TEST( &*F > 100 );
 
-    BOOST_TEST_FWD_1( (i == 1) & (j == 1), "check (i == 1) & (j == 1) has failed [true & false]" );
-    BOOST_TEST_FWD_1( (i == 2) | (j == 1), "check (i == 2) | (j == 1) has failed [false | false]" );
+    BOOST_TEST( (i == 1) & (j == 1) );
+    BOOST_TEST( (i == 2) | (j == 1) );
 
     BOOST_TEST(( i == 1 && j == 1 ));
     BOOST_TEST(( i == 2 || j == 1 ));
@@ -704,7 +692,7 @@ TEST_CASE( test_BOOST_TEST_basic_arithmetic_op )
     else
         BOOST_TEST( true );
 
-    BOOST_TEST_FWD_2( i+j==15, "This message reported instead including " << i << " and " << j );
+    BOOST_TEST( i+j==15, "This message reported instead including " << i << " and " << j );
 
     // Does not work
     // BOOST_TEST( i == 1 && j == 1 );
@@ -728,13 +716,13 @@ TEST_CASE( test_BOOST_TEST_collection_comp )
     l.push_back( 3 );
     l.push_back( 2 );
 
-    BOOST_TEST_FWD_1( v == l, "check v == l has failed. \nMismatch at position 1: 2 != 3\nMismatch at position 2: 3 != 2" );
-    BOOST_TEST_FWD_1( v != v2, "check v == v2 has failed. \nAll elements of both collections are the same" );
-    BOOST_TEST_FWD_1( v < l,  "check v < l has failed. \nMismatch at position 2: 3 >= 2" );
-    BOOST_TEST_FWD_1( v > l,  "check v > l has failed. \nMismatch at position 1: 2 <= 3" );
+    BOOST_TEST( v == l );
+    BOOST_TEST( v != v2 );
+    BOOST_TEST( v < l );
+    BOOST_TEST( v > l );
 
-    BOOST_TEST_FWD_1( v <= l, "check v <= l has failed. \nMismatch at position 2: 3 > 2" );
-    BOOST_TEST_FWD_1( v >= l, "check v <= l has failed. \nMismatch at position 1: 2 < 3" );
+    BOOST_TEST( v <= l );
+    BOOST_TEST( v >= l );
 }
 
 //____________________________________________________________________________//
@@ -764,40 +752,15 @@ TEST_CASE( test_BOOST_TEST_fpv_comp )
     BOOST_TEST( tt::fpc_tolerance<float>() == 0 );
 
     BOOST_TEST( d1 > d2 );
-    BOOST_TEST_FWD_3( d1+1./1e20 > d2,  1e-5% tt::tolerance(), "check d1+1./1e20 > d2 has failed [1e-05 + 1e-20 <= 1e-05]. Relative difference exceeds tolerance [0.000909091 > 1e-07]" );
+    BOOST_TEST( d1+1./1e20 > d2,  1e-5% tt::tolerance() );
     BOOST_TEST( tt::fpc_tolerance<double>() == 0 );
     BOOST_TEST( d2 <= d1, tt::tolerance( tt::fpc::percent_tolerance( 1e-5 ) ) );
     BOOST_TEST( tt::fpc_tolerance<double>() == 0 );
 
-    BOOST_TEST_FWD_3( d1-1e-5 == 0., tt::tolerance( 1e-7 ), "check d1-1e-5 == 0. has failed [1e-05 - 1e-05 != 0]. Absolute value exceeds tolerance [|1e-06| > 1e-07]" );
-    BOOST_TEST_FWD_3( d1-1e-5 != 0., tt::tolerance( 1e-4 ), "check d1-1e-5 != 0. has failed [1e-05 - 1e-05 == 0]. Absolute value is within tolerance [|1e-06| < 0.0001]" );
-    BOOST_TEST_FWD_3( 0. != 1e-5-d1, tt::tolerance( 1e-4 ), "check 0. != 1e-5-d1 has failed [0 == -1e-06]. Absolute value is within tolerance [|-1e-06| < 0.0001]" );
-    BOOST_TEST_FWD_3( d2-1e-5 < 0., tt::tolerance( 1e-6 ), "check d2-1e-5 < 0. has failed [1e-05 - 1e-05 >= 0]. Absolute value exceeds tolerance [|1.01e-06| > 1e-06]" );
-}
-
-//____________________________________________________________________________//
-
-BOOST_AUTO_TEST_CASE( test_BOOST_TEST_fpv_comp_using_decorator,
-* ut::tolerance(1e-3))
-{
-    BOOST_TEST( tt::fpc_tolerance<double>() == 1e-3 );
-
-    double d1 = 1.1e-5;
-    double d2 = 1.101e-5;
-    BOOST_TEST( d1 == d2 );
-    BOOST_TEST( d1 > d2 );
-}
-
-//____________________________________________________________________________//
-
-BOOST_AUTO_TEST_CASE( test_BOOST_TEST_fpv_comp_using_decorator_2,
-* ut::tolerance( tt::fpc::percent_tolerance( 1. ) ))
-{
-    BOOST_TEST( tt::fpc_tolerance<double>() == 1e-2 );
-
-    double d1 = 1.1e-5;
-    double d2 = 1.101e-5;
-    BOOST_TEST( d1 > d2 );
+    BOOST_TEST( d1-1e-5 == 0., tt::tolerance( 1e-7 ) );
+    BOOST_TEST( d1-1e-5 != 0., tt::tolerance( 1e-4 ) );
+    BOOST_TEST( 0. != 1e-5-d1, tt::tolerance( 1e-4 ) );
+    BOOST_TEST( d2-1e-5 < 0., tt::tolerance( 1e-6 ) );
 }
 
 //____________________________________________________________________________//
@@ -827,14 +790,31 @@ TEST_CASE( test_BOOST_TEST_cstring_comp )
 
 //____________________________________________________________________________//
 
+TEST_CASE( string_comparison_per_element )
+{
+    using namespace boost::test_tools;
+
+    std::string s1 = "asdfhjk";
+    std::string s2 = "asdfgjk";
+
+    BOOST_TEST( s1 == s2, tt::per_element() );
+
+    std::string s3 = "hello world";
+    std::string s4 = "helko worlt";
+
+    BOOST_TEST( s3 == s4, tt::per_element() );
+}
+
+//____________________________________________________________________________//
+
 TEST_CASE( test_BOOST_TEST_bitwise )
 {
     int a = 0xAB;
     int b = 0x88;
     short c = 0x8A;
     // decltype is needed for this to work. Not the case for eg. MSVC 2008.
-    BOOST_TEST_FWD_3( a == b, tt::bitwise(),  "check a == b has failed [171 != 136]. Bitwise comparison failed\nMismatch at position 0\nMismatch at position 1\nMismatch at position 5" );
-    BOOST_TEST_FWD_3( c == b, tt::bitwise(), "check c == b has failed [138 != 136]. Bitwise comparison failed\nMismatch at position 1\nOperands bit sizes mismatch: 16 != 32" );
+    BOOST_TEST( a == b, tt::bitwise() );
+    BOOST_TEST( c == b, tt::bitwise() );
 }
 
 //____________________________________________________________________________//
@@ -850,9 +830,7 @@ struct copy_counter : boost::noncopyable {
 
     copy_counter() {}
     copy_counter( copy_counter const& ) { s_value++; }
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     copy_counter( copy_counter&& ) {}
-#endif
 };
 
 int copy_counter::s_value = 0;
@@ -868,14 +846,9 @@ BOOST_AUTO_TEST_CASE( test_argument_handling )
     BOOST_TEST( 3 == goo() );
     BOOST_TEST( goo() != 5 );
     BOOST_TEST( copy_counter() == copy_counter() );
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     BOOST_TEST( copy_counter::s_value == 0 );
-#endif
 }
 
 //____________________________________________________________________________//
-
-
-#endif
 
 // EOF

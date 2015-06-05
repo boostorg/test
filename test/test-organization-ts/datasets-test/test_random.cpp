@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2014.
+//  (C) Copyright Gennadiy Rozental 2011-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -12,9 +12,6 @@
 // Boost.Test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/data/monomorphic/generators/random.hpp>
-
-#ifndef BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE
-
 #include <boost/test/data/monomorphic/zip.hpp>
 #include <boost/test/data/monomorphic/array.hpp>
 #include <boost/test/data/monomorphic/grid.hpp>
@@ -38,17 +35,13 @@ BOOST_AUTO_TEST_CASE( test_default )
     data::for_each_sample( ds, ic, 10 );
     BOOST_TEST( ic.m_value == 10 );
 
-#ifndef BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE
     ic.m_value = 0;
     int arr[] = {1,2,3,4,5};
     data::for_each_sample( ds^arr, ic );
     BOOST_TEST( ic.m_value == 5 );
-#endif
 
-#ifndef BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE
     BOOST_CHECK_THROW( ds * arr, std::logic_error );
     BOOST_CHECK_THROW( arr * ds, std::logic_error );
-#endif
 }
 
 //____________________________________________________________________________//
@@ -133,6 +126,7 @@ BOOST_AUTO_TEST_CASE( test_parameterized_init )
                                 std::minstd_rand>::value ));
 }
 
-#endif // BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE
+//____________________________________________________________________________//
 
+// EOF
 

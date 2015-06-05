@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2014.
+//  (C) Copyright Gennadiy Rozental 2011-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -19,6 +19,8 @@ namespace data=boost::unit_test::data;
 
 #include "test_datasets.hpp"
 
+//____________________________________________________________________________//
+
 BOOST_AUTO_TEST_CASE( test_mono_join )
 {
     BOOST_TEST( (data::make( 1 ) + data::make( 5 )).size() == 2 );
@@ -32,7 +34,6 @@ BOOST_AUTO_TEST_CASE( test_mono_join )
 
     BOOST_TEST( (data::make( std::vector<int>(2) ) + data::make( 1 ) + data::make( arr2 ) + data::make( 17 )).size() == 6 );
 
-#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
     int expected[] = {1,2,5,7,19,37};
     int* exp = expected;
     int c = 0;
@@ -44,12 +45,10 @@ BOOST_AUTO_TEST_CASE( test_mono_join )
     data::for_each_sample( samples1, ic );
     BOOST_TEST( ic.m_value == 6 );
 
-#ifndef BOOST_NO_CXX11_LAMBDAS
     c = 0;
     data::for_each_sample( samples1, [&c,exp](int i) {
         BOOST_TEST( i == exp[c++] );
     });
-#endif
 
     auto samples2 = data::make( std::vector<int>(arr1,arr1+2) ) + (data::make( 5 ) + (data::make( arr2 ) + data::make( 37 )));
 
@@ -57,12 +56,10 @@ BOOST_AUTO_TEST_CASE( test_mono_join )
     data::for_each_sample( samples2, ic );
     BOOST_TEST( ic.m_value == 6 );
 
-#ifndef BOOST_NO_CXX11_LAMBDAS
     c = 0;
     data::for_each_sample( samples2, [&c,exp](int i) {
         BOOST_TEST( i == exp[c++] );
     });
-#endif
 
     auto samples3 = (data::make( std::vector<int>(arr1,arr1+2) ) + data::make( 5 )) + (data::make( arr2 ) + data::make( 37 ));
 
@@ -70,39 +67,27 @@ BOOST_AUTO_TEST_CASE( test_mono_join )
     data::for_each_sample( samples3, ic );
     BOOST_TEST( ic.m_value == 6 );
 
-#ifndef BOOST_NO_CXX11_LAMBDAS
     c = 0;
     data::for_each_sample( samples3, [&c,exp](int i) {
         BOOST_TEST( i == exp[c++] );
     });
-#endif
-#endif
 
     copy_count::value() = 0;
     data::for_each_sample( data::make( copy_count() ) + data::make( copy_count() ), check_arg_type<copy_count>() );
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     BOOST_TEST( copy_count::value() == 0 );
-#endif
 
     copy_count::value() = 0;
     data::for_each_sample( data::make( copy_count() ) + data::make( copy_count() ) + data::make( copy_count() ), check_arg_type<copy_count>() );
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     BOOST_TEST( copy_count::value() == 0 );
-#endif
 
     copy_count::value() = 0;
     data::for_each_sample( data::make( copy_count() ) + (data::make( copy_count() ) + data::make( copy_count() )), check_arg_type<copy_count>() );
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     BOOST_TEST( copy_count::value() == 0 );
-#endif
     copy_count::value() = 0;
     data::for_each_sample( (data::make( copy_count() ) + data::make( copy_count() )) + 
                            (data::make( copy_count() ) + data::make( copy_count() )), check_arg_type<copy_count>() );
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     BOOST_TEST( copy_count::value() == 0 );
-#endif
 
-#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
     auto ds1        = data::make( copy_count() );
     auto const ds2  = data::make( copy_count() );
 
@@ -151,6 +136,9 @@ BOOST_AUTO_TEST_CASE( test_mono_join )
     BOOST_TEST( ds3.size() == 6 );
     data::for_each_sample( ds3, check_arg_type<copy_count>() );
     BOOST_TEST( copy_count::value() == std_vector_constructor_count * 2 * 3 );
-#endif
 }
+
+//____________________________________________________________________________//
+
+// EOF
 

@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2014.
+//  (C) Copyright Gennadiy Rozental 2011-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -18,7 +18,8 @@
 #include <boost/test/data/monomorphic/collection.hpp>
 
 #include <boost/test/unit_test.hpp>
-namespace data=boost::unit_test::data;
+namespace utf=boost::unit_test;
+namespace data=utf::data;
 
 #include "test_datasets.hpp"
 #include <vector>
@@ -26,33 +27,31 @@ namespace data=boost::unit_test::data;
 
 //____________________________________________________________________________//
 
-
-#ifndef BOOST_NO_CXX11_DECLTYPE
-
 template <typename>
 struct forwarded_to_collection : std::false_type {};
 
 template <typename T>
 struct forwarded_to_collection< data::monomorphic::collection<T> > : std::true_type {};
 
-
 BOOST_AUTO_TEST_CASE( test_forwarded_to_collection)
 {
   {
     std::vector<int> samples1;
-    BOOST_CHECK_MESSAGE(boost::unit_test::is_forward_iterable<decltype(samples1)>::value, "forward iterable");
-    BOOST_CHECK_MESSAGE((forwarded_to_collection<decltype(data::make( samples1 ))>::value), 
-                         "not properly forwarded to a collection");
+    BOOST_TEST(boost::unit_test::is_forward_iterable<decltype(samples1)>::value, "forward iterable");
+    BOOST_TEST((forwarded_to_collection<decltype(data::make( samples1 ))>::value), 
+               "not properly forwarded to a collection");
   }
   {
     int samples1(0);
-    BOOST_CHECK_MESSAGE(!boost::unit_test::is_forward_iterable<decltype(samples1)>::value, "forward iterable");
-    BOOST_CHECK_MESSAGE(!(forwarded_to_collection<decltype(data::make( samples1 ))>::value), 
-                         "not properly forwarded to a collection");
+    utf::ut_detail::ignore_unused_variable_warning( samples1 );
+
+    BOOST_TEST(!boost::unit_test::is_forward_iterable<decltype(samples1)>::value, "forward iterable");
+    BOOST_TEST(!(forwarded_to_collection<decltype(data::make( samples1 ))>::value), 
+               "not properly forwarded to a collection");
   }
 }
-#endif
 
+//____________________________________________________________________________//
 
 BOOST_AUTO_TEST_CASE( test_collection_sizes )
 {
@@ -79,8 +78,8 @@ BOOST_AUTO_TEST_CASE( test_collection_sizes )
     BOOST_TEST( ic.m_value == 1 );
 }
 
+//____________________________________________________________________________//
 
-#if !defined(BOOST_NO_CXX11_LAMBDAS) && !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
 BOOST_AUTO_TEST_CASE( test_collection )
 {
     std::vector<int> samples1;
@@ -103,18 +102,13 @@ BOOST_AUTO_TEST_CASE( test_collection )
         BOOST_TEST( str == *it++ );
     });
 }
-#endif
 
+//____________________________________________________________________________//
 
 BOOST_AUTO_TEST_CASE( test_collection_copies )
 {
-
     // number of copies due to the dataset make
-#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
     int exp_copy_count = 0;
-#else
-    int exp_copy_count = 1;
-#endif
 
     // number of copies due to the vector constructor
     copy_count::value() = 0;
@@ -147,7 +141,6 @@ BOOST_AUTO_TEST_CASE( test_collection_copies )
     data::for_each_sample( data::make( samples4 ), check_arg_type<copy_count>() );
     BOOST_TEST( copy_count::value() == (exp_copy_count + std_vector_constructor_count) * 2);
 
-#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
     copy_count::value() = 0;
     auto ds1 = data::make( make_copy_count_collection() );
     BOOST_TEST( ds1.size() == 3 );
@@ -159,6 +152,8 @@ BOOST_AUTO_TEST_CASE( test_collection_copies )
     BOOST_TEST( ds2.size() == 3 );
     data::for_each_sample( ds2, check_arg_type<copy_count>() );
     BOOST_TEST( copy_count::value() == (exp_copy_count + std_list_constructor_count + 1) * 3 ); // no rvalue constructor for the dataset
-#endif
 }
 
+//____________________________________________________________________________//
+
+// EOF

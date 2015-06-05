@@ -20,8 +20,6 @@ namespace ut = boost::unit_test;
 
 BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE(std::vector<int>)
 
-#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && !defined(BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX)
-
 #define VALIDATE_OP( op )                           \
 {                                                   \
     BOOST_TEST_INFO( "validating operator " #op );  \
@@ -141,11 +139,4 @@ BOOST_AUTO_TEST_CASE( test_lexicographic_ge )
 
 //____________________________________________________________________________//
 
-#else /* auto support */
-
-// to avoid having an error for test tree empty
-BOOST_AUTO_TEST_CASE( dummy )
-{}
-
-#endif /* auto support */
 // EOF

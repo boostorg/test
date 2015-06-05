@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2014.
+//  (C) Copyright Gennadiy Rozental 2001-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -13,7 +13,7 @@
 // *****************************************************************************
 
 // Boost.Test
-#define BOOST_TEST_MAIN
+#define BOOST_TEST_MODULE string_token_iterator unit test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/utils/iterator/token_iterator.hpp>
 
@@ -127,13 +127,11 @@ BOOST_AUTO_TEST_CASE( test_range_token_iterator )
     char const* pattern = "a bc , cd";
     std::copy( pattern, pattern+9, std::back_inserter( l ) );
 
-#if !defined( __GNUC__ ) ||  ( __GNUC__ == 3 && __GNUC_MINOR__ != 2 ) || ( __GNUC__ > 3 )
     my_token_iterator tit( l.begin(), l.end() );
     char const* res[] = { "a", "bc", ",", "cd" };
 
     my_token_iterator end;
     BOOST_CHECK_EQUAL_COLLECTIONS( tit, end, res, res + sizeof(res)/sizeof(char const*) );
-#endif
 }
 
 //____________________________________________________________________________//
@@ -159,15 +157,13 @@ BOOST_AUTO_TEST_CASE( test_make_range_token_iterator )
 {
     char const* str = "Abc22sdf sd2fg ";
 
-#if !BOOST_WORKAROUND( BOOST_MSVC, <= 1300 ) && !BOOST_WORKAROUND( __BORLANDC__, <= 0x550 )
     foo( boost::make_transform_iterator( str, loo ),
          boost::make_transform_iterator( str+15, loo ) );
-#endif
 }
 
 //____________________________________________________________________________//
 
-#if 0
+#if DEBUG_ONLY
 
 BOOST_AUTO_TEST_CASE( test_istream_token_iterator )
 {

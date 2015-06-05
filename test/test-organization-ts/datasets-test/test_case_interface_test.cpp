@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2014.
+//  (C) Copyright Gennadiy Rozental 2011-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -15,14 +15,11 @@
 // Boost.Test
 #include <boost/test/unit_test.hpp>
 
-#if BOOST_PP_VARIADICS
-
 #include <boost/test/data/test_case.hpp>
 #include <boost/test/data/monomorphic.hpp>
 namespace data=boost::unit_test::data;
 
 #include "test_datasets.hpp"
-
 
 //____________________________________________________________________________//
 
@@ -46,7 +43,6 @@ BOOST_DATA_TEST_CASE( test_case_interface_02, samples2, str )
 
 //____________________________________________________________________________//
 
-
 int samples3[] = {7,9};
 int index3 = 0;
 
@@ -62,7 +58,6 @@ BOOST_DATA_TEST_CASE( test_case_interface_03, data::make(samples1)+samples3, val
 
 //____________________________________________________________________________//
 
-#ifndef BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE
 int index4 = 0;
 
 BOOST_DATA_TEST_CASE( test_case_interface_04, data::make(samples2)^samples3, str, intval )
@@ -72,11 +67,8 @@ BOOST_DATA_TEST_CASE( test_case_interface_04, data::make(samples2)^samples3, str
 
     ++index4;
 }
-#endif
 
 //____________________________________________________________________________//
-
-#ifndef BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE
 
 int index5 = 0;
 
@@ -101,8 +93,6 @@ BOOST_DATA_TEST_CASE( test_case_interface_06, data::make(samples1) * samples2 * 
     ++index6;
 }
 
-#endif
-
 //____________________________________________________________________________//
 
-#endif // BOOST_PP_VARIADICS
+// EOF

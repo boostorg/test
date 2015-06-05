@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2014.
+//  (C) Copyright Gennadiy Rozental 2001-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -9,11 +9,11 @@
 //
 //  Version     : $Revision$
 //
-//  Description : basic_cstring unit test
+//  Description : fixed_mapping unit test
 // *****************************************************************************
 
 // Boost.Test
-#define BOOST_TEST_MAIN
+#define BOOST_TEST_MODULE class fixed_mapping unit test
 #include <boost/test/unit_test.hpp>
 
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
