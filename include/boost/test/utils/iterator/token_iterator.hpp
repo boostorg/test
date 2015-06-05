@@ -12,8 +12,8 @@
 //  Description : token iterator for string and range tokenization
 // ***************************************************************************
 
-#ifndef BOOST_TOKEN_ITERATOR_HPP_071894GER
-#define BOOST_TOKEN_ITERATOR_HPP_071894GER
+#ifndef BOOST_TEST_UTILS_TOKEN_ITERATOR_HPP
+#define BOOST_TEST_UTILS_TOKEN_ITERATOR_HPP
 
 // Boost
 #include <boost/config.hpp>
@@ -414,5 +414,5 @@ make_range_token_iterator( Iter begin, Iter end, Modifier const& m )
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_TOKEN_ITERATOR_HPP_071894GER
+#endif // BOOST_TEST_UTILS_TOKEN_ITERATOR_HPP
 

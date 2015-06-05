@@ -9,8 +9,8 @@
 //! Input iterator facade
 // ***************************************************************************
 
-#ifndef BOOST_INPUT_ITERATOR_FACADE_HPP_071894GER
-#define BOOST_INPUT_ITERATOR_FACADE_HPP_071894GER
+#ifndef BOOST_TEST_UTILS_INPUT_ITERATOR_FACADE_HPP
+#define BOOST_TEST_UTILS_INPUT_ITERATOR_FACADE_HPP
 
 // Boost
 #include <boost/iterator/iterator_facade.hpp>
@@ -102,5 +102,5 @@ private:
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_INPUT_ITERATOR_FACADE_HPP_071894GER
+#endif // BOOST_TEST_UTILS_INPUT_ITERATOR_FACADE_HPP
 

@@ -12,8 +12,8 @@
 //  Description : generic typed_argument_factory implementation
 // ***************************************************************************
 
-#ifndef BOOST_RT_CLA_ARGUMENT_FACTORY_HPP_062604GER
-#define BOOST_RT_CLA_ARGUMENT_FACTORY_HPP_062604GER
+#ifndef BOOST_TEST_UTILS_RUNTIME_CLA_ARGUMENT_FACTORY_HPP
+#define BOOST_TEST_UTILS_RUNTIME_CLA_ARGUMENT_FACTORY_HPP
 
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
@@ -39,7 +39,7 @@
 
 namespace boost {
 
-namespace BOOST_RT_PARAM_NAMESPACE {
+namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
 
 namespace cla {
 
@@ -70,7 +70,7 @@ struct typed_argument_factory : public argument_factory {
     typed_argument_factory()
     : m_value_interpreter( rt_cla_detail::default_value_interpreter() )
     {}
-    BOOST_RT_PARAM_UNNEEDED_VIRTUAL ~typed_argument_factory() {}
+    BOOST_TEST_UTILS_RUNTIME_PARAM_UNNEEDED_VIRTUAL ~typed_argument_factory() {}
 
     // properties modification
     template<typename Modifier>
@@ -80,24 +80,24 @@ struct typed_argument_factory : public argument_factory {
         optionally_assign( m_value_interpreter, m, interpreter );
 
         if( m.has( default_value ) ) {
-            BOOST_RT_PARAM_VALIDATE_LOGIC( !m_value_generator,
-                BOOST_RT_PARAM_LITERAL( "multiple value generators for parameter" ) );
+            BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( !m_value_generator,
+                BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "multiple value generators for parameter" ) );
 
             T const& dv_ref = m[default_value];
             m_value_generator = rt_cla_detail::const_generator<T>( dv_ref );
         }
 
         if( m.has( default_refer_to ) ) {
-            BOOST_RT_PARAM_VALIDATE_LOGIC( !m_value_generator,
-                BOOST_RT_PARAM_LITERAL( "multiple value generators for parameter" ) );
+            BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( !m_value_generator,
+                BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "multiple value generators for parameter" ) );
 
             cstring ref_id = m[default_refer_to];
             m_value_generator = rt_cla_detail::ref_generator<T>( ref_id );
         }
 
         if( m.has( assign_to ) ) {
-            BOOST_RT_PARAM_VALIDATE_LOGIC( !m_value_handler,
-                BOOST_RT_PARAM_LITERAL( "multiple value handlers for parameter" ) );
+            BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( !m_value_handler,
+                BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "multiple value handlers for parameter" ) );
 
             m_value_handler = rt_cla_detail::assigner<T>( m[assign_to] );
         }
@@ -127,7 +127,7 @@ typed_argument_factory<T>::produce_using( parameter& p, argv_traverser& tr )
         m_value_interpreter( tr, value );
     }
     catch( ... ) { // !! should we do that?
-        BOOST_RT_PARAM_TRACE( "Fail to parse argument value" );
+        BOOST_TEST_UTILS_RUNTIME_PARAM_TRACE( "Fail to parse argument value" );
 
         if( !p.p_optional_value )
             throw;
@@ -135,11 +135,11 @@ typed_argument_factory<T>::produce_using( parameter& p, argv_traverser& tr )
 
     argument_ptr actual_arg = p.actual_argument();
 
-    BOOST_RT_CLA_VALIDATE_INPUT( !!value || p.p_optional_value, tr,
-        BOOST_RT_PARAM_LITERAL( "Argument value missing for parameter " ) << p.id_2_report() );
+    BOOST_TEST_UTILS_RUNTIME_CLA_VALIDATE_INPUT( !!value || p.p_optional_value, tr,
+        BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "Argument value missing for parameter " ) << p.id_2_report() );
 
-    BOOST_RT_CLA_VALIDATE_INPUT( !actual_arg || p.p_multiplicable, tr,
-        BOOST_RT_PARAM_LITERAL( "Unexpected repetition of the parameter " ) << p.id_2_report() );
+    BOOST_TEST_UTILS_RUNTIME_CLA_VALIDATE_INPUT( !actual_arg || p.p_multiplicable, tr,
+        BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "Unexpected repetition of the parameter " ) << p.id_2_report() );
 
     if( !!value && !!m_value_handler )
         m_value_handler( p, *value );
@@ -209,8 +209,8 @@ typed_argument_factory<T>::argument_usage_info( format_stream& fs )
 
 } // namespace boost
 
-} // namespace BOOST_RT_PARAM_NAMESPACE
+} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
 
 } // namespace cla
 
-#endif // BOOST_RT_CLA_ARGUMENT_FACTORY_HPP_062604GER
+#endif // BOOST_TEST_UTILS_RUNTIME_CLA_ARGUMENT_FACTORY_HPP

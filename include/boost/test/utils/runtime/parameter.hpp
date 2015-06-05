@@ -12,15 +12,15 @@
 //  Description : abstract interface for the formal parameter
 // ***************************************************************************
 
-#ifndef BOOST_RT_PARAMETER_HPP_062604GER
-#define BOOST_RT_PARAMETER_HPP_062604GER
+#ifndef BOOST_TEST_UTILS_RUNTIME_PARAMETER_HPP
+#define BOOST_TEST_UTILS_RUNTIME_PARAMETER_HPP
 
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
 
 namespace boost {
 
-namespace BOOST_RT_PARAM_NAMESPACE {
+namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
 
 // ************************************************************************** //
 // **************              runtime::parameter              ************** //
@@ -31,8 +31,8 @@ public:
     virtual ~parameter() {}
 };
 
-} // namespace BOOST_RT_PARAM_NAMESPACE
+} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
 
 } // namespace boost
 
-#endif // BOOST_RT_PARAMETER_HPP_062604GER
+#endif // BOOST_TEST_UTILS_RUNTIME_PARAMETER_HPP

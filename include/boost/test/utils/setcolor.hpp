@@ -12,8 +12,8 @@
 //  Description : contains definition for setcolor iostream manipulator
 // ***************************************************************************
 
-#ifndef BOOST_TEST_SETCOLOR_HPP_121009GER
-#define BOOST_TEST_SETCOLOR_HPP_121009GER
+#ifndef BOOST_TEST_UTILS_SETCOLOR_HPP
+#define BOOST_TEST_UTILS_SETCOLOR_HPP
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
@@ -114,4 +114,4 @@ private:
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_TEST_SETCOLOR_HPP_121009GER
+#endif // BOOST_TEST_UTILS_SETCOLOR_HPP

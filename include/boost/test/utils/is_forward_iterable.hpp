@@ -9,8 +9,8 @@
 //! Defines the is_forward_iterable collection type trait
 // ***************************************************************************
 
-#ifndef BOOST_TEST_IS_FORWARD_ITERABLE_HPP_110612GER
-#define BOOST_TEST_IS_FORWARD_ITERABLE_HPP_110612GER
+#ifndef BOOST_TEST_UTILS_IS_FORWARD_ITERABLE_HPP
+#define BOOST_TEST_UTILS_IS_FORWARD_ITERABLE_HPP
 
 #if defined(BOOST_NO_CXX11_DECLTYPE) || defined(BOOST_NO_CXX11_NULLPTR) || defined(BOOST_NO_CXX11_TRAILING_RESULT_TYPES)
   #define BOOST_TEST_FWD_ITERABLE_CXX03
@@ -35,7 +35,6 @@
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/type_traits/remove_cv.hpp>
 #include <boost/test/utils/is_cstring.hpp>
-
 
 // STL
 #include <utility>
@@ -150,5 +149,4 @@ struct is_forward_iterable  {
 } // namespace unit_test
 } // namespace boost
 
-#endif // BOOST_TEST_IS_FORWARD_ITERABLE_HPP_110612GER
-
+#endif // BOOST_TEST_UTILS_IS_FORWARD_ITERABLE_HPP

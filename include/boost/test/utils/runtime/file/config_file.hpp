@@ -12,8 +12,8 @@
 //  Description : defines models configuration file, it's parameter and parameter namespaces
 // ***************************************************************************
 
-#ifndef BOOST_RT_FILE_CONFIG_FILE_HPP_010105GER
-#define BOOST_RT_FILE_CONFIG_FILE_HPP_010105GER
+#ifndef BOOST_TEST_UTILS_RUNTIME_FILE_CONFIG_FILE_HPP
+#define BOOST_TEST_UTILS_RUNTIME_FILE_CONFIG_FILE_HPP
 
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
@@ -32,7 +32,7 @@
 
 namespace boost {
 
-namespace BOOST_RT_PARAM_NAMESPACE {
+namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
 
 namespace file {
 
@@ -86,9 +86,9 @@ public:
     template<typename Modifier>
     void                    load( config_file_iterator cf_it, Modifier const& m )
     {
-        cstring vm = m.has( value_marker )        ? m[value_marker]        : BOOST_RT_PARAM_CSTRING_LITERAL( "\"" );
-        cstring vd = m.has( value_delimeter )     ? m[value_delimeter]     : BOOST_RT_PARAM_CSTRING_LITERAL( "= \t\n\r" );
-        cstring nd = m.has( namespace_delimeter ) ? m[namespace_delimeter] : BOOST_RT_PARAM_CSTRING_LITERAL( "::" );
+        cstring vm = m.has( value_marker )        ? m[value_marker]        : BOOST_TEST_UTILS_RUNTIME_PARAM_CSTRING_LITERAL( "\"" );
+        cstring vd = m.has( value_delimeter )     ? m[value_delimeter]     : BOOST_TEST_UTILS_RUNTIME_PARAM_CSTRING_LITERAL( "= \t\n\r" );
+        cstring nd = m.has( namespace_delimeter ) ? m[namespace_delimeter] : BOOST_TEST_UTILS_RUNTIME_PARAM_CSTRING_LITERAL( "::" );
 
         load_impl( cf_it, vm, vd, nd );
     }
@@ -175,8 +175,8 @@ public:
 
 } // namespace file
 
-} // namespace BOOST_RT_PARAM_NAMESPACE
+} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
 
 } // namespace boost
 
-#endif // BOOST_RT_FILE_CONFIG_FILE_HPP_010105GER
+#endif // BOOST_TEST_UTILS_RUNTIME_FILE_CONFIG_FILE_HPP_010105GER

@@ -12,8 +12,8 @@
 //  Description : overloadable assignment
 // ***************************************************************************
 
-#ifndef BOOST_TEST_ASSIGN_OP_033005GER
-#define BOOST_TEST_ASSIGN_OP_033005GER
+#ifndef BOOST_TEST_UTILS_ASSIGN_OP_HPP
+#define BOOST_TEST_UTILS_ASSIGN_OP_HPP
 
 namespace boost {
 namespace unit_test {
@@ -35,5 +35,5 @@ assign_op( T& t, S const& s, long )
 } // namespace unit_test
 } // namespace boost
 
-#endif // BOOST_TEST_ASSIGN_OP_033005GER
+#endif // BOOST_TEST_UTILS_ASSIGN_OP_HPP
 

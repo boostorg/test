@@ -12,8 +12,8 @@
 //  Description : flexible configuration file iterator definition
 // ***************************************************************************
 
-#ifndef BOOST_RT_FILE_CONFIG_FILE_ITERATOR_HPP_062604GER
-#define BOOST_RT_FILE_CONFIG_FILE_ITERATOR_HPP_062604GER
+#ifndef BOOST_TEST_UTILS_RUNTIME_FILE_CONFIG_FILE_ITERATOR_HPP
+#define BOOST_TEST_UTILS_RUNTIME_FILE_CONFIG_FILE_ITERATOR_HPP
 
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
@@ -30,7 +30,7 @@
 
 namespace boost {
 
-namespace BOOST_RT_PARAM_NAMESPACE {
+namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
 
 namespace file {
 
@@ -159,8 +159,8 @@ private:
 
 } // namespace file
 
-} // namespace BOOST_RT_PARAM_NAMESPACE
+} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
 
 } // namespace boost
 
-#endif // BOOST_RT_FILE_CONFIG_FILE_ITERATOR_HPP_062604GER
+#endif // BOOST_TEST_UTILS_RUNTIME_FILE_CONFIG_FILE_ITERATOR_HPP

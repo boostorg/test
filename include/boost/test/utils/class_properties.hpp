@@ -13,8 +13,8 @@
 //  properties in C++ classes. Original idea by Henrik Ravn.
 // ***************************************************************************
 
-#ifndef BOOST_TEST_CLASS_PROPERTIES_HPP_071894GER
-#define BOOST_TEST_CLASS_PROPERTIES_HPP_071894GER
+#ifndef BOOST_TEST_UTILS_CLASS_PROPERTIES_HPP
+#define BOOST_TEST_UTILS_CLASS_PROPERTIES_HPP
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
@@ -192,4 +192,4 @@ public:
 
 #undef BOOST_TEST_NO_PROTECTED_USING
 
-#endif // BOOST_TEST_CLASS_PROPERTIES_HPP_071894GER
+#endif // BOOST_TEST_UTILS_CLASS_PROPERTIES_HPP

@@ -12,8 +12,8 @@
 //  Description : common code used by any agent serving as OF_XML printer
 // ***************************************************************************
 
-#ifndef BOOST_TEST_XML_PRINTER_HPP_071894GER
-#define BOOST_TEST_XML_PRINTER_HPP_071894GER
+#ifndef BOOST_TEST_UTILS_XML_PRINTER_HPP
+#define BOOST_TEST_UTILS_XML_PRINTER_HPP
 
 // Boost.Test
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
@@ -129,4 +129,4 @@ operator<<( custom_printer<cdata> const& p, const_string value )
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_TEST_XML_PRINTER_HPP_071894GER
+#endif // BOOST_TEST_UTILS_XML_PRINTER_HPP

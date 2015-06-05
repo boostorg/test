@@ -12,8 +12,8 @@
 //  Description : defines exceptions and validation tools
 // ***************************************************************************
 
-#ifndef BOOST_RT_VALIDATION_HPP_062604GER
-#define BOOST_RT_VALIDATION_HPP_062604GER
+#ifndef BOOST_TEST_UTILS_RUNTIME_VALIDATION_HPP
+#define BOOST_TEST_UTILS_RUNTIME_VALIDATION_HPP
 
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
@@ -25,20 +25,20 @@
 #include <boost/shared_ptr.hpp>
 
 // STL
-#ifdef BOOST_RT_PARAM_EXCEPTION_INHERIT_STD
+#ifdef BOOST_TEST_UTILS_RUNTIME_PARAM_EXCEPTION_INHERIT_STD
 #include <stdexcept>
 #endif
 
 namespace boost {
 
-namespace BOOST_RT_PARAM_NAMESPACE {
+namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
 
 // ************************************************************************** //
 // **************             runtime::logic_error             ************** //
 // ************************************************************************** //
 
 class logic_error
-#ifdef BOOST_RT_PARAM_EXCEPTION_INHERIT_STD
+#ifdef BOOST_TEST_UTILS_RUNTIME_PARAM_EXCEPTION_INHERIT_STD
 : public std::exception
 #endif
 {
@@ -64,21 +64,21 @@ private:
 inline void
 report_logic_error( format_stream& msg )
 {
-    throw BOOST_RT_PARAM_NAMESPACE::logic_error( msg.str() );
+    throw BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE::logic_error( msg.str() );
 }
 
 //____________________________________________________________________________//
 
-#define BOOST_RT_PARAM_REPORT_LOGIC_ERROR( msg ) \
-    boost::BOOST_RT_PARAM_NAMESPACE::report_logic_error( format_stream().ref() << msg )
+#define BOOST_TEST_UTILS_RUNTIME_PARAM_REPORT_LOGIC_ERROR( msg ) \
+    boost::BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE::report_logic_error( format_stream().ref() << msg )
 
-#define BOOST_RT_PARAM_VALIDATE_LOGIC( b, msg ) \
-    if( b ) {} else BOOST_RT_PARAM_REPORT_LOGIC_ERROR( msg )
+#define BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( b, msg ) \
+    if( b ) {} else BOOST_TEST_UTILS_RUNTIME_PARAM_REPORT_LOGIC_ERROR( msg )
 
 //____________________________________________________________________________//
 
-} // namespace BOOST_RT_PARAM_NAMESPACE
+} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
 
 } // namespace boost
 
-#endif // BOOST_RT_VALIDATION_HPP_062604GER
+#endif // BOOST_TEST_UTILS_RUNTIME_VALIDATION_HPP

@@ -8,8 +8,8 @@
 //  Description : contains definition for all test tools in test toolbox
 // ***************************************************************************
 
-#ifndef BOOST_TEST_LAZY_OSTREAM_HPP_070708GER
-#define BOOST_TEST_LAZY_OSTREAM_HPP_070708GER
+#ifndef BOOST_TEST_UTILS_LAZY_OSTREAM_HPP
+#define BOOST_TEST_UTILS_LAZY_OSTREAM_HPP
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
@@ -127,4 +127,4 @@ operator<<( lazy_ostream_impl<PrevPrevType,TPrev> const& prev, R& (BOOST_TEST_CA
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_TEST_LAZY_OSTREAM_HPP_070708GER
+#endif // BOOST_TEST_UTILS_LAZY_OSTREAM_HPP

@@ -17,8 +17,8 @@
 //  parameters, but should be good enough for my purposes.
 // ***************************************************************************
 
-#ifndef BOOST_TEST_FOREACH_HPP_021005GER
-#define BOOST_TEST_FOREACH_HPP_021005GER
+#ifndef BOOST_TEST_UTILS_FOREACH_HPP
+#define BOOST_TEST_UTILS_FOREACH_HPP
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
@@ -313,4 +313,4 @@ for( bool BOOST_TEST_FE_CON_VAR = true;                                         
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_TEST_FOREACH_HPP_021005GER
+#endif // BOOST_TEST_UTILS_FOREACH_HPP

@@ -12,8 +12,8 @@
 //  Description : implements facility to hide input traversing details
 // ***************************************************************************
 
-#ifndef BOOST_RT_CLA_ARGV_TRAVERSER_IPP_070604GER
-#define BOOST_RT_CLA_ARGV_TRAVERSER_IPP_070604GER
+#ifndef BOOST_TEST_UTILS_RUNTIME_CLA_ARGV_TRAVERSER_IPP
+#define BOOST_TEST_UTILS_RUNTIME_CLA_ARGV_TRAVERSER_IPP
 
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/trace.hpp>
@@ -30,7 +30,7 @@ namespace std { using ::memcpy; }
 
 namespace boost {
 
-namespace BOOST_RT_PARAM_NAMESPACE {
+namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
 
 namespace cla {
 
@@ -38,15 +38,15 @@ namespace cla {
 // **************          runtime::cla::argv_traverser        ************** //
 // ************************************************************************** //
 
-BOOST_RT_PARAM_INLINE
+BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE
 argv_traverser::argv_traverser()
-: p_ignore_mismatch( false ), p_separator( BOOST_RT_PARAM_LITERAL( ' ' ) )
+: p_ignore_mismatch( false ), p_separator( BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( ' ' ) )
 {
 }
 
 //____________________________________________________________________________//
 
-BOOST_RT_PARAM_INLINE void
+BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE void
 argv_traverser::init( int argc, char_type** argv )
 {
     m_buffer.clear();
@@ -54,7 +54,7 @@ argv_traverser::init( int argc, char_type** argv )
     for( int index = 1; index < argc; ++index ) {
         m_buffer += argv[index];
         if( index != argc-1 )
-            m_buffer += BOOST_RT_PARAM_LITERAL( ' ' );
+            m_buffer += BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( ' ' );
     }
 
     m_remainder.reset( new char_type[m_buffer.size()+1] );
@@ -62,14 +62,14 @@ argv_traverser::init( int argc, char_type** argv )
     m_work_buffer       = m_buffer;
     m_commited_end      = m_work_buffer.begin();
 
-    BOOST_RT_PARAM_TRACE( "Input buffer: " << m_buffer );
+    BOOST_TEST_UTILS_RUNTIME_PARAM_TRACE( "Input buffer: " << m_buffer );
 
     next_token();
 }
 
 //____________________________________________________________________________//
 
-BOOST_RT_PARAM_INLINE void
+BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE void
 argv_traverser::remainder( int& argc, char_type** argv )
 {
     argc = 1;
@@ -78,14 +78,14 @@ argv_traverser::remainder( int& argc, char_type** argv )
         argv[argc++] = m_remainder.get() + pos;
 
         pos = std::find( m_remainder.get() + pos, m_remainder.get() + m_remainder_size,
-                         BOOST_RT_PARAM_LITERAL( ' ' ) ) - m_remainder.get();
-        m_remainder[pos++] = BOOST_RT_PARAM_LITERAL( '\0' );
+                         BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( ' ' ) ) - m_remainder.get();
+        m_remainder[pos++] = BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( '\0' );
     }
 }
 
 //____________________________________________________________________________//
 
-BOOST_RT_PARAM_INLINE cstring
+BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE cstring
 argv_traverser::token() const
 {
     return m_token;
@@ -93,7 +93,7 @@ argv_traverser::token() const
 
 //____________________________________________________________________________//
 
-BOOST_RT_PARAM_INLINE void
+BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE void
 argv_traverser::next_token()
 {
     if( m_work_buffer.is_empty() )
@@ -110,7 +110,7 @@ argv_traverser::next_token()
 
 //____________________________________________________________________________//
 
-BOOST_RT_PARAM_INLINE cstring
+BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE cstring
 argv_traverser::input() const
 {
     return m_work_buffer;
@@ -118,7 +118,7 @@ argv_traverser::input() const
 
 //____________________________________________________________________________//
 
-BOOST_RT_PARAM_INLINE void
+BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE void
 argv_traverser::trim( std::size_t size )
 {
     m_work_buffer.trim_left( size );
@@ -133,7 +133,7 @@ argv_traverser::trim( std::size_t size )
 
 //____________________________________________________________________________//
 
-BOOST_RT_PARAM_INLINE bool
+BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE bool
 argv_traverser::match_front( cstring str )
 {
     return m_work_buffer.size() < str.size() ? false : m_work_buffer.substr( 0, str.size() ) == str;
@@ -141,7 +141,7 @@ argv_traverser::match_front( cstring str )
 
 //____________________________________________________________________________//
 
-BOOST_RT_PARAM_INLINE bool
+BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE bool
 argv_traverser::match_front( char_type c )
 {
     return first_char( m_work_buffer ) == c;
@@ -149,7 +149,7 @@ argv_traverser::match_front( char_type c )
 
 //____________________________________________________________________________//
 
-BOOST_RT_PARAM_INLINE bool
+BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE bool
 argv_traverser::eoi() const
 {
     return m_work_buffer.is_empty();
@@ -157,7 +157,7 @@ argv_traverser::eoi() const
 
 //____________________________________________________________________________//
 
-BOOST_RT_PARAM_INLINE void
+BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE void
 argv_traverser::commit()
 {
     m_commited_end = m_work_buffer.begin();
@@ -165,7 +165,7 @@ argv_traverser::commit()
 
 //____________________________________________________________________________//
 
-BOOST_RT_PARAM_INLINE void
+BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE void
 argv_traverser::rollback()
 {
     m_work_buffer.assign( m_commited_end, m_work_buffer.end() );
@@ -176,7 +176,7 @@ argv_traverser::rollback()
 
 //____________________________________________________________________________//
 
-BOOST_RT_PARAM_INLINE std::size_t
+BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE std::size_t
 argv_traverser::input_pos() const
 {
     return m_work_buffer.begin() - m_commited_end;
@@ -184,7 +184,7 @@ argv_traverser::input_pos() const
 
 //____________________________________________________________________________//
 
-BOOST_RT_PARAM_INLINE bool
+BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE bool
 argv_traverser::handle_mismatch()
 {
     if( !p_ignore_mismatch )
@@ -204,8 +204,8 @@ argv_traverser::handle_mismatch()
 
 } // namespace cla
 
-} // namespace BOOST_RT_PARAM_NAMESPACE
+} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
 
 } // namespace boost
 
-#endif // BOOST_RT_CLA_ARGV_TRAVERSER_IPP_070604GER
+#endif // BOOST_TEST_UTILS_RUNTIME_CLA_ARGV_TRAVERSER_IPP

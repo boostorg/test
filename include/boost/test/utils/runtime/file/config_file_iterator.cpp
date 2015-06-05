@@ -45,7 +45,7 @@
 
 namespace boost {
 
-namespace BOOST_RT_PARAM_NAMESPACE {
+namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
 
 namespace file {
 
@@ -106,7 +106,7 @@ is_valid_identifier( cstring const& source )
         return false;
 
     while( ++it < source.end() ) {
-        if( !std::isalnum( *it ) && *it != BOOST_RT_PARAM_LITERAL( '_' ) && *it != BOOST_RT_PARAM_LITERAL( '-' ) )
+        if( !std::isalnum( *it ) && *it != BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( '_' ) && *it != BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( '-' ) )
             return false;
     }
 
@@ -158,7 +158,7 @@ include_level::include_level( cstring file_name, cstring path_separators, includ
         }
     }
 
-    BOOST_RT_PARAM_VALIDATE_LOGIC( m_stream.is_open(), BOOST_RT_PARAM_LITERAL( "can't open file " ) << file_name );
+    BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( m_stream.is_open(), BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "can't open file " ) << file_name );
 }
 
 //____________________________________________________________________________//
@@ -234,21 +234,21 @@ struct config_file_iterator::Impl : noncopyable {
 //____________________________________________________________________________//
 
 config_file_iterator::Impl::Impl()
-: m_path_separators( BOOST_RT_PARAM_LITERAL( "/\\" ) )
-, m_line_delimeter( BOOST_RT_PARAM_LITERAL( '\n' ) )
-, m_sl_comment_delimeter( BOOST_RT_PARAM_LITERAL( "#" ) )
-, m_command_delimeter( BOOST_RT_PARAM_LITERAL( "$" ) )
-, m_line_beak( BOOST_RT_PARAM_LITERAL( "\\" ) )
-, m_macro_ref_begin( BOOST_RT_PARAM_LITERAL( "$" ) )
-, m_macro_ref_end( BOOST_RT_PARAM_LITERAL( "$" ) )
+: m_path_separators( BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "/\\" ) )
+, m_line_delimeter( BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( '\n' ) )
+, m_sl_comment_delimeter( BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "#" ) )
+, m_command_delimeter( BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "$" ) )
+, m_line_beak( BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "\\" ) )
+, m_macro_ref_begin( BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "$" ) )
+, m_macro_ref_end( BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "$" ) )
 
-, m_include_kw( BOOST_RT_PARAM_LITERAL( "include" ) )
-, m_define_kw( BOOST_RT_PARAM_LITERAL( "define" ) )
-, m_undef_kw( BOOST_RT_PARAM_LITERAL( "undef" ) )
-, m_ifdef_kw( BOOST_RT_PARAM_LITERAL( "ifdef" ) )
-, m_ifndef_kw( BOOST_RT_PARAM_LITERAL( "ifndef" ) )
-, m_else_kw( BOOST_RT_PARAM_LITERAL( "else" ) )
-, m_endif_kw( BOOST_RT_PARAM_LITERAL( "endif" ) )
+, m_include_kw( BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "include" ) )
+, m_define_kw( BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "define" ) )
+, m_undef_kw( BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "undef" ) )
+, m_ifdef_kw( BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "ifdef" ) )
+, m_ifndef_kw( BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "ifndef" ) )
+, m_else_kw( BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "else" ) )
+, m_endif_kw( BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "endif" ) )
 
 , m_buffer_size( 8192 )
 
@@ -338,9 +338,9 @@ config_file_iterator::Impl::get_next_line( cstring& line )
         return true;                                                                        // 110 //
     }
 
-    BOOST_RT_PARAM_VALIDATE_LOGIC( !broken_line, BOOST_RT_PARAM_LITERAL( "broken line is not completed" ) );
-    BOOST_RT_PARAM_VALIDATE_LOGIC( m_conditional_states.size() == 0,
-                                   BOOST_RT_PARAM_LITERAL( "matching endif command is missing" ) );
+    BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( !broken_line, BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "broken line is not completed" ) );
+    BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( m_conditional_states.size() == 0,
+                                   BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "matching endif command is missing" ) );
 
     return false;
 }
@@ -359,8 +359,8 @@ config_file_iterator::Impl::get_macro_value( cstring macro_name, bool ignore_mis
         env::get( macro_name, macro_value );
         #endif
 
-        BOOST_RT_PARAM_VALIDATE_LOGIC( macro_value || ignore_missing || !m_detect_missing_macro,
-            BOOST_RT_PARAM_LITERAL( "Unknown macro \"" ) << macro_name << BOOST_RT_PARAM_LITERAL( "\"" ) );
+        BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( macro_value || ignore_missing || !m_detect_missing_macro,
+            BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "Unknown macro \"" ) << macro_name << BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "\"" ) );
 
         if( !macro_value ) {
             if( !ignore_missing )
@@ -386,7 +386,7 @@ config_file_iterator::Impl::process_command_line( cstring line )
 
     command_handler_map::const_iterator it = m_command_handler_map.find( *tit );
 
-    BOOST_RT_PARAM_VALIDATE_LOGIC( it != m_command_handler_map.end(), BOOST_RT_PARAM_LITERAL( "Invalid command " ) << *tit );
+    BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( it != m_command_handler_map.end(), BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "Invalid command " ) << *tit );
 
     ++tit;
 
@@ -405,13 +405,13 @@ config_file_iterator::Impl::process_include( cstring line )
 
     string_token_iterator tit( line, kept_delimeters = dt_none );
 
-    BOOST_RT_PARAM_VALIDATE_LOGIC( tit != string_token_iterator(),
-                                   BOOST_RT_PARAM_LITERAL( "include file name missing" ) );
+    BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( tit != string_token_iterator(),
+                                   BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "include file name missing" ) );
 
     cstring include_file_name = *tit;
 
-    BOOST_RT_PARAM_VALIDATE_LOGIC( ++tit == string_token_iterator(),
-                                   BOOST_RT_PARAM_LITERAL( "unexpected tokens at the end of include command" ) );
+    BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( ++tit == string_token_iterator(),
+                                   BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "unexpected tokens at the end of include command" ) );
 
     substitute_macros( include_file_name );
 
@@ -431,8 +431,8 @@ config_file_iterator::Impl::process_define( cstring line )
     string_token_iterator tit( line, (kept_delimeters = dt_none, max_tokens = 2 ));
 
     cstring macro_name = *tit;
-    BOOST_RT_PARAM_VALIDATE_LOGIC( is_valid_identifier( macro_name ),
-                                   BOOST_RT_PARAM_LITERAL( "invalid macro name" ) );
+    BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( is_valid_identifier( macro_name ),
+                                   BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "invalid macro name" ) );
 
     cstring macro_value = *(++tit);
     substitute_macros( macro_value );
@@ -449,8 +449,8 @@ config_file_iterator::Impl::process_undef( cstring line )
         return;
 
     cstring macro_name = line;
-    BOOST_RT_PARAM_VALIDATE_LOGIC( is_valid_identifier( macro_name ),
-                                   BOOST_RT_PARAM_LITERAL( "invalid macro name" ) );
+    BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( is_valid_identifier( macro_name ),
+                                   BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "invalid macro name" ) );
 
     m_symbols_table.remove( macro_name );
 }
@@ -465,8 +465,8 @@ config_file_iterator::Impl::process_ifdef( cstring line )
         return;
 
     cstring macro_name = line;
-    BOOST_RT_PARAM_VALIDATE_LOGIC( is_valid_identifier( macro_name ),
-                                   BOOST_RT_PARAM_LITERAL( "invalid macro name" ) );
+    BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( is_valid_identifier( macro_name ),
+                                   BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "invalid macro name" ) );
 
     if( !get_macro_value( macro_name ) )
         m_inactive_ifdef_level = m_conditional_states.size();
@@ -482,8 +482,8 @@ config_file_iterator::Impl::process_ifndef( cstring line )
         return;
 
     cstring macro_name = line;
-    BOOST_RT_PARAM_VALIDATE_LOGIC( is_valid_identifier( macro_name ),
-                                   BOOST_RT_PARAM_LITERAL( "invalid macro name" ) );
+    BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( is_valid_identifier( macro_name ),
+                                   BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "invalid macro name" ) );
 
     if( get_macro_value( macro_name ) )
         m_inactive_ifdef_level = m_conditional_states.size();
@@ -494,12 +494,12 @@ config_file_iterator::Impl::process_ifndef( cstring line )
 void
 config_file_iterator::Impl::process_else( cstring line )
 {
-    BOOST_RT_PARAM_VALIDATE_LOGIC( m_conditional_states.size() > 0 && m_conditional_states.back(),
-                                   BOOST_RT_PARAM_LITERAL( "else without matching if" ) );
+    BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( m_conditional_states.size() > 0 && m_conditional_states.back(),
+                                   BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "else without matching if" ) );
 
     m_inactive_ifdef_level = m_conditional_states.size() == m_inactive_ifdef_level ? 0 : m_conditional_states.size();
 
-    BOOST_RT_PARAM_VALIDATE_LOGIC( line.is_empty(), BOOST_RT_PARAM_LITERAL( "unexpected tokens at the end of else command" ) );
+    BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( line.is_empty(), BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "unexpected tokens at the end of else command" ) );
 }
 
 //____________________________________________________________________________//
@@ -507,13 +507,13 @@ config_file_iterator::Impl::process_else( cstring line )
 void
 config_file_iterator::Impl::process_endif( cstring line )
 {
-    BOOST_RT_PARAM_VALIDATE_LOGIC( m_conditional_states.size() > 0, BOOST_RT_PARAM_LITERAL( "endif without matching if" ) );
+    BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( m_conditional_states.size() > 0, BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "endif without matching if" ) );
 
     if( m_conditional_states.size() == m_inactive_ifdef_level )
         m_inactive_ifdef_level = 0;
 
     m_conditional_states.pop_back();
-    BOOST_RT_PARAM_VALIDATE_LOGIC( line.is_empty(), BOOST_RT_PARAM_LITERAL( "unexpected tokens at the end of endif command" ) );
+    BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( line.is_empty(), BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "unexpected tokens at the end of endif command" ) );
 }
 
 //____________________________________________________________________________//
@@ -531,7 +531,7 @@ config_file_iterator::Impl::substitute_macros( cstring& where )
 
         pos = where.find( m_macro_ref_end );
 
-        BOOST_RT_PARAM_VALIDATE_LOGIC( pos != cstring::npos, BOOST_RT_PARAM_LITERAL( "incomplete macro reference" ) );
+        BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( pos != cstring::npos, BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "incomplete macro reference" ) );
 
         cstring value = *get_macro_value( where.substr( 0, pos ), false );
         m_post_subst_line.append( value.begin(), value.size() );
@@ -678,7 +678,7 @@ config_file_iterator::set_parameter( rtti::id_t id, std::size_t value )
 
 } // namespace file
 
-} // namespace BOOST_RT_PARAM_NAMESPACE
+} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
 
 } // namespace boost
 

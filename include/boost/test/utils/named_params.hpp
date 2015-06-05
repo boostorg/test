@@ -12,8 +12,8 @@
 //  Description : facilities for named function parameters support
 // ***************************************************************************
 
-#ifndef BOOST_TEST_NAMED_PARAM_022505GER
-#define BOOST_TEST_NAMED_PARAM_022505GER
+#ifndef BOOST_TEST_UTILS_NAMED_PARAM
+#define BOOST_TEST_UTILS_NAMED_PARAM
 
 // Boost
 #include <boost/config.hpp>
@@ -364,5 +364,5 @@ struct param_type<nfp_detail::named_parameter_combine<named_parameter<T,unique_i
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_TEST_NAMED_PARAM_022505GER
+#endif // BOOST_TEST_UTILS_NAMED_PARAM
 

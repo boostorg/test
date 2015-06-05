@@ -12,19 +12,19 @@
 //  Description : optional internal tracing
 // ***************************************************************************
 
-#ifndef BOOST_RT_TRACE_HPP_062604GER
-#define BOOST_RT_TRACE_HPP_062604GER
+#ifndef BOOST_TEST_UTILS_RUNTIME_TRACE_HPP
+#define BOOST_TEST_UTILS_RUNTIME_TRACE_HPP
 
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
 
-#ifdef BOOST_RT_PARAM_DEBUG
+#ifdef BOOST_TEST_UTILS_RUNTIME_PARAM_DEBUG
 
 #include <iostream>
 
-#  define BOOST_RT_PARAM_TRACE( str ) std::cerr << str << std::endl
+#  define BOOST_TEST_UTILS_RUNTIME_PARAM_TRACE( str ) std::cerr << str << std::endl
 #else
-#  define BOOST_RT_PARAM_TRACE( str )
+#  define BOOST_TEST_UTILS_RUNTIME_PARAM_TRACE( str )
 #endif
 
-#endif // BOOST_RT_TRACE_HPP_062604GER
+#endif // BOOST_TEST_UTILS_RUNTIME_TRACE_HPP

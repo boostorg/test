@@ -9,15 +9,15 @@
 //! @brief Input validation helpers implementation
 // ***************************************************************************
 
-#ifndef BOOST_RT_CLA_VALIDATION_IPP_070604GER
-#define BOOST_RT_CLA_VALIDATION_IPP_070604GER
+#ifndef BOOST_TEST_UTILS_RUNTIME_CLA_VALIDATION_IPP
+#define BOOST_TEST_UTILS_RUNTIME_CLA_VALIDATION_IPP
 
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
 
 #include <boost/test/utils/runtime/cla/argv_traverser.hpp>
 #include <boost/test/utils/runtime/cla/validation.hpp>
-#include <boost/test/utils/runtime/validation.hpp> // BOOST_RT_PARAM_NAMESPACE::logic_error
+#include <boost/test/utils/runtime/validation.hpp> // BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE::logic_error
 
 // Boost
 #include <boost/test/utils/basic_cstring/io.hpp>
@@ -26,7 +26,7 @@
 
 namespace boost {
 
-namespace BOOST_RT_PARAM_NAMESPACE {
+namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
 
 namespace cla {
 
@@ -34,29 +34,29 @@ namespace cla {
 // **************           runtime::cla::validation           ************** //
 // ************************************************************************** //
 
-BOOST_RT_PARAM_INLINE void
+BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE void
 report_input_error( argv_traverser const& tr, format_stream& msg )
 {
     if( tr.eoi() )
-        msg << BOOST_RT_PARAM_LITERAL( " at the end of input" );
+        msg << BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( " at the end of input" );
     else {
-        msg << BOOST_RT_PARAM_LITERAL( " in the following position: " );
+        msg << BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( " in the following position: " );
 
         if( tr.input().size() > 5 )
-            msg << tr.input().substr( 0, 5 ) << BOOST_RT_PARAM_LITERAL( "..." );
+            msg << tr.input().substr( 0, 5 ) << BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "..." );
         else
             msg << tr.input();
     }
 
-    throw BOOST_RT_PARAM_NAMESPACE::logic_error( msg.str() );
+    throw BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE::logic_error( msg.str() );
 }
 
 //____________________________________________________________________________//
 
 } // namespace cla
 
-} // namespace BOOST_RT_PARAM_NAMESPACE
+} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
 
 } // namespace boost
 
-#endif // BOOST_RT_CLA_VALIDATION_IPP_070604GER
+#endif // BOOST_TEST_UTILS_RUNTIME_CLA_VALIDATION_IPP

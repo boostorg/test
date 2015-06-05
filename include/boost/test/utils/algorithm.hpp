@@ -9,8 +9,8 @@
 /// Addition to STL algorithms
 // ***************************************************************************
 
-#ifndef BOOST_ALGORITHM_HPP_062304GER
-#define BOOST_ALGORITHM_HPP_062304GER
+#ifndef BOOST_TEST_UTILS_ALGORITHM_HPP
+#define BOOST_TEST_UTILS_ALGORITHM_HPP
 
 // STL
 #include <utility>
@@ -218,6 +218,6 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_ALGORITHM_HPP_062304GER
+#endif // BOOST_TEST_UTILS_ALGORITHM_HPP
 
 

@@ -12,8 +12,8 @@
 //  Description : simple facilities for accessing type information at runtime
 // ***************************************************************************
 
-#ifndef BOOST_TEST_RTTI_HPP_062604GER
-#define BOOST_TEST_RTTI_HPP_062604GER
+#ifndef BOOST_TEST_UTILS_RTTI_HPP
+#define BOOST_TEST_UTILS_RTTI_HPP
 
 // C Runtime
 #include <cstddef>
@@ -60,4 +60,4 @@ type_id()
 } // namespace rtti
 } // namespace boost
 
-#endif // BOOST_RT_RTTI_HPP_062604GER
+#endif // BOOST_TEST_UTILS_RTTI_HPP

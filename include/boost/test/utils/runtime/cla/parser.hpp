@@ -12,8 +12,8 @@
 //  Description : defines parser - public interface for CLA parsing and accessing
 // ***************************************************************************
 
-#ifndef BOOST_RT_CLA_PARSER_HPP_062604GER
-#define BOOST_RT_CLA_PARSER_HPP_062604GER
+#ifndef BOOST_TEST_UTILS_RUNTIME_CLA_PARSER_HPP
+#define BOOST_TEST_UTILS_RUNTIME_CLA_PARSER_HPP
 
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
@@ -32,7 +32,7 @@
 
 namespace boost {
 
-namespace BOOST_RT_PARAM_NAMESPACE {
+namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
 
 namespace cla {
 
@@ -142,18 +142,18 @@ private:
 
 } // namespace cla
 
-} // namespace BOOST_RT_PARAM_NAMESPACE
+} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
 
 } // namespace boost
 
-#ifndef BOOST_RT_PARAM_OFFLINE
+#ifndef BOOST_TEST_UTILS_RUNTIME_PARAM_OFFLINE
 
-#ifndef BOOST_RT_PARAM_INLINE
-  #define BOOST_RT_PARAM_INLINE inline
+#ifndef BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE
+  #define BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE inline
 #endif
 
 #include <boost/test/utils/runtime/cla/parser.ipp>
 
 #endif
 
-#endif // BOOST_RT_CLA_PARSER_HPP_062604GER
+#endif // BOOST_TEST_UTILS_RUNTIME_CLA_PARSER_HPP

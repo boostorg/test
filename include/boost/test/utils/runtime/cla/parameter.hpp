@@ -12,8 +12,8 @@
 //  Description : defines model of formal parameter
 // ***************************************************************************
 
-#ifndef BOOST_RT_CLA_PARAMETER_HPP_062604GER
-#define BOOST_RT_CLA_PARAMETER_HPP_062604GER
+#ifndef BOOST_TEST_UTILS_RUNTIME_CLA_PARAMETER_HPP
+#define BOOST_TEST_UTILS_RUNTIME_CLA_PARAMETER_HPP
 
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
@@ -32,7 +32,7 @@
 
 namespace boost {
 
-namespace BOOST_RT_PARAM_NAMESPACE {
+namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
 
 namespace cla {
 
@@ -40,7 +40,7 @@ namespace cla {
 // **************            runtime::cla::parameter           ************** //
 // ************************************************************************** //
 
-class parameter : public BOOST_RT_PARAM_NAMESPACE::parameter {
+class parameter : public BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE::parameter {
 public:
     parameter( identification_policy& ID, argument_factory& F, bool optional_value = false )
     : p_optional( false )
@@ -97,12 +97,12 @@ public:
     {
         m_id_policy.usage_info( fs );
         if( p_optional_value )
-            fs << BOOST_RT_PARAM_LITERAL( '[' );
+            fs << BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( '[' );
 
         m_arg_factory.argument_usage_info( fs );
 
         if( p_optional_value )
-            fs << BOOST_RT_PARAM_LITERAL( ']' );
+            fs << BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( ']' );
     }
 
     // argument match/produce based on input
@@ -144,8 +144,8 @@ operator-( shared_ptr<Parameter> p, Modifier const& m )
 
 } // namespace cla
 
-} // namespace BOOST_RT_PARAM_NAMESPACE
+} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
 
 } // namespace boost
 
-#endif // BOOST_RT_CLA_PARAMETER_HPP_062604GER
+#endif // BOOST_TEST_UTILS_RUNTIME_CLA_PARAMETER_HPP

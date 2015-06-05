@@ -13,8 +13,8 @@
 //  Description : simulate /dev/null stream
 // ***************************************************************************
 
-#ifndef BOOST_NULLSTREAM_HPP_071894GER
-#define BOOST_NULLSTREAM_HPP_071894GER
+#ifndef BOOST_TEST_UTILS_NULLSTREAM_HPP
+#define BOOST_TEST_UTILS_NULLSTREAM_HPP
 
 // STL
 #include <ostream>    // for std::basic_ostream
@@ -100,4 +100,4 @@ typedef basic_onullstream<wchar_t>  wonullstream;
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif  // BOOST_NULLSTREAM_HPP_071894GER
+#endif  // BOOST_TEST_UTILS_NULLSTREAM_HPP

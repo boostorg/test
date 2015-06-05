@@ -12,5 +12,5 @@
 //  Description : offline implementation of generic parameter with dual naming
 // ***************************************************************************
 
-#define BOOST_RT_PARAM_INLINE
+#define BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE
 #include <boost/test/utils/runtime/cla/dual_name_parameter.ipp>

@@ -13,8 +13,8 @@
 //                interface
 // ***************************************************************************
 
-#ifndef BOOST_TEST_BASIC_CSTRING_HPP_071894GER
-#define BOOST_TEST_BASIC_CSTRING_HPP_071894GER
+#ifndef BOOST_TEST_UTILS_BASIC_CSTRING_HPP
+#define BOOST_TEST_UTILS_BASIC_CSTRING_HPP
 
 // Boost.Test
 #include <boost/test/utils/basic_cstring/basic_cstring_fwd.hpp>
@@ -754,4 +754,4 @@ operator+( std::basic_string<CharT1> const& lhs, basic_cstring<CharT2> const& rh
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_TEST_BASIC_CSTRING_HPP_071894GER
+#endif // BOOST_TEST_UTILS_BASIC_CSTRING_HPP

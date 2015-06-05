@@ -12,8 +12,8 @@
 //  Description : fixed sized mapping with specified invalid value
 // ***************************************************************************
 
-#ifndef BOOST_TEST_FIXED_MAPPING_HPP_071894GER
-#define BOOST_TEST_FIXED_MAPPING_HPP_071894GER
+#ifndef BOOST_TEST_UTILS_FIXED_MAPPING_HPP
+#define BOOST_TEST_UTILS_FIXED_MAPPING_HPP
 
 // Boost
 #include <boost/preprocessor/repetition/repeat.hpp>
@@ -116,5 +116,5 @@ private:
 #undef CONSTR_DECL
 #undef CONTRUCTORS
 
-#endif // BOOST_TEST_FIXED_MAPPING_HPP_071894GER
+#endif // BOOST_TEST_UTILS_FIXED_MAPPING_HPP
 

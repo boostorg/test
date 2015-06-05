@@ -12,8 +12,8 @@
 //  Description : generic char traits class; wraps std::char_traits
 // ***************************************************************************
 
-#ifndef BOOST_TEST_BCS_CHAR_TRAITS_HPP_071894GER
-#define BOOST_TEST_BCS_CHAR_TRAITS_HPP_071894GER
+#ifndef BOOST_TEST_UTILS_BCS_CHAR_TRAITS_HPP
+#define BOOST_TEST_UTILS_BCS_CHAR_TRAITS_HPP
 
 // Boost
 #include <boost/config.hpp>
@@ -147,4 +147,4 @@ public:
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_TEST_BCS_CHAR_TRAITS_HPP_071894GER
+#endif // BOOST_TEST_UTILS_BCS_CHAR_TRAITS_HPP

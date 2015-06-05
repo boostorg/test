@@ -12,8 +12,8 @@
 //  Description : simple helpers for creating cusom output manipulators
 // ***************************************************************************
 
-#ifndef BOOST_TEST_TRIVIAL_SIGNLETON_HPP_020505GER
-#define BOOST_TEST_TRIVIAL_SIGNLETON_HPP_020505GER
+#ifndef BOOST_TEST_UTILS_TRIVIAL_SIGNLETON_HPP
+#define BOOST_TEST_UTILS_TRIVIAL_SIGNLETON_HPP
 
 // Boost.Test
 #include <boost/config.hpp>
@@ -76,4 +76,4 @@ namespace { BOOST_JOIN( inst, _t)& inst = BOOST_JOIN( inst, _t)::instance(); }
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_TEST_TRIVIAL_SIGNLETON_HPP_020505GER
+#endif // BOOST_TEST_UTILS_TRIVIAL_SIGNLETON_HPP

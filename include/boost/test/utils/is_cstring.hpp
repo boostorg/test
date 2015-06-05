@@ -12,8 +12,8 @@
 //  Description : defines the is_cstring type trait
 // ***************************************************************************
 
-#ifndef BOOST_TEST_IS_CSTRING_HPP_112512GER
-#define BOOST_TEST_IS_CSTRING_HPP_112512GER
+#ifndef BOOST_TEST_UTILS_IS_CSTRING_HPP
+#define BOOST_TEST_UTILS_IS_CSTRING_HPP
 
 // Boost
 #include <boost/mpl/bool.hpp>
@@ -55,4 +55,4 @@ struct is_cstring : public ut_detail::is_cstring_impl<typename decay<T>::type> {
 } // namespace unit_test
 } // namespace boost
 
-#endif // BOOST_TEST_IS_CSTRING_HPP_112512GER
+#endif // BOOST_TEST_UTILS_IS_CSTRING_HPP

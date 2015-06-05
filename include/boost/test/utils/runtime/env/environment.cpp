@@ -19,5 +19,5 @@
 # pragma warning(disable: 4701) // local environment 'result' may be used without having been initialized
 #endif
 
-#define BOOST_RT_PARAM_INLINE
+#define BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE
 #include <boost/test/utils/runtime/env/environment.ipp>

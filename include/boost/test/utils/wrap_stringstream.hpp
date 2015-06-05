@@ -13,8 +13,8 @@
 //                to provide the unified interface
 // ***************************************************************************
 
-#ifndef BOOST_WRAP_STRINGSTREAM_HPP_071894GER
-#define BOOST_WRAP_STRINGSTREAM_HPP_071894GER
+#ifndef BOOST_TEST_UTILS_WRAP_STRINGSTREAM_HPP
+#define BOOST_TEST_UTILS_WRAP_STRINGSTREAM_HPP
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
@@ -159,4 +159,4 @@ typedef basic_wrap_stringstream<wchar_t>    wrap_wstringstream;
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif  // BOOST_WRAP_STRINGSTREAM_HPP_071894GER
+#endif  // BOOST_TEST_UTILS_WRAP_STRINGSTREAM_HPP

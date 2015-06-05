@@ -13,8 +13,8 @@
 //                interface
 // ***************************************************************************
 
-#ifndef BOOST_TEST_BASIC_CSTRING_FWD_HPP_071894GER
-#define BOOST_TEST_BASIC_CSTRING_FWD_HPP_071894GER
+#ifndef BOOST_TEST_UTILS_BASIC_CSTRING_FWD_HPP
+#define BOOST_TEST_UTILS_BASIC_CSTRING_FWD_HPP
 
 #include <boost/detail/workaround.hpp>
 
@@ -36,5 +36,5 @@ typedef char const* const           c_literal_string;
 
 } // namespace boost
 
-#endif // BOOST_TEST_BASIC_CSTRING_FWD_HPP_071894GER
+#endif // BOOST_TEST_UTILS_BASIC_CSTRING_FWD_HPP
 

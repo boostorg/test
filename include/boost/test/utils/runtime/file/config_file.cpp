@@ -26,7 +26,7 @@
 
 namespace boost {
 
-namespace BOOST_RT_PARAM_NAMESPACE {
+namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
 
 namespace file {
 
@@ -69,8 +69,8 @@ void
 param_namespace::insert_param( cstring param_name, cstring param_value )
 {
     BOOST_TEST_FOREACH( parameter const&, p, m_parameters )
-        BOOST_RT_PARAM_VALIDATE_LOGIC( p.p_name != param_name,
-                                       BOOST_RT_PARAM_LITERAL( "Duplicate parameter " ) << param_name );
+        BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( p.p_name != param_name,
+                                       BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "Duplicate parameter " ) << param_name );
 
     m_parameters.push_back( parameter( param_name, param_value, *this ) );
 }
@@ -153,13 +153,13 @@ get_requ_param_value( param_namespace const& where_from,
     boost::optional<cstring> v = get_param_value( where_from, name_part1, name_part2, name_part3, name_part4, name_part5 );
 
 #define APPEND_PART( part ) (part.is_empty() ? "" : "::") << (part.is_empty() ? cstring() : part)
-    BOOST_RT_PARAM_VALIDATE_LOGIC( !!v, BOOST_RT_PARAM_LITERAL( "Required parameter " )
+    BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( !!v, BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "Required parameter " )
                                         << name_part1
                                         << APPEND_PART( name_part2 )
                                         << APPEND_PART( name_part3 )
                                         << APPEND_PART( name_part4 )
                                         << APPEND_PART( name_part5 )
-                                        << BOOST_RT_PARAM_LITERAL( " value is missing" ) );
+                                        << BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( " value is missing" ) );
 #undef APPEND_PART
 
     return *v;
@@ -242,7 +242,7 @@ config_file::config_file( cstring file_name )
 
 } // namespace file
 
-} // namespace BOOST_RT_PARAM_NAMESPACE
+} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
 
 } // namespace boost
 

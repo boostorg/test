@@ -12,8 +12,8 @@
 //  Description : defines model of program environment variable
 // ***************************************************************************
 
-#ifndef BOOST_RT_ENV_VARIABLE_HPP_062604GER
-#define BOOST_RT_ENV_VARIABLE_HPP_062604GER
+#ifndef BOOST_TEST_UTILS_RUNTIME_ENV_VARIABLE_HPP
+#define BOOST_TEST_UTILS_RUNTIME_ENV_VARIABLE_HPP
 
 #ifdef UNDER_CE
 #error Windows CE does not support environment variables.
@@ -32,7 +32,7 @@
 
 namespace boost {
 
-namespace BOOST_RT_PARAM_NAMESPACE {
+namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
 
 namespace environment {
 
@@ -179,7 +179,7 @@ operator!=( V const& v, variable<T> ev )
 
 } // namespace environment
 
-} // namespace BOOST_RT_PARAM_NAMESPACE
+} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
 
 } // namespace boost
 
@@ -195,7 +195,7 @@ operator!=( V const& v, variable<T> ev )
 
 namespace boost {
 
-namespace BOOST_RT_PARAM_NAMESPACE {
+namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
 
 namespace environment {
 
@@ -216,8 +216,8 @@ variable<T>::variable( cstring var_name, Modifiers const& m )
 
 } // namespace environment
 
-} // namespace BOOST_RT_PARAM_NAMESPACE
+} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
 
 } // namespace boost
 
-#endif // BOOST_RT_ENV_VARIABLE_HPP_062604GER
+#endif // BOOST_TEST_UTILS_RUNTIME_ENV_VARIABLE_HPP

@@ -12,8 +12,8 @@
 //  Description : specific value generators
 // ***************************************************************************
 
-#ifndef BOOST_RT_CLA_VALUE_GENERATOR_HPP_062604GER
-#define BOOST_RT_CLA_VALUE_GENERATOR_HPP_062604GER
+#ifndef BOOST_TEST_UTILS_RUNTIME_CLA_VALUE_GENERATOR_HPP
+#define BOOST_TEST_UTILS_RUNTIME_CLA_VALUE_GENERATOR_HPP
 
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
@@ -23,7 +23,7 @@
 
 namespace boost {
 
-namespace BOOST_RT_PARAM_NAMESPACE {
+namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
 
 namespace cla {
 
@@ -74,8 +74,8 @@ private:
 
 } // namespace cla
 
-} // namespace BOOST_RT_PARAM_NAMESPACE
+} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
 
 } // namespace boost
 
-#endif // BOOST_RT_CLA_VALUE_GENERATOR_HPP_062604GER
+#endif // BOOST_TEST_UTILS_RUNTIME_CLA_VALUE_GENERATOR_HPP

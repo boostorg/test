@@ -12,8 +12,8 @@
 //  Description : simple helpers for creating cusom output manipulators
 // ***************************************************************************
 
-#ifndef BOOST_TEST_CUSTOM_MANIP_HPP_071894GER
-#define BOOST_TEST_CUSTOM_MANIP_HPP_071894GER
+#ifndef BOOST_TEST_UTILS_CUSTOM_MANIP_HPP
+#define BOOST_TEST_UTILS_CUSTOM_MANIP_HPP
 
 // STL
 #include <iosfwd>
@@ -56,4 +56,4 @@ operator<<( std::ostream& ostr, custom_manip<Uniq> const& ) { return custom_prin
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_TEST_CUSTOM_MANIP_HPP_071894GER
+#endif // BOOST_TEST_UTILS_CUSTOM_MANIP_HPP

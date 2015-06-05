@@ -12,8 +12,8 @@
 //  Description :
 // ***************************************************************************
 
-#ifndef BOOST_ISTREAM_LINE_ITERATOR_HPP_071894GER
-#define BOOST_ISTREAM_LINE_ITERATOR_HPP_071894GER
+#ifndef BOOST_TEST_UTILS_ISTREAM_LINE_ITERATOR_HPP
+#define BOOST_TEST_UTILS_ISTREAM_LINE_ITERATOR_HPP
 
 // Boost
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
@@ -89,5 +89,5 @@ typedef basic_istream_line_iterator<wchar_t>    wistream_line_iterator;
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_ISTREAM_LINE_ITERATOR_HPP_071894GER
+#endif // BOOST_TEST_UTILS_ISTREAM_LINE_ITERATOR_HPP
 

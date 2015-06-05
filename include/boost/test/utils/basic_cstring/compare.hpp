@@ -12,8 +12,8 @@
 //  Description : class basic_cstring comparisons implementation
 // ***************************************************************************
 
-#ifndef  BOOST_TEST_BASIC_CSTRING_COMPARE_HPP_071894GER
-#define  BOOST_TEST_BASIC_CSTRING_COMPARE_HPP_071894GER
+#ifndef BOOST_TEST_UTILS_BASIC_CSTRING_COMPARE_HPP
+#define BOOST_TEST_UTILS_BASIC_CSTRING_COMPARE_HPP
 
 // Boost.Test
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>

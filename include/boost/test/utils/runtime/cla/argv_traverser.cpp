@@ -12,5 +12,5 @@
 //  Description : offline implementation for argc/argv traverser
 // ***************************************************************************
 
-#define BOOST_RT_PARAM_INLINE
+#define BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE
 #include <boost/test/utils/runtime/cla/argv_traverser.ipp>
