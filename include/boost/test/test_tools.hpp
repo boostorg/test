@@ -22,7 +22,7 @@
 #endif
 
 // Boost.Test
-#define BOOST_TEST_NO_OLD_TOOLS
+// #define BOOST_TEST_NO_OLD_TOOLS
 
 #if defined(BOOST_TEST_NO_VARIADIC)
 #  define BOOST_TEST_NO_NEW_TOOLS
