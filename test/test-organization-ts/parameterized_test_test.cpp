@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2002-2015.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -49,13 +49,13 @@ void test1( int i )
 
 //____________________________________________________________________________//
 
-static void 
+static void
 setup_tree( ut::test_suite* master_tu )
 {
     master_tu->p_default_status.value = ut::test_unit::RS_ENABLED;
     ut::framework::finalize_setup_phase( master_tu->p_id );
 }
-        
+
 //____________________________________________________________________________//
 
 BOOST_AUTO_TEST_CASE( test_case1 )
@@ -84,7 +84,7 @@ BOOST_AUTO_TEST_CASE( test_case2 )
     ut::test_suite* test = BOOST_TEST_SUITE( "" );
 
     ut::unit_test_log.set_stream( null_output );
-    int test_data[] = { 1, 2, 2 };    
+    int test_data[] = { 1, 2, 2 };
     test->add( BOOST_PARAM_TEST_CASE( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
     setup_tree( test );
@@ -104,7 +104,7 @@ BOOST_AUTO_TEST_CASE( test_case3 )
     ut::test_suite* test = BOOST_TEST_SUITE( "" );
 
     ut::unit_test_log.set_stream( null_output );
-    int test_data[] = { 1, 1, 2 };    
+    int test_data[] = { 1, 1, 2 };
     test->add( BOOST_PARAM_TEST_CASE( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
     setup_tree( test );
@@ -124,7 +124,7 @@ BOOST_AUTO_TEST_CASE( test_case4 )
     ut::test_suite* test = BOOST_TEST_SUITE( "" );
 
     ut::unit_test_log.set_stream( null_output );
-    int test_data[] = { 1, 1, 1 };    
+    int test_data[] = { 1, 1, 1 };
     test->add( BOOST_PARAM_TEST_CASE( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
     setup_tree( test );
@@ -144,7 +144,7 @@ BOOST_AUTO_TEST_CASE( test_case5 )
     ut::test_suite* test = BOOST_TEST_SUITE( "" );
 
     ut::unit_test_log.set_stream( null_output );
-    int test_data[] = { 6, 6, 6 };    
+    int test_data[] = { 6, 6, 6 };
     test->add( BOOST_PARAM_TEST_CASE( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
     setup_tree( test );
@@ -165,7 +165,7 @@ BOOST_AUTO_TEST_CASE( test_case6 )
     ut::test_suite* test = BOOST_TEST_SUITE( "" );
 
     ut::unit_test_log.set_stream( null_output );
-    int test_data[] = { 0, 3, 9 };    
+    int test_data[] = { 0, 3, 9 };
     test->add( BOOST_PARAM_TEST_CASE( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
     setup_tree( test );
@@ -205,7 +205,7 @@ BOOST_AUTO_TEST_CASE( test_case8 )
     ut::test_suite* test = BOOST_TEST_SUITE( "" );
 
     ut::unit_test_log.set_stream( null_output );
-    int test_data[] = { 3, 2, 6 };    
+    int test_data[] = { 3, 2, 6 };
     test->add( BOOST_PARAM_TEST_CASE( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
     setup_tree( test );

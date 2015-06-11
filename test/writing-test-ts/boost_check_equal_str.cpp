@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2015.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE( check_string_compare )
     BOOST_TEST(buf_ptr_ch == buf_ptr_ch);
     BOOST_TEST(buf_ptr_ch == buf_array_ch);
     BOOST_TEST(buf_ptr_ch == buf_str);
-    
+
     BOOST_TEST(buf_array_ch == buf_ptr_cch);
     BOOST_TEST(buf_array_ch == buf_array_cch);
     BOOST_TEST(buf_array_ch == buf_ptr_ch);

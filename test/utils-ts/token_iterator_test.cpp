@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2015.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE( test_wide )
 {
     utf::wstring_token_iterator tit( L"\317\356\367\345\354\363 \341\373 \350 \355\345\362" );
     wchar_t const* res[4] = { L"\317\356\367\345\354\363", L"\341\373", L"\350", L"\355\345\362" };
-    
+
     BOOST_CHECK_EQUAL_COLLECTIONS( tit, wsti_end, res, res + sizeof(res)/sizeof(char const*) );
 }
 
@@ -78,10 +78,10 @@ BOOST_AUTO_TEST_CASE( test_custom_keep_delim )
 
 BOOST_AUTO_TEST_CASE( test_keep_empty_tokens )
 {
-    utf::string_token_iterator tit( "fld,, 456,a==4=,", 
+    utf::string_token_iterator tit( "fld,, 456,a==4=,",
                                     (utf::dropped_delimeters = " ,",
                                      utf::kept_delimeters    = "=",
-                                     utf::keep_empty_tokens )); 
+                                     utf::keep_empty_tokens ));
     char const* res[] = { "fld", "", "", "456", "a", "=", "", "=", "4", "=", "", "" };
 
     BOOST_CHECK_EQUAL_COLLECTIONS( tit, sti_end, res, res + sizeof(res)/sizeof(char const*) );
@@ -91,7 +91,7 @@ BOOST_AUTO_TEST_CASE( test_keep_empty_tokens )
 
 BOOST_AUTO_TEST_CASE( test_max_tokens )
 {
-    utf::string_token_iterator tit( "aa bb dd", utf::max_tokens = 2 ); 
+    utf::string_token_iterator tit( "aa bb dd", utf::max_tokens = 2 );
     char const* res[] = { "aa", "bb dd" };
 
     BOOST_CHECK_EQUAL_COLLECTIONS( tit, sti_end, res, res + sizeof(res)/sizeof(char const*) );

@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2003-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE( test_mismatch )
     BOOST_TEST( TEST_SURROUND_EXPRESSION(utf::mismatch( cs1.begin(), cs1.end(), cs2.begin(), cs2.end() ).first - cs1.begin()) == 11 );
 
     cs2 = "TeSt_liNk";
-    BOOST_TEST( 
+    BOOST_TEST(
         TEST_SURROUND_EXPRESSION(utf::mismatch( cs1.begin(), cs1.end(), cs2.begin(), cs2.end(), std::ptr_fun( predicate ) ).first - cs1.begin()) == 5 );
 }
 
@@ -69,7 +69,7 @@ BOOST_AUTO_TEST_CASE( test_find_first_not_of )
     BOOST_TEST( TEST_SURROUND_EXPRESSION(utf::find_first_not_of( cs.begin(), cs.end(), another.begin(), another.end() ) - cs.begin()) == 4 );
 
     another = "T_sE";
-    BOOST_TEST( 
+    BOOST_TEST(
         TEST_SURROUND_EXPRESSION(utf::find_first_not_of( cs.begin(), cs.end(), another.begin(), another.end(), std::ptr_fun( predicate ) ) - cs.begin()) == 7 );
 
     another = "tes_ring";

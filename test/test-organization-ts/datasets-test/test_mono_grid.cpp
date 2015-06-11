@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE( test_mono_grid_with_xrange )
 {
   auto ds1 = data::make(1);
   auto ds2 = data::xrange(5);
-  
+
   BOOST_TEST( (ds1 * ds2).size() == 5 );
   BOOST_TEST( (ds1 * ds2).size() == 5 );
 }
@@ -109,12 +109,12 @@ BOOST_AUTO_TEST_CASE( test_mono_grid_number_of_copies )
   BOOST_TEST( copy_count::value() == 0 );
 
   copy_count::value() = 0;
-  data::for_each_sample( data::make( copy_count() ) * data::make( copy_count() ) * data::make( copy_count() ), 
+  data::for_each_sample( data::make( copy_count() ) * data::make( copy_count() ) * data::make( copy_count() ),
                          check_arg_type<std::tuple<copy_count,copy_count,copy_count>>() );
   BOOST_TEST( copy_count::value() == 0 );
 
   copy_count::value() = 0;
-  data::for_each_sample( data::make( copy_count() ) * (data::make( copy_count() ) * data::make( copy_count() )), 
+  data::for_each_sample( data::make( copy_count() ) * (data::make( copy_count() ) * data::make( copy_count() )),
                          check_arg_type<std::tuple<copy_count,copy_count,copy_count>>() );
   BOOST_TEST( copy_count::value() == 0 );
 }

@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2003-2015.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -86,7 +86,7 @@ BOOST_AUTO_TEST_CASE( test0_one_to_ten )
 
     typedef boost::mpl::range_c<int,0,10> one_to_ten;
     ut::unit_test_log.set_stream( null_output );
-    
+
     test->add( BOOST_TEST_CASE_TEMPLATE( test0, one_to_ten ) );
 
     test->p_default_status.value = ut::test_unit::RS_ENABLED;

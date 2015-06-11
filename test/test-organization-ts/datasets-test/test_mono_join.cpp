@@ -84,7 +84,7 @@ BOOST_AUTO_TEST_CASE( test_mono_join )
     data::for_each_sample( data::make( copy_count() ) + (data::make( copy_count() ) + data::make( copy_count() )), check_arg_type<copy_count>() );
     BOOST_TEST( copy_count::value() == 0 );
     copy_count::value() = 0;
-    data::for_each_sample( (data::make( copy_count() ) + data::make( copy_count() )) + 
+    data::for_each_sample( (data::make( copy_count() ) + data::make( copy_count() )) +
                            (data::make( copy_count() ) + data::make( copy_count() )), check_arg_type<copy_count>() );
     BOOST_TEST( copy_count::value() == 0 );
 

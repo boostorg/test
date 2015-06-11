@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2015.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -40,7 +40,7 @@ void good_foo() {}
 
 void almost_good_foo() { BOOST_TEST_WARN( 2>3 ); }
 
-void bad_foo()  { 
+void bad_foo()  {
     onullstream_type null_out;
     unit_test_log.set_stream( null_out );
     BOOST_ERROR( "" );
@@ -54,7 +54,7 @@ struct log_guard {
     }
 };
 
-void very_bad_foo()  { 
+void very_bad_foo()  {
     log_guard lg;
     ut_detail::ignore_unused_variable_warning( lg );
     onullstream_type null_out;
@@ -86,7 +86,7 @@ void check( output_test_stream& output, output_format report_format, test_unit_i
 void check( output_test_stream& output, test_suite* ts )
 {
     ts->p_default_status.value = test_unit::RS_ENABLED;
-    
+
     framework::finalize_setup_phase( ts->p_id );
     framework::run( ts );
 
@@ -106,7 +106,7 @@ struct guard {
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( test_result_reports ) 
+BOOST_AUTO_TEST_CASE( test_result_reports )
 {
     guard G;
     ut_detail::ignore_unused_variable_warning( G );
@@ -114,7 +114,7 @@ BOOST_AUTO_TEST_CASE( test_result_reports )
 #define PATTERN_FILE_NAME "result_report_test.pattern"
 
     std::string pattern_file_name(
-        framework::master_test_suite().argc == 1 
+        framework::master_test_suite().argc == 1
             ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./test_files/" PATTERN_FILE_NAME )
             : framework::master_test_suite().argv[1] );
 
@@ -122,7 +122,7 @@ BOOST_AUTO_TEST_CASE( test_result_reports )
     results_reporter::set_stream( test_output );
 
     test_suite* ts_0 = BOOST_TEST_SUITE( "0 test cases inside" );
-    
+
     test_suite* ts_1 = BOOST_TEST_SUITE( "1 test cases inside" );
         ts_1->add( BOOST_TEST_CASE( good_foo ) );
 

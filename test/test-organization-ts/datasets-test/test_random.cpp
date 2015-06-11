@@ -5,7 +5,7 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//! @file 
+//! @file
 //! @brief tests random dataset
 // ***************************************************************************
 
@@ -115,7 +115,7 @@ BOOST_AUTO_TEST_CASE( test_parameterized_init )
     }, 10);
 
     auto ds6 = data::random(( data::engine = std::minstd_rand(),
-                              data::distribution = std::normal_distribution<>(5.,2), 
+                              data::distribution = std::normal_distribution<>(5.,2),
                               data::seed = 20UL ));
     typedef decltype(ds6) DS6;
 

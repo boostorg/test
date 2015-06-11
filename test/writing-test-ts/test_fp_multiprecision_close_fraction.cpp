@@ -27,27 +27,27 @@
 
 
 typedef boost::multiprecision::number<
-   boost::multiprecision::cpp_dec_float<50>, 
+   boost::multiprecision::cpp_dec_float<50>,
    boost::multiprecision::et_off> cpp_dec_float_50_noet;
 
 typedef boost::multiprecision::number<
-   boost::multiprecision::cpp_dec_float<50>, 
+   boost::multiprecision::cpp_dec_float<50>,
    boost::multiprecision::et_on> cpp_dec_float_50_et;
 
 
-// there is no need for this anymore, however this could be defined by 
+// there is no need for this anymore, however this could be defined by
 // the user in order to support additional types for floating point
 // comparison.
 #if 0
-namespace boost { namespace math { namespace fpc { 
+namespace boost { namespace math { namespace fpc {
 
   template <class A, boost::multiprecision::expression_template_option B>
   struct tolerance_based< boost::multiprecision::number<
-   A, 
+   A,
    B > > : boost::mpl::true_ {};
 
   template <class tag, class Arg1, class Arg2, class Arg3, class Arg4>
-  struct tolerance_based< 
+  struct tolerance_based<
     boost::multiprecision::detail::expression<
       tag, Arg1, Arg2, Arg3, Arg4> > : boost::mpl::true_ {};
 
@@ -58,7 +58,7 @@ namespace boost { namespace math { namespace fpc {
 
 
 
-/*`To define a 50 decimal digit type using `cpp_dec_float`, 
+/*`To define a 50 decimal digit type using `cpp_dec_float`,
 you must pass two template parameters to `boost::multiprecision::number`.
 
 It may be more legible to use a two-staged type definition such as this:
@@ -72,7 +72,7 @@ Here, we first define `mp_backend` as `cpp_dec_float` with 50 digits.
 The second step passes this backend to `boost::multiprecision::number`
 with `boost::multiprecision::et_off`, an enumerated type.
 
-  typedef boost::multiprecision::number<boost::multiprecision::cpp_dec_float<50>, boost::multiprecision::et_off> 
+  typedef boost::multiprecision::number<boost::multiprecision::cpp_dec_float<50>, boost::multiprecision::et_off>
   cpp_dec_float_50_noet;
 
 You can reduce typing with a `using` directive `using namespace boost::multiprecision;`
@@ -84,7 +84,7 @@ using namespace boost::multiprecision;
 
 
 
-/*`Now `cpp_dec_float_50_noet` or `cpp_dec_float_50_et` 
+/*`Now `cpp_dec_float_50_noet` or `cpp_dec_float_50_et`
 can be used as a direct replacement for built-in types like `double` etc.
 */
 
@@ -106,10 +106,10 @@ BOOST_AUTO_TEST_CASE(cpp_float_test_check_close_noet)
   BOOST_CHECK_CLOSE(a, b, eps * 100); // Expected to pass (because tolerance is as percent).
   BOOST_CHECK_CLOSE_FRACTION(a, b, eps); // Expected to pass (because tolerance is as fraction).
 
-  namespace tt = boost::test_tools;    
+  namespace tt = boost::test_tools;
   BOOST_TEST( a == b, tt::tolerance( tt::fpc::percent_tolerance( eps * 100 ) ) );
   BOOST_TEST( a == b, tt::tolerance( eps ) );
-  
+
 //] [/expression_template_1]git
 
 } // BOOST_AUTO_TEST_CASE(cpp_float_test_check_close)
@@ -131,8 +131,8 @@ BOOST_AUTO_TEST_CASE(cpp_float_test_check_close_et)
 
   BOOST_CHECK_CLOSE(a, b, eps * 100); // Expected to pass (because tolerance is as percent).
   BOOST_CHECK_CLOSE_FRACTION(a, b, eps); // Expected to pass (because tolerance is as fraction).
-  
-  namespace tt = boost::test_tools;    
+
+  namespace tt = boost::test_tools;
   BOOST_TEST( a == b, tt::tolerance( tt::fpc::percent_tolerance<cpp_dec_float_50_et>( eps * 100 ) ) );
   BOOST_TEST( a == b, tt::tolerance( eps ) );
 

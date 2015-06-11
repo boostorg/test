@@ -150,25 +150,25 @@ BOOST_AUTO_TEST_CASE( test_strong_weak, * expected_failures( 4 ) )
     BOOST_TEST(1./3 != 1./2, tt::tolerance(1./3));
 }
 
-BOOST_AUTO_TEST_CASE(test_strict_order_operations_ne, 
+BOOST_AUTO_TEST_CASE(test_strict_order_operations_ne,
                      * boost::unit_test::tolerance(0.01)
                      * expected_failures( 1 ) )
 {
     double x = 10.00;
     double y = 10.01; // diff within tolerance
-    BOOST_TEST(x == y); 
+    BOOST_TEST(x == y);
     BOOST_TEST(x != y); // fails
     BOOST_TEST(x <= y);
     BOOST_TEST(x >= y);
 }
 
-BOOST_AUTO_TEST_CASE(test_strict_order_operations_lt, 
+BOOST_AUTO_TEST_CASE(test_strict_order_operations_lt,
                      * boost::unit_test::tolerance(0.01)
                      * expected_failures( 3 ) )
 {
     double x = 10.00;
     double y = 10.01; // diff within tolerance
-    BOOST_TEST(x == y); 
+    BOOST_TEST(x == y);
     BOOST_TEST(x != y); // fails
     BOOST_TEST(x <= y);
     BOOST_TEST(y <= x);
@@ -176,68 +176,68 @@ BOOST_AUTO_TEST_CASE(test_strict_order_operations_lt,
     BOOST_TEST(y < x);  // fails, y > x
 }
 
-BOOST_AUTO_TEST_CASE(test_strict_order_operations_lt_0, 
+BOOST_AUTO_TEST_CASE(test_strict_order_operations_lt_0,
                      * boost::unit_test::tolerance(0.02)
                      * expected_failures( 3 ) )
 {
     double x = 0.00;
     double y = 0.01;
-    BOOST_TEST(x == y); 
+    BOOST_TEST(x == y);
     BOOST_TEST(x != y); // fails
-    BOOST_TEST(x <= y); 
-    BOOST_TEST(y <= x);     
+    BOOST_TEST(x <= y);
+    BOOST_TEST(y <= x);
     BOOST_TEST(x < y);  // fails, too close to 0
     BOOST_TEST(y < x);  // fails, y > x
 }
 
-BOOST_AUTO_TEST_CASE(test_strict_order_operations_le, 
+BOOST_AUTO_TEST_CASE(test_strict_order_operations_le,
                      * boost::unit_test::tolerance(0.01)
                      * expected_failures( 1 ) )
 {
     double x = 10.01;
     double y = 10.00; // diff within tolerance
-    BOOST_TEST(x == y); 
+    BOOST_TEST(x == y);
     BOOST_TEST(x != y); // fails
     BOOST_TEST(x <= y);
 }
 
 
-BOOST_AUTO_TEST_CASE(test_strict_order_operations_gt, 
+BOOST_AUTO_TEST_CASE(test_strict_order_operations_gt,
                      * boost::unit_test::tolerance(0.01)
                      * expected_failures( 3 ) )
 {
     double x = 10.00;
     double y = 10.01; // diff within tolerance
-    BOOST_TEST(x == y); 
+    BOOST_TEST(x == y);
     BOOST_TEST(x != y); // fails
     BOOST_TEST(x > y);  // fails
-    BOOST_TEST(y > x);  // fails    
+    BOOST_TEST(y > x);  // fails
 }
 
-BOOST_AUTO_TEST_CASE(test_strict_order_operations_ge, 
+BOOST_AUTO_TEST_CASE(test_strict_order_operations_ge,
                      * boost::unit_test::tolerance(0.01)
                      * expected_failures( 1 ) )
 {
     double x = 10.00;
     double y = 10.01; // diff within tolerance
-    BOOST_TEST(x == y); 
+    BOOST_TEST(x == y);
     BOOST_TEST(x != y); // fails
     BOOST_TEST(x >= y);
     BOOST_TEST(y >= x);
 }
 
-BOOST_AUTO_TEST_CASE(test_strict_order_operations_gt_0, 
+BOOST_AUTO_TEST_CASE(test_strict_order_operations_gt_0,
                      * boost::unit_test::tolerance(0.02)
                      * expected_failures( 3 ) )
 {
     double x = 0.00;
     double y = 0.01;
-    BOOST_TEST(x == y); 
+    BOOST_TEST(x == y);
     BOOST_TEST(x != y); // fails
-    BOOST_TEST(x >= y); 
-    BOOST_TEST(y >= x);     
-    BOOST_TEST(x <= y); 
-    BOOST_TEST(y <= x);      
+    BOOST_TEST(x >= y);
+    BOOST_TEST(y >= x);
+    BOOST_TEST(x <= y);
+    BOOST_TEST(y <= x);
     BOOST_TEST(x > y);  // fails, too close to 0
     BOOST_TEST(y > x);  // fails, too close to 0
 }

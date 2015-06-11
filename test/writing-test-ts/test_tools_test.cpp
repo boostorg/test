@@ -85,7 +85,6 @@ struct shorten_lf : public boost::unit_test::output::compiler_log_formatter
 {
     void    print_prefix( std::ostream& output, boost::unit_test::const_string, std::size_t line )
     {
-        output << line << ": ";
     }
 };
 
@@ -100,7 +99,7 @@ ots()
     static boost::shared_ptr<tt::output_test_stream> inst;
 
     if( !inst ) {
-        inst.reset( 
+        inst.reset(
             ut::framework::master_test_suite().argc <= 1
                 ? new tt::output_test_stream( ut::runtime_config::save_pattern() ? save_file_name : match_file_name, !ut::runtime_config::save_pattern() )
                 : new tt::output_test_stream( ut::framework::master_test_suite().argv[1], !ut::runtime_config::save_pattern() ) );
@@ -211,7 +210,7 @@ TEST_CASE( test_BOOST_WARN_MESSAGE )
     BOOST_WARN_MESSAGE( sizeof(int) == sizeof(short), "memory won't be used efficiently" );
     int obj_size = 33;
 
-    BOOST_WARN_MESSAGE( obj_size <= 8, 
+    BOOST_WARN_MESSAGE( obj_size <= 8,
                         "object size " << obj_size << " is too big to be efficiently passed by value" );
 
     ut::unit_test_log.set_threshold_level( ut::log_successful_tests );
@@ -293,7 +292,7 @@ TEST_CASE( test_BOOST_CHECK_THROW )
     ut::unit_test_log.set_threshold_level( ut::log_successful_tests );
     if( i/10 > 10 )
     {}
-    else 
+    else
         BOOST_CHECK_THROW( throw my_exception(), my_exception ); // unreachable code warning is expected
 }
 
@@ -665,8 +664,6 @@ TEST_CASE( test_BOOST_TEST_basic_arithmetic_op )
 
     BOOST_TEST( j-*p == 0 );
 
-    BOOST_TEST(( i > 5, true ));
-
     FooType F;
 
     BOOST_TEST( FooType() );
@@ -737,6 +734,7 @@ struct print_log_value<double> {
 TEST_CASE( test_BOOST_TEST_fpv_comp )
 {
     ScientificNotationExponentOutputNormalizer norm;
+    ut::ut_detail::ignore_unused_variable_warning( norm );
 
     double d1 = 1.1e-5;
     double d2 = 1.101e-5;

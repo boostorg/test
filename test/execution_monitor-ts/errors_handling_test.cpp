@@ -151,7 +151,7 @@ BOOST_AUTO_TEST_CASE( test_errors_handling )
 {
 #define PATTERN_FILE_NAME "errors_handling_test.pattern"
     std::string pattern_file_name(
-        framework::master_test_suite().argc <= 1 
+        framework::master_test_suite().argc <= 1
             ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./test_files/" PATTERN_FILE_NAME)
             : framework::master_test_suite().argv[1] );
 

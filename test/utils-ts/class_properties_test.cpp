@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2003-2015.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -28,7 +28,7 @@ struct A {
     operator bool() const { return true; }
 } a;
 
-struct B { 
+struct B {
     int foo() const { return 1; }
     int foo()       { return 2; }
 

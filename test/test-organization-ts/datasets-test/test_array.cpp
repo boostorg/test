@@ -69,16 +69,16 @@ BOOST_AUTO_TEST_CASE( test_array_make_type )
     BOOST_STATIC_ASSERT(( boost::is_array< boost::remove_reference<arr_t>::type >::value ) );
 
 
-    
+
     typedef data::result_of::make<int (&)[3]>::type dataset_array_type;
     dataset_array_type res = data::make( arr1 );
     BOOST_TEST( res.size() == 3 );
-    
-    
+
+
     double const arr2[] = {7.4,3.2};
     typedef data::result_of::make<double const (&)[2]>::type dataset_array_double_type;
     dataset_array_double_type res2 = data::make( arr2 );
-    
+
     BOOST_TEST( res2.size() == 2 );
 }
 

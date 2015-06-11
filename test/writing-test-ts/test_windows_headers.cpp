@@ -1,6 +1,6 @@
 //  (C) Copyright Raffi Enficiaud 2015
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 //  See http://www.boost.org/libs/test for the library home page.
@@ -10,7 +10,7 @@
 
 #define BOOST_TEST_MODULE test_windows_headers
 
-#include <boost/config.hpp> 
+#include <boost/config.hpp>
 #ifdef BOOST_WINDOWS
 #include <windows.h>
 #endif

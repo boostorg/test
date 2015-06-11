@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE( test_forwarded_to_collection)
   {
     std::vector<int> samples1;
     BOOST_TEST(boost::unit_test::is_forward_iterable<decltype(samples1)>::value, "forward iterable");
-    BOOST_TEST((forwarded_to_collection<decltype(data::make( samples1 ))>::value), 
+    BOOST_TEST((forwarded_to_collection<decltype(data::make( samples1 ))>::value),
                "not properly forwarded to a collection");
   }
   {
@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE( test_forwarded_to_collection)
     utf::ut_detail::ignore_unused_variable_warning( samples1 );
 
     BOOST_TEST(!boost::unit_test::is_forward_iterable<decltype(samples1)>::value, "forward iterable");
-    BOOST_TEST(!(forwarded_to_collection<decltype(data::make( samples1 ))>::value), 
+    BOOST_TEST(!(forwarded_to_collection<decltype(data::make( samples1 ))>::value),
                "not properly forwarded to a collection");
   }
 }
@@ -129,7 +129,7 @@ BOOST_AUTO_TEST_CASE( test_collection_copies )
 
     data::for_each_sample( data::make( std::vector<copy_count>( 2 ) ), check_arg_type<copy_count>() );
     BOOST_TEST( copy_count::value() == (exp_copy_count + std_vector_constructor_count) * 2);
-    BOOST_CHECK_EQUAL(copy_count::value(), (exp_copy_count + std_vector_constructor_count) * 2); 
+    BOOST_CHECK_EQUAL(copy_count::value(), (exp_copy_count + std_vector_constructor_count) * 2);
 
     copy_count::value() = 0;
     std::vector<copy_count> samples3( 2 );

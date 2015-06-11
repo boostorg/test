@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2002-2015.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : tests an ability of the Program Execution Monitor to catch 
+//  Description : tests an ability of the Program Execution Monitor to catch
 //  user fatal exceptions. Should fail during run. But not crash.
 // ***************************************************************************
 
@@ -21,13 +21,13 @@ int cpp_main( int, char *[] )  // note the name
 
     assert( div != 0 );
 
-#if NDEBUG 
+#if NDEBUG
 
 #   pragma message("assert check turned off under NDEBUG")
 
-    return 1; 
+    return 1;
 
-#endif 
+#endif
 
     return 0;
 }

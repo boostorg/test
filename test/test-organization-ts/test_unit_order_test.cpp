@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2015.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -47,7 +47,7 @@ struct tu_order_collector : ut::test_observer {
 
 //____________________________________________________________________________//
 
-static tu_order_collector 
+static tu_order_collector
 run_tree( ut::test_suite* master )
 {
     tu_order_collector c;
@@ -67,9 +67,9 @@ run_tree( ut::test_suite* master )
 
     ut::framework::deregister_observer( c );
 
-    return c;    
+    return c;
 }
-        
+
 //____________________________________________________________________________//
 
 struct _3cases {
@@ -117,7 +117,7 @@ BOOST_FIXTURE_TEST_CASE( test_simple_dep1, _3cases )
 
     ut::test_unit_id order[] = {master->p_id, tc2->p_id, tc3->p_id, tc1->p_id};
     std::vector<ut::test_unit_id> expected_order(order, order+4);
-    
+
     test_run( expected_order );
 }
 
@@ -204,8 +204,8 @@ struct _2suites_4_cases {
 
 BOOST_FIXTURE_TEST_CASE( test_suite_normal_order, _2suites_4_cases )
 {
-    ut::test_unit_id order[] = { master->p_id, 
-                                 s1->p_id, tc1->p_id, tc2->p_id, 
+    ut::test_unit_id order[] = { master->p_id,
+                                 s1->p_id, tc1->p_id, tc2->p_id,
                                  s2->p_id, tc3->p_id, tc4->p_id };
     std::vector<ut::test_unit_id> expected_order(order, order+7);
 
@@ -219,8 +219,8 @@ BOOST_FIXTURE_TEST_CASE( test_suite_simple_dep, _2suites_4_cases )
     tc1->depends_on( tc2 );
     tc3->depends_on( tc4 );
 
-    ut::test_unit_id order[] = { master->p_id, 
-                                 s1->p_id, tc2->p_id, tc1->p_id, 
+    ut::test_unit_id order[] = { master->p_id,
+                                 s1->p_id, tc2->p_id, tc1->p_id,
                                  s2->p_id, tc4->p_id, tc3->p_id };
     std::vector<ut::test_unit_id> expected_order(order, order+7);
 
@@ -233,8 +233,8 @@ BOOST_FIXTURE_TEST_CASE( test_suite_cross_dep1, _2suites_4_cases )
 {
     tc1->depends_on( tc3 );
 
-    ut::test_unit_id order[] = { master->p_id, 
-                                 s2->p_id, tc3->p_id, tc4->p_id, 
+    ut::test_unit_id order[] = { master->p_id,
+                                 s2->p_id, tc3->p_id, tc4->p_id,
                                  s1->p_id, tc1->p_id, tc2->p_id };
     std::vector<ut::test_unit_id> expected_order(order, order+7);
 
@@ -247,8 +247,8 @@ BOOST_FIXTURE_TEST_CASE( test_suite_cross_dep2, _2suites_4_cases )
 {
     tc2->depends_on( tc4 );
     tc1->depends_on( tc2 );
-    
-    ut::test_unit_id order[] = { master->p_id, 
+
+    ut::test_unit_id order[] = { master->p_id,
                                  s2->p_id, tc3->p_id, tc4->p_id,
                                  s1->p_id, tc2->p_id, tc1->p_id};
 
@@ -262,7 +262,7 @@ BOOST_FIXTURE_TEST_CASE( test_suite_on_suite_dep, _2suites_4_cases )
 {
     s1->depends_on( s2 );
 
-    ut::test_unit_id order[] = { master->p_id, 
+    ut::test_unit_id order[] = { master->p_id,
                                  s2->p_id, tc3->p_id, tc4->p_id,
                                  s1->p_id, tc1->p_id, tc2->p_id };
 
@@ -275,8 +275,8 @@ BOOST_FIXTURE_TEST_CASE( test_suite_on_suite_dep, _2suites_4_cases )
 BOOST_FIXTURE_TEST_CASE( test_suite_on_case_dep, _2suites_4_cases )
 {
     s1->depends_on( tc3 );
-    
-    ut::test_unit_id order[] = { master->p_id, 
+
+    ut::test_unit_id order[] = { master->p_id,
                                  s2->p_id, tc3->p_id, tc4->p_id,
                                  s1->p_id, tc1->p_id, tc2->p_id };
 
@@ -289,7 +289,7 @@ BOOST_FIXTURE_TEST_CASE( test_suite_on_case_dep, _2suites_4_cases )
 BOOST_FIXTURE_TEST_CASE( test_case_on_suite_dep, _2suites_4_cases )
 {
     tc1->depends_on( s2 );
-    ut::test_unit_id order[] = { master->p_id, 
+    ut::test_unit_id order[] = { master->p_id,
                                  s2->p_id, tc3->p_id, tc4->p_id,
                                  s1->p_id, tc1->p_id, tc2->p_id };
 

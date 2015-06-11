@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2015.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -129,7 +129,7 @@ BOOST_AUTO_TEST_CASE( test_is_equal )
 
     output << s << std::endl;
     BOOST_TEST( output.is_equal( "test string\n", false ) );
-    
+
     output << s << std::endl;
     BOOST_TEST( output.is_equal( "test string\ntest string\n" ) );
 
@@ -150,7 +150,7 @@ BOOST_AUTO_TEST_CASE( test_match_pattern )
 {
     for( int i1 = 0; i1 < 2; i1++ ) {
         output_test_stream output( "pattern.test", i1 == 1 );
-        
+
         output << "text1\n";
         BOOST_TEST( output.match_pattern() );
         output << "text2\n";

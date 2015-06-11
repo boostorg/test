@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2015.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -26,7 +26,7 @@ namespace rtf = boost::runtime::file;
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( basic_load_test ) 
+BOOST_AUTO_TEST_CASE( basic_load_test )
 {
     rtf::config_file cf( "test_files/cfg_file_tst1.cfg" );
 
@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE( basic_load_test )
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( multiple_load ) 
+BOOST_AUTO_TEST_CASE( multiple_load )
 {
     rtf::config_file cf;
 
@@ -61,10 +61,10 @@ BOOST_AUTO_TEST_CASE( multiple_load )
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( custom_value_marker ) 
+BOOST_AUTO_TEST_CASE( custom_value_marker )
 {
     rtf::config_file cf;
-        
+
     cf.load( "test_files/cfg_file_tst2.cfg", rtf::value_marker = "|" );
 
     BOOST_TEST( rtf::get_requ_param_value( cf, "par1" ) == "\"Simple text \"" );
@@ -72,7 +72,7 @@ BOOST_AUTO_TEST_CASE( custom_value_marker )
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( custom_value_delimeter ) 
+BOOST_AUTO_TEST_CASE( custom_value_delimeter )
 {
     rtf::config_file cf;
 
@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE( custom_value_delimeter )
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( custom_ns_delimeter ) 
+BOOST_AUTO_TEST_CASE( custom_ns_delimeter )
 {
     rtf::config_file cf;
 
@@ -150,7 +150,7 @@ void test_io()
 
     ots << global_param_namespace;
 
-    BOOST_TEST( ots.is_equal( 
+    BOOST_TEST( ots.is_equal(
         "par1 "                 QUOTE_N_END( "ABC" )
         "par2 "                 QUOTE_N_END( "12" )
         "par3 "                 QUOTE_N_END( "OFF" )
