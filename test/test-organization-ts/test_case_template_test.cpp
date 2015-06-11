@@ -35,16 +35,16 @@ namespace mpl = boost::mpl;
 
 BOOST_TEST_CASE_TEMPLATE_FUNCTION( test0, Number )
 {
-    BOOST_TEST( 2 == (int const)Number::value );
+    BOOST_TEST( 2 == (int)Number::value );
 }
 
 //____________________________________________________________________________//
 
 BOOST_TEST_CASE_TEMPLATE_FUNCTION( test1, Number )
 {
-    BOOST_TEST( 6 == (int const)Number::value );
-    BOOST_TEST_REQUIRE( 2 <= (int const)Number::value );
-    BOOST_TEST( 3 == (int const)Number::value );
+    BOOST_TEST( 6 == (int)Number::value );
+    BOOST_TEST_REQUIRE( 2 <= (int)Number::value );
+    BOOST_TEST( 3 == (int)Number::value );
 }
 
 //____________________________________________________________________________//
