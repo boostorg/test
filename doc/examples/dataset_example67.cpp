@@ -53,7 +53,7 @@ std::map<std::string, float> vect_2_str(std::vector<float> v)
 }
 
 typedef std::pair<const std::string, float> pair_map_t;
-BOOST_TEST_DONT_PRINT_LOG_VALUE( pair_map_t );
+BOOST_TEST_DONT_PRINT_LOG_VALUE( pair_map_t )
 
 BOOST_DATA_TEST_CASE( 
   test2, 

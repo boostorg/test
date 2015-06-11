@@ -265,7 +265,9 @@ BOOST_AUTO_TEST_CASE( test_close_at_tolerance )
     ::fpc::close_at_tolerance<double> pred( ::fpc::percent_tolerance( epsilon ), ::fpc::FPC_WEAK );
     BOOST_CHECK_PREDICATE( pred, (fp1)(fp2) );
 
+#ifndef BOOST_TEST_NO_OLD_TOOLS
     BOOST_TEST( !check_is_close( fp1, fp2, ::fpc::percent_tolerance( epsilon ) ) );
+#endif
 
     fp1     = 1.23456e-10;
     fp2     = 1.23457e-10;

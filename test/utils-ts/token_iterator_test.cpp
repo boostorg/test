@@ -36,6 +36,9 @@ namespace utf = boost::unit_test;
 static utf::string_token_iterator  sti_end;
 static utf::wstring_token_iterator wsti_end;
 
+BOOST_TEST_DONT_PRINT_LOG_VALUE(  utf::string_token_iterator )
+BOOST_TEST_DONT_PRINT_LOG_VALUE(  utf::wstring_token_iterator )
+
 BOOST_AUTO_TEST_CASE( test_default_delim_policy )
 {
     utf::string_token_iterator tit( "This is\n,  a \ttest" );

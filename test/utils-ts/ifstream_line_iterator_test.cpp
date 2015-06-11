@@ -22,6 +22,8 @@ namespace ut = boost::unit_test;
 
 static ut::ifstream_line_iterator eoi;
 
+BOOST_TEST_DONT_PRINT_LOG_VALUE( ut::ifstream_line_iterator )
+
 //____________________________________________________________________________//
 
 BOOST_AUTO_TEST_CASE( test_default_delimeter )

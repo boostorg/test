@@ -68,7 +68,7 @@ std::vector<int> generate_vector()
 }
 
 typedef std::pair<const int, int> pair_int;
-BOOST_TEST_DONT_PRINT_LOG_VALUE( pair_int );
+BOOST_TEST_DONT_PRINT_LOG_VALUE( pair_int )
 
 const std::vector<int> v = generate_vector();
 BOOST_DATA_TEST_CASE( test_case_1, data::make(v), var1)
