@@ -123,7 +123,7 @@ BOOST_AUTO_TEST_CASE( manual_test_case_creation_test )
     BOOST_TEST( &framework::get<test_case>( tc1->p_id ) == tc1 );
     BOOST_TEST( &framework::get( tc1->p_id, TUT_CASE ) == tc1 );
 
-    BOOST_CHECK_THROW( &framework::get( tc1->p_id, TUT_SUITE ), framework::internal_error );
+    BOOST_CHECK_THROW( framework::get( tc1->p_id, TUT_SUITE ), framework::internal_error );
 
     test_case* tc2 = make_test_case( &empty_, "my test case", "test_file_name", 1 );
     BOOST_TEST( tc2->p_name == const_string( "my test case" ) );
