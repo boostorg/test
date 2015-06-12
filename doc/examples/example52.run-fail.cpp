@@ -8,14 +8,20 @@
 //[example_code
 #define BOOST_TEST_MODULE example
 #include <boost/test/included/unit_test.hpp>
-#include <boost/test/detail/unit_test_parameters.hpp>
 using namespace boost::unit_test;
+
+struct MyConfig {
+  MyConfig()
+  {
+    unit_test_log.set_format( OF_XML );
+  }
+  ~MyConfig() {}
+};
+
+BOOST_GLOBAL_FIXTURE( MyConfig );
 
 BOOST_AUTO_TEST_CASE( test_case0 )
 {
-  if( runtime_config::log_level() < log_warnings )
-    unit_test_log.set_threshold_level( log_warnings );
-
-  BOOST_WARN( sizeof(int) > 4 );
+  BOOST_TEST( false );
 }
 //]

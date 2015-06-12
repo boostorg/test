@@ -6,7 +6,7 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 //[example_code
-#include <boost/test/prg_exec_monitor.hpp> // this header is optional
+#include <boost/test/included/prg_exec_monitor.hpp> // this header is optional
 
 int cpp_main( int, char* [] ) // note the name
 {
