@@ -284,7 +284,7 @@ void BOOST_JOIN( name, _impl )( boost::type<type_name>* )               \
 // ************************************************************************** //
 
 #define BOOST_GLOBAL_FIXTURE( F ) \
-static boost::unit_test::ut_detail::global_fixture_impl<F> BOOST_JOIN( gf_, F ) ; \
+static boost::unit_test::ut_detail::global_fixture_impl<F> BOOST_JOIN( gf_, F ) \
 /**/
 
 // ************************************************************************** //
