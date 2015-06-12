@@ -40,21 +40,23 @@ rule boost.test-self-test ( test-rule : test-suite : test-name : usage-variant ?
 rule boost.test-mt-test ( test-rule : test-suite : test-name : usage-variant ? : pattern_file * : source_files * : extra-libs ? )
 {
     return [ boost.test-self-test $(test-rule)
-             : $(test-suite) 
-             : $(test-name) 
-             : $(usage-variant) 
+             : $(test-suite)
+             : $(test-name)
+             : $(usage-variant)
              : $(pattern_file)
              : $(source_files)
              : $(extra-libs)
-             : <threading>multi 
+             : <threading>multi
            ] ;
 }
 
 #_________________________________________________________________________________________________#
 
-rule boost.test-example-as-test ( test-rule : test-name : extra_options ? )
+rule docs-example-as-test ( test-file )
 {
-    return [ boost.test-self-test $(test-rule)  : ../doc/examples : doc_$(test-name) : included : : ../doc/examples/$(test-name).cpp : : $(extra_options) ] ;
+    test-name-rule = [ MATCH \\.\\./doc/examples/(.*)\\.(.*)\\.cpp : $(test-file) ] ;
+
+    return [ boost.test-self-test $(test-name-rule[2]) : ../doc/examples : doc_$(test-name-rule[1]) : included : : $(test-file) ] ;
 }
 
 #_________________________________________________________________________________________________#
@@ -134,69 +136,35 @@ test-suite "prg_exec_monitor-ts"
 #_________________________________________________________________________________________________#
 
 test-suite "execution_monitor-ts"
-    :
-      [ boost.test-self-test run : execution_monitor-ts : errors_handling_test : : baseline-outputs/errors_handling_test.pattern
-                                                                                   baseline-outputs/errors_handling_test.pattern2 ]
-      [ boost.test-self-test run : execution_monitor-ts : custom_exception_test ]
-    ;
+:
+  [ boost.test-self-test run : execution_monitor-ts : errors_handling_test : : baseline-outputs/errors_handling_test.pattern
+                                                                               baseline-outputs/errors_handling_test.pattern2 ]
+  [ boost.test-self-test run : execution_monitor-ts : custom_exception_test ]
+;
 
 #_________________________________________________________________________________________________#
 
-test-suite "dataset-examples-ts"
-        :
-          [ boost.test-example-as-test run-fail : dataset_example59 ]
-          [ boost.test-example-as-test run      : dataset_example61 ]
-          [ boost.test-example-as-test run      : dataset_example62 ]
-          [ boost.test-example-as-test run-fail : dataset_example63 ]
-          [ boost.test-example-as-test run-fail : dataset_example64 ]
-          [ boost.test-example-as-test run      : dataset_example65 ]
-          [ boost.test-example-as-test run      : dataset_example66 ]
-          [ boost.test-example-as-test run      : dataset_example67 ]
-          [ boost.test-example-as-test run-fail : dataset_example68 ]
-        ;
+import sequence ;
 
-#_________________________________________________________________________________________________#
-
-test-suite "BOOST_TEST-examples-ts"
-        :
-          [ boost.test-example-as-test run-fail : boost_test_macro_overview          ]
-          [ boost.test-example-as-test run      : boost_test_macro_workaround        ]
-          [ boost.test-example-as-test run-fail : boost_test_macro2                  ]
-          [ boost.test-example-as-test run-fail : boost_test_macro3                  ]
-          [ boost.test-example-as-test run-fail : tolerance_01 : [ requires cxx11_variadic_macros ] ]
-          [ boost.test-example-as-test run-fail : tolerance_02 : [ requires cxx11_variadic_macros ] ]
-          [ boost.test-example-as-test run-fail : tolerance_03 : [ requires cxx11_variadic_macros ] ]
-          [ boost.test-example-as-test run-fail : tolerance_04 : [ requires cxx11_variadic_macros ] ]
-          [ boost.test-example-as-test run-fail : boost_test_message                 ]
-          [ boost.test-example-as-test run-fail : boost_test_string                  ]
-          [ boost.test-example-as-test run-fail : boost_test_bitwise                 ]
-        ;
-
-#_________________________________________________________________________________________________#
-
-test-suite "container-comparison-examples-ts"
-        :
-          [ boost.test-example-as-test run-fail : boost_test_container_default       ]
-          [ boost.test-example-as-test run-fail : boost_test_sequence_per_element    ]
-          [ boost.test-example-as-test run-fail : boost_test_container_lex           ]
-          [ boost.test-example-as-test run-fail : boost_test_macro_container_c_array ]
-        ;
+test-suite "docs-examples-ts"
+:
+  [ sequence.transform docs-example-as-test : [ glob ../doc/examples/*.cpp ] ]
+;
 
 #_________________________________________________________________________________________________#
 
 # A target that runs all the tests
-alias test 
-:   utils-ts
-    usage-variants-ts
-    framework-ts
-    writing-test-ts
-    test-organization-ts
-    multithreading-ts
-    prg_exec_monitor-ts
-    execution_monitor-ts
-    dataset-examples-ts
-    BOOST_TEST-examples-ts
-    container-comparison-examples-ts
+alias test
+:
+  utils-ts
+  usage-variants-ts
+  framework-ts
+  writing-test-ts
+  test-organization-ts
+  multithreading-ts
+  prg_exec_monitor-ts
+  execution_monitor-ts
+  docs-examples-ts
 ;
 
 #_________________________________________________________________________________________________#
