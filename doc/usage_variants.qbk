@@ -39,7 +39,7 @@ boost_test.adv_scenarios.single_header_customizations this section].
 
 [/ ##################################################################### ]
 [h3:static_lib Static library usage variant]
-For most users, who has an access to prebuild static library [footnote these files are distributed 
+For most users, who has an access to pre-built static library [footnote these files are distributed 
 with the packaging systems on Linux and OSX for instance] of the __UTF__ or can 
 [link boost_test.adv_scenarios.build_utf build it] themselves, following usage can be most versatile
  and simple approach. This usage variant entails two steps. 

@@ -23,7 +23,7 @@ This API is designed to closely mimic nullary free function declaration syntax.
 In comparison with free function all you need to do is to skip result type and breakets and wrap test 
 case name into BOOST_AUTO_TEST_CASE:
 
-[bt_example example06..Nullary function based test case with automated registration]
+[bt_example example06..Nullary function based test case with automated registration..run]
 
 With this macro you don't need to implement any other registration steps. The macro creates and
 registers the test case with the name `free_test_function` automatically.
@@ -49,7 +49,7 @@ Here is the simplest example of manually registered test case. A single test cas
 the test module initialization routine. Note that the free function name is passed by address to the macro __BOOST_TEST_CASE__`.
 
 [#ref_bt_example01]
-[bt_example example01..Nullary free function manually registered]
+[bt_example example01..Nullary free function manually registered..run]
 
 A test case can be implemented as a method of a class. In this case a pointer to the class instance has to be
 bound to the test method to create a test case. You can use the same instance of the class for multiple test
@@ -62,7 +62,7 @@ instance lifetime yourself.
  shared pointer.
 ]
 
-[bt_example example03..Nullary method of a class bound to shared class instance and manually registered]
+[bt_example example03..Nullary method of a class bound to shared class instance and manually registered..run-fail]
 
 [endsect]
 

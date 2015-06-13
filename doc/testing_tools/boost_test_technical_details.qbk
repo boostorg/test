@@ -9,7 +9,7 @@
 [section:internal_details Technical details]
 Let's consider the following example:
 
-[bt_example boost_test_macro3..BOOST_TEST reporting]
+[bt_example boost_test_macro3..BOOST_TEST reporting..run-fail]
 
 It was already mentioned that the reporting is not symmetrical (see [link boost_test.testing_tools.reports here]). 
 An expression is constructed from the `statement` appearing in the `BOOST_TEST` macro. This expression allows evaluation and reporting such
@@ -74,5 +74,5 @@ In details, what happens is the following:
 
 The example below illustrates the construction of the left-to-right /chained/ expression.
  
-[bt_example boost_test_macro2..BOOST_TEST compound statements]
+[bt_example boost_test_macro2..BOOST_TEST compound statements..run-fail]
 [endsect]

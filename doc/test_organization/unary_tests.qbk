@@ -57,19 +57,19 @@ example above in case of failure you can't say which parameter is at fault) and 
 all parameters even if one of them causes termination a particular sub test case.
 
 In comparison with a manual test case registration for each parameter approach the parametrized test case
-facility is more concise and easily extendible.
+facility is more concise and easily extensible.
 
 In following simple example the same test, implemented in `free_test_function`, is
 performed for 5 different parameters. The parameters are defined in the test module initialization function
 scope. The master test suite contains 5 independent test cases.
 
-[bt_example example07..Unary free function based test case]
+[bt_example example07..Unary free function based test case..run-fail]
 
 Next example is similar, but instead of a free function it uses a method of a class. Even though parameters are
 passed into test method by reference you can still define them in the test module initialization function scope.
 This example employs the alternative test module initialization function specification.
 
-[bt_example example08..Unary class method based test case]
+[bt_example example08..Unary class method based test case..run-fail]
 
 [endsect] [/test case with arity]
 

@@ -37,7 +37,7 @@ BOOST_TEST(result);
 In the example below, `operator==` is not defined for `std::vector` of different types, and the program would fail to
 compile if the corresponding lines were uncommented. `std::vector` uses lexicographical compare by default.
 
-[bt_example boost_test_container_default..BOOST_TEST containers comparison default]
+[bt_example boost_test_container_default..BOOST_TEST containers comparison default..run-fail]
 
 [#boost_test_coll_perelement][h3 Element-wise comparison]
 By specifying the manipulator [classref boost::test_tools::per_element], the comparison of the elements of the containers
@@ -78,7 +78,7 @@ The order of elements is given by the iterators of the respective containers [fo
 sequences for a fixed set of elements they contain]. 
 In case of failure, the indices of the elements failing `op` are returned.
 
-[bt_example boost_test_sequence_per_element..BOOST_TEST sequence comparison]
+[bt_example boost_test_sequence_per_element..BOOST_TEST sequence comparison..run-fail]
 
 [h4 Requirements]
 For the sequences to be comparable element-wise, the following conditions should be met:
@@ -107,7 +107,7 @@ The comparison is performed in the order given by forward iterators of the conta
 [tip lexicographic comparison yields a total order on the containers: the statements `c_a < c_b` and 
  `c_b <= c_a` are mutually exclusive.]
 
-[bt_example boost_test_container_lex..BOOST_TEST container comparison using lexicographical order]
+[bt_example boost_test_container_lex..BOOST_TEST container comparison using lexicographical order..run-fail]
 
 [/ TODO ]
 [/ [h4 Making lexicographic comparison the default] ]
@@ -126,7 +126,7 @@ A sequence is given by the iteration over a /forward iterable/ container. A forw
 * and for which `value_type` is not of type `char` or `wchar_t`
 
 To that respect, C-arrays are *not* forward iterable containers:
-[bt_example boost_test_macro_container_c_array..BOOST_TEST C-arrays]
+[bt_example boost_test_macro_container_c_array..BOOST_TEST C-arrays..run-fail]
 
 
 The detection of the containers is delegated to the class [classref boost::unit_test::is_forward_iterable], which for C++11

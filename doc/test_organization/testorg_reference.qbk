@@ -234,7 +234,7 @@ class with one-argument public constructor. Argument `arg` is forwarded to the c
 function, its destructor is the tear-down function. There is no way to get access to the members of these fixtures from 
 within the test case or test suite.
 
-[bt_example decorator_12..decorator fixture]
+[bt_example decorator_12..decorator fixture..run]
 
 For other ways of using fixtures, see [link boost_test.tests_organization.fixtures here].
 

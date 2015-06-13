@@ -42,7 +42,7 @@ The information extracted from the logs suggests the following fact:
 [h3 Default reporting]
 When an assertion fails, __BOOST_TEST__ reports details and values on the operands of `statement` that lead to the failure. 
 
-[bt_example boost_test_macro3..BOOST_TEST reporting]
+[bt_example boost_test_macro3..BOOST_TEST reporting..run-fail]
 
 In the above example, the values of the operands are reported for inspection, which is more valuable as a copy
 of the full statement. However, we can observe that they are not treated symmetrically:
@@ -59,6 +59,6 @@ is partial with regards to the meaning of the failed statement.
 Sometimes these information are not informative enough. The `BOOST_TEST` macro let you override the default message by the use of 
 a second argument, as shown on the following example.
 
-[bt_example boost_test_message..BOOST_TEST optional failure message]
+[bt_example boost_test_message..BOOST_TEST optional failure message..run-fail]
 
 [endsect] [/ acceptable expressions]

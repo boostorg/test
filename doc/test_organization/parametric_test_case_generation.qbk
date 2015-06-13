@@ -28,32 +28,37 @@ void combined_test()
 
 The approach above has several drawbacks:
 
-* the logic for running the tests is inside a test itself: `single_test` in the above example is run from the test case `combined_test` while its execution would be better
-  handled by the __UTF__
-* in case of fatal failure for one of the values in `param` array above (say a failure in __BOOST_TEST_REQUIRE__), the test `combined_test` is aborted and the next test-case in the test tree is executed. 
-* in case of failure, the reporting is not accurate enough: the test should certainly be reran during debugging sessions by a human or additional logic for reporting should be implemented
-  in the test itself.
-
-
+* the logic for running the tests is inside a test itself: `single_test` in the above example is run from the test 
+  case `combined_test` while its execution would be better handled by the __UTF__
+* in case of fatal failure for one of the values in `param` array above (say a failure in __BOOST_TEST_REQUIRE__),
+  the test `combined_test` is aborted and the next test-case in the test tree is executed. 
+* in case of failure, the reporting is not accurate enough: the test should certainly be reran during debugging 
+  sessions by a human or additional logic for reporting should be implemented in the test itself.
 
 [h4 Parameter generation, scalability and composition]
-In some circumstance, one would like to run a parametrized test over an /arbitrary large/ set of values. Enumerating the parameters by hand is not a solution that scales well,
-especially when these parameters can be described in another function that generates these values. However, this solution has also limitations
+In some circumstance, one would like to run a parametrized test over an /arbitrary large/ set of values. Enumerating the
+parameters by hand is not a solution that scales well, especially when these parameters can be described in another
+function that generates these values. However, this solution has also limitations
 
-* *Generating functions*: suppose we have a function `func(float f)`, where `f` is any number in [0, 1]. We are not interested that much in the exact value, but we would like to test
-  `func`. What about, instead of writing the `f` for which `func` will be tested against, we choose randomly `f` in [0, 1]? And also what about instead of having only one 
-  value for `f`, we run the test on arbitrarily many numbers? We easily understand from this small example that tests requiring parameters are more powerful when, instead 
-  of writing down constant values in the test, a generating function is provided. 
+* *Generating functions*: suppose we have a function `func(float f)`, where `f` is any number in [0, 1]. We are not 
+  interested that much in the exact value, but we would like to test `func`. What about, instead of writing the `f`
+  for which `func` will be tested against, we choose randomly `f` in [0, 1]? And also what about instead of having
+  only one value for `f`, we run the test on arbitrarily many numbers? We easily understand from this small example
+  that tests requiring parameters are more powerful when, instead of writing down constant values in the test, a 
+  generating function is provided. 
 
-* *Scalability*: suppose we have a test case on `func1`, on which we test `N` values written as constant in the test file. 
-  What does the test ensure? We have the guaranty that `func1` is working on these `N` values. Yet in this setting `N` is necessarily finite and usually small. 
-  How would we extend or scale `N` easily? One solution is to be able to 
-  generate new values, and to be able to define a test on the *class* of possible inputs for `func1` on which the function should have a defined behaviour. 
-  To some extent, `N` constant written down in the test are just an excerpt of the possible inputs of `func1`, and working on the class of inputs gives more flexibility and power 
+* *Scalability*: suppose we have a test case on `func1`, on which we test `N` values written as constant in the test 
+  file. What does the test ensure? We have the guaranty that `func1` is working on these `N` values. Yet in this 
+  setting `N` is necessarily finite and usually small. How would we extend or scale `N` easily? One solution is to 
+  be able to generate new values, and to be able to define a test on the *class* of possible inputs for `func1` on 
+  which the function should have a defined behavior. To some extent, `N` constant written down in the test are just
+  an excerpt of the possible inputs of `func1`, and working on the class of inputs gives more flexibility and power 
   to the test. 
 
-* *Composition*: suppose we already have test cases for two functions `func1` and `func2`, taking as argument the types `T1` and `T2` respectively. Now we would like to test a new functions `func3` that 
-  takes as argument a type `T3` containing `T1` and `T2`, and calling `func1` and `func2` through a known algorithm. An example of such a setting would be
+* *Composition*: suppose we already have test cases for two functions `func1` and `func2`, taking as argument the 
+  types `T1` and `T2` respectively. Now we would like to test a new functions `func3` that takes as argument a type 
+  `T3` containing `T1` and `T2`, and calling `func1` and `func2` through a known algorithm. An example of such a 
+  setting would be
   `` 
   // Returns the log of x
   // Precondition: x strictly positive.
@@ -83,21 +88,22 @@ especially when these parameters can be described in another function that gener
   * we would like to reuse the properties of `fast_log` and `fast_inv` in the compound function `func3` and assert that `func3` is well defined over an arbitrary large definition domain. 
   
   Having parametrized tests on `func3` hardly tells us about the possible numerical properties or instabilities close to the point `{field1 = 0, field2 = 1}`. 
-  Indeed, the parametrized test may test for some points around (0,1), but will fail to provide an *asymptotical behaviour* of the function close to this point. 
-
-
+  Indeed, the parametrized test may test for some points around (0,1), but will fail to provide an *asymptotic behavior* of the function close to this point. 
 
 [h4 Data driven tests in the Boost.Test framework]
 The facilities provided by the __UTF__ addressed the issues described above:
 
-* the notion of *datasets* eases the description of the class of inputs for test cases. The datasets also implement several operations that 
-  enable their combinations to create new, more complex datasets,
-* a single macro, __BOOST_DATA_TEST_CASE__, is used for the declaration and registration of a test case over a collection of values (samples),
-* each test case, associated to a unique value, is executed independently from others. These tests are guarded in the same way regular test cases are, which makes
-  the execution of the tests over each sample of a dataset isolated, robust, repeatable and ease the debugging,
+* the notion of *datasets* eases the description of the class of inputs for test cases. The datasets also implement several 
+  operations that enable their combinations to create new, more complex datasets,
+* a single macro, __BOOST_DATA_TEST_CASE__, is used for the declaration and registration of a test case over a collection 
+  of values (samples),
+* each test case, associated to a unique value, is executed independently from others. These tests are guarded in the same 
+  way regular test cases are, which makes the execution of the tests over each sample of a dataset isolated, robust,
+  repeatable and ease the debugging,
 * several datasets generating functions are provided by the __UTF__
 
-The remainder of this section covers the notions and feature provided by the __UTF__ about the data-driven test cases, in particular:
+The remainder of this section covers the notions and feature provided by the __UTF__ about the data-driven test cases, in
+particular:
 
 # the notion of [link boost_test.tests_organization.test_cases.test_case_generation.datasets *dataset* and *sample*] is introduced
 # [link boost_test.tests_organization.test_cases.test_case_generation.datasets_auto_registration the declaration and registration]
@@ -165,25 +171,29 @@ BOOST_DATA_TEST_CASE(test_case_name, dataset, var1) { /* datasets of arity 1 */ 
 BOOST_DATA_TEST_CASE(test_case_name, dataset, var1, ..., varN) { /* datasets of arity N */ }
 ``
 
-The first form of the macro is for datasets of arity 1. The value of the sample being executed by the test body is available through the automatic variable `sample`
-(`xrange` is as its name suggests a range of values):
+The first form of the macro is for datasets of arity 1. The value of the sample being executed by the test body is
+available through the automatic variable `sample` (`xrange` is as its name suggests a range of values):
+
 [snippet_dataset1_1]
 
 The second form is also for datasets of arity 1, but instead of the variable `sample`, the current sample is brought into `var1`:
 [snippet_dataset1_2]
 
-The third form is an extension of the previous form for datasets of arity `N`. The sample being a polymorphic tuple, each of the variables `var1`, ..., `varN` corresponds
-to the index 1, ... `N` of the the sample:
+The third form is an extension of the previous form for datasets of arity `N`. The sample being a polymorphic tuple, each
+of the variables `var1`, ..., `varN` corresponds to the index 1, ... `N` of the the sample:
+
 [snippet_dataset1_3]
 
-
-The arity of the dataset and the number of variables should be exactly the same, the first form being a short-cut for the case of arity 1. 
+The arity of the dataset and the number of variables should be exactly the same, the first form being a short-cut for the
+case of arity 1.
 
 [tip A compilation-time check is performed on the coherence of the arity of the dataset and the number of variables `var1`... `varN`. ]
 
 
-It should be emphasised that this macro does not declares a test case, such as __BOOST_AUTO_TEST_CASE__, but declares and registers as many test cases as there 
-are samples in the dataset given as argument. Each test case runs on exactly *one* sample of the dataset. 
+It should be emphasized that this macro does not declares a test case, such as __BOOST_AUTO_TEST_CASE__, but declares and
+registers as many test cases as there are samples in the dataset given as argument. Each test case runs on exactly *one*
+sample of the dataset.
+
 
 Exactly as regular test cases, each test - or each sample - is executed within the test body in a /guarded manner/: 
 
@@ -237,7 +247,7 @@ The following properties hold:
  `dsb` will never be reached. ]
 
 
-[bt_example dataset_example62..Example of join on datasets]
+[bt_example dataset_example62..Example of join on datasets..run]
 
 
 [endsect]
@@ -276,7 +286,7 @@ A particular handling of the size is performed if `dsa` and `dsb` are of differe
 [caution If the /zip/ operation is not supported for your compiler, the macro [macroref BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE `BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE`] 
  will be automatically set by the __UTF__]
 
-[bt_example dataset_example61..Example of zip on datasets]
+[bt_example dataset_example61..Example of zip on datasets..run]
 
 
 [endsect] [/ zip operation on datasets]
@@ -308,7 +318,7 @@ The following properties hold:
 In the following example, the random number generator is the second dataset. Its state is evaluated 6 times (3 times for the first `xrange` - first dimension -
 and twice for the second `xrange` - second dimension - to which it is zipped). Note that the state of the random engine is not copied between two successive evaluations of the first dimension.
 
-[bt_example dataset_example64..Example of Cartesian product]
+[bt_example dataset_example64..Example of Cartesian product..run-fail]
 
 
 [endsect]
@@ -347,7 +357,7 @@ a size of 1.
 
 The singleton is constructible through the function [funcref boost::unit_test::data::make]. 
 
-[bt_example dataset_example65..Singleton]
+[bt_example dataset_example65..Singleton..run]
 
 
 
@@ -358,7 +368,7 @@ sequence contained in a `C` array. The arity is 1 and the size is the size of th
 
 Such datasets are simply constructed from an overload of the [funcref boost::unit_test::data::make `make`] function.
 
-[bt_example dataset_example66..Array]
+[bt_example dataset_example66..Array..run]
 
 [/ ##################################################################################################################################  ]
 [h4:stl Datasets from forward iterable containers]
@@ -369,7 +379,7 @@ The arity is 1 and the size is the same as the one of the container.
 [tip C++11 implementation enables the dataset generation from any container which iterator implements the forward iterator concept. 
  For C++03, the feature is enabled on most STL containers.]
 
-[bt_example dataset_example67..Dataset from `std::vector` and `std::map`]
+[bt_example dataset_example67..Dataset from `std::vector` and `std::map`..run]
 
 
 
@@ -426,7 +436,7 @@ The details of the named value parameters is given in the table below.
   ]  
 ]
 
-[bt_example dataset_example59..Declaring a test with a range]
+[bt_example dataset_example59..Declaring a test with a range..run-fail]
 
 
 
@@ -485,17 +495,9 @@ The details of the named value parameters is given in the table below.
   ]  
 ]
 
-[bt_example dataset_example63..Declaring a test with a random sequence]
+[bt_example dataset_example63..Declaring a test with a random sequence..run-fail]
 
 
 [endsect] [/ Datasets generators]
-
-
-
-
-
-
-
-
 
 [endsect]

@@ -45,7 +45,7 @@ failures. If the number of failed assertions is less than the number of expected
 total number of expected failures for a given test suite `S` is the sum of the declared expected failures in `S` and the 
 sum of expected failures in all nested test units:
 
-[bt_example decorator_10..decorator expected_failures]
+[bt_example decorator_10..decorator expected_failures..run-fail]
 
 In the above example, we first run all test cases with four failed assertions. The total number of expected failures 
 is 3: 1 (for test `suite1`) + 2 (for `test1`). Because the expected failure count is exceeded, the error is reported. 
@@ -72,9 +72,7 @@ You can use this macro both on a file scope and inside a test suite. Moreover yo
 units coincide in different test suites. Expected failures specification applies to the test unit belonging to the same 
 test suite where __BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ resides.
 
-[bt_example example17..Expected failures specification for automatically registered test case]
-
-
+[bt_example example17..Expected failures specification for automatically registered test case..run]
 
 
 [/-----------------------------------------------------------------]
@@ -86,7 +84,7 @@ test suite where __BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ resides.
 To set the value of expected failures for the manually registered test unit pass it as a second argument for the
 [link ref_test_case_registration `test_suite::add`] call during test unit registration.
 
-[bt_example example16..Expected failures specification for manually registered test case]
+[bt_example example16..Expected failures specification for manually registered test case..run]
 
 [endsect] [/ expected failures]
 
