@@ -15,12 +15,11 @@ using namespace boost::unit_test;
 namespace tt=boost::test_tools;
 using namespace boost;
 
-class test_class
-{
+class test_class {
 public:
   void test_method( double d )
   {
-    BOOST_TEST( d * 100 == (double)(int)(d*100), tt::tolerance(0.01) );
+    BOOST_TEST( d * 100 == (double)(int)(d*100), tt::tolerance(0.0001) );
   }
 } tester;
 
