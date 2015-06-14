@@ -79,8 +79,16 @@ test-suite "utils-ts"
 
 test-suite "usage-variants-ts"
 :
-  [ boost.test-self-test run : usage-variants-ts : single_header_test : included ]
-  # !! two others
+  [ boost.test-self-test run : usage-variants-ts : single-header-test : included ]
+  [ boost.test-self-test run : usage-variants-ts : single-header-custom-init-test : included ]
+  [ boost.test-self-test run : usage-variants-ts : single-header-custom-main-test : included ]
+
+  [ boost.test-self-test run : usage-variants-ts : static-library-test ]
+  [ boost.test-self-test run : usage-variants-ts : static-library-custom-init-test ]
+
+  [ boost.test-self-test run : usage-variants-ts : shared-library-test : boost_unit_test_framework/<link>shared ]
+  [ boost.test-self-test run : usage-variants-ts : shared-library-custom-init-test : boost_unit_test_framework/<link>shared ]
+  [ boost.test-self-test run : usage-variants-ts : shared-library-custom-main-test : boost_unit_test_framework/<link>shared ]
 ;
 
 #_________________________________________________________________________________________________#

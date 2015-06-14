@@ -9,17 +9,25 @@
 //
 //  Version     : $Revision$
 //
-//  Description : included Test Execution Monitor test
+//  Description : static library usage variant with custom init test
 // ***************************************************************************
 
 // Boost.Test
-#define BOOST_TEST_MAIN
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE( test )
 {
     int i = 1;
-    BOOST_CHECK_EQUAL( i*i, 1 );
+    BOOST_TEST( i*i == 1 );
+}
+
+//____________________________________________________________________________//
+
+boost::unit_test::test_suite*
+init_unit_test_suite( int /*argc*/, char* [] /*argv*/ ) {
+    boost::unit_test::framework::master_test_suite().p_name.value = "Custom init func";
+
+    return 0;
 }
 
 //____________________________________________________________________________//
