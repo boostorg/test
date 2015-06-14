@@ -17,8 +17,10 @@
 #include <vector>
 
 struct dummy_class {
-  bool operator==(dummy_class const&) const { return true;  }
-  bool operator!=(dummy_class const&) const { return false; }
+    operator bool() const { return true; }
+
+    bool operator==(dummy_class const&) const { return true;  }
+    bool operator!=(dummy_class const&) const { return false; }
 };
 
 BOOST_TEST_DONT_PRINT_LOG_VALUE(dummy_class)
@@ -47,7 +49,7 @@ std::vector<dummy_class> generate_vector()
 
 BOOST_DATA_TEST_CASE( test_data_case, boost::unit_test::data::make(generate_vector()))
 {
-  BOOST_CHECK(true);
+  BOOST_TEST(sample);
 }
 
 //____________________________________________________________________________//

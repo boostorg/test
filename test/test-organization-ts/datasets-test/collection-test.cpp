@@ -21,7 +21,7 @@
 namespace utf=boost::unit_test;
 namespace data=utf::data;
 
-#include "test_datasets.hpp"
+#include "datasets-test.hpp"
 #include <vector>
 #include <list>
 

@@ -148,7 +148,7 @@ BOOST_AUTO_TEST_CASE( manual_test_suite_creation )
     pos = fn.rfind( "\\" );
     if( pos != const_string::npos )
         fn.trim_left( pos+1 );
-    BOOST_TEST( fn == const_string( "test_tree_management_test.cpp" ) );
+    BOOST_TEST( fn == const_string( "test-tree-management-test.cpp" ) );
     BOOST_TEST( ts1->p_line_num == 138U );
 
     BOOST_TEST( ts1->p_expected_failures == 0U );

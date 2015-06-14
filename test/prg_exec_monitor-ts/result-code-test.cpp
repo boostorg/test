@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : test the Execution Monitor logic regards cpp_main return values
+//  Description : test the Execution Monitor logic regards cpp_main return value
 // ***************************************************************************
 #include <stdexcept>
 

@@ -14,7 +14,7 @@
 #include <boost/test/data/monomorphic/array.hpp>
 namespace data=boost::unit_test::data;
 
-#include "test_datasets.hpp"
+#include "datasets-test.hpp"
 
 //____________________________________________________________________________//
 
