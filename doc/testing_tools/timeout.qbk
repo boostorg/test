@@ -12,7 +12,7 @@ The __UTF__ provides the decorator __decorator_timeout__ that specifies a time-o
 The argument time (in seconds) sets the maximum allowed duration of a test case. If this time is 
 exceeded the test case is forced to stop and is reported as failure.
 
-[bt_example decorator_11..decorator timeout]
+[bt_example decorator_11..decorator timeout..run-fail]
 
 [note Applied at test suite level, this decorator has no effect.]
 

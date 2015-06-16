@@ -41,6 +41,7 @@ struct it_pair {
     }
 
     It      begin() const   { return m_begin; }
+    It      end() const     { return m_begin + m_size; }
     size_t  size() const    { return m_size; }
 
 private:

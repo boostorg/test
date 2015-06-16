@@ -111,7 +111,7 @@ unit. The default tolerance only applies to a particular type, so it makes sense
 decorator if we are comparing different floating point types. For more details see __floating_points_testing_impl__. 
 The variant with `percent_tolerance` uses value `eps / 100` as tolerance.
 
-[bt_example decorator_13..decorator tolerance]
+[bt_example decorator_13..decorator tolerance..run-fail]
 
 In the above example,  in `test1`, checks on `double`s fail because they differ by more what tolerance for `double`s 
 specifies. In `test2` the tolerance for `double`s is greater and therefore the checks succeed. In `test3`, we specify 
@@ -139,7 +139,7 @@ These tools are used to validate the predicate value. The only parameter for the
 value that gets validated. It could be any expression that could be evaluated and converted to boolean value. The
 expression gets evaluated only once, so it's safe to pass complex expression for validation.
 
-[bt_example example34..BOOST_<level> usage]
+[bt_example example34..BOOST_<level> usage..run-fail]
 
 See also:
 
@@ -164,7 +164,7 @@ right value's bits mismatch.
 The first parameter is the left compared value. The second parameter is the right compared value. Parameters are
 not required to be of the same type, but warning is issued if their type's size does not coincide.
 
-[bt_example example33..BOOST_<level>_BITWISE_EQUAL usage]
+[bt_example example33..BOOST_<level>_BITWISE_EQUAL usage..run-fail]
 
 See also:
 
@@ -188,7 +188,7 @@ The difference is that the mismatched values are reported as well.
       __BOOST_LEVEL_CLOSE_FRACTION__ tools instead.
 ]
 
-[bt_example example35..BOOST_<level>_EQUAL usage]
+[bt_example example35..BOOST_<level>_EQUAL usage..run-fail]
 
 See also:
 
@@ -213,7 +213,7 @@ positions, collection elements at these positions and check that the collections
 parameters designate begin and end of the first collection. The two last parameters designate begin and end of the
 second collection.
 
-[bt_example example36..BOOST_<level>_EQUAL_COLLECTIONS usage]
+[bt_example example36..BOOST_<level>_EQUAL_COLLECTIONS usage..run-fail]
 
 See also:
 
@@ -248,8 +248,8 @@ The first parameter is the ['left] compared value. The second parameter is the
 [note Note that to use these tools you need to include additional header `floating_point_comparison.hpp`.
 ]
 
-[bt_example example42..BOOST_<level>_CLOSE usage with small values]
-[bt_example example43..BOOST_<level>_CLOSE usage with big values]
+[bt_example example42..BOOST_<level>_CLOSE usage with small values..run-fail]
+[bt_example example43..BOOST_<level>_CLOSE usage with big values..run]
 
 See also:
 
@@ -283,7 +283,7 @@ The first parameter is the ['left] compared value. The second parameter is the
 
 [note Note that to use these tools you need to include additional header `floating_point_comparison.hpp`.]
 
-[bt_example example44..BOOST_<level>_CLOSE_FRACTION usage]
+[bt_example example44..BOOST_<level>_CLOSE_FRACTION usage..run-fail]
 
 See also:
 
@@ -310,7 +310,7 @@ predicate evaluates to false, check fails. In comparison with __BOOST_LEVEL_THRO
 allow performing more fine-grained checks. For example: make sure that an expected exception has specific 
 error message.
 
-[bt_example example37..BOOST_<level>_EXCEPTION usage]
+[bt_example example37..BOOST_<level>_EXCEPTION usage..run-fail]
 
 See also:
 
@@ -330,7 +330,7 @@ See also:
 Check performed by these tools is the same as the one performed by `__BOOST_LEVEL__( left >= right )`.
 The difference is that the argument values are reported as well.
 
-[bt_example example57..BOOST_<level>_GE usage]
+[bt_example example57..BOOST_<level>_GE usage..run-fail]
 
 See also:
 
@@ -354,7 +354,7 @@ See also:
 Check performed by these tools is the same as the one performed by __BOOST_LEVEL__`( left > right )`.
 The difference is that the argument values are reported as well.
 
-[bt_example example58..BOOST_<level>_GT usage]
+[bt_example example58..BOOST_<level>_GT usage..run-fail]
 
 See also:
 
@@ -376,7 +376,7 @@ See also:
 Check performed by these tools is the same as the one performed by `__BOOST_LEVEL__( left <= right )`.
 The difference is that the argument values are reported as well.
 
-[bt_example example55..BOOST_<level>_LE usage]
+[bt_example example55..BOOST_<level>_LE usage..run-fail]
 
 See also:
 
@@ -398,7 +398,7 @@ See also:
 Check performed by these tools is the same as the one performed by `__BOOST_LEVEL__( left < right )`.
 The difference is that the argument values are reported as well.
 
-[bt_example example56..BOOST_<level>_LT usage]
+[bt_example example56..BOOST_<level>_LT usage..run-fail]
 
 See also:
 
@@ -424,7 +424,7 @@ The first parameter is the boolean expression. The second parameter is the messa
 failure. The message argument can be constructed of components of any type supporting the 
 `std::ostream& operator<<(std::ostream&)`.
 
-[bt_example example38..BOOST_<level>_MESSAGE usage]
+[bt_example example38..BOOST_<level>_MESSAGE usage..run]
 
 See also:
 
@@ -446,7 +446,7 @@ See also:
 Check performed by these tools is the same as the one performed by `__BOOST_<level>__( left != right )`.
 The difference is that the matched values are reported as well.
 
-[bt_example example54..BOOST_<level>_NE usage]
+[bt_example example54..BOOST_<level>_NE usage..run-fail]
 
 See also:
 
@@ -474,7 +474,7 @@ a form ``error in <test-case-name>;exception was thrown by <expression>``
 The only parameter is an expression to execute. You can use `do {} while(0)` block if you want to execute more than one
 statement.
 
-[bt_example example39..BOOST_<level>_NO_THROW usage]
+[bt_example example39..BOOST_<level>_NO_THROW usage..run-fail]
 
 See also:
 
@@ -500,7 +500,7 @@ advantage of these tools is that they show arguments values in case of predicate
 The first parameter is the predicate itself. The second parameter is the list of predicate arguments each wrapped
 in round brackets (`BOOST_PP` sequence format).
 
-[bt_example example40..BOOST_<level>_PREDICATE usage]
+[bt_example example40..BOOST_<level>_PREDICATE usage..run]
 
 [note Note difference in error log from __BOOST_<level>__]
 
@@ -527,7 +527,7 @@ The first parameter is the value to check. The second parameter is the tolerance
 
 [note Note that to use these tools you need to include additional header `floating_point_comparison.hpp`.]
 
-[bt_example example41..BOOST_<level>_SMALL usage]
+[bt_example example41..BOOST_<level>_SMALL usage..run-fail]
 
 See also:
 
@@ -560,7 +560,7 @@ error in <test-case-name>: exception <exception> expected
 The first parameter is the expression to execute. Use `do{} while(0)` block if you want to execute more than one
 statement. The second parameter is an expected exception.
 
-[bt_example example45..BOOST_<level>_THROW usage]
+[bt_example example45..BOOST_<level>_THROW usage..run-fail]
 
 See also:
  
@@ -588,7 +588,7 @@ an unconditional error counter increasing and message logging.
 
 The tool's only parameter is an error message to log.
 
-[bt_example example46..BOOST_ERROR usage]
+[bt_example example46..BOOST_ERROR usage..run-fail]
 
 See also:
 
@@ -609,7 +609,7 @@ unconditional error counter increasing, message logging and the current test cas
 
 The tool's only parameter is an error message to log.
 
-[bt_example example47..BOOST_FAIL usage]
+[bt_example example47..BOOST_FAIL usage..run-fail]
 
 See also:
 
@@ -633,7 +633,7 @@ macro definition with non-zero arity specify dummy arguments for it. See below f
 
 The only tool's parameter is a preprocessor symbol that gets validated.
 
-[bt_example example48..BOOST_IS_DEFINED usage]
+[bt_example example48..BOOST_IS_DEFINED usage..run-fail]
 
 See also:
 

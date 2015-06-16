@@ -20,7 +20,7 @@ struct MyConfig {
 };
 
 // structure MyConfig is used as a global fixture - it's invoked pre and post any testing is performed
-BOOST_GLOBAL_FIXTURE( MyConfig )
+BOOST_GLOBAL_FIXTURE( MyConfig );
 
 //____________________________________________________________________________//
 

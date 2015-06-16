@@ -34,7 +34,7 @@ __PEM__ instead of regular function `main` your program is required to supply a 
    
 Here is the traditional ['Hello World] program implemented using the __PEM__:
 
-[bt_example example24..Hello World with the Program Execution Monitor]
+[bt_example example24..Hello World with the Program Execution Monitor..run-fail]
 
 It really is that simple - just change the name of your initial function from `main()` to `cpp_main()`. Do make sure 
 the `argc` and `argv` parameters are specified (although you don't have to name them if you don't use them).
@@ -47,7 +47,7 @@ The __PEM__ treats as errors:
 So what if some function had thrown a `std::runtime_error` with the message "big trouble" and it is not trapped by any
 catch clause? Like in a following example:
   
-[bt_example example25..Standard exception detection within the __PEM__]
+[bt_example example25..Standard exception detection within the __PEM__..run-fail]
 
 [note Note that in both examples above we used [link boost_test.components.section_pem.section_pem_compilation.section_pem_full_include single-header variant]
 of the __PEM__. Alternatively the binaries may be built and linked with
@@ -56,7 +56,7 @@ a [link boost_test.components.section_pem.section_pem_compilation.section_pem_st
 
 Let's consider an example where function `cpp_main()` had bubbled up a return code of 5:
 
-[bt_example example26..Error return code detection of the __PEM__]
+[bt_example example26..Error return code detection of the __PEM__..run-fail]
   
 The __PEM__ reports errors to both `std::cout` (details) and `std::cerr` (summary). Primary detailed error 
 messages appear on standard output stream so that it is properly interlaced with other output, thus aiding error 

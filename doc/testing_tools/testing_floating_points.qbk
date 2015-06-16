@@ -16,14 +16,14 @@ parameter that will instruct the framework what we consider 'sufficiently close'
 
 We can define a per-[link test_unit test unit] tolerance for a given floating point type by using [link boost_test.tests_organization.decorators decorator] __decorator_tolerance__:
 
-[bt_example tolerance_01..specifying tolerance per test case]
+[bt_example tolerance_01..specifying tolerance per test case..run-fail]
 
 How the tolerance parameter is processed in detail is described [link boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_impl here].
 
 It is possible to specify floating point comparison tolerance per single assertion, by providing ['manipulator] [funcref boost::test_tools::tolerance] 
 as the second argument to __BOOST_TEST__.
 
-[bt_example tolerance_02..specifying tolerance per assertion]
+[bt_example tolerance_02..specifying tolerance per assertion..run-fail]
 
 [caution The support for manipulators requires that your compiler supports variadic macros, `auto` for type deduction
  and `decltype`. These are C++11 features, but are also available on some pre-C++11 compilers. On compilers that are
@@ -87,7 +87,7 @@ Finally, note that comparisons for tolerance are also applied to `operator<` wit
 and other relational operators. Also, the tolerance-based comparisons are involved when a more complicated expression tree is
 processed within the assertion body:
 
-[bt_example tolerance_03..tolerance applied in more complex expressions]  
+[bt_example tolerance_03..tolerance applied in more complex expressions..run-fail] 
 
 
 [/############################################################################]
@@ -110,7 +110,7 @@ you can just specialize [classref boost::math::fpc::tolerance_based] for your ty
 `boost::true_type`. Your type does not even have to be a floating-point type provided that it models concept
 [link boost_test.testing_tools.extended_comparison.floating_point.customizing_for_tolerance.concept_tolerance_based `ToleranceCompatible`].
 
-[bt_example tolerance_04..adapting user-defined types for tolerance-based comparison]
+[bt_example tolerance_04..adapting user-defined types for tolerance-based comparison..run-fail]
 
 [h3:concept_tolerance_based Concept `ToleranceCompatible`]
 

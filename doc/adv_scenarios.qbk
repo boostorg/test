@@ -22,7 +22,7 @@ To streamline the experience of setting up your test module, the __UTF__ provide
 initialization logic for them. Usually the default test module initialization will work just fine,
 but if you want to implement some custom initialization or change how default initialization 
 behaves you need to first look in [*Test module initialization] section. Here you'll learn 
-about various options the __UTF__ provides for you to customize this behaviour.
+about various options the __UTF__ provides for you to customize this behavior.
 
 The part of the framework which loads, initializes and executed your test module is called the 
 [*Test Runner]. Each usage variant comes with default test runner. If, instead, you prefer to 
@@ -47,6 +47,6 @@ are not sufficient for your purposes.
 
 [/=============================================================================]
 
-[endsect] [/Advanced usage scenarious]
+[endsect] [/Advanced usage scenarios]
 
 [/ EOF]

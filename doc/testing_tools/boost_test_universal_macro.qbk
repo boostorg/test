@@ -15,7 +15,7 @@ macro. The general form of `BOOST_TEST` is the following:
 
 An example of use might be the following:
 
-[bt_example boost_test_macro_overview..BOOST_TEST overview]
+[bt_example boost_test_macro_overview..BOOST_TEST overview..run-fail]
 
 The major features of this tool are:
 
@@ -44,7 +44,7 @@ The major features of this tool are:
 `BOOST_TEST` provides an enhanced reporting capability: additional details of the failing operands and operations are provided in the log, 
 as shown on the example below:
 
-[bt_example boost_test_macro3..BOOST_TEST enhanced reporting]
+[bt_example boost_test_macro3..BOOST_TEST enhanced reporting..run-fail]
 
 `BOOST_TEST` parses the `statement` and constructs an expression out of it. `statement` may be a complex expressions 
 containing almost any of the overloadable operators in C++:
@@ -78,7 +78,7 @@ There are a few constructions that are however unsupported, but adding an extra 
     
   The full details are given in [link boost_test.testing_tools.internal_details this section].
 
-[bt_example boost_test_macro_workaround..BOOST_TEST limitation and workaround]
+[bt_example boost_test_macro_workaround..BOOST_TEST limitation and workaround..run]
 
 
 [endsect] [/ boost_test_universal_macro]

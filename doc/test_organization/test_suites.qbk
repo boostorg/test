@@ -46,7 +46,7 @@ become members of the master test suite. There is no limit on depth of test suit
 This example creates a test tree that matches exactly the one created in the manual test suite registration
 example.
 
-[bt_example example12..Test suites with automated registration]
+[bt_example example12..Test suites with automated registration..run-fail]
 
 As you can see test tree construction in this example is more straightforward and automated.
 
@@ -54,7 +54,7 @@ In the example below, the test suite `test_suite` consists of two parts. Their d
 test case. In fact these parts may even reside in different test files. The resulting test tree remains the same. As
 you can see from the output both `test_case1` and `test_case2` reside in the same test suite `test_suite`.
 
-[bt_example example53..Test suite extension using automated registration facility]
+[bt_example example53..Test suite extension using automated registration facility..run-fail]
 
 [h3 Test suites with manual registration]
 To create a test suite manually you need to 
@@ -118,7 +118,7 @@ The example below creates a test tree, which can be represented by the following
 
 [$images/class-hier.jpg]
 
-[bt_example example11..Manually registered test suites]
+[bt_example example11..Manually registered test suites..run]
 
 [section:master_test_suite Master Test Suite]
 
@@ -175,7 +175,7 @@ master test suite.
 Returning to the free function example, let's modify initialization function to check for absence of any
 test module arguments.
 
-[bt_example example13..Command line access in initialization function]
+[bt_example example13..Command line access in initialization function..run]
 
 [#ref_BOOST_TEST_MODULE][h4 Naming the ['Master test suite]]
 
@@ -184,13 +184,13 @@ reset the name to a different value: using the macro __BOOST_TEST_MODULE__
 and from within the test module initialization function. Former is used for test modules that don't have the
 manually implemented initialization function. Following examples illustrate these methods.
 
-[bt_example example14..Naming master test suite using the macro __BOOST_TEST_MODULE__]
+[bt_example example14..Naming master test suite using the macro __BOOST_TEST_MODULE__..run]
 
 If the macro __BOOST_TEST_MODULE__ is defined, the test module initialization
 function is [*automatically generated] and the
 macro value becomes the name of the master test suite. The name may include spaces.
 
-[bt_example example15..Naming master test suite explicitly in the test module initialization function]
+[bt_example example15..Naming master test suite explicitly in the test module initialization function..run]
 
 Without the __BOOST_TEST_MAIN__ and the __BOOST_TEST_MODULE__ flags defined, the test module initialization 
 function has to be manually implemented. The master test suite name can be reset at any point within this function.

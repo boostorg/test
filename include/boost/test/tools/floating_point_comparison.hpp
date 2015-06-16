@@ -220,10 +220,10 @@ public:
     // Access methods
     //! Returns the tolerance
     FPT                 fraction_tolerance() const  { return m_fraction_tolerance; }
-    
+
     //! Returns the comparison method
     fpc::strength       strength() const            { return m_strength; }
-    
+
     //! Returns the failing fraction
     FPT                 tested_rel_diff() const     { return m_tested_rel_diff; }
 

@@ -135,7 +135,7 @@ argument and test log output by adding
 
 argument, so that test module won't produce undesirable output no one is going to look at 
 anyway. We recommend relying only on result code that will be consistent for all test programs. An 
-alternative to my second recommendation is direct both log and report to separate file you could analyse 
+alternative to my second recommendation is direct both log and report to separate file you could analyze 
 later on. Moreover you can  make Boost.Test to produce them in XML format using 
 
 ``

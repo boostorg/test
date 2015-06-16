@@ -26,8 +26,9 @@
 
 #include <boost/test/detail/pp_variadic.hpp>
 
-// STL
 #ifdef BOOST_TEST_NO_OLD_TOOLS
+#include <boost/preprocessor/seq/to_tuple.hpp>
+
 #include <iterator>
 #endif // BOOST_TEST_NO_OLD_TOOLS
 
@@ -313,17 +314,20 @@ do { try {                                                                  \
 
 #define BOOST_WARN_EQUAL_COLLECTIONS( L_begin, L_end, R_begin, R_end )              \
     BOOST_TEST_WARN( ::boost::test_tools::tt_detail::make_it_pair(L_begin, L_end) ==\
-                     ::boost::test_tools::tt_detail::make_it_pair(R_begin, R_end) ) \
+                     ::boost::test_tools::tt_detail::make_it_pair(R_begin, R_end),  \
+                     ::boost::test_tools::per_element() )                           \
 /**/
 
 #define BOOST_CHECK_EQUAL_COLLECTIONS( L_begin, L_end, R_begin, R_end )              \
     BOOST_TEST_CHECK( ::boost::test_tools::tt_detail::make_it_pair(L_begin, L_end) ==\
-                      ::boost::test_tools::tt_detail::make_it_pair(R_begin, R_end) ) \
+                      ::boost::test_tools::tt_detail::make_it_pair(R_begin, R_end),  \
+                      ::boost::test_tools::per_element() )                           \
 /**/
 
 #define BOOST_REQUIRE_EQUAL_COLLECTIONS( L_begin, L_end, R_begin, R_end )              \
     BOOST_TEST_REQUIRE( ::boost::test_tools::tt_detail::make_it_pair(L_begin, L_end) ==\
-                        ::boost::test_tools::tt_detail::make_it_pair(R_begin, R_end) ) \
+                        ::boost::test_tools::tt_detail::make_it_pair(R_begin, R_end),  \
+                        ::boost::test_tools::per_element() )                           \
 /**/
 
 //____________________________________________________________________________//
@@ -331,6 +335,12 @@ do { try {                                                                  \
 #define BOOST_WARN_BITWISE_EQUAL( L, R )    BOOST_TEST_WARN( L == R, ::boost::test_tools::bitwise() )
 #define BOOST_CHECK_BITWISE_EQUAL( L, R )   BOOST_TEST_CHECK( L == R, ::boost::test_tools::bitwise() )
 #define BOOST_REQUIRE_BITWISE_EQUAL( L, R ) BOOST_TEST_REQUIRE( L == R, ::boost::test_tools::bitwise() )
+
+//____________________________________________________________________________//
+
+#define BOOST_WARN_PREDICATE( P, ARGS )     BOOST_TEST_WARN( P BOOST_PP_SEQ_TO_TUPLE(ARGS) )
+#define BOOST_CHECK_PREDICATE( P, ARGS )    BOOST_TEST_CHECK( P BOOST_PP_SEQ_TO_TUPLE(ARGS) )
+#define BOOST_REQUIRE_PREDICATE( P, ARGS )  BOOST_TEST_REQUIRE( P BOOST_PP_SEQ_TO_TUPLE(ARGS) )
 
 //____________________________________________________________________________//
 

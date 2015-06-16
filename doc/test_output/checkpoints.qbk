@@ -27,7 +27,7 @@ The message formatted at the checkpoint position is saved and reported by the ex
 occurs). Similarly to the __BOOST_TEST_MESSAGE__ the message can be formatted from any standard
 output stream compliant components.
 
-[bt_example example22..__BOOST_TEST_CHECKPOINT__ usage]
+[bt_example example22..__BOOST_TEST_CHECKPOINT__ usage..run-fail]
 
 
 [/ -------------------------------------------------------------------------------------------------- ]
@@ -44,9 +44,6 @@ Unlike the macro __BOOST_TEST_CHECKPOINT__ this macro doesn't require any messag
 supplied with it. It's just a simple "been there" marker that records file name and line number
 code passes through.
 
-[bt_example example23..__BOOST_TEST_PASSPOINT__ usage]
-
-
-
+[bt_example example23..__BOOST_TEST_PASSPOINT__ usage..run-fail]
 
 [endsect] [/checkpoints]

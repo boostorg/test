@@ -31,7 +31,7 @@ The macro __BOOST_AUTO_TEST_CASE_TEMPLATE__ requires three arguments:
          name of the type the test case template is instantiated with
 # The collection of types to instantiate test case template with: arbitrary MPL sequence
 
-[bt_example example10..Test case template with automated registration]
+[bt_example example10..Test case template with automated registration..run-fail]
 
 [#ref_BOOST_TEST_CASE_TEMPLATE][h4 Test case template with manual registration]
 One way to perform the same set of checks for a component instantiated with different template parameters is
@@ -109,23 +109,22 @@ The names passed to both macros should be the same.
   BOOST_TEST_CASE_TEMPLATE(test_case_name, collection_of_types);
 ``
 
-__BOOST_TEST_CASE_TEMPLATE__ creates an instance of the test case generator. When passed to the method
-[memberref boost::unit_test::test_suite::add `test_suite::add`], the generator produces a separate sub test case for each type in the supplied collection of
-types and registers it immediately in the test suite. Each test case is based on the test case template body
-instantiated with a particular test type.
+__BOOST_TEST_CASE_TEMPLATE__ creates an instance of the test case generator. When passed to the method [memberref
+boost::unit_test::test_suite::add `test_suite::add`], the generator produces a separate sub test case for each type in
+the supplied collection of types and registers it immediately in the test suite. Each test case is based on the test
+case template body instantiated with a particular test type.
 
-The names for the ['sub test cases] are deduced from the macro argument `test_case_name`. If you prefer to assign different test
-case names, you need to use the underlying `make_test_case` interface instead. Both test cases creation and
-registration is performed in the test module initialization function.
+The names for the ['sub test cases] are deduced from the macro argument `test_case_name`. If you prefer to assign
+different test case names, you need to use the underlying `make_test_case` interface instead. Both test cases creation
+and registration is performed in the test module initialization function.
 
-[tip
-The test case template facility is preferable to the approach in example above, since execution of each sub
-test case is guarded and counted separately. It produces a better test log/results report (in example above in
-case of failure you can't say which type is at fault) and allows you to test all types even if one of
-them causes termination of the sub test case.
-]
+[tip The test case template facility is preferable to the approach in example above, since execution of each sub test
+case is guarded and counted separately. It produces a better test log/results report (in example above in case of
+failure you can't say which type is at fault) and allows you to test all types even if one of them causes termination of
+the sub test case. ]
 
-[bt_example example09..Manually registered test case template]
+
+[bt_example example09..Manually registered test case template..run-fail]
 
 [endsect] [/template test cases]
 

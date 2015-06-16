@@ -14,6 +14,8 @@
 
 // Boost.Test
 #include <boost/test/tools/assertion_result.hpp>
+#include <boost/test/tools/detail/print_helper.hpp>
+#include <boost/test/tools/detail/fwd.hpp>
 
 // Boost
 #include <boost/type.hpp>

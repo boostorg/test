@@ -163,11 +163,11 @@
 [/ templates ]
 
 
-[template bt_example[name descr]
+[template bt_example[name descr rule]
 
 [h5 Example: [descr]]
 
-[import ../examples/[name].cpp]
+[import ../examples/[name].[rule].cpp]
 [import ../examples/[name].output]
 [table
   [[Code]]
@@ -186,7 +186,7 @@
 
 [section:ref_[name] [descr]] 
 
-[import examples/[name].cpp]
+[import examples/[name].run-fail.cpp]
 [import examples/[name].output]
 
 [heading Source]

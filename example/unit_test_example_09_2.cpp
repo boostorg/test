@@ -20,7 +20,7 @@ struct MyConfig2 {
 };
 
 // structure MyConfig2 is used as a global fixture. You could have any number of global fxtures
-BOOST_GLOBAL_FIXTURE( MyConfig2 )
+BOOST_GLOBAL_FIXTURE( MyConfig2 );
 
 //____________________________________________________________________________//
 

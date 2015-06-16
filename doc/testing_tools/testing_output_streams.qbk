@@ -49,7 +49,7 @@ There are two ways to employ the class `output_test_stream`:
 
 Use the instance of class `output_test_stream` as an output stream and check output content using tool's methods.
 
-[bt_example example28..Explicit output checks with `output_test_stream`]
+[bt_example example28..Explicit output checks with `output_test_stream`..run-fail]
 
 [note Use of `false` to prevent output flushing in first two invocation of check functions. Unless
 you want to perform several different checks for the same output you wouldn't need to use it though. Your
@@ -69,7 +69,7 @@ i=2
 File: test.cpp Line:XXX
 ]
 
-[bt_example example29..Pattern file matching with `output_test_stream`]
+[bt_example example29..Pattern file matching with `output_test_stream`..run-fail]
 
 [tip Try to perform checks as frequently as possible, because it allows you to more closely identify possible source
     of failure

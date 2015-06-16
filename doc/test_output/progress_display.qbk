@@ -34,7 +34,7 @@ initialization. Use following interface to redirect test progress output:
   boost::unit_test::progress_monitor.set_stream( std::ostream& )
 ``
 
-[bt_example example49..Progress report for the test module with large amount of test cases]
+[bt_example example49..Progress report for the test module with large amount of test cases..run]
 
 [endsect] [/section:test_output_progress]
 

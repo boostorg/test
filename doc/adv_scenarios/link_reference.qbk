@@ -55,11 +55,11 @@ Define this flag to link against the __UTF__ shared library.
 [endsect]
 
 [section:link_boost_test_no_main `BOOST_TEST_NO_MAIN`]
-Prevents the auto generation of the test module initialisation functions. This macro is particularly relevant for
+Prevents the auto generation of the test module initialization functions. This macro is particularly relevant for
 manually registered tests in conjunction with dynamic variant of the __UTF__. When defined, a `main` function 
 registering all the tests should be implemented. 
 
-An example of a module initialisation would be
+An example of a module initialization would be
 ``
 #define __BOOST_TEST_NO_MAIN__
 #include <boost/test/unit_test.hpp>

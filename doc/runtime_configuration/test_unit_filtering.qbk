@@ -22,7 +22,7 @@ Initially, the master test suite has default run status set to ['true]. All othe
 
 You can set a different default run status in any test unit by using [link boost_test.tests_organization.decorators decorators]: __decorator_disabled__, __decorator_enabled__ and __decorator_enable_if__. The default run status is set once, upon testing program initialization, and cannot be changed. The disabled tests are not executed by default, but are still present in the test tree, and are listed along with other tests when you use command-line argument __param_list_content__. 
 
-[bt_example decorator_20..default run status]
+[bt_example decorator_20..default run status..run-fail]
 
 [#ref_dynamic_test_dependency][h3 Dynamic test dependencies]
 
@@ -219,7 +219,7 @@ For the syntax productions describing the structure of `<test_set>` value see [l
 
 While using manual absolute test case specification ignores the default run status, it does not ignore the dynamic test dependencies. If test unit `B` depends on test unit `A` and test `B` is specified to be run by __param_run_test__, `A` is also run, even if it is not specified, and its failure may cause the execution of `B` to be skipped. Similarly, the failed check of the __decorator_precondition__ may cause the test selected test to be skipped.
 
-[bt_example decorator_21..run_test and dynamic dependencies]
+[bt_example decorator_21..run_test and dynamic dependencies..run-fail]
 
 
 [#ref_command_line_control_enablers][h4 Relative specification]
@@ -233,10 +233,10 @@ Term 'relative' in this context means that the configuration is based on either 
 ]
 
 The ['enabler] specification is used to enable a set of test units which are initially disabled.
-[bt_example decorator_22..command-line enabler]
+[bt_example decorator_22..command-line enabler..run]
 
 Conversely, the ['disabler] specification is used to disable a set of test units which are initially enabled.
-[bt_example decorator_23..command-line disabler]
+[bt_example decorator_23..command-line disabler..run]
 
 If there are both an enabler and disabler on one command line that specify the same test, the test becomes disabled. I.e., the disabler takes the precedence over the enabler. 
 
