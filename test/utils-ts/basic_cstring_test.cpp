@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2015.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -52,24 +52,23 @@ typedef mpl::list2<char,const char>                                         io_t
 //____________________________________________________________________________//
 
 template<typename CharT>
-struct string_literal
-{
+struct string_literal {
     typedef typename boost::remove_const<CharT>::type   mutable_char;
 
     string_literal( char const* orig, std::size_t orig_size )
+    : buff( orig, orig + orig_size )
     {
-        std::copy( orig, orig + orig_size, buff );
-
-        buff[orig_size] = 0;
     }
 
-    mutable_char buff[100];
+    CharT* begin() const { return const_cast<CharT*>(buff.c_str()); }
+
+    std::basic_string<mutable_char> buff;
 };
 
-#define LITERAL( s ) (CharT*)string_literal<CharT>( s, sizeof( s ) ).buff
+#define LITERAL( s ) (CharT*)string_literal<CharT>( s, sizeof( s ) ).begin()
 #define LOCAL_DEF( name, s )                                                \
 string_literal<CharT> BOOST_JOIN( sl, __LINE__)(s, sizeof( s ));            \
-utf::basic_cstring<CharT> name( (CharT*)(BOOST_JOIN( sl, __LINE__).buff) )  \
+utf::basic_cstring<CharT> name( (CharT*)(BOOST_JOIN( sl, __LINE__).begin()))\
 /**/
 
 #define TEST_STRING test_string<CharT>( (CharT*)0 )
@@ -80,7 +79,7 @@ test_string( CharT* = 0 )
 {
     static string_literal<CharT> l( "test_string", 11 );
 
-    return l.buff;
+    return l.begin();
 }
 
 //____________________________________________________________________________//
@@ -221,17 +220,17 @@ BOOST_TEST_CASE_TEMPLATE_FUNCTION( asignment_test, CharT )
     utf::basic_cstring<CharT> bcs1;
     string_literal<CharT> l( "test", 4 );
 
-    bcs1 = l.buff;
+    bcs1 = l.begin();
     BOOST_TEST( traits_type::compare( bcs1.begin(), LITERAL( "test" ), bcs1.size() ) == 0 );
 
     utf::basic_cstring<CharT> bcs2( TEST_STRING );
     bcs1 = bcs2;
     BOOST_TEST( traits_type::compare( bcs1.begin(), TEST_STRING, bcs1.size() ) == 0 );
 
-    bcs1.assign( l.buff );
+    bcs1.assign( l.begin() );
     BOOST_TEST( traits_type::compare( bcs1.begin(), LITERAL( "test" ), bcs1.size() ) == 0 );
 
-    bcs1.assign( l.buff+1, l.buff+3 );
+    bcs1.assign( l.begin()+1, l.begin()+3 );
     BOOST_TEST( traits_type::compare( bcs1.begin(), LITERAL( "est" ), bcs1.size() ) == 0 );
 
     bcs1.assign( bcs2, 4, 3 );
