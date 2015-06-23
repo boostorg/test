@@ -187,7 +187,7 @@ same shared fixture for all test cases in a test suite, use the macro __BOOST_FI
 macro __BOOST_AUTO_TEST_SUITE__ for automated test suite creation and registration.
 
 ``
-  BOOST_FIXTURE_TEST_SUITE(suite_name, fixure_name);
+  BOOST_FIXTURE_TEST_SUITE(suite_name, fixture_name);
 ``
 
 Once again the only difference from the macro __BOOST_AUTO_TEST_SUITE__ usage is the presence of
@@ -259,7 +259,7 @@ To define a global test module fixture you need to implement a class that matche
 passed it as an argument to the macro __BOOST_GLOBAL_FIXTURE__.
 
 ``
-  BOOST_GLOBAL_FIXTURE(fixure_name);
+  BOOST_GLOBAL_FIXTURE(fixture_name);
 ``
 
 The statement, that performs global fixture definition, has to reside at a test file scope.

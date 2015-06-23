@@ -46,16 +46,16 @@ namespace ut_detail {
 template<typename F>
 struct global_fixture_impl : public global_fixture {
     // Constructor
-    global_fixture_impl() : m_fixure( 0 )    {}
+    global_fixture_impl() : m_fixture( 0 )    {}
 
     // test observer interface
-    virtual void    test_start( counter_t ) { m_fixure = new F; }
-    virtual void    test_finish()           { delete m_fixure; m_fixure = 0; }
-    virtual void    test_aborted()          { delete m_fixure; m_fixure = 0; }
+    virtual void    test_start( counter_t ) { m_fixture = new F; }
+    virtual void    test_finish()           { delete m_fixture; m_fixture = 0; }
+    virtual void    test_aborted()          { delete m_fixture; m_fixture = 0; }
 
 private:
     // Data members
-    F*  m_fixure;
+    F*  m_fixture;
 };
 
 } // namespace ut_detail
