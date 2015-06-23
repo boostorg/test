@@ -115,19 +115,27 @@ do {                                                            \
 
 #ifdef BOOST_TEST_TOOLS_UNDER_DEBUGGER
 
-#define BOOST_TEST_TOOL_UNIV( P, level )                                    \
+#define BOOST_TEST_TOOL_UNIV( level, P )                                    \
     BOOST_TEST_TOOL_DIRECT_IMPL( P, level, BOOST_TEST_STRINGIZE( P ) )      \
+/**/
+
+#define BOOST_TEST_TOOL_UNIV_EX( level, P, ... )                            \
+    BOOST_TEST_TOOL_UNIV( level, P )                                        \
 /**/
 
 #elif defined(BOOST_TEST_TOOLS_DEBUGGABLE)
 
-#define BOOST_TEST_TOOL_UNIV( P, level )                                    \
+#define BOOST_TEST_TOOL_UNIV( level, P )                                    \
 do {                                                                        \
-    if(::boost::debug::under_debugger() )                                   \
+    if( ::boost::debug::under_debugger() )                                  \
         BOOST_TEST_TOOL_DIRECT_IMPL( P, level, BOOST_TEST_STRINGIZE( P ) ); \
     else                                                                    \
-        BOOST_TEST_TOOL_ET_IMPL( P, level, __VA_ARGS__ );                   \
+        BOOST_TEST_TOOL_ET_IMPL( P, level );                                \
 } while( ::boost::test_tools::tt_detail::dummy_cond() )                     \
+/**/
+
+#define BOOST_TEST_TOOL_UNIV_EX( level, P, ... )                            \
+    BOOST_TEST_TOOL_UNIV( level, P )                                        \
 /**/
 
 #else
@@ -175,6 +183,19 @@ do {                                                                        \
 
 #define BOOST_CHECK_THROW_IMPL(S, E, TL, Ppassed, Mpassed, Pcaught, Mcaught)\
 do { try {                                                                  \
+    S;                                                                      \
+    BOOST_TEST_TOOL_DIRECT_IMPL( Ppassed, TL, Mpassed );                    \
+} catch( E ) {                                                              \
+    BOOST_TEST_TOOL_DIRECT_IMPL( Pcaught, TL, Mcaught );                    \
+}} while( ::boost::test_tools::tt_detail::dummy_cond() )                    \
+/**/
+
+#elif defined(BOOST_TEST_TOOLS_DEBUGGABLE)
+
+#define BOOST_CHECK_THROW_IMPL(S, E, TL, Ppassed, Mpassed, Pcaught, Mcaught)\
+do { try {                                                                  \
+    if( ::boost::debug::under_debugger() )                                  \
+        BOOST_TEST_PASSPOINT();                                             \
     S;                                                                      \
     BOOST_TEST_TOOL_DIRECT_IMPL( Ppassed, TL, Mpassed );                    \
 } catch( E ) {                                                              \

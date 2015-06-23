@@ -111,7 +111,9 @@ test-suite "writing-test-ts"
   [ boost.test-self-test run : writing-test-ts : fp-multiprecision-comparison-test ]
   [ boost.test-self-test run : writing-test-ts : output_test_stream-test ]
   [ boost.test-self-test run : writing-test-ts : test_tools-test : : baseline-outputs/test_tools-test.pattern ]
-  [ boost.test-self-test run : writing-test-ts : windows_headers-test ]
+  [ boost.test-self-test run : writing-test-ts : windows-headers-test ]
+  [ boost.test-self-test run : writing-test-ts : tools-under-debugger-test ]
+  [ boost.test-self-test run : writing-test-ts : tools-debuggable-test ]
 ;
 
 #_________________________________________________________________________________________________#
