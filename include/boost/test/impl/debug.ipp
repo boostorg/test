@@ -205,10 +205,11 @@ private:
 
 #if defined(BOOST_SUN_BASED_DEBUG)
     struct psinfo   m_psi;
+    char            m_binary_path_buff[500+1]; // !! ??
 #elif defined(BOOST_LINUX_BASED_DEBUG)
     char            m_stat_line[BOOST_TEST_STAT_LINE_MAX+1];
-#endif
     char            m_binary_path_buff[500+1]; // !! ??
+#endif
 };
 
 //____________________________________________________________________________//
