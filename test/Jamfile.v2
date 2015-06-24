@@ -5,6 +5,8 @@
 #
 #  See http://www.boost.org/libs/test for the library home page.
 
+import path ;
+
 import ../../config/checks/config : requires ;
 
 project
@@ -54,7 +56,8 @@ rule boost.test-mt-test ( test-rule : test-suite : test-name : usage-variant ? :
 
 rule docs-example-as-test ( test-file )
 {
-    test-name-rule = [ MATCH .*/doc/examples/(.*)\\.(.*)\\.cpp : $(test-file) ] ;
+    test-file-name = [ path.basename $(test-file) ] ;
+    test-name-rule = [ MATCH (.+)\\.(.+)\\.cpp : $(test-file-name) ] ;
 
     return [ boost.test-self-test $(test-name-rule[2]) : ../doc/examples : doc_$(test-name-rule[1]) : included : : $(test-file) ] ;
 }
