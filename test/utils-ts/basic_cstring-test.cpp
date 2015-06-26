@@ -55,23 +55,25 @@ template<typename CharT>
 struct string_literal {
     typedef typename boost::remove_const<CharT>::type   mutable_char;
 
+    string_literal() {}
     string_literal( char const* orig, std::size_t orig_size )
-    : buff( orig, orig + orig_size )
     {
+        assign(orig, orig_size);
     }
 
-    CharT* begin() const { return const_cast<CharT*>(buff.c_str()); }
+    CharT*    begin() const { return const_cast<CharT*>(buff.c_str()); }
+
+    void    assign( char const* orig, std::size_t orig_size )
+    {
+        buff.resize( orig_size );
+        for (size_t index = 0; index < orig_size; ++index)
+            buff[index] = orig[index];
+    }
 
     std::basic_string<mutable_char> buff;
 };
 
-#define LITERAL( s ) (CharT*)string_literal<CharT>( s, sizeof( s ) ).begin()
-#define LOCAL_DEF( name, s )                                                \
-string_literal<CharT> BOOST_JOIN( sl, __LINE__)(s, sizeof( s ));            \
-utf::basic_cstring<CharT> name( (CharT*)(BOOST_JOIN( sl, __LINE__).begin()))\
-/**/
-
-#define TEST_STRING test_string<CharT>( (CharT*)0 )
+//____________________________________________________________________________//
 
 template<typename CharT>
 CharT*
@@ -81,6 +83,27 @@ test_string( CharT* = 0 )
 
     return l.begin();
 }
+#define TEST_STRING test_string<CharT>( (CharT*)0 )
+
+//____________________________________________________________________________//
+
+template<typename CharT>
+CharT*
+static_literal(char const* orig, std::size_t orig_size)
+{
+    static string_literal<CharT> l;
+    
+    l.assign(orig, orig_size);
+
+    return l.begin();
+}
+#define LITERAL( s ) static_literal<CharT>( s, sizeof( s ) )
+
+#define LOCAL_DEF( name, s )                                                \
+string_literal<CharT> BOOST_JOIN( sl, __LINE__)(s, sizeof( s ));            \
+utf::basic_cstring<CharT> name( (CharT*)(BOOST_JOIN( sl, __LINE__).begin()))\
+/**/
+
 
 //____________________________________________________________________________//
 
