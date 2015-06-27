@@ -14,7 +14,7 @@ BOOST_AUTO_TEST_CASE(test1)
   BOOST_TEST(false);
 }
 
-boost::unit_test::test_suite* init_unit_test_suite(int argc, char* argv[])
+boost::unit_test::test_suite* init_unit_test_suite(int /*argc*/, char* /*argv*/[])
 {
   std::cout << "using obsolete init" << std::endl;
   return 0;

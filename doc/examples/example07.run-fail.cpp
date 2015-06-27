@@ -15,7 +15,7 @@ void free_test_function( int i )
   BOOST_TEST( i < 4 /* test assertion */ );
 }
 
-test_suite* init_unit_test_suite( int argc, char* argv[] )
+test_suite* init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 {
   int params[] = { 1, 2, 3, 4, 5 };
 

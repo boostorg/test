@@ -19,8 +19,12 @@ BOOST_AUTO_TEST_CASE( test_external_interface )
   }
 }
 
+void goo( int )
+{
+}
+
 void foo( int i )
 {
-    int j = 2/(i-1);
+    goo( 2/(i-1) );
 }
 //]

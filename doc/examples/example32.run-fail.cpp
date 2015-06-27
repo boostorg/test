@@ -17,8 +17,8 @@ BOOST_TEST_DONT_PRINT_LOG_VALUE( pair_type )
 
 BOOST_AUTO_TEST_CASE( test_list )
 {
-  pair_type p1( 2, 5.5 );
-  pair_type p2( 2, 5.501 );
+  pair_type p1( 2, 5.5f );
+  pair_type p2( 2, 5.501f );
 
   BOOST_CHECK_EQUAL( p1, p2 );
 }

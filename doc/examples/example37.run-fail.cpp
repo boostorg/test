@@ -19,8 +19,10 @@ struct my_exception
 
 bool is_critical( my_exception const& ex ) { return ex.m_error_code < 0; }
 
+void some_func( int i ) { if( i>0 ) throw my_exception( i ); }
+
 BOOST_AUTO_TEST_CASE( test )
 {
-  BOOST_CHECK_EXCEPTION( throw my_exception( 1 ), my_exception, is_critical );
+  BOOST_CHECK_EXCEPTION( some_func(1), my_exception, is_critical );
 }
 //]

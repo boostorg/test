@@ -9,6 +9,8 @@
 #define BOOST_TEST_MODULE example
 #include <boost/test/included/unit_test.hpp>
 
+void foo( int ) {}
+
 BOOST_AUTO_TEST_CASE( test_case )
 {
   int* p = 0;
@@ -20,6 +22,6 @@ BOOST_AUTO_TEST_CASE( test_case )
   ++p;
 
   BOOST_TEST_PASSPOINT();
-  int j = *p;
+  foo( *p );
 }
 //]

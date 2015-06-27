@@ -15,7 +15,7 @@ BOOST_TEST_CASE_TEMPLATE_FUNCTION( my_test, T )
   BOOST_TEST( sizeof(T) == 4 );
 }
 
-test_suite* init_unit_test_suite( int argc, char* argv[] )
+test_suite* init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 {
   typedef boost::mpl::list<int,long,unsigned char> test_types;
 

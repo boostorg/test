@@ -11,8 +11,10 @@
 
 class my_exception{};
 
+void some_func( int i ) { if( i<0 ) throw my_exception(); }
+
 BOOST_AUTO_TEST_CASE( test )
 {
-  BOOST_CHECK_NO_THROW( throw my_exception() );
+    BOOST_CHECK_NO_THROW( some_func(-1) );
 }
 //]

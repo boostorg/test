@@ -23,7 +23,7 @@ public:
   }
 };
 
-test_suite* init_unit_test_suite( int argc, char* argv[] )
+test_suite* init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 {
   boost::shared_ptr<test_class> tester( new test_class );
 
