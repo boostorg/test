@@ -306,8 +306,8 @@ struct Testee {
 
 int Testee::s_copy_counter = 0;
 
-Testee          get_obj() { return std::move( Testee() ); }
-Testee const    get_const_obj() { return std::move( Testee() ); }
+Testee          get_obj() { return Testee(); }
+Testee const    get_const_obj() { return Testee(); }
 
 class NC : boost::noncopyable {
 public:
