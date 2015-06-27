@@ -17,19 +17,17 @@
 
 int cpp_main( int, char *[] )  // note the name
 {
+#if NDEBUG
+#pragma message("assert check turned off under NDEBUG")
+
+    return 1;
+#else
     int div = 0;
 
     assert( div != 0 );
 
-#if NDEBUG
-
-#   pragma message("assert check turned off under NDEBUG")
-
-    return 1;
-
-#endif
-
     return 0;
+#endif
 }
 
 //____________________________________________________________________________//

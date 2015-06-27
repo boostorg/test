@@ -13,7 +13,7 @@ BOOST_AUTO_TEST_SUITE( test_suite1 )
 
 BOOST_AUTO_TEST_CASE( test_case1 )
 {
-  BOOST_TEST_WARN( sizeof(int) < 4 );
+  BOOST_TEST_WARN( sizeof(int) < 4U );
 }
 
 BOOST_AUTO_TEST_CASE( test_case2 )
