@@ -59,7 +59,7 @@ rule docs-example-as-test ( test-file )
     test-file-name = [ path.basename $(test-file) ] ;
     test-name-rule = [ MATCH (.+)\\.(.+)\\.cpp : $(test-file-name) ] ;
 
-    return [ boost.test-self-test $(test-name-rule[2]) : ../doc/examples : doc_$(test-name-rule[1]) : included : : $(test-file) ] ;
+    return [ boost.test-self-test $(test-name-rule[2]) : ../doc/examples : doc-$(test-name-rule[1]) : included : : $(test-file) ] ;
 }
 
 #_________________________________________________________________________________________________#
@@ -160,7 +160,7 @@ test-suite "execution_monitor-ts"
 
 import sequence ;
 
-test-suite "docs-examples-ts"
+test-suite "doc-examples-ts"
 :
   [ sequence.transform docs-example-as-test : [ glob ../doc/examples/*.cpp ] ]
 ;
@@ -178,7 +178,7 @@ alias test
   multithreading-ts
   prg_exec_monitor-ts
   execution_monitor-ts
-  docs-examples-ts
+  doc-examples-ts
 ;
 
 #_________________________________________________________________________________________________#
