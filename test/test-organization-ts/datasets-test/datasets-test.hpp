@@ -35,8 +35,8 @@ public:
 
     static int& value()         { static int s_value; return s_value; };
 
-    static copy_count make()    { return std::move( copy_count() ); }
-    static copy_count const make_const() { return std::move( copy_count() ); }
+    static copy_count make()    { return copy_count(); }
+    static copy_count const make_const() { return copy_count(); }
 };
 
 //____________________________________________________________________________//
@@ -153,7 +153,7 @@ struct print_sample {
 inline std::vector<copy_count>
 make_copy_count_collection()
 {
-    return std::move( std::vector<copy_count>( 3 ) );
+    return std::vector<copy_count>( 3 );
 }
 
 //____________________________________________________________________________//
@@ -161,7 +161,7 @@ make_copy_count_collection()
 inline std::list<copy_count> const
 make_copy_count_const_collection()
 {
-    return std::move( std::list<copy_count>( 3 ) );
+    return std::list<copy_count>( 3 );
 }
 
 //____________________________________________________________________________//
