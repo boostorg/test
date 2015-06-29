@@ -780,7 +780,13 @@ signal_handler::~signal_handler()
 
     sigstk.ss_size  = MINSIGSTKSZ;
     sigstk.ss_flags = SS_DISABLE;
-    BOOST_TEST_SYS_ASSERT( ::sigaltstack( &sigstk, 0 ) != -1 );
+    if( ::sigaltstack( &sigstk, 0 ) == -1 )
+    {
+        int error_n = errno;
+        std::cerr << "******** errors disabling the alternate stack:" << std::endl
+                  << "\t#error:" << error_n << std::endl
+                  << "\t" << std::strerror( error_n ) << std::endl;
+    }
 #endif
 
     s_active_handler = m_prev_handler;
