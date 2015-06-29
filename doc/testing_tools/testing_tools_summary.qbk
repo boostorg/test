@@ -15,7 +15,7 @@
   
   [/ ###############################################################################################]
   [
-    [__BOOST_TEST__, `BOOST_TEST_REQUIRE`, `BOOST_TEST_WARN`]
+    [__BOOST_TEST__, __BOOST_TEST_LEVEL__]
     [General purpose assertion macro.]
   ]
   
@@ -167,6 +167,24 @@
     [__decorator_tolerance__]
     [Sets the floating point comparison tolerance for a test unit.]
   ]
+]
+
+[table
+  [
+    [Control macros]
+    [Short description]
+  ] 
+
+  [
+    [__BOOST_TEST_TOOLS_UNDER_DEBUGGER__]
+    [When defined, test assertions are compiled in debugger-friendly mode.]
+  ]
+  
+  [
+    [__BOOST_TEST_TOOLS_DEBUGGABLE__]
+    [When defined, test assertions are compiled in two modes (debugger-friendly and full-featured), and the version is selected at run-time.]
+  ]
+  
 ]
 
 [endsect] [/ testing tools]

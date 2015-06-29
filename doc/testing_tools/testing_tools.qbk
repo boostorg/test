@@ -42,6 +42,7 @@ or the [link boost_test.utf_reference.testing_tool_ref reference].
 [include testing_output_streams.qbk]
 
 [include boost_test_technical_details.qbk]
+[include boost_test_debugging.qbk]
 [include testing_tools_summary.qbk]
 
 

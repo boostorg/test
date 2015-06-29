@@ -641,4 +641,14 @@ See also:
 
 [endsect]
 
+[/ ###############################################################################################]
+[section:assertion_control_under_debugger `BOOST_TEST_TOOLS_UNDER_DEBUGGER`]
+When defined, assertions evaluate their expression eagerly, as described [link boost_test.testing_tools.debugging here].
+[endsect] [/ assertion_control_under_debugger]
+
+[/ ###############################################################################################]
+[section:assertion_control_under_debuggable `BOOST_TEST_TOOLS_DEBUGGABLE`]
+When defined, test assertions are compiled in two modes (debugger-friendly and full-featured) and the version is selected at run-time, as described [link boost_test.testing_tools.debugging here].
+[endsect] [/ assertion_control_under_debuggable]
+
 [endsect] [/ testing_tool_ref]
