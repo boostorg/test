@@ -57,6 +57,7 @@
 
 [/ Assertions ]
 [def __BOOST_TEST__                       [link boost_test.utf_reference.testing_tool_ref.assertion_boost_test_universal_macro `BOOST_TEST`]]
+[def __BOOST_TEST_LEVEL__                 [link boost_test.utf_reference.testing_tool_ref.assertion_boost_test_universal_macro `BOOST_TEST_<level>`]]
 [def __BOOST_TEST_REQUIRE__               [link boost_test.utf_reference.testing_tool_ref.assertion_boost_test_universal_macro `BOOST_TEST_REQUIRE`]]
 
 [def __BOOST_LEVEL__                      [link boost_test.utf_reference.testing_tool_ref.assertion_boost_level `BOOST_<level>`]]
@@ -90,6 +91,10 @@
 [def __BOOST_LEVEL_CLOSE__                [link boost_test.utf_reference.testing_tool_ref.assertion_boost_level_close `BOOST_<level>_CLOSE`]]
 [def __BOOST_CHECK_CLOSE__                [link boost_test.utf_reference.testing_tool_ref.assertion_boost_level_close `BOOST_CHECK_CLOSE`]]
 [def __BOOST_LEVEL_CLOSE_FRACTION__       [link boost_test.utf_reference.testing_tool_ref.assertion_boost_level_close_fraction `BOOST_<level>_CLOSE_FRACTION`]]
+
+[/ Assertion control]
+[def __BOOST_TEST_TOOLS_UNDER_DEBUGGER__  [link boost_test.utf_reference.testing_tool_ref.assertion_control_under_debugger `BOOST_TEST_TOOLS_UNDER_DEBUGGER`]]
+[def __BOOST_TEST_TOOLS_DEBUGGABLE__      [link boost_test.utf_reference.testing_tool_ref.assertion_control_under_debuggable `BOOST_TEST_TOOLS_DEBUGGABLE`]]
 
 [/ Tests cases organisation]
 [def __BOOST_AUTO_TEST_CASE__                   [link boost_test.utf_reference.test_org_reference.test_org_boost_auto_test_case `BOOST_AUTO_TEST_CASE`]]
