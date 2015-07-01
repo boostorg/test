@@ -1,6 +1,6 @@
-//  (C) Copyright Gennadiy Rozental 2005-2008.
+//  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -9,11 +9,11 @@
 //
 //  Version     : $Revision$
 //
-//  Description : defines and implements inline model of program environment 
+//  Description : defines and implements inline model of program environment
 // ***************************************************************************
 
-#ifndef BOOST_RT_ENV_ENVIRONMENT_HPP_062604GER
-#define BOOST_RT_ENV_ENVIRONMENT_HPP_062604GER
+#ifndef BOOST_TEST_UTILS_RUNTIME_ENV_ENVIRONMENT_HPP
+#define BOOST_TEST_UTILS_RUNTIME_ENV_ENVIRONMENT_HPP
 
 #ifdef UNDER_CE
 #error Windows CE does not support environment variables.
@@ -29,15 +29,12 @@
 #include <boost/test/utils/runtime/env/modifier.hpp>
 #include <boost/test/utils/runtime/env/variable.hpp>
 
-// Boost.Test
-#include <boost/test/utils/callback.hpp>
-
 // Boost
 #include <boost/optional.hpp>
 
 namespace boost {
 
-namespace BOOST_RT_PARAM_NAMESPACE {
+namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
 
 // ************************************************************************** //
 // **************      runtime::environment implementation     ************** //
@@ -158,15 +155,15 @@ namespace environment {
 
 namespace env = environment;
 
-} // namespace BOOST_RT_PARAM_NAMESPACE
+} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
 
 } // namespace boost
 
-#ifndef BOOST_RT_PARAM_OFFLINE
+#ifndef BOOST_TEST_UTILS_RUNTIME_PARAM_OFFLINE
 
-#define BOOST_RT_PARAM_INLINE inline
+#define BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE inline
 #include <boost/test/utils/runtime/env/environment.ipp>
 
 #endif
 
-#endif // BOOST_RT_ENV_ENVIRONMENT_HPP_062604GER
+#endif // BOOST_TEST_UTILS_RUNTIME_ENV_ENVIRONMENT_HPP
