@@ -174,7 +174,7 @@ For rationale for choosing these formulae, see section __floating_points_testing
 Assertion __BOOST_TEST__ (when comparing floating-point numbers) uses the following algorithm:
 
 * When either value `u` or `v` is zero, evaluates formula (abs) on the other value.
-* When the specified tolerance is zero, preforms direct (native) comparison between `u` and `v`.
+* When the specified tolerance is zero, performs direct (native) comparison between `u` and `v`.
 * Otherwise, performs formula (rel) on `u` and `v`.
 
 [note Therefore in order to check if a number is close to zero with tolerance, you need to type:
@@ -186,7 +186,8 @@ The compatibility assertions __BOOST_LEVEL_CLOSE__ and __BOOST_LEVEL_CLOSE_FRACT
 
 The compatibility assertion __BOOST_LEVEL_SMALL__ performs formula (abs).
 
-The __UTF__ also provides unary predicate [classref boost::math::fpc::small_with_tolerance `small_with_tolerance`] and binary predicate predicate [classref boost::math::fpc::close_at_tolerance `close_at_tolerance`] that implement formula (abs) and (rel) respectively.
+The __UTF__ also provides unary predicate [classref boost::math::fpc::small_with_tolerance `small_with_tolerance`] and binary predicate predicate
+[classref boost::math::fpc::close_at_tolerance `close_at_tolerance`] that implement formula (abs) and (rel) respectively.
 
 [h3 Tolerance in `operator<`]
 
@@ -254,7 +255,8 @@ the implementation is using modified version of [link equ2 (2)] and [link equ3 (
 || abs(u - v)/abs(v) <= epsilon; // (5)
 ``
 
-This way all underflow and overflow conditions can be guarded safely. The above however, will not work when `v` or `u` is zero. In such cases the solution is to resort to a different algorithm, e.g. [link equ1 (1)]. 
+This way all underflow and overflow conditions can be guarded safely. The above however, will not work when `v` or `u` is zero. 
+In such cases the solution is to resort to a different algorithm, e.g. [link equ1 (1)]. 
 
 
 [h3 Tolerance selection considerations]

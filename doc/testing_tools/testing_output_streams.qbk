@@ -53,7 +53,7 @@ Use the instance of class `output_test_stream` as an output stream and check out
 
 [note Use of `false` to prevent output flushing in first two invocation of check functions. Unless
 you want to perform several different checks for the same output you wouldn't need to use it though. Your
-test will look like a serie of output operators followed by one check.]
+test will look like a sequence of output operators followed by one check.]
 
 [tip Try to perform checks as
 frequently as possible. It not only simplifies patterns you compare with, but also allows you to more closely
