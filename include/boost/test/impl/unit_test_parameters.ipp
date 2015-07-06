@@ -161,6 +161,7 @@ std::string COLOR_OUTPUT      = "color_output";
 std::string DETECT_FP_EXCEPT  = "detect_fp_exceptions";
 std::string DETECT_MEM_LEAKS  = "detect_memory_leaks";
 std::string LIST_CONTENT      = "list_content";
+std::string LIST_LABELS       = "list_labels";
 std::string LOG_FORMAT        = "log_format";
 std::string LOG_LEVEL         = "log_level";
 std::string LOG_SINK          = "log_sink";
@@ -191,6 +192,7 @@ parameter_2_env_var( const_string param_name )
         s_mapping[DETECT_FP_EXCEPT]     = "BOOST_TEST_DETECT_FP_EXCEPTIONS";
         s_mapping[DETECT_MEM_LEAKS]     = "BOOST_TEST_DETECT_MEMORY_LEAK";
         s_mapping[LIST_CONTENT]         = "BOOST_TEST_LIST_CONTENT";
+        s_mapping[LIST_CONTENT]         = "BOOST_TEST_LIST_LABELS";
         s_mapping[LOG_FORMAT]           = "BOOST_TEST_LOG_FORMAT";
         s_mapping[LOG_LEVEL]            = "BOOST_TEST_LOG_LEVEL";
         s_mapping[LOG_SINK]             = "BOOST_TEST_LOG_SINK";
@@ -329,6 +331,9 @@ init( int& argc, char** argv )
               << cla::dual_name_parameter<unit_test::output_format>( LIST_CONTENT + "|j" )
                 - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,cla::optional_value,
                    cla::description = "Lists the content of test tree - names of all test suites and test cases")
+              << cla::named_parameter<bool>( LIST_LABELS )
+                - (cla::prefix = "--",cla::separator = "= ",cla::guess_name,cla::optional,
+                   cla::description = "Lists all available labels")
               << cla::named_parameter<bool>( USE_ALT_STACK )
                 - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,
                    cla::description = "Turns on/off usage of an alternative stack for signal handling")
@@ -440,6 +445,14 @@ output_format
 list_content()
 {
     return retrieve_parameter( LIST_CONTENT, s_cla_parser, unit_test::OF_INVALID, unit_test::OF_CLF );
+}
+
+//____________________________________________________________________________//
+
+bool
+list_labels()
+{
+    return retrieve_parameter( LIST_LABELS, s_cla_parser, false );
 }
 
 //____________________________________________________________________________//

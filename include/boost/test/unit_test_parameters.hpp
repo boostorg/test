@@ -46,8 +46,10 @@ BOOST_TEST_DECL bool                    color_output();
 BOOST_TEST_DECL bool                    detect_fp_exceptions();
 /// Should we detect memory leaks (>0)? And if yes, which specific memory allocation should we break.
 BOOST_TEST_DECL long                    detect_memory_leaks();
-/// Print content of test tree?
+/// List content of test tree?
 BOOST_TEST_DECL output_format           list_content();
+/// List available labels?
+BOOST_TEST_DECL bool                    list_labels();
 /// Which output format to use
 BOOST_TEST_DECL output_format           log_format();
 /// Which log level to set

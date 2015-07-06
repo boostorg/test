@@ -13,9 +13,8 @@ import testing ;
 project libs/test/example
     :
     : requirements
-      <toolset>msvc-6.5:<link>static
       <toolset>clang:<cxxflags>-Wno-c99-extensions
-      <toolset>clang:<cxxflags>-Wno-variadic-macros
+      <toolset>gcc:<cxxflags>-std=c++11
 #      <toolset>msvc:<cxxflags>/P
     ;
 

@@ -37,6 +37,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <iomanip>
+#include <set>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -155,6 +156,24 @@ private:
     std::ostream&   m_os;
 };
 
+// ************************************************************************** //
+// **************               labels_collector               ************** //
+// ************************************************************************** //
+
+struct labels_collector : test_tree_visitor {
+    std::set<std::string> const& labels() const { return m_labels; }
+
+private:
+    virtual bool            visit( test_unit const& tu ) 
+    {
+        m_labels.insert( tu.p_labels->begin(), tu.p_labels->end() );
+        return true;
+    }
+
+    // Data members
+    std::set<std::string>   m_labels;
+};
+
 } // namespace ut_detail
 
 // ************************************************************************** //
@@ -189,6 +208,19 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
 
                 traverse_test_tree( framework::master_test_suite().p_id, reporter, true );
             }
+
+            return boost::exit_success;
+        }
+
+        if( runtime_config::list_labels() ) {
+            ut_detail::labels_collector collector;
+
+            traverse_test_tree( framework::master_test_suite().p_id, collector, true );
+
+            results_reporter::get_stream() << "Available labels:\n  ";
+            std::copy( collector.labels().begin(), collector.labels().end(), 
+                       std::ostream_iterator<std::string>( results_reporter::get_stream(), "\n  " ) );
+            results_reporter::get_stream() << "\n";
 
             return boost::exit_success;
         }
