@@ -104,6 +104,7 @@
 # [ticket 9537] const_string_test example fails
 # [ticket 9539] Floating-point comparison algorithms aren't formatted correctly
 # [ticket 9581] Squassabia reference link gives 404 not found
+# [ticket 9960] Warnings on Clang
 # [ticket 10318] Minor documentation fix
 # [ticket 10394] Broken links in Boost Test documentation
 # [ticket 10888] Assertion failures don't show up in the errors pane in VS 2010, VS 2012 or VS 2013 (duplicates)
