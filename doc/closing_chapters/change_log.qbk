@@ -94,6 +94,7 @@
 # [ticket 8201] Broken link in document
 # [ticket 8272] BOOST_REQUIRE_CLOSE fails to compile with boost::multiprecision::cpp_dec_float_100 (duplicates #11054)
 # [ticket 8467] Incorrect link in document (duplicates #6748)
+# [ticket 8679] Boost.Test pollutes boost namespace with it's own enable_if/disable_if templates
 # [ticket 8862] Boost.Test typo in documentation
 # [ticket 8895] English error in test collection comparison
 # [ticket 9179] Documentation: broken link (unable to find =const_string.hpp/const_string_test.cpp=)
@@ -110,5 +111,6 @@
 # [ticket 11347] `DS` identifier causes test failures in `doc/examples/dataset_example*.cpp`
 # [ticket 11358] Boost.Test v3 warning could helpfully be suppressed.
 # [ticket 11359] `BOOST_CHECK_EQUAL_COLLECTIONS`: can't control output operator (duplicates #9390)
+# [ticket 11425] use-of-uninitialized-value (obsolete)
 
 [endsect]
