@@ -150,7 +150,7 @@ test_unit::check_preconditions() const
 //____________________________________________________________________________//
 
 void
-test_unit::increase_exp_fail( unsigned num )
+test_unit::increase_exp_fail( counter_t num )
 {
     p_expected_failures.value += num;
 

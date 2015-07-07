@@ -77,8 +77,9 @@ argv_traverser::remainder( int& argc, char_type** argv )
     while(pos < m_remainder_size ) {
         argv[argc++] = m_remainder.get() + pos;
 
-        pos = std::find( m_remainder.get() + pos, m_remainder.get() + m_remainder_size,
-                         BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( ' ' ) ) - m_remainder.get();
+        pos = static_cast<size_t>(std::find( m_remainder.get() + pos, m_remainder.get() + m_remainder_size,
+                                             BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( ' ' ) ) - 
+                                  m_remainder.get());
         m_remainder[pos++] = BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( '\0' );
     }
 }
@@ -179,7 +180,7 @@ argv_traverser::rollback()
 BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE std::size_t
 argv_traverser::input_pos() const
 {
-    return m_work_buffer.begin() - m_commited_end;
+    return static_cast<std::size_t>(m_work_buffer.begin() - m_commited_end);
 }
 
 //____________________________________________________________________________//

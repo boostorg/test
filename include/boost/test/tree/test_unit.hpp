@@ -77,7 +77,7 @@ public:
     bool                                has_label( const_string l ) const;
 
     // helper access methods
-    void                                increase_exp_fail( unsigned num );
+    void                                increase_exp_fail( counter_t num );
     bool                                is_enabled() const    { return p_run_status == RS_ENABLED; }
     std::string                         full_name() const;
 
