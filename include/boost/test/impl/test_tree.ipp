@@ -375,9 +375,14 @@ namespace ut_detail {
 std::string
 normalize_test_case_name( const_string name )
 {
-    return ( name[0] == '&'
-                ? std::string( name.begin()+1, name.size()-1 )
-                : std::string( name.begin(), name.size() ) );
+    std::string norm_name( name.begin(), name.size() );
+
+    if( name[0] == '&' )
+        norm_name = norm_name.substr( 1 );
+        
+    std::replace(norm_name.begin(), norm_name.end(), ' ', '_'); 
+
+    return norm_name;
 }
 
 //____________________________________________________________________________//

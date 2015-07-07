@@ -88,10 +88,10 @@ struct generate_test_case_4_type {
         full_name += BOOST_CURRENT_FUNCTION;
 #endif
         if( boost::is_const<TestType>::value )
-            full_name += " const";
+            full_name += "_const";
         full_name += '>';
 
-        m_holder.m_test_cases.push_back( new test_case( full_name,
+        m_holder.m_test_cases.push_back( new test_case( ut_detail::normalize_test_case_name( full_name ),
                                                         m_test_case_file,
                                                         m_test_case_line,
                                                         test_case_template_invoker<TestCaseTemplate,TestType>() ) );
@@ -142,4 +142,3 @@ public:
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_TREE_TEST_CASE_TEMPLATE_HPP_091911GER
-
