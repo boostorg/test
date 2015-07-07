@@ -566,7 +566,7 @@ log_sink()
 long
 detect_memory_leaks()
 {
-    static int s_value = -1;
+    static long s_value = -1;
 
     if( s_value >= 0 )
         return s_value;

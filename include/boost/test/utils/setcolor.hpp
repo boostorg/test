@@ -82,7 +82,7 @@ public:
 private:
     // Data members
     char        m_control_command[13];
-    size_t      m_command_size;
+    int         m_command_size;
 };
 
 // ************************************************************************** //

@@ -338,8 +338,8 @@ traverse_test_tree( test_suite const& suite, test_tree_visitor& V, bool ignore_s
         return;
 
     // Recurse into children
-    unsigned total_children = suite.m_children.size();
-    for( unsigned i=0; i < total_children; ) {
+    std::size_t total_children = suite.m_children.size();
+    for( std::size_t i=0; i < total_children; ) {
         // this statement can remove the test unit from this list
         traverse_test_tree( suite.m_children[i], V, ignore_status );
         if( total_children > suite.m_children.size() )

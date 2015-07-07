@@ -74,7 +74,8 @@ public:
     basic_cstring();
     basic_cstring( std_string const& s );
     basic_cstring( pointer s );
-    basic_cstring( pointer s, size_type arg_size );
+    template<typename LenType>
+    basic_cstring( pointer s, LenType len ) : m_begin( s ), m_end( m_begin + len ) {}
     basic_cstring( pointer first, pointer last );
 
     // data access methods
@@ -115,12 +116,28 @@ public:
     basic_cstring&  operator=( pointer s );
 
     template<typename CharT2>
-    basic_cstring&  assign( basic_cstring<CharT2> const& s ) { *this = basic_cstring<CharT>( s.begin(), s.end() ); return *this; }
-    basic_cstring&  assign( self_type const& s, size_type pos, size_type len );
+    basic_cstring&  assign( basic_cstring<CharT2> const& s )
+    {
+        return *this = basic_cstring<CharT>( s.begin(), s.end() );
+    }
+    template<typename PosType, typename LenType>
+    basic_cstring&  assign( self_type const& s, PosType pos, LenType len )
+    {
+        return *this = self_type( s.m_begin + pos, len );
+    }
+
     basic_cstring&  assign( std_string const& s );
-    basic_cstring&  assign( std_string const& s, size_type pos, size_type len );
+    template<typename PosType, typename LenType>
+    basic_cstring&  assign( std_string const& s, PosType pos, LenType len )
+    {
+        return *this = self_type( s.c_str() + pos, len );
+    }
     basic_cstring&  assign( pointer s );
-    basic_cstring&  assign( pointer s, size_type len );
+    template<typename LenType>
+    basic_cstring&  assign( pointer s, LenType len )
+    {
+        return *this = self_type( s, len );
+    }
     basic_cstring&  assign( pointer f, pointer l );
 
     // swapping
@@ -191,15 +208,6 @@ basic_cstring<CharT>::basic_cstring( pointer s )
 
 template<typename CharT>
 inline
-basic_cstring<CharT>::basic_cstring( pointer s, size_type arg_size )
-: m_begin( s ), m_end( m_begin + arg_size )
-{
-}
-
-//____________________________________________________________________________//
-
-template<typename CharT>
-inline
 basic_cstring<CharT>::basic_cstring( pointer first, pointer last )
 : m_begin( first )
 , m_end( last )
@@ -233,7 +241,7 @@ template<typename CharT>
 inline typename basic_cstring<CharT>::size_type
 basic_cstring<CharT>::size() const
 {
-    return m_end - m_begin;
+    return static_cast<size_type>(m_end - m_begin);
 }
 
 //____________________________________________________________________________//
@@ -408,15 +416,6 @@ basic_cstring<CharT>::operator=( pointer s )
 
 template<typename CharT>
 inline basic_cstring<CharT>&
-basic_cstring<CharT>::assign( basic_cstring<CharT> const& s, size_type pos, size_type len )
-{
-    return *this = self_type( s.m_begin + pos, len );
-}
-
-//____________________________________________________________________________//
-
-template<typename CharT>
-inline basic_cstring<CharT>&
 basic_cstring<CharT>::assign( std_string const& s )
 {
     return *this = self_type( s );
@@ -426,27 +425,9 @@ basic_cstring<CharT>::assign( std_string const& s )
 
 template<typename CharT>
 inline basic_cstring<CharT>&
-basic_cstring<CharT>::assign( std_string const& s, size_type pos, size_type len )
-{
-    return *this = self_type( s.c_str() + pos, len );
-}
-
-//____________________________________________________________________________//
-
-template<typename CharT>
-inline basic_cstring<CharT>&
 basic_cstring<CharT>::assign( pointer s )
 {
     return *this = self_type( s );
-}
-
-//____________________________________________________________________________//
-
-template<typename CharT>
-inline basic_cstring<CharT>&
-basic_cstring<CharT>::assign( pointer s, size_type len )
-{
-    return *this = self_type( s, len );
 }
 
 //____________________________________________________________________________//
@@ -530,7 +511,7 @@ basic_cstring<CharT>::find( basic_cstring<CharT> str ) const
         ++it;
     }
 
-    return it == last ? static_cast<size_type>(npos) : it - begin();
+    return it == last ? npos : static_cast<size_type>(it - begin());
 }
 
 //____________________________________________________________________________//
