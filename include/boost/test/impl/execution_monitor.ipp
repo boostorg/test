@@ -589,7 +589,8 @@ system_signal_exception::report() const
         break;
 
     default:
-        report_error( execution_exception::system_error, "unrecognized signal" );
+        report_error( execution_exception::system_error, 
+                      "unrecognized signal %d", m_sig_info->si_signo );
     }
 }
 
