@@ -29,6 +29,7 @@
 [/ pending
 # [ticket 1136] Let BOOST_CHECK_EQUAL support std::wstring -> resolution using BOOST_TEST
 # [ticket 4222] feenablexcept does not exist on mac
+# [ticket 7397] Boost.Test, since boost 1.48 is using the deprecated Boost.Timer class - it should be updated to use the new class
 ]
 # [ticket 2018] Error in the documentation chapter "Runtime parameters reference"
 # [ticket 2450] equations in Floating-point comparison algorithms html are not rendered properly
@@ -89,7 +90,6 @@
 # [ticket 6748] Link in the documentation points to wrong page
 # [ticket 7046] Output full error message, not just 512 chars
 # [ticket 7136] Correct documentation for BOOST_<level>_CLOSE_FRACTION is not reflected into released documents
-# [ticket 7397] Boost.Test, since boost 1.48 is using the deprecated Boost.Timer class - it should be updated to use the new class
 # [ticket 7410] Test Units (Cases and Suites) in Boost.Test do not capture `__FILE__` and `__LINE__` at declaration point making it impossible to provide source file linking using external test management tools
 # [ticket 8201] Broken link in document
 # [ticket 8272] BOOST_REQUIRE_CLOSE fails to compile with boost::multiprecision::cpp_dec_float_100 (duplicates #11054)
