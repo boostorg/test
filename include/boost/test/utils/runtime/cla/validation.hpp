@@ -47,8 +47,10 @@ void report_input_error( argv_traverser const& tr, format_stream& msg );
 
 #ifndef BOOST_TEST_UTILS_RUNTIME_PARAM_OFFLINE
 
-#  define BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE inline
-#  include <boost/test/utils/runtime/cla/validation.ipp>
+#ifndef BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE
+#   define BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE inline
+#endif
+#   include <boost/test/utils/runtime/cla/validation.ipp>
 
 #endif
 

@@ -137,8 +137,10 @@ protected:
 
 #ifndef BOOST_TEST_UTILS_RUNTIME_PARAM_OFFLINE
 
-#  define BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE inline
-#  include <boost/test/utils/runtime/cla/id_policy.ipp>
+#ifndef BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE
+#   define BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE inline
+#endif
+#   include <boost/test/utils/runtime/cla/id_policy.ipp>
 
 #endif
 
