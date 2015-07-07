@@ -303,7 +303,7 @@ init( int& argc, char** argv )
               << cla::dual_name_parameter<unit_test::output_format>( OUTPUT_FORMAT + "|o" )
                 - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,
                    cla::description = "Specifies output format (both log and report)")
-              << cla::dual_name_parameter<int>( RANDOM_SEED + "|a" )
+              << cla::dual_name_parameter<unsigned>( RANDOM_SEED + "|a" )
                 - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,cla::optional_value,
                    cla::description = "Allows to switch between sequential and random order of test units execution.\n"
                                       "Optionally allows to specify concrete seed for random number generator")
@@ -613,10 +613,10 @@ memory_leaks_report_file()
 
 //____________________________________________________________________________//
 
-int
+unsigned
 random_seed()
 {
-    return retrieve_parameter( RANDOM_SEED, s_cla_parser, 0, 1 );
+    return retrieve_parameter( RANDOM_SEED, s_cla_parser, 0U, 1U );
 }
 
 //____________________________________________________________________________//

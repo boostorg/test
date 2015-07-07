@@ -90,7 +90,7 @@ label::apply( test_unit& tu )
 void
 expected_failures::apply( test_unit& tu )
 {
-    tu.increase_exp_fail( static_cast<unsigned int>(m_exp_fail) );
+    tu.increase_exp_fail( static_cast<unsigned>(m_exp_fail) );
 }
 
 //____________________________________________________________________________//

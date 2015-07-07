@@ -309,7 +309,7 @@ public:
     ///
     /// The @em p_timeout property is an integer timeout (in seconds) for monitored function execution. Use this parameter to monitor code with possible deadlocks
     /// or indefinite loops. This feature is only available for some operating systems (not yet Microsoft Windows).
-    unit_test::readwrite_property<int>  p_timeout;
+    unit_test::readwrite_property<unsigned>  p_timeout;
 
     ///  Should monitor use alternative stack for the signal catching.
     ///
@@ -513,4 +513,3 @@ unsigned BOOST_TEST_DECL disable( unsigned mask );
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif
-

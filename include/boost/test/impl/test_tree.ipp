@@ -60,7 +60,7 @@ test_unit::test_unit( const_string name, const_string file_name, std::size_t lin
 , p_id( INV_TEST_UNIT_ID )
 , p_parent_id( INV_TEST_UNIT_ID )
 , p_name( std::string( name.begin(), name.size() ) )
-, p_timeout( -1 )
+, p_timeout( 0 )
 , p_expected_failures( 0 )
 , p_default_status( RS_INHERIT )
 , p_run_status( RS_INVALID )
@@ -77,7 +77,7 @@ test_unit::test_unit( const_string module_name )
 , p_id( INV_TEST_UNIT_ID )
 , p_parent_id( INV_TEST_UNIT_ID )
 , p_name( std::string( module_name.begin(), module_name.size() ) )
-, p_timeout( -1 )
+, p_timeout( 0 )
 , p_expected_failures( 0 )
 , p_default_status( RS_INHERIT )
 , p_run_status( RS_INVALID )
@@ -237,10 +237,9 @@ test_suite::test_suite( const_string module_name )
 //____________________________________________________________________________//
 
 void
-test_suite::add( test_unit* tu, counter_t expected_failures, int timeout )
+test_suite::add( test_unit* tu, counter_t expected_failures, unsigned timeout )
 {
-    if( timeout > 0 )
-        tu->p_timeout.value = timeout;
+    tu->p_timeout.value = timeout;
 
     m_children.push_back( tu->p_id );
     tu->p_parent_id.value = p_id;
@@ -255,7 +254,7 @@ test_suite::add( test_unit* tu, counter_t expected_failures, int timeout )
 //____________________________________________________________________________//
 
 void
-test_suite::add( test_unit_generator const& gen, int timeout )
+test_suite::add( test_unit_generator const& gen, unsigned timeout )
 {
     test_unit* tu;
     while((tu = gen.next()) != 0)

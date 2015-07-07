@@ -66,10 +66,10 @@ print_stat_value( std::ostream& ostr, counter_t v, counter_t indent, counter_t t
         return;
 
     if( total > 0 )
-        ostr << std::setw( indent ) << "" << v << ' ' << name << ( v != 1 ? "s" : "" )
+        ostr << std::setw( static_cast<int>(indent) ) << "" << v << ' ' << name << ( v != 1 ? "s" : "" )
              << " out of " << total << ' ' << res << '\n';
     else
-        ostr << std::setw( indent ) << "" << v << ' ' << res << ' ' << name << ( v != 1 ? "s" : "" ) << '\n';
+        ostr << std::setw( static_cast<int>(indent) ) << "" << v << ' ' << res << ' ' << name << ( v != 1 ? "s" : "" ) << '\n';
 }
 
 //____________________________________________________________________________//
@@ -113,7 +113,7 @@ plain_report_formatter::test_unit_report_start( test_unit const& tu, std::ostrea
     else
         descr = "has failed";
 
-    ostr << std::setw( m_indent ) << ""
+    ostr << std::setw( static_cast<int>(m_indent) ) << ""
          << "Test " << tu.p_type_name << ' ' << quote() << tu.full_name() << ' ' << descr;
 
     if( tr.p_skipped ) {

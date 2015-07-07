@@ -421,6 +421,8 @@ parse_filters( test_unit_id master_tu_id, test_unit_id_list& tu_to_enable, test_
 // **************               framework::state               ************** //
 // ************************************************************************** //
 
+unsigned const TIMEOUT_EXCEEDED = static_cast<unsigned>( -1 );
+
 class state {
 public:
     state()
@@ -572,13 +574,9 @@ public:
     typedef unit_test_monitor_t::error_level execution_result;
 
       // Executed the test tree with the root at specified test unit
-    execution_result execute_test_tree( test_unit_id tu_id, int timeout = -1 )
+    execution_result execute_test_tree( test_unit_id tu_id, unsigned timeout = 0 )
     {
         test_unit const& tu = framework::get( tu_id, TUT_ANY );
-
-        // 5. Figure out timeout for this test unit
-        if( timeout < 0 || (tu.p_timeout >= 0 && timeout > tu.p_timeout) )
-            timeout = tu.p_timeout;
 
         execution_result result = unit_test_monitor_t::test_ok;
 
@@ -587,13 +585,15 @@ public:
 
         // 10. Check preconditions, including zero time left for execution and
         // successful execution of all dependencies
-        if( timeout == 0 ) {
+        if( timeout == TIMEOUT_EXCEEDED ) {
             // notify all observers about skipped test unit
             BOOST_TEST_FOREACH( test_observer*, to, m_observers )
-                to->test_unit_skipped( tu, "timeout for the test suite is exceeded" );
+                to->test_unit_skipped( tu, "timeout for the test unit is exceeded" );
 
             return unit_test_monitor_t::os_timeout;
         }
+        else if( timeout == 0 || timeout > tu.p_timeout ) // deduce timeout for this test unit
+            timeout = tu.p_timeout;
 
         test_tools::assertion_result const precondition_res = tu.check_preconditions();
         if( !precondition_res ) {
@@ -610,7 +610,7 @@ public:
 
         // 30. Execute setup fixtures if any; any failure here leads to test unit abortion
         BOOST_TEST_FOREACH( test_unit_fixture_ptr, F, tu.p_fixtures.get() ) {
-            result = unit_test_monitor.execute_and_translate( boost::bind( &test_unit_fixture::setup, F ), 0 );
+            result = unit_test_monitor.execute_and_translate( boost::bind( &test_unit_fixture::setup, F ) );
             if( result != unit_test_monitor_t::test_ok )
                 break;
         }
@@ -629,11 +629,7 @@ public:
                     typedef std::pair<counter_t,test_unit_id> value_type;
 
                     BOOST_TEST_FOREACH( value_type, chld, ts.m_ranked_children ) {
-                        int chld_timeout = -1;
-                        if( timeout > 0 ) {
-                           int elapsed_so_far = static_cast<int>(tu_timer.elapsed()); // rounding to number of whole seconds
-                           chld_timeout = (std::max)( timeout-elapsed_so_far, 0 );
-                        }
+                        unsigned chld_timeout = child_timeout( timeout, tu_timer.elapsed() );
 
                         result = (std::min)( result, execute_test_tree( chld.second, chld_timeout ) );
 
@@ -661,11 +657,7 @@ public:
                         std::random_shuffle( children_with_the_same_rank.begin(), children_with_the_same_rank.end() );
 
                         BOOST_TEST_FOREACH( test_unit_id, chld, children_with_the_same_rank ) {
-                            int chld_timeout = -1;
-                            if( timeout > 0 ) {
-                              int elapsed_so_far = static_cast<int>(tu_timer.elapsed()); // rounding to number of whole seconds
-                              chld_timeout = (std::max)( timeout-elapsed_so_far, 0 );
-                            }
+                            unsigned chld_timeout = child_timeout( timeout, tu_timer.elapsed() );
 
                             result = (std::min)( result, execute_test_tree( chld, chld_timeout ) );
 
@@ -724,6 +716,16 @@ public:
     }
 
     //////////////////////////////////////////////////////////////////
+
+    unsigned child_timeout( unsigned tu_timeout, double elapsed )
+    {
+      if( tu_timeout == 0U )
+          return 0U;
+
+      unsigned elpsed_sec = static_cast<unsigned>(elapsed); // rounding to number of whole seconds
+
+      return tu_timeout > elpsed_sec ? tu_timeout - elpsed_sec : TIMEOUT_EXCEEDED;
+    }
 
     struct priority_order {
         bool operator()( test_observer* lhs, test_observer* rhs ) const
@@ -1201,7 +1203,7 @@ run( test_unit_id id, bool continue_test )
     case 0:
         break;
     case 1: {
-        unsigned int seed = static_cast<unsigned int>( std::time( 0 ) );
+        unsigned seed = static_cast<unsigned>( std::time( 0 ) );
         BOOST_TEST_MESSAGE( "Test cases order is shuffled using seed: " << seed );
         std::srand( seed );
         break;

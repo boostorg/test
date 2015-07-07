@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( my_test, T, test_types )
 
     // usually it's a bad idea to use BOOST_CHECK_EQUAL for checking equality values of 
     // floating point types. This check may or may not produce an error report
-    BOOST_TEST( (t*t+t)/10 != 9 );
+    BOOST_TEST( (t*t+t)/10 == 9 );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
