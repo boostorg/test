@@ -7,7 +7,7 @@
 
 [section Change log]
 
-[h4 Boost release XXX]
+[h4 Boost.Test v3 / boost 1.59]
 
 [h5 New major features]
 
@@ -91,9 +91,11 @@
 # [ticket 7046] Output full error message, not just 512 chars
 # [ticket 7136] Correct documentation for BOOST_<level>_CLOSE_FRACTION is not reflected into released documents
 # [ticket 7410] Test Units (Cases and Suites) in Boost.Test do not capture `__FILE__` and `__LINE__` at declaration point making it impossible to provide source file linking using external test management tools
+# [ticket 7894] Boost.Test documentation contains no linking instructions
 # [ticket 8201] Broken link in document
 # [ticket 8272] BOOST_REQUIRE_CLOSE fails to compile with boost::multiprecision::cpp_dec_float_100 (duplicates #11054)
 # [ticket 8467] Incorrect link in document (duplicates #6748)
+# [ticket 8679] Boost.Test pollutes boost namespace with it's own enable_if/disable_if templates
 # [ticket 8862] Boost.Test typo in documentation
 # [ticket 8895] English error in test collection comparison
 # [ticket 9179] Documentation: broken link (unable to find =const_string.hpp/const_string_test.cpp=)
@@ -103,6 +105,7 @@
 # [ticket 9537] const_string_test example fails
 # [ticket 9539] Floating-point comparison algorithms aren't formatted correctly
 # [ticket 9581] Squassabia reference link gives 404 not found
+# [ticket 9960] Warnings on Clang
 # [ticket 10318] Minor documentation fix
 # [ticket 10394] Broken links in Boost Test documentation
 # [ticket 10888] Assertion failures don't show up in the errors pane in VS 2010, VS 2012 or VS 2013 (duplicates)
@@ -110,5 +113,6 @@
 # [ticket 11347] `DS` identifier causes test failures in `doc/examples/dataset_example*.cpp`
 # [ticket 11358] Boost.Test v3 warning could helpfully be suppressed.
 # [ticket 11359] `BOOST_CHECK_EQUAL_COLLECTIONS`: can't control output operator (duplicates #9390)
+# [ticket 11425] use-of-uninitialized-value (obsolete)
 
 [endsect]
