@@ -149,10 +149,9 @@ private:
 #ifndef BOOST_TEST_UTILS_RUNTIME_PARAM_OFFLINE
 
 #ifndef BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE
-  #define BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE inline
+#   define BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE inline
 #endif
-
-#include <boost/test/utils/runtime/cla/parser.ipp>
+# include <boost/test/utils/runtime/cla/parser.ipp>
 
 #endif
 

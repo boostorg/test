@@ -77,7 +77,7 @@ public:
     bool                                has_label( const_string l ) const;
 
     // helper access methods
-    void                                increase_exp_fail( unsigned num );
+    void                                increase_exp_fail( counter_t num );
     bool                                is_enabled() const    { return p_run_status == RS_ENABLED; }
     std::string                         full_name() const;
 
@@ -91,12 +91,12 @@ public:
     label_list_t                        p_labels;               ///< list of labels associated with this test unit
 
     id_list_t                           p_dependencies;         ///< list of test units this one depends on
-    precond_list_t                      p_preconditions;        ///< user supplied preconditions for this test unit; 
+    precond_list_t                      p_preconditions;        ///< user supplied preconditions for this test unit;
 
     // Public r/w properties
     readwrite_property<std::string>     p_name;                 ///< name for this test unit
     readwrite_property<std::string>     p_description;          ///< description for this test unit
-    readwrite_property<int>             p_timeout;              ///< timeout for the test unit execution in seconds
+    readwrite_property<unsigned>        p_timeout;              ///< timeout for the test unit execution in seconds
     readwrite_property<counter_t>       p_expected_failures;    ///< number of expected failures in this test unit
 
     readwrite_property<run_status>      p_default_status;       ///< run status obtained by this unit during setup phase
@@ -169,10 +169,10 @@ public:
      *
      * It is possible to specify the timeout and the expected failures.
      */
-    void            add( test_unit* tu, counter_t expected_failures = 0, int timeout = -1 );
+    void            add( test_unit* tu, counter_t expected_failures = 0, unsigned timeout = 0 );
 
     /// @overload
-    void            add( test_unit_generator const& gen, int timeout = -1 );
+    void            add( test_unit_generator const& gen, unsigned timeout = 0 );
 
     /// @overload
     void            add( test_unit_generator const& gen, decorator::collector& decorators );
@@ -273,4 +273,3 @@ make_test_case( void (UserTestCase::*           test_method )(),
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_TREE_TEST_UNIT_HPP_100211GER
-

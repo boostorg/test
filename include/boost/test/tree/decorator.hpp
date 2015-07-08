@@ -126,7 +126,7 @@ private:
 
 class BOOST_TEST_DECL timeout : public decorator::base {
 public:
-    explicit                timeout( int t ) : m_timeout( t ) {}
+    explicit                timeout( unsigned t ) : m_timeout( t ) {}
 
 private:
     // decorator::base interface
@@ -134,7 +134,7 @@ private:
     virtual base_ptr        clone() const { return base_ptr(new timeout( m_timeout )); }
 
     // Data members
-    int                     m_timeout;
+    unsigned                m_timeout;
 };
 
 // ************************************************************************** //
@@ -275,4 +275,3 @@ using decorator::precondition;
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_TREE_DECORATOR_HPP_091911GER
-

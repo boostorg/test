@@ -31,6 +31,8 @@ rule boost.test-self-test ( test-rule : test-suite : test-name : usage-variant ?
                <toolset>gcc:<cxxflags>-std=c++11
                <toolset>clang:<cxxflags>-Wno-c99-extensions
                <toolset>clang:<cxxflags>-std=c++11
+#               <toolset>clang:<cxxflags>-Wconversion
+#               <toolset>clang:<cxxflags>-Wno-sign-conversion
                <warnings>all
                $(extra-options)
              : $(test-name)

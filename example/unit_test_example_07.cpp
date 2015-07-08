@@ -23,7 +23,7 @@ struct F {
 
 BOOST_FIXTURE_TEST_SUITE( s, F )
 
-typedef boost::mpl::list<char,int,float,double> test_types;
+typedef boost::mpl::list<char,int const,float,const double> test_types;
 // this test case template produce a separate test case for each type listed in test_types
 // each produced test case uses struct F as a fixture
 BOOST_AUTO_TEST_CASE_TEMPLATE( my_test, T, test_types )
@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( my_test, T, test_types )
 
     // usually it's a bad idea to use BOOST_CHECK_EQUAL for checking equality values of 
     // floating point types. This check may or may not produce an error report
-    BOOST_CHECK_EQUAL( (t*t+t)/10, 9 );
+    BOOST_TEST( (t*t+t)/10 == 9 );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -113,7 +113,7 @@ string_name_policy::match_name( argv_traverser& tr ) const
     if( mm_pos.first == in.begin() )
         return false;
 
-    tr.trim( mm_pos.first - in.begin() );
+    tr.trim( static_cast<std::size_t>(mm_pos.first - in.begin()) );
 
     return true;
 }

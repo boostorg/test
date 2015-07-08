@@ -61,7 +61,7 @@ BOOST_TEST_DECL const_string            memory_leaks_report_file();
 /// Do not prodce result code
 BOOST_TEST_DECL bool                    no_result_code();
 /// Random seed to use to randomize order of test units being run
-BOOST_TEST_DECL int                     random_seed();
+BOOST_TEST_DECL unsigned                random_seed();
 /// Which format to use to report results
 BOOST_TEST_DECL output_format           report_format();
 /// Wht lever of report format to set

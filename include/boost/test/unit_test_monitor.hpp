@@ -44,7 +44,7 @@ public:
     static bool is_critical_error( error_level e ) { return e <= fatal_error; }
 
     // monitor method
-    error_level execute_and_translate( boost::function<void ()> const& func, int timeout = -1 );
+    error_level execute_and_translate( boost::function<void ()> const& func, unsigned timeout = 0 );
 
 private:
     BOOST_TEST_SINGLETON_CONS( unit_test_monitor_t )

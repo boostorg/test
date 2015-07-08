@@ -60,7 +60,7 @@ test_unit::test_unit( const_string name, const_string file_name, std::size_t lin
 , p_id( INV_TEST_UNIT_ID )
 , p_parent_id( INV_TEST_UNIT_ID )
 , p_name( std::string( name.begin(), name.size() ) )
-, p_timeout( -1 )
+, p_timeout( 0 )
 , p_expected_failures( 0 )
 , p_default_status( RS_INHERIT )
 , p_run_status( RS_INVALID )
@@ -77,7 +77,7 @@ test_unit::test_unit( const_string module_name )
 , p_id( INV_TEST_UNIT_ID )
 , p_parent_id( INV_TEST_UNIT_ID )
 , p_name( std::string( module_name.begin(), module_name.size() ) )
-, p_timeout( -1 )
+, p_timeout( 0 )
 , p_expected_failures( 0 )
 , p_default_status( RS_INHERIT )
 , p_run_status( RS_INVALID )
@@ -150,7 +150,7 @@ test_unit::check_preconditions() const
 //____________________________________________________________________________//
 
 void
-test_unit::increase_exp_fail( unsigned num )
+test_unit::increase_exp_fail( counter_t num )
 {
     p_expected_failures.value += num;
 
@@ -237,10 +237,9 @@ test_suite::test_suite( const_string module_name )
 //____________________________________________________________________________//
 
 void
-test_suite::add( test_unit* tu, counter_t expected_failures, int timeout )
+test_suite::add( test_unit* tu, counter_t expected_failures, unsigned timeout )
 {
-    if( timeout > 0 )
-        tu->p_timeout.value = timeout;
+    tu->p_timeout.value = timeout;
 
     m_children.push_back( tu->p_id );
     tu->p_parent_id.value = p_id;
@@ -255,7 +254,7 @@ test_suite::add( test_unit* tu, counter_t expected_failures, int timeout )
 //____________________________________________________________________________//
 
 void
-test_suite::add( test_unit_generator const& gen, int timeout )
+test_suite::add( test_unit_generator const& gen, unsigned timeout )
 {
     test_unit* tu;
     while((tu = gen.next()) != 0)
@@ -339,8 +338,8 @@ traverse_test_tree( test_suite const& suite, test_tree_visitor& V, bool ignore_s
         return;
 
     // Recurse into children
-    unsigned total_children = suite.m_children.size();
-    for( unsigned i=0; i < total_children; ) {
+    std::size_t total_children = suite.m_children.size();
+    for( std::size_t i=0; i < total_children; ) {
         // this statement can remove the test unit from this list
         traverse_test_tree( suite.m_children[i], V, ignore_status );
         if( total_children > suite.m_children.size() )
@@ -375,9 +374,14 @@ namespace ut_detail {
 std::string
 normalize_test_case_name( const_string name )
 {
-    return ( name[0] == '&'
-                ? std::string( name.begin()+1, name.size()-1 )
-                : std::string( name.begin(), name.size() ) );
+    std::string norm_name( name.begin(), name.size() );
+
+    if( name[0] == '&' )
+        norm_name = norm_name.substr( 1 );
+        
+    std::replace(norm_name.begin(), norm_name.end(), ' ', '_'); 
+
+    return norm_name;
 }
 
 //____________________________________________________________________________//

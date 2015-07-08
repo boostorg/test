@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_CASE( my_test3 )
 {
     int i = 0;
 
-    BOOST_CHECK_EQUAL( i, 0 );
+    BOOST_TEST( i == 0 );
 }
 
 //____________________________________________________________________________//

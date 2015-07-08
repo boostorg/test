@@ -18,7 +18,7 @@ using namespace boost::unit_test;
 
 void free_test_function( int i, int j )
 {
-    BOOST_CHECK_EQUAL( i, j );
+    BOOST_TEST( i == j );
 }
 
 //____________________________________________________________________________//

@@ -20,7 +20,7 @@ BOOST_AUTO_TEST_CASE( test_case_1 )
 {
      BOOST_TEST_MESSAGE( "Testing is in progress" );
 
-     BOOST_CHECK( false );
+     BOOST_TEST( false );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

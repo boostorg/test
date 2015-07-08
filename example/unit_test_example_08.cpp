@@ -16,7 +16,7 @@ BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES( my_test1, 1 )
 
 BOOST_AUTO_TEST_CASE( my_test1 )
 {
-    BOOST_CHECK( 2 == 1 );
+    BOOST_TEST( 2 == 1 );
 }
 
 //____________________________________________________________________________//

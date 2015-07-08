@@ -88,8 +88,10 @@ BOOST_TEST_UTILS_RUNTIME_CLA_NAMED_PARAM_GENERATORS( dual_name_parameter )
 
 #ifndef BOOST_TEST_UTILS_RUNTIME_PARAM_OFFLINE
 
-#  define BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE inline
-#  include <boost/test/utils/runtime/cla/dual_name_parameter.ipp>
+#ifndef BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE
+#   define BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE inline
+#endif
+#   include <boost/test/utils/runtime/cla/dual_name_parameter.ipp>
 
 #endif
 
