@@ -91,6 +91,7 @@
 # [ticket 7046] Output full error message, not just 512 chars
 # [ticket 7136] Correct documentation for BOOST_<level>_CLOSE_FRACTION is not reflected into released documents
 # [ticket 7410] Test Units (Cases and Suites) in Boost.Test do not capture `__FILE__` and `__LINE__` at declaration point making it impossible to provide source file linking using external test management tools
+# [ticket 7894] Boost.Test documentation contains no linking instructions
 # [ticket 8201] Broken link in document
 # [ticket 8272] BOOST_REQUIRE_CLOSE fails to compile with boost::multiprecision::cpp_dec_float_100 (duplicates #11054)
 # [ticket 8467] Incorrect link in document (duplicates #6748)
