@@ -7,7 +7,7 @@
 
 [section:collections Collections comparison]
 
-Instead of comparing a singular value against another, there is often a need for comparing /collections/ of values.
+Instead of comparing a single value against another, there is often a need for comparing /collections/ of values.
 A collection and indirectly the values it contains may be considered in several ways:
 
 * collection as a /sequence of values/: this is the case for instance when `N` values are stored in a
