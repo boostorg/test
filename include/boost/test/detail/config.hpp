@@ -72,13 +72,6 @@ class type_info;
 
 //____________________________________________________________________________//
 
-#if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) && \
-    !BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530))
-#  define BOOST_TEST_SUPPORT_INTERACTION_TESTING 1
-#endif
-
-//____________________________________________________________________________//
-
 #if !defined(__BORLANDC__) && !BOOST_WORKAROUND( __SUNPRO_CC, < 0x5100 )
 #define BOOST_TEST_SUPPORT_TOKEN_ITERATOR 1
 #endif
