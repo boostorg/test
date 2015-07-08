@@ -27,6 +27,8 @@
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/type_traits/remove_cv.hpp>
 
+#include <boost/test/detail/throw_exception.hpp>
+
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
@@ -57,7 +59,7 @@ inline void
 report_access_to_invalid_parameter(bool v)
 {
     if(v)
-        throw access_to_invalid_parameter();
+        BOOST_TEST_IMPL_THROW( access_to_invalid_parameter() );
 }
 
 //____________________________________________________________________________//

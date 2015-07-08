@@ -19,7 +19,6 @@
 #define BOOST_TEST_UNIT_TEST_PARAMETERS_IPP_012205GER
 
 // Boost.Test
-
 #include <boost/test/unit_test_parameters.hpp>
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 #include <boost/test/utils/basic_cstring/compare.hpp>
@@ -27,6 +26,8 @@
 #include <boost/test/utils/fixed_mapping.hpp>
 #include <boost/test/debug.hpp>
 #include <boost/test/framework.hpp>
+
+#include <boost/test/detail/throw_exception.hpp>
 
 // Boost.Runtime.Param
 #include <boost/test/utils/runtime/cla/dual_name_parameter.hpp>
@@ -273,7 +274,7 @@ init( int& argc, char** argv )
 {
     using namespace cla;
 
-    try {
+    BOOST_TEST_IMPL_TRY {
         if( s_cla_parser.num_params() != 0 )
             s_cla_parser.reset();
         else
@@ -359,7 +360,7 @@ init( int& argc, char** argv )
 
         if( s_cla_parser["help"] ) {
             s_cla_parser.help( std::cout );
-            throw framework::nothing_to_test();
+            BOOST_TEST_IMPL_THROW( framework::nothing_to_test() );
         }
 
         s_report_format     = retrieve_parameter( REPORT_FORMAT, s_cla_parser, unit_test::OF_CLF );
@@ -372,13 +373,13 @@ init( int& argc, char** argv )
 
         s_test_to_run = retrieve_parameter<std::list<std::string> >( TESTS_TO_RUN, s_cla_parser );
     }
-    catch( rt::logic_error const& ex ) {
+    BOOST_TEST_IMPL_CATCH( rt::logic_error, ex ) {
         std::ostringstream err;
 
         err << "Fail to process runtime parameters: " << ex.msg() << std::endl;
         s_cla_parser.usage( err );
 
-        throw framework::setup_error( err.str() );
+        BOOST_TEST_SETUP_ASSERT( false, err.str() );
     }
 }
 
@@ -586,11 +587,11 @@ detect_memory_leaks()
     if( runtime::interpret_argument_value_impl<bool>::_( value, bool_val ) )
         s_value = *bool_val ? 1L : 0L;
     else {
-        try {
+        BOOST_TEST_IMPL_TRY {
             // if representable as long - this is leak number
             s_value = boost::lexical_cast<long>( value );
         }
-        catch( boost::bad_lexical_cast const& ) {
+        BOOST_TEST_IMPL_CATCH0( boost::bad_lexical_cast ) {
             // value is leak report file and detection is enabled
             s_value = 1L;
         }

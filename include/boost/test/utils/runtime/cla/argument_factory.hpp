@@ -123,14 +123,14 @@ typed_argument_factory<T>::produce_using( parameter& p, argv_traverser& tr )
 {
     boost::optional<T> value;
 
-    try {
+    BOOST_TEST_IMPL_TRY {
         m_value_interpreter( tr, value );
     }
-    catch( ... ) { // !! should we do that?
+    BOOST_TEST_IMPL_CATCHALL() { // !! should we do that?
         BOOST_TEST_UTILS_RUNTIME_PARAM_TRACE( "Fail to parse argument value" );
 
         if( !p.p_optional_value )
-            throw;
+            BOOST_TEST_IMPL_RETHROW;
     }
 
     argument_ptr actual_arg = p.actual_argument();

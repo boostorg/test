@@ -20,6 +20,7 @@
 
 // Boost.Test
 #include <boost/test/utils/class_properties.hpp>
+#include <boost/test/detail/throw_exception.hpp>
 
 // Boost
 #include <boost/shared_ptr.hpp>
@@ -64,7 +65,7 @@ private:
 inline void
 report_logic_error( format_stream& msg )
 {
-    throw BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE::logic_error( msg.str() );
+    BOOST_TEST_IMPL_THROW( BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE::logic_error( msg.str() ) );
 }
 
 //____________________________________________________________________________//

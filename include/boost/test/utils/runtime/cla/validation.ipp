@@ -19,10 +19,9 @@
 #include <boost/test/utils/runtime/cla/validation.hpp>
 #include <boost/test/utils/runtime/validation.hpp> // BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE::logic_error
 
-// Boost
+// Boost.Test
 #include <boost/test/utils/basic_cstring/io.hpp>
-
-// STL
+#include <boost/test/detail/throw_exception.hpp>
 
 namespace boost {
 
@@ -48,7 +47,7 @@ report_input_error( argv_traverser const& tr, format_stream& msg )
             msg << tr.input();
     }
 
-    throw BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE::logic_error( msg.str() );
+    BOOST_TEST_IMPL_THROW( BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE::logic_error( msg.str() ) );
 }
 
 //____________________________________________________________________________//

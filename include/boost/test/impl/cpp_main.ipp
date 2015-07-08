@@ -68,7 +68,7 @@ prg_exec_monitor_main( int (*cpp_main)( int argc, char* argv[] ), int argc, char
 {
     int result = 0;
 
-    try {
+    BOOST_TEST_IMPL_TRY {
         boost::unit_test::const_string p( std::getenv( "BOOST_TEST_CATCH_SYSTEM_ERRORS" ) );
         ::boost::execution_monitor ex_mon;
 
@@ -83,11 +83,11 @@ prg_exec_monitor_main( int (*cpp_main)( int argc, char* argv[] ), int argc, char
             result = ::boost::exit_failure;
         }
     }
-    catch( ::boost::execution_exception const& exex ) {
+    BOOST_TEST_IMPL_CATCH( ::boost::execution_exception, exex ) {
         std::cout << "\n**** exception(" << exex.code() << "): " << exex.what() << std::endl;
         result = ::boost::exit_exception_failure;
     }
-    catch( ::boost::system_error const& ex ) {
+    BOOST_TEST_IMPL_CATCH( ::boost::system_error, ex ) {
         std::cout << "\n**** failed to initialize execution monitor."
                   << "\n**** expression at fault: " << ex.p_failed_exp
                   << "\n**** error(" << ex.p_errno << "): " << std::strerror( ex.p_errno ) << std::endl;

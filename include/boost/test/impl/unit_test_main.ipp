@@ -185,7 +185,7 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
 {
     int result_code = 0;
 
-    try {
+    BOOST_TEST_IMPL_TRY {
         framework::init( init_func, argc, argv );
 
         if( runtime_config::wait_for_debugger() ) {
@@ -233,20 +233,20 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
                         ? boost::exit_success
                         : results_collector.results( framework::master_test_suite().p_id ).result_code();
     }
-    catch( framework::nothing_to_test const& ) {
+    BOOST_TEST_IMPL_CATCH0( framework::nothing_to_test ) {
         result_code = boost::exit_success;
     }
-    catch( framework::internal_error const& ex ) {
+    BOOST_TEST_IMPL_CATCH( framework::internal_error, ex ) {
         results_reporter::get_stream() << "Boost.Test framework internal error: " << ex.what() << std::endl;
 
         result_code = boost::exit_exception_failure;
     }
-    catch( framework::setup_error const& ex ) {
+    BOOST_TEST_IMPL_CATCH( framework::setup_error, ex ) {
         results_reporter::get_stream() << "Test setup error: " << ex.what() << std::endl;
 
         result_code = boost::exit_exception_failure;
     }
-    catch( ... ) {
+    BOOST_TEST_IMPL_CATCHALL() {
         results_reporter::get_stream() << "Boost.Test framework internal error: unknown reason" << std::endl;
 
         result_code = boost::exit_exception_failure;

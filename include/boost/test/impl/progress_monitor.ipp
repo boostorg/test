@@ -26,7 +26,6 @@
 #include <boost/test/tree/traverse.hpp>
 
 // Boost
-#include <boost/progress.hpp>
 #include <boost/scoped_ptr.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -39,6 +38,64 @@ namespace unit_test {
 // ************************************************************************** //
 // **************                progress_monitor              ************** //
 // ************************************************************************** //
+
+struct progress_display {
+    progress_display( counter_t expected_count, std::ostream& os )
+    : m_os(os)
+    , m_count( 0 )
+    , m_expected_count( expected_count )
+    , m_next_tic_count( 0 )
+    , m_tic( 0 )
+    {
+
+        m_os << "\n0%   10   20   30   40   50   60   70   80   90   100%"
+             << "\n|----|----|----|----|----|----|----|----|----|----|"
+             << std::endl;
+
+        if( !m_expected_count ) 
+            m_expected_count = 1;  // prevent divide by zero
+    }
+
+    unsigned long  operator+=( unsigned long increment )
+    {
+        if( (m_count += increment) < m_next_tic_count )
+            return m_count;
+
+        // use of floating point ensures that both large and small counts
+        // work correctly.  static_cast<>() is also used several places
+        // to suppress spurious compiler warnings. 
+        unsigned int tics_needed =  static_cast<unsigned int>(
+            (static_cast<double>(m_count)/m_expected_count)*50.0 );
+
+        do {
+            m_os << '*' << std::flush;
+        } while( ++m_tic < tics_needed );
+
+        m_next_tic_count = static_cast<unsigned long>((m_tic/50.0) * m_expected_count);
+
+        if( m_count == m_expected_count ) {
+            if( m_tic < 51 )
+                m_os << '*';
+
+            m_os << std::endl;
+        }
+
+        return m_count;
+    }
+    unsigned long   operator++()           { return operator+=( 1 ); }
+    unsigned long   count() const          { return m_count; }
+
+private:
+    BOOST_DELETED_FUNCTION(progress_display(progress_display const&))
+    BOOST_DELETED_FUNCTION(progress_display& operator=(progress_display const&))
+
+    std::ostream&   m_os;  // may not be present in all imps
+
+    unsigned long   m_count;
+    unsigned long   m_expected_count;
+    unsigned long   m_next_tic_count;
+    unsigned int    m_tic;
+};
 
 namespace {
 

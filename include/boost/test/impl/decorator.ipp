@@ -23,6 +23,9 @@
 #if BOOST_TEST_SUPPORT_TOKEN_ITERATOR
 #include <boost/test/utils/iterator/token_iterator.hpp>
 #endif
+
+#include <boost/test/detail/throw_exception.hpp>
+
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
@@ -127,7 +130,7 @@ void
 depends_on::apply( test_unit& tu )
 {
 #if !BOOST_TEST_SUPPORT_TOKEN_ITERATOR
-    throw setup_error( "depends_on decorator is not supported on this platform" );
+    BOOST_TEST_SETUP_ASSERT( false, "depends_on decorator is not supported on this platform" );
 #else
     string_token_iterator tit( m_dependency, (dropped_delimeters = "/", kept_delimeters = dt_none) );
 
@@ -137,8 +140,8 @@ depends_on::apply( test_unit& tu )
 
         test_unit_id next_id = static_cast<test_suite*>(dep)->get( *tit );
 
-        if( next_id == INV_TEST_UNIT_ID )
-            throw framework::setup_error( std::string( "incorrect dependency specification " ) + m_dependency );
+        BOOST_TEST_SETUP_ASSERT( next_id != INV_TEST_UNIT_ID,
+                                 std::string( "incorrect dependency specification " ) + m_dependency );
 
         dep = &framework::get( next_id, TUT_ANY );
         ++tit;

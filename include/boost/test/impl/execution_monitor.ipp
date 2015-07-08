@@ -27,6 +27,7 @@
 // Boost.Test
 #include <boost/test/detail/config.hpp>
 #include <boost/test/detail/workaround.hpp>
+#include <boost/test/detail/throw_exception.hpp>
 #include <boost/test/execution_monitor.hpp>
 #include <boost/test/debug.hpp>
 
@@ -34,8 +35,10 @@
 #include <boost/cstdlib.hpp>    // for exit codes
 #include <boost/config.hpp>     // for workarounds
 #include <boost/core/ignore_unused.hpp> // for ignore_unused
+#ifndef BOOST_NO_EXCEPTION
 #include <boost/exception/get_error_info.hpp> // for get_error_info
 #include <boost/exception/current_exception_cast.hpp> // for current_exception_cast
+#endif
 
 // STL
 #include <string>               // for std::string
@@ -190,6 +193,14 @@ namespace { void _set_se_translator( void* ) {} }
 namespace boost {
 
 // ************************************************************************** //
+// **************                 throw_exception              ************** //
+// ************************************************************************** //
+
+#ifdef BOOST_NO_EXCEPTION
+void throw_exception( std::exception const & e ) { abort(); }
+#endif
+
+// ************************************************************************** //
 // **************                  report_error                ************** //
 // ************************************************************************** //
 
@@ -204,6 +215,8 @@ namespace detail {
 #else
 #  define BOOST_TEST_VSNPRINTF( a1, a2, a3, a4 ) vsnprintf( (a1), (a2), (a3), (a4) )
 #endif
+
+#ifndef BOOST_NO_EXCEPTION
 
 template <typename ErrorInfo>
 typename ErrorInfo::value_type
@@ -238,23 +251,25 @@ report_error( execution_exception::error_code ec, boost::exception const* be, ch
 //____________________________________________________________________________//
 
 static void
-report_error( execution_exception::error_code ec, char const* format, ... )
-{
-    va_list args;
-    va_start( args, format );
-
-    report_error( ec, 0, format, &args );
-}
-
-//____________________________________________________________________________//
-
-static void
 report_error( execution_exception::error_code ec, boost::exception const* be, char const* format, ... )
 {
     va_list args;
     va_start( args, format );
 
     report_error( ec, be, format, &args );
+}
+
+#endif
+
+//____________________________________________________________________________//
+
+static void
+report_error( execution_exception::error_code ec, char const* format, ... )
+{
+    va_list args;
+    va_start( args, format );
+
+    report_error( ec, 0, format, &args );
 }
 
 //____________________________________________________________________________//
@@ -854,7 +869,7 @@ execution_monitor::catch_signals( boost::function<int ()> const& F )
     if( !sigsetjmp( signal_handler::jump_buffer(), 1 ) )
         return detail::do_invoke( m_custom_translators , F );
     else
-        throw local_signal_handler.sys_sig();
+        return BOOST_TEST_IMPL_THROW( local_signal_handler.sys_sig() );
 }
 
 //____________________________________________________________________________//
@@ -1185,12 +1200,14 @@ execution_monitor::execute( boost::function<int ()> const& F )
     if( debug::under_debugger() )
         p_catch_system_errors.value = false;
 
-    try {
+    BOOST_TEST_IMPL_TRY {
         detail::fpe_except_guard G( p_detect_fp_exceptions );
         unit_test::ut_detail::ignore_unused_variable_warning( G );
 
         return catch_signals( F );
     }
+
+#ifndef BOOST_NO_EXCEPTION
 
     //  Catch-clause reference arguments are a bit different from function
     //  arguments (ISO 15.3 paragraphs 18 & 19).  Apparently const isn't
@@ -1271,6 +1288,8 @@ execution_monitor::execute( boost::function<int ()> const& F )
     // unknown error
     catch( ... )
       { detail::report_error( execution_exception::cpp_exception_error, "unknown type" ); }
+
+#endif // !BOOST_NO_EXCEPTION
 
     return 0;  // never reached; supplied to quiet compiler warnings
 } // execute

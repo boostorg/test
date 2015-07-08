@@ -108,7 +108,7 @@ parser::parse( int& argc, char_type** argv )
 
     m_traverser.init( argc, argv );
 
-    try {
+    BOOST_TEST_IMPL_TRY {
         while( !m_traverser.eoi() ) {
             parameter_ptr found_param;
 
@@ -151,10 +151,10 @@ parser::parse( int& argc, char_type** argv )
             }
         }
     }
-    catch( bad_lexical_cast const& ) {
+    BOOST_TEST_IMPL_CATCH0( bad_lexical_cast ) {
         BOOST_TEST_UTILS_RUNTIME_PARAM_REPORT_LOGIC_ERROR(
             BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "String to value convertion error during input parsing" ) );
-    }
+    };
 
     m_traverser.remainder( argc, argv );
 }

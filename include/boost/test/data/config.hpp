@@ -14,6 +14,7 @@
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
+#include <boost/test/detail/throw_exception.hpp>
 
 // STL
 #include <stdexcept> // for std::logic_error
@@ -40,7 +41,7 @@
 
 //____________________________________________________________________________//
 
-#define BOOST_TEST_DS_ERROR( msg ) throw std::logic_error( msg )
+#define BOOST_TEST_DS_ERROR( msg ) BOOST_TEST_IMPL_THROW( std::logic_error( msg ) )
 #define BOOST_TEST_DS_ASSERT( cond, msg ) if( cond ) {} else BOOST_TEST_DS_ERROR( msg )
 
 #endif // BOOST_TEST_DATA_CONFIG_HPP_112611GER

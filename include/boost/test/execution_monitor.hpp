@@ -16,6 +16,8 @@
 // Boost.Test
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
+#include <boost/test/detail/throw_exception.hpp>
+
 #include <boost/test/utils/class_properties.hpp>
 
 // Boost
@@ -413,9 +415,10 @@ public:
     // translator holder interface
     virtual int operator()( boost::function<int ()> const& F )
     {
-        try {
+        BOOST_TEST_IMPL_TRY {
             return m_next ? (*m_next)( F ) : F();
-        } catch( ExceptionType const& e ) {
+        }
+        BOOST_TEST_IMPL_CATCH( ExceptionType, e ) {
             m_translator( e );
             return boost::exit_exception_failure;
         }
@@ -462,7 +465,9 @@ public:
     unit_test::readonly_property<char const*>   p_failed_exp;
 };
 
-#define BOOST_TEST_SYS_ASSERT( exp ) if( (exp) ) ; else throw ::boost::system_error( BOOST_STRINGIZE( exp ) )
+#define BOOST_TEST_SYS_ASSERT( exp ) \
+    if( (exp) ) ; \
+    else BOOST_TEST_IMPL_THROW( ::boost::system_error( BOOST_STRINGIZE( exp ) ) )
 
 // ************************************************************************** //
 // **************Floating point exception management interface ************** //

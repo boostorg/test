@@ -27,6 +27,8 @@
 #include <boost/test/tree/test_unit.hpp>
 #include <boost/test/execution_monitor.hpp> // execution_aborted
 
+#include <boost/test/detail/throw_exception.hpp>
+
 // Boost
 #include <boost/config.hpp>
 
@@ -293,7 +295,8 @@ report_assertion( assertion_result const&   ar,
     using namespace unit_test;
 
     if( framework::current_test_case_id() == INV_TEST_UNIT_ID )
-        throw std::runtime_error( "can't use testing tools outside of test case implementation" );
+        BOOST_TEST_IMPL_THROW( 
+            std::runtime_error( "can't use testing tools outside of test case implementation" ) );
 
     if( !!ar )
         tl = PASS;
@@ -354,7 +357,7 @@ report_assertion( assertion_result const&   ar,
 
         framework::test_unit_aborted( framework::current_test_case() );
 
-        throw execution_aborted();
+        BOOST_TEST_IMPL_THROW( execution_aborted() );
     }
 
     return true;

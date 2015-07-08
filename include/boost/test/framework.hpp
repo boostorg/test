@@ -16,6 +16,8 @@
 // Boost.Test
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
+#include <boost/test/detail/throw_exception.hpp>
+
 #include <boost/test/utils/trivial_singleton.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -61,7 +63,7 @@ namespace framework {
 /// @param[in] argv command line arguments collection
 BOOST_TEST_DECL void                init( init_unit_test_func init_func, int argc, char* argv[] );
 
-/// This function applies all the decorators and figures out default run status. This argument facilitates an 
+/// This function applies all the decorators and figures out default run status. This argument facilitates an
 /// ability of the test cases to prepare some other test units (primarily used internally for self testing)
 /// @param[in] tu Optional id of the test unit representing root of test tree. If absent, master test suite is used
 BOOST_TEST_DECL void                finalize_setup_phase( test_unit_id tu = INV_TEST_UNIT_ID);
@@ -252,7 +254,9 @@ struct BOOST_TEST_DECL setup_error : public std::runtime_error {
     setup_error( const_string m ) : std::runtime_error( std::string( m.begin(), m.size() ) ) {}
 };
 
-#define BOOST_TEST_SETUP_ASSERT( cond, msg ) if( cond ) {} else throw unit_test::framework::setup_error( msg )
+#define BOOST_TEST_SETUP_ASSERT( cond, msg ) \
+    if( cond ) {} \
+    else BOOST_TEST_IMPL_THROW( unit_test::framework::setup_error( msg ) )
 
 //____________________________________________________________________________//
 

@@ -33,6 +33,11 @@ rule boost.test-self-test ( test-rule : test-suite : test-name : usage-variant ?
                <toolset>clang:<cxxflags>-std=c++11
 #               <toolset>clang:<cxxflags>-Wconversion
 #               <toolset>clang:<cxxflags>-Wno-sign-conversion
+#               <toolset>gcc:<cxxflags>-E
+#               <toolset>gcc:<cxxflags>-fno-exceptions
+#               <toolset>gcc:<cxxflags>-DBOOST_NO_EXCEPTION
+#               <toolset>clang:<cxxflags>-fno-exceptions
+#               <toolset>clang:<cxxflags>-DBOOST_NO_EXCEPTION
                <warnings>all
                $(extra-options)
              : $(test-name)

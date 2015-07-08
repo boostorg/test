@@ -19,6 +19,8 @@
 #include <boost/test/framework.hpp>
 #include <boost/test/execution_monitor.hpp>
 #include <boost/test/debug.hpp>
+#include <boost/test/unit_test_parameters.hpp>
+
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/unit_test_monitor.hpp>
 #include <boost/test/results_collector.hpp>
@@ -35,11 +37,11 @@
 #include <boost/test/utils/iterator/token_iterator.hpp>
 #endif
 
-#include <boost/test/unit_test_parameters.hpp>
-#include <boost/test/detail/global_typedef.hpp>
-
 #include <boost/test/utils/foreach.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
+
+#include <boost/test/detail/global_typedef.hpp>
+#include <boost/test/detail/throw_exception.hpp>
 
 // Boost
 #include <boost/timer.hpp>
@@ -140,8 +142,8 @@ assign_sibling_rank( test_unit_id tu_id, order_info_per_tu& tuoi )
 {
     test_unit& tu = framework::get( tu_id, TUT_ANY );
 
-    if( tu.p_sibling_rank == (std::numeric_limits<counter_t>::max)() )
-        throw framework::setup_error( "Cyclic dependency detected involving test unit \"" + tu.full_name() + "\"");
+    BOOST_TEST_SETUP_ASSERT( tu.p_sibling_rank != (std::numeric_limits<counter_t>::max)(),
+                             "Cyclic dependency detected involving test unit \"" + tu.full_name() + "\"" );
 
     if( tu.p_sibling_rank != 0 )
         return tu.p_sibling_rank;
@@ -169,7 +171,7 @@ invoke_init_func( init_unit_test_func init_func )
 {
 #ifdef BOOST_TEST_ALTERNATIVE_INIT_API
     if( !(*init_func)() )
-        throw std::runtime_error( "test module initialization failed" );
+        BOOST_TEST_IMPL_THROW( std::runtime_error( "test module initialization failed" ) );
 #else
     test_suite*  manual_test_units = (*init_func)( framework::master_test_suite().argc, framework::master_test_suite().argv );
 
@@ -831,11 +833,11 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     using namespace impl;
 
     // 70. Invoke test module initialization routine
-    try {
+    BOOST_TEST_IMPL_TRY {
         s_frk_state().m_aux_em.vexecute( boost::bind( &impl::invoke_init_func, init_func ) );
     }
-    catch( execution_exception const& ex )  {
-        throw setup_error( ex.what() );
+    BOOST_TEST_IMPL_CATCH( execution_exception, ex )  {
+        BOOST_TEST_SETUP_ASSERT( false, ex.what() );
     }
 }
 
@@ -1156,7 +1158,7 @@ get( test_unit_id id, test_unit_type t )
     test_unit* res = impl::s_frk_state().m_test_units[id];
 
     if( (res->p_type & t) == 0 )
-        throw internal_error( "Invalid test unit type" );
+        BOOST_TEST_IMPL_THROW( internal_error( "Invalid test unit type" ) );
 
     return *res;
 }
@@ -1190,11 +1192,11 @@ run( test_unit_id id, bool continue_test )
 
     if( call_start_finish ) {
         BOOST_TEST_FOREACH( test_observer*, to, impl::s_frk_state().m_observers ) {
-            try {
+            BOOST_TEST_IMPL_TRY {
                 impl::s_frk_state().m_aux_em.vexecute( boost::bind( &test_observer::test_start, to, tcc.p_count ) );
             }
-            catch( execution_exception const& ex )  {
-                throw setup_error( ex.what() );
+            BOOST_TEST_IMPL_CATCH( execution_exception, ex ) {
+                BOOST_TEST_SETUP_ASSERT( false, ex.what() );
             }
         }
     }
