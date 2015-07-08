@@ -258,6 +258,14 @@ retrieve_parameter( const_string parameter_name, cla::parser const& s_cla_parser
 
 //____________________________________________________________________________//
 
+void
+disable_use( cla::parameter const&, std::string const& )
+{
+    BOOST_TEST_SETUP_ASSERT( false, "parameter break_exec_path is disabled in this release" );
+}
+
+//____________________________________________________________________________//
+
 } // local namespace
 
 void
@@ -275,7 +283,8 @@ init( int& argc, char** argv )
                    cla::description = "Automatically starts debugger if system level error (signal) occurs")
               << cla::named_parameter<std::string>( BREAK_EXEC_PATH )
                 - (cla::prefix = "--",cla::separator = "=",cla::guess_name,cla::optional,
-                   cla::description = "For the exception safety testing allows to break at specific execution path")
+                   cla::description = "For the exception safety testing allows to break at specific execution path",
+                   cla::handler = &disable_use)
               << cla::dual_name_parameter<bool>( BUILD_INFO + "|i" )
                 - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,
                    cla::description = "Shows library build information" )
