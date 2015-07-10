@@ -6,11 +6,11 @@
  /]
 
 
-[section:link_references Build scenarios and behaviours]
+[section:link_references Build scenarios and behaviors]
 
 [section:link_boost_test_main_macro `BOOST_TEST_MAIN`]
 
-When defined, this macro creates a stub for the test module initialisation (the main entry part). This 
+When defined, this macro creates a stub for the test module initialization (the main entry part). This 
 macro also expands properly into a `main` function in case the shared library variant of the __UTF__ is used.
 
 

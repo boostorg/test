@@ -13,12 +13,12 @@
 
 * __BOOST_TEST__ generic assertion
 * [link boost_test.tests_organization.test_cases.test_case_generation data driven test cases]: supersedes the parametric test case (unary test cases)
-* test units [link boost_test.tests_organization.decorators attributes], that allow finer control over test units property and behaviour
+* test units [link boost_test.tests_organization.decorators attributes], that allow finer control over test units property and behavior
 * logical grouping of the test units using [link boost_test.tests_organization.tests_grouping labels]
 * support for declaring [link boost_test.tests_organization.tests_dependencies dependencies] over test cases
 * attributes for [link boost_test.tests_organization.enabling enabling or disabling] test execution based on static, compile-time or runtime rules
 * extended [link boost_test.runtime_config.test_unit_filtering unit test filtering] from the command line (negation, labels, ...)
-* colour output with __param_color_output__
+* color output with __param_color_output__
 * test bed listing with __param_list_content__
 * rewritten documentation using quickbook
 

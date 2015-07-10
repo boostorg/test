@@ -35,7 +35,7 @@ The __UTF__ satisfies the requirements above, and provides versatile facilities 
 
 While you can write a testing program yourself from scratch, the framework offers the following benefits:
 
-* You get an error report in a text format. Error reports are uniform and you can easily machine-analyse them.
+* You get an error report in a text format. Error reports are uniform and you can easily machine-analyze them.
 * Error reporting is separated from the testing code. You can easily change the error report format without affecting the testing code.
 * The framework automatically detects exceptions thrown by the tested components and time-outs, and reports them along other errors.
 * You can easily filter the test cases, and call only the desired ones. This does not require changing the testing code. 
@@ -59,7 +59,7 @@ Typically, when writing a test module using the __UTF__ you have to go through t
 * You perform the initialization of code under test before each test case. 
   For details, see section [link boost_test.tests_organization.fixtures Fixtures].
 * You might want to customize the way test failures are reported. For details, see section [link boost_test.test_output Controlling output].
-* You can control the run-time behaviour of the built test module (e.g., run only selected tests, change the output format). 
+* You can control the run-time behavior of the built test module (e.g., run only selected tests, change the output format). 
   This is covered in section [link boost_test.runtime_config Runtime configuration].  
 
 If you can't find answer to your question in any of the section mentioned above or if you believe you need even more configuration options, 
