@@ -44,9 +44,9 @@ and posted about this online. This page gathers a few of the additional material
    Automation of running Boost.Test with Visual Studio macros]
 * [@http://richarddingwall.name/2008/06/01/using-the-boost-unit-test-framework-with-xcode-3/ Using the Boost Unit Test Framework with Xcode 3]
 * [@http://www.lonecpluspluscoder.com/2014/09/some-boost-test-notes/ Some Boost.Test notes]
-* [@http://www.devexp.ru/2010/01/boost-test-yunit-testirovanie-i-cmake/ Boost.Test tutorial (in russian)]
-* Boost Test. Setup and usage ([@http://blog.yastrebkov.com/2009/07/boost-test.html russian],
-  [@http://blog.yastrebkov.com/2010/07/boost-test-setup-and-usage.html english])
+* [@http://www.devexp.ru/2010/01/boost-test-yunit-testirovanie-i-cmake/ Boost.Test tutorial (in Russian)]
+* Boost Test. Setup and usage ([@http://blog.yastrebkov.com/2009/07/boost-test.html Russian],
+  [@http://blog.yastrebkov.com/2010/07/boost-test-setup-and-usage.html English])
 * [@http://www.ncbi.nlm.nih.gov/toolkit/doc/book/ch_boost/ Using the Boost Unit Test Framework]
 * [@http://endl.ch/content/gallio-adapter-boosttest Gallio adapter for Boost.Test]
 * [@http://sindicollo.blogspot.com/2008/11/boosttest.html Russian translation of small tutorial to Boost.Test]

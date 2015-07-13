@@ -199,7 +199,7 @@ Tolerance-based computations also apply to `operator<` and other relational oper
 * ['greater-or-equal-at-tolerance] <==> ['strictly-greater] or ['close-at-tolerance]
 
 [note This implies that the exactly one of these: `u < v`, `u == v`, `u > v`, passes with __BOOST_TEST__ at any given tolerance.]
-[caution Relation less-at-tolerance is not a Strict Weak Ordering; using it as predicate in `std::map` or any order-based STL algorithm would result in undefined behaviour.]
+[caution Relation less-at-tolerance is not a Strict Weak Ordering; using it as predicate in `std::map` or any order-based STL algorithm would result in undefined behavior.]
 
 [endsect] [/ floating_points_comparison_impl]
 
@@ -292,7 +292,7 @@ operation itself, besides rounding, isn't considered. In order for numerical sof
 predict error bounds, the __IEEE754__ standard requires arithmetic operations to be 'correctly or exactly rounded'.
 That is, it is required that the internal computation of a given operation be such that the floating point result 
 is the exact result rounded to the number of working bits. In other words, it is required that the computation used
-by the operation itself doesn't introduce any additional errors. The __IEEE754__ standard does not require same behaviour
+by the operation itself doesn't introduce any additional errors. The __IEEE754__ standard does not require same behavior
 from most non-arithmetic operation. The underflow/overflow and division-by-zero errors may cause rounding errors 
 with unpredictable upper limits.
 

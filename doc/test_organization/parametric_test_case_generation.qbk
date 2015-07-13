@@ -140,7 +140,7 @@ The descriptive power of the datasets in __UTF__ comes from
  ]
 
  
-As we will see in the next sections, datasets representing collections of different types may be combined together (eg. /zip/ or /grid/). 
+As we will see in the next sections, datasets representing collections of different types may be combined together (e.g.. /zip/ or /grid/). 
 These operations result in new datasets, in which the samples are of an augmented type. 
 
 [/ TODO resurrect this example
@@ -464,7 +464,7 @@ auto rdgen = random( (data::seed = 100UL,
 ``
 
 Since the generated datasets will have infinite size, the sequence size should be narrowed by combining the dataset with another
-one through eg. a /zip/ operation. 
+one through e.g. a /zip/ operation. 
 
 [tip In order to be able to reproduce a failure within a randomized parameter test case, the seed that generated the failure may be
 set in order to generate the same sequence of random values.]
