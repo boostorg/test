@@ -17,7 +17,7 @@ An (almost) unique interface to all of them implemented by the macro __BOOST_TES
 
 [note All macros arguments are calculated once, so it's safe to pass complex expressions in their place.]
 
-All tools automatically supply an error location: a file name and a line number, which can also be overriden. 
+All tools automatically supply an error location: a file name and a line number, which can also be overridden. 
 
 [caution The testing tools are intended for unit test code rather than library or production code, where throwing exceptions, using `assert()`,
 `boost::concept_check` or `BOOST_STATIC_ASSERT()` may be more suitable ways to detect and report errors.]

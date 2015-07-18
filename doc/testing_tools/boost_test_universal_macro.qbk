@@ -23,7 +23,7 @@ The major features of this tool are:
   and handled,
 * an extended reporting capability in case of failure: not only `BOOST_TEST` reports the location of the failure and a copy of `statement` itself, 
   but also the values of the operands that permits a rapid identification of the issues related to the failed assertion, 
-* the possibility to control better the behaviour or the reports of the checks, in particular:
+* the possibility to control better the behavior or the reports of the checks, in particular:
 
   * floating point comparison: the tolerance may be provided, either using the `BOOST_TEST` 
      directly with `optional_modifiers`, or with /decorators/ (see [link boost_test.testing_tools.extended_comparison.floating_point here]

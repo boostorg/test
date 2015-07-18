@@ -20,7 +20,7 @@ macro __BOOST_AUTO_TEST_CASE__.
 ``
 
 This API is designed to closely mimic nullary free function declaration syntax. 
-In comparison with free function all you need to do is to skip result type and breakets and wrap test 
+In comparison with free function all you need to do is to skip result type and brackets and wrap test 
 case name into BOOST_AUTO_TEST_CASE:
 
 [bt_example example06..Nullary function based test case with automated registration..run]

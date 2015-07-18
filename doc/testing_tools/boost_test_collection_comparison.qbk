@@ -7,14 +7,14 @@
 
 [section:collections Collections comparison]
 
-Instead of comparing a singular value against another, there is often a need for comparing /collections/ of values.
+Instead of comparing a single value against another, there is often a need for comparing /collections/ of values.
 A collection and indirectly the values it contains may be considered in several ways:
 
 * collection as a /sequence of values/: this is the case for instance when `N` values are stored in a
   container. Containers in this case are used for storing several values, and iterating over the containers yields
   sequences that can be compared *element-wise*. The iteration should be in an order that is /a priori/ known
   [footnote this might not be the case
-  for eg. `std::unordered_map`, for which the buckets might be filled differently depending on the insertion order.],
+  for e.g. `std::unordered_map`, for which the buckets might be filled differently depending on the insertion order.],
   for being able to compare the sequences. The values in the collection are independent each other, and subsets can be compared as well.
 * collection as an /ensemble/: this is the case where the elements of the collection define an /entity/,
   and no element can be dissociated from the others.
@@ -30,7 +30,7 @@ The following observations can be done:
 * the methods employed for comparing collections should be chosen adequately with the meaning of the collection,
 * comparing sequences *element-wise* often involves writing loops in the test body, and if a dedicated tool is already in place
   the test body would gain in clarity and expressiveness (including the report in case of failure),
-* some comparison methods such as the lexicographical one, have good general behavior (eg. total ordering,
+* some comparison methods such as the lexicographical one, have good general behavior (e.g. total ordering,
   defined for collections of different size), but are sometimes inappropriate.
 
 __BOOST_TEST__ provides specific tools for comparing collections:

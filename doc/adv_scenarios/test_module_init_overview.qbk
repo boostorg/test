@@ -14,7 +14,7 @@ For a test module consisting of multiple source files you have to define __BOOST
 Otherwise you end up with multiple instances of the initialization function.
 ]
 
-There is practically no need to ever alter the default behaviour of the test module's initialization function. The __UTF__ provides superior tools for performing customization tasks:
+There is practically no need to ever alter the default behavior of the test module's initialization function. The __UTF__ provides superior tools for performing customization tasks:
 
 * for automatic registration of test cases and test suites in the test tree, see section [link boost_test.tests_organization Tests organization];
 * in order to assign the custom name to the master test suite define macro __BOOST_TEST_MODULE__ to desired value;

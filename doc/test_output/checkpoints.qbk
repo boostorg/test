@@ -20,7 +20,7 @@ The macro __BOOST_TEST_CHECKPOINT__ is intended to be used to inject [*named] ch
 macro signature is as follows:
 
 ``
-  __BOOST_TEST_CHECKPOINT__(checkoint_message);
+  __BOOST_TEST_CHECKPOINT__(checkpoint_message);
 ``
 
 The message formatted at the checkpoint position is saved and reported by the exception logging functions (if any

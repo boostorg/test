@@ -73,7 +73,7 @@ __runtime_configuration__ documentation.
 Yes. Starting with Boost 1.34.0.
 
 
-[h3 How to set up a cmake project using __UTF__ (extended)]
+[h3 How to set up a CMake project using __UTF__ (extended)]
 
 Suppose, you are building a test module from one translation unit `test_file.cpp`. First, let's do it using the [link boost_test.usage_variants.single_header single-header usage variant] of the __UTF__.
 
