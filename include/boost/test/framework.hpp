@@ -64,11 +64,11 @@ namespace framework {
 BOOST_TEST_DECL void                init( init_unit_test_func init_func, int argc, char* argv[] );
 
 /// This function applies all the decorators and figures out default run status. This argument facilitates an
-/// ability of the test cases to prepare some other test units (primarily used internally for self testing)
+/// ability of the test cases to prepare some other test units (primarily used internally for self testing).
 /// @param[in] tu Optional id of the test unit representing root of test tree. If absent, master test suite is used
 BOOST_TEST_DECL void                finalize_setup_phase( test_unit_id tu = INV_TEST_UNIT_ID);
 
-/// This function returns true when testing is in progress (setup is finished)
+/// This function returns true when testing is in progress (setup is finished).
 BOOST_TEST_DECL bool                test_in_progress();
 
 /// This function shuts down the framework and clears up its mono-state.
@@ -120,7 +120,7 @@ BOOST_TEST_DECL void                deregister_test_unit( test_unit* tu );
 
 // This function clears up the framework mono-state.
 
-/// Afer this call the framework can be reinitialized to perform a second test run during the same program lifetime
+/// Afer this call the framework can be reinitialized to perform a second test run during the same program lifetime.
 BOOST_TEST_DECL void                clear();
 /// @}
 
@@ -155,7 +155,7 @@ private:
     mutable unsigned m_curr_frame;
 };
 
-/// Records context frame message
+/// Records context frame message.
 
 /// Some context frames are sticky - they can only explicitly cleared by specifying context id. Other (non sticky) context frames cleared after every assertion.
 /// @param[in] context_descr context frame message
@@ -164,13 +164,13 @@ private:
 BOOST_TEST_DECL int                 add_context( lazy_ostream const& context_descr, bool sticky );
 /// Erases context frame (when test exits context scope)
 
-/// If context_id is passed clears that specific context frame identified by this id, otherwise clears all non sticky contexts
+/// If context_id is passed clears that specific context frame identified by this id, otherwise clears all non sticky contexts.
 BOOST_TEST_DECL void                clear_context( int context_id = -1 );
-/// Produces an instance of small "delegate" object, which facilitates access to collected context
+/// Produces an instance of small "delegate" object, which facilitates access to collected context.
 BOOST_TEST_DECL context_generator   get_context();
 /// @}
 
-/// @name Access to registered test units
+/// @name Access to registered test units.
 /// @{
 /// This function provides access to the master test suite.
 
@@ -178,19 +178,19 @@ BOOST_TEST_DECL context_generator   get_context();
 /// @returns a reference the master test suite instance
 BOOST_TEST_DECL master_test_suite_t& master_test_suite();
 
-/// This function provides an access to the test case currently being executed
+/// This function provides an access to the test case currently being executed.
 
-/// This function is only valid  during test execution phase
+/// This function is only valid during test execution phase.
 /// @see current_test_case_id
 BOOST_TEST_DECL test_case const&    current_test_case();
 
-/// This function provides an access to an id of the test case currently being executed
+/// This function provides an access to an id of the test case currently being executed.
 
 /// This function safer than current_test_case, cause if wont throw if no test case is being executed.
 /// @see current_test_case
 BOOST_TEST_DECL test_unit_id        current_test_case_id(); /* safe version of above */
 
-/// This function provides access to a test unit by id and type combination. It will throw if no test unit located
+/// This function provides access to a test unit by id and type combination. It will throw if no test unit located.
 /// @param[in]  tu_id    id of a test unit to locate
 /// @param[in]  tu_type  type of a test unit to locate
 /// @returns located test unit
@@ -215,7 +215,7 @@ inline UnitType&                    get( test_unit_id id )
 
 /// This function is used to start the test execution from a specific "root" test unit.
 /// If no root provided, test is started from master test suite. This second argument facilitates an ability of the test cases to
-/// start some other test units (primarily used internally for self testing)
+/// start some other test units (primarily used internally for self testing).
 /// @param[in] tu Optional id of the test unit or test unit itself from which the test is started. If absent, master test suite is used
 /// @param[in] continue_test true == continue test if it was already started, false == restart the test from scratch regardless
 BOOST_TEST_DECL void                run( test_unit_id tu = INV_TEST_UNIT_ID, bool continue_test = true );
@@ -242,14 +242,14 @@ BOOST_TEST_DECL void                setup_for_execution( test_unit const& );
 // **************                framework errors              ************** //
 // ************************************************************************** //
 
-/// This exception type is used to report internal Boost.Test framework errors
+/// This exception type is used to report internal Boost.Test framework errors.
 struct BOOST_TEST_DECL internal_error : public std::runtime_error {
     internal_error( const_string m ) : std::runtime_error( std::string( m.begin(), m.size() ) ) {}
 };
 
 //____________________________________________________________________________//
 
-/// This exception type is used to report test module setup errors
+/// This exception type is used to report test module setup errors.
 struct BOOST_TEST_DECL setup_error : public std::runtime_error {
     setup_error( const_string m ) : std::runtime_error( std::string( m.begin(), m.size() ) ) {}
 };
