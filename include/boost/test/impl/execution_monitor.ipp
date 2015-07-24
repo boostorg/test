@@ -868,8 +868,10 @@ execution_monitor::catch_signals( boost::function<int ()> const& F )
 
     if( !sigsetjmp( signal_handler::jump_buffer(), 1 ) )
         return detail::do_invoke( m_custom_translators , F );
-    else
-        BOOST_TEST_IMPL_THROW( local_signal_handler.sys_sig() );
+    else {
+        BOOST_TEST_I_THROW( local_signal_handler.sys_sig() );
+        return 0;
+    }
 }
 
 //____________________________________________________________________________//
@@ -1200,7 +1202,7 @@ execution_monitor::execute( boost::function<int ()> const& F )
     if( debug::under_debugger() )
         p_catch_system_errors.value = false;
 
-    BOOST_TEST_IMPL_TRY {
+    BOOST_TEST_I_TRY {
         detail::fpe_except_guard G( p_detect_fp_exceptions );
         unit_test::ut_detail::ignore_unused_variable_warning( G );
 
@@ -1273,7 +1275,7 @@ execution_monitor::execute( boost::function<int ()> const& F )
     // system errors
     catch( system_error const& ex )
       { detail::report_error( execution_exception::cpp_exception_error,
-                              "system_error produced by: %s: %s", ex.p_failed_exp.get(), std::strerror( ex.p_errno ) ); }
+                              "system_error produced by: %s: %s", ex.p_failed_exp, std::strerror( ex.p_errno ) ); }
     catch( detail::system_signal_exception const& ex )
       { ex.report(); }
 

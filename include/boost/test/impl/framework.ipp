@@ -170,8 +170,7 @@ static void
 invoke_init_func( init_unit_test_func init_func )
 {
 #ifdef BOOST_TEST_ALTERNATIVE_INIT_API
-    if( !(*init_func)() )
-        BOOST_TEST_IMPL_THROW( std::runtime_error( "test module initialization failed" ) );
+    BOOST_TEST_I_ASSRT( (*init_func)(), std::runtime_error( "test module initialization failed" ) );
 #else
     test_suite*  manual_test_units = (*init_func)( framework::master_test_suite().argc, framework::master_test_suite().argv );
 
@@ -390,7 +389,7 @@ parse_filters( test_unit_id master_tu_id, test_unit_id_list& tu_to_enable, test_
     // 10. collect tu to enable and disable based on filters
     bool had_selector_filter = false;
 
-    BOOST_TEST_FOREACH( const_string, filter, runtime_config::test_to_run() ) {
+    BOOST_TEST_FOREACH( const_string, filter, runtime_config::run_filters() ) {
         BOOST_TEST_SETUP_ASSERT( !filter.is_empty(), "Invalid filter specification" );
 
         enum { SELECTOR, ENABLER, DISABLER } filter_type = SELECTOR;
@@ -531,7 +530,7 @@ public:
         test_unit_id_list tu_to_disable;
 
         // 10. If there are any filters supplied, figure out lists of test units to enable/disable
-        bool had_selector_filter = !runtime_config::test_to_run().empty() &&
+        bool had_selector_filter = !runtime_config::run_filters().empty() &&
                                    parse_filters( master_tu_id, tu_to_enable, tu_to_disable );
 
         // 20. Set the stage: either use default run status or disable all test units
@@ -833,10 +832,10 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     using namespace impl;
 
     // 70. Invoke test module initialization routine
-    BOOST_TEST_IMPL_TRY {
+    BOOST_TEST_I_TRY {
         s_frk_state().m_aux_em.vexecute( boost::bind( &impl::invoke_init_func, init_func ) );
     }
-    BOOST_TEST_IMPL_CATCH( execution_exception, ex )  {
+    BOOST_TEST_I_CATCH( execution_exception, ex )  {
         BOOST_TEST_SETUP_ASSERT( false, ex.what() );
     }
 }
@@ -1157,8 +1156,7 @@ get( test_unit_id id, test_unit_type t )
 {
     test_unit* res = impl::s_frk_state().m_test_units[id];
 
-    if( (res->p_type & t) == 0 )
-        BOOST_TEST_IMPL_THROW( internal_error( "Invalid test unit type" ) );
+    BOOST_TEST_I_ASSRT( (res->p_type & t) != 0, internal_error( "Invalid test unit type" ) );
 
     return *res;
 }
@@ -1181,7 +1179,7 @@ run( test_unit_id id, bool continue_test )
     test_case_counter tcc;
     traverse_test_tree( id, tcc );
 
-    BOOST_TEST_SETUP_ASSERT( tcc.p_count != 0 , runtime_config::test_to_run().empty()
+    BOOST_TEST_SETUP_ASSERT( tcc.p_count != 0 , runtime_config::run_filters().empty()
         ? BOOST_TEST_L( "test tree is empty" )
         : BOOST_TEST_L( "no test cases matching filter or all test cases were disabled" ) );
 
@@ -1192,10 +1190,10 @@ run( test_unit_id id, bool continue_test )
 
     if( call_start_finish ) {
         BOOST_TEST_FOREACH( test_observer*, to, impl::s_frk_state().m_observers ) {
-            BOOST_TEST_IMPL_TRY {
+            BOOST_TEST_I_TRY {
                 impl::s_frk_state().m_aux_em.vexecute( boost::bind( &test_observer::test_start, to, tcc.p_count ) );
             }
-            BOOST_TEST_IMPL_CATCH( execution_exception, ex ) {
+            BOOST_TEST_I_CATCH( execution_exception, ex ) {
                 BOOST_TEST_SETUP_ASSERT( false, ex.what() );
             }
         }

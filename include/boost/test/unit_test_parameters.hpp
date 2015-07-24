@@ -21,7 +21,7 @@
 
 // STL
 #include <iosfwd>
-#include <list>
+#include <vector>
 
 //____________________________________________________________________________//
 
@@ -68,14 +68,14 @@ BOOST_TEST_DECL output_format           report_format();
 BOOST_TEST_DECL unit_test::report_level report_level();
 /// Where to direct results report into
 BOOST_TEST_DECL std::ostream*           report_sink();
+/// Specific test units to run/exclude
+BOOST_TEST_DECL std::vector<std::string> const& run_filters();
 /// Should we save pattern (true) or match against existing pattern (used by output validation tool)
 BOOST_TEST_DECL bool                    save_pattern();
 /// Should Unit Test framework show the build information?
 BOOST_TEST_DECL bool                    show_build_info();
 /// Tells Unit Test Framework to show test progress (forces specific log level)
 BOOST_TEST_DECL bool                    show_progress();
-/// Specific test units to run/exclude
-BOOST_TEST_DECL std::list<std::string> const& test_to_run();
 /// Should execution monitor use alternative stack for signal handling
 BOOST_TEST_DECL bool                    use_alt_stack();
 /// Tells Unit Test Framework to wait for debugger to attach
