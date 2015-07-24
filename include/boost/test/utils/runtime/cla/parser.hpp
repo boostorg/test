@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2014.
+//  (C) Copyright Gennadiy Rozental 2005-2015.
 //  Use, modification, and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,57 +17,77 @@
 
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
-#include <boost/test/utils/runtime/fwd.hpp>
 #include <boost/test/utils/runtime/argument.hpp>
 
 #include <boost/test/utils/runtime/cla/fwd.hpp>
 #include <boost/test/utils/runtime/cla/modifier.hpp>
 #include <boost/test/utils/runtime/cla/argv_traverser.hpp>
+#include <boost/test/utils/runtime/cla/parameter.hpp>
 
-// Boost
-#include <boost/optional.hpp>
-
-// STL
-#include <list>
+// Boost.Test
+#include <boost/test/utils/foreach.hpp>
+#include <boost/test/detail/throw_exception.hpp>
 
 namespace boost {
-
-namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
-
+namespace runtime {
 namespace cla {
 
 // ************************************************************************** //
-// **************             runtime::cla::parser             ************** //
+// **************         runtime::cla::parameter_trie         ************** //
 // ************************************************************************** //
 
-namespace cla_detail {
+namespace rt_cla_detail {
 
-template<typename Modifier>
-class global_mod_parser {
+class parameter_trie;
+typedef shared_ptr<parameter_trie> parameter_trie_ptr;
+typedef std::map<char,parameter_trie_ptr> trie_per_char;
+
+class parameter_trie {
 public:
-    global_mod_parser( parser& p, Modifier const& m )
-    : m_parser( p )
-    , m_modifiers( m )
-    {}
-
-    template<typename Param>
-    global_mod_parser const&
-    operator<<( shared_ptr<Param> param ) const
+    // If subtrie corresponding to the char c exists returns it otherwise creates new 
+    parameter_trie_ptr  make_subtrie( char c )
     {
-        param->accept_modifier( m_modifiers );
+        trie_per_char::const_iterator it = m_subtrie.find( c );
 
-        m_parser << param;
+        if( it == m_subtrie.end() )
+            it = m_subtrie.insert( std::make_pair( c, parameter_trie_ptr( new parameter_trie ) ) ).first;
 
-        return *this;
+        return it->second;
+    }
+
+    parameter_trie_ptr  make_subtrie( cstring s )
+    {
+        parameter_trie_ptr res;
+
+        BOOST_TEST_FOREACH( char, c, s )
+            res = (res ? res->make_subtrie( c ) : make_subtrie( c ));
+
+        return res;
+    }
+
+    void                add_param_candidate( basic_param_ptr param, bool final )
+    {
+        if( final ) {
+            if( !m_candidates.empty() )
+                BOOST_TEST_IMPL_THROW( ambigues_param_definition( param,  m_candidates.front() ) );
+            m_final_candidate = param;
+        }
+        else {
+            if( m_final_candidate )
+                BOOST_TEST_IMPL_THROW( ambigues_param_definition( param,  m_final_candidate ) );
+        }
+
+        m_candidates.push_back( param );
     }
 
 private:
-    // Data members;
-    parser&             m_parser;
-    Modifier const&     m_modifiers;
+    // Data members
+    trie_per_char       m_subtrie;
+    param_list          m_candidates;
+    basic_param_ptr     m_final_candidate;
 };
 
-}
+} // namespace rt_cla_detail
 
 // ************************************************************************** //
 // **************             runtime::cla::parser             ************** //
@@ -75,84 +95,53 @@ private:
 
 class parser {
 public:
-    typedef std::list<parameter_ptr>::const_iterator param_iterator;
-    typedef std::list<parameter_ptr>::size_type param_size_type;
-
     // Constructor
-    explicit            parser( cstring program_name = cstring() );
+    template<typename Params=nfp::no_params_type>
+    explicit    parser( Params const& params = nfp::no_params )
+    {
+    }
 
     // parameter list construction interface
-    parser&             operator<<( parameter_ptr param );
-
-    // parser and global parameters modifiers
-    template<typename Modifier>
-    cla_detail::global_mod_parser<Modifier>
-    operator-( Modifier const& m )
+    void        add( basic_param const& in )
     {
-        nfp::optionally_assign( m_traverser.p_separator.value, m, input_separator );
-        nfp::optionally_assign( m_traverser.p_ignore_mismatch.value, m, ignore_mismatch_m );
+        // 10. Clone parameter for storing in persistent location.
+        basic_param_ptr p = in.clone();
+        m_parameters[p->p_name] = p;
 
-        return cla_detail::global_mod_parser<Modifier>( *this, m );
+        // 20. Register all parameter's ids in trie.
+        BOOST_TEST_FOREACH( parameter_id const&, id, p->ids() ) {
+            // 30. This is going to be cursor pointing to tail trie. Process prefix chars first.
+            trie_ptr next_trie = m_param_trie->make_subtrie( id.m_prefix );
+
+            // 40. Process name chars.
+            for( size_t index = 0; index < id.m_full_name.size(); ++index ) {
+                next_trie = next_trie->make_subtrie( id.m_full_name[index] );
+
+                next_trie->add_param_candidate( p, index == (id.m_full_name.size() - 1) );
+            }
+        }
     }
 
     // input processing method
-    void                parse( int& argc, char_type** argv );
-
-    // parameters access
-    param_iterator      first_param() const;
-    param_iterator      last_param() const;
-    param_size_type     num_params() const  { return m_parameters.size(); }
-    void                reset();
-
-    // arguments access
-    const_argument_ptr  operator[]( cstring string_id ) const;
-    cstring             get( cstring string_id ) const;
-
-    template<typename T>
-    T const&            get( cstring string_id ) const
+    int         parse( int argc, char** argv, runtime::argument_store& res )
     {
-        return arg_value<T>( valid_argument( string_id ) );
-    }
-
-    template<typename T>
-    void                get( cstring string_id, boost::optional<T>& res ) const
-    {
-        const_argument_ptr actual_arg = (*this)[string_id];
-
-        if( actual_arg )
-            res = arg_value<T>( *actual_arg );
-        else
-            res.reset();
+        argv_traverser tr( argc, argv );
     }
 
     // help/usage
-    void                usage( out_stream& ostr );
-    void                help(  out_stream& ostr );
+    void        usage( std::ostream& ostr );
 
 private:
-    argument const&     valid_argument( cstring string_id ) const;
+    typedef rt_cla_detail::parameter_trie_ptr trie_ptr;
 
     // Data members
-    argv_traverser              m_traverser;
-    std::list<parameter_ptr>    m_parameters;
-    dstring                     m_program_name;
+    std::string m_program_name;
+    param_store m_parameters;
+    trie_ptr    m_param_trie;
 };
 
-//____________________________________________________________________________//
-
 } // namespace cla
-
-} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
-
+} // namespace runtime
 } // namespace boost
-
-#ifndef BOOST_TEST_UTILS_RUNTIME_PARAM_OFFLINE
-
-#ifndef BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE
-#   define BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE inline
-#endif
-# include <boost/test/utils/runtime/cla/parser.ipp>
-
-#endif
 
 #endif // BOOST_TEST_UTILS_RUNTIME_CLA_PARSER_HPP

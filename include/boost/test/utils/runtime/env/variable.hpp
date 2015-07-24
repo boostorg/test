@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2014.
+//  (C) Copyright Gennadiy Rozental 2005-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -32,7 +32,7 @@
 
 namespace boost {
 
-namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
+namespace runtime {
 
 namespace environment {
 
@@ -44,7 +44,7 @@ namespace rt_env_detail {
 
 struct variable_data : public runtime::parameter {
     cstring         m_var_name;
-    dstring         m_global_id;
+    std::string         m_global_id;
     argument_ptr    m_value;
 };
 
@@ -179,7 +179,7 @@ operator!=( V const& v, variable<T> ev )
 
 } // namespace environment
 
-} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
+} // namespace runtime
 
 } // namespace boost
 
@@ -195,7 +195,7 @@ operator!=( V const& v, variable<T> ev )
 
 namespace boost {
 
-namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
+namespace runtime {
 
 namespace environment {
 
@@ -216,7 +216,7 @@ variable<T>::variable( cstring var_name, Modifiers const& m )
 
 } // namespace environment
 
-} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
+} // namespace runtime
 
 } // namespace boost
 

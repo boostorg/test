@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2014.
+//  (C) Copyright Gennadiy Rozental 2005-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -34,7 +34,7 @@
 
 namespace boost {
 
-namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
+namespace runtime {
 
 // ************************************************************************** //
 // **************      runtime::environment implementation     ************** //
@@ -155,7 +155,7 @@ namespace environment {
 
 namespace env = environment;
 
-} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
+} // namespace runtime
 
 } // namespace boost
 

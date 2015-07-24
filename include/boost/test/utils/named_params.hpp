@@ -223,12 +223,10 @@ private:
 // **************                   no_params                  ************** //
 // ************************************************************************** //
 
-namespace nfp_detail {
 typedef named_parameter<char, struct no_params_type_t,char> no_params_type;
-} // namespace nfp_detail
 
 namespace {
-nfp_detail::no_params_type no_params( '\0' );
+no_params_type no_params( '\0' );
 } // local namespace
 
 //____________________________________________________________________________//

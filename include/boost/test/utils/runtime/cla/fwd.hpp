@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2014.
+//  (C) Copyright Gennadiy Rozental 2005-2015.
 //  Use, modification, and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,39 +17,28 @@
 
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
+#include <boost/test/utils/runtime/fwd.hpp>
 
 // Boost
 #include <boost/shared_ptr.hpp>
 
 namespace boost {
-
-namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
-
+namespace runtime {
 namespace cla {
 
 class parser;
-class parameter;
-typedef shared_ptr<parameter> parameter_ptr;
-class naming_policy;
-typedef shared_ptr<naming_policy> naming_policy_ptr;
+class basic_param;
 class argv_traverser;
 
-namespace rt_cla_detail {
+typedef shared_ptr<basic_param> basic_param_ptr;
+typedef std::vector<basic_param_ptr> param_list;
+typedef std::map<std::string, basic_param_ptr> param_store;
 
-template<typename T> class const_generator;
-template<typename T> class ref_generator;
-
-template<typename T> class assigner;
-
-class named_parameter_base;
-class positional_parameter_base;
-
-} // namespace rt_cla_detail
+// Exception type
+typedef std::pair<basic_param_ptr, basic_param_ptr> ambigues_param_definition;
 
 } // namespace cla
-
-} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
-
+} // namespace runtime
 } // namespace boost
 
 #endif // BOOST_TEST_UTILS_RUNTIME_CLA_FWD_HPP

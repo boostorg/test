@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2014.
+//  (C) Copyright Gennadiy Rozental 2005-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -26,36 +26,24 @@
 #include <boost/shared_ptr.hpp>
 
 // STL
-#ifdef BOOST_TEST_UTILS_RUNTIME_PARAM_EXCEPTION_INHERIT_STD
 #include <stdexcept>
-#endif
 
 namespace boost {
-
-namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
+namespace runtime {
 
 // ************************************************************************** //
 // **************             runtime::logic_error             ************** //
 // ************************************************************************** //
 
-class logic_error
-#ifdef BOOST_TEST_UTILS_RUNTIME_PARAM_EXCEPTION_INHERIT_STD
-: public std::exception
-#endif
-{
-    typedef shared_ptr<dstring> dstring_ptr;
+class logic_error : public std::exception {
 public:
-    // Constructor // !! could we eliminate shared_ptr
-    explicit    logic_error( cstring msg ) : m_msg( new dstring( msg.begin(), msg.size() ) ) {}
-    ~logic_error() BOOST_NOEXCEPT_OR_NOTHROW
-    {}
+    explicit                logic_error( cstring msg ) : m_msg( msg.begin(), msg.size() ) {}
 
-    dstring const&   msg() const                    { return *m_msg; }
-    virtual char_type const* what() const BOOST_NOEXCEPT_OR_NOTHROW
-    { return m_msg->c_str(); }
+    std::string const&      msg() const                             { return m_msg; }
+    virtual char const*     what() const BOOST_NOEXCEPT_OR_NOTHROW  { return m_msg.c_str(); }
 
 private:
-    dstring_ptr m_msg;
+    std::string             m_msg;
 };
 
 // ************************************************************************** //
@@ -65,21 +53,12 @@ private:
 inline void
 report_logic_error( format_stream& msg )
 {
-    BOOST_TEST_IMPL_THROW( BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE::logic_error( msg.str() ) );
+    BOOST_TEST_IMPL_THROW( runtime::logic_error( msg.str() ) );
 }
 
 //____________________________________________________________________________//
 
-#define BOOST_TEST_UTILS_RUNTIME_PARAM_REPORT_LOGIC_ERROR( msg ) \
-    boost::BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE::report_logic_error( format_stream().ref() << msg )
-
-#define BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( b, msg ) \
-    if( b ) {} else BOOST_TEST_UTILS_RUNTIME_PARAM_REPORT_LOGIC_ERROR( msg )
-
-//____________________________________________________________________________//
-
-} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
-
+} // namespace runtime
 } // namespace boost
 
 #endif // BOOST_TEST_UTILS_RUNTIME_VALIDATION_HPP

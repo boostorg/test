@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2014.
+//  (C) Copyright Gennadiy Rozental 2005-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -31,7 +31,7 @@
 
 namespace boost {
 
-namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
+namespace runtime {
 
 namespace environment {
 
@@ -42,7 +42,7 @@ namespace environment {
 namespace rt_env_detail {
 
 typedef std::map<cstring,rt_env_detail::variable_data> registry;
-typedef std::list<dstring> keys;
+typedef std::list<std::string> keys;
 
 BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE registry& s_registry()    { static registry instance; return instance; }
 BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE keys&     s_keys()        { static keys instance; return instance; }
@@ -51,9 +51,11 @@ BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE variable_data&
 new_var_record( cstring var_name )
 {
     // save the name in list of keys
-    s_keys().push_back( dstring() );
-    dstring& key = s_keys().back();
+    s_keys().push_back( std::string() );
+    std::string& key = s_keys().back();
     assign_op( key, var_name, 0 );
+
+    s_keys().push_back( std::string(var_name.begin(), var_name.size()) );
 
     // create and return new record
     variable_data& new_var_data = s_registry()[key];
@@ -84,7 +86,7 @@ BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE cstring
 sys_read_var( cstring var_name )
 {
     using namespace std;
-    return BOOST_TEST_UTILS_RUNTIME_PARAM_GETENV( var_name.begin() );
+    return getenv( var_name.begin() );
 }
 
 #ifdef BOOST_MSVC
@@ -95,7 +97,7 @@ sys_read_var( cstring var_name )
 BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE void
 sys_write_var( cstring var_name, format_stream& var_value )
 {
-    BOOST_TEST_UTILS_RUNTIME_PARAM_PUTENV( var_name, cstring( var_value.str() ) );
+    ::boost::runtime::putenv_impl( var_name, cstring( var_value.str() ) );
 }
 
 //____________________________________________________________________________//
@@ -108,8 +110,7 @@ var( cstring var_name )
     rt_env_detail::variable_data* vd = rt_env_detail::find_var_record( var_name );
 
     BOOST_TEST_UTILS_RUNTIME_PARAM_VALIDATE_LOGIC( !!vd,
-                                   BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( "First access to the environment variable " )
-                                        << var_name << BOOST_TEST_UTILS_RUNTIME_PARAM_LITERAL( " should be typed" ) );
+        "First access to the environment variable " << var_name << " should be typed" );
 
     return variable_base( *vd );
 }
@@ -118,7 +119,7 @@ var( cstring var_name )
 
 } // namespace environment
 
-} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
+} // namespace runtime
 
 } // namespace boost
 

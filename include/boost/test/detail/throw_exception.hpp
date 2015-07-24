@@ -32,8 +32,8 @@ namespace ut_detail {
 #ifdef BOOST_NO_EXCEPTION
 
 template<typename E>
-inline int
-throw_exception(E const& e) { abort(); return 0; }
+inline void
+throw_exception(E const& e) { abort(); }
 
 #define BOOST_TEST_IMPL_TRY
 #define BOOST_TEST_IMPL_CATCH( T, var ) for(T const& var = *(T*)0; false;)
@@ -44,8 +44,8 @@ throw_exception(E const& e) { abort(); return 0; }
 #else
 
 template<typename E>
-inline int
-throw_exception(E const& e) { throw e; return 0; }
+inline void
+throw_exception(E const& e) { throw e; }
 
 #define BOOST_TEST_IMPL_TRY try
 #define BOOST_TEST_IMPL_CATCH( T, var ) catch( T const& var )
