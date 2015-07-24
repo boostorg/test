@@ -156,7 +156,8 @@ namespace { void _set_se_translator( void* ) {} }
 #  endif
 
 #  if !defined(__CYGWIN__) && !defined(__QNXNTO__) && !defined(__bgq__) && \
-   (!defined(__ANDROID__) || __ANDROID_API__ >= 8)
+   (!defined(__ANDROID__) || __ANDROID_API__ >= 8) && \
+   !defined(BOOST_TEST_DISABLE_ALT_STACK)
 #    define BOOST_TEST_USE_ALT_STACK
 #  endif
 
