@@ -393,8 +393,10 @@ template<typename T>
 T
 retrieve_argument( std::string const& parameter_name, rt::argument_store const& store, T const& default_value = T(), T const& optional_value = T() )
 {
-    rt::const_argument_ptr arg = store[parameter_name];
-    if( arg ) {
+    rt::argument_store::const_iterator found = store.find( parameter_name );
+    if( found != store.end() ) {
+        rt::const_argument_ptr arg = found->second;
+        
         if( rtti::type_id<T>() == rtti::type_id<bool>() ||
             !static_cast<cla::parameter const&>( arg->p_formal_parameter.get() ).p_optional_value )
             return parser.get<T>( parameter_name );
@@ -402,8 +404,8 @@ retrieve_argument( std::string const& parameter_name, rt::argument_store const& 
         optional<T> val = parser.get<optional<T> >( parameter_name );
         if( val )
             return *val;
-        else
-            return optional_value;
+
+        return optional_value;
     }
 
     boost::optional<T> v;
@@ -414,8 +416,8 @@ retrieve_argument( std::string const& parameter_name, rt::argument_store const& 
 
     if( v )
         return *v;
-    else
-        return default_value;
+
+    return default_value;
 }
 
 //____________________________________________________________________________//
