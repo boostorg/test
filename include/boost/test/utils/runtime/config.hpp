@@ -45,9 +45,9 @@ namespace runtime {
 
 #ifndef BOOST_TEST_UTILS_RUNTIME_PARAM_CUSTOM_STRING
 
-typedef unit_test::const_string                                 cstring;
-typedef unit_test::literal_string                               literal_cstring;
-typedef wrap_stringstream                                       format_stream;
+typedef unit_test::const_string     cstring;
+typedef unit_test::literal_string   literal_cstring;
+typedef wrap_stringstream           format_stream;
 
 #ifdef BOOST_MSVC
 #pragma warning(push)

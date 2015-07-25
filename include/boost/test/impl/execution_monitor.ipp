@@ -868,8 +868,10 @@ execution_monitor::catch_signals( boost::function<int ()> const& F )
 
     if( !sigsetjmp( signal_handler::jump_buffer(), 1 ) )
         return detail::do_invoke( m_custom_translators , F );
-    else
-        return BOOST_TEST_IMPL_THROW( local_signal_handler.sys_sig() );
+    else {
+        BOOST_TEST_IMPL_THROW( local_signal_handler.sys_sig() );
+        return 0;
+    }
 }
 
 //____________________________________________________________________________//

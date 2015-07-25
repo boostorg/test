@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : global framework level forward declaration
+//  Description : runtime parameters forward declaration
 // ***************************************************************************
 
 #ifndef BOOST_TEST_UTILS_RUNTIME_FWD_HPP
@@ -27,14 +27,15 @@
 namespace boost {
 namespace runtime {
 
-class parameter;
-
 class argument;
 typedef shared_ptr<argument> argument_ptr;
 typedef shared_ptr<argument const> const_argument_ptr;
-typedef std::map<std::string, const_argument_ptr> argument_store;
+typedef std::map<std::string, const_argument_ptr> arguments_store;
 
 template<typename T> class typed_argument;
+
+class basic_param;
+typedef shared_ptr<basic_param> basic_param_ptr;
 
 } // namespace runtime
 } // namespace boost

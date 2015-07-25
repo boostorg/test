@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2015.
+//  (C) Copyright Gennadiy Rozental 2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : abstract interface for the formal parameter
+//  Description : formal parameter definition
 // ***************************************************************************
 
 #ifndef BOOST_TEST_UTILS_RUNTIME_PARAMETER_HPP
@@ -17,17 +17,155 @@
 
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
+#include <boost/test/utils/runtime/fwd.hpp>
+#include <boost/test/utils/runtime/modifier.hpp>
+
+// Boost.Test
+#include <boost/test/utils/class_properties.hpp>
 
 namespace boost {
 namespace runtime {
 
 // ************************************************************************** //
+// **************           runtime::parameter_cla_id          ************** //
+// ************************************************************************** //
+// set of attributes identifying the parameter in the command line
+
+struct parameter_cla_id {
+    parameter_cla_id( cstring prefix, cstring full_name, cstring value_separator )
+    : m_prefix( prefix.begin(), prefix.size() )
+    , m_full_name( full_name.begin(), full_name.size() )
+    , m_value_separator( value_separator.begin(), value_separator.size() )
+    {}
+
+    std::string m_prefix;
+    std::string m_full_name;
+    std::string m_value_separator;
+};
+
+typedef std::vector<parameter_cla_id> parameter_cla_ids;
+
+// ************************************************************************** //
+// **************             runtime::basic_param             ************** //
+// ************************************************************************** //
+
+class basic_param {
+    typedef unit_test::readwrite_property<std::string>  string_property;
+    typedef unit_test::readwrite_property<bool>         bool_property;
+
+public:
+    explicit                basic_param( cstring name )
+    : p_name( std::string(name.begin(), name.end()) )
+    , p_optional( true )
+    , p_multiplicable( false )
+    , p_optional_value( false )
+    {}
+
+    template<typename Modifiers>
+    basic_param( cstring name, Modifiers const& m )
+    : p_name( std::string(name.begin(), name.end()) )
+    , p_optional( true )
+    , p_multiplicable( false )
+    , p_optional_value( false )
+    {
+        accept_modifiers( m );
+    }
+    virtual                 ~basic_param() {}
+    virtual basic_param_ptr clone() const = 0;
+
+    // Pubic properties
+    string_property         p_name;
+    string_property         p_description;
+    string_property         p_env_var;
+    bool_property           p_optional;
+    bool_property           p_multiplicable;
+    bool_property           p_optional_value;
+
+    // Access methods
+    parameter_cla_ids const& cla_ids() const { return m_cla_ids; }
+    void                    add_cla_id( cstring prefix, cstring full_name, cstring value_separator )
+    {
+        m_cla_ids.push_back( parameter_cla_id( prefix, full_name, value_separator ) );
+    }
+
+private:
+    template<typename Modifiers>
+    void                    accept_modifiers( Modifiers const& m )
+    {
+        nfp::optionally_assign( p_description.value, m, description );
+        nfp::optionally_assign( p_env_var.value, m, env_var );
+
+        if( m.has( optional ) )
+            p_optional.value = true;
+
+        if( m.has( required ) )
+            p_optional.value = false;
+
+        if( m.has( multiplicable ) )
+            p_multiplicable.value = true;
+
+        if( m.has( optional_value ) )
+            p_optional_value.value = true;
+    }
+
+    // Data members
+    parameter_cla_ids       m_cla_ids;
+};
+
+// ************************************************************************** //
+// **************                Exception types               ************** //
+// ************************************************************************** //
+
+typedef std::pair<basic_param_ptr, basic_param_ptr> ambiguous_param_definition;
+
+// ************************************************************************** //
 // **************              runtime::parameter              ************** //
 // ************************************************************************** //
 
-class parameter {
+template<typename ValueType>
+class parameter : public basic_param {
 public:
-    virtual ~parameter() {}
+    explicit parameter( cstring name )
+    : basic_param( name )
+    {}
+
+    template<typename Modifiers>
+    parameter( cstring name, Modifiers const& m )
+    : basic_param( name, m )
+    {}
+
+    virtual basic_param_ptr clone() const
+    {
+        return basic_param_ptr( new parameter<ValueType>( *this ) );
+    }
+};
+
+// ************************************************************************** //
+// **************           runtime::parameters_store          ************** //
+// ************************************************************************** //
+
+class parameters_store {
+    typedef std::map<std::string, basic_param_ptr> storage_type;
+public:
+    /// Adds parameter into the persistent store
+    void                    add( basic_param const& in )
+    {
+        basic_param_ptr p = in.clone();
+
+        if( !m_parameters.insert( std::make_pair( p->p_name, p ) ).second )
+            BOOST_TEST_IMPL_THROW( ambiguous_param_definition( p,  m_parameters[p->p_name] ) );
+    }
+
+    /// Returns true if there is no parameters registered
+    bool                    is_empty() const    { return m_parameters.empty(); }
+    /// Returns map of all the registered parameter
+    storage_type const&     all() const         { return m_parameters; }
+    /// Returns map of all the registered parameter
+    basic_param_ptr         get( cstring name ) const { return m_parameters.at( std::string( name.begin(), name.size() ) ); }
+
+private:
+    // Data members
+    storage_type            m_parameters;
 };
 
 } // namespace runtime

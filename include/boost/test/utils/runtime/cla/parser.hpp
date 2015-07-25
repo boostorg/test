@@ -18,11 +18,10 @@
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
 #include <boost/test/utils/runtime/argument.hpp>
+#include <boost/test/utils/runtime/modifier.hpp>
+#include <boost/test/utils/runtime/parameter.hpp>
 
-#include <boost/test/utils/runtime/cla/fwd.hpp>
-#include <boost/test/utils/runtime/cla/modifier.hpp>
 #include <boost/test/utils/runtime/cla/argv_traverser.hpp>
-#include <boost/test/utils/runtime/cla/parameter.hpp>
 
 // Boost.Test
 #include <boost/test/utils/foreach.hpp>
@@ -44,7 +43,7 @@ typedef std::map<char,parameter_trie_ptr> trie_per_char;
 
 class parameter_trie {
 public:
-    // If subtrie corresponding to the char c exists returns it otherwise creates new 
+    // If subtrie corresponding to the char c exists returns it otherwise creates new
     parameter_trie_ptr  make_subtrie( char c )
     {
         trie_per_char::const_iterator it = m_subtrie.find( c );
@@ -69,18 +68,20 @@ public:
     {
         if( final ) {
             if( !m_candidates.empty() )
-                BOOST_TEST_IMPL_THROW( ambigues_param_definition( param,  m_candidates.front() ) );
+                BOOST_TEST_IMPL_THROW( ambiguous_param_definition( param,  m_candidates.front() ) );
             m_final_candidate = param;
         }
         else {
             if( m_final_candidate )
-                BOOST_TEST_IMPL_THROW( ambigues_param_definition( param,  m_final_candidate ) );
+                BOOST_TEST_IMPL_THROW( ambiguous_param_definition( param,  m_final_candidate ) );
         }
 
         m_candidates.push_back( param );
     }
 
 private:
+    typedef std::vector<basic_param_ptr> param_list;
+
     // Data members
     trie_per_char       m_subtrie;
     param_list          m_candidates;
@@ -96,47 +97,54 @@ private:
 class parser {
 public:
     // Constructor
-    template<typename Params=nfp::no_params_type>
-    explicit    parser( Params const& params = nfp::no_params )
+    explicit    parser( parameters_store const& parameters )
     {
+        build_trie( parameters );
     }
 
-    // parameter list construction interface
-    void        add( basic_param const& in )
+    template<typename Modifiers>
+    parser( parameters_store const& parameters, Modifiers const& m )
     {
-        // 10. Clone parameter for storing in persistent location.
-        basic_param_ptr p = in.clone();
-        m_parameters[p->p_name] = p;
-
-        // 20. Register all parameter's ids in trie.
-        BOOST_TEST_FOREACH( parameter_id const&, id, p->ids() ) {
-            // 30. This is going to be cursor pointing to tail trie. Process prefix chars first.
-            trie_ptr next_trie = m_param_trie->make_subtrie( id.m_prefix );
-
-            // 40. Process name chars.
-            for( size_t index = 0; index < id.m_full_name.size(); ++index ) {
-                next_trie = next_trie->make_subtrie( id.m_full_name[index] );
-
-                next_trie->add_param_candidate( p, index == (id.m_full_name.size() - 1) );
-            }
-        }
+        build_trie( parameters );
     }
 
     // input processing method
-    int         parse( int argc, char** argv, runtime::argument_store& res )
+    int         parse( int argc, char** argv, runtime::arguments_store& res )
     {
-        argv_traverser tr( argc, argv );
+        argv_traverser tr( argc, (char const**)argv );
+
+        return 0;
     }
 
     // help/usage
     void        usage( std::ostream& ostr );
 
 private:
+    void    build_trie( parameters_store const& parameters )
+    {
+#if 0
+        // 10. Iterate over all parameters
+        BOOST_TEST_FOREACH( basic_param_ptr, p, parameters.get() ) {
+            // 20. Register all parameter's ids in trie.
+            BOOST_TEST_FOREACH( parameter_cla_id const&, id, p->cla_ids() ) {
+                // 30. This is going to be cursor pointing to tail trie. Process prefix chars first.
+                trie_ptr next_trie = m_param_trie->make_subtrie( id.m_prefix );
+
+                // 40. Process name chars.
+                for( size_t index = 0; index < id.m_full_name.size(); ++index ) {
+                    next_trie = next_trie->make_subtrie( id.m_full_name[index] );
+
+                    next_trie->add_param_candidate( p, index == (id.m_full_name.size() - 1) );
+                }
+            }
+        }
+#endif
+    }
+
     typedef rt_cla_detail::parameter_trie_ptr trie_ptr;
 
     // Data members
     std::string m_program_name;
-    param_store m_parameters;
     trie_ptr    m_param_trie;
 };
 

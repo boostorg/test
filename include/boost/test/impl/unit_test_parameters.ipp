@@ -30,12 +30,12 @@
 #include <boost/test/detail/throw_exception.hpp>
 
 // Boost.Runtime.Param
-#include <boost/test/utils/runtime/cla/parser.hpp>
-#include <boost/test/utils/runtime/cla/parameter.hpp>
+#include <boost/test/utils/runtime/parameter.hpp>
 #include <boost/test/utils/runtime/interpret_argument_value.hpp>
 
-namespace rt  = boost::runtime;
-namespace cla = rt::cla;
+#include <boost/test/utils/runtime/cla/parser.hpp>
+
+namespace rt = boost::runtime;
 
 #ifndef UNDER_CE
 // !!!! #include <boost/test/utils/runtime/env/variable.hpp>
@@ -51,7 +51,6 @@ namespace cla = rt::cla;
 #include <boost/optional.hpp>
 
 // STL
-#include <map>
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
@@ -219,166 +218,155 @@ parameter_2_env_var( const_string param_name )
 
  //____________________________________________________________________________//
 
-cla::parser
-make_cla_parser() 
+void
+register_parameters( rt::parameters_store& store )
 {
-// !!!!    cla::parser parser( cla::eop_marker="--" );
-    cla::parser parser;
+    rt::parameter<bool> auto_start_dbg( AUTO_START_DBG, 
+        rt::description = "Automatically starts debugger if system level error (signal) occurs" );
+    auto_start_dbg.add_cla_id( "--", AUTO_START_DBG, "=" );
+    auto_start_dbg.add_cla_id( "-", "d", " " );
+    store.add( auto_start_dbg );
 
-    cla::parameter<bool> auto_start_dbg( AUTO_START_DBG, 
-        cla::description = "Automatically starts debugger if system level error (signal) occurs" );
-    auto_start_dbg.add_id( "--", AUTO_START_DBG, "=" );
-    auto_start_dbg.add_id( "-", "d", " " );
-    parser.add( auto_start_dbg );
+    rt::parameter<std::string> break_exec_path( BREAK_EXEC_PATH,
+        rt::description = "For the exception safety testing allows to break at specific execution path" );
+    break_exec_path.add_cla_id( "--", BREAK_EXEC_PATH, "=" );    
+    store.add( break_exec_path );
 
-    cla::parameter<std::string> break_exec_path( BREAK_EXEC_PATH,
-        cla::description = "For the exception safety testing allows to break at specific execution path" );
-    break_exec_path.add_id( "--", BREAK_EXEC_PATH, "=" );    
-    parser.add( break_exec_path );
+    rt::parameter<bool> build_info( BUILD_INFO,
+        rt::description = "Shows library build information" );
+    build_info.add_cla_id( "--", BUILD_INFO, "=" );
+    build_info.add_cla_id( "-", "i", " " );
+    store.add( build_info );
 
-    cla::parameter<bool> build_info( BUILD_INFO,
-        cla::description = "Shows library build information" );
-    build_info.add_id( "--", BUILD_INFO, "=" );
-    build_info.add_id( "-", "i", " " );
-    parser.add( build_info );
+    rt::parameter<bool> catch_sys_errors( CATCH_SYS_ERRORS,
+        rt::description = "Allows to switch between catching and ignoring system errors (signals)" );
+    catch_sys_errors.add_cla_id( "--", CATCH_SYS_ERRORS, "=" );
+    catch_sys_errors.add_cla_id( "-", "s", " " );
+    store.add( catch_sys_errors );
 
-    cla::parameter<bool> catch_sys_errors( CATCH_SYS_ERRORS,
-        cla::description = "Allows to switch between catching and ignoring system errors (signals)" );
-    catch_sys_errors.add_id( "--", CATCH_SYS_ERRORS, "=" );
-    catch_sys_errors.add_id( "-", "s", " " );
-    parser.add( catch_sys_errors );
+    rt::parameter<bool> color_output( COLOR_OUTPUT,
+        rt::description = "Enables color output of the framework log and report messages" );
+    color_output.add_cla_id( "--", COLOR_OUTPUT, "=" );
+    color_output.add_cla_id( "-", "x", " " );
+    store.add( color_output );
 
-    cla::parameter<bool> color_output( COLOR_OUTPUT,
-        cla::description = "Enables color output of the framework log and report messages" );
-    color_output.add_id( "--", COLOR_OUTPUT, "=" );
-    color_output.add_id( "-", "x", " " );
-    parser.add( color_output );
+    rt::parameter<bool> detect_fp_except( DETECT_FP_EXCEPT,
+        rt::description = "Allows to switch between catching and ignoring floating point exceptions" );
+    detect_fp_except.add_cla_id( "--", DETECT_FP_EXCEPT, "=" );
+    store.add( detect_fp_except );
 
-    cla::parameter<bool> detect_fp_except( DETECT_FP_EXCEPT,
-        cla::description = "Allows to switch between catching and ignoring floating point exceptions" );
-    detect_fp_except.add_id( "--", DETECT_FP_EXCEPT, "=" );
-    parser.add( detect_fp_except );
+    rt::parameter<std::string> detect_mem_leaks( DETECT_MEM_LEAKS,
+        rt::description = "Allows to switch between catching and ignoring memory leaks" );
+    detect_mem_leaks.add_cla_id( "--", DETECT_MEM_LEAKS, "=" );
+    store.add( detect_mem_leaks );
 
-    cla::parameter<std::string> detect_mem_leaks( DETECT_MEM_LEAKS,
-        cla::description = "Allows to switch between catching and ignoring memory leaks" );
-    detect_mem_leaks.add_id( "--", DETECT_MEM_LEAKS, "=" );
-    parser.add( detect_mem_leaks );
+    rt::parameter<unit_test::output_format> list_content( LIST_CONTENT, (
+        rt::optional_value,
+        rt::description = "Lists the content of test tree - names of all test suites and test cases" ) );
+    list_content.add_cla_id( "--", LIST_CONTENT, "=" );    
+    list_content.add_cla_id( "-", "j", " " );
+    store.add( list_content );
 
-    cla::parameter<unit_test::output_format> list_content( LIST_CONTENT, (
-        cla::optional_value,
-        cla::description = "Lists the content of test tree - names of all test suites and test cases" ) );
-    list_content.add_id( "--", LIST_CONTENT, "=" );    
-    list_content.add_id( "-", "j", " " );
-    parser.add( list_content );
+    rt::parameter<bool> list_labels( LIST_LABELS,
+        rt::description = "Lists all available labels" );
+    list_labels.add_cla_id( "--", LIST_LABELS, "=" );
+    store.add( list_labels );
 
-    cla::parameter<bool> list_labels( LIST_LABELS,
-        cla::description = "Lists all available labels" );
-    list_labels.add_id( "--", LIST_LABELS, "=" );
-    parser.add( list_labels );
+    rt::parameter<unit_test::output_format> log_format( LOG_FORMAT,
+        rt::description = "Specifies log format" );
+    log_format.add_cla_id( "--", LOG_FORMAT, "=" );
+    log_format.add_cla_id( "-", "f", " " );
+    store.add( log_format );
 
-    cla::parameter<unit_test::output_format> log_format( LOG_FORMAT,
-        cla::description = "Specifies log format" );
-    log_format.add_id( "--", LOG_FORMAT, "=" );
-    log_format.add_id( "-", "f", " " );
-    parser.add( log_format );
+    rt::parameter<unit_test::log_level> log_level( LOG_LEVEL,
+        rt::description = "Specifies log level" );
+    log_level.add_cla_id( "--", LOG_LEVEL, "=" );
+    log_level.add_cla_id( "-", "l", " " );
+    store.add( log_level );
 
-    cla::parameter<unit_test::log_level> log_level( LOG_LEVEL,
-        cla::description = "Specifies log level" );
-    log_level.add_id( "--", LOG_LEVEL, "=" );
-    log_level.add_id( "-", "l", " " );
-    parser.add( log_level );
+    rt::parameter<std::string> log_sink( LOG_SINK,
+        rt::description = "Specifies log sink: stdout(default),stderr or file name" );
+    log_sink.add_cla_id( "--", LOG_SINK, "=" );
+    log_sink.add_cla_id( "-", "k", " " );
+    store.add( log_sink );
 
-    cla::parameter<std::string> log_sink( LOG_SINK,
-        cla::description = "Specifies log sink: stdout(default),stderr or file name" );
-    log_sink.add_id( "--", LOG_SINK, "=" );
-    log_sink.add_id( "-", "k", " " );
-    parser.add( log_sink );
+    rt::parameter<unit_test::output_format> output_format( OUTPUT_FORMAT,
+        rt::description = "Specifies output format (both log and report)" );
+    output_format.add_cla_id( "--", OUTPUT_FORMAT, "=" );
+    output_format.add_cla_id( "-", "o", " " );
+    store.add( output_format );
 
-    cla::parameter<unit_test::output_format> output_format( OUTPUT_FORMAT,
-        cla::description = "Specifies output format (both log and report)" );
-    output_format.add_id( "--", OUTPUT_FORMAT, "=" );
-    output_format.add_id( "-", "o", " " );
-    parser.add( output_format );
-
-    cla::parameter<unsigned> random_seed( RANDOM_SEED, (
-        cla::optional_value,
-        cla::description = "Allows to switch between sequential and random order of test units execution.\n"
+    rt::parameter<unsigned> random_seed( RANDOM_SEED, (
+        rt::optional_value,
+        rt::description = "Allows to switch between sequential and random order of test units execution.\n"
                            "Optionally allows to specify concrete seed for random number generator" ) );
-    random_seed.add_id( "--", RANDOM_SEED, "=" );    
-    random_seed.add_id( "-", "a", " " );
-    parser.add( random_seed );
+    random_seed.add_cla_id( "--", RANDOM_SEED, "=" );    
+    random_seed.add_cla_id( "-", "a", " " );
+    store.add( random_seed );
 
-    cla::parameter<unit_test::output_format> report_format( REPORT_FORMAT,
-        cla::description = "Specifies report format" );
-    report_format.add_id( "--", REPORT_FORMAT, "=" );
-    report_format.add_id( "-", "m", " " );
-    parser.add( report_format );
+    rt::parameter<unit_test::output_format> report_format( REPORT_FORMAT,
+        rt::description = "Specifies report format" );
+    report_format.add_cla_id( "--", REPORT_FORMAT, "=" );
+    report_format.add_cla_id( "-", "m", " " );
+    store.add( report_format );
 
-    cla::parameter<unit_test::report_level> report_level( REPORT_LEVEL,
-        cla::description = "Specifies report level" );
-    report_level.add_id( "--", REPORT_LEVEL, "=" );
-    report_level.add_id( "-", "r", " " );
-    parser.add( report_level );
+    rt::parameter<unit_test::report_level> report_level( REPORT_LEVEL,
+        rt::description = "Specifies report level" );
+    report_level.add_cla_id( "--", REPORT_LEVEL, "=" );
+    report_level.add_cla_id( "-", "r", " " );
+    store.add( report_level );
 
-    cla::parameter<std::string> report_sink( REPORT_SINK,
-        cla::description = "Specifies report sink: stderr(default),stdout or file name" );
-    report_sink.add_id( "--", REPORT_SINK, "=" );
-    report_sink.add_id( "-", "e", " " );
-    parser.add( report_sink );
+    rt::parameter<std::string> report_sink( REPORT_SINK,
+        rt::description = "Specifies report sink: stderr(default),stdout or file name" );
+    report_sink.add_cla_id( "--", REPORT_SINK, "=" );
+    report_sink.add_cla_id( "-", "e", " " );
+    store.add( report_sink );
 
-    cla::parameter<std::string> result_code( RESULT_CODE,
-        cla::description = "Disables test modules's result code generation" );
-    result_code.add_id( "--", RESULT_CODE, "=" );
-    result_code.add_id( "-", "c", " " );
-    parser.add( result_code );
+    rt::parameter<std::string> result_code( RESULT_CODE,
+        rt::description = "Disables test modules's result code generation" );
+    result_code.add_cla_id( "--", RESULT_CODE, "=" );
+    result_code.add_cla_id( "-", "c", " " );
+    store.add( result_code );
 
-    cla::parameter<std::string> tests_to_run( TESTS_TO_RUN, (
-        cla::multiplicable,
-    cla::description = "Filters, which test units to include or exclude from test module execution" ) );
-    tests_to_run.add_id( "--", TESTS_TO_RUN, "=" );    
-    tests_to_run.add_id( "-", "t", " " );
-    parser.add( tests_to_run );
+    rt::parameter<std::string> tests_to_run( TESTS_TO_RUN, (
+        rt::multiplicable,
+    rt::description = "Filters, which test units to include or exclude from test module execution" ) );
+    tests_to_run.add_cla_id( "--", TESTS_TO_RUN, "=" );    
+    tests_to_run.add_cla_id( "-", "t", " " );
+    store.add( tests_to_run );
 
-    cla::parameter<bool> save_test_pattern( SAVE_TEST_PATTERN, (
-        cla::multiplicable,
-        cla::description = "Allows to switch between saving and matching against test pattern file" ) );
-    save_test_pattern.add_id( "--", SAVE_TEST_PATTERN, "=" );    
-    parser.add( save_test_pattern );
+    rt::parameter<bool> save_test_pattern( SAVE_TEST_PATTERN, (
+        rt::multiplicable,
+        rt::description = "Allows to switch between saving and matching against test pattern file" ) );
+    save_test_pattern.add_cla_id( "--", SAVE_TEST_PATTERN, "=" );    
+    store.add( save_test_pattern );
 
-    cla::parameter<bool> show_progress( SHOW_PROGRESS,
-        cla::description = "Turns on progress display" );
-    show_progress.add_id( "--", SHOW_PROGRESS, "=" );
-    show_progress.add_id( "-", "p", " " );
-    parser.add( show_progress );
+    rt::parameter<bool> show_progress( SHOW_PROGRESS,
+        rt::description = "Turns on progress display" );
+    show_progress.add_cla_id( "--", SHOW_PROGRESS, "=" );
+    show_progress.add_cla_id( "-", "p", " " );
+    store.add( show_progress );
 
-    cla::parameter<bool> use_alt_stack( USE_ALT_STACK,
-        cla::description = "Turns on/off usage of an alternative stack for signal handling" );
-    use_alt_stack.add_id( "--", USE_ALT_STACK, "=" );
-    parser.add( use_alt_stack );
+    rt::parameter<bool> use_alt_stack( USE_ALT_STACK,
+        rt::description = "Turns on/off usage of an alternative stack for signal handling" );
+    use_alt_stack.add_cla_id( "--", USE_ALT_STACK, "=" );
+    store.add( use_alt_stack );
 
-    cla::parameter<bool> wait_for_debugger( WAIT_FOR_DEBUGGER,
-        cla::description = "Forces test module to wait for button to be pressed before starting test run" );
-    wait_for_debugger.add_id( "--", WAIT_FOR_DEBUGGER, "=" );
-    wait_for_debugger.add_id( "-", "w", " " );
-    parser.add( wait_for_debugger );
+    rt::parameter<bool> wait_for_debugger( WAIT_FOR_DEBUGGER,
+        rt::description = "Forces test module to wait for button to be pressed before starting test run" );
+    wait_for_debugger.add_cla_id( "--", WAIT_FOR_DEBUGGER, "=" );
+    wait_for_debugger.add_cla_id( "-", "w", " " );
+    store.add( wait_for_debugger );
 
-    cla::parameter<bool> help( "help",
-        cla::description = "Help for framework parameters" );
-    help.add_id( "--", "help", "=" );
-    help.add_id( "-", "?", " " );
-    parser.add( help );
-
-    return parser;
+    rt::parameter<bool> help( "help",
+        rt::description = "Help for framework parameters" );
+    help.add_cla_id( "--", "help", "=" );
+    help.add_cla_id( "-", "?", " " );
+    store.add( help );
 }
 
-static cla::parser&
-cla_parser()
-{
-    static cla::parser s_instance = make_cla_parser();
-
-    return s_instance;
-}
-static rt::argument_store s_argument_store;
+static rt::arguments_store  s_arguments_store;
+static rt::parameters_store s_parameters_store;
 
 std::string             s_empty;
 
@@ -391,23 +379,26 @@ std::list<std::string>  s_test_to_run;
 
 template<typename T>
 T
-retrieve_argument( std::string const& parameter_name, rt::argument_store const& store, T const& default_value = T(), T const& optional_value = T() )
+retrieve_argument( std::string const& parameter_name, T const& default_value = T(), T const& optional_value = T() )
 {
-    rt::argument_store::const_iterator found = store.find( parameter_name );
-    if( found != store.end() ) {
+    rt::arguments_store::const_iterator found = s_arguments_store.find( parameter_name );
+    if( found != s_arguments_store.end() ) {
         rt::const_argument_ptr arg = found->second;
-        
-        if( rtti::type_id<T>() == rtti::type_id<bool>() ||
-            !static_cast<cla::parameter const&>( arg->p_formal_parameter.get() ).p_optional_value )
-            return parser.get<T>( parameter_name );
 
-        optional<T> val = parser.get<optional<T> >( parameter_name );
+#if 0 // !!!!        
+        if( rtti::type_id<T>() == rtti::type_id<bool>() ||
+            !static_cast<rt::parameter const&>( arg->p_formal_parameter.get() ).p_optional_value )
+            return store.get<T>( parameter_name );
+
+        optional<T> val = store.get<optional<T> >( parameter_name );
         if( val )
             return *val;
+#endif
 
         return optional_value;
     }
 
+#if 0 // !!!!
     boost::optional<T> v;
 
 #ifndef UNDER_CE
@@ -416,6 +407,7 @@ retrieve_argument( std::string const& parameter_name, rt::argument_store const& 
 
     if( v )
         return *v;
+#endif
 
     return default_value;
 }
@@ -425,7 +417,7 @@ retrieve_argument( std::string const& parameter_name, rt::argument_store const& 
 // !!!!
 #if 0
 void
-disable_use( cla::parameter const&, std::string const& )
+disable_use( rt::parameter const&, std::string const& )
 {
     BOOST_TEST_SETUP_ASSERT( false, "parameter break_exec_path is disabled in this release" );
 }
@@ -438,30 +430,36 @@ disable_use( cla::parameter const&, std::string const& )
 void
 init( int& argc, char** argv )
 {
-    using namespace cla;
-
     BOOST_TEST_IMPL_TRY {
-        cla_parser().parse( argc, argv, s_argument_store );
+        if( s_parameters_store.is_empty() )
+            register_parameters( s_parameters_store );
 
-        if( s_argument_store["help"] ) {
-            cla_parser().usage( std::cout );
+        s_arguments_store.clear();
+
+        // !!!!    cla::parser parser( cla::eop_marker="--" );
+
+        rt::cla::parser parser( s_parameters_store );
+
+        parser.parse( argc, argv, s_arguments_store );
+
+        if( s_arguments_store["help"] ) {
+            // !!!! parser.usage( s_parameters_store, std::cout );
             BOOST_TEST_IMPL_THROW( framework::nothing_to_test() );
         }
 
-        s_report_format = retrieve_argument( REPORT_FORMAT, s_argument_store, unit_test::OF_CLF );
-        s_log_format    = retrieve_argument( LOG_FORMAT, s_argument_store, unit_test::OF_CLF );
-        output_format of = retrieve_argument( OUTPUT_FORMAT, s_argument_store, unit_test::OF_INVALID );
+        s_report_format = retrieve_argument( REPORT_FORMAT, unit_test::OF_CLF );
+        s_log_format    = retrieve_argument( LOG_FORMAT, unit_test::OF_CLF );
+        output_format of = retrieve_argument( OUTPUT_FORMAT, unit_test::OF_INVALID );
 
         if( of != unit_test::OF_INVALID )
             s_report_format = s_log_format = of;
 
-        s_test_to_run = retrieve_argument<std::list<std::string> >( TESTS_TO_RUN, s_argument_store );
+        s_test_to_run = retrieve_argument<std::list<std::string> >( TESTS_TO_RUN );
     }
-    BOOST_TEST_IMPL_CATCH( rt::logic_error, ex ) {
+    BOOST_TEST_IMPL_CATCH( rt::ambiguous_param_definition, ex ) {
         std::ostringstream err;
 
-        err << "Fail to process runtime parameters: " << ex.msg() << std::endl;
-        cla_parser().usage( err );
+        // !!!! err << "Ambiguous runtime parameters definition: " << ex.msg() << std::endl;
 
         BOOST_TEST_SETUP_ASSERT( false, err.str() );
     }
@@ -472,7 +470,7 @@ init( int& argc, char** argv )
 unit_test::log_level
 log_level()
 {
-    return retrieve_argument( LOG_LEVEL, s_argument_store, unit_test::log_all_errors );
+    return retrieve_argument( LOG_LEVEL, unit_test::log_all_errors );
 }
 
 //____________________________________________________________________________//
@@ -480,7 +478,7 @@ log_level()
 bool
 no_result_code()
 {
-    return !retrieve_argument( RESULT_CODE, s_argument_store, true );
+    return !retrieve_argument( RESULT_CODE, true );
 }
 
 //____________________________________________________________________________//
@@ -488,7 +486,7 @@ no_result_code()
 unit_test::report_level
 report_level()
 {
-    return retrieve_argument( REPORT_LEVEL, s_argument_store, unit_test::CONFIRMATION_REPORT );
+    return retrieve_argument( REPORT_LEVEL, unit_test::CONFIRMATION_REPORT );
 }
 
 //____________________________________________________________________________//
@@ -504,7 +502,7 @@ test_to_run()
 const_string
 break_exec_path()
 {
-    static std::string s_break_exec_path = retrieve_argument( BREAK_EXEC_PATH, s_argument_store, s_empty );
+    static std::string s_break_exec_path = retrieve_argument( BREAK_EXEC_PATH, s_empty );
 
     return s_break_exec_path;
 }
@@ -514,7 +512,7 @@ break_exec_path()
 bool
 save_pattern()
 {
-    return retrieve_argument( SAVE_TEST_PATTERN, s_argument_store, false );
+    return retrieve_argument( SAVE_TEST_PATTERN, false );
 }
 
 //____________________________________________________________________________//
@@ -522,7 +520,7 @@ save_pattern()
 bool
 show_progress()
 {
-    return retrieve_argument( SHOW_PROGRESS, s_argument_store, false );
+    return retrieve_argument( SHOW_PROGRESS, false );
 }
 
 //____________________________________________________________________________//
@@ -530,7 +528,7 @@ show_progress()
 bool
 show_build_info()
 {
-    return retrieve_argument( BUILD_INFO, s_argument_store, false );
+    return retrieve_argument( BUILD_INFO, false );
 }
 
 //____________________________________________________________________________//
@@ -538,7 +536,7 @@ show_build_info()
 output_format
 list_content()
 {
-    return retrieve_argument( LIST_CONTENT, s_argument_store, unit_test::OF_INVALID, unit_test::OF_CLF );
+    return retrieve_argument( LIST_CONTENT, unit_test::OF_INVALID, unit_test::OF_CLF );
 }
 
 //____________________________________________________________________________//
@@ -546,7 +544,7 @@ list_content()
 bool
 list_labels()
 {
-    return retrieve_argument( LIST_LABELS, s_argument_store, false );
+    return retrieve_argument( LIST_LABELS, false );
 }
 
 //____________________________________________________________________________//
@@ -554,7 +552,7 @@ list_labels()
 bool
 catch_sys_errors()
 {
-    return retrieve_argument( CATCH_SYS_ERRORS, s_argument_store,
+    return retrieve_argument( CATCH_SYS_ERRORS,
 #ifdef BOOST_TEST_DEFAULTS_TO_CORE_DUMP
         false
 #else
@@ -568,7 +566,7 @@ catch_sys_errors()
 bool
 color_output()
 {
-    return retrieve_argument( COLOR_OUTPUT, s_argument_store, false );
+    return retrieve_argument( COLOR_OUTPUT, false );
 }
 
 //____________________________________________________________________________//
@@ -577,7 +575,7 @@ bool
 auto_start_dbg()
 {
     // !! ?? set debugger as an option
-    return retrieve_argument( AUTO_START_DBG, s_argument_store, false );
+    return retrieve_argument( AUTO_START_DBG, false );
 ;
 }
 
@@ -586,7 +584,7 @@ auto_start_dbg()
 bool
 wait_for_debugger()
 {
-    return retrieve_argument( WAIT_FOR_DEBUGGER, s_argument_store, false );
+    return retrieve_argument( WAIT_FOR_DEBUGGER, false );
 }
 
 //____________________________________________________________________________//
@@ -594,7 +592,7 @@ wait_for_debugger()
 bool
 use_alt_stack()
 {
-    return retrieve_argument( USE_ALT_STACK, s_argument_store, true );
+    return retrieve_argument( USE_ALT_STACK, true );
 }
 
 //____________________________________________________________________________//
@@ -602,7 +600,7 @@ use_alt_stack()
 bool
 detect_fp_exceptions()
 {
-    return retrieve_argument( DETECT_FP_EXCEPT, s_argument_store, false );
+    return retrieve_argument( DETECT_FP_EXCEPT, false );
 }
 
 //____________________________________________________________________________//
@@ -626,7 +624,7 @@ log_format()
 std::ostream*
 report_sink()
 {
-    std::string sink_name = retrieve_argument( REPORT_SINK, s_argument_store, s_empty );
+    std::string sink_name = retrieve_argument( REPORT_SINK, s_empty );
 
     if( sink_name.empty() || sink_name == "stderr" )
         return &std::cerr;
@@ -643,7 +641,7 @@ report_sink()
 std::ostream*
 log_sink()
 {
-    std::string sink_name = retrieve_argument( LOG_SINK, s_argument_store, s_empty );
+    std::string sink_name = retrieve_argument( LOG_SINK, s_empty );
 
     if( sink_name.empty() || sink_name == "stdout" )
         return &std::cout;
@@ -665,7 +663,7 @@ detect_memory_leaks()
     if( s_value >= 0 )
         return s_value;
 
-    std::string value = retrieve_argument( DETECT_MEM_LEAKS, s_argument_store, s_empty );
+    std::string value = retrieve_argument( DETECT_MEM_LEAKS, s_empty );
 
     optional<bool> bool_val;
     if( rt::interpret_argument_value( value, bool_val ) )
@@ -695,7 +693,7 @@ memory_leaks_report_file()
     static std::string s_value;
 
     if( s_value.empty() ) {
-        s_value = retrieve_argument<std::string>( DETECT_MEM_LEAKS, s_argument_store );
+        s_value = retrieve_argument<std::string>( DETECT_MEM_LEAKS );
 
         optional<bool> bool_val;
         if( rt::interpret_argument_value( s_value, bool_val ) )
@@ -710,7 +708,7 @@ memory_leaks_report_file()
 unsigned
 random_seed()
 {
-    return retrieve_argument( RANDOM_SEED, s_argument_store, 0U, 1U );
+    return retrieve_argument( RANDOM_SEED, 0U, 1U );
 }
 
 //____________________________________________________________________________//

@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : default algorithms for string to specific type convertions
+//  Description : algorithms for string to specific type convertions
 // ***************************************************************************
 
 #ifndef BOOST_TEST_UTILS_RUNTIME_INTERPRET_ARGUMENT_VALUE_HPP
@@ -27,8 +27,7 @@
 #include <boost/lexical_cast.hpp>
 
 // STL
-// !! could we eliminate these includes?
-#include <list>
+#include <vector>
 
 namespace boost {
 namespace runtime {
@@ -93,9 +92,9 @@ interpret_argument_value( cstring source, boost::optional<bool>& res )
 // overload for list of values
 template<typename T>
 inline bool
-interpret_argument_value( cstring source, boost::optional<std::list<T> >& res )
+interpret_argument_value( cstring source, boost::optional<std::vector<T> >& res )
 {
-    res = std::list<T>();
+    res = std::vector<T>();
 
     while( !source.is_empty() ) {
         cstring::iterator single_value_end = std::find( source.begin(), source.end(), ',' );

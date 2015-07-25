@@ -18,7 +18,6 @@
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
 #include <boost/test/utils/runtime/fwd.hpp>
-#include <boost/test/utils/runtime/validation.hpp>
 
 // Boost.Test
 #include <boost/test/utils/class_properties.hpp>
@@ -42,7 +41,7 @@ namespace runtime {
 class argument {
 public:
     // Constructor
-    argument( parameter const& p, rtti::id_t value_type )
+    argument( basic_param const& p, rtti::id_t value_type )
     : p_formal_parameter( p )
     , p_value_type( value_type )
     {}
@@ -51,8 +50,8 @@ public:
     virtual     ~argument()  {}
 
     // Public properties
-    unit_test::readonly_property<parameter const&> p_formal_parameter;
-    unit_test::readonly_property<rtti::id_t>       p_value_type;
+    unit_test::readonly_property<basic_param const&> p_formal_parameter;
+    unit_test::readonly_property<rtti::id_t>         p_value_type;
 };
 
 // ************************************************************************** //
@@ -63,10 +62,10 @@ template<typename T>
 class typed_argument : public argument {
 public:
     // Constructor
-    explicit typed_argument( parameter const& p )
+    explicit typed_argument( basic_param const& p )
     : argument( p, rtti::type_id<T>() )
     {}
-    typed_argument( parameter const& p, T const& t )
+    typed_argument( basic_param const& p, T const& t )
     : argument( p, rtti::type_id<T>() )
     , p_value( t )
     {}

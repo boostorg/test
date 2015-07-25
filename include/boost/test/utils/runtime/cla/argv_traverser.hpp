@@ -26,11 +26,16 @@ namespace cla {
 // **************          runtime::cla::argv_traverser        ************** //
 // ************************************************************************** //
 
+/// End of input token indicator
+static const char END_OF_TOKEN = '\0';
+
 class argv_traverser {
+    typedef char const** argv_type;
 public:
-    static const char END_OF_TOKEN;
- 
-    argv_traverser( int argc, char** argv )
+    /// Constructs traverser based on argc/argv pair
+    /// argv is taken "by reference" and later can be
+    /// updated in remainder method
+    argv_traverser( int argc, argv_type argv )
     : m_argc( argc )
     , m_curr_arg( 0 )
     , m_arg_size( 0 )
@@ -40,32 +45,47 @@ public:
         next_arg();
     }
 
-    void        remainder( int& argc, char** argv )
+    /// Updates argv to contain the remainder of the input
+    /// and returns new argc
+    int         remainder()
     {
-        argc = m_argc - m_curr_arg;
+        std::size_t new_argc = m_argc - m_curr_arg + 1;
 
-        for( int i = 0; i < argc ; ++i )
-            argv[i] = m_argv[m_curr_arg+i];
+        if( new_argc != m_argc )
+            for( std::size_t i = 1; i < new_argc ; ++i )
+                m_argv[i] = m_argv[m_curr_arg + i - 1];
+
+        m_argv[1] += m_arg_pos;
+
+        return (int)new_argc;
     }
 
+    /// Returns true, if we reached end on input
     bool        eoi() const
     {
         return m_curr_arg == m_argc;
     }
 
-    char    get_char()
+    /// Gets single character from input. If we reached end of
+    /// input, alwars returns END_OF_TOKEN. If we reached end
+    /// of token returns END_OF_TOKEN and moves to next token.
+    /// Note that END_OF_INPUT is returned after we read the
+    /// last charter in a token
+    char        get_char()
     {
         if( eoi() )
             return END_OF_TOKEN;
 
-        char res = m_argv[m_curr_arg][m_arg_pos];
-
-        if( ++m_arg_pos == m_arg_size )
+        if( m_arg_pos == m_arg_size ) {
             next_arg();
+            return END_OF_TOKEN;
+        }
 
-        return res;
+        return m_argv[m_curr_arg][m_arg_pos++];
     }
 
+    /// Returns all the characters left in current token and moves
+    /// to next token
     cstring     get_token()
     {
         if( eoi() )
@@ -78,19 +98,20 @@ public:
         return token;
     }
 
-    bool        match_front( cstring str )
+    /// Matches front of the input to specified string. If
+    /// matched, it skips characters in input and returns true
+    /// Otherwise returns false. Note that it does not move to
+    /// the next token even if we exhausted all characters in
+    /// a current one
+    bool        match( cstring str )
     {
-        bool res = m_arg_size - m_arg_pos < str.size() 
-                    ? false 
+        bool res = m_arg_size - m_arg_pos < str.size()
+                    ? false
                     : cstring( m_argv[m_curr_arg] + m_arg_pos, str.size() ) == str;
 
-        if( res ) {
+        if( res )
             m_arg_pos += str.size();
 
-            if( m_arg_pos == m_arg_size )
-                next_arg();
-        }
-            
         return res;
     }
 
@@ -110,10 +131,8 @@ private:
     std::size_t m_curr_arg;     // current argument index in argv
     std::size_t m_arg_size;     // current argument size
     std::size_t m_arg_pos;      // current argument position
-    char**      m_argv;         // all arguments
+    argv_type   m_argv;         // all arguments
 };
-
-const char argv_traverser::END_OF_TOKEN = '\0';
 
 } // namespace cla
 } // namespace runtime
