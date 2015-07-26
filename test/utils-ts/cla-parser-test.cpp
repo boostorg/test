@@ -15,9 +15,10 @@
 // Boost.Test
 #define BOOST_TEST_MODULE Boost.Test CLA parser test
 #include <boost/test/unit_test.hpp>
-#include <boost/test/utils/runtime/cla/argv_traverser.hpp>
 #include <boost/test/utils/runtime/parameter.hpp>
-
+#include <boost/test/utils/runtime/cla/argv_traverser.hpp>
+#include <boost/test/utils/runtime/cla/parser.hpp>
+namespace utf = boost::unit_test;
 namespace rt = boost::runtime;
 
 BOOST_AUTO_TEST_SUITE( test_argv_traverser )
@@ -163,7 +164,8 @@ BOOST_AUTO_TEST_SUITE_END()
 //____________________________________________________________________________//
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_SUITE( test_parameter_specification )
+BOOST_AUTO_TEST_SUITE( test_parameter_specification,
+                       * utf::depends_on("test_argv_traverser") )
 
 BOOST_AUTO_TEST_CASE( test_param_construction )
 {
@@ -190,6 +192,28 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
     BOOST_TEST( !p2.p_optional );
     BOOST_TEST( p2.p_multiplicable );
     BOOST_TEST( !p1.p_optional_value );
+
+    rt::parameter<int> p3( "P3" );
+    p3.add_cla_id( "/", "P3", ":" );
+    p3.add_cla_id( "-", "p+p_p", " " );
+
+    BOOST_TEST( p3.cla_ids().size() == 2U );
+    BOOST_TEST( p3.cla_ids()[0].m_prefix == "/" );
+    BOOST_TEST( p3.cla_ids()[0].m_full_name == "P3" );
+    BOOST_TEST( p3.cla_ids()[0].m_value_separator == ":" );
+    BOOST_TEST( p3.cla_ids()[1].m_prefix == "-" );
+    BOOST_TEST( p3.cla_ids()[1].m_full_name == "p+p_p" );
+    BOOST_TEST( p3.cla_ids()[1].m_value_separator == " " );
+
+    BOOST_CHECK_THROW( p3.add_cla_id( "^", "p", " " ), rt::setup_error );
+    BOOST_CHECK_THROW( p3.add_cla_id( " ", "p", " " ), rt::setup_error );
+    BOOST_CHECK_THROW( p3.add_cla_id( "", "p", " " ), rt::setup_error );
+    BOOST_CHECK_THROW( p3.add_cla_id( "-", "-abc", " " ), rt::setup_error );
+    BOOST_CHECK_THROW( p3.add_cla_id( "-", "b c", " " ), rt::setup_error );
+    BOOST_CHECK_THROW( p3.add_cla_id( "-", "", " " ), rt::setup_error );
+    BOOST_CHECK_THROW( p3.add_cla_id( "-", "a", "-" ), rt::setup_error );
+    BOOST_CHECK_THROW( p3.add_cla_id( "-", "a", "/" ), rt::setup_error );
+    BOOST_CHECK_THROW( p3.add_cla_id( "-", "a", "" ), rt::setup_error );
 }
 
 //____________________________________________________________________________//
@@ -207,15 +231,84 @@ BOOST_AUTO_TEST_CASE( test_param_store )
     S.add( p1 );
     S.add( p2 );
 
-    BOOST_CHECK_THROW( S.add( p3 ), rt::ambiguous_param_definition );
+    BOOST_CHECK_THROW( S.add( p3 ), rt::setup_error );
     BOOST_TEST( !S.is_empty() );
     BOOST_TEST( S.all().size() == 2U );
-    BOOST_TEST(( S.get("P1")->p_name.get() == "P1" ));
-    BOOST_TEST(( S.get("P2")->p_name.get() == "P2" ));
+    BOOST_TEST( S.get("P1")->p_name.get() == "P1" );
+    BOOST_TEST( S.get("P2")->p_name.get() == "P2" );
+    BOOST_CHECK_THROW( S.get("P3"), std::out_of_range );
 }
 
 //____________________________________________________________________________//
 
 BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_CASE( test_param_trie_construction,
+                      * utf::depends_on("test_parameter_specification") )
+{
+    // make sure this does not crash
+    rt::cla::parser( rt::parameters_store() );
+
+    rt::parameters_store store1;
+
+    rt::parameter<int> p1( "P1" );
+    p1.add_cla_id( "--", "param_one", " " );
+    p1.add_cla_id( "-", "p1", " " );
+    store1.add( p1 );
+
+    rt::parameter<int> p2( "P2" );
+    p2.add_cla_id( "--", "param_two", " " );
+    p2.add_cla_id( "-", "p2", " " );
+    store1.add( p2 );
+
+    rt::parameter<int> p3( "P3" );
+    p3.add_cla_id( "--", "another_", " " );
+    p3.add_cla_id( "/", "p3", " " );
+    store1.add( p3 );
+
+    rt::parameter<int> p4( "P4" );
+    p4.add_cla_id( "-", "param_one", " " );
+    store1.add( p4 );
+
+    rt::cla::parser parser1( store1 );
+
+    rt::parameters_store store2;
+
+    rt::parameter<int> p5( "P5" );
+    p5.add_cla_id( "-", "paramA", " " );
+    store2.add( p5 );
+
+    rt::parameter<int> p6( "P6" );
+    p6.add_cla_id( "-", "paramA", " " );
+    store2.add( p6 );
+
+    BOOST_CHECK_THROW( rt::cla::parser parser( store2 ), rt::setup_error );
+
+    rt::parameters_store store3;
+
+    rt::parameter<int> p7( "P7" );
+    p7.add_cla_id( "-", "paramA", " " );
+    store3.add( p7 );
+
+    rt::parameter<int> p8( "P8" );
+    p8.add_cla_id( "-", "param", " " );
+    store3.add( p8 );
+
+    BOOST_CHECK_THROW( rt::cla::parser parser( store3 ), rt::setup_error );
+
+    rt::parameters_store store4;
+
+    rt::parameter<int> p9( "P9" );
+    p9.add_cla_id( "-", "param", " " );
+    store4.add( p9 );
+
+    rt::parameter<int> p10( "P10" );
+    p10.add_cla_id( "-", "paramA", " " );
+    store4.add( p10 );
+
+    BOOST_CHECK_THROW( rt::cla::parser parser( store4 ), rt::setup_error );
+}
+
+//____________________________________________________________________________//
 
 // EOF

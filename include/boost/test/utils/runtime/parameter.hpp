@@ -19,9 +19,13 @@
 #include <boost/test/utils/runtime/config.hpp>
 #include <boost/test/utils/runtime/fwd.hpp>
 #include <boost/test/utils/runtime/modifier.hpp>
+#include <boost/test/utils/runtime/setup_error.hpp>
 
 // Boost.Test
 #include <boost/test/utils/class_properties.hpp>
+
+// STL
+#include <algorithm>
 
 namespace boost {
 namespace runtime {
@@ -36,7 +40,34 @@ struct parameter_cla_id {
     : m_prefix( prefix.begin(), prefix.size() )
     , m_full_name( full_name.begin(), full_name.size() )
     , m_value_separator( value_separator.begin(), value_separator.size() )
-    {}
+    {
+        if( m_full_name.empty() )
+            BOOST_TEST_IMPL_THROW( setup_error() << "Parameter can't have an empty prefix." );
+        if( m_prefix.empty() )
+            BOOST_TEST_IMPL_THROW( setup_error() << "Parameter " << m_full_name << " can't have an empty name." );
+        if( m_value_separator.empty() )
+            BOOST_TEST_IMPL_THROW( setup_error() << "Parameter " << m_full_name << " can't have an empty value separator." );
+
+        if( !std::all_of( m_prefix.begin(), m_prefix.end(), valid_prefix_char ) )
+            BOOST_TEST_IMPL_THROW( setup_error() << "Parameter " << m_full_name << " has invalid characters in prefix." );
+        if( !std::all_of( m_full_name.begin(), m_full_name.end(), valid_name_char ) )
+            BOOST_TEST_IMPL_THROW( setup_error() << "Parameter " << m_full_name << " has invalid characters in name." );
+        if( !std::all_of( m_value_separator.begin(), m_value_separator.end(), valid_separator_char ) )
+            BOOST_TEST_IMPL_THROW( setup_error() << "Parameter " << m_full_name << " has invalid characters in value separator." );
+    }
+
+    static bool             valid_prefix_char( char c )
+    {
+        return c == '-' || c == '/' ;
+    }
+    static bool             valid_separator_char( char c )
+    {
+        return c == '=' || c == ':' || c == ' ';
+    }
+    static bool             valid_name_char( char c )
+    {
+        return std::isalnum( c ) || c == '+' || c == '_' || c == '?';
+    }
 
     std::string m_prefix;
     std::string m_full_name;
@@ -54,13 +85,7 @@ class basic_param {
     typedef unit_test::readwrite_property<bool>         bool_property;
 
 public:
-    explicit                basic_param( cstring name )
-    : p_name( std::string(name.begin(), name.end()) )
-    , p_optional( true )
-    , p_multiplicable( false )
-    , p_optional_value( false )
-    {}
-
+    /// Constructor with modifiers
     template<typename Modifiers>
     basic_param( cstring name, Modifiers const& m )
     : p_name( std::string(name.begin(), name.end()) )
@@ -68,9 +93,24 @@ public:
     , p_multiplicable( false )
     , p_optional_value( false )
     {
-        accept_modifiers( m );
+        nfp::optionally_assign( p_description.value, m, description );
+        nfp::optionally_assign( p_env_var.value, m, env_var );
+
+        if( m.has( optional ) )
+            p_optional.value = true;
+
+        if( m.has( required ) )
+            p_optional.value = false;
+
+        if( m.has( multiplicable ) )
+            p_multiplicable.value = true;
+
+        if( m.has( optional_value ) )
+            p_optional_value.value = true;
     }
     virtual                 ~basic_param() {}
+
+    // interface for cloning typed parameters
     virtual basic_param_ptr clone() const = 0;
 
     // Pubic properties
@@ -89,34 +129,9 @@ public:
     }
 
 private:
-    template<typename Modifiers>
-    void                    accept_modifiers( Modifiers const& m )
-    {
-        nfp::optionally_assign( p_description.value, m, description );
-        nfp::optionally_assign( p_env_var.value, m, env_var );
-
-        if( m.has( optional ) )
-            p_optional.value = true;
-
-        if( m.has( required ) )
-            p_optional.value = false;
-
-        if( m.has( multiplicable ) )
-            p_multiplicable.value = true;
-
-        if( m.has( optional_value ) )
-            p_optional_value.value = true;
-    }
-
     // Data members
     parameter_cla_ids       m_cla_ids;
 };
-
-// ************************************************************************** //
-// **************                Exception types               ************** //
-// ************************************************************************** //
-
-typedef std::pair<basic_param_ptr, basic_param_ptr> ambiguous_param_definition;
 
 // ************************************************************************** //
 // **************              runtime::parameter              ************** //
@@ -125,12 +140,9 @@ typedef std::pair<basic_param_ptr, basic_param_ptr> ambiguous_param_definition;
 template<typename ValueType>
 class parameter : public basic_param {
 public:
-    explicit parameter( cstring name )
-    : basic_param( name )
-    {}
-
-    template<typename Modifiers>
-    parameter( cstring name, Modifiers const& m )
+    /// Constructor with modifiers
+    template<typename Modifiers=nfp::no_params_type>
+    parameter( cstring name, Modifiers const& m = nfp::no_params )
     : basic_param( name, m )
     {}
 
@@ -145,15 +157,16 @@ public:
 // ************************************************************************** //
 
 class parameters_store {
-    typedef std::map<std::string, basic_param_ptr> storage_type;
 public:
+    typedef std::map<std::string, basic_param_ptr> storage_type;
+
     /// Adds parameter into the persistent store
     void                    add( basic_param const& in )
     {
         basic_param_ptr p = in.clone();
 
         if( !m_parameters.insert( std::make_pair( p->p_name, p ) ).second )
-            BOOST_TEST_IMPL_THROW( ambiguous_param_definition( p,  m_parameters[p->p_name] ) );
+            BOOST_TEST_IMPL_THROW( setup_error() << "Parameter " << p->p_name << " is duplicate." );
     }
 
     /// Returns true if there is no parameters registered

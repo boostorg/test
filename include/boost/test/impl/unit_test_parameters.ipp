@@ -154,7 +154,7 @@ namespace runtime_config {
 
 namespace {
 
-// framework parameters and corresponding command-line arguments
+// UTF parameters 
 std::string AUTO_START_DBG    = "auto_start_dbg";
 std::string BREAK_EXEC_PATH   = "break_exec_path";
 std::string BUILD_INFO        = "build_info";
@@ -179,119 +179,118 @@ std::string SHOW_PROGRESS     = "show_progress";
 std::string USE_ALT_STACK     = "use_alt_stack";
 std::string WAIT_FOR_DEBUGGER = "wait_for_debugger";
 
-static const_string
-parameter_2_env_var( const_string param_name )
-{
-    typedef std::map<const_string,const_string> mtype;
-    static mtype s_mapping;
-
-    if( s_mapping.empty() ) {
-        s_mapping[AUTO_START_DBG]       = "BOOST_TEST_AUTO_START_DBG";
-        s_mapping[BREAK_EXEC_PATH]      = "BOOST_TEST_BREAK_EXEC_PATH";
-        s_mapping[BUILD_INFO]           = "BOOST_TEST_BUILD_INFO";
-        s_mapping[CATCH_SYS_ERRORS]     = "BOOST_TEST_CATCH_SYSTEM_ERRORS";
-        s_mapping[COLOR_OUTPUT]         = "BOOST_TEST_COLOR_OUTPUT";
-        s_mapping[DETECT_FP_EXCEPT]     = "BOOST_TEST_DETECT_FP_EXCEPTIONS";
-        s_mapping[DETECT_MEM_LEAKS]     = "BOOST_TEST_DETECT_MEMORY_LEAK";
-        s_mapping[LIST_CONTENT]         = "BOOST_TEST_LIST_CONTENT";
-        s_mapping[LIST_CONTENT]         = "BOOST_TEST_LIST_LABELS";
-        s_mapping[LOG_FORMAT]           = "BOOST_TEST_LOG_FORMAT";
-        s_mapping[LOG_LEVEL]            = "BOOST_TEST_LOG_LEVEL";
-        s_mapping[LOG_SINK]             = "BOOST_TEST_LOG_SINK";
-        s_mapping[OUTPUT_FORMAT]        = "BOOST_TEST_OUTPUT_FORMAT";
-        s_mapping[RANDOM_SEED]          = "BOOST_TEST_RANDOM";
-        s_mapping[REPORT_FORMAT]        = "BOOST_TEST_REPORT_FORMAT";
-        s_mapping[REPORT_LEVEL]         = "BOOST_TEST_REPORT_LEVEL";
-        s_mapping[REPORT_SINK]          = "BOOST_TEST_REPORT_SINK";
-        s_mapping[RESULT_CODE]          = "BOOST_TEST_RESULT_CODE";
-        s_mapping[TESTS_TO_RUN]         = "BOOST_TESTS_TO_RUN";
-        s_mapping[SAVE_TEST_PATTERN]    = "BOOST_TEST_SAVE_PATTERN";
-        s_mapping[SHOW_PROGRESS]        = "BOOST_TEST_SHOW_PROGRESS";
-        s_mapping[USE_ALT_STACK]        = "BOOST_TEST_USE_ALT_STACK";
-        s_mapping[WAIT_FOR_DEBUGGER]    = "BOOST_TEST_WAIT_FOR_DEBUGGER";
-    }
-
-    mtype::const_iterator it = s_mapping.find( param_name );
-
-    return it == s_mapping.end() ? const_string() : it->second;
-}
-
- //____________________________________________________________________________//
+//____________________________________________________________________________//
 
 void
 register_parameters( rt::parameters_store& store )
 {
-    rt::parameter<bool> auto_start_dbg( AUTO_START_DBG, 
-        rt::description = "Automatically starts debugger if system level error (signal) occurs" );
+    rt::parameter<bool> auto_start_dbg( AUTO_START_DBG, (
+        rt::description = "Automatically starts debugger if system level error (signal) occurs",
+        rt::env_var = "BOOST_TEST_AUTO_START_DBG"
+    ));
     auto_start_dbg.add_cla_id( "--", AUTO_START_DBG, "=" );
     auto_start_dbg.add_cla_id( "-", "d", " " );
     store.add( auto_start_dbg );
 
-    rt::parameter<std::string> break_exec_path( BREAK_EXEC_PATH,
-        rt::description = "For the exception safety testing allows to break at specific execution path" );
+    rt::parameter<std::string> break_exec_path( BREAK_EXEC_PATH, (
+        rt::description = "For the exception safety testing allows to break at specific execution path",
+        rt::env_var = "BOOST_TEST_BREAK_EXEC_PATH"
+    ));
+
     break_exec_path.add_cla_id( "--", BREAK_EXEC_PATH, "=" );    
     store.add( break_exec_path );
 
-    rt::parameter<bool> build_info( BUILD_INFO,
-        rt::description = "Shows library build information" );
+    rt::parameter<bool> build_info( BUILD_INFO, (
+        rt::description = "Shows library build information",
+        rt::env_var = "BOOST_TEST_BUILD_INFO"
+    ));
+
     build_info.add_cla_id( "--", BUILD_INFO, "=" );
     build_info.add_cla_id( "-", "i", " " );
     store.add( build_info );
 
-    rt::parameter<bool> catch_sys_errors( CATCH_SYS_ERRORS,
-        rt::description = "Allows to switch between catching and ignoring system errors (signals)" );
+    rt::parameter<bool> catch_sys_errors( CATCH_SYS_ERRORS, (
+        rt::description = "Allows to switch between catching and ignoring system errors (signals)",
+        rt::env_var = "BOOST_TEST_CATCH_SYSTEM_ERRORS"
+    ));
+
     catch_sys_errors.add_cla_id( "--", CATCH_SYS_ERRORS, "=" );
     catch_sys_errors.add_cla_id( "-", "s", " " );
     store.add( catch_sys_errors );
 
-    rt::parameter<bool> color_output( COLOR_OUTPUT,
-        rt::description = "Enables color output of the framework log and report messages" );
+    rt::parameter<bool> color_output( COLOR_OUTPUT, (
+        rt::description = "Enables color output of the framework log and report messages",
+        rt::env_var = "BOOST_TEST_COLOR_OUTPUT"
+    ));
+
     color_output.add_cla_id( "--", COLOR_OUTPUT, "=" );
     color_output.add_cla_id( "-", "x", " " );
     store.add( color_output );
 
-    rt::parameter<bool> detect_fp_except( DETECT_FP_EXCEPT,
-        rt::description = "Allows to switch between catching and ignoring floating point exceptions" );
+    rt::parameter<bool> detect_fp_except( DETECT_FP_EXCEPT, (
+        rt::description = "Allows to switch between catching and ignoring floating point exceptions",
+        rt::env_var = "BOOST_TEST_DETECT_FP_EXCEPTIONS"
+    ));
+
     detect_fp_except.add_cla_id( "--", DETECT_FP_EXCEPT, "=" );
     store.add( detect_fp_except );
 
-    rt::parameter<std::string> detect_mem_leaks( DETECT_MEM_LEAKS,
-        rt::description = "Allows to switch between catching and ignoring memory leaks" );
+    rt::parameter<std::string> detect_mem_leaks( DETECT_MEM_LEAKS, (
+        rt::description = "Allows to switch between catching and ignoring memory leaks",
+        rt::env_var = "BOOST_TEST_DETECT_MEMORY_LEAK"
+    ));
     detect_mem_leaks.add_cla_id( "--", DETECT_MEM_LEAKS, "=" );
     store.add( detect_mem_leaks );
 
     rt::parameter<unit_test::output_format> list_content( LIST_CONTENT, (
         rt::optional_value,
-        rt::description = "Lists the content of test tree - names of all test suites and test cases" ) );
+        rt::description = "Lists the content of test tree - names of all test suites and test cases",
+        rt::env_var = "BOOST_TEST_LIST_CONTENT"
+    ));
     list_content.add_cla_id( "--", LIST_CONTENT, "=" );    
     list_content.add_cla_id( "-", "j", " " );
     store.add( list_content );
 
-    rt::parameter<bool> list_labels( LIST_LABELS,
-        rt::description = "Lists all available labels" );
+    rt::parameter<bool> list_labels( LIST_LABELS, (
+        rt::description = "Lists all available labels",
+        rt::env_var = "BOOST_TEST_LIST_LABELS"
+    ));
+
     list_labels.add_cla_id( "--", LIST_LABELS, "=" );
     store.add( list_labels );
 
-    rt::parameter<unit_test::output_format> log_format( LOG_FORMAT,
-        rt::description = "Specifies log format" );
+    rt::parameter<unit_test::output_format> log_format( LOG_FORMAT, (
+        rt::description = "Specifies log format",
+        rt::env_var = "BOOST_TEST_LOG_FORMAT"
+    ));
+
     log_format.add_cla_id( "--", LOG_FORMAT, "=" );
     log_format.add_cla_id( "-", "f", " " );
     store.add( log_format );
 
-    rt::parameter<unit_test::log_level> log_level( LOG_LEVEL,
-        rt::description = "Specifies log level" );
+    rt::parameter<unit_test::log_level> log_level( LOG_LEVEL, (
+        rt::description = "Specifies log level",
+        rt::env_var = "BOOST_TEST_LOG_LEVEL"
+    ));
+
     log_level.add_cla_id( "--", LOG_LEVEL, "=" );
     log_level.add_cla_id( "-", "l", " " );
     store.add( log_level );
 
-    rt::parameter<std::string> log_sink( LOG_SINK,
-        rt::description = "Specifies log sink: stdout(default),stderr or file name" );
+    rt::parameter<std::string> log_sink( LOG_SINK, (
+        rt::description = "Specifies log sink: stdout(default),stderr or file name",
+        rt::env_var = "BOOST_TEST_LOG_SINK"
+    ));
+
     log_sink.add_cla_id( "--", LOG_SINK, "=" );
     log_sink.add_cla_id( "-", "k", " " );
     store.add( log_sink );
 
-    rt::parameter<unit_test::output_format> output_format( OUTPUT_FORMAT,
-        rt::description = "Specifies output format (both log and report)" );
+    rt::parameter<unit_test::output_format> output_format( OUTPUT_FORMAT, (
+        rt::description = "Specifies output format (both log and report)",
+        rt::env_var = "BOOST_TEST_OUTPUT_FORMAT"
+    ));
+
     output_format.add_cla_id( "--", OUTPUT_FORMAT, "=" );
     output_format.add_cla_id( "-", "o", " " );
     store.add( output_format );
@@ -299,61 +298,91 @@ register_parameters( rt::parameters_store& store )
     rt::parameter<unsigned> random_seed( RANDOM_SEED, (
         rt::optional_value,
         rt::description = "Allows to switch between sequential and random order of test units execution.\n"
-                           "Optionally allows to specify concrete seed for random number generator" ) );
+                           "Optionally allows to specify concrete seed for random number generator",
+        rt::env_var = "BOOST_TEST_RANDOM"
+    ));
+
     random_seed.add_cla_id( "--", RANDOM_SEED, "=" );    
     random_seed.add_cla_id( "-", "a", " " );
     store.add( random_seed );
 
-    rt::parameter<unit_test::output_format> report_format( REPORT_FORMAT,
-        rt::description = "Specifies report format" );
+    rt::parameter<unit_test::output_format> report_format( REPORT_FORMAT, (
+        rt::description = "Specifies report format",
+        rt::env_var = "BOOST_TEST_REPORT_FORMAT"
+    ));
+
     report_format.add_cla_id( "--", REPORT_FORMAT, "=" );
     report_format.add_cla_id( "-", "m", " " );
     store.add( report_format );
 
-    rt::parameter<unit_test::report_level> report_level( REPORT_LEVEL,
-        rt::description = "Specifies report level" );
+    rt::parameter<unit_test::report_level> report_level( REPORT_LEVEL, (
+        rt::description = "Specifies report level",
+        rt::env_var = "BOOST_TEST_REPORT_LEVEL"
+    ));
+
     report_level.add_cla_id( "--", REPORT_LEVEL, "=" );
     report_level.add_cla_id( "-", "r", " " );
     store.add( report_level );
 
-    rt::parameter<std::string> report_sink( REPORT_SINK,
-        rt::description = "Specifies report sink: stderr(default),stdout or file name" );
+    rt::parameter<std::string> report_sink( REPORT_SINK, (
+        rt::description = "Specifies report sink: stderr(default),stdout or file name",
+        rt::env_var = "BOOST_TEST_REPORT_SINK"
+    ));
+
     report_sink.add_cla_id( "--", REPORT_SINK, "=" );
     report_sink.add_cla_id( "-", "e", " " );
     store.add( report_sink );
 
-    rt::parameter<std::string> result_code( RESULT_CODE,
-        rt::description = "Disables test modules's result code generation" );
+    rt::parameter<std::string> result_code( RESULT_CODE, (
+        rt::description = "Disables test modules's result code generation",
+        rt::env_var = "BOOST_TEST_RESULT_CODE"
+    ));
+
     result_code.add_cla_id( "--", RESULT_CODE, "=" );
     result_code.add_cla_id( "-", "c", " " );
     store.add( result_code );
 
     rt::parameter<std::string> tests_to_run( TESTS_TO_RUN, (
         rt::multiplicable,
-    rt::description = "Filters, which test units to include or exclude from test module execution" ) );
+        rt::description = "Filters, which test units to include or exclude from test module execution",
+        rt::env_var = "BOOST_TESTS_TO_RUN"
+    ));
+
     tests_to_run.add_cla_id( "--", TESTS_TO_RUN, "=" );    
     tests_to_run.add_cla_id( "-", "t", " " );
     store.add( tests_to_run );
 
     rt::parameter<bool> save_test_pattern( SAVE_TEST_PATTERN, (
         rt::multiplicable,
-        rt::description = "Allows to switch between saving and matching against test pattern file" ) );
+        rt::description = "Allows to switch between saving and matching against test pattern file",
+        rt::env_var = "BOOST_TEST_SAVE_PATTERN"
+    ));
+
     save_test_pattern.add_cla_id( "--", SAVE_TEST_PATTERN, "=" );    
     store.add( save_test_pattern );
 
-    rt::parameter<bool> show_progress( SHOW_PROGRESS,
-        rt::description = "Turns on progress display" );
+    rt::parameter<bool> show_progress( SHOW_PROGRESS, (
+        rt::description = "Turns on progress display",
+        rt::env_var = "BOOST_TEST_SHOW_PROGRESS"
+    ));
+
     show_progress.add_cla_id( "--", SHOW_PROGRESS, "=" );
     show_progress.add_cla_id( "-", "p", " " );
     store.add( show_progress );
 
-    rt::parameter<bool> use_alt_stack( USE_ALT_STACK,
-        rt::description = "Turns on/off usage of an alternative stack for signal handling" );
+    rt::parameter<bool> use_alt_stack( USE_ALT_STACK, (
+        rt::description = "Turns on/off usage of an alternative stack for signal handling",
+        rt::env_var = "BOOST_TEST_USE_ALT_STACK"
+    ));
+
     use_alt_stack.add_cla_id( "--", USE_ALT_STACK, "=" );
     store.add( use_alt_stack );
 
-    rt::parameter<bool> wait_for_debugger( WAIT_FOR_DEBUGGER,
-        rt::description = "Forces test module to wait for button to be pressed before starting test run" );
+    rt::parameter<bool> wait_for_debugger( WAIT_FOR_DEBUGGER, (
+        rt::description = "Forces test module to wait for button to be pressed before starting test run",
+        rt::env_var = "BOOST_TEST_WAIT_FOR_DEBUGGER"
+    ));
+
     wait_for_debugger.add_cla_id( "--", WAIT_FOR_DEBUGGER, "=" );
     wait_for_debugger.add_cla_id( "-", "w", " " );
     store.add( wait_for_debugger );
@@ -385,7 +414,8 @@ retrieve_argument( std::string const& parameter_name, T const& default_value = T
     if( found != s_arguments_store.end() ) {
         rt::const_argument_ptr arg = found->second;
 
-#if 0 // !!!!        
+// !!!!
+#if 0 
         if( rtti::type_id<T>() == rtti::type_id<bool>() ||
             !static_cast<rt::parameter const&>( arg->p_formal_parameter.get() ).p_optional_value )
             return store.get<T>( parameter_name );
@@ -398,7 +428,8 @@ retrieve_argument( std::string const& parameter_name, T const& default_value = T
         return optional_value;
     }
 
-#if 0 // !!!!
+// !!!!
+#if 0 
     boost::optional<T> v;
 
 #ifndef UNDER_CE
@@ -456,12 +487,8 @@ init( int& argc, char** argv )
 
         s_test_to_run = retrieve_argument<std::list<std::string> >( TESTS_TO_RUN );
     }
-    BOOST_TEST_IMPL_CATCH( rt::ambiguous_param_definition, ex ) {
-        std::ostringstream err;
-
-        // !!!! err << "Ambiguous runtime parameters definition: " << ex.msg() << std::endl;
-
-        BOOST_TEST_SETUP_ASSERT( false, err.str() );
+    BOOST_TEST_IMPL_CATCH( rt::setup_error, ex ) {
+        BOOST_TEST_SETUP_ASSERT( false, ex.msg );
     }
 }
 

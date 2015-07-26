@@ -68,12 +68,14 @@ public:
     {
         if( final ) {
             if( !m_candidates.empty() )
-                BOOST_TEST_IMPL_THROW( ambiguous_param_definition( param,  m_candidates.front() ) );
+                BOOST_TEST_IMPL_THROW( setup_error() << "Parameter " << param->p_name << " conflicts with "
+                                                     << "parameter " << m_candidates.front()->p_name );
             m_final_candidate = param;
         }
         else {
             if( m_final_candidate )
-                BOOST_TEST_IMPL_THROW( ambiguous_param_definition( param,  m_final_candidate ) );
+                BOOST_TEST_IMPL_THROW( setup_error() << "Parameter " << param->p_name << " conflicts with "
+                                                     << "parameter " << m_final_candidate->p_name );
         }
 
         m_candidates.push_back( param );
@@ -96,14 +98,10 @@ private:
 
 class parser {
 public:
-    // Constructor
-    explicit    parser( parameters_store const& parameters )
-    {
-        build_trie( parameters );
-    }
-
-    template<typename Modifiers>
-    parser( parameters_store const& parameters, Modifiers const& m )
+    /// Initializes a parser and builds internal trie representation used for
+    /// parsing based on the supplied parameters
+    template<typename Modifiers=nfp::no_params_type>
+    parser( parameters_store const& parameters, Modifiers const& m = nfp::no_params)
     {
         build_trie( parameters );
     }
@@ -122,11 +120,14 @@ public:
 private:
     void    build_trie( parameters_store const& parameters )
     {
-#if 0
+        m_param_trie.reset( new rt_cla_detail::parameter_trie );
+
         // 10. Iterate over all parameters
-        BOOST_TEST_FOREACH( basic_param_ptr, p, parameters.get() ) {
+        BOOST_TEST_FOREACH( parameters_store::storage_type::value_type const&, v, parameters.all() ) {
+            basic_param_ptr param = v.second;
+
             // 20. Register all parameter's ids in trie.
-            BOOST_TEST_FOREACH( parameter_cla_id const&, id, p->cla_ids() ) {
+            BOOST_TEST_FOREACH( parameter_cla_id const&, id, param->cla_ids() ) {
                 // 30. This is going to be cursor pointing to tail trie. Process prefix chars first.
                 trie_ptr next_trie = m_param_trie->make_subtrie( id.m_prefix );
 
@@ -134,11 +135,10 @@ private:
                 for( size_t index = 0; index < id.m_full_name.size(); ++index ) {
                     next_trie = next_trie->make_subtrie( id.m_full_name[index] );
 
-                    next_trie->add_param_candidate( p, index == (id.m_full_name.size() - 1) );
+                    next_trie->add_param_candidate( param, index == (id.m_full_name.size() - 1) );
                 }
             }
         }
-#endif
     }
 
     typedef rt_cla_detail::parameter_trie_ptr trie_ptr;
