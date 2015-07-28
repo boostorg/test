@@ -19,7 +19,7 @@
 #include <boost/test/utils/runtime/config.hpp>
 #include <boost/test/utils/runtime/fwd.hpp>
 #include <boost/test/utils/runtime/modifier.hpp>
-#include <boost/test/utils/runtime/setup_error.hpp>
+#include <boost/test/utils/runtime/init_error.hpp>
 
 // Boost.Test
 #include <boost/test/utils/class_properties.hpp>
@@ -42,18 +42,18 @@ struct parameter_cla_id {
     , m_value_separator( value_separator.begin(), value_separator.size() )
     {
         if( m_full_name.empty() )
-            BOOST_TEST_IMPL_THROW( setup_error() << "Parameter can't have an empty prefix." );
+            BOOST_TEST_IMPL_THROW( init_error() << "Parameter can't have an empty prefix." );
         if( m_prefix.empty() )
-            BOOST_TEST_IMPL_THROW( setup_error() << "Parameter " << m_full_name << " can't have an empty name." );
+            BOOST_TEST_IMPL_THROW( init_error() << "Parameter " << m_full_name << " can't have an empty name." );
         if( m_value_separator.empty() )
-            BOOST_TEST_IMPL_THROW( setup_error() << "Parameter " << m_full_name << " can't have an empty value separator." );
+            BOOST_TEST_IMPL_THROW( init_error() << "Parameter " << m_full_name << " can't have an empty value separator." );
 
         if( !std::all_of( m_prefix.begin(), m_prefix.end(), valid_prefix_char ) )
-            BOOST_TEST_IMPL_THROW( setup_error() << "Parameter " << m_full_name << " has invalid characters in prefix." );
+            BOOST_TEST_IMPL_THROW( init_error() << "Parameter " << m_full_name << " has invalid characters in prefix." );
         if( !std::all_of( m_full_name.begin(), m_full_name.end(), valid_name_char ) )
-            BOOST_TEST_IMPL_THROW( setup_error() << "Parameter " << m_full_name << " has invalid characters in name." );
+            BOOST_TEST_IMPL_THROW( init_error() << "Parameter " << m_full_name << " has invalid characters in name." );
         if( !std::all_of( m_value_separator.begin(), m_value_separator.end(), valid_separator_char ) )
-            BOOST_TEST_IMPL_THROW( setup_error() << "Parameter " << m_full_name << " has invalid characters in value separator." );
+            BOOST_TEST_IMPL_THROW( init_error() << "Parameter " << m_full_name << " has invalid characters in value separator." );
     }
 
     static bool             valid_prefix_char( char c )
@@ -166,7 +166,7 @@ public:
         basic_param_ptr p = in.clone();
 
         if( !m_parameters.insert( std::make_pair( p->p_name, p ) ).second )
-            BOOST_TEST_IMPL_THROW( setup_error() << "Parameter " << p->p_name << " is duplicate." );
+            BOOST_TEST_IMPL_THROW( init_error() << "Parameter " << p->p_name << " is duplicate." );
     }
 
     /// Returns true if there is no parameters registered

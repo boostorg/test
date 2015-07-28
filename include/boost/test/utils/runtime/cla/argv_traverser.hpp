@@ -66,6 +66,16 @@ public:
         return m_curr_arg == m_argc;
     }
 
+    /// For the purposes of error reporting produces current token being parsed 
+    /// (from the begining)
+    cstring     current_token()
+    {
+        if( eoi() )
+            return cstring();
+
+        return cstring( m_argv[m_curr_arg], m_arg_size );
+    }
+
     /// Gets single character from input. If we reached end of
     /// input, alwars returns END_OF_TOKEN. If we reached end
     /// of token returns END_OF_TOKEN and moves to next token.

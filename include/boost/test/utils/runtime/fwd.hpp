@@ -30,7 +30,6 @@ namespace runtime {
 class argument;
 typedef shared_ptr<argument> argument_ptr;
 typedef shared_ptr<argument const> const_argument_ptr;
-typedef std::map<std::string, const_argument_ptr> arguments_store;
 
 template<typename T> class typed_argument;
 

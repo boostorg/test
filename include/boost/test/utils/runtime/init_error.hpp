@@ -12,8 +12,8 @@
 //  Description : defines runtime parameters setup error
 // ***************************************************************************
 
-#ifndef BOOST_TEST_UTILS_RUNTIME_SETUP_ERROR_HPP
-#define BOOST_TEST_UTILS_RUNTIME_SETUP_ERROR_HPP
+#ifndef BOOST_TEST_UTILS_RUNTIME_INIT_ERROR_HPP
+#define BOOST_TEST_UTILS_RUNTIME_INIT_ERROR_HPP
 
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
@@ -27,18 +27,18 @@ namespace boost {
 namespace runtime {
 
 // ************************************************************************** //
-// **************             runtime::setup_error             ************** //
+// **************             runtime::init_error              ************** //
 // ************************************************************************** //
 
-class setup_error {
+class init_error {
 public:
     std::string msg;
 };
 
 //____________________________________________________________________________//
 
-inline setup_error
-operator<<(setup_error&& err, char const* val)
+inline init_error
+operator<<(init_error&& err, char const* val)
 {
     err.msg.append( val );
 
@@ -48,8 +48,8 @@ operator<<(setup_error&& err, char const* val)
 //____________________________________________________________________________//
 
 template<typename T>
-inline setup_error
-operator<<(setup_error&& err, T&& val)
+inline init_error
+operator<<(init_error&& err, T&& val)
 {
     err.msg.append( lexical_cast<std::string>( val ) );
 
@@ -61,4 +61,4 @@ operator<<(setup_error&& err, T&& val)
 } // namespace runtime
 } // namespace boost
 
-#endif // BOOST_TEST_UTILS_RUNTIME_SETUP_ERROR_HPP
+#endif // BOOST_TEST_UTILS_RUNTIME_INIT_ERROR_HPP

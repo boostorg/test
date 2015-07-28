@@ -410,12 +410,12 @@ template<typename T>
 T
 retrieve_argument( std::string const& parameter_name, T const& default_value = T(), T const& optional_value = T() )
 {
+// !!!!
+#if 0 
     rt::arguments_store::const_iterator found = s_arguments_store.find( parameter_name );
     if( found != s_arguments_store.end() ) {
         rt::const_argument_ptr arg = found->second;
 
-// !!!!
-#if 0 
         if( rtti::type_id<T>() == rtti::type_id<bool>() ||
             !static_cast<rt::parameter const&>( arg->p_formal_parameter.get() ).p_optional_value )
             return store.get<T>( parameter_name );
@@ -423,13 +423,9 @@ retrieve_argument( std::string const& parameter_name, T const& default_value = T
         optional<T> val = store.get<optional<T> >( parameter_name );
         if( val )
             return *val;
-#endif
-
         return optional_value;
     }
 
-// !!!!
-#if 0 
     boost::optional<T> v;
 
 #ifndef UNDER_CE
@@ -473,7 +469,7 @@ init( int& argc, char** argv )
 
         parser.parse( argc, argv, s_arguments_store );
 
-        if( s_arguments_store["help"] ) {
+        if( s_arguments_store.has("help") ) {
             // !!!! parser.usage( s_parameters_store, std::cout );
             BOOST_TEST_IMPL_THROW( framework::nothing_to_test() );
         }
@@ -487,7 +483,7 @@ init( int& argc, char** argv )
 
         s_test_to_run = retrieve_argument<std::list<std::string> >( TESTS_TO_RUN );
     }
-    BOOST_TEST_IMPL_CATCH( rt::setup_error, ex ) {
+    BOOST_TEST_IMPL_CATCH( rt::init_error, ex ) {
         BOOST_TEST_SETUP_ASSERT( false, ex.msg );
     }
 }

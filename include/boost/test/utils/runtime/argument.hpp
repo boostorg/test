@@ -33,11 +33,6 @@ namespace runtime {
 // **************              runtime::argument               ************** //
 // ************************************************************************** //
 
-#ifdef BOOST_MSVC
-#  pragma warning(push)
-#  pragma warning(disable:4244)
-#endif
-
 class argument {
 public:
     // Constructor
@@ -62,11 +57,8 @@ template<typename T>
 class typed_argument : public argument {
 public:
     // Constructor
-    explicit typed_argument( basic_param const& p )
-    : argument( p, rtti::type_id<T>() )
-    {}
-    typed_argument( basic_param const& p, T const& t )
-    : argument( p, rtti::type_id<T>() )
+    explicit typed_argument( T const& v )
+    : argument( rtti::type_id<T>() )
     , p_value( t )
     {}
 
@@ -97,11 +89,40 @@ arg_value( argument& arg_ )
     return static_cast<typed_argument<T>&>( arg_ ).p_value.value;
 }
 
-#ifdef BOOST_MSVC
-#  pragma warning(pop)
-#endif
-
 //____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************           runtime::arguments_store          ************** //
+// ************************************************************************** //
+
+class arguments_store {
+public:
+    typedef std::map<std::string, const_argument_ptr> storage_type;
+
+    /// Returns true if store is empty
+    bool        is_empty() const    { return m_arguments.empty(); }
+
+    /// Clears the store for reuse
+    void        clear()             { m_arguments.clear(); }
+
+    /// Returns true if there is an argument corresponding to the specified parameter name
+    bool        has( std::string const& parameter_name ) const
+    {
+        return m_arguments.find( parameter_name ) != m_arguments.end();
+    }
+
+    /// Provides types access to argument value by parameter name
+    template<typename T>
+    T const&    get( std::string const& parameter_name ) const;
+
+    /// Set's the argument value for specified parameter name
+    template<typename T>
+    void        set( std::string const& parameter_name, T const& value ) const;
+
+private:
+    // Data members
+    storage_type            m_arguments;
+};
 
 } // namespace runtime
 } // namespace boost
