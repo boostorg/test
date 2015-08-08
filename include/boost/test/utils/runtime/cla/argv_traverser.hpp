@@ -76,10 +76,19 @@ public:
         return cstring( m_argv[m_curr_arg], m_arg_size );
     }
 
+    /// Skips ahead by num_chars characters
+    void        skip( std::size_t num_chars )
+    {
+        m_arg_pos += num_chars;
+        if( m_arg_pos >= m_arg_size ) {
+            next_arg();
+        }
+    }
+
     /// Gets single character from input. If we reached end of
     /// input, alwars returns END_OF_TOKEN. If we reached end
     /// of token returns END_OF_TOKEN and moves to next token.
-    /// Note that END_OF_INPUT is returned after we read the
+    /// Note that END_OF_TOKEN is returned after we read the
     /// last charter in a token
     char        get_char()
     {
@@ -94,7 +103,16 @@ public:
         return m_argv[m_curr_arg][m_arg_pos++];
     }
 
-    /// Returns all the characters left in current token and moves
+    /// "Returns" one character back to input
+    void        unget_char()
+    {
+        if( m_arg_pos == 0 )
+            return;
+
+        m_arg_pos--;
+    }
+
+    /// Returns all the characters ramaining in the current token and moves
     /// to next token
     cstring     get_token()
     {

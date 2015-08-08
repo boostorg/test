@@ -19,7 +19,8 @@
 #include <boost/test/utils/runtime/config.hpp>
 #include <boost/test/utils/runtime/fwd.hpp>
 #include <boost/test/utils/runtime/modifier.hpp>
-#include <boost/test/utils/runtime/init_error.hpp>
+#include <boost/test/utils/runtime/argument.hpp>
+#include <boost/test/utils/runtime/interpret_argument_value.hpp>
 
 // Boost.Test
 #include <boost/test/utils/class_properties.hpp>
@@ -36,24 +37,19 @@ namespace runtime {
 // set of attributes identifying the parameter in the command line
 
 struct parameter_cla_id {
-    parameter_cla_id( cstring prefix, cstring full_name, cstring value_separator )
-    : m_prefix( prefix.begin(), prefix.size() )
+    parameter_cla_id( basic_param const& owner, cstring prefix, cstring full_name, cstring value_separator )
+    : m_owner( owner )
+    , m_prefix( prefix.begin(), prefix.size() )
     , m_full_name( full_name.begin(), full_name.size() )
     , m_value_separator( value_separator.begin(), value_separator.size() )
     {
-        if( m_full_name.empty() )
-            BOOST_TEST_IMPL_THROW( init_error() << "Parameter can't have an empty prefix." );
-        if( m_prefix.empty() )
-            BOOST_TEST_IMPL_THROW( init_error() << "Parameter " << m_full_name << " can't have an empty name." );
-        if( m_value_separator.empty() )
-            BOOST_TEST_IMPL_THROW( init_error() << "Parameter " << m_full_name << " can't have an empty value separator." );
-
+        
         if( !std::all_of( m_prefix.begin(), m_prefix.end(), valid_prefix_char ) )
-            BOOST_TEST_IMPL_THROW( init_error() << "Parameter " << m_full_name << " has invalid characters in prefix." );
+            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << m_full_name << " has invalid characters in prefix." );
         if( !std::all_of( m_full_name.begin(), m_full_name.end(), valid_name_char ) )
-            BOOST_TEST_IMPL_THROW( init_error() << "Parameter " << m_full_name << " has invalid characters in name." );
+            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << m_full_name << " has invalid characters in name." );
         if( !std::all_of( m_value_separator.begin(), m_value_separator.end(), valid_separator_char ) )
-            BOOST_TEST_IMPL_THROW( init_error() << "Parameter " << m_full_name << " has invalid characters in value separator." );
+            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << m_full_name << " has invalid characters in value separator." );
     }
 
     static bool             valid_prefix_char( char c )
@@ -62,16 +58,17 @@ struct parameter_cla_id {
     }
     static bool             valid_separator_char( char c )
     {
-        return c == '=' || c == ':' || c == ' ';
+        return c == '=' || c == ':' || c == ' ' || c == '\0';
     }
     static bool             valid_name_char( char c )
     {
         return std::isalnum( c ) || c == '+' || c == '_' || c == '?';
     }
 
-    std::string m_prefix;
-    std::string m_full_name;
-    std::string m_value_separator;
+    basic_param const&      m_owner;
+    std::string             m_prefix;
+    std::string             m_full_name;
+    std::string             m_value_separator;
 };
 
 typedef std::vector<parameter_cla_id> parameter_cla_ids;
@@ -90,27 +87,18 @@ public:
     basic_param( cstring name, Modifiers const& m )
     : p_name( std::string(name.begin(), name.end()) )
     , p_optional( true )
-    , p_multiplicable( false )
+    , p_repeatable( false )
     , p_optional_value( false )
     {
         nfp::optionally_assign( p_description.value, m, description );
         nfp::optionally_assign( p_env_var.value, m, env_var );
 
-        if( m.has( optional ) )
-            p_optional.value = true;
-
-        if( m.has( required ) )
-            p_optional.value = false;
-
-        if( m.has( multiplicable ) )
-            p_multiplicable.value = true;
-
         if( m.has( optional_value ) )
-            p_optional_value.value = true;
+            p_optional_value.value = m[optional_value];
     }
     virtual                 ~basic_param() {}
 
-    // interface for cloning typed parameters
+    /// interface for cloning typed parameters
     virtual basic_param_ptr clone() const = 0;
 
     // Pubic properties
@@ -118,15 +106,30 @@ public:
     string_property         p_description;
     string_property         p_env_var;
     bool_property           p_optional;
-    bool_property           p_multiplicable;
+    bool_property           p_repeatable;
     bool_property           p_optional_value;
 
     // Access methods
     parameter_cla_ids const& cla_ids() const { return m_cla_ids; }
     void                    add_cla_id( cstring prefix, cstring full_name, cstring value_separator )
     {
-        m_cla_ids.push_back( parameter_cla_id( prefix, full_name, value_separator ) );
+        if( full_name.is_empty() )
+            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter can't have an empty name." );
+        if( prefix.is_empty() )
+            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << full_name << " can't have an empty prefix." );
+        if( value_separator.is_empty() )
+            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << full_name << " can't have an empty value separator." );
+
+        value_separator.trim();
+        if( value_separator.is_empty() && !!p_optional_value )
+            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << full_name << " with optional value attribute can't use space as value separator." );
+
+        // We trim value separaotr from all the spaces, so token end will indicate separator
+        m_cla_ids.push_back( parameter_cla_id( *this, prefix, full_name, value_separator ) );
     }
+
+    /// interface for producing argument values for this parameter
+    virtual void produce_argument( cstring token, arguments_store& store ) const = 0;
 
 private:
     // Data members
@@ -137,18 +140,98 @@ private:
 // **************              runtime::parameter              ************** //
 // ************************************************************************** //
 
+enum args_amount { 
+    REQUIRED,   // exactly 1
+    OPTIONAL,   // 0-1
+    REPEATABLE  // 0-N
+};
+
+//____________________________________________________________________________//
+
+template<typename ValueType, args_amount a = runtime::OPTIONAL>
+class parameter;
+
+//____________________________________________________________________________//
+
 template<typename ValueType>
-class parameter : public basic_param {
+class parameter<ValueType, runtime::REQUIRED> : public basic_param {
+public:
+    /// Constructor with modifiers
+    template<typename Modifiers=nfp::no_params_type>
+    parameter( cstring name, Modifiers const& m = nfp::no_params, bool is_optional = false )
+    : basic_param( name, m )
+    {
+        p_optional.value = is_optional;
+    }
+
+    virtual basic_param_ptr clone() const
+    {
+        return basic_param_ptr( new parameter<ValueType, runtime::REQUIRED>( *this ) );
+    }
+
+    virtual void produce_argument( cstring token, arguments_store& store ) const
+    {
+        ValueType value;
+        interpret_argument_value( token, value );
+
+        store.set( p_name.get(), value );
+    }
+};
+
+//____________________________________________________________________________//
+
+template<typename ValueType>
+class parameter<ValueType, runtime::OPTIONAL> : public parameter<ValueType, runtime::REQUIRED> {
+    typedef parameter<ValueType, runtime::REQUIRED> base;
+
 public:
     /// Constructor with modifiers
     template<typename Modifiers=nfp::no_params_type>
     parameter( cstring name, Modifiers const& m = nfp::no_params )
-    : basic_param( name, m )
+    : base( name, m, true )
     {}
 
     virtual basic_param_ptr clone() const
     {
-        return basic_param_ptr( new parameter<ValueType>( *this ) );
+        return basic_param_ptr( new parameter<ValueType, runtime::OPTIONAL>( *this ) );
+    }
+};
+
+//____________________________________________________________________________//
+
+template<typename ValueType>
+class parameter<ValueType, runtime::REPEATABLE> : public parameter<ValueType, runtime::REQUIRED> {
+    typedef parameter<ValueType, runtime::REQUIRED> base;
+
+public:
+    /// Constructor with modifiers
+    template<typename Modifiers=nfp::no_params_type>
+    parameter( cstring name, Modifiers const& m = nfp::no_params )
+    : base( name, m, true )
+    {
+        p_optional.value = true;
+        p_repeatable.value = true;
+    }
+
+    virtual basic_param_ptr clone() const
+    {
+        return basic_param_ptr( new parameter<ValueType, runtime::REPEATABLE>( *this ) );
+    }
+
+    virtual void produce_argument( cstring token, arguments_store& store ) const
+    {
+        ValueType value;
+        interpret_argument_value( token, value );
+
+        if( store.has( p_name.get() ) ) {
+            std::vector<ValueType>& values = store.get<std::vector<ValueType> >( p_name.get() );
+            values.push_back( value );
+        }
+        else {
+            std::vector<ValueType> values( 1, value );
+            
+            store.set( p_name.get(), argument_ptr( new typed_argument<std::vector<ValueType> >( values ) ) );
+        }
     }
 };
 
@@ -158,15 +241,15 @@ public:
 
 class parameters_store {
 public:
-    typedef std::map<std::string, basic_param_ptr> storage_type;
+    typedef std::map<cstring, basic_param_ptr> storage_type;
 
     /// Adds parameter into the persistent store
     void                    add( basic_param const& in )
     {
         basic_param_ptr p = in.clone();
 
-        if( !m_parameters.insert( std::make_pair( p->p_name, p ) ).second )
-            BOOST_TEST_IMPL_THROW( init_error() << "Parameter " << p->p_name << " is duplicate." );
+        if( !m_parameters.insert( std::make_pair( cstring(p->p_name), p ) ).second )
+            BOOST_TEST_IMPL_THROW( duplicate_param() << "Parameter " << p->p_name << " is duplicate." );
     }
 
     /// Returns true if there is no parameters registered
@@ -174,7 +257,14 @@ public:
     /// Returns map of all the registered parameter
     storage_type const&     all() const         { return m_parameters; }
     /// Returns map of all the registered parameter
-    basic_param_ptr         get( cstring name ) const { return m_parameters.at( std::string( name.begin(), name.size() ) ); }
+    basic_param_ptr         get( cstring name ) const
+    {
+        auto found = m_parameters.find( name );
+        if( found == m_parameters.end() )
+            BOOST_TEST_IMPL_THROW( unknown_param() << "Parameter " << name << " is unknown." );
+
+        return found->second;
+    }
 
 private:
     // Data members

@@ -248,7 +248,6 @@ register_parameters( rt::parameters_store& store )
         rt::env_var = "BOOST_TEST_LIST_CONTENT"
     ));
     list_content.add_cla_id( "--", LIST_CONTENT, "=" );    
-    list_content.add_cla_id( "-", "j", " " );
     store.add( list_content );
 
     rt::parameter<bool> list_labels( LIST_LABELS, (
@@ -303,7 +302,6 @@ register_parameters( rt::parameters_store& store )
     ));
 
     random_seed.add_cla_id( "--", RANDOM_SEED, "=" );    
-    random_seed.add_cla_id( "-", "a", " " );
     store.add( random_seed );
 
     rt::parameter<unit_test::output_format> report_format( REPORT_FORMAT, (
@@ -342,8 +340,7 @@ register_parameters( rt::parameters_store& store )
     result_code.add_cla_id( "-", "c", " " );
     store.add( result_code );
 
-    rt::parameter<std::string> tests_to_run( TESTS_TO_RUN, (
-        rt::multiplicable,
+    rt::parameter<std::string,rt::REPEATABLE> tests_to_run( TESTS_TO_RUN, (
         rt::description = "Filters, which test units to include or exclude from test module execution",
         rt::env_var = "BOOST_TESTS_TO_RUN"
     ));
@@ -353,7 +350,6 @@ register_parameters( rt::parameters_store& store )
     store.add( tests_to_run );
 
     rt::parameter<bool> save_test_pattern( SAVE_TEST_PATTERN, (
-        rt::multiplicable,
         rt::description = "Allows to switch between saving and matching against test pattern file",
         rt::env_var = "BOOST_TEST_SAVE_PATTERN"
     ));
@@ -484,6 +480,10 @@ init( int& argc, char** argv )
         s_test_to_run = retrieve_argument<std::list<std::string> >( TESTS_TO_RUN );
     }
     BOOST_TEST_IMPL_CATCH( rt::init_error, ex ) {
+        BOOST_TEST_SETUP_ASSERT( false, "Internal Boost.Test initialization error: " + ex.msg );
+    }
+    BOOST_TEST_IMPL_CATCH( rt::parse_error, ex ) {
+        // !!!! help/usage?
         BOOST_TEST_SETUP_ASSERT( false, ex.msg );
     }
 }
@@ -678,6 +678,8 @@ log_sink()
 
 //____________________________________________________________________________//
 
+// !!!!
+#if 0
 long
 detect_memory_leaks()
 {
@@ -688,7 +690,7 @@ detect_memory_leaks()
 
     std::string value = retrieve_argument( DETECT_MEM_LEAKS, s_empty );
 
-    optional<bool> bool_val;
+    bool bool_val;
     if( rt::interpret_argument_value( value, bool_val ) )
         s_value = *bool_val ? 1L : 0L;
     else {
@@ -727,6 +729,22 @@ memory_leaks_report_file()
 }
 
 //____________________________________________________________________________//
+
+#else
+
+long
+detect_memory_leaks()
+{
+    return 0;
+}
+
+const_string
+memory_leaks_report_file()
+{
+    return const_string();
+}
+
+#endif
 
 unsigned
 random_seed()

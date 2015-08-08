@@ -35,34 +35,28 @@ namespace runtime {
 // ************************************************************************** //
 // **************       runtime::interpret_argument_value      ************** //
 // ************************************************************************** //
-// returns true if source is used false otherwise
 
 // std::string case
-inline bool
-interpret_argument_value( cstring source, boost::optional<std::string>& res )
+inline void
+interpret_argument_value( cstring source, std::string& res )
 {
-    res = std::string();
-    assign_op( *res, source, 0 );
-
-    return true;
+    res.assign( source.begin(), source.size() );
 }
 
 //____________________________________________________________________________//
 
 // cstring overload
-inline bool
-interpret_argument_value( cstring source, boost::optional<cstring>& res )
+inline void
+interpret_argument_value( cstring source, cstring& res )
 {
     res = source;
-
-    return true;
 }
 
 //____________________________________________________________________________//
 
 // bool overload
-inline bool
-interpret_argument_value( cstring source, boost::optional<bool>& res )
+inline void
+interpret_argument_value( cstring source, bool& res )
 {
     static literal_cstring YES( "YES" );
     static literal_cstring Y( "Y" );
@@ -73,22 +67,17 @@ interpret_argument_value( cstring source, boost::optional<bool>& res )
 
     source.trim();
 
-    if( case_ins_eq( source, YES ) || case_ins_eq( source, Y ) || case_ins_eq( source, one ) ) {
+    if( source.is_empty() || case_ins_eq( source, YES ) || case_ins_eq( source, Y ) || case_ins_eq( source, one ) )
         res = true;
-        return true;
-    }
-    else if( case_ins_eq( source, NO ) || case_ins_eq( source, N ) || case_ins_eq( source, zero ) ) {
+    else if( case_ins_eq( source, NO ) || case_ins_eq( source, N ) || case_ins_eq( source, zero ) )
         res = false;
-        return true;
-    }
-    else {
-        res = true;
-        return source.is_empty();
-    }
+    else
+        res = true; // !!!! error
 }
 
 //____________________________________________________________________________//
 
+#if 0
 // overload for list of values
 template<typename T>
 inline bool
@@ -97,7 +86,7 @@ interpret_argument_value( cstring source, boost::optional<std::vector<T> >& res 
     res = std::vector<T>();
 
     while( !source.is_empty() ) {
-        cstring::iterator single_value_end = std::find( source.begin(), source.end(), ',' );
+        auto single_value_end = std::find( source.begin(), source.end(), ',' );
 
         boost::optional<T> value;
         interpret_argument_value( cstring( source.begin(), single_value_end ), value, 0 );
@@ -112,13 +101,14 @@ interpret_argument_value( cstring source, boost::optional<std::vector<T> >& res 
 
 //____________________________________________________________________________//
 
+#endif
+
 // generic overload
 template<typename T>
-inline bool
-interpret_argument_value( cstring source, boost::optional<T>& res )
+inline void
+interpret_argument_value( cstring source, T& res )
 {
     res = lexical_cast<T>( source );
-    return true;
 }
 
 //____________________________________________________________________________//

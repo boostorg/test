@@ -156,8 +156,6 @@ BOOST_AUTO_TEST_CASE( test_remainder )
     BOOST_TEST( argv[1] == "" );
 }
 
-//____________________________________________________________________________//
-
 BOOST_AUTO_TEST_SUITE_END()
 
 //____________________________________________________________________________//
@@ -175,14 +173,12 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
     BOOST_TEST( p1.p_description.get() == "" );
     BOOST_TEST( p1.p_env_var.get() == "" );
     BOOST_TEST( p1.p_optional );
-    BOOST_TEST( !p1.p_multiplicable );
+    BOOST_TEST( !p1.p_repeatable );
     BOOST_TEST( !p1.p_optional_value );
 
-    rt::parameter<int> p2( "P2", (
-        rt::required,
+    rt::parameter<int,rt::REQUIRED> p2( "P2", (
         rt::description = "123",
         rt::env_var = "E2",
-        rt::multiplicable,
         !rt::optional_value
     ));
 
@@ -190,8 +186,34 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
     BOOST_TEST( p2.p_description.get() == "123" );
     BOOST_TEST( p2.p_env_var.get() == "E2" );
     BOOST_TEST( !p2.p_optional );
-    BOOST_TEST( p2.p_multiplicable );
-    BOOST_TEST( !p1.p_optional_value );
+    BOOST_TEST( !p2.p_repeatable );
+    BOOST_TEST( !p2.p_optional_value );
+
+    rt::parameter<int,rt::REPEATABLE> p4( "P4", (
+        rt::description = "123",
+        rt::env_var = "E4",
+        rt::optional_value
+    ));
+
+    BOOST_TEST( p4.p_name.get() == "P4" );
+    BOOST_TEST( p4.p_description.get() == "123" );
+    BOOST_TEST( p4.p_env_var.get() == "E4" );
+    BOOST_TEST( p4.p_optional );
+    BOOST_TEST( p4.p_repeatable );
+    BOOST_TEST( p4.p_optional_value );
+
+    rt::parameter<bool> p5( "P5", (
+        rt::description = "bool arg",
+        rt::env_var = "E5"
+    ));
+    p5.add_cla_id( "-", "b", " " );
+
+    BOOST_TEST( p5.p_name.get() == "P5" );
+    BOOST_TEST( p5.p_description.get() == "bool arg" );
+    BOOST_TEST( p5.p_env_var.get() == "E5" );
+    BOOST_TEST( p5.p_optional );
+    BOOST_TEST( !p5.p_repeatable );
+    // !!!! BOOST_TEST( p5.p_optional_value );
 
     rt::parameter<int> p3( "P3" );
     p3.add_cla_id( "/", "P3", ":" );
@@ -203,17 +225,20 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
     BOOST_TEST( p3.cla_ids()[0].m_value_separator == ":" );
     BOOST_TEST( p3.cla_ids()[1].m_prefix == "-" );
     BOOST_TEST( p3.cla_ids()[1].m_full_name == "p+p_p" );
-    BOOST_TEST( p3.cla_ids()[1].m_value_separator == " " );
+    BOOST_TEST( p3.cla_ids()[1].m_value_separator == "" );
 
-    BOOST_CHECK_THROW( p3.add_cla_id( "^", "p", " " ), rt::init_error );
-    BOOST_CHECK_THROW( p3.add_cla_id( " ", "p", " " ), rt::init_error );
-    BOOST_CHECK_THROW( p3.add_cla_id( "", "p", " " ), rt::init_error );
-    BOOST_CHECK_THROW( p3.add_cla_id( "-", "-abc", " " ), rt::init_error );
-    BOOST_CHECK_THROW( p3.add_cla_id( "-", "b c", " " ), rt::init_error );
-    BOOST_CHECK_THROW( p3.add_cla_id( "-", "", " " ), rt::init_error );
-    BOOST_CHECK_THROW( p3.add_cla_id( "-", "a", "-" ), rt::init_error );
-    BOOST_CHECK_THROW( p3.add_cla_id( "-", "a", "/" ), rt::init_error );
-    BOOST_CHECK_THROW( p3.add_cla_id( "-", "a", "" ), rt::init_error );
+    BOOST_CHECK_THROW( p3.add_cla_id( "^", "p", " " ), rt::invalid_cla_id );
+    BOOST_CHECK_THROW( p3.add_cla_id( " ", "p", " " ), rt::invalid_cla_id );
+    BOOST_CHECK_THROW( p3.add_cla_id( "", "p", " " ), rt::invalid_cla_id );
+    BOOST_CHECK_THROW( p3.add_cla_id( "-", "-abc", " " ), rt::invalid_cla_id );
+    BOOST_CHECK_THROW( p3.add_cla_id( "-", "b c", " " ), rt::invalid_cla_id );
+    BOOST_CHECK_THROW( p3.add_cla_id( "-", "", " " ), rt::invalid_cla_id );
+    BOOST_CHECK_THROW( p3.add_cla_id( "-", "a", "-" ), rt::invalid_cla_id );
+    BOOST_CHECK_THROW( p3.add_cla_id( "-", "a", "/" ), rt::invalid_cla_id );
+    BOOST_CHECK_THROW( p3.add_cla_id( "-", "a", "" ), rt::invalid_cla_id );
+
+    rt::parameter<int> p6( "P3", rt::optional_value );
+    BOOST_CHECK_THROW( p6.add_cla_id( "-", "a", " " ), rt::invalid_cla_id );
 }
 
 //____________________________________________________________________________//
@@ -231,15 +256,13 @@ BOOST_AUTO_TEST_CASE( test_param_store )
     S.add( p1 );
     S.add( p2 );
 
-    BOOST_CHECK_THROW( S.add( p3 ), rt::init_error );
+    BOOST_CHECK_THROW( S.add( p3 ), rt::duplicate_param );
     BOOST_TEST( !S.is_empty() );
     BOOST_TEST( S.all().size() == 2U );
     BOOST_TEST( S.get("P1")->p_name.get() == "P1" );
     BOOST_TEST( S.get("P2")->p_name.get() == "P2" );
-    BOOST_CHECK_THROW( S.get("P3"), std::out_of_range );
+    BOOST_CHECK_THROW( S.get("P3"), rt::unknown_param );
 }
-
-//____________________________________________________________________________//
 
 BOOST_AUTO_TEST_SUITE_END()
 
@@ -287,7 +310,7 @@ BOOST_AUTO_TEST_CASE( test_param_trie_construction,
     p6.add_cla_id( "-", "paramA", " " );
     store2.add( p6 );
 
-    BOOST_CHECK_THROW( rt::cla::parser parser( store2 ), rt::init_error );
+    BOOST_CHECK_THROW( rt::cla::parser parser( store2 ), rt::conflicting_param );
 
     rt::parameters_store store3;
 
@@ -299,7 +322,7 @@ BOOST_AUTO_TEST_CASE( test_param_trie_construction,
     p8.add_cla_id( "-", "param", " " );
     store3.add( p8 );
 
-    BOOST_CHECK_THROW( rt::cla::parser parser( store3 ), rt::init_error );
+    BOOST_CHECK_THROW( rt::cla::parser parser( store3 ), rt::conflicting_param );
 
     rt::parameters_store store4;
 
@@ -311,28 +334,70 @@ BOOST_AUTO_TEST_CASE( test_param_trie_construction,
     p10.add_cla_id( "-", "paramA", " " );
     store4.add( p10 );
 
-    BOOST_CHECK_THROW( rt::cla::parser parser( store4 ), rt::init_error );
+    BOOST_CHECK_THROW( rt::cla::parser parser( store4 ), rt::conflicting_param );
 }
 
 //____________________________________________________________________________//
 //____________________________________________________________________________//
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_SUITE( test_cla_parsing )
+BOOST_AUTO_TEST_CASE( test_arguments_store )
+{
+    rt::arguments_store store;
 
-BOOST_AUTO_TEST_CASE( test_basic_string_argument_parsing,
-                      * utf::depends_on("test_argv_traverser")
-                      * utf::depends_on("test_parameter_specification") )
+    BOOST_TEST( store.size() == 0U );
+    BOOST_TEST( !store.has( "P1" ) );
+    BOOST_TEST( !store.has( "P2" ) );
+    BOOST_TEST( !store.has( "P3" ) );
+    BOOST_TEST( !store.has( "P4" ) );
+    BOOST_TEST( !store.has( "P5" ) );
+
+    store.set( "P1", 10 );
+    store.set( "P2", std::string("abc") );
+    store.set( "P3", rt::cstring("abc") );
+    store.set( "P4", true );
+    store.set( "P5", std::vector<int>( 1, 12 ) );
+
+    BOOST_TEST( store.has( "P1" ) );
+    BOOST_TEST( store.has( "P2" ) );
+    BOOST_TEST( store.has( "P3" ) );
+    BOOST_TEST( store.has( "P4" ) );
+    BOOST_TEST( store.has( "P5" ) );
+    BOOST_TEST( store.size() == 5U );
+
+    BOOST_TEST( store.get<int>( "P1" ) == 10 );
+    BOOST_TEST( store.get<std::string>( "P2" ) == "abc" );
+    BOOST_TEST( store.get<rt::cstring>( "P3" ) == "abc" );
+    BOOST_TEST( store.get<bool>( "P4" ) == true);
+    BOOST_TEST( store.get<std::vector<int>>( "P5" ) == std::vector<int>( 1, 12 ) );
+
+    store.set( "P1", 20 );
+    BOOST_TEST( store.get<int>( "P1" ) == 20 );
+
+    BOOST_CHECK_THROW( store.get<int>( "P0" ), rt::missing_argument );
+    BOOST_CHECK_THROW( store.get<long>( "P1" ), rt::arg_type_mismatch );
+}
+
+//____________________________________________________________________________//
+//____________________________________________________________________________//
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_SUITE( test_cla_parsing,
+                       * utf::depends_on("test_argv_traverser")
+                       * utf::depends_on("test_parameter_specification")
+                       * utf::depends_on("test_arguments_store") )
+
+BOOST_AUTO_TEST_CASE( test_basic_parsing )
 {
     rt::parameters_store param_store;
 
     rt::parameter<std::string> p1( "P1" );
-    p1.add_cla_id( "--", "param_one", " " );
+    p1.add_cla_id( "--", "param_one", "=" );
     p1.add_cla_id( "-", "p1", " " );
     param_store.add( p1 );
 
     rt::parameter<std::string> p2( "P2" );
-    p2.add_cla_id( "--", "param_two", " " );
+    p2.add_cla_id( "--", "param_two", "=" );
     p2.add_cla_id( "-", "p2", " " );
     param_store.add( p2 );
 
@@ -343,10 +408,164 @@ BOOST_AUTO_TEST_CASE( test_basic_string_argument_parsing,
 
     parser.parse( sizeof(argv1)/sizeof(char const*), (char**)argv1, args_store1 );
 
-    
+    BOOST_TEST( args_store1.size() == 0U );
+
+    char const* argv2[] = { "test.exe", "--param_one=abc" };
+    rt::arguments_store args_store2;
+
+    parser.parse( sizeof(argv2)/sizeof(char const*), (char**)argv2, args_store2 );
+
+    BOOST_TEST( args_store2.size() == 1U );
+    BOOST_TEST( args_store2.has( "P1" ) );
+    BOOST_TEST( args_store2.get<std::string>( "P1" ) == "abc" );
+
+    char const* argv3[] = { "test.exe", "--param_two=12" };
+    rt::arguments_store args_store3;
+
+    parser.parse( sizeof(argv3)/sizeof(char const*), (char**)argv3, args_store3 );
+
+    BOOST_TEST( args_store3.size() == 1U );
+    BOOST_TEST( args_store3.has( "P2" ) );
+    BOOST_TEST( args_store3.get<std::string>( "P2" ) == "12" );
+
+    char const* argv4[] = { "test.exe", "-p1", "aaa", "-p2", "37" };
+    rt::arguments_store args_store4;
+
+    parser.parse( sizeof(argv4)/sizeof(char const*), (char**)argv4, args_store4 );
+
+    BOOST_TEST( args_store4.size() == 2U );
+    BOOST_TEST( args_store4.has( "P1" ) );
+    BOOST_TEST( args_store4.get<std::string>( "P1" ) == "aaa" );
+    BOOST_TEST( args_store4.has( "P2" ) );
+    BOOST_TEST( args_store4.get<std::string>( "P2" ) == "37" );
 }
 
 //____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_typed_parsing )
+{
+    rt::parameters_store param_store;
+
+    rt::parameter<double> p1( "P1" );
+    p1.add_cla_id( "--", "param_one", "=" );
+    p1.add_cla_id( "-", "p1", " " );
+    param_store.add( p1 );
+
+    rt::parameter<int> p2( "P2" );
+    p2.add_cla_id( "--", "param_two", "=" );
+    p2.add_cla_id( "-", "p2", " " );
+    param_store.add( p2 );
+
+    rt::parameter<bool> p3( "P3" );
+    p3.add_cla_id( "--", "third", "=" );
+    p3.add_cla_id( "-", "p3", " " );
+    param_store.add( p3 );
+
+    rt::parameter<rt::cstring> p4( "P4" );
+    p4.add_cla_id( "--", "another", "=" );
+    p4.add_cla_id( "-", "p4", " " );
+    param_store.add( p4 );
+
+    rt::cla::parser parser( param_store );
+
+    char const* argv1[] = { "test.exe", "--another=some thing", "-p1", "1.2", "-p2", "37", "--third=Y" };
+    rt::arguments_store args_store1;
+
+    parser.parse( sizeof(argv1)/sizeof(char const*), (char**)argv1, args_store1 );
+
+    BOOST_TEST( args_store1.size() == 4U );
+    BOOST_TEST( args_store1.has( "P1" ) );
+    BOOST_TEST( args_store1.get<double>( "P1" ) == 1.2 );
+    BOOST_TEST( args_store1.has( "P2" ) );
+    BOOST_TEST( args_store1.get<int>( "P2" ) == 37 );
+    BOOST_TEST( args_store1.has( "P3" ) );
+    BOOST_TEST( args_store1.get<bool>( "P3" ) );
+    BOOST_TEST( args_store1.has( "P4" ) );
+    BOOST_TEST( args_store1.get<rt::cstring>( "P4" ) == "some thing" );
+}
+
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_parameter_name_guessing )
+{
+    rt::parameters_store param_store;
+
+    rt::parameter<int> p1( "P1" );
+    p1.add_cla_id( "--", "param_one", "=" );
+    p1.add_cla_id( "-", "one", " " );
+    param_store.add( p1 );
+
+    rt::parameter<int> p2( "P2" );
+    p2.add_cla_id( "--", "param_two", "=" );
+    p2.add_cla_id( "-", "two", " " );
+    param_store.add( p2 );
+
+    rt::cla::parser parser( param_store );
+
+    char const* argv1[] = { "test.exe", "--param_o=1", "-t", "2" };
+    rt::arguments_store args_store1;
+
+    parser.parse( sizeof(argv1)/sizeof(char const*), (char**)argv1, args_store1 );
+
+    BOOST_TEST( args_store1.size() == 2U );
+    BOOST_TEST( args_store1.has( "P1" ) );
+    BOOST_TEST( args_store1.has( "P2" ) );
+}
+
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_validations )
+{
+    rt::parameters_store param_store;
+
+    rt::parameter<int> p1( "P1" );
+    p1.add_cla_id( "--", "param_one", "=" );
+    p1.add_cla_id( "-", "one", " " );
+    param_store.add( p1 );
+
+    rt::parameter<int> p2( "P2" );
+    p2.add_cla_id( "--", "param_two", "=" );
+    p2.add_cla_id( "-", "two", " " );
+    param_store.add( p2 );
+
+    rt::cla::parser parser( param_store );
+    rt::arguments_store args_store;
+
+    {
+        char const* argv[] = { "test.exe", "param_one=1" };
+        BOOST_CHECK_THROW( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
+    }
+
+    {
+        char const* argv[] = { "test.exe", "/param_one=1" };
+        BOOST_CHECK_THROW( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
+    }
+
+    {
+        char const* argv[] = { "test.exe", "---param_one=1" };
+        BOOST_CHECK_THROW( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
+    }
+
+    {
+        char const* argv[] = { "test.exe", "--=1" };
+        BOOST_CHECK_THROW( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
+    }
+
+    {
+        char const* argv[] = { "test.exe", "--param_one:1" };
+        BOOST_CHECK_THROW( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
+    }
+
+    {
+        char const* argv[] = { "test.exe", "--param_one=" };
+        BOOST_CHECK_THROW( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
+    }
+
+    {
+        char const* argv[] = { "test.exe", "--param_one=1", "--param_one=2" };
+        BOOST_CHECK_THROW( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::duplicate_arg );
+    }
+}
 
 BOOST_AUTO_TEST_SUITE_END()
 

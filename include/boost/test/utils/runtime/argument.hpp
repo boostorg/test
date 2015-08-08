@@ -18,6 +18,7 @@
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
 #include <boost/test/utils/runtime/fwd.hpp>
+#include <boost/test/utils/runtime/errors.hpp>
 
 // Boost.Test
 #include <boost/test/utils/class_properties.hpp>
@@ -36,17 +37,15 @@ namespace runtime {
 class argument {
 public:
     // Constructor
-    argument( basic_param const& p, rtti::id_t value_type )
-    : p_formal_parameter( p )
-    , p_value_type( value_type )
+    argument( rtti::id_t value_type )
+    : p_value_type( value_type )
     {}
 
     // Destructor
     virtual     ~argument()  {}
 
     // Public properties
-    unit_test::readonly_property<basic_param const&> p_formal_parameter;
-    unit_test::readonly_property<rtti::id_t>         p_value_type;
+    unit_test::readonly_property<rtti::id_t>    p_value_type;
 };
 
 // ************************************************************************** //
@@ -59,37 +58,11 @@ public:
     // Constructor
     explicit typed_argument( T const& v )
     : argument( rtti::type_id<T>() )
-    , p_value( t )
+    , p_value( v )
     {}
 
     unit_test::readwrite_property<T>    p_value;
 };
-
-// ************************************************************************** //
-// **************               runtime::arg_value             ************** //
-// ************************************************************************** //
-
-template<typename T>
-inline T const&
-arg_value( argument const& arg_ )
-{
-    assert( arg_.p_value_type == rtti::type_id<T>() ); // detect logic error
-
-    return static_cast<typed_argument<T> const&>( arg_ ).p_value.value;
-}
-
-//____________________________________________________________________________//
-
-template<typename T>
-inline T&
-arg_value( argument& arg_ )
-{
-    assert( arg_.p_value_type == rtti::type_id<T>() ); // detect logic error
-
-    return static_cast<typed_argument<T>&>( arg_ ).p_value.value;
-}
-
-//____________________________________________________________________________//
 
 // ************************************************************************** //
 // **************           runtime::arguments_store          ************** //
@@ -97,27 +70,46 @@ arg_value( argument& arg_ )
 
 class arguments_store {
 public:
-    typedef std::map<std::string, const_argument_ptr> storage_type;
+    typedef std::map<cstring, argument_ptr> storage_type;
 
-    /// Returns true if store is empty
-    bool        is_empty() const    { return m_arguments.empty(); }
+    /// Returns number of arguments in the store; mostly used for testing
+    std::size_t size() const        { return m_arguments.size(); }
 
     /// Clears the store for reuse
     void        clear()             { m_arguments.clear(); }
 
     /// Returns true if there is an argument corresponding to the specified parameter name
-    bool        has( std::string const& parameter_name ) const
+    bool        has( cstring parameter_name ) const
     {
         return m_arguments.find( parameter_name ) != m_arguments.end();
     }
 
     /// Provides types access to argument value by parameter name
     template<typename T>
-    T const&    get( std::string const& parameter_name ) const;
+    T const&    get( cstring parameter_name ) const {
+        return const_cast<arguments_store*>(this)->get( parameter_name );
+    }
+
+    template<typename T>
+    T&          get( cstring parameter_name ) {
+        auto found = m_arguments.find( parameter_name );
+        if( found == m_arguments.end() )
+            BOOST_TEST_IMPL_THROW( missing_argument() << "There is no argument provided for parameter " << parameter_name );
+
+        argument_ptr arg = found->second;
+
+        if( arg->p_value_type != rtti::type_id<T>() )
+            BOOST_TEST_IMPL_THROW( arg_type_mismatch() << "Access with invalid type for argument corresponding to parameter " << parameter_name );
+
+        return static_cast<typed_argument<T>&>( *arg ).p_value.value;
+    }
 
     /// Set's the argument value for specified parameter name
     template<typename T>
-    void        set( std::string const& parameter_name, T const& value ) const;
+    void        set( cstring parameter_name, T const& value )
+    {
+        m_arguments[parameter_name] = argument_ptr( new typed_argument<T>( value ) );
+    }
 
 private:
     // Data members

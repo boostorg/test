@@ -30,9 +30,6 @@ namespace runtime {
 
 namespace {
 
-nfp::typed_keyword<bool,struct optional_t>          optional;
-nfp::typed_keyword<bool,struct required_t>          required;
-nfp::typed_keyword<bool,struct multiplicable_t>     multiplicable;
 nfp::typed_keyword<bool,struct optional_value_t>    optional_value;
 
 nfp::typed_keyword<cstring,struct description_t>    description;

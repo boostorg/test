@@ -70,7 +70,7 @@ new_var_record( cstring var_name )
 BOOST_TEST_UTILS_RUNTIME_PARAM_INLINE variable_data*
 find_var_record( cstring var_name )
 {
-    registry::iterator it = s_registry().find( var_name );
+    auto it = s_registry().find( var_name );
 
     return it == s_registry().end() ? 0 : &(it->second);
 }

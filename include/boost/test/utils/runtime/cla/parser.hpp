@@ -27,6 +27,8 @@
 #include <boost/test/utils/foreach.hpp>
 #include <boost/test/detail/throw_exception.hpp>
 
+#include <iostream>
+
 namespace boost {
 namespace runtime {
 namespace cla {
@@ -37,12 +39,13 @@ namespace cla {
 
 namespace rt_cla_detail {
 
-class parameter_trie;
+struct parameter_trie;
 typedef shared_ptr<parameter_trie> parameter_trie_ptr;
 typedef std::map<char,parameter_trie_ptr> trie_per_char;
 
-class parameter_trie {
-public:
+struct parameter_trie {
+    parameter_trie() : m_has_final_candidate( false ) {}
+
     /// If subtrie corresponding to the char c exists returns it otherwise creates new
     parameter_trie_ptr  make_subtrie( char c )
     {
@@ -66,21 +69,15 @@ public:
     }
 
     /// Registers candidate parameter for this subtrie. If final, it needs to be unique
-    void                add_param_candidate( basic_param_ptr param, bool final )
+    void                add_param_candidate( parameter_cla_id const& param_id, bool final )
     {
-        if( final ) {
-            if( !m_candidates.empty() )
-                BOOST_TEST_IMPL_THROW( init_error() << "Parameter " << param->p_name << " conflicts with "
-                                                     << "parameter " << m_candidates.front()->p_name );
-            m_final_candidate = param;
-        }
-        else {
-            if( m_final_candidate )
-                BOOST_TEST_IMPL_THROW( init_error() << "Parameter " << param->p_name << " conflicts with "
-                                                     << "parameter " << m_final_candidate->p_name );
+        if( m_has_final_candidate || final && !m_candidates.empty() ) {
+            BOOST_TEST_IMPL_THROW( conflicting_param() << "Parameter " << param_id.m_full_name << " conflicts with the "
+                                                       << "parameter " << m_candidates.back().get().m_full_name );
         }
 
-        m_candidates.push_back( param );
+        m_has_final_candidate = final;
+        m_candidates.push_back( param_id );
     }
 
     /// Gets subtrie for specified char if present or nullptr otherwise
@@ -90,13 +87,13 @@ public:
 
         return it != m_subtrie.end() ? it->second : parameter_trie_ptr();
     }
-private:
-    typedef std::vector<basic_param_ptr> param_list;
+
+    typedef std::vector<std::reference_wrapper<parameter_cla_id const> > param_id_list;
 
     // Data members
     trie_per_char       m_subtrie;
-    param_list          m_candidates;
-    basic_param_ptr     m_final_candidate;
+    param_id_list       m_candidates;
+    bool                m_has_final_candidate;
 };
 
 } // namespace rt_cla_detail
@@ -116,27 +113,58 @@ public:
     }
 
     // input processing method
-    int         parse( int argc, char** argv, runtime::arguments_store& res )
+    int
+    parse( int argc, char** argv, runtime::arguments_store& res )
     {
         // 10. Set up the traverser
         argv_traverser tr( argc, (char const**)argv );
 
         // 20. Loop till we reach end of input
-        while( tr.eoi() ) {
-            trie_ptr curr_trie = m_param_trie;
+        while( !tr.eoi() ) {
+            cstring prefix;
+            cstring name;
+            cstring value_separator;
 
-            // 30. Dig through the prefix and name characters
-            char next_char;
-            while( curr_trie && (next_char = tr.get_char()) != cla::END_OF_TOKEN ) {
-                trie_ptr sub_trie = curr_trie->get_subtrie( next_char );
+            // Perform format validations and split the argument into prefix, name and separator
+            validate_token_format( tr.current_token(), prefix, name, value_separator );
 
-                if( !sub_trie ) {
-                    BOOST_TEST_IMPL_THROW( init_error() << "Failed to recognize the parameter in token " 
-                                                         << tr.current_token() );
-                }
+            // Locate trie corresponding to found prefix and skip it in the input
+            trie_ptr curr_trie = m_param_trie[prefix];
 
-                curr_trie = sub_trie;
+            if( !curr_trie ) {
+                BOOST_TEST_IMPL_THROW( format_error() << "Unrecognized parameter prefix in the argument " 
+                                                      << tr.current_token() );
             }
+            tr.skip( prefix.size() );
+
+            // Locate parameter based on name and skip it in the input
+            parameter_cla_id const& found_id    = locate_parameter( curr_trie, name, tr.current_token() );
+            basic_param const&      found_param = found_id.m_owner;
+            tr.skip( name.size() );
+
+            // Validate and skip value separator in the input
+            if( value_separator.is_empty() && found_param.p_optional_value ) {
+                // !!!!
+                continue;
+            }
+            else if( found_id.m_value_separator != value_separator ) {
+                BOOST_TEST_IMPL_THROW( format_error() << "Invalid separator for the parameter " << found_param.p_name 
+                                                      << " in the argument " << tr.current_token() );
+            }
+            tr.skip( value_separator.size() );
+
+            // Obtain the parameter value
+            cstring value = tr.get_token();
+
+            if( value.is_empty() )
+                BOOST_TEST_IMPL_THROW( format_error() << "Missing an argument value for the parameter " << found_param.p_name 
+                                                      << " in the argument " << tr.current_token() );
+
+            if( res.has( found_param.p_name.get() ) )
+                BOOST_TEST_IMPL_THROW( duplicate_arg() << "Duplicate argument value for the parameter "  << found_param.p_name 
+                                                       << " in the argument " << tr.current_token() );
+
+            found_param.produce_argument( value, res );
         }
 
         return tr.remainder();
@@ -146,34 +174,79 @@ public:
     void        usage( std::ostream& ostr );
 
 private:
-    void    build_trie( parameters_store const& parameters )
-    {
-        m_param_trie.reset( new rt_cla_detail::parameter_trie );
+    typedef rt_cla_detail::parameter_trie_ptr trie_ptr;
+    typedef std::map<cstring,trie_ptr> str_to_trie;
 
+    void
+    build_trie( parameters_store const& parameters )
+    {
         // 10. Iterate over all parameters
         BOOST_TEST_FOREACH( parameters_store::storage_type::value_type const&, v, parameters.all() ) {
             basic_param_ptr param = v.second;
 
             // 20. Register all parameter's ids in trie.
             BOOST_TEST_FOREACH( parameter_cla_id const&, id, param->cla_ids() ) {
-                // 30. This is going to be cursor pointing to tail trie. Process prefix chars first.
-                trie_ptr next_trie = m_param_trie->make_subtrie( id.m_prefix );
+                // 30. This is the trie corresponding to the prefix.
+                trie_ptr next_trie = m_param_trie[id.m_prefix];
+                if( !next_trie )
+                    next_trie = m_param_trie[id.m_prefix] = trie_ptr( new rt_cla_detail::parameter_trie );
 
-                // 40. Process name chars.
+                // 40. Build the trie, by following parameter id's full name
+                //     and register this parameter as candidate on each level
                 for( size_t index = 0; index < id.m_full_name.size(); ++index ) {
                     next_trie = next_trie->make_subtrie( id.m_full_name[index] );
 
-                    next_trie->add_param_candidate( param, index == (id.m_full_name.size() - 1) );
+                    next_trie->add_param_candidate( id, index == (id.m_full_name.size() - 1) );
                 }
             }
         }
     }
 
-    typedef rt_cla_detail::parameter_trie_ptr trie_ptr;
+    void
+    validate_token_format( cstring token, cstring& prefix, cstring& name, cstring& separator )
+    {
+        auto it = token.begin();
+        while( it != token.end() && parameter_cla_id::valid_prefix_char( *it ) )
+            ++it;
+
+        prefix.assign( token.begin(), it );
+
+        while( it != token.end() && parameter_cla_id::valid_name_char( *it ) )
+            ++it;
+
+        name.assign( prefix.end(), it );
+
+        if( name.empty() )
+            BOOST_TEST_IMPL_THROW( format_error() << "Invalid format for an actual argument " << token );
+
+        while( it != token.end() && parameter_cla_id::valid_separator_char(*it) )
+            ++it;
+
+        separator.assign( name.end(), it );         
+    }
+
+    parameter_cla_id const&
+    locate_parameter( trie_ptr curr_trie, cstring name, cstring token )
+    {
+        BOOST_TEST_FOREACH( char, c, name ) {
+            curr_trie = curr_trie->get_subtrie( c );
+            if( !curr_trie )
+                break;
+        }
+
+        if( !curr_trie ) {
+            BOOST_TEST_IMPL_THROW( unrecognized_param() << "An unrecognized parameter in the argument " << token );
+        }
+
+        if( curr_trie->m_candidates.size() > 1 )            
+            BOOST_TEST_IMPL_THROW( ambiguous_param() << "An ambiguous parameter name in the argument " << token );
+
+        return curr_trie->m_candidates.back().get();
+    }
 
     // Data members
     std::string m_program_name;
-    trie_ptr    m_param_trie;
+    str_to_trie m_param_trie;
 };
 
 } // namespace cla

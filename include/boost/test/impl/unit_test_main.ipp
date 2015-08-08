@@ -186,6 +186,8 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
     int result_code = 0;
 
     BOOST_TEST_IMPL_TRY {
+        std::getchar();
+
         framework::init( init_func, argc, argv );
 
         if( runtime_config::wait_for_debugger() ) {

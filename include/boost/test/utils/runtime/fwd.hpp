@@ -29,7 +29,6 @@ namespace runtime {
 
 class argument;
 typedef shared_ptr<argument> argument_ptr;
-typedef shared_ptr<argument const> const_argument_ptr;
 
 template<typename T> class typed_argument;
 
