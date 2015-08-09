@@ -142,25 +142,29 @@ public:
             basic_param const&      found_param = found_id.m_owner;
             tr.skip( name.size() );
 
-            // Validate and skip value separator in the input
-            if( value_separator.is_empty() && found_param.p_optional_value ) {
-                // !!!!
-                continue;
+            cstring value;
+
+            // Validate and skip value separator in the input; deduce value source
+            if( value_separator.is_empty() && found_param.p_has_optional_value ) {
+                // !!!! bool?
+                // parameter with optional value; argument value is missing
             }
-            else if( found_id.m_value_separator != value_separator ) {
-                BOOST_TEST_IMPL_THROW( format_error() << "Invalid separator for the parameter " << found_param.p_name 
-                                                      << " in the argument " << tr.current_token() );
+            else { 
+                if( found_id.m_value_separator != value_separator ) {
+                    BOOST_TEST_IMPL_THROW( format_error() << "Invalid separator for the parameter " << found_param.p_name 
+                                                          << " in the argument " << tr.current_token() );
+                }
+
+                tr.skip( value_separator.size() );
+
+                value = tr.get_token();
+
+                if( value.is_empty() )
+                    BOOST_TEST_IMPL_THROW( format_error() << "Missing an argument value for the parameter " << found_param.p_name 
+                                                          << " in the argument " << tr.current_token() );
             }
-            tr.skip( value_separator.size() );
 
-            // Obtain the parameter value
-            cstring value = tr.get_token();
-
-            if( value.is_empty() )
-                BOOST_TEST_IMPL_THROW( format_error() << "Missing an argument value for the parameter " << found_param.p_name 
-                                                      << " in the argument " << tr.current_token() );
-
-            if( res.has( found_param.p_name.get() ) )
+            if( res.has( found_param.p_name.get() ) && !found_param.p_repeatable )
                 BOOST_TEST_IMPL_THROW( duplicate_arg() << "Duplicate argument value for the parameter "  << found_param.p_name 
                                                        << " in the argument " << tr.current_token() );
 

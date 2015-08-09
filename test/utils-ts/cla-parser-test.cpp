@@ -174,12 +174,11 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
     BOOST_TEST( p1.p_env_var.get() == "" );
     BOOST_TEST( p1.p_optional );
     BOOST_TEST( !p1.p_repeatable );
-    BOOST_TEST( !p1.p_optional_value );
+    BOOST_TEST( !p1.p_has_optional_value );
 
     rt::parameter<int,rt::REQUIRED> p2( "P2", (
         rt::description = "123",
-        rt::env_var = "E2",
-        !rt::optional_value
+        rt::env_var = "E2"
     ));
 
     BOOST_TEST( p2.p_name.get() == "P2" );
@@ -187,12 +186,12 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
     BOOST_TEST( p2.p_env_var.get() == "E2" );
     BOOST_TEST( !p2.p_optional );
     BOOST_TEST( !p2.p_repeatable );
-    BOOST_TEST( !p2.p_optional_value );
+    BOOST_TEST( !p2.p_has_optional_value );
 
     rt::parameter<int,rt::REPEATABLE> p4( "P4", (
         rt::description = "123",
         rt::env_var = "E4",
-        rt::optional_value
+        rt::optional_value = 5
     ));
 
     BOOST_TEST( p4.p_name.get() == "P4" );
@@ -200,7 +199,7 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
     BOOST_TEST( p4.p_env_var.get() == "E4" );
     BOOST_TEST( p4.p_optional );
     BOOST_TEST( p4.p_repeatable );
-    BOOST_TEST( p4.p_optional_value );
+    BOOST_TEST( p4.p_has_optional_value );
 
     rt::parameter<bool> p5( "P5", (
         rt::description = "bool arg",
@@ -213,7 +212,7 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
     BOOST_TEST( p5.p_env_var.get() == "E5" );
     BOOST_TEST( p5.p_optional );
     BOOST_TEST( !p5.p_repeatable );
-    // !!!! BOOST_TEST( p5.p_optional_value );
+    // !!!! BOOST_TEST( p5.p_has_optional_value );
 
     rt::parameter<int> p3( "P3" );
     p3.add_cla_id( "/", "P3", ":" );
@@ -237,7 +236,7 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
     BOOST_CHECK_THROW( p3.add_cla_id( "-", "a", "/" ), rt::invalid_cla_id );
     BOOST_CHECK_THROW( p3.add_cla_id( "-", "a", "" ), rt::invalid_cla_id );
 
-    rt::parameter<int> p6( "P3", rt::optional_value );
+    rt::parameter<int> p6( "P3", rt::optional_value = 1);
     BOOST_CHECK_THROW( p6.add_cla_id( "-", "a", " " ), rt::invalid_cla_id );
 }
 
@@ -442,7 +441,7 @@ BOOST_AUTO_TEST_CASE( test_basic_parsing )
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( test_typed_parsing )
+BOOST_AUTO_TEST_CASE( test_typed_argument_parsing )
 {
     rt::parameters_store param_store;
 
@@ -486,6 +485,38 @@ BOOST_AUTO_TEST_CASE( test_typed_parsing )
 
 //____________________________________________________________________________//
 
+BOOST_AUTO_TEST_CASE( test_vector_argument_parsing )
+{
+    rt::parameters_store param_store;
+
+    rt::parameter<std::vector<std::string>> p1( "P1" );
+    p1.add_cla_id( "--", "param_one", "=" );
+    p1.add_cla_id( "-", "p1", " " );
+    param_store.add( p1 );
+
+    rt::parameter<std::vector<int>> p2( "P2" );
+    p2.add_cla_id( "--", "param_two", "=" );
+    p2.add_cla_id( "-", "p2", " " );
+    param_store.add( p2 );
+
+    rt::cla::parser parser( param_store );
+
+    char const* argv1[] = { "test.exe", "--param_one=a,b,c", "-p2", "1,2,3" };
+    rt::arguments_store args_store1;
+
+    parser.parse( sizeof(argv1)/sizeof(char const*), (char**)argv1, args_store1 );
+
+    BOOST_TEST( args_store1.size() == 2U );
+    BOOST_TEST( args_store1.has( "P1" ) );
+    std::vector<std::string> P1_expected{"a", "b", "c"};
+    BOOST_TEST( args_store1.get<std::vector<std::string>>( "P1" ) == P1_expected );
+    BOOST_TEST( args_store1.has( "P2" ) );
+    std::vector<int> P2_expected{1, 2, 3};
+    BOOST_TEST( args_store1.get<std::vector<int>>( "P2" ) == P2_expected );
+}
+
+//____________________________________________________________________________//
+
 BOOST_AUTO_TEST_CASE( test_parameter_name_guessing )
 {
     rt::parameters_store param_store;
@@ -510,6 +541,59 @@ BOOST_AUTO_TEST_CASE( test_parameter_name_guessing )
     BOOST_TEST( args_store1.size() == 2U );
     BOOST_TEST( args_store1.has( "P1" ) );
     BOOST_TEST( args_store1.has( "P2" ) );
+}
+
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_repeatable_parameters )
+{
+    rt::parameters_store param_store;
+
+    rt::parameter<int,rt::REPEATABLE> p1( "P1" );
+    p1.add_cla_id( "--", "param_one", "=" );
+    p1.add_cla_id( "-", "one", " " );
+    param_store.add( p1 );
+
+    rt::cla::parser parser( param_store );
+    rt::arguments_store args_store;
+
+    char const* argv[] = { "test.exe", "-one", "1", "-one", "2" };
+    parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store );
+
+    BOOST_TEST( args_store.size() == 1U );
+    BOOST_TEST( args_store.has( "P1" ) );
+
+    std::vector<int> P1_expected{1, 2};
+    BOOST_TEST( args_store.get<std::vector<int>>( "P1" ) == P1_expected );
+}
+
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_parameter_with_optional_value )
+{
+    rt::parameters_store param_store;
+
+    rt::parameter<int> p1( "P1", rt::optional_value = 5 );
+    p1.add_cla_id( "--", "param_one", "=" );
+    param_store.add( p1 );
+
+    rt::cla::parser parser( param_store );
+
+    rt::arguments_store args_store1;
+    char const* argv1[] = { "test.exe", "--param_one=1" };
+    parser.parse( sizeof(argv1)/sizeof(char const*), (char**)argv1, args_store1 );
+
+    BOOST_TEST( args_store1.size() == 1U );
+    BOOST_TEST( args_store1.has( "P1" ) );
+    BOOST_TEST( args_store1.get<int>( "P1" ) == 1 );
+
+    rt::arguments_store args_store2;
+    char const* argv2[] = { "test.exe", "--param_one" };
+    parser.parse( sizeof(argv2)/sizeof(char const*), (char**)argv2, args_store2 );
+
+    BOOST_TEST( args_store2.size() == 1U );
+    BOOST_TEST( args_store2.has( "P1" ) );
+    BOOST_TEST( args_store2.get<int>( "P1" ) == 5 );
 }
 
 //____________________________________________________________________________//
@@ -564,6 +648,11 @@ BOOST_AUTO_TEST_CASE( test_validations )
     {
         char const* argv[] = { "test.exe", "--param_one=1", "--param_one=2" };
         BOOST_CHECK_THROW( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::duplicate_arg );
+    }
+
+    {
+        char const* argv[] = { "test.exe", "--param=1" };
+        BOOST_CHECK_THROW( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::ambiguous_param );
     }
 }
 

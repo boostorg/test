@@ -80,22 +80,23 @@ typedef std::vector<parameter_cla_id> parameter_cla_ids;
 class basic_param {
     typedef unit_test::readwrite_property<std::string>  string_property;
     typedef unit_test::readwrite_property<bool>         bool_property;
-
-public:
+protected:
     /// Constructor with modifiers
     template<typename Modifiers>
-    basic_param( cstring name, Modifiers const& m )
+    basic_param( cstring name, bool is_optional, Modifiers const& m )
     : p_name( std::string(name.begin(), name.end()) )
-    , p_optional( true )
+    , p_optional( is_optional )
     , p_repeatable( false )
-    , p_optional_value( false )
+    , p_has_optional_value( false )
     {
         nfp::optionally_assign( p_description.value, m, description );
         nfp::optionally_assign( p_env_var.value, m, env_var );
 
         if( m.has( optional_value ) )
-            p_optional_value.value = m[optional_value];
+            p_has_optional_value.value = true;
     }
+
+public:
     virtual                 ~basic_param() {}
 
     /// interface for cloning typed parameters
@@ -107,7 +108,7 @@ public:
     string_property         p_env_var;
     bool_property           p_optional;
     bool_property           p_repeatable;
-    bool_property           p_optional_value;
+    bool_property           p_has_optional_value;
 
     // Access methods
     parameter_cla_ids const& cla_ids() const { return m_cla_ids; }
@@ -121,7 +122,7 @@ public:
             BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << full_name << " can't have an empty value separator." );
 
         value_separator.trim();
-        if( value_separator.is_empty() && !!p_optional_value )
+        if( value_separator.is_empty() && !!p_has_optional_value )
             BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << full_name << " with optional value attribute can't use space as value separator." );
 
         // We trim value separaotr from all the spaces, so token end will indicate separator
@@ -137,6 +138,33 @@ private:
 };
 
 // ************************************************************************** //
+// **************             runtime::typed_param             ************** //
+// ************************************************************************** //
+
+template<typename ValueType, typename Derived>
+class typed_param : public basic_param {
+protected:
+    /// Constructor with modifiers
+    template<typename Modifiers>
+    typed_param( cstring name, bool is_optional, Modifiers const& m )
+    : basic_param( name, is_optional, m )
+    {
+        if( m.has( optional_value ) )
+            m_optional_value = (ValueType)(m[optional_value]);
+    }
+
+    virtual basic_param_ptr clone() const
+    {
+        return basic_param_ptr( new Derived( *static_cast<Derived const*>(this) ) );
+    }
+
+    // Data members
+    ValueType   m_optional_value;    
+};
+
+//____________________________________________________________________________//
+
+// ************************************************************************** //
 // **************              runtime::parameter              ************** //
 // ************************************************************************** //
 
@@ -149,73 +177,43 @@ enum args_amount {
 //____________________________________________________________________________//
 
 template<typename ValueType, args_amount a = runtime::OPTIONAL>
-class parameter;
-
-//____________________________________________________________________________//
-
-template<typename ValueType>
-class parameter<ValueType, runtime::REQUIRED> : public basic_param {
+class parameter : public typed_param<ValueType, parameter<ValueType, a>> {
+    typedef typed_param<ValueType, parameter<ValueType, a>> base;
 public:
     /// Constructor with modifiers
     template<typename Modifiers=nfp::no_params_type>
-    parameter( cstring name, Modifiers const& m = nfp::no_params, bool is_optional = false )
-    : basic_param( name, m )
+    parameter( cstring name, Modifiers const& m = nfp::no_params )
+    : base( name, a != runtime::REQUIRED, m )
     {
-        p_optional.value = is_optional;
-    }
-
-    virtual basic_param_ptr clone() const
-    {
-        return basic_param_ptr( new parameter<ValueType, runtime::REQUIRED>( *this ) );
     }
 
     virtual void produce_argument( cstring token, arguments_store& store ) const
     {
-        ValueType value;
-        interpret_argument_value( token, value );
+        if( token.empty() && p_has_optional_value ) {
+            store.set( p_name.get(), m_optional_value );
+        }
+        else {
+            ValueType value;
+            interpret_argument_value( token, value );
 
-        store.set( p_name.get(), value );
+            store.set( p_name.get(), value );
+        }
     }
 };
 
 //____________________________________________________________________________//
 
 template<typename ValueType>
-class parameter<ValueType, runtime::OPTIONAL> : public parameter<ValueType, runtime::REQUIRED> {
-    typedef parameter<ValueType, runtime::REQUIRED> base;
+class parameter<ValueType, runtime::REPEATABLE> : public typed_param<ValueType, parameter<ValueType, runtime::REPEATABLE>> {
+    typedef typed_param<ValueType, parameter<ValueType, runtime::REPEATABLE>> base;
 
 public:
     /// Constructor with modifiers
     template<typename Modifiers=nfp::no_params_type>
     parameter( cstring name, Modifiers const& m = nfp::no_params )
-    : base( name, m, true )
-    {}
-
-    virtual basic_param_ptr clone() const
+    : base( name, true, m )
     {
-        return basic_param_ptr( new parameter<ValueType, runtime::OPTIONAL>( *this ) );
-    }
-};
-
-//____________________________________________________________________________//
-
-template<typename ValueType>
-class parameter<ValueType, runtime::REPEATABLE> : public parameter<ValueType, runtime::REQUIRED> {
-    typedef parameter<ValueType, runtime::REQUIRED> base;
-
-public:
-    /// Constructor with modifiers
-    template<typename Modifiers=nfp::no_params_type>
-    parameter( cstring name, Modifiers const& m = nfp::no_params )
-    : base( name, m, true )
-    {
-        p_optional.value = true;
         p_repeatable.value = true;
-    }
-
-    virtual basic_param_ptr clone() const
-    {
-        return basic_param_ptr( new parameter<ValueType, runtime::REPEATABLE>( *this ) );
     }
 
     virtual void produce_argument( cstring token, arguments_store& store ) const
@@ -230,7 +228,7 @@ public:
         else {
             std::vector<ValueType> values( 1, value );
             
-            store.set( p_name.get(), argument_ptr( new typed_argument<std::vector<ValueType> >( values ) ) );
+            store.set( p_name.get(), values );
         }
     }
 };

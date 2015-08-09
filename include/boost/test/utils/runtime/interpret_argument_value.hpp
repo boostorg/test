@@ -77,31 +77,24 @@ interpret_argument_value( cstring source, bool& res )
 
 //____________________________________________________________________________//
 
-#if 0
 // overload for list of values
 template<typename T>
-inline bool
-interpret_argument_value( cstring source, boost::optional<std::vector<T> >& res )
+inline void
+interpret_argument_value( cstring source, std::vector<T>& res )
 {
-    res = std::vector<T>();
-
     while( !source.is_empty() ) {
         auto single_value_end = std::find( source.begin(), source.end(), ',' );
 
-        boost::optional<T> value;
-        interpret_argument_value( cstring( source.begin(), single_value_end ), value, 0 );
+        T value;
+        interpret_argument_value( cstring( source.begin(), single_value_end ), value );
 
-        res->push_back( *value );
+        res.push_back( std::move( value ) );
 
         source.trim_left( single_value_end + 1 );
     }
-
-    return true;
 }
 
 //____________________________________________________________________________//
-
-#endif
 
 // generic overload
 template<typename T>

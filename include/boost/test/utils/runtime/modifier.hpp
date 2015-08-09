@@ -30,11 +30,10 @@ namespace runtime {
 
 namespace {
 
-nfp::typed_keyword<bool,struct optional_value_t>    optional_value;
-
 nfp::typed_keyword<cstring,struct description_t>    description;
 nfp::typed_keyword<cstring,struct env_var_t>        env_var;
 
+nfp::keyword<struct optional_value_t>               optional_value;
 nfp::keyword<struct default_value_t>                default_value;
 nfp::keyword<struct handler_t>                      handler;
 
