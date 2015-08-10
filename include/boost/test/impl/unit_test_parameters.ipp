@@ -184,7 +184,7 @@ std::string WAIT_FOR_DEBUGGER = "wait_for_debugger";
 void
 register_parameters( rt::parameters_store& store )
 {
-    rt::parameter<bool> auto_start_dbg( AUTO_START_DBG, (
+    rt::option auto_start_dbg( AUTO_START_DBG, (
         rt::description = "Automatically starts debugger if system level error (signal) occurs",
         rt::env_var = "BOOST_TEST_AUTO_START_DBG"
     ));
@@ -200,7 +200,7 @@ register_parameters( rt::parameters_store& store )
     break_exec_path.add_cla_id( "--", BREAK_EXEC_PATH, "=" );    
     store.add( break_exec_path );
 
-    rt::parameter<bool> build_info( BUILD_INFO, (
+    rt::option build_info( BUILD_INFO, (
         rt::description = "Shows library build information",
         rt::env_var = "BOOST_TEST_BUILD_INFO"
     ));
@@ -209,7 +209,7 @@ register_parameters( rt::parameters_store& store )
     build_info.add_cla_id( "-", "i", " " );
     store.add( build_info );
 
-    rt::parameter<bool> catch_sys_errors( CATCH_SYS_ERRORS, (
+    rt::option catch_sys_errors( CATCH_SYS_ERRORS, (
         rt::description = "Allows to switch between catching and ignoring system errors (signals)",
         rt::env_var = "BOOST_TEST_CATCH_SYSTEM_ERRORS"
     ));
@@ -218,7 +218,7 @@ register_parameters( rt::parameters_store& store )
     catch_sys_errors.add_cla_id( "-", "s", " " );
     store.add( catch_sys_errors );
 
-    rt::parameter<bool> color_output( COLOR_OUTPUT, (
+    rt::option color_output( COLOR_OUTPUT, (
         rt::description = "Enables color output of the framework log and report messages",
         rt::env_var = "BOOST_TEST_COLOR_OUTPUT"
     ));
@@ -227,7 +227,7 @@ register_parameters( rt::parameters_store& store )
     color_output.add_cla_id( "-", "x", " " );
     store.add( color_output );
 
-    rt::parameter<bool> detect_fp_except( DETECT_FP_EXCEPT, (
+    rt::option detect_fp_except( DETECT_FP_EXCEPT, (
         rt::description = "Allows to switch between catching and ignoring floating point exceptions",
         rt::env_var = "BOOST_TEST_DETECT_FP_EXCEPTIONS"
     ));
@@ -250,7 +250,7 @@ register_parameters( rt::parameters_store& store )
     list_content.add_cla_id( "--", LIST_CONTENT, "=" );    
     store.add( list_content );
 
-    rt::parameter<bool> list_labels( LIST_LABELS, (
+    rt::option list_labels( LIST_LABELS, (
         rt::description = "Lists all available labels",
         rt::env_var = "BOOST_TEST_LIST_LABELS"
     ));
@@ -349,7 +349,7 @@ register_parameters( rt::parameters_store& store )
     tests_to_run.add_cla_id( "-", "t", " " );
     store.add( tests_to_run );
 
-    rt::parameter<bool> save_test_pattern( SAVE_TEST_PATTERN, (
+    rt::option save_test_pattern( SAVE_TEST_PATTERN, (
         rt::description = "Allows to switch between saving and matching against test pattern file",
         rt::env_var = "BOOST_TEST_SAVE_PATTERN"
     ));
@@ -357,7 +357,7 @@ register_parameters( rt::parameters_store& store )
     save_test_pattern.add_cla_id( "--", SAVE_TEST_PATTERN, "=" );    
     store.add( save_test_pattern );
 
-    rt::parameter<bool> show_progress( SHOW_PROGRESS, (
+    rt::option show_progress( SHOW_PROGRESS, (
         rt::description = "Turns on progress display",
         rt::env_var = "BOOST_TEST_SHOW_PROGRESS"
     ));
@@ -366,7 +366,7 @@ register_parameters( rt::parameters_store& store )
     show_progress.add_cla_id( "-", "p", " " );
     store.add( show_progress );
 
-    rt::parameter<bool> use_alt_stack( USE_ALT_STACK, (
+    rt::option use_alt_stack( USE_ALT_STACK, (
         rt::description = "Turns on/off usage of an alternative stack for signal handling",
         rt::env_var = "BOOST_TEST_USE_ALT_STACK"
     ));
@@ -374,7 +374,7 @@ register_parameters( rt::parameters_store& store )
     use_alt_stack.add_cla_id( "--", USE_ALT_STACK, "=" );
     store.add( use_alt_stack );
 
-    rt::parameter<bool> wait_for_debugger( WAIT_FOR_DEBUGGER, (
+    rt::option wait_for_debugger( WAIT_FOR_DEBUGGER, (
         rt::description = "Forces test module to wait for button to be pressed before starting test run",
         rt::env_var = "BOOST_TEST_WAIT_FOR_DEBUGGER"
     ));
@@ -383,7 +383,7 @@ register_parameters( rt::parameters_store& store )
     wait_for_debugger.add_cla_id( "-", "w", " " );
     store.add( wait_for_debugger );
 
-    rt::parameter<bool> help( "help",
+    rt::option help( "help",
         rt::description = "Help for framework parameters" );
     help.add_cla_id( "--", "help", "=" );
     help.add_cla_id( "-", "?", " " );

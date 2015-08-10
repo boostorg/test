@@ -43,7 +43,7 @@ struct parameter_cla_id {
     , m_full_name( full_name.begin(), full_name.size() )
     , m_value_separator( value_separator.begin(), value_separator.size() )
     {
-        
+
         if( !std::all_of( m_prefix.begin(), m_prefix.end(), valid_prefix_char ) )
             BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << m_full_name << " has invalid characters in prefix." );
         if( !std::all_of( m_full_name.begin(), m_full_name.end(), valid_name_char ) )
@@ -88,12 +88,10 @@ protected:
     , p_optional( is_optional )
     , p_repeatable( false )
     , p_has_optional_value( false )
+    , p_has_default_value( false )
     {
         nfp::optionally_assign( p_description.value, m, description );
         nfp::optionally_assign( p_env_var.value, m, env_var );
-
-        if( m.has( optional_value ) )
-            p_has_optional_value.value = true;
     }
 
 public:
@@ -109,10 +107,12 @@ public:
     bool_property           p_optional;
     bool_property           p_repeatable;
     bool_property           p_has_optional_value;
+    bool_property           p_has_default_value;
 
     // Access methods
     parameter_cla_ids const& cla_ids() const { return m_cla_ids; }
-    void                    add_cla_id( cstring prefix, cstring full_name, cstring value_separator )
+    void                    add_cla_id( cstring prefix, cstring full_name, cstring value_separator,
+                                        bool validate_value_separator = true )
     {
         if( full_name.is_empty() )
             BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter can't have an empty name." );
@@ -122,7 +122,7 @@ public:
             BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << full_name << " can't have an empty value separator." );
 
         value_separator.trim();
-        if( value_separator.is_empty() && !!p_has_optional_value )
+        if( validate_value_separator && value_separator.is_empty() && !!p_has_optional_value )
             BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << full_name << " with optional value attribute can't use space as value separator." );
 
         // We trim value separaotr from all the spaces, so token end will indicate separator
@@ -149,8 +149,15 @@ protected:
     typed_param( cstring name, bool is_optional, Modifiers const& m )
     : basic_param( name, is_optional, m )
     {
-        if( m.has( optional_value ) )
+        if( m.has( optional_value ) ) {
+            p_has_optional_value.value = true;
             m_optional_value = (ValueType)(m[optional_value]);
+        }
+
+        if( m.has( default_value ) ) {
+            p_has_default_value.value = true;
+            m_default_value = (ValueType)(m[default_value]);
+        }
     }
 
     virtual basic_param_ptr clone() const
@@ -159,7 +166,8 @@ protected:
     }
 
     // Data members
-    ValueType   m_optional_value;    
+    ValueType   m_optional_value;
+    ValueType   m_default_value;
 };
 
 //____________________________________________________________________________//
@@ -168,7 +176,7 @@ protected:
 // **************              runtime::parameter              ************** //
 // ************************************************************************** //
 
-enum args_amount { 
+enum args_amount {
     REQUIRED,   // exactly 1
     OPTIONAL,   // 0-1
     REPEATABLE  // 0-N
@@ -185,19 +193,18 @@ public:
     parameter( cstring name, Modifiers const& m = nfp::no_params )
     : base( name, a != runtime::REQUIRED, m )
     {
+        if( m.has( default_value ) && a == runtime::REQUIRED )
+            BOOST_TEST_IMPL_THROW( invalid_param_spec() << "Parameter " << name << " is required and can't have default_value." );
     }
 
     virtual void produce_argument( cstring token, arguments_store& store ) const
     {
-        if( token.empty() && p_has_optional_value ) {
-            store.set( p_name.get(), m_optional_value );
-        }
-        else {
-            ValueType value;
+        ValueType value = m_optional_value;
+
+        if( !token.empty() || !p_has_optional_value )
             interpret_argument_value( token, value );
 
-            store.set( p_name.get(), value );
-        }
+        store.set( p_name.get(), value );
     }
 };
 
@@ -206,7 +213,6 @@ public:
 template<typename ValueType>
 class parameter<ValueType, runtime::REPEATABLE> : public typed_param<ValueType, parameter<ValueType, runtime::REPEATABLE>> {
     typedef typed_param<ValueType, parameter<ValueType, runtime::REPEATABLE>> base;
-
 public:
     /// Constructor with modifiers
     template<typename Modifiers=nfp::no_params_type>
@@ -214,6 +220,9 @@ public:
     : base( name, true, m )
     {
         p_repeatable.value = true;
+
+        if( m.has( default_value ) )
+            BOOST_TEST_IMPL_THROW( invalid_param_spec() << "Parameter " << name << " is repeatable with default value of empty list." );
     }
 
     virtual void produce_argument( cstring token, arguments_store& store ) const
@@ -227,11 +236,43 @@ public:
         }
         else {
             std::vector<ValueType> values( 1, value );
-            
+
             store.set( p_name.get(), values );
         }
     }
 };
+
+//____________________________________________________________________________//
+
+class option : public typed_param<bool, option> {
+    typedef typed_param<bool, option> base;
+public:
+    /// Constructor with modifiers
+    template<typename Modifiers=nfp::no_params_type>
+    option( cstring name, Modifiers const& m = nfp::no_params )
+    : base( name, true, m )
+    {
+        p_repeatable.value = false;
+        p_has_optional_value.value = true;
+    }
+
+    void                    add_cla_id( cstring prefix, cstring full_name, cstring value_separator )
+    {
+        basic_param::add_cla_id( prefix, full_name, value_separator, false );
+    }
+
+    virtual void produce_argument( cstring token, arguments_store& store ) const
+    {
+        bool value = true;
+
+        if( !token.empty() )
+            interpret_argument_value( token, value );
+
+        store.set( p_name.get(), value );
+    }
+};
+
+//____________________________________________________________________________//
 
 // ************************************************************************** //
 // **************           runtime::parameters_store          ************** //

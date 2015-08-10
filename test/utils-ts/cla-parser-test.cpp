@@ -201,7 +201,7 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
     BOOST_TEST( p4.p_repeatable );
     BOOST_TEST( p4.p_has_optional_value );
 
-    rt::parameter<bool> p5( "P5", (
+    rt::option p5( "P5", (
         rt::description = "bool arg",
         rt::env_var = "E5"
     ));
@@ -212,7 +212,7 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
     BOOST_TEST( p5.p_env_var.get() == "E5" );
     BOOST_TEST( p5.p_optional );
     BOOST_TEST( !p5.p_repeatable );
-    // !!!! BOOST_TEST( p5.p_has_optional_value );
+    BOOST_TEST( p5.p_has_optional_value );
 
     rt::parameter<int> p3( "P3" );
     p3.add_cla_id( "/", "P3", ":" );
@@ -455,7 +455,7 @@ BOOST_AUTO_TEST_CASE( test_typed_argument_parsing )
     p2.add_cla_id( "-", "p2", " " );
     param_store.add( p2 );
 
-    rt::parameter<bool> p3( "P3" );
+    rt::option p3( "P3" );
     p3.add_cla_id( "--", "third", "=" );
     p3.add_cla_id( "-", "p3", " " );
     param_store.add( p3 );
@@ -481,6 +481,14 @@ BOOST_AUTO_TEST_CASE( test_typed_argument_parsing )
     BOOST_TEST( args_store1.get<bool>( "P3" ) );
     BOOST_TEST( args_store1.has( "P4" ) );
     BOOST_TEST( args_store1.get<rt::cstring>( "P4" ) == "some thing" );
+
+    char const* argv2[] = { "test.exe", "-p3" };
+    rt::arguments_store args_store2;
+
+    parser.parse( sizeof(argv2)/sizeof(char const*), (char**)argv2, args_store2 );
+    BOOST_TEST( args_store2.size() == 1U );
+    BOOST_TEST( args_store2.has( "P3" ) );
+    BOOST_TEST( args_store2.get<bool>( "P3" ) );
 }
 
 //____________________________________________________________________________//

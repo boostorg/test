@@ -89,6 +89,7 @@ class conflicting_param : public specific_param_error<conflicting_param, init_er
 class unknown_param : public specific_param_error<unknown_param, init_error> {};
 class missing_argument : public specific_param_error<missing_argument, init_error> {};
 class arg_type_mismatch : public specific_param_error<arg_type_mismatch, init_error> {};
+class invalid_param_spec : public specific_param_error<invalid_param_spec, init_error> {};
 
 class format_error : public specific_param_error<format_error, parse_error> {};
 class unrecognized_param : public specific_param_error<unrecognized_param, parse_error> {};

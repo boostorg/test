@@ -116,10 +116,10 @@ public:
     int
     parse( int argc, char** argv, runtime::arguments_store& res )
     {
-        // 10. Set up the traverser
+        // Set up the traverser
         argv_traverser tr( argc, (char const**)argv );
 
-        // 20. Loop till we reach end of input
+        // Loop till we reach end of input
         while( !tr.eoi() ) {
             cstring prefix;
             cstring name;
@@ -137,19 +137,16 @@ public:
             }
             tr.skip( prefix.size() );
 
-            // Locate parameter based on name and skip it in the input
+            // Locate parameter based on a name and skip it in the input
             parameter_cla_id const& found_id    = locate_parameter( curr_trie, name, tr.current_token() );
             basic_param const&      found_param = found_id.m_owner;
             tr.skip( name.size() );
 
             cstring value;
 
-            // Validate and skip value separator in the input; deduce value source
-            if( value_separator.is_empty() && found_param.p_has_optional_value ) {
-                // !!!! bool?
-                // parameter with optional value; argument value is missing
-            }
-            else { 
+            // Skip validations if parameter has optional value and we are at the end of token
+            if( !value_separator.is_empty() || !found_param.p_has_optional_value ) {
+                // Validate and skip value separator in the input
                 if( found_id.m_value_separator != value_separator ) {
                     BOOST_TEST_IMPL_THROW( format_error() << "Invalid separator for the parameter " << found_param.p_name 
                                                           << " in the argument " << tr.current_token() );
@@ -157,6 +154,7 @@ public:
 
                 tr.skip( value_separator.size() );
 
+                // Deduce value source
                 value = tr.get_token();
 
                 if( value.is_empty() )
@@ -164,13 +162,16 @@ public:
                                                           << " in the argument " << tr.current_token() );
             }
 
+            // Validate against argument duplication
             if( res.has( found_param.p_name.get() ) && !found_param.p_repeatable )
                 BOOST_TEST_IMPL_THROW( duplicate_arg() << "Duplicate argument value for the parameter "  << found_param.p_name 
                                                        << " in the argument " << tr.current_token() );
 
+            // Produce argument value
             found_param.produce_argument( value, res );
         }
 
+        // generate the remainder and return it's size
         return tr.remainder();
     }
 
