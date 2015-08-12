@@ -27,7 +27,8 @@
 #include <boost/test/utils/foreach.hpp>
 #include <boost/test/detail/throw_exception.hpp>
 
-#include <iostream>
+// STL
+#include <unordered_set>
 
 namespace boost {
 namespace runtime {
@@ -42,6 +43,7 @@ namespace rt_cla_detail {
 struct parameter_trie;
 typedef shared_ptr<parameter_trie> parameter_trie_ptr;
 typedef std::map<char,parameter_trie_ptr> trie_per_char;
+typedef std::vector<std::reference_wrapper<parameter_cla_id const> > param_cla_id_list;
 
 struct parameter_trie {
     parameter_trie() : m_has_final_candidate( false ) {}
@@ -88,11 +90,9 @@ struct parameter_trie {
         return it != m_subtrie.end() ? it->second : parameter_trie_ptr();
     }
 
-    typedef std::vector<std::reference_wrapper<parameter_cla_id const> > param_id_list;
-
     // Data members
     trie_per_char       m_subtrie;
-    param_id_list       m_candidates;
+    param_cla_id_list   m_candidates;
     bool                m_has_final_candidate;
 };
 
@@ -179,8 +179,9 @@ public:
     void        usage( std::ostream& ostr );
 
 private:
-    typedef rt_cla_detail::parameter_trie_ptr trie_ptr;
-    typedef std::map<cstring,trie_ptr> str_to_trie;
+    typedef rt_cla_detail::parameter_trie_ptr   trie_ptr;
+    typedef rt_cla_detail::trie_per_char        trie_per_char;
+    typedef std::map<cstring,trie_ptr>          str_to_trie;
 
     void
     build_trie( parameters_store const& parameters )
@@ -233,14 +234,70 @@ private:
     parameter_cla_id const&
     locate_parameter( trie_ptr curr_trie, cstring name, cstring token )
     {
+        std::vector<trie_ptr> typo_candidates;
+        std::vector<trie_ptr> next_typo_candidates;
+        trie_ptr next_trie;
+
         BOOST_TEST_FOREACH( char, c, name ) {
-            curr_trie = curr_trie->get_subtrie( c );
-            if( !curr_trie )
-                break;
+            if( curr_trie ) {
+                // locate next subtrie corresponding to the char
+                next_trie = curr_trie->get_subtrie( c );
+
+                if( next_trie ) 
+                    curr_trie = next_trie;
+                else {
+                    // Initiate search for typo candicates. We will account for 'wrong char' typo
+                    // 'missing char' typo and 'extra char' typo
+
+                    BOOST_TEST_FOREACH( trie_per_char::value_type const&, typo_cand, curr_trie->m_subtrie ) {
+                        // 'wrong char' typo
+                        typo_candidates.push_back( typo_cand.second );
+
+                        // 'missing char' typo
+                        if( next_trie = typo_cand.second->get_subtrie( c ) )
+                            typo_candidates.push_back( next_trie );
+                    }
+                    
+                    // 'extra char' typo
+                    typo_candidates.push_back( curr_trie );
+
+                    curr_trie.reset();
+                }
+            }
+            else {
+                // go over existing typo candidates and see if they are still viable
+                BOOST_TEST_FOREACH( trie_ptr, typo_cand, typo_candidates ) {
+                    trie_ptr next_typo_cand = typo_cand->get_subtrie( c );
+
+                    if( next_typo_cand )
+                        next_typo_candidates.push_back( next_typo_cand );
+                }
+
+                next_typo_candidates.swap( typo_candidates );
+                next_typo_candidates.clear();
+            }
         }
 
         if( !curr_trie ) {
-            BOOST_TEST_IMPL_THROW( unrecognized_param() << "An unrecognized parameter in the argument " << token );
+            std::vector<cstring> typo_candidate_names;
+            std::unordered_set<basic_param const*> unique_typo_candidate;
+            typo_candidate_names.reserve( typo_candidates.size() );
+            unique_typo_candidate.reserve( typo_candidates.size() );
+
+            BOOST_TEST_FOREACH( trie_ptr, trie_cand, typo_candidates ) {
+                // avoid ambiguos candidate trie 
+                if( trie_cand->m_candidates.size() > 1 )
+                    continue;
+
+                BOOST_TEST_FOREACH( parameter_cla_id const&, param_cand, trie_cand->m_candidates ) {
+                    if( !unique_typo_candidate.insert( &param_cand.m_owner ).second )
+                        continue;
+
+                    typo_candidate_names.push_back( param_cand.m_full_name );
+                }
+            }
+
+            BOOST_TEST_IMPL_THROW( unrecognized_param( std::move(typo_candidate_names) ) << "An unrecognized parameter in the argument " << token );
         }
 
         if( curr_trie->m_candidates.size() > 1 )            

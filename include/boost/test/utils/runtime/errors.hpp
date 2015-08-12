@@ -92,9 +92,15 @@ class arg_type_mismatch : public specific_param_error<arg_type_mismatch, init_er
 class invalid_param_spec : public specific_param_error<invalid_param_spec, init_error> {};
 
 class format_error : public specific_param_error<format_error, parse_error> {};
-class unrecognized_param : public specific_param_error<unrecognized_param, parse_error> {};
 class ambiguous_param : public specific_param_error<ambiguous_param, parse_error> {};
 class duplicate_arg : public specific_param_error<duplicate_arg, parse_error> {};
+
+class unrecognized_param : public specific_param_error<unrecognized_param, parse_error> {
+public:
+    explicit unrecognized_param( std::vector<cstring>&& type_candidates ) : m_typo_candidates( std::move( type_candidates ) ) {}
+
+    std::vector<cstring> m_typo_candidates;
+};
 
 } // namespace runtime
 } // namespace boost

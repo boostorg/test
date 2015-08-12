@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : unit test for comamnd line parameter parsing framework
+//  Description : unit test for runtime parameter framework
 // ***************************************************************************
 
 // Boost.Test
@@ -20,6 +20,8 @@
 #include <boost/test/utils/runtime/cla/parser.hpp>
 namespace utf = boost::unit_test;
 namespace rt = boost::runtime;
+
+#include <iostream>
 
 BOOST_AUTO_TEST_SUITE( test_argv_traverser )
 
@@ -661,6 +663,101 @@ BOOST_AUTO_TEST_CASE( test_validations )
     {
         char const* argv[] = { "test.exe", "--param=1" };
         BOOST_CHECK_THROW( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::ambiguous_param );
+    }
+}
+
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_unrecognized_param_suggestions )
+{
+    rt::parameters_store param_store;
+
+    rt::parameter<int> p1( "P1" );
+    p1.add_cla_id( "--", "param_one", "=" );
+    p1.add_cla_id( "-", "p1", " " );
+    param_store.add( p1 );
+
+    rt::parameter<int> p2( "P2" );
+    p2.add_cla_id( "--", "param_two", "=" );
+    param_store.add( p2 );
+
+    rt::parameter<int> p3( "P3" );
+    p3.add_cla_id( "--", "param_three", "=" );
+    param_store.add( p3 );
+
+    rt::cla::parser parser( param_store );
+    rt::arguments_store args_store;
+
+    {
+        char const* argv[] = { "test.exe", "--laram_one=1" };
+        BOOST_CHECK_EXCEPTION( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), 
+                               rt::unrecognized_param, 
+                               []( rt::unrecognized_param const& ex ) -> bool {
+                                    return ex.m_typo_candidates == std::vector<rt::cstring>{"param_one"};                        
+                               });
+    }
+
+    {
+        char const* argv[] = { "test.exe", "--paran_one=1" };
+        BOOST_CHECK_EXCEPTION( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), 
+                               rt::unrecognized_param, 
+                               []( rt::unrecognized_param const& ex ) -> bool {
+                                    return ex.m_typo_candidates == std::vector<rt::cstring>{"param_one"};                        
+                               });
+    }
+
+    {
+        char const* argv[] = { "test.exe", "--param_onw=1" };
+        BOOST_CHECK_EXCEPTION( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), 
+                               rt::unrecognized_param, 
+                               []( rt::unrecognized_param const& ex ) -> bool {
+                                    return ex.m_typo_candidates == std::vector<rt::cstring>{"param_one"};                        
+                               });
+    }
+
+    {
+        char const* argv[] = { "test.exe", "--param_to=1" };
+        BOOST_CHECK_EXCEPTION( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), 
+                               rt::unrecognized_param, 
+                               ([]( rt::unrecognized_param const& ex ) -> bool {
+                                    return ex.m_typo_candidates == std::vector<rt::cstring>{"param_three", "param_two"};                        
+                               }));
+    }
+
+    {
+        char const* argv[] = { "test.exe", "--paramtwo=1" };
+        BOOST_CHECK_EXCEPTION( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), 
+                               rt::unrecognized_param, 
+                               ([]( rt::unrecognized_param const& ex ) -> bool {
+                                    return ex.m_typo_candidates == std::vector<rt::cstring>{"param_two"};                        
+                               }));
+    }
+
+    {
+        char const* argv[] = { "test.exe", "--parum_=1" };
+        BOOST_CHECK_EXCEPTION( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), 
+                               rt::unrecognized_param, 
+                               ([]( rt::unrecognized_param const& ex ) -> bool {
+                                    return ex.m_typo_candidates == std::vector<rt::cstring>{};                        
+                               }));
+    }
+
+    {
+        char const* argv[] = { "test.exe", "--param__one=1" };
+        BOOST_CHECK_EXCEPTION( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), 
+                               rt::unrecognized_param, 
+                               ([]( rt::unrecognized_param const& ex ) -> bool {
+                                    return ex.m_typo_candidates == std::vector<rt::cstring>{"param_one"};                        
+                               }));
+    }
+
+    {
+        char const* argv[] = { "test.exe", "--param_twoo=1" };
+        BOOST_CHECK_EXCEPTION( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), 
+                               rt::unrecognized_param, 
+                               ([]( rt::unrecognized_param const& ex ) -> bool {
+                                    return ex.m_typo_candidates == std::vector<rt::cstring>{"param_two"};                        
+                               }));
     }
 }
 

@@ -75,12 +75,12 @@ test-suite "utils-ts"
 :
   [ boost.test-self-test run : utils-ts : algorithm-test ]
   [ boost.test-self-test run : utils-ts : basic_cstring-test ]
-  [ boost.test-self-test run : utils-ts : cla-parser-test ]
   [ boost.test-self-test run : utils-ts : class_properties-test ]
   [ boost.test-self-test run : utils-ts : fixed_mapping-test ]
   [ boost.test-self-test run : utils-ts : foreach-test ]
   [ boost.test-self-test run : utils-ts : ifstream_line_iterator-test : : inputs/ifstream_line_iterator.tst1
                                                                           inputs/ifstream_line_iterator.tst2 ]
+  [ boost.test-self-test run : utils-ts : runtime-param-test ]
   [ boost.test-self-test run : utils-ts : token_iterator-test ]
 ;
 
