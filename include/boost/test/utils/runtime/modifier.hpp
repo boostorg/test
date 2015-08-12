@@ -32,6 +32,7 @@ namespace {
 
 nfp::typed_keyword<cstring,struct description_t>    description;
 nfp::typed_keyword<cstring,struct env_var_t>        env_var;
+nfp::typed_keyword<cstring,struct env_var_t>        end_of_params;
 
 nfp::keyword<struct optional_value_t>               optional_value;
 nfp::keyword<struct default_value_t>                default_value;

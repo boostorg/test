@@ -109,6 +109,10 @@ public:
     template<typename Modifiers=nfp::no_params_type>
     parser( parameters_store const& parameters, Modifiers const& m = nfp::no_params)
     {
+        nfp::optionally_assign( m_end_of_param_indicator, m, end_of_params );
+        if( !std::all_of( m_end_of_param_indicator.begin(), m_end_of_param_indicator.end(), parameter_cla_id::valid_prefix_char ) )
+            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "End of parameters indicator can only consist of prefix characters." );
+
         build_trie( parameters );
     }
 
@@ -126,7 +130,12 @@ public:
             cstring value_separator;
 
             // Perform format validations and split the argument into prefix, name and separator
-            validate_token_format( tr.current_token(), prefix, name, value_separator );
+            // False return value indicates end of params indicator is met
+            if( !validate_token_format( tr.current_token(), prefix, name, value_separator ) ) {
+                // get rid of "end of params" token
+                tr.get_token();
+                break;
+            }
 
             // Locate trie corresponding to found prefix and skip it in the input
             trie_ptr curr_trie = m_param_trie[prefix];
@@ -208,7 +217,7 @@ private:
         }
     }
 
-    void
+    bool
     validate_token_format( cstring token, cstring& prefix, cstring& name, cstring& separator )
     {
         auto it = token.begin();
@@ -222,13 +231,19 @@ private:
 
         name.assign( prefix.end(), it );
 
-        if( name.empty() )
+        if( name.empty() ) {
+            if( !prefix.is_empty() && prefix == m_end_of_param_indicator )
+                return false;
+
             BOOST_TEST_IMPL_THROW( format_error() << "Invalid format for an actual argument " << token );
+        }
 
         while( it != token.end() && parameter_cla_id::valid_separator_char(*it) )
             ++it;
 
-        separator.assign( name.end(), it );         
+        separator.assign( name.end(), it );
+
+        return true;
     }
 
     parameter_cla_id const&
@@ -308,6 +323,7 @@ private:
 
     // Data members
     std::string m_program_name;
+    std::string m_end_of_param_indicator;
     str_to_trie m_param_trie;
 };
 

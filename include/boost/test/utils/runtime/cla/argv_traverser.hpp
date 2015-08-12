@@ -103,15 +103,6 @@ public:
         return m_argv[m_curr_arg][m_arg_pos++];
     }
 
-    /// "Returns" one character back to input
-    void        unget_char()
-    {
-        if( m_arg_pos == 0 )
-            return;
-
-        m_arg_pos--;
-    }
-
     /// Returns all the characters ramaining in the current token and moves
     /// to next token
     cstring     get_token()
@@ -124,23 +115,6 @@ public:
         next_arg();
 
         return token;
-    }
-
-    /// Matches front of the input to specified string. If
-    /// matched, it skips characters in input and returns true
-    /// Otherwise returns false. Note that it does not move to
-    /// the next token even if we exhausted all characters in
-    /// a current one
-    bool        match( cstring str )
-    {
-        bool res = m_arg_size - m_arg_pos < str.size()
-                    ? false
-                    : cstring( m_argv[m_curr_arg] + m_arg_pos, str.size() ) == str;
-
-        if( res )
-            m_arg_pos += str.size();
-
-        return res;
     }
 
 private:

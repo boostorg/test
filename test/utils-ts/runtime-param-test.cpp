@@ -89,33 +89,6 @@ BOOST_AUTO_TEST_CASE( test_get_token )
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( test_match )
-{
-    char const* argv1[] = { "test.exe", "abcjkl", "zxcvb", "a" };
-    rt::cla::argv_traverser tr1( sizeof(argv1)/sizeof(char const*), argv1 );
-
-    BOOST_TEST( tr1.match( "" ) );
-    BOOST_TEST( !tr1.match( "qwe" ) );
-    BOOST_TEST( tr1.match( "abc" ) );
-    BOOST_TEST( tr1.match( "jkl" ) );
-    BOOST_TEST( tr1.match( "" ) );
-    BOOST_TEST( !tr1.match( "z" ) );
-    BOOST_TEST( tr1.get_token() == rt::cstring() );
-    BOOST_TEST( tr1.get_char() == 'z' );
-    BOOST_TEST( !tr1.match( "xcva" ) );
-    BOOST_TEST( tr1.match( "xcvb" ) );
-    BOOST_TEST( tr1.get_char() == rt::cla::END_OF_TOKEN );
-
-    BOOST_TEST( !tr1.match( "c" ) );
-    BOOST_TEST( tr1.match( "a" ) );
-    BOOST_TEST( !tr1.eoi() );
-    BOOST_TEST( tr1.get_char() == rt::cla::END_OF_TOKEN );
-    BOOST_TEST( tr1.eoi() );
-    BOOST_TEST( !tr1.match( "a" ) );
-}
-
-//____________________________________________________________________________//
-
 BOOST_AUTO_TEST_CASE( test_remainder )
 {
     char const* argv[] = { "test.exe", "abcjkl", "zx vb" };
@@ -143,19 +116,18 @@ BOOST_AUTO_TEST_CASE( test_remainder )
     BOOST_TEST( argv[0] == "test.exe" );
     BOOST_TEST( argv[1] == "zx vb" );
 
-    tr.match( "zx" );
+    tr.skip( 2 );
     new_argc = tr.remainder();
 
     BOOST_TEST( new_argc == 2 );
     BOOST_TEST( argv[0] == "test.exe" );
     BOOST_TEST( argv[1] == " vb" );
 
-    tr.match( " vb" );
+    tr.skip( 3 );
     new_argc = tr.remainder();
 
-    BOOST_TEST( new_argc == 2 );
+    BOOST_TEST( new_argc == 1 );
     BOOST_TEST( argv[0] == "test.exe" );
-    BOOST_TEST( argv[1] == "" );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -664,6 +636,11 @@ BOOST_AUTO_TEST_CASE( test_validations )
         char const* argv[] = { "test.exe", "--param=1" };
         BOOST_CHECK_THROW( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::ambiguous_param );
     }
+
+    {
+        char const* argv[] = { "test.exe", "=1" };
+        BOOST_CHECK_THROW( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
+    }
 }
 
 //____________________________________________________________________________//
@@ -758,6 +735,47 @@ BOOST_AUTO_TEST_CASE( test_unrecognized_param_suggestions )
                                ([]( rt::unrecognized_param const& ex ) -> bool {
                                     return ex.m_typo_candidates == std::vector<rt::cstring>{"param_two"};                        
                                }));
+    }
+}
+
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_end_of_params )
+{
+    rt::parameters_store param_store;
+
+    rt::parameter<int> p1( "P1" );
+    p1.add_cla_id( "--", "param_one", "=" );
+    p1.add_cla_id( "-", "p1", " " );
+    param_store.add( p1 );
+
+    rt::parameter<int> p2( "P2" );
+    p2.add_cla_id( "--", "param_two", "=" );
+    param_store.add( p2 );
+
+    rt::cla::parser parser( param_store, rt::end_of_params = "--" );
+
+    {
+        rt::arguments_store args_store;
+        char const* argv[] = { "test.exe", "--param_one=1", "--", "/abc" };
+        int new_argc = parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store );
+
+        BOOST_TEST( args_store.size() == 1U );
+        BOOST_TEST( args_store.has( "P1" ) );
+        BOOST_TEST( args_store.get<int>( "P1" ) == 1 );
+        BOOST_TEST( new_argc == 2 );
+    }
+
+    {
+        rt::arguments_store args_store;           
+        char const* argv[] = { "test.exe", "-p1", "1", "--", "--param_two=2" };
+        int new_argc = parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store );
+
+        BOOST_TEST( args_store.size() == 1U );
+        BOOST_TEST( args_store.has( "P1" ) );
+        BOOST_TEST( !args_store.has( "P2" ) );
+        BOOST_TEST( args_store.get<int>( "P1" ) == 1 );
+        BOOST_TEST( new_argc == 2 );
     }
 }
 
