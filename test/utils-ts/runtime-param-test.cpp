@@ -594,6 +594,10 @@ BOOST_AUTO_TEST_CASE( test_validations )
     p2.add_cla_id( "-", "two", " " );
     param_store.add( p2 );
 
+    rt::option p3( "P3" );
+    p3.add_cla_id( "--", "option", "=" );
+    param_store.add( p3 );
+
     rt::cla::parser parser( param_store );
     rt::arguments_store args_store;
 
@@ -639,6 +643,11 @@ BOOST_AUTO_TEST_CASE( test_validations )
 
     {
         char const* argv[] = { "test.exe", "=1" };
+        BOOST_CHECK_THROW( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
+    }
+
+    {
+        char const* argv[] = { "test.exe", "--opt=Yeah" };
         BOOST_CHECK_THROW( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
     }
 }

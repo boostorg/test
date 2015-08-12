@@ -17,6 +17,7 @@
 
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
+#include <boost/test/utils/runtime/errors.hpp>
 
 // Boost.Test
 #include <boost/test/utils/basic_cstring/io.hpp>
@@ -72,7 +73,7 @@ interpret_argument_value( cstring source, bool& res )
     else if( case_ins_eq( source, NO ) || case_ins_eq( source, N ) || case_ins_eq( source, zero ) )
         res = false;
     else
-        res = true; // !!!! error
+        BOOST_TEST_IMPL_THROW( format_error() << source << " can't be interpreted as bool value." );
 }
 
 //____________________________________________________________________________//
