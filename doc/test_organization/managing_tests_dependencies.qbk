@@ -25,7 +25,8 @@ __param_random__ to make sure the test units are shuffled within the suites.
 If an ordering dependency is required between the test units within the same suite, it has to be declared explicitly.
 Dependencies in the __UTF__ affect two dimensions of test units, which are:
 
-* the order of execution of these units * the execution of a test unit, which is conditioned by the state of its parents
+* the order of execution of these units
+* the execution of a test unit, which is conditioned by the state of its parents
 
 [link boost_test.tests_organization.decorators Decorator] __decorator_depends_on__ associates the decorated test case
 (call it `TB`) with another test case (call it `TA`) specified by name. This affects the processing the test tree in two
