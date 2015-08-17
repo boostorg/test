@@ -21,7 +21,7 @@ for simple testing.
 
 A better simple way to report errors is for the test program to return `EXIT_SUCCESS` (normally 0) if the test program
 completes satisfactorily, and `EXIT_FAILURE` if an error is detected. This allows a simple regression test script to
-automatically and unambiguous detect success or failure. Further appropriate actions such as creating an HTML table or
+automatically and unambiguously detect success or failure. Further appropriate actions such as creating an HTML table or
 emailing an alert can be taken by the script, and can be modified as desired without having to change the actual C++
 test programs.
 
