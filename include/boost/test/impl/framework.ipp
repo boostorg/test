@@ -390,7 +390,7 @@ parse_filters( test_unit_id master_tu_id, test_unit_id_list& tu_to_enable, test_
     // 10. collect tu to enable and disable based on filters
     bool had_selector_filter = false;
 
-    BOOST_TEST_FOREACH( const_string, filter, runtime_config::test_to_run() ) {
+    BOOST_TEST_FOREACH( const_string, filter, runtime_config::run_filters() ) {
         BOOST_TEST_SETUP_ASSERT( !filter.is_empty(), "Invalid filter specification" );
 
         enum { SELECTOR, ENABLER, DISABLER } filter_type = SELECTOR;
@@ -531,7 +531,7 @@ public:
         test_unit_id_list tu_to_disable;
 
         // 10. If there are any filters supplied, figure out lists of test units to enable/disable
-        bool had_selector_filter = !runtime_config::test_to_run().empty() &&
+        bool had_selector_filter = !runtime_config::run_filters().empty() &&
                                    parse_filters( master_tu_id, tu_to_enable, tu_to_disable );
 
         // 20. Set the stage: either use default run status or disable all test units
@@ -1181,7 +1181,7 @@ run( test_unit_id id, bool continue_test )
     test_case_counter tcc;
     traverse_test_tree( id, tcc );
 
-    BOOST_TEST_SETUP_ASSERT( tcc.p_count != 0 , runtime_config::test_to_run().empty()
+    BOOST_TEST_SETUP_ASSERT( tcc.p_count != 0 , runtime_config::run_filters().empty()
         ? BOOST_TEST_L( "test tree is empty" )
         : BOOST_TEST_L( "no test cases matching filter or all test cases were disabled" ) );
 

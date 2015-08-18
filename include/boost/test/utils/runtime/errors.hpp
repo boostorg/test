@@ -16,7 +16,6 @@
 #define BOOST_TEST_UTILS_RUNTIME_INIT_ERROR_HPP
 
 // Boost.Runtime.Parameter
-#include <boost/test/utils/runtime/config.hpp>
 #include <boost/test/utils/runtime/fwd.hpp>
 
 // Boost
@@ -25,6 +24,8 @@
 
 // STL
 #include <exception>
+
+#include <boost/test/detail/suppress_warnings.hpp>
 
 namespace boost {
 namespace runtime {
@@ -46,7 +47,7 @@ public:
 //____________________________________________________________________________//
 
 class init_error : public param_error {};
-class parse_error : public param_error {};
+class input_error : public param_error {};
 
 //____________________________________________________________________________//
 
@@ -91,11 +92,12 @@ class missing_argument : public specific_param_error<missing_argument, init_erro
 class arg_type_mismatch : public specific_param_error<arg_type_mismatch, init_error> {};
 class invalid_param_spec : public specific_param_error<invalid_param_spec, init_error> {};
 
-class format_error : public specific_param_error<format_error, parse_error> {};
-class ambiguous_param : public specific_param_error<ambiguous_param, parse_error> {};
-class duplicate_arg : public specific_param_error<duplicate_arg, parse_error> {};
+class format_error : public specific_param_error<format_error, input_error> {};
+class ambiguous_param : public specific_param_error<ambiguous_param, input_error> {};
+class duplicate_arg : public specific_param_error<duplicate_arg, input_error> {};
+class missing_arg : public specific_param_error<missing_arg, input_error> {};
 
-class unrecognized_param : public specific_param_error<unrecognized_param, parse_error> {
+class unrecognized_param : public specific_param_error<unrecognized_param, input_error> {
 public:
     explicit unrecognized_param( std::vector<cstring>&& type_candidates ) : m_typo_candidates( std::move( type_candidates ) ) {}
 
@@ -104,5 +106,7 @@ public:
 
 } // namespace runtime
 } // namespace boost
+
+#include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_UTILS_RUNTIME_INIT_ERROR_HPP

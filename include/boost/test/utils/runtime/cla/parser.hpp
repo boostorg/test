@@ -16,7 +16,6 @@
 #define BOOST_TEST_UTILS_RUNTIME_CLA_PARSER_HPP
 
 // Boost.Runtime.Parameter
-#include <boost/test/utils/runtime/config.hpp>
 #include <boost/test/utils/runtime/argument.hpp>
 #include <boost/test/utils/runtime/modifier.hpp>
 #include <boost/test/utils/runtime/parameter.hpp>
@@ -29,6 +28,8 @@
 
 // STL
 #include <unordered_set>
+
+#include <boost/test/detail/suppress_warnings.hpp>
 
 namespace boost {
 namespace runtime {
@@ -330,5 +331,7 @@ private:
 } // namespace cla
 } // namespace runtime
 } // namespace boost
+
+#include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_UTILS_RUNTIME_CLA_PARSER_HPP

@@ -16,10 +16,12 @@
 #define BOOST_TEST_UTILS_RUNTIME_MODIFIER_HPP
 
 // Boost.Runtime.Parameter
-#include <boost/test/utils/runtime/config.hpp>
+#include <boost/test/utils/runtime/fwd.hpp>
 
 // Boost.Test
 #include <boost/test/utils/named_params.hpp>
+
+#include <boost/test/detail/suppress_warnings.hpp>
 
 namespace boost {
 namespace runtime {
@@ -42,5 +44,7 @@ nfp::keyword<struct handler_t>                      handler;
 
 } // namespace runtime
 } // namespace boost
+
+#include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_UTILS_RUNTIME_MODIFIER_HPP

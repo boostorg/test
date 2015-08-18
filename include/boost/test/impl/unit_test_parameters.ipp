@@ -31,7 +31,8 @@
 
 // Boost.Runtime.Param
 #include <boost/test/utils/runtime/parameter.hpp>
-#include <boost/test/utils/runtime/interpret_argument_value.hpp>
+#include <boost/test/utils/runtime/argument.hpp>
+#include <boost/test/utils/runtime/finalize.hpp>
 
 #include <boost/test/utils/runtime/cla/parser.hpp>
 
@@ -73,7 +74,7 @@ namespace unit_test {
 std::istream&
 operator>>( std::istream& in, unit_test::log_level& ll )
 {
-    static fixed_mapping<const_string,unit_test::log_level,case_ins_less<char const> > log_level_name(
+    static fixed_mapping<const_string,log_level,case_ins_less<char const> > log_level_name(
         "all"           , log_successful_tests,
         "success"       , log_successful_tests,
         "test_suite"    , log_test_units,
@@ -93,7 +94,7 @@ operator>>( std::istream& in, unit_test::log_level& ll )
     in >> val;
 
     ll = log_level_name[val];
-    BOOST_TEST_SETUP_ASSERT( ll != unit_test::invalid_log_level, "invalid log level " + val );
+    BOOST_TEST_SETUP_ASSERT( ll != invalid_log_level, "invalid log level " + val );
 
     return in;
 }
@@ -127,19 +128,19 @@ std::istream&
 operator>>( std::istream& in, unit_test::output_format& of )
 {
     fixed_mapping<const_string,unit_test::output_format,case_ins_less<char const> > output_format_name (
-        "HRF", unit_test::OF_CLF,
-        "CLF", unit_test::OF_CLF,
-        "XML", unit_test::OF_XML,
-        "DOT", unit_test::OF_DOT,
+        "HRF", OF_CLF,
+        "CLF", OF_CLF,
+        "XML", OF_XML,
+        "DOT", OF_DOT,
 
-        unit_test::OF_INVALID
+        OF_INVALID
         );
 
     std::string val;
     in >> val;
 
     of = output_format_name[val];
-    BOOST_TEST_SETUP_ASSERT( of != unit_test::OF_INVALID, "invalid output format " + val );
+    BOOST_TEST_SETUP_ASSERT( of != OF_INVALID, "invalid output format " + val );
 
     return in;
 }
@@ -173,11 +174,12 @@ std::string REPORT_FORMAT     = "report_format";
 std::string REPORT_LEVEL      = "report_level";
 std::string REPORT_SINK       = "report_sink";
 std::string RESULT_CODE       = "result_code";
-std::string TESTS_TO_RUN      = "run_test";
+std::string RUN_FILTERS       = "run_test";
 std::string SAVE_TEST_PATTERN = "save_pattern";
 std::string SHOW_PROGRESS     = "show_progress";
 std::string USE_ALT_STACK     = "use_alt_stack";
 std::string WAIT_FOR_DEBUGGER = "wait_for_debugger";
+std::string HELP              = "help";
 
 //____________________________________________________________________________//
 
@@ -188,6 +190,7 @@ register_parameters( rt::parameters_store& store )
         rt::description = "Automatically starts debugger if system level error (signal) occurs",
         rt::env_var = "BOOST_TEST_AUTO_START_DBG"
     ));
+
     auto_start_dbg.add_cla_id( "--", AUTO_START_DBG, "=" );
     auto_start_dbg.add_cla_id( "-", "d", " " );
     store.add( auto_start_dbg );
@@ -209,9 +212,16 @@ register_parameters( rt::parameters_store& store )
     build_info.add_cla_id( "-", "i", " " );
     store.add( build_info );
 
+
     rt::option catch_sys_errors( CATCH_SYS_ERRORS, (
         rt::description = "Allows to switch between catching and ignoring system errors (signals)",
-        rt::env_var = "BOOST_TEST_CATCH_SYSTEM_ERRORS"
+        rt::env_var = "BOOST_TEST_CATCH_SYSTEM_ERRORS",
+        rt::default_value =
+#ifdef BOOST_TEST_DEFAULTS_TO_CORE_DUMP
+            false
+#else
+            true
+#endif
     ));
 
     catch_sys_errors.add_cla_id( "--", CATCH_SYS_ERRORS, "=" );
@@ -245,7 +255,9 @@ register_parameters( rt::parameters_store& store )
     rt::parameter<unit_test::output_format> list_content( LIST_CONTENT, (
         rt::optional_value,
         rt::description = "Lists the content of test tree - names of all test suites and test cases",
-        rt::env_var = "BOOST_TEST_LIST_CONTENT"
+        rt::env_var = "BOOST_TEST_LIST_CONTENT",
+        rt::default_value = OF_INVALID,
+        rt::optional_value = OF_CLF
     ));
     list_content.add_cla_id( "--", LIST_CONTENT, "=" );    
     store.add( list_content );
@@ -260,7 +272,8 @@ register_parameters( rt::parameters_store& store )
 
     rt::parameter<unit_test::output_format> log_format( LOG_FORMAT, (
         rt::description = "Specifies log format",
-        rt::env_var = "BOOST_TEST_LOG_FORMAT"
+        rt::env_var = "BOOST_TEST_LOG_FORMAT",
+        rt::default_value = OF_CLF
     ));
 
     log_format.add_cla_id( "--", LOG_FORMAT, "=" );
@@ -269,7 +282,8 @@ register_parameters( rt::parameters_store& store )
 
     rt::parameter<unit_test::log_level> log_level( LOG_LEVEL, (
         rt::description = "Specifies log level",
-        rt::env_var = "BOOST_TEST_LOG_LEVEL"
+        rt::env_var = "BOOST_TEST_LOG_LEVEL",
+        rt::default_value = log_all_errors
     ));
 
     log_level.add_cla_id( "--", LOG_LEVEL, "=" );
@@ -298,7 +312,9 @@ register_parameters( rt::parameters_store& store )
         rt::optional_value,
         rt::description = "Allows to switch between sequential and random order of test units execution.\n"
                            "Optionally allows to specify concrete seed for random number generator",
-        rt::env_var = "BOOST_TEST_RANDOM"
+        rt::env_var = "BOOST_TEST_RANDOM",
+        rt::default_value = 0U,
+        rt::optional_value = 1U
     ));
 
     random_seed.add_cla_id( "--", RANDOM_SEED, "=" );    
@@ -306,7 +322,8 @@ register_parameters( rt::parameters_store& store )
 
     rt::parameter<unit_test::output_format> report_format( REPORT_FORMAT, (
         rt::description = "Specifies report format",
-        rt::env_var = "BOOST_TEST_REPORT_FORMAT"
+        rt::env_var = "BOOST_TEST_REPORT_FORMAT",
+        rt::default_value = OF_CLF
     ));
 
     report_format.add_cla_id( "--", REPORT_FORMAT, "=" );
@@ -315,7 +332,8 @@ register_parameters( rt::parameters_store& store )
 
     rt::parameter<unit_test::report_level> report_level( REPORT_LEVEL, (
         rt::description = "Specifies report level",
-        rt::env_var = "BOOST_TEST_REPORT_LEVEL"
+        rt::env_var = "BOOST_TEST_REPORT_LEVEL",
+        rt::default_value = CONFIRMATION_REPORT
     ));
 
     report_level.add_cla_id( "--", REPORT_LEVEL, "=" );
@@ -331,21 +349,22 @@ register_parameters( rt::parameters_store& store )
     report_sink.add_cla_id( "-", "e", " " );
     store.add( report_sink );
 
-    rt::parameter<std::string> result_code( RESULT_CODE, (
+    rt::option result_code( RESULT_CODE, (
         rt::description = "Disables test modules's result code generation",
-        rt::env_var = "BOOST_TEST_RESULT_CODE"
+        rt::env_var = "BOOST_TEST_RESULT_CODE",
+        rt::default_value = true
     ));
 
     result_code.add_cla_id( "--", RESULT_CODE, "=" );
     result_code.add_cla_id( "-", "c", " " );
     store.add( result_code );
 
-    rt::parameter<std::string,rt::REPEATABLE> tests_to_run( TESTS_TO_RUN, (
+    rt::parameter<std::string,rt::REPEATABLE> tests_to_run( RUN_FILTERS, (
         rt::description = "Filters, which test units to include or exclude from test module execution",
-        rt::env_var = "BOOST_TESTS_TO_RUN"
+        rt::env_var = "BOOST_TEST_RUN_FILTERS"
     ));
 
-    tests_to_run.add_cla_id( "--", TESTS_TO_RUN, "=" );    
+    tests_to_run.add_cla_id( "--", RUN_FILTERS, "=" );    
     tests_to_run.add_cla_id( "-", "t", " " );
     store.add( tests_to_run );
 
@@ -368,7 +387,8 @@ register_parameters( rt::parameters_store& store )
 
     rt::option use_alt_stack( USE_ALT_STACK, (
         rt::description = "Turns on/off usage of an alternative stack for signal handling",
-        rt::env_var = "BOOST_TEST_USE_ALT_STACK"
+        rt::env_var = "BOOST_TEST_USE_ALT_STACK",
+        rt::default_value = true
     ));
 
     use_alt_stack.add_cla_id( "--", USE_ALT_STACK, "=" );
@@ -383,57 +403,16 @@ register_parameters( rt::parameters_store& store )
     wait_for_debugger.add_cla_id( "-", "w", " " );
     store.add( wait_for_debugger );
 
-    rt::option help( "help",
+    rt::option help( HELP,
         rt::description = "Help for framework parameters" );
-    help.add_cla_id( "--", "help", "=" );
+    help.add_cla_id( "--", HELP, "=" );
     help.add_cla_id( "-", "?", " " );
     store.add( help );
 }
 
 static rt::arguments_store  s_arguments_store;
 static rt::parameters_store s_parameters_store;
-
-std::string             s_empty;
-
-output_format           s_report_format;
-output_format           s_log_format;
-
-std::list<std::string>  s_test_to_run;
-
-//____________________________________________________________________________//
-
-template<typename T>
-T
-retrieve_argument( std::string const& parameter_name, T const& default_value = T(), T const& optional_value = T() )
-{
-// !!!!
-#if 0 
-    rt::arguments_store::const_iterator found = s_arguments_store.find( parameter_name );
-    if( found != s_arguments_store.end() ) {
-        rt::const_argument_ptr arg = found->second;
-
-        if( rtti::type_id<T>() == rtti::type_id<bool>() ||
-            !static_cast<rt::parameter const&>( arg->p_formal_parameter.get() ).p_optional_value )
-            return store.get<T>( parameter_name );
-
-        optional<T> val = store.get<optional<T> >( parameter_name );
-        if( val )
-            return *val;
-        return optional_value;
-    }
-
-    boost::optional<T> v;
-
-#ifndef UNDER_CE
-    env::get( parameter_2_env_var(parameter_name), v );
-#endif
-
-    if( v )
-        return *v;
-#endif
-
-    return default_value;
-}
+static rt::arguments_store  const& s_const_arguments_store = s_arguments_store;
 
 //____________________________________________________________________________//
 
@@ -454,36 +433,43 @@ void
 init( int& argc, char** argv )
 {
     BOOST_TEST_IMPL_TRY {
+        // Initialize parameters list
         if( s_parameters_store.is_empty() )
             register_parameters( s_parameters_store );
 
+        // Clear up arguments store just in case (of multiple init invocations)
         s_arguments_store.clear();
 
-        // !!!!    cla::parser parser( cla::eop_marker="--" );
-
-        rt::cla::parser parser( s_parameters_store );
-
+        // PArse CLA they take precedence over  environment
+        rt::cla::parser parser( s_parameters_store, rt::end_of_params ="--" );
         parser.parse( argc, argv, s_arguments_store );
 
-        if( s_arguments_store.has("help") ) {
+        // Try to fetch missing arguments from environment
+        rt::env::fetch_absent( params_store, args_store );
+
+        // Set arguments to default values if defined and perform all the validations
+        rt::finalize_arguments( s_parameters_store, s_arguments_store );
+
+        // Report help if requested
+        if( s_const_arguments_store.get<bool>( HELP ) ) {
             // !!!! parser.usage( s_parameters_store, std::cout );
             BOOST_TEST_IMPL_THROW( framework::nothing_to_test() );
         }
 
-        s_report_format = retrieve_argument( REPORT_FORMAT, unit_test::OF_CLF );
-        s_log_format    = retrieve_argument( LOG_FORMAT, unit_test::OF_CLF );
-        output_format of = retrieve_argument( OUTPUT_FORMAT, unit_test::OF_INVALID );
-
-        if( of != unit_test::OF_INVALID )
-            s_report_format = s_log_format = of;
-
-        s_test_to_run = retrieve_argument<std::list<std::string> >( TESTS_TO_RUN );
+        // A bit of business logic: output_format takes precedence over log/report formats
+        if( s_arguments_store.has( OUTPUT_FORMAT ) ) {
+            unit_test::output_format of = s_arguments_store.get<unit_test::output_format>( OUTPUT_FORMAT );
+            s_arguments_store.set( REPORT_FORMAT,  of);
+            s_arguments_store.set( LOG_FORMAT, of );
+        }
     }
     BOOST_TEST_IMPL_CATCH( rt::init_error, ex ) {
         BOOST_TEST_SETUP_ASSERT( false, "Internal Boost.Test initialization error: " + ex.msg );
     }
-    BOOST_TEST_IMPL_CATCH( rt::parse_error, ex ) {
+    BOOST_TEST_IMPL_CATCH( rt::input_error, ex ) {
         // !!!! help/usage?
+        // !!!! unidentified arg, 
+        // !!!! ambigous arg, 
         BOOST_TEST_SETUP_ASSERT( false, ex.msg );
     }
 }
@@ -493,7 +479,7 @@ init( int& argc, char** argv )
 unit_test::log_level
 log_level()
 {
-    return retrieve_argument( LOG_LEVEL, unit_test::log_all_errors );
+    return s_const_arguments_store.get<unit_test::log_level>( LOG_LEVEL );
 }
 
 //____________________________________________________________________________//
@@ -501,7 +487,7 @@ log_level()
 bool
 no_result_code()
 {
-    return !retrieve_argument( RESULT_CODE, true );
+    return !s_const_arguments_store.get<bool>( RESULT_CODE );
 }
 
 //____________________________________________________________________________//
@@ -509,15 +495,15 @@ no_result_code()
 unit_test::report_level
 report_level()
 {
-    return retrieve_argument( REPORT_LEVEL, unit_test::CONFIRMATION_REPORT );
+    return s_const_arguments_store.get<unit_test::report_level>( REPORT_LEVEL );
 }
 
 //____________________________________________________________________________//
 
-std::list<std::string> const&
-test_to_run()
+std::vector<std::string> const&
+run_filters()
 {
-    return s_test_to_run;
+    return s_const_arguments_store.get<std::vector<std::string>>( RUN_FILTERS );
 }
 
 //____________________________________________________________________________//
@@ -525,9 +511,7 @@ test_to_run()
 const_string
 break_exec_path()
 {
-    static std::string s_break_exec_path = retrieve_argument( BREAK_EXEC_PATH, s_empty );
-
-    return s_break_exec_path;
+    return s_const_arguments_store.get<std::string>( BREAK_EXEC_PATH );
 }
 
 //____________________________________________________________________________//
@@ -535,7 +519,7 @@ break_exec_path()
 bool
 save_pattern()
 {
-    return retrieve_argument( SAVE_TEST_PATTERN, false );
+    return s_const_arguments_store.get<bool>( SAVE_TEST_PATTERN );
 }
 
 //____________________________________________________________________________//
@@ -543,7 +527,7 @@ save_pattern()
 bool
 show_progress()
 {
-    return retrieve_argument( SHOW_PROGRESS, false );
+    return s_const_arguments_store.get<bool>( SHOW_PROGRESS );
 }
 
 //____________________________________________________________________________//
@@ -551,15 +535,15 @@ show_progress()
 bool
 show_build_info()
 {
-    return retrieve_argument( BUILD_INFO, false );
+    return s_const_arguments_store.get<bool>( BUILD_INFO );
 }
 
 //____________________________________________________________________________//
 
-output_format
+unit_test::output_format
 list_content()
 {
-    return retrieve_argument( LIST_CONTENT, unit_test::OF_INVALID, unit_test::OF_CLF );
+    return s_const_arguments_store.get<unit_test::output_format>( LIST_CONTENT );
 }
 
 //____________________________________________________________________________//
@@ -567,7 +551,7 @@ list_content()
 bool
 list_labels()
 {
-    return retrieve_argument( LIST_LABELS, false );
+    return s_const_arguments_store.get<bool>( LIST_LABELS );
 }
 
 //____________________________________________________________________________//
@@ -575,13 +559,7 @@ list_labels()
 bool
 catch_sys_errors()
 {
-    return retrieve_argument( CATCH_SYS_ERRORS,
-#ifdef BOOST_TEST_DEFAULTS_TO_CORE_DUMP
-        false
-#else
-        true
-#endif
-        );
+    return s_const_arguments_store.get<bool>( CATCH_SYS_ERRORS );
 }
 
 //____________________________________________________________________________//
@@ -589,7 +567,7 @@ catch_sys_errors()
 bool
 color_output()
 {
-    return retrieve_argument( COLOR_OUTPUT, false );
+    return s_const_arguments_store.get<bool>( COLOR_OUTPUT );
 }
 
 //____________________________________________________________________________//
@@ -597,9 +575,7 @@ color_output()
 bool
 auto_start_dbg()
 {
-    // !! ?? set debugger as an option
-    return retrieve_argument( AUTO_START_DBG, false );
-;
+    return s_const_arguments_store.get<bool>( AUTO_START_DBG );
 }
 
 //____________________________________________________________________________//
@@ -607,7 +583,7 @@ auto_start_dbg()
 bool
 wait_for_debugger()
 {
-    return retrieve_argument( WAIT_FOR_DEBUGGER, false );
+    return s_const_arguments_store.get<bool>( WAIT_FOR_DEBUGGER );
 }
 
 //____________________________________________________________________________//
@@ -615,7 +591,7 @@ wait_for_debugger()
 bool
 use_alt_stack()
 {
-    return retrieve_argument( USE_ALT_STACK, true );
+    return s_const_arguments_store.get<bool>( USE_ALT_STACK );
 }
 
 //____________________________________________________________________________//
@@ -623,23 +599,23 @@ use_alt_stack()
 bool
 detect_fp_exceptions()
 {
-    return retrieve_argument( DETECT_FP_EXCEPT, false );
+    return s_const_arguments_store.get<bool>( DETECT_FP_EXCEPT );
 }
 
 //____________________________________________________________________________//
 
-output_format
+unit_test::output_format
 report_format()
 {
-    return s_report_format;
+    return s_arguments_store.get<unit_test::output_format>( REPORT_FORMAT );
 }
 
 //____________________________________________________________________________//
 
-output_format
+unit_test::output_format
 log_format()
 {
-    return s_log_format;
+    return s_arguments_store.get<unit_test::output_format>( LOG_FORMAT );
 }
 
 //____________________________________________________________________________//
@@ -647,9 +623,12 @@ log_format()
 std::ostream*
 report_sink()
 {
-    std::string sink_name = retrieve_argument( REPORT_SINK, s_empty );
+    if( !s_arguments_store.has( REPORT_SINK ) )
+        return &std::cerr;
 
-    if( sink_name.empty() || sink_name == "stderr" )
+    std::string const& sink_name = s_arguments_store.get<std::string>( REPORT_SINK );
+
+    if( sink_name == "stderr" )
         return &std::cerr;
 
     if( sink_name == "stdout" )
@@ -664,13 +643,16 @@ report_sink()
 std::ostream*
 log_sink()
 {
-    std::string sink_name = retrieve_argument( LOG_SINK, s_empty );
-
-    if( sink_name.empty() || sink_name == "stdout" )
+    if( !s_arguments_store.has( LOG_SINK ) )
         return &std::cout;
+
+    std::string const& sink_name = s_arguments_store.get<std::string>( LOG_SINK );
 
     if( sink_name == "stderr" )
         return &std::cerr;
+
+    if( sink_name == "stdout" )
+        return &std::cout;
 
     static std::ofstream log_file( sink_name.c_str() );
     return &log_file;
@@ -749,7 +731,7 @@ memory_leaks_report_file()
 unsigned
 random_seed()
 {
-    return retrieve_argument( RANDOM_SEED, 0U, 1U );
+    return s_const_arguments_store.get<unsigned>( RANDOM_SEED );
 }
 
 //____________________________________________________________________________//

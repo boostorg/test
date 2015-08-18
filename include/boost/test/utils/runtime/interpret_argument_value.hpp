@@ -16,7 +16,6 @@
 #define BOOST_TEST_UTILS_RUNTIME_INTERPRET_ARGUMENT_VALUE_HPP
 
 // Boost.Runtime.Parameter
-#include <boost/test/utils/runtime/config.hpp>
 #include <boost/test/utils/runtime/errors.hpp>
 
 // Boost.Test
@@ -29,6 +28,8 @@
 
 // STL
 #include <vector>
+
+#include <boost/test/detail/suppress_warnings.hpp>
 
 namespace boost {
 namespace runtime {
@@ -59,6 +60,8 @@ interpret_argument_value( cstring source, cstring& res )
 inline void
 interpret_argument_value( cstring source, bool& res )
 {
+    typedef unit_test::literal_string   literal_cstring;
+
     static literal_cstring YES( "YES" );
     static literal_cstring Y( "Y" );
     static literal_cstring NO( "NO" );
@@ -102,12 +105,19 @@ template<typename T>
 inline void
 interpret_argument_value( cstring source, T& res )
 {
-    res = lexical_cast<T>( source );
+    BOOST_TEST_IMPL_TRY {
+        res = lexical_cast<T>( source );
+    }
+    BOOST_TEST_IMPL_CATCH0( bad_lexical_cast ) {
+        BOOST_TEST_IMPL_THROW( format_error() << source << " can't be interpreted as parameter type value." );
+    }
 }
 
 //____________________________________________________________________________//
 
 } // namespace runtime
 } // namespace boost
+
+#include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_UTILS_RUNTIME_INTERPRET_ARGUMENT_VALUE_HPP

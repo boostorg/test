@@ -16,7 +16,6 @@
 #define BOOST_TEST_UTILS_RUNTIME_ARGUMENT_HPP
 
 // Boost.Runtime.Parameter
-#include <boost/test/utils/runtime/config.hpp>
 #include <boost/test/utils/runtime/fwd.hpp>
 #include <boost/test/utils/runtime/errors.hpp>
 
@@ -26,6 +25,8 @@
 
 // STL
 #include <cassert>
+
+#include <boost/test/detail/suppress_warnings.hpp>
 
 namespace boost {
 namespace runtime {
@@ -45,7 +46,7 @@ public:
     virtual     ~argument()  {}
 
     // Public properties
-    unit_test::readonly_property<rtti::id_t>    p_value_type;
+    rtti::id_t const    p_value_type;
 };
 
 // ************************************************************************** //
@@ -87,7 +88,7 @@ public:
     /// Provides types access to argument value by parameter name
     template<typename T>
     T const&    get( cstring parameter_name ) const {
-        return const_cast<arguments_store*>(this)->get( parameter_name );
+        return const_cast<arguments_store*>(this)->get<T>( parameter_name );
     }
 
     template<typename T>
@@ -118,5 +119,7 @@ private:
 
 } // namespace runtime
 } // namespace boost
+
+#include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_UTILS_RUNTIME_ARGUMENT_HPP

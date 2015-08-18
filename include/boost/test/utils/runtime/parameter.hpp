@@ -16,7 +16,6 @@
 #define BOOST_TEST_UTILS_RUNTIME_PARAMETER_HPP
 
 // Boost.Runtime.Parameter
-#include <boost/test/utils/runtime/config.hpp>
 #include <boost/test/utils/runtime/fwd.hpp>
 #include <boost/test/utils/runtime/modifier.hpp>
 #include <boost/test/utils/runtime/argument.hpp>
@@ -27,6 +26,8 @@
 
 // STL
 #include <algorithm>
+
+#include <boost/test/detail/suppress_warnings.hpp>
 
 namespace boost {
 namespace runtime {
@@ -130,7 +131,8 @@ public:
     }
 
     /// interface for producing argument values for this parameter
-    virtual void produce_argument( cstring token, arguments_store& store ) const = 0;
+    virtual void            produce_argument( cstring token, arguments_store& store ) const = 0;
+    virtual void            set_default( arguments_store& store ) const = 0;
 
 private:
     // Data members
@@ -165,6 +167,13 @@ protected:
         return basic_param_ptr( new Derived( *static_cast<Derived const*>(this) ) );
     }
 
+    virtual void            set_default( arguments_store& store ) const {
+        if( !p_has_default_value )
+            return;
+
+        store.set( p_name.get(), m_default_value );
+    }
+
     // Data members
     ValueType   m_optional_value;
     ValueType   m_default_value;
@@ -197,7 +206,7 @@ public:
             BOOST_TEST_IMPL_THROW( invalid_param_spec() << "Parameter " << name << " is required and can't have default_value." );
     }
 
-    virtual void produce_argument( cstring token, arguments_store& store ) const
+    virtual void    produce_argument( cstring token, arguments_store& store ) const
     {
         ValueType value = m_optional_value;
 
@@ -211,21 +220,21 @@ public:
 //____________________________________________________________________________//
 
 template<typename ValueType>
-class parameter<ValueType, runtime::REPEATABLE> : public typed_param<ValueType, parameter<ValueType, runtime::REPEATABLE>> {
-    typedef typed_param<ValueType, parameter<ValueType, runtime::REPEATABLE>> base;
+class parameter<ValueType, runtime::REPEATABLE> : public typed_param<std::vector<ValueType>, parameter<ValueType, runtime::REPEATABLE>> {
+    typedef typed_param<std::vector<ValueType>, parameter<ValueType, runtime::REPEATABLE>> base;
 public:
     /// Constructor with modifiers
     template<typename Modifiers=nfp::no_params_type>
     parameter( cstring name, Modifiers const& m = nfp::no_params )
-    : base( name, true, m )
+    : base( name, true, (m, default_value = std::vector<ValueType>{} ) )
     {
         p_repeatable.value = true;
 
         if( m.has( default_value ) )
-            BOOST_TEST_IMPL_THROW( invalid_param_spec() << "Parameter " << name << " is repeatable with default value of empty list." );
+            BOOST_TEST_IMPL_THROW( invalid_param_spec() << "Parameter " << name << " is repeatable with a default value of empty list." );
     }
 
-    virtual void produce_argument( cstring token, arguments_store& store ) const
+    virtual void    produce_argument( cstring token, arguments_store& store ) const
     {
         ValueType value;
         interpret_argument_value( token, value );
@@ -250,18 +259,22 @@ public:
     /// Constructor with modifiers
     template<typename Modifiers=nfp::no_params_type>
     option( cstring name, Modifiers const& m = nfp::no_params )
-    : base( name, true, m )
+    : base( name, true, (m, optional_value=true) )
     {
         p_repeatable.value = false;
-        p_has_optional_value.value = true;
+
+        if( !m.has( default_value ) ) {
+            p_has_default_value.value = true;
+            m_default_value = false;
+        }
     }
 
-    void                    add_cla_id( cstring prefix, cstring full_name, cstring value_separator )
+    void            add_cla_id( cstring prefix, cstring full_name, cstring value_separator )
     {
         basic_param::add_cla_id( prefix, full_name, value_separator, false );
     }
 
-    virtual void produce_argument( cstring token, arguments_store& store ) const
+    virtual void    produce_argument( cstring token, arguments_store& store ) const
     {
         bool value = true;
 
@@ -312,5 +325,7 @@ private:
 
 } // namespace runtime
 } // namespace boost
+
+#include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_UTILS_RUNTIME_PARAMETER_HPP

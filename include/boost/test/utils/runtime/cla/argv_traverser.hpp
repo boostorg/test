@@ -16,7 +16,9 @@
 #define BOOST_TEST_UTILS_RUNTIME_CLA_ARGV_TRAVERSER_HPP
 
 // Boost.Runtime.Parameter
-#include <boost/test/utils/runtime/config.hpp>
+#include <boost/test/utils/runtime/fwd.hpp>
+
+#include <boost/test/detail/suppress_warnings.hpp>
 
 namespace boost {
 namespace runtime {
@@ -139,5 +141,7 @@ private:
 } // namespace cla
 } // namespace runtime
 } // namespace boost
+
+#include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_UTILS_RUNTIME_CLA_ARGV_TRAVERSER_HPP

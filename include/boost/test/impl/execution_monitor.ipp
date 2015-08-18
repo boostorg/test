@@ -1275,7 +1275,7 @@ execution_monitor::execute( boost::function<int ()> const& F )
     // system errors
     catch( system_error const& ex )
       { detail::report_error( execution_exception::cpp_exception_error,
-                              "system_error produced by: %s: %s", ex.p_failed_exp.get(), std::strerror( ex.p_errno ) ); }
+                              "system_error produced by: %s: %s", ex.p_failed_exp, std::strerror( ex.p_errno ) ); }
     catch( detail::system_signal_exception const& ex )
       { ex.report(); }
 

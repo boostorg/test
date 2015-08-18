@@ -461,8 +461,8 @@ public:
     // Constructor
     explicit    system_error( char const* exp );
 
-    unit_test::readonly_property<long>          p_errno;
-    unit_test::readonly_property<char const*>   p_failed_exp;
+    long const          p_errno;
+    char const* const   p_failed_exp;
 };
 
 #define BOOST_TEST_SYS_ASSERT( exp ) \

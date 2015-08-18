@@ -15,8 +15,10 @@
 #ifndef BOOST_TEST_UTILS_RUNTIME_FWD_HPP
 #define BOOST_TEST_UTILS_RUNTIME_FWD_HPP
 
-// Boost.Runtime.Parameter
-#include <boost/test/utils/runtime/config.hpp>
+// Boost.Test
+#include <boost/test/detail/config.hpp>
+#include <boost/test/utils/basic_cstring/basic_cstring.hpp>
+#include <boost/test/utils/basic_cstring/io.hpp> // operator<<(boost::runtime::cstring)
 
 // Boost
 #include <boost/shared_ptr.hpp>
@@ -26,6 +28,8 @@
 
 namespace boost {
 namespace runtime {
+
+typedef unit_test::const_string     cstring;
 
 class argument;
 typedef shared_ptr<argument> argument_ptr;
