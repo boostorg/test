@@ -36,6 +36,8 @@
 
 #include <boost/test/utils/runtime/cla/parser.hpp>
 
+#include <boost/test/utils/runtime/env/fetch.hpp>
+
 namespace rt = boost::runtime;
 
 #ifndef UNDER_CE
@@ -140,7 +142,7 @@ operator>>( std::istream& in, unit_test::output_format& of )
     in >> val;
 
     of = output_format_name[val];
-    BOOST_TEST_SETUP_ASSERT( of != OF_INVALID, "invalid output format " + val );
+    BOOST_TEST_SETUP_ASSERT( of != OF_INVALID, "Invalid output format " + val );
 
     return in;
 }
@@ -440,12 +442,12 @@ init( int& argc, char** argv )
         // Clear up arguments store just in case (of multiple init invocations)
         s_arguments_store.clear();
 
-        // PArse CLA they take precedence over  environment
+        // Parse CLA they take precedence over  environment
         rt::cla::parser parser( s_parameters_store, rt::end_of_params ="--" );
         parser.parse( argc, argv, s_arguments_store );
 
         // Try to fetch missing arguments from environment
-        rt::env::fetch_absent( params_store, args_store );
+        rt::env::fetch_absent( s_parameters_store, s_arguments_store );
 
         // Set arguments to default values if defined and perform all the validations
         rt::finalize_arguments( s_parameters_store, s_arguments_store );

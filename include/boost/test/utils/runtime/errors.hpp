@@ -71,7 +71,7 @@ operator<<(specific_param_error<Derived, Base>&& ex, char const* val)
 
 template<typename Derived, typename Base, typename T>
 inline Derived
-operator<<(specific_param_error<Derived, Base>&& ex, T&& val)
+operator<<(specific_param_error<Derived, Base>&& ex, T const& val)
 {
     ex.msg.append( lexical_cast<std::string>( val ) );
 
