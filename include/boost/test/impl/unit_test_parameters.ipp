@@ -293,7 +293,7 @@ register_parameters( rt::parameters_store& store )
     store.add( log_level );
 
     rt::parameter<std::string> log_sink( LOG_SINK, (
-        rt::description = "Specifies log sink: stdout(default),stderr or file name",
+        rt::description = "Specifies log sink: stdout(default), stderr or file name",
         rt::env_var = "BOOST_TEST_LOG_SINK"
     ));
 
@@ -343,7 +343,7 @@ register_parameters( rt::parameters_store& store )
     store.add( report_level );
 
     rt::parameter<std::string> report_sink( REPORT_SINK, (
-        rt::description = "Specifies report sink: stderr(default),stdout or file name",
+        rt::description = "Specifies report sink: stderr(default), stdout or file name",
         rt::env_var = "BOOST_TEST_REPORT_SINK"
     ));
 
@@ -405,10 +405,11 @@ register_parameters( rt::parameters_store& store )
     wait_for_debugger.add_cla_id( "-", "w", " " );
     store.add( wait_for_debugger );
 
-    rt::option help( HELP,
-        rt::description = "Help for framework parameters" );
+    rt::parameter<std::string> help( HELP, (
+        rt::description = "Help for framework parameters",
+        rt::optional_value = std::string()
+    ));
     help.add_cla_id( "--", HELP, "=" );
-    help.add_cla_id( "-", "?", " " );
     store.add( help );
 }
 
@@ -443,7 +444,7 @@ init( int& argc, char** argv )
         s_arguments_store.clear();
 
         // Parse CLA they take precedence over  environment
-        rt::cla::parser parser( s_parameters_store, rt::end_of_params ="--" );
+        rt::cla::parser parser( s_parameters_store, (rt::end_of_params = "--", rt::negation_prefix = "no_") );
         parser.parse( argc, argv, s_arguments_store );
 
         // Try to fetch missing arguments from environment
@@ -453,15 +454,15 @@ init( int& argc, char** argv )
         rt::finalize_arguments( s_parameters_store, s_arguments_store );
 
         // Report help if requested
-        if( s_const_arguments_store.get<bool>( HELP ) ) {
-            // !!!! parser.usage( s_parameters_store, std::cout );
+        if( s_const_arguments_store.has( HELP ) ) {
+            parser.usage( std::cerr, s_parameters_store, s_const_arguments_store.get<std::string>( HELP ) );
             BOOST_TEST_IMPL_THROW( framework::nothing_to_test() );
         }
 
         // A bit of business logic: output_format takes precedence over log/report formats
         if( s_arguments_store.has( OUTPUT_FORMAT ) ) {
             unit_test::output_format of = s_arguments_store.get<unit_test::output_format>( OUTPUT_FORMAT );
-            s_arguments_store.set( REPORT_FORMAT,  of);
+            s_arguments_store.set( REPORT_FORMAT, of );
             s_arguments_store.set( LOG_FORMAT, of );
         }
     }
