@@ -23,6 +23,7 @@
 
 // Boost.Test
 #include <boost/test/utils/class_properties.hpp>
+#include <boost/test/utils/foreach.hpp>
 
 // STL
 #include <algorithm>
@@ -104,6 +105,43 @@ public:
     /// interface for cloning typed parameters
     virtual basic_param_ptr clone() const = 0;
 
+    /// interfaces for help message reporting
+    virtual void            usage( std::ostream& ostr, cstring negation_prefix )
+    {
+        ostr     << "Parameter: " << p_name << "\n";
+        if( !p_description.empty() )
+            ostr << ' ' << p_description << "\n";
+        ostr     << "  Command line formats:\n";
+        BOOST_TEST_FOREACH( parameter_cla_id const&, id, cla_ids() ) {
+            ostr << "   " << id.m_prefix;
+            cla_name_help( ostr, id.m_full_name, negation_prefix );
+
+            bool optional_value = false;
+
+            if( id.m_value_separator.empty() )
+                ostr << " ";
+            else {
+                if( p_has_optional_value ) {
+                    optional_value = true;
+                    ostr << '[';
+                }
+
+                ostr << id.m_value_separator;
+            }
+
+            value_help( ostr );
+
+            if( optional_value )
+                ostr << ']';
+
+            ostr << '\n';
+        }
+        if( !p_env_var->empty() )
+            ostr << "  Environment variable: " << p_env_var << '\n';
+    }
+
+    virtual void            help( std::ostream& ostr, cstring negation_prefix ) {}
+
     // Pubic properties
     std::string const       p_name;
     std::string const       p_description;
@@ -115,8 +153,20 @@ public:
 
     // Access methods
     parameter_cla_ids const& cla_ids() const { return m_cla_ids; }
-    void                    add_cla_id( cstring prefix, cstring full_name, cstring value_separator,
-                                        bool validate_value_separator = true )
+    void                    add_cla_id( cstring prefix, cstring full_name, cstring value_separator )
+    {
+        add_cla_id_impl( prefix, full_name, value_separator, true );
+    }
+    
+    /// interface for producing argument values for this parameter
+    virtual void            produce_argument( cstring token, bool negative_form, arguments_store& store ) const = 0;
+    virtual void            set_default( arguments_store& store ) const = 0;
+
+protected:
+    void                    add_cla_id_impl( cstring prefix, 
+                                             cstring full_name, 
+                                             cstring value_separator,
+                                             bool validate_value_separator )
     {
         if( full_name.is_empty() )
             BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter can't have an empty name." );
@@ -125,19 +175,22 @@ public:
         if( value_separator.is_empty() )
             BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << full_name << " can't have an empty value separator." );
 
+        // We trim value separaotr from all the spaces, so token end will indicate separator
         value_separator.trim();
         if( validate_value_separator && value_separator.is_empty() && !!p_has_optional_value )
             BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << full_name << " with optional value attribute can't use space as value separator." );
 
-        // We trim value separaotr from all the spaces, so token end will indicate separator
         m_cla_ids.push_back( parameter_cla_id( prefix, full_name, value_separator ) );
     }
 
-    /// interface for producing argument values for this parameter
-    virtual void            produce_argument( cstring token, bool negative_form, arguments_store& store ) const = 0;
-    virtual void            set_default( arguments_store& store ) const = 0;
-
 private:
+    /// interface for usage/help customization
+    virtual void            cla_name_help( std::ostream& ostr, cstring cla_full_name, cstring negation_prefix )
+    {
+        ostr << cla_full_name;
+    }
+    virtual void            value_help( std::ostream& ostr ) = 0;
+
     // Data members
     parameter_cla_ids       m_cla_ids;
 };
@@ -180,6 +233,12 @@ protected:
     // Data members
     ValueType   m_optional_value;
     ValueType   m_default_value;
+
+private:
+    void                    value_help( std::ostream& ostr )
+    {
+        ostr << "<value>";
+    }
 };
 
 //____________________________________________________________________________//
@@ -283,7 +342,7 @@ public:
 
     void            add_cla_id( cstring prefix, cstring full_name, cstring value_separator )
     {
-        basic_param::add_cla_id( prefix, full_name, value_separator, false );
+        add_cla_id_impl( prefix, full_name, value_separator, false );
     }
 
     virtual void    produce_argument( cstring token, bool negative_form, arguments_store& store ) const
@@ -292,13 +351,26 @@ public:
 
         if( !token.empty() ) {
             if( negative_form )
-                BOOST_TEST_IMPL_THROW( format_error() << "Negative form of the argument does not allow value." );
+                BOOST_TEST_IMPL_THROW( format_error() << "Negative form of the argument does not allow value beeing set." );
             
             interpret_argument_value( token, value );
         }
 
         store.set( p_name, value );
     }
+private:
+    virtual void            cla_name_help( std::ostream& ostr, cstring cla_full_name, cstring negation_prefix )
+    {
+        if( negation_prefix.is_empty() )
+            ostr << cla_full_name;
+        else
+            ostr << '[' << negation_prefix << ']' << cla_full_name;
+    }
+    virtual void            value_help( std::ostream& ostr )
+    {
+        ostr << "<Y|YES|1|N|NO|0>";
+    }
+
 };
 
 //____________________________________________________________________________//

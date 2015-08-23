@@ -185,7 +185,6 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
 {
     int result_code = 0;
 
-            std::getchar();
     BOOST_TEST_IMPL_TRY {
         framework::init( init_func, argc, argv );
 

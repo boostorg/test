@@ -483,38 +483,6 @@ BOOST_AUTO_TEST_CASE( test_typed_argument_parsing )
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( test_vector_argument_parsing )
-{
-    rt::parameters_store params_store;
-
-    rt::parameter<std::vector<std::string>> p1( "P1" );
-    p1.add_cla_id( "--", "param_one", "=" );
-    p1.add_cla_id( "-", "p1", " " );
-    params_store.add( p1 );
-
-    rt::parameter<std::vector<int>> p2( "P2" );
-    p2.add_cla_id( "--", "param_two", "=" );
-    p2.add_cla_id( "-", "p2", " " );
-    params_store.add( p2 );
-
-    rt::cla::parser parser( params_store );
-
-    char const* argv1[] = { "test.exe", "--param_one=a,b,c", "-p2", "1,2,3" };
-    rt::arguments_store args_store1;
-
-    parser.parse( sizeof(argv1)/sizeof(char const*), (char**)argv1, args_store1 );
-
-    BOOST_TEST( args_store1.size() == 2U );
-    BOOST_TEST( args_store1.has( "P1" ) );
-    std::vector<std::string> P1_expected{"a", "b", "c"};
-    BOOST_TEST( args_store1.get<std::vector<std::string>>( "P1" ) == P1_expected );
-    BOOST_TEST( args_store1.has( "P2" ) );
-    std::vector<int> P2_expected{1, 2, 3};
-    BOOST_TEST( args_store1.get<std::vector<int>>( "P2" ) == P2_expected );
-}
-
-//____________________________________________________________________________//
-
 BOOST_AUTO_TEST_CASE( test_parameter_name_guessing )
 {
     rt::parameters_store params_store;

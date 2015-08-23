@@ -24,6 +24,7 @@
 
 // Boost.Test
 #include <boost/test/utils/foreach.hpp>
+#include <boost/test/utils/algorithm.hpp>
 #include <boost/test/detail/throw_exception.hpp>
 
 // STL
@@ -136,6 +137,15 @@ public:
     int
     parse( int argc, char** argv, runtime::arguments_store& res )
     {
+        // save program name for help message
+        m_program_name = argv[0];
+        cstring path_sep( "\\/" );
+
+        auto it = unit_test::find_last_of( m_program_name.begin(), m_program_name.end(),
+                                           path_sep.begin(), path_sep.end() );
+        if( it != m_program_name.end() )
+            m_program_name.trim_left( it + 1 );
+
         // Set up the traverser
         argv_traverser tr( argc, (char const**)argv );
 
@@ -209,7 +219,37 @@ public:
     }
 
     // help/usage
-    void        usage( std::ostream& ostr );
+    void
+    usage( std::ostream& ostr, parameters_store const& parameters, cstring param_name )
+    {
+        if( !param_name.is_empty() ) {
+            parameters.get( param_name )->help( ostr, m_negation_prefix );
+            return;
+        }
+
+        ostr << "Usage: " << m_program_name << " [Boost.Test arguments] ";
+        if( !m_end_of_param_indicator.empty() )
+            ostr << m_end_of_param_indicator << " [custom test module arguments]";
+
+        ostr << "\n\nBoost.Test arguments correspond to parameters listed below. "
+                "All parameters are optional. Use --help <parameter name> to display detail "
+                "help for specific parameter. You can use specify parameter value either "
+                "as a command line argument or as a value of corresponding environment "
+                "variable. In case if argument for the same parameter is specified in both "
+                "places, command line is taking precendence. Command line argument format "
+                "supports parameter name guessing, so you can specify only any unambiguos "
+                "prefix to identify a parameter.";
+        if( !m_end_of_param_indicator.empty() )
+            ostr << " All the arguments after the " << m_end_of_param_indicator << " are ignored by the Boost.Test.";
+
+        ostr << "\n\nBoost.Test supports following parameters:\n";
+        
+        BOOST_TEST_FOREACH( parameters_store::storage_type::value_type const&, v, parameters.all() ) {
+            basic_param_ptr param = v.second;
+
+            param->usage( ostr, m_negation_prefix );
+        }        
+    }
 
 private:
     typedef rt_cla_detail::parameter_trie_ptr   trie_ptr;
@@ -355,7 +395,7 @@ private:
     }
 
     // Data members
-    std::string m_program_name;
+    cstring     m_program_name;
     std::string m_end_of_param_indicator;
     std::string m_negation_prefix;
     str_to_trie m_param_trie;
