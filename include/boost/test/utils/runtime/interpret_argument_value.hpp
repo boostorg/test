@@ -81,25 +81,6 @@ interpret_argument_value( cstring source, bool& res )
 
 //____________________________________________________________________________//
 
-// overload for list of values
-template<typename T>
-inline void
-interpret_argument_value( cstring source, std::vector<T>& res )
-{
-    while( !source.is_empty() ) {
-        auto single_value_end = std::find( source.begin(), source.end(), ',' );
-
-        T value;
-        interpret_argument_value( cstring( source.begin(), single_value_end ), value );
-
-        res.push_back( std::move( value ) );
-
-        source.trim_left( single_value_end + 1 );
-    }
-}
-
-//____________________________________________________________________________//
-
 // generic overload
 template<typename T>
 inline void
