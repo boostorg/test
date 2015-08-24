@@ -255,13 +255,12 @@ register_parameters( rt::parameters_store& store )
     store.add( detect_mem_leaks );
 
     rt::parameter<unit_test::output_format> list_content( LIST_CONTENT, (
-        rt::optional_value,
         rt::description = "Lists the content of test tree - names of all test suites and test cases",
         rt::env_var = "BOOST_TEST_LIST_CONTENT",
         rt::default_value = OF_INVALID,
         rt::optional_value = OF_CLF
     ));
-    list_content.add_cla_id( "--", LIST_CONTENT, "=" );    
+    list_content.add_cla_id( "--", LIST_CONTENT, "=" );
     store.add( list_content );
 
     rt::option list_labels( LIST_LABELS, (
@@ -311,7 +310,6 @@ register_parameters( rt::parameters_store& store )
     store.add( output_format );
 
     rt::parameter<unsigned> random_seed( RANDOM_SEED, (
-        rt::optional_value,
         rt::description = "Allows to switch between sequential and random order of test units execution.\n"
                            "Optionally allows to specify concrete seed for random number generator",
         rt::env_var = "BOOST_TEST_RANDOM",
@@ -319,7 +317,7 @@ register_parameters( rt::parameters_store& store )
         rt::optional_value = 1U
     ));
 
-    random_seed.add_cla_id( "--", RANDOM_SEED, "=" );    
+    random_seed.add_cla_id( "--", RANDOM_SEED, "=" );
     store.add( random_seed );
 
     rt::parameter<unit_test::output_format> report_format( REPORT_FORMAT, (
@@ -366,7 +364,7 @@ register_parameters( rt::parameters_store& store )
         rt::env_var = "BOOST_TEST_RUN_FILTERS"
     ));
 
-    tests_to_run.add_cla_id( "--", RUN_FILTERS, "=" );    
+    tests_to_run.add_cla_id( "--", RUN_FILTERS, "=" );
     tests_to_run.add_cla_id( "-", "t", " " );
     store.add( tests_to_run );
 
@@ -375,7 +373,7 @@ register_parameters( rt::parameters_store& store )
         rt::env_var = "BOOST_TEST_SAVE_PATTERN"
     ));
 
-    save_test_pattern.add_cla_id( "--", SAVE_TEST_PATTERN, "=" );    
+    save_test_pattern.add_cla_id( "--", SAVE_TEST_PATTERN, "=" );
     store.add( save_test_pattern );
 
     rt::option show_progress( SHOW_PROGRESS, (
@@ -471,8 +469,8 @@ init( int& argc, char** argv )
     }
     BOOST_TEST_IMPL_CATCH( rt::input_error, ex ) {
         // !!!! help/usage?
-        // !!!! unidentified arg, 
-        // !!!! ambigous arg, 
+        // !!!! unidentified arg,
+        // !!!! ambigous arg,
         BOOST_TEST_SETUP_ASSERT( false, ex.msg );
     }
 }

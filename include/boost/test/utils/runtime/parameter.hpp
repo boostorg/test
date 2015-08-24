@@ -51,7 +51,7 @@ struct parameter_cla_id {
                                                     << " has invalid characters in prefix." );
 
         if( !std::all_of( m_full_name.begin(), m_full_name.end(), valid_name_char ) )
-            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << m_full_name 
+            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << m_full_name
                                                     << " has invalid characters in name." );
 
         if( !std::all_of( m_value_separator.begin(), m_value_separator.end(), valid_separator_char ) )
@@ -162,14 +162,14 @@ public:
     {
         add_cla_id_impl( prefix, full_name, value_separator, false, true );
     }
-    
+
     /// interface for producing argument values for this parameter
     virtual void            produce_argument( cstring token, bool negative_form, arguments_store& store ) const = 0;
     virtual void            set_default( arguments_store& store ) const = 0;
 
 protected:
-    void                    add_cla_id_impl( cstring prefix, 
-                                             cstring full_name, 
+    void                    add_cla_id_impl( cstring prefix,
+                                             cstring full_name,
                                              cstring value_separator,
                                              bool negatable,
                                              bool validate_value_separator )
@@ -213,15 +213,14 @@ protected:
     typed_param( cstring name, bool is_optional, Modifiers const& m )
     : basic_param( name, is_optional, m )
     {
-        if( m.has( optional_value ) ) {
-            p_has_optional_value.value = true;
-            m_optional_value = (ValueType)(m[optional_value]);
-        }
+        nfp::optionally_assign( m_optional_value, m, optional_value );
+        nfp::optionally_assign( m_default_value, m, default_value );
 
-        if( m.has( default_value ) ) {
+        if( m.has( optional_value ) )
+            p_has_optional_value.value = true;
+
+        if( m.has( default_value ) )
             p_has_default_value.value = true;
-            m_default_value = (ValueType)(m[default_value]);
-        }
     }
 
     virtual basic_param_ptr clone() const
@@ -276,16 +275,14 @@ public:
 
     virtual void    produce_argument( cstring token, bool negative_form, arguments_store& store ) const
     {
-        if( negative_form )
-            BOOST_TEST_IMPL_THROW( format_error() << "Parameter " << p_name
-                                                  << " does not support negative form." );
+        cstring name = this->p_name;
 
-        ValueType value = m_optional_value;
+        ValueType value = this->m_optional_value;
 
-        if( !token.empty() || !p_has_optional_value )
+        if( !token.empty() || !this->p_has_optional_value )
             interpret_argument_value( token, value );
 
-        store.set( p_name, value );
+        store.set( name, value );
     }
 };
 
@@ -300,30 +297,32 @@ public:
     parameter( cstring name, Modifiers const& m = nfp::no_params )
     : base( name, true, (m, default_value = std::vector<ValueType>{} ) )
     {
-        p_repeatable.value = true;
+        this->p_repeatable.value = true;
 
         if( m.has( default_value ) )
-            BOOST_TEST_IMPL_THROW( invalid_param_spec() << "Parameter " << p_name 
+            BOOST_TEST_IMPL_THROW( invalid_param_spec() << "Parameter " << this->p_name
                                                         << " is repeatable with a default value of empty list." );
+
+        if( m.has( optional_value ) )
+            BOOST_TEST_IMPL_THROW( invalid_param_spec() << "Parameter " << this->p_name
+                                                        << " is repeatable and can't have optional value." );
     }
 
-    virtual void    produce_argument( cstring token, bool negative_form, arguments_store& store ) const
+    virtual void    produce_argument( cstring token, bool, arguments_store& store ) const
     {
-        if( negative_form )
-            BOOST_TEST_IMPL_THROW( format_error() << "Parameter " << p_name
-                                                  << " does not support negative form." );
+        cstring name = this->p_name;
 
         ValueType value;
         interpret_argument_value( token, value );
 
-        if( store.has( p_name ) ) {
-            std::vector<ValueType>& values = store.get<std::vector<ValueType> >( p_name );
+        if( store.has( name ) ) {
+            std::vector<ValueType>& values = store.get<std::vector<ValueType> >( name );
             values.push_back( value );
         }
         else {
             std::vector<ValueType> values( 1, value );
 
-            store.set( p_name, values );
+            store.set( name, values );
         }
     }
 };
@@ -358,7 +357,7 @@ public:
         if( !token.empty() ) {
             if( negative_form )
                 BOOST_TEST_IMPL_THROW( format_error() << "Negative form of the argument does not allow value beeing set." );
-            
+
             interpret_argument_value( token, value );
         }
 
@@ -387,7 +386,7 @@ private:
 
 class parameters_store {
     struct lg_compare {
-        bool operator()( cstring lh, cstring rh )
+        bool operator()( cstring lh, cstring rh ) const
         {
             return std::lexicographical_compare(lh.begin(), lh.end(),
                                                 rh.begin(), rh.end());
@@ -413,7 +412,7 @@ public:
     /// Returns map of all the registered parameter
     basic_param_ptr         get( cstring name ) const
     {
-        auto found = m_parameters.find( name );
+        auto const& found = m_parameters.find( name );
         if( found == m_parameters.end() )
             BOOST_TEST_IMPL_THROW( unknown_param() << "Parameter " << name << " is unknown." );
 

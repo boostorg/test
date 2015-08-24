@@ -15,12 +15,15 @@ project
 
 #_________________________________________________________________________________________________#
 
+lib gcov : : <name>gcov : ;
+
 rule boost.test-self-test ( test-rule : test-suite : test-name : usage-variant ? : pattern_file * : source_files * : extra-libs ? : extra-options ? )
 {
     source_files ?= $(test-suite)/$(test-name).cpp ;
     usage-variant ?= boost_unit_test_framework/<link>static ;
 
     return [ $(test-rule) $(source_files) ../build//$(usage-variant) $(extra-libs)
+             gcov
              : #args
              : $(pattern_file)
              : # Activating -pedantic finds more gotchas
@@ -38,6 +41,7 @@ rule boost.test-self-test ( test-rule : test-suite : test-name : usage-variant ?
 #               <toolset>gcc:<cxxflags>-DBOOST_NO_EXCEPTION
 #               <toolset>clang:<cxxflags>-fno-exceptions
 #               <toolset>clang:<cxxflags>-DBOOST_NO_EXCEPTION
+               <toolset>gcc:<cxxflags>--coverage
                <warnings>all
                $(extra-options)
              : $(test-name)

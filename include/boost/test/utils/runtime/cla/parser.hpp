@@ -75,7 +75,7 @@ struct parameter_trie {
     /// Registers candidate parameter for this subtrie. If final, it needs to be unique
     void                add_candidate_id( parameter_cla_id const& param_id, basic_param_ptr param_candidate, bool final )
     {
-        if( m_has_final_candidate || final && !m_id_candidates.empty() ) {
+        if( m_has_final_candidate || (final && !m_id_candidates.empty()) ) {
             BOOST_TEST_IMPL_THROW( conflicting_param() << "Parameter cla id " << param_id.m_full_name << " conflicts with the "
                                                        << "parameter cla id " << m_id_candidates.back().get().m_full_name );
         }
@@ -248,12 +248,12 @@ public:
             ostr << " All the arguments after the " << m_end_of_param_indicator << " are ignored by the Boost.Test.";
 
         ostr << "\n\nBoost.Test supports following parameters:\n";
-        
+
         BOOST_TEST_FOREACH( parameters_store::storage_type::value_type const&, v, parameters.all() ) {
             basic_param_ptr param = v.second;
 
             param->usage( ostr, m_negation_prefix );
-        }        
+        }
     }
 
 private:
@@ -337,7 +337,7 @@ private:
                 // locate next subtrie corresponding to the char
                 next_trie = curr_trie->get_subtrie( c );
 
-                if( next_trie ) 
+                if( next_trie )
                     curr_trie = next_trie;
                 else {
                     // Initiate search for typo candicates. We will account for 'wrong char' typo
@@ -350,7 +350,7 @@ private:
                         if( next_trie = typo_cand.second->get_subtrie( c ) )
                             typo_candidates.push_back( next_trie );
                     }
-                    
+
                     // 'extra char' typo
                     typo_candidates.push_back( curr_trie );
 
@@ -378,7 +378,7 @@ private:
             unique_typo_candidate.reserve( typo_candidates.size() );
 
             BOOST_TEST_FOREACH( trie_ptr, trie_cand, typo_candidates ) {
-                // avoid ambiguos candidate trie 
+                // avoid ambiguos candidate trie
                 if( trie_cand->m_id_candidates.size() > 1 )
                     continue;
 
@@ -393,7 +393,7 @@ private:
             BOOST_TEST_IMPL_THROW( unrecognized_param( std::move(typo_candidate_names) ) << "An unrecognized parameter in the argument " << token );
         }
 
-        if( curr_trie->m_id_candidates.size() > 1 )            
+        if( curr_trie->m_id_candidates.size() > 1 )
             BOOST_TEST_IMPL_THROW( ambiguous_param() << "An ambiguous parameter name in the argument " << token );
 
         return locate_result( curr_trie->m_id_candidates.back().get(), curr_trie->m_param_candidate );

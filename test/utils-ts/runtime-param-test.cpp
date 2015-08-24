@@ -166,8 +166,7 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
 
     rt::parameter<int,rt::REPEATABLE> p4( "P4", (
         rt::description = "123",
-        rt::env_var = "E4",
-        rt::optional_value = 5
+        rt::env_var = "E4"
     ));
 
     BOOST_TEST( p4.p_name == "P4" );
@@ -175,7 +174,7 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
     BOOST_TEST( p4.p_env_var.get() == "E4" );
     BOOST_TEST( p4.p_optional );
     BOOST_TEST( p4.p_repeatable );
-    BOOST_TEST( p4.p_has_optional_value );
+    BOOST_TEST( !p4.p_has_optional_value );
 
     rt::option p5( "P5", (
         rt::description = "bool arg",
@@ -228,6 +227,10 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
 
     rt::parameter<int> p7( "P7", rt::optional_value = 1);
     BOOST_CHECK_THROW( p7.add_cla_id( "-", "a", " " ), rt::invalid_cla_id );
+
+    BOOST_CHECK_THROW( (rt::parameter<int,rt::REQUIRED>( "P", rt::default_value = 1)), rt::invalid_param_spec );
+    BOOST_CHECK_THROW( (rt::parameter<int,rt::REPEATABLE>( "P", rt::default_value = std::vector<int>{1})), rt::invalid_param_spec );
+    BOOST_CHECK_THROW( (rt::parameter<int,rt::REPEATABLE>( "P", rt::optional_value = std::vector<int>{1})), rt::invalid_param_spec );
 }
 
 //____________________________________________________________________________//
