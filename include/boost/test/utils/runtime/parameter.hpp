@@ -39,10 +39,11 @@ namespace runtime {
 // set of attributes identifying the parameter in the command line
 
 struct parameter_cla_id {
-    parameter_cla_id( cstring prefix, cstring full_name, cstring value_separator )
+    parameter_cla_id( cstring prefix, cstring full_name, cstring value_separator, bool negatable )
     : m_prefix( prefix.begin(), prefix.size() )
     , m_full_name( full_name.begin(), full_name.size() )
     , m_value_separator( value_separator.begin(), value_separator.size() )
+    , m_negatable( negatable )
     {
 
         if( !std::all_of( m_prefix.begin(), m_prefix.end(), valid_prefix_char ) )
@@ -74,6 +75,7 @@ struct parameter_cla_id {
     std::string             m_prefix;
     std::string             m_full_name;
     std::string             m_value_separator;
+    bool                    m_negatable;
 };
 
 typedef std::vector<parameter_cla_id> parameter_cla_ids;
@@ -114,7 +116,10 @@ public:
         ostr     << "  Command line formats:\n";
         BOOST_TEST_FOREACH( parameter_cla_id const&, id, cla_ids() ) {
             ostr << "   " << id.m_prefix;
-            cla_name_help( ostr, id.m_full_name, negation_prefix );
+            if( id.m_negatable )
+                cla_name_help( ostr, id.m_full_name, negation_prefix );
+            else
+                cla_name_help( ostr, id.m_full_name, "" );
 
             bool optional_value = false;
 
@@ -155,7 +160,7 @@ public:
     parameter_cla_ids const& cla_ids() const { return m_cla_ids; }
     void                    add_cla_id( cstring prefix, cstring full_name, cstring value_separator )
     {
-        add_cla_id_impl( prefix, full_name, value_separator, true );
+        add_cla_id_impl( prefix, full_name, value_separator, false, true );
     }
     
     /// interface for producing argument values for this parameter
@@ -166,6 +171,7 @@ protected:
     void                    add_cla_id_impl( cstring prefix, 
                                              cstring full_name, 
                                              cstring value_separator,
+                                             bool negatable,
                                              bool validate_value_separator )
     {
         if( full_name.is_empty() )
@@ -180,7 +186,7 @@ protected:
         if( validate_value_separator && value_separator.is_empty() && !!p_has_optional_value )
             BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << full_name << " with optional value attribute can't use space as value separator." );
 
-        m_cla_ids.push_back( parameter_cla_id( prefix, full_name, value_separator ) );
+        m_cla_ids.push_back( parameter_cla_id( prefix, full_name, value_separator, negatable ) );
     }
 
 private:
@@ -340,9 +346,9 @@ public:
         }
     }
 
-    void            add_cla_id( cstring prefix, cstring full_name, cstring value_separator )
+    void            add_cla_id( cstring prefix, cstring full_name, cstring value_separator, bool negatable = false )
     {
-        add_cla_id_impl( prefix, full_name, value_separator, false );
+        add_cla_id_impl( prefix, full_name, value_separator, negatable, false );
     }
 
     virtual void    produce_argument( cstring token, bool negative_form, arguments_store& store ) const
@@ -380,8 +386,16 @@ private:
 // ************************************************************************** //
 
 class parameters_store {
+    struct lg_compare {
+        bool operator()( cstring lh, cstring rh )
+        {
+            return std::lexicographical_compare(lh.begin(), lh.end(),
+                                                rh.begin(), rh.end());
+        }
+    };
 public:
-    typedef std::map<cstring, basic_param_ptr> storage_type;
+
+    typedef std::map<cstring, basic_param_ptr, lg_compare> storage_type;
 
     /// Adds parameter into the persistent store
     void                    add( basic_param const& in )

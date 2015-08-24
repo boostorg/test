@@ -180,8 +180,13 @@ public:
             parameter_cla_id const& found_id    = locate_res.first;
             basic_param_ptr         found_param = locate_res.second;
 
-            if( negative_form )
+            if( negative_form ) {
+                if( !found_id.m_negatable )
+                    BOOST_TEST_IMPL_THROW( format_error() << "Parameter " << found_id.m_full_name 
+                                                          << " is not negatable" );
+
                 tr.skip( m_negation_prefix.size() );
+            }
 
             tr.skip( name.size() );
 

@@ -786,8 +786,9 @@ BOOST_AUTO_TEST_CASE( test_negation_prefix )
     params_store.add( p1 );
 
     rt::option p2( "P2" );
-    p2.add_cla_id( "--", "param_two", "=" );
-    p2.add_cla_id( "-", "p2", " " );
+    p2.add_cla_id( "--", "param_two", "=", true );
+    p2.add_cla_id( "-", "p2", " ", true );
+    p2.add_cla_id( "-", "p3", " " );
     params_store.add( p2 );
 
     BOOST_CHECK_THROW( rt::cla::parser parser( params_store, rt::negation_prefix = "no:" ), rt::invalid_cla_id );
@@ -823,6 +824,12 @@ BOOST_AUTO_TEST_CASE( test_negation_prefix )
     {
         rt::arguments_store args_store;
         char const* argv[] = { "test.exe", "--no_param_two=Y" };
+        BOOST_CHECK_THROW( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
+    }
+
+    {
+        rt::arguments_store args_store;
+        char const* argv[] = { "test.exe", "-no_p3" };
         BOOST_CHECK_THROW( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
     }
 }

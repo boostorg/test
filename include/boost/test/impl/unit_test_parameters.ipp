@@ -226,7 +226,7 @@ register_parameters( rt::parameters_store& store )
 #endif
     ));
 
-    catch_sys_errors.add_cla_id( "--", CATCH_SYS_ERRORS, "=" );
+    catch_sys_errors.add_cla_id( "--", CATCH_SYS_ERRORS, "=", true );
     catch_sys_errors.add_cla_id( "-", "s", " " );
     store.add( catch_sys_errors );
 
@@ -235,7 +235,7 @@ register_parameters( rt::parameters_store& store )
         rt::env_var = "BOOST_TEST_COLOR_OUTPUT"
     ));
 
-    color_output.add_cla_id( "--", COLOR_OUTPUT, "=" );
+    color_output.add_cla_id( "--", COLOR_OUTPUT, "=", true );
     color_output.add_cla_id( "-", "x", " " );
     store.add( color_output );
 
@@ -244,7 +244,7 @@ register_parameters( rt::parameters_store& store )
         rt::env_var = "BOOST_TEST_DETECT_FP_EXCEPTIONS"
     ));
 
-    detect_fp_except.add_cla_id( "--", DETECT_FP_EXCEPT, "=" );
+    detect_fp_except.add_cla_id( "--", DETECT_FP_EXCEPT, "=", true );
     store.add( detect_fp_except );
 
     rt::parameter<std::string> detect_mem_leaks( DETECT_MEM_LEAKS, (
@@ -357,7 +357,7 @@ register_parameters( rt::parameters_store& store )
         rt::default_value = true
     ));
 
-    result_code.add_cla_id( "--", RESULT_CODE, "=" );
+    result_code.add_cla_id( "--", RESULT_CODE, "=", true );
     result_code.add_cla_id( "-", "c", " " );
     store.add( result_code );
 
@@ -393,7 +393,7 @@ register_parameters( rt::parameters_store& store )
         rt::default_value = true
     ));
 
-    use_alt_stack.add_cla_id( "--", USE_ALT_STACK, "=" );
+    use_alt_stack.add_cla_id( "--", USE_ALT_STACK, "=", true );
     store.add( use_alt_stack );
 
     rt::option wait_for_debugger( WAIT_FOR_DEBUGGER, (
