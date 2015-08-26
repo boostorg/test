@@ -93,9 +93,15 @@ class arg_type_mismatch : public specific_param_error<arg_type_mismatch, init_er
 class invalid_param_spec : public specific_param_error<invalid_param_spec, init_error> {};
 
 class format_error : public specific_param_error<format_error, input_error> {};
-class ambiguous_param : public specific_param_error<ambiguous_param, input_error> {};
 class duplicate_arg : public specific_param_error<duplicate_arg, input_error> {};
 class missing_arg : public specific_param_error<missing_arg, input_error> {};
+
+class ambiguous_param : public specific_param_error<ambiguous_param, input_error> {
+public:
+    explicit ambiguous_param( std::vector<cstring>&& amb_candidates ) : m_amb_candidates( std::move( amb_candidates ) ) {}
+
+    std::vector<cstring> m_amb_candidates;
+};
 
 class unrecognized_param : public specific_param_error<unrecognized_param, input_error> {
 public:

@@ -66,14 +66,16 @@ interpret_argument_value( cstring source, bool& res )
     static literal_cstring Y( "Y" );
     static literal_cstring NO( "NO" );
     static literal_cstring N( "N" );
+    static literal_cstring TRUE( "TRUE" );
+    static literal_cstring FALSE( "FALSE" );
     static literal_cstring one( "1" );
     static literal_cstring zero( "0" );
 
     source.trim();
 
-    if( source.is_empty() || case_ins_eq( source, YES ) || case_ins_eq( source, Y ) || case_ins_eq( source, one ) )
+    if( source.is_empty() || case_ins_eq( source, YES ) || case_ins_eq( source, Y ) || case_ins_eq( source, one ) || case_ins_eq( source, TRUE ) )
         res = true;
-    else if( case_ins_eq( source, NO ) || case_ins_eq( source, N ) || case_ins_eq( source, zero ) )
+    else if( case_ins_eq( source, NO ) || case_ins_eq( source, N ) || case_ins_eq( source, zero ) || case_ins_eq( source, FALSE ) )
         res = false;
     else
         BOOST_TEST_IMPL_THROW( format_error() << source << " can't be interpreted as bool value." );

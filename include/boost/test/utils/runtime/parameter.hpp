@@ -113,7 +113,7 @@ public:
         ostr     << "Parameter: " << p_name << "\n";
         if( !p_description.empty() )
             ostr << ' ' << p_description << "\n";
-        ostr     << "  Command line formats:\n";
+        ostr     << " Command line formats:\n";
         BOOST_TEST_FOREACH( parameter_cla_id const&, id, cla_ids() ) {
             ostr << "   " << id.m_prefix;
             if( id.m_negatable )
@@ -126,12 +126,12 @@ public:
             if( id.m_value_separator.empty() )
                 ostr << " ";
             else {
-                if( p_has_optional_value ) {
-                    optional_value = true;
-                    ostr << '[';
-                }
-
                 ostr << id.m_value_separator;
+            }
+
+            if( p_has_optional_value ) {
+                optional_value = true;
+                ostr << '[';
             }
 
             value_help( ostr );
@@ -142,10 +142,13 @@ public:
             ostr << '\n';
         }
         if( !p_env_var->empty() )
-            ostr << "  Environment variable: " << p_env_var << '\n';
+            ostr << " Environment variable: " << p_env_var << '\n';
     }
 
-    virtual void            help( std::ostream& ostr, cstring negation_prefix ) {}
+    virtual void            help( std::ostream& ostr, cstring negation_prefix )
+    {
+        usage( ostr, negation_prefix );
+    }
 
     // Pubic properties
     std::string const       p_name;
@@ -253,23 +256,23 @@ private:
 // ************************************************************************** //
 
 enum args_amount {
-    REQUIRED,   // exactly 1
-    OPTIONAL,   // 0-1
-    REPEATABLE  // 0-N
+    REQUIRED_PARAM,   // exactly 1
+    OPTIONAL_PARAM,   // 0-1
+    REPEATABLE_PARAM  // 0-N
 };
 
 //____________________________________________________________________________//
 
-template<typename ValueType, args_amount a = runtime::OPTIONAL>
+template<typename ValueType, args_amount a = runtime::OPTIONAL_PARAM>
 class parameter : public typed_param<ValueType, parameter<ValueType, a>> {
     typedef typed_param<ValueType, parameter<ValueType, a>> base;
 public:
     /// Constructor with modifiers
     template<typename Modifiers=nfp::no_params_type>
     parameter( cstring name, Modifiers const& m = nfp::no_params )
-    : base( name, a != runtime::REQUIRED, m )
+    : base( name, a != runtime::REQUIRED_PARAM, m )
     {
-        if( m.has( default_value ) && a == runtime::REQUIRED )
+        if( m.has( default_value ) && a == runtime::REQUIRED_PARAM )
             BOOST_TEST_IMPL_THROW( invalid_param_spec() << "Parameter " << name << " is required and can't have default_value." );
     }
 
@@ -289,8 +292,9 @@ public:
 //____________________________________________________________________________//
 
 template<typename ValueType>
-class parameter<ValueType, runtime::REPEATABLE> : public typed_param<std::vector<ValueType>, parameter<ValueType, runtime::REPEATABLE>> {
-    typedef typed_param<std::vector<ValueType>, parameter<ValueType, runtime::REPEATABLE>> base;
+class parameter<ValueType, runtime::REPEATABLE_PARAM> 
+: public typed_param<std::vector<ValueType>, parameter<ValueType, runtime::REPEATABLE_PARAM>> {
+    typedef typed_param<std::vector<ValueType>, parameter<ValueType, runtime::REPEATABLE_PARAM>> base;
 public:
     /// Constructor with modifiers
     template<typename Modifiers=nfp::no_params_type>
@@ -373,7 +377,7 @@ private:
     }
     virtual void            value_help( std::ostream& ostr )
     {
-        ostr << "<Y|YES|1|N|NO|0>";
+        ostr << "<yes/no value>";
     }
 
 };
@@ -409,6 +413,11 @@ public:
     bool                    is_empty() const    { return m_parameters.empty(); }
     /// Returns map of all the registered parameter
     storage_type const&     all() const         { return m_parameters; }
+    /// Returns true if parameter with psecified name is registered
+    bool                    has( cstring name ) const
+    {
+        return m_parameters.find( name ) == m_parameters.end();
+    }
     /// Returns map of all the registered parameter
     basic_param_ptr         get( cstring name ) const
     {

@@ -152,7 +152,7 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
     BOOST_TEST( !p1.p_repeatable );
     BOOST_TEST( !p1.p_has_optional_value );
 
-    rt::parameter<int,rt::REQUIRED> p2( "P2", (
+    rt::parameter<int,rt::REQUIRED_PARAM> p2( "P2", (
         rt::description = "123",
         rt::env_var = "E2"
     ));
@@ -164,7 +164,7 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
     BOOST_TEST( !p2.p_repeatable );
     BOOST_TEST( !p2.p_has_optional_value );
 
-    rt::parameter<int,rt::REPEATABLE> p4( "P4", (
+    rt::parameter<int,rt::REPEATABLE_PARAM> p4( "P4", (
         rt::description = "123",
         rt::env_var = "E4"
     ));
@@ -228,9 +228,9 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
     rt::parameter<int> p7( "P7", rt::optional_value = 1);
     BOOST_CHECK_THROW( p7.add_cla_id( "-", "a", " " ), rt::invalid_cla_id );
 
-    BOOST_CHECK_THROW( (rt::parameter<int,rt::REQUIRED>( "P", rt::default_value = 1)), rt::invalid_param_spec );
-    BOOST_CHECK_THROW( (rt::parameter<int,rt::REPEATABLE>( "P", rt::default_value = std::vector<int>{1})), rt::invalid_param_spec );
-    BOOST_CHECK_THROW( (rt::parameter<int,rt::REPEATABLE>( "P", rt::optional_value = std::vector<int>{1})), rt::invalid_param_spec );
+    BOOST_CHECK_THROW( (rt::parameter<int,rt::REQUIRED_PARAM>( "P", rt::default_value = 1)), rt::invalid_param_spec );
+    BOOST_CHECK_THROW( (rt::parameter<int,rt::REPEATABLE_PARAM>( "P", rt::default_value = std::vector<int>{1})), rt::invalid_param_spec );
+    BOOST_CHECK_THROW( (rt::parameter<int,rt::REPEATABLE_PARAM>( "P", rt::optional_value = std::vector<int>{1})), rt::invalid_param_spec );
 }
 
 //____________________________________________________________________________//
@@ -518,7 +518,7 @@ BOOST_AUTO_TEST_CASE( test_repeatable_parameters )
 {
     rt::parameters_store params_store;
 
-    rt::parameter<int,rt::REPEATABLE> p1( "P1" );
+    rt::parameter<int,rt::REPEATABLE_PARAM> p1( "P1" );
     p1.add_cla_id( "--", "param_one", "=" );
     p1.add_cla_id( "-", "one", " " );
     params_store.add( p1 );
@@ -990,7 +990,7 @@ BOOST_AUTO_TEST_CASE( test_finalize_arguments )
 {
     rt::parameters_store params_store;
 
-    rt::parameter<int,rt::REQUIRED> p1( "P1" );
+    rt::parameter<int,rt::REQUIRED_PARAM> p1( "P1" );
     p1.add_cla_id( "--", "param_one", "=" );
     p1.add_cla_id( "-", "p1", " " );
     params_store.add( p1 );
@@ -1047,3 +1047,8 @@ BOOST_AUTO_TEST_CASE( test_finalize_arguments )
 
 // cla help/usage
 // value handler
+// enum_parameter
+// param value hints
+// streams as classes
+// eliminate access methods
+

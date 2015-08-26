@@ -225,24 +225,37 @@ public:
 
     // help/usage
     void
-    usage( std::ostream& ostr, parameters_store const& parameters, cstring param_name )
+    usage( std::ostream& ostr )
+    {
+        ostr << "Usage: " << m_program_name << " [Boost.Test argument]... ";
+        if( !m_end_of_param_indicator.empty() )
+            ostr << m_end_of_param_indicator << " [custom test module argument]...";
+
+        ostr << "\n\nFor detailed help on Boost.Test parameters use:\n"
+             << "  " << m_program_name << " --help\n"
+             << "or\n"
+             << "  " << m_program_name << " --help=<parameter name>\n";
+    }
+
+    void
+    help( std::ostream& ostr, parameters_store const& parameters, cstring param_name )
     {
         if( !param_name.is_empty() ) {
-            parameters.get( param_name )->help( ostr, m_negation_prefix );
+            if( parameters.has( param_name ) )
+                parameters.get( param_name )->help( ostr, m_negation_prefix );
             return;
         }
 
-        ostr << "Usage: " << m_program_name << " [Boost.Test arguments] ";
+        ostr << "Usage: " << m_program_name << " [Boost.Test argument]... ";
         if( !m_end_of_param_indicator.empty() )
-            ostr << m_end_of_param_indicator << " [custom test module arguments]";
+            ostr << m_end_of_param_indicator << " [custom test module argument]...";
 
         ostr << "\n\nBoost.Test arguments correspond to parameters listed below. "
-                "All parameters are optional. Use --help <parameter name> to display detail "
-                "help for specific parameter. You can use specify parameter value either "
+                "All parameters are optional. You can use specify parameter value either "
                 "as a command line argument or as a value of corresponding environment "
                 "variable. In case if argument for the same parameter is specified in both "
                 "places, command line is taking precendence. Command line argument format "
-                "supports parameter name guessing, so you can specify only any unambiguos "
+                "supports parameter name guessing, so you can use any unambiguos "
                 "prefix to identify a parameter.";
         if( !m_end_of_param_indicator.empty() )
             ostr << " All the arguments after the " << m_end_of_param_indicator << " are ignored by the Boost.Test.";
@@ -254,6 +267,8 @@ public:
 
             param->usage( ostr, m_negation_prefix );
         }
+
+        ostr << "\nUse --help=<parameter name> to display detailed help for specific parameter.\n";
     }
 
 private:
@@ -390,11 +405,20 @@ private:
                 }
             }
 
-            BOOST_TEST_IMPL_THROW( unrecognized_param( std::move(typo_candidate_names) ) << "An unrecognized parameter in the argument " << token );
+            BOOST_TEST_IMPL_THROW( unrecognized_param( std::move(typo_candidate_names) ) 
+                                        << "An unrecognized parameter in the argument " 
+                                        << token );
         }
 
-        if( curr_trie->m_id_candidates.size() > 1 )
-            BOOST_TEST_IMPL_THROW( ambiguous_param() << "An ambiguous parameter name in the argument " << token );
+        if( curr_trie->m_id_candidates.size() > 1 ) {
+            std::vector<cstring> amb_names;
+            BOOST_TEST_FOREACH( parameter_cla_id const&, param_id, curr_trie->m_id_candidates )
+                amb_names.push_back( param_id.m_full_name );
+            
+            BOOST_TEST_IMPL_THROW( ambiguous_param( std::move( amb_names ) )
+                                        << "An ambiguous parameter name in the argument " 
+                                        << token );
+        }
 
         return locate_result( curr_trie->m_id_candidates.back().get(), curr_trie->m_param_candidate );
     }

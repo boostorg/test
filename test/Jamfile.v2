@@ -15,7 +15,7 @@ project
 
 #_________________________________________________________________________________________________#
 
-lib gcov : : <name>gcov : ;
+# lib gcov : : <name>gcov : ;
 
 rule boost.test-self-test ( test-rule : test-suite : test-name : usage-variant ? : pattern_file * : source_files * : extra-libs ? : extra-options ? )
 {
@@ -23,7 +23,7 @@ rule boost.test-self-test ( test-rule : test-suite : test-name : usage-variant ?
     usage-variant ?= boost_unit_test_framework/<link>static ;
 
     return [ $(test-rule) $(source_files) ../build//$(usage-variant) $(extra-libs)
-             gcov
+#             gcov
              : #args
              : $(pattern_file)
              : # Activating -pedantic finds more gotchas
@@ -41,7 +41,7 @@ rule boost.test-self-test ( test-rule : test-suite : test-name : usage-variant ?
 #               <toolset>gcc:<cxxflags>-DBOOST_NO_EXCEPTION
 #               <toolset>clang:<cxxflags>-fno-exceptions
 #               <toolset>clang:<cxxflags>-DBOOST_NO_EXCEPTION
-               <toolset>gcc:<cxxflags>--coverage
+#               <toolset>gcc:<cxxflags>--coverage
                <warnings>all
                $(extra-options)
              : $(test-name)
@@ -82,8 +82,6 @@ test-suite "utils-ts"
   [ boost.test-self-test run : utils-ts : class_properties-test ]
   [ boost.test-self-test run : utils-ts : fixed_mapping-test ]
   [ boost.test-self-test run : utils-ts : foreach-test ]
-  [ boost.test-self-test run : utils-ts : ifstream_line_iterator-test : : inputs/ifstream_line_iterator.tst1
-                                                                          inputs/ifstream_line_iterator.tst2 ]
   [ boost.test-self-test run : utils-ts : runtime-param-test ]
   [ boost.test-self-test run : utils-ts : token_iterator-test ]
 ;
