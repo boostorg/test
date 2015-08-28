@@ -36,7 +36,7 @@ namespace data {
 
 namespace {
 nfp::keyword<struct seed_t>         seed;
-nfp::keyword<struct distrbution_t>  distribution;
+nfp::keyword<struct distribution_t> distribution;
 nfp::keyword<struct engine_t>       engine;
 } // local namespace
 
