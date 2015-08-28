@@ -243,6 +243,8 @@ public:
         if( !param_name.is_empty() ) {
             if( parameters.has( param_name ) )
                 parameters.get( param_name )->help( ostr, m_negation_prefix );
+            else
+                ostr << "Parameter " << param_name << " is uncognized\n";
             return;
         }
 
@@ -254,8 +256,8 @@ public:
                 "All parameters are optional. You can use specify parameter value either "
                 "as a command line argument or as a value of corresponding environment "
                 "variable. In case if argument for the same parameter is specified in both "
-                "places, command line is taking precendence. Command line argument format "
-                "supports parameter name guessing, so you can use any unambiguos "
+                "places, command line is taking precedence. Command line argument format "
+                "supports parameter name guessing, so you can use any unambiguous "
                 "prefix to identify a parameter.";
         if( !m_end_of_param_indicator.empty() )
             ostr << " All the arguments after the " << m_end_of_param_indicator << " are ignored by the Boost.Test.";

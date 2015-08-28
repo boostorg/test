@@ -35,7 +35,7 @@ finalize_arguments( parameters_store const& params, runtime::arguments_store& ar
 
         if( !args.has( param->p_name ) ) {
             if( param->p_has_default_value )
-                param->set_default( args );
+                param->produce_default( args );
         }
 
         if( !args.has( param->p_name ) ) {

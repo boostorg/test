@@ -1048,7 +1048,6 @@ BOOST_AUTO_TEST_CASE( test_finalize_arguments )
 // cla help/usage
 // value handler
 // enum_parameter
-// param value hints
 // streams as classes
 // eliminate access methods
 

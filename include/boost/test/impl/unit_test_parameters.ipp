@@ -251,10 +251,11 @@ register_parameters( rt::parameters_store& store )
     store.add( detect_fp_except );
 
     rt::parameter<long> detect_mem_leaks( DETECT_MEM_LEAKS, (
-        rt::description = "Turns on/off memory leaks detection (optionally breaking on specified leak number).",
+        rt::description = "Turns on/off memory leaks detection (optionally breaking on specified alloc order number).",
         rt::env_var = "BOOST_TEST_DETECT_MEMORY_LEAK",
         rt::default_value = 0L,
-        rt::optional_value = 1L
+        rt::optional_value = 1L,
+        rt::value_hint = "<alloc order number>"
     ));
     detect_mem_leaks.add_cla_id( "--", DETECT_MEM_LEAKS, "=" );
     store.add( detect_mem_leaks );
@@ -298,7 +299,8 @@ register_parameters( rt::parameters_store& store )
 
     rt::parameter<std::string> log_sink( LOG_SINK, (
         rt::description = "Specifies log sink: stdout(default), stderr or file name.",
-        rt::env_var = "BOOST_TEST_LOG_SINK"
+        rt::env_var = "BOOST_TEST_LOG_SINK",
+        rt::value_hint = "<stderr|stdout|file name>"
     ));
 
     log_sink.add_cla_id( "--", LOG_SINK, "=" );
@@ -319,7 +321,8 @@ register_parameters( rt::parameters_store& store )
                           " Optionally allows to specify concrete seed for random number generator.",
         rt::env_var = "BOOST_TEST_RANDOM",
         rt::default_value = 0U,
-        rt::optional_value = 1U
+        rt::optional_value = 1U,
+        rt::value_hint = "<seed>"
     ));
 
     random_seed.add_cla_id( "--", RANDOM_SEED, "=" );
@@ -347,13 +350,15 @@ register_parameters( rt::parameters_store& store )
 
     rt::parameter<std::string> report_sink( REPORT_SINK, (
         rt::description = "Specifies report sink: stderr(default), stdout or file name.",
-        rt::env_var = "BOOST_TEST_REPORT_SINK"
+        rt::env_var = "BOOST_TEST_REPORT_SINK",
+        rt::value_hint = "<stderr|stdout|file name>"
     ));
 
     rt::parameter<std::string> report_mem_leaks( REPORT_MEM_LEAKS, (
         rt::description = "File where to repport memory leaks to.",
         rt::env_var = "BOOST_TEST_REPORT_MEMORY_LEAK",
         rt::default_value = std::string(),
+        rt::value_hint = "<file name>"
     ));
     report_mem_leaks.add_cla_id( "--", REPORT_MEM_LEAKS, "=" );
     store.add( report_mem_leaks );
@@ -374,7 +379,8 @@ register_parameters( rt::parameters_store& store )
 
     rt::parameter<std::string,rt::REPEATABLE_PARAM> tests_to_run( RUN_FILTERS, (
         rt::description = "Filters, which test units to include or exclude from test module execution.",
-        rt::env_var = "BOOST_TEST_RUN_FILTERS"
+        rt::env_var = "BOOST_TEST_RUN_FILTERS",
+        rt::value_hint = "<test unit filter>"
     ));
 
     tests_to_run.add_cla_id( "--", RUN_FILTERS, "=" );
@@ -418,7 +424,8 @@ register_parameters( rt::parameters_store& store )
 
     rt::parameter<std::string> help( HELP, (
         rt::description = "Help for framework parameters.",
-        rt::optional_value = std::string()
+        rt::optional_value = std::string(),
+        rt::value_hint = "<parameter name>"
     ));
     help.add_cla_id( "--", HELP, "=" );
     store.add( help );

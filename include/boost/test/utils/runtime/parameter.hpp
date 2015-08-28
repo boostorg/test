@@ -99,6 +99,7 @@ protected:
     , p_has_default_value( false )
     {
         nfp::optionally_assign( p_env_var.value, m, env_var );
+        nfp::optionally_assign( p_value_hint.value, m, value_hint );
     }
 
 public:
@@ -154,6 +155,7 @@ public:
     std::string const       p_name;
     std::string const       p_description;
     string_property         p_env_var;
+    string_property         p_value_hint;
     bool const              p_optional;
     bool_property           p_repeatable;
     bool_property           p_has_optional_value;
@@ -168,7 +170,7 @@ public:
 
     /// interface for producing argument values for this parameter
     virtual void            produce_argument( cstring token, bool negative_form, arguments_store& store ) const = 0;
-    virtual void            set_default( arguments_store& store ) const = 0;
+    virtual void            produce_default( arguments_store& store ) const = 0;
 
 protected:
     void                    add_cla_id_impl( cstring prefix,
@@ -216,9 +218,6 @@ protected:
     typed_param( cstring name, bool is_optional, Modifiers const& m )
     : basic_param( name, is_optional, m )
     {
-        nfp::optionally_assign( m_optional_value, m, optional_value );
-        nfp::optionally_assign( m_default_value, m, default_value );
-
         if( m.has( optional_value ) )
             p_has_optional_value.value = true;
 
@@ -231,21 +230,13 @@ protected:
         return basic_param_ptr( new Derived( *static_cast<Derived const*>(this) ) );
     }
 
-    virtual void            set_default( arguments_store& store ) const {
-        if( !p_has_default_value )
-            return;
-
-        store.set( p_name, m_default_value );
-    }
-
-    // Data members
-    ValueType   m_optional_value;
-    ValueType   m_default_value;
-
 private:
     void                    value_help( std::ostream& ostr )
     {
-        ostr << "<value>";
+        if( p_value_hint->empty() )
+            ostr << "<value>";
+        else
+            ostr << p_value_hint;
     }
 };
 
@@ -256,79 +247,51 @@ private:
 // ************************************************************************** //
 
 enum args_amount {
-    REQUIRED_PARAM,   // exactly 1
     OPTIONAL_PARAM,   // 0-1
+    REQUIRED_PARAM,   // exactly 1
     REPEATABLE_PARAM  // 0-N
 };
 
 //____________________________________________________________________________//
 
-template<typename ValueType, args_amount a = runtime::OPTIONAL_PARAM>
-class parameter : public typed_param<ValueType, parameter<ValueType, a>> {
-    typedef typed_param<ValueType, parameter<ValueType, a>> base;
+template<typename ValueType, args_amount a = runtime::OPTIONAL_PARAM, bool is_enum = false>
+class parameter : public typed_param<ValueType, parameter<ValueType, a, is_enum>> {
+    typedef typed_param<ValueType, parameter<ValueType, a, is_enum>> base;
 public:
     /// Constructor with modifiers
     template<typename Modifiers=nfp::no_params_type>
     parameter( cstring name, Modifiers const& m = nfp::no_params )
     : base( name, a != runtime::REQUIRED_PARAM, m )
+    , m_arg_factory( m )
     {
-        if( m.has( default_value ) && a == runtime::REQUIRED_PARAM )
-            BOOST_TEST_IMPL_THROW( invalid_param_spec() << "Parameter " << name << " is required and can't have default_value." );
-    }
+        this->p_repeatable.value = (a == runtime::REPEATABLE_PARAM);
 
-    virtual void    produce_argument( cstring token, bool negative_form, arguments_store& store ) const
-    {
-        cstring name = this->p_name;
+        if( m.has( default_value ) && a != runtime::OPTIONAL_PARAM )
+            BOOST_TEST_IMPL_THROW( invalid_param_spec() << "Parameter " << name 
+                                                        << " is not optional and can't have default_value." );
 
-        ValueType value = this->m_optional_value;
-
-        if( !token.empty() || !this->p_has_optional_value )
-            interpret_argument_value( token, value );
-
-        store.set( name, value );
-    }
-};
-
-//____________________________________________________________________________//
-
-template<typename ValueType>
-class parameter<ValueType, runtime::REPEATABLE_PARAM> 
-: public typed_param<std::vector<ValueType>, parameter<ValueType, runtime::REPEATABLE_PARAM>> {
-    typedef typed_param<std::vector<ValueType>, parameter<ValueType, runtime::REPEATABLE_PARAM>> base;
-public:
-    /// Constructor with modifiers
-    template<typename Modifiers=nfp::no_params_type>
-    parameter( cstring name, Modifiers const& m = nfp::no_params )
-    : base( name, true, (m, default_value = std::vector<ValueType>{} ) )
-    {
-        this->p_repeatable.value = true;
-
-        if( m.has( default_value ) )
-            BOOST_TEST_IMPL_THROW( invalid_param_spec() << "Parameter " << this->p_name
-                                                        << " is repeatable with a default value of empty list." );
-
-        if( m.has( optional_value ) )
-            BOOST_TEST_IMPL_THROW( invalid_param_spec() << "Parameter " << this->p_name
+        if( m.has( optional_value ) && this->p_repeatable )
+            BOOST_TEST_IMPL_THROW( invalid_param_spec() << "Parameter " << name
                                                         << " is repeatable and can't have optional value." );
     }
 
-    virtual void    produce_argument( cstring token, bool, arguments_store& store ) const
+    virtual void    produce_argument( cstring token, bool , arguments_store& store ) const
     {
-        cstring name = this->p_name;
-
-        ValueType value;
-        interpret_argument_value( token, value );
-
-        if( store.has( name ) ) {
-            std::vector<ValueType>& values = store.get<std::vector<ValueType> >( name );
-            values.push_back( value );
-        }
-        else {
-            std::vector<ValueType> values( 1, value );
-
-            store.set( name, values );
-        }
+        m_arg_factory.produce_argument( token, this->p_name, store );
     }
+
+    virtual void    produce_default( arguments_store& store ) const
+    {
+        if( !p_has_default_value )
+            return;
+
+        m_arg_factory.produce_default( p_name, store );
+    }
+
+private:
+    // Data members
+    typedef argument_factory<ValueType, is_enum, a == runtime::REPEATABLE_PARAM> factory_t;
+    factory_t       m_arg_factory;
 };
 
 //____________________________________________________________________________//
@@ -339,14 +302,9 @@ public:
     /// Constructor with modifiers
     template<typename Modifiers=nfp::no_params_type>
     option( cstring name, Modifiers const& m = nfp::no_params )
-    : base( name, true, (m, optional_value=true) )
+    : base( name, true, (m, optional_value = true, default_value = false) )
+    , m_arg_factory(( m, default_value = false ))
     {
-        p_repeatable.value = false;
-
-        if( !m.has( default_value ) ) {
-            p_has_default_value.value = true;
-            m_default_value = false;
-        }
     }
 
     void            add_cla_id( cstring prefix, cstring full_name, cstring value_separator, bool negatable = false )
@@ -354,32 +312,41 @@ public:
         add_cla_id_impl( prefix, full_name, value_separator, negatable, false );
     }
 
+private:
     virtual void    produce_argument( cstring token, bool negative_form, arguments_store& store ) const
     {
-        bool value = !negative_form;
-
-        if( !token.empty() ) {
+        if( token.empty() )
+            store.set( p_name, !negative_form );
+        else {
             if( negative_form )
                 BOOST_TEST_IMPL_THROW( format_error() << "Negative form of the argument does not allow value beeing set." );
 
-            interpret_argument_value( token, value );
+            m_arg_factory.produce_argument( p_name, token, store );
         }
-
-        store.set( p_name, value );
     }
-private:
-    virtual void            cla_name_help( std::ostream& ostr, cstring cla_full_name, cstring negation_prefix )
+
+    virtual void    produce_default( arguments_store& store ) const
+    {
+        m_arg_factory.produce_default( p_name, store );
+    }
+    virtual void    cla_name_help( std::ostream& ostr, cstring cla_full_name, cstring negation_prefix )
     {
         if( negation_prefix.is_empty() )
             ostr << cla_full_name;
         else
             ostr << '[' << negation_prefix << ']' << cla_full_name;
     }
-    virtual void            value_help( std::ostream& ostr )
+    virtual void    value_help( std::ostream& ostr )
     {
-        ostr << "<yes/no value>";
+        if( p_value_hint->empty() )
+            ostr << "<yes/no value>";
+        else
+            ostr << p_value_hint;
     }
 
+    // Data members
+    typedef argument_factory<bool, false, false> factory_t;
+    factory_t       m_arg_factory;
 };
 
 //____________________________________________________________________________//
@@ -416,7 +383,7 @@ public:
     /// Returns true if parameter with psecified name is registered
     bool                    has( cstring name ) const
     {
-        return m_parameters.find( name ) == m_parameters.end();
+        return m_parameters.find( name ) != m_parameters.end();
     }
     /// Returns map of all the registered parameter
     basic_param_ptr         get( cstring name ) const
