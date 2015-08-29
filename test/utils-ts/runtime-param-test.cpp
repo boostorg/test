@@ -233,7 +233,17 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
     BOOST_CHECK_THROW( (rt::parameter<int,rt::REPEATABLE_PARAM>( "P", rt::optional_value = std::vector<int>{1})), rt::invalid_param_spec );
 
     enum EnumType { V1, V2 };
-    rt::enum_parameter<EnumType> p8( "P8", rt::enum_values<EnumType>::value = {{"V1", V1},{"V2", V2}} );
+    rt::enum_parameter<EnumType> p8( "P8", (
+        rt::enum_values<EnumType>::value = {
+            {"V1", V1},
+            {"V2", V2}},
+        rt::default_value = V1
+    ));
+
+    BOOST_TEST( !p1.p_optional );
+    BOOST_TEST( !p1.p_repeatable );
+    BOOST_TEST( !p1.p_has_optional_value );
+    BOOST_TEST( p1.p_has_default_value );
 }
 
 //____________________________________________________________________________//
@@ -839,6 +849,85 @@ BOOST_AUTO_TEST_CASE( test_negation_prefix )
         BOOST_CHECK_THROW( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
     }
 }
+
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_enum_parameter )
+{
+    rt::parameters_store params_store;
+
+    enum EnumType { V1, V2, V3 };
+    rt::enum_parameter<EnumType> p1( "P1", (
+        rt::enum_values<EnumType>::value = {
+            {"V1", V1},
+            {"V2", V2}},
+        rt::default_value = V3
+    ));
+
+    p1.add_cla_id( "--", "param_one", "=" );
+    params_store.add( p1 );
+
+    rt::enum_parameter<EnumType, rt::REPEATABLE_PARAM> p2( "P2", (
+        rt::enum_values<EnumType>::value = {
+            {"V1", V1},
+            {"V2", V2},
+            {"V2alt", V2},
+            {"V3", V3}},
+        rt::default_value = V3
+    ));
+    p2.add_cla_id( "--", "param_two", " " );
+    params_store.add( p2 );
+
+    rt::cla::parser parser( params_store );
+
+    {
+        rt::arguments_store args_store;
+        char const* argv[] = { "test.exe", "--param_one=V1" };
+        parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store );
+        BOOST_TEST( args_store.has( "P1" ) );
+        BOOST_TEST( args_store.get<EnumType>( "P1" ) == V1 );
+    }
+
+    {
+        rt::arguments_store args_store;
+        char const* argv[] = { "test.exe", "--param_one=V2" };
+        parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store );
+        BOOST_TEST( args_store.has( "P1" ) );
+        BOOST_TEST( args_store.get<EnumType>( "P1" ) == V2 );
+    }
+
+    {
+        rt::arguments_store args_store;
+        char const* argv[] = { "test.exe" };
+        parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store );
+        BOOST_TEST( args_store.has( "P1" ) );
+        BOOST_TEST( args_store.get<EnumType>( "P1" ) == V3 );
+    }
+
+    {
+        rt::arguments_store args_store;
+        char const* argv[] = { "test.exe", "--param_one=V3" };
+        BOOST_CHECK_THROW( parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
+    }
+
+    {
+        rt::arguments_store args_store;
+        char const* argv[] = { "test.exe", "--param_two", "V2alt", "--param_two", "V1", "--param_two", "V3" };
+        parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store );
+        BOOST_TEST( args_store.has( "P2" ) );
+        BOOST_TEST( args_store.get<std::vector<EnumType>>( "P2" ) == (std::vector<EnumType>{V2, V1, V3}) );
+    }
+
+    {
+        rt::arguments_store args_store;
+        char const* argv[] = { "test.exe" };
+        parser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store );
+        BOOST_TEST( args_store.has( "P2" ) );
+        BOOST_TEST( args_store.get<std::vector<EnumType>>( "P2" ) == std::vector<EnumType>{} );
+    }
+}
+
+//____________________________________________________________________________//
 
 BOOST_AUTO_TEST_SUITE_END()
 

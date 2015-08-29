@@ -108,6 +108,10 @@ public:
     /// interface for cloning typed parameters
     virtual basic_param_ptr clone() const = 0;
 
+    /// interface for producing argument values for this parameter
+    virtual void            produce_argument( cstring token, bool negative_form, arguments_store& store ) const = 0;
+    virtual void            produce_default( arguments_store& store ) const = 0;
+
     /// interfaces for help message reporting
     virtual void            usage( std::ostream& ostr, cstring negation_prefix )
     {
@@ -168,10 +172,6 @@ public:
     {
         add_cla_id_impl( prefix, full_name, value_separator, false, true );
     }
-
-    /// interface for producing argument values for this parameter
-    virtual void            produce_argument( cstring token, bool negative_form, arguments_store& store ) const = 0;
-    virtual void            produce_default( arguments_store& store ) const = 0;
 
 protected:
     void                    add_cla_id_impl( cstring prefix,
@@ -249,11 +249,14 @@ public:
     }
 
 private:
+    virtual basic_param_ptr clone() const
+    {
+        return basic_param_ptr( new parameter( *this ) );
+    }
     virtual void    produce_argument( cstring token, bool , arguments_store& store ) const
     {
         m_arg_factory.produce_argument( token, this->p_name, store );
     }
-
     virtual void    produce_default( arguments_store& store ) const
     {
         if( !this->p_has_default_value )
@@ -262,18 +265,10 @@ private:
         m_arg_factory.produce_default( this->p_name, store );
     }
 
-    virtual basic_param_ptr clone() const
-    {
-        return basic_param_ptr( new parameter( *this ) );
-    }
-
     // Data members
     typedef argument_factory<ValueType, is_enum, a == runtime::REPEATABLE_PARAM> factory_t;
     factory_t       m_arg_factory;
 };
-
-template<typename ValueType, args_amount a = runtime::OPTIONAL_PARAM>
-using enum_parameter = parameter<ValueType, a, true>;
 
 //____________________________________________________________________________//
 
@@ -335,6 +330,38 @@ private:
 };
 
 //____________________________________________________________________________//
+
+template<typename EnumType, args_amount a = runtime::OPTIONAL_PARAM>
+class enum_parameter : public parameter<EnumType, a, true> {
+    typedef parameter<EnumType, a, true> base;
+public:
+    /// Constructor with modifiers
+    template<typename Modifiers=nfp::no_params_type>
+    enum_parameter( cstring name, Modifiers const& m = nfp::no_params )
+    : base( name, m )
+    {
+        auto const& values = m[enum_values<EnumType>::value];
+        auto it = values.begin();
+        while( it != values.end() ) {
+            m_valid_names.push_back( it->first );
+            ++it;
+        }
+    }
+
+private:
+    virtual void    value_help( std::ostream& ostr )
+    {
+        if( p_value_hint->empty() ) {
+            ostr << "<";
+            ostr << ">";
+        }
+        else
+            ostr << p_value_hint;
+    }
+
+    // Data members
+    std::vector<cstring>    m_valid_names;
+};
 
 // ************************************************************************** //
 // **************           runtime::parameters_store          ************** //
