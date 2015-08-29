@@ -19,7 +19,7 @@
 #include <boost/test/utils/runtime/fwd.hpp>
 #include <boost/test/utils/runtime/modifier.hpp>
 #include <boost/test/utils/runtime/argument.hpp>
-#include <boost/test/utils/runtime/interpret_argument_value.hpp>
+#include <boost/test/utils/runtime/argument_factory.hpp>
 
 // Boost.Test
 #include <boost/test/utils/class_properties.hpp>
@@ -46,17 +46,17 @@ struct parameter_cla_id {
     , m_negatable( negatable )
     {
 
-        if( !std::all_of( m_prefix.begin(), m_prefix.end(), valid_prefix_char ) )
-            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << m_full_name
-                                                    << " has invalid characters in prefix." );
+        BOOST_TEST_I_ASSRT( std::all_of( m_prefix.begin(), m_prefix.end(), valid_prefix_char ),
+                            invalid_cla_id() << "Parameter " << m_full_name
+                                             << " has invalid characters in prefix." );
 
-        if( !std::all_of( m_full_name.begin(), m_full_name.end(), valid_name_char ) )
-            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << m_full_name
-                                                    << " has invalid characters in name." );
+        BOOST_TEST_I_ASSRT( std::all_of( m_full_name.begin(), m_full_name.end(), valid_name_char ),
+                            invalid_cla_id() << "Parameter " << m_full_name
+                                             << " has invalid characters in name." );
 
-        if( !std::all_of( m_value_separator.begin(), m_value_separator.end(), valid_separator_char ) )
-            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << m_full_name
-                                                    << " has invalid characters in value separator." );
+        BOOST_TEST_I_ASSRT( std::all_of( m_value_separator.begin(), m_value_separator.end(), valid_separator_char ),
+                            invalid_cla_id() << "Parameter " << m_full_name
+                                             << " has invalid characters in value separator." );
     }
 
     static bool             valid_prefix_char( char c )
@@ -90,13 +90,13 @@ class basic_param {
 protected:
     /// Constructor with modifiers
     template<typename Modifiers>
-    basic_param( cstring name, bool is_optional, Modifiers const& m )
+    basic_param( cstring name, bool is_optional, bool is_repeatable, Modifiers const& m )
     : p_name( name.begin(), name.end() )
     , p_description( nfp::optionally_get<std::string>( m, description ) )
     , p_optional( is_optional )
-    , p_repeatable( false )
-    , p_has_optional_value( false )
-    , p_has_default_value( false )
+    , p_repeatable( is_repeatable )
+    , p_has_optional_value( m.has( optional_value ) )
+    , p_has_default_value( m.has( default_value ) || is_repeatable )
     {
         nfp::optionally_assign( p_env_var.value, m, env_var );
         nfp::optionally_assign( p_value_hint.value, m, value_hint );
@@ -114,6 +114,7 @@ public:
         ostr     << "Parameter: " << p_name << "\n";
         if( !p_description.empty() )
             ostr << ' ' << p_description << "\n";
+
         ostr     << " Command line formats:\n";
         BOOST_TEST_FOREACH( parameter_cla_id const&, id, cla_ids() ) {
             ostr << "   " << id.m_prefix;
@@ -157,7 +158,7 @@ public:
     string_property         p_env_var;
     string_property         p_value_hint;
     bool const              p_optional;
-    bool_property           p_repeatable;
+    bool const              p_repeatable;
     bool_property           p_has_optional_value;
     bool_property           p_has_default_value;
 
@@ -179,17 +180,22 @@ protected:
                                              bool negatable,
                                              bool validate_value_separator )
     {
-        if( full_name.is_empty() )
-            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter can't have an empty name." );
-        if( prefix.is_empty() )
-            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << full_name << " can't have an empty prefix." );
-        if( value_separator.is_empty() )
-            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << full_name << " can't have an empty value separator." );
+        BOOST_TEST_I_ASSRT( !full_name.is_empty(),
+                            invalid_cla_id() << "Parameter can't have an empty name." );
 
-        // We trim value separaotr from all the spaces, so token end will indicate separator
+        BOOST_TEST_I_ASSRT( !prefix.is_empty(),
+                            invalid_cla_id() << "Parameter " << full_name
+                                             << " can't have an empty prefix." );
+
+        BOOST_TEST_I_ASSRT( !value_separator.is_empty(),
+                            invalid_cla_id() << "Parameter " << full_name
+                                             << " can't have an empty value separator." );
+
+        // We trim value separator from all the spaces, so token end will indicate separator
         value_separator.trim();
-        if( validate_value_separator && value_separator.is_empty() && !!p_has_optional_value )
-            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Parameter " << full_name << " with optional value attribute can't use space as value separator." );
+        BOOST_TEST_I_ASSRT( !validate_value_separator || !value_separator.is_empty() || !p_has_optional_value,
+                            invalid_cla_id() << "Parameter " << full_name
+                                             << " with optional value attribute can't use space as value separator." );
 
         m_cla_ids.push_back( parameter_cla_id( prefix, full_name, value_separator, negatable ) );
     }
@@ -200,47 +206,17 @@ private:
     {
         ostr << cla_full_name;
     }
-    virtual void            value_help( std::ostream& ostr ) = 0;
-
-    // Data members
-    parameter_cla_ids       m_cla_ids;
-};
-
-// ************************************************************************** //
-// **************             runtime::typed_param             ************** //
-// ************************************************************************** //
-
-template<typename ValueType, typename Derived>
-class typed_param : public basic_param {
-protected:
-    /// Constructor with modifiers
-    template<typename Modifiers>
-    typed_param( cstring name, bool is_optional, Modifiers const& m )
-    : basic_param( name, is_optional, m )
-    {
-        if( m.has( optional_value ) )
-            p_has_optional_value.value = true;
-
-        if( m.has( default_value ) )
-            p_has_default_value.value = true;
-    }
-
-    virtual basic_param_ptr clone() const
-    {
-        return basic_param_ptr( new Derived( *static_cast<Derived const*>(this) ) );
-    }
-
-private:
-    void                    value_help( std::ostream& ostr )
+    virtual void            value_help( std::ostream& ostr )
     {
         if( p_value_hint->empty() )
             ostr << "<value>";
         else
             ostr << p_value_hint;
     }
-};
 
-//____________________________________________________________________________//
+    // Data members
+    parameter_cla_ids       m_cla_ids;
+};
 
 // ************************************************************************** //
 // **************              runtime::parameter              ************** //
@@ -255,26 +231,24 @@ enum args_amount {
 //____________________________________________________________________________//
 
 template<typename ValueType, args_amount a = runtime::OPTIONAL_PARAM, bool is_enum = false>
-class parameter : public typed_param<ValueType, parameter<ValueType, a, is_enum>> {
-    typedef typed_param<ValueType, parameter<ValueType, a, is_enum>> base;
+class parameter : public basic_param {
 public:
     /// Constructor with modifiers
     template<typename Modifiers=nfp::no_params_type>
     parameter( cstring name, Modifiers const& m = nfp::no_params )
-    : base( name, a != runtime::REQUIRED_PARAM, m )
+    : basic_param( name, a != runtime::REQUIRED_PARAM, a == runtime::REPEATABLE_PARAM, m )
     , m_arg_factory( m )
     {
-        this->p_repeatable.value = (a == runtime::REPEATABLE_PARAM);
+        BOOST_TEST_I_ASSRT( !m.has( default_value ) || a == runtime::OPTIONAL_PARAM,
+                            invalid_param_spec() << "Parameter " << name
+                                                 << " is not optional and can't have default_value." );
 
-        if( m.has( default_value ) && a != runtime::OPTIONAL_PARAM )
-            BOOST_TEST_IMPL_THROW( invalid_param_spec() << "Parameter " << name 
-                                                        << " is not optional and can't have default_value." );
-
-        if( m.has( optional_value ) && this->p_repeatable )
-            BOOST_TEST_IMPL_THROW( invalid_param_spec() << "Parameter " << name
-                                                        << " is repeatable and can't have optional value." );
+        BOOST_TEST_I_ASSRT( !m.has( optional_value ) || !this->p_repeatable,
+                            invalid_param_spec() << "Parameter " << name
+                                                 << " is repeatable and can't have optional_value." );
     }
 
+private:
     virtual void    produce_argument( cstring token, bool , arguments_store& store ) const
     {
         m_arg_factory.produce_argument( token, this->p_name, store );
@@ -282,28 +256,34 @@ public:
 
     virtual void    produce_default( arguments_store& store ) const
     {
-        if( !p_has_default_value )
+        if( !this->p_has_default_value )
             return;
 
-        m_arg_factory.produce_default( p_name, store );
+        m_arg_factory.produce_default( this->p_name, store );
     }
 
-private:
+    virtual basic_param_ptr clone() const
+    {
+        return basic_param_ptr( new parameter( *this ) );
+    }
+
     // Data members
     typedef argument_factory<ValueType, is_enum, a == runtime::REPEATABLE_PARAM> factory_t;
     factory_t       m_arg_factory;
 };
 
+template<typename ValueType, args_amount a = runtime::OPTIONAL_PARAM>
+using enum_parameter = parameter<ValueType, a, true>;
+
 //____________________________________________________________________________//
 
-class option : public typed_param<bool, option> {
-    typedef typed_param<bool, option> base;
+class option : public basic_param {
 public:
     /// Constructor with modifiers
     template<typename Modifiers=nfp::no_params_type>
     option( cstring name, Modifiers const& m = nfp::no_params )
-    : base( name, true, (m, optional_value = true, default_value = false) )
-    , m_arg_factory(( m, default_value = false ))
+    : basic_param( name, true, false, (m, optional_value = true, default_value = false) )
+    , m_arg_factory(( m, optional_value = true, default_value = false ))
     {
     }
 
@@ -313,13 +293,18 @@ public:
     }
 
 private:
+    virtual basic_param_ptr clone() const
+    {
+        return basic_param_ptr( new option( *this ) );
+    }
+
     virtual void    produce_argument( cstring token, bool negative_form, arguments_store& store ) const
     {
         if( token.empty() )
             store.set( p_name, !negative_form );
         else {
-            if( negative_form )
-                BOOST_TEST_IMPL_THROW( format_error() << "Negative form of the argument does not allow value beeing set." );
+            BOOST_TEST_I_ASSRT( !negative_form,
+                                format_error() << "Can't set value to negative form of the argument." );
 
             m_arg_factory.produce_argument( p_name, token, store );
         }
@@ -372,8 +357,8 @@ public:
     {
         basic_param_ptr p = in.clone();
 
-        if( !m_parameters.insert( std::make_pair( cstring(p->p_name), p ) ).second )
-            BOOST_TEST_IMPL_THROW( duplicate_param() << "Parameter " << p->p_name << " is duplicate." );
+        BOOST_TEST_I_ASSRT( m_parameters.insert( std::make_pair( cstring(p->p_name), p ) ).second,
+                            duplicate_param() << "Parameter " << p->p_name << " is duplicate." );
     }
 
     /// Returns true if there is no parameters registered
@@ -389,8 +374,8 @@ public:
     basic_param_ptr         get( cstring name ) const
     {
         auto const& found = m_parameters.find( name );
-        if( found == m_parameters.end() )
-            BOOST_TEST_IMPL_THROW( unknown_param() << "Parameter " << name << " is unknown." );
+        BOOST_TEST_I_ASSRT( found != m_parameters.end(),
+                            unknown_param() << "Parameter " << name << " is unknown." );
 
         return found->second;
     }

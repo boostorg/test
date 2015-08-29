@@ -170,8 +170,7 @@ static void
 invoke_init_func( init_unit_test_func init_func )
 {
 #ifdef BOOST_TEST_ALTERNATIVE_INIT_API
-    if( !(*init_func)() )
-        BOOST_TEST_IMPL_THROW( std::runtime_error( "test module initialization failed" ) );
+    BOOST_TEST_I_ASSRT( (*init_func)(), std::runtime_error( "test module initialization failed" ) );
 #else
     test_suite*  manual_test_units = (*init_func)( framework::master_test_suite().argc, framework::master_test_suite().argv );
 
@@ -833,10 +832,10 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     using namespace impl;
 
     // 70. Invoke test module initialization routine
-    BOOST_TEST_IMPL_TRY {
+    BOOST_TEST_I_TRY {
         s_frk_state().m_aux_em.vexecute( boost::bind( &impl::invoke_init_func, init_func ) );
     }
-    BOOST_TEST_IMPL_CATCH( execution_exception, ex )  {
+    BOOST_TEST_I_CATCH( execution_exception, ex )  {
         BOOST_TEST_SETUP_ASSERT( false, ex.what() );
     }
 }
@@ -1157,8 +1156,7 @@ get( test_unit_id id, test_unit_type t )
 {
     test_unit* res = impl::s_frk_state().m_test_units[id];
 
-    if( (res->p_type & t) == 0 )
-        BOOST_TEST_IMPL_THROW( internal_error( "Invalid test unit type" ) );
+    BOOST_TEST_I_ASSRT( (res->p_type & t) != 0, internal_error( "Invalid test unit type" ) );
 
     return *res;
 }
@@ -1192,10 +1190,10 @@ run( test_unit_id id, bool continue_test )
 
     if( call_start_finish ) {
         BOOST_TEST_FOREACH( test_observer*, to, impl::s_frk_state().m_observers ) {
-            BOOST_TEST_IMPL_TRY {
+            BOOST_TEST_I_TRY {
                 impl::s_frk_state().m_aux_em.vexecute( boost::bind( &test_observer::test_start, to, tcc.p_count ) );
             }
-            BOOST_TEST_IMPL_CATCH( execution_exception, ex ) {
+            BOOST_TEST_I_CATCH( execution_exception, ex ) {
                 BOOST_TEST_SETUP_ASSERT( false, ex.what() );
             }
         }

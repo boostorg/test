@@ -461,7 +461,7 @@ init( int& argc, char** argv )
 {
     shared_ptr<rt::cla::parser> parser;
 
-    BOOST_TEST_IMPL_TRY {
+    BOOST_TEST_I_TRY {
         // Initialize parameters list
         if( s_parameters_store.is_empty() )
             register_parameters( s_parameters_store );
@@ -482,11 +482,11 @@ init( int& argc, char** argv )
         // Report help if requested
         if( s_const_arguments_store.get<bool>( USAGE ) ) {
             parser->usage( std::cerr );
-            BOOST_TEST_IMPL_THROW( framework::nothing_to_test() );
+            BOOST_TEST_I_THROW( framework::nothing_to_test() );
         }
         else if( s_const_arguments_store.has( HELP ) ) {
             parser->help( std::cerr, s_parameters_store, s_const_arguments_store.get<std::string>( HELP ) );
-            BOOST_TEST_IMPL_THROW( framework::nothing_to_test() );
+            BOOST_TEST_I_THROW( framework::nothing_to_test() );
         }
 
         // A bit of business logic: output_format takes precedence over log/report formats
@@ -496,10 +496,10 @@ init( int& argc, char** argv )
             s_arguments_store.set( LOG_FORMAT, of );
         }
     }
-    BOOST_TEST_IMPL_CATCH( rt::init_error, ex ) {
+    BOOST_TEST_I_CATCH( rt::init_error, ex ) {
         BOOST_TEST_SETUP_ASSERT( false, ex.msg );
     }
-    BOOST_TEST_IMPL_CATCH( rt::ambiguous_param, ex ) {
+    BOOST_TEST_I_CATCH( rt::ambiguous_param, ex ) {
         std::cerr << ex.msg << "\n Did you mean one of these?\n";
 
         BOOST_TEST_FOREACH( rt::cstring, name, ex.m_amb_candidates )
@@ -510,9 +510,9 @@ init( int& argc, char** argv )
         if( parser )
             parser->usage( std::cerr );
         
-        BOOST_TEST_IMPL_THROW( framework::nothing_to_test() );
+        BOOST_TEST_I_THROW( framework::nothing_to_test() );
     }
-    BOOST_TEST_IMPL_CATCH( rt::unrecognized_param, ex ) {
+    BOOST_TEST_I_CATCH( rt::unrecognized_param, ex ) {
         std::cerr << ex.msg << "\n";
 
         if( !ex.m_typo_candidates.empty() ) {
@@ -527,15 +527,15 @@ init( int& argc, char** argv )
         if( parser )
             parser->usage( std::cerr );
         
-        BOOST_TEST_IMPL_THROW( framework::nothing_to_test() );
+        BOOST_TEST_I_THROW( framework::nothing_to_test() );
     }
-    BOOST_TEST_IMPL_CATCH( rt::input_error, ex ) {
+    BOOST_TEST_I_CATCH( rt::input_error, ex ) {
         std::cerr << ex.msg << "\n\n";
 
         if( parser )
             parser->usage( std::cerr );
         
-        BOOST_TEST_IMPL_THROW( framework::nothing_to_test() );
+        BOOST_TEST_I_THROW( framework::nothing_to_test() );
     }
 }
 

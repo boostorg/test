@@ -35,11 +35,11 @@ template<typename E>
 inline void
 throw_exception(E const& e) { abort(); }
 
-#define BOOST_TEST_IMPL_TRY
-#define BOOST_TEST_IMPL_CATCH( T, var ) for(T const& var = *(T*)0; false;)
-#define BOOST_TEST_IMPL_CATCH0( T ) if(0)
-#define BOOST_TEST_IMPL_CATCHALL() if(0)
-#define BOOST_TEST_IMPL_RETHROW
+#define BOOST_TEST_I_TRY
+#define BOOST_TEST_I_CATCH( T, var ) for(T const& var = *(T*)0; false;)
+#define BOOST_TEST_I_CATCH0( T ) if(0)
+#define BOOST_TEST_I_CATCHALL() if(0)
+#define BOOST_TEST_I_RETHROW
 
 #else
 
@@ -47,16 +47,19 @@ template<typename E>
 inline void
 throw_exception(E const& e) { throw e; }
 
-#define BOOST_TEST_IMPL_TRY try
-#define BOOST_TEST_IMPL_CATCH( T, var ) catch( T const& var )
-#define BOOST_TEST_IMPL_CATCH0( T ) catch( T const& )
-#define BOOST_TEST_IMPL_CATCHALL() catch(...)
-#define BOOST_TEST_IMPL_RETHROW throw
+#define BOOST_TEST_I_TRY try
+#define BOOST_TEST_I_CATCH( T, var ) catch( T const& var )
+#define BOOST_TEST_I_CATCH0( T ) catch( T const& )
+#define BOOST_TEST_I_CATCHALL() catch(...)
+#define BOOST_TEST_I_RETHROW throw
 #endif
 
 //____________________________________________________________________________//
 
-#define BOOST_TEST_IMPL_THROW( E ) unit_test::ut_detail::throw_exception( E )
+#define BOOST_TEST_I_THROW( E ) unit_test::ut_detail::throw_exception( E )
+#define BOOST_TEST_I_THROW( E ) unit_test::ut_detail::throw_exception( E )
+#define BOOST_TEST_I_ASSRT( cond, ex ) if( cond ) {} else BOOST_TEST_I_THROW( ex )
+
 
 } // namespace ut_detail
 } // namespace unit_test

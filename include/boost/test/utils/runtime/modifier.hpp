@@ -38,6 +38,13 @@ nfp::typed_keyword<cstring,struct end_of_params_t>  end_of_params;
 nfp::typed_keyword<cstring,struct neg_prefix_t>     negation_prefix;
 nfp::typed_keyword<cstring,struct value_hint_t>     value_hint;
 
+template<typename EnumType>
+using enum_values = unit_test::ut_detail::static_constant<
+  nfp::typed_keyword<std::initializer_list<std::pair<const cstring,EnumType>>, struct enum_values_t>
+>;
+
+// nfp::typed_keyword<std::initializer_list<std::pair<const cstring,int>>, struct enum_values_t> enum_values;
+
 nfp::keyword<struct optional_value_t>               optional_value;
 nfp::keyword<struct default_value_t>                default_value;
 nfp::keyword<struct handler_t>                      handler;

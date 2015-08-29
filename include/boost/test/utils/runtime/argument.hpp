@@ -94,13 +94,15 @@ public:
     template<typename T>
     T&          get( cstring parameter_name ) {
         auto found = m_arguments.find( parameter_name );
-        if( found == m_arguments.end() )
-            BOOST_TEST_IMPL_THROW( missing_argument() << "There is no argument provided for parameter " << parameter_name );
+        BOOST_TEST_I_ASSRT( found != m_arguments.end(),
+            missing_argument() << "There is no argument provided for parameter "
+                               << parameter_name );
 
         argument_ptr arg = found->second;
 
-        if( arg->p_value_type != rtti::type_id<T>() )
-            BOOST_TEST_IMPL_THROW( arg_type_mismatch() << "Access with invalid type for argument corresponding to parameter " << parameter_name );
+        BOOST_TEST_I_ASSRT( arg->p_value_type == rtti::type_id<T>(),
+            arg_type_mismatch() << "Access with invalid type for argument corresponding to parameter "
+                                << parameter_name );
 
         return static_cast<typed_argument<T>&>( *arg ).p_value.value;
     }

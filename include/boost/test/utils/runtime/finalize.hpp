@@ -39,10 +39,10 @@ finalize_arguments( parameters_store const& params, runtime::arguments_store& ar
         }
 
         if( !args.has( param->p_name ) ) {
-            if( !param->p_optional )
-                BOOST_TEST_IMPL_THROW( missing_arg() << "Required argument " << param->p_name << " is missing." );
+            BOOST_TEST_I_ASSRT( param->p_optional,
+                missing_arg() << "Required argument " << param->p_name << " is missing." );
         }
-    }    
+    }
 }
 
 } // namespace runtime

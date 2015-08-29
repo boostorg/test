@@ -231,6 +231,9 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
     BOOST_CHECK_THROW( (rt::parameter<int,rt::REQUIRED_PARAM>( "P", rt::default_value = 1)), rt::invalid_param_spec );
     BOOST_CHECK_THROW( (rt::parameter<int,rt::REPEATABLE_PARAM>( "P", rt::default_value = std::vector<int>{1})), rt::invalid_param_spec );
     BOOST_CHECK_THROW( (rt::parameter<int,rt::REPEATABLE_PARAM>( "P", rt::optional_value = std::vector<int>{1})), rt::invalid_param_spec );
+
+    enum EnumType { V1, V2 };
+    rt::enum_parameter<EnumType> p8( "P8", rt::enum_values<EnumType>::value = {{"V1", V1},{"V2", V2}} );
 }
 
 //____________________________________________________________________________//
@@ -1050,4 +1053,3 @@ BOOST_AUTO_TEST_CASE( test_finalize_arguments )
 // enum_parameter
 // streams as classes
 // eliminate access methods
-

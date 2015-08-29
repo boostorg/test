@@ -12,8 +12,8 @@
 //  Description : argument factories for different kinds of parameters
 // ***************************************************************************
 
-#ifndef BOOST_TEST_UTILS_RUNTIME_INTERPRET_ARGUMENT_VALUE_HPP
-#define BOOST_TEST_UTILS_RUNTIME_INTERPRET_ARGUMENT_VALUE_HPP
+#ifndef BOOST_TEST_UTILS_RUNTIME_ARGUMENT_FACTORY_HPP
+#define BOOST_TEST_UTILS_RUNTIME_ARGUMENT_FACTORY_HPP
 
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/errors.hpp>
@@ -24,7 +24,6 @@
 #include <boost/test/utils/basic_cstring/compare.hpp>
 
 // Boost
-#include <boost/optional.hpp>
 #include <boost/lexical_cast.hpp>
 
 // STL
@@ -46,12 +45,15 @@ struct value_interpreter;
 
 template<typename ValueType>
 struct value_interpreter<ValueType, false> {
+    template<typename Modifiers>
+    explicit    value_interpreter( Modifiers const& ) {}
+
     ValueType interpret( cstring source ) const
     {
-        BOOST_TEST_IMPL_TRY{
+        BOOST_TEST_I_TRY{
             return lexical_cast<ValueType>(source);
-        } BOOST_TEST_IMPL_CATCH0( bad_lexical_cast ) {
-            BOOST_TEST_IMPL_THROW( format_error() << source << " can't be interpreted as parameter type value." );
+        } BOOST_TEST_I_CATCH0( bad_lexical_cast ) {
+            BOOST_TEST_I_THROW( format_error() << source << " can't be interpreted as parameter type value." );
         }
         return ValueType{};
     }
@@ -61,6 +63,9 @@ struct value_interpreter<ValueType, false> {
 
 template<>
 struct value_interpreter<std::string, false> {
+    template<typename Modifiers>
+    explicit    value_interpreter( Modifiers const& ) {}
+
     std::string interpret( cstring source ) const
     {
         return std::string( source.begin(), source.size() );
@@ -71,6 +76,9 @@ struct value_interpreter<std::string, false> {
 
 template<>
 struct value_interpreter<cstring, false> {
+    template<typename Modifiers>
+    explicit    value_interpreter( Modifiers const& ) {}
+
     cstring interpret( cstring source ) const
     {
         return source;
@@ -81,6 +89,9 @@ struct value_interpreter<cstring, false> {
 
 template<>
 struct value_interpreter<bool, false> {
+    template<typename Modifiers>
+    explicit    value_interpreter( Modifiers const& ) {}
+
     bool    interpret( cstring source ) const
     {
         static cstring const YES( "YES" );
@@ -100,9 +111,34 @@ struct value_interpreter<bool, false> {
         if( case_ins_eq( source, NO ) || case_ins_eq( source, N ) || case_ins_eq( source, zero ) || case_ins_eq( source, FALSE ) )
             return false;
 
-        BOOST_TEST_IMPL_THROW( format_error() << source << " can't be interpreted as bool value." );
+        BOOST_TEST_I_THROW( format_error() << source << " can't be interpreted as bool value." );
         return false;
     }
+};
+
+//____________________________________________________________________________//
+
+template<typename EnumType>
+struct value_interpreter<EnumType, true> {
+    template<typename Modifiers>
+    explicit        value_interpreter( Modifiers const& m )
+    : m_name_to_value( m[enum_values<EnumType>::value] )
+    {
+    }
+
+    EnumType        interpret( cstring source ) const
+    {
+        auto found = m_name_to_value.find( source );
+
+        BOOST_TEST_I_ASSRT( found != m_name_to_value.end(),
+                            format_error() << source << " is not a valid enumeration value name." );
+
+        return found->second;
+    }
+
+private:
+    // Data members
+    std::map<cstring,EnumType>  m_name_to_value;
 };
 
 //____________________________________________________________________________//
@@ -121,7 +157,8 @@ class argument_factory<ValueType, is_enum, false> {
 public:
     template<typename Modifiers>
     explicit    argument_factory( Modifiers const& m )
-    : m_optional_value()
+    : m_interpreter( m )
+    , m_optional_value()
     , m_default_value()
     {
         nfp::optionally_assign( m_optional_value, m, optional_value );
@@ -152,7 +189,8 @@ template<typename ValueType, bool is_enum>
 class argument_factory<ValueType, is_enum, true> {
 public:
     template<typename Modifiers>
-    explicit    argument_factory( Modifiers const& )
+    explicit    argument_factory( Modifiers const& m )
+    : m_interpreter( m )
     {
     }
 
@@ -177,6 +215,7 @@ public:
     }
 
 private:
+    // Data members
     value_interpreter<ValueType, is_enum> m_interpreter;
 };
 
@@ -187,4 +226,4 @@ private:
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_TEST_UTILS_RUNTIME_INTERPRET_ARGUMENT_VALUE_HPP
+#endif // BOOST_TEST_UTILS_RUNTIME_ARGUMENT_FACTORY_HPP

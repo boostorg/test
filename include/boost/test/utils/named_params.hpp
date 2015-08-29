@@ -58,8 +58,7 @@ struct access_to_invalid_parameter {};
 inline void
 report_access_to_invalid_parameter(bool v)
 {
-    if(v)
-        BOOST_TEST_IMPL_THROW( access_to_invalid_parameter() );
+    BOOST_TEST_I_ASSRT( !v, access_to_invalid_parameter() );
 }
 
 //____________________________________________________________________________//
@@ -329,12 +328,12 @@ template<typename T, typename Params, typename Keyword>
 inline T
 optionally_get( Params const& p, Keyword k )
 {
-    if( !p.has(k) ) 
+    if( !p.has(k) )
         return T();
 
     T res;
     optionally_assign( res, p[k] );
-    
+
     return res;
 }
 
@@ -384,4 +383,3 @@ struct param_type<nfp_detail::named_parameter_combine<named_parameter<T,unique_i
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_UTILS_NAMED_PARAM
-

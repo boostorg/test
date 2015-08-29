@@ -75,10 +75,9 @@ struct parameter_trie {
     /// Registers candidate parameter for this subtrie. If final, it needs to be unique
     void                add_candidate_id( parameter_cla_id const& param_id, basic_param_ptr param_candidate, bool final )
     {
-        if( m_has_final_candidate || (final && !m_id_candidates.empty()) ) {
-            BOOST_TEST_IMPL_THROW( conflicting_param() << "Parameter cla id " << param_id.m_full_name << " conflicts with the "
-                                                       << "parameter cla id " << m_id_candidates.back().get().m_full_name );
-        }
+        BOOST_TEST_I_ASSRT( !m_has_final_candidate && (!final || m_id_candidates.empty()),
+          conflicting_param() << "Parameter cla id " << param_id.m_full_name << " conflicts with the "
+                              << "parameter cla id " << m_id_candidates.back().get().m_full_name );
 
         m_has_final_candidate = final;
         m_id_candidates.push_back( param_id );
@@ -120,15 +119,15 @@ public:
         nfp::optionally_assign( m_end_of_param_indicator, m, end_of_params );
         nfp::optionally_assign( m_negation_prefix, m, negation_prefix );
 
-        if( !std::all_of( m_end_of_param_indicator.begin(), 
-                          m_end_of_param_indicator.end(), 
-                          parameter_cla_id::valid_prefix_char ) )
-            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "End of parameters indicator can only consist of prefix characters." );
+        BOOST_TEST_I_ASSRT( std::all_of( m_end_of_param_indicator.begin(),
+                                         m_end_of_param_indicator.end(),
+                                         parameter_cla_id::valid_prefix_char ),
+                            invalid_cla_id() << "End of parameters indicator can only consist of prefix characters." );
 
-        if( !std::all_of( m_negation_prefix.begin(), 
-                          m_negation_prefix.end(), 
-                          parameter_cla_id::valid_name_char ) )
-            BOOST_TEST_IMPL_THROW( invalid_cla_id() << "Negation prefix can only consist of prefix characters." );
+        BOOST_TEST_I_ASSRT( std::all_of( m_negation_prefix.begin(),
+                                         m_negation_prefix.end(),
+                                         parameter_cla_id::valid_name_char ),
+                            invalid_cla_id() << "Negation prefix can only consist of prefix characters." );
 
         build_trie( parameters );
     }
@@ -169,10 +168,10 @@ public:
             // Locate trie corresponding to found prefix and skip it in the input
             trie_ptr curr_trie = m_param_trie[prefix];
 
-            if( !curr_trie ) {
-                BOOST_TEST_IMPL_THROW( format_error() << "Unrecognized parameter prefix in the argument " 
-                                                      << curr_token );
-            }
+            BOOST_TEST_I_ASSRT( curr_trie,
+                                format_error() << "Unrecognized parameter prefix in the argument "
+                                               << curr_token );
+
             tr.skip( prefix.size() );
 
             // Locate parameter based on a name and skip it in the input
@@ -181,9 +180,9 @@ public:
             basic_param_ptr         found_param = locate_res.second;
 
             if( negative_form ) {
-                if( !found_id.m_negatable )
-                    BOOST_TEST_IMPL_THROW( format_error() << "Parameter " << found_id.m_full_name 
-                                                          << " is not negatable" );
+                BOOST_TEST_I_ASSRT( found_id.m_negatable,
+                                    format_error() << "Parameter " << found_id.m_full_name
+                                                   << " is not negatable." );
 
                 tr.skip( m_negation_prefix.size() );
             }
@@ -195,25 +194,27 @@ public:
             // Skip validations if parameter has optional value and we are at the end of token
             if( !value_separator.is_empty() || !found_param->p_has_optional_value ) {
                 // Validate and skip value separator in the input
-                if( found_id.m_value_separator != value_separator ) {
-                    BOOST_TEST_IMPL_THROW( format_error() << "Invalid separator for the parameter " << found_param->p_name 
-                                                          << " in the argument " << curr_token );
-                }
+                BOOST_TEST_I_ASSRT( found_id.m_value_separator == value_separator,
+                                    format_error() << "Invalid separator for the parameter "
+                                                   << found_param->p_name
+                                                   << " in the argument " << curr_token );
 
                 tr.skip( value_separator.size() );
 
                 // Deduce value source
                 value = tr.get_token();
 
-                if( value.is_empty() )
-                    BOOST_TEST_IMPL_THROW( format_error() << "Missing an argument value for the parameter " << found_param->p_name 
-                                                          << " in the argument " << curr_token );
+                BOOST_TEST_I_ASSRT( !value.is_empty(),
+                                    format_error() << "Missing an argument value for the parameter "
+                                                   << found_param->p_name
+                                                   << " in the argument " << curr_token );
             }
 
             // Validate against argument duplication
-            if( res.has( found_param->p_name ) && !found_param->p_repeatable )
-                BOOST_TEST_IMPL_THROW( duplicate_arg() << "Duplicate argument value for the parameter " << found_param->p_name 
-                                                       << " in the argument " << curr_token );
+            BOOST_TEST_I_ASSRT( !res.has( found_param->p_name ) || found_param->p_repeatable,
+                                duplicate_arg() << "Duplicate argument value for the parameter "
+                                                << found_param->p_name
+                                                << " in the argument " << curr_token );
 
             // Produce argument value
             found_param->produce_argument( value, negative_form, res );
@@ -323,7 +324,7 @@ private:
             if( !prefix.is_empty() && prefix == m_end_of_param_indicator )
                 return false;
 
-            BOOST_TEST_IMPL_THROW( format_error() << "Invalid format for an actual argument " << token );
+            BOOST_TEST_I_THROW( format_error() << "Invalid format for an actual argument " << token );
         }
 
         // Match value separator
@@ -407,8 +408,8 @@ private:
                 }
             }
 
-            BOOST_TEST_IMPL_THROW( unrecognized_param( std::move(typo_candidate_names) ) 
-                                        << "An unrecognized parameter in the argument " 
+            BOOST_TEST_I_THROW( unrecognized_param( std::move(typo_candidate_names) )
+                                        << "An unrecognized parameter in the argument "
                                         << token );
         }
 
@@ -416,10 +417,9 @@ private:
             std::vector<cstring> amb_names;
             BOOST_TEST_FOREACH( parameter_cla_id const&, param_id, curr_trie->m_id_candidates )
                 amb_names.push_back( param_id.m_full_name );
-            
-            BOOST_TEST_IMPL_THROW( ambiguous_param( std::move( amb_names ) )
-                                        << "An ambiguous parameter name in the argument " 
-                                        << token );
+
+            BOOST_TEST_I_THROW( ambiguous_param( std::move( amb_names ) ) <<
+                                "An ambiguous parameter name in the argument " << token );
         }
 
         return locate_result( curr_trie->m_id_candidates.back().get(), curr_trie->m_param_candidate );
