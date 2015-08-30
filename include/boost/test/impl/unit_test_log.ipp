@@ -193,6 +193,14 @@ unit_test_log_t::test_unit_finish( test_unit const& tu, unsigned long elapsed )
 //____________________________________________________________________________//
 
 void
+unit_test_log_t::test_unit_skipped( test_unit const& tu )
+{
+    test_unit_skipped( tu, "<Unknown reason>" );
+}
+
+//____________________________________________________________________________//
+
+void
 unit_test_log_t::test_unit_skipped( test_unit const& tu, const_string reason )
 {
     if( s_log_impl().m_threshold_level > log_test_units )

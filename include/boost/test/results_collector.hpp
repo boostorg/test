@@ -100,6 +100,7 @@ public:
 
     virtual void        test_unit_start( test_unit const& );
     virtual void        test_unit_finish( test_unit const&, unsigned long );
+    virtual void        test_unit_skipped( test_unit const& );
     virtual void        test_unit_skipped( test_unit const&, const_string );
     virtual void        test_unit_aborted( test_unit const& );
 
