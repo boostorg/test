@@ -278,7 +278,7 @@ public:
     template<typename Modifiers=nfp::no_params_type>
     option( cstring name, Modifiers const& m = nfp::no_params )
     : basic_param( name, true, false, (m, optional_value = true, default_value = false) )
-    , m_arg_factory(( m, optional_value = true, default_value = false ))
+    , m_arg_factory( (m, optional_value = true, default_value = false) )
     {
     }
 

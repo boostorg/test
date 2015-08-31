@@ -240,10 +240,10 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
         rt::default_value = V1
     ));
 
-    BOOST_TEST( !p1.p_optional );
-    BOOST_TEST( !p1.p_repeatable );
-    BOOST_TEST( !p1.p_has_optional_value );
-    BOOST_TEST( p1.p_has_default_value );
+    BOOST_TEST( p8.p_optional );
+    BOOST_TEST( !p8.p_repeatable );
+    BOOST_TEST( !p8.p_has_optional_value );
+    BOOST_TEST( p8.p_has_default_value );
 }
 
 //____________________________________________________________________________//
@@ -872,8 +872,7 @@ BOOST_AUTO_TEST_CASE( test_enum_parameter )
             {"V1", V1},
             {"V2", V2},
             {"V2alt", V2},
-            {"V3", V3}},
-        rt::default_value = V3
+            {"V3", V3}}
     ));
     p2.add_cla_id( "--", "param_two", " " );
     params_store.add( p2 );
@@ -1094,6 +1093,7 @@ BOOST_AUTO_TEST_CASE( test_finalize_arguments )
     params_store.add( p3 );
 
     rt::option p4( "P4", rt::default_value = true );
+
     params_store.add( p4 );
 
     {
