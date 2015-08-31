@@ -23,7 +23,6 @@
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 #include <boost/test/utils/basic_cstring/compare.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
-#include <boost/test/utils/fixed_mapping.hpp>
 #include <boost/test/debug.hpp>
 #include <boost/test/framework.hpp>
 
@@ -33,18 +32,8 @@
 #include <boost/test/utils/runtime/parameter.hpp>
 #include <boost/test/utils/runtime/argument.hpp>
 #include <boost/test/utils/runtime/finalize.hpp>
-
 #include <boost/test/utils/runtime/cla/parser.hpp>
-
 #include <boost/test/utils/runtime/env/fetch.hpp>
-
-namespace rt = boost::runtime;
-
-#ifndef UNDER_CE
-// !!!! #include <boost/test/utils/runtime/env/variable.hpp>
-
-// !!!! namespace env = rt::env;
-#endif
 
 // Boost
 #include <boost/config.hpp>
@@ -69,85 +58,7 @@ namespace std { using ::getenv; using ::strncmp; using ::strcmp; }
 namespace boost {
 namespace unit_test {
 
-// ************************************************************************** //
-// **************    input operations for unit_test's enums    ************** //
-// ************************************************************************** //
-
-std::istream&
-operator>>( std::istream& in, unit_test::log_level& ll )
-{
-    static fixed_mapping<const_string,log_level,case_ins_less<char const> > log_level_name(
-        "all"           , log_successful_tests,
-        "success"       , log_successful_tests,
-        "test_suite"    , log_test_units,
-        "unit_scope"    , log_test_units,
-        "message"       , log_messages,
-        "warning"       , log_warnings,
-        "error"         , log_all_errors,
-        "cpp_exception" , log_cpp_exception_errors,
-        "system_error"  , log_system_errors,
-        "fatal_error"   , log_fatal_errors,
-        "nothing"       , log_nothing,
-
-        invalid_log_level
-        );
-
-    std::string val;
-    in >> val;
-
-    ll = log_level_name[val];
-    BOOST_TEST_SETUP_ASSERT( ll != invalid_log_level, "invalid log level " + val );
-
-    return in;
-}
-
-//____________________________________________________________________________//
-
-std::istream&
-operator>>( std::istream& in, unit_test::report_level& rl )
-{
-    fixed_mapping<const_string,unit_test::report_level,case_ins_less<char const> > report_level_name (
-        "confirm",  CONFIRMATION_REPORT,
-        "short",    SHORT_REPORT,
-        "detailed", DETAILED_REPORT,
-        "no",       NO_REPORT,
-
-        INV_REPORT_LEVEL
-        );
-
-    std::string val;
-    in >> val;
-
-    rl = report_level_name[val];
-    BOOST_TEST_SETUP_ASSERT( rl != INV_REPORT_LEVEL, "invalid report level " + val );
-
-    return in;
-}
-
-//____________________________________________________________________________//
-
-std::istream&
-operator>>( std::istream& in, unit_test::output_format& of )
-{
-    fixed_mapping<const_string,unit_test::output_format,case_ins_less<char const> > output_format_name (
-        "HRF", OF_CLF,
-        "CLF", OF_CLF,
-        "XML", OF_XML,
-        "DOT", OF_DOT,
-
-        OF_INVALID
-        );
-
-    std::string val;
-    in >> val;
-
-    of = output_format_name[val];
-    BOOST_TEST_SETUP_ASSERT( of != OF_INVALID, "Invalid output format " + val );
-
-    return in;
-}
-
-//____________________________________________________________________________//
+namespace rt = boost::runtime;
 
 // ************************************************************************** //
 // **************                 runtime_config               ************** //
@@ -260,11 +171,15 @@ register_parameters( rt::parameters_store& store )
     detect_mem_leaks.add_cla_id( "--", DETECT_MEM_LEAKS, "=" );
     store.add( detect_mem_leaks );
 
-    rt::parameter<unit_test::output_format> list_content( LIST_CONTENT, (
+    rt::enum_parameter<unit_test::output_format> list_content( LIST_CONTENT, (
         rt::description = "Lists the content of test tree - names of all test suites and test cases.",
         rt::env_var = "BOOST_TEST_LIST_CONTENT",
         rt::default_value = OF_INVALID,
-        rt::optional_value = OF_CLF
+        rt::optional_value = OF_CLF,
+        rt::enum_values<unit_test::output_format>::value = {
+            { "HRF", OF_CLF },
+            { "DOT", OF_DOT }
+        }
     ));
     list_content.add_cla_id( "--", LIST_CONTENT, "=" );
     store.add( list_content );
@@ -277,20 +192,38 @@ register_parameters( rt::parameters_store& store )
     list_labels.add_cla_id( "--", LIST_LABELS, "=" );
     store.add( list_labels );
 
-    rt::parameter<unit_test::output_format> log_format( LOG_FORMAT, (
+    rt::enum_parameter<unit_test::output_format> log_format( LOG_FORMAT, (
         rt::description = "Specifies log format.",
         rt::env_var = "BOOST_TEST_LOG_FORMAT",
-        rt::default_value = OF_CLF
+        rt::default_value = OF_CLF,
+        rt::enum_values<unit_test::output_format>::value = {
+            { "HRF", OF_CLF },
+            { "CLF", OF_CLF },
+            { "XML", OF_XML }
+        }
     ));
 
     log_format.add_cla_id( "--", LOG_FORMAT, "=" );
     log_format.add_cla_id( "-", "f", " " );
     store.add( log_format );
 
-    rt::parameter<unit_test::log_level> log_level( LOG_LEVEL, (
+    rt::enum_parameter<unit_test::log_level> log_level( LOG_LEVEL, (
         rt::description = "Specifies log level.",
         rt::env_var = "BOOST_TEST_LOG_LEVEL",
-        rt::default_value = log_all_errors
+        rt::default_value = log_all_errors,
+        rt::enum_values<unit_test::log_level>::value = {
+            { "all"           , log_successful_tests },
+            { "success"       , log_successful_tests },
+            { "test_suite"    , log_test_units },
+            { "unit_scope"    , log_test_units },
+            { "message"       , log_messages },
+            { "warning"       , log_warnings },
+            { "error"         , log_all_errors },
+            { "cpp_exception" , log_cpp_exception_errors },
+            { "system_error"  , log_system_errors },
+            { "fatal_error"   , log_fatal_errors },
+            { "nothing"       , log_nothing }
+        }
     ));
 
     log_level.add_cla_id( "--", LOG_LEVEL, "=" );
@@ -307,9 +240,14 @@ register_parameters( rt::parameters_store& store )
     log_sink.add_cla_id( "-", "k", " " );
     store.add( log_sink );
 
-    rt::parameter<unit_test::output_format> output_format( OUTPUT_FORMAT, (
+    rt::enum_parameter<unit_test::output_format> output_format( OUTPUT_FORMAT, (
         rt::description = "Specifies output format (both log and report).",
-        rt::env_var = "BOOST_TEST_OUTPUT_FORMAT"
+        rt::env_var = "BOOST_TEST_OUTPUT_FORMAT",
+        rt::enum_values<unit_test::output_format>::value = {
+            { "HRF", OF_CLF },
+            { "CLF", OF_CLF },
+            { "XML", OF_XML }
+        }
     ));
 
     output_format.add_cla_id( "--", OUTPUT_FORMAT, "=" );
@@ -328,20 +266,31 @@ register_parameters( rt::parameters_store& store )
     random_seed.add_cla_id( "--", RANDOM_SEED, "=" );
     store.add( random_seed );
 
-    rt::parameter<unit_test::output_format> report_format( REPORT_FORMAT, (
+    rt::enum_parameter<unit_test::output_format> report_format( REPORT_FORMAT, (
         rt::description = "Specifies report format.",
         rt::env_var = "BOOST_TEST_REPORT_FORMAT",
-        rt::default_value = OF_CLF
+        rt::default_value = OF_CLF,
+        rt::enum_values<unit_test::output_format>::value = {
+            { "HRF", OF_CLF },
+            { "CLF", OF_CLF },
+            { "XML", OF_XML }
+        }
     ));
 
     report_format.add_cla_id( "--", REPORT_FORMAT, "=" );
     report_format.add_cla_id( "-", "m", " " );
     store.add( report_format );
 
-    rt::parameter<unit_test::report_level> report_level( REPORT_LEVEL, (
+    rt::enum_parameter<unit_test::report_level> report_level( REPORT_LEVEL, (
         rt::description = "Specifies report level.",
         rt::env_var = "BOOST_TEST_REPORT_LEVEL",
-        rt::default_value = CONFIRMATION_REPORT
+        rt::default_value = CONFIRMATION_REPORT,
+        rt::enum_values<unit_test::report_level>::value = {
+            { "confirm",  CONFIRMATION_REPORT },
+            { "short",    SHORT_REPORT },
+            { "detailed", DETAILED_REPORT },
+            { "no",       NO_REPORT }
+        }
     ));
 
     report_level.add_cla_id( "--", REPORT_LEVEL, "=" );

@@ -116,8 +116,8 @@ public:
     template<typename Modifiers=nfp::no_params_type>
     parser( parameters_store const& parameters, Modifiers const& m = nfp::no_params )
     {
-        nfp::optionally_assign( m_end_of_param_indicator, m, end_of_params );
-        nfp::optionally_assign( m_negation_prefix, m, negation_prefix );
+        nfp::opt_assign( m_end_of_param_indicator, m, end_of_params );
+        nfp::opt_assign( m_negation_prefix, m, negation_prefix );
 
         BOOST_TEST_I_ASSRT( std::all_of( m_end_of_param_indicator.begin(),
                                          m_end_of_param_indicator.end(),

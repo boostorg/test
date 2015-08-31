@@ -33,10 +33,11 @@ finalize_arguments( parameters_store const& params, runtime::arguments_store& ar
     BOOST_TEST_FOREACH( parameters_store::storage_type::value_type const&, v, params.all() ) {
         basic_param_ptr param = v.second;
 
-        if( !args.has( param->p_name ) ) {
-            if( param->p_has_default_value )
-                param->produce_default( args );
-        }
+        if( args.has( param->p_name ) )
+            continue;
+
+        if( param->p_has_default_value )
+            param->produce_default( args );
 
         if( !args.has( param->p_name ) ) {
             BOOST_TEST_I_ASSRT( param->p_optional,
