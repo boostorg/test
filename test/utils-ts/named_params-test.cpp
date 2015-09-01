@@ -19,7 +19,7 @@
 namespace utf = boost::unit_test;
 namespace nfp = boost::nfp;
 
-namespace test_single_int_parameter { 
+namespace test_single_int_parameter {
 
 nfp::typed_keyword<int, struct k1_t> k1;
 nfp::typed_keyword<int, struct k2_t> k2;
@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_CASE( test_single_int_parameter )
 
 //____________________________________________________________________________//
 
-namespace test_single_string_parameter { 
+namespace test_single_string_parameter {
 
 nfp::typed_keyword<std::string, struct k1_t> k1;
 nfp::typed_keyword<char const*, struct k2_t> k2;
@@ -432,7 +432,7 @@ nfp::keyword<struct k4_t> k4;
 template<typename T, typename D, typename Params, typename KW>
 void dotest0( Params const&, KW const& )
 {
-    typedef boost::is_same<nfp::param_type<Params,KW,D>::type,T> check;
+    typedef boost::is_same<typename nfp::param_type<Params,KW,D>::type,T> check;
     BOOST_TEST( check::value );
 }
 

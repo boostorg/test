@@ -72,7 +72,7 @@ struct is_named_param_pack<named_parameter_combine<NP,Rest>> : public mpl::true_
 // **************                  param_type                  ************** //
 // ************************************************************************** //
 
-/// param_type<Params,Keyword,Default>::type is is the type of the parameter 
+/// param_type<Params,Keyword,Default>::type is is the type of the parameter
 /// corresponding to the Keyword (if parameter is present) or Default
 
 template<typename NP, typename Keyword, typename DefaultType=void>
@@ -82,7 +82,7 @@ struct param_type
            DefaultType> {};
 
 template<typename NP, typename Rest, typename Keyword, typename DefaultType>
-struct param_type<named_parameter_combine<NP,Rest>,Keyword,DefaultType> 
+struct param_type<named_parameter_combine<NP,Rest>,Keyword,DefaultType>
 : mpl::if_<typename is_same<typename NP::id,typename Keyword::id>::type,
            typename remove_cv<typename NP::data_type>::type,
            typename param_type<Rest,Keyword,DefaultType>::type> {};
@@ -91,14 +91,14 @@ struct param_type<named_parameter_combine<NP,Rest>,Keyword,DefaultType>
 // **************                  has_param                   ************** //
 // ************************************************************************** //
 
-/// has_param<Params,Keyword>::value is true id Params has parameter corresponding 
+/// has_param<Params,Keyword>::value is true id Params has parameter corresponding
 /// to the Keyword
 
 template<typename NP, typename Keyword>
 struct has_param : is_same<typename NP::id,typename Keyword::id> {};
 
 template<typename NP, typename Rest, typename Keyword>
-struct has_param<named_parameter_combine<NP,Rest>,Keyword> 
+struct has_param<named_parameter_combine<NP,Rest>,Keyword>
 : mpl::or_<typename is_same<typename NP::id,typename Keyword::id>::type,
            typename has_param<Rest,Keyword>::type> {};
 
@@ -202,7 +202,7 @@ struct named_parameter_combine
     void        erase( keyword<typename NP::id,false> kw ) const        { m_param.erase( kw ); }
     using       Rest::erase;
 
-    using       named_parameter_base<named_parameter_combine<NP,Rest>>::operator,;
+    using       nfp_detail::named_parameter_base<named_parameter_combine<NP,Rest>>::operator,;
 
     // Visitation support
     template<typename Visitor>
@@ -329,13 +329,16 @@ struct typed_keyword<bool,unique_id,required>
 // **************                  opt_assign                  ************** //
 // ************************************************************************** //
 
-inline void
-opt_assign(...) {}
+template<typename T, typename Params, typename Keyword>
+inline typename enable_if_c<!has_param<Params,Keyword>::value,void>::type
+opt_assign( T& target, Params const& p, Keyword k )
+{
+}
 
 //____________________________________________________________________________//
 
 template<typename T, typename Params, typename Keyword>
-inline typename enable_if<typename has_param<Params,Keyword>::type,void>::type
+inline typename enable_if_c<has_param<Params,Keyword>::value,void>::type
 opt_assign( T& target, Params const& p, Keyword k )
 {
     using namespace unit_test;

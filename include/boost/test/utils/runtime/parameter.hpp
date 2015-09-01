@@ -301,7 +301,7 @@ private:
             BOOST_TEST_I_ASSRT( !negative_form,
                                 format_error() << "Can't set value to negative form of the argument." );
 
-            m_arg_factory.produce_argument( p_name, token, store );
+            m_arg_factory.produce_argument( token, p_name, store );
         }
     }
 
@@ -351,12 +351,12 @@ public:
 private:
     virtual void    value_help( std::ostream& ostr )
     {
-        if( p_value_hint->empty() ) {
+        if( this->p_value_hint->empty() ) {
             ostr << "<";
             ostr << ">";
         }
         else
-            ostr << p_value_hint;
+            ostr << this->p_value_hint;
     }
 
     // Data members

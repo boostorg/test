@@ -17,7 +17,6 @@
 
 // Boost.Test
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
-#include <boost/test/utils/fixed_mapping.hpp>
 #include <boost/test/utils/custom_manip.hpp>
 #include <boost/test/utils/foreach.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
