@@ -161,8 +161,8 @@ public:
     , m_optional_value()
     , m_default_value()
     {
-        nfp::optionally_assign( m_optional_value, m, optional_value );
-        nfp::optionally_assign( m_default_value, m, default_value );
+        nfp::opt_assign( m_optional_value, m, optional_value );
+        nfp::opt_assign( m_default_value, m, default_value );
     }
 
     void        produce_argument( cstring source, cstring param_name, arguments_store& store ) const

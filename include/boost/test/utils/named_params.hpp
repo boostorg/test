@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2014.
+//  (C) Copyright Gennadiy Rozental 2005-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : facilities for named function parameters support
+//  Description : named function parameters library
 // ***************************************************************************
 
 #ifndef BOOST_TEST_UTILS_NAMED_PARAM
@@ -18,7 +18,6 @@
 // Boost
 #include <boost/config.hpp>
 #include <boost/detail/workaround.hpp>
-#include <boost/mpl/bool.hpp>
 
 // Boost.Test
 #include <boost/test/utils/rtti.hpp>
@@ -28,6 +27,14 @@
 #include <boost/type_traits/remove_cv.hpp>
 
 #include <boost/test/detail/throw_exception.hpp>
+
+// Boost
+#include <boost/mpl/if.hpp>
+#include <boost/mpl/or.hpp>
+#include <boost/type_traits/is_same.hpp>
+#include <boost/type_traits/remove_cv.hpp>
+#include <boost/utility/enable_if.hpp>
+#include <boost/mpl/bool.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -50,14 +57,50 @@ template<typename NP1,typename NP2>                             struct named_par
 // **************              is_named_param_pack             ************** //
 // ************************************************************************** //
 
+/// is_named_param_pack<T>::value is true if T is parameters pack
+
 template<typename T>
-struct is_named_param_pack : public boost::mpl::false_ {};
+struct is_named_param_pack : public mpl::false_ {};
 
 template<typename T, typename unique_id, typename RefType>
-struct is_named_param_pack<named_parameter<T,unique_id,RefType> > : public boost::mpl::true_ {};
+struct is_named_param_pack<named_parameter<T,unique_id,RefType> > : public mpl::true_ {};
 
 template<typename NP, typename Rest>
-struct is_named_param_pack<named_parameter_combine<NP,Rest>> : public boost::mpl::true_ {};
+struct is_named_param_pack<named_parameter_combine<NP,Rest>> : public mpl::true_ {};
+
+// ************************************************************************** //
+// **************                  param_type                  ************** //
+// ************************************************************************** //
+
+/// param_type<Params,Keyword,Default>::type is is the type of the parameter 
+/// corresponding to the Keyword (if parameter is present) or Default
+
+template<typename NP, typename Keyword, typename DefaultType=void>
+struct param_type
+: mpl::if_<typename is_same<typename NP::id,typename Keyword::id>::type,
+           typename remove_cv<typename NP::data_type>::type,
+           DefaultType> {};
+
+template<typename NP, typename Rest, typename Keyword, typename DefaultType>
+struct param_type<named_parameter_combine<NP,Rest>,Keyword,DefaultType> 
+: mpl::if_<typename is_same<typename NP::id,typename Keyword::id>::type,
+           typename remove_cv<typename NP::data_type>::type,
+           typename param_type<Rest,Keyword,DefaultType>::type> {};
+
+// ************************************************************************** //
+// **************                  has_param                   ************** //
+// ************************************************************************** //
+
+/// has_param<Params,Keyword>::value is true id Params has parameter corresponding 
+/// to the Keyword
+
+template<typename NP, typename Keyword>
+struct has_param : is_same<typename NP::id,typename Keyword::id> {};
+
+template<typename NP, typename Rest, typename Keyword>
+struct has_param<named_parameter_combine<NP,Rest>,Keyword> 
+: mpl::or_<typename is_same<typename NP::id,typename Keyword::id>::type,
+           typename has_param<Rest,Keyword>::type> {};
 
 // ************************************************************************** //
 // **************          access_to_invalid_parameter         ************** //
@@ -223,8 +266,6 @@ private:
     mutable bool    m_erased;
 };
 
-//____________________________________________________________________________//
-
 // ************************************************************************** //
 // **************                   no_params                  ************** //
 // ************************************************************************** //
@@ -234,8 +275,6 @@ typedef named_parameter<char, struct no_params_type_t,char> no_params_type;
 namespace {
 no_params_type no_params( '\0' );
 } // local namespace
-
-//____________________________________________________________________________//
 
 // ************************************************************************** //
 // **************                    keyword                   ************** //
@@ -274,9 +313,9 @@ struct typed_keyword : keyword<unique_id,required> {
 
 //____________________________________________________________________________//
 
-template<typename unique_id>
-struct typed_keyword<bool,unique_id,false>
-: keyword<unique_id,false>
+template<typename unique_id, bool required>
+struct typed_keyword<bool,unique_id,required>
+: keyword<unique_id,required>
 , named_parameter<bool,unique_id,bool> {
     typedef unique_id id;
 
@@ -286,90 +325,57 @@ struct typed_keyword<bool,unique_id,false>
     operator!() const           { return named_parameter<bool,unique_id,bool>( false ); }
 };
 
-//____________________________________________________________________________//
-
 // ************************************************************************** //
-// **************               optionally_assign              ************** //
+// **************                  opt_assign                  ************** //
 // ************************************************************************** //
 
-template<typename T>
 inline void
-optionally_assign( T&, nil )
-{
-    nfp_detail::report_access_to_invalid_parameter(true);
-}
-
-//____________________________________________________________________________//
-
-template<typename T, typename Source>
-inline void
-#if BOOST_WORKAROUND( __MWERKS__, BOOST_TESTED_AT( 0x3003 ) ) || \
-    BOOST_WORKAROUND( __DECCXX_VER, BOOST_TESTED_AT(60590042) )
-optionally_assign( T& target, Source src )
-#else
-optionally_assign( T& target, Source const& src )
-#endif
-{
-    using namespace unit_test;
-
-    assign_op( target, src, static_cast<int>(0) );
-}
+opt_assign(...) {}
 
 //____________________________________________________________________________//
 
 template<typename T, typename Params, typename Keyword>
-inline void
-optionally_assign( T& target, Params const& p, Keyword k )
+inline typename enable_if<typename has_param<Params,Keyword>::type,void>::type
+opt_assign( T& target, Params const& p, Keyword k )
 {
-    if( p.has(k) )
-        optionally_assign( target, p[k] );
+    using namespace unit_test;
+
+    assign_op( target, p[k], static_cast<int>(0) );
 }
 
-//____________________________________________________________________________//
-
 // ************************************************************************** //
-// **************                optionally_get               ************** //
+// **************                    opt_get                   ************** //
 // ************************************************************************** //
 
 template<typename T, typename Params, typename Keyword>
 inline T
-optionally_get( Params const& p, Keyword k )
+opt_get( Params const& p, Keyword k, T default_val )
 {
-    if( !p.has(k) )
-        return T();
+    opt_assign( default_val, p, k );
 
-    T res;
-    optionally_assign( res, p[k] );
+    return default_val;
+}
 
-    return res;
+// ************************************************************************** //
+// **************                    opt_get                   ************** //
+// ************************************************************************** //
+
+template<typename Params, typename NP>
+inline typename enable_if_c<!has_param<Params,keyword<typename NP::id>>::value,
+named_parameter_combine<NP,Params>>::type
+opt_append( Params const& params, NP const& np )
+{
+    return (params,np);
 }
 
 //____________________________________________________________________________//
 
-// ************************************************************************** //
-// **************                  param_type                  ************** //
-// ************************************************************************** //
-
-template<typename Params,typename KeywordType,typename DefaultType=void>
-struct param_type {
-    typedef DefaultType type;
-};
-
-template<typename NP,typename Rest,typename Keyword,typename DefaultType>
-struct param_type<named_parameter_combine<NP,Rest>,Keyword,DefaultType> : param_type<Rest,Keyword,DefaultType> {
-};
-
-template<typename T, typename unique_id, typename RefType,bool required,typename DefaultType>
-struct param_type<named_parameter<T,unique_id,RefType>,keyword<unique_id,required>,DefaultType> {
-    typedef typename boost::remove_cv<T>::type type;
-};
-
-template<typename T, typename unique_id, typename RefType,typename Rest,bool required,typename DefaultType>
-struct param_type<named_parameter_combine<named_parameter<T,unique_id,RefType>,Rest>,
-                  keyword<unique_id,required>,
-                  DefaultType> {
-    typedef typename boost::remove_cv<T>::type type;
-};
+template<typename Params, typename NP>
+inline typename enable_if_c<has_param<Params,keyword<typename NP::id>>::value,Params>::type
+opt_append( Params const& params, NP const& )
+{
+    return params;
+}
 
 } // namespace nfp
 } // namespace boost

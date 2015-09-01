@@ -92,7 +92,8 @@ public:
     template<typename Src>
     void        set_delimeters( Src d )
     {
-        nfp::optionally_assign( m_delimeters, d );
+        using namespace unit_test;
+        assign_op( m_delimeters, d, static_cast<int>(0) );
 
         if( !m_delimeters.is_empty() )
             m_type = dt_char;
@@ -210,7 +211,7 @@ protected:
         if( m.has( keep_empty_tokens ) )
             m_keep_empty_tokens = true;
 
-        nfp::optionally_assign( m_tokens_left, m, max_tokens );
+        nfp::opt_assign( m_tokens_left, m, max_tokens );
     }
 
     template<typename Iter>

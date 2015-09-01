@@ -92,14 +92,14 @@ protected:
     template<typename Modifiers>
     basic_param( cstring name, bool is_optional, bool is_repeatable, Modifiers const& m )
     : p_name( name.begin(), name.end() )
-    , p_description( nfp::optionally_get<std::string>( m, description ) )
+    , p_description( nfp::opt_get( m, description, std::string{} ) )
     , p_optional( is_optional )
     , p_repeatable( is_repeatable )
     , p_has_optional_value( m.has( optional_value ) )
     , p_has_default_value( m.has( default_value ) || is_repeatable )
     {
-        nfp::optionally_assign( p_env_var.value, m, env_var );
-        nfp::optionally_assign( p_value_hint.value, m, value_hint );
+        nfp::opt_assign( p_env_var.value, m, env_var );
+        nfp::opt_assign( p_value_hint.value, m, value_hint );
     }
 
 public:
@@ -277,8 +277,8 @@ public:
     /// Constructor with modifiers
     template<typename Modifiers=nfp::no_params_type>
     option( cstring name, Modifiers const& m = nfp::no_params )
-    : basic_param( name, true, false, (m, optional_value = true, default_value = false) )
-    , m_arg_factory( (m, optional_value = true, default_value = false) )
+    : basic_param( name, true, false, nfp::opt_append( nfp::opt_append( m, optional_value = true), default_value = false) )
+    , m_arg_factory( nfp::opt_append( nfp::opt_append( m, optional_value = true), default_value = false) )
     {
     }
 
