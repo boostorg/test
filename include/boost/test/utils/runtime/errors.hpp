@@ -15,7 +15,7 @@
 #ifndef BOOST_TEST_UTILS_RUNTIME_INIT_ERROR_HPP
 #define BOOST_TEST_UTILS_RUNTIME_INIT_ERROR_HPP
 
-// Boost.Runtime.Parameter
+// Boost.Test Runtime parameters
 #include <boost/test/utils/runtime/fwd.hpp>
 
 // Boost

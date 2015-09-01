@@ -15,7 +15,7 @@
 #ifndef BOOST_TEST_UTILS_RUNTIME_ARGUMENT_FACTORY_HPP
 #define BOOST_TEST_UTILS_RUNTIME_ARGUMENT_FACTORY_HPP
 
-// Boost.Runtime.Parameter
+// Boost.Test Runtime parameters
 #include <boost/test/utils/runtime/errors.hpp>
 #include <boost/test/utils/runtime/argument.hpp>
 
@@ -25,6 +25,7 @@
 
 // Boost
 #include <boost/lexical_cast.hpp>
+#include <boost/function/function2.hpp>
 
 // STL
 #include <vector>

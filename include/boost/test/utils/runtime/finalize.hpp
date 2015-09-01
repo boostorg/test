@@ -15,7 +15,7 @@
 #ifndef BOOST_TEST_UTILS_RUNTIME_FINALIZE_HPP
 #define BOOST_TEST_UTILS_RUNTIME_FINALIZE_HPP
 
-// Boost.Runtime.Parameter
+// Boost.Test Runtime parameters
 #include <boost/test/utils/runtime/parameter.hpp>
 #include <boost/test/utils/runtime/argument.hpp>
 

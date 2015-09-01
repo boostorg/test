@@ -504,3 +504,23 @@ BOOST_AUTO_TEST_CASE( test_optional_append )
 }
 
 } // test_optional_append
+
+//____________________________________________________________________________//
+
+namespace test_no_params {
+
+nfp::typed_keyword<int, struct k1_t> k1;
+
+template<typename Params=nfp::no_params_type>
+void dotest0( bool exp, Params const& p = nfp::no_params )
+{
+    BOOST_TEST_REQUIRE( p.has(k1) == exp );
+}
+
+BOOST_AUTO_TEST_CASE( test_no_params )
+{
+    dotest0( false );
+    dotest0( true, k1=11 );
+}
+
+} // test_no_params

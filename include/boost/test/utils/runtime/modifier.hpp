@@ -15,7 +15,7 @@
 #ifndef BOOST_TEST_UTILS_RUNTIME_MODIFIER_HPP
 #define BOOST_TEST_UTILS_RUNTIME_MODIFIER_HPP
 
-// Boost.Runtime.Parameter
+// Boost.Test Runtime parameters
 #include <boost/test/utils/runtime/fwd.hpp>
 
 // Boost.Test

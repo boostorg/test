@@ -15,7 +15,7 @@
 #ifndef BOOST_TEST_UTILS_RUNTIME_ARGUMENT_HPP
 #define BOOST_TEST_UTILS_RUNTIME_ARGUMENT_HPP
 
-// Boost.Runtime.Parameter
+// Boost.Test Runtime parameters
 #include <boost/test/utils/runtime/fwd.hpp>
 #include <boost/test/utils/runtime/errors.hpp>
 

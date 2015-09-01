@@ -15,7 +15,7 @@
 #ifndef BOOST_TEST_UTILS_RUNTIME_PARAMETER_HPP
 #define BOOST_TEST_UTILS_RUNTIME_PARAMETER_HPP
 
-// Boost.Runtime.Parameter
+// Boost.Test Runtime parameters
 #include <boost/test/utils/runtime/fwd.hpp>
 #include <boost/test/utils/runtime/modifier.hpp>
 #include <boost/test/utils/runtime/argument.hpp>
@@ -129,15 +129,15 @@ public:
 
             bool optional_value = false;
 
+            if( p_has_optional_value ) {
+                optional_value = true;
+                ostr << '[';
+            }
+
             if( id.m_value_separator.empty() )
                 ostr << " ";
             else {
                 ostr << id.m_value_separator;
-            }
-
-            if( p_has_optional_value ) {
-                optional_value = true;
-                ostr << '[';
             }
 
             value_help( ostr );
@@ -202,11 +202,11 @@ protected:
 
 private:
     /// interface for usage/help customization
-    virtual void            cla_name_help( std::ostream& ostr, cstring cla_full_name, cstring negation_prefix )
+    virtual void            cla_name_help( std::ostream& ostr, cstring cla_full_name, cstring negation_prefix ) const
     {
         ostr << cla_full_name;
     }
-    virtual void            value_help( std::ostream& ostr )
+    virtual void            value_help( std::ostream& ostr ) const
     {
         if( p_value_hint->empty() )
             ostr << "<value>";
@@ -309,14 +309,14 @@ private:
     {
         m_arg_factory.produce_default( p_name, store );
     }
-    virtual void    cla_name_help( std::ostream& ostr, cstring cla_full_name, cstring negation_prefix )
+    virtual void    cla_name_help( std::ostream& ostr, cstring cla_full_name, cstring negation_prefix ) const
     {
         if( negation_prefix.is_empty() )
             ostr << cla_full_name;
         else
             ostr << '[' << negation_prefix << ']' << cla_full_name;
     }
-    virtual void    value_help( std::ostream& ostr )
+    virtual void    value_help( std::ostream& ostr ) const
     {
         if( p_value_hint->empty() )
             ostr << "<yes/no value>";
@@ -349,10 +349,23 @@ public:
     }
 
 private:
-    virtual void    value_help( std::ostream& ostr )
+    virtual basic_param_ptr clone() const
+    {
+        return basic_param_ptr( new enum_parameter( *this ) );
+    }
+
+    virtual void    value_help( std::ostream& ostr ) const
     {
         if( this->p_value_hint->empty() ) {
             ostr << "<";
+            bool first = true;
+            BOOST_TEST_FOREACH( cstring, name, m_valid_names ) {
+                if( first )
+                    first = false;
+                else
+                    ostr << '|';
+                ostr << name;
+            }
             ostr << ">";
         }
         else
