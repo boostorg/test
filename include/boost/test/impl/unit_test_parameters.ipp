@@ -20,12 +20,15 @@
 
 // Boost.Test
 #include <boost/test/unit_test_parameters.hpp>
+
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 #include <boost/test/utils/basic_cstring/compare.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
+
 #include <boost/test/debug.hpp>
 #include <boost/test/framework.hpp>
 
+#include <boost/test/detail/log_level.hpp>
 #include <boost/test/detail/throw_exception.hpp>
 
 // Boost.Runtime.Param
@@ -66,8 +69,6 @@ namespace rt = boost::runtime;
 
 namespace runtime_config {
 
-namespace {
-
 // UTF parameters 
 std::string AUTO_START_DBG    = "auto_start_dbg";
 std::string BREAK_EXEC_PATH   = "break_exec_path";
@@ -99,12 +100,21 @@ std::string USAGE             = "usage";
 
 //____________________________________________________________________________//
 
+namespace {
+
 void
 register_parameters( rt::parameters_store& store )
 {
     rt::option auto_start_dbg( AUTO_START_DBG, (
         rt::description = "Automatically starts debugger if system level error (signal) occurs.",
-        rt::env_var = "BOOST_TEST_AUTO_START_DBG"
+        rt::env_var = "BOOST_TEST_AUTO_START_DBG",
+
+        rt::help = "Parameter " + AUTO_START_DBG + " specifies whether Boost.Test should attempt "
+                   "to attach a debugger when fatal system error occurs. At the moment this feature "
+                   "is only avaialble on a few selected platforms: Win32 and Unix. There is a "
+                   "default debugger configured for these platforms. You can manually configure "
+                   "different debugger. For more details on how to configure the debugger see the "
+                   "Boost.Test debug API, specifically the function boost::debug::set_debugger."
     ));
 
     auto_start_dbg.add_cla_id( "--", AUTO_START_DBG, "=" );
@@ -113,7 +123,10 @@ register_parameters( rt::parameters_store& store )
 
     rt::parameter<std::string> break_exec_path( BREAK_EXEC_PATH, (
         rt::description = "For the exception safety testing allows to break at specific execution path.",
-        rt::env_var = "BOOST_TEST_BREAK_EXEC_PATH"
+        rt::env_var = "BOOST_TEST_BREAK_EXEC_PATH",
+        rt::callback = [](rt::cstring) {
+            BOOST_TEST_SETUP_ASSERT( false, "parameter break_exec_path is disabled in this release" );
+        }
     ));
 
     break_exec_path.add_cla_id( "--", BREAK_EXEC_PATH, "=" );    
@@ -388,18 +401,6 @@ register_parameters( rt::parameters_store& store )
 
 static rt::arguments_store  s_arguments_store;
 static rt::parameters_store s_parameters_store;
-static rt::arguments_store  const& s_const_arguments_store = s_arguments_store;
-
-//____________________________________________________________________________//
-
-// !!!!
-#if 0
-void
-disable_use( rt::parameter const&, std::string const& )
-{
-    BOOST_TEST_SETUP_ASSERT( false, "parameter break_exec_path is disabled in this release" );
-}
-#endif
 
 //____________________________________________________________________________//
 
@@ -429,12 +430,12 @@ init( int& argc, char** argv )
         rt::finalize_arguments( s_parameters_store, s_arguments_store );
 
         // Report help if requested
-        if( s_const_arguments_store.get<bool>( USAGE ) ) {
+        if( runtime_config::get<bool>( USAGE ) ) {
             parser->usage( std::cerr );
             BOOST_TEST_I_THROW( framework::nothing_to_test() );
         }
-        else if( s_const_arguments_store.has( HELP ) ) {
-            parser->help( std::cerr, s_parameters_store, s_const_arguments_store.get<std::string>( HELP ) );
+        else if( s_arguments_store.has( HELP ) ) {
+            parser->help( std::cerr, s_parameters_store, runtime_config::get<std::string>( HELP ) );
             BOOST_TEST_I_THROW( framework::nothing_to_test() );
         }
 
@@ -482,7 +483,7 @@ init( int& argc, char** argv )
         std::cerr << ex.msg << "\n\n";
 
         if( parser )
-            parser->usage( std::cerr );
+            parser->usage( std::cerr, ex.param_name );
         
         BOOST_TEST_I_THROW( framework::nothing_to_test() );
     }
@@ -490,42 +491,10 @@ init( int& argc, char** argv )
 
 //____________________________________________________________________________//
 
-unit_test::log_level
-log_level()
+rt::arguments_store const&
+argument_store()
 {
-    return s_const_arguments_store.get<unit_test::log_level>( LOG_LEVEL );
-}
-
-//____________________________________________________________________________//
-
-bool
-no_result_code()
-{
-    return !s_const_arguments_store.get<bool>( RESULT_CODE );
-}
-
-//____________________________________________________________________________//
-
-unit_test::report_level
-report_level()
-{
-    return s_const_arguments_store.get<unit_test::report_level>( REPORT_LEVEL );
-}
-
-//____________________________________________________________________________//
-
-std::vector<std::string> const&
-run_filters()
-{
-    return s_const_arguments_store.get<std::vector<std::string>>( RUN_FILTERS );
-}
-
-//____________________________________________________________________________//
-
-const_string
-break_exec_path()
-{
-    return s_const_arguments_store.get<std::string>( BREAK_EXEC_PATH );
+    return s_arguments_store;
 }
 
 //____________________________________________________________________________//
@@ -533,165 +502,7 @@ break_exec_path()
 bool
 save_pattern()
 {
-    return s_const_arguments_store.get<bool>( SAVE_TEST_PATTERN );
-}
-
-//____________________________________________________________________________//
-
-bool
-show_progress()
-{
-    return s_const_arguments_store.get<bool>( SHOW_PROGRESS );
-}
-
-//____________________________________________________________________________//
-
-bool
-show_build_info()
-{
-    return s_const_arguments_store.get<bool>( BUILD_INFO );
-}
-
-//____________________________________________________________________________//
-
-unit_test::output_format
-list_content()
-{
-    return s_const_arguments_store.get<unit_test::output_format>( LIST_CONTENT );
-}
-
-//____________________________________________________________________________//
-
-bool
-list_labels()
-{
-    return s_const_arguments_store.get<bool>( LIST_LABELS );
-}
-
-//____________________________________________________________________________//
-
-bool
-catch_sys_errors()
-{
-    return s_const_arguments_store.get<bool>( CATCH_SYS_ERRORS );
-}
-
-//____________________________________________________________________________//
-
-bool
-color_output()
-{
-    return s_const_arguments_store.get<bool>( COLOR_OUTPUT );
-}
-
-//____________________________________________________________________________//
-
-bool
-auto_start_dbg()
-{
-    return s_const_arguments_store.get<bool>( AUTO_START_DBG );
-}
-
-//____________________________________________________________________________//
-
-bool
-wait_for_debugger()
-{
-    return s_const_arguments_store.get<bool>( WAIT_FOR_DEBUGGER );
-}
-
-//____________________________________________________________________________//
-
-bool
-use_alt_stack()
-{
-    return s_const_arguments_store.get<bool>( USE_ALT_STACK );
-}
-
-//____________________________________________________________________________//
-
-bool
-detect_fp_exceptions()
-{
-    return s_const_arguments_store.get<bool>( DETECT_FP_EXCEPT );
-}
-
-//____________________________________________________________________________//
-
-unit_test::output_format
-report_format()
-{
-    return s_arguments_store.get<unit_test::output_format>( REPORT_FORMAT );
-}
-
-//____________________________________________________________________________//
-
-unit_test::output_format
-log_format()
-{
-    return s_arguments_store.get<unit_test::output_format>( LOG_FORMAT );
-}
-
-//____________________________________________________________________________//
-
-std::ostream*
-report_sink()
-{
-    if( !s_arguments_store.has( REPORT_SINK ) )
-        return &std::cerr;
-
-    std::string const& sink_name = s_arguments_store.get<std::string>( REPORT_SINK );
-
-    if( sink_name == "stderr" )
-        return &std::cerr;
-
-    if( sink_name == "stdout" )
-        return &std::cout;
-
-    static std::ofstream report_file( sink_name.c_str() );
-    return &report_file;
-}
-
-//____________________________________________________________________________//
-
-std::ostream*
-log_sink()
-{
-    if( !s_arguments_store.has( LOG_SINK ) )
-        return &std::cout;
-
-    std::string const& sink_name = s_arguments_store.get<std::string>( LOG_SINK );
-
-    if( sink_name == "stderr" )
-        return &std::cerr;
-
-    if( sink_name == "stdout" )
-        return &std::cout;
-
-    static std::ofstream log_file( sink_name.c_str() );
-    return &log_file;
-}
-
-//____________________________________________________________________________//
-
-long
-detect_memory_leaks()
-{
-    return s_const_arguments_store.get<long>( DETECT_MEM_LEAKS );
-}
-
-//____________________________________________________________________________//
-
-const_string
-memory_leaks_report_file()
-{
-    return s_const_arguments_store.get<std::string>( REPORT_MEM_LEAKS );
-}
-
-unsigned
-random_seed()
-{
-    return s_const_arguments_store.get<unsigned>( RANDOM_SEED );
+    return runtime_config::get<bool>( SAVE_TEST_PATTERN );
 }
 
 //____________________________________________________________________________//

@@ -278,6 +278,4 @@ BOOST_AUTO_TEST_CASE( test_close_at_tolerance )
     BOOST_TEST( !::fpc::close_at_tolerance<double>( ::fpc::percent_tolerance( epsilon ) )(fp1, fp2) );
 }
 
-//____________________________________________________________________________//
-
 // EOF

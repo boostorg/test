@@ -5,17 +5,14 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines parser - public interface for CLA parsing and accessing
+//!@file
+//!@brief CLA parser
 // ***************************************************************************
 
 #ifndef BOOST_TEST_UTILS_RUNTIME_CLA_PARSER_HPP
 #define BOOST_TEST_UTILS_RUNTIME_CLA_PARSER_HPP
 
-// Boost.Runtime.Parameter
+// Boost.Test Runtime parameters
 #include <boost/test/utils/runtime/argument.hpp>
 #include <boost/test/utils/runtime/modifier.hpp>
 #include <boost/test/utils/runtime/parameter.hpp>
@@ -76,8 +73,8 @@ struct parameter_trie {
     void                add_candidate_id( parameter_cla_id const& param_id, basic_param_ptr param_candidate, bool final )
     {
         BOOST_TEST_I_ASSRT( !m_has_final_candidate && (!final || m_id_candidates.empty()),
-          conflicting_param() << "Parameter cla id " << param_id.m_full_name << " conflicts with the "
-                              << "parameter cla id " << m_id_candidates.back().get().m_full_name );
+          conflicting_param() << "Parameter cla id " << param_id.m_tag << " conflicts with the "
+                              << "parameter cla id " << m_id_candidates.back().get().m_tag );
 
         m_has_final_candidate = final;
         m_id_candidates.push_back( param_id );
@@ -181,8 +178,8 @@ public:
 
             if( negative_form ) {
                 BOOST_TEST_I_ASSRT( found_id.m_negatable,
-                                    format_error() << "Parameter " << found_id.m_full_name
-                                                   << " is not negatable." );
+                                    format_error( found_param->p_name ) 
+                                        << "Parameter tag " << found_id.m_tag << " is not negatable." );
 
                 tr.skip( m_negation_prefix.size() );
             }
@@ -195,9 +192,10 @@ public:
             if( !value_separator.is_empty() || !found_param->p_has_optional_value ) {
                 // Validate and skip value separator in the input
                 BOOST_TEST_I_ASSRT( found_id.m_value_separator == value_separator,
-                                    format_error() << "Invalid separator for the parameter "
-                                                   << found_param->p_name
-                                                   << " in the argument " << curr_token );
+                                    format_error( found_param->p_name ) 
+                                        << "Invalid separator for the parameter "
+                                        << found_param->p_name
+                                        << " in the argument " << curr_token );
 
                 tr.skip( value_separator.size() );
 
@@ -205,16 +203,18 @@ public:
                 value = tr.get_token();
 
                 BOOST_TEST_I_ASSRT( !value.is_empty(),
-                                    format_error() << "Missing an argument value for the parameter "
-                                                   << found_param->p_name
-                                                   << " in the argument " << curr_token );
+                                    format_error( found_param->p_name )
+                                        << "Missing an argument value for the parameter "
+                                        << found_param->p_name
+                                        << " in the argument " << curr_token );
             }
 
             // Validate against argument duplication
             BOOST_TEST_I_ASSRT( !res.has( found_param->p_name ) || found_param->p_repeatable,
-                                duplicate_arg() << "Duplicate argument value for the parameter "
-                                                << found_param->p_name
-                                                << " in the argument " << curr_token );
+                                duplicate_arg( found_param->p_name )
+                                    << "Duplicate argument value for the parameter "
+                                    << found_param->p_name
+                                    << " in the argument " << curr_token );
 
             // Produce argument value
             found_param->produce_argument( value, negative_form, res );
@@ -226,13 +226,20 @@ public:
 
     // help/usage
     void
-    usage( std::ostream& ostr )
+    usage( std::ostream& ostr, cstring param_name = cstring() )
     {
-        ostr << "Usage: " << m_program_name << " [Boost.Test argument]... ";
-        if( !m_end_of_param_indicator.empty() )
-            ostr << m_end_of_param_indicator << " [custom test module argument]...";
+        if( !param_name.is_empty() ) {
+            auto param = locate_parameter( m_param_trie[help_prefix], param_name, "" ).second;
+            param->usage( ostr, m_negation_prefix );
+        }
+        else {        
+            ostr << "Usage: " << m_program_name << " [Boost.Test argument]... ";
+            if( !m_end_of_param_indicator.empty() )
+                ostr << m_end_of_param_indicator << " [custom test module argument]...";
+            ostr << "\n";
+        }
 
-        ostr << "\n\nFor detailed help on Boost.Test parameters use:\n"
+        ostr << "\nFor detailed help on Boost.Test parameters use:\n"
              << "  " << m_program_name << " --help\n"
              << "or\n"
              << "  " << m_program_name << " --help=<parameter name>\n";
@@ -242,10 +249,8 @@ public:
     help( std::ostream& ostr, parameters_store const& parameters, cstring param_name )
     {
         if( !param_name.is_empty() ) {
-            if( parameters.has( param_name ) )
-                parameters.get( param_name )->help( ostr, m_negation_prefix );
-            else
-                ostr << "Parameter " << param_name << " is uncognized\n";
+            auto param = locate_parameter( m_param_trie[help_prefix], param_name, "" ).second;
+            param->help( ostr, m_negation_prefix );
             return;
         }
 
@@ -282,23 +287,23 @@ private:
     void
     build_trie( parameters_store const& parameters )
     {
-        // 10. Iterate over all parameters
+        // Iterate over all parameters
         BOOST_TEST_FOREACH( parameters_store::storage_type::value_type const&, v, parameters.all() ) {
             basic_param_ptr param = v.second;
 
-            // 20. Register all parameter's ids in trie.
+            // Register all parameter's ids in trie.
             BOOST_TEST_FOREACH( parameter_cla_id const&, id, param->cla_ids() ) {
-                // 30. This is the trie corresponding to the prefix.
+                // This is the trie corresponding to the prefix.
                 trie_ptr next_trie = m_param_trie[id.m_prefix];
                 if( !next_trie )
                     next_trie = m_param_trie[id.m_prefix] = trie_ptr( new rt_cla_detail::parameter_trie );
 
-                // 40. Build the trie, by following parameter id's full name
-                //     and register this parameter as candidate on each level
-                for( size_t index = 0; index < id.m_full_name.size(); ++index ) {
-                    next_trie = next_trie->make_subtrie( id.m_full_name[index] );
+                // Build the trie, by following name's characters
+                // and register this parameter as candidate on each level
+                for( size_t index = 0; index < id.m_tag.size(); ++index ) {
+                    next_trie = next_trie->make_subtrie( id.m_tag[index] );
 
-                    next_trie->add_candidate_id( id, param, index == (id.m_full_name.size() - 1) );
+                    next_trie->add_candidate_id( id, param, index == (id.m_tag.size() - 1) );
                 }
             }
         }
@@ -365,7 +370,7 @@ private:
                         typo_candidates.push_back( typo_cand.second );
 
                         // 'missing char' typo
-                        if( next_trie = typo_cand.second->get_subtrie( c ) )
+                        if( (next_trie = typo_cand.second->get_subtrie( c )) )
                             typo_candidates.push_back( next_trie );
                     }
 
@@ -404,7 +409,7 @@ private:
                     if( !unique_typo_candidate.insert( &param_cand ).second )
                         continue;
 
-                    typo_candidate_names.push_back( param_cand.m_full_name );
+                    typo_candidate_names.push_back( param_cand.m_tag );
                 }
             }
 
@@ -416,7 +421,7 @@ private:
         if( curr_trie->m_id_candidates.size() > 1 ) {
             std::vector<cstring> amb_names;
             BOOST_TEST_FOREACH( parameter_cla_id const&, param_id, curr_trie->m_id_candidates )
-                amb_names.push_back( param_id.m_full_name );
+                amb_names.push_back( param_id.m_tag );
 
             BOOST_TEST_I_THROW( ambiguous_param( std::move( amb_names ) ) <<
                                 "An ambiguous parameter name in the argument " << token );

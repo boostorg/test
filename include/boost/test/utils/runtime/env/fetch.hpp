@@ -15,7 +15,7 @@
 #ifndef BOOST_TEST_UTILS_RUNTIME_ENV_FETCH_HPP
 #define BOOST_TEST_UTILS_RUNTIME_ENV_FETCH_HPP
 
-// Boost.Runtime.Parameter
+// Boost.Test Runtime parameters
 #include <boost/test/utils/runtime/parameter.hpp>
 #include <boost/test/utils/runtime/argument.hpp>
 
@@ -69,18 +69,19 @@ fetch_absent( parameters_store const& params, runtime::arguments_store& args, Re
     BOOST_TEST_FOREACH( parameters_store::storage_type::value_type const&, v, params.all() ) {
         basic_param_ptr param = v.second;
 
-        if( args.has( param->p_name ) || param->p_env_var->empty() )
+        if( args.has( param->p_name ) || param->p_env_var.empty() )
             continue;
 
-        auto value = read_func( param->p_env_var.get() );
+        auto value = read_func( param->p_env_var );
 
         if( !value.second )
             continue;
 
         // Validate against unexpected empty value
         BOOST_TEST_I_ASSRT( !value.first.is_empty() || param->p_has_optional_value,
-            format_error() << "Missing an argument value for the parameter " << param->p_name
-                           << " in the environment." );
+            format_error( param->p_name ) 
+                << "Missing an argument value for the parameter " << param->p_name
+                << " in the environment." );
 
         // Produce argument value
         param->produce_argument( value.first, false, args );

@@ -15,7 +15,7 @@
 #ifndef BOOST_TEST_UTILS_RUNTIME_MODIFIER_HPP
 #define BOOST_TEST_UTILS_RUNTIME_MODIFIER_HPP
 
-// Boost.Runtime.Parameter
+// Boost.Test Runtime parameters
 #include <boost/test/utils/runtime/fwd.hpp>
 
 // Boost.Test
@@ -33,6 +33,7 @@ namespace runtime {
 namespace {
 
 nfp::typed_keyword<cstring,struct description_t>    description;
+nfp::typed_keyword<cstring,struct help_t>           help;
 nfp::typed_keyword<cstring,struct env_var_t>        env_var;
 nfp::typed_keyword<cstring,struct end_of_params_t>  end_of_params;
 nfp::typed_keyword<cstring,struct neg_prefix_t>     negation_prefix;
@@ -43,11 +44,9 @@ using enum_values = unit_test::ut_detail::static_constant<
   nfp::typed_keyword<std::initializer_list<std::pair<const cstring,EnumType>>, struct enum_values_t>
 >;
 
-// nfp::typed_keyword<std::initializer_list<std::pair<const cstring,int>>, struct enum_values_t> enum_values;
-
 nfp::keyword<struct optional_value_t>               optional_value;
 nfp::keyword<struct default_value_t>                default_value;
-nfp::keyword<struct handler_t>                      handler;
+nfp::keyword<struct callback_t>                     callback;
 
 } // local namespace
 

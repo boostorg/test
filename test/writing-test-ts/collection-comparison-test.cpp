@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : tests collection comparison implementation
+/// @file
+/// @brief tests collection comparison implementation
 // ***************************************************************************
 
 // Boost.Test
@@ -24,8 +21,8 @@ BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE(std::vector<int>)
 {                                                   \
     BOOST_TEST_INFO( "validating operator " #op );  \
     bool expected = (c1 op c2);                     \
-    BOOST_TEST_BUILD_ASSERTION( c1 op c2 );         \
-    auto const& res = E.evaluate();                 \
+    auto const& E_under_test = tt::assertion::seed()->* c1 op c2 ;  \
+    auto const& res = E_under_test.evaluate();      \
     BOOST_TEST( expected == !!res );                \
 }                                                   \
 /**/

@@ -15,7 +15,7 @@
 #ifndef BOOST_TEST_UTILS_RUNTIME_CLA_ARGV_TRAVERSER_HPP
 #define BOOST_TEST_UTILS_RUNTIME_CLA_ARGV_TRAVERSER_HPP
 
-// Boost.Runtime.Parameter
+// Boost.Test Runtime parameters
 #include <boost/test/utils/runtime/fwd.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -68,7 +68,7 @@ public:
         return m_curr_arg == m_argc;
     }
 
-    /// For the purposes of error reporting produces current token being parsed 
+    /// For the purposes of error reporting produces current token being parsed
     /// (from the begining)
     cstring     current_token()
     {

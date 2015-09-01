@@ -15,13 +15,15 @@
 #ifndef BOOST_TEST_UTILS_RUNTIME_ARGUMENT_HPP
 #define BOOST_TEST_UTILS_RUNTIME_ARGUMENT_HPP
 
-// Boost.Runtime.Parameter
+// Boost.Test Runtime parameters
 #include <boost/test/utils/runtime/fwd.hpp>
 #include <boost/test/utils/runtime/errors.hpp>
 
 // Boost.Test
 #include <boost/test/utils/class_properties.hpp>
 #include <boost/test/utils/rtti.hpp>
+#include <boost/test/utils/basic_cstring/compare.hpp>
+#include <boost/test/detail/throw_exception.hpp>
 
 // STL
 #include <cassert>
@@ -95,8 +97,8 @@ public:
     T&          get( cstring parameter_name ) {
         auto found = m_arguments.find( parameter_name );
         BOOST_TEST_I_ASSRT( found != m_arguments.end(),
-            missing_argument() << "There is no argument provided for parameter "
-                               << parameter_name );
+            access_to_missing_argument() 
+                << "There is no argument provided for parameter " << parameter_name );
 
         argument_ptr arg = found->second;
 

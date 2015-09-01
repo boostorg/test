@@ -82,23 +82,21 @@ class delim_policy {
     typedef basic_cstring<CharT const> cstring;
 public:
     // Constructor
-    explicit    delim_policy( ti_delimeter_type t = dt_char, cstring d = cstring() )
-    : m_type( t )
+    explicit    delim_policy( ti_delimeter_type type_ = dt_char, cstring delimeters_ = cstring() )
+    : m_type( type_ )
     {
-        set_delimeters( d );
+        set_delimeters( delimeters_ );
     }
 
-    void        set_delimeters( ti_delimeter_type t ) { m_type = t; }
-    template<typename Src>
-    void        set_delimeters( Src d )
+    void        set_delimeters( ti_delimeter_type type_ ) { m_type = type_; }
+    void        set_delimeters( cstring delimeters_ )
     {
-        using namespace unit_test;
-        assign_op( m_delimeters, d, static_cast<int>(0) );
+        m_delimeters = delimeters_;
 
         if( !m_delimeters.is_empty() )
             m_type = dt_char;
     }
-
+    void        set_delimeters( nfp::nil ) {}
     bool        operator()( CharT c )
     {
         switch( m_type ) {

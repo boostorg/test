@@ -19,13 +19,12 @@
 #include <boost/test/output/plain_report_formatter.hpp>
 #include <boost/test/utils/custom_manip.hpp>
 #include <boost/test/results_collector.hpp>
+#include <boost/test/unit_test_parameters.hpp>
 
 #include <boost/test/tree/test_unit.hpp>
 
 #include <boost/test/utils/basic_cstring/io.hpp>
 #include <boost/test/utils/setcolor.hpp>
-
-#include <boost/test/unit_test_parameters.hpp>
 
 // STL
 #include <iomanip>
@@ -84,6 +83,7 @@ void
 plain_report_formatter::results_report_start( std::ostream& ostr )
 {
     m_indent = 0;
+    m_color_output = runtime_config::get<bool>( runtime_config::COLOR_OUTPUT );
     ostr << '\n';
 }
 
@@ -160,13 +160,13 @@ plain_report_formatter::do_confirmation_report( test_unit const& tu, std::ostrea
     test_results const& tr = results_collector.results( tu.p_id );
 
     if( tr.passed() ) {
-        BOOST_TEST_SCOPE_SETCOLOR( ostr, term_attr::BRIGHT, term_color::GREEN );
+        BOOST_TEST_SCOPE_SETCOLOR( m_color_output, ostr, term_attr::BRIGHT, term_color::GREEN );
 
         ostr << "*** No errors detected\n";
         return;
     }
 
-    BOOST_TEST_SCOPE_SETCOLOR( ostr, term_attr::BRIGHT, term_color::RED );
+    BOOST_TEST_SCOPE_SETCOLOR( m_color_output, ostr, term_attr::BRIGHT, term_color::RED );
 
     if( tr.p_skipped ) {
         ostr << "*** The test " << tu.p_type_name << ' ' << quote() << tu.full_name() << " was skipped"

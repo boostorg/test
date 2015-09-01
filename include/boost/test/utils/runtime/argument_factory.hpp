@@ -15,7 +15,7 @@
 #ifndef BOOST_TEST_UTILS_RUNTIME_ARGUMENT_FACTORY_HPP
 #define BOOST_TEST_UTILS_RUNTIME_ARGUMENT_FACTORY_HPP
 
-// Boost.Runtime.Parameter
+// Boost.Test Runtime parameters
 #include <boost/test/utils/runtime/errors.hpp>
 #include <boost/test/utils/runtime/argument.hpp>
 
@@ -25,6 +25,7 @@
 
 // Boost
 #include <boost/lexical_cast.hpp>
+#include <boost/function/function2.hpp>
 
 // STL
 #include <vector>
@@ -48,12 +49,13 @@ struct value_interpreter<ValueType, false> {
     template<typename Modifiers>
     explicit    value_interpreter( Modifiers const& ) {}
 
-    ValueType interpret( cstring source ) const
+    ValueType interpret( cstring param_name, cstring source ) const
     {
         BOOST_TEST_I_TRY{
             return lexical_cast<ValueType>(source);
         } BOOST_TEST_I_CATCH0( bad_lexical_cast ) {
-            BOOST_TEST_I_THROW( format_error() << source << " can't be interpreted as parameter type value." );
+            BOOST_TEST_I_THROW( format_error( param_name ) << source << 
+                                    " can't be interpreted as value of parameter " << param_name << "." );
         }
         return ValueType{};
     }
@@ -66,7 +68,7 @@ struct value_interpreter<std::string, false> {
     template<typename Modifiers>
     explicit    value_interpreter( Modifiers const& ) {}
 
-    std::string interpret( cstring source ) const
+    std::string interpret( cstring, cstring source ) const
     {
         return std::string( source.begin(), source.size() );
     }
@@ -79,7 +81,7 @@ struct value_interpreter<cstring, false> {
     template<typename Modifiers>
     explicit    value_interpreter( Modifiers const& ) {}
 
-    cstring interpret( cstring source ) const
+    cstring interpret( cstring, cstring source ) const
     {
         return source;
     }
@@ -92,7 +94,7 @@ struct value_interpreter<bool, false> {
     template<typename Modifiers>
     explicit    value_interpreter( Modifiers const& ) {}
 
-    bool    interpret( cstring source ) const
+    bool    interpret( cstring param_name, cstring source ) const
     {
         static cstring const YES( "YES" );
         static cstring const Y( "Y" );
@@ -111,7 +113,7 @@ struct value_interpreter<bool, false> {
         if( case_ins_eq( source, NO ) || case_ins_eq( source, N ) || case_ins_eq( source, zero ) || case_ins_eq( source, FALSE ) )
             return false;
 
-        BOOST_TEST_I_THROW( format_error() << source << " can't be interpreted as bool value." );
+        BOOST_TEST_I_THROW( format_error( param_name ) << source << " can't be interpreted as bool value." );
         return false;
     }
 };
@@ -126,12 +128,13 @@ struct value_interpreter<EnumType, true> {
     {
     }
 
-    EnumType        interpret( cstring source ) const
+    EnumType        interpret( cstring param_name, cstring source ) const
     {
         auto found = m_name_to_value.find( source );
 
         BOOST_TEST_I_ASSRT( found != m_name_to_value.end(),
-                            format_error() << source << " is not a valid enumeration value name." );
+                            format_error( param_name ) << source << 
+                                " is not a valid enumeration value name for parameter " << param_name << "." );
 
         return found->second;
     }
@@ -158,16 +161,14 @@ public:
     template<typename Modifiers>
     explicit    argument_factory( Modifiers const& m )
     : m_interpreter( m )
-    , m_optional_value()
-    , m_default_value()
+    , m_optional_value( nfp::opt_get( m, optional_value, ValueType{} ) )
+    , m_default_value( nfp::opt_get( m, default_value, ValueType{} ) )
     {
-        nfp::opt_assign( m_optional_value, m, optional_value );
-        nfp::opt_assign( m_default_value, m, default_value );
     }
 
     void        produce_argument( cstring source, cstring param_name, arguments_store& store ) const
     {
-        store.set( param_name, source.empty() ? m_optional_value : m_interpreter.interpret( source ) );
+        store.set( param_name, source.empty() ? m_optional_value : m_interpreter.interpret( param_name, source ) );
     }
 
     void        produce_default( cstring param_name, arguments_store& store ) const
@@ -196,7 +197,7 @@ public:
 
     void        produce_argument( cstring source, cstring param_name, arguments_store& store ) const
     {
-        ValueType value = m_interpreter.interpret( source );
+        ValueType value = m_interpreter.interpret( param_name, source );
 
         if( store.has( param_name ) ) {
             std::vector<ValueType>& values = store.get<std::vector<ValueType>>( param_name );
