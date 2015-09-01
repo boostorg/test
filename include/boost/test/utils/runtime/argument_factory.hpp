@@ -22,9 +22,9 @@
 // Boost.Test
 #include <boost/test/utils/basic_cstring/io.hpp>
 #include <boost/test/utils/basic_cstring/compare.hpp>
+#include <boost/test/utils/string_cast.hpp>
 
 // Boost
-#include <boost/lexical_cast.hpp>
 #include <boost/function/function2.hpp>
 
 // STL
@@ -51,13 +51,11 @@ struct value_interpreter<ValueType, false> {
 
     ValueType interpret( cstring param_name, cstring source ) const
     {
-        BOOST_TEST_I_TRY{
-            return lexical_cast<ValueType>(source);
-        } BOOST_TEST_I_CATCH0( bad_lexical_cast ) {
-            BOOST_TEST_I_THROW( format_error( param_name ) << source << 
-                                    " can't be interpreted as value of parameter " << param_name << "." );
-        }
-        return ValueType{};
+        ValueType res;
+        if( !unit_test::utils::string_as<ValueType>( source, res ) )
+            BOOST_TEST_I_THROW( format_error( param_name ) << source <<
+                                " can't be interpreted as value of parameter " << param_name << "." );
+        return res;
     }
 };
 
@@ -96,25 +94,31 @@ struct value_interpreter<bool, false> {
 
     bool    interpret( cstring param_name, cstring source ) const
     {
-        static cstring const YES( "YES" );
-        static cstring const Y( "Y" );
-        static cstring const NO( "NO" );
-        static cstring const N( "N" );
-        static cstring const TRUE( "TRUE" );
-        static cstring const FALSE( "FALSE" );
-        static cstring const one( "1" );
-        static cstring const zero( "0" );
+        static cstring const s_YES( "YES" );
+        static cstring const s_Y( "Y" );
+        static cstring const s_NO( "NO" );
+        static cstring const s_N( "N" );
+        static cstring const s_TRUE( "TRUE" );
+        static cstring const s_FALSE( "FALSE" );
+        static cstring const s_one( "1" );
+        static cstring const s_zero( "0" );
 
         source.trim();
 
-        if( source.is_empty() || case_ins_eq( source, YES ) || case_ins_eq( source, Y ) || case_ins_eq( source, one ) || case_ins_eq( source, TRUE ) )
+        if( source.is_empty() ||
+            case_ins_eq( source, s_YES ) ||
+            case_ins_eq( source, s_Y ) ||
+            case_ins_eq( source, s_one ) ||
+            case_ins_eq( source, s_TRUE ) )
             return true;
 
-        if( case_ins_eq( source, NO ) || case_ins_eq( source, N ) || case_ins_eq( source, zero ) || case_ins_eq( source, FALSE ) )
+        if( case_ins_eq( source, s_NO ) ||
+            case_ins_eq( source, s_N ) ||
+            case_ins_eq( source, s_zero ) ||
+            case_ins_eq( source, s_FALSE ) )
             return false;
 
         BOOST_TEST_I_THROW( format_error( param_name ) << source << " can't be interpreted as bool value." );
-        return false;
     }
 };
 
@@ -133,7 +137,7 @@ struct value_interpreter<EnumType, true> {
         auto found = m_name_to_value.find( source );
 
         BOOST_TEST_I_ASSRT( found != m_name_to_value.end(),
-                            format_error( param_name ) << source << 
+                            format_error( param_name ) << source <<
                                 " is not a valid enumeration value name for parameter " << param_name << "." );
 
         return found->second;

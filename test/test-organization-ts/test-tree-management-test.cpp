@@ -149,7 +149,7 @@ BOOST_AUTO_TEST_CASE( manual_test_suite_creation )
     if( pos != const_string::npos )
         fn.trim_left( pos+1 );
     BOOST_TEST( fn == const_string( "test-tree-management-test.cpp" ) );
-    BOOST_TEST( ts1->p_line_num == 135U );
+    BOOST_TEST( ts1->p_line_num == 138U );
 
     BOOST_TEST( ts1->p_expected_failures == 0U );
     BOOST_TEST( ts1->p_timeout == 0U );

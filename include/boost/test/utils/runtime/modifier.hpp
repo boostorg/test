@@ -32,21 +32,20 @@ namespace runtime {
 
 namespace {
 
-nfp::typed_keyword<cstring,struct description_t>    description;
-nfp::typed_keyword<cstring,struct help_t>           help;
-nfp::typed_keyword<cstring,struct env_var_t>        env_var;
-nfp::typed_keyword<cstring,struct end_of_params_t>  end_of_params;
-nfp::typed_keyword<cstring,struct neg_prefix_t>     negation_prefix;
-nfp::typed_keyword<cstring,struct value_hint_t>     value_hint;
+auto const& description     = unit_test::static_constant<nfp::typed_keyword<cstring,struct description_t>>::value;
+auto const& help            = unit_test::static_constant<nfp::typed_keyword<cstring,struct help_t>>::value;
+auto const& env_var         = unit_test::static_constant<nfp::typed_keyword<cstring,struct env_var_t>>::value;
+auto const& end_of_params   = unit_test::static_constant<nfp::typed_keyword<cstring,struct end_of_params_t>>::value;
+auto const& negation_prefix = unit_test::static_constant<nfp::typed_keyword<cstring,struct neg_prefix_t>>::value;
+auto const& value_hint      = unit_test::static_constant<nfp::typed_keyword<cstring,struct value_hint_t>>::value;
+auto const& optional_value  = unit_test::static_constant<nfp::keyword<struct optional_value_t>>::value;
+auto const& default_value   = unit_test::static_constant<nfp::keyword<struct default_value_t>>::value;
+auto const& callback        = unit_test::static_constant<nfp::keyword<struct callback_t>>::value;
 
 template<typename EnumType>
-using enum_values = unit_test::ut_detail::static_constant<
+using enum_values = unit_test::static_constant<
   nfp::typed_keyword<std::initializer_list<std::pair<const cstring,EnumType>>, struct enum_values_t>
 >;
-
-nfp::keyword<struct optional_value_t>               optional_value;
-nfp::keyword<struct default_value_t>                default_value;
-nfp::keyword<struct callback_t>                     callback;
 
 } // local namespace
 

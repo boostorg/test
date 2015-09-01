@@ -37,7 +37,7 @@ enum report_level  { INV_REPORT_LEVEL, CONFIRMATION_REPORT, SHORT_REPORT, DETAIL
 enum output_format { OF_INVALID,
                      OF_CLF, ///< compiler log format
                      OF_XML, ///< XML format for report and log,
-                     OF_DOT  ///< dot format for output content 
+                     OF_DOT  ///< dot format for output content
 };
 
 //____________________________________________________________________________//
@@ -70,6 +70,8 @@ test_id_2_unit_type( test_unit_id id )
 
 //____________________________________________________________________________//
 
+} // namespace ut_detail
+
 // helper templates to prevent ODR violations
 template<class T>
 struct static_constant {
@@ -80,8 +82,6 @@ template<class T>
 T static_constant<T>::value;
 
 //____________________________________________________________________________//
-
-} // namespace ut_detail
 
 } // namespace unit_test
 } // namespace boost

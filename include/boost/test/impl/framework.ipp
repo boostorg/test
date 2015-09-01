@@ -838,9 +838,10 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     }
 
     // 50. Set up memory leak detection
-    if( runtime_config::get<long>( runtime_config::DETECT_MEM_LEAKS ) > 0 ) {
+    unsigned long detect_mem_leak = runtime_config::get<unsigned long>( runtime_config::DETECT_MEM_LEAKS );
+    if( detect_mem_leak > 0 ) {
         debug::detect_memory_leaks( true, runtime_config::get<std::string>( runtime_config::REPORT_MEM_LEAKS ) );
-        debug::break_memory_alloc( runtime_config::get<long>( runtime_config::DETECT_MEM_LEAKS ) );
+        debug::break_memory_alloc( (long)detect_mem_leak );
     }
 
     // 60. Initialize master unit test suite

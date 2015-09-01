@@ -18,9 +18,11 @@
 // Boost.Test Runtime parameters
 #include <boost/test/utils/runtime/fwd.hpp>
 
+// Boost.Test
+#include <boost/test/utils/string_cast.hpp>
+
 // Boost
 #include <boost/shared_ptr.hpp>
-#include <boost/lexical_cast.hpp>
 
 // STL
 #include <exception>
@@ -85,7 +87,7 @@ template<typename Derived, typename Base, typename T>
 inline Derived
 operator<<(specific_param_error<Derived, Base>&& ex, T const& val)
 {
-    ex.msg.append( lexical_cast<std::string>( val ) );
+    ex.msg.append( unit_test::utils::string_cast( val ) );
 
     return reinterpret_cast<Derived&&>(ex);
 }
@@ -121,7 +123,7 @@ SPECIFIC_EX_TYPE( missing_req_arg, input_error );
 
 class ambiguous_param : public specific_param_error<ambiguous_param, input_error> {
 public:
-    explicit    ambiguous_param( std::vector<cstring>&& amb_candidates ) 
+    explicit    ambiguous_param( std::vector<cstring>&& amb_candidates )
     : specific_param_error<ambiguous_param,input_error>( "" )
     , m_amb_candidates( std::move( amb_candidates ) ) {}
 

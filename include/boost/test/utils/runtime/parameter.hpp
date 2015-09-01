@@ -336,7 +336,7 @@ private:
     virtual void    value_help( std::ostream& ostr ) const
     {
         if( p_value_hint.empty() )
-            ostr << "<yes/no value>";
+            ostr << "<boolean value>";
         else
             ostr << p_value_hint;
     }

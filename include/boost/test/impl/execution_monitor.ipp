@@ -243,9 +243,9 @@ report_error( execution_exception::error_code ec, boost::exception const* be, ch
 
     va_end( *args );
 
-    BOOST_TEST_IMPL_THROW(execution_exception( ec, buf, execution_exception::location( extract<throw_file>( be ),
-                                                                       (size_t)extract<throw_line>( be ),
-                                                                       extract<throw_function>( be ) ) ));
+    BOOST_TEST_I_THROW(execution_exception( ec, buf, execution_exception::location( extract<throw_file>( be ),
+                                                                                    (size_t)extract<throw_line>( be ),
+                                                                                    extract<throw_function>( be ) ) ));
 }
 
 //____________________________________________________________________________//
@@ -868,10 +868,8 @@ execution_monitor::catch_signals( boost::function<int ()> const& F )
 
     if( !sigsetjmp( signal_handler::jump_buffer(), 1 ) )
         return detail::do_invoke( m_custom_translators , F );
-    else {
+    else
         BOOST_TEST_I_THROW( local_signal_handler.sys_sig() );
-        return 0;
-    }
 }
 
 //____________________________________________________________________________//

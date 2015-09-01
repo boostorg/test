@@ -1175,5 +1175,4 @@ BOOST_AUTO_TEST_CASE( test_param_callback )
 // EOF
 
 // cla help/usage
-// streams as classes
-// eliminate access methods
+// build info

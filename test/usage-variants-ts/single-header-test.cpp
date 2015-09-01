@@ -21,7 +21,6 @@ BOOST_AUTO_TEST_CASE( test )
 {
     int i = 1;
     BOOST_CHECK( i*i == 1 );
-    BOOST_CHECK( framework::master_test_suite().argv[1] == "a b" );
 }
 
 //____________________________________________________________________________//
