@@ -22,6 +22,8 @@
 // Boost.Test
 #include <boost/test/utils/class_properties.hpp>
 #include <boost/test/utils/rtti.hpp>
+#include <boost/test/utils/basic_cstring/compare.hpp>
+#include <boost/test/detail/throw_exception.hpp>
 
 // STL
 #include <cassert>

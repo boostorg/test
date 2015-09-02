@@ -389,7 +389,9 @@ parse_filters( test_unit_id master_tu_id, test_unit_id_list& tu_to_enable, test_
     // 10. collect tu to enable and disable based on filters
     bool had_selector_filter = false;
 
-    BOOST_TEST_FOREACH( const_string, filter, runtime_config::run_filters() ) {
+    auto const& filters = runtime_config::get<std::vector<std::string>>( runtime_config::RUN_FILTERS );
+
+    BOOST_TEST_FOREACH( const_string, filter, filters ) {
         BOOST_TEST_SETUP_ASSERT( !filter.is_empty(), "Invalid filter specification" );
 
         enum { SELECTOR, ENABLER, DISABLER } filter_type = SELECTOR;
@@ -530,7 +532,7 @@ public:
         test_unit_id_list tu_to_disable;
 
         // 10. If there are any filters supplied, figure out lists of test units to enable/disable
-        bool had_selector_filter = !runtime_config::run_filters().empty() &&
+        bool had_selector_filter = !runtime_config::get<std::vector<std::string>>( runtime_config::RUN_FILTERS ).empty() &&
                                    parse_filters( master_tu_id, tu_to_enable, tu_to_disable );
 
         // 20. Set the stage: either use default run status or disable all test units
@@ -626,7 +628,7 @@ public:
             if( tu.p_type == TUT_SUITE ) {
                 test_suite const& ts = static_cast<test_suite const&>( tu );
 
-                if( runtime_config::random_seed() == 0 ) {
+                if( runtime_config::get<unsigned>( runtime_config::RANDOM_SEED ) == 0 ) {
                     typedef std::pair<counter_t,test_unit_id> value_type;
 
                     BOOST_TEST_FOREACH( value_type, chld, ts.m_ranked_children ) {
@@ -805,24 +807,24 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     runtime_config::init( argc, argv );
 
     // 20. Set the desired log level and format
-    unit_test_log.set_threshold_level( runtime_config::log_level() );
-    unit_test_log.set_format( runtime_config::log_format() );
+    unit_test_log.set_threshold_level( runtime_config::get<log_level>( runtime_config::LOG_LEVEL ) );
+    unit_test_log.set_format( runtime_config::get<output_format>( runtime_config::LOG_FORMAT ) );
 
     // 30. Set the desired report level and format
-    results_reporter::set_level( runtime_config::report_level() );
-    results_reporter::set_format( runtime_config::report_format() );
+    results_reporter::set_level( runtime_config::get<report_level>( runtime_config::REPORT_LEVEL ) );
+    results_reporter::set_format( runtime_config::get<output_format>( runtime_config::REPORT_FORMAT ) );
 
     // 40. Register default test observers
     register_observer( results_collector );
     register_observer( unit_test_log );
 
-    if( runtime_config::show_progress() )
+    if( runtime_config::get<bool>( runtime_config::SHOW_PROGRESS ) )
         register_observer( progress_monitor );
 
     // 50. Set up memory leak detection
-    if( runtime_config::detect_memory_leaks() > 0 ) {
-        debug::detect_memory_leaks( true, runtime_config::memory_leaks_report_file() );
-        debug::break_memory_alloc( runtime_config::detect_memory_leaks() );
+    if( runtime_config::get<long>( runtime_config::DETECT_MEM_LEAKS ) > 0 ) {
+        debug::detect_memory_leaks( true, runtime_config::get<std::string>( runtime_config::REPORT_MEM_LEAKS ) );
+        debug::break_memory_alloc( runtime_config::get<long>( runtime_config::DETECT_MEM_LEAKS ) );
     }
 
     // 60. Initialize master unit test suite
@@ -1179,7 +1181,7 @@ run( test_unit_id id, bool continue_test )
     test_case_counter tcc;
     traverse_test_tree( id, tcc );
 
-    BOOST_TEST_SETUP_ASSERT( tcc.p_count != 0 , runtime_config::run_filters().empty()
+    BOOST_TEST_SETUP_ASSERT( tcc.p_count != 0 , runtime_config::get<std::vector<std::string>>( runtime_config::RUN_FILTERS ).empty()
         ? BOOST_TEST_L( "test tree is empty" )
         : BOOST_TEST_L( "no test cases matching filter or all test cases were disabled" ) );
 
@@ -1199,18 +1201,15 @@ run( test_unit_id id, bool continue_test )
         }
     }
 
-    switch( runtime_config::random_seed() ) {
+    unsigned seed = runtime_config::get<unsigned>( runtime_config::RANDOM_SEED );
+    switch( seed ) {
     case 0:
         break;
-    case 1: {
-        unsigned seed = static_cast<unsigned>( std::time( 0 ) );
+    case 1:
+        seed = static_cast<unsigned>( std::time( 0 ) );
+    default:
         BOOST_TEST_MESSAGE( "Test cases order is shuffled using seed: " << seed );
         std::srand( seed );
-        break;
-    }
-    default:
-        BOOST_TEST_MESSAGE( "Test cases order is shuffled using seed: " << runtime_config::random_seed() );
-        std::srand( runtime_config::random_seed() );
     }
 
     impl::s_frk_state().execute_test_tree( id );

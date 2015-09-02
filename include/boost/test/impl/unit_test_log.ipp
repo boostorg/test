@@ -133,7 +133,7 @@ unit_test_log_t::test_start( counter_t test_cases_amount )
 
     s_log_impl().m_log_formatter->log_start( s_log_impl().stream(), test_cases_amount );
 
-    if( runtime_config::show_build_info() )
+    if( runtime_config::get<bool>( runtime_config::BUILD_INFO ) )
         s_log_impl().m_log_formatter->log_build_info( s_log_impl().stream() );
 
     s_log_impl().m_entry_in_progress = false;

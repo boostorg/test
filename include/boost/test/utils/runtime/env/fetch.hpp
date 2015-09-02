@@ -69,10 +69,10 @@ fetch_absent( parameters_store const& params, runtime::arguments_store& args, Re
     BOOST_TEST_FOREACH( parameters_store::storage_type::value_type const&, v, params.all() ) {
         basic_param_ptr param = v.second;
 
-        if( args.has( param->p_name ) || param->p_env_var->empty() )
+        if( args.has( param->p_name ) || param->p_env_var.empty() )
             continue;
 
-        auto value = read_func( param->p_env_var.get() );
+        auto value = read_func( param->p_env_var );
 
         if( !value.second )
             continue;

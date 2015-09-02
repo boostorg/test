@@ -43,11 +43,9 @@ using enum_values = unit_test::ut_detail::static_constant<
   nfp::typed_keyword<std::initializer_list<std::pair<const cstring,EnumType>>, struct enum_values_t>
 >;
 
-// nfp::typed_keyword<std::initializer_list<std::pair<const cstring,int>>, struct enum_values_t> enum_values;
-
 nfp::keyword<struct optional_value_t>               optional_value;
 nfp::keyword<struct default_value_t>                default_value;
-nfp::keyword<struct handler_t>                      handler;
+nfp::keyword<struct callback_t>                     callback;
 
 } // local namespace
 

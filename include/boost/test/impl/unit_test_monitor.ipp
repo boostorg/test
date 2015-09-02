@@ -37,11 +37,11 @@ unit_test_monitor_t::error_level
 unit_test_monitor_t::execute_and_translate( boost::function<void ()> const& func, unsigned timeout )
 {
     BOOST_TEST_I_TRY {
-        p_catch_system_errors.value     = runtime_config::catch_sys_errors();
+        p_catch_system_errors.value     = runtime_config::get<bool>( runtime_config::CATCH_SYS_ERRORS );
         p_timeout.value                 = timeout;
-        p_auto_start_dbg.value          = runtime_config::auto_start_dbg();
-        p_use_alt_stack.value           = runtime_config::use_alt_stack();
-        p_detect_fp_exceptions.value    = runtime_config::detect_fp_exceptions();
+        p_auto_start_dbg.value          = runtime_config::get<bool>( runtime_config::AUTO_START_DBG );
+        p_use_alt_stack.value           = runtime_config::get<bool>( runtime_config::USE_ALT_STACK );
+        p_detect_fp_exceptions.value    = runtime_config::get<bool>( runtime_config::DETECT_FP_EXCEPT );
 
         vexecute( func );
     }

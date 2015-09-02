@@ -147,7 +147,7 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
 
     BOOST_TEST( p1.p_name == "P1" );
     BOOST_TEST( p1.p_description == "" );
-    BOOST_TEST( p1.p_env_var.get() == "" );
+    BOOST_TEST( p1.p_env_var == "" );
     BOOST_TEST( p1.p_optional );
     BOOST_TEST( !p1.p_repeatable );
     BOOST_TEST( !p1.p_has_optional_value );
@@ -159,7 +159,7 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
 
     BOOST_TEST( p2.p_name == "P2" );
     BOOST_TEST( p2.p_description == "123" );
-    BOOST_TEST( p2.p_env_var.get() == "E2" );
+    BOOST_TEST( p2.p_env_var == "E2" );
     BOOST_TEST( !p2.p_optional );
     BOOST_TEST( !p2.p_repeatable );
     BOOST_TEST( !p2.p_has_optional_value );
@@ -171,7 +171,7 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
 
     BOOST_TEST( p4.p_name == "P4" );
     BOOST_TEST( p4.p_description == "123" );
-    BOOST_TEST( p4.p_env_var.get() == "E4" );
+    BOOST_TEST( p4.p_env_var == "E4" );
     BOOST_TEST( p4.p_optional );
     BOOST_TEST( p4.p_repeatable );
     BOOST_TEST( !p4.p_has_optional_value );
@@ -184,7 +184,7 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
 
     BOOST_TEST( p5.p_name == "P5" );
     BOOST_TEST( p5.p_description == "bool arg" );
-    BOOST_TEST( p5.p_env_var.get() == "E5" );
+    BOOST_TEST( p5.p_env_var == "E5" );
     BOOST_TEST( p5.p_optional );
     BOOST_TEST( !p5.p_repeatable );
     BOOST_TEST( p5.p_has_optional_value );
@@ -198,7 +198,7 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
 
     BOOST_TEST( p6.p_name == "P6" );
     BOOST_TEST( p6.p_description == "option with true default" );
-    BOOST_TEST( p6.p_env_var.get() == "E6" );
+    BOOST_TEST( p6.p_env_var == "E6" );
     BOOST_TEST( p6.p_optional );
     BOOST_TEST( !p6.p_repeatable );
     BOOST_TEST( p6.p_has_optional_value );
@@ -1078,8 +1078,6 @@ BOOST_AUTO_TEST_CASE( test_fetch_from_environment )
 }
 
 //____________________________________________________________________________//
-//____________________________________________________________________________//
-//____________________________________________________________________________//
 
 BOOST_AUTO_TEST_CASE( test_finalize_arguments )
 {
@@ -1138,11 +1136,44 @@ BOOST_AUTO_TEST_CASE( test_finalize_arguments )
     }
 }
 
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_param_callback )
+{
+    rt::parameters_store params_store;
+
+    int counter = 0;
+    auto cb = [&counter](rt::cstring param_name )
+    {
+        BOOST_TEST( param_name == "P1" );
+        counter++;
+    };
+
+    rt::parameter<int> p1( "P1", rt::callback = cb );
+    params_store.add( p1 );
+
+    rt::parameter<int> p2( "P2" );
+    params_store.add( p2 );
+
+    {
+        rt::arguments_store args_store;
+        args_store.set( "P1", 3 );
+
+        rt::finalize_arguments( params_store, args_store );
+        BOOST_TEST( counter == 1 );
+    }
+
+    {
+        rt::arguments_store args_store;
+        args_store.set( "P2", 3 );
+
+        rt::finalize_arguments( params_store, args_store );
+        BOOST_TEST( counter == 1 );
+    }
+}
+
 // EOF
 
-
 // cla help/usage
-// value handler
-// enum_parameter
 // streams as classes
 // eliminate access methods

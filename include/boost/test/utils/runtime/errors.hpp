@@ -24,6 +24,7 @@
 
 // STL
 #include <exception>
+#include <vector>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 

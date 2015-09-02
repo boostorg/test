@@ -25,6 +25,9 @@
 #include <boost/test/utils/class_properties.hpp>
 #include <boost/test/utils/foreach.hpp>
 
+// Boost
+#include <boost/function/function2.hpp>
+
 // STL
 #include <algorithm>
 
@@ -78,13 +81,14 @@ struct parameter_cla_id {
     bool                    m_negatable;
 };
 
-typedef std::vector<parameter_cla_id> parameter_cla_ids;
+typedef std::vector<parameter_cla_id> param_cla_ids;
 
 // ************************************************************************** //
 // **************             runtime::basic_param             ************** //
 // ************************************************************************** //
 
 class basic_param {
+    typedef function<void (cstring)> callback_type;
     typedef unit_test::readwrite_property<std::string>  string_property;
     typedef unit_test::readwrite_property<bool>         bool_property;
 protected:
@@ -93,20 +97,39 @@ protected:
     basic_param( cstring name, bool is_optional, bool is_repeatable, Modifiers const& m )
     : p_name( name.begin(), name.end() )
     , p_description( nfp::opt_get( m, description, std::string{} ) )
+    , p_env_var( nfp::opt_get( m, env_var, std::string{} ) )
+    , p_value_hint( nfp::opt_get( m, value_hint, std::string{} ) )
     , p_optional( is_optional )
     , p_repeatable( is_repeatable )
     , p_has_optional_value( m.has( optional_value ) )
     , p_has_default_value( m.has( default_value ) || is_repeatable )
+    , p_callback( nfp::opt_get( m, callback, callback_type{} ) )
     {
-        nfp::opt_assign( p_env_var.value, m, env_var );
-        nfp::opt_assign( p_value_hint.value, m, value_hint );
     }
 
 public:
     virtual                 ~basic_param() {}
 
+    // Pubic properties
+    std::string const       p_name;
+    std::string const       p_description;
+    std::string const       p_env_var;
+    std::string const       p_value_hint;
+    bool const              p_optional;
+    bool const              p_repeatable;
+    bool_property           p_has_optional_value;
+    bool_property           p_has_default_value;
+    callback_type const     p_callback;
+
     /// interface for cloning typed parameters
     virtual basic_param_ptr clone() const = 0;
+
+    /// Access methods
+    param_cla_ids const&    cla_ids() const { return m_cla_ids; }
+    void                    add_cla_id( cstring prefix, cstring full_name, cstring value_separator )
+    {
+        add_cla_id_impl( prefix, full_name, value_separator, false, true );
+    }
 
     /// interface for producing argument values for this parameter
     virtual void            produce_argument( cstring token, bool negative_form, arguments_store& store ) const = 0;
@@ -147,30 +170,13 @@ public:
 
             ostr << '\n';
         }
-        if( !p_env_var->empty() )
+        if( !p_env_var.empty() )
             ostr << " Environment variable: " << p_env_var << '\n';
     }
 
     virtual void            help( std::ostream& ostr, cstring negation_prefix )
     {
         usage( ostr, negation_prefix );
-    }
-
-    // Pubic properties
-    std::string const       p_name;
-    std::string const       p_description;
-    string_property         p_env_var;
-    string_property         p_value_hint;
-    bool const              p_optional;
-    bool const              p_repeatable;
-    bool_property           p_has_optional_value;
-    bool_property           p_has_default_value;
-
-    // Access methods
-    parameter_cla_ids const& cla_ids() const { return m_cla_ids; }
-    void                    add_cla_id( cstring prefix, cstring full_name, cstring value_separator )
-    {
-        add_cla_id_impl( prefix, full_name, value_separator, false, true );
     }
 
 protected:
@@ -208,14 +214,14 @@ private:
     }
     virtual void            value_help( std::ostream& ostr ) const
     {
-        if( p_value_hint->empty() )
+        if( p_value_hint.empty() )
             ostr << "<value>";
         else
             ostr << p_value_hint;
     }
 
     // Data members
-    parameter_cla_ids       m_cla_ids;
+    param_cla_ids       m_cla_ids;
 };
 
 // ************************************************************************** //
@@ -318,7 +324,7 @@ private:
     }
     virtual void    value_help( std::ostream& ostr ) const
     {
-        if( p_value_hint->empty() )
+        if( p_value_hint.empty() )
             ostr << "<yes/no value>";
         else
             ostr << p_value_hint;
@@ -356,7 +362,7 @@ private:
 
     virtual void    value_help( std::ostream& ostr ) const
     {
-        if( this->p_value_hint->empty() ) {
+        if( this->p_value_hint.empty() ) {
             ostr << "<";
             bool first = true;
             BOOST_TEST_FOREACH( cstring, name, m_valid_names ) {

@@ -174,29 +174,29 @@ compiler_log_formatter::log_entry_start( std::ostream& output, log_entry_data co
     switch( let ) {
         case BOOST_UTL_ET_INFO:
             print_prefix( output, entry_data.m_file_name, entry_data.m_line_num );
-            if( runtime_config::color_output() )
+            if( runtime_config::get<bool>( runtime_config::COLOR_OUTPUT ) )
                 output << setcolor( term_attr::BRIGHT, term_color::GREEN );
             output << "info: ";
             break;
         case BOOST_UTL_ET_MESSAGE:
-            if( runtime_config::color_output() )
+            if( runtime_config::get<bool>( runtime_config::COLOR_OUTPUT ) )
                 output << setcolor( term_attr::BRIGHT, term_color::CYAN );
             break;
         case BOOST_UTL_ET_WARNING:
             print_prefix( output, entry_data.m_file_name, entry_data.m_line_num );
-            if( runtime_config::color_output() )
+            if( runtime_config::get<bool>( runtime_config::COLOR_OUTPUT ) )
                 output << setcolor( term_attr::BRIGHT, term_color::YELLOW );
             output << "warning: in \"" << test_phase_identifier() << "\": ";
             break;
         case BOOST_UTL_ET_ERROR:
             print_prefix( output, entry_data.m_file_name, entry_data.m_line_num );
-            if( runtime_config::color_output() )
+            if( runtime_config::get<bool>( runtime_config::COLOR_OUTPUT ) )
                 output << setcolor( term_attr::BRIGHT, term_color::RED );
             output << "error: in \"" << test_phase_identifier() << "\": ";
             break;
         case BOOST_UTL_ET_FATAL_ERROR:
             print_prefix( output, entry_data.m_file_name, entry_data.m_line_num );
-            if( runtime_config::color_output() )
+            if( runtime_config::get<bool>( runtime_config::COLOR_OUTPUT ) )
                 output << setcolor( term_attr::BLINK, term_color::RED );
             output << "fatal error: in \"" << test_phase_identifier() << "\": ";
             break;
@@ -224,7 +224,7 @@ compiler_log_formatter::log_entry_value( std::ostream& output, lazy_ostream cons
 void
 compiler_log_formatter::log_entry_finish( std::ostream& output )
 {
-    if( runtime_config::color_output() )
+    if( runtime_config::get<bool>( runtime_config::COLOR_OUTPUT ) )
         output << setcolor();
 
     output << std::endl;
