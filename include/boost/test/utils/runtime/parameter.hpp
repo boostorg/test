@@ -42,23 +42,23 @@ namespace runtime {
 // set of attributes identifying the parameter in the command line
 
 struct parameter_cla_id {
-    parameter_cla_id( cstring prefix, cstring full_name, cstring value_separator, bool negatable )
+    parameter_cla_id( cstring prefix, cstring tag, cstring value_separator, bool negatable )
     : m_prefix( prefix.begin(), prefix.size() )
-    , m_full_name( full_name.begin(), full_name.size() )
+    , m_tag( tag.begin(), tag.size() )
     , m_value_separator( value_separator.begin(), value_separator.size() )
     , m_negatable( negatable )
     {
 
         BOOST_TEST_I_ASSRT( std::all_of( m_prefix.begin(), m_prefix.end(), valid_prefix_char ),
-                            invalid_cla_id() << "Parameter " << m_full_name
+                            invalid_cla_id() << "Parameter " << m_tag
                                              << " has invalid characters in prefix." );
 
-        BOOST_TEST_I_ASSRT( std::all_of( m_full_name.begin(), m_full_name.end(), valid_name_char ),
-                            invalid_cla_id() << "Parameter " << m_full_name
+        BOOST_TEST_I_ASSRT( std::all_of( m_tag.begin(), m_tag.end(), valid_name_char ),
+                            invalid_cla_id() << "Parameter " << m_tag
                                              << " has invalid characters in name." );
 
         BOOST_TEST_I_ASSRT( std::all_of( m_value_separator.begin(), m_value_separator.end(), valid_separator_char ),
-                            invalid_cla_id() << "Parameter " << m_full_name
+                            invalid_cla_id() << "Parameter " << m_tag
                                              << " has invalid characters in value separator." );
     }
 
@@ -76,7 +76,7 @@ struct parameter_cla_id {
     }
 
     std::string             m_prefix;
-    std::string             m_full_name;
+    std::string             m_tag;
     std::string             m_value_separator;
     bool                    m_negatable;
 };
@@ -126,9 +126,9 @@ public:
 
     /// Access methods
     param_cla_ids const&    cla_ids() const { return m_cla_ids; }
-    void                    add_cla_id( cstring prefix, cstring full_name, cstring value_separator )
+    void                    add_cla_id( cstring prefix, cstring tag, cstring value_separator )
     {
-        add_cla_id_impl( prefix, full_name, value_separator, false, true );
+        add_cla_id_impl( prefix, tag, value_separator, false, true );
     }
 
     /// interface for producing argument values for this parameter
@@ -146,9 +146,9 @@ public:
         BOOST_TEST_FOREACH( parameter_cla_id const&, id, cla_ids() ) {
             ostr << "   " << id.m_prefix;
             if( id.m_negatable )
-                cla_name_help( ostr, id.m_full_name, negation_prefix );
+                cla_name_help( ostr, id.m_tag, negation_prefix );
             else
-                cla_name_help( ostr, id.m_full_name, "" );
+                cla_name_help( ostr, id.m_tag, "" );
 
             bool optional_value = false;
 
@@ -181,36 +181,36 @@ public:
 
 protected:
     void                    add_cla_id_impl( cstring prefix,
-                                             cstring full_name,
+                                             cstring tag,
                                              cstring value_separator,
                                              bool negatable,
                                              bool validate_value_separator )
     {
-        BOOST_TEST_I_ASSRT( !full_name.is_empty(),
+        BOOST_TEST_I_ASSRT( !tag.is_empty(),
                             invalid_cla_id() << "Parameter can't have an empty name." );
 
         BOOST_TEST_I_ASSRT( !prefix.is_empty(),
-                            invalid_cla_id() << "Parameter " << full_name
+                            invalid_cla_id() << "Parameter " << tag
                                              << " can't have an empty prefix." );
 
         BOOST_TEST_I_ASSRT( !value_separator.is_empty(),
-                            invalid_cla_id() << "Parameter " << full_name
+                            invalid_cla_id() << "Parameter " << tag
                                              << " can't have an empty value separator." );
 
         // We trim value separator from all the spaces, so token end will indicate separator
         value_separator.trim();
         BOOST_TEST_I_ASSRT( !validate_value_separator || !value_separator.is_empty() || !p_has_optional_value,
-                            invalid_cla_id() << "Parameter " << full_name
+                            invalid_cla_id() << "Parameter " << tag
                                              << " with optional value attribute can't use space as value separator." );
 
-        m_cla_ids.push_back( parameter_cla_id( prefix, full_name, value_separator, negatable ) );
+        m_cla_ids.push_back( parameter_cla_id( prefix, tag, value_separator, negatable ) );
     }
 
 private:
     /// interface for usage/help customization
-    virtual void            cla_name_help( std::ostream& ostr, cstring cla_full_name, cstring negation_prefix ) const
+    virtual void            cla_name_help( std::ostream& ostr, cstring cla_tag, cstring negation_prefix ) const
     {
-        ostr << cla_full_name;
+        ostr << cla_tag;
     }
     virtual void            value_help( std::ostream& ostr ) const
     {
@@ -288,9 +288,9 @@ public:
     {
     }
 
-    void            add_cla_id( cstring prefix, cstring full_name, cstring value_separator, bool negatable = false )
+    void            add_cla_id( cstring prefix, cstring tag, cstring value_separator, bool negatable = false )
     {
-        add_cla_id_impl( prefix, full_name, value_separator, negatable, false );
+        add_cla_id_impl( prefix, tag, value_separator, negatable, false );
     }
 
 private:
@@ -305,7 +305,7 @@ private:
             store.set( p_name, !negative_form );
         else {
             BOOST_TEST_I_ASSRT( !negative_form,
-                                format_error() << "Can't set value to negative form of the argument." );
+                                format_error( p_name ) << "Can't set value to negative form of the argument." );
 
             m_arg_factory.produce_argument( token, p_name, store );
         }
@@ -315,12 +315,12 @@ private:
     {
         m_arg_factory.produce_default( p_name, store );
     }
-    virtual void    cla_name_help( std::ostream& ostr, cstring cla_full_name, cstring negation_prefix ) const
+    virtual void    cla_name_help( std::ostream& ostr, cstring cla_tag, cstring negation_prefix ) const
     {
         if( negation_prefix.is_empty() )
-            ostr << cla_full_name;
+            ostr << cla_tag;
         else
-            ostr << '[' << negation_prefix << ']' << cla_full_name;
+            ostr << '[' << negation_prefix << ']' << cla_tag;
     }
     virtual void    value_help( std::ostream& ostr ) const
     {

@@ -18,7 +18,10 @@
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/utils/runtime/argument.hpp>
 
-// 
+// STL
+#include <iostream>
+#include <fstream>
+
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
@@ -73,14 +76,22 @@ get( runtime::cstring parameter_name )
     return argument_store().get<T>( parameter_name );
 }
 
+/// For public access
+BOOST_TEST_DECL bool save_pattern();
+
 // ************************************************************************** //
 // **************                  stream_holder               ************** //
 // ************************************************************************** //
 
 class stream_holder {
 public:
-    stream_holder( runtime::cstring param_name, std::ostream* default_stream )
-    : m_stream( default_stream )
+    // Constructor
+    explicit        stream_holder( std::ostream& default_stream )
+    : m_stream( &default_stream )
+    {
+    }
+
+    void            setup( runtime::cstring param_name )
     {
         if( !runtime_config::argument_store().has( param_name ) )
             return;
@@ -97,10 +108,13 @@ public:
         }
     }
 
+    // Access methods
+    std::ostream&   ref() const { return *m_stream; }  
+
 private:
     // Data members
     std::ofstream   m_file;
-    std::ofstream*  m_stream;  
+    std::ostream*   m_stream;  
 };
 
 } // namespace runtime_config

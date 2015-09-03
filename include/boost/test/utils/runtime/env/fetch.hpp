@@ -79,8 +79,9 @@ fetch_absent( parameters_store const& params, runtime::arguments_store& args, Re
 
         // Validate against unexpected empty value
         BOOST_TEST_I_ASSRT( !value.first.is_empty() || param->p_has_optional_value,
-            format_error() << "Missing an argument value for the parameter " << param->p_name
-                           << " in the environment." );
+            format_error( param->p_name ) 
+                << "Missing an argument value for the parameter " << param->p_name
+                << " in the environment." );
 
         // Produce argument value
         param->produce_argument( value.first, false, args );

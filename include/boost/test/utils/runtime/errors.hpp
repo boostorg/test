@@ -42,19 +42,30 @@ public:
         return msg.c_str();
     }
 
+    cstring     param_name;
     std::string msg;
+
+protected:
+    explicit    param_error( cstring param_name_ ) : param_name( param_name_) {}
 };
 
 //____________________________________________________________________________//
 
-class init_error : public param_error {};
-class input_error : public param_error {};
+class init_error : public param_error {
+protected:
+    explicit    init_error( cstring param_name ) : param_error( param_name ) {}
+};
+class input_error : public param_error {
+protected:
+    explicit    input_error( cstring param_name ) : param_error( param_name ) {}
+};
 
 //____________________________________________________________________________//
 
 template<typename Derived, typename Base>
 class specific_param_error : public Base {
-public:
+protected:
+    explicit    specific_param_error( cstring param_name ) : Base( param_name ) {}
 };
 
 //____________________________________________________________________________//
@@ -85,28 +96,43 @@ operator<<(specific_param_error<Derived, Base>&& ex, T const& val)
 // **************           specific exception types           ************** //
 // ************************************************************************** //
 
-class invalid_cla_id : public specific_param_error<invalid_cla_id, init_error> {};
-class duplicate_param : public specific_param_error<duplicate_param, init_error> {};
-class conflicting_param : public specific_param_error<conflicting_param, init_error> {};
-class unknown_param : public specific_param_error<unknown_param, init_error> {};
-class missing_argument : public specific_param_error<missing_argument, init_error> {};
-class arg_type_mismatch : public specific_param_error<arg_type_mismatch, init_error> {};
-class invalid_param_spec : public specific_param_error<invalid_param_spec, init_error> {};
+#define SPECIFIC_EX_TYPE( type, base )                  \
+class type : public specific_param_error<type,base> {   \
+public:                                                 \
+    explicit type( cstring param_name = cstring() )     \
+    : specific_param_error<type,base>( param_name )     \
+    {}                                                  \
+}                                                       \
+/**/
 
-class format_error : public specific_param_error<format_error, input_error> {};
-class duplicate_arg : public specific_param_error<duplicate_arg, input_error> {};
-class missing_arg : public specific_param_error<missing_arg, input_error> {};
+SPECIFIC_EX_TYPE( invalid_cla_id, init_error );
+SPECIFIC_EX_TYPE( duplicate_param, init_error );
+SPECIFIC_EX_TYPE( conflicting_param, init_error );
+SPECIFIC_EX_TYPE( unknown_param, init_error );
+SPECIFIC_EX_TYPE( access_to_missing_argument, init_error );
+SPECIFIC_EX_TYPE( arg_type_mismatch, init_error );
+SPECIFIC_EX_TYPE( invalid_param_spec, init_error );
+
+SPECIFIC_EX_TYPE( format_error, input_error );
+SPECIFIC_EX_TYPE( duplicate_arg, input_error );
+SPECIFIC_EX_TYPE( missing_req_arg, input_error );
+
+#undef SPECIFIC_EX_TYPE
 
 class ambiguous_param : public specific_param_error<ambiguous_param, input_error> {
 public:
-    explicit ambiguous_param( std::vector<cstring>&& amb_candidates ) : m_amb_candidates( std::move( amb_candidates ) ) {}
+    explicit    ambiguous_param( std::vector<cstring>&& amb_candidates ) 
+    : specific_param_error<ambiguous_param,input_error>( "" )
+    , m_amb_candidates( std::move( amb_candidates ) ) {}
 
     std::vector<cstring> m_amb_candidates;
 };
 
 class unrecognized_param : public specific_param_error<unrecognized_param, input_error> {
 public:
-    explicit unrecognized_param( std::vector<cstring>&& type_candidates ) : m_typo_candidates( std::move( type_candidates ) ) {}
+    explicit    unrecognized_param( std::vector<cstring>&& type_candidates )
+    : specific_param_error<unrecognized_param,input_error>( "" )
+    , m_typo_candidates( std::move( type_candidates ) ) {}
 
     std::vector<cstring> m_typo_candidates;
 };

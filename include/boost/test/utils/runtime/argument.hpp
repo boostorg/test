@@ -97,8 +97,8 @@ public:
     T&          get( cstring parameter_name ) {
         auto found = m_arguments.find( parameter_name );
         BOOST_TEST_I_ASSRT( found != m_arguments.end(),
-            missing_argument() << "There is no argument provided for parameter "
-                               << parameter_name );
+            access_to_missing_argument() 
+                << "There is no argument provided for parameter " << parameter_name );
 
         argument_ptr arg = found->second;
 

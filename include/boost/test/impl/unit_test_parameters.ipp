@@ -423,12 +423,12 @@ init( int& argc, char** argv )
         rt::finalize_arguments( s_parameters_store, s_arguments_store );
 
         // Report help if requested
-        if( s_const_arguments_store.get<bool>( USAGE ) ) {
-            parser->usage( std::cerr );
+        if( runtime_config::get<bool>( USAGE ) ) {
+            parser->usage( std::cerr, s_parameters_store );
             BOOST_TEST_I_THROW( framework::nothing_to_test() );
         }
-        else if( s_const_arguments_store.has( HELP ) ) {
-            parser->help( std::cerr, s_parameters_store, s_const_arguments_store.get<std::string>( HELP ) );
+        else if( s_arguments_store.has( HELP ) ) {
+            parser->help( std::cerr, s_parameters_store, runtime_config::get<std::string>( HELP ) );
             BOOST_TEST_I_THROW( framework::nothing_to_test() );
         }
 
@@ -451,7 +451,7 @@ init( int& argc, char** argv )
         std::cerr << "\n";
 
         if( parser )
-            parser->usage( std::cerr );
+            parser->usage( std::cerr, s_parameters_store );
         
         BOOST_TEST_I_THROW( framework::nothing_to_test() );
     }
@@ -468,7 +468,7 @@ init( int& argc, char** argv )
         std::cerr << "\n";
 
         if( parser )
-            parser->usage( std::cerr );
+            parser->usage( std::cerr, s_parameters_store );
         
         BOOST_TEST_I_THROW( framework::nothing_to_test() );
     }
@@ -476,7 +476,7 @@ init( int& argc, char** argv )
         std::cerr << ex.msg << "\n\n";
 
         if( parser )
-            parser->usage( std::cerr );
+            parser->usage( std::cerr, s_parameters_store, ex.param_name );
         
         BOOST_TEST_I_THROW( framework::nothing_to_test() );
     }
@@ -495,47 +495,7 @@ argument_store()
 bool
 save_pattern()
 {
-    return s_const_arguments_store.get<bool>( SAVE_TEST_PATTERN );
-}
-
-//____________________________________________________________________________//
-
-std::ostream*
-report_sink()
-{
-    if( !s_arguments_store.has( REPORT_SINK ) )
-        return &std::cerr;
-
-    std::string const& sink_name = s_arguments_store.get<std::string>( REPORT_SINK );
-
-    if( sink_name == "stderr" )
-        return &std::cerr;
-
-    if( sink_name == "stdout" )
-        return &std::cout;
-
-    static std::ofstream report_file( sink_name.c_str() );
-    return &report_file;
-}
-
-//____________________________________________________________________________//
-
-std::ostream*
-log_sink()
-{
-    if( !s_arguments_store.has( LOG_SINK ) )
-        return &std::cout;
-
-    std::string const& sink_name = s_arguments_store.get<std::string>( LOG_SINK );
-
-    if( sink_name == "stderr" )
-        return &std::cerr;
-
-    if( sink_name == "stdout" )
-        return &std::cout;
-
-    static std::ofstream log_file( sink_name.c_str() );
-    return &log_file;
+    return runtime_config::get<bool>( SAVE_TEST_PATTERN );
 }
 
 //____________________________________________________________________________//

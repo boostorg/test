@@ -209,10 +209,10 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
 
     BOOST_TEST( p3.cla_ids().size() == 2U );
     BOOST_TEST( p3.cla_ids()[0].m_prefix == "/" );
-    BOOST_TEST( p3.cla_ids()[0].m_full_name == "P3" );
+    BOOST_TEST( p3.cla_ids()[0].m_tag == "P3" );
     BOOST_TEST( p3.cla_ids()[0].m_value_separator == ":" );
     BOOST_TEST( p3.cla_ids()[1].m_prefix == "-" );
-    BOOST_TEST( p3.cla_ids()[1].m_full_name == "p+p_p" );
+    BOOST_TEST( p3.cla_ids()[1].m_tag == "p+p_p" );
     BOOST_TEST( p3.cla_ids()[1].m_value_separator == "" );
 
     BOOST_CHECK_THROW( p3.add_cla_id( "^", "p", " " ), rt::invalid_cla_id );
@@ -379,7 +379,7 @@ BOOST_AUTO_TEST_CASE( test_arguments_store )
     store.set( "P1", 20 );
     BOOST_TEST( store.get<int>( "P1" ) == 20 );
 
-    BOOST_CHECK_THROW( store.get<int>( "P0" ), rt::missing_argument );
+    BOOST_CHECK_THROW( store.get<int>( "P0" ), rt::access_to_missing_argument );
     BOOST_CHECK_THROW( store.get<long>( "P1" ), rt::arg_type_mismatch );
 }
 
@@ -1132,7 +1132,7 @@ BOOST_AUTO_TEST_CASE( test_finalize_arguments )
     {
         rt::arguments_store args_store;
 
-        BOOST_CHECK_THROW( rt::finalize_arguments( params_store, args_store ), rt::missing_arg );
+        BOOST_CHECK_THROW( rt::finalize_arguments( params_store, args_store ), rt::missing_req_arg );
     }
 }
 

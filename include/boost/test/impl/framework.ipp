@@ -434,6 +434,8 @@ public:
     , m_next_test_suite_id( MIN_TEST_SUITE_ID )
     , m_test_in_progress( false )
     , m_context_idx( 0 )
+    , m_log_sink( std::cout )
+    , m_report_sink( std::cerr )
     {
     }
 
@@ -769,6 +771,9 @@ public:
     int             m_context_idx;
 
     boost::execution_monitor m_aux_em;
+
+    runtime_config::stream_holder m_log_sink;
+    runtime_config::stream_holder m_report_sink;
 };
 
 //____________________________________________________________________________//
@@ -803,23 +808,31 @@ setup_for_execution( test_unit const& tu )
 void
 init( init_unit_test_func init_func, int argc, char* argv[] )
 {
+    using namespace impl;
+
     // 10. Set up runtime parameters
     runtime_config::init( argc, argv );
 
-    // 20. Set the desired log level and format
+    // 20. Set the desired log level, format and sink
     unit_test_log.set_threshold_level( runtime_config::get<log_level>( runtime_config::LOG_LEVEL ) );
     unit_test_log.set_format( runtime_config::get<output_format>( runtime_config::LOG_FORMAT ) );
+    s_frk_state().m_log_sink.setup( runtime_config::LOG_SINK );
+    unit_test_log.set_stream( s_frk_state().m_log_sink.ref() );
 
-    // 30. Set the desired report level and format
+    // 30. Set the desired report level, format and sink
     results_reporter::set_level( runtime_config::get<report_level>( runtime_config::REPORT_LEVEL ) );
     results_reporter::set_format( runtime_config::get<output_format>( runtime_config::REPORT_FORMAT ) );
+    s_frk_state().m_report_sink.setup( runtime_config::REPORT_SINK );
+    results_reporter::set_stream( s_frk_state().m_report_sink.ref() );
 
     // 40. Register default test observers
     register_observer( results_collector );
     register_observer( unit_test_log );
 
-    if( runtime_config::get<bool>( runtime_config::SHOW_PROGRESS ) )
+    if( runtime_config::get<bool>( runtime_config::SHOW_PROGRESS ) ) {
+        progress_monitor.set_stream( s_frk_state().m_log_sink.ref() );
         register_observer( progress_monitor );
+    }
 
     // 50. Set up memory leak detection
     if( runtime_config::get<long>( runtime_config::DETECT_MEM_LEAKS ) > 0 ) {
@@ -830,8 +843,6 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     // 60. Initialize master unit test suite
     master_test_suite().argc = argc;
     master_test_suite().argv = argv;
-
-    using namespace impl;
 
     // 70. Invoke test module initialization routine
     BOOST_TEST_I_TRY {
