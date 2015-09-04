@@ -207,13 +207,13 @@ BOOST_AUTO_TEST_CASE( test_param_construction )
     p3.add_cla_id( "/", "P3", ":" );
     p3.add_cla_id( "-", "p+p_p", " " );
 
-    BOOST_TEST( p3.cla_ids().size() == 2U );
-    BOOST_TEST( p3.cla_ids()[0].m_prefix == "/" );
-    BOOST_TEST( p3.cla_ids()[0].m_tag == "P3" );
-    BOOST_TEST( p3.cla_ids()[0].m_value_separator == ":" );
-    BOOST_TEST( p3.cla_ids()[1].m_prefix == "-" );
-    BOOST_TEST( p3.cla_ids()[1].m_tag == "p+p_p" );
-    BOOST_TEST( p3.cla_ids()[1].m_value_separator == "" );
+    BOOST_TEST( p3.cla_ids().size() == 3U );
+    BOOST_TEST( p3.cla_ids()[1].m_prefix == "/" );
+    BOOST_TEST( p3.cla_ids()[1].m_tag == "P3" );
+    BOOST_TEST( p3.cla_ids()[1].m_value_separator == ":" );
+    BOOST_TEST( p3.cla_ids()[2].m_prefix == "-" );
+    BOOST_TEST( p3.cla_ids()[2].m_tag == "p+p_p" );
+    BOOST_TEST( p3.cla_ids()[2].m_value_separator == "" );
 
     BOOST_CHECK_THROW( p3.add_cla_id( "^", "p", " " ), rt::invalid_cla_id );
     BOOST_CHECK_THROW( p3.add_cla_id( " ", "p", " " ), rt::invalid_cla_id );

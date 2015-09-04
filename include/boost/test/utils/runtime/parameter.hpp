@@ -87,16 +87,19 @@ typedef std::vector<parameter_cla_id> param_cla_ids;
 // **************             runtime::basic_param             ************** //
 // ************************************************************************** //
 
+cstring const help_prefix("////");
+
 class basic_param {
-    typedef function<void (cstring)> callback_type;
-    typedef unit_test::readwrite_property<std::string>  string_property;
-    typedef unit_test::readwrite_property<bool>         bool_property;
+    typedef function<void (cstring)>            callback_type;
+    typedef unit_test::readwrite_property<bool> bool_property;
+
 protected:
     /// Constructor with modifiers
     template<typename Modifiers>
     basic_param( cstring name, bool is_optional, bool is_repeatable, Modifiers const& m )
     : p_name( name.begin(), name.end() )
     , p_description( nfp::opt_get( m, description, std::string{} ) )
+    , p_help( nfp::opt_get( m, runtime::help, std::string{} ) )
     , p_env_var( nfp::opt_get( m, env_var, std::string{} ) )
     , p_value_hint( nfp::opt_get( m, value_hint, std::string{} ) )
     , p_optional( is_optional )
@@ -105,6 +108,7 @@ protected:
     , p_has_default_value( m.has( default_value ) || is_repeatable )
     , p_callback( nfp::opt_get( m, callback, callback_type{} ) )
     {
+        add_cla_id( help_prefix, name, ":" );
     }
 
 public:
@@ -113,6 +117,7 @@ public:
     // Pubic properties
     std::string const       p_name;
     std::string const       p_description;
+    std::string const       p_help;
     std::string const       p_env_var;
     std::string const       p_value_hint;
     bool const              p_optional;
@@ -138,12 +143,15 @@ public:
     /// interfaces for help message reporting
     virtual void            usage( std::ostream& ostr, cstring negation_prefix )
     {
-        ostr     << "Parameter: " << p_name << "\n";
+        ostr     << "Parameter: " << p_name << '\n';
         if( !p_description.empty() )
-            ostr << ' ' << p_description << "\n";
+            ostr << ' ' << p_description << '\n';
 
         ostr     << " Command line formats:\n";
         BOOST_TEST_FOREACH( parameter_cla_id const&, id, cla_ids() ) {
+            if( id.m_prefix == help_prefix )
+                continue;
+
             ostr << "   " << id.m_prefix;
             if( id.m_negatable )
                 cla_name_help( ostr, id.m_tag, negation_prefix );
@@ -158,7 +166,7 @@ public:
             }
 
             if( id.m_value_separator.empty() )
-                ostr << " ";
+                ostr << ' ';
             else {
                 ostr << id.m_value_separator;
             }
@@ -177,6 +185,9 @@ public:
     virtual void            help( std::ostream& ostr, cstring negation_prefix )
     {
         usage( ostr, negation_prefix );
+
+        if( !p_help.empty() )
+            ostr << '\n' << p_help << '\n';
     }
 
 protected:

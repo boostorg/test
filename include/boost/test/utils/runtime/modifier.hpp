@@ -33,6 +33,7 @@ namespace runtime {
 namespace {
 
 nfp::typed_keyword<cstring,struct description_t>    description;
+nfp::typed_keyword<cstring,struct help_t>           help;
 nfp::typed_keyword<cstring,struct env_var_t>        env_var;
 nfp::typed_keyword<cstring,struct end_of_params_t>  end_of_params;
 nfp::typed_keyword<cstring,struct neg_prefix_t>     negation_prefix;

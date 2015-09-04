@@ -229,10 +229,12 @@ public:
 
     // help/usage
     void
-    usage( std::ostream& ostr, parameters_store const& parameters, cstring param_name = cstring() )
+    usage( std::ostream& ostr, cstring param_name = cstring() )
     {
-        if( !param_name.is_empty() )
-            parameters.get( param_name )->usage( ostr, m_negation_prefix );
+        if( !param_name.is_empty() ) {
+            auto param = locate_parameter( m_param_trie[help_prefix], param_name, "" ).second;
+            param->usage( ostr, m_negation_prefix );
+        }
         else {        
             ostr << "Usage: " << m_program_name << " [Boost.Test argument]... ";
             if( !m_end_of_param_indicator.empty() )
@@ -250,10 +252,8 @@ public:
     help( std::ostream& ostr, parameters_store const& parameters, cstring param_name )
     {
         if( !param_name.is_empty() ) {
-            if( parameters.has( param_name ) )
-                parameters.get( param_name )->help( ostr, m_negation_prefix );
-            else
-                ostr << "Parameter " << param_name << " is uncognized\n";
+            auto param = locate_parameter( m_param_trie[help_prefix], param_name, "" ).second;
+            param->help( ostr, m_negation_prefix );
             return;
         }
 
@@ -290,19 +290,19 @@ private:
     void
     build_trie( parameters_store const& parameters )
     {
-        // 10. Iterate over all parameters
+        // Iterate over all parameters
         BOOST_TEST_FOREACH( parameters_store::storage_type::value_type const&, v, parameters.all() ) {
             basic_param_ptr param = v.second;
 
-            // 20. Register all parameter's ids in trie.
+            // Register all parameter's ids in trie.
             BOOST_TEST_FOREACH( parameter_cla_id const&, id, param->cla_ids() ) {
-                // 30. This is the trie corresponding to the prefix.
+                // This is the trie corresponding to the prefix.
                 trie_ptr next_trie = m_param_trie[id.m_prefix];
                 if( !next_trie )
                     next_trie = m_param_trie[id.m_prefix] = trie_ptr( new rt_cla_detail::parameter_trie );
 
-                // 40. Build the trie, by following parameter id's full name
-                //     and register this parameter as candidate on each level
+                // Build the trie, by following name's characters
+                // and register this parameter as candidate on each level
                 for( size_t index = 0; index < id.m_tag.size(); ++index ) {
                     next_trie = next_trie->make_subtrie( id.m_tag[index] );
 

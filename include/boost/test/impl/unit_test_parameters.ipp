@@ -107,7 +107,14 @@ register_parameters( rt::parameters_store& store )
 {
     rt::option auto_start_dbg( AUTO_START_DBG, (
         rt::description = "Automatically starts debugger if system level error (signal) occurs.",
-        rt::env_var = "BOOST_TEST_AUTO_START_DBG"
+        rt::env_var = "BOOST_TEST_AUTO_START_DBG",
+
+        rt::help = "Parameter " + AUTO_START_DBG + " specifies whether Boost.Test should attempt "
+                   "to attach a debugger when fatal system error occurs. At the moment this feature "
+                   "is only avaialble on a few selected platforms: Win32 and Unix. There is a "
+                   "default debugger configured for these platforms. You can manually configure "
+                   "different debugger. For more details on how to configure the debugger see the "
+                   "Boost.Test debug API, specifically the function boost::debug::set_debugger."
     ));
 
     auto_start_dbg.add_cla_id( "--", AUTO_START_DBG, "=" );
@@ -424,7 +431,7 @@ init( int& argc, char** argv )
 
         // Report help if requested
         if( runtime_config::get<bool>( USAGE ) ) {
-            parser->usage( std::cerr, s_parameters_store );
+            parser->usage( std::cerr );
             BOOST_TEST_I_THROW( framework::nothing_to_test() );
         }
         else if( s_arguments_store.has( HELP ) ) {
@@ -451,7 +458,7 @@ init( int& argc, char** argv )
         std::cerr << "\n";
 
         if( parser )
-            parser->usage( std::cerr, s_parameters_store );
+            parser->usage( std::cerr );
         
         BOOST_TEST_I_THROW( framework::nothing_to_test() );
     }
@@ -468,7 +475,7 @@ init( int& argc, char** argv )
         std::cerr << "\n";
 
         if( parser )
-            parser->usage( std::cerr, s_parameters_store );
+            parser->usage( std::cerr );
         
         BOOST_TEST_I_THROW( framework::nothing_to_test() );
     }
@@ -476,7 +483,7 @@ init( int& argc, char** argv )
         std::cerr << ex.msg << "\n\n";
 
         if( parser )
-            parser->usage( std::cerr, s_parameters_store, ex.param_name );
+            parser->usage( std::cerr, ex.param_name );
         
         BOOST_TEST_I_THROW( framework::nothing_to_test() );
     }
