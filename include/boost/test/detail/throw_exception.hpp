@@ -29,7 +29,7 @@ namespace boost {
 namespace unit_test {
 namespace ut_detail {
 
-#ifdef BOOST_NO_EXCEPTION
+#ifdef BOOST_NO_EXCEPTIONS
 
 template<typename E>
 inline int
