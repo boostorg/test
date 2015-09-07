@@ -181,15 +181,17 @@ class expression_base {
 public:
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-
+    template<typename T>
+    struct RhsT : remove_const<typename remove_reference<T>::type> {};
+    
 #define ADD_OP_SUPPORT( oper, name, _ )                         \
     template<typename T>                                        \
     binary_expr<ExprType,T,                                     \
-        op::name<ValType,typename remove_reference<T>::type> >  \
+        op::name<ValType,typename RhsT<T>::type> >              \
     operator oper( T&& rhs )                                    \
     {                                                           \
         return binary_expr<ExprType,T,                          \
-         op::name<ValType,typename remove_reference<T>::type> > \
+         op::name<ValType,typename RhsT<T>::type> >             \
             ( std::forward<ExprType>(                           \
                 *static_cast<ExprType*>(this) ),                \
               std::forward<T>(rhs) );                           \
@@ -200,7 +202,7 @@ public:
 #define ADD_OP_SUPPORT( oper, name, _ )                         \
     template<typename T>                                        \
     binary_expr<ExprType,typename boost::decay<T const>::type,  \
-        op::name<ValType,typename boost::decay<T const>::type> > \
+        op::name<ValType,typename boost::decay<T const>::type> >\
     operator oper( T const& rhs ) const                         \
     {                                                           \
         typedef typename boost::decay<T const>::type Rhs;       \
