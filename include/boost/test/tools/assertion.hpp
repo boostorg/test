@@ -23,6 +23,7 @@
 #include <boost/mpl/assert.hpp>
 #include <boost/utility/declval.hpp>
 #include <boost/type_traits/remove_reference.hpp>
+#include <boost/type_traits/remove_const.hpp>
 
 // STL
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
@@ -248,7 +249,7 @@ public:
 // simple value expression
 
 template<typename T>
-class value_expr : public expression_base<value_expr<T>,typename remove_reference<T>::type> {
+class value_expr : public expression_base<value_expr<T>,typename remove_const<typename remove_reference<T>::type>::type> {
 public:
     // Public types
     typedef T                   result_type;

@@ -146,6 +146,7 @@ error: in "test_BOOST_TEST_fpv_comp": check d1-1e-5 == 0. has failed [1e-05 - 1e
 error: in "test_BOOST_TEST_fpv_comp": check d1-1e-5 != 0. has failed [1e-05 - 1e-05 == 0]. Absolute value is within tolerance [|1e-06| < 0.0001]
 error: in "test_BOOST_TEST_fpv_comp": check 0. != 1e-5-d1 has failed [0 == -1e-06]. Absolute value is within tolerance [|-1e-06| < 0.0001]
 error: in "test_BOOST_TEST_fpv_comp": check d2-1e-5 < 0. has failed [1e-05 - 1e-05 >= 0]
+error: in "test_BOOST_TEST_fpv_comp": check 1.01 == cd has failed [1 != 1]. Relative difference exceeds tolerance [0.01 > 0.001]
 error: in "test_BOOST_TEST_cstring_comp": check str1 == str2 has failed [test1 != test12]
 error: in "test_BOOST_TEST_cstring_comp": check str1 == str3 has failed [test1 != test2]
 error: in "test_BOOST_TEST_cstring_comp": check str3 == str2 has failed [test2 != test12]
