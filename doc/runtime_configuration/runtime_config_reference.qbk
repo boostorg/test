@@ -16,8 +16,28 @@ Each parameter specification includes:
 # acceptable values and 
 # a long description
 
-The default value for the parameter is bold in the
-acceptable values list. All values are case sensitive and are required to exactly match the parameter specification.
+The default value for the parameter is bold in the acceptable values list. 
+
+[h4 Parameter value formats]
+
+The __UTF__ runtime parameters take value of the following types: string, boolean, enumeration, 
+unsigned, long. Formats expeced from values of these types are following:
+
+[h5 String, unsigned, long]
+                                                                              
+Value of these types are expected in the same format they are represented in C++.
+
+[h5 Boolean]
+
+Values of these types are options with yes/no or true/false meaning. True values are represented
+by case insensitive strings: "Y", "YES", "TRUE", "1". False values are represented by case 
+insensitive strings: "N", "NO", "FALSE", "0".
+ 
+[h5 Enumeration]
+
+Values of enumeration type are expected as case sensitive strings representintive 
+enumeration value names. Each parameter with enumeration value lists all valid names in the 
+parameter`s description.
 
 [/ ###############################################################################################]
 
@@ -33,32 +53,13 @@ specifically the function [funcref boost::debug::set_debugger].
 
 [h4 Acceptable values]
 
-* [*no]
-* yes
-* ['debugger identifier]
+Boolean with default [*no] value.
 
 [h4 Environment variable]
 
-  BOOST_TEST_AUTO_START_DBG
+BOOST_TEST_AUTO_START_DBG
 
 [endsect] [/auto_start_dbg]
-
-[/ ###############################################################################################]
-[section:break_exec_path `break_exec_path`]
-
-this runtime parameter is used by exception safety tester. By default exception safety tester only reports index of 
-execution path and  test case name where failure occurred. Using this parameter you can make the tester to break the 
-execution right before entering this path.
-      
-[h4 Acceptable values]
-
-* string consisting of space separate test_name:execution_path_number pairs
-
-[h4 Environment variable]
-
-  BOOST_TEST_BREAK_EXEC_PATH
-
-[endsect] [/break_exec_path]
 
 [/ ###############################################################################################]
 
@@ -73,12 +74,11 @@ Print build information that include:
 
 [h4 Acceptable values]
 
-* [*no] (default)
-* yes
+Boolean option with default [*no] value.
 
 [h4 Environment variable]
 
-  BOOST_TEST_BUILD_INFO
+BOOST_TEST_BUILD_INFO
 
 [endsect] [/ build_info]
 
@@ -90,8 +90,7 @@ executed within GUI or to get a coredump for stack analysis. See [link ref_usage
 
 [h4 Acceptable values]
 
-* [*yes] (default)
-* no
+Boolean option with default [*no] value.
 
 [h4 Environment variable]
 
@@ -103,13 +102,11 @@ executed within GUI or to get a coredump for stack analysis. See [link ref_usage
 [section:color_output `color_output`]
 
 The __UTF__ is able to produce colour output on systems which supports it. To enable this behaviour set the parameter to 
-`yes`. By default the output produces in not coloured.
-
+`yes`. By default the output does not produces colored output.
       
 [h4 Acceptable values]
 
-* [*no] (default)
-* yes
+Boolean option with default [*no] value.
 
 [h4 Environment variable]
 
