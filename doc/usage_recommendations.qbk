@@ -110,7 +110,7 @@ run you test, to get more information about the error location add
 --__param_catch_system__=no 
 ``
 
-to the test run command line. Now run the test again and it will create a coredump you could analyse using you preferable 
+to the test run command line. Now run the test again and it will create a coredump you could analyze using you preferable 
 debugger. Or run it under debugger in a first place and it will break at the point of failure.
 
 [h4 How to use test module build with Boost.Test framework under management of automated regression test facilities?]
@@ -154,6 +154,6 @@ and use some automated tool that will format this information as you like.
 
 [include tutorials/web_wisdom.qbk]
 
-[endsect] [/ recommandations]
+[endsect] [/ recommendations]
 
 [/EOF]

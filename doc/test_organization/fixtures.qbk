@@ -23,8 +23,8 @@ many requiring very similar test setup/cleanup. This is the problem that the tes
 
 In practice a test fixture usually is a combination of `setup` and `teardown` functions, associated with test case.
 The former serves the purposes of test setup. The later is dedicated to the cleanup tasks. Ideally we'd like for a 
-test module author to be able to define variables used in fixtures on the stack and the same timeto refer to them 
-directly in a test case.
+test module author to be able to define variables used in fixtures on the stack and, at the same time, to refer to 
+them directly in a test case.
  
 It's important to understand that C++ provides a way to implement a straightforward test fixture solution
 that almost satisfies our requirements without any extra support from the test framework. Here is how simple test 
@@ -91,7 +91,7 @@ coincides with the pure C++ solution discussed above.
 This model is expected from fixtures used with __BOOST_FIXTURE_TEST_CASE__ and __BOOST_FIXTURE_TEST_SUITE__.
 
 [caution The above interface prevents you from reporting errors in the `teardown` procedure using an exception. It does make
-    sense though: if somehow more than one fixture is assigned to a test unit (eg. using __decorator_fixture__ decorator), 
+    sense though: if somehow more than one fixture is assigned to a test unit (e.g. using __decorator_fixture__ decorator), 
     you want all `teardown` procedures to run, even if some may experience problems.
 ]
 

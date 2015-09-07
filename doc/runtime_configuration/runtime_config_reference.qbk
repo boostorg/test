@@ -424,7 +424,7 @@ Regarding the meaning of these values [link ref_command_line_control see here].
 [/ ###############################################################################################]
 [section:save_pattern `save_pattern`]
 
-Provides parameters for testing output streams. See __output_test_stream_tool__ secton for details on these tests.
+Provides parameters for testing output streams. See __output_test_stream_tool__ section for details on these tests.
 
 This parameter serves no particular purpose within the framework itself. It can be used by test modules relying 
 on [classref boost::test_tools::output_test_stream] to implement testing logic. `output_test_stream` has two modes of operation: 

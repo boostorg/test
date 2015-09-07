@@ -23,7 +23,7 @@ So a much more helpful display using 9 decimal digits is thus:
 
 
 For __IEEE754__ 32-bit float values - 9 decimal digits are shown. For 64-bit __IEEE754__ double - 17 decimal digits. For
-__IEEE754__ extended long double using 80-bit - 21 decimal digits. For __IEEE754__ quadruple long double 128-bit, and Sparc
+__IEEE754__ extended long double using 80-bit - 21 decimal digits. For __IEEE754__ quadruple long double 128-bit, and SPARC
 extended long double 128-bit - 36 decimal digits. For floating-point types, a convenient formula to calculate
 `max_digits10` is: `2 + std::numeric_limits<FPT>::digits * 3010/10000`;
 
@@ -31,7 +31,7 @@ extended long double 128-bit - 36 decimal digits. For floating-point types, a co
      Note that a user defined floating point type UDFPT must define
      `std::numeric_limits<UDFPT>::is_specialized = true` and provide an appropriate value
      for `std::numeric_limits<UDFPT>::digits`, the number of bits used for the significand
-     or mantissa. For example, for the Sparc extended long double 128, 113 bits are used for the significand (one of
+     or mantissa. For example, for the SPARC extended long double 128, 113 bits are used for the significand (one of
      which is implicit).
 ]
 [endsect] [/section:log_floating_points]

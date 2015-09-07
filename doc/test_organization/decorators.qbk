@@ -7,9 +7,9 @@
 
 [section:decorators Decorators]
 
-Decorator is a uniform mechanism for updating various attributes of the automatically registerred test units. These
+Decorator is a uniform mechanism for updating various attributes of the automatically registered test units. These
 attributes affect how the test tree is processed during the execution of the test module and include test unit
-description, floating-point tolerance and the number of expected failures amoung others. They are listed in detail in
+description, floating-point tolerance and the number of expected failures among others. They are listed in detail in
 the following sections.
 
 [h4 Test case decorators]
@@ -36,7 +36,7 @@ __BOOST_FIXTURE_TEST_SUITE__.
 [bt_example decorator_02..Test suite decorators..run]
 
 How a test suite decorator affects the processing of the test units inside of it varies with the decorator 
-and is described for each decorator in subsequent sections. For instsnce, the function of the decorator in the above 
+and is described for each decorator in subsequent sections. For instance, the function of the decorator in the above 
 example is that when tests are filtered by label `"trivial"`, every test unit in suite `suite1` will be run.
 
 Similar to C++ namespace test suite can be closed and reopened within the same test file or span more than one file 

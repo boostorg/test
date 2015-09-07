@@ -13,12 +13,12 @@
 
 * __BOOST_TEST__ generic assertion
 * [link boost_test.tests_organization.test_cases.test_case_generation data driven test cases]: supersedes the parametric test case (unary test cases)
-* test units [link boost_test.tests_organization.decorators attributes], that allow finer control over test units property and behaviour
+* test units [link boost_test.tests_organization.decorators attributes], that allow finer control over test units property and behavior
 * logical grouping of the test units using [link boost_test.tests_organization.tests_grouping labels]
 * support for declaring [link boost_test.tests_organization.tests_dependencies dependencies] over test cases
 * attributes for [link boost_test.tests_organization.enabling enabling or disabling] test execution based on static, compile-time or runtime rules
 * extended [link boost_test.runtime_config.test_unit_filtering unit test filtering] from the command line (negation, labels, ...)
-* colour output with __param_color_output__
+* color output with __param_color_output__
 * test bed listing with __param_list_content__
 * rewritten documentation using quickbook
 
@@ -106,6 +106,7 @@
 # [ticket 9539] Floating-point comparison algorithms aren't formatted correctly
 # [ticket 9581] Squassabia reference link gives 404 not found
 # [ticket 9960] Warnings on Clang
+# [ticket 10256] [boost test] - issue: sigaltstack
 # [ticket 10318] Minor documentation fix
 # [ticket 10394] Broken links in Boost Test documentation
 # [ticket 10888] Assertion failures don't show up in the errors pane in VS 2010, VS 2012 or VS 2013 (duplicates)
@@ -116,6 +117,3 @@
 # [ticket 11425] use-of-uninitialized-value (obsolete)
 
 [endsect]
-
-[h4 Develop pending - to merge to one of the release]
-# [ticket 10256] [boost test] - issue: sigaltstack

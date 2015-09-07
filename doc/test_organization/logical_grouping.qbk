@@ -20,7 +20,7 @@ The __UTF__ provides a flexible way of grouping test units by the use of /labels
 __decorator_label__. It is possible to associate more than one label with a test unit.
 
 Labels can be associated to test cases and test suites. For the latter, the label is inherited by all the nodes in the
-subtree defined by the labeled test suite: decorating a test suite with label `L` is equivalent to decorating every test
+subtree defined by the labelled test suite: decorating a test suite with label `L` is equivalent to decorating every test
 unit inside with `L`.
 
 
