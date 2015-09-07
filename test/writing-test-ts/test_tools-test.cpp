@@ -765,6 +765,8 @@ TEST_CASE( test_BOOST_TEST_fpv_comp )
     BOOST_TEST( 1.0 == cd );
     BOOST_TEST( cd == 1.01, 10.% tt::tolerance());
     BOOST_TEST( 1.01 == cd, 0.1% tt::tolerance() );
+
+    BOOST_TEST( 0.0 == 0.0);
 }
 
 //____________________________________________________________________________//
