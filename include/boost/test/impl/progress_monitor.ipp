@@ -149,6 +149,14 @@ progress_monitor_t::test_unit_finish( test_unit const& tu, unsigned long )
 void
 progress_monitor_t::test_unit_skipped( test_unit const& tu, const_string /*reason*/ )
 {
+    test_unit_skipped( tu );
+}
+
+//____________________________________________________________________________//
+
+void
+progress_monitor_t::test_unit_skipped( test_unit const& tu )
+{
     BOOST_TEST_SCOPE_SETCOLOR( *s_pm_impl().m_stream, term_attr::BRIGHT, term_color::MAGENTA );
 
     test_case_counter tcc;

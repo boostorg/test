@@ -209,6 +209,14 @@ results_collector_t::test_unit_finish( test_unit const& tu, unsigned long )
 void
 results_collector_t::test_unit_skipped( test_unit const& tu, const_string /*reason*/ )
 {
+    test_unit_skipped( tu );
+}
+
+//____________________________________________________________________________//
+
+void
+results_collector_t::test_unit_skipped( test_unit const& tu )
+{
     test_results& tr = s_rc_impl().m_results_store[tu.p_id];
 
     tr.clear();
