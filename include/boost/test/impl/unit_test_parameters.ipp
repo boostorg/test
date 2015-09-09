@@ -205,7 +205,13 @@ register_parameters( rt::parameters_store& store )
         rt::env_var = "BOOST_TEST_DETECT_MEMORY_LEAK",
         rt::default_value = 1L,
         rt::optional_value = 1L,
-        rt::value_hint = "<alloc order number>"
+        rt::value_hint = "<alloc order number>",
+        rt::help = "Parameter " + DETECT_MEM_LEAKS + "enables/disables memory leaks detection. "
+                   "This parameter has optional long integer value. The default value is 1, which "
+                   "enables the memory leak detection. The value 0 disables memory leak detection. "
+                   "Any value N greater than 1 is treated as leak allocation number and tells the "
+                   "framework to setup runtime breakpoint at Nth heap allocation. If value is "
+                   "omitted the default value is assumed."
     ));
 
     detect_mem_leaks.add_cla_id( "--", DETECT_MEM_LEAKS, "=" );

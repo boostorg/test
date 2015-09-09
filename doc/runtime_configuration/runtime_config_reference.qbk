@@ -21,7 +21,7 @@ The default value for the parameter is bold in the acceptable values list.
 [h4 Parameter value formats]
 
 The __UTF__ runtime parameters take value of the following types: string, boolean, enumeration, 
-unsigned, long. Formats expeced from values of these types are following:
+unsigned, long. Formats required for values of these types are following:
 
 [h5 String, unsigned, long][#regular_param_value]
                                                                               
@@ -46,7 +46,7 @@ parameter`s description.
 Automatically attach debugger in case of system failure.
 
 Option ['auto_start_dbg] specifies whether Boost.Test should attempt to attach a debugger when fatal system 
-error occurs. At the moment this feature is only avaialble on a few selected platforms: Win32 and Unix. There is a 
+error occurs. At the moment this feature is only available on a few selected platforms: Win32 and *nix. There is a 
 default debugger configured for these platforms. You can manually configure different debugger. 
 For more details on how to configure the debugger see the [headerref boost/test/debug.hpp Boost.Test debug API], 
 specifically the function [funcref boost::debug::set_debugger].
@@ -106,7 +106,7 @@ BOOST_TEST_CATCH_SYSTEM_ERRORS
 [/ ###############################################################################################]
 [section:color_output `color_output`]
 
-The __UTF__ is able to produce color output on systems which supports it. To enable this behaviour set this option to 
+The __UTF__ is able to produce color output on systems which supports it. To enable this behavior set this option to 
 `yes`. By default the framework does not produces color output.
       
 [h4 Acceptable values]
@@ -122,7 +122,7 @@ BOOST_TEST_COLOR_OUTPUT
 [/ ###############################################################################################]
 [section:detect_fp_exceptions `detect_fp_exceptions`]
 
-Option ['build_info] enables/disables hardware traps for the floating point exceptions (if supported on your platfrom).
+Option ['build_info] enables/disables hardware traps for the floating point exceptions (if supported on your platform).
       
 [h4 Acceptable values]
 
@@ -137,15 +137,12 @@ BOOST_TEST_DETECT_FP_EXCEPTIONS
 [/ ###############################################################################################]
 [section:detect_memory_leaks `detect_memory_leaks`]
 
-Option ['detect_memory_leaks] tells the framework to detect the memory leaks (if any). In addition any 
-value greater than 1 is treated as leak allocation number and setups runtime breakpoint. In other words 
-setting this parameter to the positive value N greater than 1 causes the framework to set a breakpoint 
-at Nth memory allocation (don't do that from the command line - only when you are under debugger). 
+Parameter ['detect_memory_leaks] enables/disables memory leaks detection (if present in your build configuration). 
+This parameter has optional long integer value. The default value is 1, which enables the memory leak detection. 
+The value 0 disables memory leak detection. Any value N greater than 1 is treated as leak allocation number and tells the 
+framework to setup runtime breakpoint at Nth heap allocation. If value is omitted the default value is assumed. 
 
-[note If your test program produces memory leaks notifications, they are combined with allocation 
-number values you could use to set a breakpoint.]
-
-[caution Currently only applies to MS family of compilers in debug builds.]
+[note The only platform which supports memory leak detection is Microsoft Visual Studio family of compilers in debug builds.]
       
 [h4 Acceptable values]
 
