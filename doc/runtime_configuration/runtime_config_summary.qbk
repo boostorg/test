@@ -15,14 +15,14 @@
 
   [/ ###############################################################################################]
   [
-    [__param_auto_start_dbg__]
-    [Automatically attach debugger in case of system failure.]
+    [[link boost_test.utf_reference.rt_param_reference.auto_dbg `auto_start_dbg`]]
+    [Automatically attaches debugger in case of system failure.]
   ]
 
   [/ ###############################################################################################]
   [
-    [__param_build_info__]
-    [Print build information.]
+    [[link boost_test.utf_reference.rt_param_reference.build_info `build_info`]]
+    [Displays library build information.]
   ]
 
   [/ ###############################################################################################]
@@ -33,19 +33,19 @@
 
   [/ ###############################################################################################]
   [
-    [__param_color_output__]
+    [[link boost_test.utf_reference.rt_param_reference.color_output      `color_output`]]
     [Produce colour output]
   ]
 
   [/ ###############################################################################################]
   [
-    [__param_detect_fp_exceptions__]
+    [[link boost_test.utf_reference.rt_param_reference.detect_fp_exceptions `detect_fp_exceptions`]]
     [Traps floating point exceptions (on supported platforms).]
   ]
 
   [/ ###############################################################################################]
   [
-    [__param_detect_memory_leaks__]
+    [[link boost_test.utf_reference.rt_param_reference.detect_memory_leaks `detect_memory_leaks`]]
     [Detects memory leaks.]
   ]
 

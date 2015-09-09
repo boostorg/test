@@ -23,17 +23,17 @@ The default value for the parameter is bold in the acceptable values list.
 The __UTF__ runtime parameters take value of the following types: string, boolean, enumeration, 
 unsigned, long. Formats expeced from values of these types are following:
 
-[h5 String, unsigned, long]
+[h5 String, unsigned, long][#regular_param_value]
                                                                               
 Value of these types are expected in the same format they are represented in C++.
 
-[h5 Boolean]
+[h5 Boolean][#boolean_param_value]
 
 Values of these types are options with yes/no or true/false meaning. True values are represented
 by case insensitive strings: "Y", "YES", "TRUE", "1". False values are represented by case 
 insensitive strings: "N", "NO", "FALSE", "0".
  
-[h5 Enumeration]
+[h5 Enumeration][#enum_param_value]
 
 Values of enumeration type are expected as case sensitive strings representintive 
 enumeration value names. Each parameter with enumeration value lists all valid names in the 
@@ -45,7 +45,7 @@ parameter`s description.
 
 Automatically attach debugger in case of system failure.
 
-Parameter ['auto_start_dbg] specifies whether Boost.Test should attempt to attach a debugger when fatal system 
+Option ['auto_start_dbg] specifies whether Boost.Test should attempt to attach a debugger when fatal system 
 error occurs. At the moment this feature is only avaialble on a few selected platforms: Win32 and Unix. There is a 
 default debugger configured for these platforms. You can manually configure different debugger. 
 For more details on how to configure the debugger see the [headerref boost/test/debug.hpp Boost.Test debug API], 
@@ -53,7 +53,7 @@ specifically the function [funcref boost::debug::set_debugger].
 
 [h4 Acceptable values]
 
-Boolean with default [*no] value.
+[link boolean_param_value Boolean] with default value [*no].
 
 [h4 Environment variable]
 
@@ -65,16 +65,17 @@ BOOST_TEST_AUTO_START_DBG
 
 [section:build_info `build_info`]
 
-Print build information that include: 
+Option ['build_info] tells the __UTF__ to display the build information before testing begins.
+This information includes: 
 
 * platform
 * compiler
-* STL implementation in use and 
+* STL implementation in use
 * boost version
 
 [h4 Acceptable values]
 
-Boolean option with default [*no] value.
+[link boolean_param_value Boolean] with default value [*no].
 
 [h4 Environment variable]
 
@@ -85,65 +86,64 @@ BOOST_TEST_BUILD_INFO
 [/ ###############################################################################################]
 [section:catch_system `catch_system_errors`]
 
-Value "no" prohibits the framework from catching asynchronous system events. This could be used for test programs
-executed within GUI or to get a coredump for stack analysis. See [link ref_usage_recommendations usage recommendations] pages for more details.
+If option ['catch_system_errors] has value "no" the __UTF__ does not attempt to catch asynchronous system failures 
+(signals on *NIX platforms or structured exceptions on Windows). This can be used for test programs executed 
+within IDE or to get a coredump for stack analysis. See 
+[link ref_usage_recommendations usage recommendations] pages for more details.
 
 [h4 Acceptable values]
 
-Boolean option with default [*no] value.
+[link boolean_param_value Boolean] with default value [*no].
+
+[note The __UTF__ can be built with flag BOOST_TEST_DEFAULTS_TO_CORE_DUMP in which case default changes to [*yes]]
 
 [h4 Environment variable]
 
-  BOOST_TEST_CATCH_SYSTEM_ERRORS
+BOOST_TEST_CATCH_SYSTEM_ERRORS
 
 [endsect] [/catch_system_errors]
 
 [/ ###############################################################################################]
 [section:color_output `color_output`]
 
-The __UTF__ is able to produce colour output on systems which supports it. To enable this behaviour set the parameter to 
-`yes`. By default the output does not produces colored output.
+The __UTF__ is able to produce color output on systems which supports it. To enable this behaviour set this option to 
+`yes`. By default the framework does not produces color output.
       
 [h4 Acceptable values]
 
-Boolean option with default [*no] value.
+[link boolean_param_value Boolean] with default value [*no].
 
 [h4 Environment variable]
 
-  BOOST_TEST_COLOR_OUTPUT
+BOOST_TEST_COLOR_OUTPUT
 
 [endsect] [/color_output]
 
 [/ ###############################################################################################]
 [section:detect_fp_exceptions `detect_fp_exceptions`]
 
-Traps or not floating point exceptions.
-
-Enables/disable hardware traps for the floating point exception (if supported).
+Option ['build_info] enables/disables hardware traps for the floating point exceptions (if supported on your platfrom).
       
 [h4 Acceptable values]
 
-* [*no] (default)
-* yes
+[link boolean_param_value Boolean] with default value [*no].
 
 [h4 Environment variable]
 
-  BOOST_TEST_DETECT_FP_EXCEPTIONS
+BOOST_TEST_DETECT_FP_EXCEPTIONS
 
 [endsect] [/detect_fp_exceptions]  
 
 [/ ###############################################################################################]
 [section:detect_memory_leaks `detect_memory_leaks`]
 
-Detect memory leaks.
+Option ['detect_memory_leaks] tells the framework to detect the memory leaks (if any). In addition any 
+value greater than 1 is treated as leak allocation number and setups runtime breakpoint. In other words 
+setting this parameter to the positive value N greater than 1 causes the framework to set a breakpoint 
+at Nth memory allocation (don't do that from the command line - only when you are under debugger). 
 
-Positive value tells the framework to detect the memory leaks (if any). In addition any value greater than 1
-is treated as leak allocation number and setups runtime breakpoint. In other words setting this parameter to
-the positive value N greater than 1 causes the framework to set a breakpoint at Nth memory allocation (don't
-do that from the command line - only when you are under debugger). 
-
-[note If your test program produces memory
-leaks notifications, they are combined with allocation number values you could use to set a breakpoint.]
+[note If your test program produces memory leaks notifications, they are combined with allocation 
+number values you could use to set a breakpoint.]
 
 [caution Currently only applies to MS family of compilers in debug builds.]
       
@@ -155,7 +155,7 @@ leaks notifications, they are combined with allocation number values you could u
 
 [h4 Environment variable]
 
-  BOOST_TEST_DETECT_MEMORY_LEAK
+BOOST_TEST_DETECT_MEMORY_LEAK
 
 [endsect] [/detect_memory_leaks]  
 
@@ -165,9 +165,13 @@ leaks notifications, they are combined with allocation number values you could u
 Lists the content of the tests that would be run. If set on the command line, no test will be run and the content
 of the test bed will be printed, one test per line.
 
+[h4 Acceptable values]
+
+[link boolean_param_value Boolean] with default value [*no].
+
 [h4 Environment variable]
   
-  BOOST_TEST_LIST_CONTENT
+BOOST_TEST_LIST_CONTENT
 
 [endsect] [/list_content]
 
@@ -186,7 +190,7 @@ format use the [link ref_log_formatter_api custom log formatting API].
 
 [h4 Environment variable]
 
-  BOOST_TEST_LOG_FORMAT
+BOOST_TEST_LOG_FORMAT
 
 [endsect] [/log_format]
 
@@ -250,7 +254,7 @@ log when nothing is logged a test output stream.
 
 [h4 Environment variable]
 
-  BOOST_TEST_LOG_LEVEL
+BOOST_TEST_LOG_LEVEL
 
 [endsect] [/log_level]
 
@@ -273,7 +277,7 @@ This parameter allows to easily redirect the test logs. The parameter value is
 
 [h4 Environment variable]
 
-  BOOST_TEST_LOG_SINK
+BOOST_TEST_LOG_SINK
 
 [endsect] [/log_sink]  
 
@@ -291,7 +295,7 @@ Combines an effect of __param_report_format__ and __param_log_format__ parameter
 
 [h4 Environment variable]
 
-  BOOST_TEST_OUTPUT_FORMAT
+BOOST_TEST_OUTPUT_FORMAT
 
 [endsect] [/output_format]   
 
@@ -313,7 +317,7 @@ it is used as a random seed. In other case random seed is generated based on cur
 
 [h4 Environment variable]
 
-  BOOST_TEST_RANDOM
+BOOST_TEST_RANDOM
 
 [endsect] [/random]  
 
@@ -333,7 +337,7 @@ Allows selecting the __UTF__ report format from the list of formats supplied by 
 
 [h4 Environment variable]
 
-  BOOST_TEST_REPORT_FORMAT
+BOOST_TEST_REPORT_FORMAT
 
 [endsect] [/report_format]   
 
@@ -353,7 +357,7 @@ Allows setting the level of details carried by the testing results report genera
 
 [h4 Environment variable]
 
-  BOOST_TEST_REPORT_LEVEL
+BOOST_TEST_REPORT_LEVEL
 
 [endsect] [/report_level]      
 
@@ -372,7 +376,7 @@ This parameter allows to easily redirect the test result report. See __param_log
 
 [h4 Environment variable]
 
-  BOOST_TEST_REPORT_SINK
+BOOST_TEST_REPORT_SINK
 
 [endsect] [/report_sink]  
 
@@ -384,12 +388,11 @@ executed within GUI. See the [link ref_usage_recommendations usage recommendatio
       
 [h4 Acceptable values]
 
-* [*yes] (default)
-* no
+[link boolean_param_value Boolean] with default value [*yes].
 
 [h4 Environment variable]
 
-  BOOST_TEST_RESULT_CODE
+BOOST_TEST_RESULT_CODE
 
 [endsect] [/result_code]      
 
@@ -441,14 +444,11 @@ bool is_save_pattern_flag_set = boost::unit_test::runtime_config::save_pattern()
       
 [h4 Acceptable values]
 
-* [*no] (default)
-* yes
-
-Equivalent to ['yes] when called without any argument.
+[link boolean_param_value Boolean] with default value [*no].
 
 [h4 Environment variable]
 
-  BOOST_TEST_SAVE_PATTERN
+BOOST_TEST_SAVE_PATTERN
 
 [endsect] [/save_pattern] 
 
@@ -459,12 +459,11 @@ Makes the framework to print progress information. More details [link boost_test
 
 [h4 Acceptable values]
 
-* [*no] (default)
-* yes
+[link boolean_param_value Boolean] with default value [*no].
 
 [h4 Environment variable]
 
-  BOOST_TEST_SHOW_PROGRESS
+BOOST_TEST_SHOW_PROGRESS
 
 [endsect]
 
@@ -481,12 +480,11 @@ processing, on platforms where they are supported.
       
 [h4 Acceptable values]
 
-* [*yes] (default)
-* no
+[link boolean_param_value Boolean] with default value [*yes].
 
 [h4 Environment variable]
 
-  BOOST_TEST_USE_ALT_STACK
+BOOST_TEST_USE_ALT_STACK
 
 [endsect] [/use_alt_stack]  
 
