@@ -148,7 +148,7 @@ framework to setup runtime breakpoint at Nth heap allocation. If value is omitte
 
 * 0 
 * [*1] (default)
-* integer value > 1
+* long integer value > 1
 
 [h4 Environment variable]
 
@@ -159,12 +159,32 @@ BOOST_TEST_DETECT_MEMORY_LEAK
 [/ ###############################################################################################]
 [section:list_content `list_content`]
 
-Lists the content of the tests that would be run. If set on the command line, no test will be run and the content
-of the test bed will be printed, one test per line.
+Parameter [`list_content] instructs the __UTF__ to list the content of the test module instead of executing the test cases.
+Parameter accepts optional string value indicating the format of the output. Currently the framework support two formats: 
+human readable format (HRF) and dot graph format (DOT). If value is omitted HRF value is assumed.
+
+In human readable format information about the test suites and test cases is presented in tree like form with 
+each test unit name on a separate line with horizontal indentation in relation to the parent test suite. In addition test 
+units which are enabled by default have a '*' next the test test unit name. For example following output:
+
+    testsuite1*
+        testcase1*
+        testcase2
+    testsuite2*
+        testcase3*
+
+represents test module consisting of two test suites testsuite1 and testsuite2 and three test cases testcase1, 
+testcase2, testcase3. First two test cases belong to the first test suite and last one belong to second. Out of
+three test case only two are enabled by default: testcase1 and testcase3. testcase2 is not enabled by default, but can 
+be enabled by using the parameter __param_run_test__.
+
+DOT output generates a graph representing a test module tree in a [@http://www.graphviz.org/doc/info/lang.html dot format]. 
+This output includes much more information about the test tree, including labels, timeouts, expected failures and dependencies.
 
 [h4 Acceptable values]
 
-[link boolean_param_value Boolean] with default value [*no].
+* [*HRF] (default)
+* DOT
 
 [h4 Environment variable]
   
@@ -173,17 +193,33 @@ BOOST_TEST_LIST_CONTENT
 [endsect] [/list_content]
 
 [/ ###############################################################################################]
+[section:list_labels `list_labels`]
+
+Option [`list_labels] instructs the __UTF__ to list all the the labels defined in the test module instead 
+of executing the test cases. 
+
+[h4 Acceptable values]
+
+[link boolean_param_value Boolean] with default value [*no].
+
+[h4 Environment variable]
+  
+BOOST_TEST_LIST_LABELS
+
+[endsect] [/list_labels]
+
+[/ ###############################################################################################]
 [section:log_format `log_format`]
 
-Allows selecting the __UTF__ log format from the list of formats supplied by the framework. To specify custom log
-format use the [link ref_log_formatter_api custom log formatting API].
+Parameter ['log_format] allows to set the __UTF__ log format to one of the formats supplied by the framework. 
+To specify custom log format use the [link ref_log_formatter_api custom log formatting API]. By default human
+readable format (HRF), which is similar to compiler error format, is used. Alternatively you can specify XML 
+as log format. This format is easier to process by testing automation tools.
       
 [h4 Acceptable values]
 
 * [*HRF] (default)
 * XML
-
-['HRF] stands for human readable format, while ['XML] is dedicated to  automated output processing
 
 [h4 Environment variable]
 

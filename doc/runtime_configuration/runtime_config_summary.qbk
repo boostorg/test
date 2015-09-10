@@ -51,14 +51,14 @@
 
   [/ ###############################################################################################]
   [
-    [__param_list_content__]
+    [[link boost_test.utf_reference.rt_param_reference.list_content `list_content`]]
     [List the tests that will be run.]
   ]
 
   [/ ###############################################################################################]
   [
-    [__param_list_labels__]
-    [List the labels supported by the test module.]
+    [[link boost_test.utf_reference.rt_param_reference.list_labels `list_labels`]]
+    [List the labels defined in the test module.]
   ]
 
   [/ ###############################################################################################]

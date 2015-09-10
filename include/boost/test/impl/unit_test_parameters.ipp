@@ -136,8 +136,7 @@ register_parameters( rt::parameters_store& store )
 
     rt::option build_info( BUILD_INFO, (
         rt::description = "Displays library build information.",
-        rt::env_var = "BOOST_TEST_BUILD_INFO"
-
+        rt::env_var = "BOOST_TEST_BUILD_INFO",
         rt::help = "Option " + BUILD_INFO + " displays library build information, including: platform, "
                    "compiler, STL version and Boost version."
     ));
@@ -154,9 +153,9 @@ register_parameters( rt::parameters_store& store )
         rt::env_var = "BOOST_TEST_CATCH_SYSTEM_ERRORS",
         rt::default_value =
 #ifdef BOOST_TEST_DEFAULTS_TO_CORE_DUMP
-            false
+            false,
 #else
-            true
+            true,
 #endif
         rt::help = "If option " + CATCH_SYS_ERRORS + " has value no the frameworks does not attempt to catch "
                    "asynchronous system failure events (signals on *NIX platforms or structured exceptions on Windows). "
@@ -206,7 +205,7 @@ register_parameters( rt::parameters_store& store )
         rt::default_value = 1L,
         rt::optional_value = 1L,
         rt::value_hint = "<alloc order number>",
-        rt::help = "Parameter " + DETECT_MEM_LEAKS + "enables/disables memory leaks detection. "
+        rt::help = "Parameter " + DETECT_MEM_LEAKS + " enables/disables memory leaks detection. "
                    "This parameter has optional long integer value. The default value is 1, which "
                    "enables the memory leak detection. The value 0 disables memory leak detection. "
                    "Any value N greater than 1 is treated as leak allocation number and tells the "
@@ -227,7 +226,12 @@ register_parameters( rt::parameters_store& store )
         rt::enum_values<unit_test::output_format>::value = {
             { "HRF", OF_CLF },
             { "DOT", OF_DOT }
-        }
+        },
+        rt::help = "Parameter " + LIST_CONTENT + " instructs the framework to list the content "
+                   "of the test module instead of executing the test cases. Parameter accepts "
+                   "optional string value indicating the format of the output. Currently the "
+                   "framework supports two formats: human readable format (HRF) and dot graph "
+                   "format (DOT). If value is omitted HRF value is assumed."
     ));
     list_content.add_cla_id( "--", LIST_CONTENT, "=" );
     store.add( list_content );
@@ -236,7 +240,9 @@ register_parameters( rt::parameters_store& store )
 
     rt::option list_labels( LIST_LABELS, (
         rt::description = "Lists all available labels.",
-        rt::env_var = "BOOST_TEST_LIST_LABELS"
+        rt::env_var = "BOOST_TEST_LIST_LABELS",
+        rt::help = "Option " + LIST_LABELS + " instructs the framework to list all the the labels "
+                   "defined in the test module instead of executing the test cases."
     ));
 
     list_labels.add_cla_id( "--", LIST_LABELS, "=" );
@@ -252,7 +258,10 @@ register_parameters( rt::parameters_store& store )
             { "HRF", OF_CLF },
             { "CLF", OF_CLF },
             { "XML", OF_XML }
-        }
+        },
+        rt::help = "Parameter " + LOG_FORMAT + " allows to set the framework's log format to one of "
+                   "the formats supplied by the framework. By default human readable format (HRF) is "
+                   "used. Alternatively you can specify XML as log format."
     ));
 
     log_format.add_cla_id( "--", LOG_FORMAT, "=" );
@@ -527,8 +536,6 @@ init( int& argc, char** argv )
         BOOST_TEST_FOREACH( rt::cstring, name, ex.m_amb_candidates )
             std::cerr << "   " << name << "\n";
 
-        std::cerr << "\n";
-
         BOOST_TEST_I_THROW( framework::nothing_to_test() );
     }
     BOOST_TEST_I_CATCH( rt::unrecognized_param, ex ) {
@@ -540,8 +547,10 @@ init( int& argc, char** argv )
             BOOST_TEST_FOREACH( rt::cstring, name, ex.m_typo_candidates )
                 std::cerr << "   " << name << "\n";
         }
-        else if( parser )
+        else if( parser ) {
+            std::cerr << "\n";
             parser->usage( std::cerr );
+        }
         
         BOOST_TEST_I_THROW( framework::nothing_to_test() );
     }

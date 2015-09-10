@@ -114,7 +114,6 @@ struct value_interpreter<bool, false> {
             return false;
 
         BOOST_TEST_I_THROW( format_error( param_name ) << source << " can't be interpreted as bool value." );
-        return false;
     }
 };
 
