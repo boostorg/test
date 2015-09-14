@@ -89,7 +89,7 @@ keyboard shortcuts/mouse clicks you use for compilation error analysis:
 If you got "memory access violation" message (or any other message indication fatal or system error) when you 
 run you test, to get more information of error location add 
 ``
---__param_catch_system__=no
+--[link boost_test.utf_reference.rt_param_reference.catch_system `catch_system_error`]=no
 ``
 to the test run command line:
      
@@ -107,7 +107,7 @@ Now run the test again under debugger and it will break at the point of failure.
 If you got "memory access violation" message (or any other message indication fatal or system error) when you 
 run you test, to get more information about the error location add 
 ``
---__param_catch_system__=no 
+--[link boost_test.utf_reference.rt_param_reference.catch_system `catch_system_error`]=no 
 ``
 
 to the test run command line. Now run the test again and it will create a coredump you could analyze using you preferable 
@@ -117,7 +117,7 @@ debugger. Or run it under debugger in a first place and it will break at the poi
 
 My first recommendation is to make sure that the test framework catches all fatal errors by adding argument
 ``
---__param_catch_system__=yes 
+--[link boost_test.utf_reference.rt_param_reference.catch_system `catch_system_error`]=yes 
 ``
 
 to all test modules invocations. Otherwise test program may produce unwanted dialogs (depends on compiler and OS) that will halt you 
@@ -130,7 +130,7 @@ regression tests run. The second recommendation is to suppress result report out
 argument and test log output by adding 
 
 ``
---__param_log_level__=nothing
+--[link boost_test.utf_reference.rt_param_reference.log_level `log_level`]=nothing
 `` 
 
 argument, so that test module won't produce undesirable output no one is going to look at 
@@ -139,7 +139,7 @@ alternative to my second recommendation is direct both log and report to separat
 later on. Moreover you can  make Boost.Test to produce them in XML format using 
 
 ``
---__param_output_format__=XML
+--[link boost_test.utf_reference.rt_param_reference.output_format `output_format`]=XML
 ``
 and use some automated tool that will format this information as you like.
 

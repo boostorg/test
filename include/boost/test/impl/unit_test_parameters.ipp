@@ -259,9 +259,12 @@ register_parameters( rt::parameters_store& store )
             { "CLF", OF_CLF },
             { "XML", OF_XML }
         },
-        rt::help = "Parameter " + LOG_FORMAT + " allows to set the framework's log format to one of "
-                   "the formats supplied by the framework. By default human readable format (HRF) is "
-                   "used. Alternatively you can specify XML as log format."
+        rt::help = "Parameter " + LOG_FORMAT + " allows to set the frameowrk's log format to one "
+                   "of the formats supplied by the framework. The only acceptable values for this "
+                   "parameter are the names of the output formats supplied by the framework. By "
+                   "default the framework uses human readable format (HRF) for testing log. This "
+                   "format is similar to compiler error format. Alternatively you can specify XML "
+                   "as log format. This format is easier to process by testing automation tools."
     ));
 
     log_format.add_cla_id( "--", LOG_FORMAT, "=" );
@@ -286,7 +289,13 @@ register_parameters( rt::parameters_store& store )
             { "system_error"  , log_system_errors },
             { "fatal_error"   , log_fatal_errors },
             { "nothing"       , log_nothing }
-        }
+        },
+        rt::help = "Parameter " + LOG_LEVEL + " allows to set the framework's log level. "
+                   "Log level defines the verbosity of testing log produced by a testing "
+                   "module. The verbosity ranges from a complete log, when all assertions "
+                   "(both successful and failing) are reported, all notifications about "
+                   "test units start and finish are included, to an empty log when nothing "
+                   "is reported to a testing log stream."
     ));
 
     log_level.add_cla_id( "--", LOG_LEVEL, "=" );
@@ -298,7 +307,11 @@ register_parameters( rt::parameters_store& store )
     rt::parameter<std::string> log_sink( LOG_SINK, (
         rt::description = "Specifies log sink: stdout(default), stderr or file name.",
         rt::env_var = "BOOST_TEST_LOG_SINK",
-        rt::value_hint = "<stderr|stdout|file name>"
+        rt::value_hint = "<stderr|stdout|file name>",
+        rt::help = "Parameter " + LOG_SINK + " allows to set the log sink - location "
+                   "where we report the log to, thus it allows to easily redirect the "
+                   "test logs to file or standard streams. By default testing log is "
+                   "directed to standard output."
     ));
 
     log_sink.add_cla_id( "--", LOG_SINK, "=" );
@@ -314,7 +327,14 @@ register_parameters( rt::parameters_store& store )
             { "HRF", OF_CLF },
             { "CLF", OF_CLF },
             { "XML", OF_XML }
-        }
+        },
+        rt::help = "Parameter " + OUTPUT_FORMAT + " combines an effect of " + REPORT_FORMAT + 
+                   " and " + LOG_FORMAT + " parameters. This parameter has higher priority "
+                   "than either one of them. In other words if this parameter is specified "
+                   "it overrides the value of other two parameters. This parameter does not "
+                   "have a default value. The only acceptable values are string names of "
+                   "output formats: HRF - human readable format and XML - XML formats for "
+                   "automation tools processing."
     ));
 
     output_format.add_cla_id( "--", OUTPUT_FORMAT, "=" );
@@ -329,7 +349,15 @@ register_parameters( rt::parameters_store& store )
         rt::env_var = "BOOST_TEST_RANDOM",
         rt::default_value = 0U,
         rt::optional_value = 1U,
-        rt::value_hint = "<seed>"
+        rt::value_hint = "<seed>",
+        rt::help = "Parameter " + RANDOM_SEED + " instructs the framework to execute the "
+                   "test cases in random order. This parameter accepts optional unsigned "
+                   "integer argument. By default test cases are executed in some specific "
+                   "order defined by order of test units in test files and dependency between "
+                   "test units. If parameter is specified without the argument value testing "
+                   "order is randomized based on current time. Alternatively you can specify "
+                   "any positive value greater than 1 and it will be used as random seed for "
+                   "the run."
     ));
 
     random_seed.add_cla_id( "--", RANDOM_SEED, "=" );
@@ -345,7 +373,13 @@ register_parameters( rt::parameters_store& store )
             { "HRF", OF_CLF },
             { "CLF", OF_CLF },
             { "XML", OF_XML }
-        }
+        },
+        rt::help = "Parameter " + REPORT_FORMAT + " allows to set the framework's report format "
+                   "to one of the formats supplied by the framework. The only acceptable values "
+                   "for this parameter are the names of the output formats. By default the framework "
+                   "uses human readable format (HRF) for results reporting. Alternatively you can "
+                   "specify XML as report format. This format is easier to process by testing "
+                   "automation tools."
     ));
 
     report_format.add_cla_id( "--", REPORT_FORMAT, "=" );

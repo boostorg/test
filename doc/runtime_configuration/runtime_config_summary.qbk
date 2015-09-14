@@ -27,13 +27,13 @@
 
   [/ ###############################################################################################]
   [
-    [__param_catch_system__]
+    [[link boost_test.utf_reference.rt_param_reference.catch_system `catch_system_error`]]
     [Catch system errors.]
   ]
 
   [/ ###############################################################################################]
   [
-    [[link boost_test.utf_reference.rt_param_reference.color_output      `color_output`]]
+    [[link boost_test.utf_reference.rt_param_reference.color_output `color_output`]]
     [Produce colour output]
   ]
 
@@ -63,25 +63,25 @@
 
   [/ ###############################################################################################]
   [
-    [__param_log_format__]
+    [[link boost_test.utf_reference.rt_param_reference.log_format `log_format`]]
     [Specifies the log format]
   ]
 
   [/ ###############################################################################################]
   [
-    [__param_log_level__]
+    [[link boost_test.utf_reference.rt_param_reference.log_level `log_level`]]
     [Specifies the logging level of the __UTF__]
   ]
 
   [/ ###############################################################################################]
   [
-    [__param_log_sink__]
+    [[link boost_test.utf_reference.rt_param_reference.log_sink `log_sink`]]
     [Specifies the sink stream for logging.]
   ]
 
   [/ ###############################################################################################]
   [
-    [__param_output_format__]
+    [[link boost_test.utf_reference.rt_param_reference.output_format `output_format`]]
     [Specifies the log format and the report format.]
   ]
 

@@ -212,9 +212,12 @@ BOOST_TEST_LIST_LABELS
 [section:log_format `log_format`]
 
 Parameter ['log_format] allows to set the __UTF__ log format to one of the formats supplied by the framework. 
-To specify custom log format use the [link ref_log_formatter_api custom log formatting API]. By default human
-readable format (HRF), which is similar to compiler error format, is used. Alternatively you can specify XML 
-as log format. This format is easier to process by testing automation tools.
+To specify custom log format use the [link ref_log_formatter_api custom log formatting API].
+
+The only acceptable values for this parameter are the names of the output formats supplied by the 
+framework. By default the framework uses human readable format (HRF) for testing log. This format 
+is similar to compiler error format. Alternatively you can specify XML as log format. This format 
+is easier to process by testing automation tools.
       
 [h4 Acceptable values]
 
@@ -230,58 +233,65 @@ BOOST_TEST_LOG_FORMAT
 [/ ###############################################################################################]
 [section:log_level `log_level`]
 
-Allows setting the __UTF__ [link ref_log_level_explanations log level] in a range from a
-complete log, when all successful tests are confirmed and all test suite messages are included, to an empty
-log when nothing is logged a test output stream. 
+Parameter [`log_level] allows to set the __UTF__ [link ref_log_level_explanations log level]. Log level defines 
+the verbosity of testing log produced by a testing module. The verbosity ranges from a complete log, when all 
+assertions (both successful and failing) are reported, all notifications about test units start and finish 
+are included, to an empty log when nothing is reported to a testing log stream. 
 
-[note Log levels are accumulating, in other words each log level includes also all the information reported  by less restrictive ones.]
-      
+Log level is set to one of the predefined levels, which are organized into hierarchy, where each level includes
+all the messages on that level as well as all the messages on levels below. Level are identified by string 
+names, which are listed next.
+
 [h4 Acceptable values]
 
-[table Log levels
+Following is the list of level names ordered from higher to lower level. Thus each level includes messages on 
+that level as well as all the messages on levels defined below.
+
+[table
   [
-    [value]
-    [feature]
+    [Value]
+    [Included messages]
   ]
   [
     [all]
-    [report all log messages including the passed test notification]
+    [All log messages including the passed assertions notification]
   ]
   [
     [success]
-    [the same as all]
+    [The same as all]
   ]
   [
     [test_suite]
-    [Shows test suite messages]
+    [Test units start/finish notifications]
   ]
   [
     [message]
-    [Shows user messages]
+    [User generated messages (using BOOST_MESSAGE tool)]
   ]  
   [
     [warning]
-    [Reports warnings issued by user]
+    [Messages describing failed assertion on WARN level (BOOST_WARN_... tools)]
   ]  
   [
     [[*error] (default)]
-    [Reports all error conditions]
+    [Messages describing failed assertion on CHECK level (BOOST_WARN_... tools)]
   ]  
   [
     [cpp_exception]
-    [Reports uncaught C++ exception]
+    [Messages reporting uncaught C++ exception]
   ]  
   [
     [system_error]
-    [Reports system originated non-fatal errors. For example, timeout or floating point exception.]
+    [Messages reporting system originated non-fatal errors. For example, timeout or floating point exception.]
   ]  
   [
     [fatal_error]
-    [Reports only user or system originated fatal errors. For example, memory access violation.]
+    [Messages reporting user or system originated fatal errors. For example, memory access violation. Also
+     all the messages describing failed assertion on REQUIRE level (BOOST_REQUIRE_... tools)]
   ]  
   [
     [nothing]
-    [Does not report any information.]
+    [No messages are reported.]
   ]  
 ]
 
@@ -294,19 +304,30 @@ BOOST_TEST_LOG_LEVEL
 [/ ###############################################################################################]
 [section:log_sink `log_sink`]
 
-Sets the logging sink to the one specified.
+Parameter [`log_sink] allows to set the log sink - location where we report the log to, thus it allows 
+to easily redirect the test logs to file or standard streams. By default testing log is directed to 
+standard output.
 
-This parameter allows to easily redirect the test logs. The parameter value is 
-
-* either the string containing either a file name, in which case the __UTF__ will redirect log into this file
-* or `stdout` (the default), in which case log is redirected into standard output stream
-* or `stderr` , in which case log is redirected into standard error stream.
-      
 [h4 Acceptable values]
 
-* [*`stdout`] (default)
-* `stderr`
-* arbitrary file name
+[table
+  [
+    [Value]
+    [Meaning]
+  ]
+  [
+    [[*`stdout`] (default)]
+    [Testing log is redirected into standard output stream]
+  ]
+  [
+    [stderr]
+    [Testing log is redirected into standard error stream]
+  ]
+  [
+    [File name]
+    [Testing log is redirected into this file]
+  ]
+]
 
 [h4 Environment variable]
 
@@ -317,11 +338,16 @@ BOOST_TEST_LOG_SINK
 [/ ###############################################################################################]
 [section:output_format `output_format`]
 
-Combines an effect of __param_report_format__ and __param_log_format__ parameters. Has higher priority than either one of them if specified.      
+Parameter [`output_format] combines an effect of __param_report_format__ and 
+[link boost_test.utf_reference.rt_param_reference.log_format `log_format`] 
+parameters. This parameter has higher priority than either one of them. In other words if this 
+parameter is specified it overrides the value of other two parameters. This parameter does not have 
+a default value. The only acceptable values are string names of output formats: HRF - human readable 
+format and XML - XML formats for automation tools processing.
       
 [h4 Acceptable values]
 
-* [*HRF] (default)
+* HRF
 * XML
 
 ['HRF] stands for human readable format, while ['XML] is dedicated to  automated output processing
@@ -335,13 +361,12 @@ BOOST_TEST_OUTPUT_FORMAT
 [/ ###############################################################################################]
 [section:random `random`]
 
-Runs the tests in random order.
-
-Positive value makes the framework to run the test cases in random order. Also if this value is greater than 1,
-it is used as a random seed. In other case random seed is generated based on current time.
-
-[caution If computed from time, the seed is not outputted to the report]
-      
+Parameter [`random] instructs the __UTF__ to execute the test cases in random order. This parameter 
+accepts optional unsigned integer argument. By default test cases are executed in some specific order 
+defined by order of test units in test files and dependency between test units. If parameter is 
+specified without the argument value testing order is randomized based on current time. Alternatively 
+you can specify any positive value greater than 1 and it will be used as random seed for the run.
+     
 [h4 Acceptable values]
 
 * [*0] (default)
@@ -357,16 +382,19 @@ BOOST_TEST_RANDOM
 [/ ###############################################################################################]
 [section:report_format `report_format`]
 
-Allows selecting the __UTF__ report format from the list of formats supplied by the framework. To specify a custom report format use unit_test_report API.
+Parameter [`report_format] allows to set the __UTF__ report format to one of the formats supplied 
+by the framework. To specify a custom report format use unit_test_report API. 
 
-[warning Provide something concrete to the user]
-      
+The only acceptable values for this parameter are the names of the output formats. By default the 
+framework uses human readable format (HRF) for results reporting. Alternatively you can specify 
+XML as report format. This format is easier to process by testing automation tools.
+
+[/TODO: unit_test_report API]
+     
 [h4 Acceptable values]
 
 * [*HRF] (default)
 * XML
-
-['HRF] stands for human readable format, while ['XML] is dedicated to  automated output processing
 
 [h4 Environment variable]
 
@@ -377,9 +405,9 @@ BOOST_TEST_REPORT_FORMAT
 [/ ###############################################################################################]
 [section:report_level `report_level`]
 
-Allows setting the level of details carried by the testing results report generated by the framework. Use value 
-"no" to eliminate the results report completely. See the 
-[link ref_tests_report test report] section for description of different report formats.
+Parameter [`report_level] allows to set the verbosity level of the testing results report generated by 
+the __UTF__. Use value "no" to eliminate the results report completely. See the 
+[link ref_report_formats report formats] section for description of different report formats.
       
 [h4 Acceptable values]
 
@@ -399,7 +427,7 @@ BOOST_TEST_REPORT_LEVEL
 
 Sets the report sink to the one specified.
 
-This parameter allows to easily redirect the test result report. See __param_log_sink__ for more details.
+This parameter allows to easily redirect the test result report.
       
 [h4 Acceptable values]
 
