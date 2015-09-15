@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2014.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -6,11 +6,11 @@
 //  See http://www.boost.org/libs/test for the library home page.
 //
 ///@file
-///Defines monomorphic dataset based on C type arrays
+///Defines monomorphic dataset based on C++11 initializer_list template
 // ***************************************************************************
 
-#ifndef BOOST_TEST_DATA_MONOMORPHIC_ARRAY_HPP_121411GER
-#define BOOST_TEST_DATA_MONOMORPHIC_ARRAY_HPP_121411GER
+#ifndef BOOST_TEST_DATA_MONOMORPHIC_INITIALIZATION_LIST_HPP_091515GER
+#define BOOST_TEST_DATA_MONOMORPHIC_INITIALIZATION_LIST_HPP_091515GER
 
 // Boost.Test
 #include <boost/test/data/config.hpp>
@@ -31,7 +31,7 @@ namespace monomorphic {
 
 /// Dataset view of a C array
 template<typename T>
-class array : public monomorphic::dataset<T> {
+class init_list : public monomorphic::dataset<T> {
     typedef monomorphic::dataset<T> base;
     typedef typename base::iter_ptr iter_ptr;
 
@@ -56,37 +56,35 @@ public:
     enum { arity = 1 };
 
     // Constructor
-    array( T const* arr, std::size_t size )
-    : m_arr( arr )
-    , m_size( size )
+    init_list( std::initializer_list<T>&& il )
+    : m_data( std::forward<std::initializer_list<T>>( il ) )
     {}
 
     // dataset interface
-    virtual data::size_t    size() const            { return m_size; }
-    virtual iter_ptr        begin() const           { return boost::make_shared<iterator>( m_arr, m_size ); }
+    virtual data::size_t    size() const            { return m_data.size(); }
+    virtual iter_ptr        begin() const           { return boost::make_shared<iterator>( m_data.begin(), m_data.size() ); }
 
 private:
     // Data members
-    T const*        m_arr;
-    std::size_t     m_size;
+    std::initializer_list<T> m_data;    
 };
 
 //____________________________________________________________________________//
 
 //! An array dataset is a dataset
 template<typename T>
-struct is_dataset<array<T>> : mpl::true_ {};
+struct is_dataset<init_list<T>> : mpl::true_ {};
 
 } // namespace monomorphic
 
 //____________________________________________________________________________//
 
 //! @overload boost::unit_test::data::make()
-template<typename T, std::size_t size>
-inline monomorphic::array<typename boost::remove_const<T>::type>
-make( T (&a)[size] )
+template<typename T>
+inline monomorphic::init_list<T>
+make( std::initializer_list<T>&& il )
 {
-    return monomorphic::array<typename boost::remove_const<T>::type>( a, size );
+    return monomorphic::init_list<T>( std::forward<std::initializer_list<T>>( il ) );
 }
 
 } // namespace data
@@ -95,5 +93,5 @@ make( T (&a)[size] )
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_TEST_DATA_MONOMORPHIC_ARRAY_HPP_121411GER
+#endif // BOOST_TEST_DATA_MONOMORPHIC_INITIALIZATION_LIST_HPP_091515GER
 
