@@ -89,6 +89,8 @@ struct is_dataset<collection<C> > : mpl::true_ {};
 
 } // namespace monomorphic
 
+//____________________________________________________________________________//
+
 //! @overload boost::unit_test::data::make()
 template<typename C>
 inline typename std::enable_if<is_forward_iterable<C>::value,monomorphic::collection<C>>::type
@@ -96,8 +98,6 @@ make( C&& c )
 {
     return monomorphic::collection<C>( std::forward<C>(c) );
 }
-
-//____________________________________________________________________________//
 
 } // namespace data
 } // namespace unit_test

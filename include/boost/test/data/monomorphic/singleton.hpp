@@ -71,9 +71,13 @@ private:
     T               m_value;
 };
 
+//____________________________________________________________________________//
+
 // a singleton is a dataset
 template<typename T>
 struct is_dataset<singleton<T> > : mpl::true_ {};
+
+//____________________________________________________________________________//
 
 } // namespace monomorphic
 
@@ -89,20 +93,23 @@ make( T&& v )
     return monomorphic::singleton<T>( std::forward<T>( v ) );
 }
 
+//____________________________________________________________________________//
+
 /// @overload boost::unit_test::data::make
-inline monomorphic::singleton<char*> make( char* str )
+inline monomorphic::singleton<char*>
+make( char* str )
 {
     return monomorphic::singleton<char*>( std::move(str) );
 }
 
+//____________________________________________________________________________//
 
 /// @overload boost::unit_test::data::make
-inline monomorphic::singleton<char const*> make( char const* str )
+inline monomorphic::singleton<char const*>
+make( char const* str )
 {
     return monomorphic::singleton<char const*>( std::move(str) );
 }
-
-
 
 } // namespace data
 } // namespace unit_test

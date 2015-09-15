@@ -92,11 +92,11 @@ private:
     Generator               m_generator;
 };
 
+//____________________________________________________________________________//
 
 //! A generated dataset is a dataset.
 template<typename Generator>
 struct is_dataset<generated_by<Generator> > : mpl::true_ {};
-
 
 } // namespace monomorphic
 } // namespace data

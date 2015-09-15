@@ -63,15 +63,17 @@ class array;
 template<typename DataSet>
 struct is_dataset : mpl::false_ {};
 
+//____________________________________________________________________________//
+
 //! A reference to a dataset is a dataset
 template<typename DataSet>
 struct is_dataset<DataSet&> : is_dataset<DataSet> {};
 
+//____________________________________________________________________________//
+
 //! A const dataset is a dataset
 template<typename DataSet>
 struct is_dataset<DataSet const> : is_dataset<DataSet> {};
-
-//____________________________________________________________________________//
 
 } // namespace monomorphic
 
@@ -153,8 +155,6 @@ template<typename DataSet>
 struct make {
     typedef decltype( data::make( boost::declval<DataSet>() ) ) type;
 };
-
-//____________________________________________________________________________//
 
 } // namespace result_of
 
