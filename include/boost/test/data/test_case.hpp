@@ -41,11 +41,24 @@ namespace boost {
 namespace unit_test {
 namespace data {
 
+namespace ds_detail {
+
 // ************************************************************************** //
-// **************              test_case_template              ************** //
+// **************                     seed                     ************** //
 // ************************************************************************** //
 
-namespace ds_detail {
+struct seed {
+    template<typename DataSet>
+    typename data::result_of::make<DataSet>::type
+    operator->*( DataSet&& ds ) const
+    {
+        return data::make( std::forward<DataSet>( ds ) );
+    }
+};
+
+// ************************************************************************** //
+// **************                 test_case_gen                ************** //
+// ************************************************************************** //
 
 template<typename TestCase,typename DataSet>
 class test_case_gen : public test_unit_generator {
@@ -152,7 +165,7 @@ BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     boost::unit_test::data::ds_detail::make_test_case_gen<test_name>(   \
           BOOST_STRINGIZE( test_name ),                                 \
           __FILE__, __LINE__,                                           \
-          boost::unit_test::data::make(dataset) ),                      \
+          boost::unit_test::data::ds_detail::seed{} ->* dataset ),      \
     boost::unit_test::decorator::collector::instance() );               \
                                                                         \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                 \
