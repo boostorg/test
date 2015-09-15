@@ -35,8 +35,6 @@ namespace monomorphic {
 //! This dataset is applicable to any container implementing a forward iterator. Note that
 //! container with one element will be considered as singletons.
 //! This dataset is constructible with the @ref boost::unit_test::data::make function.
-//!
-//! For compilers supporting r-value references, the collection is moved instead of copied.
 template<typename C>
 class collection : public monomorphic::dataset<typename boost::decay<C>::type::value_type> {
     typedef typename boost::decay<C>::type col_type;
@@ -64,18 +62,12 @@ class collection : public monomorphic::dataset<typename boost::decay<C>::type::v
 public:
     enum { arity = 1 };
 
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     //! Constructor
     //! The collection is moved
     explicit                collection( C&& col ) : m_col( std::forward<C>(col) ) {}
 
     //! Move constructor
     collection( collection&& c ) : m_col( std::forward<C>( c.m_col ) ) {}
-#else
-    //! Constructor
-    //! The collection is copied
-    explicit                collection( C const& col ) : m_col( col ) {}
-#endif
 
     //! Returns the underlying collection
     C const&                col() const             { return m_col; }
@@ -97,23 +89,15 @@ struct is_dataset<collection<C> > : mpl::true_ {};
 
 } // namespace monomorphic
 
+//____________________________________________________________________________//
+
 //! @overload boost::unit_test::data::make()
 template<typename C>
-inline typename BOOST_TEST_ENABLE_IF<is_forward_iterable<C>::value, 
-                                     monomorphic::collection<C> >::type
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+inline typename std::enable_if<is_forward_iterable<C>::value,monomorphic::collection<C>>::type
 make( C&& c )
 {
     return monomorphic::collection<C>( std::forward<C>(c) );
 }
-#else
-make( C const& c )
-{
-    return monomorphic::collection<C>( c );
-}
-#endif
-
-//____________________________________________________________________________//
 
 } // namespace data
 } // namespace unit_test

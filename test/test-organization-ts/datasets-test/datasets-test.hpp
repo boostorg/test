@@ -140,6 +140,42 @@ private:
 
 //____________________________________________________________________________//
 
+struct expected_call_count {
+    explicit expected_call_count( int exp_count )
+    : m_call_count( 0 )
+    , m_exp_count( exp_count )
+    {}
+    expected_call_count(expected_call_count const&) = delete;
+    void operator=(expected_call_count const&) = delete;
+
+    ~expected_call_count()
+    {
+        BOOST_TEST( m_exp_count == m_call_count );
+    }
+
+    template<typename S>
+    void    operator()( S const& ) const
+    {
+        m_call_count++;
+    }
+    template<typename S1,typename S2>
+    void    operator()( S1 const&, S2 const& ) const
+    {
+        m_call_count++;
+    }
+    template<typename S1,typename S2,typename S3>
+    void    operator()( S1 const&, S2 const&, S3 const& ) const
+    {
+        m_call_count++;
+    }
+
+    mutable int    m_call_count;
+    int            m_exp_count;
+
+};
+
+//____________________________________________________________________________//
+
 struct print_sample {
     template<typename T>
     void    operator()( T const& sample ) const

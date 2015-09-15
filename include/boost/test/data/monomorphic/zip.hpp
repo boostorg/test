@@ -28,9 +28,6 @@ namespace monomorphic {
 
 namespace ds_detail {
 
-
-//____________________________________________________________________________//
-
 // !! ?? variadic template implementation; use forward_as_tuple?
 template<typename T1, typename T2>
 struct zip_traits {
@@ -71,8 +68,6 @@ struct zip_traits<std::tuple<T1,T2>,T3> {
         return ref_type(std::get<0>(a1),std::get<1>(a1),a2);
     }
 };
-
-//____________________________________________________________________________//
 
 } // namespace ds_detail
 
@@ -190,9 +185,7 @@ struct zip {
 
 } // namespace result_of
 
-
 //____________________________________________________________________________//
-
 
 //! Overload operator for zip support
 template<typename DS1, typename DS2>
@@ -201,8 +194,12 @@ inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && is_dataset<DS2
 >::type
 operator^( DS1&& ds1, DS2&& ds2 )
 {
-    return zip<DS1,DS2>( std::forward<DS1>( ds1 ),  std::forward<DS2>( ds2 ), ds_detail::zip_size( ds1, ds2 ) );
+    return zip<DS1,DS2>( std::forward<DS1>( ds1 ),
+                         std::forward<DS2>( ds2 ),
+                         ds_detail::zip_size( ds1, ds2 ) );
 }
+
+//____________________________________________________________________________//
 
 //! @overload boost::unit_test::data::monomorphic::operator^()
 template<typename DS1, typename DS2>
@@ -214,6 +211,8 @@ operator^( DS1&& ds1, DS2&& ds2 )
     return std::forward<DS1>(ds1) ^ data::make(std::forward<DS2>(ds2));
 }
 
+//____________________________________________________________________________//
+
 //! @overload boost::unit_test::data::monomorphic::operator^()
 template<typename DS1, typename DS2>
 inline typename boost::lazy_enable_if_c<!is_dataset<DS1>::value && is_dataset<DS2>::value,
@@ -224,10 +223,7 @@ operator^( DS1&& ds1, DS2&& ds2 )
     return data::make(std::forward<DS1>(ds1)) ^ std::forward<DS2>(ds2);
 }
 
-//____________________________________________________________________________//
-
 } // namespace monomorphic
-
 } // namespace data
 } // namespace unit_test
 } // namespace boost
