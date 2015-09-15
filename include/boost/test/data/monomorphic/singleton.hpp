@@ -82,8 +82,6 @@ struct is_dataset<singleton<T> > : mpl::true_ {};
 
 } // namespace monomorphic
 
-
-
 /// @overload boost::unit_test::data::make()
 template<typename T>
 inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
@@ -102,7 +100,6 @@ make( T const& v )
     return monomorphic::singleton<T>( v );
 }
 #endif
-
 
 /// @overload boost::unit_test::data::make
 inline monomorphic::singleton<char*> make( char* str )

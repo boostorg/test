@@ -172,12 +172,7 @@ make( C const& c );
 
 //____________________________________________________________________________//
 
-
-
 #endif // !BOOST_NO_CXX11_RVALUE_REFERENCES
-
-
-
 
 // fwrd declarations
 //! @overload boost::unit_test::data::make()
@@ -185,6 +180,7 @@ template<typename T, std::size_t size>
 inline monomorphic::array< typename boost::remove_const<T>::type >
 make( T (&a)[size] );
 
+#if 0
 // apparently some compilers (eg clang-3.4 on linux) have trouble understanding
 // the previous line for T being const
 //! @overload boost::unit_test::data::make()
@@ -196,7 +192,7 @@ template<typename T, std::size_t size>
 inline monomorphic::array< typename boost::remove_const<T>::type >
 make( T a[size] );
 
-
+#endif
 
 //! @overload boost::unit_test::data::make()
 inline monomorphic::singleton<char*>
@@ -206,24 +202,19 @@ make( char* str );
 inline monomorphic::singleton<char const*>
 make( char const* str );
 
-
-
 //____________________________________________________________________________//
-
-
 
 namespace result_of {
 
 #ifndef BOOST_NO_CXX11_DECLTYPE
 //! Result of the make call.
 template<typename DataSet>
-struct make
-{
+struct make {
     typedef decltype(data::make(boost::declval<DataSet>())) type;
 };
 #else
 
-// explicit specialisation, cumbersome
+// explicit partial specialisation, cumbersome
 
 template <typename DataSet, typename Enable = void>
 struct make;
@@ -250,21 +241,16 @@ struct make<
 };
 
 template <typename C>  
-struct make<
-         C, 
-         typename BOOST_TEST_ENABLE_IF< is_forward_iterable<C>::value>::type
-         >
+struct make<C,typename BOOST_TEST_ENABLE_IF< is_forward_iterable<C>::value>::type>
 {
     typedef monomorphic::collection<C> type;
 };
 
-#if 1 
 template <typename T, std::size_t size>  
 struct make<T [size]>
 {
     typedef monomorphic::array<typename boost::remove_const<T>::type> type;
 };
-#endif
 
 template <typename T, std::size_t size>  
 struct make<T (&)[size]>
@@ -292,21 +278,13 @@ struct make<char const*>
 
 #endif // BOOST_NO_CXX11_DECLTYPE
 
-
 } // namespace result_of
-
-
-
 
 //____________________________________________________________________________//
 
 } // namespace data
 } // namespace unit_test
 } // namespace boost
-
-
-
-
 
 #include <boost/test/detail/enable_warnings.hpp>
 

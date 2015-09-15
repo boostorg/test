@@ -29,7 +29,7 @@ namespace monomorphic {
 // **************                     array                    ************** //
 // ************************************************************************** //
 
-/// Dataset view of an C array
+/// Dataset view of a C array
 template<typename T>
 class array : public monomorphic::dataset<T> {
     typedef monomorphic::dataset<T> base;
@@ -75,33 +75,43 @@ private:
 
 //! An array dataset is a dataset
 template<typename T>
-struct is_dataset<array<T> > : mpl::true_ {};
+struct is_dataset<array<T>> : mpl::true_ {};
 
 } // namespace monomorphic
 
 
-//! @overload boost::unit_test::data::make()
-template<typename T, std::size_t size>
-inline monomorphic::array< typename boost::remove_const<T>::type > make( T (&a)[size] )
-{
-    return monomorphic::array< typename boost::remove_const<T>::type >( a, size );
-}
+//____________________________________________________________________________//
 
 //! @overload boost::unit_test::data::make()
 template<typename T, std::size_t size>
-inline monomorphic::array< typename boost::remove_const<T>::type > make( T const (&a)[size] )
+inline monomorphic::array<typename boost::remove_const<T>::type>
+make( T (&a)[size] )
 {
-    return monomorphic::array<T>( a, size );
+    return monomorphic::array<typename boost::remove_const<T>::type>( a, size );
 }
-
-template<typename T, std::size_t size>
-inline monomorphic::array< typename boost::remove_const<T>::type > make( T a[size] )
-{
-    return monomorphic::array<T>( a, size );
-}
-
 
 //____________________________________________________________________________//
+
+#if 0
+
+//! @overload boost::unit_test::data::make()
+template<typename T, std::size_t size>
+inline monomorphic::array<typename boost::remove_const<T>::type>
+make( T const (&a)[size] )
+{
+    return monomorphic::array<T>( a, size );
+}
+
+//____________________________________________________________________________//
+
+template<typename T, std::size_t size>
+inline monomorphic::array<typename boost::remove_const<T>::type>
+make( T a[size] )
+{
+    return monomorphic::array<T>( a, size );
+}
+
+#endif
 
 } // namespace data
 } // namespace unit_test
