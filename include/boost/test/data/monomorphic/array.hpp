@@ -90,29 +90,6 @@ make( T (&a)[size] )
     return monomorphic::array<typename boost::remove_const<T>::type>( a, size );
 }
 
-//____________________________________________________________________________//
-
-#if 0
-
-//! @overload boost::unit_test::data::make()
-template<typename T, std::size_t size>
-inline monomorphic::array<typename boost::remove_const<T>::type>
-make( T const (&a)[size] )
-{
-    return monomorphic::array<T>( a, size );
-}
-
-//____________________________________________________________________________//
-
-template<typename T, std::size_t size>
-inline monomorphic::array<typename boost::remove_const<T>::type>
-make( T a[size] )
-{
-    return monomorphic::array<T>( a, size );
-}
-
-#endif
-
 } // namespace data
 } // namespace unit_test
 } // namespace boost
