@@ -14,7 +14,7 @@
 
 // Boost.Test
 #include <boost/test/data/config.hpp>
-#include <boost/test/data/monomorphic/dataset.hpp>
+#include <boost/test/data/monomorphic/fwd.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -31,7 +31,7 @@ namespace monomorphic {
 
 /// Dataset view of a C array
 template<typename T>
-class array : public monomorphic::dataset<T, array<T>> {
+class array {
 public:
     typedef T sample;
 

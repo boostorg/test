@@ -12,6 +12,7 @@
 // Boost.Test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/data/monomorphic/initializer_list.hpp>
+#include <boost/test/data/for_each_sample.hpp>
 namespace data=boost::unit_test::data;
 
 #include "datasets-test.hpp"

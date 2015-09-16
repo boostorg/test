@@ -14,7 +14,7 @@
 
 // Boost.Test
 #include <boost/test/data/config.hpp>
-#include <boost/test/data/monomorphic/dataset.hpp>
+#include <boost/test/data/monomorphic/fwd.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -31,7 +31,7 @@ namespace monomorphic {
 
 /// Models a single element data set
 template<typename T>
-class singleton : public monomorphic::dataset<typename boost::decay<T>::type, singleton<T>> {
+class singleton {
 public:
     typedef typename boost::decay<T>::type sample;
 

@@ -14,7 +14,7 @@
 
 // Boost.Test
 #include <boost/test/data/config.hpp>
-#include <boost/test/data/monomorphic/dataset.hpp>
+#include <boost/test/data/monomorphic/fwd.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -42,7 +42,7 @@ namespace monomorphic {
  * - the member function @c reset should put the state of the object in the same state as right after its instanciation
  */
 template<typename Generator>
-class generated_by : public monomorphic::dataset<typename Generator::sample, generated_by<Generator>> {
+class generated_by {
 public:
     typedef typename Generator::sample sample;
 

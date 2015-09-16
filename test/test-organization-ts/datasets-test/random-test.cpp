@@ -15,6 +15,7 @@
 #include <boost/test/data/monomorphic/zip.hpp>
 #include <boost/test/data/monomorphic/array.hpp>
 #include <boost/test/data/monomorphic/grid.hpp>
+#include <boost/test/data/for_each_sample.hpp>
 namespace data=boost::unit_test::data;
 
 #include "datasets-test.hpp"

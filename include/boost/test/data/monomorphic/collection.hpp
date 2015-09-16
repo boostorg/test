@@ -14,7 +14,7 @@
 
 // Boost.Test
 #include <boost/test/data/config.hpp>
-#include <boost/test/data/monomorphic/dataset.hpp>
+#include <boost/test/data/monomorphic/fwd.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -36,7 +36,7 @@ namespace monomorphic {
 //! container with one element will be considered as singletons.
 //! This dataset is constructible with the @ref boost::unit_test::data::make function.
 template<typename C>
-class collection : public monomorphic::dataset<typename boost::decay<C>::type::value_type, collection<C>> {
+class collection {
     typedef typename boost::decay<C>::type col_type;
 public:
     typedef typename col_type::value_type sample;

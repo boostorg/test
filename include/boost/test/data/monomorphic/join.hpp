@@ -14,7 +14,7 @@
 
 // Boost.Test
 #include <boost/test/data/config.hpp>
-#include <boost/test/data/monomorphic/dataset.hpp>
+#include <boost/test/data/monomorphic/fwd.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -34,8 +34,7 @@ namespace monomorphic {
 //! The size of the resulting dataset is the sum of the two underlying datasets. The arity of the datasets
 //! should match.
 template<typename DataSet1, typename DataSet2>
-class join : public monomorphic::dataset<typename boost::decay<DataSet1>::type::sample, 
-                                         join<DataSet1,DataSet2>> {
+class join {
     typedef typename boost::decay<DataSet1>::type   dataset1_decay;
     typedef typename boost::decay<DataSet2>::type   dataset2_decay;
 

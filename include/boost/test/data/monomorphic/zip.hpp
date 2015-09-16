@@ -12,12 +12,14 @@
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_ZIP_HPP_102211GER
 #define BOOST_TEST_DATA_MONOMORPHIC_ZIP_HPP_102211GER
 
+// Boost.Test
 #include <boost/test/data/config.hpp>
 
 #if !defined(BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE) || defined(BOOST_TEST_DOXYGEN_DOC__)
 
-// Boost.Test
-#include <boost/test/data/monomorphic/dataset.hpp>
+#include <boost/test/data/traits.hpp>
+#include <boost/test/data/monomorphic/fwd.hpp>
+
 #include <boost/test/detail/suppress_warnings.hpp>
 
 
@@ -32,7 +34,7 @@ namespace ds_detail {
 template<typename T1, typename T2>
 struct zip_traits {
     typedef std::tuple<T1,T2> type;
-    typedef typename monomorphic::traits<type>::ref_type ref_type;
+    typedef typename data::traits<type>::ref_type ref_type;
 
     static ref_type
     tuple_merge(T1 const& a1, T2 const& a2)
@@ -46,7 +48,7 @@ struct zip_traits {
 template<typename T1, typename T2,typename T3>
 struct zip_traits<T1,std::tuple<T2,T3>> {
     typedef std::tuple<T1,T2,T3> type;
-    typedef typename monomorphic::traits<type>::ref_type ref_type;
+    typedef typename data::traits<type>::ref_type ref_type;
 
     static ref_type
     tuple_merge(T1 const& a1, std::tuple<T2 const&,T3 const&> const& a2)
@@ -60,7 +62,7 @@ struct zip_traits<T1,std::tuple<T2,T3>> {
 template<typename T1, typename T2,typename T3>
 struct zip_traits<std::tuple<T1,T2>,T3> {
     typedef std::tuple<T1,T2,T3> type;
-    typedef typename monomorphic::traits<type>::ref_type ref_type;
+    typedef typename data::traits<type>::ref_type ref_type;
 
     static ref_type
     tuple_merge(std::tuple<T1 const&,T2 const&> const& a1, T3 const& a2)
@@ -80,9 +82,7 @@ struct zip_traits<std::tuple<T1,T2>,T3> {
 //! A zip of two datasets is a dataset whose arity is the sum of the operand datasets arity. The size is given by
 //! the function creating the instance (see @c operator^ on datasets).
 template<typename DataSet1, typename DataSet2>
-class zip : public monomorphic::dataset<typename ds_detail::zip_traits<typename boost::decay<DataSet1>::type::sample,
-                                                                       typename boost::decay<DataSet2>::type::sample>::type,
-                                        zip<DataSet1,DataSet2>> {
+class zip {
     typedef typename boost::decay<DataSet1>::type   dataset1_decay;
     typedef typename boost::decay<DataSet2>::type   dataset2_decay;
 
@@ -98,7 +98,7 @@ public:
     enum { arity = dataset1_decay::arity + dataset2_decay::arity };
 
     struct iterator {
-        typedef typename monomorphic::traits<sample>::ref_type ref_type;
+        typedef typename data::traits<sample>::ref_type ref_type;
 
         // Constructor
         explicit    iterator( dataset1_iter iter1, dataset2_iter iter2 )
