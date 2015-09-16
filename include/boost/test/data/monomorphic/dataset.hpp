@@ -97,35 +97,10 @@ struct traits<std::tuple<T1,T2,T3>> {
 //! - the @c begin function, which provides a forward iterator on the beginning of the sequence. The returned
 //!   iterator should be incrementable a number of times corresponding to the returned size.
 //!
-template<typename T>
+template<typename T, typename SpecificDS>
 class dataset {
 public:
-    //! Type of the samples in this dataset
-    typedef T data_type;
-    
-    virtual ~dataset() 
-    {}
-
-    //! Interface of the dataset iterator
-    class iterator {
-    public:
-        typedef typename monomorphic::traits<T>::ref_type ref_type;
-
-        virtual             ~iterator() {}
-
-        // forward iterator interface
-        virtual ref_type    operator*() = 0;
-        virtual void        operator++() = 0;
-    };
-
-    //! Type of the iterator
-    typedef boost::shared_ptr<iterator> iter_ptr;
-
-    //! Dataset size
-    virtual data::size_t    size() const = 0;
-
-    //! Iterator to use to iterate over this dataset
-    virtual iter_ptr        begin() const = 0;
+    SpecificDS const& specific() const  { return *static_cast<SpecificDS const*>(this); }
 };
 
 } // namespace monomorphic
@@ -134,20 +109,20 @@ public:
 // **************                for_each_sample               ************** //
 // ************************************************************************** //
 
-template<typename SampleType, typename Action>
+template<typename SampleType, typename SpecificDS, typename Action>
 inline void
-for_each_sample( monomorphic::dataset<SampleType> const& ds,
-                 Action const&                           act,
-                 data::size_t                            number_of_samples = BOOST_TEST_DS_INFINITE_SIZE )
+for_each_sample( monomorphic::dataset<SampleType, SpecificDS> const& ds,
+                 Action const&  act,
+                 data::size_t   number_of_samples = BOOST_TEST_DS_INFINITE_SIZE )
 {
-    data::size_t size = (std::min)( ds.size(), number_of_samples );
+    data::size_t size = (std::min)( ds.specific().size(), number_of_samples );
     BOOST_TEST_DS_ASSERT( !size.is_inf(), "Dataset has infinite size. Please specify the number of samples" );
 
-    auto it = ds.begin();
+    auto it = ds.specific().begin();
 
     while( size-- > 0 ) {
-        monomorphic::traits<SampleType>::invoke_action( **it, act );
-        ++(*it);
+        monomorphic::traits<SampleType>::invoke_action( *it, act );
+        ++it;
     }
 }
 

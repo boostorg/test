@@ -15,7 +15,7 @@
 #include <boost/test/data/monomorphic/singleton.hpp>
 #include <boost/test/data/monomorphic/array.hpp>
 #include <boost/test/data/monomorphic/collection.hpp>
-#include <boost/test/data/monomorphic/generators/xrange.hpp>
+//#include <boost/test/data/monomorphic/generators/xrange.hpp>
 
 namespace data = boost::unit_test::data;
 
@@ -36,6 +36,7 @@ BOOST_AUTO_TEST_CASE( test_mono_grid_size_and_composition )
 
 //____________________________________________________________________________//
 
+#if 0
 BOOST_AUTO_TEST_CASE( test_mono_grid_with_xrange )
 {
   auto ds1 = data::make(1);
@@ -44,6 +45,8 @@ BOOST_AUTO_TEST_CASE( test_mono_grid_with_xrange )
   BOOST_TEST( (ds1 * ds2).size() == 5 );
   BOOST_TEST( (ds1 * ds2).size() == 5 );
 }
+
+#endif
 
 //____________________________________________________________________________//
 

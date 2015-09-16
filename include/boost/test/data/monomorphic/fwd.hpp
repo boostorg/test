@@ -39,10 +39,11 @@ namespace monomorphic {
 
 
 #if !defined(BOOST_TEST_DOXYGEN_DOC__)
+
 template<typename T>
 struct traits;
 
-template<typename T>
+template<typename T, typename Specific>
 class dataset;
 
 template<typename T>
@@ -56,6 +57,7 @@ class array;
 
 template<typename T>
 class init_list;
+
 #endif
 
 // ************************************************************************** //
@@ -120,14 +122,14 @@ template<typename T>
 inline typename std::enable_if<!is_forward_iterable<T>::value && 
                                !monomorphic::is_dataset<T>::value &&
                                !boost::is_array<typename boost::remove_reference<T>::type>::value, 
-                               monomorphic::singleton<T> >::type
+                               monomorphic::singleton<T>>::type
 make( T&& v );
 
 //____________________________________________________________________________//
 
 //! @overload boost::unit_test::data::make()
 template<typename C>
-inline typename std::enable_if<is_forward_iterable<C>::value,monomorphic::collection<C> >::type
+inline typename std::enable_if<is_forward_iterable<C>::value,monomorphic::collection<C>>::type
 make( C&& c );
 
 //____________________________________________________________________________//

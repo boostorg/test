@@ -36,45 +36,27 @@ namespace monomorphic {
 //! container with one element will be considered as singletons.
 //! This dataset is constructible with the @ref boost::unit_test::data::make function.
 template<typename C>
-class collection : public monomorphic::dataset<typename boost::decay<C>::type::value_type> {
+class collection : public monomorphic::dataset<typename boost::decay<C>::type::value_type, collection<C>> {
     typedef typename boost::decay<C>::type col_type;
-    typedef typename col_type::value_type T;
-    typedef monomorphic::dataset<T> base;
-    typedef typename base::iter_ptr iter_ptr;
-
-    struct iterator : public base::iterator {
-        // Constructor
-        explicit    iterator( collection<C> const& owner )
-        : m_iter( owner.col().begin() )
-        , m_singleton( owner.col().size() == 1 )
-        {}
-
-        // forward iterator interface
-        virtual T const&    operator*()     { return *m_iter; }
-        virtual void        operator++()    { if( !m_singleton ) ++m_iter; }
-
-    private:
-        // Data members
-        typename col_type::const_iterator m_iter;
-        bool                m_singleton;
-    };
-
 public:
+    typedef typename col_type::value_type sample;
+
     enum { arity = 1 };
 
-    //! Constructor
-    //! The collection is moved
-    explicit                collection( C&& col ) : m_col( std::forward<C>(col) ) {}
+    typedef typename col_type::const_iterator iterator;
+
+    //! Constructor consumed a temporary collection or stores a reference 
+    explicit        collection( C&& col ) : m_col( std::forward<C>(col) ) {}
 
     //! Move constructor
     collection( collection&& c ) : m_col( std::forward<C>( c.m_col ) ) {}
 
     //! Returns the underlying collection
-    C const&                col() const             { return m_col; }
+    C const&        col() const             { return m_col; }
 
-    // dataset interface
-    virtual data::size_t    size() const            { return m_col.size(); }
-    virtual iter_ptr        begin() const           { return boost::make_shared<iterator>( *this ); }
+    //! dataset interface
+    data::size_t    size() const            { return m_col.size(); }
+    iterator        begin() const           { return m_col.begin(); }
 
 private:
     // Data members
@@ -85,7 +67,7 @@ private:
 
 //! A collection from a forward iterable container is a dataset.
 template<typename C>
-struct is_dataset<collection<C> > : mpl::true_ {};
+struct is_dataset<collection<C>> : mpl::true_ {};
 
 } // namespace monomorphic
 

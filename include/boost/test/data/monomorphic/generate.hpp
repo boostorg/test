@@ -36,43 +36,43 @@ namespace monomorphic {
  * - random_t
  *
  * The generator concept is the following:
- * - the type of the generated samples is given by field @c data_type
+ * - the type of the generated samples is given by field @c sample
  * - the member function @c capacity should return the size of the collection being generated (potentially infinite)
  * - the member function @c next should change the state of the generator to the next generated value
  * - the member function @c reset should put the state of the object in the same state as right after its instanciation
  */
 template<typename Generator>
-class generated_by : public monomorphic::dataset<typename Generator::data_type> {
-    typedef typename Generator::data_type T;
-    typedef monomorphic::dataset<T> base;
-    typedef typename base::iter_ptr iter_ptr;
+class generated_by : public monomorphic::dataset<typename Generator::sample, generated_by<Generator>> {
+public:
+    typedef typename Generator::sample sample;
 
-    struct iterator : public base::iterator {
+    enum { arity = 1 };
+
+    struct iterator {
         // Constructor
         explicit    iterator( Generator& gen )
-        : m_gen( gen )
+        : m_gen( &gen )
         {
-            if(m_gen.capacity() > 0) {
-                m_gen.reset();
+            if(m_gen->capacity() > 0) {
+                m_gen->reset();
                 ++*this;
             }
         }
 
         // forward iterator interface
-        virtual T const&    operator*()     { return m_curr_sample; }
-        virtual void        operator++()    { m_curr_sample = m_gen.next(); }
+        sample const&   operator*() const   { return m_curr_sample; }
+        void            operator++()        { m_curr_sample = m_gen->next(); }
 
     private:
         // Data members
-        Generator&          m_gen;
-        T                   m_curr_sample;
+        Generator*  m_gen;
+        sample      m_curr_sample;
     };
-public:
-    enum { arity = 1 };
+
     typedef Generator generator_type;
 
     // Constructor
-    explicit                generated_by( Generator&& G )
+    explicit        generated_by( Generator&& G )
     : m_generator( std::forward<Generator>(G) )
     {}
 
@@ -82,21 +82,21 @@ public:
     {}
 
     //! Size of the underlying dataset
-    data::size_t            size() const            { return m_generator.capacity(); }
+    data::size_t    size() const            { return m_generator.capacity(); }
 
     //! Iterator on the beginning of the dataset
-    virtual iter_ptr        begin() const           { return boost::make_shared<iterator>( boost::ref(const_cast<Generator&>(m_generator)) ); }
+    iterator        begin() const           { return iterator( boost::ref(const_cast<Generator&>(m_generator)) ); }
 
 private:
     // Data members
-    Generator               m_generator;
+    Generator       m_generator;
 };
 
 //____________________________________________________________________________//
 
 //! A generated dataset is a dataset.
 template<typename Generator>
-struct is_dataset<generated_by<Generator> > : mpl::true_ {};
+struct is_dataset<generated_by<Generator>> : mpl::true_ {};
 
 } // namespace monomorphic
 } // namespace data

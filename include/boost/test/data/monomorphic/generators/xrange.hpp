@@ -49,7 +49,7 @@ namespace monomorphic {
 template<typename SampleType, typename StepType=SampleType>
 class xrange_t {
 public:
-    typedef SampleType data_type;
+    typedef SampleType sample;
 
     xrange_t( SampleType const& begin, StepType const& step, data::size_t size )
     : m_begin( begin )
@@ -159,7 +159,7 @@ struct make_xrange {
 //!
 //! @note the step size cannot be null, and it should be positive if @c begin_val < @c end_val, negative otherwise.
 template<typename SampleType, typename Params>
-inline monomorphic::generated_by<monomorphic::xrange_t<SampleType> >
+inline monomorphic::generated_by<monomorphic::xrange_t<SampleType>>
 xrange( Params const& params )
 {
     return monomorphic::ds_detail::make_xrange<SampleType>::_( params );
@@ -169,7 +169,7 @@ xrange( Params const& params )
 
 /// @overload boost::unit_test::data::xrange()
 template<typename SampleType>
-inline monomorphic::generated_by<monomorphic::xrange_t<SampleType> >
+inline monomorphic::generated_by<monomorphic::xrange_t<SampleType>>
 xrange( SampleType const& end_val )
 {
     return monomorphic::ds_detail::make_xrange<SampleType>::_( data::end=end_val );
@@ -179,7 +179,7 @@ xrange( SampleType const& end_val )
 
 /// @overload boost::unit_test::data::xrange()
 template<typename SampleType, typename Params>
-inline typename enable_if_c<nfp::is_named_params<Params>::value,monomorphic::generated_by<monomorphic::xrange_t<SampleType> > >::type
+inline typename enable_if_c<nfp::is_named_params<Params>::value,monomorphic::generated_by<monomorphic::xrange_t<SampleType>> >::type
 xrange( SampleType const& end_val, Params const& params )
 {
     return monomorphic::ds_detail::make_xrange<SampleType>::
@@ -190,7 +190,7 @@ xrange( SampleType const& end_val, Params const& params )
 
 /// @overload boost::unit_test::data::xrange()
 template<typename SampleType>
-inline monomorphic::generated_by<monomorphic::xrange_t<SampleType> >
+inline monomorphic::generated_by<monomorphic::xrange_t<SampleType>>
 xrange( SampleType const& begin_val, SampleType const& end_val )
 {
     return monomorphic::ds_detail::make_xrange<SampleType>::
@@ -203,7 +203,7 @@ xrange( SampleType const& begin_val, SampleType const& end_val )
 
 /// @overload boost::unit_test::data::xrange()
 template<typename SampleType,typename StepType>
-inline monomorphic::generated_by<monomorphic::xrange_t<SampleType> >
+inline monomorphic::generated_by<monomorphic::xrange_t<SampleType>>
 xrange( SampleType const& begin_val, SampleType const& end_val, StepType const& step_val )
 {
     return monomorphic::ds_detail::make_xrange<SampleType,StepType>::

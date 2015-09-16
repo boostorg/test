@@ -31,29 +31,13 @@ namespace monomorphic {
 
 /// Dataset view of a C array
 template<typename T>
-class array : public monomorphic::dataset<T> {
-    typedef monomorphic::dataset<T> base;
-    typedef typename base::iter_ptr iter_ptr;
-
-    struct iterator : public base::iterator {
-        // Constructor
-        explicit    iterator( T const* begin, data::size_t size )
-        : m_it( begin )
-        , m_singleton( size == 1 )
-        {}
-
-        // forward iterator interface
-        virtual T const&    operator*()     { return *m_it; }
-        virtual void        operator++()    { if( !m_singleton ) ++m_it; }
-
-    private:
-        // Data members
-        T const*            m_it;
-        bool                m_singleton;
-    };
-
+class array : public monomorphic::dataset<T, array<T>> {
 public:
+    typedef T sample;
+
     enum { arity = 1 };
+
+    typedef T const* iterator;
 
     // Constructor
     array( T const* arr, std::size_t size )
@@ -62,8 +46,8 @@ public:
     {}
 
     // dataset interface
-    virtual data::size_t    size() const            { return m_size; }
-    virtual iter_ptr        begin() const           { return boost::make_shared<iterator>( m_arr, m_size ); }
+    data::size_t    size() const    { return m_size; }
+    iterator        begin() const   { return m_arr; }
 
 private:
     // Data members
