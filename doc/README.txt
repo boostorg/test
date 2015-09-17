@@ -1,57 +1,67 @@
-This folder contains the documentation for the Boost.Test library. 
-Any contribution or submission to the library should be accompanied by the corresponding documentation. 
+This folder contains the documentation for the Boost.Test library.
+Any contribution or submission to the library should be accompanied by the corresponding documentation.
 
-The format of the documentation uses [http://www.boost.org/tools/quickbook/index.html Quickbook]. 
+The format of the documentation uses [http://www.boost.org/tools/quickbook/index.html Quickbook].
 
 How to build the documentation
 ==============================
 
+In order to generate the documentation, the following is needed:
 
-Install Doxygen
----------------
-Part of the documentation needs [http://www.doxygen.org Doxygen]. Download and install it. `doxygen` should be accessible from the terminal.
+* Docbook
+* Doxygen
+* xsltproc
 
-Download Docbook
-----------------
-Quickbook needs docbook to be installed. Download and untar the docbook archives:
+Doxygen
+-------
+Part of the documentation needs [http://www.doxygen.org Doxygen]. `doxygen` should be accessible from the ``PATH``.
 
-* Docbook XSL that can be found here: 
-* Docbook XML that can be found here:
+Docbook
+-------
+Quickbook needs Docbook (XSL and XML) to be installed. Download and untar the docbook archives:
 
-These two archives are supposed to be untarred to `$docbook_xsl_directory` and `$docbook_xml_directory` respectively. 
+* Docbook XSL that can be found here: [http://sourceforge.net/projects/docbook/files/docbook-xsl/]
+* Docbook DTD that can be found here: [http://www.docbook.org/schemas/]
 
+The directories `$docbook_xsl_directory` and `$docbook_dtd_directory`, respectively, will refer to the location
+of the deflated archive.
 
 Download xsltproc
 -----------------
-This program is needed by docbook, in order to be able to transform XMLs into HTMLs.
-`xsltproc` should be accessible from the command line. 
-
+This program is needed by Docbook, in order to be able to transform XMLs into HTMLs.
+`xsltproc` should be accessible from the ``PATH``.
 
 Construct bjam
 --------------
 
-Simply by typing in a terminal:
+Simply by typing in a console at the root of the Boost repository:
 ``
-> cd $boost_root
 > ./bootstrap.[sh|bat]
-
 ``
 
 Build the documentation
 -----------------------
 
+Running the following commands will construct the documentation with `bjam` and
+all the needed dependencies:
+
 ``
 > cd $boost_root/libs/test/doc
-> ../../../b2 -sDOCBOOK_XSL_DIR=$docbook_xsl_directory -sDOCBOOK_DTD_DIR=$docbook_xml_directory
+> ../../../b2 -sDOCBOOK_XSL_DIR=$docbook_xsl_directory -sDOCBOOK_DTD_DIR=$docbook_dtd_directory
 ``
 
+It is possible to run directly
+``
+> ../../../b2
+``
+
+but this results in a download from the Internet of the Docbook XLS and DTD, which is much slower.
 
 Recommendations
----------------
+===============
 
-- Documentation is part of the "definition of done". A feature does not exist until it is implemented, tested, documented and reviewed. 
+- Documentation is part of the "definition of done". A feature does not exist until it is implemented, tested, documented and reviewed.
 - It is highly recommended that each of your pull request comes with an updated documentation. Not doing so put this work on the shoulders
   of the maintainers and as a result, it would be likely that the pull request is not addressed in a timely manner.
 - Please also update the changelog for referencing your contribution
 - Every file should come with a copyright notice on the very beginning
-

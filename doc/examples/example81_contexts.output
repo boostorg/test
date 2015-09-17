@@ -1,5 +1,5 @@
 //[example_output
-> example81
+> example
 Running 1 test case...
 test.cpp(20): error: in "test_case1": check 1 != 1 has failed [1 == 1]
 Failure occurred in a following context:
