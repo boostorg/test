@@ -32,7 +32,7 @@ namespace ut_detail {
 #ifdef BOOST_NO_EXCEPTIONS
 
 template<typename E>
-inline
+inline void
 BOOST_NORETURN throw_exception(E const& e) { abort(); }
 
 #define BOOST_TEST_IMPL_TRY
