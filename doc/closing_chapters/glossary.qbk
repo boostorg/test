@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003 Boost.Test contributors 
+ / Copyright (c) 2003 Boost.Test contributors
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -19,7 +19,7 @@ it's called ['multi-file test module]. Logically, each test module consists of f
 # [link test_body test body]
 # [link test_cleanup test cleanup]
 # [link test_runner test runner]
- 
+
 The test runner part is optional. If a test module is built as
 an executable, the test runner is built-in. If a test module is built as a dynamic library, it is run by an
 [link boost_test.adv_scenarios.external_test_runner external test runner].
@@ -28,15 +28,15 @@ an executable, the test runner is built-in. If a test module is built as a dynam
 [#test_body][h3 Test body]
 This is the part of a test module that actually performs the test.
 Logically test body is a collection of [link test_assertion test assertions] wrapped in
-[link test_case test cases], which are organized in a [link test_tree test tree].
+[link test_case test cases], which are organized in a [link ref_test_tree test tree].
 
-[#test_tree][h3 Test tree]
+[#ref_test_tree][h3 Test tree]
 This is a hierarchical structure of [link test_suite test suites] (non-leaf nodes) and
 [link test_case test cases] (leaf nodes). More details can be found [link boost_test.tests_organization here].
 
-[#test_unit][h3 Test unit]
+[#ref_test_unit][h3 Test unit]
 This is a collective name when referred to either a [link test_suite test suite] or
-[link test_case test cases].
+[link test_case test cases]. See [link boost_test.tests_organization this section] for more details.
 
 [#test_assertion][h3 Test assertion]
 This is a single binary condition (binary in a sense that is has two outcomes: pass and fail) checked
@@ -51,8 +51,8 @@ test module. The __UTF__ supports both approaches.
 This is an independently monitored function within a test module that
 consists of one or more test assertions. The term ['independently monitored] in the definition above is
 used to emphasize the fact, that all test cases are monitored independently. An uncaught exception or other normal
-test case execution termination doesn't cause the testing to cease. Instead the error is caught by the test 
-case execution monitor, reported by the __UTF__ and testing proceeds to the next test case. Later on you are going 
+test case execution termination doesn't cause the testing to cease. Instead the error is caught by the test
+case execution monitor, reported by the __UTF__ and testing proceeds to the next test case. Later on you are going
 to see that this is on of the primary reasons to prefer multiple small test cases to a single big test function.
 
 
@@ -67,7 +67,7 @@ test cases into a single referable entity. There are various reasons why you may
 * To skip groups of test cases based on the result of another test unit in a test tree.
 
 A test suite can also contain other test suites, thus allowing a hierarchical test tree structure to be formed.
-The __UTF__ requires the test tree to contain at least one test suite with at least one test case. The top level 
+The __UTF__ requires the test tree to contain at least one test suite with at least one test case. The top level
 test suite - root node of the test tree - is called the master test suite.
 
 
