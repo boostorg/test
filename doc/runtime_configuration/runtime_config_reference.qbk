@@ -25,7 +25,7 @@ unsigned, long. Formats required for values of these types are following:
 
 [h5 String, unsigned, long][#regular_param_value]
                                                                               
-Value of these types are expected in the same format they are represented in C++.
+Values of these types are expected in the same format they are represented in C++.
 
 [h5 Boolean][#boolean_param_value]
 
@@ -35,20 +35,18 @@ insensitive strings: "N", "NO", "FALSE", "0".
  
 [h5 Enumeration][#enum_param_value]
 
-Values of enumeration type are expected as case sensitive strings representintive 
-enumeration value names. Each parameter with enumeration value lists all valid names in the 
+Values of a enumeration type are expected as case sensitive strings representing 
+enumeration value names. Each parameter with a enumeration value lists all valid names in a 
 parameter`s description.
 
 [/ ###############################################################################################]
 
 [section:auto_dbg `auto_start_dbg`]
 
-Automatically attach debugger in case of system failure.
-
-Option ['auto_start_dbg] specifies whether Boost.Test should attempt to attach a debugger when fatal system 
+Option ['auto_start_dbg] specifies whether Boost.Test should attempt to attach a debugger when a fatal system 
 error occurs. At the moment this feature is only available on a few selected platforms: Win32 and *nix. There is a 
-default debugger configured for these platforms. You can manually configure different debugger. 
-For more details on how to configure the debugger see the [headerref boost/test/debug.hpp Boost.Test debug API], 
+default debugger configured for these platforms. You can manually configure a different debugger. 
+For more details on how to configure a debugger see the [headerref boost/test/debug.hpp Boost.Test debug API], 
 specifically the function [funcref boost::debug::set_debugger].
 
 [h4 Acceptable values]
@@ -65,7 +63,7 @@ BOOST_TEST_AUTO_START_DBG
 
 [section:build_info `build_info`]
 
-Option ['build_info] tells the __UTF__ to display the build information before testing begins.
+Option ['build_info] instructs the __UTF__ to display the build information before testing begins.
 This information includes: 
 
 * platform
@@ -88,7 +86,7 @@ BOOST_TEST_BUILD_INFO
 
 If option ['catch_system_errors] has value "no" the __UTF__ does not attempt to catch asynchronous system failures 
 (signals on *NIX platforms or structured exceptions on Windows). This can be used for test programs executed 
-within IDE or to get a coredump for stack analysis. See 
+within an IDE or to get a coredump for a stack analysis. See 
 [link ref_usage_recommendations usage recommendations] pages for more details.
 
 [h4 Acceptable values]
@@ -106,8 +104,8 @@ BOOST_TEST_CATCH_SYSTEM_ERRORS
 [/ ###############################################################################################]
 [section:color_output `color_output`]
 
-The __UTF__ is able to produce color output on systems which supports it. To enable this behavior set this option to 
-`yes`. By default the framework does not produces color output.
+The __UTF__ is able to produce color output on systems which support it. To enable this behavior, set this option to 
+`yes`. By default the framework does not produce color output.
       
 [h4 Acceptable values]
 
@@ -138,7 +136,7 @@ BOOST_TEST_DETECT_FP_EXCEPTIONS
 [section:detect_memory_leaks `detect_memory_leaks`]
 
 Parameter ['detect_memory_leaks] enables/disables memory leaks detection (if present in your build configuration). 
-This parameter has optional long integer value. The default value is 1, which enables the memory leak detection. 
+This parameter has an optional long integer value. The default value is 1, which enables memory leak detection. 
 The value 0 disables memory leak detection. Any value N greater than 1 is treated as leak allocation number and tells the 
 framework to setup runtime breakpoint at Nth heap allocation. If value is omitted the default value is assumed. 
 
@@ -159,13 +157,13 @@ BOOST_TEST_DETECT_MEMORY_LEAK
 [/ ###############################################################################################]
 [section:list_content `list_content`]
 
-Parameter [`list_content] instructs the __UTF__ to list the content of the test module instead of executing the test cases.
-Parameter accepts optional string value indicating the format of the output. Currently the framework support two formats: 
-human readable format (HRF) and dot graph format (DOT). If value is omitted HRF value is assumed.
+Parameter ['list_content] instructs the __UTF__ to list the content of the test module instead of executing test cases.
+Parameter accepts optional string value indicating the format of the output. Currently the framework supports two formats: 
+human readable format (HRF) and dot graph format (DOT). If a value is omitted HRF value is assumed.
 
-In human readable format information about the test suites and test cases is presented in tree like form with 
+In human readable format information about the test suites and test cases is presented in a tree like form with 
 each test unit name on a separate line with horizontal indentation in relation to the parent test suite. In addition test 
-units which are enabled by default have a '*' next the test test unit name. For example following output:
+units which are enabled by default have an '*' next to the test unit name. For example, the following output:
 
     testsuite1*
         testcase1*
@@ -173,13 +171,13 @@ units which are enabled by default have a '*' next the test test unit name. For 
     testsuite2*
         testcase3*
 
-represents test module consisting of two test suites testsuite1 and testsuite2 and three test cases testcase1, 
-testcase2, testcase3. First two test cases belong to the first test suite and last one belong to second. Out of
-three test case only two are enabled by default: testcase1 and testcase3. testcase2 is not enabled by default, but can 
+represents test module consisting of two test suites: testsuite1 and testsuite2, and three test cases: testcase1, 
+testcase2, and testcase3. The first two test cases belong to the first test suite and last one belongs to the second. Out of
+three test cases only two are enabled by default: testcase1 and testcase3. testcase2 is not enabled by default, but can 
 be enabled by using the parameter __param_run_test__.
 
 DOT output generates a graph representing a test module tree in a [@http://www.graphviz.org/doc/info/lang.html dot format]. 
-This output includes much more information about the test tree, including labels, timeouts, expected failures and dependencies.
+This output includes much more information about the test tree including labels, timeouts, expected failures, and dependencies.
 
 [h4 Acceptable values]
 
@@ -195,8 +193,8 @@ BOOST_TEST_LIST_CONTENT
 [/ ###############################################################################################]
 [section:list_labels `list_labels`]
 
-Option [`list_labels] instructs the __UTF__ to list all the the labels defined in the test module instead 
-of executing the test cases. 
+Option ['list_labels] instructs the __UTF__ to list all the the labels defined in the test module instead 
+of executing test cases. 
 
 [h4 Acceptable values]
 
@@ -215,8 +213,8 @@ Parameter ['log_format] allows to set the __UTF__ log format to one of the forma
 To specify custom log format use the [link ref_log_formatter_api custom log formatting API].
 
 The only acceptable values for this parameter are the names of the output formats supplied by the 
-framework. By default the framework uses human readable format (HRF) for testing log. This format 
-is similar to compiler error format. Alternatively you can specify XML as log format. This format 
+framework. By default the framework uses human readable format (HRF) for the testing log. This format 
+is similar to a compiler error format. Alternatively you can specify XML as a log format. This format 
 is easier to process by testing automation tools.
       
 [h4 Acceptable values]
@@ -233,13 +231,13 @@ BOOST_TEST_LOG_FORMAT
 [/ ###############################################################################################]
 [section:log_level `log_level`]
 
-Parameter [`log_level] allows to set the __UTF__ [link ref_log_level_explanations log level]. Log level defines 
-the verbosity of testing log produced by a testing module. The verbosity ranges from a complete log, when all 
-assertions (both successful and failing) are reported, all notifications about test units start and finish 
-are included, to an empty log when nothing is reported to a testing log stream. 
+Parameter ['log_level] allows to set the __UTF__ [link ref_log_level_explanations log level]. Log level defines 
+the verbosity of the testing log produced by a testing module. The verbosity ranges from a complete log, when all 
+assertions (both successful and failing) are reported and all notifications about test units start and finish 
+are included, to an empty log, when nothing is reported to a testing log stream. 
 
-Log level is set to one of the predefined levels, which are organized into hierarchy, where each level includes
-all the messages on that level as well as all the messages on levels below. Level are identified by string 
+Log level is set to one of the predefined levels which are organized hierarchically, where each level includes
+all the messages on that level as well as all the messages from levels below. Levels are identified by string 
 names, which are listed next.
 
 [h4 Acceptable values]
@@ -304,9 +302,9 @@ BOOST_TEST_LOG_LEVEL
 [/ ###############################################################################################]
 [section:log_sink `log_sink`]
 
-Parameter [`log_sink] allows to set the log sink - location where we report the log to, thus it allows 
-to easily redirect the test logs to file or standard streams. By default testing log is directed to 
-standard output.
+Parameter ['log_sink] allows to set the log sink - location where framework writes the testing log to,
+thus it allows to easily redirect the testing log to file or standard streams. By default testing log 
+is directed to the standard output stream.
 
 [h4 Acceptable values]
 
@@ -338,7 +336,7 @@ BOOST_TEST_LOG_SINK
 [/ ###############################################################################################]
 [section:output_format `output_format`]
 
-Parameter [`output_format] combines an effect of __param_report_format__ and 
+Parameter ['output_format] combines an effect of __param_report_format__ and 
 [link boost_test.utf_reference.rt_param_reference.log_format `log_format`] 
 parameters. This parameter has higher priority than either one of them. In other words if this 
 parameter is specified it overrides the value of other two parameters. This parameter does not have 
@@ -361,7 +359,7 @@ BOOST_TEST_OUTPUT_FORMAT
 [/ ###############################################################################################]
 [section:random `random`]
 
-Parameter [`random] instructs the __UTF__ to execute the test cases in random order. This parameter 
+Parameter ['random] instructs the __UTF__ to execute the test cases in random order. This parameter 
 accepts optional unsigned integer argument. By default test cases are executed in some specific order 
 defined by order of test units in test files and dependency between test units. If parameter is 
 specified without the argument value testing order is randomized based on current time. Alternatively 
@@ -382,7 +380,7 @@ BOOST_TEST_RANDOM
 [/ ###############################################################################################]
 [section:report_format `report_format`]
 
-Parameter [`report_format] allows to set the __UTF__ report format to one of the formats supplied 
+Parameter ['report_format] allows to set the __UTF__ report format to one of the formats supplied 
 by the framework. To specify a custom report format use unit_test_report API. 
 
 The only acceptable values for this parameter are the names of the output formats. By default the 
@@ -405,7 +403,7 @@ BOOST_TEST_REPORT_FORMAT
 [/ ###############################################################################################]
 [section:report_level `report_level`]
 
-Parameter [`report_level] allows to set the verbosity level of the testing results report generated by 
+Parameter ['report_level] allows to set the verbosity level of the testing result report generated by 
 the __UTF__. Use value "no" to eliminate the results report completely. See the 
 [link ref_report_formats report formats] section for description of different report formats.
       
@@ -425,9 +423,9 @@ BOOST_TEST_REPORT_LEVEL
 [/ ###############################################################################################]
 [section:report_sink `report_sink`]
 
-Sets the report sink to the one specified.
-
-This parameter allows to easily redirect the test result report.
+Parameter ['report_sink] allows to set the result report sink - the location where the framework writes 
+the result report to, thus it allows to easily redirect the result report to a file or a standard stream.
+By default the testing result report is directed to the standard error stream.
       
 [h4 Acceptable values]
 
@@ -481,7 +479,7 @@ Regarding the meaning of these values [link ref_command_line_control see here].
 
 [h4 Environment variable]
 
-  BOOST_TESTS_TO_RUN
+BOOST_TESTS_TO_RUN
 
 [endsect] [/run_test]
   

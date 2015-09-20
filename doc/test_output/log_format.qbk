@@ -5,6 +5,7 @@
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
+[section Log formats]
 [section:log_human_readable_format Human readable log format]
 
 The human readable log format is designed to closely match an errors description produced by the Microsoft family
@@ -94,5 +95,7 @@ This log format is designed for automated test results processing. The test log 
 active log level threshold.
 
 [/TODO: Fix this section]
+
+[endsect] 
 
 [endsect] [/section:log_xml_format ]

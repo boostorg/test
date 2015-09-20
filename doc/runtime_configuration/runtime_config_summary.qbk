@@ -87,7 +87,7 @@
 
   [/ ###############################################################################################]
   [
-    [__param_random__]
+    [[link boost_test.utf_reference.rt_param_reference.random `random`]]
     [Runs the tests in random order]
   ]
 
