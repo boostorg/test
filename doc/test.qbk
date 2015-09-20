@@ -122,13 +122,8 @@
 [/ runtime/cla parameters]
 [def __param_show_progress__                    [link boost_test.utf_reference.rt_param_reference.show_progress     `show_progress`]]
 [def __param_run_test__                         [link boost_test.utf_reference.rt_param_reference.run_test          `run_test`]]
-[def __param_report_level__                     [link boost_test.utf_reference.rt_param_reference.report_level      `report_level`]]
-[def __param_report_format__                    [link boost_test.utf_reference.rt_param_reference.report_format     `report_format`]]
 [def __param_result_code__                      [link boost_test.utf_reference.rt_param_reference.result_code       `result_code`]]
-[def __param_break_exec_path__                  [link boost_test.utf_reference.rt_param_reference.break_exec_path   `break_exec_path`]]
-[def __param_use_alt_stack__                    [link boost_test.utf_reference.rt_param_reference.use_alt_stack     `use_alt_stack`]]
 
-[def __param_report_sink__                      [link boost_test.utf_reference.rt_param_reference.report_sink       `report_sink`]]
 [def __param_save_pattern__                     [link boost_test.utf_reference.rt_param_reference.save_pattern      `save_pattern`]]
 [def __default_run_status__                     [link ref_default_run_status ['default run status]]]
 

@@ -76,7 +76,7 @@
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.log_sink `log_sink`]]
-    [Specifies the sink stream for logging.]
+    [Specifies where to write testing log to.]
   ]
 
   [/ ###############################################################################################]
@@ -93,26 +93,26 @@
 
   [/ ###############################################################################################]
   [
-    [__param_report_format__]
+    [[link boost_test.utf_reference.rt_param_reference.report_format `report_format`]]
     [Specifies the report format.]
   ]
 
   [/ ###############################################################################################]
   [
-    [__param_report_level__]
+    [[link boost_test.utf_reference.rt_param_reference.report_level `report_level`]]
     [The level of details carried by the __UTF__ report.]
   ]
 
   [/ ###############################################################################################]
   [
-    [__param_report_mem_leaks__]
-    [Optional file name where the memory leaks should be reported to.]
+    [[link boost_test.utf_reference.rt_param_reference.report_memory_leaks_to `report_memory_leaks_to`]]
+    [Optional file name where memory leaks should be reported to.]
   ]
 
   [/ ###############################################################################################]
   [
-    [__param_report_sink__]
-    [Specifies the sink stream for tests reports.]
+    [[link boost_test.utf_reference.rt_param_reference.report_sink `report_sink`]]
+    [Specifies where to write the testing result report to.]
   ]
 
   [/ ###############################################################################################]
@@ -141,7 +141,7 @@
 
   [/ ###############################################################################################]
   [
-    [__param_use_alt_stack__]
+    [[link boost_test.utf_reference.rt_param_reference.use_alt_stack `use_alt_stack`]]
     [Uses an alternative stack for running tests (on supported platforms).]
   ]
 

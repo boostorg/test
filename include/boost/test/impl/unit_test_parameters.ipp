@@ -412,7 +412,12 @@ register_parameters( rt::parameters_store& store )
     rt::parameter<std::string> report_sink( REPORT_SINK, (
         rt::description = "Specifies report sink: stderr(default), stdout or file name.",
         rt::env_var = "BOOST_TEST_REPORT_SINK",
-        rt::value_hint = "<stderr|stdout|file name>"
+        rt::value_hint = "<stderr|stdout|file name>",
+        rt::help = "Parameter " + REPORT_SINK + " allows to set the result report sink - "
+                   "the location where the framework writes the result report to, thus it "
+                   "allows to easily redirect the result report to a file or a standard "
+                   "stream. By default the testing result report is directed to the "
+                   "standard error stream. "
     ));
 
     report_sink.add_cla_id( "--", REPORT_SINK, "=" );
@@ -423,9 +428,12 @@ register_parameters( rt::parameters_store& store )
 
     rt::parameter<std::string> report_mem_leaks( REPORT_MEM_LEAKS, (
         rt::description = "File where to report memory leaks to.",
-        rt::env_var = "BOOST_TEST_REPORT_MEMORY_LEAK",
+        rt::env_var = "BOOST_TEST_REPORT_MEMORY_LEAKS_TO",
         rt::default_value = std::string(),
-        rt::value_hint = "<file name>"
+        rt::value_hint = "<file name>",
+        rt::help = "Parameter " + REPORT_MEM_LEAKS + " allows to specify a file where to report "
+                   "memory leaks to. The parameter does not have default value. If it is not specified, "
+                   "memory leaks (if any) are reported to the standard error stream."
     ));
 
     report_mem_leaks.add_cla_id( "--", REPORT_MEM_LEAKS, "=" );
@@ -436,7 +444,10 @@ register_parameters( rt::parameters_store& store )
     rt::option result_code( RESULT_CODE, (
         rt::description = "Disables test modules's result code generation.",
         rt::env_var = "BOOST_TEST_RESULT_CODE",
-        rt::default_value = true
+        rt::default_value = true,
+        rt::help = "The 'no' argument value for the parameter " + RESULT_CODE + " instructs the "
+                   "framework to always return zero result code. This can be used for test programs "
+                   "executed within IDE. By default this parameter has value 'yes'"
     ));
 
     result_code.add_cla_id( "--", RESULT_CODE, "=", true );

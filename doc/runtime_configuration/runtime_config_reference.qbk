@@ -336,7 +336,8 @@ BOOST_TEST_LOG_SINK
 [/ ###############################################################################################]
 [section:output_format `output_format`]
 
-Parameter ['output_format] combines an effect of __param_report_format__ and 
+Parameter ['output_format] combines an effect of 
+[link boost_test.utf_reference.rt_param_reference.report_format `report_format`] and 
 [link boost_test.utf_reference.rt_param_reference.log_format `log_format`] 
 parameters. This parameter has higher priority than either one of them. In other words if this 
 parameter is specified it overrides the value of other two parameters. This parameter does not have 
@@ -421,6 +422,23 @@ BOOST_TEST_REPORT_LEVEL
 [endsect] [/report_level]      
 
 [/ ###############################################################################################]
+[section:report_memory_leaks_to `report_memory_leaks_to`]
+
+Parameter ['report_memory_leaks_to] allows to specify a file where to report memory leaks to. The 
+parameter does not have default value. If it is not specified, memory leaks (if any) are reported 
+to the standard error stream.
+      
+[h4 Acceptable values]
+
+* arbitrary file name
+
+[h4 Environment variable]
+
+BOOST_TEST_REPORT_MEMORY_LEAKS_TO
+
+[endsect] [/report_sink]  
+
+[/ ###############################################################################################]
 [section:report_sink `report_sink`]
 
 Parameter ['report_sink] allows to set the result report sink - the location where the framework writes 
@@ -442,8 +460,9 @@ BOOST_TEST_REPORT_SINK
 [/ ###############################################################################################]
 [section:result_code `result_code`]
 
-Value "no" enforces the framework to always return zero result code. This could be used for test programs 
-executed within GUI. See the [link ref_usage_recommendations usage recommendations] section for more details.
+The "no" argument value for the parameter [`result_code] instructs the __UTF__ to always return zero 
+result code. This could be used for test programs executed within IDE. By default this parameter has 
+value "yes". See the [link ref_usage_recommendations usage recommendations] section for more details.
       
 [h4 Acceptable values]
 
@@ -534,8 +553,8 @@ Uses an alternative stack.
 Specifies whether or not the execution monitor should employ an alternative stack for signals 
 processing, on platforms where they are supported.
 
-[warning indicate which platforms are supported]
-[warning add a link to the execution monitor]
+[/ TODO indicate which platforms are supported]
+[/ TODO add a link to the execution monitor]
       
 [h4 Acceptable values]
 
