@@ -120,12 +120,8 @@
 [def __BOOST_TEST_LOG_LEVEL__                   [link boost_test.utf_reference.rt_param_reference.log_level `BOOST_TEST_LOG_LEVEL`]] [/ this is an environment variable]
 
 [/ runtime/cla parameters]
-[def __param_show_progress__                    [link boost_test.utf_reference.rt_param_reference.show_progress     `show_progress`]]
-[def __param_run_test__                         [link boost_test.utf_reference.rt_param_reference.run_test          `run_test`]]
-[def __param_result_code__                      [link boost_test.utf_reference.rt_param_reference.result_code       `result_code`]]
-
-[def __param_save_pattern__                     [link boost_test.utf_reference.rt_param_reference.save_pattern      `save_pattern`]]
 [def __default_run_status__                     [link ref_default_run_status ['default run status]]]
+[def __param_run_test__                         [link boost_test.utf_reference.rt_param_reference.run_test `run_test`]]
 
 [/ decorators]
 [def __decorator_label__                        [link boost_test.utf_reference.test_org_reference.decorator_label `label`]] 

@@ -417,7 +417,7 @@ register_parameters( rt::parameters_store& store )
                    "the location where the framework writes the result report to, thus it "
                    "allows to easily redirect the result report to a file or a standard "
                    "stream. By default the testing result report is directed to the "
-                   "standard error stream. "
+                   "standard error stream."
     ));
 
     report_sink.add_cla_id( "--", REPORT_SINK, "=" );
@@ -447,7 +447,7 @@ register_parameters( rt::parameters_store& store )
         rt::default_value = true,
         rt::help = "The 'no' argument value for the parameter " + RESULT_CODE + " instructs the "
                    "framework to always return zero result code. This can be used for test programs "
-                   "executed within IDE. By default this parameter has value 'yes'"
+                   "executed within IDE. By default this parameter has value 'yes'."
     ));
 
     result_code.add_cla_id( "--", RESULT_CODE, "=", true );
@@ -459,7 +459,14 @@ register_parameters( rt::parameters_store& store )
     rt::parameter<std::string,rt::REPEATABLE_PARAM> tests_to_run( RUN_FILTERS, (
         rt::description = "Filters, which test units to include or exclude from test module execution.",
         rt::env_var = "BOOST_TEST_RUN_FILTERS",
-        rt::value_hint = "<test unit filter>"
+        rt::value_hint = "<test unit filter>",
+        rt::help = "Parameter " + RUN_FILTERS + " allows to filter which test units to execute during "
+                   "testing. The framework supports both 'selection filters', which allow to select "
+                   "which test units to enable from the set of available test units, and 'disabler "
+                   "filters', which allow to disable some test units. The __UTF__ also supports "
+                   "enabling/disabling test units at compile time. These settings identify the default "
+                   "set of test units to run. Parameter " + RUN_FILTERS + " is used to change this default. "
+                   "This parameter is repeatable, so you can specify more than one filter if necessary." 
     ));
 
     tests_to_run.add_cla_id( "--", RUN_FILTERS, "=" );
@@ -469,8 +476,12 @@ register_parameters( rt::parameters_store& store )
     ///////////////////////////////////////////////
 
     rt::option save_test_pattern( SAVE_TEST_PATTERN, (
-        rt::description = "Allows to switch between saving and matching against test pattern file.",
-        rt::env_var = "BOOST_TEST_SAVE_PATTERN"
+        rt::description = "Allows to switch between saving or matching test pattern file.",
+        rt::env_var = "BOOST_TEST_SAVE_PATTERN",
+        rt::help = "Parameter " + SAVE_TEST_PATTERN + " facilitates switching mode of operation for "
+                   "testing output streams.\n\nThis parameter serves no particular purpose within the "
+                   "framework itself. It can be used by test modules relying on output_test_stream to " 
+                   "implement testing logic. Default mode is 'match' (false)." 
     ));
 
     save_test_pattern.add_cla_id( "--", SAVE_TEST_PATTERN, "=" );
@@ -480,7 +491,9 @@ register_parameters( rt::parameters_store& store )
 
     rt::option show_progress( SHOW_PROGRESS, (
         rt::description = "Turns on progress display.",
-        rt::env_var = "BOOST_TEST_SHOW_PROGRESS"
+        rt::env_var = "BOOST_TEST_SHOW_PROGRESS",
+        rt::help = "Parameter " + SHOW_PROGRESS + " instructs the framework to display test progress "
+                   "information. By default the test progress is not shown."
     ));
 
     show_progress.add_cla_id( "--", SHOW_PROGRESS, "=" );
@@ -492,7 +505,10 @@ register_parameters( rt::parameters_store& store )
     rt::option use_alt_stack( USE_ALT_STACK, (
         rt::description = "Turns on/off usage of an alternative stack for signal handling.",
         rt::env_var = "BOOST_TEST_USE_ALT_STACK",
-        rt::default_value = true
+        rt::default_value = true,
+        rt::help = "Parameter " + USE_ALT_STACK + " instructs the framework to use alternative "
+                   "stack for signals processing, on platforms where they are supported. The feature "
+                   "is enabled by default, but can be disabled using this parameter."
     ));
 
     use_alt_stack.add_cla_id( "--", USE_ALT_STACK, "=", true );
@@ -502,7 +518,10 @@ register_parameters( rt::parameters_store& store )
 
     rt::option wait_for_debugger( WAIT_FOR_DEBUGGER, (
         rt::description = "Forces test module to wait for button to be pressed before starting test run.",
-        rt::env_var = "BOOST_TEST_WAIT_FOR_DEBUGGER"
+        rt::env_var = "BOOST_TEST_WAIT_FOR_DEBUGGER",
+        rt::help = "Parameter " + WAIT_FOR_DEUBGGER + " instructs the framework to pause before starting "
+                   "test units execution, so that you can attach a debugger to running test module. By "
+                   "default this parameters turned off."
     ));
 
     wait_for_debugger.add_cla_id( "--", WAIT_FOR_DEBUGGER, "=" );
@@ -514,7 +533,8 @@ register_parameters( rt::parameters_store& store )
     rt::parameter<std::string> help( HELP, (
         rt::description = "Help for framework parameters.",
         rt::optional_value = std::string(),
-        rt::value_hint = "<parameter name>"
+        rt::value_hint = "<parameter name>",
+        rt::help = ""
     ));
     help.add_cla_id( "--", HELP, "=" );
     store.add( help );

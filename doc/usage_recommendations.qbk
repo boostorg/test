@@ -74,7 +74,7 @@ project property page:
 Full command you need in "Command Line" field is:
 
 [pre
-"$(TargetDir)\$(TargetName).exe" --__param_result_code__=no --[link boost_test.utf_reference.rt_param_reference.report_level `report_level`]=no
+"$(TargetDir)\$(TargetName).exe" --[link boost_test.utf_reference.rt_param_reference.result_code `result_code`]=no --[link boost_test.utf_reference.rt_param_reference.report_level `report_level`]=no
 ]
      
 Note that both report level and result code are suppressed. This way the only output you may see from this 

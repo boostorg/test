@@ -51,6 +51,12 @@
 
   [/ ###############################################################################################]
   [
+    [[link boost_test.utf_reference.rt_param_reference.help `help`]]
+    [Provides help on the __UTF__ parameters.]
+  ]
+
+  [/ ###############################################################################################]
+  [
     [[link boost_test.utf_reference.rt_param_reference.list_content `list_content`]]
     [List the tests that will be run.]
   ]
@@ -117,7 +123,7 @@
 
   [/ ###############################################################################################]
   [
-    [__param_result_code__]
+    [[link boost_test.utf_reference.rt_param_reference.result_code `result_code`]]
     [Make the framework return a result code indicating an error in the tests.]
   ]
 
@@ -129,13 +135,13 @@
 
   [/ ###############################################################################################]
   [
-    [__param_save_pattern__]
+    [[link boost_test.utf_reference.rt_param_reference.save_pattern `save_pattern`]]
     [Provides parameters for testing output streams.]
   ]
 
   [/ ###############################################################################################]
   [
-    [__param_show_progress__]
+    [[link boost_test.utf_reference.rt_param_reference.show_progress `show_progress`]]
     [Makes the framework to print progress information. More details [link boost_test.test_output.test_output_progress here].]
   ]
 
@@ -147,7 +153,7 @@
 
   [/ ###############################################################################################]
   [
-    [__param_wait_for_debugger__]
+    [[link boost_test.utf_reference.rt_param_reference.wait_for_debugger `wait_for_debugger`]]
     [Pause test module before testing is started to allow debugger to attach.]
   ]
 ]
