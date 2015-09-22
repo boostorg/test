@@ -8,15 +8,26 @@
 
 [section:rt_param_reference Runtime parameters reference]
 
-Each parameter specification includes: 
+Following sections provide detailed specification for all __UTF__ runtime parmeters. Each parameter specification includes: 
 
-# the full parameter name
-# corresponding environment variable name
-# command line argument name
-# acceptable values and 
-# a long description
+* The full parameter name.
+* Description od parameter semantic and default value.
+* Acceptable argument values. The default value for the parameter is bold in the acceptable values list. 
+* Command line syntax. The format of all command line arguments is: <prefix><name>[<separator><value>]. For example: --param=<value>.
+  [] around separator and value indicate that argument value is optional. For example: -q[ <value>].
+* Corresponding environment variable name.
 
-The default value for the parameter is bold in the acceptable values list. 
+[note All command line argument formats support parameter name guessing. What this means is that is if command like 
+format is like this:
+[pre  --long_parameter_name=<value>]
+you can in fact use any unambiguous prefix of the parameter name to specify the argument. For example: 
+[pre  --long_param=123]
+or
+[pre  --long_p=123.]
+If parameter name prefix you chose is ambiguous the framework lets you know which parameters match specified 
+prefix. For example, try 
+[pre  --log=all]
+]
 
 [h4 Parameter value formats]
 
@@ -56,7 +67,7 @@ specifically the function [funcref boost::debug::set_debugger].
 [h4 Command line syntax]
 
 * --auto_debug[=<boolean value>]
-* --d [<boolean value>]
+* -d [<boolean value>]
 
 [h4 Environment variable]
 
@@ -80,6 +91,11 @@ This information includes:
 
 [link boolean_param_value Boolean] with default value [*no].
 
+[h4 Command line syntax]
+
+* --build_info[=<boolean value>]
+* -i [<boolean value>]
+
 [h4 Environment variable]
 
 BOOST_TEST_BUILD_INFO
@@ -100,6 +116,11 @@ within an IDE or to get a coredump for a stack analysis. See
 
 [note The __UTF__ can be built with flag BOOST_TEST_DEFAULTS_TO_CORE_DUMP in which case default changes to [*yes]]
 
+[h4 Command line syntax]
+
+* --catch_system_errors[=<boolean value>]
+* -i [<boolean value>]
+
 [h4 Environment variable]
 
 BOOST_TEST_CATCH_SYSTEM_ERRORS
@@ -116,6 +137,11 @@ The __UTF__ is able to produce color output on systems which support it. To enab
 
 [link boolean_param_value Boolean] with default value [*no].
 
+[h4 Command line syntax]
+
+* --color_output[=<boolean value>]
+* -x [<boolean value>]
+
 [h4 Environment variable]
 
 BOOST_TEST_COLOR_OUTPUT
@@ -130,6 +156,10 @@ Option ['build_info] enables/disables hardware traps for the floating point exce
 [h4 Acceptable values]
 
 [link boolean_param_value Boolean] with default value [*no].
+
+[h4 Command line syntax]
+
+* --detect_fp_exceptions[=<boolean value>]
 
 [h4 Environment variable]
 
@@ -153,6 +183,10 @@ framework to setup runtime breakpoint at Nth heap allocation. If value is omitte
 * [*1] (default)
 * [link regular_param_value long integer value] > 1
 
+[h4 Command line syntax]
+
+* --detect_memory_leaks[=<alloc order number>]
+
 [h4 Environment variable]
 
 BOOST_TEST_DETECT_MEMORY_LEAK
@@ -171,6 +205,10 @@ parameter is displayed.
 [h4 Acceptable values]
 
 An optional parameter name [link regular_param_value string].
+
+[h4 Command line syntax]
+
+* --help[=<parameter name>]
 
 [endsect] [/help]  
 
@@ -206,6 +244,10 @@ This output includes much more information about the test tree including labels,
 * [*HRF] (default)
 * DOT
 
+[h4 Command line syntax]
+
+* --list_content[=<format>]
+
 [h4 Environment variable]
   
 BOOST_TEST_LIST_CONTENT
@@ -221,6 +263,10 @@ of executing test cases.
 [h4 Acceptable values]
 
 [link boolean_param_value Boolean] with default value [*no].
+
+[h4 Command line syntax]
+
+* --list_labels[=<boolean value>]
 
 [h4 Environment variable]
   
@@ -245,6 +291,11 @@ is easier to process by testing automation tools.
 
 * [*HRF] (default)
 * XML
+
+[h4 Command line syntax]
+
+* --log_format=<format>
+* -f <format>
 
 [h4 Environment variable]
 
@@ -317,6 +368,11 @@ Thus each level includes messages on that level as well as all the messages on l
   ]  
 ]
 
+[h4 Command line syntax]
+
+* --log_level=<level>
+* -l <level>
+
 [h4 Environment variable]
 
 BOOST_TEST_LOG_LEVEL
@@ -353,6 +409,11 @@ Case sensitive [link regular_param_value string]:
   ]
 ]
 
+[h4 Command line syntax]
+
+* --log_sink=<stream or file name>
+* -k <stream or file name>
+
 [h4 Environment variable]
 
 BOOST_TEST_LOG_SINK
@@ -379,6 +440,11 @@ format and XML - XML formats for automation tools processing.
 
 ['HRF] stands for human readable format, while ['XML] is dedicated to  automated output processing
 
+[h4 Command line syntax]
+
+* --output_format=<format>
+* -o <format>
+
 [h4 Environment variable]
 
 BOOST_TEST_OUTPUT_FORMAT
@@ -399,6 +465,10 @@ you can specify any positive value greater than 1 and it will be used as random 
 * [*0] (default)
 * 1
 * [link regular_param_value integer] value > 1
+
+[h4 Command line syntax]
+
+* --random=<seed>
 
 [h4 Environment variable]
 
@@ -425,6 +495,11 @@ XML as report format. This format is easier to process by testing automation too
 * [*HRF] (default)
 * XML
 
+[h4 Command line syntax]
+
+* --report_format=<format>
+* -m <format>
+
 [h4 Environment variable]
 
 BOOST_TEST_REPORT_FORMAT
@@ -447,6 +522,11 @@ the __UTF__. Use value "no" to eliminate the results report completely. See the
 * short
 * detailed
 
+[h4 Command line syntax]
+
+* --report_level=<format>
+* -r <format>
+
 [h4 Environment variable]
 
 BOOST_TEST_REPORT_LEVEL
@@ -463,6 +543,10 @@ to the standard error stream.
 [h4 Acceptable values]
 
 Arbitrary file name [link regular_param_value string].
+
+[h4 Command line syntax]
+
+* --report_memory_leaks_to=<file name>
 
 [h4 Environment variable]
 
@@ -485,6 +569,11 @@ Case sensitive [link regular_param_value string]:
 * `stdout`
 * arbitrary file name
 
+[h4 Command line syntax]
+
+* --report_synk=<stream or file name>
+* -e <stream or file name>
+
 [h4 Environment variable]
 
 BOOST_TEST_REPORT_SINK
@@ -502,6 +591,11 @@ value "yes". See the [link ref_usage_recommendations usage recommendations] sect
 
 [link boolean_param_value Boolean] with default value [*yes].
 
+[h4 Command line syntax]
+
+* --result_code[=<boolean value>]
+* -c [<boolean value>]
+
 [h4 Environment variable]
 
 BOOST_TEST_RESULT_CODE
@@ -511,7 +605,7 @@ BOOST_TEST_RESULT_CODE
 [/ ###############################################################################################]
 [section:run_test `run_test`]
 
-Parameter ['run_test] allows to filter which test units to execute during testing. The __UTF__ supports
+Parameter ['run_test] allows to filter which test units to execute durinltg testing. The __UTF__ supports
 both "selection filters", which allow to select which test units to enable from the set of available 
 test units, and "disabler filters", which allow to disable some test units. The __UTF__ also supports 
 enabling/disabling test units at compile time. These settings identify the default set of test units 
@@ -538,6 +632,11 @@ pattern       ::= '*'? identifier '*'?
 ```
 
 Regarding the meaning of these values [link ref_command_line_control see here].
+
+[h4 Command line syntax]
+
+* --run_test=<test unit filter spec>
+* -t <test unit filter spec>
 
 [h4 Environment variable]
 
@@ -569,6 +668,10 @@ bool is_save_pattern_flag_set = boost::unit_test::runtime_config::save_pattern()
 
 [link boolean_param_value Boolean] with default value [*no].
 
+[h4 Command line syntax]
+
+* --save_pattern[=<boolean value>]
+
 [h4 Environment variable]
 
 BOOST_TEST_SAVE_PATTERN
@@ -584,6 +687,11 @@ parameter test progress is not shown. More details [link boost_test.test_output.
 [h4 Acceptable values]
 
 [link boolean_param_value Boolean] with default value [*no].
+
+[h4 Command line syntax]
+
+* --show_progress[=<boolean value>]
+* -p [<boolean value>]
 
 [h4 Environment variable]
 
@@ -606,6 +714,10 @@ by default, but can be disabled using this parameter.
 
 [link boolean_param_value Boolean] with default value [*yes].
 
+[h4 Command line syntax]
+
+* --use_alt_stack[=<boolean value>]
+
 [h4 Environment variable]
 
 BOOST_TEST_USE_ALT_STACK
@@ -618,7 +730,11 @@ BOOST_TEST_USE_ALT_STACK
 If specified option ['usage] instructs the __UTF__ to displays short usage message about the 
 framework's parameters. 
 
-[note The parameter name does not match command line interface.]
+[h4 Command line syntax]
+
+* -? [<boolean value>]
+
+[note The parameter name is not part of command line format, only short '-?'.]
       
 [h4 Acceptable values]
 
@@ -635,6 +751,11 @@ so that you can attach a debugger to running test module. By default this parame
 [h4 Acceptable values]
 
 [link boolean_param_value Boolean] with default value [*no].
+
+[h4 Command line syntax]
+
+* --wait_for_debugger[=<boolean value>]
+* -w [<boolean value>]
 
 [h4 Environment variable]
 
