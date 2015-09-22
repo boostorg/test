@@ -119,7 +119,7 @@ within an IDE or to get a coredump for a stack analysis. See
 [h4 Command line syntax]
 
 * --catch_system_errors[=<boolean value>]
-* -i [<boolean value>]
+* -s [<boolean value>]
 
 [h4 Environment variable]
 
