@@ -8,10 +8,10 @@
 
 [section:rt_param_reference Runtime parameters reference]
 
-Following sections provide detailed specification for all __UTF__ runtime parmeters. Each parameter specification includes: 
+Following sections provide detailed specification for all __UTF__ runtime parameters. Each parameter specification includes: 
 
 * The full parameter name.
-* Description od parameter semantic and default value.
+* Description of parameter semantic and default value.
 * Acceptable argument values. The default value for the parameter is bold in the acceptable values list. 
 * Command line syntax. The format of all command line arguments is: <prefix><name>[<separator><value>]. For example: --param=<value>.
   [] around separator and value indicate that argument value is optional. For example: -q[ <value>].
@@ -605,7 +605,7 @@ BOOST_TEST_RESULT_CODE
 [/ ###############################################################################################]
 [section:run_test `run_test`]
 
-Parameter ['run_test] allows to filter which test units to execute durinltg testing. The __UTF__ supports
+Parameter ['run_test] allows to filter which test units to execute during testing. The __UTF__ supports
 both "selection filters", which allow to select which test units to enable from the set of available 
 test units, and "disabler filters", which allow to disable some test units. The __UTF__ also supports 
 enabling/disabling test units at compile time. These settings identify the default set of test units 

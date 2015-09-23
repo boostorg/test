@@ -16,37 +16,37 @@
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.auto_dbg `auto_start_dbg`]]
-    [Automatically attaches debugger in case of system failure.]
+    [Instructs the framework to automatically attach debugger in case of system failure.]
   ]
 
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.build_info `build_info`]]
-    [Displays library build information.]
+    [Instructs the framework to display library build information.]
   ]
 
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.catch_system `catch_system_error`]]
-    [Catch system errors.]
+    [Instructs the framework to catch system errors.]
   ]
 
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.color_output `color_output`]]
-    [Produce colour output]
+    [Instructs the framework to produce color output]
   ]
 
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.detect_fp_exceptions `detect_fp_exceptions`]]
-    [Traps floating point exceptions (on supported platforms).]
+    [Instructs the framework to trap floating point exceptions (on supported platforms).]
   ]
 
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.detect_memory_leaks `detect_memory_leaks`]]
-    [Detects memory leaks.]
+    [Instructs the framework to detect memory leaks (on supported platforms).]
   ]
 
   [/ ###############################################################################################]
@@ -58,13 +58,13 @@
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.list_content `list_content`]]
-    [List the tests that will be run.]
+    [Lists the tests that will be run.]
   ]
 
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.list_labels `list_labels`]]
-    [List the labels defined in the test module.]
+    [Lists the labels defined in the test module.]
   ]
 
   [/ ###############################################################################################]
@@ -76,7 +76,7 @@
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.log_level `log_level`]]
-    [Specifies the logging level of the __UTF__]
+    [Specifies the framework's logging level]
   ]
 
   [/ ###############################################################################################]
@@ -94,7 +94,7 @@
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.random `random`]]
-    [Runs the tests in random order]
+    [Instructs the framework to run the tests in random order]
   ]
 
   [/ ###############################################################################################]
@@ -106,13 +106,13 @@
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.report_level `report_level`]]
-    [The level of details carried by the __UTF__ report.]
+    [Specifies the level of details carried by the framework's testing result report.]
   ]
 
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.report_memory_leaks_to `report_memory_leaks_to`]]
-    [Optional file name where memory leaks should be reported to.]
+    [Specifies file name where memory leaks report should be re-directed to.]
   ]
 
   [/ ###############################################################################################]
@@ -124,37 +124,43 @@
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.result_code `result_code`]]
-    [Make the framework return a result code indicating an error in the tests.]
+    [Instructs the framework to return or ignore a result code indicating an error in the tests.]
   ]
 
   [/ ###############################################################################################]
   [
     [__param_run_test__]
-    [Specifies which test units to run.]
+    [Allows to filter which test units to execute at runtime.]
   ]
 
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.save_pattern `save_pattern`]]
-    [Provides parameters for testing output streams.]
+    [Facilitates mode switching for testing output streams.]
   ]
 
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.show_progress `show_progress`]]
-    [Makes the framework to print progress information. More details [link boost_test.test_output.test_output_progress here].]
+    [Instructs the framework to print progress information. More details [link boost_test.test_output.test_output_progress here].]
   ]
 
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.use_alt_stack `use_alt_stack`]]
-    [Uses an alternative stack for running tests (on supported platforms).]
+    [Instructs the framework to use an alternative stack for signal processing (on supported platforms).]
+  ]
+
+  [/ ###############################################################################################]
+  [
+    [[link boost_test.utf_reference.rt_param_reference.usage `usage`]]
+    [Displays short usage message.]
   ]
 
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.wait_for_debugger `wait_for_debugger`]]
-    [Pause test module before testing is started to allow debugger to attach.]
+    [Instructs the framework to pause test module before testing is started to allow debugger to attach.]
   ]
 ]
 
