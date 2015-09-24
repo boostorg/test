@@ -100,7 +100,8 @@ environment variables.
 
 ]
 
-[note `BOOST_TEST_CATCH_SYSTEM_ERRORS` is similar to the __UTF__'s __param_catch_system__ command line parameter.]
+[note `BOOST_TEST_CATCH_SYSTEM_ERRORS` is similar to the __UTF__'s 
+ [link boost_test.utf_reference.rt_param_reference.catch_system `catch_system_error`] command line parameter.]
 
 [endsect] [/ configuration]
 

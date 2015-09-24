@@ -89,15 +89,14 @@ public:
     }
 
     void        set_delimeters( ti_delimeter_type t ) { m_type = t; }
-    template<typename Src>
-    void        set_delimeters( Src d )
+    void        set_delimeters( cstring d )
     {
-        nfp::optionally_assign( m_delimeters, d );
+        m_delimeters = d;
 
         if( !m_delimeters.is_empty() )
             m_type = dt_char;
     }
-
+    void        set_delimeters( nfp::nil ) {}
     bool        operator()( CharT c )
     {
         switch( m_type ) {
@@ -210,7 +209,7 @@ protected:
         if( m.has( keep_empty_tokens ) )
             m_keep_empty_tokens = true;
 
-        nfp::optionally_assign( m_tokens_left, m, max_tokens );
+        nfp::opt_assign( m_tokens_left, m, max_tokens );
     }
 
     template<typename Iter>

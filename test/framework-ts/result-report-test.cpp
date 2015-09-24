@@ -100,7 +100,8 @@ struct guard {
     ~guard()
     {
         results_reporter::set_stream( std::cerr );
-        results_reporter::set_format( runtime_config::report_format() );
+        results_reporter::set_format( runtime_config::get<output_format>(
+            runtime_config::REPORT_FORMAT ) );
     }
 };
 
