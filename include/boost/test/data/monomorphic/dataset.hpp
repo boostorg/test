@@ -143,7 +143,7 @@ for_each_sample( monomorphic::dataset<SampleType> const& ds,
     data::size_t size = (std::min)( ds.size(), number_of_samples );
     BOOST_TEST_DS_ASSERT( !size.is_inf(), "Dataset has infinite size. Please specify the number of samples" );
 
-    typename monomorphic::dataset<SampleType>::iter_ptr it = ds.begin();
+    auto it = ds.begin();
 
     while( size-- > 0 ) {
         monomorphic::traits<SampleType>::invoke_action( **it, act );
@@ -154,7 +154,7 @@ for_each_sample( monomorphic::dataset<SampleType> const& ds,
 //____________________________________________________________________________//
 
 template<typename SampleType, typename Action>
-inline typename BOOST_TEST_ENABLE_IF<!monomorphic::is_dataset<SampleType>::value,void>::type
+inline typename std::enable_if<!monomorphic::is_dataset<SampleType>::value,void>::type
 for_each_sample( SampleType const&  samples,
                  Action const&      act,
                  data::size_t       number_of_samples = BOOST_TEST_DS_INFINITE_SIZE )

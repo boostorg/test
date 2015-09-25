@@ -53,16 +53,11 @@ class singleton : public monomorphic::dataset<typename boost::decay<T>::type> {
 public:
     enum { arity = 1 };
 
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     //! Constructor
     explicit                singleton( T&& value ) : m_value( std::forward<T>( value ) ) {}
 
     //! Move constructor
     singleton( singleton&& s ) : m_value( std::forward<T>( s.m_value ) ) {}
-#else
-    // Constructor
-    explicit                singleton( T const& value ) : m_value( value ) {}
-#endif
 
     // Access methods
     T const&                value() const           { return m_value; }
@@ -76,56 +71,45 @@ private:
     T               m_value;
 };
 
+//____________________________________________________________________________//
+
 // a singleton is a dataset
 template<typename T>
 struct is_dataset<singleton<T> > : mpl::true_ {};
 
+//____________________________________________________________________________//
+
 } // namespace monomorphic
-
-
 
 /// @overload boost::unit_test::data::make()
 template<typename T>
-inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
-                                     !monomorphic::is_dataset<T>::value &&
-                                     !boost::is_array< typename boost::remove_reference<T>::type >::value, 
-                                     monomorphic::singleton<T>
+inline typename std::enable_if<!is_forward_iterable<T>::value && 
+                               !monomorphic::is_dataset<T>::value &&
+                               !boost::is_array<typename boost::remove_reference<T>::type>::value, 
+                               monomorphic::singleton<T>
 >::type
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 make( T&& v )
 {
     return monomorphic::singleton<T>( std::forward<T>( v ) );
 }
-#else
-make( T const& v )
-{
-    return monomorphic::singleton<T>( v );
-}
-#endif
 
+//____________________________________________________________________________//
 
 /// @overload boost::unit_test::data::make
-inline monomorphic::singleton<char*> make( char* str )
+inline monomorphic::singleton<char*>
+make( char* str )
 {
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     return monomorphic::singleton<char*>( std::move(str) );
-#else
-    return monomorphic::singleton<char*>( str );
-#endif
 }
 
+//____________________________________________________________________________//
 
 /// @overload boost::unit_test::data::make
-inline monomorphic::singleton<char const*> make( char const* str )
+inline monomorphic::singleton<char const*>
+make( char const* str )
 {
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     return monomorphic::singleton<char const*>( std::move(str) );
-#else
-    return monomorphic::singleton<char const*>( str );
-#endif
 }
-
-
 
 } // namespace data
 } // namespace unit_test

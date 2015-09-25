@@ -71,7 +71,6 @@ public:
     enum { arity = 1 };
     typedef Generator generator_type;
 
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     // Constructor
     explicit                generated_by( Generator&& G )
     : m_generator( std::forward<Generator>(G) )
@@ -81,12 +80,6 @@ public:
     generated_by( generated_by&& rhs )
     : m_generator( std::forward<Generator>(rhs.m_generator) )
     {}
-#else
-    // Constructor
-    explicit                generated_by( Generator const& G )
-    : m_generator( G )
-    {}
-#endif
 
     //! Size of the underlying dataset
     data::size_t            size() const            { return m_generator.capacity(); }
@@ -99,11 +92,11 @@ private:
     Generator               m_generator;
 };
 
+//____________________________________________________________________________//
 
 //! A generated dataset is a dataset.
 template<typename Generator>
 struct is_dataset<generated_by<Generator> > : mpl::true_ {};
-
 
 } // namespace monomorphic
 } // namespace data
