@@ -15,6 +15,7 @@
 #include <boost/test/data/monomorphic/zip.hpp>
 #include <boost/test/data/monomorphic/array.hpp>
 #include <boost/test/data/monomorphic/grid.hpp>
+#include <boost/test/data/for_each_sample.hpp>
 namespace data=boost::unit_test::data;
 
 #include "datasets-test.hpp"
@@ -72,7 +73,7 @@ BOOST_AUTO_TEST_CASE( test_parameterized_init )
 
     BOOST_TEST(( std::is_same<DS1::generator_type::distr_type,
                                 std::normal_distribution<>>::value ));
-    BOOST_TEST(( std::is_same<DS1::generator_type::data_type,double>::value ));
+    BOOST_TEST(( std::is_same<DS1::generator_type::sample,double>::value ));
     BOOST_TEST(( std::is_same<DS1::generator_type::engine_type,
                                 std::default_random_engine>::value ));
 
@@ -81,7 +82,7 @@ BOOST_AUTO_TEST_CASE( test_parameterized_init )
 
     BOOST_TEST(( std::is_same<DS2::generator_type::distr_type,
                                 std::discrete_distribution<>>::value ));
-    BOOST_TEST(( std::is_same<DS2::generator_type::data_type,int>::value ));
+    BOOST_TEST(( std::is_same<DS2::generator_type::sample,int>::value ));
     BOOST_TEST(( std::is_same<DS2::generator_type::engine_type,
                                 std::default_random_engine>::value ));
 
@@ -90,7 +91,7 @@ BOOST_AUTO_TEST_CASE( test_parameterized_init )
 
     BOOST_TEST(( std::is_same<DS3::generator_type::distr_type,
                                 std::uniform_real_distribution<>>::value ));
-    BOOST_TEST(( std::is_same<DS3::generator_type::data_type,double>::value ));
+    BOOST_TEST(( std::is_same<DS3::generator_type::sample,double>::value ));
     BOOST_TEST(( std::is_same<DS3::generator_type::engine_type,
                                 std::minstd_rand>::value ));
 
@@ -99,7 +100,7 @@ BOOST_AUTO_TEST_CASE( test_parameterized_init )
 
     BOOST_TEST(( std::is_same<DS4::generator_type::distr_type,
                                 std::uniform_real_distribution<>>::value ));
-    BOOST_TEST(( std::is_same<DS4::generator_type::data_type,double>::value ));
+    BOOST_TEST(( std::is_same<DS4::generator_type::sample,double>::value ));
     BOOST_TEST(( std::is_same<DS4::generator_type::engine_type,
                                 std::default_random_engine>::value ));
 
@@ -121,7 +122,7 @@ BOOST_AUTO_TEST_CASE( test_parameterized_init )
 
     BOOST_TEST(( std::is_same<DS6::generator_type::distr_type,
                                 std::normal_distribution<>>::value ));
-    BOOST_TEST(( std::is_same<DS6::generator_type::data_type,double>::value ));
+    BOOST_TEST(( std::is_same<DS6::generator_type::sample,double>::value ));
     BOOST_TEST(( std::is_same<DS6::generator_type::engine_type,
                                 std::minstd_rand>::value ));
 }

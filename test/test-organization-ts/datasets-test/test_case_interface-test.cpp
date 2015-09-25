@@ -93,6 +93,4 @@ BOOST_DATA_TEST_CASE( test_case_interface_06, samples1 * samples2 * samples3, in
     ++index6;
 }
 
-//____________________________________________________________________________//
-
 // EOF
