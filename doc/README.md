@@ -14,14 +14,14 @@ In order to generate the documentation, the following is needed:
 
 Doxygen
 -------
-Part of the documentation needs [http://www.doxygen.org Doxygen]. `doxygen` should be accessible from the ``PATH``.
+Part of the documentation needs [Doxygen](http://www.doxygen.org). `doxygen` should be accessible from the ``PATH``.
 
 Docbook
 -------
 Quickbook needs Docbook (XSL and XML) to be installed. Download and untar the docbook archives:
 
-* Docbook XSL that can be found here: [http://sourceforge.net/projects/docbook/files/docbook-xsl/]
-* Docbook DTD that can be found here: [http://www.docbook.org/schemas/]
+* Docbook XSL that can be found here: http://sourceforge.net/projects/docbook/files/docbook-xsl/
+* Docbook DTD that can be found here: http://www.docbook.org/schemas/
 
 The directories `$docbook_xsl_directory` and `$docbook_dtd_directory`, respectively, will refer to the location
 of the deflated archive.
@@ -35,9 +35,10 @@ Construct bjam
 --------------
 
 Simply by typing in a console at the root of the Boost repository:
-``
+
+```
 > ./bootstrap.[sh|bat]
-``
+```
 
 Build the documentation
 -----------------------
@@ -45,15 +46,15 @@ Build the documentation
 Running the following commands will construct the documentation with `bjam` and
 all the needed dependencies:
 
-``
+````
 > cd $boost_root/libs/test/doc
 > ../../../b2 -sDOCBOOK_XSL_DIR=$docbook_xsl_directory -sDOCBOOK_DTD_DIR=$docbook_dtd_directory
-``
+```
 
 It is possible to run directly
-``
+```
 > ../../../b2
-``
+```
 
 but this results in a download from the Internet of the Docbook XLS and DTD, which is much slower.
 
