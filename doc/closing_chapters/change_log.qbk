@@ -7,6 +7,17 @@
 
 [section Change log]
 
+[h4 Boost.Test v3.1 / boost XXXX]
+
+[h5 New major features]
+* improved command line interface
+* improved API for datasets
+* improved C++11 support for datasets (initializer list)
+
+[h5 Bugfixes and feature requests]
+# [ticket 11625] `BOOST_TEST( ..., per_element() )` erroneously requires collections are comparable
+
+
 [h4 Boost.Test v3 / boost 1.59]
 
 [h5 New major features]
