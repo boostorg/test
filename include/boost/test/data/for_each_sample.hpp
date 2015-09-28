@@ -6,7 +6,7 @@
 //  See http://www.boost.org/libs/test for the library home page.
 //
 /// @file
-/// Defines for_each_sample algorith
+/// Defines for_each_sample algorithm
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_FOR_EACH_SAMPLE_HPP_102211GER
