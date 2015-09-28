@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines parser - public interface for CLA parsing and accessing
+//!@file
+//!@brief CLA parser
 // ***************************************************************************
 
 #ifndef BOOST_TEST_UTILS_RUNTIME_CLA_PARSER_HPP
@@ -373,7 +370,7 @@ private:
                         typo_candidates.push_back( typo_cand.second );
 
                         // 'missing char' typo
-                        if( next_trie = typo_cand.second->get_subtrie( c ) )
+                        if( (next_trie = typo_cand.second->get_subtrie( c )) )
                             typo_candidates.push_back( next_trie );
                     }
 
