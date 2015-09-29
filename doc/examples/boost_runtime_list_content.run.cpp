@@ -40,7 +40,9 @@ BOOST_AUTO_TEST_SUITE_END()
 //// --------------------------------------------------------------------------
 // Test suite 2, disabled by default, s1/test2 is explicitely enabled.
 BOOST_AUTO_TEST_SUITE( s2,
-* utf::disabled() * utf::label( "label1" ) * utf::expected_failures( 3 ))
+* utf::disabled() 
+* utf::label( "label1" ) 
+* utf::expected_failures( 3 ))
 
 BOOST_AUTO_TEST_CASE( test1, // s2/test1
 * utf::description( "defaulted"))
@@ -54,7 +56,8 @@ boost::test_tools::assertion_result do_it( utf::test_unit_id )
 }
 
 BOOST_AUTO_TEST_CASE( test2, // s2/test2
-* utf::enabled() * utf::description( "enabled w. precondition")
+* utf::enabled() 
+* utf::description( "enabled w. precondition")
 * utf::precondition(do_it))
 {
   BOOST_TEST(false);
@@ -76,7 +79,8 @@ BOOST_AUTO_TEST_CASE( test2, // s2/s23/test2
 }
 
 BOOST_AUTO_TEST_CASE( test3, // s2/s23/test3
-* utf::enabled() * utf::depends_on( "s2/test2" ))
+* utf::enabled() 
+* utf::depends_on( "s2/test2" ))
 {
   BOOST_TEST( true );
 }
