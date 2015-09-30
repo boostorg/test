@@ -234,8 +234,8 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
                         ? boost::exit_success
                         : results_collector.results( framework::master_test_suite().p_id ).result_code();
     }
-    BOOST_TEST_I_CATCH0( framework::nothing_to_test ) {
-        result_code = boost::exit_success;
+    BOOST_TEST_I_CATCH( framework::nothing_to_test, ex ) {
+        result_code = ex.m_result_code;
     }
     BOOST_TEST_I_CATCH( framework::internal_error, ex ) {
         results_reporter::get_stream() << "Boost.Test framework internal error: " << ex.what() << std::endl;

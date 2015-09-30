@@ -258,7 +258,11 @@ struct BOOST_TEST_DECL setup_error : public std::runtime_error {
 
 //____________________________________________________________________________//
 
-struct nothing_to_test {}; // not really an error
+struct nothing_to_test {
+    explicit    nothing_to_test( int rc ) : m_result_code( rc ) {}
+
+    int         m_result_code;
+};
 
 //____________________________________________________________________________//
 
