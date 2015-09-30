@@ -90,7 +90,7 @@ struct shorten_lf : public boost::unit_test::output::compiler_log_formatter
 
 //____________________________________________________________________________//
 
-std::string match_file_name( "./test_files/test_tools-test.pattern" );
+std::string match_file_name( "./baseline-outputs/test_tools-test.pattern" );
 std::string save_file_name( "test_tools-test.pattern" );
 
 static tt::output_test_stream&
