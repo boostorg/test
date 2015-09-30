@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2015.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  (C) Copyright Beman Dawes 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
@@ -7,12 +7,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : tests an ability of Unit Test Framework to catch all kinds
-//  of test errors in a user code and properly report it.
+/// @file
+/// @brief tests an ability of Unit Test Framework to catch all kinds of test errors in a user code and properly report it.
 // ***************************************************************************
 
 // Boost.Test

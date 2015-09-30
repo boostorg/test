@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2015.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  (C) Copyright Beman Dawes 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
@@ -6,12 +6,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : tests an ability of Program Execution Monitor to catch
-//  system exceptions. Should fail during run.
+/// @file
+/// @brief tests an ability of Program Execution Monitor to catch system exceptions. Should fail during run.
 // ***************************************************************************
 
 #ifdef __MWERKS__
