@@ -69,7 +69,11 @@ prg_exec_monitor_main( int (*cpp_main)( int argc, char* argv[] ), int argc, char
     int result = 0;
 
     BOOST_TEST_I_TRY {
+#if BOOST_PLAT_WINDOWS_RUNTIME
+        boost::unit_test::const_string p( "no" );
+#else
         boost::unit_test::const_string p( std::getenv( "BOOST_TEST_CATCH_SYSTEM_ERRORS" ) );
+#endif
         ::boost::execution_monitor ex_mon;
 
         ex_mon.p_catch_system_errors.value = p != "no";
@@ -102,7 +106,11 @@ prg_exec_monitor_main( int (*cpp_main)( int argc, char* argv[] ), int argc, char
         //  like the clutter.  Use an environment variable to avoid command
         //  line argument modifications; for use in production programs
         //  that's a no-no in some organizations.
+#if !BOOST_PLAT_WINDOWS_RUNTIME
         ::boost::unit_test::const_string p( std::getenv( "BOOST_PRG_MON_CONFIRM" ) );
+#else
+        ::boost::unit_test::const_string p( "yes" );
+#endif
         if( p != "no" ) {
             std::cerr << std::flush << "no errors detected" << std::endl;
         }
