@@ -727,7 +727,11 @@ TEST_CASE( test_BOOST_TEST_collection_comp )
 namespace boost{ namespace test_tools{ namespace tt_detail{
 template<>
 struct print_log_value<double> {
-    void    operator()( std::ostream& os, double d ) { os << std::setprecision(1) << d; }
+    void    operator()( std::ostream& os, double d )
+	{
+		std::streamsize curr_prec = os.precision();
+		os << std::setprecision(1) << d << std::setprecision( curr_prec );
+	}
 };
 }}}
 
