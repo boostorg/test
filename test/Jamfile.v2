@@ -24,7 +24,7 @@ rule boost.test-self-test ( test-rule : test-suite : test-name : usage-variant ?
 
     return [ $(test-rule) $(source_files) ../build//$(usage-variant) $(extra-libs)
 #             gcov
-             : #args
+             : -- "" 
              : $(pattern_file)
              : # Activating -pedantic finds more gotchas
                # Unfortunately, this warns about the use of "long long" in gcc's own stdlib
