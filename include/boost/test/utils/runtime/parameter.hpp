@@ -141,7 +141,7 @@ public:
     virtual void            produce_default( arguments_store& store ) const = 0;
 
     /// interfaces for help message reporting
-    virtual void            usage( std::ostream& ostr, cstring negation_prefix )
+    virtual void            usage( std::ostream& ostr, cstring negation_prefix_ )
     {
         ostr     << "Parameter: " << p_name << '\n';
         if( !p_description.empty() )
@@ -154,14 +154,14 @@ public:
 
             ostr << "   " << id.m_prefix;
             if( id.m_negatable )
-                cla_name_help( ostr, id.m_tag, negation_prefix );
+                cla_name_help( ostr, id.m_tag, negation_prefix_ );
             else
                 cla_name_help( ostr, id.m_tag, "" );
 
-            bool optional_value = false;
+            bool optional_value_ = false;
 
             if( p_has_optional_value ) {
-                optional_value = true;
+                optional_value_ = true;
                 ostr << '[';
             }
 
@@ -173,7 +173,7 @@ public:
 
             value_help( ostr );
 
-            if( optional_value )
+            if( optional_value_ )
                 ostr << ']';
 
             ostr << '\n';
@@ -182,9 +182,9 @@ public:
             ostr << " Environment variable: " << p_env_var << '\n';
     }
 
-    virtual void            help( std::ostream& ostr, cstring negation_prefix )
+    virtual void            help( std::ostream& ostr, cstring negation_prefix_ )
     {
-        usage( ostr, negation_prefix );
+        usage( ostr, negation_prefix_ );
 
         if( !p_help.empty() )
             ostr << '\n' << p_help << '\n';
@@ -219,7 +219,7 @@ protected:
 
 private:
     /// interface for usage/help customization
-    virtual void            cla_name_help( std::ostream& ostr, cstring cla_tag, cstring negation_prefix ) const
+    virtual void            cla_name_help( std::ostream& ostr, cstring cla_tag, cstring negation_prefix_ ) const
     {
         ostr << cla_tag;
     }
@@ -326,12 +326,12 @@ private:
     {
         m_arg_factory.produce_default( p_name, store );
     }
-    virtual void    cla_name_help( std::ostream& ostr, cstring cla_tag, cstring negation_prefix ) const
+    virtual void    cla_name_help( std::ostream& ostr, cstring cla_tag, cstring negation_prefix_ ) const
     {
-        if( negation_prefix.is_empty() )
+        if( negation_prefix_.is_empty() )
             ostr << cla_tag;
         else
-            ostr << '[' << negation_prefix << ']' << cla_tag;
+            ostr << '[' << negation_prefix_ << ']' << cla_tag;
     }
     virtual void    value_help( std::ostream& ostr ) const
     {

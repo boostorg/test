@@ -110,7 +110,7 @@ BOOST_AUTO_TEST_CASE( manual_test_case_creation_test )
     BOOST_TEST( tc1->p_id != INV_TEST_UNIT_ID );
 
     BOOST_TEST( tc1->p_expected_failures == 0U );
-    BOOST_TEST( tc1->p_timeout == 0 );
+    BOOST_TEST( tc1->p_timeout == 0U );
     BOOST_TEST( tc1->p_name == const_string( "empty_" ) );
     BOOST_TEST( tc1->p_test_func );
     BOOST_TEST( tc1->p_default_status == test_unit::RS_INHERIT );
@@ -146,10 +146,10 @@ BOOST_AUTO_TEST_CASE( manual_test_suite_creation )
     if( pos != const_string::npos )
         fn.trim_left( pos+1 );
     BOOST_TEST( fn == const_string( "test-tree-management-test.cpp" ) );
-    BOOST_TEST( ts1->p_line_num == 138U );
+    BOOST_TEST( ts1->p_line_num == 135U );
 
     BOOST_TEST( ts1->p_expected_failures == 0U );
-    BOOST_TEST( ts1->p_timeout == 0 );
+    BOOST_TEST( ts1->p_timeout == 0U );
     BOOST_TEST( ts1->p_name == const_string( "TestSuite" ) );
     BOOST_TEST( ts1->p_default_status == test_unit::RS_INHERIT );
     BOOST_TEST( ts1->p_run_status == test_unit::RS_INVALID );
@@ -174,7 +174,7 @@ BOOST_AUTO_TEST_CASE( manual_test_unit_registration )
     BOOST_TEST( ts1->size() == 1U );
 
     BOOST_TEST( tc1->p_expected_failures == 1U );
-    BOOST_TEST( tc1->p_timeout == 10 );
+    BOOST_TEST( tc1->p_timeout == 10U );
     BOOST_TEST( ts1->p_expected_failures == 1U );
 
     test_case* tc2 = make_test_case( &empty_, "empty2", "file_name", line_num );
@@ -183,7 +183,7 @@ BOOST_AUTO_TEST_CASE( manual_test_unit_registration )
     BOOST_TEST( ts1->size() == 2U );
 
     BOOST_TEST( tc2->p_expected_failures == 2U );
-    BOOST_TEST( tc2->p_timeout == 0 );
+    BOOST_TEST( tc2->p_timeout == 0U );
     BOOST_TEST( ts1->p_expected_failures == 3U );
 
     test_suite* ts2 = BOOST_TEST_SUITE( "TestSuite2" );
