@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2015.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  (C) Copyright Beman Dawes 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
@@ -7,12 +7,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : tests an ability of Unit Test Framework to catch all kinds
-//  of test errors in a user code and properly report it.
+/// @file
+/// @brief tests an ability of Unit Test Framework to catch all kinds of test errors in a user code and properly report it.
 // ***************************************************************************
 
 // Boost.Test
@@ -149,10 +145,10 @@ void error_on_demand()
 
 BOOST_AUTO_TEST_CASE( test_errors_handling )
 {
-#define PATTERN_FILE_NAME "errors_handling_test.pattern"
+#define PATTERN_FILE_NAME "errors-handling-test.pattern"
     std::string pattern_file_name(
         framework::master_test_suite().argc <= 1
-            ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./test_files/" PATTERN_FILE_NAME)
+            ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./baseline-outputs/" PATTERN_FILE_NAME)
             : framework::master_test_suite().argv[1] );
 
 #ifdef LIMITED_TEST
@@ -185,10 +181,11 @@ BOOST_AUTO_TEST_CASE( test_errors_handling )
             framework::run( test );
 
             unit_test_log.set_stream( std::cout );
-            unit_test_log.set_format( runtime_config::log_format() );
-            unit_test_log.set_threshold_level( runtime_config::log_level() != invalid_log_level
-                                                ? runtime_config::log_level()
-                                                : log_all_errors );
+            unit_test_log.set_format( runtime_config::get<output_format>( runtime_config::LOG_FORMAT ) );
+
+            log_level ll = runtime_config::get<log_level>( runtime_config::LOG_LEVEL );
+            unit_test_log.set_threshold_level( ll != invalid_log_level? ll : log_all_errors );
+
             BOOST_CHECK( test_output.match_pattern() );
         }
     }

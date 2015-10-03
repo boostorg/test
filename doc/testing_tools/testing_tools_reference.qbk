@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003 Boost.Test team 
+ / Copyright (c) 2003 Boost.Test contributors
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,24 +17,24 @@
 ``
   BOOST_TEST(statement);
   BOOST_TEST_<level>(statement);
-  
+
   // replacement failure message, requires variadic macros
   BOOST_TEST(statement, "failure message");
-  
+
   // Floating point comparison, requires variadic macros, auto and decltype
   BOOST_TEST(statement, floating_point_comparison_manipulation);
-  
+
   // bitwise comparison, requires variadic macros, auto and decltype
   BOOST_TEST(statement, boost::test_tools::bitwise() );
 
   // element-wise comparison, for containers
   BOOST_TEST(statement, boost::test_tools::per_element() );
-  
+
   // lexicographic comparison, for containers
   BOOST_TEST(statement, boost::test_tools::lexicographic() );
 ``
 
-The full documentation of this macro is located [link boost_test.testing_tools.boost_test_universal_macro here]. 
+The full documentation of this macro is located [link boost_test.testing_tools.boost_test_universal_macro here].
 
 The macro is available in three variants, corresponding to different [link boost_test.testing_tools.tools_assertion_severity_level assertion severity levels]:
 
@@ -45,18 +45,18 @@ The macro is available in three variants, corresponding to different [link boost
 ``
 
 
-* `"failure message"` is a C-string printed in case of failure in place of the default message. 
-  See [link boost_test.testing_tools.reports this section] for 
+* `"failure message"` is a C-string printed in case of failure in place of the default message.
+  See [link boost_test.testing_tools.reports this section] for
   more details.
-* `floating_point_comparison_manipulation` is one of the floating point comparison manipulators. 
+* `floating_point_comparison_manipulation` is one of the floating point comparison manipulators.
   See [link boost_test.testing_tools.boost_test_universal_macro this section]
    for more details.
-* [classref boost::test_tools::bitwise] is a manipulator indicating that the comparison should be performed bitwise. See 
+* [classref boost::test_tools::bitwise] is a manipulator indicating that the comparison should be performed bitwise. See
   [link boost_test.testing_tools.extended_comparison.bitwise this section] for more details
 * [classref boost::test_tools::per_element] is a manipulator indicating that the comparison should be performed on each element, in sequence, rather
-  than on containers. See 
+  than on containers. See
   [link boost_test_coll_perelement this section] for more details
-* [classref boost::test_tools::lexicographic] is a manipulator indicating that the comparison should be performed with the lexicographic order. See 
+* [classref boost::test_tools::lexicographic] is a manipulator indicating that the comparison should be performed with the lexicographic order. See
   [link boost_test_coll_default_lex this section] for more details
 
 [h3 Limitations and workaround]
@@ -76,7 +76,7 @@ There are some restrictions on the statements that are supported by this tool. T
 expected_failures(counter_t number);
 ``
 
-Indicates the expected failures for a test unit. 
+Indicates the expected failures for a test unit.
 See [link boost_test.testing_tools.expected_failures here] for more details.
 
 [endsect] [/ section expected_failures]
@@ -103,20 +103,20 @@ template <typename FPT>
   tolerance(FPT eps);
 
 template <typename FPT>
-  tolerance(test_tools::fpc::percent_tolerance_t<FPT> eps)  
+  tolerance(test_tools::fpc::percent_tolerance_t<FPT> eps)
 ``
 
-Decorator `tolerance` specifies the default comparison tolerance for floating point type `FTP` in the decorated test 
-unit. The default tolerance only applies to a particular type, so it makes sense to provide more than one `tolerance` 
-decorator if we are comparing different floating point types. For more details see __floating_points_testing_impl__. 
+Decorator `tolerance` specifies the default comparison tolerance for floating point type `FTP` in the decorated test
+unit. The default tolerance only applies to a particular type, so it makes sense to provide more than one `tolerance`
+decorator if we are comparing different floating point types. For more details see __floating_points_testing_impl__.
 The variant with `percent_tolerance` uses value `eps / 100` as tolerance.
 
 [bt_example decorator_13..decorator tolerance..run-fail]
 
-In the above example,  in `test1`, checks on `double`s fail because they differ by more what tolerance for `double`s 
-specifies. In `test2` the tolerance for `double`s is greater and therefore the checks succeed. In `test3`, we specify 
-only tolerance for type `float`, and since the checks use type `double` the specified tolerance does not apply. Tolerance 
-in `test4` is equivalent to that in `test1`, therefore its checks also fail. Tolerance in `test5` is equivalent to 
+In the above example,  in `test1`, checks on `double`s fail because they differ by more what tolerance for `double`s
+specifies. In `test2` the tolerance for `double`s is greater and therefore the checks succeed. In `test3`, we specify
+only tolerance for type `float`, and since the checks use type `double` the specified tolerance does not apply. Tolerance
+in `test4` is equivalent to that in `test1`, therefore its checks also fail. Tolerance in `test5` is equivalent to
 that in `test2`, therefore its checks also succeed.
 [endsect] [/ section decorator_tolerance]
 
@@ -209,7 +209,7 @@ See also:
 ``
 
 These tools are used to perform an element by element comparison of two collections. They print all mismatched
-positions, collection elements at these positions and check that the collections have the same size. The first two 
+positions, collection elements at these positions and check that the collections have the same size. The first two
 parameters designate begin and end of the first collection. The two last parameters designate begin and end of the
 second collection.
 
@@ -231,7 +231,7 @@ See also:
 ``
 
 These tools are used to check on closeness using strong relationship defined by the predicate
-``check_is_close( left, right, tolerance )`` 
+``check_is_close( left, right, tolerance )``
 
 To check for the weak relationship use
 __BOOST_LEVEL_PREDICATE__ family of tools with explicit `check_is_close` invocation.
@@ -270,7 +270,7 @@ See also:
 ``
 
 These tools are used to check on closeness using strong relationship defined by the predicate
-``check_is_close(left, right, tolerance)`` 
+``check_is_close(left, right, tolerance)``
 
 To check for the weak relationship use __BOOST_LEVEL_PREDICATE__ family of tools with explicit `check_is_close` invocation.
 
@@ -291,30 +291,6 @@ See also:
 * __BOOST_LEVEL_SMALL__
 * __BOOST_LEVEL_EQUAL__
 * __floating_points_testing_tools__
-
-[endsect]
-
-[/ ###############################################################################################]
-[section:assertion_boost_level_exception `BOOST_<level>_EXCEPTION`]
-
-``
-  BOOST_WARN_EXCEPTION(expression, exception, predicate);
-  BOOST_CHECK_EXCEPTION(expression, exception, predicate);
-  BOOST_REQUIRE_EXCEPTION(expression, exception, predicate);
-``
-
-These tools are used to perform an exception detection and validation check. Tools execute the supplied expression
-and validate that it throws an exception of supplied class (or the one derived from it) that complies with the 
-supplied predicate. If the expression throws any other unrelated exception, doesn't throw at all or 
-predicate evaluates to false, check fails. In comparison with __BOOST_LEVEL_THROW__ tools these
-allow performing more fine-grained checks. For example: make sure that an expected exception has specific 
-error message.
-
-[bt_example example37..BOOST_<level>_EXCEPTION usage..run-fail]
-
-See also:
-
-* __BOOST_LEVEL_THROW__
 
 [endsect]
 
@@ -421,7 +397,7 @@ These tools perform exactly the same check as __BOOST_LEVEL__ tools. The only di
 instead of generating an error/confirm message these use the supplied one.
 
 The first parameter is the boolean expression. The second parameter is the message reported in case of check
-failure. The message argument can be constructed of components of any type supporting the 
+failure. The message argument can be constructed of components of any type supporting the
 `std::ostream& operator<<(std::ostream&)`.
 
 [bt_example example38..BOOST_<level>_MESSAGE usage..run]
@@ -455,34 +431,6 @@ See also:
 [endsect]
 
 [/ ###############################################################################################]
-[section:assertion_boost_level_no_throw `BOOST_<level>_NO_THROW`]
-
-
-``
-  BOOST_WARN_NO_THROW(expression);
-  BOOST_CHECK_NO_THROW(expression);
-  BOOST_REQUIRE_NO_THROW(expression);
-``
-
-These tools are used to perform a "no throw" check. Tools execute the supplied expression and validate that it does
-not throw any exceptions. Error would be reported by the framework even if the statement appear directly in test
-case body and throw any exception. But these tools allow proceeding further with test case in case of failure.
-
-If check is successful, tools may produce a confirmation message, in other case they produce an error message in
-a form ``error in <test-case-name>;exception was thrown by <expression>``
-
-The only parameter is an expression to execute. You can use `do {} while(0)` block if you want to execute more than one
-statement.
-
-[bt_example example39..BOOST_<level>_NO_THROW usage..run-fail]
-
-See also:
-
-* __BOOST_LEVEL_THROW__
-
-[endsect]
-
-[/ ###############################################################################################]
 [section:assertion_boost_level_predicate `BOOST_<level>_PREDICATE`]
 
 
@@ -511,6 +459,102 @@ See also:
 [endsect]
 
 [/ ###############################################################################################]
+[section:assertion_boost_level_no_throw `BOOST_<level>_NO_THROW`]
+
+``
+  BOOST_WARN_NO_THROW(expression);
+  BOOST_CHECK_NO_THROW(expression);
+  BOOST_REQUIRE_NO_THROW(expression);
+``
+
+These assertions validate that the execution of `expression` does not throw any exception.
+To that extent, all possible exception are caught by assertion itself and no exception is propagated to
+the test body.
+
+[tip
+It is possible to test for complex expressions with the use of constructs such as `do { /* ... */} while(0)` block.
+]
+
+[bt_example exception_nothrow..BOOST_<level>_NO_THROW usage..run-fail]
+
+See also:
+
+* __BOOST_LEVEL_THROW__
+* [link boost_test.testing_tools.exception_correctness Exception correctness] section
+
+[endsect]
+
+[/ ###############################################################################################]
+[section:assertion_boost_level_throw `BOOST_<level>_THROW`]
+
+``
+  BOOST_WARN_THROW(expression, exception_type);
+  BOOST_CHECK_THROW(expression, exception_type);
+  BOOST_REQUIRE_THROW(expression, exception_type);
+``
+
+These assertions validate that the execution of `expression` raises an /expected/ exception, which means an exception of
+the supplied `exception_type` type or of any child type.
+
+* If `expression` raises an unexpected exception, this exception is not caught by `BOOST_<level>_THROW` assertion and
+  might propagate to the test body. If not caught at all, the framework will catch it and terminate the test case
+  with the status /failed/.
+* If `expression` does not raise any exception, the the assertion fails.
+
+[warning the assertion catches only the expected exceptions.]
+
+[tip
+It is possible to test for complex expressions with the use of constructs such as `do { /* ... */} while(0)` block.
+]
+
+[bt_example exception_check..BOOST_<level>_THROW usage..run-fail]
+
+See also:
+
+* __BOOST_LEVEL_NO_THROW__
+* [link boost_test.testing_tools.exception_correctness Exception correctness] section
+
+
+[endsect]
+
+[/ ###############################################################################################]
+[section:assertion_boost_level_exception `BOOST_<level>_EXCEPTION`]
+
+``
+  BOOST_WARN_EXCEPTION(expression, exception_type, predicate);
+  BOOST_CHECK_EXCEPTION(expression, exception_type, predicate);
+  BOOST_REQUIRE_EXCEPTION(expression, exception_type, predicate);
+``
+
+As for __BOOST_LEVEL_THROW__, these assertions validate that `expression` raises an exception of the
+type specified by `exception_type` or any of its child type, with additional checks on the exception instance.
+
+* If an expected exception is raised by `expression`, the instance of the exception is passed to `predicate`
+  for further validation.
+* It behaves like __BOOST_LEVEL_THROW__ if `expression` does not raise any exception, or an unrelated exception is raised.
+
+`predicate` should be a unary function accepting the an instance of `exception_type` or any of its child, and that should return
+a boolean indicating the success (`true`) or failure (`false`).
+
+[warning the assertion catches only the expected exceptions.]
+
+[tip
+It is possible to test for complex expressions with the use of constructs such as `do { /* ... */} while(0)` block.
+]
+
+
+The example below checks that the exception carries the proper error code.
+
+[bt_example exception_check_predicate..BOOST_<level>_EXCEPTION usage..run-fail]
+
+See also:
+
+* __BOOST_LEVEL_THROW__
+* [link boost_test.testing_tools.exception_correctness Exception correctness] section
+
+[endsect]
+
+[/ ###############################################################################################]
 [section:assertion_boost_level_small `BOOST_<level>_SMALL`]
 
 ``
@@ -520,7 +564,7 @@ See also:
 ``
 
 These tools are used to check that supplied value is small enough. The "smallness" is defined by absolute value
-of the tolerance supplied as a second argument. Use these tools with caution. To compare to values on closeness 
+of the tolerance supplied as a second argument. Use these tools with caution. To compare to values on closeness
 it's preferable to use __BOOST_LEVEL_CLOSE__ tools instead.
 
 The first parameter is the value to check. The second parameter is the tolerance.
@@ -537,41 +581,11 @@ See also:
 
 [endsect]
 
-[/ ###############################################################################################]
-[section:assertion_boost_level_throw `BOOST_<level>_THROW`]
-
-
-``
-  BOOST_WARN_THROW(expression, exception);
-  BOOST_CHECK_THROW(expression, exception);
-  BOOST_REQUIRE_THROW(expression, exception);
-``
-
-These tools are used to perform an exception detection check. Tools execute the supplied expression and validate
-that it throws an exception of supplied class (or the one derived from it) or it's child. If the statement 
-throws any other unrelated exception or doesn't throw at all, check fails.
-
-If check is successful, the tool produces a confirmation message, in other case it produces an error message in a
-form 
-``
-error in <test-case-name>: exception <exception> expected
-``
-
-The first parameter is the expression to execute. Use `do{} while(0)` block if you want to execute more than one
-statement. The second parameter is an expected exception.
-
-[bt_example example45..BOOST_<level>_THROW usage..run-fail]
-
-See also:
- 
-* __BOOST_LEVEL_NO_THROW__
-
-[endsect]
 
 
 [/ ###############################################################################################]
 [section:test_org_boost_test_case_expected_failure `BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES`]
-Indicates the number of failures for a test case. 
+Indicates the number of failures for a test case.
 
 See [link boost_test.testing_tools.expected_failures here] for more details.
 [endsect] [/ expected failures]
@@ -584,7 +598,7 @@ See [link boost_test.testing_tools.expected_failures here] for more details.
 ``
 
 __BOOST_ERROR__ tool behave the same way as `__BOOST_TEST__(false, message)`. This tool is used for
-an unconditional error counter increasing and message logging. 
+an unconditional error counter increasing and message logging.
 
 The tool's only parameter is an error message to log.
 
@@ -605,7 +619,7 @@ See also:
 ``
 
 `__BOOST_FAIL__(message)` behave the same way as `__BOOST_TEST_REQUIRE__(false, message)`. This tool is used for an
-unconditional error counter increasing, message logging and the current test case aborting. 
+unconditional error counter increasing, message logging and the current test case aborting.
 
 The tool's only parameter is an error message to log.
 
@@ -614,7 +628,7 @@ The tool's only parameter is an error message to log.
 See also:
 
 * __BOOST_TEST__
-* 
+*
 
 [endsect]
 

@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003 Boost.Test team 
+ / Copyright (c) 2003 Boost.Test contributors 
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -129,24 +129,18 @@ macros for this purpose:
 * __BOOST_TEST_CHECKPOINT__ to specify a ['named] checkpoint and 
 * __BOOST_TEST_PASSPOINT__ to specify an ['unnamed] checkpoint.
 
-
-
 [endsect] [/ test log output]
-
-
 
 [/ -------------------------------------------------------------------------------------------------- ]
 [section:log_runtime_config Verbosity of the logs]
 
-The active log level threshold can be configured at runtime using the parameter __param_log_level__. 
-The test log output format can be selected using either parameter __param_log_format__ or the
-parameter __param_output_format__.
+The active log level threshold can be configured at runtime using the parameter 
+[link boost_test.utf_reference.rt_param_reference.log_level `log_level`]. 
+The test log output format can be selected using either parameter 
+[link boost_test.utf_reference.rt_param_reference.log_format `log_format`] or the parameter 
+[link boost_test.utf_reference.rt_param_reference.output_format `output_format`].
 
 [endsect] [/section:log_runtime_config]
-
-
-
-
 
 [/ -------------------------------------------------------------------------------------------------- ]
 [section:testing_tool_output_disable Disabling automatic printing for specific types]
@@ -169,10 +163,6 @@ includes statement failing to compile:
 
 [endsect] [/section:testing_tool_output_disable]
 
-
-
-
-
 [/ -------------------------------------------------------------------------------------------------- ]
 [section:test_output_macro_message Custom messages]
 The macro __BOOST_TEST_MESSAGE__ is intended to be used for the purpose of injecting an additional message into the
@@ -193,22 +183,16 @@ manner similar to standard `std::iostream` operation.
 
 [endsect] [/section:test_output_macro_message]
 
-
 [/ -------------------------------------------------------------------------------------------------- ]
 
 [include checkpoints.qbk]
 [include contexts.qbk]
 [include logging_floating_point.qbk]
 [include log_format.qbk]
+[include report_format.qbk]
 [include compilation_options.qbk]
-
-
-[#ref_tests_report][section Test reports]
-[warning Section empty]
-[endsect]
 
 [include progress_display.qbk]
 [include testout_summary.qbk]
 
 [endsect]  [/test_output]
-

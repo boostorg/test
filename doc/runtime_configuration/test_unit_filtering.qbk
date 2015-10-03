@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2015 Andrzej Krzemienski
+ / Copyright (c) 2003 Boost.Test contributors 
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -20,7 +20,11 @@ Each test unit (either test case or test suite) has an associated ['default run 
 
 Initially, the master test suite has default run status set to ['true]. All other test units have default run status set to ['inherit]. This implies that, unless any additional configuration is applied, all tests are designated to be run.
 
-You can set a different default run status in any test unit by using [link boost_test.tests_organization.decorators decorators]: __decorator_disabled__, __decorator_enabled__ and __decorator_enable_if__. The default run status is set once, upon testing program initialization, and cannot be changed. The disabled tests are not executed by default, but are still present in the test tree, and are listed along with other tests when you use command-line argument __param_list_content__. 
+You can set a different default run status in any test unit by using [link boost_test.tests_organization.decorators decorators]: 
+__decorator_disabled__, __decorator_enabled__ and __decorator_enable_if__. The default run status is set once, upon testing program 
+initialization, and cannot be changed. The disabled tests are not executed by default, but are still present in the test tree, 
+and are listed along with other tests when you use command-line argument 
+[link boost_test.utf_reference.rt_param_reference.list_content `list_content`]. 
 
 [bt_example decorator_20..default run status..run-fail]
 
@@ -33,7 +37,8 @@ Additionally, it is possible to statically associate a test unit with a conditio
 
 [#ref_command_line_control][h3 Command-line control]
 
-Static configuration of the test-case filtering is used by default, unless command-line filtering is applied. With command-line argument __param_run_test__ it is possible to alter the static pre-set in a number of ways:
+Static configuration of the test-case filtering is used by default, unless command-line filtering is applied. With command-line argument 
+__param_run_test__ it is possible to alter the static pre-set in a number of ways:
 
 # Ignore the static configuration and manually specify test cases to be run.
 # Augment the statically defined set by enabling the disabled test cases.
@@ -41,7 +46,12 @@ Static configuration of the test-case filtering is used by default, unless comma
 
 [#ref_command_line_control_absolute][h4 Absolute specification]
 
-Term 'absolute' in this context means that the default run status of the test units, which has been statically set up, is completely ignored and the tests to be run are specified manually from scratch. First, in order to learn what test units are registered in the test tree the user needs to use command-line argument __param_list_content__. Next, in order to specify a set of test cases, the user needs to use command-line argument __param_run_test__ with absolute value:
+Term 'absolute' in this context means that the default run status of the test units, which has been statically set up, 
+is completely ignored and the tests to be run are specified manually from scratch. First, in order to learn what test 
+units are registered in the test tree the user needs to use command-line argument 
+[link boost_test.utf_reference.rt_param_reference.list_content `list_content`].
+Next, in order to specify a set of test cases, the user needs to use command-line argument 
+__param_run_test__ with absolute value:
 
 ```
 > test_program --__param_run_test__=<test_set>

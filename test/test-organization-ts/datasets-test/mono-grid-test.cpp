@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2015.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -16,6 +16,7 @@
 #include <boost/test/data/monomorphic/array.hpp>
 #include <boost/test/data/monomorphic/collection.hpp>
 #include <boost/test/data/monomorphic/generators/xrange.hpp>
+#include <boost/test/data/for_each_sample.hpp>
 
 namespace data = boost::unit_test::data;
 

@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003 Boost.Test team 
+ / Copyright (c) 2003 Boost.Test contributors 
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -11,7 +11,7 @@ It may appear that floating-point numbers are displayed by the __UTF__ with an e
 However the number of digits shown is chosen to avoid apparently nonsensical displays like `[1.00000 != 1.00000]`
 when comparing exactly unity against a value which is increased by just one least significant binary digit using
 the default precision for float of just 6 decimal digits, given by
-`std::numeric_limits<float>::digits10`. The function used for the number of decimal
+ `std::numeric_limits<float>::digits10`. The function used for the number of decimal
 digits displayed is that proposed for a future C++ Standard,
 [@http://www2.open-std.org/JTC1/SC22/WG21/docs/papers/2005/n1822.pdf A Proposal to add a max
 significant decimal digits value], to be called `std::numeric_limits::max_digits10();`.

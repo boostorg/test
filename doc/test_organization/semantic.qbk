@@ -1,6 +1,5 @@
 [/
- / Copyright (c) 2015 Andrzej Krzemienski 
- / Copyright (c) 2015 Raffi Enficiaud
+ / Copyright (c) 2003 Boost.Test contributors 
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,9 +15,10 @@ on the test unit /name/, or instead of looking at the code.
 The __UTF__ provides the decorator __decorator_description__ for that purpose.
 
 Decorator `description` attaches an arbitrary string to the test unit. All strings attached to test units can be
-displayed when running a test program with parameter __param_list_content__. This can be used for conveying information
-from the person who composes the test tree to the person who will be running the test program. Applying more than one
-decorator `description` to the same test unit means that the two (or more) strings will be concatenated.
+displayed when running a test program with parameter [link boost_test.utf_reference.rt_param_reference.list_content `list_content`].
+This can be used for conveying information from the person who composes the test tree to the person who will be 
+running the test program. Applying more than one decorator `description` to the same test unit means that the two 
+(or more) strings will be concatenated.
 
 
 [bt_example decorator_09..decorator description..run]

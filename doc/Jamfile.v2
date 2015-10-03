@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2003-2015 Boost.Test team 
+# Copyright (c) 2003 Boost.Test contributors
 #
 # Distributed under the Boost Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -33,54 +33,55 @@ doxygen doxygen_reference_generated_doc
       $(BOOST_ROOT)/libs/test/include/boost/test/unit_test_log_formatter.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/results_reporter.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/results_collector.hpp
-      
+
       # progress monitor
       $(BOOST_ROOT)/libs/test/include/boost/test/progress_monitor.hpp
-      
+
       # test cases and suites
       $(BOOST_ROOT)/libs/test/include/boost/test/tree/test_unit.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/parameterized_test.hpp
-      
+
       # execution monitor source files
       $(BOOST_ROOT)/libs/test/include/boost/test/execution_monitor.hpp
-      
+
       # output test stream
       $(BOOST_ROOT)/libs/test/include/boost/test/tools/output_test_stream.hpp
-      
+
       # datasets
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/fwd.hpp
-      $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/dataset.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/test_case.hpp
+      $(BOOST_ROOT)/libs/test/include/boost/test/data/for_each_sample.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/size.hpp
+      $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/initializer_list.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/array.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/collection.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generate.hpp
-      
-     
+
+
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/grid.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/join.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/singleton.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/zip.hpp
-      
+
       # datasets generators
       $(BOOST_ROOT)/libs/test/include/boost/test/data/config.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators/keywords.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators/random.hpp
-      $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators/xrange.hpp      
-      
+      $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/generators/xrange.hpp
+
       # utils
       $(BOOST_ROOT)/libs/test/include/boost/test/utils/algorithm.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/utils/named_params.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/tools/floating_point_comparison.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/utils/is_forward_iterable.hpp
-      
+
       # BOOST_TEST related functions
       $(BOOST_ROOT)/libs/test/include/boost/test/tools/detail/bitwise_manip.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/tools/detail/lexicographic_manip.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/tools/detail/per_element_manip.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/tools/detail/tolerance_manip.hpp
-      
+
       # others
       $(BOOST_ROOT)/libs/test/include/boost/test/unit_test_parameters.hpp
     :
@@ -140,5 +141,3 @@ boostbook standalone
   ;
 
 explicit test ;
-
-

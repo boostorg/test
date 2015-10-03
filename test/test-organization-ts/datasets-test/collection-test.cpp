@@ -1,21 +1,19 @@
-//  (C) Copyright Gennadiy Rozental 2011-2015.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : tests stl collection based dataset
+/// @file
+/// @brief tests stl collection based dataset
 // ***************************************************************************
 
 // Boost.Test
 
 #include <boost/test/data/monomorphic/singleton.hpp>
 #include <boost/test/data/monomorphic/collection.hpp>
+#include <boost/test/data/for_each_sample.hpp>
 
 #include <boost/test/unit_test.hpp>
 namespace utf=boost::unit_test;

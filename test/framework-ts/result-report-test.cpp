@@ -1,16 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2001-2015.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : tests Unit Test Framework reporting facilities against
-//  pattern file
+/// @file
+/// @brief tests Unit Test Framework reporting facilities against pattern file
 // ***************************************************************************
 
 // Boost.Test
@@ -24,9 +20,6 @@
 #include <boost/test/unit_test_parameters.hpp>
 #include <boost/test/utils/nullstream.hpp>
 typedef boost::onullstream onullstream_type;
-
-// BOOST
-#include <boost/lexical_cast.hpp>
 
 // STL
 #include <iostream>
@@ -100,7 +93,8 @@ struct guard {
     ~guard()
     {
         results_reporter::set_stream( std::cerr );
-        results_reporter::set_format( runtime_config::report_format() );
+        results_reporter::set_format( runtime_config::get<output_format>(
+            runtime_config::REPORT_FORMAT ) );
     }
 };
 

@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2014.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -38,10 +38,6 @@
 #include <vector>
 
 #include <boost/test/detail/suppress_warnings.hpp>
-
-#if BOOST_WORKAROUND(__BORLANDC__, < 0x600) && BOOST_WORKAROUND(_STLPORT_VERSION, <= 0x450)
-    using std::rand; // rand is in std and random_shuffle is in _STL
-#endif
 
 //____________________________________________________________________________//
 

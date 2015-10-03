@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2014.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -25,9 +25,9 @@ namespace unit_test {
 namespace data {
 
 namespace {
-nfp::keyword<struct begin_t>    begin;
-nfp::keyword<struct end_t>      end;
-nfp::keyword<struct step_t>     step;
+auto const& begin   = unit_test::static_constant<nfp::keyword<struct begin_t>>::value;
+auto const& end     = unit_test::static_constant<nfp::keyword<struct end_t>>::value;
+auto const& step    = unit_test::static_constant<nfp::keyword<struct step_t>>::value;
 } // local namespace
 
 } // namespace data

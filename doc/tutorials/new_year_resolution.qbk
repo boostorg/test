@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003 Boost.Test team 
+ / Copyright (c) 2003 Boost.Test contributors
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -69,8 +69,8 @@ production stage. The data_access_test test case passed and I am ready for the n
 
 [import ../snippet/const_string.hpp] [import ../snippet/const_string_test.cpp]
 
-Continuing my effort I am able to complete class `const_string` (see [@snippet/const_string.hpp Listing 1
-=const_string.hpp=]) and testing module for it (see [@snippet/const_string_test.cpp Listing 2 =const_string_test.cpp=])
+Continuing my effort I am able to complete class `const_string` (see [@../snippet/const_string.hpp Listing 1
+=const_string.hpp=]) and testing module for it (see [@../snippet/const_string_test.cpp Listing 2 =const_string_test.cpp=])
 that is checking all features that are presented in the class `const_string` specification.
 
 

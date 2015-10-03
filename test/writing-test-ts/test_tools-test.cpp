@@ -1,15 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2001-2015.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : tests all Test Tools but output_test_stream
+/// @file
+/// @brief tests all Test Tools but output_test_stream
 // ***************************************************************************
 
 // Boost.Test
@@ -90,8 +87,8 @@ struct shorten_lf : public boost::unit_test::output::compiler_log_formatter
 
 //____________________________________________________________________________//
 
-std::string match_file_name( "./test_files/test_tools_test.pattern" );
-std::string save_file_name( "test_tools_test.pattern" );
+std::string match_file_name( "./baseline-outputs/test_tools-test.pattern" );
+std::string save_file_name( "test_tools-test.pattern" );
 
 static tt::output_test_stream&
 ots()
@@ -128,11 +125,14 @@ BOOST_AUTO_TEST_CASE( name )                                        \
     ut::framework::finalize_setup_phase( impl->p_id );              \
     ut::framework::run( impl );                                     \
                                                                     \
+    ut::log_level ll = ut::runtime_config::get<ut::log_level>(      \
+        ut::runtime_config::LOG_LEVEL );                            \
+    ut::output_format lf = ut::runtime_config::get<ut::output_format>( \
+        ut::runtime_config::LOG_FORMAT );                           \
+                                                                    \
     ut::unit_test_log.set_threshold_level(                          \
-        ut::runtime_config::log_level() != ut::invalid_log_level    \
-            ? ut::runtime_config::log_level()                       \
-            : ut::log_all_errors );                                 \
-    ut::unit_test_log.set_format( ut::runtime_config::log_format());\
+        ll != ut::invalid_log_level ? ll : ut::log_all_errors );    \
+    ut::unit_test_log.set_format( lf );                             \
     ut::unit_test_log.set_stream( std::cout );                      \
     BOOST_CHECK( ots().match_pattern() );                           \
 }                                                                   \
@@ -727,7 +727,11 @@ TEST_CASE( test_BOOST_TEST_collection_comp )
 namespace boost{ namespace test_tools{ namespace tt_detail{
 template<>
 struct print_log_value<double> {
-    void    operator()( std::ostream& os, double d ) { os << std::setprecision(1) << d; }
+    void    operator()( std::ostream& os, double d )
+	{
+		std::streamsize curr_prec = os.precision();
+		os << std::setprecision(1) << d << std::setprecision( curr_prec );
+	}
 };
 }}}
 
@@ -759,6 +763,14 @@ TEST_CASE( test_BOOST_TEST_fpv_comp )
     BOOST_TEST( d1-1e-5 != 0., tt::tolerance( 1e-4 ) );
     BOOST_TEST( 0. != 1e-5-d1, tt::tolerance( 1e-4 ) );
     BOOST_TEST( d2-1e-5 < 0., tt::tolerance( 1e-6 ) );
+
+    const double cd = 1.0;
+    BOOST_TEST( cd == 1.0);
+    BOOST_TEST( 1.0 == cd );
+    BOOST_TEST( cd == 1.01, 10.% tt::tolerance());
+    BOOST_TEST( 1.01 == cd, 0.1% tt::tolerance() );
+
+    BOOST_TEST( 0.0 == 0.0);
 }
 
 //____________________________________________________________________________//
@@ -848,5 +860,15 @@ BOOST_AUTO_TEST_CASE( test_argument_handling )
 }
 
 //____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_precision_mutation, * ut::expected_failures( 1 ) )
+{
+    std::streamsize initial_precition = std::cout.precision();
+    std::cout.precision(initial_precition);
+
+    BOOST_TEST( 1.2 == 2.3, 10.% tt::tolerance() );
+
+    BOOST_TEST( initial_precition == std::cout.precision() );
+}
 
 // EOF

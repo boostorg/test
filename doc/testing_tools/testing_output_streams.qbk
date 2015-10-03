@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003 Boost.Test team 
+ / Copyright (c) 2003 Boost.Test contributors 
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -36,8 +36,8 @@ of sheer volume. A possible way to address that issue is to split the test in tw
 # second to save this output to ensure that future checks produce the same output
 
 The class `output_test_stream` allows both the matching of the output content versus a /pattern file/ and generation
-of this pattern file. The command line parameter __param_save_pattern__ may be used to either generate
-a new pattern file, or to check against an existing pattern.
+of this pattern file. The command line parameter [link boost_test.utf_reference.rt_param_reference.save_pattern `save_pattern`]
+may be used to either generate a new pattern file, or to check against an existing pattern.
 
 [h3:usages Usage]
 There are two ways to employ the class `output_test_stream`: 

@@ -1,11 +1,26 @@
 [/
- / Copyright (c) 2013 Boost.Test team
+ / Copyright (c) 2013 Boost.Test contributors
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
 [section Change log]
+
+[h4 Boost.Test v3.1 / boost XXXX]
+
+[h5 New major features]
+* improved command line interface
+* improved API for datasets
+* improved C++11 support for datasets (initializer list)
+
+[h5 Bugfixes and feature requests]
+# [ticket 11478] Boost Test Exception Assert Failure has poor message
+# [ticket 11571] Can't compile `BOOST_TEST( ..., per_element() )` comparison of `vector<string>`
+# [ticket 11623] Clang rejects some simple `BOOST_TEST()` statements
+# [ticket 11624] `BOOST_TEST( 0.0 == 0.0 )` fails under C++11 (GCC and Clang)
+# [ticket 11625] `BOOST_TEST( ..., per_element() )` erroneously requires collections are comparable
+
 
 [h4 Boost.Test v3 / boost 1.59]
 
@@ -18,8 +33,8 @@
 * support for declaring [link boost_test.tests_organization.tests_dependencies dependencies] over test cases
 * attributes for [link boost_test.tests_organization.enabling enabling or disabling] test execution based on static, compile-time or runtime rules
 * extended [link boost_test.runtime_config.test_unit_filtering unit test filtering] from the command line (negation, labels, ...)
-* color output with __param_color_output__
-* test bed listing with __param_list_content__
+* color output with [link boost_test.utf_reference.rt_param_reference.color_output `color_output`]
+* test bed listing with [link boost_test.utf_reference.rt_param_reference.list_content `list_content`]
 * rewritten documentation using quickbook
 
 [/* now having a more accurate timing (see [ticket 7397]) for the tests. Old format is still available through the command line option __param_deprecated_timer_format__

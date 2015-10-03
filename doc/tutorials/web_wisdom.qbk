@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2015 Boost.Test team 
+ / Copyright (c) 2015 Boost.Test contributors 
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -11,7 +11,7 @@ If you can't find answer to the question you have on these pages, it is quite po
 and posted about this online. This page gathers a few of the additional materials you may review.
 
 [note The following material is provided "as is". The views, implementation or methods expressed are their respective authors and 
-      do not necessarily represent positions of the Boost.Test team, and might be outdated.]
+      do not necessarily represent positions of the Boost.Test contributors, and might be outdated.]
 
 * [@http://stackoverflow.com/search?q=boost+test Stack overflow Boost.Test related questions]
 * [@http://www.ibm.com/developerworks/aix/library/au-ctools1_boost/?S_TACT=105AGY20&S_CMP=HP Get to know the Boost unit test framework (from IBM)]
