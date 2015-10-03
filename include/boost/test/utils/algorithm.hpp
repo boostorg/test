@@ -22,8 +22,8 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
+namespace utils {
 
 /// @brief this algorithm search through two collections for first mismatch position that get returned as a pair
 /// of iterators, first pointing to the mismatch position in first collection, second iterator in second one
@@ -213,11 +213,10 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 
 //____________________________________________________________________________//
 
+} // namespace utils
 } // namespace unit_test
 } // namespace boost
 
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_UTILS_ALGORITHM_HPP
-
-
