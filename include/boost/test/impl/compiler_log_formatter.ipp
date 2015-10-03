@@ -177,6 +177,8 @@ compiler_log_formatter::log_exception_finish( std::ostream& output )
 void
 compiler_log_formatter::log_entry_start( std::ostream& output, log_entry_data const& entry_data, log_entry_types let )
 {
+    using namespace utils;
+
     switch( let ) {
         case BOOST_UTL_ET_INFO:
             print_prefix( output, entry_data.m_file_name, entry_data.m_line_num );
@@ -231,7 +233,7 @@ void
 compiler_log_formatter::log_entry_finish( std::ostream& output )
 {
     if( m_color_output )
-        output << setcolor();
+        output << utils::setcolor();
 
     output << std::endl;
 }

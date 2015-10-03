@@ -65,19 +65,19 @@ xml_report_formatter::test_unit_report_start( test_unit const& tu, std::ostream&
         descr = "failed";
 
     ostr << '<' << ( tu.p_type == TUT_CASE ? "TestCase" : "TestSuite" )
-         << " name"     << attr_value() << tu.p_name
-         << " result"   << attr_value() << descr
-         << " assertions_passed"        << attr_value() << tr.p_assertions_passed
-         << " assertions_failed"        << attr_value() << tr.p_assertions_failed
-         << " warnings_failed"          << attr_value() << tr.p_warnings_failed
-         << " expected_failures"        << attr_value() << tr.p_expected_failures;
+         << " name"                     << utils::attr_value() << tu.p_name
+         << " result"                   << utils::attr_value() << descr
+         << " assertions_passed"        << utils::attr_value() << tr.p_assertions_passed
+         << " assertions_failed"        << utils::attr_value() << tr.p_assertions_failed
+         << " warnings_failed"          << utils::attr_value() << tr.p_warnings_failed
+         << " expected_failures"        << utils::attr_value() << tr.p_expected_failures;
 
     if( tu.p_type == TUT_SUITE ) {
-        ostr << " test_cases_passed"    << attr_value() << tr.p_test_cases_passed
-             << " test_cases_passed_with_warnings" << attr_value() << tr.p_test_cases_warned
-             << " test_cases_failed"    << attr_value() << tr.p_test_cases_failed
-             << " test_cases_skipped"   << attr_value() << tr.p_test_cases_skipped
-             << " test_cases_aborted"   << attr_value() << tr.p_test_cases_aborted;
+        ostr << " test_cases_passed"    << utils::attr_value() << tr.p_test_cases_passed
+             << " test_cases_passed_with_warnings" << utils::attr_value() << tr.p_test_cases_warned
+             << " test_cases_failed"    << utils::attr_value() << tr.p_test_cases_failed
+             << " test_cases_skipped"   << utils::attr_value() << tr.p_test_cases_skipped
+             << " test_cases_aborted"   << utils::attr_value() << tr.p_test_cases_aborted;
     }
 
     ostr << '>';

@@ -33,6 +33,7 @@
 
 namespace boost {
 namespace unit_test {
+namespace utils {
 
 // ************************************************************************** //
 // **************               xml print helpers              ************** //
@@ -121,6 +122,7 @@ operator<<( custom_printer<cdata> const& p, const_string value )
 
 //____________________________________________________________________________//
 
+} // namespace utils
 } // namespace unit_test
 } // namespace boost
 
