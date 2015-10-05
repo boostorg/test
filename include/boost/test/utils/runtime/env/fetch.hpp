@@ -21,6 +21,9 @@
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
+// Boost
+#include <boost/predef.h>
+
 // C Runtime
 #include <stdlib.h>
 

@@ -24,6 +24,7 @@
 // Boost
 #include <boost/cstdlib.hpp>    // for exit codes
 #include <boost/config.hpp>     // for workarounds
+#include <boost/predef.h>       // for BOOST_PLAT_ macros
 
 // STL
 #include <iostream>
