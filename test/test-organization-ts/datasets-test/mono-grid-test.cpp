@@ -16,6 +16,7 @@
 #include <boost/test/data/monomorphic/array.hpp>
 #include <boost/test/data/monomorphic/collection.hpp>
 #include <boost/test/data/monomorphic/generators/xrange.hpp>
+#include <boost/test/data/for_each_sample.hpp>
 
 namespace data = boost::unit_test::data;
 
