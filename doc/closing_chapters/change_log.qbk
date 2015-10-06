@@ -12,6 +12,10 @@
 [h5 New major features]
 
 [h5 Bugfixes and feature requests]
+# [ticket 11571] Can't compile `BOOST_TEST( ..., per_element() )` comparison of `vector<string>`
+# [ticket 11623] Clang rejects some simple `BOOST_TEST()` statements
+# [ticket 11624] `BOOST_TEST( 0.0 == 0.0 )` fails under C++11 (GCC and Clang)
+# [ticket 11625] `BOOST_TEST( ..., per_element() )` erroneously requires collections are comparable
 
 
 [h4 Boost.Test v3 / boost 1.59]
