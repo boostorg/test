@@ -51,12 +51,12 @@ class xrange_t {
 public:
     typedef SampleType sample;
 
-    xrange_t( SampleType const& begin_, StepType const& step_, data::size_t size_ )
-    : m_begin( begin_ )
-    , m_curr( begin_ )
-    , m_step( step_ )
+    xrange_t( SampleType const& begin, StepType const& step, data::size_t size )
+    : m_begin( begin )
+    , m_curr( begin )
+    , m_step( step )
     , m_index( 0 )
-    , m_size( size_ )
+    , m_size( size )
     {}
 
     // Generator interface

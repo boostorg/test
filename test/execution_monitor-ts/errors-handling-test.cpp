@@ -145,10 +145,10 @@ void error_on_demand()
 
 BOOST_AUTO_TEST_CASE( test_errors_handling )
 {
-#define PATTERN_FILE_NAME "errors-handling-test.pattern"
+#define PATTERN_FILE_NAME "errors_handling_test.pattern"
     std::string pattern_file_name(
         framework::master_test_suite().argc <= 1
-            ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./baseline-outputs/" PATTERN_FILE_NAME)
+            ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./test_files/" PATTERN_FILE_NAME)
             : framework::master_test_suite().argv[1] );
 
 #ifdef LIMITED_TEST

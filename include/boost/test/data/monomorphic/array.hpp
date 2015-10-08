@@ -40,9 +40,9 @@ public:
     typedef T const* iterator;
 
     // Constructor
-    array( T const* arr_, std::size_t size_ )
-    : m_arr( arr_ )
-    , m_size( size_ )
+    array( T const* arr, std::size_t size )
+    : m_arr( arr )
+    , m_size( size )
     {}
 
     // dataset interface

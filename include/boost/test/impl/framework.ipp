@@ -538,8 +538,8 @@ public:
                                    parse_filters( master_tu_id, tu_to_enable, tu_to_disable );
 
         // 20. Set the stage: either use default run status or disable all test units
-        set_run_status initial_setter( had_selector_filter ? test_unit::RS_DISABLED : test_unit::RS_INVALID );
-        traverse_test_tree( master_tu_id, initial_setter, true );
+        set_run_status setter( had_selector_filter ? test_unit::RS_DISABLED : test_unit::RS_INVALID );
+        traverse_test_tree( master_tu_id, setter, true );
 
         // 30. Apply all selectors and enablers.
         while( !tu_to_enable.empty() ) {
@@ -552,8 +552,8 @@ public:
                 continue;
 
             // set new status and add all dependencies into tu_to_enable
-            set_run_status enabler( test_unit::RS_ENABLED, &tu_to_enable );
-            traverse_test_tree( tu.p_id, enabler, true );
+            set_run_status setter( test_unit::RS_ENABLED, &tu_to_enable );
+            traverse_test_tree( tu.p_id, setter, true );
         }
 
         // 40. Apply all disablers
@@ -566,8 +566,8 @@ public:
             if( !tu.is_enabled() )
                 continue;
 
-            set_run_status disabler( test_unit::RS_DISABLED );
-            traverse_test_tree( tu.p_id, disabler, true );
+            set_run_status setter( test_unit::RS_DISABLED );
+            traverse_test_tree( tu.p_id, setter, true );
         }
 
         // 50. Make sure parents of enabled test units are also enabled
