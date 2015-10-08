@@ -305,8 +305,8 @@ prepare_window_title( dbg_startup_info const& dsi )
 
     str_t path_sep( "\\/" );
 
-    str_t::iterator  it = unit_test::utils::find_last_of( dsi.binary_path.begin(), dsi.binary_path.end(),
-                                                          path_sep.begin(), path_sep.end() );
+    str_t::iterator  it = unit_test::find_last_of( dsi.binary_path.begin(), dsi.binary_path.end(),
+                                                   path_sep.begin(), path_sep.end() );
 
     if( it == dsi.binary_path.end() )
         it = dsi.binary_path.begin();
