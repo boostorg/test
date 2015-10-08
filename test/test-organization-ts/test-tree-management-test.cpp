@@ -1,12 +1,15 @@
-//  (C) Copyright Gennadiy Rozental 2001.
+//  (C) Copyright Gennadiy Rozental 2007-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file
-/// @brief test tree management unit test
+//  File        : $RCSfile$
+//
+//  Version     : $Revision$
+//
+//  Description : test tree management unit test
 // ***************************************************************************
 
 // Boost.Test

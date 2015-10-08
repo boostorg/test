@@ -1,12 +1,16 @@
-//  (C) Copyright Gennadiy Rozental 2001.
+//  (C) Copyright Gennadiy Rozental 2002-2015.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-/// @file
-/// @brief tests an ability of the Program Execution Monitor to catch user fatal exceptions. Should fail during run. But not crash.
+//  File        : $RCSfile$
+//
+//  Version     : $Revision$
+//
+//  Description : tests an ability of the Program Execution Monitor to catch
+//  user fatal exceptions. Should fail during run. But not crash.
 // ***************************************************************************
 
 #include <cassert>
