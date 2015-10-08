@@ -18,11 +18,14 @@
 
 #include <boost/test/utils/is_forward_iterable.hpp>
 
+
 // Boost
+#include <boost/utility/declval.hpp>
 #include <boost/type_traits/remove_const.hpp>
-#include <boost/type_traits/remove_reference.hpp>
-#include <boost/type_traits/is_array.hpp>
 #include <boost/mpl/bool.hpp>
+#include <boost/smart_ptr/make_shared.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/type_traits/decay.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -36,8 +39,10 @@ namespace monomorphic {
 
 
 #if !defined(BOOST_TEST_DOXYGEN_DOC__)
+template<typename T>
+struct traits;
 
-template<typename T, typename Specific>
+template<typename T>
 class dataset;
 
 template<typename T>
@@ -51,7 +56,6 @@ class array;
 
 template<typename T>
 class init_list;
-
 #endif
 
 // ************************************************************************** //
@@ -115,15 +119,15 @@ make(DataSet&& ds)
 template<typename T>
 inline typename std::enable_if<!is_forward_iterable<T>::value && 
                                !monomorphic::is_dataset<T>::value &&
-                               !is_array<typename remove_reference<T>::type>::value, 
-                               monomorphic::singleton<T>>::type
+                               !boost::is_array<typename boost::remove_reference<T>::type>::value, 
+                               monomorphic::singleton<T> >::type
 make( T&& v );
 
 //____________________________________________________________________________//
 
 //! @overload boost::unit_test::data::make()
 template<typename C>
-inline typename std::enable_if<is_forward_iterable<C>::value,monomorphic::collection<C>>::type
+inline typename std::enable_if<is_forward_iterable<C>::value,monomorphic::collection<C> >::type
 make( C&& c );
 
 //____________________________________________________________________________//
@@ -159,7 +163,7 @@ namespace result_of {
 //! Result of the make call.
 template<typename DataSet>
 struct make {
-    typedef decltype( data::make( declval<DataSet>() ) ) type;
+    typedef decltype( data::make( boost::declval<DataSet>() ) ) type;
 };
 
 } // namespace result_of

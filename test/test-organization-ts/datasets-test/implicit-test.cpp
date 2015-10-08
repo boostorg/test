@@ -14,8 +14,11 @@
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
-#include <boost/test/data/monomorphic.hpp>
-#include <boost/test/data/for_each_sample.hpp>
+#include <boost/test/data/monomorphic/singleton.hpp>
+#include <boost/test/data/monomorphic/collection.hpp>
+#include <boost/test/data/monomorphic/array.hpp>
+#include <boost/test/data/monomorphic/join.hpp>
+#include <boost/test/data/monomorphic/zip.hpp>
 namespace data=boost::unit_test::data;
 
 #include "datasets-test.hpp"

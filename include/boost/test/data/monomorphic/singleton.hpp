@@ -14,7 +14,7 @@
 
 // Boost.Test
 #include <boost/test/data/config.hpp>
-#include <boost/test/data/monomorphic/fwd.hpp>
+#include <boost/test/data/monomorphic/dataset.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -31,38 +31,40 @@ namespace monomorphic {
 
 /// Models a single element data set
 template<typename T>
-class singleton {
-public:
-    typedef typename boost::decay<T>::type sample;
+class singleton : public monomorphic::dataset<typename boost::decay<T>::type> {
+    typedef monomorphic::dataset<typename boost::decay<T>::type> base;
+    typedef typename base::iter_ptr  iter_ptr;
 
-    enum { arity = 1 };
-
-    struct iterator {
+    struct iterator : public base::iterator {
         // Constructor
-        explicit            iterator( singleton<T> const* owner ) 
+        explicit            iterator( singleton<T> const& owner ) 
         : m_owner( owner ) 
         {}
 
         // forward iterator interface 
-        sample const&       operator*() const   { return m_owner->value(); }
-        void                operator++() {}
+        virtual typename base::data_type const&
+                            operator*()     { return m_owner.value(); }
+        virtual void        operator++()    {}
 
     private:
-        singleton<T> const* m_owner;
+        singleton<T> const& m_owner;
     };
 
+public:
+    enum { arity = 1 };
+
     //! Constructor
-    explicit        singleton( T&& value ) : m_value( std::forward<T>( value ) ) {}
+    explicit                singleton( T&& value ) : m_value( std::forward<T>( value ) ) {}
 
     //! Move constructor
     singleton( singleton&& s ) : m_value( std::forward<T>( s.m_value ) ) {}
 
-    //! Value access method
-    T const&        value() const   { return m_value; }
+    // Access methods
+    T const&                value() const           { return m_value; }
 
-    //! dataset interface
-    data::size_t    size() const    { return 1; }
-    iterator        begin() const   { return iterator( this ); }
+    // dataset interface
+    virtual data::size_t    size() const            { return 1; }
+    virtual iter_ptr        begin() const           { return boost::make_shared<iterator>( *this ); }
 
 private:
     // Data members
@@ -73,7 +75,7 @@ private:
 
 // a singleton is a dataset
 template<typename T>
-struct is_dataset<singleton<T>> : mpl::true_ {};
+struct is_dataset<singleton<T> > : mpl::true_ {};
 
 //____________________________________________________________________________//
 

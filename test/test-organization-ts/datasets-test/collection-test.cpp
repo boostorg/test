@@ -16,7 +16,6 @@
 
 #include <boost/test/data/monomorphic/singleton.hpp>
 #include <boost/test/data/monomorphic/collection.hpp>
-#include <boost/test/data/for_each_sample.hpp>
 
 #include <boost/test/unit_test.hpp>
 namespace utf=boost::unit_test;

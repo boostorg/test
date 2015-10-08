@@ -15,38 +15,55 @@
 namespace bdata = boost::unit_test::data;
 
 // Dataset generating a Fibonacci sequence
-class fibonacci_dataset {
+class fibonacci_dataset : public bdata::monomorphic::dataset<int>
+{
 public:
-    // Samples type is int
-    using sample=int;
-    enum { arity = 1 };
+  // Samples type is int
+  typedef int data_type;
+  enum { arity = 1 };
 
-    struct iterator {
-        typedef bdata::traits<int>::ref_type ref_type;
+private:
+  typedef bdata::monomorphic::dataset<int> base;
+  
+  struct iterator : base::iterator
+  {
+    typedef bdata::monomorphic::traits<int>::ref_type ref_type;
+    int a;
+    int b; // b is the output
     
-        iterator() : a(1), b(1) {}
+    iterator() : a(0), b(0) 
+    {}
     
-        ref_type operator*() const   { return b; }
-        void operator++()
-        {
-            a = a + b;
-            std::swap(a, b);
+    ref_type operator*()
+    {
+      return b;
+    }
+    
+    virtual void operator++()
+    {
+      a = a + b;
+      std::swap(a, b);
       
-            if(!b)
-                b = 1;
-        }
-    private:
-        int a;
-        int b; // b is the output
-    };
+      if(!b)
+        b = 1;
+    }
+  };
   
-    fibonacci_dataset()             {}
+public:
+  fibonacci_dataset()
+  {}
   
-    // size is infinite
-    bdata::size_t   size() const    { return bdata::BOOST_TEST_DS_INFINITE_SIZE; }
+  // size is infinite
+  bdata::size_t size() const
+  {
+    return bdata::BOOST_TEST_DS_INFINITE_SIZE;
+  }
   
-    // iterator
-    iterator        begin() const   { return iterator(); }
+  // iterator
+  virtual iter_ptr begin() const
+  { 
+    return boost::make_shared<iterator>(); 
+  }
 };
 
 namespace boost { namespace unit_test { namespace data { namespace monomorphic {
@@ -57,10 +74,14 @@ namespace boost { namespace unit_test { namespace data { namespace monomorphic {
 
 // Creating a test-driven dataset 
 BOOST_DATA_TEST_CASE( 
-    test1, 
-    fibonacci_dataset() ^ bdata::make( { 1, 2, 3, 5, 8, 13, 21, 35, 56 } ),
-    fib_sample, exp)
+  test1, 
+  fibonacci_dataset() ^ bdata::xrange(10),
+  fib_sample, index)
 {
-      BOOST_TEST(fib_sample == exp);
+  std::cout << "test 1: " 
+    << fib_sample 
+    << " / index: " << index
+    << std::endl;
+  BOOST_TEST(fib_sample <= 13);
 }
 //]

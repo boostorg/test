@@ -14,7 +14,7 @@
 
 // Boost.Test
 #include <boost/test/data/config.hpp>
-#include <boost/test/data/monomorphic/fwd.hpp>
+#include <boost/test/data/monomorphic/dataset.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -31,22 +31,38 @@ namespace monomorphic {
 
 /// Dataset view of a C array
 template<typename T>
-class init_list {
-public:
-    typedef T sample;
+class init_list : public monomorphic::dataset<T> {
+    typedef monomorphic::dataset<T> base;
+    typedef typename base::iter_ptr iter_ptr;
 
+    struct iterator : public base::iterator {
+        // Constructor
+        explicit    iterator( T const* begin, data::size_t size )
+        : m_it( begin )
+        , m_singleton( size == 1 )
+        {}
+
+        // forward iterator interface
+        virtual T const&    operator*()     { return *m_it; }
+        virtual void        operator++()    { if( !m_singleton ) ++m_it; }
+
+    private:
+        // Data members
+        T const*            m_it;
+        bool                m_singleton;
+    };
+
+public:
     enum { arity = 1 };
 
-    typedef T const* iterator;
-
-    //! Constructor swallows initializer_list
+    // Constructor
     init_list( std::initializer_list<T>&& il )
     : m_data( std::forward<std::initializer_list<T>>( il ) )
     {}
 
-    //! dataset interface
-    data::size_t    size() const    { return m_data.size(); }
-    iterator        begin() const   { return m_data.begin(); }
+    // dataset interface
+    virtual data::size_t    size() const            { return m_data.size(); }
+    virtual iter_ptr        begin() const           { return boost::make_shared<iterator>( m_data.begin(), m_data.size() ); }
 
 private:
     // Data members
