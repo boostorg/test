@@ -190,8 +190,6 @@ operator*( DS1&& ds1, DS2&& ds2 )
     return grid<DS1,DS2>( std::forward<DS1>( ds1 ),  std::forward<DS2>( ds2 ) );
 }
 
-//____________________________________________________________________________//
-
 //! @overload boost::unit_test::data::operator*
 template<typename DS1, typename DS2>
 inline typename boost::lazy_enable_if_c<is_dataset<DS1>::value && !is_dataset<DS2>::value,
@@ -202,8 +200,6 @@ operator*( DS1&& ds1, DS2&& ds2 )
     return std::forward<DS1>(ds1) * data::make(std::forward<DS2>(ds2));
 }
 
-//____________________________________________________________________________//
-
 //! @overload boost::unit_test::data::operator*
 template<typename DS1, typename DS2>
 inline typename boost::lazy_enable_if_c<!is_dataset<DS1>::value && is_dataset<DS2>::value,
@@ -213,6 +209,8 @@ operator*( DS1&& ds1, DS2&& ds2 )
 {
     return data::make(std::forward<DS1>(ds1)) * std::forward<DS2>(ds2);
 }
+
+//____________________________________________________________________________//
 
 } // namespace monomorphic
 

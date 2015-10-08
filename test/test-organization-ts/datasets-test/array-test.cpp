@@ -22,38 +22,40 @@ BOOST_AUTO_TEST_CASE( test_array )
 {
     int arr1[] = {1,2,3};
     BOOST_TEST( data::make( arr1 ).size() == 3 );
-
     double const arr2[] = {7.4,3.2};
     BOOST_TEST( data::make( arr2 ).size() == 2 );
 
-    bool arr3[] = {true, true, false};
-    BOOST_TEST( data::make( arr3 ).size() == 3 );
-
-    typedef bool (arr_type)[3];
-    arr_type const& arr3_ref = arr3;
-    BOOST_TEST( data::make( arr3_ref ).size() == 3 );
-
-    int arr4[] = {7,11,13,17};
-    data::for_each_sample( data::make( arr4 ), check_arg_type<int>() );
+    int arr3[] = {7,11,13,17};
+    data::for_each_sample( data::make( arr3 ), check_arg_type<int>() );
 
     int c = 0;
-    int* ptr4 = arr4;
-    data::for_each_sample( data::make( arr4 ), [&c,ptr4](int i) {
-        BOOST_TEST( i == ptr4[c++] );
+    int* ptr3 = arr3;
+    data::for_each_sample( data::make( arr3 ), [&c,ptr3](int i) {
+        BOOST_TEST( i == ptr3[c++] );
     });
 
-    data::for_each_sample( data::make( arr4 ), expected_call_count{ 4 } );
-    data::for_each_sample( data::make( arr4 ), expected_call_count{ 2 }, 2 );
-    data::for_each_sample( data::make( arr4 ), expected_call_count{ 0 }, 0 );
+    invocation_count ic;
+
+    ic.m_value = 0;
+    data::for_each_sample( data::make( arr3 ), ic );
+    BOOST_TEST( ic.m_value == 4 );
+
+    ic.m_value = 0;
+    data::for_each_sample( data::make( arr3 ), ic, 2 );
+    BOOST_TEST( ic.m_value == 2 );
+
+    ic.m_value = 0;
+    data::for_each_sample( data::make( arr3 ), ic, 0 );
+    BOOST_TEST( ic.m_value == 0 );
 
     copy_count::value() = 0;
-    copy_count arr5[] = { copy_count(), copy_count() };
-    data::for_each_sample( data::make( arr5 ), check_arg_type<copy_count>() );
+    copy_count arr4[] = { copy_count(), copy_count() };
+    data::for_each_sample( data::make( arr4 ), check_arg_type<copy_count>() );
     BOOST_TEST( copy_count::value() == 0 );
 
     copy_count::value() = 0;
-    copy_count const arr6[] = { copy_count(), copy_count() };
-    data::for_each_sample( data::make( arr6 ), check_arg_type<copy_count>() );
+    copy_count const arr5[] = { copy_count(), copy_count() };
+    data::for_each_sample( data::make( arr5 ), check_arg_type<copy_count>() );
     BOOST_TEST( copy_count::value() == 0 );
 }
 
@@ -66,9 +68,12 @@ BOOST_AUTO_TEST_CASE( test_array_make_type )
     typedef int (&arr_t)[3];
     BOOST_STATIC_ASSERT(( boost::is_array< boost::remove_reference<arr_t>::type >::value ) );
 
+
+
     typedef data::result_of::make<int (&)[3]>::type dataset_array_type;
     dataset_array_type res = data::make( arr1 );
     BOOST_TEST( res.size() == 3 );
+
 
     double const arr2[] = {7.4,3.2};
     typedef data::result_of::make<double const (&)[2]>::type dataset_array_double_type;
@@ -76,5 +81,7 @@ BOOST_AUTO_TEST_CASE( test_array_make_type )
 
     BOOST_TEST( res2.size() == 2 );
 }
+
+//____________________________________________________________________________//
 
 // EOF
