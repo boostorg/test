@@ -25,9 +25,9 @@ namespace unit_test {
 namespace data {
 
 namespace {
-auto const& begin   = unit_test::static_constant<nfp::keyword<struct begin_t>>::value;
-auto const& end     = unit_test::static_constant<nfp::keyword<struct end_t>>::value;
-auto const& step    = unit_test::static_constant<nfp::keyword<struct step_t>>::value;
+nfp::keyword<struct begin_t>    begin;
+nfp::keyword<struct end_t>      end;
+nfp::keyword<struct step_t>     step;
 } // local namespace
 
 } // namespace data

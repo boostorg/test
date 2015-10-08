@@ -83,7 +83,6 @@ test-suite "utils-ts"
   [ boost.test-self-test run : utils-ts : foreach-test ]
   [ boost.test-self-test run : utils-ts : named_params-test ]
   [ boost.test-self-test run : utils-ts : runtime-param-test ]
-  [ boost.test-self-test run : utils-ts : string_cast-test ]
   [ boost.test-self-test run : utils-ts : token_iterator-test ]
 ;
 

@@ -134,9 +134,4 @@ BOOST_AUTO_TEST_CASE( test_lexicographic_ge )
     BOOST_TEST( b >= a, tt::lexicographic() );
 }
 
-BOOST_AUTO_TEST_CASE( test_collction_of_collection_comp )
-{
-    BOOST_TEST( std::string("abc") == std::string("abc") );
-}
-
 // EOF

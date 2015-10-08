@@ -21,6 +21,9 @@
 #include <boost/test/utils/nullstream.hpp>
 typedef boost::onullstream onullstream_type;
 
+// BOOST
+#include <boost/lexical_cast.hpp>
+
 // STL
 #include <iostream>
 

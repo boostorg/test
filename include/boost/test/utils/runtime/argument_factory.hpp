@@ -22,9 +22,9 @@
 // Boost.Test
 #include <boost/test/utils/basic_cstring/io.hpp>
 #include <boost/test/utils/basic_cstring/compare.hpp>
-#include <boost/test/utils/string_cast.hpp>
 
 // Boost
+#include <boost/lexical_cast.hpp>
 #include <boost/function/function2.hpp>
 
 // STL
@@ -51,11 +51,13 @@ struct value_interpreter<ValueType, false> {
 
     ValueType interpret( cstring param_name, cstring source ) const
     {
-        ValueType res;
-        if( !unit_test::utils::string_as<ValueType>( source, res ) )
-            BOOST_TEST_I_THROW( format_error( param_name ) << source <<
-                                " can't be interpreted as value of parameter " << param_name << "." );
-        return res;
+        BOOST_TEST_I_TRY{
+            return lexical_cast<ValueType>(source);
+        } BOOST_TEST_I_CATCH0( bad_lexical_cast ) {
+            BOOST_TEST_I_THROW( format_error( param_name ) << source << 
+                                    " can't be interpreted as value of parameter " << param_name << "." );
+        }
+        return ValueType{};
     }
 };
 
@@ -105,7 +107,7 @@ struct value_interpreter<bool, false> {
 
         source.trim();
 
-        if( source.is_empty() ||
+        if( source.is_empty() || 
             case_ins_eq( source, s_YES ) ||
             case_ins_eq( source, s_Y ) ||
             case_ins_eq( source, s_one ) ||
@@ -137,7 +139,7 @@ struct value_interpreter<EnumType, true> {
         auto found = m_name_to_value.find( source );
 
         BOOST_TEST_I_ASSRT( found != m_name_to_value.end(),
-                            format_error( param_name ) << source <<
+                            format_error( param_name ) << source << 
                                 " is not a valid enumeration value name for parameter " << param_name << "." );
 
         return found->second;

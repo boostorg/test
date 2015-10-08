@@ -54,8 +54,8 @@ public:
         {}
 
         // forward iterator interface
-        sample const&       operator*() const   { return m_first_size > 0 ? *m_it1 : *m_it2; }
-        void                operator++()        { if( m_first_size > 0 ) { --m_first_size; ++m_it1; } else ++m_it2; }
+        sample const&    operator*() const   { return m_first_size > 0 ? *m_it1 : *m_it2; }
+        void                operator++()        { m_first_size > 0 ? (--m_first_size,++m_it1) : ++m_it2; }
 
     private:
         // Data members

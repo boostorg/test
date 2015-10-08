@@ -50,7 +50,7 @@ struct specialized_compare<Col> : public mpl::true_ {};         \
 
 namespace op {
 
-template <typename OP, bool can_be_equal, bool prefer_shorter,
+template <typename OP, bool can_be_equal, bool prefer_shorter, 
           typename Lhs, typename Rhs>
 inline assertion_result
 lexicographic_compare( Lhs const& lhs, Rhs const& rhs )
@@ -69,13 +69,13 @@ lexicographic_compare( Lhs const& lhs, Rhs const& rhs )
             return ar; // a < b
 
         assertion_result const& reverse_ar = OP::eval(*first2, *first1);
-        if( element_ar && !reverse_ar )
+        if( element_ar && !reverse_ar )                     
             return ar; // a<=b and !(b<=a) => a < b => return true
+        
+        if( element_ar || !reverse_ar ) 
+            continue; // (a<=b and b<=a) or (!(a<b) and !(b<a)) => a == b => keep looking                   
 
-        if( element_ar || !reverse_ar )
-            continue; // (a<=b and b<=a) or (!(a<b) and !(b<a)) => a == b => keep looking
-
-        // !(a<=b) and b<=a => b < a => return false
+        // !(a<=b) and b<=a => b < a => return false            
         ar = false;
         ar.message() << "\nFailure at position " << pos << ": "
                      << tt_detail::print_helper(*first1)
@@ -85,7 +85,7 @@ lexicographic_compare( Lhs const& lhs, Rhs const& rhs )
         return ar;
     }
 
-
+    
     if( first1 != last1 ) {
         if( prefer_shorter ) {
             ar = false;
@@ -376,3 +376,4 @@ BOOST_TEST_FOR_EACH_COMP_OP( DEFINE_COLLECTION_COMPARISON )
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_TOOLS_COLLECTION_COMPARISON_OP_HPP_050815GER
+
