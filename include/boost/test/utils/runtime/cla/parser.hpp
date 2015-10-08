@@ -137,8 +137,8 @@ public:
         m_program_name = argv[0];
         cstring path_sep( "\\/" );
 
-        auto it = unit_test::utils::find_last_of( m_program_name.begin(), m_program_name.end(),
-                                                  path_sep.begin(), path_sep.end() );
+        auto it = unit_test::find_last_of( m_program_name.begin(), m_program_name.end(),
+                                           path_sep.begin(), path_sep.end() );
         if( it != m_program_name.end() )
             m_program_name.trim_left( it + 1 );
 

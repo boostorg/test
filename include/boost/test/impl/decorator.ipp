@@ -132,10 +132,10 @@ depends_on::apply( test_unit& tu )
 #if !BOOST_TEST_SUPPORT_TOKEN_ITERATOR
     BOOST_TEST_SETUP_ASSERT( false, "depends_on decorator is not supported on this platform" );
 #else
-    utils::string_token_iterator tit( m_dependency, (utils::dropped_delimeters = "/", utils::kept_delimeters = utils::dt_none) );
+    string_token_iterator tit( m_dependency, (dropped_delimeters = "/", kept_delimeters = dt_none) );
 
     test_unit* dep = &framework::master_test_suite();
-    while( tit != utils::string_token_iterator() ) {
+    while( tit != string_token_iterator() ) {
         BOOST_TEST_SETUP_ASSERT( dep->p_type == TUT_SUITE, std::string( "incorrect dependency specification " ) + m_dependency );
 
         test_unit_id next_id = static_cast<test_suite*>(dep)->get( *tit );

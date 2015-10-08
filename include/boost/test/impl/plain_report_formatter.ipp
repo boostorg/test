@@ -45,11 +45,11 @@ namespace output {
 
 namespace {
 
-typedef utils::custom_manip<struct quote_t> quote;
+typedef custom_manip<struct quote_t> quote;
 
 template<typename T>
 inline std::ostream&
-operator<<( utils::custom_printer<quote> const& p, T const& value )
+operator<<( custom_printer<quote> const& p, T const& value )
 {
     *p << '"' << value << '"';
 

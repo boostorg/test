@@ -40,8 +40,8 @@ namespace std{ using ::ispunct; using ::isspace; }
 #endif
 
 namespace boost {
+
 namespace unit_test {
-namespace utils {
 
 // ************************************************************************** //
 // **************               ti_delimeter_type              ************** //
@@ -405,8 +405,8 @@ make_range_token_iterator( Iter begin, Iter end, Modifier const& m )
 
 //____________________________________________________________________________//
 
-} // namespace utils
 } // namespace unit_test
+
 } // namespace boost
 
 //____________________________________________________________________________//

@@ -24,7 +24,6 @@
 
 namespace boost {
 namespace unit_test {
-namespace utils {
 
 // ************************************************************************** //
 // **************          custom manipulators helpers         ************** //
@@ -52,7 +51,6 @@ operator<<( std::ostream& ostr, custom_manip<Uniq> const& ) { return custom_prin
 
 //____________________________________________________________________________//
 
-} // namespace utils
 } // namespace unit_test
 } // namespace boost
 
