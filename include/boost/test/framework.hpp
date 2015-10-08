@@ -254,7 +254,9 @@ struct BOOST_TEST_DECL setup_error : public std::runtime_error {
     setup_error( const_string m ) : std::runtime_error( std::string( m.begin(), m.size() ) ) {}
 };
 
-#define BOOST_TEST_SETUP_ASSERT( cond, msg ) BOOST_TEST_I_ASSRT( cond, unit_test::framework::setup_error( msg ) )
+#define BOOST_TEST_SETUP_ASSERT( cond, msg ) \
+    if( cond ) {} \
+    else BOOST_TEST_IMPL_THROW( unit_test::framework::setup_error( msg ) )
 
 //____________________________________________________________________________//
 
@@ -269,3 +271,4 @@ struct nothing_to_test {}; // not really an error
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_FRAMEWORK_HPP_020805GER
+

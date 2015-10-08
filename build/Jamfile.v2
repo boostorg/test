@@ -14,10 +14,9 @@ project boost/test
                    <toolset>msvc:<cxxflags>-wd4673
                    #<toolset>gcc:<cxxflags>-std=gnu++0x
                    <toolset>clang:<cxxflags>-Wno-c99-extensions
+                   <toolset>clang:<cxxflags>-Wno-variadic-macros
                    <warnings>all
                    # <warnings-as-errors>on
-                   <toolset>gcc:<cxxflags>-std=c++11
-                   <toolset>clang:<cxxflags>-std=c++11
                    
                    # adding a dependency on boost/timer as the header are needed, and the junction needs
                    # to be there in order to build the library.

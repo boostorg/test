@@ -18,7 +18,7 @@ executed in one go, even if the test suite namespace is opened multiple times.
 
 Even though the order is not guaranteed, it may be accidentally preserved across the different runs. In order to make
 sure the test cases do not depend on one another, whoever runs the test module may provide a command-line argument
-[link boost_test.utf_reference.rt_param_reference.random `random`] to make sure the test units are shuffled within the suites.
+__param_random__ to make sure the test units are shuffled within the suites.
 
 [h3 Declaring a test case dependency]
 

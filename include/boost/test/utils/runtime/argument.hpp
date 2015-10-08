@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2015.
+//  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -15,40 +15,45 @@
 #ifndef BOOST_TEST_UTILS_RUNTIME_ARGUMENT_HPP
 #define BOOST_TEST_UTILS_RUNTIME_ARGUMENT_HPP
 
-// Boost.Test Runtime parameters
+// Boost.Runtime.Parameter
+#include <boost/test/utils/runtime/config.hpp>
 #include <boost/test/utils/runtime/fwd.hpp>
-#include <boost/test/utils/runtime/errors.hpp>
+#include <boost/test/utils/runtime/validation.hpp>
 
 // Boost.Test
 #include <boost/test/utils/class_properties.hpp>
 #include <boost/test/utils/rtti.hpp>
-#include <boost/test/utils/basic_cstring/compare.hpp>
-#include <boost/test/detail/throw_exception.hpp>
 
 // STL
 #include <cassert>
 
-#include <boost/test/detail/suppress_warnings.hpp>
-
 namespace boost {
-namespace runtime {
+
+namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE {
 
 // ************************************************************************** //
 // **************              runtime::argument               ************** //
 // ************************************************************************** //
 
+#ifdef BOOST_MSVC
+#  pragma warning(push)
+#  pragma warning(disable:4244)
+#endif
+
 class argument {
 public:
     // Constructor
-    argument( rtti::id_t value_type )
-    : p_value_type( value_type )
+    argument( parameter const& p, rtti::id_t value_type )
+    : p_formal_parameter( p )
+    , p_value_type( value_type )
     {}
 
     // Destructor
     virtual     ~argument()  {}
 
     // Public properties
-    rtti::id_t const    p_value_type;
+    unit_test::readonly_property<parameter const&> p_formal_parameter;
+    unit_test::readonly_property<rtti::id_t>       p_value_type;
 };
 
 // ************************************************************************** //
@@ -59,71 +64,49 @@ template<typename T>
 class typed_argument : public argument {
 public:
     // Constructor
-    explicit typed_argument( T const& v )
-    : argument( rtti::type_id<T>() )
-    , p_value( v )
+    explicit typed_argument( parameter const& p )
+    : argument( p, rtti::type_id<T>() )
+    {}
+    typed_argument( parameter const& p, T const& t )
+    : argument( p, rtti::type_id<T>() )
+    , p_value( t )
     {}
 
     unit_test::readwrite_property<T>    p_value;
 };
 
 // ************************************************************************** //
-// **************           runtime::arguments_store          ************** //
+// **************               runtime::arg_value             ************** //
 // ************************************************************************** //
 
-class arguments_store {
-public:
-    typedef std::map<cstring, argument_ptr> storage_type;
+template<typename T>
+inline T const&
+arg_value( argument const& arg_ )
+{
+    assert( arg_.p_value_type == rtti::type_id<T>() ); // detect logic error
 
-    /// Returns number of arguments in the store; mostly used for testing
-    std::size_t size() const        { return m_arguments.size(); }
+    return static_cast<typed_argument<T> const&>( arg_ ).p_value.value;
+}
 
-    /// Clears the store for reuse
-    void        clear()             { m_arguments.clear(); }
+//____________________________________________________________________________//
 
-    /// Returns true if there is an argument corresponding to the specified parameter name
-    bool        has( cstring parameter_name ) const
-    {
-        return m_arguments.find( parameter_name ) != m_arguments.end();
-    }
+template<typename T>
+inline T&
+arg_value( argument& arg_ )
+{
+    assert( arg_.p_value_type == rtti::type_id<T>() ); // detect logic error
 
-    /// Provides types access to argument value by parameter name
-    template<typename T>
-    T const&    get( cstring parameter_name ) const {
-        return const_cast<arguments_store*>(this)->get<T>( parameter_name );
-    }
+    return static_cast<typed_argument<T>&>( arg_ ).p_value.value;
+}
 
-    template<typename T>
-    T&          get( cstring parameter_name ) {
-        auto found = m_arguments.find( parameter_name );
-        BOOST_TEST_I_ASSRT( found != m_arguments.end(),
-            access_to_missing_argument() 
-                << "There is no argument provided for parameter " << parameter_name );
+#ifdef BOOST_MSVC
+#  pragma warning(pop)
+#endif
 
-        argument_ptr arg = found->second;
+//____________________________________________________________________________//
 
-        BOOST_TEST_I_ASSRT( arg->p_value_type == rtti::type_id<T>(),
-            arg_type_mismatch() << "Access with invalid type for argument corresponding to parameter "
-                                << parameter_name );
+} // namespace BOOST_TEST_UTILS_RUNTIME_PARAM_NAMESPACE
 
-        return static_cast<typed_argument<T>&>( *arg ).p_value.value;
-    }
-
-    /// Set's the argument value for specified parameter name
-    template<typename T>
-    void        set( cstring parameter_name, T const& value )
-    {
-        m_arguments[parameter_name] = argument_ptr( new typed_argument<T>( value ) );
-    }
-
-private:
-    // Data members
-    storage_type            m_arguments;
-};
-
-} // namespace runtime
 } // namespace boost
-
-#include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_UTILS_RUNTIME_ARGUMENT_HPP

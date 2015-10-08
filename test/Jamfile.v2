@@ -15,15 +15,12 @@ project
 
 #_________________________________________________________________________________________________#
 
-# lib gcov : : <name>gcov : ;
-
 rule boost.test-self-test ( test-rule : test-suite : test-name : usage-variant ? : pattern_file * : source_files * : extra-libs ? : extra-options ? )
 {
     source_files ?= $(test-suite)/$(test-name).cpp ;
     usage-variant ?= boost_unit_test_framework/<link>static ;
 
     return [ $(test-rule) $(source_files) ../build//$(usage-variant) $(extra-libs)
-#             gcov
              : #args
              : $(pattern_file)
              : # Activating -pedantic finds more gotchas
@@ -32,14 +29,13 @@ rule boost.test-self-test ( test-rule : test-suite : test-name : usage-variant ?
                <toolset>gcc:<cxxflags>-pedantic
                <toolset>gcc:<cxxflags>-Wno-long-long
                <toolset>gcc:<cxxflags>-std=c++11
-#               <toolset>gcc:<cxxflags>-E
-#               <toolset>gcc:<cxxflags>-fno-exceptions
-#               <toolset>gcc:<cxxflags>-DBOOST_NO_EXCEPTION
-#               <toolset>gcc:<cxxflags>--coverage
                <toolset>clang:<cxxflags>-Wno-c99-extensions
                <toolset>clang:<cxxflags>-std=c++11
 #               <toolset>clang:<cxxflags>-Wconversion
 #               <toolset>clang:<cxxflags>-Wno-sign-conversion
+#               <toolset>gcc:<cxxflags>-E
+#               <toolset>gcc:<cxxflags>-fno-exceptions
+#               <toolset>gcc:<cxxflags>-DBOOST_NO_EXCEPTION
 #               <toolset>clang:<cxxflags>-fno-exceptions
 #               <toolset>clang:<cxxflags>-DBOOST_NO_EXCEPTION
                <warnings>all
@@ -80,9 +76,12 @@ test-suite "utils-ts"
   [ boost.test-self-test run : utils-ts : algorithm-test ]
   [ boost.test-self-test run : utils-ts : basic_cstring-test ]
   [ boost.test-self-test run : utils-ts : class_properties-test ]
+#  [ boost.test-self-test run : utils-ts : config_file-test ]
+#  [ boost.test-self-test run : utils-ts : config_file_iterator-test ]
+  [ boost.test-self-test run : utils-ts : fixed_mapping-test ]
   [ boost.test-self-test run : utils-ts : foreach-test ]
-  [ boost.test-self-test run : utils-ts : named_params-test ]
-  [ boost.test-self-test run : utils-ts : runtime-param-test ]
+  [ boost.test-self-test run : utils-ts : ifstream_line_iterator-test : : inputs/ifstream_line_iterator.tst1
+                                                                          inputs/ifstream_line_iterator.tst2 ]
   [ boost.test-self-test run : utils-ts : token_iterator-test ]
 ;
 

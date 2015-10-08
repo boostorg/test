@@ -415,10 +415,10 @@ public:
     // translator holder interface
     virtual int operator()( boost::function<int ()> const& F )
     {
-        BOOST_TEST_I_TRY {
+        BOOST_TEST_IMPL_TRY {
             return m_next ? (*m_next)( F ) : F();
         }
-        BOOST_TEST_I_CATCH( ExceptionType, e ) {
+        BOOST_TEST_IMPL_CATCH( ExceptionType, e ) {
             m_translator( e );
             return boost::exit_exception_failure;
         }
@@ -461,11 +461,13 @@ public:
     // Constructor
     explicit    system_error( char const* exp );
 
-    long const          p_errno;
-    char const* const   p_failed_exp;
+    unit_test::readonly_property<long>          p_errno;
+    unit_test::readonly_property<char const*>   p_failed_exp;
 };
 
-#define BOOST_TEST_SYS_ASSERT( cond ) BOOST_TEST_I_ASSRT( cond, ::boost::system_error( BOOST_STRINGIZE( exp ) ) )
+#define BOOST_TEST_SYS_ASSERT( exp ) \
+    if( (exp) ) ; \
+    else BOOST_TEST_IMPL_THROW( ::boost::system_error( BOOST_STRINGIZE( exp ) ) )
 
 // ************************************************************************** //
 // **************Floating point exception management interface ************** //

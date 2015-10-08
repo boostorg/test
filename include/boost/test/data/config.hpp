@@ -41,7 +41,8 @@
 
 //____________________________________________________________________________//
 
-#define BOOST_TEST_DS_ERROR( msg )        BOOST_TEST_I_THROW( std::logic_error( msg ) )
-#define BOOST_TEST_DS_ASSERT( cond, msg ) BOOST_TEST_I_ASSRT( cond, std::logic_error( msg ) )
+#define BOOST_TEST_DS_ERROR( msg ) BOOST_TEST_IMPL_THROW( std::logic_error( msg ) )
+#define BOOST_TEST_DS_ASSERT( cond, msg ) if( cond ) {} else BOOST_TEST_DS_ERROR( msg )
 
 #endif // BOOST_TEST_DATA_CONFIG_HPP_112611GER
+

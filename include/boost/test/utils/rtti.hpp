@@ -36,7 +36,7 @@ struct rttid_holder {
 private:
     struct rttid {};
 
-    static rttid const& inst() { static rttid s_inst; return s_inst; }
+    static rttid const& inst() { static rttid s_inst;  return s_inst; }
 };
 
 } // namespace rtti_detail

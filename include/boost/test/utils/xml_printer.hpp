@@ -17,6 +17,7 @@
 
 // Boost.Test
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
+#include <boost/test/utils/fixed_mapping.hpp>
 #include <boost/test/utils/custom_manip.hpp>
 #include <boost/test/utils/foreach.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
@@ -41,19 +42,21 @@ namespace unit_test {
 inline void
 print_escaped( std::ostream& where_to, const_string value )
 {
-    static std::map<char,char const*> const char_type{{
-        {'<' , "lt"},
-        {'>' , "gt"},
-        {'&' , "amp"},
-        {'\'', "apos"},
-        {'"' , "quot"}
-    }};
+    static fixed_mapping<char,char const*> char_type(
+        '<' , "lt",
+        '>' , "gt",
+        '&' , "amp",
+        '\'', "apos" ,
+        '"' , "quot",
+
+        0
+    );
 
     BOOST_TEST_FOREACH( char, c, value ) {
-        auto found_ref = char_type.find( c );
+        char const* ref = char_type[c];
 
-        if( found_ref != char_type.end() )
-            where_to << '&' << found_ref->second << ';';
+        if( ref )
+            where_to << '&' << ref << ';';
         else
             where_to << c;
     }

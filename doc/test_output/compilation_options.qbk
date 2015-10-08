@@ -35,6 +35,9 @@ cases. There are no limitations on number of output stream resets either.
 
 [endsect] [/section:log_ct_output_stream_redirection]
 
+
+
+
 [#ref_log_level_explanations][section:log_ct_log_level Log level configuration]
 If you need to enforce specific log level from within your test module use the following interface:
 
@@ -43,8 +46,7 @@ If you need to enforce specific log level from within your test module use the f
 ``
 
 In regular circumstances you shouldn't use this interface, since you not only override default log level, but also
-the one supplied at test execution time. Prefer to use runtime parameter
-[link boost_test.utf_reference.rt_param_reference.log_level `log_level`] for log level selection.
+the one supplied at test execution time. Prefer to use runtime parameters __param_log_level__ for log level selection.
 
 [bt_example example51..Compile-time log level configuration..run]
 

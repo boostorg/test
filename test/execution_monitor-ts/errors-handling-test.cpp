@@ -185,11 +185,10 @@ BOOST_AUTO_TEST_CASE( test_errors_handling )
             framework::run( test );
 
             unit_test_log.set_stream( std::cout );
-            unit_test_log.set_format( runtime_config::get<output_format>( runtime_config::LOG_FORMAT ) );
-
-            log_level ll = runtime_config::get<log_level>( runtime_config::LOG_LEVEL );
-            unit_test_log.set_threshold_level( ll != invalid_log_level? ll : log_all_errors );
-
+            unit_test_log.set_format( runtime_config::log_format() );
+            unit_test_log.set_threshold_level( runtime_config::log_level() != invalid_log_level
+                                                ? runtime_config::log_level()
+                                                : log_all_errors );
             BOOST_CHECK( test_output.match_pattern() );
         }
     }

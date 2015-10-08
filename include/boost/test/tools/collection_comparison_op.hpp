@@ -325,7 +325,7 @@ compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::GE<L, R> >*
 // ********* specialization of comparison operators for collections ********* //
 // ************************************************************************** //
 
-#define DEFINE_COLLECTION_COMPARISON( oper, name, rev )             \
+#define DEFINE_COLLECTION_COMPARISON( oper, name, _ )               \
 template<typename Lhs,typename Rhs>                                 \
 struct name<Lhs,Rhs,typename boost::enable_if_c<                    \
     unit_test::is_forward_iterable<Lhs>::value &&                   \
@@ -356,10 +356,6 @@ public:                                                             \
     report( std::ostream&,                                          \
             PrevExprType const&,                                    \
             Rhs const& ) {}                                         \
-                                                                    \
-    static char const* revert()                                     \
-    { return " " #rev " "; }                                        \
-                                                                    \
 };                                                                  \
 /**/
 

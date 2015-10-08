@@ -15,7 +15,6 @@
 // Boost.Test
 #define BOOST_TEST_MODULE single header test
 #include <boost/test/included/unit_test.hpp>
-using namespace boost::unit_test;
 
 BOOST_AUTO_TEST_CASE( test )
 {

@@ -185,10 +185,10 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
 {
     int result_code = 0;
 
-    BOOST_TEST_I_TRY {
+    BOOST_TEST_IMPL_TRY {
         framework::init( init_func, argc, argv );
 
-        if( runtime_config::get<bool>( runtime_config::WAIT_FOR_DEBUGGER ) ) {
+        if( runtime_config::wait_for_debugger() ) {
             results_reporter::get_stream() << "Press any key to continue..." << std::endl;
 
             std::getchar();
@@ -197,9 +197,8 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
 
         framework::finalize_setup_phase();
 
-        output_format list_cont = runtime_config::get<output_format>( runtime_config::LIST_CONTENT );
-        if( list_cont != unit_test::OF_INVALID ) {
-            if( list_cont == unit_test::OF_DOT ) {
+        if( runtime_config::list_content() != unit_test::OF_INVALID ) {
+            if( runtime_config::list_content() == unit_test::OF_DOT ) {
                 ut_detail::dot_content_reporter reporter( results_reporter::get_stream() );
 
                 traverse_test_tree( framework::master_test_suite().p_id, reporter, true );
@@ -213,7 +212,7 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
             return boost::exit_success;
         }
 
-        if( runtime_config::get<bool>( runtime_config::LIST_LABELS ) ) {
+        if( runtime_config::list_labels() ) {
             ut_detail::labels_collector collector;
 
             traverse_test_tree( framework::master_test_suite().p_id, collector, true );
@@ -230,24 +229,24 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
 
         results_reporter::make_report();
 
-        result_code = !runtime_config::get<bool>( runtime_config::RESULT_CODE )
+        result_code = runtime_config::no_result_code()
                         ? boost::exit_success
                         : results_collector.results( framework::master_test_suite().p_id ).result_code();
     }
-    BOOST_TEST_I_CATCH0( framework::nothing_to_test ) {
+    BOOST_TEST_IMPL_CATCH0( framework::nothing_to_test ) {
         result_code = boost::exit_success;
     }
-    BOOST_TEST_I_CATCH( framework::internal_error, ex ) {
+    BOOST_TEST_IMPL_CATCH( framework::internal_error, ex ) {
         results_reporter::get_stream() << "Boost.Test framework internal error: " << ex.what() << std::endl;
 
         result_code = boost::exit_exception_failure;
     }
-    BOOST_TEST_I_CATCH( framework::setup_error, ex ) {
+    BOOST_TEST_IMPL_CATCH( framework::setup_error, ex ) {
         results_reporter::get_stream() << "Test setup error: " << ex.what() << std::endl;
 
         result_code = boost::exit_exception_failure;
     }
-    BOOST_TEST_I_CATCHALL() {
+    BOOST_TEST_IMPL_CATCHALL() {
         results_reporter::get_stream() << "Boost.Test framework internal error: unknown reason" << std::endl;
 
         result_code = boost::exit_exception_failure;

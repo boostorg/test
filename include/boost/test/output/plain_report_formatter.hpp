@@ -33,8 +33,6 @@ namespace output {
 
 class plain_report_formatter : public results_reporter::format {
 public:
-    plain_report_formatter() : m_indent( 0 ), m_color_output( false ) {}
-
     // Formatter interface
     void    results_report_start( std::ostream& ostr );
     void    results_report_finish( std::ostream& ostr );
@@ -47,7 +45,6 @@ public:
 private:
     // Data members
     counter_t m_indent;
-    bool    m_color_output;
 };
 
 } // namespace output

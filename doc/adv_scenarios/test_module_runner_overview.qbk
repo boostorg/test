@@ -33,7 +33,7 @@ The test runner may return one of the following values:
 [[Value][Meaning]]
 [[`boost::exit_success`][
 * No errors occurred during testing, or
-* the success result was forced with command-line argument `--[link boost_test.utf_reference.rt_param_reference.result_code `result_code`]=no`.]]
+* the success result was forced with command-line argument `--__param_result_code__=no`.]]
 [[`boost::exit_test_failure`][
 * Non-fatal errors detected and no uncaught exceptions were thrown during testing, or
 * the initialization of the __UTF__ failed. ]]

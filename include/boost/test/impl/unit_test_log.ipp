@@ -20,6 +20,7 @@
 #include <boost/test/unit_test_log_formatter.hpp>
 #include <boost/test/execution_monitor.hpp>
 #include <boost/test/framework.hpp>
+
 #include <boost/test/unit_test_parameters.hpp>
 
 #include <boost/test/utils/basic_cstring/compare.hpp>
@@ -84,8 +85,8 @@ namespace {
 struct unit_test_log_impl {
     // Constructor
     unit_test_log_impl()
-    : m_stream( &std::cout )
-    , m_stream_state_saver( new io_saver_type( std::cout ) )
+    : m_stream( runtime_config::log_sink() )
+    , m_stream_state_saver( new io_saver_type( *m_stream ) )
     , m_threshold_level( log_all_errors )
     , m_log_formatter( new output::compiler_log_formatter )
     {
@@ -109,14 +110,11 @@ struct unit_test_log_impl {
     log_checkpoint_data m_checkpoint_data;
 
     // helper functions
-    std::ostream&       stream()
-    {
-        return *m_stream;
-    }
+    std::ostream&       stream()            { return *m_stream; }
     void                set_checkpoint( const_string file, std::size_t line_num, const_string msg )
     {
         assign_op( m_checkpoint_data.m_message, msg, 0 );
-        m_checkpoint_data.m_file_name   = file;
+        m_checkpoint_data.m_file_name    = file;
         m_checkpoint_data.m_line_num    = line_num;
     }
 };
@@ -135,7 +133,7 @@ unit_test_log_t::test_start( counter_t test_cases_amount )
 
     s_log_impl().m_log_formatter->log_start( s_log_impl().stream(), test_cases_amount );
 
-    if( runtime_config::get<bool>( runtime_config::BUILD_INFO ) )
+    if( runtime_config::show_build_info() )
         s_log_impl().m_log_formatter->log_build_info( s_log_impl().stream() );
 
     s_log_impl().m_entry_in_progress = false;

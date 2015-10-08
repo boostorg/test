@@ -294,8 +294,9 @@ report_assertion( assertion_result const&   ar,
 {
     using namespace unit_test;
 
-    BOOST_TEST_I_ASSRT( framework::current_test_case_id() != INV_TEST_UNIT_ID,
-                        std::runtime_error( "Can't use testing tools outside of test case implementation." ) );
+    if( framework::current_test_case_id() == INV_TEST_UNIT_ID )
+        BOOST_TEST_IMPL_THROW( 
+            std::runtime_error( "can't use testing tools outside of test case implementation" ) );
 
     if( !!ar )
         tl = PASS;
@@ -356,7 +357,7 @@ report_assertion( assertion_result const&   ar,
 
         framework::test_unit_aborted( framework::current_test_case() );
 
-        BOOST_TEST_I_THROW( execution_aborted() );
+        BOOST_TEST_IMPL_THROW( execution_aborted() );
     }
 
     return true;

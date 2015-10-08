@@ -17,8 +17,8 @@
 
 // Boost.Test
 #include <boost/test/progress_monitor.hpp>
-#include <boost/test/unit_test_parameters.hpp>
 
+#include <boost/test/unit_test_parameters.hpp>
 #include <boost/test/utils/setcolor.hpp>
 
 #include <boost/test/tree/test_unit.hpp>
@@ -102,20 +102,14 @@ namespace {
 struct progress_monitor_impl {
     // Constructor
     progress_monitor_impl()
-    : m_stream( &std::cout )
-    , m_color_output( false )
-    {
-    }
+        : m_stream( runtime_config::log_sink() )
+    {}
 
-    std::ostream*                   m_stream;
-    scoped_ptr<progress_display>    m_progress_display;
-    bool                            m_color_output;
+    std::ostream*                m_stream;
+    scoped_ptr<progress_display> m_progress_display;
 };
 
 progress_monitor_impl& s_pm_impl() { static progress_monitor_impl the_inst; return the_inst; }
-
-#define PM_SCOPED_COLOR() \
-    BOOST_TEST_SCOPE_SETCOLOR( s_pm_impl().m_color_output, *s_pm_impl().m_stream, term_attr::BRIGHT, term_color::MAGENTA )
 
 } // local namespace
 
@@ -124,9 +118,7 @@ progress_monitor_impl& s_pm_impl() { static progress_monitor_impl the_inst; retu
 void
 progress_monitor_t::test_start( counter_t test_cases_amount )
 {
-    s_pm_impl().m_color_output = runtime_config::get<bool>( runtime_config::COLOR_OUTPUT );
-
-    PM_SCOPED_COLOR();
+    BOOST_TEST_SCOPE_SETCOLOR( *s_pm_impl().m_stream, term_attr::BRIGHT, term_color::MAGENTA );
 
     s_pm_impl().m_progress_display.reset( new progress_display( test_cases_amount, *s_pm_impl().m_stream ) );
 }
@@ -136,7 +128,7 @@ progress_monitor_t::test_start( counter_t test_cases_amount )
 void
 progress_monitor_t::test_aborted()
 {
-    PM_SCOPED_COLOR();
+    BOOST_TEST_SCOPE_SETCOLOR( *s_pm_impl().m_stream, term_attr::BRIGHT, term_color::MAGENTA );
 
     (*s_pm_impl().m_progress_display) += s_pm_impl().m_progress_display->count();
 }
@@ -146,7 +138,7 @@ progress_monitor_t::test_aborted()
 void
 progress_monitor_t::test_unit_finish( test_unit const& tu, unsigned long )
 {
-    PM_SCOPED_COLOR();
+    BOOST_TEST_SCOPE_SETCOLOR( *s_pm_impl().m_stream, term_attr::BRIGHT, term_color::MAGENTA );
 
     if( tu.p_type == TUT_CASE )
         ++(*s_pm_impl().m_progress_display);
@@ -157,7 +149,7 @@ progress_monitor_t::test_unit_finish( test_unit const& tu, unsigned long )
 void
 progress_monitor_t::test_unit_skipped( test_unit const& tu, const_string /*reason*/ )
 {
-    PM_SCOPED_COLOR();
+    BOOST_TEST_SCOPE_SETCOLOR( *s_pm_impl().m_stream, term_attr::BRIGHT, term_color::MAGENTA );
 
     test_case_counter tcc;
     traverse_test_tree( tu, tcc );
@@ -174,8 +166,6 @@ progress_monitor_t::set_stream( std::ostream& ostr )
 }
 
 //____________________________________________________________________________//
-
-#undef PM_SCOPED_COLOR
 
 } // namespace unit_test
 } // namespace boost

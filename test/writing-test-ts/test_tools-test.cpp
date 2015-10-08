@@ -128,14 +128,11 @@ BOOST_AUTO_TEST_CASE( name )                                        \
     ut::framework::finalize_setup_phase( impl->p_id );              \
     ut::framework::run( impl );                                     \
                                                                     \
-    ut::log_level ll = ut::runtime_config::get<ut::log_level>(      \
-        ut::runtime_config::LOG_LEVEL );                            \
-    ut::output_format lf = ut::runtime_config::get<ut::output_format>( \
-        ut::runtime_config::LOG_FORMAT );                           \
-                                                                    \
     ut::unit_test_log.set_threshold_level(                          \
-        ll != ut::invalid_log_level ? ll : ut::log_all_errors );    \
-    ut::unit_test_log.set_format( lf );                             \
+        ut::runtime_config::log_level() != ut::invalid_log_level    \
+            ? ut::runtime_config::log_level()                       \
+            : ut::log_all_errors );                                 \
+    ut::unit_test_log.set_format( ut::runtime_config::log_format());\
     ut::unit_test_log.set_stream( std::cout );                      \
     BOOST_CHECK( ots().match_pattern() );                           \
 }                                                                   \
