@@ -54,11 +54,4 @@ BOOST_AUTO_TEST_CASE( test_seed_with_grid )
     BOOST_TEST( (data::ds_detail::seed{} ->* arr1 * arr2).size() == 9 );
 }
 
-//____________________________________________________________________________//
-
-BOOST_AUTO_TEST_CASE( test_seed_with_init_list )
-{
-    BOOST_TEST( (data::ds_detail::seed{} ->* data::make({1,2,3})).size() == 3 );
-}
-
 // EOF

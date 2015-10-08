@@ -53,9 +53,6 @@ class collection;
 
 template<typename T>
 class array;
-
-template<typename T>
-class init_list;
 #endif
 
 // ************************************************************************** //
@@ -148,13 +145,6 @@ make( char* str );
 //! @overload boost::unit_test::data::make()
 inline monomorphic::singleton<char const*>
 make( char const* str );
-
-//____________________________________________________________________________//
-
-//! @overload boost::unit_test::data::make()
-template<typename T>
-inline monomorphic::init_list<T>
-make( std::initializer_list<T>&& );
 
 //____________________________________________________________________________//
 

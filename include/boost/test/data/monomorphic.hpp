@@ -15,7 +15,6 @@
 // Boost.Test
 #include <boost/test/data/monomorphic/array.hpp>
 #include <boost/test/data/monomorphic/collection.hpp>
-#include <boost/test/data/monomorphic/initializer_list.hpp>
 #include <boost/test/data/monomorphic/generate.hpp>
 #include <boost/test/data/monomorphic/generators.hpp>
 #include <boost/test/data/monomorphic/grid.hpp>

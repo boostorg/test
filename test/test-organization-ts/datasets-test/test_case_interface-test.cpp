@@ -26,17 +26,17 @@ namespace data=boost::unit_test::data;
 int samples1[] = {1,2,3};
 int index1 = 0;
 
-BOOST_DATA_TEST_CASE( test_case_interface_01, data::make({1,2,3}) )
+BOOST_DATA_TEST_CASE( test_case_interface_01, samples1 )
 {
     BOOST_TEST( sample == samples1[index1++] );
 }
 
 //____________________________________________________________________________//
 
-std::vector<std::string> samples2 = {"qwerty","asdfg"};
+char const* samples2[] = {"qwerty","asdfg"};
 int index2 = 0;
 
-BOOST_DATA_TEST_CASE( test_case_interface_02, samples2, str )
+BOOST_DATA_TEST_CASE( test_case_interface_02, data::make(samples2), str )
 {
     BOOST_TEST( str == samples2[index2++] );
 }
@@ -46,7 +46,7 @@ BOOST_DATA_TEST_CASE( test_case_interface_02, samples2, str )
 int samples3[] = {7,9};
 int index3 = 0;
 
-BOOST_DATA_TEST_CASE( test_case_interface_03, data::make({1,2,3}) + samples3, val )
+BOOST_DATA_TEST_CASE( test_case_interface_03, samples1 + samples3, val )
 {
     if( index3 < 3 )
         BOOST_TEST( val == samples1[index3] );
@@ -60,7 +60,7 @@ BOOST_DATA_TEST_CASE( test_case_interface_03, data::make({1,2,3}) + samples3, va
 
 int index4 = 0;
 
-BOOST_DATA_TEST_CASE( test_case_interface_04, samples2 ^ data::make({7,9}), str, intval )
+BOOST_DATA_TEST_CASE( test_case_interface_04, samples2 ^ samples3, str, intval )
 {
     BOOST_TEST( str == samples2[index4] );
     BOOST_TEST( intval == samples3[index4] );
