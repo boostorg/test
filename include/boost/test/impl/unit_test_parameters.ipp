@@ -44,7 +44,6 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/test/detail/enable_warnings.hpp>
 #include <boost/optional.hpp>
-#include <boost/cstdlib.hpp>
 
 // STL
 #include <cstdlib>
@@ -576,7 +575,7 @@ init( int& argc, char** argv )
 
         // Parse CLA they take precedence over  environment
         parser.reset( new rt::cla::parser( s_parameters_store, (rt::end_of_params = "--", rt::negation_prefix = "no_") ) );
-        argc = parser->parse( argc, argv, s_arguments_store );
+        parser->parse( argc, argv, s_arguments_store );
 
         // Try to fetch missing arguments from environment
         rt::env::fetch_absent( s_parameters_store, s_arguments_store );
@@ -587,11 +586,11 @@ init( int& argc, char** argv )
         // Report help if requested
         if( runtime_config::get<bool>( USAGE ) ) {
             parser->usage( std::cerr );
-            BOOST_TEST_I_THROW( framework::nothing_to_test( boost::exit_success ) );
+            BOOST_TEST_I_THROW( framework::nothing_to_test() );
         }
         else if( s_arguments_store.has( HELP ) ) {
             parser->help( std::cerr, s_parameters_store, runtime_config::get<std::string>( HELP ) );
-            BOOST_TEST_I_THROW( framework::nothing_to_test( boost::exit_success ) );
+            BOOST_TEST_I_THROW( framework::nothing_to_test() );
         }
 
         // A bit of business logic: output_format takes precedence over log/report formats
@@ -610,7 +609,7 @@ init( int& argc, char** argv )
         BOOST_TEST_FOREACH( rt::cstring, name, ex.m_amb_candidates )
             std::cerr << "   " << name << "\n";
 
-        BOOST_TEST_I_THROW( framework::nothing_to_test( boost::exit_exception_failure ) );
+        BOOST_TEST_I_THROW( framework::nothing_to_test() );
     }
     BOOST_TEST_I_CATCH( rt::unrecognized_param, ex ) {
         std::cerr << ex.msg << "\n";
@@ -626,7 +625,7 @@ init( int& argc, char** argv )
             parser->usage( std::cerr );
         }
         
-        BOOST_TEST_I_THROW( framework::nothing_to_test( boost::exit_exception_failure ) );
+        BOOST_TEST_I_THROW( framework::nothing_to_test() );
     }
     BOOST_TEST_I_CATCH( rt::input_error, ex ) {
         std::cerr << ex.msg << "\n\n";
@@ -634,7 +633,7 @@ init( int& argc, char** argv )
         if( parser )
             parser->usage( std::cerr, ex.param_name );
         
-        BOOST_TEST_I_THROW( framework::nothing_to_test( boost::exit_exception_failure ) );
+        BOOST_TEST_I_THROW( framework::nothing_to_test() );
     }
 }
 
