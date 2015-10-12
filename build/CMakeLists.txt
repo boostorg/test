@@ -12,6 +12,8 @@ project(BoostTest)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_MACOSX_RPATH ON)
 
+add_definitions(-DBOOST_TEST_NO_LIB)
+
 # build type, by default to release (with optimisations) 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "Setting build type to 'Release' as none was specified.")
@@ -34,7 +36,6 @@ if(NOT MSVC)
   # c++11 options
   check_cxx_compiler_flag(-std=c++11 HAS_CXX11_FLAG)
   check_cxx_compiler_flag(-std=c++0x HAS_CXX0X_FLAG)
-  check_cxx_compiler_flag(-pthread   HAS_PTHREAD_FLAG)
   if(HAS_CXX11_FLAG)
     message(STATUS "Compiling with C++11 support")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -102,7 +103,7 @@ add_library(boost_test_framework
             SHARED
             ${BOOST_UTF_HEADERS}
             ${BOOST_UTF_SRC})
-target_compile_definitions(boost_test_framework PRIVATE "-DBOOST_TEST_DYN_LINK=1")
+target_compile_definitions(boost_test_framework PUBLIC "-DBOOST_TEST_DYN_LINK=1")
 target_include_directories(boost_test_framework PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
 set_target_properties(boost_test_framework PROPERTIES FOLDER "UTF")
 
@@ -110,6 +111,7 @@ set_target_properties(boost_test_framework PROPERTIES FOLDER "UTF")
 
 # adding the tests
 
+# documentation tests
 file(GLOB_RECURSE
      BOOST_UTF_DOC_EXAMPLES
      ${BOOST_TEST_ROOT_DIR}/doc/examples/*.cpp)
@@ -129,3 +131,20 @@ foreach(_h IN LISTS BOOST_UTF_DOC_EXAMPLES)
     set_tests_properties(doc-${_hh} PROPERTIES WILL_FAIL TRUE)
   endif()
 endforeach()
+
+
+# unit tests
+
+set(BOOST_TEST_UNITTESTS_FOLDER ${BOOST_TEST_ROOT_DIR}/test)
+
+file(GLOB_RECURSE
+     BOOST_TEST_UNITTESTS_DATASET
+     ${BOOST_TEST_UNITTESTS_FOLDER}/test-organization-ts/datasets-test/*.cpp
+     ${BOOST_TEST_UNITTESTS_FOLDER}/test-organization-ts/datasets-test/*.hpp)
+add_executable(boost_test_datasets ${BOOST_TEST_UNITTESTS_DATASET})
+target_include_directories(boost_test_datasets PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
+target_link_libraries(boost_test_datasets boost_test_framework)
+target_compile_definitions(boost_test_datasets PUBLIC "BOOST_TEST_DYN_LINK=1")
+set_target_properties(boost_test_datasets PROPERTIES FOLDER "Unit tests")
+add_test(NAME bt-unittest-dataset
+         COMMAND boost_test_datasets)
