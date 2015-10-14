@@ -110,6 +110,12 @@ class type_info;
 #define BOOST_PP_VARIADICS 1
 #endif
 
+#if BOOST_CLANG
+#define BOOST_PP_VARIADICS 1
+#endif
 
+#if defined(BOOST_GCC) && (BOOST_GCC >= 4 * 10000 + 8 * 100)
+#define BOOST_PP_VARIADICS 1
+#endif
 
 #endif // BOOST_TEST_CONFIG_HPP_071894GER
