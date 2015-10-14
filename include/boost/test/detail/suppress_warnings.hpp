@@ -26,7 +26,13 @@
 # pragma warning(disable: 4511) // 'class' : copy constructor could not be generated
 #endif
 
-#ifdef BOOST_CLANG
-#pragma clang diagnostic push
-//#pragma clang diagnostic ignored "-Wlogical-op-parentheses"
+#if BOOST_CLANG
+# pragma clang diagnostic push
+# pragma clang diagnostic ignored "-Wvariadic-macros"
 #endif
+
+#if defined(BOOST_GCC)
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-Wvariadic-macros"
+#endif
+

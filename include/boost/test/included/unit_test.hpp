@@ -12,6 +12,9 @@
 #ifndef BOOST_INCLUDED_UNIT_TEST_FRAMEWORK_HPP_071894GER
 #define BOOST_INCLUDED_UNIT_TEST_FRAMEWORK_HPP_071894GER
 
+#include <boost/test/detail/config.hpp>
+#include <boost/test/detail/suppress_warnings.hpp>
+
 #include <boost/test/impl/compiler_log_formatter.ipp>
 #include <boost/test/impl/debug.ipp>
 #include <boost/test/impl/decorator.ipp>
@@ -32,5 +35,7 @@
 
 #define BOOST_TEST_INCLUDED
 #include <boost/test/unit_test.hpp>
+
+#include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_INCLUDED_UNIT_TEST_FRAMEWORK_HPP_071894GER
