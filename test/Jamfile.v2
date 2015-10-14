@@ -129,8 +129,8 @@ test-suite "framework-ts"
 test-suite "writing-test-ts"
 :
   [ boost.test-self-test run : writing-test-ts : assertion-construction-test : : : : : : $(requirements_boost_test_full_support) ]
-  [ boost.test-self-test run : writing-test-ts : boost_check_equal-str-test : : : : : : $(requirements_boost_test_full_support)  ]
-  [ boost.test-self-test run : writing-test-ts : collection-comparison-test  : : : : : : $(requirements_boost_test_full_support) ]
+  [ boost.test-self-test run : writing-test-ts : boost_check_equal-str-test ]
+  [ boost.test-self-test run : writing-test-ts : collection-comparison-test : : : : : : [ requires cxx11_auto_declarations cxx11_decltype ] ] # required by the test content
   [ boost.test-self-test run : writing-test-ts : dont_print_log_value-test : : : : : : $(requirements_datasets) ]
   [ boost.test-self-test run : writing-test-ts : fp-comparisons-test : : : : : : $(requirements_boost_test_full_support) ]
   [ boost.test-self-test run : writing-test-ts : fp-multiprecision-comparison-test : : : : : : $(requirements_boost_test_full_support) ]
@@ -145,10 +145,10 @@ test-suite "writing-test-ts"
 
 test-suite "test-organization-ts"
 :
-  [ boost.test-self-test run : test-organization-ts : parameterized_test-test : : : : : : $(requirements_boost_test_full_support) ]
+  [ boost.test-self-test run : test-organization-ts : parameterized_test-test ]
   [ boost.test-self-test run : test-organization-ts : test_case_template-test ]
   [ boost.test-self-test run : test-organization-ts : datasets-test : : : [ glob test-organization-ts/datasets-test/*.cpp ] : : : $(requirements_datasets) ]
-  [ boost.test-self-test run : test-organization-ts : test_unit-order-test  : : : : : : $(requirements_boost_test_full_support) ]
+  [ boost.test-self-test run : test-organization-ts : test_unit-order-test ]
   [ boost.test-self-test run : test-organization-ts : test-tree-management-test ]
 ;
 

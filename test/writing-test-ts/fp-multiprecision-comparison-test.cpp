@@ -106,9 +106,11 @@ BOOST_AUTO_TEST_CASE(cpp_float_test_check_close_noet)
   BOOST_CHECK_CLOSE(a, b, eps * 100); // Expected to pass (because tolerance is as percent).
   BOOST_CHECK_CLOSE_FRACTION(a, b, eps); // Expected to pass (because tolerance is as fraction).
 
+#ifndef BOOST_TEST_MACRO_LIMITED_SUPPORT
   namespace tt = boost::test_tools;
   BOOST_TEST( a == b, tt::tolerance( tt::fpc::percent_tolerance( eps * 100 ) ) );
   BOOST_TEST( a == b, tt::tolerance( eps ) );
+#endif
 
 //] [/expression_template_1]git
 
@@ -132,10 +134,11 @@ BOOST_AUTO_TEST_CASE(cpp_float_test_check_close_et)
   BOOST_CHECK_CLOSE(a, b, eps * 100); // Expected to pass (because tolerance is as percent).
   BOOST_CHECK_CLOSE_FRACTION(a, b, eps); // Expected to pass (because tolerance is as fraction).
 
+#ifndef BOOST_TEST_MACRO_LIMITED_SUPPORT
   namespace tt = boost::test_tools;
   BOOST_TEST( a == b, tt::tolerance( tt::fpc::percent_tolerance<cpp_dec_float_50_et>( eps * 100 ) ) );
   BOOST_TEST( a == b, tt::tolerance( eps ) );
-
+#endif
   /*`Using `cpp_dec_float_50` with the default expression template use switched on,
   the compiler error message for `BOOST_CHECK_CLOSE_FRACTION(a, b, eps); would be:
   */
@@ -159,4 +162,3 @@ Output:
   *** No errors detected
 
 */
-

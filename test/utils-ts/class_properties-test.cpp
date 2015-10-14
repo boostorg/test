@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
 //  Description : unit test for class properties facility
+//  Note: this file should be compatible with C++03 compilers (features in boost.test v2)
 // ***************************************************************************
 
 // Boost.Test
@@ -134,7 +131,10 @@ BOOST_AUTO_TEST_CASE( test_readonly_property )
     BOOST_TEST( p_b->foo() == 1 );
 
     BOOST_TEST( (p_one ^ 3) == 2 ); // ^ has lower precedence than ==
+#ifndef BOOST_TEST_MACRO_LIMITED_SUPPORT
+    // complex expressions (on the left) not understood by boost.test v3 in C++03 mode
     BOOST_TEST( p_two / 2 == 1 ); // / has higher precedence than ==
+#endif
 
     BOOST_TEST( !p_b_ptr );
 
