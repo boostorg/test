@@ -13,13 +13,13 @@
 // ***************************************************************************
 
 // Boost.Test
-#define BOOST_TEST_MODULE shared library test 
+#define BOOST_TEST_MODULE shared library test
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE( test )
 {
     int i = 1;
-    BOOST_TEST( i*i == 1 );
+    BOOST_CHECK( i*i == 1 );
 }
 
 //____________________________________________________________________________//

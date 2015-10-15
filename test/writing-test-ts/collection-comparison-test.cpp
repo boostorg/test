@@ -139,4 +139,11 @@ BOOST_AUTO_TEST_CASE( test_lexicographic_ge )
 
 //____________________________________________________________________________//
 
+BOOST_AUTO_TEST_CASE( test_xollction_of_collection_comp )
+{
+    BOOST_TEST( std::string("abc") == std::string("abc") );
+}
+
+//____________________________________________________________________________//
+
 // EOF

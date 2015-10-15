@@ -27,6 +27,7 @@ BOOST_AUTO_TEST_CASE( check_is_cstring_concept )
 
 //____________________________________________________________________________//
 
+
 BOOST_AUTO_TEST_CASE( check_string_compare )
 {
     char const* buf_ptr_cch     = "abc";
@@ -45,11 +46,13 @@ BOOST_AUTO_TEST_CASE( check_string_compare )
     BOOST_TEST(buf_ptr_cch == buf_array_ch);
     BOOST_TEST(buf_ptr_cch == buf_str);
 
+#ifndef BOOST_TEST_MACRO_LIMITED_SUPPORT
     BOOST_TEST(buf_array_cch == buf_ptr_cch);
     BOOST_TEST(buf_array_cch == buf_array_cch);
     BOOST_TEST(buf_array_cch == buf_ptr_ch);
     BOOST_TEST(buf_array_cch == buf_array_ch);
     BOOST_TEST(buf_array_cch == buf_str);
+#endif
 
     BOOST_TEST(buf_ptr_ch == buf_ptr_cch);
     BOOST_TEST(buf_ptr_ch == buf_array_cch);
@@ -57,11 +60,13 @@ BOOST_AUTO_TEST_CASE( check_string_compare )
     BOOST_TEST(buf_ptr_ch == buf_array_ch);
     BOOST_TEST(buf_ptr_ch == buf_str);
 
+#ifndef BOOST_TEST_MACRO_LIMITED_SUPPORT
     BOOST_TEST(buf_array_ch == buf_ptr_cch);
     BOOST_TEST(buf_array_ch == buf_array_cch);
     BOOST_TEST(buf_array_ch == buf_ptr_ch);
     BOOST_TEST(buf_array_ch == buf_array_ch);
     BOOST_TEST(buf_array_ch == buf_str);
+#endif
 
     BOOST_TEST(buf_str == buf_ptr_cch);
     BOOST_TEST(buf_str == buf_array_cch);

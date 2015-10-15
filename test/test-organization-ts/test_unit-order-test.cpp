@@ -89,7 +89,12 @@ struct _3cases {
     {
         tu_order_collector res = run_tree( master );
 
+#ifndef BOOST_TEST_MACRO_LIMITED_SUPPORT
         BOOST_TEST( expected_order == res.m_order, tt::per_element() );
+#else
+        BOOST_CHECK_EQUAL_COLLECTIONS(expected_order.begin(), expected_order.end(),
+                                      res.m_order.begin(), res.m_order.end());
+#endif
     }
 
     ut::test_suite* master;
@@ -187,7 +192,13 @@ struct _2suites_4_cases {
     {
         tu_order_collector res = run_tree( master );
 
+#ifndef BOOST_TEST_MACRO_LIMITED_SUPPORT
         BOOST_TEST( expected_order == res.m_order, tt::per_element() );
+#else
+        BOOST_CHECK_EQUAL_COLLECTIONS(expected_order.begin(), expected_order.end(),
+                                      res.m_order.begin(), res.m_order.end());
+#endif
+
     }
 
     ut::test_suite* master;
