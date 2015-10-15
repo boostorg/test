@@ -41,6 +41,7 @@ rule boost.test-self-test ( test-rule : test-suite : test-name : usage-variant ?
                # So deactivate those warnings again
                <toolset>gcc:<cxxflags>-pedantic
                <toolset>gcc:<cxxflags>-Wno-long-long
+               <toolset>gcc:<cxxflags>-Wno-variadic-macros
                <toolset>clang:<cxxflags>-Wno-c99-extensions
                <warnings>all
                $(extra-options)
