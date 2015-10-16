@@ -106,6 +106,10 @@ class type_info;
 #define BOOST_TEST_MAIN BOOST_TEST_MODULE
 #endif
 
+
+
+#ifndef BOOST_PP_VARIADICS /* we can change this only if not already defined) */
+
 #ifdef __PGI
 #define BOOST_PP_VARIADICS 1
 #endif
@@ -117,5 +121,7 @@ class type_info;
 #if defined(BOOST_GCC) && (BOOST_GCC >= 4 * 10000 + 8 * 100)
 #define BOOST_PP_VARIADICS 1
 #endif
+
+#endif /* ifndef BOOST_PP_VARIADICS */
 
 #endif // BOOST_TEST_CONFIG_HPP_071894GER
