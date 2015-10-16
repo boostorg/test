@@ -51,12 +51,12 @@ class xrange_t {
 public:
     typedef SampleType sample;
 
-    xrange_t( SampleType const& begin, StepType const& step, data::size_t size )
-    : m_begin( begin )
-    , m_curr( begin )
-    , m_step( step )
+    xrange_t( SampleType const& begin_, StepType const& step_, data::size_t size_ )
+    : m_begin( begin_ )
+    , m_curr( begin_ )
+    , m_step( step_ )
     , m_index( 0 )
-    , m_size( size )
+    , m_size( size_ )
     {}
 
     // Generator interface
@@ -179,11 +179,11 @@ xrange( SampleType const& end_val )
 
 /// @overload boost::unit_test::data::xrange()
 template<typename SampleType, typename Params>
-inline typename enable_if_c<nfp::is_named_params<Params>::value,monomorphic::generated_by<monomorphic::xrange_t<SampleType>> >::type
+inline typename enable_if_c<nfp::is_named_params<Params>::value,
+                            monomorphic::generated_by<monomorphic::xrange_t<SampleType>>>::type
 xrange( SampleType const& end_val, Params const& params )
 {
-    return monomorphic::ds_detail::make_xrange<SampleType>::
-            _(( params, data::end=end_val ));
+    return monomorphic::ds_detail::make_xrange<SampleType>::_(( params, data::end=end_val ));
 }
 
 //____________________________________________________________________________//
@@ -193,8 +193,9 @@ template<typename SampleType>
 inline monomorphic::generated_by<monomorphic::xrange_t<SampleType>>
 xrange( SampleType const& begin_val, SampleType const& end_val )
 {
-    return monomorphic::ds_detail::make_xrange<SampleType>::
-            _(( data::begin=begin_val, data::end=end_val ));
+    return monomorphic::ds_detail::make_xrange<SampleType>::_((
+                data::begin=begin_val,
+                data::end=end_val ));
 }
 
 //____________________________________________________________________________//
@@ -206,8 +207,10 @@ template<typename SampleType,typename StepType>
 inline monomorphic::generated_by<monomorphic::xrange_t<SampleType>>
 xrange( SampleType const& begin_val, SampleType const& end_val, StepType const& step_val )
 {
-    return monomorphic::ds_detail::make_xrange<SampleType,StepType>::
-            _(( data::begin=begin_val, data::end=end_val, data::step=step_val ));
+    return monomorphic::ds_detail::make_xrange<SampleType,StepType>::_(( 
+                data::begin=begin_val, 
+                data::end=end_val,
+                data::step=step_val ));
 }
 
 //____________________________________________________________________________//
