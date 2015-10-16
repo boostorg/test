@@ -38,9 +38,9 @@ if(NOT MSVC)
   check_cxx_compiler_flag(-std=c++0x HAS_CXX0X_FLAG)
   if(HAS_CXX11_FLAG)
     message(STATUS "Compiling with C++11 support")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
   elseif(HAS_CXX0X_FLAG)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+    #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
   endif()
 endif()
 
@@ -108,8 +108,19 @@ target_include_directories(boost_test_framework PUBLIC ${BOOST_TEST_ROOT_DIR}/in
 set_target_properties(boost_test_framework PROPERTIES FOLDER "UTF")
 
 
+####
+# Documentation files (files only, no target)
+file(GLOB_RECURSE
+     BOOST_UTF_DOC_FILES
+     ${BOOST_TEST_ROOT_DIR}/doc/*.qbk)
+add_custom_target(
+  quickbook
+  SOURCES ${BOOST_UTF_DOC_FILES})
+set_property(TARGET quickbook PROPERTY FOLDER "Documentation/")
 
-# adding the tests
+
+####
+# Unit tests
 
 # documentation tests
 file(GLOB_RECURSE
@@ -133,8 +144,7 @@ foreach(_h IN LISTS BOOST_UTF_DOC_EXAMPLES)
 endforeach()
 
 
-# unit tests
-
+# unit tests folder
 set(BOOST_TEST_UNITTESTS_FOLDER ${BOOST_TEST_ROOT_DIR}/test)
 
 file(GLOB_RECURSE
@@ -148,3 +158,37 @@ target_compile_definitions(boost_test_datasets PUBLIC "BOOST_TEST_DYN_LINK=1")
 set_target_properties(boost_test_datasets PROPERTIES FOLDER "Unit tests")
 add_test(NAME bt-unittest-dataset
          COMMAND boost_test_datasets)
+
+
+####
+# TS writing-test-ts
+
+set(BOOST_UTF_TESTS_IND_FILES
+    writing-test-ts
+    execution_monitor-ts
+    framework-ts
+    usage-variants-ts
+    utils-ts)
+
+foreach(_ts IN LISTS BOOST_UTF_TESTS_IND_FILES)
+
+  file(GLOB_RECURSE
+       _boost_utf_current_tsuite
+       ${BOOST_TEST_UNITTESTS_FOLDER}/${_ts}/*.cpp)
+
+
+  foreach(_h IN LISTS _boost_utf_current_tsuite)
+    get_filename_component(_hh ${_h} ABSOLUTE)
+    get_filename_component(_name ${_h} NAME_WE)
+    file(RELATIVE_PATH _v ${BOOST_TEST_UNITTESTS_FOLDER} ${_hh})
+    get_filename_component(_v "${_v}" DIRECTORY)
+    add_executable(${_name} ${_hh})
+    set_target_properties(${_name} PROPERTIES FOLDER "Unit tests/${_v}")
+    add_test(NAME bt-unittest-${_name}
+             COMMAND ${_name})
+  endforeach()
+
+  unset(_boost_utf_current_tsuite)
+
+endforeach() # test suite
+
