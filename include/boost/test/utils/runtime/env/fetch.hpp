@@ -72,7 +72,7 @@ fetch_absent( parameters_store const& params, runtime::arguments_store& args, Re
         if( args.has( param->p_name ) || param->p_env_var.empty() )
             continue;
 
-        auto value = read_func( param->p_env_var );
+        std::pair<cstring,bool> value = read_func( param->p_env_var );
 
         if( !value.second )
             continue;

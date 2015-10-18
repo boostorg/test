@@ -32,6 +32,8 @@ namespace runtime {
 
 namespace {
 
+#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
+
 auto const& description     = unit_test::static_constant<nfp::typed_keyword<cstring,struct description_t>>::value;
 auto const& help            = unit_test::static_constant<nfp::typed_keyword<cstring,struct help_t>>::value;
 auto const& env_var         = unit_test::static_constant<nfp::typed_keyword<cstring,struct env_var_t>>::value;
@@ -46,6 +48,45 @@ template<typename EnumType>
 using enum_values = unit_test::static_constant<
   nfp::typed_keyword<std::initializer_list<std::pair<const cstring,EnumType>>, struct enum_values_t>
 >;
+
+#else
+
+nfp::typed_keyword<cstring,struct description_t> description;
+nfp::typed_keyword<cstring,struct help_t> help;
+nfp::typed_keyword<cstring,struct env_var_t> env_var;
+nfp::typed_keyword<cstring,struct end_of_params_t> end_of_params;
+nfp::typed_keyword<cstring,struct neg_prefix_t> negation_prefix;
+nfp::typed_keyword<cstring,struct value_hint_t> value_hint;
+nfp::keyword<struct optional_value_t> optional_value;
+nfp::keyword<struct default_value_t> default_value;
+nfp::keyword<struct callback_t> callback;
+
+template<typename EnumType>
+struct enum_values_list {
+    typedef std::pair<cstring,EnumType> ElemT;
+    typedef std::vector<ElemT> ValuesT;
+
+    enum_values_list const&
+    operator()( cstring k, EnumType v ) const
+    {
+        const_cast<enum_values_list*>(this)->m_values.push_back( ElemT( k, v ) );
+
+        return *this;
+    }
+
+    operator ValuesT const&() const { return m_values; }
+
+private:
+    ValuesT m_values;
+};
+
+template<typename EnumType>
+struct enum_values : unit_test::static_constant<
+  nfp::typed_keyword<enum_values_list<EnumType>, struct enum_values_t> >
+{
+};
+
+#endif
 
 } // local namespace
 

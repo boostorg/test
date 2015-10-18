@@ -27,6 +27,7 @@
 
 // Boost
 #include <boost/function/function2.hpp>
+#include <boost/algorithm/cxx11/all_of.hpp>
 
 // STL
 #include <algorithm>
@@ -49,15 +50,15 @@ struct parameter_cla_id {
     , m_negatable( negatable )
     {
 
-        BOOST_TEST_I_ASSRT( std::all_of( m_prefix.begin(), m_prefix.end(), valid_prefix_char ),
+        BOOST_TEST_I_ASSRT( algorithm::all_of( m_prefix.begin(), m_prefix.end(), valid_prefix_char ),
                             invalid_cla_id() << "Parameter " << m_tag
                                              << " has invalid characters in prefix." );
 
-        BOOST_TEST_I_ASSRT( std::all_of( m_tag.begin(), m_tag.end(), valid_name_char ),
+        BOOST_TEST_I_ASSRT( algorithm::all_of( m_tag.begin(), m_tag.end(), valid_name_char ),
                             invalid_cla_id() << "Parameter " << m_tag
                                              << " has invalid characters in name." );
 
-        BOOST_TEST_I_ASSRT( std::all_of( m_value_separator.begin(), m_value_separator.end(), valid_separator_char ),
+        BOOST_TEST_I_ASSRT( algorithm::all_of( m_value_separator.begin(), m_value_separator.end(), valid_separator_char ),
                             invalid_cla_id() << "Parameter " << m_tag
                                              << " has invalid characters in value separator." );
     }
@@ -98,15 +99,15 @@ protected:
     template<typename Modifiers>
     basic_param( cstring name, bool is_optional, bool is_repeatable, Modifiers const& m )
     : p_name( name.begin(), name.end() )
-    , p_description( nfp::opt_get( m, description, std::string{} ) )
-    , p_help( nfp::opt_get( m, runtime::help, std::string{} ) )
-    , p_env_var( nfp::opt_get( m, env_var, std::string{} ) )
-    , p_value_hint( nfp::opt_get( m, value_hint, std::string{} ) )
+    , p_description( nfp::opt_get( m, description, std::string() ) )
+    , p_help( nfp::opt_get( m, runtime::help, std::string() ) )
+    , p_env_var( nfp::opt_get( m, env_var, std::string() ) )
+    , p_value_hint( nfp::opt_get( m, value_hint, std::string() ) )
     , p_optional( is_optional )
     , p_repeatable( is_repeatable )
     , p_has_optional_value( m.has( optional_value ) )
     , p_has_default_value( m.has( default_value ) || is_repeatable )
-    , p_callback( nfp::opt_get( m, callback, callback_type{} ) )
+    , p_callback( nfp::opt_get( m, callback, callback_type() ) )
     {
         add_cla_id( help_prefix, name, ":" );
     }
@@ -251,8 +252,13 @@ template<typename ValueType, args_amount a = runtime::OPTIONAL_PARAM, bool is_en
 class parameter : public basic_param {
 public:
     /// Constructor with modifiers
+#ifndef BOOST_NO_CXX11_FUNCTION_TEMPLATE_DEFAULT_ARGS
     template<typename Modifiers=nfp::no_params_type>
     parameter( cstring name, Modifiers const& m = nfp::no_params )
+#else
+    template<typename Modifiers>
+    parameter( cstring name, Modifiers const& m )
+#endif
     : basic_param( name, a != runtime::REQUIRED_PARAM, a == runtime::REPEATABLE_PARAM, m )
     , m_arg_factory( m )
     {
@@ -292,8 +298,13 @@ private:
 class option : public basic_param {
 public:
     /// Constructor with modifiers
+#ifndef BOOST_NO_CXX11_FUNCTION_TEMPLATE_DEFAULT_ARGS
     template<typename Modifiers=nfp::no_params_type>
     option( cstring name, Modifiers const& m = nfp::no_params )
+#else
+    template<typename Modifiers>
+    option( cstring name, Modifiers const& m )
+#endif
     : basic_param( name, true, false, nfp::opt_append( nfp::opt_append( m, optional_value = true), default_value = false) )
     , m_arg_factory( nfp::opt_append( nfp::opt_append( m, optional_value = true), default_value = false) )
     {
@@ -353,12 +364,22 @@ class enum_parameter : public parameter<EnumType, a, true> {
     typedef parameter<EnumType, a, true> base;
 public:
     /// Constructor with modifiers
+#ifndef BOOST_NO_CXX11_FUNCTION_TEMPLATE_DEFAULT_ARGS
     template<typename Modifiers=nfp::no_params_type>
     enum_parameter( cstring name, Modifiers const& m = nfp::no_params )
+#else
+    template<typename Modifiers>
+    enum_parameter( cstring name, Modifiers const& m )
+#endif
     : base( name, m )
     {
+#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
         auto const& values = m[enum_values<EnumType>::value];
         auto it = values.begin();
+#else
+        std::vector<std::pair<cstring, EnumType> > const& values = m[enum_values<EnumType>::value];
+        typename std::vector<std::pair<cstring, EnumType> >::const_iterator it = values.begin();
+#endif
         while( it != values.end() ) {
             m_valid_names.push_back( it->first );
             ++it;
@@ -392,6 +413,7 @@ private:
     // Data members
     std::vector<cstring>    m_valid_names;
 };
+
 
 // ************************************************************************** //
 // **************           runtime::parameters_store          ************** //
@@ -430,7 +452,7 @@ public:
     /// Returns map of all the registered parameter
     basic_param_ptr         get( cstring name ) const
     {
-        auto const& found = m_parameters.find( name );
+        storage_type::const_iterator const& found = m_parameters.find( name );
         BOOST_TEST_I_ASSRT( found != m_parameters.end(),
                             unknown_param() << "Parameter " << name << " is unknown." );
 

@@ -42,6 +42,7 @@ namespace utils {
 inline void
 print_escaped( std::ostream& where_to, const_string value )
 {
+#ifndef BOOST_NO_CXX11_HDR_INITIALIZER_LIST
     static std::map<char,char const*> const char_type{{
         {'<' , "lt"},
         {'>' , "gt"},
@@ -49,9 +50,20 @@ print_escaped( std::ostream& where_to, const_string value )
         {'\'', "apos"},
         {'"' , "quot"}
     }};
+#else
+    static std::map<char,char const*> char_type;
+
+    if( char_type.empty() ) {
+        char_type['<'] = "lt";
+        char_type['>'] = "gt";
+        char_type['&'] = "amp";
+        char_type['\'']= "apos";
+        char_type['"'] = "quot";
+    }
+#endif
 
     BOOST_TEST_FOREACH( char, c, value ) {
-        auto found_ref = char_type.find( c );
+        std::map<char,char const*>::const_iterator found_ref = char_type.find( c );
 
         if( found_ref != char_type.end() )
             where_to << '&' << found_ref->second << ';';

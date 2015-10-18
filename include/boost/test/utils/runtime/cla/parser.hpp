@@ -24,8 +24,11 @@
 #include <boost/test/utils/algorithm.hpp>
 #include <boost/test/detail/throw_exception.hpp>
 
+#include <boost/algorithm/cxx11/all_of.hpp> // !! ?? unnecessary after cxx11
+
 // STL
-#include <unordered_set>
+// !! ?? #include <unordered_set>
+#include <set>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -42,7 +45,7 @@ namespace rt_cla_detail {
 struct parameter_trie;
 typedef shared_ptr<parameter_trie> parameter_trie_ptr;
 typedef std::map<char,parameter_trie_ptr> trie_per_char;
-typedef std::vector<std::reference_wrapper<parameter_cla_id const>> param_cla_id_list;
+typedef std::vector<boost::reference_wrapper<parameter_cla_id const> > param_cla_id_list;
 
 struct parameter_trie {
     parameter_trie() : m_has_final_candidate( false ) {}
@@ -77,7 +80,7 @@ struct parameter_trie {
                               << "parameter cla id " << m_id_candidates.back().get().m_tag );
 
         m_has_final_candidate = final;
-        m_id_candidates.push_back( param_id );
+        m_id_candidates.push_back( ref(param_id) );
 
         if( m_id_candidates.size() == 1 )
             m_param_candidate = param_candidate;
@@ -110,20 +113,25 @@ class parser {
 public:
     /// Initializes a parser and builds internal trie representation used for
     /// parsing based on the supplied parameters
+#ifndef BOOST_NO_CXX11_FUNCTION_TEMPLATE_DEFAULT_ARGS
     template<typename Modifiers=nfp::no_params_type>
     parser( parameters_store const& parameters, Modifiers const& m = nfp::no_params )
+#else
+    template<typename Modifiers>
+    parser( parameters_store const& parameters, Modifiers const& m )
+#endif
     {
         nfp::opt_assign( m_end_of_param_indicator, m, end_of_params );
         nfp::opt_assign( m_negation_prefix, m, negation_prefix );
 
-        BOOST_TEST_I_ASSRT( std::all_of( m_end_of_param_indicator.begin(),
-                                         m_end_of_param_indicator.end(),
-                                         parameter_cla_id::valid_prefix_char ),
+        BOOST_TEST_I_ASSRT( algorithm::all_of( m_end_of_param_indicator.begin(),
+                                               m_end_of_param_indicator.end(),
+                                               parameter_cla_id::valid_prefix_char ),
                             invalid_cla_id() << "End of parameters indicator can only consist of prefix characters." );
 
-        BOOST_TEST_I_ASSRT( std::all_of( m_negation_prefix.begin(),
-                                         m_negation_prefix.end(),
-                                         parameter_cla_id::valid_name_char ),
+        BOOST_TEST_I_ASSRT( algorithm::all_of( m_negation_prefix.begin(),
+                                               m_negation_prefix.end(),
+                                               parameter_cla_id::valid_name_char ),
                             invalid_cla_id() << "Negation prefix can only consist of prefix characters." );
 
         build_trie( parameters );
@@ -137,8 +145,8 @@ public:
         m_program_name = argv[0];
         cstring path_sep( "\\/" );
 
-        auto it = unit_test::utils::find_last_of( m_program_name.begin(), m_program_name.end(),
-                                                  path_sep.begin(), path_sep.end() );
+        cstring::iterator it = unit_test::utils::find_last_of( m_program_name.begin(), m_program_name.end(),
+                                                                path_sep.begin(), path_sep.end() );
         if( it != m_program_name.end() )
             m_program_name.trim_left( it + 1 );
 
@@ -172,7 +180,7 @@ public:
             tr.skip( prefix.size() );
 
             // Locate parameter based on a name and skip it in the input
-            auto locate_res = locate_parameter( curr_trie, name, curr_token );
+            locate_result locate_res = locate_parameter( curr_trie, name, curr_token );
             parameter_cla_id const& found_id    = locate_res.first;
             basic_param_ptr         found_param = locate_res.second;
 
@@ -229,10 +237,10 @@ public:
     usage( std::ostream& ostr, cstring param_name = cstring() )
     {
         if( !param_name.is_empty() ) {
-            auto param = locate_parameter( m_param_trie[help_prefix], param_name, "" ).second;
+            basic_param_ptr param = locate_parameter( m_param_trie[help_prefix], param_name, "" ).second;
             param->usage( ostr, m_negation_prefix );
         }
-        else {        
+        else {
             ostr << "Usage: " << m_program_name << " [Boost.Test argument]... ";
             if( !m_end_of_param_indicator.empty() )
                 ostr << m_end_of_param_indicator << " [custom test module argument]...";
@@ -249,7 +257,7 @@ public:
     help( std::ostream& ostr, parameters_store const& parameters, cstring param_name )
     {
         if( !param_name.is_empty() ) {
-            auto param = locate_parameter( m_param_trie[help_prefix], param_name, "" ).second;
+            basic_param_ptr param = locate_parameter( m_param_trie[help_prefix], param_name, "" ).second;
             param->help( ostr, m_negation_prefix );
             return;
         }
@@ -313,7 +321,7 @@ private:
     validate_token_format( cstring token, cstring& prefix, cstring& name, cstring& separator, bool& negative_form )
     {
         // Match prefix
-        auto it = token.begin();
+        cstring::iterator it = token.begin();
         while( it != token.end() && parameter_cla_id::valid_prefix_char( *it ) )
             ++it;
 
@@ -396,9 +404,9 @@ private:
 
         if( !curr_trie ) {
             std::vector<cstring> typo_candidate_names;
-            std::unordered_set<parameter_cla_id const*> unique_typo_candidate;
+            std::set<parameter_cla_id const*> unique_typo_candidate; // !! ?? unordered_set
             typo_candidate_names.reserve( typo_candidates.size() );
-            unique_typo_candidate.reserve( typo_candidates.size() );
+// !! ??            unique_typo_candidate.reserve( typo_candidates.size() );
 
             BOOST_TEST_FOREACH( trie_ptr, trie_cand, typo_candidates ) {
                 // avoid ambiguos candidate trie
@@ -413,9 +421,15 @@ private:
                 }
             }
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
             BOOST_TEST_I_THROW( unrecognized_param( std::move(typo_candidate_names) )
-                                        << "An unrecognized parameter in the argument "
-                                        << token );
+                                << "An unrecognized parameter in the argument "
+                                << token );
+#else
+            BOOST_TEST_I_THROW( unrecognized_param( typo_candidate_names )
+                                << "An unrecognized parameter in the argument "
+                                << token );
+#endif
         }
 
         if( curr_trie->m_id_candidates.size() > 1 ) {
@@ -423,8 +437,13 @@ private:
             BOOST_TEST_FOREACH( parameter_cla_id const&, param_id, curr_trie->m_id_candidates )
                 amb_names.push_back( param_id.m_tag );
 
-            BOOST_TEST_I_THROW( ambiguous_param( std::move( amb_names ) ) <<
-                                "An ambiguous parameter name in the argument " << token );
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+            BOOST_TEST_I_THROW( ambiguous_param( std::move( amb_names ) )
+                                << "An ambiguous parameter name in the argument " << token );
+#else
+            BOOST_TEST_I_THROW( ambiguous_param( amb_names )
+                                << "An ambiguous parameter name in the argument " << token );
+#endif
         }
 
         return locate_result( curr_trie->m_id_candidates.back().get(), curr_trie->m_param_candidate );

@@ -128,17 +128,25 @@ template<typename EnumType>
 struct value_interpreter<EnumType, true> {
     template<typename Modifiers>
     explicit        value_interpreter( Modifiers const& m )
+#ifndef BOOST_NO_CXX11_HDR_INITIALIZER_LIST
     : m_name_to_value( m[enum_values<EnumType>::value] )
     {
     }
+#else
+    {
+        std::vector<std::pair<cstring,EnumType> > const& values = m[enum_values<EnumType>::value];
+
+        m_name_to_value.insert( values.begin(), values.end() );
+    }
+#endif
 
     EnumType        interpret( cstring param_name, cstring source ) const
     {
-        auto found = m_name_to_value.find( source );
+        typename std::map<cstring,EnumType>::const_iterator found = m_name_to_value.find( source );
 
         BOOST_TEST_I_ASSRT( found != m_name_to_value.end(),
                             format_error( param_name ) << source <<
-                                " is not a valid enumeration value name for parameter " << param_name << "." );
+                            " is not a valid enumeration value name for parameter " << param_name << "." );
 
         return found->second;
     }
@@ -165,8 +173,8 @@ public:
     template<typename Modifiers>
     explicit    argument_factory( Modifiers const& m )
     : m_interpreter( m )
-    , m_optional_value( nfp::opt_get( m, optional_value, ValueType{} ) )
-    , m_default_value( nfp::opt_get( m, default_value, ValueType{} ) )
+    , m_optional_value( nfp::opt_get( m, optional_value, ValueType() ) )
+    , m_default_value( nfp::opt_get( m, default_value, ValueType() ) )
     {
     }
 
@@ -204,7 +212,7 @@ public:
         ValueType value = m_interpreter.interpret( param_name, source );
 
         if( store.has( param_name ) ) {
-            std::vector<ValueType>& values = store.get<std::vector<ValueType>>( param_name );
+            std::vector<ValueType>& values = store.get<std::vector<ValueType> >( param_name );
             values.push_back( value );
         }
         else {
@@ -216,7 +224,7 @@ public:
     }
     void        produce_default( cstring param_name, arguments_store& store ) const
     {
-        store.set( param_name, std::vector<ValueType>{} );
+        store.set( param_name, std::vector<ValueType>() );
     }
 
 private:

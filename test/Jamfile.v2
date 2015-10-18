@@ -37,7 +37,7 @@ rule boost.test-self-test ( test-rule : test-suite : test-name : usage-variant ?
 
     return [ $(test-rule) $(source_files) ../build//$(usage-variant) $(extra-libs)
 #             gcov
-             : #args
+             : -- "" #args
              : $(pattern_file)
              : # Activating -pedantic finds more gotchas
                # Unfortunately, this warns about the use of "long long" in gcc's own stdlib
@@ -46,7 +46,7 @@ rule boost.test-self-test ( test-rule : test-suite : test-name : usage-variant ?
                <toolset>gcc:<cxxflags>-Wno-long-long
                <toolset>gcc:<cxxflags>-Wno-variadic-macros
                <toolset>clang:<cxxflags>-Wno-c99-extensions
-               # <toolset>gcc:<cxxflags>--coverage
+#               <toolset>gcc:<cxxflags>--coverage
                <warnings>all
                $(extra-options)
                $(requirements)
@@ -98,7 +98,7 @@ test-suite "utils-ts"
   [ boost.test-self-test run : utils-ts : class_properties-test ]
   [ boost.test-self-test run : utils-ts : foreach-test ]
   [ boost.test-self-test run : utils-ts : named_params-test ]
-  [ boost.test-self-test run : utils-ts : runtime-param-test ]
+  [ boost.test-self-test run : utils-ts : runtime-param-test : : : : : : [ requires cxx11_auto_declarations cxx11_function_template_default_args cxx11_lambdas cxx11_hdr_initializer_list ] ]
   [ boost.test-self-test run : utils-ts : string_cast-test ]
   [ boost.test-self-test run : utils-ts : token_iterator-test ]
 ;

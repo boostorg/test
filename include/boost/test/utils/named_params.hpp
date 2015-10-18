@@ -66,7 +66,7 @@ template<typename T, typename unique_id, typename RefType>
 struct is_named_param_pack<named_parameter<T,unique_id,RefType> > : public mpl::true_ {};
 
 template<typename NP, typename Rest>
-struct is_named_param_pack<named_parameter_combine<NP,Rest>> : public mpl::true_ {};
+struct is_named_param_pack<named_parameter_combine<NP,Rest> > : public mpl::true_ {};
 
 // ************************************************************************** //
 // **************                  param_type                  ************** //
@@ -202,7 +202,7 @@ struct named_parameter_combine
     void        erase( keyword<typename NP::id,false> kw ) const        { m_param.erase( kw ); }
     using       Rest::erase;
 
-    using       nfp_detail::named_parameter_base<named_parameter_combine<NP,Rest>>::operator,;
+    using       nfp_detail::named_parameter_base<named_parameter_combine<NP,Rest> >::operator,;
 
     // Visitation support
     template<typename Visitor>
@@ -364,8 +364,8 @@ opt_get( Params const& p, Keyword k, T default_val )
 // ************************************************************************** //
 
 template<typename Params, typename NP>
-inline typename enable_if_c<!has_param<Params,keyword<typename NP::id>>::value,
-named_parameter_combine<NP,Params>>::type
+inline typename enable_if_c<!has_param<Params,keyword<typename NP::id> >::value,
+named_parameter_combine<NP,Params> >::type
 opt_append( Params const& params, NP const& np )
 {
     return (params,np);
@@ -374,7 +374,7 @@ opt_append( Params const& params, NP const& np )
 //____________________________________________________________________________//
 
 template<typename Params, typename NP>
-inline typename enable_if_c<has_param<Params,keyword<typename NP::id>>::value,Params>::type
+inline typename enable_if_c<has_param<Params,keyword<typename NP::id> >::value,Params>::type
 opt_append( Params const& params, NP const& )
 {
     return params;

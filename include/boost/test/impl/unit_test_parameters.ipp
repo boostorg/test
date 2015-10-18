@@ -125,10 +125,13 @@ register_parameters( rt::parameters_store& store )
 
     rt::parameter<std::string> break_exec_path( BREAK_EXEC_PATH, (
         rt::description = "For the exception safety testing allows to break at specific execution path.",
-        rt::env_var = "BOOST_TEST_BREAK_EXEC_PATH",
+        rt::env_var = "BOOST_TEST_BREAK_EXEC_PATH"
+#ifndef BOOST_NO_CXX11_LAMBDAS
+        ,
         rt::callback = [](rt::cstring) {
             BOOST_TEST_SETUP_ASSERT( false, "parameter break_exec_path is disabled in this release" );
         }
+#endif
     ));
 
     break_exec_path.add_cla_id( "--", BREAK_EXEC_PATH, "=" );    
@@ -223,10 +226,18 @@ register_parameters( rt::parameters_store& store )
         rt::env_var = "BOOST_TEST_LIST_CONTENT",
         rt::default_value = OF_INVALID,
         rt::optional_value = OF_CLF,
-        rt::enum_values<unit_test::output_format>::value = {
+        rt::enum_values<unit_test::output_format>::value = 
+#ifndef BOOST_NO_CXX11_HDR_INITIALIZER_LIST
+        {
             { "HRF", OF_CLF },
             { "DOT", OF_DOT }
         },
+#else
+        rt::enum_values_list<unit_test::output_format>()
+            ( "HRF", OF_CLF )
+            ( "DOT", OF_DOT )
+        ,
+#endif
         rt::help = "Parameter " + LIST_CONTENT + " instructs the framework to list the content "
                    "of the test module instead of executing the test cases. Parameter accepts "
                    "optional string value indicating the format of the output. Currently the "
@@ -254,11 +265,20 @@ register_parameters( rt::parameters_store& store )
         rt::description = "Specifies log format.",
         rt::env_var = "BOOST_TEST_LOG_FORMAT",
         rt::default_value = OF_CLF,
-        rt::enum_values<unit_test::output_format>::value = {
+        rt::enum_values<unit_test::output_format>::value =
+#ifndef BOOST_NO_CXX11_HDR_INITIALIZER_LIST
+        {
             { "HRF", OF_CLF },
             { "CLF", OF_CLF },
             { "XML", OF_XML }
         },
+#else
+        rt::enum_values_list<unit_test::output_format>()
+            ( "HRF", OF_CLF )
+            ( "CLF", OF_CLF )
+            ( "XML", OF_XML )
+        ,
+#endif
         rt::help = "Parameter " + LOG_FORMAT + " allows to set the frameowrk's log format to one "
                    "of the formats supplied by the framework. The only acceptable values for this "
                    "parameter are the names of the output formats supplied by the framework. By "
@@ -277,7 +297,9 @@ register_parameters( rt::parameters_store& store )
         rt::description = "Specifies log level.",
         rt::env_var = "BOOST_TEST_LOG_LEVEL",
         rt::default_value = log_all_errors,
-        rt::enum_values<unit_test::log_level>::value = {
+        rt::enum_values<unit_test::log_level>::value =
+#ifndef BOOST_NO_CXX11_HDR_INITIALIZER_LIST
+        {
             { "all"           , log_successful_tests },
             { "success"       , log_successful_tests },
             { "test_suite"    , log_test_units },
@@ -290,6 +312,21 @@ register_parameters( rt::parameters_store& store )
             { "fatal_error"   , log_fatal_errors },
             { "nothing"       , log_nothing }
         },
+#else
+        rt::enum_values_list<unit_test::log_level>()
+            ( "all"           , log_successful_tests )
+            ( "success"       , log_successful_tests )
+            ( "test_suite"    , log_test_units )
+            ( "unit_scope"    , log_test_units )
+            ( "message"       , log_messages )
+            ( "warning"       , log_warnings )
+            ( "error"         , log_all_errors )
+            ( "cpp_exception" , log_cpp_exception_errors )
+            ( "system_error"  , log_system_errors )
+            ( "fatal_error"   , log_fatal_errors )
+            ( "nothing"       , log_nothing )
+        ,
+#endif
         rt::help = "Parameter " + LOG_LEVEL + " allows to set the framework's log level. "
                    "Log level defines the verbosity of testing log produced by a testing "
                    "module. The verbosity ranges from a complete log, when all assertions "
@@ -323,11 +360,20 @@ register_parameters( rt::parameters_store& store )
     rt::enum_parameter<unit_test::output_format> output_format( OUTPUT_FORMAT, (
         rt::description = "Specifies output format (both log and report).",
         rt::env_var = "BOOST_TEST_OUTPUT_FORMAT",
-        rt::enum_values<unit_test::output_format>::value = {
+        rt::enum_values<unit_test::output_format>::value =
+#ifndef BOOST_NO_CXX11_HDR_INITIALIZER_LIST
+        {
             { "HRF", OF_CLF },
             { "CLF", OF_CLF },
             { "XML", OF_XML }
         },
+#else
+        rt::enum_values_list<unit_test::output_format>()
+            ( "HRF", OF_CLF )
+            ( "CLF", OF_CLF )
+            ( "XML", OF_XML )
+        ,
+#endif
         rt::help = "Parameter " + OUTPUT_FORMAT + " combines an effect of " + REPORT_FORMAT + 
                    " and " + LOG_FORMAT + " parameters. This parameter has higher priority "
                    "than either one of them. In other words if this parameter is specified "
@@ -369,11 +415,20 @@ register_parameters( rt::parameters_store& store )
         rt::description = "Specifies report format.",
         rt::env_var = "BOOST_TEST_REPORT_FORMAT",
         rt::default_value = OF_CLF,
-        rt::enum_values<unit_test::output_format>::value = {
+        rt::enum_values<unit_test::output_format>::value =
+#ifndef BOOST_NO_CXX11_HDR_INITIALIZER_LIST
+        {
             { "HRF", OF_CLF },
             { "CLF", OF_CLF },
             { "XML", OF_XML }
         },
+#else
+        rt::enum_values_list<unit_test::output_format>()
+            ( "HRF", OF_CLF )
+            ( "CLF", OF_CLF )
+            ( "XML", OF_XML )
+        ,
+#endif
         rt::help = "Parameter " + REPORT_FORMAT + " allows to set the framework's report format "
                    "to one of the formats supplied by the framework. The only acceptable values "
                    "for this parameter are the names of the output formats. By default the framework "
@@ -392,12 +447,22 @@ register_parameters( rt::parameters_store& store )
         rt::description = "Specifies report level.",
         rt::env_var = "BOOST_TEST_REPORT_LEVEL",
         rt::default_value = CONFIRMATION_REPORT,
-        rt::enum_values<unit_test::report_level>::value = {
+        rt::enum_values<unit_test::report_level>::value =
+#ifndef BOOST_NO_CXX11_HDR_INITIALIZER_LIST
+        {
             { "confirm",  CONFIRMATION_REPORT },
             { "short",    SHORT_REPORT },
             { "detailed", DETAILED_REPORT },
             { "no",       NO_REPORT }
         },
+#else
+        rt::enum_values_list<unit_test::report_level>()
+            ( "confirm",  CONFIRMATION_REPORT )
+            ( "short",    SHORT_REPORT )
+            ( "detailed", DETAILED_REPORT )
+            ( "no",       NO_REPORT )
+        ,
+#endif
         rt::help = "Parameter " + REPORT_LEVEL + " allows to set the verbosity level of the "
                    "testing result report generated by the framework. Use value 'no' to "
                    "eliminate the results report completely."
