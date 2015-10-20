@@ -50,7 +50,7 @@ inline tolerance_manip<FPT>
 operator%( FPT v, tolerance_manip_delay const& )
 {
     BOOST_STATIC_ASSERT_MSG( (fpc::tolerance_based<FPT>::value), 
-                             "tolerance only for floating points" );
+                             "tolerance should be specified using a floating points type" );
 
     return tolerance_manip<FPT>( FPT(v / 100) );
 }
