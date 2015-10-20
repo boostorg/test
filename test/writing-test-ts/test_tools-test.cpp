@@ -90,8 +90,8 @@ struct shorten_lf : public boost::unit_test::output::compiler_log_formatter
 
 //____________________________________________________________________________//
 
-std::string match_file_name( "./test_files/test_tools_test.pattern" );
-std::string save_file_name( "test_tools_test.pattern" );
+std::string match_file_name( "./test_files/test_tools-test.pattern" );
+std::string save_file_name( "test_tools-test.pattern" );
 
 static tt::output_test_stream&
 ots()
@@ -759,6 +759,14 @@ TEST_CASE( test_BOOST_TEST_fpv_comp )
     BOOST_TEST( d1-1e-5 != 0., tt::tolerance( 1e-4 ) );
     BOOST_TEST( 0. != 1e-5-d1, tt::tolerance( 1e-4 ) );
     BOOST_TEST( d2-1e-5 < 0., tt::tolerance( 1e-6 ) );
+
+    const double cd = 1.0;
+    BOOST_TEST( cd == 1.0);
+    BOOST_TEST( 1.0 == cd );
+    BOOST_TEST( cd == 1.01, 10.% tt::tolerance());
+    BOOST_TEST( 1.01 == cd, 0.1% tt::tolerance() );
+
+    BOOST_TEST( 0.0 == 0.0);
 }
 
 //____________________________________________________________________________//

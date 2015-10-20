@@ -15,16 +15,26 @@
 #define BOOST_TEST_TOOLS_HPP_111812GER
 
 #include <boost/config.hpp>
-#include <boost/preprocessor/config/config.hpp>
 
-#if !BOOST_PP_VARIADICS || ((__cplusplus >= 201103L) && defined(BOOST_NO_CXX11_VARIADIC_MACROS))
-#define BOOST_TEST_NO_VARIADIC
+// brings some compiler configuration like BOOST_PP_VARIADICS
+#include <boost/test/detail/config.hpp>
+
+#include <boost/preprocessor/config/config.hpp>
+#include <boost/test/detail/suppress_warnings.hpp>
+
+
+#if    defined(BOOST_NO_CXX11_VARIADIC_MACROS) \
+    || defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) \
+    || defined(BOOST_NO_CXX11_DECLTYPE)
+#  define BOOST_TEST_MACRO_LIMITED_SUPPORT
 #endif
 
 // Boost.Test
 // #define BOOST_TEST_NO_OLD_TOOLS
 
-#if defined(BOOST_TEST_NO_VARIADIC)
+#if     defined(BOOST_TEST_MACRO_LIMITED_SUPPORT) \
+    &&  (   !BOOST_PP_VARIADICS \
+         || !(__cplusplus >= 201103L) && defined(BOOST_NO_CXX11_VARIADIC_MACROS))
 #  define BOOST_TEST_NO_NEW_TOOLS
 #endif
 
@@ -57,5 +67,6 @@
 #  include <boost/test/tools/detail/lexicographic_manip.hpp>
 #endif
 
+#include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_TOOLS_HPP_111812GER

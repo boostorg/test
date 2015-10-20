@@ -18,7 +18,13 @@
 #include <boost/test/tree/test_case_template.hpp>
 #include <boost/test/tree/global_fixture.hpp>
 
+
+#include <boost/test/detail/suppress_warnings.hpp>
+
+
 #include <boost/test/detail/pp_variadic.hpp>
+
+
 
 //____________________________________________________________________________//
 
@@ -352,6 +358,9 @@ init_unit_test_suite( int, char* [] )   {
 #endif
 
 //____________________________________________________________________________//
+
+#include <boost/test/detail/enable_warnings.hpp>
+
 
 #endif // BOOST_TEST_UNIT_TEST_SUITE_HPP_071894GER
 

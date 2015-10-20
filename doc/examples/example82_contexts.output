@@ -1,5 +1,5 @@
 //[example_output
-> example82
+> example
 Running 1 test case...
 test.cpp(27): error: in "test1": check processor.op2(i, j) has failed
 Failure occurred in a following context:

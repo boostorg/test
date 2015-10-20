@@ -26,6 +26,11 @@
 # pragma warning(pop)
 #endif
 
-#ifdef BOOST_CLANG
+#if BOOST_CLANG
 #pragma clang diagnostic pop
 #endif
+
+#if defined(BOOST_GCC)
+# pragma GCC diagnostic pop
+#endif
+

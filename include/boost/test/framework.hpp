@@ -120,7 +120,7 @@ BOOST_TEST_DECL void                deregister_test_unit( test_unit* tu );
 
 // This function clears up the framework mono-state.
 
-/// Afer this call the framework can be reinitialized to perform a second test run during the same program lifetime.
+/// After this call the framework can be reinitialized to perform a second test run during the same program lifetime.
 BOOST_TEST_DECL void                clear();
 /// @}
 

@@ -285,7 +285,7 @@ public:
     // Action method
     bool        operator()( FPT fpv ) const
     {
-        return fpc::fpc_detail::fpt_abs( fpv ) < m_tolerance;
+        return fpc::fpc_detail::fpt_abs( fpv ) <= m_tolerance;
     }
 
 private:
