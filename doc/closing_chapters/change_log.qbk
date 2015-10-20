@@ -10,6 +10,7 @@
 [h4 Boost.Test v3.1 / boost XXXX]
 
 [h5 New major features]
+* improved API for datasets: initializer list for creating datasets, easier to construct datasets
 
 [h5 Bugfixes and feature requests]
 # [ticket 11478] Boost Test Exception Assert Failure has poor message

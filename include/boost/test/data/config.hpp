@@ -19,7 +19,6 @@
 // STL
 #include <stdexcept> // for std::logic_error
 
-
 // availability on features: preprocessed by doxygen
 
 #if defined(BOOST_NO_CXX11_HDR_RANDOM) || defined(BOOST_TEST_DOXYGEN_DOC__)
@@ -27,7 +26,6 @@
 #define BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE
 
 #endif
-
 
 #if defined(BOOST_NO_CXX11_HDR_TUPLE) || defined(BOOST_TEST_DOXYGEN_DOC__)
 
