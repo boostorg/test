@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2013 Boost.Test team
+ / Copyright (c) 2013 Boost.Test contributors
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -10,8 +10,10 @@
 [h4 Boost.Test v3.1 / boost XXXX]
 
 [h5 New major features]
+* improved API for datasets: initializer list for creating datasets, easier to construct datasets
 
 [h5 Bugfixes and feature requests]
+# [ticket 11478] Boost Test Exception Assert Failure has poor message
 # [ticket 11571] Can't compile `BOOST_TEST( ..., per_element() )` comparison of `vector<string>`
 # [ticket 11623] Clang rejects some simple `BOOST_TEST()` statements
 # [ticket 11624] `BOOST_TEST( 0.0 == 0.0 )` fails under C++11 (GCC and Clang)

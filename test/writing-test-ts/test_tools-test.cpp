@@ -90,7 +90,7 @@ struct shorten_lf : public boost::unit_test::output::compiler_log_formatter
 
 //____________________________________________________________________________//
 
-std::string match_file_name( "./test_files/test_tools-test.pattern" );
+std::string match_file_name( "./baseline-outputs/test_tools-test.pattern" );
 std::string save_file_name( "test_tools-test.pattern" );
 
 static tt::output_test_stream&
@@ -727,7 +727,11 @@ TEST_CASE( test_BOOST_TEST_collection_comp )
 namespace boost{ namespace test_tools{ namespace tt_detail{
 template<>
 struct print_log_value<double> {
-    void    operator()( std::ostream& os, double d ) { os << std::setprecision(1) << d; }
+    void    operator()( std::ostream& os, double d )
+	{
+		std::streamsize curr_prec = os.precision();
+		os << std::setprecision(1) << d << std::setprecision( curr_prec );
+	}
 };
 }}}
 
@@ -856,5 +860,15 @@ BOOST_AUTO_TEST_CASE( test_argument_handling )
 }
 
 //____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_precision_mutation, * ut::expected_failures( 1 ) )
+{
+    std::streamsize initial_precition = std::cout.precision();
+    std::cout.precision(initial_precition);
+
+    BOOST_TEST( 1.2 == 2.3, 10.% tt::tolerance() );
+
+    BOOST_TEST( initial_precition == std::cout.precision() );
+}
 
 // EOF
