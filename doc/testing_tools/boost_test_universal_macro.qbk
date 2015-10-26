@@ -39,7 +39,6 @@ The major features of this tool are:
 [warning To get all the functionalities of `BOOST_TEST` family of assertions, a C++11 capable compiler is required, especially
  supporting the `auto` and `decltype` keywords and the variadic macros. The documentation focuses on these set of compilers.
  For compilers not supporting all the features of `BOOST_TEST`, the macro `BOOST_TEST_MACRO_LIMITED_SUPPORT`.]
-]
 
 [#boost_test_statement_overloads][h3 Complex statements]
 `BOOST_TEST` provides an enhanced reporting capability: additional details of the failing operands and operations are provided in the log,
