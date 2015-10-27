@@ -102,7 +102,7 @@ private:
 
         m_os << ",fontname=Helvetica";
 
-        m_os << (tu.is_enabled() ? ",color=green" : ",color=yellow");
+        m_os << (tu.p_default_status == test_unit::RS_ENABLED ? ",color=green" : ",color=yellow");
 
         if( master_ts )
             m_os << ",label=\"" << tu.p_name << "\"];\n";

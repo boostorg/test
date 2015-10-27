@@ -137,8 +137,13 @@ test_unit::check_preconditions() const
 
     BOOST_TEST_FOREACH( precondition_t, precondition, p_preconditions.get() ) {
         test_tools::assertion_result res = precondition( p_id );
-        if( !res )
-            return res;
+        if( !res ) {
+            test_tools::assertion_result res_out(false);
+            res_out.message() << "precondition failed";
+            if( !res.has_empty_message() )
+                res_out.message() << ": " << res.message();
+            return res_out;
+        }
     }
 
     return true;

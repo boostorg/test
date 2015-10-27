@@ -24,3 +24,4 @@ standalonedoc_HTML.manifest
 doc/html/*.html
 doc/examples/build
 doc/doxygen
+build/tmp

@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003 Boost.Test contributors 
+ / Copyright (c) 2003 Boost.Test contributors
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -216,13 +216,19 @@ An optional parameter name [link regular_param_value string].
 [/ ###############################################################################################]
 [section:list_content `list_content`]
 
-Parameter ['list_content] instructs the __UTF__ to list the content of the test module instead of executing test cases.
-Parameter accepts optional string value indicating the format of the output. Currently the framework supports two formats:
-human readable format (HRF) and dot graph format (DOT). If a value is omitted HRF value is assumed.
+Lists the name of the [link ref_test_unit test units] contained in the [link ref_test_module test module] and exits (no test is run).
 
-In human readable format information about the test suites and test cases is presented in a tree like form with
-each test unit name on a separate line with horizontal indentation in relation to the parent test suite. In addition test
-units which are enabled by default have an '*' next to the test unit name. For example, the following output:
+This command line parameter accepts an /optional/ string value indicating the format of the output.
+The framework supports the following two formats:
+
+# HRF (default), standing for /Human Readable Format/,
+# DOT, standing for the [@http://www.graphviz.org/doc/info/lang.html GraphViz graph format]. This format may be automatically parsed or rendered.
+
+[h4 HRF]
+
+For HRF, the [link ref_test_tree test tree] (test suites and test cases) is presented in a tree like form with
+each test unit name on a separate line with horizontal indentation in relation to the parent test suite.
+In addition, test units which are enabled by default have an asterisk `*` next to the test unit name. For example, the following output:
 
     testsuite1*
         testcase1*
@@ -230,13 +236,27 @@ units which are enabled by default have an '*' next to the test unit name. For e
     testsuite2*
         testcase3*
 
-represents test module consisting of two test suites: testsuite1 and testsuite2, and three test cases: testcase1,
-testcase2, and testcase3. The first two test cases belong to the first test suite and last one belongs to the second. Out of
-three test cases only two are enabled by default: testcase1 and testcase3. testcase2 is not enabled by default, but can
-be enabled by using the parameter __param_run_test__.
+represents test module consisting of two test suites: `testsuite1` and `testsuite2`, and three test cases: `testcase1`,
+`testcase2`, and `testcase3`. The formatting reflects the test-tree: the first two test cases belong to the first test suite
+and last one belongs to the second. Out of three test cases only two are enabled by default:
+`testcase1` and `testcase3`. `testcase2` is not enabled by default, but can be enabled by using the parameter __param_run_test__.
 
-DOT output generates a graph representing a test module tree in a [@http://www.graphviz.org/doc/info/lang.html dot format].
+[h4 DOT]
+
+DOT output generates a graph representing the module's [link ref_test_tree test tree] in a
+[@http://www.graphviz.org/doc/info/lang.html dot format].
 This output includes much more information about the test tree including labels, timeouts, expected failures, and dependencies.
+
+The legen is as follow:
+
+* the master test suite is represented as an ellipse
+* a test unit (suite, case) is in a rounded rectangle
+* test unit declaration location, [link boost_test.tests_organization.tests_grouping labels],
+  [link boost_test.testing_tools.expected_failures expected failures], [link boost_test.testing_tools.timeout timeouts] are appended,
+* a green box indicates that the test unit that is enabled, otherwise its colour is yellow,
+* an plain black arrow goes from a test unit to each of its children, following the test tree (the arrow pointing to the child),
+* a dashed red arrow indicates a runtime dependence on test units, the arrow pointing to the parent in the dependency graph.
+
 
 [h4 Acceptable values]
 
@@ -253,13 +273,29 @@ This output includes much more information about the test tree including labels,
 
   BOOST_TEST_LIST_CONTENT
 
+[h4 Example]
+
+The following /deliberately/ complicated example illustrates the purpose of the `--list_content`
+directive. The SVG generated from the produced Graphviz/dot file can be downloaded
+[@images/boost_runtime_list_content.svg here].
+
+[bt_example boost_runtime_list_content..`--list_content` illustration..run-fail]
+
+[$images/boost_runtime_list_content.png [width 70%]]
+
+
 [endsect] [/list_content]
 
 [/ ###############################################################################################]
 [section:list_labels `list_labels`]
 
-Option ['list_labels] instructs the __UTF__ to list all the the labels defined in the test module instead
-of executing test cases.
+Lists the labels associated to the [link ref_test_unit test units] in the current
+[link ref_test_module test module] and exits (no test is run).
+
+[tip
+See [link boost_test.tests_organization.tests_grouping this section] for more details on labels and logical grouping
+of test cases.
+]
 
 [h4 Acceptable values]
 
@@ -272,6 +308,16 @@ of executing test cases.
 [h4 Environment variable]
 
   BOOST_TEST_LIST_LABELS
+
+[h4 Example]
+
+The previous example from [link boost_test.utf_reference.rt_param_reference.list_content `--list_content`] gives
+```
+> ./boost_runtime_list_content --list_labels
+Available labels:
+  label1
+  label2
+```
 
 [endsect] [/list_labels]
 

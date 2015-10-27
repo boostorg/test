@@ -1,10 +1,10 @@
 [/
- / Copyright (c) 2003 Boost.Test contributors 
+ / Copyright (c) 2003 Boost.Test contributors
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
- 
+
 [library Boost.Test
     [quickbook 1.7]
     [copyright 2001 - 2015 Boost.Test contributors]
@@ -27,8 +27,6 @@
 [def __IEEE754__ [*IEEE754]]
 
 [def __part_faq__                         [link boost_test.section_faq FAQ]]
-
-[def __test_tree__                        [link test_tree test tree]]
 
 [/ content in the test organization]
 
@@ -124,7 +122,7 @@
 [def __param_run_test__                         [link boost_test.utf_reference.rt_param_reference.run_test `run_test`]]
 
 [/ decorators]
-[def __decorator_label__                        [link boost_test.utf_reference.test_org_reference.decorator_label `label`]] 
+[def __decorator_label__                        [link boost_test.utf_reference.test_org_reference.decorator_label `label`]]
 [def __decorator_enabled__                      [link boost_test.utf_reference.test_org_reference.decorator_enabled `enabled`]]
 [def __decorator_disabled__                     [link boost_test.utf_reference.test_org_reference.decorator_enabled `disabled`]]
 [def __decorator_enable_if__                    [link boost_test.utf_reference.test_org_reference.decorator_enable_if `enable_if`]]
@@ -164,7 +162,7 @@
 [/ ### template for the example page  ]
 [template bt_example_page[name descr]
 
-[section:ref_[name] [descr]] 
+[section:ref_[name] [descr]]
 
 [import examples/[name].run-fail.cpp]
 [import examples/[name].output]
@@ -233,7 +231,7 @@
 [include test_output/testout_reference.qbk]
 [include runtime_configuration/runtime_config_reference.qbk]
 [include adv_scenarios/link_reference.qbk]
-[/ doxygen auto-generated reference documentation] 
+[/ doxygen auto-generated reference documentation]
 [xinclude doxygen_reference_generated_doc.xml]
 [endsect]
 
@@ -244,4 +242,3 @@
 
 
 [/ EOF]
-
