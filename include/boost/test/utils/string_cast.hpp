@@ -9,14 +9,17 @@
 //
 //  Version     : $Revision$
 //
-//  Description : simple helpers for creating cusom output manipulators
+//  Description : trivial utility to cast to/from strings
 // ***************************************************************************
 
-#ifndef BOOST_TEST_UTILS_CUSTOM_MANIP_HPP
-#define BOOST_TEST_UTILS_CUSTOM_MANIP_HPP
+#ifndef BOOST_TEST_UTILS_STRING_CAST_HPP
+#define BOOST_TEST_UTILS_STRING_CAST_HPP
+
+// Boost.Test
+#include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 
 // STL
-#include <iosfwd>
+#include <sstream>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -27,28 +30,33 @@ namespace unit_test {
 namespace utils {
 
 // ************************************************************************** //
-// **************          custom manipulators helpers         ************** //
+// **************                  string_cast                 ************** //
 // ************************************************************************** //
 
-template<typename Manip>
-struct custom_printer {
-    explicit custom_printer( std::ostream& ostr ) : m_ostr( &ostr ) {}
-
-    std::ostream& operator*() const { return *m_ostr; }
-
-private:
-    std::ostream* const m_ostr;
-};
-
-//____________________________________________________________________________//
-
-template<typename Uniq> struct custom_manip {};
+template<typename T>
+inline std::string
+string_cast( T const& t )
+{
+    std::ostringstream buff;
+    buff << t;
+    return buff.str();
+}
 
 //____________________________________________________________________________//
 
-template<typename Uniq>
-inline custom_printer<custom_manip<Uniq> >
-operator<<( std::ostream& ostr, custom_manip<Uniq> const& ) { return custom_printer<custom_manip<Uniq> >( ostr ); }
+// ************************************************************************** //
+// **************                  string_as                 ************** //
+// ************************************************************************** //
+
+template<typename T>
+inline bool
+string_as( const_string str, T& res )
+{
+    std::istringstream buff( std::string( str.begin(), str.end() ) );
+    buff >> res;
+
+    return !buff.fail() && buff.eof();
+}
 
 //____________________________________________________________________________//
 
@@ -58,4 +66,4 @@ operator<<( std::ostream& ostr, custom_manip<Uniq> const& ) { return custom_prin
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_TEST_UTILS_CUSTOM_MANIP_HPP
+#endif // BOOST_TEST_UTILS_STRING_CAST_HPP

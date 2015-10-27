@@ -20,7 +20,7 @@
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
-// STL
+// needed for std::min
 #include <algorithm>
 
 //____________________________________________________________________________//

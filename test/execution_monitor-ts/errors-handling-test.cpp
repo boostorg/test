@@ -149,10 +149,10 @@ void error_on_demand()
 
 BOOST_AUTO_TEST_CASE( test_errors_handling )
 {
-#define PATTERN_FILE_NAME "errors_handling_test.pattern"
+#define PATTERN_FILE_NAME "errors-handling-test.pattern"
     std::string pattern_file_name(
         framework::master_test_suite().argc <= 1
-            ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./test_files/" PATTERN_FILE_NAME)
+            ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./baseline-outputs/" PATTERN_FILE_NAME)
             : framework::master_test_suite().argv[1] );
 
 #ifdef LIMITED_TEST
@@ -185,10 +185,11 @@ BOOST_AUTO_TEST_CASE( test_errors_handling )
             framework::run( test );
 
             unit_test_log.set_stream( std::cout );
-            unit_test_log.set_format( runtime_config::log_format() );
-            unit_test_log.set_threshold_level( runtime_config::log_level() != invalid_log_level
-                                                ? runtime_config::log_level()
-                                                : log_all_errors );
+            unit_test_log.set_format( runtime_config::get<output_format>( runtime_config::LOG_FORMAT ) );
+
+            log_level ll = runtime_config::get<log_level>( runtime_config::LOG_LEVEL );
+            unit_test_log.set_threshold_level( ll != invalid_log_level? ll : log_all_errors );
+
             BOOST_CHECK( test_output.match_pattern() );
         }
     }

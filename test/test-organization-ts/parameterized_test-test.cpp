@@ -210,7 +210,7 @@ BOOST_AUTO_TEST_CASE( test_case8 )
     ut::test_results const& tr = ut::results_collector.results( test->p_id );
 
     ut::unit_test_log.set_stream( std::cout );
-    BOOST_CHECK_EQUAL( tr.p_assertions_failed, 3U );
+    BOOST_TEST( tr.p_assertions_failed == 3U );
     BOOST_TEST( !tr.p_aborted );
 }
 
