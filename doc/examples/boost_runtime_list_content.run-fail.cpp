@@ -5,6 +5,7 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 
+//[example_code
 #define BOOST_TEST_MODULE list_content
 #include <boost/test/included/unit_test.hpp>
 namespace utf=boost::unit_test;
@@ -12,8 +13,8 @@ namespace utf=boost::unit_test;
 //// --------------------------------------------------------------------------
 // Test suite 1, disabled by default, s1/test2 is explicitely enabled.
 BOOST_AUTO_TEST_SUITE( s1,
-* utf::disabled()
-* utf::description( "disabled suite 1")
+* utf::disabled()                         // suite is not disabled because of the
+* utf::description( "disabled suite 1")   // extra declaration at the end of the file
 * utf::label( "label1" )
 * utf::label( "label2" ))
 
@@ -104,3 +105,4 @@ BOOST_AUTO_TEST_CASE( test1, // s1/s14/test1
 
 BOOST_AUTO_TEST_SUITE_END() // s1/s14
 BOOST_AUTO_TEST_SUITE_END() // s1
+//]

@@ -58,7 +58,7 @@
   [/ ###############################################################################################]
   [
     [[link boost_test.utf_reference.rt_param_reference.list_content `list_content`]]
-    [Lists the tests that will be run.]
+    [Lists the tests units, their organization in the test tree, their enabled/disabled state...]
   ]
 
   [/ ###############################################################################################]

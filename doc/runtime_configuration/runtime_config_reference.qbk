@@ -247,6 +247,17 @@ DOT output generates a graph representing the module's [link ref_test_tree test 
 [@http://www.graphviz.org/doc/info/lang.html dot format].
 This output includes much more information about the test tree including labels, timeouts, expected failures, and dependencies.
 
+The legen is as follow:
+
+* the master test suite is represented as an ellipse
+* a test unit (suite, case) is in a rounded rectangle
+* test unit declaration location, [link boost_test.tests_organization.tests_grouping labels],
+  [link boost_test.testing_tools.expected_failures expected failures], [link boost_test.testing_tools.timeout timeouts] are appended,
+* a green box indicates that the test unit that is enabled, otherwise its colour is yellow,
+* an plain black arrow goes from a test unit to each of its children, following the test tree (the arrow pointing to the child),
+* a dashed red arrow indicates a runtime dependence on test units, the arrow pointing to the parent in the dependency graph.
+
+
 [h4 Acceptable values]
 
 [link enum_param_value Enumeration] names:
@@ -261,6 +272,19 @@ This output includes much more information about the test tree including labels,
 [h4 Environment variable]
 
   BOOST_TEST_LIST_CONTENT
+
+[h4 Example]
+
+The following /deliberately/ complicated example illustrates the purpose of the `--list_content`
+directive. The SVG generated from the produced Graphviz/dot file can be downloaded
+[@images/boost_runtime_list_content.svg here].
+
+[bt_example boost_runtime_list_content..`--list_content` illustration..run-fail]
+
+[$images/boost_runtime_list_content.png [width 70%]]
+
+
+[endsect] [/list_content]
 
 [/ ###############################################################################################]
 [section:list_labels `list_labels`]
@@ -284,6 +308,16 @@ of test cases.
 [h4 Environment variable]
 
   BOOST_TEST_LIST_LABELS
+
+[h4 Example]
+
+The previous example from [link boost_test.utf_reference.rt_param_reference.list_content `--list_content`] gives
+```
+> ./boost_runtime_list_content --list_labels
+Available labels:
+  label1
+  label2
+```
 
 [endsect] [/list_labels]
 
