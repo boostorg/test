@@ -60,7 +60,7 @@ In the example below, `operator==` is not defined for `std::vector` of different
 compile if the corresponding lines were uncommented (`std::vector` uses lexicographical comparison by default).
 
 [note In this case, there is no additional diagnostic provided by the __UTF__. See the section
-[link #ref_boost_test_coll_special_macro `BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE`] below.]
+[link ref_boost_test_coll_special_macro `BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE`] below.]
 
 [bt_example boost_test_container_default..BOOST_TEST containers comparison default..run-fail]
 
