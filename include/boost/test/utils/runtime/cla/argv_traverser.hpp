@@ -28,9 +28,6 @@ namespace cla {
 // **************          runtime::cla::argv_traverser        ************** //
 // ************************************************************************** //
 
-/// End of input token indicator
-static const char END_OF_TOKEN = '\0';
-
 class argv_traverser {
     typedef char const** argv_type;
 public:
@@ -39,102 +36,63 @@ public:
     /// updated in remainder method
     argv_traverser( int argc, argv_type argv )
     : m_argc( argc )
-    , m_curr_arg( 0 )
-    , m_arg_size( 0 )
-    , m_arg_pos( 0 )
+    , m_curr_token( 0 )
+    , m_token_size( 0 )
     , m_argv( argv )
     {
-        next_arg();
+        // save program name
+        save_token();
     }
 
-    /// Updates argv to contain the remainder of the input
-    /// and returns new argc
+    /// Returns new argc
     int         remainder()
     {
-        std::size_t new_argc = m_argc - m_curr_arg + 1;
-
-        if( new_argc != m_argc )
-            for( std::size_t i = 1; i < new_argc ; ++i )
-                m_argv[i] = m_argv[m_curr_arg + i - 1];
-
-        m_argv[1] += m_arg_pos;
-
-        return (int)new_argc;
+        return m_argc;
     }
 
     /// Returns true, if we reached end on input
     bool        eoi() const
     {
-        return m_curr_arg == m_argc;
+        return m_curr_token == m_argc;
     }
 
-    /// For the purposes of error reporting produces current token being parsed
-    /// (from the begining)
+    /// Returns current token in the input
     cstring     current_token()
     {
         if( eoi() )
             return cstring();
 
-        return cstring( m_argv[m_curr_arg], m_arg_size );
+        return cstring( m_argv[m_curr_token], m_token_size );
     }
 
-    /// Skips ahead by num_chars characters
-    void        skip( std::size_t num_chars )
+    /// Saves current token for remainder
+    void        save_token()
     {
-        m_arg_pos += num_chars;
-        if( m_arg_pos >= m_arg_size ) {
-            next_arg();
+        ++m_curr_token;
+
+        if( !eoi() )
+            m_token_size = ::strlen( m_argv[m_curr_token] );
+    }
+
+    /// Commit current token and iterate to next one
+    void        next_token()
+    {
+        if( !eoi() ) {
+            for( std::size_t i = m_curr_token; i < m_argc-1; ++i )
+                m_argv[i] = m_argv[i + 1];
+
+            --m_argc;
+
+            m_token_size = ::strlen( m_argv[m_curr_token] );
         }
-    }
-
-    /// Gets single character from input. If we reached end of
-    /// input, alwars returns END_OF_TOKEN. If we reached end
-    /// of token returns END_OF_TOKEN and moves to next token.
-    /// Note that END_OF_TOKEN is returned after we read the
-    /// last charter in a token
-    char        get_char()
-    {
-        if( eoi() )
-            return END_OF_TOKEN;
-
-        if( m_arg_pos == m_arg_size ) {
-            next_arg();
-            return END_OF_TOKEN;
-        }
-
-        return m_argv[m_curr_arg][m_arg_pos++];
-    }
-
-    /// Returns all the characters ramaining in the current token and moves
-    /// to next token
-    cstring     get_token()
-    {
-        if( eoi() )
-            return cstring();
-
-        cstring token( m_argv[m_curr_arg] + m_arg_pos, m_arg_size - m_arg_pos );
-
-        next_arg();
-
-        return token;
     }
 
 private:
-    void        next_arg()
-    {
-        ++m_curr_arg;
-
-        if( !eoi() ) {
-            m_arg_size = ::strlen( m_argv[m_curr_arg] );
-            m_arg_pos  = 0;
-        }
-    }
 
     // Data members
     std::size_t m_argc;         // total number of arguments
-    std::size_t m_curr_arg;     // current argument index in argv
-    std::size_t m_arg_size;     // current argument size
-    std::size_t m_arg_pos;      // current argument position
+    std::size_t m_curr_token;   // current token index in argv
+    std::size_t m_token_size;   // current token size
     argv_type   m_argv;         // all arguments
 };
 

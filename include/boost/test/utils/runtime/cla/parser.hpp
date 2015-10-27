@@ -29,6 +29,7 @@
 // STL
 // !! ?? #include <unordered_set>
 #include <set>
+#include <iostream>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -103,6 +104,18 @@ struct parameter_trie {
     bool                m_has_final_candidate;
 };
 
+// ************************************************************************** //
+// **************      runtime::cla::report_foreing_token      ************** //
+// ************************************************************************** //
+
+static void 
+report_foreing_token( cstring program_name, cstring token )
+{
+    std::cerr << "Boost.Test WARNING: token \"" << token << "\" does not correspond to the Boost.Test argument \n"
+              << "                    and should be placed after all Boost.Test arguments and the -- separator.\n"
+              << "                    For example: " << program_name << " --random -- " << token << "\n"; 
+}
+
 } // namespace rt_cla_detail
 
 // ************************************************************************** //
@@ -166,18 +179,21 @@ public:
             // False return value indicates end of params indicator is met
             if( !validate_token_format( curr_token, prefix, name, value_separator, negative_form ) ) {
                 // get rid of "end of params" token
-                tr.get_token();
+                tr.next_token();
                 break;
             }
 
             // Locate trie corresponding to found prefix and skip it in the input
             trie_ptr curr_trie = m_param_trie[prefix];
 
-            BOOST_TEST_I_ASSRT( curr_trie,
-                                format_error() << "Unrecognized parameter prefix in the argument "
-                                               << curr_token );
+            if( !curr_trie ) {
+                //  format_error() << "Unrecognized parameter prefix in the argument " << tr.current_token()
+                rt_cla_detail::report_foreing_token( m_program_name, curr_token );
+                tr.save_token();
+                continue;
+            }
 
-            tr.skip( prefix.size() );
+            curr_token.trim_left( prefix.size() );
 
             // Locate parameter based on a name and skip it in the input
             locate_result locate_res = locate_parameter( curr_trie, name, curr_token );
@@ -189,10 +205,10 @@ public:
                                     format_error( found_param->p_name ) 
                                         << "Parameter tag " << found_id.m_tag << " is not negatable." );
 
-                tr.skip( m_negation_prefix.size() );
+                curr_token.trim_left( m_negation_prefix.size() );
             }
 
-            tr.skip( name.size() );
+            curr_token.trim_left( name.size() );
 
             cstring value;
 
@@ -203,18 +219,22 @@ public:
                                     format_error( found_param->p_name ) 
                                         << "Invalid separator for the parameter "
                                         << found_param->p_name
-                                        << " in the argument " << curr_token );
+                                        << " in the argument " << tr.current_token() );
 
-                tr.skip( value_separator.size() );
+                curr_token.trim_left( value_separator.size() );
 
                 // Deduce value source
-                value = tr.get_token();
+                value = curr_token;
+                if( value.is_empty() ) {
+                    tr.next_token();
+                    value = tr.current_token();
+                }
 
                 BOOST_TEST_I_ASSRT( !value.is_empty(),
                                     format_error( found_param->p_name )
                                         << "Missing an argument value for the parameter "
                                         << found_param->p_name
-                                        << " in the argument " << curr_token );
+                                        << " in the argument " << tr.current_token() );
             }
 
             // Validate against argument duplication
@@ -222,10 +242,12 @@ public:
                                 duplicate_arg( found_param->p_name )
                                     << "Duplicate argument value for the parameter "
                                     << found_param->p_name
-                                    << " in the argument " << curr_token );
+                                    << " in the argument " << tr.current_token() );
 
             // Produce argument value
             found_param->produce_argument( value, negative_form, res );
+
+            tr.next_token();
         }
 
         // generate the remainder and return it's size
@@ -327,6 +349,9 @@ private:
 
         prefix.assign( token.begin(), it );
 
+        if( prefix.empty() )
+            return true;
+
         // Match name
         while( it != token.end() && parameter_cla_id::valid_name_char( *it ) )
             ++it;
@@ -334,14 +359,14 @@ private:
         name.assign( prefix.end(), it );
 
         if( name.empty() ) {
-            if( !prefix.is_empty() && prefix == m_end_of_param_indicator )
+            if( prefix == m_end_of_param_indicator )
                 return false;
 
             BOOST_TEST_I_THROW( format_error() << "Invalid format for an actual argument " << token );
         }
 
         // Match value separator
-        while( it != token.end() && parameter_cla_id::valid_separator_char(*it) )
+        while( it != token.end() && parameter_cla_id::valid_separator_char( *it ) )
             ++it;
 
         separator.assign( name.end(), it );

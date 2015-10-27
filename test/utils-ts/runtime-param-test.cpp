@@ -33,103 +33,105 @@ BOOST_AUTO_TEST_CASE( test_construction )
     rt::cla::argv_traverser tr1( sizeof(argv1)/sizeof(char const*), argv1 );
 
     BOOST_TEST( tr1.eoi() );
+    BOOST_TEST( tr1.remainder() == 1 );
 
     char const* argv2[] = { "test.exe", "--abc=1" };
     rt::cla::argv_traverser tr2( sizeof(argv2)/sizeof(char const*), argv2 );
 
     BOOST_TEST( !tr2.eoi() );
+    BOOST_TEST( tr2.remainder() == 2 );
 
     char const* argv3[] = { "test.exe", "" };
     rt::cla::argv_traverser tr3( sizeof(argv3)/sizeof(char const*), argv3 );
 
     BOOST_TEST( !tr3.eoi() );
+    BOOST_TEST( tr3.remainder() == 2 );
 }
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( test_get_char )
+BOOST_AUTO_TEST_CASE( test_next_token )
 {
-    char const* argv1[] = { "test.exe", "ab c", "de", "" };
-    rt::cla::argv_traverser tr1( sizeof(argv1)/sizeof(char const*), argv1 );
+    char const* argv1[] = { "test.exe", "a", "b", "" };
+    rt::cla::argv_traverser tr( sizeof(argv1)/sizeof(char const*), argv1 );
 
-    BOOST_TEST( tr1.get_char() == 'a' );
-    BOOST_TEST( tr1.get_char() == 'b' );
-    BOOST_TEST( tr1.get_char() == ' ' );
-    BOOST_TEST( tr1.get_char() == 'c' );
-    BOOST_TEST( tr1.get_char() == rt::cla::END_OF_TOKEN );
-    BOOST_TEST( tr1.get_char() == 'd' );
-    BOOST_TEST( tr1.get_char() == 'e' );
-    BOOST_TEST( !tr1.eoi() );
-    BOOST_TEST( tr1.get_char() == rt::cla::END_OF_TOKEN );
-    BOOST_TEST( !tr1.eoi() );
-    BOOST_TEST( tr1.get_char() == rt::cla::END_OF_TOKEN );
-    BOOST_TEST( tr1.eoi() );
-    BOOST_TEST( tr1.get_char() == rt::cla::END_OF_TOKEN );
+    tr.next_token();
+    BOOST_TEST( tr.remainder() == 3 );
+    BOOST_TEST( argv1[0] == "test.exe" );
+    BOOST_TEST( argv1[1] == "b" );
+    BOOST_TEST( argv1[2] == "" );
+
+    tr.next_token();
+    BOOST_TEST( tr.remainder() == 2 );
+    BOOST_TEST( argv1[0] == "test.exe" );
+    BOOST_TEST( argv1[1] == "" );
+
+    tr.next_token();
+    BOOST_TEST( tr.remainder() == 1 );
+    BOOST_TEST( argv1[0] == "test.exe" );
+    BOOST_TEST( tr.eoi() );
 }
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( test_get_token )
+BOOST_AUTO_TEST_CASE( test_current_token )
 {
     char const* argv1[] = { "test.exe", "abc", "zxcvb", "as kl", "--ooo=111", "a", "" };
-    rt::cla::argv_traverser tr1( sizeof(argv1)/sizeof(char const*), argv1 );
+    rt::cla::argv_traverser tr( sizeof(argv1)/sizeof(char const*), argv1 );
 
-    BOOST_TEST( tr1.get_token() == "abc" );
-    BOOST_TEST( tr1.get_char() == 'z' );
-    BOOST_TEST( tr1.get_token() == "xcvb" );
-    BOOST_TEST( tr1.get_token() == "as kl" );
-    BOOST_TEST( tr1.get_char() == '-' );
-    BOOST_TEST( tr1.get_token() == "-ooo=111" );
-    BOOST_TEST( tr1.get_char() == 'a' );
-    BOOST_TEST( !tr1.eoi() );
-    BOOST_TEST( tr1.get_token() == rt::cstring() );
-    BOOST_TEST( !tr1.eoi() );
-    BOOST_TEST( tr1.get_token() == rt::cstring() );
-    BOOST_TEST( tr1.eoi() );
-    BOOST_TEST( tr1.get_token() == rt::cstring() );
+    BOOST_TEST( tr.current_token() == "abc" );
+    tr.next_token();
+    BOOST_TEST( tr.current_token() == "zxcvb" );
+    tr.next_token();
+    BOOST_TEST( tr.current_token() == "as kl" );
+    tr.next_token();
+    BOOST_TEST( tr.current_token() == "--ooo=111" );
+    tr.next_token();
+    BOOST_TEST( tr.current_token() == "a" );
+    tr.next_token();
+    BOOST_TEST( !tr.eoi() );
+    BOOST_TEST( tr.current_token() == rt::cstring() );
+    tr.next_token();
+    BOOST_TEST( tr.eoi() );
+    BOOST_TEST( tr.current_token() == rt::cstring() );
+}
+
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_save_token )
+{
+    char const* argv1[] = { "test.exe", "a", "b", "" };
+    rt::cla::argv_traverser tr( sizeof(argv1)/sizeof(char const*), argv1 );
+
+    tr.save_token();
+    BOOST_TEST( tr.remainder() == 4 );
+    BOOST_TEST( tr.current_token() == "b" );
+
+    tr.save_token();
+    BOOST_TEST( tr.remainder() == 4 );
+    BOOST_TEST( tr.current_token() == "" );
+
+    tr.save_token();
+    BOOST_TEST( tr.remainder() == 4 );
+    BOOST_TEST( tr.eoi() );
 }
 
 //____________________________________________________________________________//
 
 BOOST_AUTO_TEST_CASE( test_remainder )
 {
-    char const* argv[] = { "test.exe", "abcjkl", "zx vb" };
+    char const* argv[] = { "test.exe", "abcjkl", "zx vb", " 3 ", "" };
     rt::cla::argv_traverser tr( sizeof(argv)/sizeof(char const*), argv );
 
-    int new_argc = tr.remainder();
+    tr.next_token();
+    tr.save_token();
+    tr.next_token();
+    tr.save_token();
 
-    BOOST_TEST( new_argc == 3 );
-    BOOST_TEST( argv[0] == "test.exe" );
-    BOOST_TEST( argv[1] == "abcjkl" );
-    BOOST_TEST( argv[2] == "zx vb" );
-
-    tr.get_char();
-    new_argc = tr.remainder();
-
-    BOOST_TEST( new_argc == 3 );
-    BOOST_TEST( argv[0] == "test.exe" );
-    BOOST_TEST( argv[1] == "bcjkl" );
-    BOOST_TEST( argv[2] == "zx vb" );
-
-    tr.get_token();
-    new_argc = tr.remainder();
-
-    BOOST_TEST( new_argc == 2 );
+    BOOST_TEST( tr.remainder() == 3 );
     BOOST_TEST( argv[0] == "test.exe" );
     BOOST_TEST( argv[1] == "zx vb" );
-
-    tr.skip( 2 );
-    new_argc = tr.remainder();
-
-    BOOST_TEST( new_argc == 2 );
-    BOOST_TEST( argv[0] == "test.exe" );
-    BOOST_TEST( argv[1] == " vb" );
-
-    tr.skip( 3 );
-    new_argc = tr.remainder();
-
-    BOOST_TEST( new_argc == 1 );
-    BOOST_TEST( argv[0] == "test.exe" );
+    BOOST_TEST( argv[2] == "" );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -602,21 +604,6 @@ BOOST_AUTO_TEST_CASE( test_validations )
     rt::arguments_store args_store;
 
     {
-        char const* argv[] = { "test.exe", "param_one=1" };
-        BOOST_CHECK_THROW( testparser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
-    }
-
-    {
-        char const* argv[] = { "test.exe", "/param_one=1" };
-        BOOST_CHECK_THROW( testparser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
-    }
-
-    {
-        char const* argv[] = { "test.exe", "---param_one=1" };
-        BOOST_CHECK_THROW( testparser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
-    }
-
-    {
         char const* argv[] = { "test.exe", "--=1" };
         BOOST_CHECK_THROW( testparser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
     }
@@ -642,13 +629,23 @@ BOOST_AUTO_TEST_CASE( test_validations )
     }
 
     {
-        char const* argv[] = { "test.exe", "=1" };
+        char const* argv[] = { "test.exe", "--opt=Yeah" };
         BOOST_CHECK_THROW( testparser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
     }
 
     {
-        char const* argv[] = { "test.exe", "--opt=Yeah" };
-        BOOST_CHECK_THROW( testparser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ), rt::format_error );
+        char const* argv[] = { "test.exe", "param_one=1" };
+        BOOST_TEST( testparser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ) == 2 );
+    }
+
+    {
+        char const* argv[] = { "test.exe", "---param_one=1" };
+        BOOST_TEST( testparser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ) == 2 );
+    }
+
+    {
+        char const* argv[] = { "test.exe", "=1" };
+        BOOST_TEST( testparser.parse( sizeof(argv)/sizeof(char const*), (char**)argv, args_store ) == 2 );
     }
 }
 
