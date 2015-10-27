@@ -17,7 +17,6 @@
 
 // Boost.Test
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
-#include <boost/test/utils/fixed_mapping.hpp>
 #include <boost/test/utils/custom_manip.hpp>
 #include <boost/test/utils/foreach.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
@@ -34,6 +33,7 @@
 
 namespace boost {
 namespace unit_test {
+namespace utils {
 
 // ************************************************************************** //
 // **************               xml print helpers              ************** //
@@ -42,21 +42,31 @@ namespace unit_test {
 inline void
 print_escaped( std::ostream& where_to, const_string value )
 {
-    static fixed_mapping<char,char const*> char_type(
-        '<' , "lt",
-        '>' , "gt",
-        '&' , "amp",
-        '\'', "apos" ,
-        '"' , "quot",
+#ifndef BOOST_NO_CXX11_HDR_INITIALIZER_LIST
+    static std::map<char,char const*> const char_type{{
+        {'<' , "lt"},
+        {'>' , "gt"},
+        {'&' , "amp"},
+        {'\'', "apos"},
+        {'"' , "quot"}
+    }};
+#else
+    static std::map<char,char const*> char_type;
 
-        0
-    );
+    if( char_type.empty() ) {
+        char_type['<'] = "lt";
+        char_type['>'] = "gt";
+        char_type['&'] = "amp";
+        char_type['\'']= "apos";
+        char_type['"'] = "quot";
+    }
+#endif
 
     BOOST_TEST_FOREACH( char, c, value ) {
-        char const* ref = char_type[c];
+        std::map<char,char const*>::const_iterator found_ref = char_type.find( c );
 
-        if( ref )
-            where_to << '&' << ref << ';';
+        if( found_ref != char_type.end() )
+            where_to << '&' << found_ref->second << ';';
         else
             where_to << c;
     }
@@ -124,6 +134,7 @@ operator<<( custom_printer<cdata> const& p, const_string value )
 
 //____________________________________________________________________________//
 
+} // namespace utils
 } // namespace unit_test
 } // namespace boost
 

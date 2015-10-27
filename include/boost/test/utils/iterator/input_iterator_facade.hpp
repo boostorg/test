@@ -20,8 +20,8 @@
 //____________________________________________________________________________//
 
 namespace boost {
-
 namespace unit_test {
+namespace utils {
 
 // ************************************************************************** //
 // **************          input_iterator_core_access          ************** //
@@ -94,8 +94,8 @@ private:
     }
 };
 
+} // namespace utils
 } // namespace unit_test
-
 } // namespace boost
 
 //____________________________________________________________________________//
@@ -103,4 +103,3 @@ private:
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_UTILS_INPUT_ITERATOR_FACADE_HPP
-

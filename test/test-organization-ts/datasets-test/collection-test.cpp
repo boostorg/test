@@ -130,7 +130,6 @@ BOOST_AUTO_TEST_CASE( test_collection_copies )
 
     data::for_each_sample( data::make( std::vector<copy_count>( 2 ) ), check_arg_type<copy_count>() );
     BOOST_TEST( copy_count::value() == (exp_copy_count + std_vector_constructor_count) * 2);
-    BOOST_CHECK_EQUAL(copy_count::value(), (exp_copy_count + std_vector_constructor_count) * 2);
 
     copy_count::value() = 0;
     std::vector<copy_count> samples3( 2 );
