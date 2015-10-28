@@ -59,6 +59,9 @@ BOOST_TEST(result);
 In the example below, `operator==` is not defined for `std::vector` of different types, and the program would fail to
 compile if the corresponding lines were uncommented (`std::vector` uses lexicographical comparison by default).
 
+[note In this case, there is no additional diagnostic provided by the __UTF__. See the section
+[link ref_boost_test_coll_special_macro `BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE`] below.]
+
 [bt_example boost_test_container_default..BOOST_TEST containers comparison default..run-fail]
 
 [#boost_test_coll_perelement][h3 Element-wise comparison]
@@ -132,9 +135,18 @@ The comparison is performed in the order given by forward iterators of the conta
 
 [bt_example boost_test_container_lex..BOOST_TEST container comparison using lexicographical order..run-fail]
 
-[/ TODO ]
-[/ [h4 Making lexicographic comparison the default] ]
-[/ TODO ]
+
+[#ref_boost_test_coll_special_macro][h4 Extended diagnostic by default for specific containers]
+
+As seen above, the lexicographical comparison is either explicit (`boost::test_tools::lexicographic()`) or implicit when
+the container operations uses this type of comparison. In the second case, it is however not possible to benefit from an extended
+diagnostic in case of failure.
+
+If the lexicographical comparison is the default for a specific container, it is possible to dispatch the comparison
+operations to the __UTF__ instead of the container operator. In order to default to the __UTF__ lexicographical comparison,
+the macro `BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE` might be used as follow:
+
+[bt_example boost_test_container_lex_default..Default `std::vector<int>` to lexicographic with extended diagnostic..run-fail]
 
 [h4 Requirements]
 

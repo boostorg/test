@@ -11,8 +11,14 @@
 
 [h5 New major features]
 * improved API for datasets: initializer list for creating datasets, easier to construct datasets
+* improved command line interface
 
 [h5 Bugfixes and feature requests]
+# [ticket 3384] Double-quoted arguments including spaces are divided by Boost.Test.
+# [ticket 6032] Program options within init_unit_test_suite are incorrect when using path and whitespaces
+# [ticket 6859] Boost.Test eats away last empty command line parameter
+# [ticket 10317] boost::test corrupts contents of argv if a paramter contains whitespace
+# [ticket 11279] invalid parameters should be reported
 # [ticket 11478] Boost Test Exception Assert Failure has poor message
 # [ticket 11571] Can't compile `BOOST_TEST( ..., per_element() )` comparison of `vector<string>`
 # [ticket 11623] Clang rejects some simple `BOOST_TEST()` statements
@@ -31,8 +37,8 @@
 * support for declaring [link boost_test.tests_organization.tests_dependencies dependencies] over test cases
 * attributes for [link boost_test.tests_organization.enabling enabling or disabling] test execution based on static, compile-time or runtime rules
 * extended [link boost_test.runtime_config.test_unit_filtering unit test filtering] from the command line (negation, labels, ...)
-* color output with __param_color_output__
-* test bed listing with __param_list_content__
+* color output with [link boost_test.utf_reference.rt_param_reference.color_output `color_output`]
+* test bed listing with [link boost_test.utf_reference.rt_param_reference.list_content `list_content`]
 * rewritten documentation using quickbook
 
 [/* now having a more accurate timing (see [ticket 7397]) for the tests. Old format is still available through the command line option __param_deprecated_timer_format__

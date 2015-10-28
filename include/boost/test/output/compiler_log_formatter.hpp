@@ -33,6 +33,8 @@ namespace output {
 
 class BOOST_TEST_DECL compiler_log_formatter : public unit_test_log_formatter {
 public:
+    compiler_log_formatter() : m_color_output( false ) {}
+
     // Formatter interface
     void    log_start( std::ostream&, counter_t test_cases_amount );
     void    log_finish( std::ostream& );
@@ -56,6 +58,9 @@ public:
 
 protected:
     virtual void    print_prefix( std::ostream&, const_string file, std::size_t line );
+
+    // Data members
+    bool    m_color_output;
 };
 
 } // namespace output

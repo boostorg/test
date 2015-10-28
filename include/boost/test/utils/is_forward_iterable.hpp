@@ -16,7 +16,6 @@
   #define BOOST_TEST_FWD_ITERABLE_CXX03
 #endif
 
-
 #if defined(BOOST_TEST_FWD_ITERABLE_CXX03)
 // Boost
 #include <boost/mpl/bool.hpp>
@@ -76,72 +75,81 @@ struct is_forward_iterable< std::set<K, C, A> > : public mpl::true_ {};
 
 namespace ut_detail {
 
-  template<typename T>
-  struct is_present : public mpl::true_ {};
+template<typename T>
+struct is_present : public mpl::true_ {};
 
-  // some compiler do not implement properly decltype non expression involving members (eg. VS2013)
-  // a workaround is to use -> decltype syntax.
-  template <class T>
-  struct has_member_size {
-  private:
+//____________________________________________________________________________//
+
+// some compiler do not implement properly decltype non expression involving members (eg. VS2013)
+// a workaround is to use -> decltype syntax.
+template <class T>
+struct has_member_size {
+private:
     struct nil_t {};
-    template<typename U> static auto  test(U*) -> decltype( boost::declval<U>().size() );
-    template<typename>   static nil_t test(...);
+    template<typename U> static auto  test( U* ) -> decltype(boost::declval<U>().size());
+    template<typename>   static nil_t test( ... );
 
-  public:
-    static bool const value = !std::is_same< decltype(test<T>(nullptr)), nil_t>::value;
-  };
+public:
+    static bool const value = !std::is_same< decltype(test<T>( nullptr )), nil_t>::value;
+};
 
-  template <class T>
-  struct has_member_begin {
-  private:
+//____________________________________________________________________________//
+
+template <class T>
+struct has_member_begin {
+private:
     struct nil_t {};
-    template<typename U>  static auto  test(U*) -> decltype( boost::declval<U>().begin() );
-    template<typename>    static nil_t test(...);
-  public:
-    static bool const value = !std::is_same< decltype(test<T>(nullptr)), nil_t>::value;
-  };
+    template<typename U>  static auto  test( U* ) -> decltype(boost::declval<U>().begin());
+    template<typename>    static nil_t test( ... );
+public:
+    static bool const value = !std::is_same< decltype(test<T>( nullptr )), nil_t>::value;
+};
 
-  template <class T>
-  struct has_member_end {
-  private:
+//____________________________________________________________________________//
+
+template <class T>
+struct has_member_end {
+private:
     struct nil_t {};
-    template<typename U>  static auto  test(U*) -> decltype( boost::declval<U>().end() );
-    template<typename>    static nil_t test(...);
-  public:
-    static bool const value = !std::is_same< decltype(test<T>(nullptr)), nil_t>::value;
-  };
+    template<typename U>  static auto  test( U* ) -> decltype(boost::declval<U>().end());
+    template<typename>    static nil_t test( ... );
+public:
+    static bool const value = !std::is_same< decltype(test<T>( nullptr )), nil_t>::value;
+};
 
-  template <class T, class enabled = void>
-  struct is_forward_iterable_impl : std::false_type
-  {};
+//____________________________________________________________________________//
 
-  template <class T>
-  struct is_forward_iterable_impl<
+template <class T, class enabled = void>
+struct is_forward_iterable_impl : std::false_type {
+};
+
+//____________________________________________________________________________//
+
+template <class T>
+struct is_forward_iterable_impl<
     T,
     typename std::enable_if<
-      is_present<typename T::const_iterator>::value &&
-      is_present<typename T::value_type>::value &&
-      has_member_size<T>::value &&
-      has_member_begin<T>::value &&
-      has_member_end<T>::value &&
-      !is_cstring<T>::value
-      >::type
-    > : std::true_type
-  {};
+    is_present<typename T::const_iterator>::value &&
+    is_present<typename T::value_type>::value &&
+    has_member_size<T>::value &&
+    has_member_begin<T>::value &&
+    has_member_end<T>::value &&
+    !is_cstring<T>::value
+    >::type
+> : std::true_type
+{};
 
+//____________________________________________________________________________//
 
 } // namespace ut_detail
 
-
-/*! Indicates that a specific type implements the forward iterable concept.
- */
-template<typename T> 
-struct is_forward_iterable  {
-  typedef typename std::remove_reference<T>::type T_ref;
-  typedef ut_detail::is_forward_iterable_impl<T_ref> is_fwd_it_t;
-  typedef mpl::bool_<is_fwd_it_t::value> type;
-  enum { value = is_fwd_it_t::value };
+/*! Indicates that a specific type implements the forward iterable concept. */
+template<typename T>
+struct is_forward_iterable {
+    typedef typename std::remove_reference<T>::type T_ref;
+    typedef ut_detail::is_forward_iterable_impl<T_ref> is_fwd_it_t;
+    typedef mpl::bool_<is_fwd_it_t::value> type;
+    enum { value = is_fwd_it_t::value };
 };
 
 #endif /* defined(BOOST_TEST_FWD_ITERABLE_CXX03) */

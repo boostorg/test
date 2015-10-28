@@ -20,8 +20,6 @@
 #include <boost/test/detail/config.hpp>
 
 #include <boost/preprocessor/config/config.hpp>
-#include <boost/test/detail/suppress_warnings.hpp>
-
 
 #if    defined(BOOST_NO_CXX11_VARIADIC_MACROS) \
     || defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) \
@@ -66,7 +64,5 @@
 #  include <boost/test/tools/detail/per_element_manip.hpp>
 #  include <boost/test/tools/detail/lexicographic_manip.hpp>
 #endif
-
-#include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_TOOLS_HPP_111812GER

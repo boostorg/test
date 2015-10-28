@@ -179,7 +179,7 @@ xrange( SampleType const& end_val )
 
 /// @overload boost::unit_test::data::xrange()
 template<typename SampleType, typename Params>
-inline typename enable_if_c<nfp::is_named_params<Params>::value,
+inline typename enable_if_c<nfp::is_named_param_pack<Params>::value,
                             monomorphic::generated_by<monomorphic::xrange_t<SampleType>>>::type
 xrange( SampleType const& end_val, Params const& params )
 {

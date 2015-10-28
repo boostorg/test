@@ -100,7 +100,8 @@ struct guard {
     ~guard()
     {
         results_reporter::set_stream( std::cerr );
-        results_reporter::set_format( runtime_config::report_format() );
+        results_reporter::set_format( runtime_config::get<output_format>(
+            runtime_config::REPORT_FORMAT ) );
     }
 };
 
@@ -115,7 +116,7 @@ BOOST_AUTO_TEST_CASE( test_result_reports )
 
     std::string pattern_file_name(
         framework::master_test_suite().argc == 1
-            ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./test_files/" PATTERN_FILE_NAME )
+            ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./baseline-outputs/" PATTERN_FILE_NAME )
             : framework::master_test_suite().argv[1] );
 
     output_test_stream test_output( pattern_file_name, !runtime_config::save_pattern() );
