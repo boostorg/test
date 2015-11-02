@@ -23,7 +23,7 @@ requirements_boost_test_full_support = [ requires cxx11_variadic_macros cxx11_de
 # requirements_boost_test_full_support += [ check-target-builds ../tools/check_boost_test_support.cpp "Boost.Test feature check: BOOST_TEST full support"  : : <build>no ] ;
 
 # requirements for dataset feature
-requirements_datasets = [ requires cxx11_decltype cxx11_hdr_random cxx11_hdr_tuple cxx11_hdr_initializer_list cxx11_variadic_macros cxx11_trailing_result_types ] ;
+requirements_datasets = [ requires cxx11_decltype cxx11_hdr_random cxx11_hdr_tuple cxx11_hdr_initializer_list cxx11_variadic_macros ] ;
 
 
 #_________________________________________________________________________________________________#
@@ -46,7 +46,6 @@ rule boost.test-self-test ( test-rule : test-suite : test-name : usage-variant ?
                <toolset>gcc:<cxxflags>-Wno-long-long
                <toolset>gcc:<cxxflags>-Wno-variadic-macros
                <toolset>clang:<cxxflags>-Wno-c99-extensions
-               <toolset>clang:<cxxflags>-Wno-variadic-macros
 #               <toolset>gcc:<cxxflags>--coverage
                <warnings>all
                $(extra-options)
@@ -134,7 +133,7 @@ test-suite "writing-test-ts"
 :
   [ boost.test-self-test run : writing-test-ts : assertion-construction-test : : : : : : $(requirements_boost_test_full_support) ]
   [ boost.test-self-test run : writing-test-ts : boost_check_equal-str-test ]
-  [ boost.test-self-test run : writing-test-ts : collection-comparison-test : : : : : : $(requirements_boost_test_full_support)  [ requires cxx11_unified_initialization_syntax ] ] # required by the test content
+  [ boost.test-self-test run : writing-test-ts : collection-comparison-test : : : : : : [ requires cxx11_auto_declarations cxx11_decltype ] ] # required by the test content
   [ boost.test-self-test run : writing-test-ts : dont_print_log_value-test : : : : : : $(requirements_datasets) ]
   [ boost.test-self-test run : writing-test-ts : fp-comparisons-test : : : : : : $(requirements_boost_test_full_support) ]
   [ boost.test-self-test run : writing-test-ts : fp-multiprecision-comparison-test : : : : : : $(requirements_boost_test_full_support) ]
