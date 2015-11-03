@@ -7,7 +7,7 @@
 
 [section Change log]
 
-[h4 Boost.Test v3.1 / boost XXXX]
+[h4 Boost.Test v3.1 / boost 1.60]
 
 [h5 New major features]
 * improved API for datasets: initializer list for creating datasets, easier to construct datasets
@@ -17,6 +17,7 @@
 # [ticket 3384] Double-quoted arguments including spaces are divided by Boost.Test.
 # [ticket 6032] Program options within init_unit_test_suite are incorrect when using path and whitespaces
 # [ticket 6859] Boost.Test eats away last empty command line parameter
+# [ticket 7257] Boost.Test alters and does not restore ostream precision after any Test macro (fixed in 1.59)
 # [ticket 10317] boost::test corrupts contents of argv if a paramter contains whitespace
 # [ticket 11279] invalid parameters should be reported
 # [ticket 11478] Boost Test Exception Assert Failure has poor message
