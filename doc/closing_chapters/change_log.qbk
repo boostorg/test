@@ -15,9 +15,11 @@
 
 [h5 Bugfixes and feature requests]
 # [ticket 3384] Double-quoted arguments including spaces are divided by Boost.Test.
+# [ticket 3897] Test framework does not include <osreldate.h> before testing __FreeBSD_version (fixed in 1.59)
 # [ticket 6032] Program options within init_unit_test_suite are incorrect when using path and whitespaces
 # [ticket 6859] Boost.Test eats away last empty command line parameter
 # [ticket 7257] Boost.Test alters and does not restore ostream precision after any Test macro (fixed in 1.59)
+# [ticket 9228] Patch to make Boost.Test work with RTTI disabled (fixed in 1.59)
 # [ticket 10317] boost::test corrupts contents of argv if a paramter contains whitespace
 # [ticket 11279] invalid parameters should be reported
 # [ticket 11478] Boost Test Exception Assert Failure has poor message
