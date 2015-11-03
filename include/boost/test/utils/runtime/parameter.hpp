@@ -373,7 +373,7 @@ public:
 #endif
     : base( name, m )
     {
-#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
+#ifdef BOOST_TEST_CLA_NEW_API
         auto const& values = m[enum_values<EnumType>::value];
         auto it = values.begin();
 #else

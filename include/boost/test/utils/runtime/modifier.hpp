@@ -32,8 +32,11 @@ namespace runtime {
 
 namespace {
 
-#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
+#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && !defined(BOOST_NO_CXX11_TEMPLATE_ALIASES)
+#define BOOST_TEST_CLA_NEW_API
+#endif
 
+#ifdef BOOST_TEST_CLA_NEW_API
 auto const& description     = unit_test::static_constant<nfp::typed_keyword<cstring,struct description_t>>::value;
 auto const& help            = unit_test::static_constant<nfp::typed_keyword<cstring,struct help_t>>::value;
 auto const& env_var         = unit_test::static_constant<nfp::typed_keyword<cstring,struct env_var_t>>::value;
