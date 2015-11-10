@@ -379,7 +379,8 @@ private:
         return true;
     }
 
-    typedef std::pair<parameter_cla_id const&, basic_param_ptr> locate_result;
+    // C++03: cannot have references as types
+    typedef std::pair<parameter_cla_id, basic_param_ptr> locate_result;
 
     locate_result
     locate_parameter( trie_ptr curr_trie, cstring name, cstring token )
