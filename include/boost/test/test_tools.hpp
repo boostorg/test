@@ -27,6 +27,13 @@
 #  define BOOST_TEST_MACRO_LIMITED_SUPPORT
 #endif
 
+// having issues in auto type deduction with gcc C++0x mode
+#if !defined(BOOST_TEST_MACRO_LIMITED_SUPPORT) \
+    && defined(BOOST_GCC) \
+    && !(__cplusplus >= 201103L)
+#  define BOOST_TEST_MACRO_LIMITED_SUPPORT
+#endif
+
 // Boost.Test
 // #define BOOST_TEST_NO_OLD_TOOLS
 

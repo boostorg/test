@@ -28,6 +28,7 @@
 // STL
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 #include <utility>
+#include <type_traits>
 #endif
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -192,18 +193,21 @@ class expression_base {
 public:
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-    template<typename T>
-    struct RhsT : remove_const<typename remove_reference<T>::type> {};
+    //template<typename T>
+    //struct RhsT : remove_const<typename remove_reference<T>::type> {};
+
+    //template<typename T>
+    //struct RhsT : std::conditional<std::is_rvalue_reference<T&&>::value, T, T> {};
     
 #define ADD_OP_SUPPORT( oper, name, _, _i )                     \
     template<typename T>                                        \
-    binary_expr<ExprType,T,                                     \
-        op::name<ValType,typename RhsT<T>::type> >              \
-    operator oper( T&& rhs )                                    \
+    binary_expr<ExprType, T,               \
+        op::name<ValType,typename std::decay<T>::type> >              \
+    operator oper( T&& rhs )                              \
     {                                                           \
         return binary_expr<ExprType,T,                          \
-         op::name<ValType,typename RhsT<T>::type> >             \
-            ( std::forward<ExprType>(                           \
+          op::name<ValType,typename std::decay<T>::type> >            \
+            ( std::move(                           \
                 *static_cast<ExprType*>(this) ),                \
               std::forward<T>(rhs) );                           \
     }                                                           \
@@ -262,7 +266,7 @@ public:
 // simple value expression
 
 template<typename T>
-class value_expr : public expression_base<value_expr<T>,typename remove_const<typename remove_reference<T>::type>::type> {
+class value_expr : public expression_base<value_expr<T>, typename remove_const<typename remove_reference<T>::type>::type> {
 public:
     // Public types
     typedef T                   result_type;
@@ -272,8 +276,9 @@ public:
     value_expr( value_expr&& ve )
     : m_value( std::forward<T>(ve.m_value) )
     {}
-    explicit                    value_expr( T&& val )
-    : m_value( std::forward<T>(val) )
+    template <class U>
+    value_expr( U&& val )
+    : m_value( std::forward<U>(val) )
     {}
 #else
     explicit                    value_expr( T const& val )
@@ -348,9 +353,11 @@ public:
     : m_lhs( std::forward<LExpr>(be.m_lhs) )
     , m_rhs( std::forward<Rhs>(be.m_rhs) )
     {}
-    binary_expr( LExpr&& lhs, Rhs&& rhs )
+
+    template <class T>
+    binary_expr( LExpr&& lhs, T&& rhs )
     : m_lhs( std::forward<LExpr>(lhs) )
-    , m_rhs( std::forward<Rhs>(rhs) )
+    , m_rhs( std::forward<T>(rhs) )
     {}
 #else
     binary_expr( LExpr const& lhs, Rhs const& rhs )
