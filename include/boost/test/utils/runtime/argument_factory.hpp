@@ -128,7 +128,7 @@ template<typename EnumType>
 struct value_interpreter<EnumType, true> {
     template<typename Modifiers>
     explicit        value_interpreter( Modifiers const& m )
-#ifndef BOOST_NO_CXX11_HDR_INITIALIZER_LIST
+#if !defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST) && !defined(BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX)
     : m_name_to_value( m[enum_values<EnumType>::value] )
     {
     }

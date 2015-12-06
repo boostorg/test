@@ -38,7 +38,7 @@ if(NOT MSVC)
   check_cxx_compiler_flag(-std=c++0x HAS_CXX0X_FLAG)
   if(HAS_CXX11_FLAG)
     message(STATUS "Compiling with C++11 support")
-    #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
   elseif(HAS_CXX0X_FLAG)
     #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
   endif()
@@ -147,7 +147,8 @@ endforeach()
 # unit tests folder
 set(BOOST_TEST_UNITTESTS_FOLDER ${BOOST_TEST_ROOT_DIR}/test)
 
-file(GLOB_RECURSE
+# datasets
+file(GLOB
      BOOST_TEST_UNITTESTS_DATASET
      ${BOOST_TEST_UNITTESTS_FOLDER}/test-organization-ts/datasets-test/*.cpp
      ${BOOST_TEST_UNITTESTS_FOLDER}/test-organization-ts/datasets-test/*.hpp)
@@ -168,10 +169,13 @@ set(BOOST_UTF_TESTS_IND_FILES
     execution_monitor-ts
     framework-ts
     usage-variants-ts
-    utils-ts)
+    utils-ts
+    test-organization-ts)
+    
 
 foreach(_ts IN LISTS BOOST_UTF_TESTS_IND_FILES)
 
+  message("parsing test suite ${_ts}")
   file(GLOB_RECURSE
        _boost_utf_current_tsuite
        ${BOOST_TEST_UNITTESTS_FOLDER}/${_ts}/*.cpp)
@@ -181,9 +185,10 @@ foreach(_ts IN LISTS BOOST_UTF_TESTS_IND_FILES)
     get_filename_component(_hh ${_h} ABSOLUTE)
     get_filename_component(_name ${_h} NAME_WE)
     file(RELATIVE_PATH _v ${BOOST_TEST_UNITTESTS_FOLDER} ${_hh})
-    get_filename_component(_v "${_v}" DIRECTORY)
+    #get_filename_component(_v "${_v}" DIRECTORY)
+    message("adding ${_ts}/${_name}")
     add_executable(${_name} ${_hh})
-    set_target_properties(${_name} PROPERTIES FOLDER "Unit tests/${_v}")
+    set_target_properties(${_name} PROPERTIES FOLDER "Unit tests/${_ts}")
     add_test(NAME bt-unittest-${_name}
              COMMAND ${_name})
   endforeach()
