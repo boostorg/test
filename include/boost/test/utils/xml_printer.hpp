@@ -42,7 +42,7 @@ namespace utils {
 inline void
 print_escaped( std::ostream& where_to, const_string value )
 {
-#ifndef BOOST_NO_CXX11_HDR_INITIALIZER_LIST
+#if !defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST) && !defined(BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX)
     static std::map<char,char const*> const char_type{{
         {'<' , "lt"},
         {'>' , "gt"},
