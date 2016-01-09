@@ -36,8 +36,9 @@
 #include <boost/test/detail/suppress_warnings.hpp>
 #include <boost/test/tools/detail/print_helper.hpp>
 
-#ifndef BOOST_TEST_DATASET_MAX_ARITY
-#define BOOST_TEST_DATASET_MAX_ARITY 10
+#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) \
+   && !defined(BOOST_TEST_DATASET_MAX_ARITY)
+# define BOOST_TEST_DATASET_MAX_ARITY 10
 #endif
 
 //____________________________________________________________________________//
@@ -98,6 +99,7 @@ public:
         return res;
     }
 
+#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
   /// make this variadic
 #define TC_MAKE(z,arity,_)                                                          \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                             \
@@ -109,6 +111,17 @@ public:
     }                                                                               \
 
     BOOST_PP_REPEAT_FROM_TO(1, BOOST_TEST_DATASET_MAX_ARITY, TC_MAKE, _)
+#else
+    template<typename ...Arg>
+    void    operator()(Arg ... arg) const
+    {
+        m_test_cases.push_back(
+            new test_case( m_tc_name,
+                           m_tc_file,
+                           m_tc_line,
+                           boost::bind( &TestCase::template test_method<Arg...>, arg...) ) );
+    }
+#endif
 
 private:
     // Data members
