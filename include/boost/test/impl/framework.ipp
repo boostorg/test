@@ -397,22 +397,32 @@ parse_filters( test_unit_id master_tu_id, test_unit_id_list& tu_to_enable, test_
     BOOST_TEST_FOREACH( const_string, filter, filters ) {
         BOOST_TEST_SETUP_ASSERT( !filter.is_empty(), "Invalid filter specification" );
 
-        enum { SELECTOR, ENABLER, DISABLER } filter_type = SELECTOR;
+        // each --run_test command may also be separated by a ':' (environment variable)
+        utils::string_token_iterator t_filter_it( filter, (utils::dropped_delimeters = ":",
+                                                           utils::kept_delimeters = utils::dt_none) );
 
-        // 11. Deduce filter type
-        if( filter[0] == '!' || filter[0] == '+' ) {
-            filter_type = filter[0] == '+' ? ENABLER : DISABLER;
-            filter.trim_left( 1 );
-            BOOST_TEST_SETUP_ASSERT( !filter.is_empty(), "Invalid filter specification" );
-        }
+        while( t_filter_it != utils::string_token_iterator() ) {
+            const_string filter_token = *t_filter_it;
 
-        had_selector_filter |= filter_type == SELECTOR;
+            enum { SELECTOR, ENABLER, DISABLER } filter_type = SELECTOR;
 
-        // 12. Add test units to corresponding list
-        switch( filter_type ) {
-        case SELECTOR:
-        case ENABLER:  add_filtered_test_units( master_tu_id, filter, tu_to_enable ); break;
-        case DISABLER: add_filtered_test_units( master_tu_id, filter, tu_to_disable ); break;
+            // 11. Deduce filter type
+            if( filter_token[0] == '!' || filter_token[0] == '+' ) {
+                filter_type = filter_token[0] == '+' ? ENABLER : DISABLER;
+                filter_token.trim_left( 1 );
+                BOOST_TEST_SETUP_ASSERT( !filter_token.is_empty(), "Invalid filter specification" );
+            }
+
+            had_selector_filter |= filter_type == SELECTOR;
+
+            // 12. Add test units to corresponding list
+            switch( filter_type ) {
+            case SELECTOR:
+            case ENABLER:  add_filtered_test_units( master_tu_id, filter_token, tu_to_enable ); break;
+            case DISABLER: add_filtered_test_units( master_tu_id, filter_token, tu_to_disable ); break;
+            }
+
+            ++t_filter_it;
         }
     }
 
