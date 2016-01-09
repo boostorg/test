@@ -176,7 +176,7 @@ set(BOOST_UTF_TESTS_IND_FILES
 foreach(_ts IN LISTS BOOST_UTF_TESTS_IND_FILES)
 
   message("parsing test suite ${_ts}")
-  file(GLOB_RECURSE
+  file(GLOB
        _boost_utf_current_tsuite
        ${BOOST_TEST_UNITTESTS_FOLDER}/${_ts}/*.cpp)
 
