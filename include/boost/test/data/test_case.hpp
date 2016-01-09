@@ -36,6 +36,10 @@
 #include <boost/test/detail/suppress_warnings.hpp>
 #include <boost/test/tools/detail/print_helper.hpp>
 
+#ifndef BOOST_TEST_DATASET_MAX_ARITY
+#define BOOST_TEST_DATASET_MAX_ARITY 10
+#endif
+
 //____________________________________________________________________________//
 
 namespace boost {
@@ -94,7 +98,7 @@ public:
         return res;
     }
 
-    // !! ?? variadics based implementation
+  /// make this variadic
 #define TC_MAKE(z,arity,_)                                                          \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                             \
     void    operator()( BOOST_PP_ENUM_BINARY_PARAMS(arity, Arg, const& arg) ) const \
@@ -104,7 +108,7 @@ public:
          BOOST_PP_ENUM_PARAMS(arity, arg) ) ) );                                    \
     }                                                                               \
 
-    BOOST_PP_REPEAT_FROM_TO(1, 4, TC_MAKE, _)
+    BOOST_PP_REPEAT_FROM_TO(1, BOOST_TEST_DATASET_MAX_ARITY, TC_MAKE, _)
 
 private:
     // Data members
