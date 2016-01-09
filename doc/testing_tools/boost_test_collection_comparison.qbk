@@ -84,8 +84,10 @@ if(c_a.size() == c_b.size())
 {
   for(int i=0; i < c_a.size(); i++)
   {
-    __BOOST_TEST_CONTEXT__("index" << i);
-    BOOST_TEST(a_i op b_i);
+    __BOOST_TEST_CONTEXT__("index " << i)
+    {
+      BOOST_TEST(a_i op b_i);
+    }
   }
 }
 else
