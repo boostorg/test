@@ -47,8 +47,8 @@ insensitive strings: "N", "NO", "FALSE", "0".
 
 [h5 Enumeration][#enum_param_value]
 
-Values of a enumeration type are expected as case sensitive strings representing
-enumeration value names. Each parameter with a enumeration value lists all valid names in a
+Values of an enumeration type are expected as case sensitive strings representing
+enumeration value names. Each parameter with an enumeration value lists all valid names in a
 parameter`s description.
 
 [/ ###############################################################################################]
@@ -222,7 +222,7 @@ This command line parameter accepts an /optional/ string value indicating the fo
 The framework supports the following two formats:
 
 # HRF (default), standing for /Human Readable Format/,
-# DOT, standing for the [@http://www.graphviz.org/doc/info/lang.html GraphViz graph format]. This format may be automatically parsed or rendered.
+# DOT, standing for the [@http://www.graphviz.org/doc/info/lang.html Graphviz graph format]. This format may be automatically parsed or rendered.
 
 [h4 HRF]
 
@@ -247,14 +247,14 @@ DOT output generates a graph representing the module's [link ref_test_tree test 
 [@http://www.graphviz.org/doc/info/lang.html dot format].
 This output includes much more information about the test tree including labels, timeouts, expected failures, and dependencies.
 
-The legen is as follow:
+The legend is as follow:
 
 * the master test suite is represented as an ellipse
 * a test unit (suite, case) is in a rounded rectangle
 * test unit declaration location, [link boost_test.tests_organization.tests_grouping labels],
   [link boost_test.testing_tools.expected_failures expected failures], [link boost_test.testing_tools.timeout timeouts] are appended,
-* a green box indicates that the test unit that is enabled, otherwise its colour is yellow,
-* an plain black arrow goes from a test unit to each of its children, following the test tree (the arrow pointing to the child),
+* a green box indicates that the test unit that is enabled, otherwise its color is yellow,
+* a plain black arrow goes from a test unit to each of its children, following the test tree (the arrow pointing to the child),
 * a dashed red arrow indicates a runtime dependence on test units, the arrow pointing to the parent in the dependency graph.
 
 
@@ -670,8 +670,8 @@ filter        ::= relative_spec? test_set
 relative_spec ::= '+' | '!'
 test_set      ::= label | path
 label         ::= '@' identifier
-path          ::= (suite '/')? patern_list
-patern_list   ::= (pattern ',')* pattern
+path          ::= (suite '/')? pattern_list
+pattern_list   ::= (pattern ',')* pattern
 suite         ::= (pattern '/')* pattern
 pattern       ::= '*'? identifier '*'?
 ```
