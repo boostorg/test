@@ -480,6 +480,7 @@ public:
         BOOST_TEST_FOREACH( test_unit_id, chld_id, ts.m_children )
             deduce_siblings_order( chld_id, master_tu_id, tuoi );
 
+        ts.m_ranked_children.clear();
         BOOST_TEST_FOREACH( test_unit_id, chld_id, ts.m_children ) {
             counter_t rank = assign_sibling_rank( chld_id, tuoi );
             ts.m_ranked_children.insert( std::make_pair( rank, chld_id ) );
