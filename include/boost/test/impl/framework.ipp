@@ -1233,7 +1233,7 @@ run( test_unit_id id, bool continue_test )
     case 0:
         break;
     case 1:
-        seed = static_cast<unsigned>( std::time( 0 ) );
+        seed = static_cast<unsigned>( std::rand() ^ std::time( 0 ) ); // better init using std::rand() ^ ...
     default:
         BOOST_TEST_MESSAGE( "Test cases order is shuffled using seed: " << seed );
         std::srand( seed );
