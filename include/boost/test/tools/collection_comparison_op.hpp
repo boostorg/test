@@ -16,6 +16,7 @@
 #include <boost/test/tools/assertion.hpp>
 
 #include <boost/test/utils/is_forward_iterable.hpp>
+#include <boost/test/utils/is_cstring.hpp>
 
 // Boost
 #include <boost/mpl/bool.hpp>
@@ -328,8 +329,10 @@ compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::GE<L, R> >*
 #define DEFINE_COLLECTION_COMPARISON( oper, name, rev )             \
 template<typename Lhs,typename Rhs>                                 \
 struct name<Lhs,Rhs,typename boost::enable_if_c<                    \
-    unit_test::is_forward_iterable<Lhs>::value &&                   \
-    unit_test::is_forward_iterable<Rhs>::value>::type> {            \
+    unit_test::is_forward_iterable<Lhs>::value \
+    &&   !unit_test::is_cstring<Lhs>::value \
+    && unit_test::is_forward_iterable<Rhs>::value \
+    &&   !unit_test::is_cstring<Rhs>::value>::type> {            \
 public:                                                             \
     typedef assertion_result result_type;                           \
                                                                     \

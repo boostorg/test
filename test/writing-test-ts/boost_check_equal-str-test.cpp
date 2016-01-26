@@ -23,6 +23,7 @@ BOOST_AUTO_TEST_CASE( check_is_cstring_concept )
   BOOST_TEST((bp::is_cstring<char const []>::value));
   BOOST_TEST((bp::is_cstring<char []>::value));
   BOOST_TEST((bp::is_cstring<char *>::value));
+  BOOST_TEST((bp::is_cstring<std::string>::value));
 }
 
 //____________________________________________________________________________//

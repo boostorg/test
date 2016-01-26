@@ -21,6 +21,8 @@
 #include <boost/type_traits/decay.hpp>
 #include <boost/type_traits/remove_pointer.hpp>
 
+#include <string>
+
 //____________________________________________________________________________//
 
 namespace boost {
@@ -51,6 +53,9 @@ struct is_cstring_impl<wchar_t*> : public mpl::true_ {};
 
 template<typename T>
 struct is_cstring : public ut_detail::is_cstring_impl<typename decay<T>::type> {};
+
+template<typename T>
+struct is_cstring< std::basic_string<T, std::char_traits<T> > > : public mpl::true_ {};
 
 } // namespace unit_test
 } // namespace boost
