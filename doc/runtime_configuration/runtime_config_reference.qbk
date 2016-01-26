@@ -198,10 +198,12 @@ framework to setup runtime breakpoint at Nth heap allocation. If value is omitte
 [section:help `help`]
 
 Parameter ['help] displays help on the framework's parameters. The parameter accepts an optional
-argument value. If present, an argument value is interpreted as a parameter name (name guessing
-works as well, so for example --help=rand displays help on the parameter random). If the parameter
-name is unknown or ambiguous error is reported. If argument value is absent, a summary of all framework's
-parameter is displayed.
+argument value:
+
+* if present, the argument value is interpreted as a parameter name. Name guessing
+  works as well (so for example `--help=rand` displays help on the parameter `random`).
+* if the parameter name is unknown or ambiguous, an error is reported,
+* if the argument value is absent, a summary of all framework's parameter is displayed.
 
 [h4 Acceptable values]
 
@@ -386,15 +388,18 @@ Thus each level includes messages on that level as well as all the messages on l
   ]
   [
     [message]
-    [User generated messages (using BOOST_MESSAGE tool)]
+    [User generated messages (using __BOOST_TEST_MESSAGE__ tool)]
   ]
   [
     [warning]
-    [Messages describing failed assertion on WARN level (BOOST_WARN_... tools)]
+    [Messages describing failed assertion on `WARN` level (
+    [link boost_test.utf_reference.testing_tool_ref.assertion_boost_test_universal_macro `BOOST_TEST_WARN`]
+    / `BOOST_WARN_...`
+     tools)]
   ]
   [
     [[*error] (default)]
-    [Messages describing failed assertion on CHECK level (BOOST_WARN_... tools)]
+    [Messages describing failed assertion on `CHECK` level (__BOOST_TEST__ / `BOOST_CHECK_...` tools)]
   ]
   [
     [cpp_exception]
@@ -407,7 +412,7 @@ Thus each level includes messages on that level as well as all the messages on l
   [
     [fatal_error]
     [Messages reporting user or system originated fatal errors. For example, memory access violation. Also
-     all the messages describing failed assertion on REQUIRE level (BOOST_REQUIRE_... tools)]
+     all the messages describing failed assertion on `REQUIRE` level (__BOOST_TEST_REQUIRE__ / `BOOST_REQUIRE_...` tools)]
   ]
   [
     [nothing]
