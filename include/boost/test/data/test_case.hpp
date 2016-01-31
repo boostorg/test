@@ -37,6 +37,7 @@
 
 #include <boost/test/detail/suppress_warnings.hpp>
 #include <boost/test/tools/detail/print_helper.hpp>
+#include <boost/test/utils/string_cast.hpp>
 
 #if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) \
    && !defined(BOOST_TEST_DATASET_MAX_ARITY)
@@ -122,11 +123,13 @@ public:
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, DataSet&& ds )
     : m_tc_name( ut_detail::normalize_test_case_name( tc_name ) )
+    , m_tc_index( 1 )
     {
         data::for_each_sample( std::forward<DataSet>( ds ), *this );
     }
     test_case_gen( test_case_gen&& gen )
     : m_tc_name( gen.m_tc_name )
+    , m_tc_index( 1 )
     , m_test_cases( std::move(gen.m_test_cases) )
     {}
 #else
@@ -150,14 +153,14 @@ public:
 
 #if !defined(BOOST_TEST_DATASET_VARIADIC)
   /// make this variadic
-#define TC_MAKE(z,arity,_)                                                          \
-    template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                             \
-    void    operator()( BOOST_PP_ENUM_BINARY_PARAMS(arity, Arg, const& arg) ) const \
-    {                                                                               \
-        m_test_cases.push_back( new test_case( m_tc_name, m_tc_file, m_tc_line,     \
+#define TC_MAKE(z,arity,_)                                                              \
+    template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                                 \
+    void    operator()( BOOST_PP_ENUM_BINARY_PARAMS(arity, Arg, const& arg) ) const     \
+    {                                                                                   \
+        m_test_cases.push_back( new test_case( genTestCaseName(), m_tc_file, m_tc_line, \
          boost::bind( &TestCase::template test_method<BOOST_PP_ENUM_PARAMS(arity,Arg)>, \
-         BOOST_PP_ENUM_PARAMS(arity, arg) ) ) );                                    \
-    }                                                                               \
+         BOOST_PP_ENUM_PARAMS(arity, arg) ) ) );                                        \
+    }                                                                                   \
 
     BOOST_PP_REPEAT_FROM_TO(1, BOOST_TEST_DATASET_MAX_ARITY, TC_MAKE, _)
 #else
@@ -166,7 +169,7 @@ public:
     void    operator()(Arg&& ... arg) const
     {
         m_test_cases.push_back(
-            new test_case( m_tc_name,
+            new test_case( genTestCaseName(),
                            m_tc_file,
                            m_tc_line,
                            boost::bind( &TestCase::template test_method<Arg...>,
@@ -175,10 +178,16 @@ public:
 #endif
 
 private:
+    std::string  genTestCaseName() const
+    {
+        return m_tc_name + "#" + utils::string_cast(m_tc_index++);
+    }
+
     // Data members
     std::string                     m_tc_name;
     const_string                    m_tc_file;
     std::size_t                     m_tc_line;
+    mutable std::size_t             m_tc_index;
     mutable std::list<test_unit*>   m_test_cases;
 };
 
