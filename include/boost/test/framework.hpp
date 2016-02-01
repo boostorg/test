@@ -254,7 +254,7 @@ struct BOOST_TEST_DECL setup_error : public std::runtime_error {
     setup_error( const_string m ) : std::runtime_error( std::string( m.begin(), m.size() ) ) {}
 };
 
-#define BOOST_TEST_SETUP_ASSERT( cond, msg ) BOOST_TEST_I_ASSRT( cond, unit_test::framework::setup_error( msg ) )
+#define BOOST_TEST_SETUP_ASSERT( cond, msg ) BOOST_TEST_I_ASSERT( cond, unit_test::framework::setup_error( msg ) )
 
 //____________________________________________________________________________//
 

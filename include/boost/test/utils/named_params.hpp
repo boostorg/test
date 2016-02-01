@@ -115,7 +115,7 @@ struct access_to_invalid_parameter {};
 inline void
 report_access_to_invalid_parameter( bool v )
 {
-    BOOST_TEST_I_ASSRT( !v, access_to_invalid_parameter() );
+    BOOST_TEST_I_ASSERT( !v, access_to_invalid_parameter() );
 }
 
 } // namespace nfp_detail

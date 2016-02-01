@@ -294,7 +294,7 @@ report_assertion( assertion_result const&   ar,
 {
     using namespace unit_test;
 
-    BOOST_TEST_I_ASSRT( framework::current_test_case_id() != INV_TEST_UNIT_ID,
+    BOOST_TEST_I_ASSERT( framework::current_test_case_id() != INV_TEST_UNIT_ID,
                         std::runtime_error( "Can't use testing tools outside of test case implementation." ) );
 
     if( !!ar )

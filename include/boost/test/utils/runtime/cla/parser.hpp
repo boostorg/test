@@ -76,7 +76,7 @@ struct parameter_trie {
     /// Registers candidate parameter for this subtrie. If final, it needs to be unique
     void                add_candidate_id( parameter_cla_id const& param_id, basic_param_ptr param_candidate, bool final )
     {
-        BOOST_TEST_I_ASSRT( !m_has_final_candidate && (!final || m_id_candidates.empty()),
+        BOOST_TEST_I_ASSERT( !m_has_final_candidate && (!final || m_id_candidates.empty()),
           conflicting_param() << "Parameter cla id " << param_id.m_tag << " conflicts with the "
                               << "parameter cla id " << m_id_candidates.back().get().m_tag );
 
@@ -137,12 +137,12 @@ public:
         nfp::opt_assign( m_end_of_param_indicator, m, end_of_params );
         nfp::opt_assign( m_negation_prefix, m, negation_prefix );
 
-        BOOST_TEST_I_ASSRT( algorithm::all_of( m_end_of_param_indicator.begin(),
+        BOOST_TEST_I_ASSERT( algorithm::all_of( m_end_of_param_indicator.begin(),
                                                m_end_of_param_indicator.end(),
                                                parameter_cla_id::valid_prefix_char ),
                             invalid_cla_id() << "End of parameters indicator can only consist of prefix characters." );
 
-        BOOST_TEST_I_ASSRT( algorithm::all_of( m_negation_prefix.begin(),
+        BOOST_TEST_I_ASSERT( algorithm::all_of( m_negation_prefix.begin(),
                                                m_negation_prefix.end(),
                                                parameter_cla_id::valid_name_char ),
                             invalid_cla_id() << "Negation prefix can only consist of prefix characters." );
@@ -201,7 +201,7 @@ public:
             basic_param_ptr         found_param = locate_res.second;
 
             if( negative_form ) {
-                BOOST_TEST_I_ASSRT( found_id.m_negatable,
+                BOOST_TEST_I_ASSERT( found_id.m_negatable,
                                     format_error( found_param->p_name ) 
                                         << "Parameter tag " << found_id.m_tag << " is not negatable." );
 
@@ -215,7 +215,7 @@ public:
             // Skip validations if parameter has optional value and we are at the end of token
             if( !value_separator.is_empty() || !found_param->p_has_optional_value ) {
                 // Validate and skip value separator in the input
-                BOOST_TEST_I_ASSRT( found_id.m_value_separator == value_separator,
+                BOOST_TEST_I_ASSERT( found_id.m_value_separator == value_separator,
                                     format_error( found_param->p_name ) 
                                         << "Invalid separator for the parameter "
                                         << found_param->p_name
@@ -230,7 +230,7 @@ public:
                     value = tr.current_token();
                 }
 
-                BOOST_TEST_I_ASSRT( !value.is_empty(),
+                BOOST_TEST_I_ASSERT( !value.is_empty(),
                                     format_error( found_param->p_name )
                                         << "Missing an argument value for the parameter "
                                         << found_param->p_name
@@ -238,7 +238,7 @@ public:
             }
 
             // Validate against argument duplication
-            BOOST_TEST_I_ASSRT( !res.has( found_param->p_name ) || found_param->p_repeatable,
+            BOOST_TEST_I_ASSERT( !res.has( found_param->p_name ) || found_param->p_repeatable,
                                 duplicate_arg( found_param->p_name )
                                     << "Duplicate argument value for the parameter "
                                     << found_param->p_name
