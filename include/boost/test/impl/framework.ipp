@@ -170,7 +170,7 @@ static void
 invoke_init_func( init_unit_test_func init_func )
 {
 #ifdef BOOST_TEST_ALTERNATIVE_INIT_API
-    BOOST_TEST_I_ASSRT( (*init_func)(), std::runtime_error( "test module initialization failed" ) );
+    BOOST_TEST_I_ASSERT( (*init_func)(), std::runtime_error( "test module initialization failed" ) );
 #else
     test_suite*  manual_test_units = (*init_func)( framework::master_test_suite().argc, framework::master_test_suite().argv );
 
@@ -1173,7 +1173,7 @@ get( test_unit_id id, test_unit_type t )
 {
     test_unit* res = impl::s_frk_state().m_test_units[id];
 
-    BOOST_TEST_I_ASSRT( (res->p_type & t) != 0, internal_error( "Invalid test unit type" ) );
+    BOOST_TEST_I_ASSERT( (res->p_type & t) != 0, internal_error( "Invalid test unit type" ) );
 
     return *res;
 }

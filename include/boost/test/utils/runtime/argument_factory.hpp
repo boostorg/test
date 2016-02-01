@@ -144,7 +144,7 @@ struct value_interpreter<EnumType, true> {
     {
         typename std::map<cstring,EnumType>::const_iterator found = m_name_to_value.find( source );
 
-        BOOST_TEST_I_ASSRT( found != m_name_to_value.end(),
+        BOOST_TEST_I_ASSERT( found != m_name_to_value.end(),
                             format_error( param_name ) << source <<
                             " is not a valid enumeration value name for parameter " << param_name << "." );
 

@@ -96,14 +96,14 @@ public:
     template<typename T>
     T&          get( cstring parameter_name ) {
         storage_type::const_iterator found = m_arguments.find( parameter_name );
-        BOOST_TEST_I_ASSRT( found != m_arguments.end(),
+        BOOST_TEST_I_ASSERT( found != m_arguments.end(),
                             access_to_missing_argument() 
                                 << "There is no argument provided for parameter "
                                 << parameter_name );
 
         argument_ptr arg = found->second;
 
-        BOOST_TEST_I_ASSRT( arg->p_value_type == rtti::type_id<T>(),
+        BOOST_TEST_I_ASSERT( arg->p_value_type == rtti::type_id<T>(),
                             arg_type_mismatch()
                                 << "Access with invalid type for argument corresponding to parameter "
                                 << parameter_name );

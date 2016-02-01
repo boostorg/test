@@ -38,7 +38,7 @@ finalize_arguments( parameters_store const& params, runtime::arguments_store& ar
                 param->produce_default( args );
 
             if( !args.has( param->p_name ) ) {
-                BOOST_TEST_I_ASSRT( param->p_optional,
+                BOOST_TEST_I_ASSERT( param->p_optional,
                     missing_req_arg( param->p_name ) << "Missing argument for required parameter " << param->p_name << "." );
             }
         }

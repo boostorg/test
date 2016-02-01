@@ -50,15 +50,15 @@ struct parameter_cla_id {
     , m_negatable( negatable )
     {
 
-        BOOST_TEST_I_ASSRT( algorithm::all_of( m_prefix.begin(), m_prefix.end(), valid_prefix_char ),
+        BOOST_TEST_I_ASSERT( algorithm::all_of( m_prefix.begin(), m_prefix.end(), valid_prefix_char ),
                             invalid_cla_id() << "Parameter " << m_tag
                                              << " has invalid characters in prefix." );
 
-        BOOST_TEST_I_ASSRT( algorithm::all_of( m_tag.begin(), m_tag.end(), valid_name_char ),
+        BOOST_TEST_I_ASSERT( algorithm::all_of( m_tag.begin(), m_tag.end(), valid_name_char ),
                             invalid_cla_id() << "Parameter " << m_tag
                                              << " has invalid characters in name." );
 
-        BOOST_TEST_I_ASSRT( algorithm::all_of( m_value_separator.begin(), m_value_separator.end(), valid_separator_char ),
+        BOOST_TEST_I_ASSERT( algorithm::all_of( m_value_separator.begin(), m_value_separator.end(), valid_separator_char ),
                             invalid_cla_id() << "Parameter " << m_tag
                                              << " has invalid characters in value separator." );
     }
@@ -198,20 +198,20 @@ protected:
                                              bool negatable,
                                              bool validate_value_separator )
     {
-        BOOST_TEST_I_ASSRT( !tag.is_empty(),
+        BOOST_TEST_I_ASSERT( !tag.is_empty(),
                             invalid_cla_id() << "Parameter can't have an empty name." );
 
-        BOOST_TEST_I_ASSRT( !prefix.is_empty(),
+        BOOST_TEST_I_ASSERT( !prefix.is_empty(),
                             invalid_cla_id() << "Parameter " << tag
                                              << " can't have an empty prefix." );
 
-        BOOST_TEST_I_ASSRT( !value_separator.is_empty(),
+        BOOST_TEST_I_ASSERT( !value_separator.is_empty(),
                             invalid_cla_id() << "Parameter " << tag
                                              << " can't have an empty value separator." );
 
         // We trim value separator from all the spaces, so token end will indicate separator
         value_separator.trim();
-        BOOST_TEST_I_ASSRT( !validate_value_separator || !value_separator.is_empty() || !p_has_optional_value,
+        BOOST_TEST_I_ASSERT( !validate_value_separator || !value_separator.is_empty() || !p_has_optional_value,
                             invalid_cla_id() << "Parameter " << tag
                                              << " with optional value attribute can't use space as value separator." );
 
@@ -262,11 +262,11 @@ public:
     : basic_param( name, a != runtime::REQUIRED_PARAM, a == runtime::REPEATABLE_PARAM, m )
     , m_arg_factory( m )
     {
-        BOOST_TEST_I_ASSRT( !m.has( default_value ) || a == runtime::OPTIONAL_PARAM,
+        BOOST_TEST_I_ASSERT( !m.has( default_value ) || a == runtime::OPTIONAL_PARAM,
                             invalid_param_spec() << "Parameter " << name
                                                  << " is not optional and can't have default_value." );
 
-        BOOST_TEST_I_ASSRT( !m.has( optional_value ) || !this->p_repeatable,
+        BOOST_TEST_I_ASSERT( !m.has( optional_value ) || !this->p_repeatable,
                             invalid_param_spec() << "Parameter " << name
                                                  << " is repeatable and can't have optional_value." );
     }
@@ -326,7 +326,7 @@ private:
         if( token.empty() )
             store.set( p_name, !negative_form );
         else {
-            BOOST_TEST_I_ASSRT( !negative_form,
+            BOOST_TEST_I_ASSERT( !negative_form,
                                 format_error( p_name ) << "Can't set value to negative form of the argument." );
 
             m_arg_factory.produce_argument( token, p_name, store );
@@ -436,7 +436,7 @@ public:
     {
         basic_param_ptr p = in.clone();
 
-        BOOST_TEST_I_ASSRT( m_parameters.insert( std::make_pair( cstring(p->p_name), p ) ).second,
+        BOOST_TEST_I_ASSERT( m_parameters.insert( std::make_pair( cstring(p->p_name), p ) ).second,
                             duplicate_param() << "Parameter " << p->p_name << " is duplicate." );
     }
 
@@ -453,7 +453,7 @@ public:
     basic_param_ptr         get( cstring name ) const
     {
         storage_type::const_iterator const& found = m_parameters.find( name );
-        BOOST_TEST_I_ASSRT( found != m_parameters.end(),
+        BOOST_TEST_I_ASSERT( found != m_parameters.end(),
                             unknown_param() << "Parameter " << name << " is unknown." );
 
         return found->second;
