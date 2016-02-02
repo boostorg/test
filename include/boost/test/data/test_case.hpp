@@ -165,18 +165,22 @@ make_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_l
         BOOST_PP_SEQ_FOR_EACH_I(BOOST_DATA_TEST_CASE_PARAM, _, params)) \
 /**/
 
-#define BOOST_DATA_TEST_CASE_IMPL( arity, test_name, dataset, params )  \
-struct test_name {                                                      \
+#define BOOST_DATA_TEST_CASE_IMPL(arity, F, test_name, dataset, params) \
+struct test_name : public F {                                           \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                 \
     static void test_method( BOOST_DATA_TEST_CASE_PARAMS( params ) )    \
     {                                                                   \
+        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture entry.");\
+        test_name t;                                                    \
+        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" entry.");        \
         BOOST_TEST_CONTEXT( ""                                          \
             BOOST_PP_SEQ_FOR_EACH(BOOST_DATA_TEST_CONTEXT, _, params))  \
-            _impl(BOOST_PP_SEQ_ENUM(params));                           \
+            t._impl(BOOST_PP_SEQ_ENUM(params));                         \
+        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" exit.");         \
     }                                                                   \
 private:                                                                \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                 \
-    static void _impl(BOOST_DATA_TEST_CASE_PARAMS( params ));           \
+    void _impl(BOOST_DATA_TEST_CASE_PARAMS( params ));                  \
 };                                                                      \
                                                                         \
 BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
@@ -190,13 +194,13 @@ BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     void test_name::_impl( BOOST_DATA_TEST_CASE_PARAMS( params ) )      \
 /**/
 
-#define BOOST_DATA_TEST_CASE_WITH_PARAMS( test_name, dataset, ... )     \
+#define BOOST_DATA_TEST_CASE_WITH_PARAMS( F, test_name, dataset, ... )  \
     BOOST_DATA_TEST_CASE_IMPL( BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),     \
-                               test_name, dataset,                      \
+                               F, test_name, dataset,                   \
                                BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__) )  \
 /**/
-#define BOOST_DATA_TEST_CASE_NO_PARAMS( test_name, dataset )            \
-    BOOST_DATA_TEST_CASE_WITH_PARAMS( test_name, dataset, sample )      \
+#define BOOST_DATA_TEST_CASE_NO_PARAMS( F, test_name, dataset )         \
+    BOOST_DATA_TEST_CASE_WITH_PARAMS( F, test_name, dataset, sample )   \
 /**/
 
 #if BOOST_PP_VARIADICS_MSVC
@@ -205,14 +209,32 @@ BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     BOOST_PP_CAT(                                                       \
     BOOST_PP_IIF(BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2), \
                      BOOST_DATA_TEST_CASE_NO_PARAMS,                    \
-                     BOOST_DATA_TEST_CASE_WITH_PARAMS) (__VA_ARGS__), ) \
+                     BOOST_DATA_TEST_CASE_WITH_PARAMS) (                \
+                        BOOST_AUTO_TEST_CASE_FIXTURE, __VA_ARGS__), )   \
 /**/
+
+#define BOOST_DATA_TEST_CASE_F( F, ... )                                \
+    BOOST_PP_CAT(                                                       \
+    BOOST_PP_IIF(BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2), \
+                     BOOST_DATA_TEST_CASE_NO_PARAMS,                    \
+                     BOOST_DATA_TEST_CASE_WITH_PARAMS) (                \
+                        F, __VA_ARGS__), )                              \
+/**/
+
 #else
 
 #define BOOST_DATA_TEST_CASE( ... )                                     \
     BOOST_PP_IIF(BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2), \
                      BOOST_DATA_TEST_CASE_NO_PARAMS,                    \
-                     BOOST_DATA_TEST_CASE_WITH_PARAMS) (__VA_ARGS__)    \
+                     BOOST_DATA_TEST_CASE_WITH_PARAMS) (                \
+                        BOOST_AUTO_TEST_CASE_FIXTURE, __VA_ARGS__)      \
+/**/
+
+#define BOOST_DATA_TEST_CASE_F( F, ... )                                \
+    BOOST_PP_IIF(BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2), \
+                     BOOST_DATA_TEST_CASE_NO_PARAMS,                    \
+                     BOOST_DATA_TEST_CASE_WITH_PARAMS) (                \
+                        F, __VA_ARGS__)                                 \
 /**/
 #endif
 
