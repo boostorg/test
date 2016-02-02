@@ -14,9 +14,12 @@
 
 // Boost.Test
 #include <boost/test/data/config.hpp>
-#include <boost/test/data/traits.hpp>
 #include <boost/test/data/size.hpp>
+#include <boost/test/data/index_sequence.hpp>
 #include <boost/test/data/monomorphic/fwd.hpp>
+
+// STL
+#include <tuple>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -28,6 +31,37 @@
 namespace boost {
 namespace unit_test {
 namespace data {
+
+// ************************************************************************** //
+// **************              data::invoke_action             ************** //
+// ************************************************************************** //
+
+template<typename Action, typename T>
+inline void
+invoke_action( Action const& action, T const& arg )
+{
+    action( arg );
+}
+
+//____________________________________________________________________________//
+
+template<typename Action, typename ...T, std::size_t ...I>
+inline void
+invoke_action_impl( Action const& action, std::tuple<T const&...> const& args, index_sequence<I...> const& )
+{
+    action( std::get<I>(args)... );
+}
+
+//____________________________________________________________________________//
+
+template<typename Action, typename ...T>
+inline void
+invoke_action( Action const& action, std::tuple<T const&...> const& args )
+{
+    invoke_action_impl( action, args, index_sequence_for<T...>{} );
+}
+
+//____________________________________________________________________________//
 
 // ************************************************************************** //
 // **************                for_each_sample               ************** //
@@ -45,7 +79,7 @@ for_each_sample( DataSet const&     samples,
     auto it = samples.begin();
 
     while( size-- > 0 ) {
-        data::traits<typename DataSet::sample>::invoke_action( *it, act );
+        invoke_action( act, *it );
         ++it;
     }
 }

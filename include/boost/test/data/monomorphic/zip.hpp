@@ -17,8 +17,8 @@
 
 #if !defined(BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE) || defined(BOOST_TEST_DOXYGEN_DOC__)
 
-#include <boost/test/data/traits.hpp>
 #include <boost/test/data/monomorphic/fwd.hpp>
+#include <boost/test/data/monomorphic/sample_merge.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -27,51 +27,6 @@ namespace boost {
 namespace unit_test {
 namespace data {
 namespace monomorphic {
-
-namespace ds_detail {
-
-// !! ?? variadic template implementation; use forward_as_tuple?
-template<typename T1, typename T2>
-struct zip_traits {
-    typedef std::tuple<T1,T2> type;
-    typedef typename data::traits<type>::ref_type ref_type;
-
-    static ref_type
-    tuple_merge(T1 const& a1, T2 const& a2)
-    {
-        return ref_type(a1,a2);
-    }
-};
-
-//____________________________________________________________________________//
-
-template<typename T1, typename T2,typename T3>
-struct zip_traits<T1,std::tuple<T2,T3>> {
-    typedef std::tuple<T1,T2,T3> type;
-    typedef typename data::traits<type>::ref_type ref_type;
-
-    static ref_type
-    tuple_merge(T1 const& a1, std::tuple<T2 const&,T3 const&> const& a2)
-    {
-        return ref_type(a1,std::get<0>(a2),std::get<1>(a2));
-    }
-};
-
-//____________________________________________________________________________//
-
-template<typename T1, typename T2,typename T3>
-struct zip_traits<std::tuple<T1,T2>,T3> {
-    typedef std::tuple<T1,T2,T3> type;
-    typedef typename data::traits<type>::ref_type ref_type;
-
-    static ref_type
-    tuple_merge(std::tuple<T1 const&,T2 const&> const& a1, T3 const& a2)
-    {
-        return ref_type(std::get<0>(a1),std::get<1>(a1),a2);
-    }
-};
-
-} // namespace ds_detail
 
 // ************************************************************************** //
 // **************                       zip                    ************** //
@@ -93,13 +48,12 @@ class zip {
     typedef typename dataset2_decay::sample         sample2;
 
 public:
-    typedef typename ds_detail::zip_traits<sample1,sample2>::type sample;
+    typedef typename merged_sample<sample1,sample2>::type   sample;
+    typedef typename merged_sample<sample1,sample2>::ref    sample_ref;
 
     enum { arity = dataset1_decay::arity + dataset2_decay::arity };
 
     struct iterator {
-        typedef typename data::traits<sample>::ref_type ref_type;
-
         // Constructor
         explicit    iterator( dataset1_iter iter1, dataset2_iter iter2 )
         : m_iter1( std::move( iter1 ) )
@@ -107,7 +61,7 @@ public:
         {}
 
         // forward iterator interface
-        ref_type        operator*() const   { return ds_detail::zip_traits<sample1,sample2>::tuple_merge( *m_iter1, *m_iter2 ); }
+        sample_ref      operator*() const   { return sample_merge( *m_iter1, *m_iter2 ); }
         void            operator++()        { ++m_iter1; ++m_iter2; }
 
     private:
