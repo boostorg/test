@@ -237,6 +237,13 @@ test-suite "execution_monitor-ts"
 
 #_________________________________________________________________________________________________#
 
+test-suite "benchmark-ts"
+:
+  [ boost.test-self-test run : benchmark-ts : benchmark-time-test ]
+;
+
+#_________________________________________________________________________________________________#
+
 import sequence ;
 
 test-suite "doc-examples-ts"
@@ -480,6 +487,7 @@ alias test
   multithreading-ts
   prg_exec_monitor-ts
   execution_monitor-ts
+  benchmark-ts
   doc-examples-ts
   custom-command-line-ts
 ;

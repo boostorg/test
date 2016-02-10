@@ -36,7 +36,7 @@ template<typename FPT>
 inline FPT&
 fpc_tolerance()
 {
-    static FPT s_value = 0;
+    static FPT s_value{};
     return s_value;
 }
 
