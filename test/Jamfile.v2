@@ -153,6 +153,7 @@ test-suite "test-organization-ts"
   [ boost.test-self-test run : test-organization-ts : test_case_template-test ]
   [ boost.test-self-test run : test-organization-ts : datasets-test : : : [ glob test-organization-ts/datasets-test/*.cpp ] : : : $(requirements_datasets) ]
   [ boost.test-self-test run : test-organization-ts : test_unit-order-test ]
+  [ boost.test-self-test run : test-organization-ts : test_unit-order-shuffled-test ]
   [ boost.test-self-test run : test-organization-ts : test-tree-management-test ]
 ;
 

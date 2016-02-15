@@ -507,16 +507,23 @@ format and XML - XML formats for automation tools processing.
 [section:random `random`]
 
 Parameter ['random] instructs the __UTF__ to execute the test cases in random order. This parameter
-accepts optional unsigned integer argument. By default test cases are executed in some specific order
-defined by order of test units in test files and dependency between test units. If parameter is
-specified without the argument value testing order is randomized based on current time. Alternatively
-you can specify any positive value greater than 1 and it will be used as random seed for the run.
+accepts an optional `unsigned integer` argument for the seed of the random generator:
+
+* By default (value `0`), the test cases are executed in some specific order
+  defined by the order of test units in the test files, and the dependencies between test units.
+* If the parameter is specified without the argument value, or with value `1`, the testing order is randomized based on current time.
+* Alternatively, any positive value greater than `1` will be used as random seed for the run.
+
+[tip in case `--random` is specified, the value of the seed is logged using __BOOST_TEST_MESSAGE__, so that it is possible to replay
+ exactly the same sequence of unit test in case of failure. For the seed to be visible in the logs,
+ make sure the proper [link boost_test.utf_reference.rt_param_reference.log_level `--log_level`] is set.
+ ]
 
 [h4 Acceptable values]
 
-* [*0] (default)
-* 1
-* [link regular_param_value integer] value > 1
+* [*0] (default): no randomization
+* `1`: random seed based on the current time
+* [link regular_param_value integer] `value > 1` : seed for the random number generator
 
 [h4 Command line syntax]
 
