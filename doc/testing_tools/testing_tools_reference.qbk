@@ -533,8 +533,8 @@ type specified by `exception_type` or any of its child type, with additional che
   for further validation.
 * It behaves like __BOOST_LEVEL_THROW__ if `expression` does not raise any exception, or an unrelated exception is raised.
 
-`predicate` should be a unary function accepting the an instance of `exception_type` or any of its child, and that should return
-a boolean indicating the success (`true`) or failure (`false`).
+`predicate` should be a unary function accepting an instance of `exception_type` or any of its child, and that should return
+a boolean indicating a success (`true`) or a failure (`false`).
 
 [warning the assertion catches only the expected exceptions.]
 
