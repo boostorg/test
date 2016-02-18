@@ -197,8 +197,8 @@ The arity of the dataset and the number of variables should be exactly the same,
 case of arity 1.
 
 [tip A compilation-time check is performed on the coherence of the arity of the dataset and the number of variables `var1`... `varN`.
- The maximal supported arity is controlled by the macro __BOOST_TEST_DATASET_MAX_ARITY__, that can be overridden prior to including the
- __UTF__ headers.]
+ For compilers *without variadic template* support, the maximal supported arity is controlled by the macro
+ __BOOST_TEST_DATASET_MAX_ARITY__, that can be overridden /prior/ to including the __UTF__ headers.]
 
 It should be emphasized that those macros do not declare a unique test case (as __BOOST_AUTO_TEST_CASE__ would do) but declare and
 register as many test cases as there are samples in the dataset given in argument. Each test case runs on exactly *one*
