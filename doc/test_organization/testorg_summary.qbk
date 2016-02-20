@@ -46,6 +46,11 @@
   ]
 
   [
+    [__BOOST_DATA_TEST_CASE_F__]
+    [Same as __BOOST_DATA_TEST_CASE__ with fixtures support]
+  ]
+
+  [
     [__BOOST_TEST_DATASET_MAX_ARITY__]
     [Controlling the maximal arity of the data test case declared with __BOOST_DATA_TEST_CASE__]
   ]

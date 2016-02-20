@@ -13,11 +13,14 @@
 [h5 New features]
 * now datasets support any [link boost_test.tests_organization.test_cases.test_case_generation.datasets arity], using the
   variadic template support of the compiler.
+* now datasets support fixtures through `BOOST_DATA_TEST_CASE_F`, see
+  [link boost_test.tests_organization.test_cases.test_case_generation.datasets here] for more details
 
 [h5 Bugfixes and feature requests]
 # [ticket 6767] Use of namespace qualifier with floating point exception functions breaks if they are macros
 # [ticket 8905] boost/test/impl/debug.ipp: Ignores return value from WaitForSingleObject
 # [ticket 9943] Runtime parameter Random seed for random order of test cases not respected correctly
+# [ticket 11854] Add fixture support in `BOOST_DATA_TEST_CASE`
 # [ticket 11887] `BOOST_TEST(3u == (std::max)(0u, 3u))` fails
 # [ticket 11889] BOOST_DATA_TEST_CASE fails to compile for 4D and higher dimensional grids
 

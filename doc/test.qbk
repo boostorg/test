@@ -103,6 +103,7 @@
 [/ parametrized test cases]
 [def __BOOST_PARAM_TEST_CASE__                  [link boost_test.utf_reference.test_org_reference.test_org_boost_test_case_parameter `BOOST_PARAM_TEST_CASE`]]
 [def __BOOST_DATA_TEST_CASE__                   [link boost_test.utf_reference.test_org_reference.test_org_boost_test_dataset `BOOST_DATA_TEST_CASE`]]
+[def __BOOST_DATA_TEST_CASE_F__                 [link boost_test.utf_reference.test_org_reference.test_org_boost_test_dataset_fixture `BOOST_DATA_TEST_CASE_F`]]
 [def __BOOST_TEST_DATASET_MAX_ARITY__           [link boost_test.utf_reference.test_org_reference.test_org_boost_test_dataset `BOOST_TEST_DATASET_MAX_ARITY`]]
 
 [/ test suites]

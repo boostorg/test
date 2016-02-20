@@ -93,6 +93,8 @@ BOOST_DATA_TEST_CASE( test_case_interface_06, samples1 * samples2 * samples3, in
     ++index6;
 }
 
+//____________________________________________________________________________//
+
 // test dataset dim > 3
 int index7 = 0;
 
@@ -109,6 +111,24 @@ BOOST_DATA_TEST_CASE( test_case_interface_07, samples1 * samples2 * samples3 * s
       BOOST_TEST( floatval == samples4[index7%sizeoftable(samples4)] );
     }
     ++index7;
+}
+
+//____________________________________________________________________________//
+
+static int index8 = 1;
+
+struct SharedFixture {
+    SharedFixture()
+    : m_expected(index8++)
+    {
+    }
+
+    int m_expected;
+};
+
+BOOST_DATA_TEST_CASE_F( SharedFixture, test_case_interface_08, data::make({1,2,3}) )
+{
+    BOOST_TEST( sample == m_expected );
 }
 
 // EOF
