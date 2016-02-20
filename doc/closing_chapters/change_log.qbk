@@ -23,6 +23,7 @@
 # [ticket 11854] Add fixture support in `BOOST_DATA_TEST_CASE`
 # [ticket 11887] `BOOST_TEST(3u == (std::max)(0u, 3u))` fails
 # [ticket 11889] BOOST_DATA_TEST_CASE fails to compile for 4D and higher dimensional grids
+# [ticket 11983] Boost Test XML Report contains unescaped XML characters
 
 [h4 Boost.Test v3.1 / boost 1.60]
 
