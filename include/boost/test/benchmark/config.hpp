@@ -37,7 +37,15 @@ using num_samples_t = uint_least32_t;
 //    test tool to store and compare against golden benchmark measurements to validate against changes in performance.
 // benchmark::memory - measure memory utilization
 // benchmark::record/log/profile - records time and/or memory utilization in a scope. Builds hierarchical tree of records to 
-// allow profiling resource utilization in the program
+//    allow profiling resource utilization in the program
+// separate library for benchmark impl
+// different report formats?
+// result to have sampling policy remplate parameters to store sampling units?
+// compute number of iterations in a single run
+// pause/resume
+// Add validations to all sampling policies methods to avoid misuse
+
+
 
 } // namespace benchmark
 } // namespace boost
