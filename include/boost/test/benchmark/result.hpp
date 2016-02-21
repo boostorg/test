@@ -32,9 +32,6 @@
 namespace boost {
 namespace benchmark {
 
-// !! different report formats?
-// !! sampling policy remplate parameters to store sampling units?
- 
 class result {
 public:
         template<typename SamplingPolicy>
