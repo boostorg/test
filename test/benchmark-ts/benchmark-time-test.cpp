@@ -13,6 +13,7 @@
 #include <boost/test/benchmark/time.hpp>
 #include <boost/test/benchmark/sampling/average.hpp>
 #include <boost/test/benchmark/sampling/skip_first.hpp>
+#include <boost/test/benchmark/sampling/skip_outliers.hpp>
 #include <boost/test/benchmark/sampling/stop_on_convergence.hpp>
 #include <boost/test/benchmark/sampling/chain.hpp>
 
@@ -53,7 +54,6 @@ double_sec operator "" _sec( long double val )
 
 //____________________________________________________________________________//
 
-#if 0
 BOOST_AUTO_TEST_CASE( benchmark_time_api_test )
 {
     // Just func
@@ -89,7 +89,6 @@ BOOST_AUTO_TEST_CASE( benchmark_time_api_test )
                bm::func = [](){} ));
 }
 
-#endif
 //____________________________________________________________________________//
 
 BOOST_AUTO_TEST_SUITE( sampling_policy_ts )
@@ -342,7 +341,6 @@ BOOST_DATA_TEST_CASE( benchmark_time_report_test,
     simple_sample_policy.add_sample( sample );    
     bm::result res( simple_sample_policy, num_iter );
 
-#if 0
     res.report_time<nanoseconds>( *test_stream );
     BOOST_TEST( test_stream->match_pattern() );
 
@@ -369,7 +367,6 @@ BOOST_DATA_TEST_CASE( benchmark_time_report_test,
 
     res.report_time<duration<double, boost::ratio<60>>>( *test_stream, 2 );
     BOOST_TEST( test_stream->match_pattern() );
-#endif
 
     res.report_time( *test_stream );
     BOOST_TEST( test_stream->match_pattern() );
@@ -388,13 +385,19 @@ BOOST_DATA_TEST_CASE( benchmark_time_report_test,
     res2.report_time( *test_stream );
     BOOST_TEST( test_stream->match_pattern() );
 
-//    res2.report_performance<chrono::milliseconds>( *test_stream, 4 );
-//    BOOST_TEST( test_stream->match_pattern() );
+    res2.report_performance<chrono::duration<double,boost::milli>>( *test_stream, 4 );
+    BOOST_TEST( test_stream->match_pattern() );
+
+    res2.report_performance( *test_stream, 6, false );
+    BOOST_TEST( test_stream->match_pattern() );
 }
 
 BOOST_AUTO_TEST_CASE( practical_example_test )
 {
-    const boost::int_least64_t MAX = 100;
+    using namespace bm::sampling;
+    using units = chrono::duration<double,boost::micro>;
+
+    const boost::int_least64_t MAX = 1000;
 
     std::vector<boost::int_least64_t> v;
     v.reserve( MAX );
@@ -408,7 +411,8 @@ BOOST_AUTO_TEST_CASE( practical_example_test )
             v.clear();
         },
         bm::num_iterations = 10,
-        bm::sampling_policy = bm::sampling::average<>( 10000 ) ));
+        bm::timer_policy = bm::timer::high_resolution(),
+        bm::sampling_policy = make_chain<units, average, skip_outliers, stop_on_convergence>( units(100), 2, 10000, 10 ) ));
 
     res.report_time( std::cout );
     res.report_time<double_sec>( std::cout );

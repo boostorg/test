@@ -6,8 +6,8 @@
 //  See http://www.boost.org/libs/test for the library home page.
 //
 //! @file
-//! @brief skip_first represents policy aspect, which produces the policy 
-//!        which skips first sample (for example to ignore initial run overhead).
+//! @brief stop_on_convergence models policy aspect, which produces the policy 
+//!        which stops, when sample variance is below some value.
 // ***************************************************************************
 
 #ifndef BOOST_TEST_BENCHMARK_SAMPLING_STOP_ON_CONVERGENCE_HPP
@@ -26,19 +26,19 @@ namespace benchmark {
 namespace sampling {
 
 template<typename Next>
-class stop_on_convergence {
+class stop_on_convergence : public Next {
 public:
     using units_t = typename Next::units_t;
     using threshold_t = units_t;
 
-    stop_on_convergence() : m_next(), m_variance_threshold( 0 ), m_done( false ) {}
+    stop_on_convergence() : Next(), m_variance_threshold( 0 ), m_done( false ) {}
     stop_on_convergence( Next&& next, threshold_t stdev_threshold ) 
-    : m_next( std::move( next ) )
+    : Next( std::move( next ) )
     , m_variance_threshold( stdev_threshold * stdev_threshold.count() )
     , m_done( false ) {}
     template<typename ...Args>
     stop_on_convergence( threshold_t stdev_threshold, Args&&... args )
-    : m_next( std::forward<Args>( args )... )
+    : Next( std::forward<Args>( args )... )
     , m_variance_threshold( stdev_threshold * stdev_threshold.count() )
     , m_done( false ) {}
 
@@ -46,22 +46,16 @@ public:
     bool            is_done() const
     {
         if( !m_done )
-            m_done = m_next.is_done() || (m_next.variance() < m_variance_threshold);
+            m_done = Next::is_done() || (Next::variance() != units_t{0} && Next::variance() < m_variance_threshold);
 
         return m_done;
     }
-    units_t         value() const           { return m_next.value(); }
-    units_t         best() const            { return m_next.best(); }
-    units_t         worst() const           { return m_next.worst(); }
-    units_t         variance() const        { return m_next.variance(); }
-    num_samples_t   total_samples() const   { return m_next.total_samples(); }
 
     // Samples collection
-    void            add_sample( units_t sample ) { if( !m_done ) m_next.add_sample( sample ); }
+    void            add_sample( units_t sample ) { if( !m_done ) Next::add_sample( sample ); }
 
 private:
     // Data members
-    Next            m_next;
     threshold_t     m_variance_threshold;
     mutable bool    m_done;
 };

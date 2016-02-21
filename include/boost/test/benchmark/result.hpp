@@ -19,6 +19,7 @@
 // Boost
 #include <boost/chrono/duration.hpp>
 #include <boost/chrono/io/duration_io.hpp>
+#include <boost/chrono/io/duration_units.hpp>
 #include <boost/io/ios_state.hpp>
 
 // STL
@@ -31,11 +32,12 @@
 namespace boost {
 namespace benchmark {
 
-//!! different report formats?
-
+// !! different report formats?
+// !! sampling policy remplate parameters to store sampling units?
+ 
 class result {
 public:
-    template<typename SamplingPolicy>
+        template<typename SamplingPolicy>
     result( SamplingPolicy const& sampling_policy, iterations_t num_iterations )
     : m_estimated_value( _get_nano( sampling_policy.value() ) )
     , m_best_value( _get_nano( sampling_policy.best() ) )
@@ -44,18 +46,18 @@ public:
     , m_num_iterations( num_iterations )
     {
         // If SU is sample units , NI is number of iterations,
-        // V count of sample units in sample variance
+        // V is sample variance in sample units
         //
-        // Sample Variance: Vs = V in SU^2 = V * (SU/1ns)^2 in ns^2
-        // Call Variance: Vc = Vs / NI = V * (SU/1ns)^2 / NI in ns^2
-        // Call StdDev:   SDc = SQRT( Vc ) = SQRT( V / NI ) * SU/1ns = 
-        // = (SQRT( V * NI ) * SU/1ns) / NI
-        // Since we devide all values by NI in the end we store measument error as
-        // measument_error = SQRT( V * NI ) * SU/1ns = SQRT( V * NI ) in SU
+        // Sample Variance: V(sample) = V in SU^2 = V * (SU/1ns)^2 in ns^2
+        // Call Variance: V(call) = V(sample) / NI = V * (SU/1ns)^2 / NI in ns^2
+        // Call StdDev:   SD(call) = SQRT( V(call) ) in ns = SQRT( V / NI ) * SU/1ns in ns = 
+        // = (SQRT( V * NI ) * SU/1ns) / NI in ns
+        // Since we divide all values by NI in the end we store measument error as
+        // measument_error = SQRT( V * NI ) * SU/1ns in ns = SQRT( V * NI ) in SU
         using sample_units = SamplingPolicy::units_t;
 
         m_measument_error = _get_nano( sample_units{
-            static_cast<sample_units::rep>( std::sqrt(sampling_policy.variance().count() * m_num_iterations )) } );
+            static_cast<sample_units::rep>( std::sqrt( sampling_policy.variance().count() * m_num_iterations ) ) } );
     }
 
     // Access methods
@@ -113,35 +115,88 @@ public:
         else
             report_time<chrono::duration<double, ratio<60>>>( ostr, precision, abbreviate_units );
     }
+
     template<typename ReportUnits>
     void            report_performance( std::ostream& ostr, std::streamsize precision = 3, bool abbreviate_units = true )
     {
         io::ios_precision_saver precision_saver( ostr );
-
-        chrono::duration_style_io_saver style_saver( ostr, abbreviate_units
-                                                            ? chrono::duration_style::symbol
-                                                            : chrono::duration_style::prefix );
-
         ostr << std::setprecision( precision );
 
-        ReportUnits per_unit{1};
+        auto style = abbreviate_units ? chrono::duration_style::symbol : chrono::duration_style::prefix;
 
-        ostr << "Estimated performance: " << _perf<ReportUnits>( m_estimated_value ) << " (";
-        if( m_measument_error != 0LL )
-            ostr << "+/-" << error<ReportUnits>() << " ";
+        auto nanosec_per_unit = ReportUnits{1} / chrono::nanoseconds{1};
+        decltype(nanosec_per_unit) estimated_performance{};
 
-        ostr << "based on " << m_total_measured_calls << " measured call"
-             << (m_total_measured_calls > 1 ? "s" : "" ) << ")" ;
+        chrono::duration_units_default<char> facet;
+        
+        auto units_name = " calls/" + facet.get_unit( style, ReportUnits{} );
 
-        ostr << "\nBest time:      " << per_unit / best<ReportUnits>();
-        if( m_estimated_value != m_best_value )
-            ostr << " (+" << _percent_diff( m_estimated_value, m_best_value ) << "%)";
+        if( m_estimated_value != 0LL ) {
+            estimated_performance = nanosec_per_unit * m_num_iterations / m_estimated_value;
+            ostr << "Estimated performance: " << estimated_performance << units_name << " (";
 
-        ostr << "\nWorst time:     " << per_unit / worst<ReportUnits>();
-        if( m_estimated_value != m_worst_value )
-            ostr << " (" << _percent_diff( m_estimated_value, m_worst_value ) << "%)";
+            if( m_measument_error != 0LL ) {
+                // If RU is report units and given 
+                //      SD(call) = measument_error / NI in ns
+                //  and 
+                //      MEAN(call) = estimated_value / NI in ns
+                // We can get an approximation for SD(RU/call).
+                // SD(RU/call) = SD(ns/call) * RU/1ns
+                // SD(ns/call) ~= SD(call) / MEAN(call)^2 in "calls per ns" = 
+                // = (measument_error / NI ) / (estimated_value / NI) ^ 2  in "calls per ns" = 
+                // = measument_error * NI / estimated_value^2 in "calls per ns" = 
+                // = measument_error * NI * RU/1ns / estimated_value^2 in "calls per RU"
 
-        ostr << "\n";
+                // auto perf_error = nanosec_per_unit * m_num_iterations * m_measument_error / 
+                //                   (m_estimated_value * m_estimated_value);
+                auto perf_error = estimated_performance * m_measument_error / m_estimated_value;
+
+                if( perf_error != 0 )
+                    ostr << "+/-" << perf_error << units_name << " ";
+            }
+
+            ostr << "based on " << m_total_measured_calls << " measured call"
+                 << (m_total_measured_calls > 1 ? "s" : "" ) << ")" ;
+        }
+
+        if( m_best_value != 0 ) {
+            auto best_performance = nanosec_per_unit * m_num_iterations / m_best_value;
+            ostr << "\nBest time:      " << best_performance << units_name;
+            if( m_estimated_value != m_best_value )
+                ostr << " (+" << _percent_diff( estimated_performance, best_performance ) << "%)";
+        }
+
+        if( m_worst_value != 0 ) {
+            auto worst_perfomance = nanosec_per_unit * m_num_iterations / m_worst_value;
+            ostr << "\nWorst time:     " << worst_perfomance << units_name;
+            if( m_estimated_value != m_worst_value )
+                ostr << " (" << _percent_diff( estimated_performance, worst_perfomance ) << "%)";
+
+            ostr << "\n";
+        }
+    }
+    void            report_performance( std::ostream& ostr, std::streamsize precision = 3, bool abbreviate_units = true )
+    {
+        if( m_estimated_value == 0LL ) 
+            return;
+
+        nanosecond_t nanosec_per_unit = chrono::seconds{1} / chrono::nanoseconds{1};
+        const nanosecond_t thou = 1000LL;
+
+        if( (60 * nanosec_per_unit * m_num_iterations / m_estimated_value) == 0 )
+            report_performance<chrono::duration<double, ratio<60>>>( ostr, precision, abbreviate_units );
+        else if( (nanosec_per_unit * m_num_iterations / m_estimated_value) == 0 )
+            report_performance<chrono::minutes>( ostr, precision, abbreviate_units );
+        else if( (nanosec_per_unit * m_num_iterations / m_estimated_value) < thou )
+            report_performance<chrono::seconds>( ostr, precision, abbreviate_units );
+        else if( ((nanosec_per_unit /= thou) * m_num_iterations / m_estimated_value) < thou )
+            report_performance<chrono::milliseconds>( ostr, precision, abbreviate_units );
+        else if( ((nanosec_per_unit /= thou) * m_num_iterations / m_estimated_value) < thou )
+            report_performance<chrono::microseconds>( ostr, precision, abbreviate_units );
+        else if( (nanosec_per_unit * m_num_iterations / m_estimated_value) != 0LL )
+            report_performance<chrono::nanoseconds>( ostr, precision, abbreviate_units );
+        else
+            report_performance<chrono::duration<double, boost::nano>>( ostr, precision, abbreviate_units );
     }
 
 private:
@@ -156,19 +211,12 @@ private:
         return chrono::duration_cast<Units>( chrono::nanoseconds( val ) ) / m_num_iterations;
     }
     template<typename Units>
-    typename Units::rep _perf( nanosecond_t val ) const
+    double          _percent_diff( Units base, Units some_val )
     {
-        return Units{1} / chrono::nanoseconds( val ) * m_num_iteration;
-    }
-    template<typename Units>
-    static constexpr double _std_dev_mult()
-    {
-        return std::sqrt( Units{1} / chrono::nanoseconds{1} );
-    }
+        if( base == Units{0} )
+            return 0.;
 
-    double          _percent_diff( nanosecond_t base, nanosecond_t some_val )
-    {
-        nanosecond_t delta = 100*(some_val-base);
+        Units delta = 100*(some_val-base);
 
         return static_cast<double>(delta) / base;
     }
