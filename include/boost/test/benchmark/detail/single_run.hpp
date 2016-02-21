@@ -53,7 +53,7 @@ private:
     {
         iterations_t num_iter = m_num_iterations;
 
-        Timer::duration total_elapsed{0};
+        Timer::duration_t total_elapsed{0};
 
         // !! Loop unrolling
         // !! Should we measure setup time and deduct it at the end instead?

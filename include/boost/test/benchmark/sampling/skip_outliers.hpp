@@ -6,12 +6,14 @@
 //  See http://www.boost.org/libs/test for the library home page.
 //
 //! @file
-//! @brief skip_first represents policy aspect, which produces the policy 
-//!        which skips first sample (for example to ignore initial run overhead).
+//! @brief skip_outliers models policy aspect, which produces the policy 
+//!        which skips outlier samples, which are distanced from sample 
+//!        population mean by more then N sigmas. Note that this aspect does
+//!        not attempt to "fix the past". Only new samples are skipped.
 // ***************************************************************************
 
-#ifndef BOOST_TEST_BENCHMARK_SAMPLING_SKIP_FIRST_HPP
-#define BOOST_TEST_BENCHMARK_SAMPLING_SKIP_FIRST_HPP
+#ifndef BOOST_TEST_BENCHMARK_SAMPLING_SKIP_OUTLIERS_HPP
+#define BOOST_TEST_BENCHMARK_SAMPLING_SKIP_OUTLIERS_HPP
 
 // Boost.Test Benchmark
 #include <boost/test/benchmark/config.hpp>
@@ -26,38 +28,40 @@ namespace benchmark {
 namespace sampling {
 
 template<typename Next>
-class skip_first : public Next {
+class skip_outliers : public Next {
 public:
     using units_t = typename Next::units_t;
 
-    skip_first() : Next(), m_skipped( false ) {}
-    skip_first( Next&& next )
+    skip_outliers()
+    : Next()
+    , m_var_multiplier( num_sigmas * num_sigmas )
+    {}
+    skip_outliers( Next&& next, unsigned num_sigmas )
     : Next( std::move( next ) )
-    , m_skipped( false )
+    , m_var_multiplier( num_sigmas * num_sigmas )
     {}
     template<typename ...Args>
-    skip_first( Args&&... args )
+    skip_outliers( unsigned num_sigmas, Args&&... args )
     : Next( std::forward<Args>( args )... )
-    , m_skipped( false )
+    , m_var_multiplier( num_sigmas * num_sigmas )
     {}
 
     // Samples collection
     void            add_sample( units_t sample )
     {
-        if( !m_skipped )
-            m_skipped = true;
-        else
+        auto distance = sample - value();
+
+        if( variance().count() == 0 || distance.count() * distance.count() < m_var_multiplier * variance().count() )
             Next::add_sample( sample );
     }
 
 private:
     // Data members
-    Next            m_next;
-    bool            m_skipped;
+    unsigned        m_var_multiplier;
 };
 
 } // namespace sampling
 } // namespace benchmark
 } // namespace boost
 
-#endif // BOOST_TEST_BENCHMARK_SAMPLING_SKIP_FIRST_HPP
+#endif // BOOST_TEST_BENCHMARK_SAMPLING_SKIP_OUTLIERS_HPP

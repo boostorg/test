@@ -9,8 +9,8 @@
 //! @brief This is the timer policy based on chrono::high_resolution_clock.
 // ***************************************************************************
 
-#ifndef BOOST_TEST_BENCHMARK_TIMER_HIGH_RESOLUTION_HPP
-#define BOOST_TEST_BENCHMARK_TIMER_HIGH_RESOLUTION_HPP
+#ifndef BOOST_TEST_BENCHMARK_TIMER_CHRONO_BASED_HPP
+#define BOOST_TEST_BENCHMARK_TIMER_CHRONO_BASED_HPP
 
 // Boost.Test Benchmark
 #include <boost/test/benchmark/config.hpp>
@@ -24,26 +24,32 @@ namespace boost {
 namespace benchmark {
 namespace timer {
 
-class high_resolution {
-    using clock_t = chrono::high_resolution_clock;
+template<typename Clock>
+class chrono_based {
 public:
-    using duration = chrono::nanoseconds;
+    using clock_t    = Clock;
+    using duration_t = typename clock_t::duration;
 
-    high_resolution() : m_start( clock_t::now() ) {}
+    chrono_based() : m_start( clock_t::now() ) {}
 
-    chrono::nanoseconds elapsed() const
+    duration_t elapsed() const
     {
         clock_t::time_point now = clock_t::now();
-        return chrono::duration_cast<chrono::nanoseconds>(now - m_start);
+        return chrono::duration_cast<duration_t>(now - m_start);
     }
 
 private:
     // Data members
-    clock_t::time_point m_start;
+    typename clock_t::time_point m_start;
 };
+
+using high_resolution   = chrono_based<chrono::high_resolution_clock>;
+using process_real_cpu  = chrono_based<chrono::process_real_cpu_clock>;
+using process_user_cpu  = chrono_based<chrono::process_user_cpu_clock>;
+using process_system_cpu= chrono_based<chrono::process_system_cpu_clock>;
 
 } // namespace timer
 } // namespace benchmark
 } // namespace boost
 
-#endif // BOOST_TEST_BENCHMARK_TIMER_HIGH_RESOLUTION_HPP
+#endif // BOOST_TEST_BENCHMARK_TIMER_CHRONO_BASED_HPP

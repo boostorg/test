@@ -17,7 +17,7 @@
 
 #include <boost/test/benchmark/result.hpp>
 #include <boost/test/benchmark/sampling/single_sample.hpp>
-#include <boost/test/benchmark/timer/high_resolution.hpp>
+#include <boost/test/benchmark/timer/chrono_based.hpp>
 #include <boost/test/benchmark/detail/single_run.hpp>
 
 // Boost.Test utils
