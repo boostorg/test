@@ -26,8 +26,6 @@ namespace detail {
 template<typename Func, typename Setup, typename Timer>
 class single_run {
 public:
-    using iterations_t = iterations_t;
-
     single_run( Func&& f, Setup&& s, iterations_t num_iterations = 0 )
     : m_func( std::forward<Func>( f ) )
     , m_setup( std::forward<Setup>( s ) )
@@ -53,7 +51,7 @@ private:
     {
         iterations_t num_iter = m_num_iterations;
 
-        Timer::duration_t total_elapsed{0};
+        typename Timer::duration_t total_elapsed{0};
 
         // !! Loop unrolling
         // !! Should we measure setup time and deduct it at the end instead?
@@ -69,7 +67,7 @@ private:
     }
 
     template<typename SamplingPolicy>
-    void        run_impl( SamplingPolicy& sampling_policy, nullptr_t )
+    void        run_impl( SamplingPolicy& sampling_policy, std::nullptr_t )
     {
         iterations_t num_iter = m_num_iterations;
 

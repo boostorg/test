@@ -1,38 +1,38 @@
 ==========================================================
 sample: 123 nanoseconds; num_iter: 1000
-Estimated time: 0 ns (based on 1000 measured calls)
-Best time:      0 ns
-Worst time:     0 ns
+Estimated time: 0 nanoseconds (based on 1000 measured calls)
+Best time:      0 nanoseconds
+Worst time:     0 nanoseconds
 Estimated time: 0 µs (based on 1000 measured calls)
 Best time:      0 µs
 Worst time:     0 µs
-Estimated time: 0 milliseconds (based on 1000 measured calls)
-Best time:      0 milliseconds
-Worst time:     0 milliseconds
+Estimated time: 0 ms (based on 1000 measured calls)
+Best time:      0 ms
+Worst time:     0 ms
+Estimated time: 0 seconds (based on 1000 measured calls)
+Best time:      0 seconds
+Worst time:     0 seconds
+Estimated time: 0 min (based on 1000 measured calls)
+Best time:      0 min
+Worst time:     0 min
+Estimated time: 0 µs (based on 1000 measured calls)
+Best time:      0 µs
+Worst time:     0 µs
+Estimated time: 0 ms (based on 1000 measured calls)
+Best time:      0 ms
+Worst time:     0 ms
 Estimated time: 0 s (based on 1000 measured calls)
 Best time:      0 s
 Worst time:     0 s
 Estimated time: 0 min (based on 1000 measured calls)
 Best time:      0 min
 Worst time:     0 min
-Estimated time: 0.000123 µs (based on 1000 measured calls)
-Best time:      0.000123 µs
-Worst time:     0.000123 µs
-Estimated time: 1.23e-07 ms (based on 1000 measured calls)
-Best time:      1.23e-07 ms
-Worst time:     1.23e-07 ms
-Estimated time: 1.23e-10 s (based on 1000 measured calls)
-Best time:      1.23e-10 s
-Worst time:     1.23e-10 s
-Estimated time: 2.1e-12 min (based on 1000 measured calls)
-Best time:      2.1e-12 min
-Worst time:     2.1e-12 min
-Estimated time: 0.123 ns (based on 1000 measured calls)
-Best time:      0.123 ns
-Worst time:     0.123 ns
-Estimated time: 0.122 ns (+/-0.181 ns based on 7000 measured calls)
-Best time:      0.116 ns (-4.92%)
-Worst time:     0.131 ns (+7.38%)
+Estimated time: 0 ns (based on 1000 measured calls)
+Best time:      0 ns
+Worst time:     0 ns
+Estimated time: 0 ns (+/-0 ns based on 7000 measured calls)
+Best time:      0 ns (-4.92%)
+Worst time:     0 ns (+7.38%)
 Estimated performance: 8.197e+06 calls/ms (+/-1.216e+07 calls/ms based on 7000 measured calls)
 Best time:      8.621e+06 calls/ms (+5.172%)
 Worst time:     7.634e+06 calls/ms (-6.87%)
@@ -40,40 +40,40 @@ Estimated performance: 8 calls/nanoseconds (+/-11 calls/nanoseconds based on 700
 Best time:      8 calls/nanoseconds (+0%)
 Worst time:     7 calls/nanoseconds (-12.5%)
 ==========================================================
-sample: 123 nanoseconds; num_iter: 10
+sample: 123 ns; num_iter: 10
 Estimated time: 12 ns (based on 10 measured calls)
 Best time:      12 ns
 Worst time:     12 ns
 Estimated time: 0 µs (based on 10 measured calls)
 Best time:      0 µs
 Worst time:     0 µs
-Estimated time: 0 milliseconds (based on 10 measured calls)
-Best time:      0 milliseconds
-Worst time:     0 milliseconds
+Estimated time: 0 ms (based on 10 measured calls)
+Best time:      0 ms
+Worst time:     0 ms
+Estimated time: 0 seconds (based on 10 measured calls)
+Best time:      0 seconds
+Worst time:     0 seconds
+Estimated time: 0 min (based on 10 measured calls)
+Best time:      0 min
+Worst time:     0 min
+Estimated time: 0 µs (based on 10 measured calls)
+Best time:      0 µs
+Worst time:     0 µs
+Estimated time: 0 ms (based on 10 measured calls)
+Best time:      0 ms
+Worst time:     0 ms
 Estimated time: 0 s (based on 10 measured calls)
 Best time:      0 s
 Worst time:     0 s
 Estimated time: 0 min (based on 10 measured calls)
 Best time:      0 min
 Worst time:     0 min
-Estimated time: 0.0123 µs (based on 10 measured calls)
-Best time:      0.0123 µs
-Worst time:     0.0123 µs
-Estimated time: 1.23e-05 ms (based on 10 measured calls)
-Best time:      1.23e-05 ms
-Worst time:     1.23e-05 ms
-Estimated time: 1.23e-08 s (based on 10 measured calls)
-Best time:      1.23e-08 s
-Worst time:     1.23e-08 s
-Estimated time: 2.1e-10 min (based on 10 measured calls)
-Best time:      2.1e-10 min
-Worst time:     2.1e-10 min
-Estimated time: 12.3 ns (based on 10 measured calls)
-Best time:      12.3 ns
-Worst time:     12.3 ns
-Estimated time: 12.2 ns (+/-1.8 ns based on 70 measured calls)
-Best time:      11.6 ns (-4.92%)
-Worst time:     13.1 ns (+7.38%)
+Estimated time: 12 ns (based on 10 measured calls)
+Best time:      12 ns
+Worst time:     12 ns
+Estimated time: 12 ns (+/-1 ns based on 70 measured calls)
+Best time:      11 ns (-4.92%)
+Worst time:     13 ns (+7.38%)
 Estimated performance: 8.197e+04 calls/ms (+/-1.209e+04 calls/ms based on 70 measured calls)
 Best time:      8.621e+04 calls/ms (+5.172%)
 Worst time:     7.634e+04 calls/ms (-6.87%)
@@ -81,34 +81,34 @@ Estimated performance: 81 calls/microseconds (+/-11 calls/microseconds based on 
 Best time:      86 calls/microseconds (+6.17284%)
 Worst time:     76 calls/microseconds (-6.17284%)
 ==========================================================
-sample: 123 nanoseconds; num_iter: 1
+sample: 123 ns; num_iter: 1
 Estimated time: 123 ns (based on 1 measured call)
 Best time:      123 ns
 Worst time:     123 ns
 Estimated time: 0 µs (based on 1 measured call)
 Best time:      0 µs
 Worst time:     0 µs
-Estimated time: 0 milliseconds (based on 1 measured call)
-Best time:      0 milliseconds
-Worst time:     0 milliseconds
+Estimated time: 0 ms (based on 1 measured call)
+Best time:      0 ms
+Worst time:     0 ms
+Estimated time: 0 seconds (based on 1 measured call)
+Best time:      0 seconds
+Worst time:     0 seconds
+Estimated time: 0 min (based on 1 measured call)
+Best time:      0 min
+Worst time:     0 min
+Estimated time: 0 µs (based on 1 measured call)
+Best time:      0 µs
+Worst time:     0 µs
+Estimated time: 0 ms (based on 1 measured call)
+Best time:      0 ms
+Worst time:     0 ms
 Estimated time: 0 s (based on 1 measured call)
 Best time:      0 s
 Worst time:     0 s
 Estimated time: 0 min (based on 1 measured call)
 Best time:      0 min
 Worst time:     0 min
-Estimated time: 0.123 µs (based on 1 measured call)
-Best time:      0.123 µs
-Worst time:     0.123 µs
-Estimated time: 0.000123 ms (based on 1 measured call)
-Best time:      0.000123 ms
-Worst time:     0.000123 ms
-Estimated time: 1.23e-07 s (based on 1 measured call)
-Best time:      1.23e-07 s
-Worst time:     1.23e-07 s
-Estimated time: 2.1e-09 min (based on 1 measured call)
-Best time:      2.1e-09 min
-Worst time:     2.1e-09 min
 Estimated time: 123 ns (based on 1 measured call)
 Best time:      123 ns
 Worst time:     123 ns
@@ -122,40 +122,40 @@ Estimated performance: 8 calls/microseconds (based on 7 measured calls)
 Best time:      8 calls/microseconds (+0%)
 Worst time:     7 calls/microseconds (-12.5%)
 ==========================================================
-sample: 84607 nanoseconds; num_iter: 1000
+sample: 84607 ns; num_iter: 1000
 Estimated time: 84 ns (based on 1000 measured calls)
 Best time:      84 ns
 Worst time:     84 ns
 Estimated time: 0 µs (based on 1000 measured calls)
 Best time:      0 µs
 Worst time:     0 µs
-Estimated time: 0 milliseconds (based on 1000 measured calls)
-Best time:      0 milliseconds
-Worst time:     0 milliseconds
+Estimated time: 0 ms (based on 1000 measured calls)
+Best time:      0 ms
+Worst time:     0 ms
+Estimated time: 0 seconds (based on 1000 measured calls)
+Best time:      0 seconds
+Worst time:     0 seconds
+Estimated time: 0 min (based on 1000 measured calls)
+Best time:      0 min
+Worst time:     0 min
+Estimated time: 0 µs (based on 1000 measured calls)
+Best time:      0 µs
+Worst time:     0 µs
+Estimated time: 0 ms (based on 1000 measured calls)
+Best time:      0 ms
+Worst time:     0 ms
 Estimated time: 0 s (based on 1000 measured calls)
 Best time:      0 s
 Worst time:     0 s
 Estimated time: 0 min (based on 1000 measured calls)
 Best time:      0 min
 Worst time:     0 min
-Estimated time: 0.0846 µs (based on 1000 measured calls)
-Best time:      0.0846 µs
-Worst time:     0.0846 µs
-Estimated time: 8.46e-05 ms (based on 1000 measured calls)
-Best time:      8.46e-05 ms
-Worst time:     8.46e-05 ms
-Estimated time: 8.4607e-08 s (based on 1000 measured calls)
-Best time:      8.4607e-08 s
-Worst time:     8.4607e-08 s
-Estimated time: 1.4e-09 min (based on 1000 measured calls)
-Best time:      1.4e-09 min
-Worst time:     1.4e-09 min
-Estimated time: 84.6 ns (based on 1000 measured calls)
-Best time:      84.6 ns
-Worst time:     84.6 ns
-Estimated time: 84.4 ns (+/-125 ns based on 7000 measured calls)
-Best time:      80.4 ns (-4.8%)
-Worst time:     90.5 ns (+7.23%)
+Estimated time: 84 ns (based on 1000 measured calls)
+Best time:      84 ns
+Worst time:     84 ns
+Estimated time: 84 ns (+/-124 ns based on 7000 measured calls)
+Best time:      80 ns (-4.8%)
+Worst time:     90 ns (+7.23%)
 Estimated performance: 1.184e+04 calls/ms (+/-1.753e+04 calls/ms based on 7000 measured calls)
 Best time:      1.244e+04 calls/ms (+5.038%)
 Worst time:     1.105e+04 calls/ms (-6.743%)
@@ -163,40 +163,40 @@ Estimated performance: 11 calls/microseconds (+/-16 calls/microseconds based on 
 Best time:      12 calls/microseconds (+9.09091%)
 Worst time:     11 calls/microseconds (0%)
 ==========================================================
-sample: 84607 nanoseconds; num_iter: 10
+sample: 84607 ns; num_iter: 10
 Estimated time: 8460 ns (based on 10 measured calls)
 Best time:      8460 ns
 Worst time:     8460 ns
 Estimated time: 8 µs (based on 10 measured calls)
 Best time:      8 µs
 Worst time:     8 µs
-Estimated time: 0 milliseconds (based on 10 measured calls)
-Best time:      0 milliseconds
-Worst time:     0 milliseconds
+Estimated time: 0 ms (based on 10 measured calls)
+Best time:      0 ms
+Worst time:     0 ms
+Estimated time: 0 seconds (based on 10 measured calls)
+Best time:      0 seconds
+Worst time:     0 seconds
+Estimated time: 0 min (based on 10 measured calls)
+Best time:      0 min
+Worst time:     0 min
+Estimated time: 8 µs (based on 10 measured calls)
+Best time:      8 µs
+Worst time:     8 µs
+Estimated time: 0 ms (based on 10 measured calls)
+Best time:      0 ms
+Worst time:     0 ms
 Estimated time: 0 s (based on 10 measured calls)
 Best time:      0 s
 Worst time:     0 s
 Estimated time: 0 min (based on 10 measured calls)
 Best time:      0 min
 Worst time:     0 min
-Estimated time: 8.46 µs (based on 10 measured calls)
-Best time:      8.46 µs
-Worst time:     8.46 µs
-Estimated time: 0.00846 ms (based on 10 measured calls)
-Best time:      0.00846 ms
-Worst time:     0.00846 ms
-Estimated time: 8.4607e-06 s (based on 10 measured calls)
-Best time:      8.4607e-06 s
-Worst time:     8.4607e-06 s
-Estimated time: 1.4e-07 min (based on 10 measured calls)
-Best time:      1.4e-07 min
-Worst time:     1.4e-07 min
-Estimated time: 8.46 µs (based on 10 measured calls)
-Best time:      8.46 µs
-Worst time:     8.46 µs
-Estimated time: 8.44 µs (+/-1.25 µs based on 70 measured calls)
-Best time:      8.04 µs (-4.8%)
-Worst time:     9.05 µs (+7.23%)
+Estimated time: 8 µs (based on 10 measured calls)
+Best time:      8 µs
+Worst time:     8 µs
+Estimated time: 8 µs (+/-1 µs based on 70 measured calls)
+Best time:      8 µs (-4.8%)
+Worst time:     9 µs (+7.23%)
 Estimated performance: 118.4 calls/ms (+/-17.53 calls/ms based on 70 measured calls)
 Best time:      124.4 calls/ms (+5.038%)
 Worst time:     110.5 calls/ms (-6.743%)
@@ -204,40 +204,40 @@ Estimated performance: 118 calls/milliseconds (+/-17 calls/milliseconds based on
 Best time:      124 calls/milliseconds (+5.08475%)
 Worst time:     110 calls/milliseconds (-6.77966%)
 ==========================================================
-sample: 84607 nanoseconds; num_iter: 1
+sample: 84607 ns; num_iter: 1
 Estimated time: 84607 ns (based on 1 measured call)
 Best time:      84607 ns
 Worst time:     84607 ns
 Estimated time: 84 µs (based on 1 measured call)
 Best time:      84 µs
 Worst time:     84 µs
-Estimated time: 0 milliseconds (based on 1 measured call)
-Best time:      0 milliseconds
-Worst time:     0 milliseconds
+Estimated time: 0 ms (based on 1 measured call)
+Best time:      0 ms
+Worst time:     0 ms
+Estimated time: 0 seconds (based on 1 measured call)
+Best time:      0 seconds
+Worst time:     0 seconds
+Estimated time: 0 min (based on 1 measured call)
+Best time:      0 min
+Worst time:     0 min
+Estimated time: 84 µs (based on 1 measured call)
+Best time:      84 µs
+Worst time:     84 µs
+Estimated time: 0 ms (based on 1 measured call)
+Best time:      0 ms
+Worst time:     0 ms
 Estimated time: 0 s (based on 1 measured call)
 Best time:      0 s
 Worst time:     0 s
 Estimated time: 0 min (based on 1 measured call)
 Best time:      0 min
 Worst time:     0 min
-Estimated time: 84.6 µs (based on 1 measured call)
-Best time:      84.6 µs
-Worst time:     84.6 µs
-Estimated time: 0.0846 ms (based on 1 measured call)
-Best time:      0.0846 ms
-Worst time:     0.0846 ms
-Estimated time: 8.4607e-05 s (based on 1 measured call)
-Best time:      8.4607e-05 s
-Worst time:     8.4607e-05 s
-Estimated time: 1.4e-06 min (based on 1 measured call)
-Best time:      1.4e-06 min
-Worst time:     1.4e-06 min
-Estimated time: 84.6 µs (based on 1 measured call)
-Best time:      84.6 µs
-Worst time:     84.6 µs
-Estimated time: 84.4 µs (+/-3.95 µs based on 7 measured calls)
-Best time:      80.4 µs (-4.8%)
-Worst time:     90.5 µs (+7.23%)
+Estimated time: 84 µs (based on 1 measured call)
+Best time:      84 µs
+Worst time:     84 µs
+Estimated time: 84 µs (+/-3 µs based on 7 measured calls)
+Best time:      80 µs (-4.8%)
+Worst time:     90 µs (+7.23%)
 Estimated performance: 11.84 calls/ms (+/-0.5545 calls/ms based on 7 measured calls)
 Best time:      12.44 calls/ms (+5.038%)
 Worst time:     11.05 calls/ms (-6.743%)
@@ -245,40 +245,40 @@ Estimated performance: 11 calls/milliseconds (based on 7 measured calls)
 Best time:      12 calls/milliseconds (+9.09091%)
 Worst time:     11 calls/milliseconds (0%)
 ==========================================================
-sample: 2359011 nanoseconds; num_iter: 1000
+sample: 2359011 ns; num_iter: 1000
 Estimated time: 2359 ns (based on 1000 measured calls)
 Best time:      2359 ns
 Worst time:     2359 ns
 Estimated time: 2 µs (based on 1000 measured calls)
 Best time:      2 µs
 Worst time:     2 µs
-Estimated time: 0 milliseconds (based on 1000 measured calls)
-Best time:      0 milliseconds
-Worst time:     0 milliseconds
+Estimated time: 0 ms (based on 1000 measured calls)
+Best time:      0 ms
+Worst time:     0 ms
+Estimated time: 0 seconds (based on 1000 measured calls)
+Best time:      0 seconds
+Worst time:     0 seconds
+Estimated time: 0 min (based on 1000 measured calls)
+Best time:      0 min
+Worst time:     0 min
+Estimated time: 2 µs (based on 1000 measured calls)
+Best time:      2 µs
+Worst time:     2 µs
+Estimated time: 0 ms (based on 1000 measured calls)
+Best time:      0 ms
+Worst time:     0 ms
 Estimated time: 0 s (based on 1000 measured calls)
 Best time:      0 s
 Worst time:     0 s
 Estimated time: 0 min (based on 1000 measured calls)
 Best time:      0 min
 Worst time:     0 min
-Estimated time: 2.36 µs (based on 1000 measured calls)
-Best time:      2.36 µs
-Worst time:     2.36 µs
-Estimated time: 0.00236 ms (based on 1000 measured calls)
-Best time:      0.00236 ms
-Worst time:     0.00236 ms
-Estimated time: 2.359e-06 s (based on 1000 measured calls)
-Best time:      2.359e-06 s
-Worst time:     2.359e-06 s
-Estimated time: 3.9e-08 min (based on 1000 measured calls)
-Best time:      3.9e-08 min
-Worst time:     3.9e-08 min
-Estimated time: 2.36 µs (based on 1000 measured calls)
-Best time:      2.36 µs
-Worst time:     2.36 µs
-Estimated time: 2.35 µs (+/-3.48 µs based on 7000 measured calls)
-Best time:      2.24 µs (-4.8%)
-Worst time:     2.52 µs (+7.23%)
+Estimated time: 2 µs (based on 1000 measured calls)
+Best time:      2 µs
+Worst time:     2 µs
+Estimated time: 2 µs (+/-3 µs based on 7000 measured calls)
+Best time:      2 µs (-4.8%)
+Worst time:     2 µs (+7.23%)
 Estimated performance: 424.8 calls/ms (+/-628.9 calls/ms based on 7000 measured calls)
 Best time:      446.2 calls/ms (+5.038%)
 Worst time:     396.2 calls/ms (-6.742%)
@@ -286,38 +286,38 @@ Estimated performance: 424 calls/milliseconds (+/-627 calls/milliseconds based o
 Best time:      446 calls/milliseconds (+5.18868%)
 Worst time:     396 calls/milliseconds (-6.60377%)
 ==========================================================
-sample: 2359011 nanoseconds; num_iter: 10
+sample: 2359011 ns; num_iter: 10
 Estimated time: 235901 ns (based on 10 measured calls)
 Best time:      235901 ns
 Worst time:     235901 ns
 Estimated time: 235 µs (based on 10 measured calls)
 Best time:      235 µs
 Worst time:     235 µs
-Estimated time: 0 milliseconds (based on 10 measured calls)
-Best time:      0 milliseconds
-Worst time:     0 milliseconds
+Estimated time: 0 ms (based on 10 measured calls)
+Best time:      0 ms
+Worst time:     0 ms
+Estimated time: 0 seconds (based on 10 measured calls)
+Best time:      0 seconds
+Worst time:     0 seconds
+Estimated time: 0 min (based on 10 measured calls)
+Best time:      0 min
+Worst time:     0 min
+Estimated time: 235 µs (based on 10 measured calls)
+Best time:      235 µs
+Worst time:     235 µs
+Estimated time: 0 ms (based on 10 measured calls)
+Best time:      0 ms
+Worst time:     0 ms
 Estimated time: 0 s (based on 10 measured calls)
 Best time:      0 s
 Worst time:     0 s
 Estimated time: 0 min (based on 10 measured calls)
 Best time:      0 min
 Worst time:     0 min
-Estimated time: 236 µs (based on 10 measured calls)
-Best time:      236 µs
-Worst time:     236 µs
-Estimated time: 0.236 ms (based on 10 measured calls)
-Best time:      0.236 ms
-Worst time:     0.236 ms
-Estimated time: 0.0002359 s (based on 10 measured calls)
-Best time:      0.0002359 s
-Worst time:     0.0002359 s
-Estimated time: 3.9e-06 min (based on 10 measured calls)
-Best time:      3.9e-06 min
-Worst time:     3.9e-06 min
-Estimated time: 236 µs (based on 10 measured calls)
-Best time:      236 µs
-Worst time:     236 µs
-Estimated time: 235 µs (+/-34.8 µs based on 70 measured calls)
+Estimated time: 235 µs (based on 10 measured calls)
+Best time:      235 µs
+Worst time:     235 µs
+Estimated time: 235 µs (+/-34 µs based on 70 measured calls)
 Best time:      224 µs (-4.8%)
 Worst time:     252 µs (+7.23%)
 Estimated performance: 4.248 calls/ms (+/-0.6289 calls/ms based on 70 measured calls)
@@ -327,40 +327,40 @@ Estimated performance: 4 calls/milliseconds (based on 70 measured calls)
 Best time:      4 calls/milliseconds (+0%)
 Worst time:     3 calls/milliseconds (-25%)
 ==========================================================
-sample: 2359011 nanoseconds; num_iter: 1
+sample: 2359011 ns; num_iter: 1
 Estimated time: 2359011 ns (based on 1 measured call)
 Best time:      2359011 ns
 Worst time:     2359011 ns
 Estimated time: 2359 µs (based on 1 measured call)
 Best time:      2359 µs
 Worst time:     2359 µs
-Estimated time: 2 milliseconds (based on 1 measured call)
-Best time:      2 milliseconds
-Worst time:     2 milliseconds
+Estimated time: 2 ms (based on 1 measured call)
+Best time:      2 ms
+Worst time:     2 ms
+Estimated time: 0 seconds (based on 1 measured call)
+Best time:      0 seconds
+Worst time:     0 seconds
+Estimated time: 0 min (based on 1 measured call)
+Best time:      0 min
+Worst time:     0 min
+Estimated time: 2359 µs (based on 1 measured call)
+Best time:      2359 µs
+Worst time:     2359 µs
+Estimated time: 2 ms (based on 1 measured call)
+Best time:      2 ms
+Worst time:     2 ms
 Estimated time: 0 s (based on 1 measured call)
 Best time:      0 s
 Worst time:     0 s
 Estimated time: 0 min (based on 1 measured call)
 Best time:      0 min
 Worst time:     0 min
-Estimated time: 2.36e+03 µs (based on 1 measured call)
-Best time:      2.36e+03 µs
-Worst time:     2.36e+03 µs
-Estimated time: 2.36 ms (based on 1 measured call)
-Best time:      2.36 ms
-Worst time:     2.36 ms
-Estimated time: 0.002359 s (based on 1 measured call)
-Best time:      0.002359 s
-Worst time:     0.002359 s
-Estimated time: 3.9e-05 min (based on 1 measured call)
-Best time:      3.9e-05 min
-Worst time:     3.9e-05 min
-Estimated time: 2.36 ms (based on 1 measured call)
-Best time:      2.36 ms
-Worst time:     2.36 ms
-Estimated time: 2.35 ms (+/-0.11 ms based on 7 measured calls)
-Best time:      2.24 ms (-4.8%)
-Worst time:     2.52 ms (+7.23%)
+Estimated time: 2 ms (based on 1 measured call)
+Best time:      2 ms
+Worst time:     2 ms
+Estimated time: 2 ms (+/-0 ms based on 7 measured calls)
+Best time:      2 ms (-4.8%)
+Worst time:     2 ms (+7.23%)
 Estimated performance: 0.4248 calls/ms (+/-0.01989 calls/ms based on 7 measured calls)
 Best time:      0.4462 calls/ms (+5.038%)
 Worst time:     0.3962 calls/ms (-6.742%)
@@ -368,16 +368,28 @@ Estimated performance: 424 calls/seconds (+/-19 calls/seconds based on 7 measure
 Best time:      446 calls/seconds (+5.18868%)
 Worst time:     396 calls/seconds (-6.60377%)
 ==========================================================
-sample: 346234678 nanoseconds; num_iter: 1000
+sample: 346234678 ns; num_iter: 1000
 Estimated time: 346234 ns (based on 1000 measured calls)
 Best time:      346234 ns
 Worst time:     346234 ns
 Estimated time: 346 µs (based on 1000 measured calls)
 Best time:      346 µs
 Worst time:     346 µs
-Estimated time: 0 milliseconds (based on 1000 measured calls)
-Best time:      0 milliseconds
-Worst time:     0 milliseconds
+Estimated time: 0 ms (based on 1000 measured calls)
+Best time:      0 ms
+Worst time:     0 ms
+Estimated time: 0 seconds (based on 1000 measured calls)
+Best time:      0 seconds
+Worst time:     0 seconds
+Estimated time: 0 min (based on 1000 measured calls)
+Best time:      0 min
+Worst time:     0 min
+Estimated time: 346 µs (based on 1000 measured calls)
+Best time:      346 µs
+Worst time:     346 µs
+Estimated time: 0 ms (based on 1000 measured calls)
+Best time:      0 ms
+Worst time:     0 ms
 Estimated time: 0 s (based on 1000 measured calls)
 Best time:      0 s
 Worst time:     0 s
@@ -387,20 +399,8 @@ Worst time:     0 min
 Estimated time: 346 µs (based on 1000 measured calls)
 Best time:      346 µs
 Worst time:     346 µs
-Estimated time: 0.346 ms (based on 1000 measured calls)
-Best time:      0.346 ms
-Worst time:     0.346 ms
-Estimated time: 0.00034623 s (based on 1000 measured calls)
-Best time:      0.00034623 s
-Worst time:     0.00034623 s
-Estimated time: 5.8e-06 min (based on 1000 measured calls)
-Best time:      5.8e-06 min
-Worst time:     5.8e-06 min
-Estimated time: 346 µs (based on 1000 measured calls)
-Best time:      346 µs
-Worst time:     346 µs
 Estimated time: 345 µs (+/-511 µs based on 7000 measured calls)
-Best time:      329 µs (-4.8%)
+Best time:      328 µs (-4.8%)
 Worst time:     370 µs (+7.23%)
 Estimated performance: 2.894 calls/ms (+/-4.285 calls/ms based on 7000 measured calls)
 Best time:      3.04 calls/ms (+5.038%)
@@ -409,39 +409,39 @@ Estimated performance: 2 calls/milliseconds (+/-2 calls/milliseconds based on 70
 Best time:      3 calls/milliseconds (+50%)
 Worst time:     2 calls/milliseconds (0%)
 ==========================================================
-sample: 346234678 nanoseconds; num_iter: 10
+sample: 346234678 ns; num_iter: 10
 Estimated time: 34623467 ns (based on 10 measured calls)
 Best time:      34623467 ns
 Worst time:     34623467 ns
 Estimated time: 34623 µs (based on 10 measured calls)
 Best time:      34623 µs
 Worst time:     34623 µs
-Estimated time: 34 milliseconds (based on 10 measured calls)
-Best time:      34 milliseconds
-Worst time:     34 milliseconds
+Estimated time: 34 ms (based on 10 measured calls)
+Best time:      34 ms
+Worst time:     34 ms
+Estimated time: 0 seconds (based on 10 measured calls)
+Best time:      0 seconds
+Worst time:     0 seconds
+Estimated time: 0 min (based on 10 measured calls)
+Best time:      0 min
+Worst time:     0 min
+Estimated time: 34623 µs (based on 10 measured calls)
+Best time:      34623 µs
+Worst time:     34623 µs
+Estimated time: 34 ms (based on 10 measured calls)
+Best time:      34 ms
+Worst time:     34 ms
 Estimated time: 0 s (based on 10 measured calls)
 Best time:      0 s
 Worst time:     0 s
 Estimated time: 0 min (based on 10 measured calls)
 Best time:      0 min
 Worst time:     0 min
-Estimated time: 3.46e+04 µs (based on 10 measured calls)
-Best time:      3.46e+04 µs
-Worst time:     3.46e+04 µs
-Estimated time: 34.6 ms (based on 10 measured calls)
-Best time:      34.6 ms
-Worst time:     34.6 ms
-Estimated time: 0.034623 s (based on 10 measured calls)
-Best time:      0.034623 s
-Worst time:     0.034623 s
-Estimated time: 0.00058 min (based on 10 measured calls)
-Best time:      0.00058 min
-Worst time:     0.00058 min
-Estimated time: 34.6 ms (based on 10 measured calls)
-Best time:      34.6 ms
-Worst time:     34.6 ms
-Estimated time: 34.5 ms (+/-5.11 ms based on 70 measured calls)
-Best time:      32.9 ms (-4.8%)
+Estimated time: 34 ms (based on 10 measured calls)
+Best time:      34 ms
+Worst time:     34 ms
+Estimated time: 34 ms (+/-5 ms based on 70 measured calls)
+Best time:      32 ms (-4.8%)
 Worst time:     37 ms (+7.23%)
 Estimated performance: 0.02894 calls/ms (+/-0.004285 calls/ms based on 70 measured calls)
 Best time:      0.0304 calls/ms (+5.038%)
@@ -450,39 +450,39 @@ Estimated performance: 28 calls/seconds (+/-4 calls/seconds based on 70 measured
 Best time:      30 calls/seconds (+7.14286%)
 Worst time:     26 calls/seconds (-7.14286%)
 ==========================================================
-sample: 346234678 nanoseconds; num_iter: 1
+sample: 346234678 ns; num_iter: 1
 Estimated time: 346234678 ns (based on 1 measured call)
 Best time:      346234678 ns
 Worst time:     346234678 ns
 Estimated time: 346234 µs (based on 1 measured call)
 Best time:      346234 µs
 Worst time:     346234 µs
-Estimated time: 346 milliseconds (based on 1 measured call)
-Best time:      346 milliseconds
-Worst time:     346 milliseconds
+Estimated time: 346 ms (based on 1 measured call)
+Best time:      346 ms
+Worst time:     346 ms
+Estimated time: 0 seconds (based on 1 measured call)
+Best time:      0 seconds
+Worst time:     0 seconds
+Estimated time: 0 min (based on 1 measured call)
+Best time:      0 min
+Worst time:     0 min
+Estimated time: 346234 µs (based on 1 measured call)
+Best time:      346234 µs
+Worst time:     346234 µs
+Estimated time: 346 ms (based on 1 measured call)
+Best time:      346 ms
+Worst time:     346 ms
 Estimated time: 0 s (based on 1 measured call)
 Best time:      0 s
 Worst time:     0 s
 Estimated time: 0 min (based on 1 measured call)
 Best time:      0 min
 Worst time:     0 min
-Estimated time: 3.46e+05 µs (based on 1 measured call)
-Best time:      3.46e+05 µs
-Worst time:     3.46e+05 µs
 Estimated time: 346 ms (based on 1 measured call)
 Best time:      346 ms
 Worst time:     346 ms
-Estimated time: 0.34623 s (based on 1 measured call)
-Best time:      0.34623 s
-Worst time:     0.34623 s
-Estimated time: 0.0058 min (based on 1 measured call)
-Best time:      0.0058 min
-Worst time:     0.0058 min
-Estimated time: 346 ms (based on 1 measured call)
-Best time:      346 ms
-Worst time:     346 ms
-Estimated time: 345 ms (+/-16.2 ms based on 7 measured calls)
-Best time:      329 ms (-4.8%)
+Estimated time: 345 ms (+/-16 ms based on 7 measured calls)
+Best time:      328 ms (-4.8%)
 Worst time:     370 ms (+7.23%)
 Estimated performance: 0.002894 calls/ms (+/-0.0001355 calls/ms based on 7 measured calls)
 Best time:      0.00304 calls/ms (+5.038%)
@@ -491,40 +491,40 @@ Estimated performance: 2 calls/seconds (based on 7 measured calls)
 Best time:      3 calls/seconds (+50%)
 Worst time:     2 calls/seconds (0%)
 ==========================================================
-sample: 400933842101 nanoseconds; num_iter: 1000
+sample: 400933842101 ns; num_iter: 1000
 Estimated time: 400933842 ns (based on 1000 measured calls)
 Best time:      400933842 ns
 Worst time:     400933842 ns
 Estimated time: 400933 µs (based on 1000 measured calls)
 Best time:      400933 µs
 Worst time:     400933 µs
-Estimated time: 400 milliseconds (based on 1000 measured calls)
-Best time:      400 milliseconds
-Worst time:     400 milliseconds
+Estimated time: 400 ms (based on 1000 measured calls)
+Best time:      400 ms
+Worst time:     400 ms
+Estimated time: 0 seconds (based on 1000 measured calls)
+Best time:      0 seconds
+Worst time:     0 seconds
+Estimated time: 0 min (based on 1000 measured calls)
+Best time:      0 min
+Worst time:     0 min
+Estimated time: 400933 µs (based on 1000 measured calls)
+Best time:      400933 µs
+Worst time:     400933 µs
+Estimated time: 400 ms (based on 1000 measured calls)
+Best time:      400 ms
+Worst time:     400 ms
 Estimated time: 0 s (based on 1000 measured calls)
 Best time:      0 s
 Worst time:     0 s
 Estimated time: 0 min (based on 1000 measured calls)
 Best time:      0 min
 Worst time:     0 min
-Estimated time: 4.01e+05 µs (based on 1000 measured calls)
-Best time:      4.01e+05 µs
-Worst time:     4.01e+05 µs
-Estimated time: 401 ms (based on 1000 measured calls)
-Best time:      401 ms
-Worst time:     401 ms
-Estimated time: 0.40093 s (based on 1000 measured calls)
-Best time:      0.40093 s
-Worst time:     0.40093 s
-Estimated time: 0.0067 min (based on 1000 measured calls)
-Best time:      0.0067 min
-Worst time:     0.0067 min
-Estimated time: 401 ms (based on 1000 measured calls)
-Best time:      401 ms
-Worst time:     401 ms
+Estimated time: 400 ms (based on 1000 measured calls)
+Best time:      400 ms
+Worst time:     400 ms
 Estimated time: 400 ms (+/-592 ms based on 7000 measured calls)
-Best time:      381 ms (-4.8%)
-Worst time:     429 ms (+7.23%)
+Best time:      380 ms (-4.8%)
+Worst time:     428 ms (+7.23%)
 Estimated performance: 0.0025 calls/ms (+/-0.0037 calls/ms based on 7000 measured calls)
 Best time:      0.002625 calls/ms (+5.038%)
 Worst time:     0.002331 calls/ms (-6.742%)
@@ -532,40 +532,40 @@ Estimated performance: 2 calls/seconds (+/-2 calls/seconds based on 7000 measure
 Best time:      2 calls/seconds (+0%)
 Worst time:     2 calls/seconds (0%)
 ==========================================================
-sample: 400933842101 nanoseconds; num_iter: 10
+sample: 400933842101 ns; num_iter: 10
 Estimated time: 40093384210 ns (based on 10 measured calls)
 Best time:      40093384210 ns
 Worst time:     40093384210 ns
 Estimated time: 40093384 µs (based on 10 measured calls)
 Best time:      40093384 µs
 Worst time:     40093384 µs
-Estimated time: 40093 milliseconds (based on 10 measured calls)
-Best time:      40093 milliseconds
-Worst time:     40093 milliseconds
+Estimated time: 40093 ms (based on 10 measured calls)
+Best time:      40093 ms
+Worst time:     40093 ms
+Estimated time: 40 seconds (based on 10 measured calls)
+Best time:      40 seconds
+Worst time:     40 seconds
+Estimated time: 0 min (based on 10 measured calls)
+Best time:      0 min
+Worst time:     0 min
+Estimated time: 40093384 µs (based on 10 measured calls)
+Best time:      40093384 µs
+Worst time:     40093384 µs
+Estimated time: 40093 ms (based on 10 measured calls)
+Best time:      40093 ms
+Worst time:     40093 ms
 Estimated time: 40 s (based on 10 measured calls)
 Best time:      40 s
 Worst time:     40 s
 Estimated time: 0 min (based on 10 measured calls)
 Best time:      0 min
 Worst time:     0 min
-Estimated time: 4.01e+07 µs (based on 10 measured calls)
-Best time:      4.01e+07 µs
-Worst time:     4.01e+07 µs
-Estimated time: 4.01e+04 ms (based on 10 measured calls)
-Best time:      4.01e+04 ms
-Worst time:     4.01e+04 ms
-Estimated time: 40.093 s (based on 10 measured calls)
-Best time:      40.093 s
-Worst time:     40.093 s
-Estimated time: 0.67 min (based on 10 measured calls)
-Best time:      0.67 min
-Worst time:     0.67 min
-Estimated time: 40.1 s (based on 10 measured calls)
-Best time:      40.1 s
-Worst time:     40.1 s
-Estimated time: 40 s (+/-5.92 s based on 70 measured calls)
-Best time:      38.1 s (-4.8%)
-Worst time:     42.9 s (+7.23%)
+Estimated time: 40 s (based on 10 measured calls)
+Best time:      40 s
+Worst time:     40 s
+Estimated time: 40 s (+/-5 s based on 70 measured calls)
+Best time:      38 s (-4.8%)
+Worst time:     42 s (+7.23%)
 Estimated performance: 2.5e-05 calls/ms (+/-3.7e-06 calls/ms based on 70 measured calls)
 Best time:      2.625e-05 calls/ms (+5.038%)
 Worst time:     2.331e-05 calls/ms (-6.742%)
@@ -573,40 +573,40 @@ Estimated performance: 1 calls/minutes (based on 70 measured calls)
 Best time:      1 calls/minutes (+0%)
 Worst time:     1 calls/minutes (0%)
 ==========================================================
-sample: 400933842101 nanoseconds; num_iter: 1
+sample: 400933842101 ns; num_iter: 1
 Estimated time: 400933842101 ns (based on 1 measured call)
 Best time:      400933842101 ns
 Worst time:     400933842101 ns
 Estimated time: 400933842 µs (based on 1 measured call)
 Best time:      400933842 µs
 Worst time:     400933842 µs
-Estimated time: 400933 milliseconds (based on 1 measured call)
-Best time:      400933 milliseconds
-Worst time:     400933 milliseconds
+Estimated time: 400933 ms (based on 1 measured call)
+Best time:      400933 ms
+Worst time:     400933 ms
+Estimated time: 400 seconds (based on 1 measured call)
+Best time:      400 seconds
+Worst time:     400 seconds
+Estimated time: 6 min (based on 1 measured call)
+Best time:      6 min
+Worst time:     6 min
+Estimated time: 400933842 µs (based on 1 measured call)
+Best time:      400933842 µs
+Worst time:     400933842 µs
+Estimated time: 400933 ms (based on 1 measured call)
+Best time:      400933 ms
+Worst time:     400933 ms
 Estimated time: 400 s (based on 1 measured call)
 Best time:      400 s
 Worst time:     400 s
 Estimated time: 6 min (based on 1 measured call)
 Best time:      6 min
 Worst time:     6 min
-Estimated time: 4.01e+08 µs (based on 1 measured call)
-Best time:      4.01e+08 µs
-Worst time:     4.01e+08 µs
-Estimated time: 4.01e+05 ms (based on 1 measured call)
-Best time:      4.01e+05 ms
-Worst time:     4.01e+05 ms
-Estimated time: 400.93 s (based on 1 measured call)
-Best time:      400.93 s
-Worst time:     400.93 s
-Estimated time: 6.7 min (based on 1 measured call)
-Best time:      6.7 min
-Worst time:     6.7 min
-Estimated time: 401 s (based on 1 measured call)
-Best time:      401 s
-Worst time:     401 s
-Estimated time: 400 s (+/-18.7 s based on 7 measured calls)
-Best time:      381 s (-4.8%)
-Worst time:     429 s (+7.23%)
+Estimated time: 400 s (based on 1 measured call)
+Best time:      400 s
+Worst time:     400 s
+Estimated time: 400 s (+/-18 s based on 7 measured calls)
+Best time:      380 s (-4.8%)
+Worst time:     428 s (+7.23%)
 Estimated performance: 2.5e-06 calls/ms (+/-1.17e-07 calls/ms based on 7 measured calls)
 Best time:      2.625e-06 calls/ms (+5.038%)
 Worst time:     2.331e-06 calls/ms (-6.742%)

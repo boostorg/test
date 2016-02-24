@@ -34,7 +34,7 @@ public:
 
     skip_outliers()
     : Next()
-    , m_var_multiplier( num_sigmas * num_sigmas )
+    , m_var_multiplier( 0 )
     {}
     skip_outliers( Next&& next, unsigned num_sigmas )
     : Next( std::move( next ) )
@@ -49,9 +49,9 @@ public:
     // Samples collection
     void            add_sample( units_t sample )
     {
-        auto distance = sample - value();
+        auto distance = sample - this->value();
 
-        if( variance().count() == 0 || distance.count() * distance.count() < m_var_multiplier * variance().count() )
+        if( this->variance().count() == 0 || distance.count() * distance.count() < m_var_multiplier * this->variance().count() )
             Next::add_sample( sample );
     }
 

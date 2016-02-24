@@ -34,7 +34,7 @@ namespace benchmark {
 
 class result {
 public:
-        template<typename SamplingPolicy>
+    template<typename SamplingPolicy>
     result( SamplingPolicy const& sampling_policy, iterations_t num_iterations )
     : m_estimated_value( _get_nano( sampling_policy.value() ) )
     , m_best_value( _get_nano( sampling_policy.best() ) )
@@ -51,10 +51,10 @@ public:
         // = (SQRT( V * NI ) * SU/1ns) / NI in ns
         // Since we divide all values by NI in the end we store measument error as
         // measument_error = SQRT( V * NI ) * SU/1ns in ns = SQRT( V * NI ) in SU
-        using sample_units = SamplingPolicy::units_t;
+        using sample_units=typename SamplingPolicy::units_t;
 
-        m_measument_error = _get_nano( sample_units{
-            static_cast<sample_units::rep>( std::sqrt( sampling_policy.variance().count() * m_num_iterations ) ) } );
+        m_measument_error = _get_nano( sample_units(
+            static_cast<typename sample_units::rep>(std::sqrt( sampling_policy.variance().count() * m_num_iterations )) ) );
     }
 
     // Access methods

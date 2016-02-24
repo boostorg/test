@@ -73,7 +73,7 @@ time( Func&& func, Setup&& setup, SamplingPolicy&& sampling_policy = SamplingPol
 
 //____________________________________________________________________________//
 
-template<typename Func, typename Setup=nullptr_t>
+template<typename Func, typename Setup=std::nullptr_t>
 inline typename enable_if_c<!nfp::is_named_param_pack<Func>::value,result>::type
 time( Func&& func, Setup&& setup = Setup() )
 {
