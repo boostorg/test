@@ -34,7 +34,7 @@ public:
 
     duration_t elapsed() const
     {
-        clock_t::time_point now = clock_t::now();
+        typename clock_t::time_point now = clock_t::now();
         return chrono::duration_cast<duration_t>(now - m_start);
     }
 
