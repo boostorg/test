@@ -129,7 +129,7 @@ file(GLOB_RECURSE
 
 foreach(_h IN LISTS BOOST_UTF_DOC_EXAMPLES)
   get_filename_component(_hh ${_h} NAME_WE)
-  add_executable(${_hh} ${_h})
+  add_executable(${_hh} ${_h} ${BOOST_TEST_ROOT_DIR}/doc/examples/${_hh}.output)
   target_include_directories(${_hh} PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
   set_target_properties(${_hh} PROPERTIES FOLDER "Doc examples")
 
