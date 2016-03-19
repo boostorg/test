@@ -47,12 +47,7 @@ class grid {
     typedef typename dataset1_decay::iterator       dataset1_iter;
     typedef typename dataset2_decay::iterator       dataset2_iter;
 
-    typedef typename dataset1_decay::sample         sample1;
-    typedef typename dataset2_decay::sample         sample2;
-
 public:
-    typedef typename merged_sample<sample1,sample2>::type   sample;
-    typedef typename merged_sample<sample1,sample2>::ref    sample_ref;
 
     struct iterator {
         // Constructor
@@ -63,8 +58,14 @@ public:
         , m_ds2_pos( 0 )
         {}
 
+        using iterator_sample = decltype(
+            sample_merge( *std::declval<dataset1_iter>(),
+                          *std::declval<dataset2_iter>()) );
+
         // forward iterator interface
-        sample_ref      operator*() const { return sample_merge( *m_iter1, *m_iter2 ); }
+        auto            operator*() const -> iterator_sample {
+            return sample_merge( *m_iter1, *m_iter2 );
+        }
         void            operator++()
         {
             ++m_ds2_pos;

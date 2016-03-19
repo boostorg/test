@@ -25,75 +25,58 @@ namespace unit_test {
 namespace data {
 namespace monomorphic {
 
-template<typename T1, typename T2>
-struct merged_sample {
-    typedef std::tuple<T1,T2>               type;
-    typedef std::tuple<T1 const&,T2 const&> ref;
-};
-
-//____________________________________________________________________________//
-
-template<typename T1, typename ...T>
-struct merged_sample<T1, std::tuple<T...>> {
-    typedef std::tuple<T1, T...>                type;
-    typedef std::tuple<T1 const&, T const&...>  ref;
-};
-
-//____________________________________________________________________________//
-
-template<typename ...T, typename T1>
-struct merged_sample<std::tuple<T...>, T1> {
-    typedef std::tuple<T..., T1>                type;
-    typedef std::tuple<T const&..., T1 const&>  ref;
-};
-
-//____________________________________________________________________________//
-
-template<typename ...T1, typename ...T2>
-struct merged_sample<std::tuple<T1...>, std::tuple<T2...>> {
-    typedef std::tuple<T1..., T2...>                type;
-    typedef std::tuple<T1 const&..., T2 const&...>  ref;
-};
-
 //____________________________________________________________________________//
 
 namespace ds_detail {
 
-template<typename ...T1, typename ...T2, std::size_t ...I1, std::size_t ...I2>
-inline typename merged_sample<std::tuple<T1...>, std::tuple<T2...>>::ref
-sample_merge_impl( std::tuple<T1 const&...> const& a1, std::tuple<T2 const&...> const& a2, 
-                   index_sequence<I1...> const&      , index_sequence<I2...> const& )
-{
-    using ref_type = typename merged_sample<std::tuple<T1...>, std::tuple<T2...>>::ref;
+template <class T>
+struct is_tuple : std::false_type {};
 
-    return ref_type( std::get<I1>(a1)..., std::get<I2>(a2)... );
+template <class ...T>
+struct is_tuple<std::tuple<T...>> : std::true_type {};
+
+template <class T>
+struct is_tuple<T&&> : is_tuple<typename std::decay<T>::type> {};
+
+template <class T>
+struct is_tuple<T&> : is_tuple<typename std::decay<T>::type> {};
+
+template<typename T>
+inline auto as_tuple_impl_xvalues( T const & arg, std::false_type  /* is_rvalue_ref */ )
+  -> decltype(std::tuple<T const&>(arg)) {
+    //return std::tuple<T const&>(arg);
+    return std::forward_as_tuple(arg);
 }
 
-//____________________________________________________________________________//
+template<typename T>
+inline auto as_tuple_impl_xvalues( T && arg, std::true_type  /* is_rvalue_ref */ )
+  -> decltype(std::make_tuple(std::forward<T>(arg))) {
+    return std::make_tuple(std::forward<T>(arg));
+}
 
-template<typename ...T1, typename ...T2>
-inline typename merged_sample<std::tuple<T1...>, std::tuple<T2...>>::ref
-sample_merge_impl( std::tuple<T1 const&...> const& a1, std::tuple<T2 const&...> const& a2 )
-{
-    return sample_merge_impl( a1, a2, index_sequence_for<T1...>{}, index_sequence_for<T2...>{}  );
+
+template<typename T>
+inline auto as_tuple_impl( T && arg, std::false_type  /* is_tuple = nullptr */ )
+  -> decltype(as_tuple_impl_xvalues(std::forward<T>(arg),
+              typename std::is_rvalue_reference<T&&>::type())) {
+    return as_tuple_impl_xvalues(std::forward<T>(arg),
+                                 typename std::is_rvalue_reference<T&&>::type());
 }
 
 //____________________________________________________________________________//
 
 template<typename T>
-inline std::tuple<T const&>
-as_tuple( T const& arg )
-{
-    return std::tuple<T const&>( arg );
+inline T &&
+as_tuple_impl(T && arg, std::true_type  /* is_tuple */ ) {
+    return std::forward<T>(arg);
 }
 
-//____________________________________________________________________________//
-
-template<typename ...T>
-inline std::tuple<T...> const&
-as_tuple( std::tuple<T...> const& arg )
-{
-    return arg;
+template<typename T>
+inline auto as_tuple( T && arg )
+  -> decltype( as_tuple_impl(std::forward<T>(arg),
+                             typename ds_detail::is_tuple<T>::type()) ) {
+  return as_tuple_impl(std::forward<T>(arg),
+                       typename ds_detail::is_tuple<T>::type());
 }
 
 //____________________________________________________________________________//
@@ -101,13 +84,12 @@ as_tuple( std::tuple<T...> const& arg )
 } // namespace ds_detail
 
 template<typename T1, typename T2>
-inline typename merged_sample<T1, T2>::ref
-sample_merge( T1 const& a1, T2 const& a2 )
-{
-    auto const& a1_as_tuple = ds_detail::as_tuple( a1 );
-    auto const& a2_as_tuple = ds_detail::as_tuple( a2 );
-
-    return ds_detail::sample_merge_impl( a1_as_tuple, a2_as_tuple );
+inline auto
+sample_merge( T1 && a1, T2 && a2 )
+    -> decltype( std::tuple_cat(ds_detail::as_tuple(std::forward<T1>(a1)),
+                                ds_detail::as_tuple(std::forward<T2>(a2)) ) ) {
+    return std::tuple_cat(ds_detail::as_tuple(std::forward<T1>(a1)),
+                          ds_detail::as_tuple(std::forward<T2>(a2)));
 }
 
 } // namespace monomorphic
