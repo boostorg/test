@@ -33,6 +33,8 @@
 
 #include <boost/bind.hpp>
 
+#include <boost/type_traits/is_copy_constructible.hpp>
+
 #include <boost/test/detail/suppress_warnings.hpp>
 #include <boost/test/tools/detail/print_helper.hpp>
 
@@ -85,12 +87,12 @@ struct parameter_holder {
 
 template <class T>
 parameter_holder<typename std::remove_reference<T>::type>
-boost_bind_rvalue_holder_helper_impl(T&& value, std::false_type /* is copy constructible */) {
+boost_bind_rvalue_holder_helper_impl(T&& value, boost::false_type /* is copy constructible */) {
     return parameter_holder<typename std::remove_reference<T>::type>(std::forward<T>(value));
 }
 
 template <class T>
-T&& boost_bind_rvalue_holder_helper_impl(T&& value, std::true_type /* is copy constructible */) {
+T&& boost_bind_rvalue_holder_helper_impl(T&& value, boost::true_type /* is copy constructible */) {
     return std::forward<T>(value);
 }
 
@@ -98,11 +100,12 @@ template <class T>
 auto boost_bind_rvalue_holder_helper(T&& value)
   -> decltype(boost_bind_rvalue_holder_helper_impl(
                   std::forward<T>(value),
-                  typename std::is_copy_constructible<typename std::remove_reference<T>::type>::type()))
+                  typename boost::is_copy_constructible<typename std::remove_reference<T>::type>::type()))
 {
+    // need to use boost::is_copy_constructible because std::is_copy_constructible is broken on MSVC12
     return boost_bind_rvalue_holder_helper_impl(
               std::forward<T>(value),
-              typename std::is_copy_constructible<typename std::remove_reference<T>::type>::type());
+              typename boost::is_copy_constructible<typename std::remove_reference<T>::type>::type());
 }
 
 #endif
