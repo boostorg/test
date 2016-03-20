@@ -15,6 +15,7 @@
   variadic template support of the compiler.
 * now datasets support fixtures through `BOOST_DATA_TEST_CASE_F`, see
   [link boost_test.tests_organization.test_cases.test_case_generation.datasets here] for more details
+* now datasets honors move semantics of the types used for samples
 
 [h5 Bugfixes and feature requests]
 # [ticket 6767] Use of namespace qualifier with floating point exception functions breaks if they are macros
