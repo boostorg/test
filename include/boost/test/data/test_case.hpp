@@ -123,18 +123,19 @@ public:
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, DataSet&& ds )
     : m_tc_name( ut_detail::normalize_test_case_name( tc_name ) )
-    , m_tc_index( 1 )
+    , m_tc_index( 0 )
     {
         data::for_each_sample( std::forward<DataSet>( ds ), *this );
     }
     test_case_gen( test_case_gen&& gen )
     : m_tc_name( gen.m_tc_name )
-    , m_tc_index( 1 )
+    , m_tc_index( gen.m_tc_index )
     , m_test_cases( std::move(gen.m_test_cases) )
     {}
 #else
     test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, DataSet const& ds )
     : m_tc_name( ut_detail::normalize_test_case_name( tc_name ) )
+    , m_tc_index( 0 )
     {
         data::for_each_sample( ds, *this );
     }
@@ -158,13 +159,12 @@ public:
     void    operator()( BOOST_PP_ENUM_BINARY_PARAMS(arity, Arg, const& arg) ) const     \
     {                                                                                   \
         m_test_cases.push_back( new test_case( genTestCaseName(), m_tc_file, m_tc_line, \
-         boost::bind( &TestCase::template test_method<BOOST_PP_ENUM_PARAMS(arity,Arg)>, \
-         BOOST_PP_ENUM_PARAMS(arity, arg) ) ) );                                        \
+           boost::bind( &TestCase::template test_method<BOOST_PP_ENUM_PARAMS(arity,Arg)>,\
+           BOOST_PP_ENUM_PARAMS(arity, arg) ) ) );                                      \
     }                                                                                   \
 
     BOOST_PP_REPEAT_FROM_TO(1, BOOST_TEST_DATASET_MAX_ARITY, TC_MAKE, _)
 #else
-
     template<typename ...Arg>
     void    operator()(Arg&& ... arg) const
     {
@@ -180,7 +180,7 @@ public:
 private:
     std::string  genTestCaseName() const
     {
-        return m_tc_name + "#" + utils::string_cast(m_tc_index++);
+        return "_" + utils::string_cast(m_tc_index++);
     }
 
     // Data members
@@ -226,16 +226,16 @@ make_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_l
 /**/
 
 #define BOOST_DATA_TEST_CASE_IMPL(arity, F, test_name, dataset, params) \
-struct test_name : public F {                                           \
+struct BOOST_PP_CAT(test_name, case) : public F {                       \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                 \
     static void test_method( BOOST_DATA_TEST_CASE_PARAMS( params ) )    \
     {                                                                   \
         BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture entry.");\
-        test_name t;                                                    \
+        BOOST_PP_CAT(test_name, case) t;                                \
         BOOST_TEST_CHECKPOINT('"' << #test_name << "\" entry.");        \
         BOOST_TEST_CONTEXT( ""                                          \
             BOOST_PP_SEQ_FOR_EACH(BOOST_DATA_TEST_CONTEXT, _, params))  \
-            t._impl(BOOST_PP_SEQ_ENUM(params));                         \
+        t._impl(BOOST_PP_SEQ_ENUM(params));                             \
         BOOST_TEST_CHECKPOINT('"' << #test_name << "\" exit.");         \
     }                                                                   \
 private:                                                                \
@@ -243,15 +243,21 @@ private:                                                                \
     void _impl(BOOST_DATA_TEST_CASE_PARAMS( params ));                  \
 };                                                                      \
                                                                         \
-BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
-    boost::unit_test::data::ds_detail::make_test_case_gen<test_name>(   \
+BOOST_AUTO_TEST_SUITE( test_name )                                      \
+                                                                        \
+BOOST_AUTO_TU_REGISTRAR( BOOST_PP_CAT(test_name, case) )(               \
+    boost::unit_test::data::ds_detail::make_test_case_gen<              \
+                                      BOOST_PP_CAT(test_name, case)>(   \
           BOOST_STRINGIZE( test_name ),                                 \
           __FILE__, __LINE__,                                           \
           boost::unit_test::data::ds_detail::seed{} ->* dataset ),      \
     boost::unit_test::decorator::collector::instance() );               \
                                                                         \
+BOOST_AUTO_TEST_SUITE_END()                                             \
+                                                                        \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                 \
-    void test_name::_impl( BOOST_DATA_TEST_CASE_PARAMS( params ) )      \
+    void BOOST_PP_CAT(test_name, case)::_impl(                          \
+                                BOOST_DATA_TEST_CASE_PARAMS( params ) ) \
 /**/
 
 #define BOOST_DATA_TEST_CASE_WITH_PARAMS( F, test_name, dataset, ... )  \
