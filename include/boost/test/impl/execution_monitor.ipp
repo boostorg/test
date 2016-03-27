@@ -1137,6 +1137,7 @@ execution_monitor::catch_signals( boost::function<int ()> const& F )
     detail::system_signal_exception SSE( this );
 
     int ret_val = 0;
+    // clang windows workaround: this not available in __finally scope
     bool l_catch_system_errors = p_catch_system_errors;
 
     __try {
