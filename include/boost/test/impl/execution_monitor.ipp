@@ -1137,6 +1137,7 @@ execution_monitor::catch_signals( boost::function<int ()> const& F )
     detail::system_signal_exception SSE( this );
 
     int ret_val = 0;
+    bool l_catch_system_errors = p_catch_system_errors;
 
     __try {
         __try {
@@ -1147,7 +1148,7 @@ execution_monitor::catch_signals( boost::function<int ()> const& F )
         }
     }
     __finally {
-        if( p_catch_system_errors ) {
+        if( l_catch_system_errors ) {
             BOOST_TEST_CRT_SET_HOOK( old_crt_hook );
 
            _set_invalid_parameter_handler( old_iph );
