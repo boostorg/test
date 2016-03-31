@@ -33,6 +33,8 @@
 
 #include <boost/bind.hpp>
 
+#include <boost/type_traits/is_copy_constructible.hpp>
+
 #include <boost/test/detail/suppress_warnings.hpp>
 #include <boost/test/tools/detail/print_helper.hpp>
 
@@ -61,6 +63,53 @@ struct seed {
         return data::make( std::forward<DataSet>( ds ) );
     }
 };
+
+
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
+    !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && \
+    !defined(BOOST_NO_CXX11_DECLTYPE) && \
+    !defined(BOOST_NO_CXX11_TRAILING_RESULT_TYPES) && \
+    !defined(BOOST_NO_CXX11_SMART_PTR)
+
+#define BOOST_TEST_DATASET_VARIADIC
+template <class T>
+struct parameter_holder {
+    std::shared_ptr<T> value;
+
+    parameter_holder(T && value_)
+        : value(std::make_shared<T>(std::move(value_)))
+    {}
+
+    operator T const&() const {
+        return *value;
+    }
+};
+
+template <class T>
+parameter_holder<typename std::remove_reference<T>::type>
+boost_bind_rvalue_holder_helper_impl(T&& value, boost::false_type /* is copy constructible */) {
+    return parameter_holder<typename std::remove_reference<T>::type>(std::forward<T>(value));
+}
+
+template <class T>
+T&& boost_bind_rvalue_holder_helper_impl(T&& value, boost::true_type /* is copy constructible */) {
+    return std::forward<T>(value);
+}
+
+template <class T>
+auto boost_bind_rvalue_holder_helper(T&& value)
+  -> decltype(boost_bind_rvalue_holder_helper_impl(
+                  std::forward<T>(value),
+                  typename boost::is_copy_constructible<typename std::remove_reference<T>::type>::type()))
+{
+    // need to use boost::is_copy_constructible because std::is_copy_constructible is broken on MSVC12
+    return boost_bind_rvalue_holder_helper_impl(
+              std::forward<T>(value),
+              typename boost::is_copy_constructible<typename std::remove_reference<T>::type>::type());
+}
+
+#endif
+
 
 // ************************************************************************** //
 // **************                 test_case_gen                ************** //
@@ -99,7 +148,7 @@ public:
         return res;
     }
 
-#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+#if !defined(BOOST_TEST_DATASET_VARIADIC)
   /// make this variadic
 #define TC_MAKE(z,arity,_)                                                          \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                             \
@@ -112,14 +161,16 @@ public:
 
     BOOST_PP_REPEAT_FROM_TO(1, BOOST_TEST_DATASET_MAX_ARITY, TC_MAKE, _)
 #else
+
     template<typename ...Arg>
-    void    operator()(Arg ... arg) const
+    void    operator()(Arg&& ... arg) const
     {
         m_test_cases.push_back(
             new test_case( m_tc_name,
                            m_tc_file,
                            m_tc_line,
-                           boost::bind( &TestCase::template test_method<Arg...>, arg...) ) );
+                           boost::bind( &TestCase::template test_method<Arg...>,
+                                        boost_bind_rvalue_holder_helper(std::forward<Arg>(arg))...)));
     }
 #endif
 

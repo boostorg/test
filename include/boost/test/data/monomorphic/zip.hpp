@@ -44,13 +44,7 @@ class zip {
     typedef typename dataset1_decay::iterator       dataset1_iter;
     typedef typename dataset2_decay::iterator       dataset2_iter;
 
-    typedef typename dataset1_decay::sample         sample1;
-    typedef typename dataset2_decay::sample         sample2;
-
 public:
-    typedef typename merged_sample<sample1,sample2>::type   sample;
-    typedef typename merged_sample<sample1,sample2>::ref    sample_ref;
-
     enum { arity = dataset1_decay::arity + dataset2_decay::arity };
 
     struct iterator {
@@ -60,8 +54,14 @@ public:
         , m_iter2( std::move( iter2 ) )
         {}
 
+        using iterator_sample = decltype(
+            sample_merge( *std::declval<dataset1_iter>(),
+                          *std::declval<dataset2_iter>()) );
+
         // forward iterator interface
-        sample_ref      operator*() const   { return sample_merge( *m_iter1, *m_iter2 ); }
+        auto            operator*() const -> iterator_sample {
+            return sample_merge( *m_iter1, *m_iter2 );
+        }
         void            operator++()        { ++m_iter1; ++m_iter2; }
 
     private:
@@ -69,6 +69,8 @@ public:
         dataset1_iter   m_iter1;
         dataset2_iter   m_iter2;
     };
+
+    typedef typename iterator::iterator_sample   sample;
 
     //! Constructor
     //!
