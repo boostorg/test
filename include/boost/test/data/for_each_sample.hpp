@@ -63,7 +63,7 @@ invoke_action( Action const& action, T&& args, std::true_type /* is_tuple */ )
 {
     invoke_action_impl( action,
                         std::forward<T>(args),
-                        typename make_index_sequence< 0, std::tuple_size<T>::value >::type{} );
+                        typename make_index_sequence< 0, std::tuple_size<std::decay_t<T>>::value >::type{} );
 
 }
 
