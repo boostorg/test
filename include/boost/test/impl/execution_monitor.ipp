@@ -155,6 +155,8 @@ namespace { void _set_se_translator( void* ) {} }
 #    include <android/api-level.h>
 #  endif
 
+// BOOST_TEST_DISABLE_ALT_STACK is available in case you're crosscompiling a
+// target like ESXi which has no proper flag and doesn't support the alt stack.
 #  if !defined(__CYGWIN__) && !defined(__QNXNTO__) && !defined(__bgq__) && \
    (!defined(__ANDROID__) || __ANDROID_API__ >= 8) && \
    !defined(BOOST_TEST_DISABLE_ALT_STACK)
