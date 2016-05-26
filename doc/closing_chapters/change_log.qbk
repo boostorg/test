@@ -12,6 +12,7 @@
 [h5 New features]
 
 [h5 Bugfixes and feature requests]
+# [ticket 12024] boost test depends on nonexisting `abi::__cxa_demangle` on android
 
 [h4 Boost.Test v3.2 / boost 1.61]
 
