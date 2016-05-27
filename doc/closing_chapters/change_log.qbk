@@ -14,6 +14,7 @@
 [h5 Bugfixes and feature requests]
 # [pull_request 81] Possibility to remove the support of the alternative stack at compilation time. See
   [link boost_test.utf_reference.link_references.config_disable_alt_stack `BOOST_TEST_DISABLE_ALT_STACK`] for more details.
+# [ticket 11128] `[bb10/qnx failures]` Build error
 # [ticket 12224] Crash on MSVC with RTTI disabled
 
 [h4 Boost.Test v3.2 / boost 1.61]
