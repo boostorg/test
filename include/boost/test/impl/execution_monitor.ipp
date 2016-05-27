@@ -185,8 +185,8 @@ namespace { void _set_se_translator( void* ) {} }
 #include <errno.h>
 #endif
 
-#if defined(__GNUC__) && !defined(BOOST_NO_TYPEID)
-#  include <cxxabi.h>
+#if !defined(BOOST_NO_TYPEID) && !defined(BOOST_NO_RTTI)
+#  include <boost/core/demangle.hpp>
 #endif
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -307,23 +307,17 @@ struct fpe_except_guard {
     unsigned m_previosly_enabled;
 };
 
-#if !defined(BOOST_NO_TYPEID) && !defined(BOOST_NO_RTTI)
 
 // ************************************************************************** //
 // **************                  typeid_name                 ************** //
 // ************************************************************************** //
 
+#if !defined(BOOST_NO_TYPEID) && !defined(BOOST_NO_RTTI)
 template<typename T>
-char const*
+std::string
 typeid_name( T const& t )
 {
-#ifdef __GNUC__
-    int status;
-
-    return abi::__cxa_demangle( typeid(t).name(), 0, 0, &status );
-#else
-    return typeid(t).name();
-#endif
+    return boost::core::demangle(typeid(t).name());
 }
 #endif
 
@@ -1239,7 +1233,7 @@ execution_monitor::execute( boost::function<int ()> const& F )
     catch( ex_name const& ex )                                              \
         { detail::report_error( execution_exception::cpp_exception_error,   \
                           current_exception_cast<boost::exception const>(), \
-                          "%s: %s", detail::typeid_name(ex), ex.what() ); } \
+                          "%s: %s", detail::typeid_name(ex).c_str(), ex.what() ); } \
 /**/
 #endif
 
