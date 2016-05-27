@@ -766,6 +766,9 @@ by default, but can be disabled using this parameter.
 
 [/ TODO indicate which platforms are supported]
 [/ TODO add a link to the execution monitor]
+[note If this feature is not supported by your compiler, this command line option will be silently ignored.]
+[note it is possible to remove the support of the alternative stack with the macro
+[link boost_test.utf_reference.link_references.config_disable_alt_stack `BOOST_TEST_DISABLE_ALT_STACK`]]
 
 [h4 Acceptable values]
 

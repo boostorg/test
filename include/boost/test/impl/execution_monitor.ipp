@@ -155,8 +155,10 @@ namespace { void _set_se_translator( void* ) {} }
 #    include <android/api-level.h>
 #  endif
 
+// documentation of BOOST_TEST_DISABLE_ALT_STACK in execution_monitor.hpp
 #  if !defined(__CYGWIN__) && !defined(__QNXNTO__) && !defined(__bgq__) && \
-   (!defined(__ANDROID__) || __ANDROID_API__ >= 8)
+   (!defined(__ANDROID__) || __ANDROID_API__ >= 8) && \
+   !defined(BOOST_TEST_DISABLE_ALT_STACK)
 #    define BOOST_TEST_USE_ALT_STACK
 #  endif
 
@@ -605,7 +607,7 @@ system_signal_exception::report() const
         break;
 
     default:
-        report_error( execution_exception::system_error, 
+        report_error( execution_exception::system_error,
                       "unrecognized signal %d", m_sig_info->si_signo );
     }
 }
@@ -1437,4 +1439,3 @@ disable( unsigned mask )
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_EXECUTION_MONITOR_IPP_012205GER
-
