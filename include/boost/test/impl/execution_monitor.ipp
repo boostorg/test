@@ -306,7 +306,7 @@ struct fpe_except_guard {
     unsigned m_previosly_enabled;
 };
 
-#ifndef BOOST_NO_TYPEID
+#if !defined(BOOST_NO_TYPEID) && !defined(BOOST_NO_RTTI)
 
 // ************************************************************************** //
 // **************                  typeid_name                 ************** //
@@ -1226,7 +1226,7 @@ execution_monitor::execute( boost::function<int ()> const& F )
                               "std::string: %s", ex.c_str() ); }
 
     //  std:: exceptions
-#ifdef BOOST_NO_TYPEID
+#if defined(BOOST_NO_TYPEID) || defined(BOOST_NO_RTTI)
 #define CATCH_AND_REPORT_STD_EXCEPTION( ex_name )                           \
     catch( ex_name const& ex )                                              \
        { detail::report_error( execution_exception::cpp_exception_error,    \
@@ -1268,7 +1268,7 @@ execution_monitor::execute( boost::function<int ()> const& F )
     catch( boost::exception const& ex )
       { detail::report_error( execution_exception::cpp_exception_error,
                               &ex,
-#ifdef BOOST_NO_TYPEID
+#if defined(BOOST_NO_TYPEID) || defined(BOOST_NO_RTTI)
                               "unknown boost::exception" ); }
 #else
                               typeid(ex).name()          ); }
