@@ -20,6 +20,7 @@
 ]
 
 [template ticket[number]'''<ulink url="https://svn.boost.org/trac/boost/ticket/'''[number]'''">'''#[number]'''</ulink>''']
+[template pull_request[number]'''<ulink url="https://github.com/boostorg/test/pull/'''[number]'''">'''#PR-[number]'''</ulink>''']
 
 [def __UTF__ /Unit Test Framework/]
 [def __PEM__ /Program Execution Monitor]
