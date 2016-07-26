@@ -51,30 +51,30 @@ public:
                                         bool            text_or_binary    = true );
 
     // Destructor
-    ~output_test_stream();
+    virtual ~output_test_stream();
 
     //! Checks if the stream is empty
     //!
     //!@param[in] flush_stream if true, flushes the stream after the call
-    assertion_result    is_empty( bool flush_stream = true );
+    virtual assertion_result    is_empty( bool flush_stream = true );
     
     //! Checks the length of the stream
     //!
     //!@param[in] length target length
     //!@param[in] flush_stream if true, flushes the stream after the call. Set to false to call
     //!           additional checks on the same content.
-    assertion_result    check_length( std::size_t length, bool flush_stream = true );
+    virtual assertion_result    check_length( std::size_t length, bool flush_stream = true );
     
     //! Checks the content of the stream against a string
     //!
     //!@param[in] arg_ the target stream
     //!@param[in] flush_stream if true, flushes the stream after the call.
-    assertion_result    is_equal( const_string arg_, bool flush_stream = true );
+    virtual assertion_result    is_equal( const_string arg_, bool flush_stream = true );
 
     //! Checks the content of the stream against a pattern file
     //!
     //!@param[in] flush_stream if true, flushes the stream after the call.
-    assertion_result    match_pattern( bool flush_stream = true );
+    virtual assertion_result    match_pattern( bool flush_stream = true );
 
     //! Flushes the stream
     void            flush();
