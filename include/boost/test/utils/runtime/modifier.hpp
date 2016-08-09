@@ -32,7 +32,7 @@ namespace runtime {
 
 namespace {
 
-#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && !defined(BOOST_NO_CXX11_TEMPLATE_ALIASES)
+#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && !defined(BOOST_NO_CXX11_TEMPLATE_ALIASES) && !defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST)
 #define BOOST_TEST_CLA_NEW_API
 #endif
 
