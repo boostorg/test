@@ -213,6 +213,31 @@ find_last_not_of( BidirectionalIterator1 first1, BidirectionalIterator1 last1,
 
 //____________________________________________________________________________//
 
+
+/// @brief This algorithm replaces all occurrences of a set of substrings by another substrings
+///
+/// @param str - string of operation
+/// @param first1 - iterator to the beginning of the substrings to replace
+/// @param last1 - iterator to the end of the substrings to replace
+/// @param first2 - iterator to the beginning of the substrings to replace with
+/// @param last2 - iterator to the end of the substrings to replace with
+template<class StringClass, class ForwardIterator>
+inline StringClass
+replace_all_occurrences_of( StringClass str,
+                            ForwardIterator first1, ForwardIterator last1,
+                            ForwardIterator first2, ForwardIterator last2)
+{
+    for(; first1 != last1 && first2 != last2; ++first1, ++first2) {
+        std::size_t found = str.find( *first1 );
+        while( found != StringClass::npos ) {
+            str.replace(found, first1->size(), *first2 );
+            found = str.find( *first1, found + first2->size() );
+        }
+    }
+
+    return str;
+}
+
 } // namespace utils
 } // namespace unit_test
 } // namespace boost
