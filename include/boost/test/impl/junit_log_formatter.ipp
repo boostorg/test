@@ -28,6 +28,7 @@
 #include <boost/test/results_collector.hpp>
 
 #include <boost/test/utils/algorithm.hpp>
+#include <boost/test/utils/string_cast.hpp>
 
 //#include <boost/test/results_reporter.hpp>
 
@@ -37,6 +38,7 @@
 
 // STL
 #include <iostream>
+#include <fstream>
 #include <set>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -603,6 +605,34 @@ junit_log_formatter::log_entry_context( std::ostream& ostr, const_string context
 }
 
 //____________________________________________________________________________//
+
+
+std::string
+junit_log_formatter::get_default_stream_description() const {
+    std::string name = framework::master_test_suite().p_name.value;
+
+    static const std::string to_replace[] =  { " ", "\"", "/", "\\", ":"};
+    static const std::string replacement[] = { "_", "_" , "_", "_" , "_"};
+
+    name = unit_test::utils::replace_all_occurrences_of(
+        name,
+        to_replace, to_replace + sizeof(to_replace)/sizeof(to_replace[0]),
+        replacement, replacement + sizeof(replacement)/sizeof(replacement[0]));
+
+    std::ifstream check_init((name + ".xml").c_str());
+    if(!check_init)
+        return name + ".xml";
+
+    int index = 0;
+    for(; index < 100; index++) {
+      std::string candidate = name + "_" + utils::string_cast(index) + ".xml";
+      std::ifstream file(candidate.c_str());
+      if(!file)
+          return candidate;
+    }
+
+    return name + ".xml";
+}
 
 } // namespace output
 } // namespace unit_test

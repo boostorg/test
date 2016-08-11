@@ -114,6 +114,11 @@ public:
     {
     }
 
+    //! Instead of a regular stream, returns a file name corresponding to
+    //! the current master test suite. If the file already exists, adds an index
+    //! to it.
+    virtual std::string  get_default_stream_description() const;
+
 
 private:
     typedef std::map<test_unit_id, junit_impl::junit_log_helper> map_trace_t;
