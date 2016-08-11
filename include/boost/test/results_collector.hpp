@@ -67,6 +67,7 @@ public:
     counter_prop    p_test_cases_failed;
     counter_prop    p_test_cases_skipped;
     counter_prop    p_test_cases_aborted;
+    counter_prop    p_duration_microseconds;
     bool_prop       p_aborted;
     bool_prop       p_skipped;
     /// @}

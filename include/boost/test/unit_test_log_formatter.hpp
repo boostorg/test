@@ -72,8 +72,8 @@ struct BOOST_TEST_DECL log_checkpoint_data
 };
 
 // ************************************************************************** //
-/// Abstract Unit Test Framework log formatter interface
-
+/// @brief Abstract Unit Test Framework log formatter interface
+///
 /// During the test module execution Unit Test Framework can report messages about success or failure of assertions,
 /// which test suites are being run and more (specifically which messages are reported depends on log level threshold selected by the user).
 /// All these messages constitute Unit Test Framework log. There are many ways (formats) to present these messages to the user. Boost.Test comes with
@@ -132,7 +132,7 @@ public:
 
     /// @param[in] os   output stream to write a messages into
     /// @param[in] tu   test unit being finished
-    /// @param[in] elapsed time in milliseconds spend executing this test unit
+    /// @param[in] elapsed time in microseconds spend executing this test unit
     /// @see test_unit_start
     virtual void        test_unit_finish( std::ostream& os, test_unit const& tu, unsigned long elapsed ) = 0;
 
