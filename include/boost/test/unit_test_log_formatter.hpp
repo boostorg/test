@@ -155,6 +155,9 @@ public:
     /// Deprecated version of this interface
     virtual void        test_unit_skipped( std::ostream& os, test_unit const& tu ) {}
 
+    /// Invoked when a test unit is aborted
+    virtual void        test_unit_aborted( std::ostream& os, test_unit const& tu ) {};
+
     // @}
 
     // @name Uncaught exception report
