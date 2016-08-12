@@ -28,6 +28,7 @@
 #include <boost/test/impl/unit_test_monitor.ipp>
 #include <boost/test/impl/unit_test_parameters.ipp>
 #include <boost/test/impl/xml_log_formatter.ipp>
+#include <boost/test/impl/junit_log_formatter.ipp>
 #include <boost/test/impl/xml_report_formatter.ipp>
 
 #define BOOST_TEST_INCLUDED

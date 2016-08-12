@@ -27,6 +27,7 @@
 
 #include <boost/test/output/compiler_log_formatter.hpp>
 #include <boost/test/output/xml_log_formatter.hpp>
+#include <boost/test/output/junit_log_formatter.hpp>
 
 // Boost
 #include <boost/shared_ptr.hpp>
@@ -124,6 +125,7 @@ struct unit_test_log_impl {
     {
       m_log_formatter_data.push_back( unit_test_log_data_helper_impl(new output::compiler_log_formatter, OF_CLF, true) ); // only this one is active by default,
       m_log_formatter_data.push_back( unit_test_log_data_helper_impl(new output::xml_log_formatter, OF_XML, false) );
+      m_log_formatter_data.push_back( unit_test_log_data_helper_impl(new output::junit_log_formatter, OF_JUNIT, false) );
     }
 
     typedef std::vector<unit_test_log_data_helper_impl> v_formatter_data_t;

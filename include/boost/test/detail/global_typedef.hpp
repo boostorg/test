@@ -35,9 +35,10 @@ enum report_level  { INV_REPORT_LEVEL, CONFIRMATION_REPORT, SHORT_REPORT, DETAIL
 //____________________________________________________________________________//
 
 enum output_format { OF_INVALID,
-                     OF_CLF, ///< compiler log format
-                     OF_XML, ///< XML format for report and log,
-                     OF_DOT  ///< dot format for output content
+                     OF_CLF,      ///< compiler log format
+                     OF_XML,      ///< XML format for report and log,
+                     OF_JUNIT,    ///< JUNIT format for report and log,
+                     OF_DOT       ///< dot format for output content
 };
 
 //____________________________________________________________________________//
