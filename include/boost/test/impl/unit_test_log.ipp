@@ -88,15 +88,17 @@ struct unit_test_log_data_helper_impl {
   typedef boost::shared_ptr<io_saver_type>           saver_ptr;
 
   bool                m_enabled;
+  output_format       m_format;
   std::ostream*       m_stream;
   saver_ptr           m_stream_state_saver;
   formatter_ptr       m_log_formatter;
 
-  unit_test_log_data_helper_impl(unit_test_log_formatter* p_log_formatter, bool enabled = false)
-    : m_log_formatter()
+  unit_test_log_data_helper_impl(unit_test_log_formatter* p_log_formatter, output_format format, bool enabled = false)
+    : m_enabled( enabled )
+    , m_format( format )
     , m_stream( &std::cout )
     , m_stream_state_saver( new io_saver_type( std::cout ) )
-    , m_enabled(enabled)
+    , m_log_formatter()
   {
     m_log_formatter.reset(p_log_formatter);
     m_log_formatter->set_log_level(log_all_errors);
@@ -118,8 +120,8 @@ struct unit_test_log_impl {
     // Constructor
     unit_test_log_impl()
     {
-      m_log_formatter_data.push_back( unit_test_log_data_helper_impl(new output::compiler_log_formatter, true) );
-      m_log_formatter_data.push_back( unit_test_log_data_helper_impl(new output::xml_log_formatter, false) );
+      m_log_formatter_data.push_back( unit_test_log_data_helper_impl(new output::compiler_log_formatter, OF_CLF, true) ); // only this one is active by default,
+      m_log_formatter_data.push_back( unit_test_log_data_helper_impl(new output::xml_log_formatter, OF_XML, false) );
     }
 
     typedef std::vector<unit_test_log_data_helper_impl> v_formatter_data_t;
@@ -151,7 +153,7 @@ unit_test_log_t::test_start( counter_t test_cases_amount )
 {
 
     BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
-      if( current_logger_data.get_log_level() == log_nothing )
+      if( !current_logger_data.m_enabled || current_logger_data.get_log_level() == log_nothing )
           continue;
 
       current_logger_data.m_log_formatter->log_start( current_logger_data.stream(), test_cases_amount );
@@ -169,7 +171,7 @@ void
 unit_test_log_t::test_finish()
 {
     BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
-      if( current_logger_data.get_log_level() == log_nothing )
+      if( !current_logger_data.m_enabled || current_logger_data.get_log_level() == log_nothing )
           continue;
 
       current_logger_data.m_log_formatter->log_finish( current_logger_data.stream() );
@@ -194,7 +196,7 @@ unit_test_log_t::test_unit_start( test_unit const& tu )
     if( s_log_impl().m_entry_in_progress )
         *this << log::end();
     BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
-        if( current_logger_data.get_log_level() > log_test_units )
+        if( !current_logger_data.m_enabled || current_logger_data.get_log_level() > log_test_units )
             continue;
         current_logger_data.m_log_formatter->test_unit_start( current_logger_data.stream(), tu );
     }
@@ -212,7 +214,7 @@ unit_test_log_t::test_unit_finish( test_unit const& tu, unsigned long elapsed )
 
     BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
 
-        if( current_logger_data.get_log_level() > log_test_units )
+        if( !current_logger_data.m_enabled || current_logger_data.get_log_level() > log_test_units )
             continue;
 
         current_logger_data.m_log_formatter->test_unit_finish( current_logger_data.stream(), tu, elapsed );
@@ -228,7 +230,7 @@ unit_test_log_t::test_unit_skipped( test_unit const& tu, const_string reason )
         *this << log::end();
 
     BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
-        if( current_logger_data.get_log_level() > log_test_units )
+        if( !current_logger_data.m_enabled || current_logger_data.get_log_level() > log_test_units )
             continue;
 
         current_logger_data.m_log_formatter->test_unit_skipped( current_logger_data.stream(), tu, reason );
@@ -264,7 +266,7 @@ unit_test_log_t::exception_caught( execution_exception const& ex )
 
     BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
 
-      if( l >= current_logger_data.get_log_level() ) {
+      if( current_logger_data.m_enabled && l >= current_logger_data.get_log_level() ) {
 
           current_logger_data.m_log_formatter->log_exception_start( current_logger_data.stream(), s_log_impl().m_checkpoint_data, ex );
 
@@ -299,7 +301,9 @@ unit_test_log_t::operator<<( log::begin const& b )
         *this << log::end();
 
     BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
-        current_logger_data.m_stream_state_saver->restore();
+        if( current_logger_data.m_enabled ) {
+            current_logger_data.m_stream_state_saver->restore();
+        }
     }
 
     s_log_impl().m_entry_data.clear();
@@ -325,7 +329,9 @@ unit_test_log_t::operator<<( log::end const& )
         log_entry_context( s_log_impl().m_entry_data.m_level );
 
         BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
-            current_logger_data.m_log_formatter->log_entry_finish( current_logger_data.stream() );
+            if( current_logger_data.m_enabled ) {
+                current_logger_data.m_log_formatter->log_entry_finish( current_logger_data.stream() );
+            }
         }
 
         s_log_impl().m_entry_in_progress = false;
@@ -365,6 +371,9 @@ unit_test_log_t::log_entry_start()
         return true;
 
     BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
+
+        if( !current_logger_data.m_enabled )
+            continue;
 
         switch( s_log_impl().m_entry_data.m_level ) {
         case log_successful_tests:
@@ -409,7 +418,7 @@ unit_test_log_t::operator<<( const_string value )
 {
     BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
 
-        if( s_log_impl().m_entry_data.m_level >= current_logger_data.get_log_level() && !value.empty() && log_entry_start() )
+        if( current_logger_data.m_enabled && s_log_impl().m_entry_data.m_level >= current_logger_data.get_log_level() && !value.empty() && log_entry_start() )
             current_logger_data.m_log_formatter->log_entry_value( current_logger_data.stream(), value );
 
     }
@@ -422,7 +431,7 @@ unit_test_log_t&
 unit_test_log_t::operator<<( lazy_ostream const& value )
 {
     BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
-        if( s_log_impl().m_entry_data.m_level >= current_logger_data.get_log_level() && !value.empty() && log_entry_start() )
+        if( current_logger_data.m_enabled && s_log_impl().m_entry_data.m_level >= current_logger_data.get_log_level() && !value.empty() && log_entry_start() )
             current_logger_data.m_log_formatter->log_entry_value( current_logger_data.stream(), value );
     }
     return *this;
@@ -440,18 +449,24 @@ unit_test_log_t::log_entry_context( log_level l )
     const_string frame;
 
     BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
-        current_logger_data.m_log_formatter->entry_context_start( current_logger_data.stream(), l );
+        if( current_logger_data.m_enabled ) {
+            current_logger_data.m_log_formatter->entry_context_start( current_logger_data.stream(), l );
+        }
     }
 
     while( !(frame=context.next()).is_empty() )
     {
         BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
-            current_logger_data.m_log_formatter->log_entry_context( current_logger_data.stream(), frame );
+            if( current_logger_data.m_enabled ) {
+                current_logger_data.m_log_formatter->log_entry_context( current_logger_data.stream(), frame );
+            }
         }
     }
 
     BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
-        current_logger_data.m_log_formatter->entry_context_finish( current_logger_data.stream() );
+        if( current_logger_data.m_enabled ) {
+            current_logger_data.m_log_formatter->entry_context_finish( current_logger_data.stream() );
+        }
     }
 }
 
@@ -472,8 +487,10 @@ unit_test_log_t::set_stream( std::ostream& str )
         return;
 
     BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
-        current_logger_data.m_stream = &str;
-        current_logger_data.m_stream_state_saver.reset( new io_saver_type( str ) );
+        if( current_logger_data.m_enabled ) {
+            current_logger_data.m_stream = &str;
+            current_logger_data.m_stream_state_saver.reset( new io_saver_type( str ) );
+        }
     }
 }
 
@@ -503,7 +520,9 @@ unit_test_log_t::set_threshold_level( log_level lev )
         return;
 
     BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
-        current_logger_data.m_log_formatter->set_log_level( lev );
+        if( current_logger_data.m_enabled ) {
+            current_logger_data.m_log_formatter->set_log_level( lev );
+        }
     }
 }
 
@@ -570,7 +589,7 @@ unit_test_log_t::set_formatter( unit_test_log_formatter* the_formatter )
 {
     // remove all previous loggers
     s_log_impl().m_log_formatter_data.clear(); // no mem leaks since shared_ptr is in use
-    s_log_impl().m_log_formatter_data.push_back( unit_test_log_data_helper_impl(the_formatter, true) );
+    s_log_impl().m_log_formatter_data.push_back( unit_test_log_data_helper_impl(the_formatter, OF_INVALID, true) );
 }
 
 //____________________________________________________________________________//
@@ -593,3 +612,4 @@ unit_test_log_formatter::log_entry_value( std::ostream& ostr, lazy_ostream const
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_UNIT_TEST_LOG_IPP_012205GER
+
