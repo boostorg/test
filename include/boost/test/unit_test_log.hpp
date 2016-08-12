@@ -136,7 +136,7 @@ public:
 
 private:
     // Implementation helpers
-    bool                log_entry_start();
+    bool                log_entry_start(output_format log_format);
     void                log_entry_context( log_level l );
     void                clear_entry_context();
 
