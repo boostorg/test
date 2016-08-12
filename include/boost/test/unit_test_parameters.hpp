@@ -86,7 +86,7 @@ BOOST_TEST_DECL bool save_pattern();
 class stream_holder {
 public:
     // Constructor
-    explicit        stream_holder( std::ostream& default_stream )
+    explicit        stream_holder( std::ostream& default_stream = std::cout)
     : m_stream( &default_stream )
     {
     }

@@ -23,12 +23,13 @@
 #include <boost/test/unit_test_parameters.hpp>
 
 #include <boost/test/utils/basic_cstring/compare.hpp>
+#include <boost/test/utils/foreach.hpp>
 
 #include <boost/test/output/compiler_log_formatter.hpp>
 #include <boost/test/output/xml_log_formatter.hpp>
 
 // Boost
-#include <boost/scoped_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 #include <boost/io/ios_state.hpp>
 typedef ::boost::io::ios_base_all_saver io_saver_type;
 
@@ -81,38 +82,56 @@ entry_value_collector::~entry_value_collector()
 
 namespace {
 
+// log data
+struct unit_test_log_data_helper_impl {
+  typedef boost::shared_ptr<unit_test_log_formatter> formatter_ptr;
+  typedef boost::shared_ptr<io_saver_type>           saver_ptr;
+
+  bool                m_enabled;
+  std::ostream*       m_stream;
+  saver_ptr           m_stream_state_saver;
+  formatter_ptr       m_log_formatter;
+
+  unit_test_log_data_helper_impl(unit_test_log_formatter* p_log_formatter, bool enabled = false)
+    : m_log_formatter()
+    , m_stream( &std::cout )
+    , m_stream_state_saver( new io_saver_type( std::cout ) )
+    , m_enabled(enabled)
+  {
+    m_log_formatter.reset(p_log_formatter);
+    m_log_formatter->set_log_level(log_all_errors);
+  }
+
+  // helper functions
+  std::ostream&       stream()
+  {
+      return *m_stream;
+  }
+
+  log_level get_log_level() const
+  {
+      return m_log_formatter->get_log_level();
+  }
+};
+
 struct unit_test_log_impl {
     // Constructor
     unit_test_log_impl()
-    : m_stream( &std::cout )
-    , m_stream_state_saver( new io_saver_type( std::cout ) )
-    , m_threshold_level( log_all_errors )
-    , m_log_formatter( new output::compiler_log_formatter )
     {
+      m_log_formatter_data.push_back( unit_test_log_data_helper_impl(new output::compiler_log_formatter, true) );
+      m_log_formatter_data.push_back( unit_test_log_data_helper_impl(new output::xml_log_formatter, false) );
     }
 
-    // log data
-    typedef scoped_ptr<unit_test_log_formatter> formatter_ptr;
-    typedef scoped_ptr<io_saver_type>           saver_ptr;
-
-    std::ostream*       m_stream;
-    saver_ptr           m_stream_state_saver;
-    log_level           m_threshold_level;
-    formatter_ptr       m_log_formatter;
+    typedef std::vector<unit_test_log_data_helper_impl> v_formatter_data_t;
+    v_formatter_data_t m_log_formatter_data;
 
     // entry data
-    bool                m_entry_in_progress;
-    bool                m_entry_started;
     log_entry_data      m_entry_data;
+    bool                m_entry_in_progress;
 
     // check point data
     log_checkpoint_data m_checkpoint_data;
 
-    // helper functions
-    std::ostream&       stream()
-    {
-        return *m_stream;
-    }
     void                set_checkpoint( const_string file, std::size_t line_num, const_string msg )
     {
         assign_op( m_checkpoint_data.m_message, msg, 0 );
@@ -130,15 +149,18 @@ unit_test_log_impl& s_log_impl() { static unit_test_log_impl the_inst; return th
 void
 unit_test_log_t::test_start( counter_t test_cases_amount )
 {
-    if( s_log_impl().m_threshold_level == log_nothing )
-        return;
 
-    s_log_impl().m_log_formatter->log_start( s_log_impl().stream(), test_cases_amount );
+    BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
+      if( current_logger_data.get_log_level() == log_nothing )
+          continue;
 
-    if( runtime_config::get<bool>( runtime_config::BUILD_INFO ) )
-        s_log_impl().m_log_formatter->log_build_info( s_log_impl().stream() );
+      current_logger_data.m_log_formatter->log_start( current_logger_data.stream(), test_cases_amount );
 
-    s_log_impl().m_entry_in_progress = false;
+      if( runtime_config::get<bool>( runtime_config::BUILD_INFO ) )
+          current_logger_data.m_log_formatter->log_build_info( current_logger_data.stream() );
+
+      s_log_impl().m_entry_in_progress = false;
+    }
 }
 
 //____________________________________________________________________________//
@@ -146,12 +168,14 @@ unit_test_log_t::test_start( counter_t test_cases_amount )
 void
 unit_test_log_t::test_finish()
 {
-    if( s_log_impl().m_threshold_level == log_nothing )
-        return;
+    BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
+      if( current_logger_data.get_log_level() == log_nothing )
+          continue;
 
-    s_log_impl().m_log_formatter->log_finish( s_log_impl().stream() );
+      current_logger_data.m_log_formatter->log_finish( current_logger_data.stream() );
 
-    s_log_impl().stream().flush();
+      current_logger_data.stream().flush();
+    }
 }
 
 //____________________________________________________________________________//
@@ -167,13 +191,13 @@ unit_test_log_t::test_aborted()
 void
 unit_test_log_t::test_unit_start( test_unit const& tu )
 {
-    if( s_log_impl().m_threshold_level > log_test_units )
-        return;
-
     if( s_log_impl().m_entry_in_progress )
         *this << log::end();
-
-    s_log_impl().m_log_formatter->test_unit_start( s_log_impl().stream(), tu );
+    BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
+        if( current_logger_data.get_log_level() > log_test_units )
+            continue;
+        current_logger_data.m_log_formatter->test_unit_start( current_logger_data.stream(), tu );
+    }
 }
 
 //____________________________________________________________________________//
@@ -181,15 +205,19 @@ unit_test_log_t::test_unit_start( test_unit const& tu )
 void
 unit_test_log_t::test_unit_finish( test_unit const& tu, unsigned long elapsed )
 {
-    if( s_log_impl().m_threshold_level > log_test_units )
-        return;
-
+    // Raffi: TODO check that things, used to be after the log level check
     s_log_impl().m_checkpoint_data.clear();
 
     if( s_log_impl().m_entry_in_progress )
         *this << log::end();
 
-    s_log_impl().m_log_formatter->test_unit_finish( s_log_impl().stream(), tu, elapsed );
+    BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
+
+        if( current_logger_data.get_log_level() > log_test_units )
+            continue;
+
+        current_logger_data.m_log_formatter->test_unit_finish( current_logger_data.stream(), tu, elapsed );
+    }
 }
 
 //____________________________________________________________________________//
@@ -197,13 +225,16 @@ unit_test_log_t::test_unit_finish( test_unit const& tu, unsigned long elapsed )
 void
 unit_test_log_t::test_unit_skipped( test_unit const& tu, const_string reason )
 {
-    if( s_log_impl().m_threshold_level > log_test_units )
-        return;
-
+    // Raffi: this test used to be after checking for the log level
     if( s_log_impl().m_entry_in_progress )
         *this << log::end();
 
-    s_log_impl().m_log_formatter->test_unit_skipped( s_log_impl().stream(), tu, reason );
+    BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
+        if( current_logger_data.get_log_level() > log_test_units )
+            continue;
+
+        current_logger_data.m_log_formatter->test_unit_skipped( current_logger_data.stream(), tu, reason );
+    }
 }
 
 //____________________________________________________________________________//
@@ -216,17 +247,21 @@ unit_test_log_t::exception_caught( execution_exception const& ex )
         (ex.code() <= execution_exception::timeout_error        ? log_system_errors
                                                                 : log_fatal_errors );
 
-    if( l >= s_log_impl().m_threshold_level ) {
-        if( s_log_impl().m_entry_in_progress )
-            *this << log::end();
+    // Raffi: initially after the check of the log level
+    if( s_log_impl().m_entry_in_progress )
+        *this << log::end();
 
-        s_log_impl().m_log_formatter->log_exception_start( s_log_impl().stream(), s_log_impl().m_checkpoint_data, ex );
+    BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
 
-        log_entry_context( l );
+      if( l >= current_logger_data.get_log_level() ) {
 
-        s_log_impl().m_log_formatter->log_exception_finish( s_log_impl().stream() );
+          current_logger_data.m_log_formatter->log_exception_start( current_logger_data.stream(), s_log_impl().m_checkpoint_data, ex );
+
+          log_entry_context( l );
+
+          current_logger_data.m_log_formatter->log_exception_finish( current_logger_data.stream() );
+      }
     }
-
     clear_entry_context();
 }
 
@@ -252,7 +287,9 @@ unit_test_log_t::operator<<( log::begin const& b )
     if( s_log_impl().m_entry_in_progress )
         *this << log::end();
 
-    s_log_impl().m_stream_state_saver->restore();
+    BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
+        current_logger_data.m_stream_state_saver->restore();
+    }
 
     s_log_impl().m_entry_data.clear();
 
@@ -276,7 +313,9 @@ unit_test_log_t::operator<<( log::end const& )
     if( s_log_impl().m_entry_in_progress ) {
         log_entry_context( s_log_impl().m_entry_data.m_level );
 
-        s_log_impl().m_log_formatter->log_entry_finish( s_log_impl().stream() );
+       BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
+            current_logger_data.m_log_formatter->log_entry_finish( current_logger_data.stream() );
+       }
 
         s_log_impl().m_entry_in_progress = false;
     }
@@ -314,33 +353,37 @@ unit_test_log_t::log_entry_start()
     if( s_log_impl().m_entry_in_progress )
         return true;
 
-    switch( s_log_impl().m_entry_data.m_level ) {
-    case log_successful_tests:
-        s_log_impl().m_log_formatter->log_entry_start( s_log_impl().stream(), s_log_impl().m_entry_data,
-                                                       unit_test_log_formatter::BOOST_UTL_ET_INFO );
-        break;
-    case log_messages:
-        s_log_impl().m_log_formatter->log_entry_start( s_log_impl().stream(), s_log_impl().m_entry_data,
-                                                       unit_test_log_formatter::BOOST_UTL_ET_MESSAGE );
-        break;
-    case log_warnings:
-        s_log_impl().m_log_formatter->log_entry_start( s_log_impl().stream(), s_log_impl().m_entry_data,
-                                                       unit_test_log_formatter::BOOST_UTL_ET_WARNING );
-        break;
-    case log_all_errors:
-    case log_cpp_exception_errors:
-    case log_system_errors:
-        s_log_impl().m_log_formatter->log_entry_start( s_log_impl().stream(), s_log_impl().m_entry_data,
-                                                       unit_test_log_formatter::BOOST_UTL_ET_ERROR );
-        break;
-    case log_fatal_errors:
-        s_log_impl().m_log_formatter->log_entry_start( s_log_impl().stream(), s_log_impl().m_entry_data,
-                                                       unit_test_log_formatter::BOOST_UTL_ET_FATAL_ERROR );
-        break;
-    case log_nothing:
-    case log_test_units:
-    case invalid_log_level:
-        return false;
+    BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
+
+        switch( s_log_impl().m_entry_data.m_level ) {
+        case log_successful_tests:
+            current_logger_data.m_log_formatter->log_entry_start( current_logger_data.stream(), s_log_impl().m_entry_data,
+                                                  unit_test_log_formatter::BOOST_UTL_ET_INFO );
+            break;
+        case log_messages:
+            current_logger_data.m_log_formatter->log_entry_start( current_logger_data.stream(), s_log_impl().m_entry_data,
+                                                  unit_test_log_formatter::BOOST_UTL_ET_MESSAGE );
+            break;
+        case log_warnings:
+            current_logger_data.m_log_formatter->log_entry_start( current_logger_data.stream(), s_log_impl().m_entry_data,
+                                                  unit_test_log_formatter::BOOST_UTL_ET_WARNING );
+            break;
+        case log_all_errors:
+        case log_cpp_exception_errors:
+        case log_system_errors:
+            current_logger_data.m_log_formatter->log_entry_start( current_logger_data.stream(), s_log_impl().m_entry_data,
+                                                  unit_test_log_formatter::BOOST_UTL_ET_ERROR );
+            break;
+        case log_fatal_errors:
+            current_logger_data.m_log_formatter->log_entry_start( current_logger_data.stream(), s_log_impl().m_entry_data,
+                                                  unit_test_log_formatter::BOOST_UTL_ET_FATAL_ERROR );
+            break;
+        case log_nothing:
+        case log_test_units:
+        case invalid_log_level:
+            return false;
+        }
+
     }
 
     s_log_impl().m_entry_in_progress = true;
@@ -353,9 +396,12 @@ unit_test_log_t::log_entry_start()
 unit_test_log_t&
 unit_test_log_t::operator<<( const_string value )
 {
-    if( s_log_impl().m_entry_data.m_level >= s_log_impl().m_threshold_level && !value.empty() && log_entry_start() )
-        s_log_impl().m_log_formatter->log_entry_value( s_log_impl().stream(), value );
+    BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
 
+        if( s_log_impl().m_entry_data.m_level >= current_logger_data.get_log_level() && !value.empty() && log_entry_start() )
+            current_logger_data.m_log_formatter->log_entry_value( current_logger_data.stream(), value );
+
+    }
     return *this;
 }
 
@@ -364,9 +410,10 @@ unit_test_log_t::operator<<( const_string value )
 unit_test_log_t&
 unit_test_log_t::operator<<( lazy_ostream const& value )
 {
-    if( s_log_impl().m_entry_data.m_level >= s_log_impl().m_threshold_level && !value.empty() && log_entry_start() )
-        s_log_impl().m_log_formatter->log_entry_value( s_log_impl().stream(), value );
-
+    BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
+        if( s_log_impl().m_entry_data.m_level >= current_logger_data.get_log_level() && !value.empty() && log_entry_start() )
+            current_logger_data.m_log_formatter->log_entry_value( current_logger_data.stream(), value );
+    }
     return *this;
 }
 
@@ -381,12 +428,20 @@ unit_test_log_t::log_entry_context( log_level l )
 
     const_string frame;
 
-    s_log_impl().m_log_formatter->entry_context_start( s_log_impl().stream(), l );
+    BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
+        current_logger_data.m_log_formatter->entry_context_start( current_logger_data.stream(), l );
+    }
 
     while( !(frame=context.next()).is_empty() )
-        s_log_impl().m_log_formatter->log_entry_context( s_log_impl().stream(), frame );
+    {
+        BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
+            current_logger_data.m_log_formatter->log_entry_context( current_logger_data.stream(), frame );
+        }
+    }
 
-    s_log_impl().m_log_formatter->entry_context_finish( s_log_impl().stream() );
+    BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
+        current_logger_data.m_log_formatter->entry_context_finish( current_logger_data.stream() );
+    }
 }
 
 //____________________________________________________________________________//
@@ -405,8 +460,10 @@ unit_test_log_t::set_stream( std::ostream& str )
     if( s_log_impl().m_entry_in_progress )
         return;
 
-    s_log_impl().m_stream = &str;
-    s_log_impl().m_stream_state_saver.reset( new io_saver_type( str ) );
+    BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
+       current_logger_data.m_stream = &str;
+       current_logger_data.m_stream_state_saver.reset( new io_saver_type( str ) );
+    }
 }
 
 //____________________________________________________________________________//
@@ -417,7 +474,9 @@ unit_test_log_t::set_threshold_level( log_level lev )
     if( s_log_impl().m_entry_in_progress || lev == invalid_log_level )
         return;
 
-    s_log_impl().m_threshold_level = lev;
+    BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
+        current_logger_data.m_log_formatter->set_log_level( lev );
+    }
 }
 
 //____________________________________________________________________________//
@@ -444,7 +503,9 @@ unit_test_log_t::set_format( output_format log_format )
 void
 unit_test_log_t::set_formatter( unit_test_log_formatter* the_formatter )
 {
-    s_log_impl().m_log_formatter.reset( the_formatter );
+    // remove all previous loggers
+    s_log_impl().m_log_formatter_data.clear();
+    s_log_impl().m_log_formatter_data.push_back( unit_test_log_data_helper_impl(the_formatter, true) );
 }
 
 //____________________________________________________________________________//

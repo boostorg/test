@@ -23,6 +23,7 @@
 // STL
 #include <iosfwd>
 #include <string> // for std::string
+#include <iostream>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -94,6 +95,11 @@ public:
                            BOOST_UTL_ET_ERROR,      ///< Non fatal error notification message
                            BOOST_UTL_ET_FATAL_ERROR ///< Fatal error notification message
     };
+
+    //! Constructor
+    unit_test_log_formatter()
+        : m_log_level(log_all_errors)
+    {}
 
     // Destructor
     virtual             ~unit_test_log_formatter() {}
@@ -217,7 +223,7 @@ public:
     /// Context consists of multiple "scopes" identified by description messages assigned by the test module using
     /// BOOST_TEST_INFO/BOOST_TEST_CONTEXT statements.
     /// @param[in] os   output stream to write a messages into
-    /// @param[in] l    entry log_leveg, to be used to fine tune the message
+    /// @param[in] l    entry log_level, to be used to fine tune the message
     /// @see log_entry_context, entry_context_finish
     virtual void        entry_context_start( std::ostream& os, log_level l ) = 0;
 
@@ -235,6 +241,41 @@ public:
     /// @see log_entry_start, entry_context_context
     virtual void        entry_context_finish( std::ostream& os ) = 0;
     // @}
+
+    //! @name Log level management
+    //! @{
+
+    /// Some loggers need to manage the log level by their own. This 
+    /// member function let the implementation decide of that.
+    virtual void        set_log_level(log_level new_log_level)
+    {
+        m_log_level = new_log_level;
+    }
+    virtual log_level   get_log_level() const
+    {
+        return m_log_level;
+    }
+    //! @}
+
+
+    //! @name Stream management
+    //! @{
+
+    /// Returns a default stream for this logger.
+    ///
+    /// The returned string describes the stream as if it was passed from
+    /// the command line --log_sink parameter.
+    virtual std::string  get_default_stream_description() const
+    {
+        return "stdout";
+    }
+
+    //! @}
+
+
+protected:
+    log_level           m_log_level;
+
 };
 
 } // namespace unit_test

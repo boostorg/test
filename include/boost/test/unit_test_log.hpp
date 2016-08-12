@@ -102,7 +102,9 @@ public:
 
     // log configuration methods
     void                set_stream( std::ostream& );
+    void                set_stream( output_format, std::ostream& );
     void                set_threshold_level( log_level );
+    void                set_threshold_level( output_format, log_level );
     void                set_format( output_format );
     void                set_formatter( unit_test_log_formatter* );
 
