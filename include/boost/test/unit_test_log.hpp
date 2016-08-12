@@ -106,7 +106,20 @@ public:
     void                set_stream( output_format, std::ostream& );
     void                set_threshold_level( log_level );
     void                set_threshold_level( output_format, log_level );
+
+    //! Add a format to the set of loggers
+    void                add_format( output_format );
+
+    //! Sets the unique format of the logger
     void                set_format( output_format );
+
+
+    //! Returns the logger for the specified format.
+    unit_test_log_formatter* get_formatter( output_format );
+
+    //! Sets the logger
+    //! The specified logger becomes the unique one.
+    //! @note the ownership of the pointer is transfered to this instance.
     void                set_formatter( unit_test_log_formatter* );
 
     // test progress logging

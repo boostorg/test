@@ -10,6 +10,15 @@
 [h4 Boost.Test v3.3 / boost 1.62]
 
 [h5 New features]
+# xUnit/junit like log format
+# improved command line syntax for specifying the logger
+# possibility to specify several loggers and sinks from the command line
+
+
+[h5 Breaking changes]
+The call ``unit_test_log.set_formatter( new formatter );`` resets the log stream and log level. Be sure to
+specify the sink and log level after this call to experience the same behaviour as for Boost.Test < 3.3.
+
 
 [h5 Bugfixes and feature requests]
 # [pull_request 81] Possibility to remove the support of the alternative stack at compilation time. See
