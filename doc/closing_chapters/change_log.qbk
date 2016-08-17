@@ -25,6 +25,8 @@ specify the sink and log level after this call to experience the same behavior a
 [h5 Bugfixes and feature requests]
 # [pull_request 81] Possibility to remove the support of the alternative stack at compilation time. See
   [link boost_test.utf_reference.link_references.config_disable_alt_stack `BOOST_TEST_DISABLE_ALT_STACK`] for more details.
+# [ticket 8707] Provide Standard xUnit XML Output from Boost Test
+# [ticket 8834] Boost Test should be able to generate report in both XML and HRF together
 # [ticket 11128] `[bb10/qnx failures]` Build error
 # [ticket 12024] boost test depends on nonexisting `abi::__cxa_demangle` on android
 # [ticket 12103] Fix for gcc bug 58952 (`getchar()` is defined as a macro in `uClibc`)
