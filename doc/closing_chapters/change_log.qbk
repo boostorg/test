@@ -18,6 +18,7 @@
   [link boost_test.utf_reference.link_references.config_disable_alt_stack `BOOST_TEST_DISABLE_ALT_STACK`] for more details.
 # [ticket 11128] `[bb10/qnx failures]` Build error
 # [ticket 11845] Ability to generate the unique and stable test name for every data set in `BOOST_DATA_TEST_CASE`
+# [ticket 11859] Wrong handling of "," in Run-Parameters
 # [ticket 12024] boost test depends on nonexisting `abi::__cxa_demangle` on android
 # [ticket 12103] Fix for gcc bug 58952 (`getchar()` is defined as a macro in `uClibc`)
 # [ticket 12224] Crash on MSVC with RTTI disabled

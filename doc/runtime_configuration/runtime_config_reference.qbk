@@ -668,25 +668,33 @@ test units, and "disabler filters", which allow to disable some test units. The 
 enabling/disabling test units at compile time. These settings identify the default set of test units
 to run. Parameter ['run_test] is used to change this default. This parameter is repeatable, so you can
 specify more than one filter if necessary.
+It is also possible to use the ':' for separating each filter
+which can be used for filtering the tests with the environment variable `BOOST_TEST_RUN_FILTERS` (as it cannot be
+repeated like `--run_test`).
 
 More details about practical application of this parameter resides in [link boost_test.runtime_config.test_unit_filtering test unit
 filtering] section.
 
 [h4 Acceptable values]
 
-[link regular_param_value String] value representing single filter. The following grammar productions
-describe the syntax of filters:
+[link regular_param_value String] value representing single filter or a set of filters separated by ':'.
+The following grammar productions describe the syntax of filters:
 
 ```
+filter_set    ::= (filter ':')* filter
 filter        ::= relative_spec? test_set
 relative_spec ::= '+' | '!'
 test_set      ::= label | path
 label         ::= '@' identifier
 path          ::= (suite '/')? pattern_list
-pattern_list   ::= (pattern ',')* pattern
+pattern_list  ::= (pattern ',')* pattern
 suite         ::= (pattern '/')* pattern
 pattern       ::= '*'? identifier '*'?
 ```
+
+[caution the `pattern_list` above indicates test unit inside the same test suite given by `suite`. This means that the syntax
+ "`--run_test=suite1/suite2/A,B,C`" runs the test cases `A`, `B` and `C` that are *inside* `suite1/suite2`. In order to indicate
+ several test units that are not siblings, either repeat the `--run_test` or use `:` to separate the filters.]
 
 Regarding the meaning of these values [link ref_command_line_control see here].
 
