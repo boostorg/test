@@ -36,6 +36,10 @@ public:
     virtual void    test_aborted() {}
 
     virtual void    test_unit_start( test_unit const& ) {}
+
+    //! Called at each end of a test unit.
+    //!
+    //! @param elaspsed duration of the test unit in microseconds.
     virtual void    test_unit_finish( test_unit const&, unsigned long /* elapsed */ ) {}
     virtual void    test_unit_skipped( test_unit const& tu, const_string ) { test_unit_skipped( tu ); }
     virtual void    test_unit_skipped( test_unit const& ) {} ///< backward compatibility

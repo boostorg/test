@@ -54,6 +54,7 @@ TEST_EXEC_MON_SOURCES =
   unit_test_main
   unit_test_monitor
   unit_test_parameters
+  junit_log_formatter
   xml_log_formatter
   xml_report_formatter
   ;
@@ -74,6 +75,7 @@ UTF_SOURCES =
   unit_test_main
   unit_test_monitor
   unit_test_parameters
+  junit_log_formatter
   xml_log_formatter
   xml_report_formatter
   ;

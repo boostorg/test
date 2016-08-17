@@ -22,6 +22,7 @@
 #include <boost/test/unit_test_parameters.hpp>
 
 #include <boost/test/unit_test_log.hpp>
+#include <boost/test/unit_test_log_formatter.hpp>
 #include <boost/test/unit_test_monitor.hpp>
 #include <boost/test/results_collector.hpp>
 #include <boost/test/progress_monitor.hpp>
@@ -39,6 +40,7 @@
 
 #include <boost/test/utils/foreach.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
+#include <boost/test/utils/basic_cstring/compare.hpp>
 
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/detail/throw_exception.hpp>
@@ -98,7 +100,7 @@ tu_depth( test_unit_id tu_id, test_unit_id master_tu_id, order_info_per_tu& tuoi
         return 0;
 
     order_info& info = tuoi[tu_id];
-    
+
     if( info.depth == -1 )
         info.depth = tu_depth( get_tu_parent( tu_id ), master_tu_id, tuoi ) + 1;
 
@@ -236,12 +238,12 @@ public:
     name_filter( test_unit_id_list& targ_list, const_string filter_expr ) : m_targ_list( targ_list ), m_depth( 0 )
     {
 #ifdef BOOST_TEST_SUPPORT_TOKEN_ITERATOR
-        utils::string_token_iterator tit( filter_expr, (utils::dropped_delimeters = "/", 
+        utils::string_token_iterator tit( filter_expr, (utils::dropped_delimeters = "/",
                                                         utils::kept_delimeters = utils::dt_none) );
 
         while( tit != utils::string_token_iterator() ) {
-            m_components.push_back( 
-                std::vector<component>( utils::string_token_iterator( *tit, (utils::dropped_delimeters = ",", 
+            m_components.push_back(
+                std::vector<component>( utils::string_token_iterator( *tit, (utils::dropped_delimeters = ",",
                                                                              utils::kept_delimeters = utils::dt_none) ),
                                         utils::string_token_iterator() ) );
 
@@ -261,6 +263,7 @@ private:
         std::vector<component> const& filters = m_components[m_depth-1];
 
         // look for match
+        using namespace boost::placeholders;
         return std::find_if( filters.begin(), filters.end(), bind( &component::pass, _1, boost::ref(tu) ) ) != filters.end();
     }
 
@@ -351,8 +354,8 @@ private:
                 if( dep.p_run_status == tu.p_run_status )
                     continue;
 
-                BOOST_TEST_MESSAGE( "Including test " << dep.p_type_name << ' ' << dep.full_name() <<
-                                    " as a dependency of test " << tu.p_type_name << ' ' << tu.full_name() );
+                BOOST_TEST_FRAMEWORK_MESSAGE( "Including test " << dep.p_type_name << ' ' << dep.full_name() <<
+                                              " as a dependency of test " << tu.p_type_name << ' ' << tu.full_name() );
 
                 m_dep_collector->push_back( dep_id );
             }
@@ -447,7 +450,7 @@ public:
     , m_next_test_suite_id( MIN_TEST_SUITE_ID )
     , m_test_in_progress( false )
     , m_context_idx( 0 )
-    , m_log_sink( std::cout )
+    , m_log_sinks( )
     , m_report_sink( std::cerr )
     {
     }
@@ -797,7 +800,7 @@ public:
 
     boost::execution_monitor m_aux_em;
 
-    runtime_config::stream_holder m_log_sink;
+    std::map<output_format, runtime_config::stream_holder> m_log_sinks;
     runtime_config::stream_holder m_report_sink;
 };
 
@@ -819,7 +822,7 @@ setup_for_execution( test_unit const& tu )
 {
     s_frk_state().deduce_run_status( tu.p_id );
 }
- 
+
 //____________________________________________________________________________//
 
 } // namespace impl
@@ -838,16 +841,132 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     // 10. Set up runtime parameters
     runtime_config::init( argc, argv );
 
+
     // 20. Set the desired log level, format and sink
-    unit_test_log.set_threshold_level( runtime_config::get<log_level>( runtime_config::LOG_LEVEL ) );
-    unit_test_log.set_format( runtime_config::get<output_format>( runtime_config::LOG_FORMAT ) );
-    s_frk_state().m_log_sink.setup( runtime_config::LOG_SINK );
-    unit_test_log.set_stream( s_frk_state().m_log_sink.ref() );
+#ifdef BOOST_TEST_SUPPORT_TOKEN_ITERATOR
+    bool has_combined_logger = runtime_config::has( runtime_config::COMBINED_LOGGER )
+        && !runtime_config::get< std::vector<std::string> >( runtime_config::COMBINED_LOGGER ).empty();
+#else
+    bool has_combined_logger = false;
+#endif
+
+    if( !has_combined_logger ) {
+      unit_test_log.set_threshold_level( runtime_config::get<log_level>( runtime_config::LOG_LEVEL ) );
+      const output_format format = runtime_config::get<output_format>( runtime_config::LOG_FORMAT );
+      unit_test_log.set_format( format );
+
+      runtime_config::stream_holder& stream_logger = s_frk_state().m_log_sinks[format];
+      if( runtime_config::has( runtime_config::LOG_SINK ) )
+          stream_logger.setup( runtime_config::get<const_string>( runtime_config::LOG_SINK ) );
+      unit_test_log.set_stream( stream_logger.ref() );
+    }
+    else
+    {
+
+      const std::vector<std::string>& v_output_format = runtime_config::get< std::vector<std::string> >( runtime_config::COMBINED_LOGGER ) ;
+
+      static const std::pair<const char*, log_level> all_log_levels[] = {
+          std::make_pair( "all"           , log_successful_tests ),
+          std::make_pair( "success"       , log_successful_tests ),
+          std::make_pair( "test_suite"    , log_test_units ),
+          std::make_pair( "unit_scope"    , log_test_units ),
+          std::make_pair( "message"       , log_messages ),
+          std::make_pair( "warning"       , log_warnings ),
+          std::make_pair( "error"         , log_all_errors ),
+          std::make_pair( "cpp_exception" , log_cpp_exception_errors ),
+          std::make_pair( "system_error"  , log_system_errors ),
+          std::make_pair( "fatal_error"   , log_fatal_errors ),
+          std::make_pair( "nothing"       , log_nothing )
+      };
+
+      static const std::pair<const char*, output_format> all_formats[] = {
+          std::make_pair( "HRF"  , OF_CLF ),
+          std::make_pair( "CLF"  , OF_CLF ),
+          std::make_pair( "XML"  , OF_XML ),
+          std::make_pair( "JUNIT", OF_JUNIT )
+      };
+
+
+      bool is_first = true;
+
+      BOOST_TEST_FOREACH( const_string, current_multi_config, v_output_format ) {
+
+#ifdef BOOST_TEST_SUPPORT_TOKEN_ITERATOR
+        utils::string_token_iterator current_config( current_multi_config, (utils::dropped_delimeters = ":",
+                                                                            utils::kept_delimeters = utils::dt_none) );
+
+        for( ; current_config != utils::string_token_iterator() ; ++current_config) {
+
+          utils::string_token_iterator current_format_specs( *current_config, (utils::keep_empty_tokens,
+                                                                               utils::dropped_delimeters = ",",
+                                                                               utils::kept_delimeters = utils::dt_none) );
+
+          output_format format = OF_INVALID ; // default
+          if( current_format_specs != utils::string_token_iterator() &&
+              current_format_specs->size() ) {
+
+            for(size_t elem=0; elem < sizeof(all_formats)/sizeof(all_formats[0]); elem++) {
+              if(case_ins_eq(const_string(all_formats[elem].first), *current_format_specs)) {
+                  format = all_formats[elem].second;
+                  break;
+              }
+            }
+          }
+
+          if( format == OF_INVALID ) {
+            format = runtime_config::get<output_format>( runtime_config::LOG_FORMAT ); // will get the default one
+          }
+
+          // activates this format
+          if( is_first ) {
+              unit_test_log.set_format( format );
+          }
+          else {
+              unit_test_log.add_format( format );
+          }
+          is_first = false;
+
+          unit_test_log_formatter * const formatter = unit_test_log.get_formatter(format);
+          if( !formatter ) {
+              BOOST_TEST_SETUP_ASSERT( false, "Logger setup error" );
+          }
+
+          log_level formatter_log_level = formatter->get_log_level(); // default log level given by the formatter
+          if( ++current_format_specs != utils::string_token_iterator() &&
+              current_format_specs->size() ) {
+
+            for(size_t elem=0; elem < sizeof(all_log_levels)/sizeof(all_log_levels[0]); elem++) {
+              if(case_ins_eq(const_string(all_log_levels[elem].first), *current_format_specs)) {
+                  formatter_log_level = all_log_levels[elem].second;
+                  break;
+              }
+            }
+            unit_test_log.set_threshold_level( format, formatter_log_level );
+          }
+
+          runtime_config::stream_holder& stream_logger = s_frk_state().m_log_sinks[format];
+          if( ++current_format_specs != utils::string_token_iterator() &&
+              current_format_specs->size() ) {
+              stream_logger.setup( *current_format_specs );
+          }
+          else {
+              stream_logger.setup( formatter->get_default_stream_description() );
+          }
+          unit_test_log.set_stream( format, stream_logger.ref() );
+
+        }
+#endif
+      }
+
+    }
+
 
     // 30. Set the desired report level, format and sink
     results_reporter::set_level( runtime_config::get<report_level>( runtime_config::REPORT_LEVEL ) );
     results_reporter::set_format( runtime_config::get<output_format>( runtime_config::REPORT_FORMAT ) );
-    s_frk_state().m_report_sink.setup( runtime_config::REPORT_SINK );
+
+    if( runtime_config::has( runtime_config::REPORT_SINK ) )
+        s_frk_state().m_report_sink.setup( runtime_config::get<const_string>( runtime_config::REPORT_SINK ) );
     results_reporter::set_stream( s_frk_state().m_report_sink.ref() );
 
     // 40. Register default test observers
@@ -855,7 +974,7 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     register_observer( unit_test_log );
 
     if( runtime_config::get<bool>( runtime_config::SHOW_PROGRESS ) ) {
-        progress_monitor.set_stream( s_frk_state().m_log_sink.ref() );
+        progress_monitor.set_stream( s_frk_state().m_log_sinks.begin()->second.ref() ); // TODO
         register_observer( progress_monitor );
     }
 
@@ -1245,7 +1364,7 @@ run( test_unit_id id, bool continue_test )
     case 1:
         seed = static_cast<unsigned>( std::rand() ^ std::time( 0 ) ); // better init using std::rand() ^ ...
     default:
-        BOOST_TEST_MESSAGE( "Test cases order is shuffled using seed: " << seed );
+        BOOST_TEST_FRAMEWORK_MESSAGE( "Test cases order is shuffled using seed: " << seed );
         std::srand( seed );
     }
 
