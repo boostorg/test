@@ -113,24 +113,14 @@ public:
     {
         m_stream
             << "<" << entry_type
-            << " message"<< utils::attr_value() << log.logentry_message
-            << " type"<< utils::attr_value() << log.logentry_type
+            << " message" << utils::attr_value() << log.logentry_message
+            << " type" << utils::attr_value() << log.logentry_type
             << ">";
 
-        std::ostringstream o;
-
-        // test case information (redundant but useful)
-        o   << "Test case:" << std::endl
-            << "- name: " << tc.full_name() << std::endl
-            << "- description: '" << tc.p_description << "'" << std::endl
-            << "- file: " << file_basename(tc.p_file_name) << std::endl
-            << "- line: " << tc.p_line_num << std::endl
-            ;
-
         if(!log.output.empty()) {
-            o << std::endl << log.output;
+            m_stream << utils::cdata() << "\n" + log.output;
         }
-        m_stream << utils::cdata() << o.str();
+
         m_stream << "</" << entry_type << ">";
     }
 
@@ -183,54 +173,77 @@ public:
             classname.erase(classname.size()-1);
         }
 
-        m_stream
-          << "<testcase"
-          // << "disabled=\"" << tr.p_test_cases_skipped << "\" "
-          << " assertions"<< utils::attr_value() << tr.p_assertions_passed + tr.p_assertions_failed;
+        //
+        // test case header
 
+        // total number of assertions
+        m_stream << "<testcase assertions" << utils::attr_value() << tr.p_assertions_passed + tr.p_assertions_failed;
+
+        // class name
         if(!classname.empty())
-          m_stream << " classname" << utils::attr_value() << classname;
+            m_stream << " classname" << utils::attr_value() << classname;
 
+        // test case name and time taken
         m_stream
-          << " name"      << utils::attr_value() << tu_name_normalize(tc.p_name)
-          //<< " status"    << utils::attr_value() << tr.p_test_cases_failed
-          << " time"      << utils::attr_value() << double(tr.p_duration_microseconds) * 1E-6
-          << ">" << std::endl;
+            << " name"      << utils::attr_value() << tu_name_normalize(tc.p_name)
+            << " time"      << utils::attr_value() << double(tr.p_duration_microseconds) * 1E-6
+            << ">" << std::endl;
 
         if( tr.p_skipped || skipped ) {
             m_stream << "<skipped/>" << std::endl;
         }
         else {
 
-          for(std::vector< junit_impl::junit_log_helper::assertion_entry >::const_iterator it(detailed_log.failures.begin());
-              it != detailed_log.failures.end();
+          for(std::vector< junit_impl::junit_log_helper::assertion_entry >::const_iterator it(detailed_log.assertion_entries.begin());
+              it != detailed_log.assertion_entries.end();
               ++it)
           {
-              add_log_entry("failure", tc, *it);
-          }
-          for(std::vector< junit_impl::junit_log_helper::assertion_entry >::const_iterator it(detailed_log.errors.begin());
-              it != detailed_log.errors.end();
-              ++it)
-          {
-              add_log_entry("error", tc, *it);
+              if(it->log_entry == junit_impl::junit_log_helper::assertion_entry::log_entry_failure) {
+                  add_log_entry("failure", tc, *it);
+              }
+              else if(it->log_entry == junit_impl::junit_log_helper::assertion_entry::log_entry_error) {
+                  add_log_entry("error", tc, *it);
+              }
           }
         }
 
-        if(!detailed_log.system_out.empty()) {
+        // system-out + all info/messages
+        std::string system_out = detailed_log.system_out;
+        for(std::vector< junit_impl::junit_log_helper::assertion_entry >::const_iterator it(detailed_log.assertion_entries.begin());
+            it != detailed_log.assertion_entries.end();
+            ++it)
+        {
+            if(it->log_entry != junit_impl::junit_log_helper::assertion_entry::log_entry_info)
+                continue;
+            system_out += it->output;
+        }
+
+        if(!system_out.empty()) {
             m_stream
                 << "<system-out>"
-                << utils::cdata() << detailed_log.system_out
+                << utils::cdata() << system_out
                 << "</system-out>"
                 << std::endl;
         }
 
-        if(!detailed_log.system_err.empty()) {
-            m_stream
-                << "<system-err>"
-                << utils::cdata() << detailed_log.system_err
-                << "</system-err>"
-                << std::endl;
+        // system-err output + test case informations
+        std::string system_err = detailed_log.system_err;
+        {
+            // test case information (redundant but useful)
+            std::ostringstream o;
+            o   << "Test case:" << std::endl
+                << "- name: " << tc.full_name() << std::endl
+                << "- description: '" << tc.p_description << "'" << std::endl
+                << "- file: " << file_basename(tc.p_file_name) << std::endl
+                << "- line: " << tc.p_line_num << std::endl
+                ;
+            system_err = o.str() + system_err;
         }
+        m_stream
+            << "<system-err>"
+            << utils::cdata() << system_err
+            << "</system-err>"
+            << std::endl;
 
         m_stream << "</testcase>" << std::endl;
     }
@@ -368,7 +381,7 @@ junit_log_formatter::log_exception_start( std::ostream& ostr, log_checkpoint_dat
     std::ostringstream o;
     execution_exception::location const& loc = ex.where();
 
-    m_is_last_failure_or_error = false;
+    m_is_last_assertion_or_error = false;
 
     if(!list_path_to_root.empty())
     {
@@ -376,7 +389,8 @@ junit_log_formatter::log_exception_start( std::ostream& ostr, log_checkpoint_dat
 
         junit_impl::junit_log_helper::assertion_entry entry;
 
-        entry.logentry_message = "unexpected exception during execution";
+        entry.logentry_message = "unexpected exception";
+        entry.log_entry = junit_impl::junit_log_helper::assertion_entry::log_entry_error;
 
         switch(ex.code())
         {
@@ -430,7 +444,7 @@ junit_log_formatter::log_exception_start( std::ostream& ostr, log_checkpoint_dat
 
         entry.output = o.str();
 
-        last_entry.errors.push_back(entry);
+        last_entry.assertion_entries.push_back(entry);
     }
 
     // check what to do with this one
@@ -442,8 +456,8 @@ void
 junit_log_formatter::log_exception_finish( std::ostream& ostr )
 {
     // sealing the last entry
-    assert(!map_tests[list_path_to_root.back()].errors.back().sealed);
-    map_tests[list_path_to_root.back()].errors.back().sealed = true;
+    assert(!map_tests[list_path_to_root.back()].assertion_entries.back().sealed);
+    map_tests[list_path_to_root.back()].assertion_entries.back().sealed = true;
 }
 
 //____________________________________________________________________________//
@@ -452,7 +466,7 @@ void
 junit_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& entry_data, log_entry_types let )
 {
     junit_impl::junit_log_helper& last_entry = map_tests[list_path_to_root.back()];
-    m_is_last_failure_or_error = true;
+    m_is_last_assertion_or_error = true;
     switch(let)
     {
       case unit_test_log_formatter::BOOST_UTL_ET_INFO:
@@ -460,6 +474,13 @@ junit_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& 
       case unit_test_log_formatter::BOOST_UTL_ET_WARNING:
       {
         std::ostringstream o;
+
+        junit_impl::junit_log_helper::assertion_entry entry;
+        entry.log_entry = junit_impl::junit_log_helper::assertion_entry::log_entry_info;
+        entry.logentry_message = "info";
+        entry.logentry_type = "message";
+        entry.line_number = entry_data.m_line_num;
+
         o << (let == unit_test_log_formatter::BOOST_UTL_ET_WARNING ?
               "WARNING:" : (let == unit_test_log_formatter::BOOST_UTL_ET_MESSAGE ?
                             "MESSAGE:" : "INFO:"))
@@ -468,7 +489,8 @@ junit_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& 
           << "- line   : " << entry_data.m_line_num << std::endl
           << "- message: "; // no CR
 
-        last_entry.system_out += o.str();
+        entry.output += o.str();
+        last_entry.assertion_entries.push_back(entry);
         break;
       }
       default:
@@ -477,7 +499,8 @@ junit_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& 
       {
         std::ostringstream o;
         junit_impl::junit_log_helper::assertion_entry entry;
-        entry.logentry_message = "unexpected exception during execution";
+        entry.log_entry = junit_impl::junit_log_helper::assertion_entry::log_entry_failure;
+        entry.logentry_message = "failure";
         entry.logentry_type = (let == unit_test_log_formatter::BOOST_UTL_ET_ERROR ? "assertion error" : "fatal error");
         entry.line_number = entry_data.m_line_num;
 
@@ -491,7 +514,7 @@ junit_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& 
           << "- message: " ; // no CR
 
         entry.output += o.str();
-        last_entry.failures.push_back(entry);
+        last_entry.assertion_entries.push_back(entry);
         break;
       }
     }
@@ -507,17 +530,16 @@ junit_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& 
 void
 junit_log_formatter::log_entry_value( std::ostream& ostr, const_string value )
 {
-    assert(map_tests[list_path_to_root.back()].failures.empty() || !map_tests[list_path_to_root.back()].failures.back().sealed);
+    assert(map_tests[list_path_to_root.back()].assertion_entries.empty() || !map_tests[list_path_to_root.back()].assertion_entries.back().sealed);
     junit_impl::junit_log_helper& last_entry = map_tests[list_path_to_root.back()];
     std::ostringstream o;
     utils::print_escaped_cdata( o, value );
 
-    if(!last_entry.failures.empty())
+    if(!last_entry.assertion_entries.empty())
     {
-        junit_impl::junit_log_helper::assertion_entry& log_entry = last_entry.failures.back();
-        log_entry.logentry_message = o.str();
-
-        last_entry.failures.back().output += value;
+        junit_impl::junit_log_helper::assertion_entry& log_entry = last_entry.assertion_entries.back();
+        //log_entry.logentry_message = o.str();
+        log_entry.output += value;
     }
     else
     {
@@ -532,10 +554,10 @@ junit_log_formatter::log_entry_value( std::ostream& ostr, const_string value )
 void
 junit_log_formatter::log_entry_finish( std::ostream& ostr )
 {
-    assert(map_tests[list_path_to_root.back()].failures.empty() || !map_tests[list_path_to_root.back()].failures.back().sealed);
+    assert(map_tests[list_path_to_root.back()].assertion_entries.empty() || !map_tests[list_path_to_root.back()].assertion_entries.back().sealed);
     junit_impl::junit_log_helper& last_entry = map_tests[list_path_to_root.back()];
-    if(!last_entry.failures.empty()) {
-        junit_impl::junit_log_helper::assertion_entry& log_entry = last_entry.failures.back();
+    if(!last_entry.assertion_entries.empty()) {
+        junit_impl::junit_log_helper::assertion_entry& log_entry = last_entry.assertion_entries.back();
         log_entry.output += "\n\n"; // quote end, CR
         log_entry.sealed = true;
     }
@@ -549,10 +571,10 @@ junit_log_formatter::log_entry_finish( std::ostream& ostr )
 void
 junit_log_formatter::entry_context_start( std::ostream& ostr, log_level )
 {
-    std::vector< junit_impl::junit_log_helper::assertion_entry > &v_failure_or_error = m_is_last_failure_or_error ? map_tests[list_path_to_root.back()].failures : map_tests[list_path_to_root.back()].errors;
+    std::vector< junit_impl::junit_log_helper::assertion_entry > &v_failure_or_error = map_tests[list_path_to_root.back()].assertion_entries;
     assert(!v_failure_or_error.back().sealed);
 
-    if(m_is_last_failure_or_error)
+    if(m_is_last_assertion_or_error)
     {
         v_failure_or_error.back().output += "\n- context:\n";
     }
@@ -568,8 +590,7 @@ void
 junit_log_formatter::entry_context_finish( std::ostream& ostr )
 {
     // no op, may be removed
-    std::vector< junit_impl::junit_log_helper::assertion_entry > &v_failure_or_error = m_is_last_failure_or_error ? map_tests[list_path_to_root.back()].failures : map_tests[list_path_to_root.back()].errors;
-    assert(!v_failure_or_error.back().sealed);
+    assert(!map_tests[list_path_to_root.back()].assertion_entries.back().sealed);
 }
 
 //____________________________________________________________________________//
@@ -577,9 +598,8 @@ junit_log_formatter::entry_context_finish( std::ostream& ostr )
 void
 junit_log_formatter::log_entry_context( std::ostream& ostr, const_string context_descr )
 {
-    std::vector< junit_impl::junit_log_helper::assertion_entry > &v_failure_or_error = m_is_last_failure_or_error ? map_tests[list_path_to_root.back()].failures : map_tests[list_path_to_root.back()].errors;
-    assert(!v_failure_or_error.back().sealed);
-    v_failure_or_error.back().output += (m_is_last_failure_or_error ? "  - '": "- '") + std::string(context_descr.begin(), context_descr.end()) + "'\n"; // quote end
+    assert(!map_tests[list_path_to_root.back()].assertion_entries.back().sealed);
+    map_tests[list_path_to_root.back()].assertion_entries.back().output += (m_is_last_assertion_or_error ? "  - '": "- '") + std::string(context_descr.begin(), context_descr.end()) + "'\n"; // quote end
 }
 
 //____________________________________________________________________________//

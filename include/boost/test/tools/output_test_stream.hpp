@@ -39,10 +39,10 @@ class BOOST_TEST_DECL output_test_stream : public wrap_stringstream::wrapped_str
 public:
     //! Constructor
     //!
-    //!@param[in] pattern_file_name indicates the name of the file for matching. If the 
+    //!@param[in] pattern_file_name indicates the name of the file for matching. If the
     //!           string is empty, the standard input or output streams are used instead
     //!           (depending on match_or_save)
-    //!@param[in] match_or_save if true, the pattern file will be read, otherwise it will be 
+    //!@param[in] match_or_save if true, the pattern file will be read, otherwise it will be
     //!           written
     //!@param[in] text_or_binary if false, opens the stream in binary mode. Otherwise the stream
     //!           is opened with default flags and the carriage returns are ignored.
@@ -57,14 +57,14 @@ public:
     //!
     //!@param[in] flush_stream if true, flushes the stream after the call
     virtual assertion_result    is_empty( bool flush_stream = true );
-    
+
     //! Checks the length of the stream
     //!
     //!@param[in] length target length
     //!@param[in] flush_stream if true, flushes the stream after the call. Set to false to call
     //!           additional checks on the same content.
     virtual assertion_result    check_length( std::size_t length, bool flush_stream = true );
-    
+
     //! Checks the content of the stream against a string
     //!
     //!@param[in] arg_ the target stream
@@ -73,16 +73,27 @@ public:
 
     //! Checks the content of the stream against a pattern file
     //!
-    //!@param[in] flush_stream if true, flushes the stream after the call.
+    //!@param[in] flush_stream if true, flushes/resets the stream after the call.
     virtual assertion_result    match_pattern( bool flush_stream = true );
 
     //! Flushes the stream
     void            flush();
 
+protected:
+
+    //! Returns the string representation of the stream
+    //!
+    //! May be overriden in order to mutate the string before the matching operations.
+    virtual std::string get_stream_string_representation() const;
+
 private:
     // helper functions
+
+    //! Length of the stream
     std::size_t     length();
-    void            sync();
+
+    //! Synching the stream into an internal string representation
+    virtual void    sync();
 
     struct Impl;
     Impl*           m_pimpl;

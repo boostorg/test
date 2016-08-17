@@ -354,8 +354,8 @@ private:
                 if( dep.p_run_status == tu.p_run_status )
                     continue;
 
-                BOOST_TEST_MESSAGE( "Including test " << dep.p_type_name << ' ' << dep.full_name() <<
-                                    " as a dependency of test " << tu.p_type_name << ' ' << tu.full_name() );
+                BOOST_TEST_FRAMEWORK_MESSAGE( "Including test " << dep.p_type_name << ' ' << dep.full_name() <<
+                                              " as a dependency of test " << tu.p_type_name << ' ' << tu.full_name() );
 
                 m_dep_collector->push_back( dep_id );
             }
@@ -1354,7 +1354,7 @@ run( test_unit_id id, bool continue_test )
     case 1:
         seed = static_cast<unsigned>( std::rand() ^ std::time( 0 ) ); // better init using std::rand() ^ ...
     default:
-        BOOST_TEST_MESSAGE( "Test cases order is shuffled using seed: " << seed );
+        BOOST_TEST_FRAMEWORK_MESSAGE( "Test cases order is shuffled using seed: " << seed );
         std::srand( seed );
     }
 

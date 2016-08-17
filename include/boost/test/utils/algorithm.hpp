@@ -266,14 +266,21 @@ replace_all_occurrences_with_wildcards(
         ++it_string_to_find, ++ it_string_to_replace) {
 
         std::size_t wildcard_pos = it_string_to_find->find("*");
-        if(wildcard_pos == StringClass::npos)
+        if(wildcard_pos == StringClass::npos) {
+            ForwardIterator it_to_find_current_end(it_string_to_find);
+            ForwardIterator it_to_replace_current_end(it_string_to_replace);
+            str = replace_all_occurrences_of(
+                str,
+                it_string_to_find, ++it_to_find_current_end,
+                it_string_to_replace, ++it_to_replace_current_end);
             continue;
+        }
 
         std::size_t wildcard_pos_replace = it_string_to_replace->find("*");
 
         std::size_t found_begin = str.find( it_string_to_find->substr(0, wildcard_pos) );
         while( found_begin != StringClass::npos ) {
-            std::size_t found_end = str.find(it_string_to_find->substr(wildcard_pos+1), found_begin + wildcard_pos); // to simplify
+            std::size_t found_end = str.find(it_string_to_find->substr(wildcard_pos+1), found_begin + wildcard_pos + 1); // to simplify
             if( found_end != StringClass::npos ) {
 
                 if( wildcard_pos_replace == StringClass::npos ) {
@@ -296,6 +303,7 @@ replace_all_occurrences_with_wildcards(
                 }
             }
 
+            // may adapt the restart to the replacement and be more efficient
             found_begin = str.find( it_string_to_find->substr(0, wildcard_pos), found_begin + 1 );
        }
     }

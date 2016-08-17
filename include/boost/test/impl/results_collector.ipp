@@ -199,11 +199,11 @@ results_collector_t::test_unit_finish( test_unit const& tu, unsigned long elapse
 
         bool num_failures_match = tr.p_aborted || tr.p_assertions_failed >= tr.p_expected_failures;
         if( !num_failures_match )
-            BOOST_TEST_MESSAGE( "Test case " << tu.full_name() << " has fewer failures than expected" );
+            BOOST_TEST_FRAMEWORK_MESSAGE( "Test case " << tu.full_name() << " has fewer failures than expected" );
 
         bool check_any_assertions = tr.p_aborted || (tr.p_assertions_failed != 0) || (tr.p_assertions_passed != 0);
         if( !check_any_assertions )
-            BOOST_TEST_MESSAGE( "Test case " << tu.full_name() << " did not check any assertions" );
+            BOOST_TEST_FRAMEWORK_MESSAGE( "Test case " << tu.full_name() << " did not check any assertions" );
     }
 }
 

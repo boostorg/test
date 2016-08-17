@@ -158,6 +158,17 @@ BOOST_TEST_SINGLETON_INST( unit_test_log )
 // **************       Unit test log interface helpers        ************** //
 // ************************************************************************** //
 
+// messages sent by the framework
+#define BOOST_TEST_FRAMEWORK_MESSAGE( M )                       \
+   (::boost::unit_test::unit_test_log                           \
+        << ::boost::unit_test::log::begin(                      \
+                "boost.test framework",                         \
+                __LINE__ ))                                     \
+             ( ::boost::unit_test::log_messages )               \
+    << BOOST_TEST_LAZY_MSG( M )                                 \
+/**/
+
+
 #define BOOST_TEST_MESSAGE( M )                                 \
     BOOST_TEST_LOG_ENTRY( ::boost::unit_test::log_messages )    \
     << BOOST_TEST_LAZY_MSG( M )                                 \
