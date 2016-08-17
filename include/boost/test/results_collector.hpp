@@ -53,9 +53,13 @@ public:
     test_results();
 
     /// Type representing counter like public property
-    typedef BOOST_READONLY_PROPERTY( counter_t, (results_collector_t)(test_results)(results_collect_helper) ) counter_prop;
+    typedef BOOST_READONLY_PROPERTY( counter_t, (results_collector_t)
+                                                (test_results)
+                                                (results_collect_helper) ) counter_prop;
     /// Type representing boolean like public property
-    typedef BOOST_READONLY_PROPERTY( bool,      (results_collector_t)(test_results)(results_collect_helper) ) bool_prop;
+    typedef BOOST_READONLY_PROPERTY( bool,      (results_collector_t)
+                                                (test_results)
+                                                (results_collect_helper) ) bool_prop;
 
     /// @name Public properties
     counter_prop    p_assertions_passed;
