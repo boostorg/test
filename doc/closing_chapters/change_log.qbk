@@ -10,14 +10,16 @@
 [h4 Boost.Test v3.3 / boost 1.62]
 
 [h5 New features]
-# xUnit/junit like log format
-# improved command line syntax for specifying the logger
-# possibility to specify several loggers and sinks from the command line
+# the __UTF__ learned to log the messages in the xUnit/JUNIT log format.
+  See [link boost_test.test_output.log_formats.log_junit_format here] for more details.
+# the __UTF__ learned to have several loggers at the same time, each of which with their own log level and log sink.
+  See the associated command line switch [link boost_test.utf_reference.rt_param_reference.logger `--logger`] and
+  corresponding environment variable `BOOST_TEST_LOGGER` for more details.
 
 
 [h5 Breaking changes]
 The call ``unit_test_log.set_formatter( new formatter );`` resets the log stream and log level. Be sure to
-specify the sink and log level after this call to experience the same behaviour as for Boost.Test < 3.3.
+specify the sink and log level after this call to experience the same behavior as for Boost.Test < 3.3.
 
 
 [h5 Bugfixes and feature requests]

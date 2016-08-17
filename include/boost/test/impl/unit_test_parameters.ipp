@@ -290,7 +290,7 @@ register_parameters( rt::parameters_store& store )
                    "parameter are the names of the output formats supplied by the framework. By "
                    "default the framework uses human readable format (HRF) for testing log. This "
                    "format is similar to compiler error format. Alternatively you can specify XML "
-                   "as log format. This format is easier to process by testing automation tools."
+                   "or JUNIT as log format, which are easier to process by testing automation tools."
     ));
 
     log_format.add_cla_id( "--", LOG_FORMAT, "=" );
@@ -393,6 +393,19 @@ register_parameters( rt::parameters_store& store )
     output_format.add_cla_id( "-", "o", " " );
     store.add( output_format );
 
+    /////////////////////////////////////////////// combined logger option
+
+    rt::parameter<std::string,rt::REPEATABLE_PARAM> combined_logger( COMBINED_LOGGER, (
+        rt::description = "Specifies log level and sink for one or several log format",
+        rt::env_var = "BOOST_TEST_LOGGER",
+        rt::value_hint = "log_format:log_level:log_sink",
+        rt::help = "Parameter " + COMBINED_LOGGER + " allows to specify the logger type, level and sink\n"
+                   "in one command." 
+    ));
+
+    combined_logger.add_cla_id( "--", COMBINED_LOGGER, "=" );
+    store.add( combined_logger );
+
     ///////////////////////////////////////////////
 
     rt::parameter<unsigned> random_seed( RANDOM_SEED, (
@@ -446,21 +459,6 @@ register_parameters( rt::parameters_store& store )
     report_format.add_cla_id( "--", REPORT_FORMAT, "=" );
     report_format.add_cla_id( "-", "m", " " );
     store.add( report_format );
-
-
-    /////////////////////////////////////////////// combined logger option
-
-    rt::parameter<std::string,rt::REPEATABLE_PARAM> combined_logger( COMBINED_LOGGER, (
-        rt::description = "Specifies log format v2.",
-        rt::env_var = "BOOST_TEST_COMBINED_LOGGER",
-        rt::value_hint = "log_format:log_level:log_sink",
-        rt::help = "Parameter " + COMBINED_LOGGER + " allows to specify the logger type, level and sink\n"
-                   "in one command." 
-    ));
-
-    combined_logger.add_cla_id( "--", COMBINED_LOGGER, "=" );
-    combined_logger.add_cla_id( "-", "q", " " );
-    store.add( combined_logger );
 
     ///////////////////////////////////////////////
 
