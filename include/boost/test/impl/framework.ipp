@@ -823,26 +823,9 @@ setup_for_execution( test_unit const& tu )
     s_frk_state().deduce_run_status( tu.p_id );
 }
 
-//____________________________________________________________________________//
-
-} // namespace impl
-
-//____________________________________________________________________________//
-
-// ************************************************************************** //
-// **************                framework::init               ************** //
-// ************************************************************************** //
-
 void
-init( init_unit_test_func init_func, int argc, char* argv[] )
+setup_loggers()
 {
-    using namespace impl;
-
-    // 10. Set up runtime parameters
-    runtime_config::init( argc, argv );
-
-
-    // 20. Set the desired log level, format and sink
 #ifdef BOOST_TEST_SUPPORT_TOKEN_ITERATOR
     bool has_combined_logger = runtime_config::has( runtime_config::COMBINED_LOGGER )
         && !runtime_config::get< std::vector<std::string> >( runtime_config::COMBINED_LOGGER ).empty();
@@ -960,6 +943,28 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
 
     }
 
+}
+
+//____________________________________________________________________________//
+
+} // namespace impl
+
+//____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************                framework::init               ************** //
+// ************************************************************************** //
+
+void
+init( init_unit_test_func init_func, int argc, char* argv[] )
+{
+    using namespace impl;
+
+    // 10. Set up runtime parameters
+    runtime_config::init( argc, argv );
+
+    // 20. Set the desired log level, format and sink
+    impl::setup_loggers();
 
     // 30. Set the desired report level, format and sink
     results_reporter::set_level( runtime_config::get<report_level>( runtime_config::REPORT_LEVEL ) );
