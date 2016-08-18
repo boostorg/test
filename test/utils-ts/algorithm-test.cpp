@@ -114,4 +114,59 @@ BOOST_AUTO_TEST_CASE( test_find_last_not_of )
 
 //____________________________________________________________________________//
 
+BOOST_AUTO_TEST_CASE( test_replace_all )
+{
+    {
+      std::string cs( "cstring: cstring is a const string that can be transformed to an std::string" );
+
+      const std::string to_look_for[] = {"cstring", "const"};
+      const std::string to_replace[] = { "const_string", "constant" };
+
+      BOOST_TEST( utu::replace_all_occurrences_of(
+                    cs,
+                    to_look_for, to_look_for + sizeof(to_look_for)/sizeof(to_look_for[0]),
+                    to_replace, to_replace + sizeof(to_replace)/sizeof(to_replace[0]))
+                    ==
+                    "constant_string: constant_string is a constant string that can be transformed to an std::string"
+              );
+    }
+
+    {
+      std::string cs( "some\\file\\with\\wrong:.path" );
+
+      const std::string to_look_for[] = {"\\", ":"};
+      const std::string to_replace[] = { "/", "_" };
+
+      BOOST_TEST( utu::replace_all_occurrences_of(
+                    cs,
+                    to_look_for, to_look_for + sizeof(to_look_for)/sizeof(to_look_for[0]),
+                    to_replace, to_replace + sizeof(to_replace)/sizeof(to_replace[0]))
+                    ==
+                    "some/file/with/wrong_.path"
+              );
+    }
+}
+
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_replace_with_wildcards )
+{
+    {
+      std::string cs( "this string contains x='374'u elements of size y='24'u and y='75'z" );
+
+      const std::string to_look_for[] = {"x='*'u", "y='*'u"};
+      const std::string to_replace[] = { "x='27'q", "k='*0'p" };
+
+      BOOST_TEST( utu::replace_all_occurrences_with_wildcards(
+                    cs,
+                    to_look_for, to_look_for + sizeof(to_look_for)/sizeof(to_look_for[0]),
+                    to_replace, to_replace + sizeof(to_replace)/sizeof(to_replace[0]))
+                    ==
+                    "this string contains x='27'q elements of size k='240'p and y='75'z"
+              );
+    }
+}
+
+//____________________________________________________________________________//
+
 // EOF

@@ -98,7 +98,7 @@ BOOST_DATA_TEST_CASE( test_case_interface_06, samples1 * samples2 * samples3, in
 // test dataset dim > 3
 int index7 = 0;
 
-float samples4[] = {1E3, 1E-3, 3.14};
+float samples4[] = {1E3f, 1E-3f, 3.14f};
 
 #define sizeoftable(x) (sizeof(x)/sizeof(x[0]))
 

@@ -85,6 +85,7 @@ set(BOOST_UTF_SRC
     ${BOOST_TEST_ROOT_DIR}/src/decorator.cpp
     ${BOOST_TEST_ROOT_DIR}/src/execution_monitor.cpp
     ${BOOST_TEST_ROOT_DIR}/src/framework.cpp
+    ${BOOST_TEST_ROOT_DIR}/src/junit_log_formatter.cpp
     ${BOOST_TEST_ROOT_DIR}/src/plain_report_formatter.cpp
     ${BOOST_TEST_ROOT_DIR}/src/progress_monitor.cpp
     ${BOOST_TEST_ROOT_DIR}/src/results_collector.cpp
@@ -100,10 +101,10 @@ set(BOOST_UTF_SRC
     )
 
 add_library(boost_test_framework
-            SHARED
+            STATIC
             ${BOOST_UTF_HEADERS}
             ${BOOST_UTF_SRC})
-target_compile_definitions(boost_test_framework PUBLIC "-DBOOST_TEST_DYN_LINK=1")
+target_compile_definitions(boost_test_framework PUBLIC "-DBOOST_TEST_DYN_LINK=0")
 target_include_directories(boost_test_framework PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
 set_target_properties(boost_test_framework PROPERTIES FOLDER "UTF")
 
@@ -188,6 +189,7 @@ foreach(_ts IN LISTS BOOST_UTF_TESTS_IND_FILES)
     #get_filename_component(_v "${_v}" DIRECTORY)
     message("adding ${_ts}/${_name}")
     add_executable(${_name} ${_hh})
+    target_link_libraries(${_name} PRIVATE boost_test_framework)
     set_target_properties(${_name} PROPERTIES FOLDER "Unit tests/${_ts}")
     add_test(NAME bt-unittest-${_name}
              COMMAND ${_name})

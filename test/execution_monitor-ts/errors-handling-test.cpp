@@ -179,8 +179,8 @@ BOOST_AUTO_TEST_CASE( test_errors_handling )
                         << "log level: "       << log_level_name[level] << ';'
                         << " error type: "     << error_type_name[error_type] << ";\n" << std::endl;
 
-            unit_test_log.set_stream( test_output );
             unit_test_log.set_formatter( new this_test_log_formatter );
+            unit_test_log.set_stream( test_output );
             unit_test_log.set_threshold_level( level );
             framework::run( test );
 

@@ -10,11 +10,28 @@
 [h4 Boost.Test v3.3 / boost 1.62]
 
 [h5 New features]
+* now each sample of a dataset test case has its own name, such that it is possible to execute one particular sample from the
+  command line interface.
+* the __UTF__ learned to log the messages in the xUnit/JUNIT log format.
+  See [link boost_test.test_output.log_formats.log_junit_format here] for more details.
+* the __UTF__ learned to have several loggers at the same time, each of which with their own log level and log sink.
+  See the associated command line switch [link boost_test.utf_reference.rt_param_reference.logger `--logger`] and
+  corresponding environment variable `BOOST_TEST_LOGGER` for more details.
+
+
+[h5 Breaking changes]
+The call ``unit_test_log.set_formatter( new formatter );`` resets the log stream and log level. Be sure to
+specify the sink and log level after this call to experience the same behavior as for Boost.Test < 3.3.
+
 
 [h5 Bugfixes and feature requests]
 # [pull_request 81] Possibility to remove the support of the alternative stack at compilation time. See
   [link boost_test.utf_reference.link_references.config_disable_alt_stack `BOOST_TEST_DISABLE_ALT_STACK`] for more details.
+# [ticket 8707] Provide Standard xUnit XML Output from Boost Test
+# [ticket 8834] Boost Test should be able to generate report in both XML and HRF together
 # [ticket 11128] `[bb10/qnx failures]` Build error
+# [ticket 11845] Ability to generate the unique and stable test name for every data set in `BOOST_DATA_TEST_CASE`
+# [ticket 11859] Wrong handling of "," in Run-Parameters
 # [ticket 12024] boost test depends on nonexisting `abi::__cxa_demangle` on android
 # [ticket 12103] Fix for gcc bug 58952 (`getchar()` is defined as a macro in `uClibc`)
 # [ticket 12224] Crash on MSVC with RTTI disabled

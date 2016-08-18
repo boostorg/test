@@ -95,6 +95,7 @@ public:
     virtual void        test_unit_start( test_unit const& );
     virtual void        test_unit_finish( test_unit const&, unsigned long elapsed );
     virtual void        test_unit_skipped( test_unit const&, const_string );
+    virtual void        test_unit_aborted( test_unit const& );
 
     virtual void        exception_caught( execution_exception const& ex );
 
@@ -102,8 +103,23 @@ public:
 
     // log configuration methods
     void                set_stream( std::ostream& );
+    void                set_stream( output_format, std::ostream& );
     void                set_threshold_level( log_level );
+    void                set_threshold_level( output_format, log_level );
+
+    //! Add a format to the set of loggers
+    void                add_format( output_format );
+
+    //! Sets the unique format of the logger
     void                set_format( output_format );
+
+
+    //! Returns the logger for the specified format.
+    unit_test_log_formatter* get_formatter( output_format );
+
+    //! Sets the logger
+    //! The specified logger becomes the unique one.
+    //! @note the ownership of the pointer is transfered to this instance.
     void                set_formatter( unit_test_log_formatter* );
 
     // test progress logging
@@ -120,7 +136,7 @@ public:
 
 private:
     // Implementation helpers
-    bool                log_entry_start();
+    bool                log_entry_start(output_format log_format);
     void                log_entry_context( log_level l );
     void                clear_entry_context();
 
@@ -141,6 +157,17 @@ BOOST_TEST_SINGLETON_INST( unit_test_log )
 // ************************************************************************** //
 // **************       Unit test log interface helpers        ************** //
 // ************************************************************************** //
+
+// messages sent by the framework
+#define BOOST_TEST_FRAMEWORK_MESSAGE( M )                       \
+   (::boost::unit_test::unit_test_log                           \
+        << ::boost::unit_test::log::begin(                      \
+                "boost.test framework",                         \
+                __LINE__ ))                                     \
+             ( ::boost::unit_test::log_messages )               \
+    << BOOST_TEST_LAZY_MSG( M )                                 \
+/**/
+
 
 #define BOOST_TEST_MESSAGE( M )                                 \
     BOOST_TEST_LOG_ENTRY( ::boost::unit_test::log_messages )    \
