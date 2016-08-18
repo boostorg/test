@@ -10,13 +10,18 @@
 [h4 Boost.Test v3.3 / boost 1.62]
 
 [h5 New features]
-* now each sample of a dataset test case has its own name, such that it is possible to execute one particular sample from the
-  command line interface.
+* Boost.Test now treats each sample of a dataset test case as being a uniquely named test case under the same test suite,
+  which enables the (re)run of one particular sample from the command line interface
+* Boost.Test learned to interpret ':' as a separator for the test filters: the string passed to
+  [link boost_test.utf_reference.rt_param_reference.run_test `--run_test`]
+  generates tokens as if `--run_test` has been repeated, which enables the set up of several test filters
+  through the associated environment variable `BOOST_TEST_RUN_FILTERS`
 * the __UTF__ learned to log the messages in the xUnit/JUNIT log format.
   See [link boost_test.test_output.log_formats.log_junit_format here] for more details.
 * the __UTF__ learned to have several loggers at the same time, each of which with their own log level and log sink.
   See the associated command line switch [link boost_test.utf_reference.rt_param_reference.logger `--logger`] and
   corresponding environment variable `BOOST_TEST_LOGGER` for more details.
+* loggers are now able to indicate their default output stream and log level.
 
 
 [h5 Breaking changes]
