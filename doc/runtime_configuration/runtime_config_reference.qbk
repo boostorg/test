@@ -487,14 +487,14 @@ The ['logger] parameter allows to fully specify (log format, level and sink) one
 If this parameter is specified, it has precedence over [link boost_test.utf_reference.rt_param_reference.log_format `log_format`],
 [link boost_test.utf_reference.rt_param_reference.log_level `log_level`] and [link boost_test.utf_reference.rt_param_reference.log_sink `log_sink`].
 
-The parameter is /repeatable/: it may appear several times on the command line. It is possible to indicate a set of loggers using a ':' as
-a separator (useful for the use through the environment variable).
+The parameter is /repeatable/: it may appear several times on the command line. It is possible to indicate a set of loggers using the separator ':',
+which is the only way for repeating a logger description through the environment variable.
 
-The parameter is composed of 3 fields separated by a ',' and indicating respectively the log format, level and sink. The log
+The parameter is composed of three fields separated by a coma ',' and indicating respectively the log format, level and sink. The log
 format is mandatory. The log level and sink are both optional: if omitted, the default for the specified format will
 be used. The log level and sink accept the same value as their respective command line switch (see
 [link boost_test.utf_reference.rt_param_reference.log_level `log_level`] and [link boost_test.utf_reference.rt_param_reference.log_sink `log_sink`]
-for more information). 
+for more information).
 
 [h4 Acceptable values]
 
@@ -504,18 +504,18 @@ Case sensitive [link regular_param_value string]:
 logger_set    ::= (logger ':')* logger
 logger        ::= logger_format (',' log_level? (',' log_sink? )? )?
 logger_format ::= 'HRF' | 'XML' | 'JUNIT'
-log_level     ::= all | success | test_suite | message | warning | error | cpp_exception | system_error | fatal_error | nothing
+log_level     ::= 'all' | 'success' | 'test_suite' | 'message' | 'warning' | 'error' | 'cpp_exception' | 'system_error' | 'fatal_error' | 'nothing'
 log_sink      ::= 'stdout' | 'stderr' | filename
 ```
 
 Examples:
 * `--logger=HRF,all` will set the `all` log level for the `HRF` log format, and will use the default sink associated to `HRF` (`stdout`)
 * `--logger=JUNIT,,somefile.xml:HRF,warning` will use the default log level associated to the `JUNIT` log format, and will use the file `somefile.xml`
-  as the log sink. It will also enable the `HRF` format with log level `warning` and default sink for `HRF` (`stdout`).
+  as the log sink. It will also enable the `HRF` format with log level `warning`. The corresponding sink will be set to the `HRF` default (`stdout`).
 
 [h4 Command line syntax]
 
-* `--logger=<stream or file name>`
+* `--logger=<logger_set>`
 
 [h4 Environment variable]
 
