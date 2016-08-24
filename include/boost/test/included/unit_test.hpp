@@ -13,6 +13,7 @@
 #define BOOST_INCLUDED_UNIT_TEST_FRAMEWORK_HPP_071894GER
 
 #include <boost/test/impl/compiler_log_formatter.ipp>
+#include <boost/test/impl/junit_log_formatter.ipp>
 #include <boost/test/impl/debug.ipp>
 #include <boost/test/impl/decorator.ipp>
 #include <boost/test/impl/framework.ipp>
