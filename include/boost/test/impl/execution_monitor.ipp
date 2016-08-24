@@ -1378,7 +1378,10 @@ enable( unsigned mask )
 #endif
 
     return ~old_cw & BOOST_FPE_ALL;
-#elif defined(__GLIBC__) && defined(__USE_GNU) && !defined(BOOST_CLANG) && !defined(BOOST_NO_FENV_H)
+#elif defined(__GLIBC__) && defined(__USE_GNU)
+    if (BOOST_FPE_ALL == 0)
+        /* Not Implemented */
+        return 0;
     feclearexcept(BOOST_FPE_ALL);
     int res = feenableexcept( mask );
     return res == -1 ? (unsigned)BOOST_FPE_INV : (unsigned)res;
@@ -1415,7 +1418,10 @@ disable( unsigned mask )
 #endif
 
     return ~old_cw & BOOST_FPE_ALL;
-#elif defined(__GLIBC__) && defined(__USE_GNU) && !defined(BOOST_CLANG) && !defined(BOOST_NO_FENV_H)
+#elif defined(__GLIBC__) && defined(__USE_GNU)
+    if (BOOST_FPE_ALL == 0)
+        /* Not Implemented */
+        return BOOST_FPE_INV;
     feclearexcept(BOOST_FPE_ALL);
     int res = fedisableexcept( mask );
     return res == -1 ? (unsigned)BOOST_FPE_INV : (unsigned)res;
