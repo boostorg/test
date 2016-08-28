@@ -129,7 +129,7 @@ Hence the dataset implements the notion of /sequence/.
 
 The descriptive power of the datasets in __UTF__ comes from
 
-* the [classref boost::unit_test::data::monomorphic::dataset interface] for creating a custom datasets, which is quite simple,
+* the [link boost_test.tests_organization.test_cases.test_case_generation.dataset_interface interface] for creating a custom datasets, which is quite simple,
 * the [link boost_test.tests_organization.test_cases.test_case_generation.operations operations] they provide for combining different datasets
 * their interface with other type of collections (`stl` containers, `C` arrays)
 * the available built-in [link boost_test.tests_organization.test_cases.test_case_generation.generators /dataset generators/]
@@ -143,9 +143,7 @@ The descriptive power of the datasets in __UTF__ comes from
 As we will see in the next sections, datasets representing collections of different types may be combined together (e.g.. /zip/ or /grid/).
 These operations result in new datasets, in which the samples are of an augmented type.
 
-[/ TODO resurrect this example
-  [tip This [link boost_test.boost_test_examples.ref_dataset_example68 example] implements a dataset generating a Fibonacci sequence]
-]
+[tip This [link boost_test.boost_test_examples.ref_dataset_example68 example] implements a dataset generating a Fibonacci sequence]
 
 [endsect] [/ datasets]
 
@@ -156,8 +154,20 @@ These operations result in new datasets, in which the samples are of an augmente
 [/ Main code import for this section ]
 [import ../snippet/dataset_1/test_file.cpp]
 
+[/ ##################################################################################################################################  ]
+[section:dataset_interface Dataset interface]
+The interface of the /dataset/ should implement the two following functions:
 
+- `iterator begin()` where /iterator/ is a forward iterator,
+- `boost::unit_test::datasize::size_t size() const` indicates the size of the dataset. The returned type is a dedicated
+  class [classref boost::unit_test::datasize::size_t size_t] that can indicate an /infinite/ dataset size.
 
+[tip This [link boost_test.boost_test_examples.ref_dataset_example68 example] implements a dataset generating a Fibonacci sequence]
+
+Once the dataset class `D` is declared, the trait `[classref boost::unit_test::data::monomorphic::is_dataset]<D>::value` should evaluate to
+`true`.
+
+[endsect] [/ datasets interface]
 
 [/ ##################################################################################################################################  ]
 [section:datasets_auto_registration Declaring and registering test cases with datasets]
@@ -255,9 +265,7 @@ The following properties hold:
 [warning In the expression `dsa + dsb`, `dsa` and/or `dsb` can be of infinite size. The resulting dataset will have an infinite size as well. If `dsa` is infinite, the content of
  `dsb` will never be reached. ]
 
-
 [bt_example dataset_example62..Example of join on datasets..run]
-
 
 [endsect]
 
@@ -284,8 +292,7 @@ The following properties hold:
    == dsa ^ dsb ^ dsc
   ``
 
-
-A particular handling of the size is performed if `dsa` and `dsb` are of different size. The rule is as follow:
+A particular handling is performed if `dsa` and `dsb` are of different size. The rule is as follow:
 
 * if the both zipped datasets have the same size, this is the size of the resulting dataset (this size can then be infinite).
 * otherwise if one of the dataset is of size 1 (singleton) or of infinite size, the resulting size is governed by the other dataset.
@@ -325,7 +332,8 @@ The following properties hold:
  will be automatically set by the __UTF__]
 
 In the following example, the random number generator is the second dataset. Its state is evaluated 6 times (3 times for the first `xrange` - first dimension -
-and twice for the second `xrange` - second dimension - to which it is zipped). Note that the state of the random engine is not copied between two successive evaluations of the first dimension.
+and twice for the second `xrange` - second dimension - to which it is zipped). Note that the state of the random engine is
+not copied between two successive evaluations of the first dimension.
 
 [bt_example dataset_example64..Example of Cartesian product..run-fail]
 
