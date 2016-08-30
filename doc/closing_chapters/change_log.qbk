@@ -11,7 +11,9 @@
 
 [h5 New features]
 * Boost.Test now treats each sample of a dataset test case as being a uniquely named test case under the same test suite,
-  which enables the (re)run of one particular sample from the command line interface
+  which enables the (re)run of one particular sample from the command line interface. See
+  [link boost_test.tests_organization.test_cases.test_case_generation.datasets_auto_registration.samples_and_test_tree here]
+  for more details,
 * Boost.Test learned to interpret ':' as a separator for the test filters: the string passed to
   [link boost_test.utf_reference.rt_param_reference.run_test `--run_test`]
   generates tokens as if `--run_test` has been repeated, which enables the set up of several test filters
