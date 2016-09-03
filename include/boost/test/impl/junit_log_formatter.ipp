@@ -332,11 +332,6 @@ junit_log_formatter::test_unit_start( std::ostream& ostr, test_unit const& tu )
         root_id = tu.p_id;
     list_path_to_root.push_back( tu.p_id );
     junit_impl::junit_log_helper& v = map_tests[tu.p_id]; // current_test_case_id not working here
-
-    if( !tu.p_file_name.empty() ) {
-        v.file_name.assign(tu.p_file_name.begin(), tu.p_file_name.end() );
-        v.line_number = tu.p_line_num;
-    }
 }
 
 
@@ -420,10 +415,6 @@ junit_log_formatter::log_exception_start( std::ostream& ostr, log_checkpoint_dat
             break;
         }
 
-        entry.line_number = loc.m_line_num;
-        entry.failure_file.assign(loc.m_file_name.begin(), loc.m_file_name.end());
-        entry.function.assign(loc.m_function.begin(), loc.m_function.end());
-
         o << "UNCAUGHT EXCEPTION:" << std::endl;
         if( !loc.m_function.is_empty() )
             o << "- function: \""   << loc.m_function << "\"" << std::endl;
@@ -481,7 +472,6 @@ junit_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& 
         entry.log_entry = junit_impl::junit_log_helper::assertion_entry::log_entry_info;
         entry.logentry_message = "info";
         entry.logentry_type = "message";
-        entry.line_number = entry_data.m_line_num;
 
         o << (let == unit_test_log_formatter::BOOST_UTL_ET_WARNING ?
               "WARNING:" : (let == unit_test_log_formatter::BOOST_UTL_ET_MESSAGE ?
@@ -504,11 +494,6 @@ junit_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& 
         entry.log_entry = junit_impl::junit_log_helper::assertion_entry::log_entry_failure;
         entry.logentry_message = "failure";
         entry.logentry_type = (let == unit_test_log_formatter::BOOST_UTL_ET_ERROR ? "assertion error" : "fatal error");
-        entry.line_number = entry_data.m_line_num;
-
-        const_string filebasename(file_basename(entry_data.m_file_name));
-        entry.failure_file.assign(filebasename.begin(), filebasename.end());
-        entry.function = "";
 
         o << "ASSERTION FAILURE:" << std::endl
           << "- file   : " << file_basename(entry_data.m_file_name) << std::endl
@@ -540,12 +525,11 @@ junit_log_formatter::log_entry_value( std::ostream& ostr, const_string value )
     if(!last_entry.assertion_entries.empty())
     {
         junit_impl::junit_log_helper::assertion_entry& log_entry = last_entry.assertion_entries.back();
-        //log_entry.logentry_message = o.str();
         log_entry.output += value;
     }
     else
     {
-        // this may be a message comming from another observer
+        // this may be a message coming from another observer
         // the prefix is set in the log_entry_start
         last_entry.system_out += value;
     }
