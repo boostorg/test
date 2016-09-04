@@ -275,8 +275,6 @@ BOOST_AUTO_TEST_CASE( test_result_reports )
     ts_3->depends_on( ts_1 );
 
     check( test_output, ts_main );
-
-    results_reporter::set_stream( std::cout );
 }
 
 //____________________________________________________________________________//
