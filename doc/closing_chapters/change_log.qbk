@@ -40,6 +40,7 @@ specify the sink and log level after this call to experience the same behavior a
 # [ticket 12024] boost test depends on nonexisting `abi::__cxa_demangle` on android
 # [ticket 12103] Fix for gcc bug 58952 (`getchar()` is defined as a macro in `uClibc`)
 # [ticket 12224] Crash on MSVC with RTTI disabled
+# [ticket 12378] Compilation errors with clang 3.8
 
 [h4 Boost.Test v3.2 / boost 1.61]
 
