@@ -230,7 +230,7 @@ This make it easy to:
 Exactly as regular test cases, each test case (associated to a specific sample) is executed within the test body in a /guarded manner/:
 
 * the test execution are independent: if an error occurs for one sample, the remaining samples execution is not affected
-* in case of error, the [link boost_test.test_output.contexts context] within which the error occurred is reported in the [link boost_test.test_output log] along with
+* in case of error, the [link boost_test.test_output.test_tools_support_for_logging.contexts context] within which the error occurred is reported in the [link boost_test.test_output log] along with
   the failing sample index. This context contains the sample for which the test failed, which would ease the debugging.
 
 [endsect]
