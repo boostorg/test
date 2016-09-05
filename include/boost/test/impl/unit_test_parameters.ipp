@@ -231,7 +231,7 @@ register_parameters( rt::parameters_store& store )
         rt::default_value = OF_INVALID,
         rt::optional_value = OF_CLF,
         rt::enum_values<unit_test::output_format>::value = 
-#if !defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST) && !defined(BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX)
+#if defined(BOOST_TEST_CLA_NEW_API)
         {
             { "HRF", OF_CLF },
             { "DOT", OF_DOT }
@@ -270,7 +270,7 @@ register_parameters( rt::parameters_store& store )
         rt::env_var = "BOOST_TEST_LOG_FORMAT",
         rt::default_value = OF_CLF,
         rt::enum_values<unit_test::output_format>::value =
-#if !defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST) && !defined(BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX)
+#if defined(BOOST_TEST_CLA_NEW_API)
         {
             { "HRF", OF_CLF },
             { "CLF", OF_CLF },
@@ -304,7 +304,7 @@ register_parameters( rt::parameters_store& store )
         rt::env_var = "BOOST_TEST_LOG_LEVEL",
         rt::default_value = log_all_errors,
         rt::enum_values<unit_test::log_level>::value =
-#if !defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST) && !defined(BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX)
+#if defined(BOOST_TEST_CLA_NEW_API)
         {
             { "all"           , log_successful_tests },
             { "success"       , log_successful_tests },
@@ -367,7 +367,7 @@ register_parameters( rt::parameters_store& store )
         rt::description = "Specifies output format (both log and report).",
         rt::env_var = "BOOST_TEST_OUTPUT_FORMAT",
         rt::enum_values<unit_test::output_format>::value =
-#if !defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST) && !defined(BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX)
+#if defined(BOOST_TEST_CLA_NEW_API)
         {
             { "HRF", OF_CLF },
             { "CLF", OF_CLF },
@@ -435,7 +435,7 @@ register_parameters( rt::parameters_store& store )
         rt::env_var = "BOOST_TEST_REPORT_FORMAT",
         rt::default_value = OF_CLF,
         rt::enum_values<unit_test::output_format>::value =
-#if !defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST) && !defined(BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX)
+#if defined(BOOST_TEST_CLA_NEW_API)
         {
             { "HRF", OF_CLF },
             { "CLF", OF_CLF },
@@ -467,7 +467,7 @@ register_parameters( rt::parameters_store& store )
         rt::env_var = "BOOST_TEST_REPORT_LEVEL",
         rt::default_value = CONFIRMATION_REPORT,
         rt::enum_values<unit_test::report_level>::value =
-#if !defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST) && !defined(BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX)
+#if defined(BOOST_TEST_CLA_NEW_API)
         {
             { "confirm",  CONFIRMATION_REPORT },
             { "short",    SHORT_REPORT },
