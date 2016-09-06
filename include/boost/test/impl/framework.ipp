@@ -56,6 +56,9 @@
 #include <cstdlib>
 #include <ctime>
 #include <numeric>
+#ifdef BOOST_NO_CXX98_RANDOM_SHUFFLE
+#include <iterator>
+#endif
 
 #ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::time; using ::srand; }
@@ -435,6 +438,25 @@ parse_filters( test_unit_id master_tu_id, test_unit_id_list& tu_to_enable, test_
 
 //____________________________________________________________________________//
 
+#ifdef BOOST_NO_CXX98_RANDOM_SHUFFLE
+
+// a poor man's implementation of random_shuffle
+template< class RandomIt, class RandomFunc >
+void random_shuffle( RandomIt first, RandomIt last, RandomFunc &r )
+{
+    typedef typename std::iterator_traits<RandomIt>::difference_type difference_type;
+    difference_type n = last - first;
+    for (difference_type i = n-1; i > 0; --i) {
+        difference_type j = r(i+1);
+        if (j != i) {
+            using std::swap;
+            swap(first[i], first[j]);
+        }
+    }
+}
+
+#endif
+
 } // namespace impl
 
 // ************************************************************************** //
@@ -688,7 +710,11 @@ public:
 
                         const random_generator_helper& rand_gen = p_random_generator ? *p_random_generator : random_generator_helper();
 
+#ifdef BOOST_NO_CXX98_RANDOM_SHUFFLE
+                        impl::random_shuffle( children_with_the_same_rank.begin(), children_with_the_same_rank.end(), rand_gen );
+#else
                         std::random_shuffle( children_with_the_same_rank.begin(), children_with_the_same_rank.end(), rand_gen );
+#endif
 
                         BOOST_TEST_FOREACH( test_unit_id, chld, children_with_the_same_rank ) {
                             unsigned chld_timeout = child_timeout( timeout, tu_timer.elapsed() );
