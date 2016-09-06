@@ -11,7 +11,9 @@
 
 [h5 New features]
 * Boost.Test now treats each sample of a dataset test case as being a uniquely named test case under the same test suite,
-  which enables the (re)run of one particular sample from the command line interface
+  which enables the (re)run of one particular sample from the command line interface. See
+  [link boost_test.tests_organization.test_cases.test_case_generation.datasets_auto_registration.samples_and_test_tree here]
+  for more details,
 * Boost.Test learned to interpret ':' as a separator for the test filters: the string passed to
   [link boost_test.utf_reference.rt_param_reference.run_test `--run_test`]
   generates tokens as if `--run_test` has been repeated, which enables the set up of several test filters
@@ -40,6 +42,9 @@ specify the sink and log level after this call to experience the same behavior a
 # [ticket 12024] boost test depends on nonexisting `abi::__cxa_demangle` on android
 # [ticket 12103] Fix for gcc bug 58952 (`getchar()` is defined as a macro in `uClibc`)
 # [ticket 12224] Crash on MSVC with RTTI disabled
+# [ticket 12241] Data-driven testing over a range of `std::tuple` has broken
+# [ticket 12257] Incorrect line numbers in `test_units` generated from `test_case_gen`
+# [ticket 12378] Compilation errors with clang 3.8
 
 [h4 Boost.Test v3.2 / boost 1.61]
 

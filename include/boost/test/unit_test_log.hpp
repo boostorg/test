@@ -85,6 +85,30 @@ private:
 // **************                 unit_test_log                ************** //
 // ************************************************************************** //
 
+/// @brief Manages the sets of loggers, their streams and log levels
+///
+/// The Boost.Test framework allows for having several formatters/loggers at the same time, each of which
+/// having their own log level and output stream.
+///
+/// This class serves the purpose of
+/// - exposing an interface to the test framework (as a boost::unit_test::test_observer)
+/// - exposing an interface to the testing tools
+/// - managing several loggers
+///
+/// @note Accesses to the functions exposed by this class are made through the singleton
+///   @c boost::unit_test::unit_test_log.
+///
+/// Users/developers willing to implement their own formatter need to:
+/// - implement a boost::unit_test::unit_test_log_formatter that will output the desired format
+/// - register the formatter during a eg. global fixture using the method @c set_formatter (though the framework singleton).
+///
+/// @warning this observer has a higher priority than the @ref boost::unit_test::results_collector_t. This means
+/// that the various @ref boost::unit_test::test_results associated to each test unit may not be available at the time
+/// the @c test_unit_start, @c test_unit_finish ... are called.
+///
+/// @see
+/// - boost::unit_test::test_observer
+/// - boost::unit_test::unit_test_log_formatter
 class BOOST_TEST_DECL unit_test_log_t : public test_observer, public singleton<unit_test_log_t> {
 public:
     // test_observer interface implementation
@@ -102,23 +126,44 @@ public:
     virtual int         priority() { return 1; }
 
     // log configuration methods
+    //! Sets the stream for all enabled loggers
     void                set_stream( std::ostream& );
+
+    //! Sets the stream for specific logger
+    //!
+    //! @note Has no effect if the specified format is not found
+    //! @par Since Boost 1.62
     void                set_stream( output_format, std::ostream& );
+
+    //! Sets the threshold level for all enabled loggers/formatters.
     void                set_threshold_level( log_level );
+
+    //! Sets the threshold/log level of a specific format
+    //!
+    //! @note Has no effect if the specified format is not found
+    //! @par Since Boost 1.62
     void                set_threshold_level( output_format, log_level );
 
     //! Add a format to the set of loggers
+    //!
+    //! Adding a logger means that the specified logger is enabled. The log level is managed by the formatter itself
+    //! and specifies what events are forwarded to the underlying formatter.
+    //! @par Since Boost 1.62
     void                add_format( output_format );
 
     //! Sets the unique format of the logger
     void                set_format( output_format );
 
-
-    //! Returns the logger for the specified format.
+    //! Returns the logger instance for a specific format.
+    //!
+    //! @returns the logger/formatter instance, or @c 0 if the format is not found.
+    //! @par Since Boost 1.62
     unit_test_log_formatter* get_formatter( output_format );
 
     //! Sets the logger
+    //!
     //! The specified logger becomes the unique one.
+    //!
     //! @note the ownership of the pointer is transfered to this instance.
     void                set_formatter( unit_test_log_formatter* );
 

@@ -974,7 +974,7 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     register_observer( unit_test_log );
 
     if( runtime_config::get<bool>( runtime_config::SHOW_PROGRESS ) ) {
-        progress_monitor.set_stream( s_frk_state().m_log_sinks.begin()->second.ref() ); // TODO
+        progress_monitor.set_stream( std::cout ); // defaults to stdout
         register_observer( progress_monitor );
     }
 
