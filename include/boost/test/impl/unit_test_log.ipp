@@ -584,7 +584,7 @@ unit_test_log_t::add_format( output_format log_format )
 
 //____________________________________________________________________________//
 
-unit_test_log_formatter* 
+unit_test_log_formatter*
 unit_test_log_t::get_formatter( output_format log_format ) {
     BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
         if( current_logger_data.m_format == log_format) {
@@ -596,11 +596,27 @@ unit_test_log_t::get_formatter( output_format log_format ) {
 
 
 void
+unit_test_log_t::add_custom_formatter( unit_test_log_formatter* the_formatter )
+{
+    // remove only user defined logger
+    for(unit_test_log_impl::v_formatter_data_t::iterator it(s_log_impl().m_log_formatter_data.begin()),
+            ite(s_log_impl().m_log_formatter_data.end());
+        it != ite;
+        ++it)
+    {
+        if( it->m_format == OF_CUSTOM_LOGGER) {
+            s_log_impl().m_log_formatter_data.erase(it);
+            break;
+        }
+    }
+    s_log_impl().m_log_formatter_data.push_back( unit_test_log_data_helper_impl(the_formatter, OF_CUSTOM_LOGGER, true) );
+}
+
+void
 unit_test_log_t::set_formatter( unit_test_log_formatter* the_formatter )
 {
-    // remove all previous loggers
-    s_log_impl().m_log_formatter_data.clear(); // no mem leaks since shared_ptr is in use
-    s_log_impl().m_log_formatter_data.push_back( unit_test_log_data_helper_impl(the_formatter, OF_INVALID, true) );
+    add_custom_formatter(the_formatter);
+    set_format(OF_CUSTOM_LOGGER);
 }
 
 //____________________________________________________________________________//

@@ -331,7 +331,7 @@ junit_log_formatter::test_unit_start( std::ostream& ostr, test_unit const& tu )
     if(list_path_to_root.empty())
         root_id = tu.p_id;
     list_path_to_root.push_back( tu.p_id );
-    junit_impl::junit_log_helper& v = map_tests[tu.p_id]; // current_test_case_id not working here
+    map_tests.insert(std::make_pair(tu.p_id, junit_impl::junit_log_helper())); // current_test_case_id not working here
 }
 
 

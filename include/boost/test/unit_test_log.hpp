@@ -160,12 +160,21 @@ public:
     //! @par Since Boost 1.62
     unit_test_log_formatter* get_formatter( output_format );
 
-    //! Sets the logger
+    //! Sets the logger instance
     //!
     //! The specified logger becomes the unique one.
     //!
-    //! @note the ownership of the pointer is transfered to this instance.
+    //! @note the ownership of the pointer is transfered to this instance. This corresponds to a
+    //! call to @c add_custom_formatter followed by a call to @c set_format(OF_CUSTOM_LOGGER).
     void                set_formatter( unit_test_log_formatter* );
+
+    //! Adds a custom log formatter to the set of formatters
+    //!
+    //! The specified logger is added with the format @c OF_CUSTOM_LOGGER, such that it can
+    //! be futher selected.
+    //! @note the ownership of the pointer is transfered to this instance.
+    //! @par Since Boost 1.63
+    void                add_custom_formatter( unit_test_log_formatter* the_formatter );
 
     // test progress logging
     void                set_checkpoint( const_string file, std::size_t line_num, const_string msg = const_string() );
