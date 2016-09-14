@@ -126,7 +126,9 @@ public:
     virtual int         priority() { return 1; }
 
     // log configuration methods
-    //! Sets the stream for all enabled loggers
+    //! Sets the stream for all loggers
+    //!
+    //! This will override the log sink/stream of all loggers, whether enabled or not.
     void                set_stream( std::ostream& );
 
     //! Sets the stream for specific logger
@@ -135,7 +137,9 @@ public:
     //! @par Since Boost 1.62
     void                set_stream( output_format, std::ostream& );
 
-    //! Sets the threshold level for all enabled loggers/formatters.
+    //! Sets the threshold level for all loggers/formatters.
+    //!
+    //! This will override the log level of all loggers, whether enabled or not.
     void                set_threshold_level( log_level );
 
     //! Sets the threshold/log level of a specific format
@@ -151,30 +155,46 @@ public:
     //! @par Since Boost 1.62
     void                add_format( output_format );
 
-    //! Sets the unique format of the logger
+    //! Sets the format of the logger
+    //!
+    //! This will become the only active format of the logs.
     void                set_format( output_format );
 
     //! Returns the logger instance for a specific format.
     //!
-    //! @returns the logger/formatter instance, or @c 0 if the format is not found.
+    //! @returns the logger/formatter instance, or @c (unit_test_log_formatter*)0 if the format is not found.
     //! @par Since Boost 1.62
     unit_test_log_formatter* get_formatter( output_format );
 
     //! Sets the logger instance
     //!
-    //! The specified logger becomes the unique one.
+    //! The specified logger becomes the unique active one. The custom log formatter has the
+    //! format @c OF_CUSTOM_LOGGER. If such a format exists already, its formatter gets replaced by the one
+    //! given in argument.
     //!
-    //! @note the ownership of the pointer is transfered to this instance. This corresponds to a
-    //! call to @c add_custom_formatter followed by a call to @c set_format(OF_CUSTOM_LOGGER).
+    //! The log level and output stream of the new formatter are taken from the currently active logger. In case
+    //! several loggers are active, the order of priority is CUSTOM, HRF, XML, and JUNIT.
+    //! If (unit_test_log_formatter*)0 is given as argument, the custom logger (if any) is removed.
+    //!
+    //! @note The ownership of the pointer is transfered to the Boost.Test framework. This call is equivalent to
+    //! - a call to @c add_formatter
+    //! - a call to @c set_format(OF_CUSTOM_LOGGER)
+    //! - a configuration of the newly added logger with a previously configured stream and log level.
     void                set_formatter( unit_test_log_formatter* );
 
     //! Adds a custom log formatter to the set of formatters
     //!
     //! The specified logger is added with the format @c OF_CUSTOM_LOGGER, such that it can
-    //! be futher selected.
-    //! @note the ownership of the pointer is transfered to this instance.
-    //! @par Since Boost 1.63
-    void                add_custom_formatter( unit_test_log_formatter* the_formatter );
+    //! be futher selected or its stream/log level can be specified.
+    //! If there is already a custom logger (with @c OF_CUSTOM_LOGGER), then
+    //! the existing one gets replaced by the one given in argument.
+    //! The provided logger is added with an enabled state.
+    //! If (unit_test_log_formatter*)0 is given as argument, the custom logger (if any) is removed and
+    //! no other action is performed.
+    //!
+    //! @note The ownership of the pointer is transfered to the Boost.Test framework.
+    //! @par Since Boost 1.62
+    void                add_formatter( unit_test_log_formatter* the_formatter );
 
     // test progress logging
     void                set_checkpoint( const_string file, std::size_t line_num, const_string msg = const_string() );

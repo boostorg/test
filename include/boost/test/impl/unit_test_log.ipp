@@ -498,10 +498,8 @@ unit_test_log_t::set_stream( std::ostream& str )
         return;
 
     BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
-        if( current_logger_data.m_enabled ) {
-            current_logger_data.m_stream = &str;
-            current_logger_data.m_stream_state_saver.reset( new io_saver_type( str ) );
-        }
+        current_logger_data.m_stream = &str;
+        current_logger_data.m_stream_state_saver.reset( new io_saver_type( str ) );
     }
 }
 
@@ -531,9 +529,7 @@ unit_test_log_t::set_threshold_level( log_level lev )
         return;
 
     BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
-        if( current_logger_data.m_enabled ) {
-            current_logger_data.m_log_formatter->set_log_level( lev );
-        }
+        current_logger_data.m_log_formatter->set_log_level( lev );
     }
 }
 
@@ -596,7 +592,7 @@ unit_test_log_t::get_formatter( output_format log_format ) {
 
 
 void
-unit_test_log_t::add_custom_formatter( unit_test_log_formatter* the_formatter )
+unit_test_log_t::add_formatter( unit_test_log_formatter* the_formatter )
 {
     // remove only user defined logger
     for(unit_test_log_impl::v_formatter_data_t::iterator it(s_log_impl().m_log_formatter_data.begin()),
@@ -609,14 +605,39 @@ unit_test_log_t::add_custom_formatter( unit_test_log_formatter* the_formatter )
             break;
         }
     }
-    s_log_impl().m_log_formatter_data.push_back( unit_test_log_data_helper_impl(the_formatter, OF_CUSTOM_LOGGER, true) );
+
+    if( the_formatter ) {
+        s_log_impl().m_log_formatter_data.push_back( unit_test_log_data_helper_impl(the_formatter, OF_CUSTOM_LOGGER, true) );
+    }
 }
 
 void
 unit_test_log_t::set_formatter( unit_test_log_formatter* the_formatter )
 {
-    add_custom_formatter(the_formatter);
-    set_format(OF_CUSTOM_LOGGER);
+    // remove only user defined logger
+    log_level current_level = invalid_log_level;
+    std::ostream *current_stream = 0;
+    output_format previous_format = OF_INVALID;
+    for(unit_test_log_impl::v_formatter_data_t::iterator it(s_log_impl().m_log_formatter_data.begin()),
+            ite(s_log_impl().m_log_formatter_data.end());
+        it != ite;
+        ++it)
+    {
+        if( it->m_enabled ) {
+            if( current_level == invalid_log_level || it->m_format < previous_format || it->m_format == OF_CUSTOM_LOGGER) {
+                current_level = it->get_log_level();
+                current_stream = &(it->stream());
+                previous_format = it->m_format;
+            }
+        }
+    }
+
+    if( the_formatter ) {
+        add_formatter(the_formatter);
+        set_format(OF_CUSTOM_LOGGER);
+        set_threshold_level(OF_CUSTOM_LOGGER, current_level);
+        set_stream(OF_CUSTOM_LOGGER, *current_stream);
+    }
 }
 
 //____________________________________________________________________________//
@@ -629,6 +650,18 @@ void
 unit_test_log_formatter::log_entry_value( std::ostream& ostr, lazy_ostream const& value )
 {
     log_entry_value( ostr, (wrap_stringstream().ref() << value).str() );
+}
+
+void
+unit_test_log_formatter::set_log_level(log_level new_log_level)
+{
+    m_log_level = new_log_level;
+}
+
+log_level
+unit_test_log_formatter::get_log_level() const
+{
+    return m_log_level;
 }
 
 //____________________________________________________________________________//
