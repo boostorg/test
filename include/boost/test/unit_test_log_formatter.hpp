@@ -279,17 +279,11 @@ public:
     /// Some loggers need to manage the log level by their own. This
     /// member function let the implementation decide of that.
     /// @par Since Boost 1.62
-    virtual void        set_log_level(log_level new_log_level)
-    {
-        m_log_level = new_log_level;
-    }
+    virtual void        set_log_level(log_level new_log_level);
 
     /// Returns the log level of the logger/formatter
     /// @par Since Boost 1.62
-    virtual log_level   get_log_level() const
-    {
-        return m_log_level;
-    }
+    virtual log_level   get_log_level() const;
     // @}
 
 
