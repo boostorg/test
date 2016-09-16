@@ -63,7 +63,6 @@ or for a specific logger:
 
 [tip See [memberref boost::unit_test::unit_test_log_t::set_threshold_level] and [enumref boost::unit_test::output_format] for more details]
 
-
 In regular circumstances you shouldn't use this interface, since you not only override default log level, but also
 the one supplied at test execution time. Prefer to use runtime parameters
 [link boost_test.utf_reference.rt_param_reference.log_level `--log_level`] or [link boost_test.utf_reference.rt_param_reference.logger `--logger`]
@@ -87,7 +86,9 @@ or for adding a format:
    boost::unit_test::unit_test_log.add_format( boost::unit_test::output_format );
 ``
 
-Note that [memberref boost::unit_test::unit_test_log_t::set_format] above disables all formatters but the one provided as argument.
+[caution [memberref boost::unit_test::unit_test_log_t::set_format] above disables all formatters but the one provided as argument.]
+
+[tip See [memberref boost::unit_test::unit_test_log_t::set_format] and [enumref boost::unit_test::output_format] for more details]
 
 In regular circumstances you shouldn't use this interface. Prefer to use runtime parameters
 [link boost_test.utf_reference.rt_param_reference.log_format `--log_format`] or [link boost_test.utf_reference.rt_param_reference.logger `--logger`]
@@ -102,16 +103,21 @@ for predefined log format selection.
 
 It is possible to implement your own formatter: it should derive from [classref boost::unit_test::unit_test_log_formatter].
 
-Once implemented, add it to the set of log format using one of the two functions:
+It is possible to add a your own instance of a formatter to the set of formats using one of the two functions:
 
 ``
 boost::unit_test::unit_test_log.set_formatter( unit_test_log_formatter* );
+boost::unit_test::unit_test_log.add_formatter( unit_test_log_formatter* );
 ``
 
-[warning This call is equivalent to [memberref boost::unit_test::unit_test_log_t::set_format] ([link boost_test.test_output.logging_api.log_ct_log_format see here])
+[tip See [memberref boost::unit_test::unit_test_log_t::set_formatter] and [memberref boost::unit_test::unit_test_log_t::add_formatter]
+ for more details]
+
+[warning The call to `boost::unit_test::unit_test_log.set_formatter` is equivalent to
+ [memberref boost::unit_test::unit_test_log_t::set_format] ([link boost_test.test_output.logging_api.log_ct_log_format see here])
  as it disables all other formatters.]
 
-[tip More details about the class implementing the formatting of the logs can be found in the following reference sections.
+[tip More details about the class implementing the formatting of the logs can be found in the following reference sections:
 
 * [classref boost::unit_test::unit_test_log_formatter] defines the interface for all loggers. Built-in
   [link boost_test.test_output.log_formats.log_human_readable_format HRF], [link boost_test.test_output.log_formats.log_xml_format XML]

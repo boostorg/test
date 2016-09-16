@@ -70,7 +70,7 @@ namespace rt = boost::runtime;
 
 namespace runtime_config {
 
-// UTF parameters 
+// UTF parameters
 std::string AUTO_START_DBG    = "auto_start_dbg";
 std::string BREAK_EXEC_PATH   = "break_exec_path";
 std::string BUILD_INFO        = "build_info";
@@ -136,7 +136,7 @@ register_parameters( rt::parameters_store& store )
 #endif
     ));
 
-    break_exec_path.add_cla_id( "--", BREAK_EXEC_PATH, "=" );    
+    break_exec_path.add_cla_id( "--", BREAK_EXEC_PATH, "=" );
     store.add( break_exec_path );
 
     ///////////////////////////////////////////////
@@ -166,7 +166,7 @@ register_parameters( rt::parameters_store& store )
 #endif
         rt::help = "If option " + CATCH_SYS_ERRORS + " has value no the frameworks does not attempt to catch "
                    "asynchronous system failure events (signals on *NIX platforms or structured exceptions on Windows). "
-                   " Default value is " 
+                   " Default value is "
 #ifdef BOOST_TEST_DEFAULTS_TO_CORE_DUMP
                     "no."
 #else
@@ -230,7 +230,7 @@ register_parameters( rt::parameters_store& store )
         rt::env_var = "BOOST_TEST_LIST_CONTENT",
         rt::default_value = OF_INVALID,
         rt::optional_value = OF_CLF,
-        rt::enum_values<unit_test::output_format>::value = 
+        rt::enum_values<unit_test::output_format>::value =
 #if defined(BOOST_TEST_CLA_NEW_API)
         {
             { "HRF", OF_CLF },
@@ -380,7 +380,7 @@ register_parameters( rt::parameters_store& store )
             ( "XML", OF_XML )
         ,
 #endif
-        rt::help = "Parameter " + OUTPUT_FORMAT + " combines an effect of " + REPORT_FORMAT + 
+        rt::help = "Parameter " + OUTPUT_FORMAT + " combines an effect of " + REPORT_FORMAT +
                    " and " + LOG_FORMAT + " parameters. This parameter has higher priority "
                    "than either one of them. In other words if this parameter is specified "
                    "it overrides the value of other two parameters. This parameter does not "
@@ -400,7 +400,7 @@ register_parameters( rt::parameters_store& store )
         rt::env_var = "BOOST_TEST_LOGGER",
         rt::value_hint = "log_format:log_level:log_sink",
         rt::help = "Parameter " + COMBINED_LOGGER + " allows to specify the logger type, level and sink\n"
-                   "in one command." 
+                   "in one command."
     ));
 
     combined_logger.add_cla_id( "--", COMBINED_LOGGER, "=" );
@@ -550,7 +550,7 @@ register_parameters( rt::parameters_store& store )
                    "filters', which allow to disable some test units. The __UTF__ also supports "
                    "enabling/disabling test units at compile time. These settings identify the default "
                    "set of test units to run. Parameter " + RUN_FILTERS + " is used to change this default. "
-                   "This parameter is repeatable, so you can specify more than one filter if necessary." 
+                   "This parameter is repeatable, so you can specify more than one filter if necessary."
     ));
 
     tests_to_run.add_cla_id( "--", RUN_FILTERS, "=" );
@@ -564,8 +564,8 @@ register_parameters( rt::parameters_store& store )
         rt::env_var = "BOOST_TEST_SAVE_PATTERN",
         rt::help = "Parameter " + SAVE_TEST_PATTERN + " facilitates switching mode of operation for "
                    "testing output streams.\n\nThis parameter serves no particular purpose within the "
-                   "framework itself. It can be used by test modules relying on output_test_stream to " 
-                   "implement testing logic. Default mode is 'match' (false)." 
+                   "framework itself. It can be used by test modules relying on output_test_stream to "
+                   "implement testing logic. Default mode is 'match' (false)."
     ));
 
     save_test_pattern.add_cla_id( "--", SAVE_TEST_PATTERN, "=" );
@@ -683,6 +683,7 @@ init( int& argc, char** argv )
             s_arguments_store.set( REPORT_FORMAT, of );
             s_arguments_store.set( LOG_FORMAT, of );
         }
+
     }
     BOOST_TEST_I_CATCH( rt::init_error, ex ) {
         BOOST_TEST_SETUP_ASSERT( false, ex.msg );
@@ -708,7 +709,7 @@ init( int& argc, char** argv )
             std::cerr << "\n";
             parser->usage( std::cerr );
         }
-        
+
         BOOST_TEST_I_THROW( framework::nothing_to_test( boost::exit_exception_failure ) );
     }
     BOOST_TEST_I_CATCH( rt::input_error, ex ) {
@@ -716,7 +717,7 @@ init( int& argc, char** argv )
 
         if( parser )
             parser->usage( std::cerr, ex.param_name );
-        
+
         BOOST_TEST_I_THROW( framework::nothing_to_test( boost::exit_exception_failure ) );
     }
 }
