@@ -6,10 +6,14 @@
 #  See http://www.boost.org/libs/test for the library home page.
 
 import path ;
+import project ;
+import property ;
+import property-set ;
+import "class" : new ;
 
 import ../../config/checks/config : requires ;
 
-project
+project boost/test-tests
     : requirements
     ;
 
@@ -197,9 +201,101 @@ test-suite "doc-examples-ts"
 
 #_________________________________________________________________________________________________#
 
+class bt-conditional-sink
+{
+    import property-set ;
+    import targets ;
+    import property ;
+
+    rule __init__ ( logger : log_or_report : sink_is_file )
+    {
+        # ECHO instanciating sink with $(logger) ;
+        self.logger = $(logger) ;
+        sink_is_file ?= "no" ;
+        self.sink_is_file = $(sink_is_file) ;
+        self.log_or_report = $(log_or_report) ;
+    }
+
+    rule check ( properties * )
+    {
+        local ps = [ property-set.create $(properties) ] ;
+        local path,relative-to-build-dir = [ $(ps).target-path ] ;
+        local path = $(path,relative-to-build-dir[1]) ;
+
+        # ECHO LOGGER $(self.logger) ;
+        # ECHO PROP $(properties) ;
+
+        # does not work
+        # local p = [ project.current ] ;
+
+        #local location-prefix = [ property.select <location-prefix> : $(properties) ] ;
+        #ECHO location-prefix $(location-prefix) ;
+
+        local ret = <testing.arg>--$(self.log_or_report)_format=$(self.logger) ;
+
+        if $(self.sink_is_file) = "yes"
+        {
+            ret += <testing.arg>--$(self.log_or_report)_sink=smoke-ts-sink.$(self.logger) ;
+
+        }
+        # ECHO OPTIONS ARE $(ret) ;
+        # ECHO LOG_TO_FILE ARE $(self.sink_is_file) ;
+        return $(ret) ;
+    }
+}
+
+rule boost.test-smoke-ts-logger ( test-name-prefix : logger ? : log_or_report ? : requirements ? )
+{
+    logger ?= HRF ;
+    log_or_report ?= log ;
+
+    local detailed_name = all ;
+    if $(log_or_report) = report
+    {
+      detailed_name = detailed ;
+    }
+
+    requirements ?= $(requirements_datasets) ;
+
+    local bt-format-instance = [ new bt-conditional-sink $(logger) : $(log_or_report) : "no" ] ;
+    local bt-format-sink-instance = [ new bt-conditional-sink $(logger) : $(log_or_report) : "yes" ] ;
+
+    local conditions-format = <conditional>@$(bt-format-instance).check ;
+    local conditions-format-sink  = <conditional>@$(bt-format-sink-instance).check ;
+
+    to-return =
+      [ run smoke-ts-included :
+                              : : $(requirements) $(conditions-format) : $(test-name-prefix)-0-$(log_or_report)-format ]
+      [ run smoke-ts-included : --$(log_or_report)_level=$(detailed_name)
+                              : : $(requirements) $(conditions-format) : $(test-name-prefix)-1-$(log_or_report)-format-all ]
+      [ run smoke-ts-included :
+                              : : $(requirements) $(conditions-format-sink)  : $(test-name-prefix)-2-$(log_or_report)-format-to-file ]
+      [ run smoke-ts-included : --$(log_or_report)_level=$(detailed_name)
+                              : : $(requirements) $(conditions-format-sink)  : $(test-name-prefix)-3-$(log_or_report)-format-to-file-all ]
+   ;
+
+   return $(to-return) ;
+}
+
+exe smoke-ts-included : smoke-ts/basic-smoke-test.cpp
+                      : $(requirements_datasets) ;
+
+alias "smoke-ts"
+:
+[ boost.test-smoke-ts-logger bt-st-txml : XML : log ]
+[ boost.test-smoke-ts-logger bt-st-txml : XML : report ]
+[ boost.test-smoke-ts-logger bt-st-thrf : HRF : log ]
+[ boost.test-smoke-ts-logger bt-st-thrf : HRF : report ]
+[ boost.test-smoke-ts-logger bt-st-tjunit : JUNIT : log ]
+# : $(requirements_datasets)
+;
+
+#_________________________________________________________________________________________________#
+
 # A target that runs all the tests
 alias test
 :
+  smoke-ts
   utils-ts
   usage-variants-ts
   framework-ts
