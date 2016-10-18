@@ -679,7 +679,7 @@ Case sensitive [link regular_param_value string]:
 
 [h4 Command line syntax]
 
-* `--report_synk=<stream or file name>`
+* `--report_sink=<stream or file name>`
 * `-e <stream or file name>`
 
 [h4 Environment variable]

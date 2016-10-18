@@ -7,6 +7,11 @@
 
 [section Change log]
 
+[h4 Boost.Test v3.4 / boost 1.63]
+
+[h5 Bugfixes and feature requests]
+# [ticket 12506] typo in Boost.test ``report_sink`` description
+
 [h4 Boost.Test v3.3 / boost 1.62]
 
 [h5 New features]
