@@ -11,6 +11,7 @@
 
 [h5 Bugfixes and feature requests]
 # [ticket 12506] typo in Boost.test ``report_sink`` description
+# [ticket 12507] Boost.test `--report_sink` parameter broken
 
 [h4 Boost.Test v3.3 / boost 1.62]
 
