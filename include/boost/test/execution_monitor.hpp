@@ -499,44 +499,44 @@ enum masks {
     BOOST_FPE_ALL       = MCW_EM,
 
 #elif defined(BOOST_NO_FENV_H) || defined(BOOST_CLANG) /* *** */
-    BOOST_FPE_ALL       = 0,
+    BOOST_FPE_ALL       = BOOST_FPE_OFF,
 
 #else /* *** */
 
 #if defined(FE_DIVBYZERO)
     BOOST_FPE_DIVBYZERO = FE_DIVBYZERO,
 #else
-    BOOST_FPE_DIVBYZERO = 0,
+    BOOST_FPE_DIVBYZERO = BOOST_FPE_OFF,
 #endif
 
 #if defined(FE_INEXACT)
     BOOST_FPE_INEXACT   = FE_INEXACT,
 #else
-    BOOST_FPE_INEXACT   = 0,
+    BOOST_FPE_INEXACT   = BOOST_FPE_OFF,
 #endif
 
 #if defined(FE_INVALID)
     BOOST_FPE_INVALID   = FE_INVALID,
 #else
-    BOOST_FPE_INVALID   = 0,
+    BOOST_FPE_INVALID   = BOOST_FPE_OFF,
 #endif
 
 #if defined(FE_OVERFLOW)
     BOOST_FPE_OVERFLOW  = FE_OVERFLOW,
 #else
-    BOOST_FPE_OVERFLOW  = 0,
+    BOOST_FPE_OVERFLOW  = BOOST_FPE_OFF,
 #endif
 
 #if defined(FE_UNDERFLOW)
     BOOST_FPE_UNDERFLOW = FE_UNDERFLOW,
 #else
-    BOOST_FPE_UNDERFLOW = 0,
+    BOOST_FPE_UNDERFLOW = BOOST_FPE_OFF,
 #endif
 
 #if defined(FE_ALL_EXCEPT)
     BOOST_FPE_ALL       = FE_ALL_EXCEPT,
 #else
-    BOOST_FPE_ALL       = 0,
+    BOOST_FPE_ALL       = BOOST_FPE_OFF,
 #endif
 
 #endif /* *** */
