@@ -938,10 +938,11 @@ setup_loggers()
                     BOOST_TEST_SETUP_ASSERT( formatter, "Logger setup error" );
 
                     log_level formatter_log_level = invalid_log_level;
+                    ++current_format_specs ;
                     if( !current_format_specs->size() ) {
                         formatter_log_level = formatter->get_log_level(); // default log level given by the formatter
                     }
-                    else if( ++current_format_specs != utils::string_token_iterator() ) {
+                    else if( current_format_specs != utils::string_token_iterator() ) {
 
                         for(size_t elem=0; elem < sizeof(all_log_levels)/sizeof(all_log_levels[0]); elem++) {
                             if(const_string(all_log_levels[elem].first) == *current_format_specs) {
