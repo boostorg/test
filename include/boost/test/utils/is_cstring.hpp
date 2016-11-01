@@ -20,6 +20,8 @@
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/decay.hpp>
 #include <boost/type_traits/remove_pointer.hpp>
+#include <boost/type_traits/remove_const.hpp>
+#include <boost/type_traits/add_const.hpp>
 
 #include <string>
 
@@ -49,6 +51,21 @@ struct is_cstring_impl<char*> : public mpl::true_ {};
 template<>
 struct is_cstring_impl<wchar_t*> : public mpl::true_ {};
 
+template <typename T>
+struct deduce_cstring_impl {
+    typedef typename boost::add_const<
+        typename boost::remove_pointer<
+            typename boost::decay<T>::type
+        >::type
+    >::type type;
+};
+
+template <typename T>
+struct deduce_cstring_impl< std::basic_string<T, std::char_traits<T> > > {
+  // const is required here
+  typedef typename boost::add_const<T>::type type;
+};
+
 } // namespace ut_detail
 
 template<typename T>
@@ -56,6 +73,15 @@ struct is_cstring : public ut_detail::is_cstring_impl<typename decay<T>::type> {
 
 template<typename T>
 struct is_cstring< std::basic_string<T, std::char_traits<T> > > : public mpl::true_ {};
+
+template <class T>
+struct deduce_cstring {
+    typedef typename
+        boost::remove_const<
+            typename boost::remove_reference<T>::type
+        >::type U;
+    typedef typename ut_detail::deduce_cstring_impl<U>::type type;
+};
 
 } // namespace unit_test
 } // namespace boost

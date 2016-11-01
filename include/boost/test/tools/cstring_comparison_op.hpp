@@ -30,34 +30,6 @@ namespace test_tools {
 namespace assertion {
 namespace op {
 
-namespace details_string {
-
-template <typename T>
-struct to_cstring_impl {
-    typedef typename boost::add_const<
-        typename remove_pointer<
-            typename decay<T>::type
-        >::type
-    >::type type;
-};
-
-template <typename T>
-struct to_cstring_impl< std::basic_string<T, std::char_traits<T> > > {
-  // const is required here
-  typedef typename boost::add_const<T>::type type;
-};
-
-template <class T>
-struct to_cstring {
-    typedef typename
-        remove_const<
-            typename remove_reference<T>::type
-        >::type U;
-    typedef typename to_cstring_impl<U>::type type;
-};
-
-}
-
 // ************************************************************************** //
 // **************               string_compare                 ************** //
 // ************************************************************************** //
@@ -69,10 +41,12 @@ struct name<Lhs,Rhs,typename boost::enable_if_c<                    \
      && unit_test::is_cstring<Rhs>::value)                          \
     >::type >                                                       \
 {                                                                   \
-    typedef typename details_string::to_cstring<Lhs>::type lhs_char_type; \
-    typedef typename details_string::to_cstring<Rhs>::type rhs_char_type; \
+    typedef typename unit_test::deduce_cstring<Lhs>::type lhs_char_type; \
+    typedef typename unit_test::deduce_cstring<Rhs>::type rhs_char_type; \
 public:                                                             \
     typedef assertion_result result_type;                           \
+                                                                    \
+    typedef name<lhs_char_type, rhs_char_type> elem_op;             \
                                                                     \
     static bool                                                     \
     eval( Lhs const& lhs, Rhs const& rhs)                           \

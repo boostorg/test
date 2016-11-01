@@ -53,7 +53,10 @@ namespace op {
 
 template <typename OP, bool can_be_equal, bool prefer_shorter,
           typename Lhs, typename Rhs>
-inline assertion_result
+inline
+typename boost::enable_if_c<
+    unit_test::is_forward_iterable<Lhs>::value && unit_test::is_forward_iterable<Rhs>::value,
+    assertion_result>::type
 lexicographic_compare( Lhs const& lhs, Rhs const& rhs )
 {
     assertion_result ar( true );
@@ -86,7 +89,6 @@ lexicographic_compare( Lhs const& lhs, Rhs const& rhs )
         return ar;
     }
 
-
     if( first1 != last1 ) {
         if( prefer_shorter ) {
             ar = false;
@@ -107,6 +109,23 @@ lexicographic_compare( Lhs const& lhs, Rhs const& rhs )
     return ar;
 }
 
+template <typename OP, bool can_be_equal, bool prefer_shorter,
+          typename Lhs, typename Rhs>
+inline
+typename boost::enable_if_c<
+    (!unit_test::is_forward_iterable<Lhs>::value && unit_test::is_cstring<Lhs>::value) ||
+    (!unit_test::is_forward_iterable<Rhs>::value && unit_test::is_cstring<Rhs>::value),
+    assertion_result>::type
+lexicographic_compare( Lhs const& lhs, Rhs const& rhs )
+{
+    typedef typename unit_test::deduce_cstring<Lhs>::type lhs_char_type;
+    typedef typename unit_test::deduce_cstring<Rhs>::type rhs_char_type;
+
+    return lexicographic_compare<OP, can_be_equal, prefer_shorter>(
+        boost::unit_test::basic_cstring<lhs_char_type>(lhs),
+        boost::unit_test::basic_cstring<rhs_char_type>(rhs));
+}
+
 //____________________________________________________________________________//
 
 // ************************************************************************** //
@@ -114,7 +133,10 @@ lexicographic_compare( Lhs const& lhs, Rhs const& rhs )
 // ************************************************************************** //
 
 template <typename OP, typename Lhs, typename Rhs>
-inline assertion_result
+inline
+typename boost::enable_if_c<
+    unit_test::is_forward_iterable<Lhs>::value && unit_test::is_forward_iterable<Rhs>::value,
+    assertion_result>::type
 element_compare( Lhs const& lhs, Rhs const& rhs )
 {
     assertion_result ar( true );
@@ -143,6 +165,22 @@ element_compare( Lhs const& lhs, Rhs const& rhs )
     }
 
     return ar;
+}
+
+// In case string comparison is branching here
+template <typename OP, typename Lhs, typename Rhs>
+inline
+typename boost::enable_if_c<
+    (!unit_test::is_forward_iterable<Lhs>::value && unit_test::is_cstring<Lhs>::value) ||
+    (!unit_test::is_forward_iterable<Rhs>::value && unit_test::is_cstring<Rhs>::value),
+    assertion_result>::type
+element_compare( Lhs const& lhs, Rhs const& rhs )
+{
+    typedef typename unit_test::deduce_cstring<Lhs>::type lhs_char_type;
+    typedef typename unit_test::deduce_cstring<Rhs>::type rhs_char_type;
+
+    return element_compare<OP>(boost::unit_test::basic_cstring<lhs_char_type>(lhs),
+                               boost::unit_test::basic_cstring<rhs_char_type>(rhs));
 }
 
 //____________________________________________________________________________//
