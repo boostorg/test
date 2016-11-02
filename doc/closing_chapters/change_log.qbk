@@ -9,11 +9,17 @@
 
 [h4 Boost.Test v3.4 / boost 1.63]
 
+[h5 New features]
+* Now [link boost_test_coll_perelement `per_element`] and [link boost_test_coll_default_lex `lexicographic`] modifiers of __BOOST_TEST__
+  can also be applied to string comparison. See
+  [link boost_test.testing_tools.extended_comparison.strings string comparison] for more details.
+
 [h5 Bugfixes and feature requests]
 # [pull_request 103] Syntactic change silences latest gcc warnings
 # [pull_request 105] Fix unused parameter warnings/errors with gcc 6
-# [ticket 11756] boost.Test: non standards compliant use of ``FE_*`` macros (unable to compile boost test library on FPU-less arches)
-# [ticket 12506] typo in Boost.test ``report_sink`` description
+# [ticket 11756] boost.Test: non standards compliant use of `FE_*` macros (unable to compile boost test library on FPU-less arches)
+# [ticket 11907] Why does `BOOST_TEST()` treat `std::string` as a collection?
+# [ticket 12506] typo in Boost.test `report_sink` description
 # [ticket 12507] Boost.test `--report_sink` parameter broken
 
 [h4 Boost.Test v3.3 / boost 1.62]
