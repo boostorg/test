@@ -300,7 +300,7 @@ alias "smoke-ts"
 [ boost.test-smoke-ts-logger bt-st-thrf : HRF : report ]
 [ boost.test-smoke-ts-logger bt-st-tjunit : JUNIT : log ]
 [ boost.test-smoke-ts-logger bt-st-tjunit : JUNIT : log : : yes ]
-[ run smoke-ts-included-2 : <testing.arg>\"--run_test=test<ns__X>\" : : : bt-st-runtest-with-colons ]
+[ run smoke-ts-included-2 : <testing.arg>\"--run_test=test<*\" : : : bt-st-runtest-with-colons ]
 # : $(requirements_datasets)
 ;
 
