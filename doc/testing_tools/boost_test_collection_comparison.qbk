@@ -136,6 +136,8 @@ The comparison is performed in the order given by forward iterators of the conta
 [tip lexicographic comparison yields a total order on the containers: the statements `c_a < c_b` and
  `c_b <= c_a` are mutually exclusive.]
 
+[note The equality `==` and inequality `!=` are not available for this type of comparison.]
+
 [bt_example boost_test_container_lex..BOOST_TEST container comparison using lexicographical order..run-fail]
 
 
