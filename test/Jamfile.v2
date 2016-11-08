@@ -278,6 +278,8 @@ rule boost.test-smoke-ts-logger ( test-name-prefix : logger ? : log_or_report ? 
                               : : $(requirements) $(conditions-format-sink)  : $(test-name-prefix)-2-$(log_or_report)-format-to-file-$(log_new_style) ]
       [ run smoke-ts-included : --$(log_or_report)_level=$(detailed_name)
                               : : $(requirements) $(conditions-format-sink)  : $(test-name-prefix)-3-$(log_or_report)-format-to-file-$(log_new_style)-all ]
+      [ run smoke-ts-included : --run_test=test1/_2
+                              : : $(requirements) $(conditions-format) : $(test-name-prefix)-4-$(log_or_report)-format-$(log_new_style)-filter ]
    ;
 
    return $(to-return) ;
@@ -285,6 +287,8 @@ rule boost.test-smoke-ts-logger ( test-name-prefix : logger ? : log_or_report ? 
 
 exe smoke-ts-included : smoke-ts/basic-smoke-test.cpp
                       : $(requirements_datasets) ;
+
+exe smoke-ts-included-2 : smoke-ts/basic-smoke-test2.cpp ;
 
 alias "smoke-ts"
 :
@@ -296,6 +300,7 @@ alias "smoke-ts"
 [ boost.test-smoke-ts-logger bt-st-thrf : HRF : report ]
 [ boost.test-smoke-ts-logger bt-st-tjunit : JUNIT : log ]
 [ boost.test-smoke-ts-logger bt-st-tjunit : JUNIT : log : : yes ]
+[ run smoke-ts-included-2 : <testing.arg>\"--run_test=test<*\" : : : bt-st-runtest-with-colons ]
 # : $(requirements_datasets)
 ;
 
