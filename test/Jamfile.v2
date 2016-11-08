@@ -131,6 +131,7 @@ test-suite "framework-ts"
   [ boost.test-self-test run : framework-ts : result-report-test : : baseline-outputs/result-report-test.pattern ]
   [ boost.test-self-test run : framework-ts : log-formatter-test : : baseline-outputs/log-formatter-test.pattern ]
   [ boost.test-self-test run : framework-ts : run-by-name-or-label-test ]
+  [ boost.test-self-test run : framework-ts : version-uses-module-name : included ]
 ;
 
 #_________________________________________________________________________________________________#
@@ -296,6 +297,7 @@ alias "smoke-ts"
 [ boost.test-smoke-ts-logger bt-st-thrf : HRF : report ]
 [ boost.test-smoke-ts-logger bt-st-tjunit : JUNIT : log ]
 [ boost.test-smoke-ts-logger bt-st-tjunit : JUNIT : log : : yes ]
+[ run smoke-ts-included : --version : : $(requirements_datasets) : cla-check-print-version ]
 # : $(requirements_datasets)
 ;
 
