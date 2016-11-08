@@ -15,6 +15,7 @@
 # [ticket 11756] boost.Test: non standards compliant use of ``FE_*`` macros (unable to compile boost test library on FPU-less arches)
 # [ticket 12506] typo in Boost.test ``report_sink`` description
 # [ticket 12507] Boost.test `--report_sink` parameter broken
+# [ticket 12530] No way to find out Boost.Test version without running any tests
 
 [h4 Boost.Test v3.3 / boost 1.62]
 
