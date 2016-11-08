@@ -14,7 +14,7 @@ set(CMAKE_MACOSX_RPATH ON)
 
 add_definitions(-DBOOST_TEST_NO_LIB)
 
-# build type, by default to release (with optimisations) 
+# build type, by default to release (with optimisations)
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "Setting build type to 'Release' as none was specified.")
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
@@ -171,8 +171,10 @@ set(BOOST_UTF_TESTS_IND_FILES
     framework-ts
     usage-variants-ts
     utils-ts
-    test-organization-ts)
-    
+    test-organization-ts
+    smoke-ts
+  )
+
 
 foreach(_ts IN LISTS BOOST_UTF_TESTS_IND_FILES)
 
@@ -198,4 +200,3 @@ foreach(_ts IN LISTS BOOST_UTF_TESTS_IND_FILES)
   unset(_boost_utf_current_tsuite)
 
 endforeach() # test suite
-

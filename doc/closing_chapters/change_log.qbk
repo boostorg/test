@@ -7,6 +7,15 @@
 
 [section Change log]
 
+[h4 Boost.Test v3.4 / boost 1.63]
+
+[h5 Bugfixes and feature requests]
+# [pull_request 103] Syntactic change silences latest gcc warnings
+# [pull_request 105] Fix unused parameter warnings/errors with gcc 6
+# [ticket 11756] boost.Test: non standards compliant use of ``FE_*`` macros (unable to compile boost test library on FPU-less arches)
+# [ticket 12506] typo in Boost.test ``report_sink`` description
+# [ticket 12507] Boost.test `--report_sink` parameter broken
+
 [h4 Boost.Test v3.3 / boost 1.62]
 
 [h5 New features]
