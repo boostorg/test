@@ -41,10 +41,12 @@ BOOST_AUTO_TEST_CASE( check_string_compare )
     BOOST_TEST((void*)buf_array_cch != (void*)buf_array_ch);
 
     BOOST_TEST(buf_ptr_cch == buf_ptr_cch);
+#ifndef BOOST_TEST_MACRO_LIMITED_SUPPORT
     BOOST_TEST(buf_ptr_cch == buf_array_cch);
-    BOOST_TEST(buf_ptr_cch == buf_ptr_ch);
     BOOST_TEST(buf_ptr_cch == buf_array_ch);
+    BOOST_TEST(buf_ptr_cch == buf_ptr_ch);
     BOOST_TEST(buf_ptr_cch == buf_str);
+#endif
 
 #ifndef BOOST_TEST_MACRO_LIMITED_SUPPORT
     BOOST_TEST(buf_array_cch == buf_ptr_cch);
@@ -54,11 +56,13 @@ BOOST_AUTO_TEST_CASE( check_string_compare )
     BOOST_TEST(buf_array_cch == buf_str);
 #endif
 
+    BOOST_TEST(buf_ptr_ch == buf_ptr_ch);
+#ifndef BOOST_TEST_MACRO_LIMITED_SUPPORT
     BOOST_TEST(buf_ptr_ch == buf_ptr_cch);
     BOOST_TEST(buf_ptr_ch == buf_array_cch);
-    BOOST_TEST(buf_ptr_ch == buf_ptr_ch);
     BOOST_TEST(buf_ptr_ch == buf_array_ch);
     BOOST_TEST(buf_ptr_ch == buf_str);
+#endif
 
 #ifndef BOOST_TEST_MACRO_LIMITED_SUPPORT
     BOOST_TEST(buf_array_ch == buf_ptr_cch);
