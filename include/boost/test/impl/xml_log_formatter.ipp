@@ -46,10 +46,23 @@ static const_string tu_type_name( test_unit const& tu )
 // **************               xml_log_formatter              ************** //
 // ************************************************************************** //
 
+xml_log_formatter::xml_log_formatter() : m_log_has_started(false)
+{
+}
+
+void xml_log_formatter::buffer_or_stream(std::ostream& ostr, const std::string& s) {
+    if(m_log_has_started)
+        ostr << s;
+    else
+        m_buffering_before_start += s;
+}
+
 void
 xml_log_formatter::log_start( std::ostream& ostr, counter_t )
 {
     ostr  << "<TestLog>";
+    m_log_has_started = true;
+    ostr  << m_buffering_before_start;
 }
 
 //____________________________________________________________________________//
@@ -58,6 +71,8 @@ void
 xml_log_formatter::log_finish( std::ostream& ostr )
 {
     ostr  << "</TestLog>";
+    m_log_has_started = false;
+    m_buffering_before_start.clear();
 }
 
 //____________________________________________________________________________//
@@ -120,22 +135,25 @@ void
 xml_log_formatter::log_exception_start( std::ostream& ostr, log_checkpoint_data const& checkpoint_data, execution_exception const& ex )
 {
     execution_exception::location const& loc = ex.where();
+    std::stringstream s;
 
-    ostr << "<Exception file" << utils::attr_value() << loc.m_file_name
-         << " line"           << utils::attr_value() << loc.m_line_num;
+    s << "<Exception file" << utils::attr_value() << loc.m_file_name
+      << " line"           << utils::attr_value() << loc.m_line_num;
 
     if( !loc.m_function.is_empty() )
-        ostr << " function"   << utils::attr_value() << loc.m_function;
+        s << " function"   << utils::attr_value() << loc.m_function;
 
-    ostr << ">" << utils::cdata() << ex.what();
+    s << ">" << utils::cdata() << ex.what();
 
     if( !checkpoint_data.m_file_name.is_empty() ) {
-        ostr << "<LastCheckpoint file" << utils::attr_value() << checkpoint_data.m_file_name
+        s << "<LastCheckpoint file" << utils::attr_value() << checkpoint_data.m_file_name
              << " line"                << utils::attr_value() << checkpoint_data.m_line_num
              << ">"
              << utils::cdata() << checkpoint_data.m_message
              << "</LastCheckpoint>";
     }
+
+    buffer_or_stream(ostr, s.str());
 }
 
 //____________________________________________________________________________//
@@ -143,7 +161,8 @@ xml_log_formatter::log_exception_start( std::ostream& ostr, log_checkpoint_data 
 void
 xml_log_formatter::log_exception_finish( std::ostream& ostr )
 {
-    ostr << "</Exception>";
+    const char* exception_end = "</Exception>";
+    buffer_or_stream(ostr, exception_end);
 }
 
 //____________________________________________________________________________//
@@ -154,12 +173,14 @@ xml_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& en
     static literal_string xml_tags[] = { "Info", "Message", "Warning", "Error", "FatalError" };
 
     m_curr_tag = xml_tags[let];
-    ostr << '<' << m_curr_tag
+    std::stringstream s;
+    s    << '<' << m_curr_tag
          << BOOST_TEST_L( " file" ) << utils::attr_value() << entry_data.m_file_name
          << BOOST_TEST_L( " line" ) << utils::attr_value() << entry_data.m_line_num
          << BOOST_TEST_L( "><![CDATA[" );
 
     m_value_closed = false;
+    buffer_or_stream(ostr, s.str());
 }
 
 //____________________________________________________________________________//
@@ -167,7 +188,9 @@ xml_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& en
 void
 xml_log_formatter::log_entry_value( std::ostream& ostr, const_string value )
 {
-    utils::print_escaped_cdata( ostr, value );
+    std::stringstream s;
+    utils::print_escaped_cdata( s, value );
+    buffer_or_stream(ostr, s.str());
 }
 
 //____________________________________________________________________________//
@@ -175,13 +198,15 @@ xml_log_formatter::log_entry_value( std::ostream& ostr, const_string value )
 void
 xml_log_formatter::log_entry_finish( std::ostream& ostr )
 {
+    std::stringstream s;
     if( !m_value_closed ) {
-        ostr << BOOST_TEST_L( "]]>" );
+        s << BOOST_TEST_L( "]]>" );
         m_value_closed = true;
     }
 
-    ostr << BOOST_TEST_L( "</" ) << m_curr_tag << BOOST_TEST_L( ">" );
+    s << BOOST_TEST_L( "</" ) << m_curr_tag << BOOST_TEST_L( ">" );
 
+    buffer_or_stream(ostr, s.str());
     m_curr_tag.clear();
 }
 
@@ -190,12 +215,14 @@ xml_log_formatter::log_entry_finish( std::ostream& ostr )
 void
 xml_log_formatter::entry_context_start( std::ostream& ostr, log_level )
 {
+    std::stringstream s;
     if( !m_value_closed ) {
-        ostr << BOOST_TEST_L( "]]>" );
+        s << BOOST_TEST_L( "]]>" );
         m_value_closed = true;
     }
 
-    ostr << BOOST_TEST_L( "<Context>" );
+    s << BOOST_TEST_L( "<Context>" );
+    buffer_or_stream(ostr, s.str());
 }
 
 //____________________________________________________________________________//
@@ -203,7 +230,9 @@ xml_log_formatter::entry_context_start( std::ostream& ostr, log_level )
 void
 xml_log_formatter::entry_context_finish( std::ostream& ostr, log_level )
 {
-    ostr << BOOST_TEST_L( "</Context>" );
+    std::stringstream s;
+    s << BOOST_TEST_L( "</Context>" );
+    buffer_or_stream(ostr, s.str());
 }
 
 //____________________________________________________________________________//
@@ -211,7 +240,9 @@ xml_log_formatter::entry_context_finish( std::ostream& ostr, log_level )
 void
 xml_log_formatter::log_entry_context( std::ostream& ostr, log_level, const_string context_descr )
 {
-    ostr << BOOST_TEST_L( "<Frame>" ) << utils::cdata() << context_descr << BOOST_TEST_L( "</Frame>" );
+    std::stringstream s;
+    s << BOOST_TEST_L( "<Frame>" ) << utils::cdata() << context_descr << BOOST_TEST_L( "</Frame>" );
+    buffer_or_stream(ostr, s.str());
 }
 
 //____________________________________________________________________________//

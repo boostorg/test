@@ -36,6 +36,9 @@ namespace output {
 
 class xml_log_formatter : public unit_test_log_formatter {
 public:
+
+    xml_log_formatter();
+
     // Formatter interface
     void    log_start( std::ostream&, counter_t test_cases_amount ) BOOST_OVERRIDE;
     void    log_finish( std::ostream& ) BOOST_OVERRIDE;
@@ -58,9 +61,14 @@ public:
     void    entry_context_finish( std::ostream&, log_level ) BOOST_OVERRIDE;
 
 private:
+
+    void buffer_or_stream(std::ostream&, const std::string&);
+
     // Data members
     const_string    m_curr_tag;
     bool            m_value_closed;
+    bool            m_log_has_started;
+    std::string     m_buffering_before_start;
 };
 
 } // namespace output
