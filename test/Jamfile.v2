@@ -350,6 +350,7 @@ exe check-streams-on-exit : framework-ts/check-streams-on-exit.cpp ;
 
 exe dataset-master-test-suite-accessible-test : test-organization-ts/dataset-master-test-suite-accessible-test.cpp
                                               : $(requirements_datasets) ;
+exe smoke-invalid-handling-log-global-fixture : framework-ts/log-invalid-xml-test.cpp ;
 
 alias "smoke-ts"
 :
@@ -464,6 +465,10 @@ alias "custom-command-line-ts"
 [ run custom-command-line-binary-4      : -- --test-file  : ../doc/examples/runtime-configuration_4-test.txt : $(requirements_datasets) [ requires cxx11_trailing_result_types cxx11_auto_declarations ] $(l_gcc_c11_rvalue_full_support) : cla-specific-api1-test-4-4 ]
 [ run custom-command-line-binary-4      : --log_level=all --no_color -- --test-file : ../doc/examples/runtime-configuration_4-test.txt : $(requirements_datasets) [ requires cxx11_trailing_result_types cxx11_auto_declarations ] $(l_gcc_c11_rvalue_full_support) : cla-specific-api1-test-4-5 ]
 
+
+[ run smoke-invalid-handling-log-global-fixture : --log_format=XML --log_level=all : : : log-global-fixture-XML ]
+[ run smoke-invalid-handling-log-global-fixture : --log_format=JUNIT --log_level=all : : : log-global-fixture-JUNIT ]
+# : $(requirements_datasets)
 ;
 
 #_________________________________________________________________________________________________#
