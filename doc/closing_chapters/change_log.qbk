@@ -28,6 +28,7 @@
 # [ticket 12339] Propose users given way to disable blink in colour output
 # [ticket 12506] typo in Boost.test `report_sink` description
 # [ticket 12507] Boost.test `--report_sink` parameter broken
+# [ticket 12530] No way to find out Boost.Test version without running any tests
 # [ticket 12531] `--run_test` in Boost 1.62 does not accept test names which contain ':'
 
 [h4 Boost.Test v3.3 / boost 1.62]
