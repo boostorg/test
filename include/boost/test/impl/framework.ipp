@@ -893,14 +893,32 @@ setup_loggers()
             BOOST_TEST_FOREACH( const_string, current_multi_config, v_output_format ) {
 
     #ifdef BOOST_TEST_SUPPORT_TOKEN_ITERATOR
-                utils::string_token_iterator current_config( current_multi_config, (utils::dropped_delimeters = ":",
-                                                                                    utils::kept_delimeters = utils::dt_none) );
 
-                for( ; current_config != utils::string_token_iterator() ; ++current_config) {
+                // ':' may be used for file names: C:/tmp/mylogsink.xml
+                // we merge the tokens that start with / or \ with the previous one.
+                std::vector<std::string> v_processed_tokens;
 
-                    utils::string_token_iterator current_format_specs( *current_config, (utils::keep_empty_tokens,
-                                                                                         utils::dropped_delimeters = ",",
-                                                                                         utils::kept_delimeters = utils::dt_none) );
+                {
+                    utils::string_token_iterator current_config( current_multi_config, (utils::dropped_delimeters = ":",
+                                                                                        utils::kept_delimeters = utils::dt_none) );
+
+                    for( ; current_config != utils::string_token_iterator() ; ++current_config) {
+                        std::string str_copy(current_config->begin(), current_config->end());
+                        if( ( str_copy[0] == '\\' || str_copy[0] == '/' )
+                            && v_processed_tokens.size() > 0) {
+                            v_processed_tokens.back() += ":" + str_copy; // ':' has been eaten up
+                        }
+                        else {
+                            v_processed_tokens.push_back(str_copy);
+                        }
+                    }
+                }
+
+                BOOST_TEST_FOREACH( std::string const&, current_config, v_processed_tokens ) {
+
+                    utils::string_token_iterator current_format_specs( current_config, (utils::keep_empty_tokens,
+                                                                                        utils::dropped_delimeters = ",",
+                                                                                        utils::kept_delimeters = utils::dt_none) );
 
                     output_format format = OF_INVALID ; // default
                     if( current_format_specs != utils::string_token_iterator() &&
@@ -917,7 +935,7 @@ setup_loggers()
                     BOOST_TEST_I_ASSRT( format != OF_INVALID,
                                         boost::runtime::access_to_missing_argument()
                                             << "Unable to determine the logger type from '"
-                                            << *current_config
+                                            << current_config
                                             << "'. Possible choices are: "
                                             << std::accumulate(all_formats,
                                                                all_formats + sizeof(all_formats)/sizeof(all_formats[0]),
@@ -956,7 +974,7 @@ setup_loggers()
                     BOOST_TEST_I_ASSRT( formatter_log_level != invalid_log_level,
                                         boost::runtime::access_to_missing_argument()
                                             << "Unable to determine the log level from '"
-                                            << *current_config
+                                            << current_config
                                             << "'. Possible choices are: "
                                             << std::accumulate(all_log_levels,
                                                                all_log_levels + sizeof(all_log_levels)/sizeof(all_log_levels[0]),
