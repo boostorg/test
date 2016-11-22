@@ -9,12 +9,27 @@
 
 [h4 Boost.Test v3.4 / boost 1.63]
 
+[Breaking changes]
+# Now colons that appear in test case names are replaced with underscores. This affect mainly the
+  [link boost_test.tests_organization.test_cases.test_organization_templates template/typed test cases].
+  The change is needed since the colon '`:`' is interpreted as a filter separators since 1.62, and it is
+  otherwise not possible to execute the tests reported by `--list_content`. See [ticket 12531] for more details.
+
+[h5 New features]
+* Now [link boost_test_coll_perelement `per_element`] and [link boost_test_coll_default_lex `lexicographic`] modifiers of __BOOST_TEST__
+  can also be applied to string comparison. See
+  [link boost_test.testing_tools.extended_comparison.strings string comparison] for more details.
+
 [h5 Bugfixes and feature requests]
 # [pull_request 103] Syntactic change silences latest gcc warnings
 # [pull_request 105] Fix unused parameter warnings/errors with gcc 6
-# [ticket 11756] boost.Test: non standards compliant use of ``FE_*`` macros (unable to compile boost test library on FPU-less arches)
-# [ticket 12506] typo in Boost.test ``report_sink`` description
+# [ticket 11756] boost.Test: non standards compliant use of `FE_*` macros (unable to compile boost test library on FPU-less arches)
+# [ticket 11907] Why does `BOOST_TEST()` treat `std::string` as a collection?
+# [ticket 12339] Propose users given way to disable blink in colour output
+# [ticket 12506] typo in Boost.test `report_sink` description
 # [ticket 12507] Boost.test `--report_sink` parameter broken
+# [ticket 12530] No way to find out Boost.Test version without running any tests
+# [ticket 12531] `--run_test` in Boost 1.62 does not accept test names which contain ':'
 
 [h4 Boost.Test v3.3 / boost 1.62]
 

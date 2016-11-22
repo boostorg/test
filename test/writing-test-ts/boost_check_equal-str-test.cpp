@@ -23,6 +23,7 @@ BOOST_AUTO_TEST_CASE( check_is_cstring_concept )
   BOOST_TEST((bp::is_cstring<char const []>::value));
   BOOST_TEST((bp::is_cstring<char []>::value));
   BOOST_TEST((bp::is_cstring<char *>::value));
+  BOOST_TEST((bp::is_cstring<std::string>::value));
 }
 
 //____________________________________________________________________________//
@@ -41,10 +42,12 @@ BOOST_AUTO_TEST_CASE( check_string_compare )
     BOOST_TEST((void*)buf_array_cch != (void*)buf_array_ch);
 
     BOOST_TEST(buf_ptr_cch == buf_ptr_cch);
+#ifndef BOOST_TEST_MACRO_LIMITED_SUPPORT
     BOOST_TEST(buf_ptr_cch == buf_array_cch);
-    BOOST_TEST(buf_ptr_cch == buf_ptr_ch);
     BOOST_TEST(buf_ptr_cch == buf_array_ch);
+    BOOST_TEST(buf_ptr_cch == buf_ptr_ch);
     BOOST_TEST(buf_ptr_cch == buf_str);
+#endif
 
 #ifndef BOOST_TEST_MACRO_LIMITED_SUPPORT
     BOOST_TEST(buf_array_cch == buf_ptr_cch);
@@ -54,11 +57,13 @@ BOOST_AUTO_TEST_CASE( check_string_compare )
     BOOST_TEST(buf_array_cch == buf_str);
 #endif
 
+    BOOST_TEST(buf_ptr_ch == buf_ptr_ch);
+#ifndef BOOST_TEST_MACRO_LIMITED_SUPPORT
     BOOST_TEST(buf_ptr_ch == buf_ptr_cch);
     BOOST_TEST(buf_ptr_ch == buf_array_cch);
-    BOOST_TEST(buf_ptr_ch == buf_ptr_ch);
     BOOST_TEST(buf_ptr_ch == buf_array_ch);
     BOOST_TEST(buf_ptr_ch == buf_str);
+#endif
 
 #ifndef BOOST_TEST_MACRO_LIMITED_SUPPORT
     BOOST_TEST(buf_array_ch == buf_ptr_cch);
@@ -73,6 +78,36 @@ BOOST_AUTO_TEST_CASE( check_string_compare )
     BOOST_TEST(buf_str == buf_ptr_ch);
     BOOST_TEST(buf_str == buf_array_ch);
     BOOST_TEST(buf_str == buf_str);
+
+    BOOST_TEST(buf_ptr_cch == buf_str);
+    //BOOST_TEST(buf_array_cch == buf_str); // does not compile
+    BOOST_TEST(buf_ptr_ch == buf_str);
+    //BOOST_TEST(buf_array_ch == buf_str); // does not compile
+    BOOST_TEST(buf_str == buf_str);
+
+#ifndef BOOST_TEST_MACRO_LIMITED_SUPPORT
+    BOOST_TEST( buf_ptr_cch == buf_ptr_cch, boost::test_tools::per_element() );
+    BOOST_TEST( buf_ptr_cch <= "abd" , boost::test_tools::per_element() );
+    BOOST_TEST( buf_ptr_cch >= "aba" , boost::test_tools::per_element() );
+    BOOST_TEST( buf_str == buf_ptr_cch , boost::test_tools::per_element() );
+    BOOST_TEST( buf_str <= "abd" , boost::test_tools::per_element() );
+    BOOST_TEST( buf_str >= "aba" , boost::test_tools::per_element() );
+
+    BOOST_TEST( buf_ptr_cch <= buf_ptr_cch, boost::test_tools::lexicographic() );
+    BOOST_TEST( buf_ptr_cch >= buf_ptr_cch, boost::test_tools::lexicographic() );
+    BOOST_TEST( buf_ptr_cch <= "abc" , boost::test_tools::lexicographic() );
+    BOOST_TEST( buf_ptr_cch < "abd" , boost::test_tools::lexicographic() );
+    BOOST_TEST( buf_ptr_cch < "abcd" , boost::test_tools::lexicographic() );
+    BOOST_TEST( buf_ptr_cch >= "abc" , boost::test_tools::lexicographic() );
+    BOOST_TEST( buf_ptr_cch > "aba" , boost::test_tools::lexicographic() );
+    BOOST_TEST( buf_ptr_cch > "abad" , boost::test_tools::lexicographic() );
+    BOOST_TEST( buf_str <= buf_ptr_cch , boost::test_tools::lexicographic() );
+    BOOST_TEST( buf_str >= buf_ptr_cch , boost::test_tools::lexicographic() );
+    BOOST_TEST( buf_str <= "abc" , boost::test_tools::lexicographic() );
+    BOOST_TEST( buf_str < "abd" , boost::test_tools::lexicographic() );
+    BOOST_TEST( buf_str > "aba" , boost::test_tools::lexicographic() );
+#endif
+
 }
 
 // EOF

@@ -29,6 +29,8 @@ namespace utf = boost::unit_test;
 
 #define EXPR_TYPE( expr ) ( assertion::seed() ->* expr )
 
+
+#if !defined(BOOST_TEST_FWD_ITERABLE_CXX03)
 // some broken compilers do not implement properly decltype on expressions
 // partial implementation of is_forward_iterable when decltype not available
 struct not_fwd_iterable_1 {
@@ -132,6 +134,8 @@ BOOST_AUTO_TEST_CASE( test_forward_iterable_concept )
     BOOST_CHECK_MESSAGE(!utf::is_forward_iterable< type >::value, "is_forward_iterable failed");
   }
 }
+
+#endif
 
 BOOST_AUTO_TEST_CASE( test_basic_value_expression_construction )
 {
@@ -473,6 +477,38 @@ BOOST_AUTO_TEST_CASE( test_mutating_ops )
         BOOST_TEST( res.message() == " [(bool)0 is false]" );
         BOOST_TEST( j == 0 );
    }
+}
+
+BOOST_AUTO_TEST_CASE( test_specialized_comparator_string )
+{
+    using namespace boost::test_tools;
+
+    {
+        std::string s("abc");
+
+        predicate_result const& res = EXPR_TYPE( s == "a" ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == " [abc != a]" );
+        BOOST_TEST( s == "abc" );
+    }
+
+    {
+        predicate_result const& res = EXPR_TYPE( std::string("abc") == "a" ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == " [abc != a]" );
+    }
+
+    {
+        predicate_result const& res = EXPR_TYPE( "abc" == std::string("a") ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == " [abc != a]" );
+    }
+
+    {
+        predicate_result const& res = EXPR_TYPE( std::string("abc") == std::string("a") ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == " [abc != a]" );
+    }
 }
 
 // EOF
