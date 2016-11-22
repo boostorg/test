@@ -731,10 +731,10 @@ namespace boost{ namespace test_tools{ namespace tt_detail{
 template<>
 struct print_log_value<double> {
     void    operator()( std::ostream& os, double d )
-	{
-		std::streamsize curr_prec = os.precision();
-		os << std::setprecision(1) << d << std::setprecision( curr_prec );
-	}
+  {
+    std::streamsize curr_prec = os.precision();
+    os << std::setprecision(1) << d << std::setprecision( curr_prec );
+  }
 };
 }}}
 
