@@ -9,7 +9,7 @@
 
 [h4 Boost.Test v3.4 / boost 1.63]
 
-[Breaking changes]
+[h5 Breaking changes]
 # Now colons that appear in test case names are replaced with underscores. This affect mainly the
   [link boost_test.tests_organization.test_cases.test_organization_templates template/typed test cases].
   The change is needed since the colon '`:`' is interpreted as a filter separators since 1.62, and it is
