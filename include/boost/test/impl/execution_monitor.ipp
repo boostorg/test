@@ -32,7 +32,7 @@
 #include <boost/cstdlib.hpp>    // for exit codes
 #include <boost/config.hpp>     // for workarounds
 #include <boost/core/ignore_unused.hpp> // for ignore_unused
-#ifndef BOOST_NO_EXCEPTION
+#ifndef BOOST_NO_EXCEPTIONS
 #include <boost/exception/get_error_info.hpp> // for get_error_info
 #include <boost/exception/current_exception_cast.hpp> // for current_exception_cast
 #endif
@@ -196,7 +196,7 @@ namespace boost {
 // **************                 throw_exception              ************** //
 // ************************************************************************** //
 
-#ifdef BOOST_NO_EXCEPTION
+#ifdef BOOST_NO_EXCEPTIONS
 void throw_exception( std::exception const & e ) { abort(); }
 #endif
 
@@ -216,7 +216,7 @@ namespace detail {
 #  define BOOST_TEST_VSNPRINTF( a1, a2, a3, a4 ) vsnprintf( (a1), (a2), (a3), (a4) )
 #endif
 
-#ifndef BOOST_NO_EXCEPTION
+#ifndef BOOST_NO_EXCEPTIONS
 
 template <typename ErrorInfo>
 typename ErrorInfo::value_type
@@ -1285,7 +1285,7 @@ execution_monitor::execute( boost::function<int ()> const& F )
     catch( ... )
       { detail::report_error( execution_exception::cpp_exception_error, "unknown type" ); }
 
-#endif // !BOOST_NO_EXCEPTION
+#endif // !BOOST_NO_EXCEPTIONS
 
     return 0;  // never reached; supplied to quiet compiler warnings
 } // execute
