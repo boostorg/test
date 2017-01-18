@@ -71,35 +71,35 @@ namespace rt = boost::runtime;
 namespace runtime_config {
 
 // UTF parameters
-std::string AUTO_START_DBG    = "auto_start_dbg";
-std::string BREAK_EXEC_PATH   = "break_exec_path";
-std::string BUILD_INFO        = "build_info";
-std::string CATCH_SYS_ERRORS  = "catch_system_errors";
-std::string COLOR_OUTPUT      = "color_output";
-std::string DETECT_FP_EXCEPT  = "detect_fp_exceptions";
-std::string DETECT_MEM_LEAKS  = "detect_memory_leaks";
-std::string LIST_CONTENT      = "list_content";
-std::string LIST_LABELS       = "list_labels";
-std::string LOG_FORMAT        = "log_format";
-std::string LOG_LEVEL         = "log_level";
-std::string LOG_SINK          = "log_sink";
-std::string COMBINED_LOGGER   = "logger";
-std::string OUTPUT_FORMAT     = "output_format";
-std::string RANDOM_SEED       = "random";
-std::string REPORT_FORMAT     = "report_format";
-std::string REPORT_LEVEL      = "report_level";
-std::string REPORT_MEM_LEAKS  = "report_memory_leaks_to";
-std::string REPORT_SINK       = "report_sink";
-std::string RESULT_CODE       = "result_code";
-std::string RUN_FILTERS       = "run_test";
-std::string SAVE_TEST_PATTERN = "save_pattern";
-std::string SHOW_PROGRESS     = "show_progress";
-std::string USE_ALT_STACK     = "use_alt_stack";
-std::string WAIT_FOR_DEBUGGER = "wait_for_debugger";
+std::string auto_start_dbg_str    = "auto_start_dbg";
+std::string break_exec_path_str   = "break_exec_path";
+std::string build_info_str        = "build_info";
+std::string catch_sys_errors_str  = "catch_system_errors";
+std::string color_output_str      = "color_output";
+std::string detect_fp_except_str  = "detect_fp_exceptions";
+std::string detect_mem_leaks_str  = "detect_memory_leaks";
+std::string list_content_str      = "list_content";
+std::string list_labels_str       = "list_labels";
+std::string log_format_str        = "log_format";
+std::string log_level_str         = "log_level";
+std::string log_sink_str          = "log_sink";
+std::string combined_logger_str   = "logger";
+std::string output_format_str     = "output_format";
+std::string random_seed_str       = "random";
+std::string report_format_str     = "report_format";
+std::string report_level_str      = "report_level";
+std::string report_mem_leaks_str  = "report_memory_leaks_to";
+std::string report_sink_str       = "report_sink";
+std::string result_code_str       = "result_code";
+std::string run_filters_str       = "run_test";
+std::string save_test_pattern_str = "save_pattern";
+std::string show_progress_str     = "show_progress";
+std::string use_alt_stack_str     = "use_alt_stack";
+std::string wait_for_debugger_str = "wait_for_debugger";
 
-std::string HELP              = "help";
-std::string USAGE             = "usage";
-std::string VERSION           = "version";
+std::string help_str              = "help";
+std::string usage_str             = "usage";
+std::string version_str           = "version";
 
 //____________________________________________________________________________//
 
@@ -108,11 +108,11 @@ namespace {
 void
 register_parameters( rt::parameters_store& store )
 {
-    rt::option auto_start_dbg( AUTO_START_DBG, (
+    rt::option auto_start_dbg( auto_start_dbg_str, (
         rt::description = "Automatically attaches debugger in case of system level failure (signal).",
         rt::env_var = "BOOST_TEST_AUTO_START_DBG",
 
-        rt::help = "Option " + AUTO_START_DBG + " specifies whether Boost.Test should attempt "
+        rt::help = "Option " + auto_start_dbg_str + " specifies whether Boost.Test should attempt "
                    "to attach a debugger when fatal system error occurs. At the moment this feature "
                    "is only available on a few selected platforms: Win32 and *nix. There is a "
                    "default debugger configured for these platforms. You can manually configure "
@@ -120,13 +120,13 @@ register_parameters( rt::parameters_store& store )
                    "Boost.Test debug API, specifically the function boost::debug::set_debugger."
     ));
 
-    auto_start_dbg.add_cla_id( "--", AUTO_START_DBG, "=" );
+    auto_start_dbg.add_cla_id( "--", auto_start_dbg_str, "=" );
     auto_start_dbg.add_cla_id( "-", "d", " " );
     store.add( auto_start_dbg );
 
     ///////////////////////////////////////////////
 
-    rt::parameter<std::string> break_exec_path( BREAK_EXEC_PATH, (
+    rt::parameter<std::string> break_exec_path( break_exec_path_str, (
         rt::description = "For the exception safety testing allows to break at specific execution path.",
         rt::env_var = "BOOST_TEST_BREAK_EXEC_PATH"
 #ifndef BOOST_NO_CXX11_LAMBDAS
@@ -137,25 +137,25 @@ register_parameters( rt::parameters_store& store )
 #endif
     ));
 
-    break_exec_path.add_cla_id( "--", BREAK_EXEC_PATH, "=" );
+    break_exec_path.add_cla_id( "--", break_exec_path_str, "=" );
     store.add( break_exec_path );
 
     ///////////////////////////////////////////////
 
-    rt::option build_info( BUILD_INFO, (
+    rt::option build_info( build_info_str, (
         rt::description = "Displays library build information.",
         rt::env_var = "BOOST_TEST_BUILD_INFO",
-        rt::help = "Option " + BUILD_INFO + " displays library build information, including: platform, "
+        rt::help = "Option " + build_info_str + " displays library build information, including: platform, "
                    "compiler, STL version and Boost version."
     ));
 
-    build_info.add_cla_id( "--", BUILD_INFO, "=" );
+    build_info.add_cla_id( "--", build_info_str, "=" );
     build_info.add_cla_id( "-", "i", " " );
     store.add( build_info );
 
     ///////////////////////////////////////////////
 
-    rt::option catch_sys_errors( CATCH_SYS_ERRORS, (
+    rt::option catch_sys_errors( catch_sys_errors_str, (
         rt::description = "Allows to switch between catching and ignoring system errors (signals).",
         rt::env_var = "BOOST_TEST_CATCH_SYSTEM_ERRORS",
         rt::default_value =
@@ -164,7 +164,7 @@ register_parameters( rt::parameters_store& store )
 #else
             true,
 #endif
-        rt::help = "If option " + CATCH_SYS_ERRORS + " has value no the frameworks does not attempt to catch "
+        rt::help = "If option " + catch_sys_errors_str + " has value no the frameworks does not attempt to catch "
                    "asynchronous system failure events (signals on *NIX platforms or structured exceptions on Windows). "
                    " Default value is "
 #ifdef BOOST_TEST_DEFAULTS_TO_CORE_DUMP
@@ -174,13 +174,13 @@ register_parameters( rt::parameters_store& store )
 #endif
     ));
 
-    catch_sys_errors.add_cla_id( "--", CATCH_SYS_ERRORS, "=", true );
+    catch_sys_errors.add_cla_id( "--", catch_sys_errors_str, "=", true );
     catch_sys_errors.add_cla_id( "-", "s", " " );
     store.add( catch_sys_errors );
 
     ///////////////////////////////////////////////
 
-    rt::option color_output( COLOR_OUTPUT, (
+    rt::option color_output( color_output_str, (
         rt::description = "Enables color output of the framework log and report messages.",
         rt::env_var = "BOOST_TEST_COLOR_OUTPUT",
         rt::help = "The framework is able to produce color output on systems which supports it. "
@@ -188,31 +188,31 @@ register_parameters( rt::parameters_store& store )
                    "does not produces color output."
     ));
 
-    color_output.add_cla_id( "--", COLOR_OUTPUT, "=", true );
+    color_output.add_cla_id( "--", color_output_str, "=", true );
     color_output.add_cla_id( "-", "x", " " );
     store.add( color_output );
 
     ///////////////////////////////////////////////
 
-    rt::option detect_fp_except( DETECT_FP_EXCEPT, (
+    rt::option detect_fp_except( detect_fp_except_str, (
         rt::description = "Enables/disables floating point exceptions traps.",
         rt::env_var = "BOOST_TEST_DETECT_FP_EXCEPTIONS",
-        rt::help = "Option " + DETECT_FP_EXCEPT + " enables/disables hardware traps for the floating "
+        rt::help = "Option " + detect_fp_except_str + " enables/disables hardware traps for the floating "
                    "point exceptions (if supported on your platfrom)."
     ));
 
-    detect_fp_except.add_cla_id( "--", DETECT_FP_EXCEPT, "=", true );
+    detect_fp_except.add_cla_id( "--", detect_fp_except_str, "=", true );
     store.add( detect_fp_except );
 
     ///////////////////////////////////////////////
 
-    rt::parameter<unsigned long> detect_mem_leaks( DETECT_MEM_LEAKS, (
+    rt::parameter<unsigned long> detect_mem_leaks( detect_mem_leaks_str, (
         rt::description = "Turns on/off memory leaks detection (optionally breaking on specified alloc order number).",
         rt::env_var = "BOOST_TEST_DETECT_MEMORY_LEAK",
         rt::default_value = 1L,
         rt::optional_value = 1L,
         rt::value_hint = "<alloc order number>",
-        rt::help = "Parameter " + DETECT_MEM_LEAKS + " enables/disables memory leaks detection. "
+        rt::help = "Parameter " + detect_mem_leaks_str + " enables/disables memory leaks detection. "
                    "This parameter has optional long integer value. The default value is 1, which "
                    "enables the memory leak detection. The value 0 disables memory leak detection. "
                    "Any value N greater than 1 is treated as leak allocation number and tells the "
@@ -220,12 +220,12 @@ register_parameters( rt::parameters_store& store )
                    "omitted the default value is assumed."
     ));
 
-    detect_mem_leaks.add_cla_id( "--", DETECT_MEM_LEAKS, "=" );
+    detect_mem_leaks.add_cla_id( "--", detect_mem_leaks_str, "=" );
     store.add( detect_mem_leaks );
 
     ///////////////////////////////////////////////
 
-    rt::enum_parameter<unit_test::output_format> list_content( LIST_CONTENT, (
+    rt::enum_parameter<unit_test::output_format> list_content( list_content_str, (
         rt::description = "Lists the content of test tree - names of all test suites and test cases.",
         rt::env_var = "BOOST_TEST_LIST_CONTENT",
         rt::default_value = OF_INVALID,
@@ -242,30 +242,30 @@ register_parameters( rt::parameters_store& store )
             ( "DOT", OF_DOT )
         ,
 #endif
-        rt::help = "Parameter " + LIST_CONTENT + " instructs the framework to list the content "
+        rt::help = "Parameter " + list_content_str + " instructs the framework to list the content "
                    "of the test module instead of executing the test cases. Parameter accepts "
                    "optional string value indicating the format of the output. Currently the "
                    "framework supports two formats: human readable format (HRF) and dot graph "
                    "format (DOT). If value is omitted HRF value is assumed."
     ));
-    list_content.add_cla_id( "--", LIST_CONTENT, "=" );
+    list_content.add_cla_id( "--", list_content_str, "=" );
     store.add( list_content );
 
     ///////////////////////////////////////////////
 
-    rt::option list_labels( LIST_LABELS, (
+    rt::option list_labels( list_labels_str, (
         rt::description = "Lists all available labels.",
         rt::env_var = "BOOST_TEST_LIST_LABELS",
-        rt::help = "Option " + LIST_LABELS + " instructs the framework to list all the the labels "
+        rt::help = "Option " + list_labels_str + " instructs the framework to list all the the labels "
                    "defined in the test module instead of executing the test cases."
     ));
 
-    list_labels.add_cla_id( "--", LIST_LABELS, "=" );
+    list_labels.add_cla_id( "--", list_labels_str, "=" );
     store.add( list_labels );
 
     ///////////////////////////////////////////////
 
-    rt::enum_parameter<unit_test::output_format> log_format( LOG_FORMAT, (
+    rt::enum_parameter<unit_test::output_format> log_format( log_format_str, (
         rt::description = "Specifies log format.",
         rt::env_var = "BOOST_TEST_LOG_FORMAT",
         rt::default_value = OF_CLF,
@@ -285,7 +285,7 @@ register_parameters( rt::parameters_store& store )
             ( "JUNIT", OF_JUNIT )
         ,
 #endif
-        rt::help = "Parameter " + LOG_FORMAT + " allows to set the frameowrk's log format to one "
+        rt::help = "Parameter " + log_format_str + " allows to set the frameowrk's log format to one "
                    "of the formats supplied by the framework. The only acceptable values for this "
                    "parameter are the names of the output formats supplied by the framework. By "
                    "default the framework uses human readable format (HRF) for testing log. This "
@@ -293,13 +293,13 @@ register_parameters( rt::parameters_store& store )
                    "or JUNIT as log format, which are easier to process by testing automation tools."
     ));
 
-    log_format.add_cla_id( "--", LOG_FORMAT, "=" );
+    log_format.add_cla_id( "--", log_format_str, "=" );
     log_format.add_cla_id( "-", "f", " " );
     store.add( log_format );
 
     ///////////////////////////////////////////////
 
-    rt::enum_parameter<unit_test::log_level> log_level( LOG_LEVEL, (
+    rt::enum_parameter<unit_test::log_level> log_level( log_level_str, (
         rt::description = "Specifies log level.",
         rt::env_var = "BOOST_TEST_LOG_LEVEL",
         rt::default_value = log_all_errors,
@@ -333,7 +333,7 @@ register_parameters( rt::parameters_store& store )
             ( "nothing"       , log_nothing )
         ,
 #endif
-        rt::help = "Parameter " + LOG_LEVEL + " allows to set the framework's log level. "
+        rt::help = "Parameter " + log_level_str + " allows to set the framework's log level. "
                    "Log level defines the verbosity of testing log produced by a testing "
                    "module. The verbosity ranges from a complete log, when all assertions "
                    "(both successful and failing) are reported, all notifications about "
@@ -341,29 +341,29 @@ register_parameters( rt::parameters_store& store )
                    "is reported to a testing log stream."
     ));
 
-    log_level.add_cla_id( "--", LOG_LEVEL, "=" );
+    log_level.add_cla_id( "--", log_level_str, "=" );
     log_level.add_cla_id( "-", "l", " " );
     store.add( log_level );
 
     ///////////////////////////////////////////////
 
-    rt::parameter<std::string> log_sink( LOG_SINK, (
+    rt::parameter<std::string> log_sink( log_sink_str, (
         rt::description = "Specifies log sink: stdout(default), stderr or file name.",
         rt::env_var = "BOOST_TEST_LOG_SINK",
         rt::value_hint = "<stderr|stdout|file name>",
-        rt::help = "Parameter " + LOG_SINK + " allows to set the log sink - location "
+        rt::help = "Parameter " + log_sink_str + " allows to set the log sink - location "
                    "where we report the log to, thus it allows to easily redirect the "
                    "test logs to file or standard streams. By default testing log is "
                    "directed to standard output."
     ));
 
-    log_sink.add_cla_id( "--", LOG_SINK, "=" );
+    log_sink.add_cla_id( "--", log_sink_str, "=" );
     log_sink.add_cla_id( "-", "k", " " );
     store.add( log_sink );
 
     ///////////////////////////////////////////////
 
-    rt::enum_parameter<unit_test::output_format> output_format( OUTPUT_FORMAT, (
+    rt::enum_parameter<unit_test::output_format> output_format( output_format_str, (
         rt::description = "Specifies output format (both log and report).",
         rt::env_var = "BOOST_TEST_OUTPUT_FORMAT",
         rt::enum_values<unit_test::output_format>::value =
@@ -380,8 +380,8 @@ register_parameters( rt::parameters_store& store )
             ( "XML", OF_XML )
         ,
 #endif
-        rt::help = "Parameter " + OUTPUT_FORMAT + " combines an effect of " + REPORT_FORMAT +
-                   " and " + LOG_FORMAT + " parameters. This parameter has higher priority "
+        rt::help = "Parameter " + output_format_str + " combines an effect of " + report_format_str +
+                   " and " + log_format_str + " parameters. This parameter has higher priority "
                    "than either one of them. In other words if this parameter is specified "
                    "it overrides the value of other two parameters. This parameter does not "
                    "have a default value. The only acceptable values are string names of "
@@ -389,33 +389,33 @@ register_parameters( rt::parameters_store& store )
                    "automation tools processing."
     ));
 
-    output_format.add_cla_id( "--", OUTPUT_FORMAT, "=" );
+    output_format.add_cla_id( "--", output_format_str, "=" );
     output_format.add_cla_id( "-", "o", " " );
     store.add( output_format );
 
     /////////////////////////////////////////////// combined logger option
 
-    rt::parameter<std::string,rt::REPEATABLE_PARAM> combined_logger( COMBINED_LOGGER, (
+    rt::parameter<std::string,rt::REPEATABLE_PARAM> combined_logger( combined_logger_str, (
         rt::description = "Specifies log level and sink for one or several log format",
         rt::env_var = "BOOST_TEST_LOGGER",
         rt::value_hint = "log_format:log_level:log_sink",
-        rt::help = "Parameter " + COMBINED_LOGGER + " allows to specify the logger type, level and sink\n"
+        rt::help = "Parameter " + combined_logger_str + " allows to specify the logger type, level and sink\n"
                    "in one command."
     ));
 
-    combined_logger.add_cla_id( "--", COMBINED_LOGGER, "=" );
+    combined_logger.add_cla_id( "--", combined_logger_str, "=" );
     store.add( combined_logger );
 
     ///////////////////////////////////////////////
 
-    rt::parameter<unsigned> random_seed( RANDOM_SEED, (
+    rt::parameter<unsigned> random_seed( random_seed_str, (
         rt::description = "Allows to switch between sequential and random order of test units execution."
                           " Optionally allows to specify concrete seed for random number generator.",
         rt::env_var = "BOOST_TEST_RANDOM",
         rt::default_value = 0U,
         rt::optional_value = 1U,
         rt::value_hint = "<seed>",
-        rt::help = "Parameter " + RANDOM_SEED + " instructs the framework to execute the "
+        rt::help = "Parameter " + random_seed_str + " instructs the framework to execute the "
                    "test cases in random order. This parameter accepts optional unsigned "
                    "integer argument. By default test cases are executed in some specific "
                    "order defined by order of test units in test files and dependency between "
@@ -425,12 +425,12 @@ register_parameters( rt::parameters_store& store )
                    "the run."
     ));
 
-    random_seed.add_cla_id( "--", RANDOM_SEED, "=" );
+    random_seed.add_cla_id( "--", random_seed_str, "=" );
     store.add( random_seed );
 
     ///////////////////////////////////////////////
 
-    rt::enum_parameter<unit_test::output_format> report_format( REPORT_FORMAT, (
+    rt::enum_parameter<unit_test::output_format> report_format( report_format_str, (
         rt::description = "Specifies report format.",
         rt::env_var = "BOOST_TEST_REPORT_FORMAT",
         rt::default_value = OF_CLF,
@@ -448,7 +448,7 @@ register_parameters( rt::parameters_store& store )
             ( "XML", OF_XML )
         ,
 #endif
-        rt::help = "Parameter " + REPORT_FORMAT + " allows to set the framework's report format "
+        rt::help = "Parameter " + report_format_str + " allows to set the framework's report format "
                    "to one of the formats supplied by the framework. The only acceptable values "
                    "for this parameter are the names of the output formats. By default the framework "
                    "uses human readable format (HRF) for results reporting. Alternatively you can "
@@ -456,13 +456,13 @@ register_parameters( rt::parameters_store& store )
                    "automation tools."
     ));
 
-    report_format.add_cla_id( "--", REPORT_FORMAT, "=" );
+    report_format.add_cla_id( "--", report_format_str, "=" );
     report_format.add_cla_id( "-", "m", " " );
     store.add( report_format );
 
     ///////////////////////////////////////////////
 
-    rt::enum_parameter<unit_test::report_level> report_level( REPORT_LEVEL, (
+    rt::enum_parameter<unit_test::report_level> report_level( report_level_str, (
         rt::description = "Specifies report level.",
         rt::env_var = "BOOST_TEST_REPORT_LEVEL",
         rt::default_value = CONFIRMATION_REPORT,
@@ -482,155 +482,155 @@ register_parameters( rt::parameters_store& store )
             ( "no",       NO_REPORT )
         ,
 #endif
-        rt::help = "Parameter " + REPORT_LEVEL + " allows to set the verbosity level of the "
+        rt::help = "Parameter " + report_level_str + " allows to set the verbosity level of the "
                    "testing result report generated by the framework. Use value 'no' to "
                    "eliminate the results report completely."
     ));
 
-    report_level.add_cla_id( "--", REPORT_LEVEL, "=" );
+    report_level.add_cla_id( "--", report_level_str, "=" );
     report_level.add_cla_id( "-", "r", " " );
     store.add( report_level );
 
     ///////////////////////////////////////////////
 
-    rt::parameter<std::string> report_mem_leaks( REPORT_MEM_LEAKS, (
+    rt::parameter<std::string> report_mem_leaks( report_mem_leaks_str, (
         rt::description = "File where to report memory leaks to.",
         rt::env_var = "BOOST_TEST_REPORT_MEMORY_LEAKS_TO",
         rt::default_value = std::string(),
         rt::value_hint = "<file name>",
-        rt::help = "Parameter " + REPORT_MEM_LEAKS + " allows to specify a file where to report "
+        rt::help = "Parameter " + report_mem_leaks_str + " allows to specify a file where to report "
                    "memory leaks to. The parameter does not have default value. If it is not specified, "
                    "memory leaks (if any) are reported to the standard error stream."
     ));
 
-    report_mem_leaks.add_cla_id( "--", REPORT_MEM_LEAKS, "=" );
+    report_mem_leaks.add_cla_id( "--", report_mem_leaks_str, "=" );
     store.add( report_mem_leaks );
 
     ///////////////////////////////////////////////
 
-    rt::parameter<std::string> report_sink( REPORT_SINK, (
+    rt::parameter<std::string> report_sink( report_sink_str, (
         rt::description = "Specifies report sink: stderr(default), stdout or file name.",
         rt::env_var = "BOOST_TEST_REPORT_SINK",
         rt::value_hint = "<stderr|stdout|file name>",
-        rt::help = "Parameter " + REPORT_SINK + " allows to set the result report sink - "
+        rt::help = "Parameter " + report_sink_str + " allows to set the result report sink - "
                    "the location where the framework writes the result report to, thus it "
                    "allows to easily redirect the result report to a file or a standard "
                    "stream. By default the testing result report is directed to the "
                    "standard error stream."
     ));
 
-    report_sink.add_cla_id( "--", REPORT_SINK, "=" );
+    report_sink.add_cla_id( "--", report_sink_str, "=" );
     report_sink.add_cla_id( "-", "e", " " );
     store.add( report_sink );
 
     ///////////////////////////////////////////////
 
-    rt::option result_code( RESULT_CODE, (
+    rt::option result_code( result_code_str, (
         rt::description = "Disables test modules's result code generation.",
         rt::env_var = "BOOST_TEST_RESULT_CODE",
         rt::default_value = true,
-        rt::help = "The 'no' argument value for the parameter " + RESULT_CODE + " instructs the "
+        rt::help = "The 'no' argument value for the parameter " + result_code_str + " instructs the "
                    "framework to always return zero result code. This can be used for test programs "
                    "executed within IDE. By default this parameter has value 'yes'."
     ));
 
-    result_code.add_cla_id( "--", RESULT_CODE, "=", true );
+    result_code.add_cla_id( "--", result_code_str, "=", true );
     result_code.add_cla_id( "-", "c", " " );
     store.add( result_code );
 
     ///////////////////////////////////////////////
 
-    rt::parameter<std::string,rt::REPEATABLE_PARAM> tests_to_run( RUN_FILTERS, (
+    rt::parameter<std::string,rt::REPEATABLE_PARAM> tests_to_run( run_filters_str, (
         rt::description = "Filters, which test units to include or exclude from test module execution.",
         rt::env_var = "BOOST_TEST_RUN_FILTERS",
         rt::value_hint = "<test unit filter>",
-        rt::help = "Parameter " + RUN_FILTERS + " allows to filter which test units to execute during "
+        rt::help = "Parameter " + run_filters_str + " allows to filter which test units to execute during "
                    "testing. The framework supports both 'selection filters', which allow to select "
                    "which test units to enable from the set of available test units, and 'disabler "
                    "filters', which allow to disable some test units. The __UTF__ also supports "
                    "enabling/disabling test units at compile time. These settings identify the default "
-                   "set of test units to run. Parameter " + RUN_FILTERS + " is used to change this default. "
+                   "set of test units to run. Parameter " + run_filters_str + " is used to change this default. "
                    "This parameter is repeatable, so you can specify more than one filter if necessary."
     ));
 
-    tests_to_run.add_cla_id( "--", RUN_FILTERS, "=" );
+    tests_to_run.add_cla_id( "--", run_filters_str, "=" );
     tests_to_run.add_cla_id( "-", "t", " " );
     store.add( tests_to_run );
 
     ///////////////////////////////////////////////
 
-    rt::option save_test_pattern( SAVE_TEST_PATTERN, (
+    rt::option save_test_pattern( save_test_pattern_str, (
         rt::description = "Allows to switch between saving or matching test pattern file.",
         rt::env_var = "BOOST_TEST_SAVE_PATTERN",
-        rt::help = "Parameter " + SAVE_TEST_PATTERN + " facilitates switching mode of operation for "
+        rt::help = "Parameter " + save_test_pattern_str + " facilitates switching mode of operation for "
                    "testing output streams.\n\nThis parameter serves no particular purpose within the "
                    "framework itself. It can be used by test modules relying on output_test_stream to "
                    "implement testing logic. Default mode is 'match' (false)."
     ));
 
-    save_test_pattern.add_cla_id( "--", SAVE_TEST_PATTERN, "=" );
+    save_test_pattern.add_cla_id( "--", save_test_pattern_str, "=" );
     store.add( save_test_pattern );
 
     ///////////////////////////////////////////////
 
-    rt::option show_progress( SHOW_PROGRESS, (
+    rt::option show_progress( show_progress_str, (
         rt::description = "Turns on progress display.",
         rt::env_var = "BOOST_TEST_SHOW_PROGRESS",
-        rt::help = "Parameter " + SHOW_PROGRESS + " instructs the framework to display test progress "
+        rt::help = "Parameter " + show_progress_str + " instructs the framework to display test progress "
                    "information. By default the test progress is not shown."
     ));
 
-    show_progress.add_cla_id( "--", SHOW_PROGRESS, "=" );
+    show_progress.add_cla_id( "--", show_progress_str, "=" );
     show_progress.add_cla_id( "-", "p", " " );
     store.add( show_progress );
 
     ///////////////////////////////////////////////
 
-    rt::option use_alt_stack( USE_ALT_STACK, (
+    rt::option use_alt_stack( use_alt_stack_str, (
         rt::description = "Turns on/off usage of an alternative stack for signal handling.",
         rt::env_var = "BOOST_TEST_USE_ALT_STACK",
         rt::default_value = true,
-        rt::help = "Parameter " + USE_ALT_STACK + " instructs the framework to use alternative "
+        rt::help = "Parameter " + use_alt_stack_str + " instructs the framework to use alternative "
                    "stack for signals processing, on platforms where they are supported. The feature "
                    "is enabled by default, but can be disabled using this parameter."
     ));
 
-    use_alt_stack.add_cla_id( "--", USE_ALT_STACK, "=", true );
+    use_alt_stack.add_cla_id( "--", use_alt_stack_str, "=", true );
     store.add( use_alt_stack );
 
     ///////////////////////////////////////////////
 
-    rt::option wait_for_debugger( WAIT_FOR_DEBUGGER, (
+    rt::option wait_for_debugger( wait_for_debugger_str, (
         rt::description = "Forces test module to wait for button to be pressed before starting test run.",
         rt::env_var = "BOOST_TEST_WAIT_FOR_DEBUGGER",
-        rt::help = "Parameter " + WAIT_FOR_DEBUGGER + " instructs the framework to pause before starting "
+        rt::help = "Parameter " + wait_for_debugger_str + " instructs the framework to pause before starting "
                    "test units execution, so that you can attach a debugger to running test module. By "
                    "default this parameters turned off."
     ));
 
-    wait_for_debugger.add_cla_id( "--", WAIT_FOR_DEBUGGER, "=" );
+    wait_for_debugger.add_cla_id( "--", wait_for_debugger_str, "=" );
     wait_for_debugger.add_cla_id( "-", "w", " " );
     store.add( wait_for_debugger );
 
     ///////////////////////////////////////////////
 
-    rt::parameter<std::string> help( HELP, (
+    rt::parameter<std::string> help( help_str, (
         rt::description = "Help for framework parameters.",
         rt::optional_value = std::string(),
         rt::value_hint = "<parameter name>",
-        rt::help = "Parameter " + HELP + " displays help on the framework's parameters. "
+        rt::help = "Parameter " + help_str + " displays help on the framework's parameters. "
                    "The parameter accepts an optional argument value. If present, an argument value is "
                    "interpreted as a parameter name (name guessing works as well, so for example "
                    "--help=rand displays help on the parameter random). If the parameter name is unknown "
                    "or ambiguous error is reported. If argument value is absent, a summary of all "
                    "framework's parameter is displayed."
     ));
-    help.add_cla_id( "--", HELP, "=" );
+    help.add_cla_id( "--", help_str, "=" );
     store.add( help );
 
     ///////////////////////////////////////////////
 
-    rt::option usage( USAGE, (
+    rt::option usage( usage_str, (
         rt::description = "Short message explaining usage of Boost.Test parameters."
     ));
     usage.add_cla_id( "-", "?", " " );
@@ -638,10 +638,10 @@ register_parameters( rt::parameters_store& store )
 
     ///////////////////////////////////////////////
 
-    rt::option version( VERSION, (
+    rt::option version( version_str, (
         rt::description = "Prints Boost.Test version and exits."
     ));
-    version.add_cla_id( "--", VERSION, " " );
+    version.add_cla_id( "--", version_str, " " );
     store.add( version );
 }
 
@@ -676,24 +676,24 @@ init( int& argc, char** argv )
         rt::finalize_arguments( s_parameters_store, s_arguments_store );
 
         // Report help if requested
-        if( runtime_config::get<bool>( VERSION ) ) {
+        if( runtime_config::get<bool>( version_str ) ) {
             parser->version( std::cerr );
             BOOST_TEST_I_THROW( framework::nothing_to_test( boost::exit_success ) );
         }
-        else if( runtime_config::get<bool>( USAGE ) ) {
+        else if( runtime_config::get<bool>( usage_str ) ) {
             parser->usage( std::cerr );
             BOOST_TEST_I_THROW( framework::nothing_to_test( boost::exit_success ) );
         }
-        else if( s_arguments_store.has( HELP ) ) {
-            parser->help( std::cerr, s_parameters_store, runtime_config::get<std::string>( HELP ) );
+        else if( s_arguments_store.has( help_str ) ) {
+            parser->help( std::cerr, s_parameters_store, runtime_config::get<std::string>( help_str ) );
             BOOST_TEST_I_THROW( framework::nothing_to_test( boost::exit_success ) );
         }
 
         // A bit of business logic: output_format takes precedence over log/report formats
-        if( s_arguments_store.has( OUTPUT_FORMAT ) ) {
-            unit_test::output_format of = s_arguments_store.get<unit_test::output_format>( OUTPUT_FORMAT );
-            s_arguments_store.set( REPORT_FORMAT, of );
-            s_arguments_store.set( LOG_FORMAT, of );
+        if( s_arguments_store.has( output_format_str ) ) {
+            unit_test::output_format of = s_arguments_store.get<unit_test::output_format>( output_format_str );
+            s_arguments_store.set( report_format_str, of );
+            s_arguments_store.set( log_format_str, of );
         }
 
     }
@@ -747,7 +747,7 @@ argument_store()
 bool
 save_pattern()
 {
-    return runtime_config::get<bool>( SAVE_TEST_PATTERN );
+    return runtime_config::get<bool>( save_test_pattern_str );
 }
 
 //____________________________________________________________________________//
