@@ -62,7 +62,7 @@ test_phase_identifier()
 void
 compiler_log_formatter::log_start( std::ostream& output, counter_t test_cases_amount )
 {
-    m_color_output = runtime_config::get<bool>( runtime_config::COLOR_OUTPUT );
+    m_color_output = runtime_config::get<bool>( runtime_config::btrt_color_output );
 
     if( test_cases_amount > 0 )
         output  << "Running " << test_cases_amount << " test "
