@@ -12,6 +12,7 @@
 [h5 New features]
 
 [h5 Bugfixes and feature requests]
+# [ticket 12778] Boost.Test is broken against left shift operator in certain cases (`nullptr` issue)
 
 [h4 Boost.Test v3.4 / boost 1.63]
 
