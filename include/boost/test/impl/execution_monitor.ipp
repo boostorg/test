@@ -1354,11 +1354,7 @@ unsigned
 enable( unsigned mask )
 {
     boost::ignore_unused(mask);
-
-#if defined(UNDER_CE)
-    /* Not Implemented in Windows CE */
-    return BOOST_FPE_OFF;
-#elif defined(BOOST_SEH_BASED_SIGNAL_HANDLING)
+#if defined(BOOST_TEST_FPE_SUPPORT_WITH_SEH__)
     _clearfp();
 
 #if BOOST_WORKAROUND( BOOST_MSVC, <= 1310)
@@ -1373,9 +1369,10 @@ enable( unsigned mask )
     if( ::_controlfp_s( 0, old_cw & ~mask, BOOST_FPE_ALL ) != 0 )
         return BOOST_FPE_INV;
 #endif
-
     return ~old_cw & BOOST_FPE_ALL;
-#elif defined(__GLIBC__) && defined(__USE_GNU)
+
+#elif defined(BOOST_TEST_FPE_SUPPORT_WITH_GLIBC_EXTENSIONS__)
+    // same macro definition as in execution_monitor.hpp
     if (BOOST_FPE_ALL == BOOST_FPE_OFF)
         /* Not Implemented */
         return BOOST_FPE_OFF;
@@ -1395,12 +1392,8 @@ disable( unsigned mask )
 {
     boost::ignore_unused(mask);
 
-#if defined(UNDER_CE)
-    /* Not Implemented in Windows CE */
-    return BOOST_FPE_INV;
-#elif defined(BOOST_SEH_BASED_SIGNAL_HANDLING)
+#if defined(BOOST_TEST_FPE_SUPPORT_WITH_SEH__)
     _clearfp();
-
 #if BOOST_WORKAROUND( BOOST_MSVC, <= 1310)
     unsigned old_cw = ::_controlfp( 0, 0 );
     ::_controlfp( old_cw | mask, BOOST_FPE_ALL );
@@ -1413,9 +1406,9 @@ disable( unsigned mask )
     if( ::_controlfp_s( 0, old_cw | mask, BOOST_FPE_ALL ) != 0 )
         return BOOST_FPE_INV;
 #endif
-
     return ~old_cw & BOOST_FPE_ALL;
-#elif defined(__GLIBC__) && defined(__USE_GNU)
+
+#elif defined(BOOST_TEST_FPE_SUPPORT_WITH_GLIBC_EXTENSIONS__)
     if (BOOST_FPE_ALL == BOOST_FPE_OFF)
         /* Not Implemented */
         return BOOST_FPE_INV;

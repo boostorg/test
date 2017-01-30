@@ -66,6 +66,19 @@
 
 #endif
 
+#if defined(BOOST_SEH_BASED_SIGNAL_HANDLING) && !defined(UNDER_CE)
+  //! Indicates tha the floating point exception handling is supported
+  //! through SEH
+  #define BOOST_TEST_FPE_SUPPORT_WITH_SEH__
+#elif !defined(BOOST_SEH_BASED_SIGNAL_HANDLING) && !defined(UNDER_CE)
+  #if !defined(BOOST_NO_FENV_H) && !defined(BOOST_CLANG) && \
+      (defined(__GLIBC__) && defined(__USE_GNU))
+  //! Indicates that floating point exception handling is supported for the
+  //! non SEH version of it, for the GLIBC extensions only
+  #define BOOST_TEST_FPE_SUPPORT_WITH_GLIBC_EXTENSIONS__
+  #endif
+#endif
+
 
 // Additional macro documentations not being generated without this hack
 #ifdef BOOST_TEST_DOXYGEN_DOC__
@@ -489,7 +502,7 @@ namespace fpe {
 enum masks {
     BOOST_FPE_OFF       = 0,
 
-#ifdef BOOST_SEH_BASED_SIGNAL_HANDLING /* *** */
+#if defined(BOOST_TEST_FPE_SUPPORT_WITH_SEH__) /* *** */
     BOOST_FPE_DIVBYZERO = EM_ZERODIVIDE,
     BOOST_FPE_INEXACT   = EM_INEXACT,
     BOOST_FPE_INVALID   = EM_INVALID,
@@ -498,7 +511,7 @@ enum masks {
 
     BOOST_FPE_ALL       = MCW_EM,
 
-#elif defined(BOOST_NO_FENV_H) || defined(BOOST_CLANG) /* *** */
+#elif !defined(BOOST_TEST_FPE_SUPPORT_WITH_GLIBC_EXTENSIONS__)/* *** */
     BOOST_FPE_ALL       = BOOST_FPE_OFF,
 
 #else /* *** */
