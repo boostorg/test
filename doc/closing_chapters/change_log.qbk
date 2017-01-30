@@ -12,6 +12,8 @@
 [h5 New features]
 
 [h5 Bugfixes and feature requests]
+# [pull_request 108] Change capital variable names to lowercase
+# [ticket 12748] Boost.Test defines a variable called `VERSION`
 
 [h4 Boost.Test v3.4 / boost 1.63]
 
