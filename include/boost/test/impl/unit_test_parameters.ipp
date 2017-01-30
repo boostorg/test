@@ -73,7 +73,7 @@ namespace runtime_config {
 // UTF parameters
 std::string btrt_auto_start_dbg    = "auto_start_dbg";
 std::string btrt_break_exec_path   = "break_exec_path";
-std::string btrt_build_info_str    = "build_info";
+std::string btrt_build_info        = "build_info";
 std::string btrt_catch_sys_errors  = "catch_system_errors";
 std::string btrt_color_output      = "color_output";
 std::string btrt_detect_fp_except  = "detect_fp_exceptions";
@@ -142,14 +142,14 @@ register_parameters( rt::parameters_store& store )
 
     ///////////////////////////////////////////////
 
-    rt::option build_info( btrt_build_info_str, (
+    rt::option build_info( btrt_build_info, (
         rt::description = "Displays library build information.",
         rt::env_var = "BOOST_TEST_BUILD_INFO",
-        rt::help = "Option " + btrt_build_info_str + " displays library build information, including: platform, "
+        rt::help = "Option " + btrt_build_info + " displays library build information, including: platform, "
                    "compiler, STL version and Boost version."
     ));
 
-    build_info.add_cla_id( "--", btrt_build_info_str, "=" );
+    build_info.add_cla_id( "--", btrt_build_info, "=" );
     build_info.add_cla_id( "-", "i", " " );
     store.add( build_info );
 

@@ -168,7 +168,7 @@ unit_test_log_t::test_start( counter_t test_cases_amount )
 
       current_logger_data.m_log_formatter->log_start( current_logger_data.stream(), test_cases_amount );
 
-      if( runtime_config::get<bool>( runtime_config::btrt_build_info_str ) )
+      if( runtime_config::get<bool>( runtime_config::btrt_build_info ) )
           current_logger_data.m_log_formatter->log_build_info( current_logger_data.stream() );
 
       current_logger_data.m_entry_in_progress = false;
