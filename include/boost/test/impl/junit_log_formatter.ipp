@@ -776,7 +776,7 @@ junit_log_formatter::entry_context_start( std::ostream& /*ostr*/, log_level )
 //____________________________________________________________________________//
 
 void
-junit_log_formatter::entry_context_finish( std::ostream& /*ostr*/ )
+junit_log_formatter::entry_context_finish( std::ostream& /*ostr*/, log_level )
 {
     // no op, may be removed
     junit_impl::junit_log_helper& last_entry = get_current_log_entry();
@@ -788,7 +788,7 @@ junit_log_formatter::entry_context_finish( std::ostream& /*ostr*/ )
 //____________________________________________________________________________//
 
 void
-junit_log_formatter::log_entry_context( std::ostream& /*ostr*/, const_string context_descr )
+junit_log_formatter::log_entry_context( std::ostream& /*ostr*/, log_level , const_string context_descr )
 {
     junit_impl::junit_log_helper& last_entry = get_current_log_entry();
     if(last_entry.skipping)
