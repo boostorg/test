@@ -12,6 +12,8 @@
 [h5 New features]
 
 [h5 Bugfixes and feature requests]
+# [pull_request 107] `BOOST_NO_EXCEPTIONS` typo making `throw_exception` unusable under some circumstances 
+
 
 [h4 Boost.Test v3.4 / boost 1.63]
 
