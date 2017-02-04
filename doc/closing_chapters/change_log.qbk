@@ -12,6 +12,7 @@
 [h5 New features]
 
 [h5 Bugfixes and feature requests]
+# [ticket 12712] `BOOST_AUTO_TEST_SUITE`: Generate unique names by using `__COUNTER__`
 
 [h4 Boost.Test v3.4 / boost 1.63]
 
