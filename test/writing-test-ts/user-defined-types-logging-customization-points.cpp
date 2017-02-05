@@ -13,7 +13,7 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/data/test_case.hpp>
 
-
+namespace printing_test {
 struct user_defined_type {
     int value;
 
@@ -26,14 +26,17 @@ struct user_defined_type {
 };
 
 std::ostream& boost_test_print_type(std::ostream& ostr, user_defined_type const& right) {
-    ostr << "value of my type is " << right.value;
+    ostr << "** value of my type is " << right.value << " **";
     return ostr;
 }
+}
+
+//using namespace printing_test;
 
 BOOST_AUTO_TEST_CASE(test1)
 {
-    using ::boost_test_print_type;
-    user_defined_type t(10);
+    //using printing_test::user_defined_type;
+    printing_test::user_defined_type t(10);
     BOOST_CHECK_EQUAL(t, 10);
-    BOOST_TEST(t == 10);
+    BOOST_TEST(t == 11);
 }
