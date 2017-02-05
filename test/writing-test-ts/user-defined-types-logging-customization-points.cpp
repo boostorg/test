@@ -11,7 +11,6 @@
 
 #define BOOST_TEST_MODULE user type logger customization points
 #include <boost/test/unit_test.hpp>
-#include <boost/test/data/test_case.hpp>
 
 namespace printing_test {
 struct user_defined_type {
@@ -38,5 +37,7 @@ BOOST_AUTO_TEST_CASE(test1)
     //using printing_test::user_defined_type;
     printing_test::user_defined_type t(10);
     BOOST_CHECK_EQUAL(t, 10);
-    BOOST_TEST(t == 11);
+#ifndef BOOST_TEST_MACRO_LIMITED_SUPPORT
+    BOOST_TEST(t == 10);
+#endif
 }
