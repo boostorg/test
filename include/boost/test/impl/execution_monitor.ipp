@@ -1375,7 +1375,7 @@ enable( unsigned mask )
 #endif
 
     return ~old_cw & BOOST_FPE_ALL;
-#elif defined(__GLIBC__) && defined(__USE_GNU)
+#elif defined(__GLIBC__) && defined(__USE_GNU) && !defined(BOOST_NO_FENV_H)
     if (BOOST_FPE_ALL == BOOST_FPE_OFF)
         /* Not Implemented */
         return BOOST_FPE_OFF;
@@ -1415,7 +1415,7 @@ disable( unsigned mask )
 #endif
 
     return ~old_cw & BOOST_FPE_ALL;
-#elif defined(__GLIBC__) && defined(__USE_GNU)
+#elif defined(__GLIBC__) && defined(__USE_GNU) && !defined(BOOST_NO_FENV_H)
     if (BOOST_FPE_ALL == BOOST_FPE_OFF)
         /* Not Implemented */
         return BOOST_FPE_INV;
