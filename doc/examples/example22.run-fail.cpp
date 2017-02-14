@@ -23,8 +23,17 @@ void goo( int )
 {
 }
 
+#if defined(BOOST_MSVC)
+// compiler optimizations may cause this code NOT to crash.
+#pragma optimize("", off)
+#endif
+
 void foo( int i )
 {
     goo( 2/(i-1) );
 }
+
+#if defined(BOOST_MSVC)
+#pragma optimize("", on)
+#endif
 //]
