@@ -83,7 +83,7 @@ void
 plain_report_formatter::results_report_start( std::ostream& ostr )
 {
     m_indent = 0;
-    m_color_output = runtime_config::get<bool>( runtime_config::COLOR_OUTPUT );
+    m_color_output = runtime_config::get<bool>( runtime_config::color_output_str );
     ostr << '\n';
 }
 
