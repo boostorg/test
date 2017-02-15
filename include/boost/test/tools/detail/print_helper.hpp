@@ -30,6 +30,10 @@
 
 #include <limits>
 
+#if !defined(BOOST_NO_CXX11_NULLPTR)
+#include <cstddef>
+#endif
+
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
@@ -132,6 +136,13 @@ template<>
 struct BOOST_TEST_DECL print_log_value<wchar_t const*> {
     void    operator()( std::ostream& ostr, wchar_t const* t );
 };
+
+#if !defined(BOOST_NO_CXX11_NULLPTR)
+template<>
+struct BOOST_TEST_DECL print_log_value<std::nullptr_t> {
+    void    operator()( std::ostream& ostr, std::nullptr_t t );
+};
+#endif
 
 //____________________________________________________________________________//
 
