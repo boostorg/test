@@ -167,6 +167,7 @@ test-suite "test-organization-ts"
   [ boost.test-self-test run : test-organization-ts : test_unit-order-test ]
   [ boost.test-self-test run : test-organization-ts : test_unit-order-shuffled-test : : : : : : $(requirements_boost_test_full_support) ]
   [ boost.test-self-test run : test-organization-ts : test-tree-management-test ]
+  [ boost.test-self-test run : test-organization-ts : test-tree-several-suite-decl ]
 ;
 
 #_________________________________________________________________________________________________#
