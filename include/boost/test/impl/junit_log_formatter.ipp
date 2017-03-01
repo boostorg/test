@@ -209,23 +209,50 @@ public:
           }
         }
 
-        // system-out + all info/messages
-        std::string system_out = detailed_log.system_out;
-        for(std::vector< junit_impl::junit_log_helper::assertion_entry >::const_iterator it(detailed_log.assertion_entries.begin());
-            it != detailed_log.assertion_entries.end();
-            ++it)
-        {
-            if(it->log_entry != junit_impl::junit_log_helper::assertion_entry::log_entry_info)
-                continue;
-            system_out += it->output;
-        }
 
-        if(!system_out.empty()) {
-            m_stream
-                << "<system-out>"
-                << utils::cdata() << system_out
-                << "</system-out>"
-                << std::endl;
+        struct conditional_cdata_helper {
+            std::ostream &ostr;
+            std::string const field;
+            bool empty;
+
+            conditional_cdata_helper(std::ostream &ostr_, std::string field_)
+            : ostr(ostr_)
+            , field(field_)
+            , empty(true)
+            {}
+
+            ~conditional_cdata_helper() {
+                if(!empty) {
+                    ostr << BOOST_TEST_L( "]]>" ) << "</" << field << '>' << std::endl;
+                }
+            }
+
+            void operator()(const std::string& s) {
+                bool current_empty = s.empty();
+                if(empty) {
+                    if(!current_empty) {
+                        empty = false;
+                        ostr << '<' << field << '>' << BOOST_TEST_L( "<![CDATA[" );
+                    }
+                }
+                if(!current_empty) {
+                    ostr << s;
+                }
+            }
+        };
+
+        // system-out + all info/messages
+        {
+            conditional_cdata_helper system_out_helper(m_stream, "system-out");
+            system_out_helper(detailed_log.system_out);
+            for(std::vector< junit_impl::junit_log_helper::assertion_entry >::const_iterator it(detailed_log.assertion_entries.begin());
+                it != detailed_log.assertion_entries.end();
+                ++it)
+            {
+                if(it->log_entry != junit_impl::junit_log_helper::assertion_entry::log_entry_info)
+                    continue;
+                system_out_helper(it->output);
+            }
         }
 
         // system-err output + test case informations
