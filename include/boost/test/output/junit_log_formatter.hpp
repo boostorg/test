@@ -64,6 +64,18 @@ namespace output {
       // list of failure, errors and messages (assertions message and the full log)
       std::vector< assertion_entry > assertion_entries;
 
+      bool skipping;
+
+      junit_log_helper(): skipping(false)
+      {}
+
+      void clear() {
+          assertion_entries.clear();
+          system_out.clear();
+          system_err.clear();
+          skipping = false;
+      }
+
     };
   }
 
@@ -77,7 +89,11 @@ public:
 
     junit_log_formatter() : m_display_build_info(false)
     {
-      this->m_log_level = log_successful_tests;
+        // we log everything from the logger singleton point of view
+        // because we need to know about all the messages/commands going to the logger
+        // we decide what we put inside the logs internally
+        this->m_log_level = log_successful_tests;
+        m_log_level_internal = log_successful_tests;
     }
 
     // Formatter interface
@@ -104,8 +120,14 @@ public:
     void    entry_context_finish( std::ostream& );
 
     //! Discards changes in the log level
-    virtual void        set_log_level(log_level )
+    virtual void        set_log_level(log_level ll)
     {
+        if(ll > log_successful_tests && ll < log_messages)
+            ll = log_successful_tests;
+        else if (ll > log_all_errors)
+            ll = log_all_errors;
+
+        this->m_log_level_internal = ll;
     }
 
     //! Instead of a regular stream, returns a file name corresponding to
@@ -117,12 +139,19 @@ public:
 private:
     typedef std::map<test_unit_id, junit_impl::junit_log_helper> map_trace_t;
     map_trace_t map_tests;
+    junit_impl::junit_log_helper runner_log_entry;
+
+    junit_impl::junit_log_helper& get_current_log_entry() {
+        if(list_path_to_root.empty())
+            return runner_log_entry;
+        return map_tests.at(list_path_to_root.back());
+    }
 
     std::list<test_unit_id> list_path_to_root;
-    test_unit_id root_id;
     bool m_display_build_info;
     bool m_is_last_assertion_or_error; // true if failure, false if error
 
+    log_level m_log_level_internal;
     friend class junit_result_helper;
 };
 
