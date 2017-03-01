@@ -155,13 +155,18 @@ public:
                 if( tr_parent.p_skipped )
                 {
                     skipped = true;
-                    detailed_log.system_out+= "- disabled: " + tu.full_name() + "\n";
+                    detailed_log.system_out.push_back("- disabled: " + tu.full_name() + "\n");
                 }
                 junit_log_formatter::map_trace_t::const_iterator it_element_stack(m_map_test.find(id));
                 if( it_element_stack != m_map_test.end() )
                 {
-                    detailed_log.system_out+= "- skipping decision: '" + it_element_stack->second.system_out + "'";
-                    detailed_log.system_out = "SKIPPING decision stack:\n" + detailed_log.system_out;
+                    detailed_log.system_out.push_back("- skipping decision: '");
+                    detailed_log.system_out.insert(
+                        detailed_log.system_out.end(),
+                        it_element_stack->second.system_out.begin(),
+                        it_element_stack->second.system_out.end());
+                    detailed_log.system_out.push_back("'");
+                    detailed_log.system_out.push_front("SKIPPING decision stack:\n");
                     need_skipping_reason = false;
                 }
             }
@@ -244,7 +249,12 @@ public:
         // system-out + all info/messages
         {
             conditional_cdata_helper system_out_helper(m_stream, "system-out");
-            system_out_helper(detailed_log.system_out);
+            for(std::list<std::string>::const_iterator it(detailed_log.system_out.begin()), ite(detailed_log.system_out.end());
+                it != ite;
+                ++it)
+            {
+              system_out_helper(*it);
+            }
             for(std::vector< junit_impl::junit_log_helper::assertion_entry >::const_iterator it(detailed_log.assertion_entries.begin());
                 it != detailed_log.assertion_entries.end();
                 ++it)
@@ -256,9 +266,8 @@ public:
         }
 
         // system-err output + test case informations
-        std::string system_err = detailed_log.system_err;
         {
-            // test case information (redundant but useful)
+            conditional_cdata_helper system_err_helper(m_stream, "system-err");
             std::ostringstream o;
             o   << "Test case:" << std::endl
                 << "- name: " << tc.full_name() << std::endl
@@ -266,13 +275,15 @@ public:
                 << "- file: " << file_basename(tc.p_file_name) << std::endl
                 << "- line: " << tc.p_line_num << std::endl
                 ;
-            system_err = o.str() + system_err;
+
+            system_err_helper(o.str());
+            for(std::list<std::string>::const_iterator it(detailed_log.system_err.begin()), ite(detailed_log.system_err.end());
+                it != ite;
+                ++it)
+            {
+              system_err_helper(*it);
+            }
         }
-        m_stream
-            << "<system-err>"
-            << utils::cdata() << system_err
-            << "</system-err>"
-            << std::endl;
 
         m_stream << "</testcase>" << std::endl;
     }
@@ -385,16 +396,16 @@ junit_log_formatter::test_unit_aborted( std::ostream& os, test_unit const& tu )
 void
 junit_log_formatter::test_unit_skipped( std::ostream& ostr, test_unit const& tu, const_string reason )
 {
-    if(tu.p_type == TUT_CASE)
+    //if(tu.p_type == TUT_CASE)
+    //{
+        junit_impl::junit_log_helper& v = map_tests[tu.p_id];
+        v.system_out.push_back(std::string(reason.begin(), reason.end()));
+    //}
+    /*else
     {
         junit_impl::junit_log_helper& v = map_tests[tu.p_id];
         v.system_out.assign(reason.begin(), reason.end());
-    }
-    else
-    {
-        junit_impl::junit_log_helper& v = map_tests[tu.p_id];
-        v.system_out.assign(reason.begin(), reason.end());
-    }
+    }*/
 }
 
 //____________________________________________________________________________//
@@ -546,8 +557,8 @@ junit_log_formatter::log_entry_value( std::ostream& ostr, const_string value )
 {
     assert(map_tests[list_path_to_root.back()].assertion_entries.empty() || !map_tests[list_path_to_root.back()].assertion_entries.back().sealed);
     junit_impl::junit_log_helper& last_entry = map_tests[list_path_to_root.back()];
-    std::ostringstream o;
-    utils::print_escaped_cdata( o, value );
+    //std::ostringstream o;
+    //utils::print_escaped_cdata( o, value );
 
     if(!last_entry.assertion_entries.empty())
     {
@@ -558,7 +569,7 @@ junit_log_formatter::log_entry_value( std::ostream& ostr, const_string value )
     {
         // this may be a message coming from another observer
         // the prefix is set in the log_entry_start
-        last_entry.system_out += value;
+        last_entry.system_out.push_back(std::string(value.begin(), value.end()));
     }
 }
 
@@ -575,7 +586,7 @@ junit_log_formatter::log_entry_finish( std::ostream& ostr )
         log_entry.sealed = true;
     }
     else {
-        last_entry.system_out += "\n\n"; // quote end, CR
+        last_entry.system_out.push_back("\n\n"); // quote end, CR
     }
 }
 
