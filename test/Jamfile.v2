@@ -17,6 +17,10 @@ project boost/test-tests
     : requirements
     ;
 
+import ../../predef/check/predef
+    : check require
+    : predef-check predef-require ;
+
 local check_msg = "Boost.Test feature check: " ;
 
 # documentation requirements: we use new style examples in the doc and compile on compilers supporting that
@@ -48,7 +52,7 @@ rule boost.test-self-test ( test-rule : test-suite : test-name : usage-variant ?
                # So deactivate those warnings again
                <toolset>gcc:<cxxflags>-pedantic
                <toolset>gcc:<cxxflags>-Wno-long-long
-               <toolset>gcc:<cxxflags>-Wno-variadic-macros
+               [ predef-check "BOOST_COMP_GNUC >= 4.3.0" : : <cxxflags>-Wno-variadic-macros ]
                <toolset>clang:<cxxflags>-Wno-c99-extensions
                <toolset>clang:<cxxflags>-Wno-variadic-macros
 #               <toolset>gcc:<cxxflags>--coverage
@@ -150,6 +154,7 @@ test-suite "writing-test-ts"
   [ boost.test-self-test run : writing-test-ts : tools-under-debugger-test ]
   [ boost.test-self-test run : writing-test-ts : tools-debuggable-test  : : : : : : $(requirements_boost_test_full_support) ]
   [ boost.test-self-test run : writing-test-ts : test-dataset-over-tuples  : : : : : : $(requirements_datasets) ]
+  [ boost.test-self-test run : writing-test-ts : nullptr-support-test : : : : : : [ requires cxx11_nullptr ] ]
 ;
 
 #_________________________________________________________________________________________________#
@@ -163,6 +168,7 @@ test-suite "test-organization-ts"
   [ boost.test-self-test run : test-organization-ts : test_unit-order-test ]
   [ boost.test-self-test run : test-organization-ts : test_unit-order-shuffled-test : : : : : : $(requirements_boost_test_full_support) ]
   [ boost.test-self-test run : test-organization-ts : test-tree-management-test ]
+  [ boost.test-self-test run : test-organization-ts : test-tree-several-suite-decl ]
 ;
 
 #_________________________________________________________________________________________________#

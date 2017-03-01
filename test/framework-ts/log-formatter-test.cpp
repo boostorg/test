@@ -117,7 +117,7 @@ void check( output_test_stream& output, test_suite* ts )
 struct guard {
     ~guard()
     {
-        boost::unit_test::unit_test_log.set_format( runtime_config::get<output_format>( runtime_config::LOG_FORMAT ) );
+        boost::unit_test::unit_test_log.set_format( runtime_config::get<output_format>( runtime_config::btrt_log_format ) );
         boost::unit_test::unit_test_log.set_stream( std::cout );
     }
 };

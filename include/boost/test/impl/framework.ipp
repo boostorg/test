@@ -396,7 +396,7 @@ parse_filters( test_unit_id master_tu_id, test_unit_id_list& tu_to_enable, test_
     // 10. collect tu to enable and disable based on filters
     bool had_selector_filter = false;
 
-    std::vector<std::string> const& filters = runtime_config::get<std::vector<std::string> >( runtime_config::RUN_FILTERS );
+    std::vector<std::string> const& filters = runtime_config::get<std::vector<std::string> >( runtime_config::btrt_run_filters );
 
     BOOST_TEST_FOREACH( const_string, filter, filters ) {
         BOOST_TEST_SETUP_ASSERT( !filter.is_empty(), "Invalid filter specification" );
@@ -552,7 +552,7 @@ public:
         test_unit_id_list tu_to_disable;
 
         // 10. If there are any filters supplied, figure out lists of test units to enable/disable
-        bool had_selector_filter = !runtime_config::get<std::vector<std::string> >( runtime_config::RUN_FILTERS ).empty() &&
+        bool had_selector_filter = !runtime_config::get<std::vector<std::string> >( runtime_config::btrt_run_filters ).empty() &&
                                    parse_filters( master_tu_id, tu_to_enable, tu_to_disable );
 
         // 20. Set the stage: either use default run status or disable all test units
@@ -657,7 +657,7 @@ public:
             if( tu.p_type == TUT_SUITE ) {
                 test_suite const& ts = static_cast<test_suite const&>( tu );
 
-                if( runtime_config::get<unsigned>( runtime_config::RANDOM_SEED ) == 0 ) {
+                if( runtime_config::get<unsigned>( runtime_config::btrt_random_seed ) == 0 ) {
                     typedef std::pair<counter_t,test_unit_id> value_type;
 
                     BOOST_TEST_FOREACH( value_type, chld, ts.m_ranked_children ) {
@@ -845,26 +845,26 @@ setup_loggers()
     BOOST_TEST_I_TRY {
 
 #ifdef BOOST_TEST_SUPPORT_TOKEN_ITERATOR
-        bool has_combined_logger = runtime_config::has( runtime_config::COMBINED_LOGGER )
-            && !runtime_config::get< std::vector<std::string> >( runtime_config::COMBINED_LOGGER ).empty();
+        bool has_combined_logger = runtime_config::has( runtime_config::btrt_combined_logger )
+            && !runtime_config::get< std::vector<std::string> >( runtime_config::btrt_combined_logger ).empty();
 #else
         bool has_combined_logger = false;
 #endif
 
         if( !has_combined_logger ) {
-            unit_test_log.set_threshold_level( runtime_config::get<log_level>( runtime_config::LOG_LEVEL ) );
-            const output_format format = runtime_config::get<output_format>( runtime_config::LOG_FORMAT );
+            unit_test_log.set_threshold_level( runtime_config::get<log_level>( runtime_config::btrt_log_level ) );
+            const output_format format = runtime_config::get<output_format>( runtime_config::btrt_log_format );
             unit_test_log.set_format( format );
 
             runtime_config::stream_holder& stream_logger = s_frk_state().m_log_sinks[format];
-            if( runtime_config::has( runtime_config::LOG_SINK ) )
-                stream_logger.setup( runtime_config::get<std::string>( runtime_config::LOG_SINK ) );
+            if( runtime_config::has( runtime_config::btrt_log_sink ) )
+                stream_logger.setup( runtime_config::get<std::string>( runtime_config::btrt_log_sink ) );
             unit_test_log.set_stream( stream_logger.ref() );
         }
         else
         {
 
-            const std::vector<std::string>& v_output_format = runtime_config::get< std::vector<std::string> >( runtime_config::COMBINED_LOGGER ) ;
+            const std::vector<std::string>& v_output_format = runtime_config::get< std::vector<std::string> >( runtime_config::btrt_combined_logger ) ;
 
             static const std::pair<const char*, log_level> all_log_levels[] = {
                 std::make_pair( "all"           , log_successful_tests ),
@@ -1033,26 +1033,26 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     impl::setup_loggers();
 
     // 30. Set the desired report level, format and sink
-    results_reporter::set_level( runtime_config::get<report_level>( runtime_config::REPORT_LEVEL ) );
-    results_reporter::set_format( runtime_config::get<output_format>( runtime_config::REPORT_FORMAT ) );
+    results_reporter::set_level( runtime_config::get<report_level>( runtime_config::btrt_report_level ) );
+    results_reporter::set_format( runtime_config::get<output_format>( runtime_config::btrt_report_format ) );
 
-    if( runtime_config::has( runtime_config::REPORT_SINK ) )
-        s_frk_state().m_report_sink.setup( runtime_config::get<std::string>( runtime_config::REPORT_SINK ) );
+    if( runtime_config::has( runtime_config::btrt_report_sink ) )
+        s_frk_state().m_report_sink.setup( runtime_config::get<std::string>( runtime_config::btrt_report_sink ) );
     results_reporter::set_stream( s_frk_state().m_report_sink.ref() );
 
     // 40. Register default test observers
     register_observer( results_collector );
     register_observer( unit_test_log );
 
-    if( runtime_config::get<bool>( runtime_config::SHOW_PROGRESS ) ) {
+    if( runtime_config::get<bool>( runtime_config::btrt_show_progress ) ) {
         progress_monitor.set_stream( std::cout ); // defaults to stdout
         register_observer( progress_monitor );
     }
 
     // 50. Set up memory leak detection
-    unsigned long detect_mem_leak = runtime_config::get<unsigned long>( runtime_config::DETECT_MEM_LEAKS );
+    unsigned long detect_mem_leak = runtime_config::get<unsigned long>( runtime_config::btrt_detect_mem_leaks );
     if( detect_mem_leak > 0 ) {
-        debug::detect_memory_leaks( true, runtime_config::get<std::string>( runtime_config::REPORT_MEM_LEAKS ) );
+        debug::detect_memory_leaks( true, runtime_config::get<std::string>( runtime_config::btrt_report_mem_leaks ) );
         debug::break_memory_alloc( (long)detect_mem_leak );
     }
 
@@ -1408,7 +1408,7 @@ run( test_unit_id id, bool continue_test )
     test_case_counter tcc;
     traverse_test_tree( id, tcc );
 
-    BOOST_TEST_SETUP_ASSERT( tcc.p_count != 0 , runtime_config::get<std::vector<std::string> >( runtime_config::RUN_FILTERS ).empty()
+    BOOST_TEST_SETUP_ASSERT( tcc.p_count != 0 , runtime_config::get<std::vector<std::string> >( runtime_config::btrt_run_filters ).empty()
         ? BOOST_TEST_L( "test tree is empty" )
         : BOOST_TEST_L( "no test cases matching filter or all test cases were disabled" ) );
 
@@ -1428,7 +1428,7 @@ run( test_unit_id id, bool continue_test )
         }
     }
 
-    unsigned seed = runtime_config::get<unsigned>( runtime_config::RANDOM_SEED );
+    unsigned seed = runtime_config::get<unsigned>( runtime_config::btrt_random_seed );
     switch( seed ) {
     case 0:
         break;

@@ -129,9 +129,9 @@ BOOST_AUTO_TEST_CASE( name )                                        \
     ut::framework::run( impl );                                     \
                                                                     \
     ut::log_level ll = ut::runtime_config::get<ut::log_level>(      \
-        ut::runtime_config::LOG_LEVEL );                            \
+        ut::runtime_config::btrt_log_level );                       \
     ut::output_format lf = ut::runtime_config::get<ut::output_format>( \
-        ut::runtime_config::LOG_FORMAT );                           \
+        ut::runtime_config::btrt_log_format );                      \
                                                                     \
     ut::unit_test_log.set_threshold_level(                          \
         ll != ut::invalid_log_level ? ll : ut::log_all_errors );    \
