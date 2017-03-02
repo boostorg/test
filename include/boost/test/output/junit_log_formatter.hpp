@@ -60,6 +60,7 @@ namespace output {
 
       std::list<std::string> system_out;      // sysout: additional information
       std::list<std::string> system_err;      // syserr: additional information
+      std::string skipping_reason;
 
       // list of failure, errors and messages (assertions message and the full log)
       std::vector< assertion_entry > assertion_entries;
@@ -73,6 +74,7 @@ namespace output {
           assertion_entries.clear();
           system_out.clear();
           system_err.clear();
+          skipping_reason.clear();
           skipping = false;
       }
 
@@ -144,7 +146,8 @@ private:
     junit_impl::junit_log_helper& get_current_log_entry() {
         if(list_path_to_root.empty())
             return runner_log_entry;
-        return map_tests.at(list_path_to_root.back());
+        map_trace_t::iterator it = map_tests.find(list_path_to_root.back());
+        return (it == map_tests.end() ? runner_log_entry : it->second);
     }
 
     std::list<test_unit_id> list_path_to_root;

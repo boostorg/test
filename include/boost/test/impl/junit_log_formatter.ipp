@@ -101,10 +101,12 @@ public:
         std::ostream& stream,
         test_unit const& ts,
         junit_log_formatter::map_trace_t const& mt,
+        junit_impl::junit_log_helper const& runner_log_,
         bool display_build_info )
     : m_stream(stream)
     , m_ts( ts )
     , m_map_test( mt )
+    , runner_log( runner_log_ )
     , m_id( 0 )
     , m_display_build_info(display_build_info)
     { }
@@ -126,51 +128,71 @@ public:
         m_stream << "</" << entry_type << ">";
     }
 
-    void    visit( test_case const& tc )
-    {
-        test_results const& tr = results_collector.results( tc.p_id );
+    struct conditional_cdata_helper {
+        std::ostream &ostr;
+        std::string const field;
+        bool empty;
 
-        junit_impl::junit_log_helper detailed_log;
-        bool need_skipping_reason = false;
-        bool skipped = false;
+        conditional_cdata_helper(std::ostream &ostr_, std::string field_)
+        : ostr(ostr_)
+        , field(field_)
+        , empty(true)
+        {}
 
-        junit_log_formatter::map_trace_t::const_iterator it_element(m_map_test.find(tc.p_id));
-        if( it_element != m_map_test.end() )
-        {
-            detailed_log = it_element->second;
+        ~conditional_cdata_helper() {
+            if(!empty) {
+                ostr << BOOST_TEST_L( "]]>" ) << "</" << field << '>' << std::endl;
+            }
         }
-        else
-        {
-            need_skipping_reason = true;
-        }
 
-        std::string classname;
-        test_unit_id id(tc.p_parent_id);
-        while( id != m_ts.p_id ) {
-            test_unit const& tu = boost::unit_test::framework::get( id, TUT_ANY );
-
-            if(need_skipping_reason)
-            {
-                test_results const& tr_parent = results_collector.results( id );
-                if( tr_parent.p_skipped )
-                {
-                    skipped = true;
-                    detailed_log.system_out.push_back("- disabled: " + tu.full_name() + "\n");
-                }
-                junit_log_formatter::map_trace_t::const_iterator it_element_stack(m_map_test.find(id));
-                if( it_element_stack != m_map_test.end() )
-                {
-                    detailed_log.system_out.push_back("- skipping decision: '");
-                    detailed_log.system_out.insert(
-                        detailed_log.system_out.end(),
-                        it_element_stack->second.system_out.begin(),
-                        it_element_stack->second.system_out.end());
-                    detailed_log.system_out.push_back("'");
-                    detailed_log.system_out.push_front("SKIPPING decision stack:\n");
-                    need_skipping_reason = false;
+        void operator()(const std::string& s) {
+            bool current_empty = s.empty();
+            if(empty) {
+                if(!current_empty) {
+                    empty = false;
+                    ostr << '<' << field << '>' << BOOST_TEST_L( "<![CDATA[" );
                 }
             }
+            if(!current_empty) {
+                ostr << s;
+            }
+        }
+    };
 
+    std::list<std::string> build_skipping_chain(test_case const & tc) const
+    {
+        // we enter here because we know that the tc has been skipped.
+        // either junit has not seen this tc, or it is indicated as disabled
+        assert(m_map_test.count(tc.p_id) == 0 || results_collector.results( tc.p_id ).p_skipped);
+
+        std::list<std::string> out;
+
+        test_unit_id id(tc.p_id);
+        while( id != m_ts.p_id && id != INV_TEST_UNIT_ID) {
+            test_unit const& tu = boost::unit_test::framework::get( id, TUT_ANY );
+            out.push_back("- disabled test unit: '" + tu.full_name() + "'\n");
+            if(m_map_test.count(id) > 0)
+            {
+                // junit has seen the reason: this is enough for constructing the chain
+                break;
+            }
+            id = tu.p_parent_id;
+        }
+        junit_log_formatter::map_trace_t::const_iterator it_element_stack(m_map_test.find(id));
+        if( it_element_stack != m_map_test.end() )
+        {
+            out.push_back("- reason: '" + it_element_stack->second.skipping_reason + "'");
+            out.push_front("Test case disabled because of the following chain of decision:\n");
+        }
+
+        return out;
+    }
+
+    std::string get_class_name(test_case const & tc) const {
+        std::string classname;
+        test_unit_id id(tc.p_parent_id);
+        while( id != m_ts.p_id && id != INV_TEST_UNIT_ID ) {
+            test_unit const& tu = boost::unit_test::framework::get( id, TUT_ANY );
             classname = tu_name_normalize(tu.p_name) + "." + classname;
             id = tu.p_parent_id;
         }
@@ -180,23 +202,118 @@ public:
             classname.erase(classname.size()-1);
         }
 
+        return classname;
+    }
+
+    void    write_testcase_header(test_case const & tc,
+                                  test_results const *tr = 0) const
+    {
         //
         // test case header
 
         // total number of assertions
-        m_stream << "<testcase assertions" << utils::attr_value() << tr.p_assertions_passed + tr.p_assertions_failed;
+        m_stream << "<testcase assertions" << utils::attr_value() << tr->p_assertions_passed + tr->p_assertions_failed;
 
         // class name
+        const std::string classname = get_class_name(tc);
         if(!classname.empty())
             m_stream << " classname" << utils::attr_value() << classname;
 
         // test case name and time taken
         m_stream
             << " name"      << utils::attr_value() << tu_name_normalize(tc.p_name)
-            << " time"      << utils::attr_value() << double(tr.p_duration_microseconds) * 1E-6
+            << " time"      << utils::attr_value() << double(tr->p_duration_microseconds) * 1E-6
             << ">" << std::endl;
+    }
 
-        if( tr.p_skipped || skipped ) {
+    void    write_testcase_system_out(junit_impl::junit_log_helper const &detailed_log,
+                                      test_case const * tc,
+                                      bool skipped,
+                                      test_results const *tr = 0) const
+    {
+        // system-out + all info/messages, the object skips the empty entries
+        conditional_cdata_helper system_out_helper(m_stream, "system-out");
+
+        // indicate why the test has been skipped first
+        if( skipped ) {
+            std::list<std::string> skipping_decision_chain = build_skipping_chain(*tc);
+            for(std::list<std::string>::const_iterator it(skipping_decision_chain.begin()), ite(skipping_decision_chain.end());
+                it != ite;
+                ++it)
+            {
+              system_out_helper(*it);
+            }
+        }
+
+        // stdout
+        for(std::list<std::string>::const_iterator it(detailed_log.system_out.begin()), ite(detailed_log.system_out.end());
+            it != ite;
+            ++it)
+        {
+          system_out_helper(*it);
+        }
+
+        // warning/info message last
+        for(std::vector< junit_impl::junit_log_helper::assertion_entry >::const_iterator it(detailed_log.assertion_entries.begin());
+            it != detailed_log.assertion_entries.end();
+            ++it)
+        {
+            if(it->log_entry != junit_impl::junit_log_helper::assertion_entry::log_entry_info)
+                continue;
+            system_out_helper(it->output);
+        }
+    }
+
+    void    write_testcase_system_err(junit_impl::junit_log_helper const &detailed_log,
+                                      test_case const * tc,
+                                      test_results const *tr = 0) const
+    {
+        // system-err output + test case informations
+        bool has_failed = (tr != 0) ? !tr->passed() : false;
+        if(!detailed_log.system_err.empty() || has_failed)
+        {
+            conditional_cdata_helper system_err_helper(m_stream, "system-err");
+            std::ostringstream o;
+            if(has_failed) {
+                o << "Failures detected in:" << std::endl;
+            }
+            else {
+                o << "ERROR STREAM:" << std::endl;
+            }
+
+            o << "- test case: " << tc->full_name() << std::endl;
+            if(!tc->p_description.value.empty())
+                o << " '" << tc->p_description << "'";
+
+            o << std::endl
+                << "- file: " << file_basename(tc->p_file_name) << std::endl
+                << "- line: " << tc->p_line_num << std::endl
+                ;
+
+            if(!detailed_log.system_err.empty())
+                o << std::endl << "STDERR BEGIN: ------------" << std::endl;
+
+            system_err_helper(o.str());
+            for(std::list<std::string>::const_iterator it(detailed_log.system_err.begin()), ite(detailed_log.system_err.end());
+                it != ite;
+                ++it)
+            {
+              system_err_helper(*it);
+            }
+
+            if(!detailed_log.system_err.empty())
+                o << std::endl << "STDERR END    ------------" << std::endl;
+        }
+    }
+
+    void    output_detailed_logs(junit_impl::junit_log_helper const &detailed_log,
+                                 test_case const & tc,
+                                 bool skipped,
+                                 test_results const *tr = 0) const
+    {
+        write_testcase_header(tc, tr);
+
+        if( skipped ) {
             m_stream << "<skipped/>" << std::endl;
         }
         else {
@@ -214,78 +331,24 @@ public:
           }
         }
 
-
-        struct conditional_cdata_helper {
-            std::ostream &ostr;
-            std::string const field;
-            bool empty;
-
-            conditional_cdata_helper(std::ostream &ostr_, std::string field_)
-            : ostr(ostr_)
-            , field(field_)
-            , empty(true)
-            {}
-
-            ~conditional_cdata_helper() {
-                if(!empty) {
-                    ostr << BOOST_TEST_L( "]]>" ) << "</" << field << '>' << std::endl;
-                }
-            }
-
-            void operator()(const std::string& s) {
-                bool current_empty = s.empty();
-                if(empty) {
-                    if(!current_empty) {
-                        empty = false;
-                        ostr << '<' << field << '>' << BOOST_TEST_L( "<![CDATA[" );
-                    }
-                }
-                if(!current_empty) {
-                    ostr << s;
-                }
-            }
-        };
-
-        // system-out + all info/messages
-        {
-            conditional_cdata_helper system_out_helper(m_stream, "system-out");
-            for(std::list<std::string>::const_iterator it(detailed_log.system_out.begin()), ite(detailed_log.system_out.end());
-                it != ite;
-                ++it)
-            {
-              system_out_helper(*it);
-            }
-            for(std::vector< junit_impl::junit_log_helper::assertion_entry >::const_iterator it(detailed_log.assertion_entries.begin());
-                it != detailed_log.assertion_entries.end();
-                ++it)
-            {
-                if(it->log_entry != junit_impl::junit_log_helper::assertion_entry::log_entry_info)
-                    continue;
-                system_out_helper(it->output);
-            }
-        }
-
-        // system-err output + test case informations
-        {
-            conditional_cdata_helper system_err_helper(m_stream, "system-err");
-            std::ostringstream o;
-            o   << "Test case:" << std::endl
-                << "- name: " << tc.full_name() << std::endl
-                << "- description: '" << tc.p_description << "'" << std::endl
-                << "- file: " << file_basename(tc.p_file_name) << std::endl
-                << "- line: " << tc.p_line_num << std::endl
-                ;
-
-            system_err_helper(o.str());
-            for(std::list<std::string>::const_iterator it(detailed_log.system_err.begin()), ite(detailed_log.system_err.end());
-                it != ite;
-                ++it)
-            {
-              system_err_helper(*it);
-            }
-        }
-
+        write_testcase_system_out(detailed_log, &tc, skipped, tr);
+        write_testcase_system_err(detailed_log, &tc, tr);
         m_stream << "</testcase>" << std::endl;
+    }
+
+    void    visit( test_case const& tc )
+    {
+
+        test_results const& tr = results_collector.results( tc.p_id );
+        junit_log_formatter::map_trace_t::const_iterator it_find = m_map_test.find(tc.p_id);
+        if(it_find == m_map_test.end())
+        {
+            // test has been skipped and not seen by the logger
+            output_detailed_logs(junit_impl::junit_log_helper(), tc, true, &tr);
+        }
+        else {
+            output_detailed_logs(it_find->second, tc, tr.p_skipped, &tr);
+        }
     }
 
     bool    test_suite_start( test_suite const& ts )
@@ -328,6 +391,10 @@ public:
     {
         if( m_ts.p_id != ts.p_id )
             return;
+
+        write_testcase_system_out(runner_log, 0, false, 0);
+        write_testcase_system_err(runner_log, 0, 0);
+
         m_stream << "</testsuite>";
     }
 
@@ -336,6 +403,7 @@ private:
     std::ostream& m_stream;
     test_unit const& m_ts;
     junit_log_formatter::map_trace_t const& m_map_test;
+    junit_impl::junit_log_helper const& runner_log;
     size_t m_id;
     bool m_display_build_info;
 };
@@ -355,7 +423,7 @@ junit_log_formatter::log_finish( std::ostream& ostr )
         while(root->p_parent_id != INV_TEST_UNIT_ID && map_tests.count(root->p_parent_id) > 0) {
             root = &boost::unit_test::framework::get( root->p_parent_id, TUT_ANY );
         }
-        junit_result_helper ch( ostr, *root, map_tests, m_display_build_info );
+        junit_result_helper ch( ostr, *root, map_tests, this->runner_log_entry, m_display_build_info );
         traverse_test_tree( root->p_id, ch, true ); // last is to ignore disabled suite special handling
     }
     else {
@@ -413,7 +481,7 @@ junit_log_formatter::test_unit_skipped( std::ostream& ostr, test_unit const& tu,
     // we cannot use get_current_log_entry here, but the TU id should appear in the map.
     // The "skip" boolean is given by the boost.test framework
     junit_impl::junit_log_helper& v = map_tests[tu.p_id]; // not sure if we can use get_current_log_entry()
-    v.system_out.push_back(std::string(reason.begin(), reason.end()));
+    v.skipping_reason.assign(reason.begin(), reason.end());
 }
 
 //____________________________________________________________________________//
@@ -506,7 +574,7 @@ junit_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& 
     {
       case unit_test_log_formatter::BOOST_UTL_ET_INFO:
       {
-        if(m_log_level_internal > log_level::log_successful_tests) {
+        if(m_log_level_internal > log_successful_tests) {
           last_entry.skipping = true;
           break;
         }
@@ -514,7 +582,7 @@ junit_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& 
       }
       case unit_test_log_formatter::BOOST_UTL_ET_MESSAGE:
       {
-        if(m_log_level_internal > log_level::log_messages) {
+        if(m_log_level_internal > log_messages) {
           last_entry.skipping = true;
           break;
         }
@@ -522,7 +590,7 @@ junit_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& 
       }
       case unit_test_log_formatter::BOOST_UTL_ET_WARNING:
       {
-        if(m_log_level_internal > log_level::log_warnings) {
+        if(m_log_level_internal > log_warnings) {
           last_entry.skipping = true;
           break;
         }
@@ -565,12 +633,7 @@ junit_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& 
         break;
       }
     }
-
 }
-
-      //____________________________________________________________________________//
-
-
 
 //____________________________________________________________________________//
 
@@ -602,19 +665,21 @@ void
 junit_log_formatter::log_entry_finish( std::ostream& ostr )
 {
     junit_impl::junit_log_helper& last_entry = get_current_log_entry();
-    if(last_entry.skipping)
-        return;
+    if(!last_entry.skipping)
+    {
+        assert(last_entry.assertion_entries.empty() || !last_entry.assertion_entries.back().sealed);
 
-    assert(last_entry.assertion_entries.empty() || !last_entry.assertion_entries.back().sealed);
+        if(!last_entry.assertion_entries.empty()) {
+            junit_impl::junit_log_helper::assertion_entry& log_entry = last_entry.assertion_entries.back();
+            log_entry.output += "\n\n"; // quote end, CR
+            log_entry.sealed = true;
+        }
+        else {
+            last_entry.system_out.push_back("\n\n"); // quote end, CR
+        }
+    }
 
-    if(!last_entry.assertion_entries.empty()) {
-        junit_impl::junit_log_helper::assertion_entry& log_entry = last_entry.assertion_entries.back();
-        log_entry.output += "\n\n"; // quote end, CR
-        log_entry.sealed = true;
-    }
-    else {
-        last_entry.system_out.push_back("\n\n"); // quote end, CR
-    }
+    last_entry.skipping = false;
 }
 
 //____________________________________________________________________________//
@@ -646,6 +711,9 @@ void
 junit_log_formatter::entry_context_finish( std::ostream& ostr )
 {
     // no op, may be removed
+    junit_impl::junit_log_helper& last_entry = get_current_log_entry();
+    if(last_entry.skipping)
+        return;
     assert(!get_current_log_entry().assertion_entries.back().sealed);
 }
 
