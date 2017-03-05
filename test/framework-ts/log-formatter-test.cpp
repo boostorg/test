@@ -112,7 +112,7 @@ void check( output_test_stream& output, test_suite* ts )
 
     check( output, OF_CLF, ts->p_id );
     check( output, OF_XML, ts->p_id );
-    check( output, OF_JUNIT, ts->p_id );
+    check( output, OF_JUNIT, ts->p_id, log_successful_tests );
     check( output, OF_JUNIT, ts->p_id, log_cpp_exception_errors ); // should branch to the log log_all_errors 
 }
 

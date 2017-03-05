@@ -95,7 +95,7 @@ public:
         // because we need to know about all the messages/commands going to the logger
         // we decide what we put inside the logs internally
         this->m_log_level = log_successful_tests;
-        m_log_level_internal = log_successful_tests;
+        m_log_level_internal = log_messages;
     }
 
     // Formatter interface
