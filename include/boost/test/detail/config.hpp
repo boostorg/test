@@ -125,7 +125,7 @@ class type_info;
 
 
 
-#ifndef BOOST_PP_VARIADICS /* we can change this only if not already defined) */
+#ifndef BOOST_PP_VARIADICS /* we can change this only if not already defined */
 
 #ifdef __PGI
 #define BOOST_PP_VARIADICS 1
@@ -140,6 +140,13 @@ class type_info;
 #endif
 
 #endif /* ifndef BOOST_PP_VARIADICS */
+
+// some versions of VC exibit a manifest error with this BOOST_UNREACHABLE_RETURN
+#if BOOST_WORKAROUND(BOOST_MSVC, < 1910)
+# define BOOST_TEST_UNREACHABLE_RETURN(x) return x
+#else
+# define BOOST_TEST_UNREACHABLE_RETURN(x) BOOST_UNREACHABLE_RETURN(x)
+#endif
 
 //____________________________________________________________________________//
 // string_view support

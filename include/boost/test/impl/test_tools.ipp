@@ -384,7 +384,7 @@ report_assertion( assertion_result const&   ar,
         BOOST_TEST_I_THROW( execution_aborted() );
         // the previous line either throws or aborts and the return below is not reached
         // return false;
-        BOOST_UNREACHABLE_RETURN(false);
+        BOOST_TEST_UNREACHABLE_RETURN(false);
     }
 
     return true;
