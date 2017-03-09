@@ -16,10 +16,36 @@ arguments to the output stream in some form of log statement. If arguments type 
 ``
   operator<<(std::ostream&, ArgumentType const&);
 ``
-interface you will get a compilation error. You can either implement above interface or prohibit
-the [link boost_test.testing_tools testing tools] from logging argument values for
-specified type. To do so, use following statement on file level before first test case that
-includes statement failing to compile:
+interface, you will get a compilation error.
+
+The __UTF__ supports three different methods for logging user defined types:
+
+# through the `operator<<` for that specific type: any type that implements the above interface has direct support for
+  logging,
+# through a customization point responsible for logging a specific type, which is less intrusive than the implementation
+  of `operator<<`. This is explained in more details in [link ref_log_output_custom_customization_point this section],
+# by prohibiting the [link boost_test.testing_tools testing tools] from logging argument values for
+  specified type through __BOOST_TEST_DONT_PRINT_LOG_VALUE__.
+  This is explained in more details in [link ref_log_output_custom_avoid_printing this section].
+
+[#ref_log_output_custom_customization_point]
+[h4 User type customization point for logging]
+It is possible to indicate a function, `boost_test_print_type`, to __UTF__ that is responsible for the printing of a user defined type, without
+the need to override the `operator<<` for that specific type. This is convenient for instance when
+the `operator<<` has already been defined for other needs.
+
+The syntax follows the `operator<<`, and this function should be in the same namespace as the type:
+
+```
+std::ostream& boost_test_print_type(std::ostream& ostr, ArgumentType const& right);
+```
+
+[bt_example logger-customization-point..Logging customization point usage..run-fail]
+
+[#ref_log_output_custom_avoid_printing]
+[h4 Prohibiting the printing of a specific type]
+To prohibit the printing of a specific type, use the following statement on file level before first
+test case that includes statement failing to compile:
 
 ``
   BOOST_TEST_DONT_PRINT_LOG_VALUE(ArgumentType)
