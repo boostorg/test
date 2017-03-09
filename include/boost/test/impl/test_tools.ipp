@@ -68,6 +68,12 @@ namespace tt_detail {
 // ************************************************************************** //
 
 void
+print_log_value<bool>::operator()( std::ostream& ostr, bool t )
+{
+     ostr << std::boolalpha << t;
+}
+
+void
 print_log_value<char>::operator()( std::ostream& ostr, char t )
 {
     if( (std::isprint)( static_cast<unsigned char>(t) ) )
