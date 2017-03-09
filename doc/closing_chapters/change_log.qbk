@@ -10,6 +10,11 @@
 [h4 Boost.Test v3.5 / boost 1.64]
 
 [h5 New features]
+* [link boost_test.test_output.log_formats.log_junit_format JUnit output format] can now have a
+  [link boost_test.test_output.log_formats.test_log_output log-level] set between `success` and
+  `non-fatal error`, and defaults to `general information`.
+* [link boost_test.test_output.log_formats.log_junit_format JUnit output format] is now more
+  performant in case a lot of checks are done in a test module. 
 
 [h5 Bugfixes and feature requests]
 # [pull_request 107] `BOOST_NO_EXCEPTIONS` typo making `throw_exception` unusable under some circumstances 
