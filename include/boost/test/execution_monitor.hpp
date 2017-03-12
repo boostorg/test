@@ -72,9 +72,11 @@
   #define BOOST_TEST_FPE_SUPPORT_WITH_SEH__
 #elif !defined(BOOST_SEH_BASED_SIGNAL_HANDLING) && !defined(UNDER_CE)
   #if !defined(BOOST_NO_FENV_H) && !defined(BOOST_CLANG) && \
-      (defined(__GLIBC__) && defined(__USE_GNU))
+      defined(__GLIBC__) && defined(__USE_GNU) && \
+      !(defined(__UCLIBC__) || defined(__nios2__) || defined(__microblaze__))
   //! Indicates that floating point exception handling is supported for the
   //! non SEH version of it, for the GLIBC extensions only
+  // see dicussions on the related topic: https://svn.boost.org/trac/boost/ticket/11756
   #define BOOST_TEST_FPE_SUPPORT_WITH_GLIBC_EXTENSIONS__
   #endif
 #endif
