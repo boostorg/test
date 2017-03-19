@@ -83,11 +83,14 @@ void very_bad_exception()  {
 
 //____________________________________________________________________________//
 
-void check( output_test_stream& output, output_format log_format, test_unit_id id )
+void check( output_test_stream& output,
+            output_format log_format,
+            test_unit_id id,
+            log_level ll = log_successful_tests )
 {
     boost::unit_test::unit_test_log.set_format(log_format);
     boost::unit_test::unit_test_log.set_stream(output);
-    boost::unit_test::unit_test_log.set_threshold_level(log_successful_tests);
+    boost::unit_test::unit_test_log.set_threshold_level(ll);
 
     output << "* " << log_format << "-format  *******************************************************************";
     output << std::endl;
@@ -109,7 +112,8 @@ void check( output_test_stream& output, test_suite* ts )
 
     check( output, OF_CLF, ts->p_id );
     check( output, OF_XML, ts->p_id );
-    check( output, OF_JUNIT, ts->p_id );
+    check( output, OF_JUNIT, ts->p_id, log_successful_tests );
+    check( output, OF_JUNIT, ts->p_id, log_cpp_exception_errors ); // should branch to the log log_all_errors 
 }
 
 //____________________________________________________________________________//

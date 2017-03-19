@@ -130,17 +130,17 @@ file(GLOB_RECURSE
 
 foreach(_h IN LISTS BOOST_UTF_DOC_EXAMPLES)
   get_filename_component(_hh ${_h} NAME_WE)
-  add_executable(${_hh} ${_h} ${BOOST_TEST_ROOT_DIR}/doc/examples/${_hh}.output)
-  target_include_directories(${_hh} PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
-  set_target_properties(${_hh} PROPERTIES FOLDER "Doc examples")
+  add_executable(doc-${_hh} ${_h} ${BOOST_TEST_ROOT_DIR}/doc/examples/${_hh}.output)
+  target_include_directories(doc-${_hh} PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
+  set_target_properties(doc-${_hh} PROPERTIES FOLDER "Doc examples")
 
-  add_test(NAME doc-${_hh}
-           COMMAND ${_hh})
+  add_test(NAME doc-${_hh}-test
+           COMMAND doc-${_hh})
   get_filename_component(_ext ${_h} EXT)
   string(FIND ${_ext} "fail" _index_fail)
   if(${_index_fail} GREATER -1)
     message(STATUS "test ${_hh}.${_ext} = ${_index_fail}")
-    set_tests_properties(doc-${_hh} PROPERTIES WILL_FAIL TRUE)
+    set_tests_properties(doc-${_hh}-test PROPERTIES WILL_FAIL TRUE)
   endif()
 endforeach()
 

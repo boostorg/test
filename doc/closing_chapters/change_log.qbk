@@ -10,10 +10,19 @@
 [h4 Boost.Test v3.5 / boost 1.64]
 
 [h5 New features]
+* Now Boost.Test provides [link ref_log_output_custom_customization_point customization points] for logging user defined types:
+  this solution is less intrusive than forcing the definition of `operator<<` for a specific type.
+* [link boost_test.test_output.log_formats.log_junit_format JUnit output format] can now have a
+  [link boost_test.test_output.log_formats.test_log_output log-level] set between `success` and
+  `non-fatal error`, and defaults to `general information`.
+* [link boost_test.test_output.log_formats.log_junit_format JUnit output format] is now more
+  performant in case a lot of checks are done in a test module. 
 
 [h5 Bugfixes and feature requests]
 # [pull_request 107] `BOOST_NO_EXCEPTIONS` typo making `throw_exception` unusable under some circumstances 
 # [pull_request 108] Change capital variable names to lowercase
+# [ticket 11756] boost.Test: non standards compliant use of `FE_*` macros (unable to compile boost test library on FPU-less arches) (reopened)
+# [ticket 12540] Provide customisation point for printing types in tests
 # [ticket 12712] `BOOST_AUTO_TEST_SUITE`: Generate unique names by using `__COUNTER__`
 # [ticket 12748] Boost.Test defines a variable called `VERSION`
 # [ticket 12778] Boost.Test is broken against left shift operator in certain cases (`nullptr` issue)
