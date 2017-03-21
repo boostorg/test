@@ -9,15 +9,15 @@
 #define BOOST_TEST_MODULE example
 #include <boost/test/included/unit_test.hpp>
 
-#if defined(BOOST_MSVC)
-// compiler optimizations may cause this code NOT to crash.
+#if defined(BOOST_MSVC) && (BOOST_MSVC > 1900)
+// VS2017+ compiler optimizations may cause this code NOT to crash.
 #pragma optimize("", off)
 #endif
 
 
 void foo( int ) {}
 
-#if defined(BOOST_MSVC)
+#if defined(BOOST_MSVC) && (BOOST_MSVC > 1900)
 #pragma optimize("", on)
 #endif
 
