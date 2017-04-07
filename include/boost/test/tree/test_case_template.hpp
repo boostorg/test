@@ -29,7 +29,11 @@
 #include <boost/mpl/identity.hpp>
 #include <boost/type.hpp>
 #include <boost/type_traits/is_const.hpp>
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
 #include <boost/function/function0.hpp>
+#else
+#include <functional>
+#endif
 
 #if defined(BOOST_NO_TYPEID) || defined(BOOST_NO_RTTI)
 #  include <boost/current_function.hpp>
