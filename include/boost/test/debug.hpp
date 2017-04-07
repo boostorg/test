@@ -18,8 +18,12 @@
 #include <boost/test/detail/config.hpp>
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
 // Boost
 #include <boost/function/function1.hpp>
+#else
+#include <functional>
+#endif
 
 // STL
 #include <string>
@@ -72,8 +76,11 @@ struct dbg_startup_info {
 };
 
 /// Signature of debugger starter routine. Takes an instance of dbg_startup_into as only argument
-typedef boost::function<void (dbg_startup_info const&)> dbg_starter;
-
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
+    typedef boost::function<void (dbg_startup_info const&)> dbg_starter;
+#else
+    using dbg_starter = std::function<void (dbg_startup_info const&)>;
+#endif
 // ************************************************************************** //
 /// Specifies which debugger to use when attaching and optionally what routine to use to start that debugger
 

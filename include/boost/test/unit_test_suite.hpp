@@ -33,7 +33,7 @@
 // ************************************************************************** //
 
 #define BOOST_TEST_CASE( test_function )                                   \
-boost::unit_test::make_test_case( boost::function<void ()>(test_function), \
+boost::unit_test::make_test_case( boost::unit_test::test_func_t(test_function), \
                                   BOOST_TEST_STRINGIZE( test_function ),   \
                                   __FILE__, __LINE__ )
 #define BOOST_CLASS_TEST_CASE( test_function, tc_instance )                \
