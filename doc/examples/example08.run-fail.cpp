@@ -29,7 +29,11 @@ bool init_unit_test()
   using boost::placeholders::_1;
   double params[] = { 1., 1.1, 1.01, 1.001, 1.0001 };
 
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
   boost::function<void (double)> test_method = bind( &test_class::test_method, &tester, _1);
+#else
+  std::function<void (double)> test_method = bind( &test_class::test_method, &tester, _1);
+#endif
 
   framework::master_test_suite().
     add( BOOST_PARAM_TEST_CASE( test_method, params, params+5 ) );

@@ -94,7 +94,7 @@ struct test_tree {
         for(std::size_t s = 0; s < 10; s++)
         {
             ut::test_case* tc = boost::unit_test::make_test_case(
-                                    boost::function<void ()>(some_test),
+                                    boost::unit_test::test_func_t(some_test),
                                     "tc_" +  boost::unit_test::utils::string_cast(s),
                                     __FILE__, __LINE__ );
             tsuites[std::rand() % tsuites.size()]->add(tc);

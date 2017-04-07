@@ -47,7 +47,11 @@ namespace rt_cla_detail {
 struct parameter_trie;
 typedef shared_ptr<parameter_trie> parameter_trie_ptr;
 typedef std::map<char,parameter_trie_ptr> trie_per_char;
-typedef std::vector<boost::reference_wrapper<parameter_cla_id const> > param_cla_id_list;
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
+    typedef std::vector<boost::reference_wrapper<parameter_cla_id const> > param_cla_id_list;
+#else
+    using param_cla_id_list = std::vector<std::reference_wrapper<parameter_cla_id const>>;
+#endif
 
 struct parameter_trie {
     parameter_trie() : m_has_final_candidate( false ) {}
@@ -82,8 +86,11 @@ struct parameter_trie {
                               << "parameter cla id " << m_id_candidates.back().get().m_tag );
 
         m_has_final_candidate = final;
-        m_id_candidates.push_back( ref(param_id) );
-
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
+        m_id_candidates.push_back( boost::ref(param_id) );
+#else
+        m_id_candidates.push_back( std::ref(param_id) );
+#endif
         if( m_id_candidates.size() == 1 )
             m_param_candidate = param_candidate;
         else

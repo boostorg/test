@@ -37,7 +37,7 @@ BOOST_TEST_SINGLETON_CONS_IMPL(unit_test_monitor_t)
 // ************************************************************************** //
 
 unit_test_monitor_t::error_level
-unit_test_monitor_t::execute_and_translate( boost::function<void ()> const& func, unsigned long int timeout_microseconds )
+unit_test_monitor_t::execute_and_translate( test_func_t const& func, unsigned long int timeout_microseconds )
 {
     BOOST_TEST_I_TRY {
         p_catch_system_errors.value     = runtime_config::get<bool>( runtime_config::btrt_catch_sys_errors );

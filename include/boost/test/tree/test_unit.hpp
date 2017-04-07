@@ -27,9 +27,12 @@
 #include <boost/test/utils/class_properties.hpp>
 
 // Boost
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
 #include <boost/function/function0.hpp>
 #include <boost/function/function1.hpp>
-
+#else
+#include <functional>
+#endif
 // STL
 #include <vector>
 #include <string>
@@ -52,6 +55,12 @@ namespace framework {
 
 typedef std::vector<test_unit_id> test_unit_id_list;
 
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
+    typedef boost::function<void ()> test_func_t;
+#else
+    using test_func_t = std::function<void ()>;
+#endif
+
 class BOOST_TEST_DECL test_unit {
 public:
     enum { type = TUT_ANY };
@@ -65,7 +74,11 @@ public:
     typedef std::vector<decorator::base_ptr>                                decor_list_t;
     typedef BOOST_READONLY_PROPERTY(std::vector<std::string>,(test_unit))   label_list_t;
 
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
     typedef boost::function<test_tools::assertion_result (test_unit_id)>    precondition_t;
+#else
+    using precondition_t = std::function<test_tools::assertion_result (test_unit_id)>;
+#endif
     typedef BOOST_READONLY_PROPERTY(std::vector<precondition_t>,(test_unit)) precond_list_t;
 
     // preconditions management
@@ -137,11 +150,11 @@ public:
     enum { type = TUT_CASE };
 
     // Constructor
-    test_case( const_string tc_name, boost::function<void ()> const& test_func );
-    test_case( const_string tc_name, const_string tc_file, std::size_t tc_line, boost::function<void ()> const& test_func );
+    test_case( const_string tc_name, test_func_t const& test_func );
+    test_case( const_string tc_name, const_string tc_file, std::size_t tc_line, test_func_t const& test_func );
 
     // Public property
-    typedef BOOST_READONLY_PROPERTY(boost::function<void ()>,(test_case))  test_func;
+    typedef BOOST_READONLY_PROPERTY(test_func_t,(test_case))  test_func;
 
     test_func   p_test_func;
 
@@ -260,7 +273,7 @@ struct user_tc_method_invoker {
 // ************************************************************************** //
 
 inline test_case*
-make_test_case( boost::function<void ()> const& test_func, const_string tc_name, const_string tc_file, std::size_t tc_line )
+make_test_case( test_func_t const& test_func, const_string tc_name, const_string tc_file, std::size_t tc_line )
 {
     return new test_case( ut_detail::normalize_test_case_name( tc_name ), tc_file, tc_line, test_func );
 }
