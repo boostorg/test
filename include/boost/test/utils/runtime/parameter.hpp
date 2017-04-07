@@ -27,8 +27,13 @@
 #include <boost/test/utils/setcolor.hpp>
 
 // Boost
-#include <boost/function.hpp>
 #include <boost/algorithm/cxx11/all_of.hpp>
+
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
+#include <boost/function/function2.hpp>
+#else
+#include <functional>
+#endif
 
 // STL
 #include <algorithm>
@@ -126,7 +131,12 @@ typedef std::vector<parameter_cla_id> param_cla_ids;
 cstring const help_prefix("////");
 
 class basic_param {
+
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
     typedef function<void (cstring)>            callback_type;
+#else
+    using callback_type = std::function<void (cstring)>;
+#endif
     typedef unit_test::readwrite_property<bool> bool_property;
 
 protected:

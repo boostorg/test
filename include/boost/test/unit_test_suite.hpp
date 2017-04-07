@@ -33,9 +33,9 @@
 // **************    Non-auto (explicit) test case interface   ************** //
 // ************************************************************************** //
 
-#define BOOST_TEST_CASE_NAME( test_function, test_name )                   \
-boost::unit_test::make_test_case( boost::function<void ()>(test_function), \
-                                  test_name ,                              \
+#define BOOST_TEST_CASE_NAME( test_function, test_name )                        \
+boost::unit_test::make_test_case( boost::unit_test::test_func_t(test_function), \
+                                  test_name ,                                   \
                                   __FILE__, __LINE__ )
 #define BOOST_TEST_CASE( test_function )                                   \
 BOOST_TEST_CASE_NAME(test_function, BOOST_TEST_STRINGIZE( test_function) )

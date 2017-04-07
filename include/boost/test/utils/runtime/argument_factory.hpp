@@ -25,8 +25,12 @@
 #include <boost/test/utils/basic_cstring/compare.hpp>
 #include <boost/test/utils/string_cast.hpp>
 
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
 // Boost
 #include <boost/function/function2.hpp>
+#else
+#include <functional>
+#endif
 
 // STL
 #include <vector>

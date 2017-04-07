@@ -33,7 +33,11 @@
 #include <boost/type_traits/is_lvalue_reference.hpp>
 #include <boost/type_traits/is_rvalue_reference.hpp>
 #include <boost/type_traits/remove_reference.hpp>
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
 #include <boost/function/function0.hpp>
+#else
+#include <functional>
+#endif
 
 #if defined(BOOST_NO_TYPEID) || defined(BOOST_NO_RTTI)
 #  include <boost/current_function.hpp>

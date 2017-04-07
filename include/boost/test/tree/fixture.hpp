@@ -18,8 +18,12 @@
 // Boost
 #include <boost/shared_ptr.hpp>
 #include <boost/scoped_ptr.hpp>
-#include <boost/function/function0.hpp>
 #include <boost/utility/declval.hpp>
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
+  #include <boost/function/function0.hpp>
+#else
+  #include <functional>
+#endif
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -27,6 +31,12 @@
 
 namespace boost {
 namespace unit_test {
+
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
+    typedef boost::function<void ()> fixture_func_t;
+#else
+    using fixture_func_t = std::function<void ()>;
+#endif
 
 // ************************************************************************** //
 // **************               test_unit_fixture              ************** //
@@ -166,7 +176,7 @@ private:
 class function_based_fixture : public test_unit_fixture {
 public:
     // Constructor
-    function_based_fixture( boost::function<void ()> const& setup_, boost::function<void ()> const& teardown_ )
+    function_based_fixture( fixture_func_t const& setup_, fixture_func_t const& teardown_ )
     : m_setup( setup_ )
     , m_teardown( teardown_ )
     {
@@ -178,8 +188,8 @@ private:
     void                teardown() BOOST_OVERRIDE  { if( m_teardown ) m_teardown(); }
 
     // Data members
-    boost::function<void ()>    m_setup;
-    boost::function<void ()>    m_teardown;
+    fixture_func_t              m_setup;
+    fixture_func_t              m_teardown;
 };
 
 } // namespace unit_test

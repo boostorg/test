@@ -25,7 +25,11 @@
 #include <boost/scoped_array.hpp>
 #include <boost/type.hpp>
 #include <boost/cstdlib.hpp>
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
 #include <boost/function/function0.hpp>
+#else
+#include <functional>
+#endif
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -96,6 +100,14 @@
 //____________________________________________________________________________//
 
 namespace boost {
+
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
+    typedef boost::function<void ()> test_func_t;
+    typedef boost::function<int ()> result_func_t;
+#else
+    using test_func_t = std::function<void ()>;
+    using result_func_t = std::function<int ()>;
+#endif
 
 /// @defgroup ExecutionMonitor Function Execution Monitor
 /// @{
@@ -197,8 +209,7 @@ public:
 
     // translator holder interface
     // invokes the function F inside the try/catch guarding against specific exception
-    virtual int operator()( boost::function<int ()> const& F ) = 0;
-
+    virtual int operator()( result_func_t const& F ) = 0;
     // erases specific translator holder from the chain
     translator_holder_base_ptr erase( translator_holder_base_ptr this_, const_string tag )
     {
@@ -368,14 +379,14 @@ public:
     /// @param[in] F  Function to monitor
     /// @returns  value returned by function call F().
     /// @see vexecute
-    int         execute( boost::function<int ()> const& F );
+    int         execute( result_func_t const& F );
 
     /// @brief Execution monitor entry point for functions returning void
     ///
     /// This method is semantically identical to execution_monitor::execute, but doesn't produce any result code.
     /// @param[in] F  Function to monitor
     /// @see execute
-    void         vexecute( boost::function<void ()> const& F );
+    void         vexecute( test_func_t const& F );
     // @}
 
     // @name Exception translator registration
@@ -421,8 +432,7 @@ public:
 
 private:
     // implementation helpers
-    int         catch_signals( boost::function<int ()> const& F );
-
+    int         catch_signals( result_func_t const& F );
     // Data members
     detail::translator_holder_base_ptr  m_custom_translators;
     boost::scoped_array<char>           m_alt_stack;
@@ -442,7 +452,7 @@ public:
     : translator_holder_base( next, tag ), m_translator( tr ) {}
 
     // translator holder interface
-    int operator()( boost::function<int ()> const& F ) BOOST_OVERRIDE
+    int operator()( result_func_t const& F ) BOOST_OVERRIDE
     {
         BOOST_TEST_I_TRY {
             return m_next ? (*m_next)( F ) : F();
