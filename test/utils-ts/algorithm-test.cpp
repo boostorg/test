@@ -36,6 +36,12 @@ namespace std { using ::toupper; }
 #define TEST_SURROUND_EXPRESSION(x) x
 #endif
 
+#ifdef BOOST_NO_CXX98_BINDERS
+#define REF_FUN(x) std::function<bool(char,char)>(x)
+#else
+#define REF_FUN(x) std::ptr_fun(x)
+#endif
+
 //____________________________________________________________________________//
 
 bool predicate( char c1, char c2 ) { return (std::toupper)( c1 ) == (std::toupper)( c2 ); }
@@ -57,7 +63,7 @@ BOOST_AUTO_TEST_CASE( test_mismatch )
 
     cs2 = "TeSt_liNk";
     BOOST_TEST(
-        TEST_SURROUND_EXPRESSION(utu::mismatch( cs1.begin(), cs1.end(), cs2.begin(), cs2.end(), std::ptr_fun( predicate ) ).first - cs1.begin()) == 5 );
+        TEST_SURROUND_EXPRESSION(utu::mismatch( cs1.begin(), cs1.end(), cs2.begin(), cs2.end(), REF_FUN( predicate ) ).first - cs1.begin()) == 5 );
 }
 
 //____________________________________________________________________________//
@@ -71,7 +77,7 @@ BOOST_AUTO_TEST_CASE( test_find_first_not_of )
 
     another = "T_sE";
     BOOST_TEST(
-        TEST_SURROUND_EXPRESSION(utu::find_first_not_of( cs.begin(), cs.end(), another.begin(), another.end(), std::ptr_fun( predicate ) ) - cs.begin()) == 7 );
+        TEST_SURROUND_EXPRESSION(utu::find_first_not_of( cs.begin(), cs.end(), another.begin(), another.end(), REF_FUN( predicate ) ) - cs.begin()) == 7 );
 
     another = "tes_ring";
     BOOST_TEST( utu::find_last_not_of( cs.begin(), cs.end(), another.begin(), another.end() ) == cs.end() );
@@ -87,7 +93,7 @@ BOOST_AUTO_TEST_CASE( test_find_last_of )
     BOOST_TEST( TEST_SURROUND_EXPRESSION(utu::find_last_of( cs.begin(), cs.end(), another.begin(), another.end() ) - cs.begin()) == 6 );
 
     another = "_Se";
-    BOOST_TEST( TEST_SURROUND_EXPRESSION(utu::find_last_of( cs.begin(), cs.end(), another.begin(), another.end(), std::ptr_fun( predicate ) ) - cs.begin()) == 5 );
+    BOOST_TEST( TEST_SURROUND_EXPRESSION(utu::find_last_of( cs.begin(), cs.end(), another.begin(), another.end(), REF_FUN( predicate ) ) - cs.begin()) == 5 );
 
     another = "qw";
     BOOST_TEST( utu::find_last_of( cs.begin(), cs.end(), another.begin(), another.end() ) == cs.end() );
@@ -106,7 +112,7 @@ BOOST_AUTO_TEST_CASE( test_find_last_not_of )
     BOOST_TEST( TEST_SURROUND_EXPRESSION(utu::find_last_not_of( cs.begin(), cs.end(), another.begin(), another.end() ) - cs.begin()) == 4 );
 
     another = "_SeG";
-    BOOST_TEST( TEST_SURROUND_EXPRESSION(utu::find_last_not_of( cs.begin(), cs.end(), another.begin(), another.end(), std::ptr_fun( predicate ) ) - cs.begin()) == 9 );
+    BOOST_TEST( TEST_SURROUND_EXPRESSION(utu::find_last_not_of( cs.begin(), cs.end(), another.begin(), another.end(), REF_FUN( predicate ) ) - cs.begin()) == 9 );
 
     another = "e_string";
     BOOST_TEST( utu::find_last_not_of( cs.begin(), cs.end(), another.begin(), another.end() ) == cs.end() );
