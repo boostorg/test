@@ -20,9 +20,14 @@
 #include <boost/type_traits/remove_const.hpp>
 
 #include <boost/bind.hpp>
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
 #include <boost/function/function1.hpp>
+#else
+#include <functional>
+#endif
 
 #include <boost/test/detail/suppress_warnings.hpp>
+
 
 //____________________________________________________________________________//
 
@@ -53,7 +58,13 @@ namespace ut_detail {
 template<typename ParamType, typename ParamIter>
 class param_test_case_generator : public test_unit_generator {
 public:
-    param_test_case_generator( boost::function<void (ParamType)> const& test_func,
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
+    typedef boost::function<void (ParamType)> param_func_t;
+#else
+    using param_func_t = std::function<void (ParamType)>;
+#endif
+
+    param_test_case_generator( param_func_t const&                      test_func,
                                const_string                             tc_name,
                                const_string                             tc_file,
                                std::size_t                              tc_line,
@@ -81,7 +92,7 @@ public:
 
 private:
     // Data members
-    boost::function<void (ParamType)>    m_test_func;
+    param_func_t            m_test_func;
     std::string             m_tc_name;
     const_string            m_tc_file;
     std::size_t             m_tc_line;
@@ -93,8 +104,11 @@ private:
 
 template<typename UserTestCase,typename ParamType>
 struct user_param_tc_method_invoker {
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
     typedef void (UserTestCase::*test_method)( ParamType );
-
+#else
+    using test_method = std::function<void (ParamType)>;
+#endif
     // Constructor
     user_param_tc_method_invoker( shared_ptr<UserTestCase> inst, test_method test_method )
     : m_inst( inst ), m_test_method( test_method ) {}
@@ -112,7 +126,11 @@ struct user_param_tc_method_invoker {
 
 template<typename ParamType, typename ParamIter>
 inline ut_detail::param_test_case_generator<ParamType,ParamIter>
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
 make_test_case( boost::function<void (ParamType)> const& test_func,
+#else
+make_test_case( std::function<void (ParamType)> const& test_func,
+#endif
                 const_string                             tc_name,
                 const_string                             tc_file,
                 std::size_t                              tc_line,
@@ -169,4 +187,3 @@ make_test_case( void (UserTestCase::*test_method )( ParamType ),
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_PARAMETERIZED_TEST_HPP_021102GER
-

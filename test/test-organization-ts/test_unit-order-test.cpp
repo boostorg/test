@@ -29,7 +29,7 @@ namespace tt = boost::test_tools;
 
 void some_test() {}
 #define TC( name )                                                      \
-boost::unit_test::make_test_case( boost::function<void ()>(some_test),  \
+boost::unit_test::make_test_case( boost::unit_test::test_func_t(some_test), \
                                   BOOST_TEST_STRINGIZE( name ),         \
                                   __FILE__, __LINE__ )
 

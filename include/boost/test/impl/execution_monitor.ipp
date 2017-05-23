@@ -839,7 +839,7 @@ static void boost_execution_monitor_attaching_signal_handler( int sig, siginfo_t
 // ************************************************************************** //
 
 int
-execution_monitor::catch_signals( boost::function<int ()> const& F )
+execution_monitor::catch_signals( result_func_t const& F )
 {
     using namespace detail;
 
@@ -1191,7 +1191,7 @@ execution_monitor::execution_monitor()
 //____________________________________________________________________________//
 
 int
-execution_monitor::execute( boost::function<int ()> const& F )
+execution_monitor::execute( result_func_t const& F )
 {
     if( debug::under_debugger() )
         p_catch_system_errors.value = false;
@@ -1295,16 +1295,15 @@ execution_monitor::execute( boost::function<int ()> const& F )
 namespace detail {
 
 struct forward {
-    explicit    forward( boost::function<void ()> const& F ) : m_F( F ) {}
-
+    explicit    forward( test_func_t const& F ) : m_F( F ) {}
     int         operator()() { m_F(); return 0; }
 
-    boost::function<void ()> const& m_F;
+    test_func_t const& m_F;
 };
 
 } // namespace detail
 void
-execution_monitor::vexecute( boost::function<void ()> const& F )
+execution_monitor::vexecute( test_func_t const& F )
 {
     execute( detail::forward( F ) );
 }

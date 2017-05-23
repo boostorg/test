@@ -198,7 +198,7 @@ test_unit::has_label( const_string l ) const
 // **************                   test_case                  ************** //
 // ************************************************************************** //
 
-test_case::test_case( const_string name, boost::function<void ()> const& test_func )
+test_case::test_case( const_string name, test_func_t const& test_func )
 : test_unit( name, "", 0, static_cast<test_unit_type>(type) )
 , p_test_func( test_func )
 {
@@ -207,7 +207,7 @@ test_case::test_case( const_string name, boost::function<void ()> const& test_fu
 
 //____________________________________________________________________________//
 
-test_case::test_case( const_string name, const_string file_name, std::size_t line_num, boost::function<void ()> const& test_func )
+    test_case::test_case( const_string name, const_string file_name, std::size_t line_num, test_func_t const& test_func )
 : test_unit( name, file_name, line_num, static_cast<test_unit_type>(type) )
 , p_test_func( test_func )
 {
