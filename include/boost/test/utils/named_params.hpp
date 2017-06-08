@@ -131,23 +131,23 @@ struct nil {
 #else
     operator T const&() const
 #endif
-    { nfp_detail::report_access_to_invalid_parameter(true); static T* v = 0; return *v; }
+    { nfp_detail::report_access_to_invalid_parameter(true); static T* v = 0; BOOST_UNREACHABLE_RETURN(*v); }
 
     template<typename T>
     T any_cast() const
-    { nfp_detail::report_access_to_invalid_parameter(true); static typename remove_reference<T>::type* v = 0; return *v; }
+    { nfp_detail::report_access_to_invalid_parameter(true); static typename remove_reference<T>::type* v = 0; BOOST_UNREACHABLE_RETURN(*v); }
 
     template<typename Arg1>
     nil operator()( Arg1 const& )
-    { nfp_detail::report_access_to_invalid_parameter(true); return nil(); }
+    { nfp_detail::report_access_to_invalid_parameter(true); BOOST_UNREACHABLE_RETURN(nil()); }
 
     template<typename Arg1,typename Arg2>
     nil operator()( Arg1 const&, Arg2 const& )
-    { nfp_detail::report_access_to_invalid_parameter(true); return nil(); }
+    { nfp_detail::report_access_to_invalid_parameter(true); BOOST_UNREACHABLE_RETURN(nil()); }
 
     template<typename Arg1,typename Arg2,typename Arg3>
     nil operator()( Arg1 const&, Arg2 const&, Arg3 const& )
-    { nfp_detail::report_access_to_invalid_parameter(true); return nil(); }
+    { nfp_detail::report_access_to_invalid_parameter(true); BOOST_UNREACHABLE_RETURN(nil()); }
 
     // Visitation support
     template<typename Visitor>
