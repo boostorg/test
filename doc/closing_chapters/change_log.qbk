@@ -7,6 +7,14 @@
 
 [section Change log]
 
+[h4 Boost.Test v3.6 / boost 1.65]
+
+[h5 New features]
+* VS2017 / C++17 compatibility (thanks to Daniela Engert)
+
+[h5 Bugfixes and feature requests]
+# [pull_request 106] replace deprecated binders and adapters, and `random_shuffle` by more modern equivalents
+
 [h4 Boost.Test v3.5 / boost 1.64]
 
 [h5 New features]
