@@ -19,6 +19,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/function/function0.hpp>
+#include <boost/utility/declval.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -46,24 +47,52 @@ typedef shared_ptr<test_unit_fixture> test_unit_fixture_ptr;
 // **************               fixture helper functions       ************** //
 // ************************************************************************** //
 
+namespace impl_fixture {
 
-namespace fixture_details {
+#if defined(BOOST_NO_CXX11_DECLTYPE) || defined(BOOST_NO_CXX11_TRAILING_RESULT_TYPES)
+
+    template<typename U, void (U::*)()> struct fixture_detect {};
 
     template<typename T>
     struct has_setup {
-        template<typename U, void (U::*)()> struct detect {};
-        template<typename U> static char Test(detect<U, &U::setup>*);
+    private:
+        template<typename U> static char Test(fixture_detect<U, &U::setup>*);
         template<typename U> static int Test(...);
+    public:
         static const bool value = sizeof(Test<T>(0)) == sizeof(char);
     };
 
     template<typename T>
     struct has_teardown {
-        template<typename U, void (U::*)()> struct detect {};
-        template<typename U> static char Test(detect<U, &U::teardown>*);
+    private:
+        template<typename U> static char Test(fixture_detect<U, &U::teardown>*);
         template<typename U> static int Test(...);
+    public:
         static const bool value = sizeof(Test<T>(0)) == sizeof(char);
     };
+
+#else
+
+    template<typename U> struct fixture_detect { typedef char type; };
+    template<typename T>
+    struct has_setup {
+    private:
+        template<typename U> static auto Test(U*) -> typename fixture_detect<decltype(boost::declval<U>().setup())>::type;
+        template<typename U> static int Test(...);
+    public:
+        static const bool value = sizeof(Test<T>(0)) == sizeof(char);
+    };
+
+    template<typename T>
+    struct has_teardown {
+    private:
+        template<typename U> static auto Test(U*) -> typename fixture_detect<decltype(boost::declval<U>().teardown())>::type;
+        template<typename U> static int Test(...);
+    public:
+        static const bool value = sizeof(Test<T>(0)) == sizeof(char);
+    };
+
+#endif
 
     template <bool has_setup = false>
     struct call_setup          { template <class U> void operator()(U& u) { }               };
@@ -76,19 +105,18 @@ namespace fixture_details {
 
     template <>
     struct call_teardown<true> { template <class U> void operator()(U& u) { u.teardown(); } };
+}
 
-    //! Calls the fixture "setup" if detected by the compiler, otherwise does nothing.
-    template <class U>
-    void setup_conditional(U& u) {
-        return call_setup<has_setup<U>::value>()(u);
-    }
+//! Calls the fixture "setup" if detected by the compiler, otherwise does nothing.
+template <class U>
+void setup_conditional(U& u) {
+    return impl_fixture::call_setup<impl_fixture::has_setup<U>::value>()(u);
+}
 
-    //! Calls the fixture "teardown" if detected by the compiler, otherwise does nothing.
-    template <class U>
-    void teardown_conditional(U& u) {
-        return call_teardown<has_teardown<U>::value>()(u);
-    }
-
+//! Calls the fixture "teardown" if detected by the compiler, otherwise does nothing.
+template <class U>
+void teardown_conditional(U& u) {
+    return impl_fixture::call_teardown<impl_fixture::has_teardown<U>::value>()(u);
 }
 
 
@@ -104,8 +132,8 @@ public:
 
 private:
     // Fixture interface
-    virtual void    setup()         { m_inst.reset( new F( m_arg ) ); fixture_details::setup_conditional(*m_inst); }
-    virtual void    teardown()      { fixture_details::teardown_conditional(*m_inst); m_inst.reset(); }
+    virtual void    setup()         { m_inst.reset( new F( m_arg ) ); setup_conditional(*m_inst); }
+    virtual void    teardown()      { teardown_conditional(*m_inst); m_inst.reset(); }
 
     // Data members
     scoped_ptr<F>   m_inst;
@@ -122,8 +150,8 @@ public:
 
 private:
     // Fixture interface
-    virtual void    setup()         { m_inst.reset( new F ); fixture_details::setup_conditional(*m_inst); }
-    virtual void    teardown()      { fixture_details::teardown_conditional(*m_inst); m_inst.reset(); }
+    virtual void    setup()         { m_inst.reset( new F ); setup_conditional(*m_inst); }
+    virtual void    teardown()      { teardown_conditional(*m_inst); m_inst.reset(); }
 
     // Data members
     scoped_ptr<F>   m_inst;

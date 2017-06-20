@@ -96,13 +96,13 @@ struct global_fixture_impl : public global_fixture {
     // test fixture interface
     virtual void setup()                    {
         m_fixture = new F;
-        fixture_details::setup_conditional(*m_fixture);
+        setup_conditional(*m_fixture);
     }
 
     // test fixture interface
     virtual void teardown()                 {
         if(m_fixture) {
-            fixture_details::teardown_conditional(*m_fixture);
+            teardown_conditional(*m_fixture);
         }
         delete m_fixture;
         m_fixture = 0;

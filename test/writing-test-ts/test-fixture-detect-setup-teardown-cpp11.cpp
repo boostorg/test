@@ -8,7 +8,7 @@
 // checks issue https://svn.boost.org/trac/boost/ticket/5563 in particular
 // the ability of the framework to detect new fixture signatures.
 
-#define BOOST_TEST_MODULE test_fixture_detect_setup_teardown
+#define BOOST_TEST_MODULE test_fixture_detect_setup_teardown_cpp11
 #include <boost/test/unit_test.hpp>
 #include <iostream>
 #include <boost/test/unit_test_suite.hpp>
@@ -56,17 +56,13 @@ BOOST_AUTO_TEST_CASE( fixture_setup_teardown_detect_both )
     teardown_conditional(obj);
 }
 
-#if defined(BOOST_NO_CXX11_DECLTYPE) || defined(BOOST_NO_CXX11_TRAILING_RESULT_TYPES)
-
 BOOST_AUTO_TEST_CASE( fixture_setup_teardown_detect_both_from_child )
 {
-    // cannot detect this with the C++03 approach
-    BOOST_CHECK(!impl_fixture::has_setup<fixture_with_child>::value);
-    BOOST_CHECK(!impl_fixture::has_setup<fixture_with_child>::value);
+    // should detect this with the C++11/declspec approach
+    BOOST_CHECK(impl_fixture::has_setup<fixture_with_child>::value);
+    BOOST_CHECK(impl_fixture::has_setup<fixture_with_child>::value);
 
     fixture_with_child obj;
     setup_conditional(obj);
     teardown_conditional(obj);
 }
-
-#endif
