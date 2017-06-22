@@ -9,10 +9,15 @@
 
 While many test log configuration tasks can be performed at runtime using predefined framework parameters, the
 __UTF__ provides a compile time interface as well. The interface gives you full power over what, where and how to
-log. The interface is provided by singleton class [classref boost::unit_test::unit_test_log_t] and is
+log. The interface of the logger is provided by singleton class [classref boost::unit_test::unit_test_log_t] and is
 accessible through local file scope reference to single instance of this class
 
-``boost::unit_test::unit_test_log``
+``
+boost::unit_test::unit_test_log
+``
+
+In order to install customization of the logger, the __UTF__ provides the __BOOST_TEST_GLOBAL_CONFIGURATION__ facility
+that acts in a similar fashion to a global fixture.
 
 
 [/ ------------------------------------------------------------------------------------------------ ]

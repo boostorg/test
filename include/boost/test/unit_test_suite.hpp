@@ -143,12 +143,15 @@ struct test_name : public F { void test_method(); };                    \
                                                                         \
 static void BOOST_AUTO_TC_INVOKER( test_name )()                        \
 {                                                                       \
-    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture entry.");    \
-    test_name t; boost::unit_test::setup_conditional(t);                \
-    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" entry.");            \
+    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture ctor");      \
+    test_name t;                                                        \
+    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture setup");     \
+    boost::unit_test::setup_conditional(t);                             \
+    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" test entry");        \
     t.test_method();                                                    \
-    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" exit.");             \
+    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture teardown");  \
     boost::unit_test::teardown_conditional(t);                          \
+    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture dtor");      \
 }                                                                       \
                                                                         \
 struct BOOST_AUTO_TC_UNIQUE_ID( test_name ) {};                         \
