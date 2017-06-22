@@ -47,7 +47,7 @@ unit_test_monitor_t::execute_and_translate( boost::function<void ()> const& func
     }
     BOOST_TEST_I_CATCH( execution_exception, ex ) {
         framework::exception_caught( ex );
-        framework::test_unit_aborted( framework::current_test_case() );
+        framework::test_unit_aborted( framework::current_test_unit() );
 
         // translate execution_exception::error_code to error_level
         switch( ex.code() ) {

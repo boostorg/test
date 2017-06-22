@@ -52,7 +52,7 @@ namespace {
 std::string
 test_phase_identifier()
 {
-    return framework::test_in_progress() ? framework::current_test_case().full_name() : std::string( "Test setup" );
+    return framework::test_in_progress() ? framework::current_test_unit().full_name() : std::string( "Test setup" );
 }
 
 } // local namespace

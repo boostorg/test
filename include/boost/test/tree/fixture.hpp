@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision: 74640 $
-//
-//  Description : defines fixture interface and object makers
+/// @file
+/// Defines fixture interface and object makers
 // ***************************************************************************
 
 #ifndef BOOST_TEST_TREE_FIXTURE_HPP_100311GER
@@ -46,6 +43,56 @@ public:
 typedef shared_ptr<test_unit_fixture> test_unit_fixture_ptr;
 
 // ************************************************************************** //
+// **************               fixture helper functions       ************** //
+// ************************************************************************** //
+
+
+namespace fixture_details {
+
+    template<typename T>
+    struct has_setup {
+        template<typename U, void (U::*)()> struct detect {};
+        template<typename U> static char Test(detect<U, &U::setup>*);
+        template<typename U> static int Test(...);
+        static const bool value = sizeof(Test<T>(0)) == sizeof(char);
+    };
+
+    template<typename T>
+    struct has_teardown {
+        template<typename U, void (U::*)()> struct detect {};
+        template<typename U> static char Test(detect<U, &U::teardown>*);
+        template<typename U> static int Test(...);
+        static const bool value = sizeof(Test<T>(0)) == sizeof(char);
+    };
+
+    template <bool has_setup = false>
+    struct call_setup          { template <class U> void operator()(U& u) { }               };
+
+    template <>
+    struct call_setup<true>    { template <class U> void operator()(U& u) { u.setup(); }    };
+
+    template <bool has_teardown = false>
+    struct call_teardown       { template <class U> void operator()(U& u) { }               };
+
+    template <>
+    struct call_teardown<true> { template <class U> void operator()(U& u) { u.teardown(); } };
+
+    //! Calls the fixture "setup" if detected by the compiler, otherwise does nothing.
+    template <class U>
+    void setup_conditional(U& u) {
+        return call_setup<has_setup<U>::value>()(u);
+    }
+
+    //! Calls the fixture "teardown" if detected by the compiler, otherwise does nothing.
+    template <class U>
+    void teardown_conditional(U& u) {
+        return call_teardown<has_teardown<U>::value>()(u);
+    }
+
+}
+
+
+// ************************************************************************** //
 // **************              class_based_fixture             ************** //
 // ************************************************************************** //
 
@@ -57,8 +104,8 @@ public:
 
 private:
     // Fixture interface
-    virtual void    setup()         { m_inst.reset( new F( m_arg ) ); }
-    virtual void    teardown()      { m_inst.reset(); }
+    virtual void    setup()         { m_inst.reset( new F( m_arg ) ); fixture_details::setup_conditional(*m_inst); }
+    virtual void    teardown()      { fixture_details::teardown_conditional(*m_inst); m_inst.reset(); }
 
     // Data members
     scoped_ptr<F>   m_inst;
@@ -75,8 +122,8 @@ public:
 
 private:
     // Fixture interface
-    virtual void    setup()         { m_inst.reset( new F ); }
-    virtual void    teardown()      { m_inst.reset(); }
+    virtual void    setup()         { m_inst.reset( new F ); fixture_details::setup_conditional(*m_inst); }
+    virtual void    teardown()      { fixture_details::teardown_conditional(*m_inst); m_inst.reset(); }
 
     // Data members
     scoped_ptr<F>   m_inst;

@@ -290,6 +290,22 @@ void BOOST_JOIN( name, _impl )( boost::type<type_name>* )               \
 // ************************************************************************** //
 
 #define BOOST_GLOBAL_FIXTURE( F ) \
+static boost::unit_test::ut_detail::global_configuration_impl<F> BOOST_JOIN( gf_, F ) \
+/**/
+
+// ************************************************************************** //
+// **************      BOOST_TEST_GLOBAL_CONFIGURATION         ************** //
+// ************************************************************************** //
+
+#define BOOST_TEST_GLOBAL_CONFIGURATION( F ) \
+static boost::unit_test::ut_detail::global_configuration_impl<F> BOOST_JOIN( gf_, F ) \
+/**/
+
+// ************************************************************************** //
+// **************         BOOST_TEST_GLOBAL_FIXTURE            ************** //
+// ************************************************************************** //
+
+#define BOOST_TEST_GLOBAL_FIXTURE( F ) \
 static boost::unit_test::ut_detail::global_fixture_impl<F> BOOST_JOIN( gf_, F ) \
 /**/
 
