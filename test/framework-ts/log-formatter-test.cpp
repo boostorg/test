@@ -11,7 +11,7 @@
 
 // Boost.Test
 #define BOOST_TEST_MAIN
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/tools/output_test_stream.hpp>
 #include <boost/test/unit_test_suite.hpp>
@@ -113,7 +113,7 @@ void check( output_test_stream& output, test_suite* ts )
     check( output, OF_CLF, ts->p_id );
     check( output, OF_XML, ts->p_id );
     check( output, OF_JUNIT, ts->p_id, log_successful_tests );
-    check( output, OF_JUNIT, ts->p_id, log_cpp_exception_errors ); // should branch to the log log_all_errors 
+    check( output, OF_JUNIT, ts->p_id, log_cpp_exception_errors ); // should branch to the log log_all_errors
 }
 
 //____________________________________________________________________________//
@@ -186,7 +186,7 @@ public:
                                                       "condition 2>3 is not satisfied\n",
                                                       "condition 2>3 is not satisfied]",
                                                       };
-                                                      
+
             static const std::string to_replace[]  = {"time=\"0.1234\"",
                                                       get_basename() + ":*:" ,
                                                       "unknown location:*:",

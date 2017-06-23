@@ -143,11 +143,15 @@ struct test_name : public F { void test_method(); };                    \
                                                                         \
 static void BOOST_AUTO_TC_INVOKER( test_name )()                        \
 {                                                                       \
-    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture entry.");    \
+    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture ctor");      \
     test_name t;                                                        \
-    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" entry.");            \
+    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture setup");     \
+    boost::unit_test::setup_conditional(t);                             \
+    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" test entry");        \
     t.test_method();                                                    \
-    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" exit.");             \
+    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture teardown");  \
+    boost::unit_test::teardown_conditional(t);                          \
+    BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture dtor");      \
 }                                                                       \
                                                                         \
 struct BOOST_AUTO_TC_UNIQUE_ID( test_name ) {};                         \
@@ -230,10 +234,11 @@ struct BOOST_AUTO_TC_INVOKER( test_name ) {                             \
     static void run( boost::type<TestType>* = 0 )                       \
     {                                                                   \
         BOOST_TEST_CHECKPOINT('"' << #test_name <<"\" fixture entry."); \
-        test_name<TestType> t;                                          \
+        test_name<TestType> t; boost::unit_test::setup_conditional(t);  \
         BOOST_TEST_CHECKPOINT('"' << #test_name << "\" entry.");        \
         t.test_method();                                                \
         BOOST_TEST_CHECKPOINT('"' << #test_name << "\" exit.");         \
+        boost::unit_test::teardown_conditional(t);                      \
     }                                                                   \
 };                                                                      \
                                                                         \
@@ -290,6 +295,22 @@ void BOOST_JOIN( name, _impl )( boost::type<type_name>* )               \
 // ************************************************************************** //
 
 #define BOOST_GLOBAL_FIXTURE( F ) \
+static boost::unit_test::ut_detail::global_configuration_impl<F> BOOST_JOIN( gf_, F ) \
+/**/
+
+// ************************************************************************** //
+// **************      BOOST_TEST_GLOBAL_CONFIGURATION         ************** //
+// ************************************************************************** //
+
+#define BOOST_TEST_GLOBAL_CONFIGURATION( F ) \
+static boost::unit_test::ut_detail::global_configuration_impl<F> BOOST_JOIN( gf_, F ) \
+/**/
+
+// ************************************************************************** //
+// **************         BOOST_TEST_GLOBAL_FIXTURE            ************** //
+// ************************************************************************** //
+
+#define BOOST_TEST_GLOBAL_FIXTURE( F ) \
 static boost::unit_test::ut_detail::global_fixture_impl<F> BOOST_JOIN( gf_, F ) \
 /**/
 
