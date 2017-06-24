@@ -95,13 +95,13 @@ namespace impl_fixture {
 #endif
 
     template <bool has_setup = false>
-    struct call_setup          { template <class U> void operator()(U& u) { }               };
+    struct call_setup          { template <class U> void operator()(U& ) { }                };
 
     template <>
     struct call_setup<true>    { template <class U> void operator()(U& u) { u.setup(); }    };
 
     template <bool has_teardown = false>
-    struct call_teardown       { template <class U> void operator()(U& u) { }               };
+    struct call_teardown       { template <class U> void operator()(U& ) { }                };
 
     template <>
     struct call_teardown<true> { template <class U> void operator()(U& u) { u.teardown(); } };
