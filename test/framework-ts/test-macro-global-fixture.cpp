@@ -244,7 +244,7 @@ public:
                                                       "condition 2>3 is not satisfied\n",
                                                       "condition 2>3 is not satisfied]",
                                                       };
-                                                      
+
             static const std::string to_replace[]  = {"time=\"0.1234\"",
                                                       get_basename() + ":*:" ,
                                                       "unknown location:*:",
