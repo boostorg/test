@@ -47,6 +47,7 @@ TEST_EXEC_MON_SOURCES =
   progress_monitor
   results_collector
   results_reporter
+  test_framework_init_observer
   test_main
   test_tools
   test_tree
@@ -69,6 +70,7 @@ UTF_SOURCES =
   progress_monitor
   results_collector
   results_reporter
+  test_framework_init_observer
   test_tools
   test_tree
   unit_test_log

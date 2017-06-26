@@ -90,6 +90,7 @@ set(BOOST_UTF_SRC
     ${BOOST_TEST_ROOT_DIR}/src/progress_monitor.cpp
     ${BOOST_TEST_ROOT_DIR}/src/results_collector.cpp
     ${BOOST_TEST_ROOT_DIR}/src/results_reporter.cpp
+    ${BOOST_TEST_ROOT_DIR}/src/test_framework_init_observer.cpp
     ${BOOST_TEST_ROOT_DIR}/src/test_tools.cpp
     ${BOOST_TEST_ROOT_DIR}/src/test_tree.cpp
     ${BOOST_TEST_ROOT_DIR}/src/unit_test_log.cpp

@@ -1342,6 +1342,12 @@ execution_exception::location::location( char const* file_name, size_t line_num,
 , m_function( func )
 {}
 
+execution_exception::location::location(const_string file_name, size_t line_num, char const* func )
+: m_file_name( file_name )
+, m_line_num( line_num )
+, m_function( func )
+{}
+
 //____________________________________________________________________________//
 
 // ************************************************************************** //

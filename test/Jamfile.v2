@@ -136,6 +136,7 @@ test-suite "framework-ts"
   [ boost.test-self-test run : framework-ts : log-formatter-test : : baseline-outputs/log-formatter-test.pattern ]
   [ boost.test-self-test run : framework-ts : run-by-name-or-label-test ]
   [ boost.test-self-test run : framework-ts : version-uses-module-name : included ]
+  [ boost.test-self-test run : framework-ts : test-macro-global-fixture : : baseline-outputs/global-fixtures-test.pattern ]
 ;
 
 #_________________________________________________________________________________________________#
@@ -156,6 +157,8 @@ test-suite "writing-test-ts"
   [ boost.test-self-test run : writing-test-ts : test-dataset-over-tuples  : : : : : : $(requirements_datasets) ]
   [ boost.test-self-test run : writing-test-ts : nullptr-support-test : : : : : : [ requires cxx11_nullptr ] ]
   [ boost.test-self-test run : writing-test-ts : user-defined-types-logging-customization-points ]
+  [ boost.test-self-test run : writing-test-ts : test-fixture-detect-setup-teardown ]
+  [ boost.test-self-test run : writing-test-ts : test-fixture-detect-setup-teardown-cpp11 : : : : : : [ requires cxx11_decltype cxx11_trailing_result_types ] ]
 ;
 
 #_________________________________________________________________________________________________#

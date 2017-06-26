@@ -9,11 +9,22 @@
 
 [h4 Boost.Test v3.6 / boost 1.65]
 
+[h5 Breaking changes]
+* __BOOST_GLOBAL_FIXTURE__ is flagged as deprecated and will be removed in a later version
+* Using test assertions and macros is not allowed when used inside __BOOST_GLOBAL_FIXTURE__. Please use __BOOST_TEST_GLOBAL_FIXTURE__
+  instead (see below).
+
 [h5 New features]
 * VS2017 / C++17 compatibility (thanks to Daniela Engert)
+* Deprecating __BOOST_GLOBAL_FIXTURE__ in favor of __BOOST_TEST_GLOBAL_FIXTURE__ and __BOOST_TEST_GLOBAL_CONFIGURATION__. This
+  helps separating the logic of the fixtures associated to the master test suite, from the one used for setting up the logging
+  and reporting facility, and results in a general cleaner design.
 
 [h5 Bugfixes and feature requests]
 # [pull_request 106] replace deprecated binders and adapters, and `random_shuffle` by more modern equivalents
+# [ticket 5282] Test fixtures do not support virtual inheritance
+# [ticket 5563] using a test macro in a global fixture crashes Boost.Test
+# [ticket 11962] `BOOST_TEST_MESSAGE` in fixture constructor - invalid XML
 
 [h4 Boost.Test v3.5 / boost 1.64]
 
@@ -24,10 +35,10 @@
   [link boost_test.test_output.log_formats.test_log_output log-level] set between `success` and
   `non-fatal error`, and defaults to `general information`.
 * [link boost_test.test_output.log_formats.log_junit_format JUnit output format] is now more
-  performant in case a lot of checks are done in a test module. 
+  performant in case a lot of checks are done in a test module.
 
 [h5 Bugfixes and feature requests]
-# [pull_request 107] `BOOST_NO_EXCEPTIONS` typo making `throw_exception` unusable under some circumstances 
+# [pull_request 107] `BOOST_NO_EXCEPTIONS` typo making `throw_exception` unusable under some circumstances
 # [pull_request 108] Change capital variable names to lowercase
 # [ticket 11756] boost.Test: non standards compliant use of `FE_*` macros (unable to compile boost test library on FPU-less arches) (reopened)
 # [ticket 12540] Provide customisation point for printing types in tests

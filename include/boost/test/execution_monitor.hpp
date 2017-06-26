@@ -270,6 +270,7 @@ public:
     /// Simple model for the location of failure in a source code
     struct BOOST_TEST_DECL location {
         explicit    location( char const* file_name = 0, size_t line_num = 0, char const* func = 0 );
+        explicit    location( const_string file_name, size_t line_num = 0, char const* func = 0 );
 
         const_string    m_file_name;    ///< File name
         size_t          m_line_num;     ///< Line number
