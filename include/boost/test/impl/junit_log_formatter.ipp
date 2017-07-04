@@ -189,14 +189,14 @@ public:
 
         test_unit_id id(tu.p_id);
         while( id != m_ts.p_id && id != INV_TEST_UNIT_ID) {
-            test_unit const& tu = boost::unit_test::framework::get( id, TUT_ANY );
-            out.push_back("- disabled test unit: '" + tu_name_remove_newlines(tu.full_name()) + "'\n");
+            test_unit const& tu_hierarchy = boost::unit_test::framework::get( id, TUT_ANY );
+            out.push_back("- disabled test unit: '" + tu_name_remove_newlines(tu_hierarchy.full_name()) + "'\n");
             if(m_map_test.count(id) > 0)
             {
                 // junit has seen the reason: this is enough for constructing the chain
                 break;
             }
-            id = tu.p_parent_id;
+            id = tu_hierarchy.p_parent_id;
         }
         junit_log_formatter::map_trace_t::const_iterator it_element_stack(m_map_test.find(id));
         if( it_element_stack != m_map_test.end() )
