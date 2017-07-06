@@ -92,7 +92,7 @@ const_string file_basename(const_string filename) {
 // ************************************************************************** //
 
 void
-junit_log_formatter::log_start( std::ostream& ostr, counter_t test_cases_amount)
+junit_log_formatter::log_start( std::ostream& /*ostr*/, counter_t /*test_cases_amount*/)
 {
     map_tests.clear();
     list_path_to_root.clear();
@@ -189,14 +189,14 @@ public:
 
         test_unit_id id(tu.p_id);
         while( id != m_ts.p_id && id != INV_TEST_UNIT_ID) {
-            test_unit const& tu = boost::unit_test::framework::get( id, TUT_ANY );
-            out.push_back("- disabled test unit: '" + tu_name_remove_newlines(tu.full_name()) + "'\n");
+            test_unit const& tu_hierarchy = boost::unit_test::framework::get( id, TUT_ANY );
+            out.push_back("- disabled test unit: '" + tu_name_remove_newlines(tu_hierarchy.full_name()) + "'\n");
             if(m_map_test.count(id) > 0)
             {
                 // junit has seen the reason: this is enough for constructing the chain
                 break;
             }
-            id = tu.p_parent_id;
+            id = tu_hierarchy.p_parent_id;
         }
         junit_log_formatter::map_trace_t::const_iterator it_element_stack(m_map_test.find(id));
         if( it_element_stack != m_map_test.end() )
@@ -507,7 +507,7 @@ junit_log_formatter::log_finish( std::ostream& ostr )
 //____________________________________________________________________________//
 
 void
-junit_log_formatter::log_build_info( std::ostream& ostr )
+junit_log_formatter::log_build_info( std::ostream& /*ostr*/ )
 {
     m_display_build_info = true;
 }
@@ -515,7 +515,7 @@ junit_log_formatter::log_build_info( std::ostream& ostr )
 //____________________________________________________________________________//
 
 void
-junit_log_formatter::test_unit_start( std::ostream& ostr, test_unit const& tu )
+junit_log_formatter::test_unit_start( std::ostream& /*ostr*/, test_unit const& tu )
 {
     list_path_to_root.push_back( tu.p_id );
     map_tests.insert(std::make_pair(tu.p_id, junit_impl::junit_log_helper())); // current_test_case_id not working here
@@ -526,7 +526,7 @@ junit_log_formatter::test_unit_start( std::ostream& ostr, test_unit const& tu )
 //____________________________________________________________________________//
 
 void
-junit_log_formatter::test_unit_finish( std::ostream& ostr, test_unit const& tu, unsigned long elapsed )
+junit_log_formatter::test_unit_finish( std::ostream& /*ostr*/, test_unit const& tu, unsigned long /*elapsed*/ )
 {
     // the time is already stored in the result_reporter
     assert( tu.p_id == list_path_to_root.back() );
@@ -534,7 +534,7 @@ junit_log_formatter::test_unit_finish( std::ostream& ostr, test_unit const& tu, 
 }
 
 void
-junit_log_formatter::test_unit_aborted( std::ostream& os, test_unit const& tu )
+junit_log_formatter::test_unit_aborted( std::ostream& /*ostr*/, test_unit const& tu )
 {
     assert( tu.p_id == list_path_to_root.back() );
     //list_path_to_root.pop_back();
@@ -543,7 +543,7 @@ junit_log_formatter::test_unit_aborted( std::ostream& os, test_unit const& tu )
 //____________________________________________________________________________//
 
 void
-junit_log_formatter::test_unit_skipped( std::ostream& ostr, test_unit const& tu, const_string reason )
+junit_log_formatter::test_unit_skipped( std::ostream& /*ostr*/, test_unit const& tu, const_string reason )
 {
     // if a test unit is skipped, then the start of this TU has not been called yet.
     // we cannot use get_current_log_entry here, but the TU id should appear in the map.
@@ -555,7 +555,7 @@ junit_log_formatter::test_unit_skipped( std::ostream& ostr, test_unit const& tu,
 //____________________________________________________________________________//
 
 void
-junit_log_formatter::log_exception_start( std::ostream& ostr, log_checkpoint_data const& checkpoint_data, execution_exception const& ex )
+junit_log_formatter::log_exception_start( std::ostream& /*ostr*/, log_checkpoint_data const& checkpoint_data, execution_exception const& ex )
 {
     std::ostringstream o;
     execution_exception::location const& loc = ex.where();
@@ -623,7 +623,7 @@ junit_log_formatter::log_exception_start( std::ostream& ostr, log_checkpoint_dat
 //____________________________________________________________________________//
 
 void
-junit_log_formatter::log_exception_finish( std::ostream& ostr )
+junit_log_formatter::log_exception_finish( std::ostream& /*ostr*/ )
 {
     // sealing the last entry
     assert(!get_current_log_entry().assertion_entries.back().sealed);
@@ -633,7 +633,7 @@ junit_log_formatter::log_exception_finish( std::ostream& ostr )
 //____________________________________________________________________________//
 
 void
-junit_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& entry_data, log_entry_types let )
+junit_log_formatter::log_entry_start( std::ostream& /*ostr*/, log_entry_data const& entry_data, log_entry_types let )
 {
     junit_impl::junit_log_helper& last_entry = get_current_log_entry();
     last_entry.skipping = false;
@@ -706,7 +706,7 @@ junit_log_formatter::log_entry_start( std::ostream& ostr, log_entry_data const& 
 //____________________________________________________________________________//
 
 void
-junit_log_formatter::log_entry_value( std::ostream& ostr, const_string value )
+junit_log_formatter::log_entry_value( std::ostream& /*ostr*/, const_string value )
 {
     junit_impl::junit_log_helper& last_entry = get_current_log_entry();
     if(last_entry.skipping)
@@ -730,7 +730,7 @@ junit_log_formatter::log_entry_value( std::ostream& ostr, const_string value )
 //____________________________________________________________________________//
 
 void
-junit_log_formatter::log_entry_finish( std::ostream& ostr )
+junit_log_formatter::log_entry_finish( std::ostream& /*ostr*/ )
 {
     junit_impl::junit_log_helper& last_entry = get_current_log_entry();
     if(!last_entry.skipping)
@@ -753,7 +753,7 @@ junit_log_formatter::log_entry_finish( std::ostream& ostr )
 //____________________________________________________________________________//
 
 void
-junit_log_formatter::entry_context_start( std::ostream& ostr, log_level )
+junit_log_formatter::entry_context_start( std::ostream& /*ostr*/, log_level )
 {
     junit_impl::junit_log_helper& last_entry = get_current_log_entry();
     if(last_entry.skipping)
@@ -776,7 +776,7 @@ junit_log_formatter::entry_context_start( std::ostream& ostr, log_level )
 //____________________________________________________________________________//
 
 void
-junit_log_formatter::entry_context_finish( std::ostream& ostr )
+junit_log_formatter::entry_context_finish( std::ostream& /*ostr*/ )
 {
     // no op, may be removed
     junit_impl::junit_log_helper& last_entry = get_current_log_entry();
@@ -788,7 +788,7 @@ junit_log_formatter::entry_context_finish( std::ostream& ostr )
 //____________________________________________________________________________//
 
 void
-junit_log_formatter::log_entry_context( std::ostream& ostr, const_string context_descr )
+junit_log_formatter::log_entry_context( std::ostream& /*ostr*/, const_string context_descr )
 {
     junit_impl::junit_log_helper& last_entry = get_current_log_entry();
     if(last_entry.skipping)
