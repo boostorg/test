@@ -25,6 +25,7 @@
 # [ticket 5282] Test fixtures do not support virtual inheritance
 # [ticket 5563] using a test macro in a global fixture crashes Boost.Test
 # [ticket 11962] `BOOST_TEST_MESSAGE` in fixture constructor - invalid XML
+# [ticket 12228] Some test headers fail to compile independently
 # [ticket 13011] `BOOST_TEST` broken with floating point relational operators
 
 [h4 Boost.Test v3.5 / boost 1.64]
