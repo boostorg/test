@@ -552,5 +552,100 @@ BOOST_AUTO_TEST_CASE( test_specialized_comparator_string )
     }
 }
 
+BOOST_AUTO_TEST_CASE( test_comparison_with_arrays )
+{
+    using namespace boost::test_tools;
+
+    {
+        char c_string_array[] = "abc";
+
+        predicate_result const& res = EXPR_TYPE( c_string_array == "a" ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == " [abc != a]" );
+        BOOST_TEST( c_string_array == "abc" );
+    }
+
+    {
+        char c_string_array[] = "abc";
+
+        predicate_result const& res = EXPR_TYPE( "a" == c_string_array ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == " [a != abc]" );
+        BOOST_TEST( "abc" == c_string_array );
+    }
+
+    {
+        char const c_string_array[] = "abc";
+
+        predicate_result const& res = EXPR_TYPE( c_string_array == "a" ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == " [abc != a]" );
+        BOOST_TEST( c_string_array == "abc" );
+    }
+
+    {
+        char const c_string_array[] = "abc";
+
+        predicate_result const& res = EXPR_TYPE( "a" == c_string_array ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == " [a != abc]" );
+        BOOST_TEST( "abc" == c_string_array );
+    }
+
+
+    {
+        long int c_long_array[] = {3,4,7};
+        std::vector<long int> v_long_array(c_long_array, c_long_array + sizeof(c_long_array)/sizeof(c_long_array[0]));
+        std::swap(v_long_array[1], v_long_array[2]);
+
+        predicate_result const& res = EXPR_TYPE( c_long_array == v_long_array ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == ". \nMismatch at position 1: 4 != 7. \nMismatch at position 2: 7 != 4. " );
+
+        std::swap(v_long_array[1], v_long_array[2]);
+        BOOST_TEST( c_long_array == v_long_array );
+    }
+
+    {
+        long int c_long_array[] = {3,4,7};
+
+        std::vector<long int> v_long_array(c_long_array, c_long_array + sizeof(c_long_array)/sizeof(c_long_array[0]));
+        std::swap(v_long_array[1], v_long_array[2]);
+
+        predicate_result const& res = EXPR_TYPE( v_long_array == c_long_array ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == ". \nMismatch at position 1: 7 != 4. \nMismatch at position 2: 4 != 7. " );
+        std::swap(v_long_array[1], v_long_array[2]);
+        BOOST_TEST( c_long_array == v_long_array );
+    }
+
+    {
+        long int const c_long_array[] = {3,4,7};
+        std::vector<long int> v_long_array(c_long_array, c_long_array + sizeof(c_long_array)/sizeof(c_long_array[0]));
+        std::swap(v_long_array[1], v_long_array[2]);
+
+        predicate_result const& res = EXPR_TYPE( c_long_array == v_long_array ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == ". \nMismatch at position 1: 4 != 7. \nMismatch at position 2: 7 != 4. " );
+
+        std::swap(v_long_array[1], v_long_array[2]);
+        BOOST_TEST( c_long_array == v_long_array );
+    }
+
+    {
+        long int const c_long_array[] = {3,4,7};
+
+        std::vector<long int> v_long_array(c_long_array, c_long_array + sizeof(c_long_array)/sizeof(c_long_array[0]));
+        std::swap(v_long_array[1], v_long_array[2]);
+
+        predicate_result const& res = EXPR_TYPE( v_long_array == c_long_array ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == ". \nMismatch at position 1: 7 != 4. \nMismatch at position 2: 4 != 7. " );
+        std::swap(v_long_array[1], v_long_array[2]);
+        BOOST_TEST( c_long_array == v_long_array );
+    }
+
+}
+
 // EOF
 

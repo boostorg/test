@@ -149,8 +149,7 @@ struct is_forward_iterable_impl<
     T,
     typename std::enable_if<
       has_member_begin<T>::value &&
-      has_member_end<T>::value //&&
-      //!is_cstring<T>::value
+      has_member_end<T>::value
     >::type
 > : std::true_type
 {};

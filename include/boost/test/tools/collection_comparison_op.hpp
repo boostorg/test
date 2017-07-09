@@ -38,6 +38,15 @@ namespace assertion {
 template<typename T>
 struct specialized_compare : public mpl::false_ {};
 
+template <typename T>
+struct is_c_array : public mpl::false_ {};
+
+template<typename T, std::size_t N>
+struct is_c_array<T [N]> : public mpl::true_ {};
+
+template<typename T, std::size_t N>
+struct is_c_array<T (&)[N]> : public mpl::true_ {};
+
 #define BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE(Col)          \
 namespace boost { namespace test_tools { namespace assertion {  \
 template<>                                                      \
@@ -386,11 +395,20 @@ public:                                                             \
     typedef unit_test::bt_iterator_traits<Rhs> t_Rhs_iterator_helper; \
                                                                     \
     typedef name<Lhs, Rhs> OP;                                      \
+                                                                    \
     typedef typename                                                \
-        mpl::if_c<is_same<typename decay<Lhs>::type,                \
-                          typename decay<Rhs>::type>::value,        \
-                  typename cctraits<OP>::is_specialized,            \
-                  mpl::false_>::type is_specialized;                \
+        mpl::if_c<                                                  \
+          mpl::or_<                                                 \
+              typename is_c_array<Lhs>::type,                       \
+              typename is_c_array<Rhs>::type                        \
+          >::value,                                                 \
+          mpl::true_,                                               \
+          typename                                                  \
+              mpl::if_c<is_same<typename decay<Lhs>::type,          \
+                                typename decay<Rhs>::type>::value,  \
+                        typename cctraits<OP>::is_specialized,      \
+                        mpl::false_>::type                          \
+          >::type is_specialized;                                   \
                                                                     \
     typedef name<typename t_Lhs_iterator_helper::value_type,        \
                  typename t_Rhs_iterator_helper::value_type         \
