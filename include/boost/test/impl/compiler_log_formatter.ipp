@@ -260,21 +260,29 @@ compiler_log_formatter::print_prefix( std::ostream& output, const_string file_na
 void
 compiler_log_formatter::entry_context_start( std::ostream& output, log_level l )
 {
-    output << (l == log_successful_tests ? "\nAssertion" : "\nFailure" ) << " occurred in a following context:";
+    if( l == log_messages ) {
+        output << "\n[context:";
+    }
+    else {
+        output << (l == log_successful_tests ? "\nAssertion" : "\nFailure" ) << " occurred in a following context:";
+    }
 }
 
 //____________________________________________________________________________//
 
 void
-compiler_log_formatter::entry_context_finish( std::ostream& output )
+compiler_log_formatter::entry_context_finish( std::ostream& output, log_level l )
 {
+    if( l == log_messages ) {
+        output << "]";
+    }
     output.flush();
 }
 
 //____________________________________________________________________________//
 
 void
-compiler_log_formatter::log_entry_context( std::ostream& output, const_string context_descr )
+compiler_log_formatter::log_entry_context( std::ostream& output, log_level l, const_string context_descr )
 {
     output << "\n    " << context_descr;
 }
