@@ -137,6 +137,7 @@ test-suite "framework-ts"
   [ boost.test-self-test run : framework-ts : run-by-name-or-label-test ]
   [ boost.test-self-test run : framework-ts : version-uses-module-name : included ]
   [ boost.test-self-test run : framework-ts : test-macro-global-fixture : : baseline-outputs/global-fixtures-test.pattern ]
+  [ boost.test-self-test run : framework-ts : message-in-datatestcase-test : : baseline-outputs/messages-in-datasets-test.pattern : : : : $(requirements_datasets) ]
 ;
 
 #_________________________________________________________________________________________________#
@@ -149,6 +150,7 @@ test-suite "writing-test-ts"
   [ boost.test-self-test run : writing-test-ts : dont_print_log_value-test : : : : : : $(requirements_datasets) ]
   [ boost.test-self-test run : writing-test-ts : fp-comparisons-test : : : : : : $(requirements_boost_test_full_support) ]
   [ boost.test-self-test run : writing-test-ts : fp-multiprecision-comparison-test : : : : : : $(requirements_boost_test_full_support) ]
+  [ boost.test-self-test run : writing-test-ts : fp-relational-operator ]
   [ boost.test-self-test run : writing-test-ts : output_test_stream-test ]
   [ boost.test-self-test run : writing-test-ts : test_tools-test : : baseline-outputs/test_tools-test.pattern : : : : $(requirements_boost_test_full_support) ]
   [ boost.test-self-test run : writing-test-ts : windows-headers-test ]

@@ -23,11 +23,26 @@ BOOST_AUTO_TEST_CASE( check_is_cstring_concept )
   BOOST_TEST((bp::is_cstring<char const []>::value));
   BOOST_TEST((bp::is_cstring<char []>::value));
   BOOST_TEST((bp::is_cstring<char *>::value));
-  BOOST_TEST((bp::is_cstring<std::string>::value));
+  BOOST_TEST((!bp::is_cstring<std::string>::value));
+  BOOST_TEST((!bp::is_cstring< bp::basic_cstring<char> >::value));
+
+  BOOST_TEST((!bp::is_cstring< std::vector<char> >::value));
+}
+
+BOOST_AUTO_TEST_CASE( check_is_cstring_comparable_concept )
+{
+  namespace bp = boost::unit_test;
+  BOOST_TEST((bp::is_cstring_comparable<char const*>::value));
+  BOOST_TEST((bp::is_cstring_comparable<char const []>::value));
+  BOOST_TEST((bp::is_cstring_comparable<char []>::value));
+  BOOST_TEST((bp::is_cstring_comparable<char *>::value));
+  BOOST_TEST((bp::is_cstring_comparable<std::string>::value));
+  BOOST_TEST((bp::is_cstring_comparable< bp::basic_cstring<char> >::value));
+
+  BOOST_TEST((!bp::is_cstring_comparable< std::vector<char> >::value));
 }
 
 //____________________________________________________________________________//
-
 
 BOOST_AUTO_TEST_CASE( check_string_compare )
 {

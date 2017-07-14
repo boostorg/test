@@ -13,16 +13,17 @@
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_log.hpp>
-#include <boost/test/tools/output_test_stream.hpp>
 #include <boost/test/unit_test_suite.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/unit_test_parameters.hpp>
 #include <boost/test/utils/nullstream.hpp>
 typedef boost::onullstream onullstream_type;
-#include <boost/test/utils/algorithm.hpp>
 
 // BOOST
 #include <boost/lexical_cast.hpp>
+
+// our special logger for tests
+#include "logger-for-tests.hpp"
 
 // STL
 #include <iostream>
@@ -55,13 +56,6 @@ void bad_foo()  {
 
     BOOST_CHECK_MESSAGE( 1 == 2.3, "non sense" );
 }
-
-struct log_guard {
-    ~log_guard()
-    {
-        unit_test_log.set_stream( std::cout );
-    }
-};
 
 void very_bad_foo()  {
     BOOST_TEST_CONTEXT("some context") {
@@ -126,89 +120,6 @@ struct guard {
     }
 };
 
-
-
-class output_test_stream_for_loggers : public output_test_stream {
-
-public:
-    explicit output_test_stream_for_loggers(
-        boost::unit_test::const_string    pattern_file_name = boost::unit_test::const_string(),
-        bool                              match_or_save     = true,
-        bool                              text_or_binary    = true )
-    : output_test_stream(pattern_file_name, match_or_save, text_or_binary)
-    {}
-
-    static std::string normalize_path(const std::string &str) {
-        const std::string to_look_for[] = {"\\"};
-        const std::string to_replace[]  = {"/"};
-        return utils::replace_all_occurrences_of(
-                    str,
-                    to_look_for, to_look_for + sizeof(to_look_for)/sizeof(to_look_for[0]),
-                    to_replace, to_replace + sizeof(to_replace)/sizeof(to_replace[0])
-              );
-    }
-
-    static std::string get_basename() {
-        static std::string basename;
-
-        if(basename.empty()) {
-            basename = normalize_path(__FILE__);
-            std::string::size_type basename_pos = basename.rfind('/');
-            if(basename_pos != std::string::npos) {
-                 basename = basename.substr(basename_pos+1);
-            }
-        }
-        return basename;
-    }
-
-    virtual std::string get_stream_string_representation() const {
-        std::string current_string = output_test_stream::get_stream_string_representation();
-
-        std::string pathname_fixes;
-        {
-            static const std::string to_look_for[] = {normalize_path(__FILE__)};
-            static const std::string to_replace[]  = {"xxx/" + get_basename() };
-            pathname_fixes = utils::replace_all_occurrences_of(
-                current_string,
-                to_look_for, to_look_for + sizeof(to_look_for)/sizeof(to_look_for[0]),
-                to_replace, to_replace + sizeof(to_replace)/sizeof(to_replace[0])
-            );
-        }
-
-        std::string other_vars_fixes;
-        {
-            static const std::string to_look_for[] = {"time=\"*\"",
-                                                      get_basename() + "(*):",
-                                                      "unknown location(*):",
-                                                      "; testing time: *us\n", // removing this is far more easier than adding a testing time
-                                                      "; testing time: *ms\n",
-                                                      "<TestingTime>*</TestingTime>",
-                                                      "condition 2>3 is not satisfied\n",
-                                                      "condition 2>3 is not satisfied]",
-                                                      };
-
-            static const std::string to_replace[]  = {"time=\"0.1234\"",
-                                                      get_basename() + ":*:" ,
-                                                      "unknown location:*:",
-                                                      "\n",
-                                                      "\n",
-                                                      "<TestingTime>ZZZ</TestingTime>",
-                                                      "condition 2>3 is not satisfied [2 <= 3]\n",
-                                                      "condition 2>3 is not satisfied [2 <= 3]]",
-                                                      };
-
-            other_vars_fixes = utils::replace_all_occurrences_with_wildcards(
-                pathname_fixes,
-                to_look_for, to_look_for + sizeof(to_look_for)/sizeof(to_look_for[0]),
-                to_replace, to_replace + sizeof(to_replace)/sizeof(to_replace[0])
-            );
-        }
-
-        return other_vars_fixes;
-    }
-
-};
-
 //____________________________________________________________________________//
 
 
@@ -224,7 +135,10 @@ BOOST_AUTO_TEST_CASE( test_result_reports )
             ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./baseline-outputs/" PATTERN_FILE_NAME )
             : framework::master_test_suite().argv[1] );
 
-    output_test_stream_for_loggers test_output( pattern_file_name, !runtime_config::save_pattern() );
+    output_test_stream_for_loggers test_output( pattern_file_name,
+                                                !runtime_config::save_pattern(),
+                                                true,
+                                                __FILE__ );
 
 #line 207
     test_suite* ts_0 = BOOST_TEST_SUITE( "0 test cases inside" );
