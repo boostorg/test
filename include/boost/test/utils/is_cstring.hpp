@@ -90,7 +90,7 @@ template<typename T>
 struct is_cstring : public ut_detail::is_cstring_impl<typename decay<T>::type> {};
 
 template<typename T, bool is_cstring = is_cstring<typename boost::decay<T>::type>::value >
-struct is_cstring_comparable: public mpl::false_ {};;
+struct is_cstring_comparable: public mpl::false_ {};
 
 template<typename T>
 struct is_cstring_comparable< T, true > : public mpl::true_ {};
