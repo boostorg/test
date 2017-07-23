@@ -30,7 +30,7 @@ foreach(_h IN LISTS BOOST_UTF_DOC_EXAMPLES)
   get_filename_component(_hh ${_h} NAME_WE)
   add_executable(doc-${_hh} ${_h} ${BOOST_TEST_ROOT_DIR}/doc/examples/${_hh}.output)
   target_include_directories(doc-${_hh} PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
-  set_target_properties(doc-${_hh} PROPERTIES FOLDER "${BOOST_CURRENT_PACKAGE}/${BOOST_CURRENT_COMPONENT}/Doc examples")
+  set_target_properties(doc-${_hh} PROPERTIES FOLDER "boost.${BOOST_CURRENT_PACKAGE}/${BOOST_CURRENT_COMPONENT}/Doc examples")
 
   add_test(NAME doc-${_hh}-test
            COMMAND doc-${_hh})
@@ -53,7 +53,7 @@ add_executable(boost_test_datasets ${BOOST_TEST_UNITTESTS_DATASET})
 target_include_directories(boost_test_datasets PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
 target_link_libraries(boost_test_datasets boost_test_framework)
 target_compile_definitions(boost_test_datasets PUBLIC "BOOST_TEST_DYN_LINK=1")
-set_target_properties(boost_test_datasets PROPERTIES FOLDER "${BOOST_CURRENT_PACKAGE}/${BOOST_CURRENT_COMPONENT}/Unit tests")
+set_target_properties(boost_test_datasets PROPERTIES FOLDER "boost.${BOOST_CURRENT_PACKAGE}/${BOOST_CURRENT_COMPONENT}/Unit tests")
 add_test(NAME bt-unittest-dataset
          COMMAND boost_test_datasets)
 
@@ -87,7 +87,7 @@ foreach(_ts IN LISTS BOOST_UTF_TESTS_IND_FILES)
     #message("adding ${_ts}/${_name}")
     add_executable(${_name} ${_hh})
     target_link_libraries(${_name} PRIVATE boost_test_framework)
-    set_target_properties(${_name} PROPERTIES FOLDER "${BOOST_CURRENT_PACKAGE}/${BOOST_CURRENT_COMPONENT}/Unit tests/${_ts}")
+    set_target_properties(${_name} PROPERTIES FOLDER "boost.${BOOST_CURRENT_PACKAGE}/${BOOST_CURRENT_COMPONENT}/Unit tests/${_ts}")
     add_test(NAME bt-unittest-${_name}
              COMMAND ${_name})
   endforeach()

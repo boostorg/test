@@ -107,4 +107,4 @@ add_library(boost_test_framework
             ${BOOST_UTF_SRC})
 target_compile_definitions(boost_test_framework PUBLIC "-DBOOST_TEST_DYN_LINK=0")
 target_include_directories(boost_test_framework PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
-set_target_properties(boost_test_framework PROPERTIES FOLDER "UTF")
+set_target_properties(boost_test_framework PROPERTIES FOLDER "boost.${BOOST_CURRENT_PACKAGE}/${BOOST_CURRENT_COMPONENT}")
