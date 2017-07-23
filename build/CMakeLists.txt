@@ -108,14 +108,3 @@ add_library(boost_test_framework
 target_compile_definitions(boost_test_framework PUBLIC "-DBOOST_TEST_DYN_LINK=0")
 target_include_directories(boost_test_framework PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
 set_target_properties(boost_test_framework PROPERTIES FOLDER "UTF")
-
-
-####
-# Documentation files (files only, no target)
-file(GLOB_RECURSE
-     BOOST_UTF_DOC_FILES
-     ${BOOST_TEST_ROOT_DIR}/doc/*.qbk)
-add_custom_target(
-  quickbook
-  SOURCES ${BOOST_UTF_DOC_FILES})
-set_property(TARGET quickbook PROPERTY FOLDER "Documentation/")
