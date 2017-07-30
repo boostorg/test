@@ -12,9 +12,9 @@
 ####
 # Documentation files (files only, no target)
 file(GLOB_RECURSE
-     BOOST_UTF_DOC_FILES
+     BOOST_TEST_DOC_FILES
      ${CMAKE_CURRENT_LIST_DIR}/*.qbk)
 add_custom_target(
   quickbook
-  SOURCES ${BOOST_UTF_DOC_FILES})
+  SOURCES ${BOOST_TEST_DOC_FILES})
 set_property(TARGET quickbook PROPERTY FOLDER "boost.${BOOST_CURRENT_PACKAGE}/${BOOST_CURRENT_COMPONENT}")
