@@ -43,7 +43,6 @@
 #include <boost/config.hpp>
 #include <boost/test/detail/suppress_warnings.hpp>
 #include <boost/test/detail/enable_warnings.hpp>
-#include <boost/optional.hpp>
 #include <boost/cstdlib.hpp>
 
 // STL

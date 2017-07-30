@@ -35,8 +35,8 @@
 #else
 
 // Boost
+#include <boost/static_assert.hpp>
 #include <boost/utility/declval.hpp>
-#include <boost/range.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/type_traits/remove_cv.hpp>
