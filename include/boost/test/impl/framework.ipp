@@ -610,13 +610,22 @@ public:
 
             tu_to_enable.pop_back();
 
-            // 35. Ignore test units which already enabled
+            // 35. Ignore test units which are already enabled
             if( tu.is_enabled() )
                 continue;
 
             // set new status and add all dependencies into tu_to_enable
             set_run_status enabler( test_unit::RS_ENABLED, &tu_to_enable );
             traverse_test_tree( tu.p_id, enabler, true );
+
+            // Add the dependencies of the parent suites, see trac #13149
+            test_unit_id parent_id = tu.p_parent_id;
+            while(   parent_id != INV_TEST_UNIT_ID
+                  && parent_id != master_tu_id )
+            {
+                traverse_test_tree( parent_id, enabler, true );
+                parent_id = framework::get( parent_id, TUT_ANY ).p_parent_id;
+            }
         }
 
         // 40. Apply all disablers
