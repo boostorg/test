@@ -140,4 +140,37 @@ BOOST_AUTO_TEST_CASE( test_collection_of_collection_comp )
     BOOST_TEST( std::string("abc") == std::string("abc") );
 }
 
+//____________________________________________________________________________//
+
+// this one does not have const_iterator nor a size, but should be forward iterable
+// and possible to use in the collection comparison
+struct fwd_iterable_custom {
+  typedef std::vector<int>::const_iterator custom_iterator; // named "exotic" on purpose
+
+  custom_iterator begin() const { return values.begin(); }
+  custom_iterator end() const { return values.end(); }
+
+  fwd_iterable_custom(std::initializer_list<int> ilist) : values{ilist}
+  {}
+private:
+  std::vector<int> values;
+};
+
+BOOST_AUTO_TEST_CASE( test_collection_requirement_type )
+{
+    fwd_iterable_custom a{3,4,5};
+    fwd_iterable_custom b{3,4,6};
+    fwd_iterable_custom c{3,4,5};
+    BOOST_TEST( a == a, tt::per_element() );
+    //BOOST_TEST( a != b, tt::per_element() );
+    BOOST_TEST( a == c, tt::per_element() );
+
+    BOOST_TEST( a < b, tt::lexicographic() );
+    BOOST_TEST( a <= c, tt::lexicographic() );
+    BOOST_TEST( b > c, tt::lexicographic() );
+
+    BOOST_TEST( a <= b, tt::per_element() );
+    BOOST_TEST( a <= c, tt::per_element() );
+}
+
 // EOF
