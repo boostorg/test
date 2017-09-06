@@ -60,7 +60,7 @@ public:
 
     // !! should also present reverse_iterator, const_reverse_iterator
 
-#if !BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600))
+#if !BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600)) || !defined(__DCC__)
     enum npos_type { npos = static_cast<size_type>(-1) };
 #else
     // IBM/VisualAge version 6 is not able to handle enums larger than 4 bytes.
