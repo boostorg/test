@@ -68,6 +68,10 @@ using std::va_list;
 using std::va_list;
 #endif
 
+#if defined(__VXWORKS__)
+# define BOOST_TEST_LIMITED_SIGNAL_DETAILS
+#endif
+
 #ifdef BOOST_SEH_BASED_SIGNAL_HANDLING
 #  include <windows.h>
 
