@@ -287,57 +287,119 @@ public:
     }
 
     void
-    usage( std::ostream& ostr, cstring param_name = cstring() )
+    usage(std::ostream& ostr, 
+          cstring param_name = cstring(),
+          bool use_color = true)
     {
+        namespace utils = unit_test::utils;
+        namespace ut_detail = unit_test::ut_detail;
+
         if( !param_name.is_empty() ) {
             basic_param_ptr param = locate_parameter( m_param_trie[help_prefix], param_name, "" ).second;
             param->usage( ostr, m_negation_prefix );
         }
         else {
-            ostr << "Usage: " << m_program_name << " [Boost.Test argument]... ";
-            if( !m_end_of_param_indicator.empty() )
-                ostr << m_end_of_param_indicator << " [custom test module argument]...";
-            ostr << "\n";
+            ostr << "\n  The program '" << m_program_name << "' is a Boost.test module containing unit tests.";
+            
+            {
+              BOOST_TEST_SCOPE_SETCOLOR( use_color, ostr, term_attr::BRIGHT, term_color::ORIGINAL );
+              ostr << "\n\n  Usage\n    ";
+            }
+            
+            {
+                BOOST_TEST_SCOPE_SETCOLOR( use_color, ostr, term_attr::BRIGHT, term_color::GREEN );
+                ostr << m_program_name << " [Boost.Test argument]... ";
+            }
+            if( !m_end_of_param_indicator.empty() ) {
+                BOOST_TEST_SCOPE_SETCOLOR( use_color, ostr, term_attr::BRIGHT, term_color::YELLOW );
+                ostr << '[' << m_end_of_param_indicator << " [custom test module argument]...]";
+            }
         }
 
-        ostr << "\nFor detailed help on Boost.Test parameters use:\n"
-             << "  " << m_program_name << " --help\n"
-             << "or\n"
-             << "  " << m_program_name << " --help=<parameter name>\n";
+        ostr << "\n\n  Use\n      ";
+        {
+            
+            BOOST_TEST_SCOPE_SETCOLOR( use_color, ostr, term_attr::BRIGHT, term_color::GREEN );
+            ostr << m_program_name << " --help";
+        }
+        ostr << "\n  or  ";
+        {
+            BOOST_TEST_SCOPE_SETCOLOR( use_color, ostr, term_attr::BRIGHT, term_color::GREEN );
+            ostr << m_program_name << " --help=<parameter name>";
+        }
+        ostr << "\n  for detailed help on Boost.Test parameters.\n";
     }
 
     void
-    help( std::ostream& ostr, parameters_store const& parameters, cstring param_name )
+    help(std::ostream& ostr, 
+         parameters_store const& parameters, 
+         cstring param_name,
+         bool use_color = true)
     {
+        namespace utils = unit_test::utils;
+        namespace ut_detail = unit_test::ut_detail;
+
         if( !param_name.is_empty() ) {
             basic_param_ptr param = locate_parameter( m_param_trie[help_prefix], param_name, "" ).second;
-            param->help( ostr, m_negation_prefix );
+            param->help( ostr, m_negation_prefix, use_color);
             return;
         }
 
-        ostr << "Usage: " << m_program_name << " [Boost.Test argument]... ";
-        if( !m_end_of_param_indicator.empty() )
-            ostr << m_end_of_param_indicator << " [custom test module argument]...";
+        usage(ostr, cstring(), use_color);
 
-        ostr << "\n\nBoost.Test arguments correspond to parameters listed below. "
-                "All parameters are optional. You can use specify parameter value either "
-                "as a command line argument or as a value of corresponding environment "
-                "variable. In case if argument for the same parameter is specified in both "
-                "places, command line is taking precedence. Command line argument format "
-                "supports parameter name guessing, so you can use any unambiguous "
-                "prefix to identify a parameter.";
-        if( !m_end_of_param_indicator.empty() )
-            ostr << " All the arguments after the " << m_end_of_param_indicator << " are ignored by the Boost.Test.";
+        ostr << "\n\n";
+        {
+          BOOST_TEST_SCOPE_SETCOLOR( use_color, ostr, term_attr::BRIGHT, term_color::ORIGINAL );
+          ostr << "  Command line flags:\n";
+        }
+        runtime::commandline_pretty_print(
+            ostr,
+            "   ",
+            "The command line flags of Boost.Test are listed below. "
+            "All parameters are optional. You can specify parameter value either "
+            "as a command line argument or as a value of its corresponding environment "
+            "variable. If a flag is specified as a command line argument and an environment variable "
+            "at the same time, the command line takes precedence. "
+            "The command line argument "
+            "support name guessing, and works with shorter names as long as those are not ambiguous."
+        );
 
-        ostr << "\n\nBoost.Test supports following parameters:\n";
-
-        BOOST_TEST_FOREACH( parameters_store::storage_type::value_type const&, v, parameters.all() ) {
-            basic_param_ptr param = v.second;
-
-            param->usage( ostr, m_negation_prefix );
+        if( !m_end_of_param_indicator.empty() ) {
+            ostr << "\n\n   All the arguments after the '";
+            {
+                BOOST_TEST_SCOPE_SETCOLOR( use_color, ostr, term_attr::BRIGHT, term_color::YELLOW );
+                ostr << m_end_of_param_indicator;
+            }
+            ostr << "' are ignored by Boost.Test.";
         }
 
-        ostr << "\nUse --help=<parameter name> to display detailed help for specific parameter.\n";
+
+        {
+          BOOST_TEST_SCOPE_SETCOLOR( use_color, ostr, term_attr::BRIGHT, term_color::ORIGINAL );
+          ostr << "\n\n  Environment variables:\n";
+        }
+        runtime::commandline_pretty_print(
+            ostr,
+            "   ",
+            "Every argument listed below may also be set by a corresponding environment"
+            "variable. For an argument '--argument_x=<value>', the corresponding "
+            "environment variable is 'BOOST_TEST_ARGUMENT_X=value"
+        );
+
+
+
+        ostr << "\n\n  The following parameters are supported:\n";
+
+        BOOST_TEST_FOREACH( 
+            parameters_store::storage_type::value_type const&, 
+            v, 
+            parameters.all() ) 
+        {
+            basic_param_ptr param = v.second;
+            ostr << "\n";
+            param->usage( ostr, m_negation_prefix, use_color);
+        }
+
     }
 
 private:
