@@ -646,7 +646,7 @@ junit_log_formatter::log_entry_start( std::ostream& /*ostr*/, log_entry_data con
           last_entry.skipping = true;
           break;
         }
-        // no break on purpose
+        BOOST_FALLTHROUGH;
       }
       case unit_test_log_formatter::BOOST_UTL_ET_MESSAGE:
       {
@@ -654,7 +654,7 @@ junit_log_formatter::log_entry_start( std::ostream& /*ostr*/, log_entry_data con
           last_entry.skipping = true;
           break;
         }
-        // no break on purpose
+        BOOST_FALLTHROUGH;
       }
       case unit_test_log_formatter::BOOST_UTL_ET_WARNING:
       {
