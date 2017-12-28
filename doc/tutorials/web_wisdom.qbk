@@ -53,5 +53,6 @@ and posted about this online. This page gathers a few of the additional material
 * [@http://www.eld.leidenuniv.nl/~moene/Home/projects/testdox/boosttest/ Customizing the output log and report format]
 * [@https://github.com/etas/vs-boost-unit-test-adapter Boost Test Adapter] (Boost.Test extension for Microsoft Visual Studio, also
   available from [@https://visualstudiogallery.msdn.microsoft.com/5f4ae1bd-b769-410e-8238-fb30beda987f here]).
+* [@https://marketplace.visualstudio.com/items?itemName=VisualCPPTeam.TestAdapterforBoostTest Microsoft Boost Test Adapter]
 
 [endsect] [/section:web_wisdom]
