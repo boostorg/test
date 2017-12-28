@@ -14,7 +14,7 @@
 [h5 New features]
 
 [h5 Bugfixes and feature requests]
-
+# [pull_request 122] Fix some fallthrough warnings with `gcc >= 7`
 
 [h4 Boost.Test v3.6 / boost 1.65]
 
