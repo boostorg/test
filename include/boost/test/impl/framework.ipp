@@ -705,6 +705,9 @@ public:
             // 40. We are going to time the execution
             boost::timer tu_timer;
 
+            // we pass the random generator
+            const random_generator_helper& rand_gen = p_random_generator ? *p_random_generator : random_generator_helper();
+
             if( tu.p_type == TUT_SUITE ) {
                 test_suite const& ts = static_cast<test_suite const&>( tu );
 
@@ -714,14 +717,14 @@ public:
                     BOOST_TEST_FOREACH( value_type, chld, ts.m_ranked_children ) {
                         unsigned chld_timeout = child_timeout( timeout, tu_timer.elapsed() );
 
-                        result = (std::min)( result, execute_test_tree( chld.second, chld_timeout ) );
+                        result = (std::min)( result, execute_test_tree( chld.second, chld_timeout, &rand_gen ) );
 
                         if( unit_test_monitor.is_critical_error( result ) )
                             break;
                     }
                 }
                 else {
-                    // Go through ranges of chldren with the same dependency rank and shuffle them
+                    // Go through ranges of children with the same dependency rank and shuffle them
                     // independently. Execute each subtree in this order
                     test_unit_id_list children_with_the_same_rank;
 
@@ -736,8 +739,6 @@ public:
                             children_with_the_same_rank.push_back( it->second );
                             it++;
                         }
-
-                        const random_generator_helper& rand_gen = p_random_generator ? *p_random_generator : random_generator_helper();
 
 #ifdef BOOST_NO_CXX98_RANDOM_SHUFFLE
                         impl::random_shuffle( children_with_the_same_rank.begin(), children_with_the_same_rank.end(), rand_gen );
