@@ -509,6 +509,7 @@ log_sink      ::= 'stdout' | 'stderr' | filename
 ```
 
 Examples:
+
 * `--logger=HRF,all` will set the `all` log level for the `HRF` log format, and will use the default sink associated to `HRF` (`stdout`)
 * `--logger=JUNIT,,somefile.xml:HRF,warning` will use the default log level associated to the `JUNIT` log format, and will use the file `somefile.xml`
   as the log sink. It will also enable the `HRF` format with log level `warning`. The corresponding sink will be set to the `HRF` default (`stdout`).
