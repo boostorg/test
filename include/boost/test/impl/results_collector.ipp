@@ -55,7 +55,7 @@ test_results::passed() const
     return  !p_skipped                                  &&
             p_test_cases_failed == 0                    &&
             p_assertions_failed <= p_expected_failures  &&
-            p_test_cases_skipped == 0                   &&
+            // p_test_cases_skipped == 0                   &&
             !p_aborted;
 }
 

@@ -692,7 +692,8 @@ public:
             BOOST_TEST_FOREACH( test_observer*, to, m_observers )
                 to->test_unit_skipped( tu, precondition_res.message() );
 
-            return unit_test_monitor_t::precondition_failure;
+            // this is not an error to skip for this reason.
+            return unit_test_monitor_t::test_ok;
         }
 
         // 20. Notify all observers about the start of the test unit
