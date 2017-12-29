@@ -347,12 +347,10 @@ public:
     , m_dep_collector( dep_collector )
     {}
 
-private:
     // test_tree_visitor interface
     virtual bool    visit( test_unit const& tu )
     {
         const_cast<test_unit&>(tu).p_run_status.value = m_new_status == test_unit::RS_INVALID ? tu.p_default_status : m_new_status;
-
         if( m_dep_collector ) {
             BOOST_TEST_FOREACH( test_unit_id, dep_id, tu.p_dependencies.get() ) {
                 test_unit const& dep = framework::get( dep_id, TUT_ANY );
@@ -369,6 +367,7 @@ private:
         return true;
     }
 
+private:
     // Data members
     test_unit::run_status   m_new_status;
     test_unit_id_list*      m_dep_collector;
@@ -610,13 +609,27 @@ public:
 
             tu_to_enable.pop_back();
 
-            // 35. Ignore test units which already enabled
+            // 35. Ignore test units which are already enabled
             if( tu.is_enabled() )
                 continue;
 
             // set new status and add all dependencies into tu_to_enable
             set_run_status enabler( test_unit::RS_ENABLED, &tu_to_enable );
             traverse_test_tree( tu.p_id, enabler, true );
+
+            // Add the dependencies of the parent suites, see trac #13149
+            test_unit_id parent_id = tu.p_parent_id;
+            while(   parent_id != INV_TEST_UNIT_ID
+                  && parent_id != master_tu_id )
+            {
+                // we do not use the traverse_test_tree as otherwise it would enable the sibblings and subtree
+                // of the test case we want to enable (we need to enable the parent suites and their dependencies only)
+                // the parent_id needs to be enabled in order to be properly parsed by finalize_run_status, the visit
+                // does the job
+                test_unit& tu_parent = framework::get( parent_id, TUT_ANY );
+                enabler.visit( tu_parent );
+                parent_id = tu_parent.p_parent_id;
+            }
         }
 
         // 40. Apply all disablers

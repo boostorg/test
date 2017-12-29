@@ -24,6 +24,7 @@
 # [pull_request 118] Update VxWorks support
 # [pull_request 121] fix compiler warning
 # [pull_request 122] Fix some fallthrough warnings with `gcc >= 7`
+# [ticket 13149] Dependency decorators on parent suites
 
 [h4 Boost.Test v3.6 / boost 1.65]
 
