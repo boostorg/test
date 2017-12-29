@@ -14,6 +14,7 @@
 [h5 New features]
 
 [h5 Bugfixes and feature requests]
+# [pull_request 112] Deliberate-failure tests shouldn't be optimized
 
 
 [h4 Boost.Test v3.6 / boost 1.65]
