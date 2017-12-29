@@ -617,6 +617,15 @@ public:
             // set new status and add all dependencies into tu_to_enable
             set_run_status enabler( test_unit::RS_ENABLED, &tu_to_enable );
             traverse_test_tree( tu.p_id, enabler, true );
+            
+            // Parent suites may have dependencies, too
+            test_unit_id parent_id = tu.p_parent_id;
+            while(   parent_id != INV_TEST_UNIT_ID
+                  && parent_id != master_test_suite().p_id)
+            {
+                traverse_test_tree( parent_id, enabler, true );
+                parent_id = framework::get( parent_id, TUT_ANY ).p_parent_id;
+            }
         }
 
         // 40. Apply all disablers
