@@ -119,14 +119,6 @@ print_log_value<wchar_t const*>::operator()( std::ostream& ostr, wchar_t const* 
     ostr << ( t ? t : L"null string" );
 }
 
-#if !defined(BOOST_NO_CXX11_NULLPTR)
-void
-print_log_value<std::nullptr_t>::operator()( std::ostream& ostr, std::nullptr_t )
-{
-    ostr << "nullptr";
-}
-#endif
-
 //____________________________________________________________________________//
 
 // ************************************************************************** //
