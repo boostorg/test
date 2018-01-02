@@ -281,9 +281,47 @@ test_suite::add( test_unit_generator const& gen, decorator::collector& decorator
         decorators.store_in( *tu );
         add( tu, 0 );
     }
-
     decorators.reset();
 }
+
+void
+test_suite::add( boost::shared_ptr<test_unit_generator> gen_ptr, decorator::collector& decorators )
+{
+    std::pair<boost::shared_ptr<test_unit_generator>, std::vector<decorator::base_ptr> > toto(gen_ptr, decorators.get_lazy_decorators() );
+    m_generators.push_back(toto);
+    //m_generators.push_back(
+    //  std::make_pair<boost::shared_ptr<test_unit_generator>, std::vector<decorator::base_ptr> >(gen_ptr, decorators.get_lazy_decorators() ) );
+    decorators.reset();
+}
+
+void
+test_suite::generate( )
+{
+    typedef std::pair<boost::shared_ptr<test_unit_generator>, std::vector<decorator::base_ptr> > element_t;
+  
+    for(std::vector<element_t>::iterator it(m_generators.begin()), ite(m_generators.end());
+        it < ite;
+        ++it)
+    {
+      test_unit* tu;
+      while((tu = it->first->next()) != 0) {
+          tu->p_decorators.value.insert( tu->p_decorators.value.end(), it->second.begin(), it->second.end() );
+          //it->second.store_in( *tu );
+          add( tu, 0 );
+      }
+
+    }
+    m_generators.clear();
+    
+    #if 0
+    test_unit* tu;
+    while((tu = gen.next()) != 0) {
+        decorators.store_in( *tu );
+        add( tu, 0 );
+    }
+    #endif
+}
+
 
 //____________________________________________________________________________//
 
@@ -454,6 +492,14 @@ auto_test_unit_registrar::auto_test_unit_registrar( test_unit_generator const& t
 {
     framework::current_auto_test_suite().add( tc_gen, decorators );
 }
+
+//____________________________________________________________________________//
+
+auto_test_unit_registrar::auto_test_unit_registrar( boost::shared_ptr<test_unit_generator> tc_gen, decorator::collector& decorators )
+{
+    framework::current_auto_test_suite().add( tc_gen, decorators );
+}
+
 
 //____________________________________________________________________________//
 

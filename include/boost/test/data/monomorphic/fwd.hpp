@@ -43,9 +43,6 @@ namespace monomorphic {
 
 #if !defined(BOOST_TEST_DOXYGEN_DOC__)
 
-template<typename T, typename Specific>
-class dataset;
-
 template<typename T>
 class singleton;
 
@@ -57,6 +54,12 @@ class array;
 
 template<typename T>
 class init_list;
+
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
+    !defined(BOOST_NO_CXX11_HDR_TUPLE)
+template<class dataset_t, class ...Args>
+class delayed_dataset;
+#endif
 
 #endif
 
@@ -157,6 +160,19 @@ make( char const* str );
 template<typename T>
 inline monomorphic::init_list<T>
 make( std::initializer_list<T>&& );
+
+
+//____________________________________________________________________________//
+
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
+    !defined(BOOST_NO_CXX11_HDR_TUPLE)
+template<class dataset_t, class ...Args>
+inline typename std::enable_if<
+  monomorphic::is_dataset< dataset_t >::value,
+  monomorphic::delayed_dataset<dataset_t, Args...>
+>::type
+make_delayed(Args... args);
+#endif
 
 //____________________________________________________________________________//
 

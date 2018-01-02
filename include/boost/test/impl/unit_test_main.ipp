@@ -263,6 +263,11 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
 
         result_code = boost::exit_exception_failure;
     }
+    BOOST_TEST_I_CATCH( std::logic_error, ex ) {
+        results_reporter::get_stream() << "Test setup error: " << ex.what() << std::endl;
+
+        result_code = boost::exit_exception_failure;
+    }
     BOOST_TEST_I_CATCHALL() {
         results_reporter::get_stream() << "Boost.Test framework internal error: unknown reason" << std::endl;
 

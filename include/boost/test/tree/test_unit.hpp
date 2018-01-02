@@ -177,9 +177,15 @@ public:
 
     /// @overload
     void            add( test_unit_generator const& gen, decorator::collector& decorators );
+  
+    /// @overload
+    void            add( boost::shared_ptr<test_unit_generator> gen_ptr, decorator::collector& decorators );
 
     //! Removes a test from the test suite.
     void            remove( test_unit_id id );
+  
+    //! Generates all the delayed test_units from the generators
+    void            generate( );
 
 
     // access methods
@@ -200,6 +206,8 @@ protected:
 
     test_unit_id_list   m_children;
     children_per_rank   m_ranked_children; ///< maps child sibling rank to list of children with that rank
+  
+    std::vector< std::pair<boost::shared_ptr<test_unit_generator>, std::vector<decorator::base_ptr> > > m_generators; /// lazy evaluation
 };
 
 // ************************************************************************** //

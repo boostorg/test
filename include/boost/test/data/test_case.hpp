@@ -126,15 +126,17 @@ public:
     // Constructor
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, DataSet&& ds )
-    : m_tc_name( ut_detail::normalize_test_case_name( tc_name ) )
+    : m_dataset( std::forward<DataSet>( ds ) )
+    , m_generated( false )
+    , m_tc_name( ut_detail::normalize_test_case_name( tc_name ) )
     , m_tc_file( tc_file )
     , m_tc_line( tc_line )
     , m_tc_index( 0 )
-    {
-        data::for_each_sample( std::forward<DataSet>( ds ), *this );
-    }
+    {}
     test_case_gen( test_case_gen&& gen )
-    : m_tc_name( gen.m_tc_name )
+    : m_dataset( std::move( gen.m_dataset ) )
+    , m_generated( gen.m_generated )
+    , m_tc_name( gen.m_tc_name )
     , m_tc_file( gen.m_tc_file )
     , m_tc_line( gen.m_tc_line )
     , m_tc_index( gen.m_tc_index )
@@ -142,17 +144,23 @@ public:
     {}
 #else
     test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, DataSet const& ds )
-    : m_tc_name( ut_detail::normalize_test_case_name( tc_name ) )
+    : m_dataset( ds )
+    , m_generated( false )
+    , m_tc_name( ut_detail::normalize_test_case_name( tc_name ) )
     , m_tc_file( tc_file )    
     , m_tc_line( tc_line )
     , m_tc_index( 0 )
-    {
-        data::for_each_sample( ds, *this );
-    }
+    {}
 #endif
-
+    
+public:
     virtual test_unit* next() const
     {
+        if(!m_generated) {
+            data::for_each_sample( m_dataset, *this );
+            m_generated = true;
+        }
+
         if( m_test_cases.empty() )
             return 0;
 
@@ -161,6 +169,7 @@ public:
 
         return res;
     }
+
 
 #if !defined(BOOST_TEST_DATASET_VARIADIC)
     // see BOOST_TEST_DATASET_MAX_ARITY to increase the default supported arity
@@ -195,6 +204,8 @@ private:
     }
 
     // Data members
+    DataSet                         m_dataset;
+    mutable bool                    m_generated;
     std::string                     m_tc_name;
     const_string                    m_tc_file;
     std::size_t                     m_tc_line;
@@ -206,10 +217,10 @@ private:
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 template<typename TestCase,typename DataSet>
-test_case_gen<TestCase,DataSet>
+boost::shared_ptr<test_unit_generator> //test_case_gen<TestCase,DataSet>
 make_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, DataSet&& ds )
 {
-    return test_case_gen<TestCase,DataSet>( tc_name, tc_file, tc_line, std::forward<DataSet>(ds) );
+    return boost::shared_ptr<test_unit_generator>(new test_case_gen<TestCase,DataSet>( tc_name, tc_file, tc_line, std::forward<DataSet>(ds) ));
 }
 #else
 template<typename TestCase,typename DataSet>

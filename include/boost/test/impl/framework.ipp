@@ -1181,6 +1181,13 @@ finalize_setup_phase( test_unit_id master_tu_id )
     class apply_decorators : public test_tree_visitor {
     private:
         // test_tree_visitor interface
+      
+        virtual bool    test_suite_start( test_suite const& ts)
+        {
+            const_cast<test_suite&>(ts).generate();
+            return test_tree_visitor::test_suite_start(ts);
+        }
+      
         virtual bool    visit( test_unit const& tu )
         {
             BOOST_TEST_FOREACH( decorator::base_ptr, d, tu.p_decorators.get() )

@@ -59,6 +59,8 @@ public:
     void                    store_in( test_unit& tu );
 
     void                    reset();
+  
+    std::vector<base_ptr>   get_lazy_decorators() const;
 
 private:
     BOOST_TEST_SINGLETON_CONS( collector )

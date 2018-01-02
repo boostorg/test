@@ -186,6 +186,8 @@ test-suite "test-organization-ts"
   [ boost.test-self-test run : test-organization-ts : test-tree-management-test ]
   [ boost.test-self-test run : test-organization-ts : test-tree-several-suite-decl ]
   [ boost.test-self-test run : test-organization-ts : test_unit-report-clashing-names ]
+  # cannot pass paramters from the command line, another test developed below
+  # [ boost.test-self-test run : test-organization-ts : dataset-master-test-suite-accessible-test : : --param1=1 --param2=2 : : : : $(requirements_datasets) ]
 ;
 
 #_________________________________________________________________________________________________#
@@ -322,6 +324,9 @@ exe smoke-ts-included-2 : smoke-ts/basic-smoke-test2.cpp ;
 
 exe check-streams-on-exit : framework-ts/check-streams-on-exit.cpp ;
 
+exe dataset-master-test-suite-accessible-test : test-organization-ts/dataset-master-test-suite-accessible-test.cpp
+                                              : $(requirements_datasets) ;
+
 alias "smoke-ts"
 :
 [ boost.test-smoke-ts-logger bt-st-txml : XML : log ]
@@ -336,6 +341,7 @@ alias "smoke-ts"
 [ run smoke-ts-included : --version : : $(requirements_datasets) : cla-check-print-version ]
 [ run check-streams-on-exit : --list_content --report_sink=stdout : : $(requirements_datasets) : cla-check-list-content-with-report-sink ]
 [ run check-streams-on-exit : --list_content --report_sink=test.txt : : $(requirements_datasets) : cla-check-list-content-with-report-sink-2 ]
+[ run dataset-master-test-suite-accessible-test : -- --param1=1 --param2=2 : : $(requirements_datasets) : dataset-lazy-generator  ]
 # : $(requirements_datasets)
 ;
 
