@@ -74,6 +74,7 @@ void very_bad_exception()  {
     throw local_exception();
 }
 
+void bad_foo2() { bad_foo(); } // tests with clashing names
 
 //____________________________________________________________________________//
 
@@ -160,7 +161,7 @@ BOOST_AUTO_TEST_CASE( test_result_reports )
         ts_3->add( BOOST_TEST_CASE( bad_foo ) );
         test_case* tc1 = BOOST_TEST_CASE( very_bad_foo );
         ts_3->add( tc1 );
-        test_case* tc2 = BOOST_TEST_CASE( bad_foo );
+        test_case* tc2 = BOOST_TEST_CASE( bad_foo2 );
         ts_3->add( tc2 );
         tc2->depends_on( tc1 );
 
@@ -168,7 +169,7 @@ BOOST_AUTO_TEST_CASE( test_result_reports )
         ts_4->add( BOOST_TEST_CASE( bad_foo ) );
         ts_4->add( BOOST_TEST_CASE( very_bad_foo ) );
         ts_4->add( BOOST_TEST_CASE( very_bad_exception ) );
-        ts_4->add( BOOST_TEST_CASE( bad_foo ) );
+        ts_4->add( BOOST_TEST_CASE( bad_foo2 ) );
 
     test_suite* ts_main = BOOST_TEST_SUITE( "Fake Test Suite Hierarchy" );
         ts_main->add( ts_0 );

@@ -91,7 +91,7 @@ struct F2 {
 
 BOOST_FIXTURE_TEST_SUITE( S5, F2 )
 
-typedef boost::mpl::vector<int,float,char,double,int> test_types;
+typedef boost::mpl::vector<int,float,char,double,short int> test_types;
 BOOST_AUTO_TEST_CASE_TEMPLATE( tctempl, T, test_types )
 {
 }
