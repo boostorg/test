@@ -33,10 +33,11 @@
 # [pull_request 125] Prevent 2 unused parameter warnings
 # [pull_request 127] Silence 'unused variable' warning
 # [ticket 12092] Request: allow `std::tuple` typelists in `BOOST_AUTO_TEST_CASE_TEMPLATE`
+# [ticket 12596] Sanitize metacharacters in test names
 # [ticket 12597] Report tests with clashing names
 # [ticket 12969] Problem linking `print_helper_t<nullptr_t>` under Clang
 # [ticket 13149] Dependency decorators on parent suites
-# [ticket 13170] `BOOST_AUTO_TEST_CASE_TEMPLATE` don't want `typedef` for list
+# [ticket 13170] `BOOST_AUTO_TEST_CASE_TEMPLATE` don't want `typedef` for list 
 # [ticket 13387] Test header fails to compile
 # [ticket 13407] Boost.Test appears to crash under Cygwin
 
