@@ -7,13 +7,17 @@
 
 [section Change log]
 
-[h4 Boost.Test v3.7 / boost 1.67]
+[#ref_CHANGE_LOG_3_7][h4 Boost.Test v3.7 / boost 1.67]
 
 [h5 Breaking changes]
 
 * Now colour is on by default for the output streams that are either `std::cout` or `std::cerr`. This can be 
   disabled by passing [link boost_test.utf_reference.rt_param_reference.color_output `--no_color_ouput`] (or just `--no_color`) 
   to the command line.
+* Adding test cases with the same name to the same test suite is reported as an error. This impacts 
+  [link boost_test.tests_organization.test_cases.test_organization_templates template] and
+  [link boost_test.tests_organization.test_cases.param_test parametrized] test cases, as well as manually 
+  registered tests. Make sure you have no duplicate names.
 
 [h5 New features]
 * Colour output on Windows
@@ -24,6 +28,7 @@
 # [pull_request 118] Update VxWorks support
 # [pull_request 121] fix compiler warning
 # [pull_request 122] Fix some fallthrough warnings with `gcc >= 7`
+# [ticket 12597] Report tests with clashing names
 # [ticket 13149] Dependency decorators on parent suites
 
 [h4 Boost.Test v3.6 / boost 1.65]
