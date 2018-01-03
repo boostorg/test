@@ -22,12 +22,14 @@
 [h5 New features]
 * Colour output on Windows
 * Improved and clearer command line help
+* `BOOST_AUTO_TEST_CASE_TEMPLATE` now accepts a sequence of types in an `std::tuple`
 
 [h5 Bugfixes and feature requests]
 # [pull_request 112] Deliberate-failure tests shouldn't be optimized
 # [pull_request 118] Update VxWorks support
 # [pull_request 121] fix compiler warning
 # [pull_request 122] Fix some fallthrough warnings with `gcc >= 7`
+# [ticket 12092] Request: allow `std::tuple` typelists in `BOOST_AUTO_TEST_CASE_TEMPLATE`
 # [ticket 12597] Report tests with clashing names
 # [ticket 12969] Problem linking `print_helper_t<nullptr_t>` under Clang
 # [ticket 13149] Dependency decorators on parent suites
