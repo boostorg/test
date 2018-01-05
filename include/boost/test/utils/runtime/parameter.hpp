@@ -270,7 +270,7 @@ protected:
 
 private:
     /// interface for usage/help customization
-    virtual void            cla_name_help( std::ostream& ostr, cstring cla_tag, cstring /* negation_prefix_ */, bool use_color = true) const
+    virtual void            cla_name_help( std::ostream& ostr, cstring cla_tag, cstring /* negation_prefix_ */, bool /* use_color */ = true) const
     {
         ostr << cla_tag;
     }
