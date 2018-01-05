@@ -168,7 +168,7 @@ struct BOOST_TEST_DECL print_log_value<wchar_t const*> {
 template<>
 struct print_log_value<std::nullptr_t> {
     // declaration and definition is here because of #12969 https://svn.boost.org/trac10/ticket/12969
-    void    operator()( std::ostream& ostr, std::nullptr_t t ) {
+    void    operator()( std::ostream& ostr, std::nullptr_t /*t*/ ) {
         ostr << "nullptr";
     }
 };
