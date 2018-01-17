@@ -32,6 +32,9 @@
 namespace boost {
 namespace benchmark {
 
+//! Gathers the results in an abstract way
+//!
+//!
 class result {
 public:
     template<typename SamplingPolicy>
