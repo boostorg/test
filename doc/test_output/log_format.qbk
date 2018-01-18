@@ -216,14 +216,14 @@ The [@http://junit.org/ JUNIT format] is log format supported by a wide range of
 
 This format defaults its log level to [link test_log_output_table `General information`] and its default stream to a file named after
 [link boost_test.tests_organization.test_suite.master_test_suite master test suite].
-The logger will attempt to not overwrite any existing output file, which is also usually understood Continuous Build tools.
+The logger will attempt to not overwrite any existing output file, which is also usually understood by Continuous Build tools.
 
 This format is in fact both a log and a report format: most of the Continuous Build tools will summarize
 the content of a JUNIT file and show an overview of the failing/succeeding tests of a module (report format)
 while letting the user inspect the detailed logs (log format).
 
-[caution The minimal log-level for the JUnit logger is `general information`. Any set-up to higher log level
- will default to that minimal log-level.]
+[caution The minimal log-level for the JUnit logger is [link test_log_output_table `non fatal error`]. 
+ Any set-up to higher log level will default to that minimal log-level.]
 
 [note Until Boost 1.64, the log level was previously defaulting to `success` and was causing a heavy load
  on the logging part in some circumstances.]
