@@ -490,7 +490,8 @@ unsigned const TIMEOUT_EXCEEDED = static_cast<unsigned>( -1 );
 class state {
 public:
     state()
-    : m_curr_test_unit( INV_TEST_UNIT_ID )
+    : m_master_test_suite( 0 )
+    , m_curr_test_unit( INV_TEST_UNIT_ID )
     , m_next_test_case_id( MIN_TEST_CASE_ID )
     , m_next_test_suite_id( MIN_TEST_SUITE_ID )
     , m_test_in_progress( false )
