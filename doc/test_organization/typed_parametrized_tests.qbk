@@ -33,6 +33,11 @@ The macro __BOOST_AUTO_TEST_CASE_TEMPLATE__ requires three arguments:
 
 [bt_example example10..Test case template with automated registration..run-fail]
 
+[warning Since [link ref_CHANGE_LOG_3_7 __UTF__ v3.7], it is forbidden to have the same test case name
+ under the same test suite. For automatically registered tests, the test name is derived from the type 
+ for which the test case is created. This indirectly means that having a duplicate of types in the 
+ `collection_of_types` will yield an error.]
+
 [#ref_BOOST_TEST_CASE_TEMPLATE][h4 Test case template with manual registration]
 One way to perform the same set of checks for a component instantiated with different template parameters is
 illustrated in the following example:
@@ -51,7 +56,6 @@ void combined_test()
   single_test<unsigned char>();
 }
 ``
-
 
 There several problems/inconveniences with above approach, including:
 
@@ -125,6 +129,11 @@ the sub test case. ]
 
 
 [bt_example example09..Manually registered test case template..run-fail]
+
+[warning Since [link ref_CHANGE_LOG_3_7 __UTF__ v3.7], it is forbidden to have the same test case name
+ under the same test suite. For manually registered tests, the test name is derived from the type 
+ for which the test case is created. This indirectly means that having a duplicate of types in the 
+ `collection_of_types` will yield an error.]
 
 [endsect] [/template test cases]
 
