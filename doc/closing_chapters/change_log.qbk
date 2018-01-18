@@ -40,6 +40,7 @@
 # [ticket 13170] `BOOST_AUTO_TEST_CASE_TEMPLATE` don't want `typedef` for list 
 # [ticket 13181] Boost test can't compare classes which have `begin` and `end` but not `const_iterator`
 # [ticket 13387] Test header fails to compile
+# [ticket 13398] Log format JUNIT generates invalid XML files
 # [ticket 13407] Boost.Test appears to crash under Cygwin
 # [ticket 13443] Boost.Test data driven test fails to compile when number of samples greater than 9
 
