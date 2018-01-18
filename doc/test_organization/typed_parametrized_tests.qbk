@@ -58,14 +58,15 @@ The arguments are as follow:
 # `formal_type_parameter_name`: the name of a formal template parameter:
          name of the type the test case template is instantiated with
 # `collection_of_types`: the collection of types to instantiate test case template with. 
-  This is an *arbitrary MPL sequence*
+  This is an *arbitrary MPL sequence* or a sequence of types wrapped in a `std::tuple`
+  (since [link ref_CHANGE_LOG_3_7 __UTF__ v3.7], if supported by the compiler) 
 
 [bt_example example10..Test case template with automated registration..run-fail]
 
 [warning Since [link ref_CHANGE_LOG_3_7 __UTF__ v3.7], the __UTF__ does not allow for duplicate test case name
  under the same test suite. As test names are derived from the types in the `collection_of_types`,
- this indirectly means that having a duplicate of types in the
- `collection_of_types` will yield an error.]
+ this indirectly means that *having a duplicate type* in the
+ `collection_of_types` *yields an error*.]
 
 [note If you prefer having the template parameter list directly in the declaration of __BOOST_AUTO_TEST_CASE_TEMPLATE__,
   you may use the macro [@www.boost.org/doc/libs/release/libs/utility/identity_type/doc/html/index.html `BOOST_IDENTITY_TYPE`].
