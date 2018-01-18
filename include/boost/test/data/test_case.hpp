@@ -33,12 +33,15 @@
 #include <boost/preprocessor/comparison/equal.hpp>
 
 #include <boost/bind.hpp>
-
 #include <boost/type_traits/is_copy_constructible.hpp>
 
-#include <boost/test/detail/suppress_warnings.hpp>
 #include <boost/test/tools/detail/print_helper.hpp>
 #include <boost/test/utils/string_cast.hpp>
+
+#include <list>
+#include <string>
+
+#include <boost/test/detail/suppress_warnings.hpp>
 
 #if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) \
    && !defined(BOOST_TEST_DATASET_MAX_ARITY)
