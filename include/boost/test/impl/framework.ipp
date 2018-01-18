@@ -490,7 +490,8 @@ unsigned const TIMEOUT_EXCEEDED = static_cast<unsigned>( -1 );
 class state {
 public:
     state()
-    : m_curr_test_unit( INV_TEST_UNIT_ID )
+    : m_master_test_suite(0)
+    , m_curr_test_unit( INV_TEST_UNIT_ID )
     , m_next_test_case_id( MIN_TEST_CASE_ID )
     , m_next_test_suite_id( MIN_TEST_SUITE_ID )
     , m_test_in_progress( false )
@@ -880,11 +881,7 @@ public:
 namespace impl {
 namespace {
 
-#if defined(__CYGWIN__)
 framework::state& s_frk_state() { static framework::state* the_inst = 0; if(!the_inst) the_inst = new framework::state; return *the_inst; }
-#else
-framework::state& s_frk_state() { static framework::state the_inst; return the_inst; }
-#endif
 
 } // local namespace
 
