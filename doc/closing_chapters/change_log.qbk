@@ -28,6 +28,7 @@
 # [pull_request 118] Update VxWorks support
 # [pull_request 121] fix compiler warning
 # [pull_request 122] Fix some fallthrough warnings with `gcc >= 7`
+# [pull_request 125] Prevent 2 unused parameter warnings
 # [ticket 12597] Report tests with clashing names
 # [ticket 12969] Problem linking `print_helper_t<nullptr_t>` under Clang
 # [ticket 13149] Dependency decorators on parent suites
