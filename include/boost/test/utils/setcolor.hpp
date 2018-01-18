@@ -25,7 +25,12 @@
 #include <boost/test/detail/suppress_warnings.hpp>
 
 #ifdef _WIN32
-#include <Windows.h>
+  #include <Windows.h>
+
+  #if defined(__MINGW32__) && !defined(COMMON_LVB_UNDERSCORE)
+    // mingw badly mimicking windows.h
+    #define COMMON_LVB_UNDERSCORE 0x8000
+  #endif
 #endif
 
 //____________________________________________________________________________//
