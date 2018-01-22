@@ -46,7 +46,7 @@ void bad_foo()  {
     BOOST_ERROR( "" );
     unit_test_log.set_stream( std::cout );
 }
-
+void bad_foo2() { bad_foo(); } // preventing clashing names
 struct log_guard {
     ~log_guard()
     {
@@ -141,7 +141,7 @@ BOOST_AUTO_TEST_CASE( test_result_reports )
         ts_3->add( BOOST_TEST_CASE( bad_foo ) );
         test_case* tc1 = BOOST_TEST_CASE( very_bad_foo );
         ts_3->add( tc1 );
-        test_case* tc2 = BOOST_TEST_CASE( bad_foo );
+        test_case* tc2 = BOOST_TEST_CASE( bad_foo2 );
         ts_3->add( tc2 );
         tc2->depends_on( tc1 );
 

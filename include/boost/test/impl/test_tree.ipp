@@ -241,6 +241,14 @@ test_suite::test_suite( const_string module_name )
 void
 test_suite::add( test_unit* tu, counter_t expected_failures, unsigned timeout )
 {
+    // check for clashing names #12597
+    for( test_unit_id_list::const_iterator it(m_children.begin()), ite(m_children.end());
+         it < ite;
+         ++it) {
+        BOOST_TEST_SETUP_ASSERT( tu->p_name != framework::get(*it, TUT_ANY).p_name,
+                                 "test unit with name '" + tu->p_name.value + std::string("' registered multiple times") );
+    }
+
     tu->p_timeout.value = timeout;
 
     m_children.push_back( tu->p_id );
