@@ -46,6 +46,16 @@ using num_samples_t = uint_least32_t;
 // Add validations to all sampling policies methods to avoid misuse
 
 
+//! Indicates the units for time reports
+enum {
+  nanoseconds,
+  microseconds,
+  milliseconds,
+  seconds,
+  minutes,
+  hours
+} e_time_units;
+
 
 } // namespace benchmark
 } // namespace boost

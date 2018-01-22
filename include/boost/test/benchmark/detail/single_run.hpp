@@ -6,7 +6,7 @@
 //  See http://www.boost.org/libs/test for the library home page.
 //
 //! @file
-//! @brief This header includes helper class, which models the notion os a 
+//! @brief This header includes helper class, which models the notion of a 
 //!        single run consisting of multiple iterations/calls to the code 
 //!        being measured.
 // ***************************************************************************
