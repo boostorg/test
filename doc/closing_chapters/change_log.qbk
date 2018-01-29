@@ -27,6 +27,7 @@
 [h5 Bugfixes and feature requests]
 # [pull_request 112] Deliberate-failure tests shouldn't be optimized
 # [pull_request 118] Update VxWorks support
+# [pull_request 118] `[clang]` Fix `[-Wc++11-narrowing]` error
 # [pull_request 121] fix compiler warning
 # [pull_request 122] Fix some fallthrough warnings with `gcc >= 7`
 # [pull_request 125] Prevent 2 unused parameter warnings
