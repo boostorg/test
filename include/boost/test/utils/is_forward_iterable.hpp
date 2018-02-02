@@ -194,6 +194,8 @@ struct is_container_forward_iterable {
 
 #endif /* defined(BOOST_TEST_FWD_ITERABLE_CXX03) */
 
+
+//! Helper structure for accessing the content of a container or an array
 template <typename T, bool is_forward_iterable = is_forward_iterable<T>::value >
 struct bt_iterator_traits;
 
@@ -201,18 +203,18 @@ template <typename T>
 struct bt_iterator_traits< T, true >{
     BOOST_STATIC_ASSERT((is_forward_iterable<T>::value));
 
-
-#if defined(BOOST_TEST_FWD_ITERABLE_CXX03)
+#if defined(BOOST_TEST_FWD_ITERABLE_CXX03) || \
+    (defined(BOOST_MSVC) && (BOOST_MSVC_FULL_VER <= 170061030))
     typedef typename T::const_iterator const_iterator;
     typedef typename std::iterator_traits<const_iterator>::value_type value_type;
 #else
-    typedef decltype(std::declval<
+    typedef decltype(boost::declval<
         typename boost::add_const<
-          typename std::remove_reference<T>::type 
+          typename boost::remove_reference<T>::type
         >::type>().begin()) const_iterator;
 
     typedef typename std::iterator_traits<const_iterator>::value_type value_type;
-#endif
+#endif /* BOOST_TEST_FWD_ITERABLE_CXX03 */
 
     static const_iterator begin(T const& container) {
         return container.begin();
@@ -220,18 +222,26 @@ struct bt_iterator_traits< T, true >{
     static const_iterator end(T const& container) {
         return container.end();
     }
+
+#if defined(BOOST_TEST_FWD_ITERABLE_CXX03) || \
+    (defined(BOOST_MSVC) && (BOOST_MSVC_FULL_VER <= 170061030))
+    static std::size_t
+    size(T const& container) {
+        return container.size();
+    }
+#else
     static std::size_t
     size(T const& container) {
         return size(container,
                     std::integral_constant<bool, ut_detail::has_member_size<T>::value>());
     }
-
 private:
     static std::size_t
     size(T const& container, std::true_type)  { return container.size(); }
 
     static std::size_t
     size(T const& container, std::false_type) { return std::distance(begin(container), end(container)); }
+#endif /* BOOST_TEST_FWD_ITERABLE_CXX03 */
 };
 
 template <typename T, std::size_t N>

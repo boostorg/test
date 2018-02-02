@@ -70,8 +70,17 @@ struct fwd_iterable_custom {
   custom_iterator begin() const { return values.begin(); }
   custom_iterator end() const { return values.end(); }
 
+#if !defined(BOOST_MSVC) || (BOOST_MSVC_FULL_VER > 180040629)
+#define MY_TEST_HAS_INIT_LIST
   fwd_iterable_custom(std::initializer_list<int> ilist) : values{ilist}
   {}
+#else
+  fwd_iterable_custom(int v1, int v2, int v3) {
+    values.push_back(v1);
+    values.push_back(v2);
+    values.push_back(v3);
+  }
+#endif
 private:
   std::vector<int> values;
 };
@@ -178,7 +187,11 @@ BOOST_AUTO_TEST_CASE( test_forward_iterable_concept )
     BOOST_CHECK_MESSAGE(utf::is_forward_iterable< type >::value, "is_forward_iterable failed");
     BOOST_CHECK_MESSAGE(!utf::is_container_forward_iterable< type >::value, "is_container_forward_iterable failed");
 
+#ifdef MY_TEST_HAS_INIT_LIST
     fwd_iterable_custom a{3,4,5};
+#else
+    fwd_iterable_custom a(3,4,5);
+#endif
     BOOST_TEST( utf::bt_iterator_traits<fwd_iterable_custom>::size(a) == 3 );
   }
   {
