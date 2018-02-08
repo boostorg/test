@@ -164,6 +164,7 @@ public:
 
 #if !defined(BOOST_TEST_DATASET_VARIADIC)
     // see BOOST_TEST_DATASET_MAX_ARITY to increase the default supported arity
+    // there is also a limit on boost::bind
 #define TC_MAKE(z,arity,_)                                                              \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                                 \
     void    operator()( BOOST_PP_ENUM_BINARY_PARAMS(arity, Arg, const& arg) ) const     \
@@ -182,8 +183,8 @@ public:
             new test_case( genTestCaseName(),
                            m_tc_file,
                            m_tc_line,
-                           boost::bind( &TestCase::template test_method<Arg...>,
-                                        boost_bind_rvalue_holder_helper(std::forward<Arg>(arg))...)));
+                           std::bind( &TestCase::template test_method<Arg...>,
+                                      boost_bind_rvalue_holder_helper(std::forward<Arg>(arg))...)));
     }
 #endif
 
