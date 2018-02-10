@@ -38,11 +38,12 @@
 # [ticket 12969] Problem linking `print_helper_t<nullptr_t>` under Clang
 # [ticket 13149] Dependency decorators on parent suites
 # [ticket 13170] `BOOST_AUTO_TEST_CASE_TEMPLATE` don't want `typedef` for list 
+# [ticket 13181] Boost test can't compare classes which have `begin` and `end` but not `const_iterator`
 # [ticket 13387] Test header fails to compile
 # [ticket 13407] Boost.Test appears to crash under Cygwin
 # [ticket 13443] Boost.Test data driven test fails to compile when number of samples greater than 9
 
-[h4 Boost.Test v3.6 / boost 1.65]
+[#ref_CHANGE_LOG_3_6][h4 Boost.Test v3.6 / boost 1.65]
 
 [h5 Breaking changes]
 * __BOOST_GLOBAL_FIXTURE__ is flagged as deprecated and will be removed in a later version
