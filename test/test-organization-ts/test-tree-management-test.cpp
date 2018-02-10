@@ -126,7 +126,7 @@ BOOST_AUTO_TEST_CASE( manual_test_case_creation_test )
     BOOST_CHECK_THROW( framework::get( tc1->p_id, TUT_SUITE ), framework::internal_error );
 
     test_case* tc2 = make_test_case( &empty_, "my test case", "test_file_name", 1 );
-    BOOST_TEST( tc2->p_name == const_string( "my_test_case" ) );
+    BOOST_TEST( tc2->p_name == const_string( "my test case" ) );
     BOOST_TEST( tc2->p_file_name == const_string( "test_file_name" ) );
     BOOST_TEST( tc2->p_line_num == 1U );
 }
