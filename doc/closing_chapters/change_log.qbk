@@ -36,6 +36,7 @@
 # [ticket 12596] Sanitize metacharacters in test names
 # [ticket 12597] Report tests with clashing names
 # [ticket 12969] Problem linking `print_helper_t<nullptr_t>` under Clang
+# [ticket 13058] `errors.hpp` in Boost Test requires warning `C4946` to be `off`
 # [ticket 13149] Dependency decorators on parent suites
 # [ticket 13170] `BOOST_AUTO_TEST_CASE_TEMPLATE` don't want `typedef` for list 
 # [ticket 13181] Boost test can't compare classes which have `begin` and `end` but not `const_iterator`

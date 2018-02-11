@@ -86,7 +86,7 @@ public:
     {
         this->msg.append( val );
 
-        return reinterpret_cast<Derived&&>(*this);
+        return static_cast<Derived&&>(*this);
     }
 
     //____________________________________________________________________________//
@@ -96,7 +96,7 @@ public:
     {
         this->msg.append( unit_test::utils::string_cast( val ) );
 
-        return reinterpret_cast<Derived&&>(*this);
+        return static_cast<Derived&&>(*this);
     }
 
     //____________________________________________________________________________//
