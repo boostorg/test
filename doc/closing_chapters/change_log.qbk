@@ -43,6 +43,7 @@
 # [ticket 13387] Test header fails to compile
 # [ticket 13398] Log format JUNIT generates invalid XML files
 # [ticket 13407] Boost.Test appears to crash under Cygwin
+# [ticket 13435] `BOOST_TEST_GLOBAL_CONFIGURATION` (result report shutdown time)
 # [ticket 13443] Boost.Test data driven test fails to compile when number of samples greater than 9
 
 [#ref_CHANGE_LOG_3_6][h4 Boost.Test v3.6 / boost 1.65]
