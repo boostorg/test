@@ -31,7 +31,7 @@ typedef boost::onullstream onullstream_type;
 
 using boost::test_tools::output_test_stream;
 using namespace boost::unit_test;
-namespace utf = boost::unit_test;
+
 
 
 //____________________________________________________________________________//
@@ -124,7 +124,7 @@ struct guard {
 //____________________________________________________________________________//
 
 
-BOOST_AUTO_TEST_CASE( test_result_reports )
+BOOST_AUTO_TEST_CASE( test_logs )
 {
     guard G;
     ut_detail::ignore_unused_variable_warning( G );
@@ -132,7 +132,7 @@ BOOST_AUTO_TEST_CASE( test_result_reports )
 #define PATTERN_FILE_NAME "log-formatter-test.pattern"
 
     std::string pattern_file_name(
-        framework::master_test_suite().argc == 1
+        framework::master_test_suite().argc <= 1
             ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME : "./baseline-outputs/" PATTERN_FILE_NAME )
             : framework::master_test_suite().argv[1] );
 
@@ -197,5 +197,35 @@ BOOST_AUTO_TEST_CASE( test_result_reports )
 }
 
 //____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_logs_junit_info_closing_tags )
+{
+    guard G;
+    ut_detail::ignore_unused_variable_warning( G );
+
+#define PATTERN_FILE_NAME_JUNIT "log-formatter-test.pattern.junit"
+
+    std::string pattern_file_name(
+        framework::master_test_suite().argc <= 2
+            ? (runtime_config::save_pattern() ? PATTERN_FILE_NAME_JUNIT : "./baseline-outputs/" PATTERN_FILE_NAME_JUNIT )
+            : framework::master_test_suite().argv[2] );
+
+    output_test_stream_for_loggers test_output( pattern_file_name,
+                                                !runtime_config::save_pattern(),
+                                                true,
+                                                __FILE__ );
+
+#line 218
+    test_suite* ts_main = BOOST_TEST_SUITE( "1 test cases inside" );
+    ts_main->add( BOOST_TEST_CASE( almost_good_foo ) );
+
+    ts_main->p_default_status.value = test_unit::RS_ENABLED;
+    char const* argv[] = { "a.exe", "--run_test=*", "--build_info" };
+    int argc = sizeof(argv)/sizeof(argv[0]);
+    boost::unit_test::runtime_config::init( argc, (char**)argv );
+    boost::unit_test::framework::impl::setup_for_execution( *ts_main );
+
+    check( test_output, OF_JUNIT, ts_main->p_id, log_successful_tests );
+}
 
 // EOF

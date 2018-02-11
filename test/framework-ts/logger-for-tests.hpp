@@ -70,6 +70,9 @@ public:
 
         std::string other_vars_fixes;
         {
+            std::ostringstream s_version;
+            s_version << BOOST_VERSION/100000 << "." << BOOST_VERSION/100 % 1000 << "." << BOOST_VERSION % 100;
+
             const std::string to_look_for[] = {"time=\"*\"",
                                                basename + "(*):",
                                                "unknown location(*):",
@@ -78,6 +81,10 @@ public:
                                                "<TestingTime>*</TestingTime>",
                                                "condition 2>3 is not satisfied\n",
                                                "condition 2>3 is not satisfied]",
+                                               BOOST_PLATFORM,
+                                               BOOST_STDLIB,
+                                               BOOST_COMPILER,
+                                               s_version.str()
                                                };
 
             const std::string to_replace[]  = {"time=\"0.1234\"",
@@ -88,6 +95,10 @@ public:
                                                "<TestingTime>ZZZ</TestingTime>",
                                                "condition 2>3 is not satisfied [2 <= 3]\n",
                                                "condition 2>3 is not satisfied [2 <= 3]]",
+                                               "BOOST_SOME_PLATFORM",
+                                               "BOOST_SOME_STDLIB",
+                                               "BOOST_SOME_COMPILER",
+                                               "BOOST_1.XX.Y_SOME_VERSION",
                                                };
 
             other_vars_fixes = utils::replace_all_occurrences_with_wildcards(

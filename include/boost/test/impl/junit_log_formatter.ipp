@@ -431,13 +431,13 @@ public:
             if(m_display_build_info)
             {
                 m_stream  << "<properties>" << std::endl;
-                m_stream  << "<property name=\"platform\" value" << utils::attr_value() << BOOST_PLATFORM << std::endl;
-                m_stream  << "<property name=\"compiler\" value" << utils::attr_value() << BOOST_COMPILER << std::endl;
-                m_stream  << "<property name=\"stl\" value" << utils::attr_value() << BOOST_STDLIB << std::endl;
+                m_stream  << "<property name=\"platform\" value" << utils::attr_value() << BOOST_PLATFORM << " />" << std::endl;
+                m_stream  << "<property name=\"compiler\" value" << utils::attr_value() << BOOST_COMPILER << " />" << std::endl;
+                m_stream  << "<property name=\"stl\" value" << utils::attr_value() << BOOST_STDLIB << " />" << std::endl;
 
                 std::ostringstream o;
                 o << BOOST_VERSION/100000 << "." << BOOST_VERSION/100 % 1000 << "." << BOOST_VERSION % 100;
-                m_stream  << "<property name=\"boost\" value" << utils::attr_value() << o.str() << std::endl;
+                m_stream  << "<property name=\"boost\" value" << utils::attr_value() << o.str() << " />" << std::endl;
                 m_stream  << "</properties>" << std::endl;
             }
         }
