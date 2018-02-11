@@ -1597,6 +1597,8 @@ run( test_unit_id id, bool continue_test )
 
     impl::s_frk_state().m_test_in_progress = false;
 
+    results_reporter::make_report( INV_REPORT_LEVEL, id );
+
     unit_test::framework_init_observer.clear();
     if( call_start_finish ) {
         // indicates the framework that no test is in progress anymore if observers need to be notified
