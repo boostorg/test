@@ -175,6 +175,7 @@ test-suite "test-organization-ts"
   [ boost.test-self-test run : test-organization-ts : test_unit-order-test ]
   [ boost.test-self-test run : test-organization-ts : test_unit-order-shuffled-test : : : : : : $(requirements_boost_test_full_support) ]
   [ boost.test-self-test run : test-organization-ts : test_unit-nested-suite-dependency ]
+  [ boost.test-self-test run : test-organization-ts : test_unit-sanitize-names ]
   [ boost.test-self-test run : test-organization-ts : test-tree-management-test ]
   [ boost.test-self-test run : test-organization-ts : test-tree-several-suite-decl ]
   [ boost.test-self-test run : test-organization-ts : test_unit-report-clashing-names ]

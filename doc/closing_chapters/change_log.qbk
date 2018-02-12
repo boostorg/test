@@ -27,18 +27,23 @@
 [h5 Bugfixes and feature requests]
 # [pull_request 112] Deliberate-failure tests shouldn't be optimized
 # [pull_request 118] Update VxWorks support
+# [pull_request 118] `[clang]` Fix `[-Wc++11-narrowing]` error
 # [pull_request 121] fix compiler warning
 # [pull_request 122] Fix some fallthrough warnings with `gcc >= 7`
 # [pull_request 125] Prevent 2 unused parameter warnings
+# [pull_request 127] Silence 'unused variable' warning
 # [ticket 12092] Request: allow `std::tuple` typelists in `BOOST_AUTO_TEST_CASE_TEMPLATE`
+# [ticket 12596] Sanitize metacharacters in test names
 # [ticket 12597] Report tests with clashing names
 # [ticket 12969] Problem linking `print_helper_t<nullptr_t>` under Clang
 # [ticket 13149] Dependency decorators on parent suites
-# [ticket 13170] `BOOST_AUTO_TEST_CASE_TEMPLATE` don't want `typedef` for list
+# [ticket 13170] `BOOST_AUTO_TEST_CASE_TEMPLATE` don't want `typedef` for list 
+# [ticket 13181] Boost test can't compare classes which have `begin` and `end` but not `const_iterator`
 # [ticket 13387] Test header fails to compile
 # [ticket 13407] Boost.Test appears to crash under Cygwin
+# [ticket 13443] Boost.Test data driven test fails to compile when number of samples greater than 9
 
-[h4 Boost.Test v3.6 / boost 1.65]
+[#ref_CHANGE_LOG_3_6][h4 Boost.Test v3.6 / boost 1.65]
 
 [h5 Breaking changes]
 * __BOOST_GLOBAL_FIXTURE__ is flagged as deprecated and will be removed in a later version
