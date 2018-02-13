@@ -99,6 +99,12 @@
 
   [/ ###############################################################################################]
   [
+    [[link boost_test.utf_reference.rt_param_reference.pause_on_exit `pause_on_exit`]]
+    [Wait for button press before terminating the test executable.]
+  ]
+
+  [/ ###############################################################################################]
+  [
     [[link boost_test.utf_reference.rt_param_reference.random `random`]]
     [Instructs the framework to run the tests in random order]
   ]

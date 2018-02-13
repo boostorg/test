@@ -556,6 +556,26 @@ a default value. The only acceptable values are string names of output formats (
 [endsect] [/output_format]
 
 [/ ###############################################################################################]
+[section:pause_on_exit `pause_on_exit`]
+
+Parameter ['pause_on_exit] instructs the __UTF__ to wait until a button is pressed before the
+test executable terminates. This feature is turned off by default.
+
+[h4 Acceptable values]
+
+[link boolean_param_value Boolean] with default value [*no].
+
+[h4 Command line syntax]
+
+* `--pause_on_exit[=<boolean value>]`
+
+[h4 Environment variable]
+
+  BOOST_TEST_PAUSE_ON_EXIT
+
+[endsect] [/pause_on_exit]
+
+[/ ###############################################################################################]
 [section:random `random`]
 
 Parameter ['random] instructs the __UTF__ to execute the test cases in random order. This parameter

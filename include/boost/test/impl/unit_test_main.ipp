@@ -174,6 +174,19 @@ private:
     std::set<std::string>   m_labels;
 };
 
+// ************************************************************************** //
+// **************                wait_for_keypress             ************** //
+// ************************************************************************** //
+
+void wait_for_keypress()
+{
+    results_reporter::get_stream() << "Press enter to continue..." << std::endl;
+
+    // getchar is defined as a macro in uClibc. Use parenthesis to fix
+    // gcc bug 58952 for gcc <= 4.8.2.
+    (std::getchar)();
+}
+
 } // namespace ut_detail
 
 // ************************************************************************** //
@@ -189,11 +202,7 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
         framework::init( init_func, argc, argv );
 
         if( runtime_config::get<bool>( runtime_config::btrt_wait_for_debugger ) ) {
-            results_reporter::get_stream() << "Press any key to continue..." << std::endl;
-
-            // getchar is defined as a macro in uClibc. Use parenthesis to fix
-            // gcc bug 58952 for gcc <= 4.8.2.
-            (std::getchar)();
+            ut_detail::wait_for_keypress();
             results_reporter::get_stream() << "Continuing..." << std::endl;
         }
 
@@ -254,6 +263,10 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
     }
 
     framework::shutdown();
+
+    if( runtime_config::get<bool>( runtime_config::btrt_pause_on_exit ) ) {
+        ut_detail::wait_for_keypress();
+    }
 
     return result_code;
 }

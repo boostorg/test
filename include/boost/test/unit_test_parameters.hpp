@@ -61,6 +61,7 @@ BOOST_TEST_DECL extern std::string btrt_save_test_pattern;
 BOOST_TEST_DECL extern std::string btrt_show_progress;
 BOOST_TEST_DECL extern std::string btrt_use_alt_stack;
 BOOST_TEST_DECL extern std::string btrt_wait_for_debugger;
+BOOST_TEST_DECL extern std::string btrt_pause_on_exit;
 BOOST_TEST_DECL extern std::string btrt_help;
 BOOST_TEST_DECL extern std::string btrt_usage;
 BOOST_TEST_DECL extern std::string btrt_version;
