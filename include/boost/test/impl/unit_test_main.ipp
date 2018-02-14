@@ -230,8 +230,6 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
 
         framework::run();
 
-        results_reporter::make_report();
-
         result_code = !runtime_config::get<bool>( runtime_config::btrt_result_code )
                         ? boost::exit_success
                         : results_collector.results( framework::master_test_suite().p_id ).result_code();
