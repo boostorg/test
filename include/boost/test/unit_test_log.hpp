@@ -137,6 +137,13 @@ public:
     //! @par Since Boost 1.62
     void                set_stream( output_format, std::ostream& );
 
+    //! Returns a pointer to the stream associated to specific logger
+    //!
+    //! @note Returns a null pointer if the format is not found
+    //! @par Since Boost 1.67
+    std::ostream*       get_stream( output_format ) const;
+
+
     //! Sets the threshold level for all loggers/formatters.
     //!
     //! This will override the log level of all loggers, whether enabled or not.

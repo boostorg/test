@@ -936,9 +936,9 @@ setup_loggers()
 
             runtime_config::stream_holder& stream_logger = s_frk_state().m_log_sinks[format];
             if( runtime_config::has( runtime_config::btrt_log_sink ) ) {
+                // we remove all streams in this case, so we do not specify the format
                 boost::function< void () > log_cleaner = boost::bind( &unit_test_log_t::set_stream,
                                                                       &unit_test_log,
-                                                                      format,
                                                                       boost::ref(std::cout)
                                                                       );
                 stream_logger.setup( runtime_config::get<std::string>( runtime_config::btrt_log_sink ),
