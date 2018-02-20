@@ -910,6 +910,13 @@ struct sum_to_first_only {
 };
 
 void
+shutdown_loggers_and_reports()
+{
+    s_frk_state().m_log_sinks.clear();
+    s_frk_state().m_report_sink.setup( "stdcerr" );
+}
+
+void
 setup_loggers()
 {
 
@@ -928,8 +935,15 @@ setup_loggers()
             unit_test_log.set_format( format );
 
             runtime_config::stream_holder& stream_logger = s_frk_state().m_log_sinks[format];
-            if( runtime_config::has( runtime_config::btrt_log_sink ) )
-                stream_logger.setup( runtime_config::get<std::string>( runtime_config::btrt_log_sink ) );
+            if( runtime_config::has( runtime_config::btrt_log_sink ) ) {
+                // we remove all streams in this case, so we do not specify the format
+                boost::function< void () > log_cleaner = boost::bind( &unit_test_log_t::set_stream,
+                                                                      &unit_test_log,
+                                                                      boost::ref(std::cout)
+                                                                      );
+                stream_logger.setup( runtime_config::get<std::string>( runtime_config::btrt_log_sink ),
+                                     log_cleaner );
+            }
             unit_test_log.set_stream( stream_logger.ref() );
         }
         else
@@ -1041,7 +1055,6 @@ setup_loggers()
                         }
                     }
 
-
                     BOOST_TEST_I_ASSRT( formatter_log_level != invalid_log_level,
                                         boost::runtime::access_to_missing_argument()
                                             << "Unable to determine the log level from '"
@@ -1056,12 +1069,18 @@ setup_loggers()
                     unit_test_log.set_threshold_level( format, formatter_log_level );
 
                     runtime_config::stream_holder& stream_logger = s_frk_state().m_log_sinks[format];
+                    boost::function< void () > log_cleaner = boost::bind( &unit_test_log_t::set_stream,
+                                                                          &unit_test_log,
+                                                                          format,
+                                                                          boost::ref(std::cout) );
                     if( ++current_format_specs != utils::string_token_iterator() &&
                         current_format_specs->size() ) {
-                        stream_logger.setup( *current_format_specs );
+                        stream_logger.setup( *current_format_specs, 
+                                             log_cleaner );
                     }
                     else {
-                        stream_logger.setup( formatter->get_default_stream_description() );
+                        stream_logger.setup( formatter->get_default_stream_description(),
+                                             log_cleaner );
                     }
                     unit_test_log.set_stream( format, stream_logger.ref() );
                 }
@@ -1107,8 +1126,14 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     results_reporter::set_level( runtime_config::get<report_level>( runtime_config::btrt_report_level ) );
     results_reporter::set_format( runtime_config::get<output_format>( runtime_config::btrt_report_format ) );
 
-    if( runtime_config::has( runtime_config::btrt_report_sink ) )
-        s_frk_state().m_report_sink.setup( runtime_config::get<std::string>( runtime_config::btrt_report_sink ) );
+    if( runtime_config::has( runtime_config::btrt_report_sink ) ) {
+        boost::function< void () > report_cleaner = boost::bind( &results_reporter::set_stream,
+                                                                 boost::ref(std::cerr)
+                                                                );
+        s_frk_state().m_report_sink.setup( runtime_config::get<std::string>( runtime_config::btrt_report_sink ),
+                                           report_cleaner );
+    }
+    
     results_reporter::set_stream( s_frk_state().m_report_sink.ref() );
 
     // 40. Register default test observers
@@ -1188,6 +1213,7 @@ test_in_progress()
 void
 shutdown()
 {
+    impl::shutdown_loggers_and_reports();
     // eliminating some fake memory leak reports. See for more details:
     // http://connect.microsoft.com/VisualStudio/feedback/details/106937/memory-leaks-reported-by-debug-crt-inside-typeinfo-name
 
