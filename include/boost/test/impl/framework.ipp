@@ -913,7 +913,7 @@ void
 shutdown_loggers_and_reports()
 {
     s_frk_state().m_log_sinks.clear();
-    s_frk_state().m_report_sink.setup( "stdcerr" );
+    s_frk_state().m_report_sink.setup( "stderr" );
 }
 
 void
