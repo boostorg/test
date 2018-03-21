@@ -32,6 +32,7 @@
 # [pull_request 122] Fix some fallthrough warnings with `gcc >= 7`
 # [pull_request 125] Prevent 2 unused parameter warnings
 # [pull_request 127] Silence 'unused variable' warning
+# [pull_request 134] Fix `stdcerr` file creation on shutdown
 # [ticket 12092] Request: allow `std::tuple` typelists in `BOOST_AUTO_TEST_CASE_TEMPLATE`
 # [ticket 12596] Sanitize metacharacters in test names
 # [ticket 12597] Report tests with clashing names
