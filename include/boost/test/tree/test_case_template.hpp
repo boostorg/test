@@ -169,9 +169,9 @@ public:
     // Constructor
     template_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line )
     {
-        using tuple_t = std::tuple<tuple_parameter_pack...>;
-        using this_type = template_test_case_gen<TestCaseTemplate, tuple_t >;
-        using single_test_gen = generate_test_case_4_type<this_type, TestCaseTemplate>;
+        typedef std::tuple<tuple_parameter_pack...> tuple_t;
+        typedef template_test_case_gen<TestCaseTemplate, tuple_t > this_type;
+        typedef generate_test_case_4_type<this_type, TestCaseTemplate> single_test_gen;
 
         single_test_gen op( tc_name, tc_file, tc_line, *this );
 
