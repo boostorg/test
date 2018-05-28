@@ -84,6 +84,7 @@ std::string btrt_log_level         = "log_level";
 std::string btrt_log_sink          = "log_sink";
 std::string btrt_combined_logger   = "logger";
 std::string btrt_output_format     = "output_format";
+std::string btrt_pause_on_exit     = "pause_on_exit";
 std::string btrt_random_seed       = "random";
 std::string btrt_report_format     = "report_format";
 std::string btrt_report_level      = "report_level";
@@ -391,6 +392,18 @@ register_parameters( rt::parameters_store& store )
     output_format.add_cla_id( "--", btrt_output_format, "=" );
     output_format.add_cla_id( "-", "o", " " );
     store.add( output_format );
+
+    ///////////////////////////////////////////////
+
+    rt::option pause_on_exit( btrt_pause_on_exit, (
+        rt::description = "Wait for button press before terminating the test executable.",
+        rt::env_var = "BOOST_TEST_PAUSE_ON_EXIT",
+        rt::help = "Instructs the framework to pause before terminating the test executable. "
+                   "This feature is turned off by default."
+    ));
+
+    pause_on_exit.add_cla_id( "--", btrt_pause_on_exit, "=" );
+    store.add( pause_on_exit );
 
     /////////////////////////////////////////////// combined logger option
 
