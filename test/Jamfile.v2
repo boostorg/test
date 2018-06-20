@@ -333,9 +333,19 @@ alias "smoke-ts"
 [ boost.test-smoke-ts-logger bt-st-tjunit : JUNIT : log ]
 [ boost.test-smoke-ts-logger bt-st-tjunit : JUNIT : log : : yes ]
 [ run smoke-ts-included-2 : <testing.arg>\"--run_test=test<*\" : : : bt-st-runtest-with-colons ]
-[ run smoke-ts-included : --version : : $(requirements_datasets) : cla-check-print-version ]
 [ run check-streams-on-exit : --list_content --report_sink=stdout : : $(requirements_datasets) : cla-check-list-content-with-report-sink ]
 [ run check-streams-on-exit : --list_content --report_sink=test.txt : : $(requirements_datasets) : cla-check-list-content-with-report-sink-2 ]
+# several command line parameter checks
+[ run smoke-ts-included : --version : : $(requirements_datasets) : cla-check-print-version ]
+[ run smoke-ts-included : -c true : : $(requirements_datasets) : cla-result-code-short ]
+[ run smoke-ts-included : -c false : : $(requirements_datasets) : cla-result-code-short-false ]
+[ run smoke-ts-included : --result_code=true : : $(requirements_datasets) : cla-result-code-long ]
+[ run smoke-ts-included : --result_code=false : : $(requirements_datasets) : cla-result-code-long-false ]
+[ run smoke-ts-included : --no_result_code : : $(requirements_datasets) : cla-result-code-long-false-short ]
+[ run smoke-ts-included : -x no -c --list_content=HRF : : $(requirements_datasets) : cla-mixed-long-short1 ]
+[ run smoke-ts-included : -x -c no --list_content=HRF : : $(requirements_datasets) : cla-mixed-long-short2 ]
+[ run smoke-ts-included : -x -c no --list_content=HRF -- --some-ignored : : $(requirements_datasets) : cla-mixed-long-short3 ]
+
 # : $(requirements_datasets)
 ;
 
