@@ -43,6 +43,7 @@ namespace unit_test {
 
 namespace framework {
 class state;
+BOOST_TEST_DECL master_test_suite_t& master_test_suite();
 }
 
 // ************************************************************************** //
@@ -206,12 +207,17 @@ protected:
 // ************************************************************************** //
 
 class BOOST_TEST_DECL master_test_suite_t : public test_suite {
-public:
+private:
     master_test_suite_t();
-
+    master_test_suite_t(const master_test_suite_t&); // undefined
+    master_test_suite_t& operator=(master_test_suite_t const &); // undefined
+  
+public:
     // Data members
     int      argc;
     char**   argv;
+  
+    friend master_test_suite_t& boost::unit_test::framework::master_test_suite();
 };
 
 // ************************************************************************** //

@@ -138,6 +138,7 @@ test-suite "framework-ts"
   [ boost.test-self-test run : framework-ts : version-uses-module-name : included ]
   [ boost.test-self-test run : framework-ts : test-macro-global-fixture : : baseline-outputs/global-fixtures-test.pattern ]
   [ boost.test-self-test run : framework-ts : message-in-datatestcase-test : : baseline-outputs/messages-in-datasets-test.pattern : : : : $(requirements_datasets) ]
+  [ compile-fail framework-ts/master-test-suite-non-copyable-test.cpp ../build//included ]
 
   # ticket 13371: "Use-after-free with --log_sink=file"
   # this single check is not enough as we should check for various command line options: we make extensive 
