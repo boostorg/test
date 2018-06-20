@@ -132,6 +132,7 @@ namespace boost {
 namespace unit_test {
 class master_test_suite_t : public test_suite
 {
+  /// implementation details
 public:
   int argc;
   char** argv;

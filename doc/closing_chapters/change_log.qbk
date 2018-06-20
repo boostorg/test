@@ -9,6 +9,9 @@
 
 [#ref_CHANGE_LOG_3_8][h4 Boost.Test v3.8 / boost 1.68]
 
+[h5 Breaking changes]
+* the [link boost_test.tests_organization.test_suite.master_test_suite `master_test_suite_t`] is not copyable anymore.
+
 [h5 Bugfixes and feature requests]
 # [ticket 13525] Boost Test 1.67.0: Compilation error with GCC 4.6.3
 # [pull_request 143] Fix exception_api.run-fail.cpp doc example
