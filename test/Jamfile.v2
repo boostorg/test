@@ -307,8 +307,9 @@ rule boost.test-smoke-ts-logger ( test-name-prefix : logger ? : log_or_report ? 
       [ run check-streams-on-exit :
                               : : $(requirements) $(conditions-format) : $(test-name-prefix)-5--$(log_or_report)-format--newstyle-$(log_new_style) ]
       [ run check-streams-on-exit :
-                              : : $(requirements) $(conditions-format-sink) : $(test-name-prefix)-6--$(log_or_report)-format--newstyle-$(log_new_style)--with-sink ]
-   ;
+                              : : $(requirements) $(conditions-format-sink) : $(test-name-prefix)-6--$(log_or_report)-format--newstyle-$(log_new_style)--with-sink ]                        
+ 
+      ;
 
    return $(to-return) ;
 }
@@ -332,6 +333,8 @@ alias "smoke-ts"
 [ boost.test-smoke-ts-logger bt-st-tjunit : JUNIT : log : : yes ]
 [ run smoke-ts-included-2 : <testing.arg>\"--run_test=test<*\" : : : bt-st-runtest-with-colons ]
 [ run smoke-ts-included : --version : : $(requirements_datasets) : cla-check-print-version ]
+[ run check-streams-on-exit : --list_content --report_sink=stdout : : $(requirements_datasets) : cla-check-list-content-with-report-sink ]
+[ run check-streams-on-exit : --list_content --report_sink=test.txt : : $(requirements_datasets) : cla-check-list-content-with-report-sink-2 ]
 # : $(requirements_datasets)
 ;
 
