@@ -56,6 +56,10 @@ rule boost.test-self-test ( test-rule : test-suite : test-name : usage-variant ?
                [ predef-check "BOOST_COMP_GNUC >= 4.3.0" : : <cxxflags>-Wno-variadic-macros ]
                <toolset>clang:<cxxflags>-Wno-c99-extensions
                <toolset>clang:<cxxflags>-Wno-variadic-macros
+               <toolset>clang:<cxxflags>-Werror=address-of-temporary
+               #<toolset>clang:<cxxflags>-Werror=bind-to-temporary-copy
+               <toolset>clang:<cxxflags>-Werror=return-stack-address
+               # <toolset>clang:<cxxflags>-Werror=dangling
 #               <toolset>gcc:<cxxflags>--coverage
                <warnings>all
                $(extra-options)

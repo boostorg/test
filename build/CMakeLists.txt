@@ -105,7 +105,7 @@ add_library(boost_test_framework
             STATIC
             ${BOOST_UTF_HEADERS}
             ${BOOST_UTF_SRC})
-target_compile_definitions(boost_test_framework PUBLIC "-DBOOST_TEST_DYN_LINK=0")
+#target_compile_definitions(boost_test_framework PUBLIC "-DBOOST_TEST_DYN_LINK=0")
 target_include_directories(boost_test_framework PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
 set_target_properties(boost_test_framework PROPERTIES FOLDER "UTF")
 
@@ -157,7 +157,7 @@ file(GLOB
 add_executable(boost_test_datasets ${BOOST_TEST_UNITTESTS_DATASET})
 target_include_directories(boost_test_datasets PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
 target_link_libraries(boost_test_datasets boost_test_framework)
-target_compile_definitions(boost_test_datasets PUBLIC "BOOST_TEST_DYN_LINK=1")
+#target_compile_definitions(boost_test_datasets PUBLIC "BOOST_TEST_DYN_LINK=0")
 set_target_properties(boost_test_datasets PROPERTIES FOLDER "Unit tests")
 add_test(NAME bt-unittest-dataset
          COMMAND boost_test_datasets)
