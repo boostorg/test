@@ -281,7 +281,7 @@ The following /deliberately/ complicated example illustrates the purpose of the 
 directive. The SVG generated from the produced Graphviz/dot file can be downloaded
 [@images/boost_runtime_list_content.svg here].
 
-[bt_example boost_runtime_list_content..`--list_content` illustration..run-fail]
+[bt_example boost_runtime_list_content..`--list_content` illustration..run]
 
 [$images/boost_runtime_list_content.png [width 70%]]
 

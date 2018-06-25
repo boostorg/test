@@ -124,7 +124,7 @@ test_unit::check_preconditions() const
         test_results const& test_rslt = unit_test::results_collector.results( dep_id );
         if( !test_rslt.passed() ) {
             test_tools::assertion_result res(false);
-            res.message() << "dependency test " << dep.p_type_name << " \"" << dep.full_name() << "\" has failed";
+            res.message() << "dependency test " << dep.p_type_name << " \"" << dep.full_name() << (test_rslt.skipped() ? "\" was skipped":"\" has failed");
             return res;
         }
 
