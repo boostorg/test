@@ -6,7 +6,7 @@
 //  See http://www.boost.org/libs/test for the library home page.
 //
 //! @file
-//! checking the preconditions
+//! checking the preconditions and dependencies
 // *****************************************************************************
 
 #define BOOST_TEST_MODULE test_preconditions

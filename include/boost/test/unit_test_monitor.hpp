@@ -34,7 +34,9 @@ class BOOST_TEST_DECL unit_test_monitor_t : public singleton<unit_test_monitor_t
 public:
     enum error_level {
         test_ok                 =  0,
-        precondition_failure    = -1,
+        /// Indicates a failure to prepare the unit test (eg. fixture). Does not
+        /// account for tests skipped because of parent tests failed/skipped.
+        test_setup_failure    = -1,
         unexpected_exception    = -2,
         os_exception            = -3,
         os_timeout              = -4,

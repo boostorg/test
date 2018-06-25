@@ -692,7 +692,9 @@ public:
             BOOST_TEST_FOREACH( test_observer*, to, m_observers )
                 to->test_unit_skipped( tu, precondition_res.message() );
 
-            // this is not an error to skip for this reason.
+            // It is not an error to skip the test if any of the parent tests
+            // have failed. This one should be reported as skipped as if it was
+            // disabled
             return unit_test_monitor_t::test_ok;
         }
 
@@ -708,7 +710,7 @@ public:
                 break;
             test_results const& test_rslt = unit_test::results_collector.results( m_curr_test_unit );
             if( test_rslt.aborted() ) {
-                result = unit_test_monitor_t::precondition_failure;
+                result = unit_test_monitor_t::test_setup_failure;
                 break;
             }
         }
