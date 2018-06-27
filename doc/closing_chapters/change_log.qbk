@@ -16,6 +16,7 @@
 # [pull_request 143] Fix exception_api.run-fail.cpp doc example
 # [pull_request 145] Fix build of library on recent Cygwin editions
 # [ticket 12095] disabling test with precondition leads to error
+# [ticket 13504] `[Boost::Test]` short form of `catch_system_errors` not working
 # [ticket 13525] Boost Test 1.67.0: Compilation error with GCC 4.6.3
 # [ticket 13528] Boost Test 1.67 crashes when the `--report_sink` command-line parameter is used
 

@@ -211,10 +211,15 @@ public:
 
             curr_token.trim_left( name.size() );
 
+            bool should_go_to_next = true;
             cstring value;
+          
 
             // Skip validations if parameter has optional value and we are at the end of token
             if( !value_separator.is_empty() || !found_param->p_has_optional_value ) {
+            
+                // we are given a separator or there is no optional value
+            
                 // Validate and skip value separator in the input
                 BOOST_TEST_I_ASSRT( found_id.m_value_separator == value_separator,
                                     format_error( found_param->p_name ) 
@@ -237,6 +242,40 @@ public:
                                         << found_param->p_name
                                         << " in the argument " << tr.current_token() );
             }
+            else if( (value_separator.is_empty() && found_id.m_value_separator.empty()) ) {
+                // Deduce value source
+                value = curr_token;
+                if( value.is_empty() ) {
+                    tr.next_token(); // tokenization broke the value, we check the next one
+                  
+                    if(!found_param->p_has_optional_value) {
+                        // there is no separator and there is no optional value
+                        // we look for the value on the next token
+                        // example "-t XXXX" (no default)
+                        // and we commit this value as being the passed value
+                        value = tr.current_token();
+                    }
+                    else {
+                        // there is no separator and the value is optional
+                        // we check the next token
+                        // example "-c" (defaults to true)
+                        // and commit this as the value if this is not a token
+                        cstring value_check = tr.current_token();
+                  
+                        cstring prefix_test, name_test, value_separator_test;
+                        bool negative_form_test;
+                        if( validate_token_format( value_check, prefix_test, name_test, value_separator_test, negative_form_test )
+                            && m_param_trie[prefix_test]) {
+                          // this is a token, we consume what we have
+                          should_go_to_next = false;
+                        }
+                        else {
+                          // this is a value, we commit it
+                          value = value_check;
+                        }
+                    }
+                }
+            }
 
             // Validate against argument duplication
             BOOST_TEST_I_ASSRT( !res.has( found_param->p_name ) || found_param->p_repeatable,
@@ -248,7 +287,9 @@ public:
             // Produce argument value
             found_param->produce_argument( value, negative_form, res );
 
-            tr.next_token();
+            if(should_go_to_next) {
+                tr.next_token();
+            }
         }
 
         // generate the remainder and return it's size
