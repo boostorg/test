@@ -9,13 +9,27 @@
 
 [#ref_CHANGE_LOG_3_8][h4 Boost.Test v3.8 / boost 1.68]
 
+[h5 New features]
+* The tests generated from a dataset are now instanciated during the framework setup. This
+  way, it is possible to access the `argc` and `argv` of the master test suite. For indicating
+  a dataset that should be instanciated later, use `data::make_delayed`.
+* It is now possible to create a dataset with `data::make`, with variable number of arguments. 
+  As the datasets are monomorphic, those should be castable to the first element type.
+
 [h5 Breaking changes]
 * the [link boost_test.tests_organization.test_suite.master_test_suite `master_test_suite_t`] is not copyable anymore.
+* As datasets can now be delayed, it might be that additional copies of the dataset arguments are performed.
+  This is especially the case for datasets created out of an `std::initializer_list`.
 
 [h5 Bugfixes and feature requests]
+# [pull_request 143] Fix exception_api.run-fail.cpp doc example
+# [pull_request 145] Fix build of library on recent Cygwin editions
+# [ticket 12095] disabling test with precondition leads to error
+# [ticket 12953] access to `master_test_suite().{argc, argv}`
+# [ticket 13504] `[Boost::Test]` short form of `catch_system_errors` not working
 # [ticket 13525] Boost Test 1.67.0: Compilation error with GCC 4.6.3
 # [ticket 13528] Boost Test 1.67 crashes when the `--report_sink` command-line parameter is used
-# [pull_request 143] Fix exception_api.run-fail.cpp doc example
+
 
 [#ref_CHANGE_LOG_3_7][h4 Boost.Test v3.7 / boost 1.67]
 

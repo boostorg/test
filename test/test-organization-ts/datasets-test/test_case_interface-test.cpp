@@ -159,4 +159,16 @@ BOOST_DATA_TEST_CASE(
 {
 }
 
+//____________________________________________________________________________//
+
+BOOST_AUTO_TEST_CASE( test_has_dataset )
+{
+    using t1 = decltype(data::make( 1 ));
+    BOOST_TEST((data::monomorphic::has_dataset<t1>::value));
+  
+    BOOST_TEST((data::monomorphic::has_dataset<int, t1>::value));
+    BOOST_TEST((!data::monomorphic::has_dataset<int, float>::value));
+}
+
+
 // EOF

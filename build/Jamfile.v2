@@ -4,6 +4,8 @@
 #
 #  See http://www.boost.org/libs/test for the library home page.
 
+import os ;
+
 import ../../predef/check/predef
     : check 
     : predef-check ;
@@ -12,6 +14,7 @@ project boost/test
     : source-location ../src
     : requirements <link>shared:<define>BOOST_TEST_DYN_LINK=1
                    <toolset>borland:<cxxflags>-w-8080
+                   <target-os>cygwin:<define>_POSIX_C_SOURCE=200112L
                    # Disable Warning about boost::noncopyable not being exported
                    <link>shared,<toolset>msvc:<cxxflags>-wd4275
                    <toolset>msvc:<cxxflags>-wd4671

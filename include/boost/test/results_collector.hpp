@@ -79,6 +79,12 @@ public:
     /// Returns true if test unit passed
     bool            passed() const;
 
+    /// Returns true if test unit skipped
+    ///
+    /// For test suites, this indicates if the test suite itself has been marked as
+    /// skipped, and not if the test suite contains any skipped test.
+    bool            skipped() const;
+  
     /// Returns true if the test unit was aborted (hard failure)
     bool            aborted() const;
 

@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_SUITE_END()
 
 
 //// --------------------------------------------------------------------------
-// Test suite 2, disabled by default, s1/test2 is explicitely enabled.
+// Test suite 2, disabled by default, s2/test2 is explicitely enabled.
 BOOST_AUTO_TEST_SUITE( s2,
 * utf::disabled()
 * utf::label( "label1" )
