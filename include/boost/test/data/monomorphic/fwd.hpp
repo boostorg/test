@@ -76,12 +76,26 @@ struct is_dataset : mpl::false_ {};
 //! A reference to a dataset is a dataset
 template<typename DataSet>
 struct is_dataset<DataSet&> : is_dataset<DataSet> {};
+template<typename DataSet>
+struct is_dataset<DataSet&&> : is_dataset<DataSet> {};
 
 //____________________________________________________________________________//
 
 //! A const dataset is a dataset
 template<typename DataSet>
 struct is_dataset<DataSet const> : is_dataset<DataSet> {};
+
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+
+//! Helper to check if a list of types contains a dataset
+template<class DataSet, class...>
+struct has_dataset : is_dataset<DataSet> {};
+
+template<class DataSet0, class DataSet1, class... DataSetTT>
+struct has_dataset<DataSet0, DataSet1, DataSetTT...>
+  : std::integral_constant<bool, is_dataset<DataSet0>::value || has_dataset<DataSet1, DataSetTT...>::value>
+{};
+#endif
 
 } // namespace monomorphic
 
@@ -161,6 +175,18 @@ template<typename T>
 inline monomorphic::init_list<T>
 make( std::initializer_list<T>&& );
 
+//____________________________________________________________________________//
+
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
+    !defined(BOOST_TEST_ERRONEOUS_INIT_LIST)
+//! @overload boost::unit_test::data::make()
+template<class T, class ...Args>
+inline typename std::enable_if<
+  !monomorphic::has_dataset<T, Args...>::value,
+  monomorphic::init_list<T>
+>::type
+make( T&& arg0, Args&&... args );
+#endif
 
 //____________________________________________________________________________//
 

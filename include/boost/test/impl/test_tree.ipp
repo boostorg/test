@@ -287,10 +287,8 @@ test_suite::add( test_unit_generator const& gen, decorator::collector& decorator
 void
 test_suite::add( boost::shared_ptr<test_unit_generator> gen_ptr, decorator::collector& decorators )
 {
-    std::pair<boost::shared_ptr<test_unit_generator>, std::vector<decorator::base_ptr> > toto(gen_ptr, decorators.get_lazy_decorators() );
-    m_generators.push_back(toto);
-    //m_generators.push_back(
-    //  std::make_pair<boost::shared_ptr<test_unit_generator>, std::vector<decorator::base_ptr> >(gen_ptr, decorators.get_lazy_decorators() ) );
+    std::pair<boost::shared_ptr<test_unit_generator>, std::vector<decorator::base_ptr> > tmp_p(gen_ptr, decorators.get_lazy_decorators() );
+    m_generators.push_back(tmp_p);
     decorators.reset();
 }
 

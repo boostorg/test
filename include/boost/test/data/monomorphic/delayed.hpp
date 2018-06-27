@@ -49,9 +49,16 @@ class delayed_dataset
 public:
     enum { arity = dataset_t::arity };
     using iterator = decltype(std::declval<dataset_t>().begin());
+    using sample = typename dataset_t::sample;
 
     delayed_dataset(Args... args)
     : m_args(std::make_tuple(std::forward<Args>(args)...))
+    {}
+
+    // Mostly for VS2013
+    delayed_dataset(delayed_dataset&& b) 
+    : m_args(std::move(b.m_args))
+    , m_dataset(std::move(b.m_dataset))
     {}
 
     boost::unit_test::data::size_t size() const {
@@ -102,6 +109,7 @@ make_delayed(Args... args)
 {
     return monomorphic::delayed_dataset<dataset_t, Args...>( std::forward<Args>(args)... );
 }
+
 
 } // namespace data
 } // namespace unit_test
