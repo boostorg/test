@@ -320,6 +320,8 @@ exe smoke-ts-included : smoke-ts/basic-smoke-test.cpp
 
 exe smoke-ts-included-2 : smoke-ts/basic-smoke-test2.cpp ;
 
+exe smoke-ts-included-3 : smoke-ts/basic-smoke-test3.cpp ;
+
 exe check-streams-on-exit : framework-ts/check-streams-on-exit.cpp ;
 
 alias "smoke-ts"
@@ -345,6 +347,42 @@ alias "smoke-ts"
 [ run smoke-ts-included : -x no -c --list_content=HRF : : $(requirements_datasets) : cla-mixed-long-short1 ]
 [ run smoke-ts-included : -x -c no --list_content=HRF : : $(requirements_datasets) : cla-mixed-long-short2 ]
 [ run smoke-ts-included : -x -c no --list_content=HRF -- --some-ignored : : $(requirements_datasets) : cla-mixed-long-short3 ]
+
+# those checks are mainly for consistency: we run a very simple thing, pass command line and 
+# check behaviour wrt. to the command line arguments
+
+[ run-fail smoke-ts-included-3 : : : : cla-no-args-checking-fail ] # sanity check
+
+# short vs. long arguments with optional value
+[ run-fail smoke-ts-included-3 : --result_code : : : cla-ignore-result-code-long-fail-optional ]
+[ run smoke-ts-included-3 : --result_code=0 : : : cla-ignore-result-code-long-no-fail ]
+[ run-fail smoke-ts-included-3 : --no_result_code=0 : : : cla-ignore-result-code-long-fail-negated-wrong ]
+[ run smoke-ts-included-3 : --no_result_code : : : cla-ignore-result-code-long-no-fail-negated ]
+[ run-fail smoke-ts-included-3 : --result_code=1 : : : cla-ignore-result-code-long-fail ]
+[ run-fail smoke-ts-included-3 : -c : : : cla-ignore-result-code-short-fail-optional ]
+[ run smoke-ts-included-3 : -c no : : : cla-ignore-result-code-short-no-fail ]
+[ run-fail smoke-ts-included-3 : -c yes : : : cla-ignore-result-code-short-fail ]
+
+# short vs. long arguments without optional arguments
+[ run-fail smoke-ts-included-3 : --run_test : : : cla-runtest-long-fail-no-optional ]
+[ run smoke-ts-included-3 : --run_test=case2 : : : cla-runtest-long-no-fail ]
+[ run smoke-ts-included-3 : --run_test=case2 : : : cla-runtest-long-fail1 ]
+[ run-fail smoke-ts-included-3 : --run_test=case2 --run_test=some_suite : : : cla-runtest-repeated-long-fail ]
+[ run-fail smoke-ts-included-3 : --run_test=some_suite/case1  : : : cla-runtest-long-fail2 ]
+[ run-fail smoke-ts-included-3 : -t : : : cla-runtest-short-fail-no-optional ]
+[ run-fail smoke-ts-included-3 : -t some_suite : : : cla-runtest-short-fail1 ]
+[ run-fail smoke-ts-included-3 : -t some_suite/case1 : : : cla-runtest-short-fail2 ]
+[ run smoke-ts-included-3 : -t case2 : : : cla-runtest-short-no-fail ]
+
+# mixed short/long
+[ run-fail smoke-ts-included-3 : --run_test=case2 -t some_suite : : : cla-runtest-repeated-mixed-long-fail1 ]
+[ run-fail smoke-ts-included-3 : -t some_suite --run_test=case2 : : : cla-runtest-repeated-mixed-long-fail2 ]
+[ run smoke-ts-included-3 : --run_test=case2 -t some_suite -c no : : : cla-runtest-repeated-mixed-long-no-fail1 ]
+[ run smoke-ts-included-3 : -t some_suite -c no --run_test=case2 : : : cla-runtest-repeated-mixed-long-no-fail2 ]
+[ run smoke-ts-included-3 : -c no --run_test=case2 -t some_suite : : : cla-runtest-repeated-mixed-long-no-fail3 ]
+[ run-fail smoke-ts-included-3 : --result_code=1 --run_test=case2 -t some_suite : : : cla-runtest-repeated-mixed-long-fail3 ]
+[ run smoke-ts-included-3 : --result_code=0 --run_test=case2 -t some_suite : : : cla-runtest-repeated-mixed-long-fail4 ]
+
 
 # : $(requirements_datasets)
 ;
