@@ -136,7 +136,7 @@ The __UTF__ is able to produce color output on systems which support it. To enab
 
 [h4 Acceptable values]
 
-[link boolean_param_value Boolean] with default value [*no].
+[link boolean_param_value Boolean] with default value [*yes].
 
 [h4 Command line syntax]
 
