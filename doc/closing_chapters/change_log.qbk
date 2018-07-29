@@ -11,8 +11,9 @@
 
 [h5 New features]
 * The tests generated from a dataset are now instanciated during the framework setup. This
-  way, it is possible to access the `argc` and `argv` of the master test suite. For indicating
-  a dataset that should be instanciated later, use `data::make_delayed`.
+  let the dataset generator access the `argc` and `argv` of the master test suite. For indicating
+  a dataset that should be instanciated in a delayed manner, a new `data::make_delayed` helper has
+  been introduced.
 * It is now possible to create a dataset with `data::make`, with variable number of arguments. 
   As the datasets are monomorphic, those should be castable to the first element type.
 

@@ -54,6 +54,7 @@ These units are the *test cases*, the *test suites* and the *fixtures*.
 
 [include test_cases.qbk]
 [include test_suites.qbk]
+[include test_naming.qbk]
 [include decorators.qbk]
 [include fixtures.qbk]
 [include managing_tests_dependencies.qbk]
