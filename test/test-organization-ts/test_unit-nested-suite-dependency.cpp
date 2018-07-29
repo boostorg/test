@@ -18,12 +18,12 @@
 // initial reproducing snippet on the corresponding ticket
 #if 0
 BOOST_AUTO_TEST_SUITE(suite1, *boost::unit_test::depends_on("suite2"))
-	BOOST_AUTO_TEST_SUITE(suite1_nested)
+  BOOST_AUTO_TEST_SUITE(suite1_nested)
     BOOST_AUTO_TEST_CASE(suite1_test1)
     {
       BOOST_CHECK(true);
     }
-	BOOST_AUTO_TEST_SUITE_END()
+  BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(suite2)
