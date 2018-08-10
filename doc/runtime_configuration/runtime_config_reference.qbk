@@ -131,8 +131,8 @@ within an IDE or to get a coredump for a stack analysis. See
 [/ ###############################################################################################]
 [section:color_output `color_output`]
 
-The __UTF__ is able to produce color output on systems which support it. To enable this behavior, set this option to
-`yes`. By default the framework does not produce color output.
+The __UTF__ is able to produce color output on systems which support it. To disable this behavior, set this option to
+`no`. By default the framework produces color output.
 
 [h4 Acceptable values]
 
