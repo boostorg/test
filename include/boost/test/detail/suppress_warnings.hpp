@@ -26,7 +26,7 @@
 # pragma warning(disable: 4511) // 'class' : copy constructor could not be generated
 #endif
 
-#if BOOST_CLANG
+#ifdef BOOST_CLANG
 # pragma clang diagnostic push
 # pragma clang diagnostic ignored "-Wvariadic-macros"
 #endif
