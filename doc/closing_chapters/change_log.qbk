@@ -14,6 +14,7 @@
 [h5 Breaking changes]
 
 [h5 Bugfixes and feature requests]
+# [pull_request 151] Fix warning: `BOOST_CLANG` is not defined, evaluates to `0`
 
 [#ref_CHANGE_LOG_3_8][h4 Boost.Test v3.8 / boost 1.68]
 
