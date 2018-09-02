@@ -218,6 +218,7 @@ test-suite "execution_monitor-ts"
   [ boost.test-self-test run : execution_monitor-ts : errors-handling-test : : baseline-outputs/errors-handling-test.pattern
                                                                                baseline-outputs/errors-handling-test.pattern2 ]
   [ boost.test-self-test run : execution_monitor-ts : custom-exception-test ]
+  [ boost.test-self-test run : execution_monitor-ts : boost_exception-test ]
 ;
 
 #_________________________________________________________________________________________________#
