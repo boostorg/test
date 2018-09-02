@@ -11,7 +11,7 @@
 
 
 [/ Test cases ###############################################################################################]
-[section:test_org_boost_test_case `BOOST_TEST_CASE`]
+[section:test_org_boost_test_case `BOOST_TEST_CASE` and `BOOST_TEST_CASE_NAME`]
 Creates a test case for manual registration. The registration in the test tree should be performed manually.
 
 See [link ref_BOOST_TEST_CASE here] for more details.

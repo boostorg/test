@@ -11,7 +11,9 @@
 
 #define BOOST_TEST_MODULE test_clashing_names
 #include <boost/test/unit_test.hpp>
+#include <boost/test/utils/string_cast.hpp>
 #include <boost/mpl/list.hpp>
+#include <boost/bind.hpp>
 
 void suite1_test1()
 {
@@ -65,4 +67,27 @@ BOOST_AUTO_TEST_CASE( test_clashing_cases_template_test_case )
     BOOST_CHECK_NO_THROW( t_suite2->add( BOOST_TEST_CASE_TEMPLATE( template_test_case, test_types1 ) ) );
     BOOST_CHECK_THROW( t_suite1->add( BOOST_TEST_CASE_TEMPLATE( template_test_case, test_types2 ) ),
                        boost::unit_test::framework::setup_error );
+}
+
+void test2(int value)
+{
+  BOOST_TEST(value >= 0);
+}
+
+
+BOOST_AUTO_TEST_CASE( test_clashing_cases_with_name )
+{
+    using namespace boost::unit_test;
+    test_suite* master_ts = BOOST_TEST_SUITE("local master");
+
+    test_suite* t_suite1 = BOOST_TEST_SUITE( "suite1" );
+    master_ts->add(t_suite1);
+    t_suite1->add( BOOST_TEST_CASE( suite1_test1 ) );
+    t_suite1->add( BOOST_TEST_CASE( boost::bind( test2, 0 ) ) );
+    BOOST_CHECK_THROW( t_suite1->add( BOOST_TEST_CASE( boost::bind( test2, 0 ) ) ),
+                       boost::unit_test::framework::setup_error );
+
+    for(int i = 0; i < 10; i++) {
+        t_suite1->add( BOOST_TEST_CASE_NAME( boost::bind( test2, i ), "test-X-" + boost::unit_test::utils::string_cast(i) ) );
+    }
 }
