@@ -14,6 +14,8 @@
 [h5 Breaking changes]
 
 [h5 Bugfixes and feature requests]
+# [github_issue 149] Setting color_output=no does not disable the output of color format codes
+# [pull_request 154] When specifying `--color_output=no`, don't output color codes
 
 [#ref_CHANGE_LOG_3_8][h4 Boost.Test v3.8 / boost 1.68]
 
