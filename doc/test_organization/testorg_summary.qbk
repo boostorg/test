@@ -16,7 +16,7 @@
   [/ ###############################################################################################]
   [/ Test cases]
   [
-    [__BOOST_TEST_CASE__]
+    [__BOOST_TEST_CASE__] [__BOOST_TEST_CASE_NAME__]
     [Manual registration of a test case]
   ]
   [
