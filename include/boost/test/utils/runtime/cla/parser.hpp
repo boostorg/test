@@ -314,7 +314,7 @@ public:
             << BOOST_VERSION % 100       ;
        ostr << " with ";
 #if defined(BOOST_TEST_INCLUDED)
-       ostr << "single header inclusion of";
+       ostr << "header-only inclusion of";
 #elif defined(BOOST_TEST_DYN_LINK)
        ostr << "dynamic linking to";
 #else

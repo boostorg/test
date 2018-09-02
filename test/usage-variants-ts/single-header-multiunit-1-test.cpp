@@ -5,15 +5,11 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : single header usage variant test
+//  Description : header-only usage variant with multiple translation units test 
 // ***************************************************************************
 
 // Boost.Test
-#define BOOST_TEST_MODULE single header multiunit test
+#define BOOST_TEST_MODULE header-only multiunit test
 #include <boost/test/included/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE( test1 )
