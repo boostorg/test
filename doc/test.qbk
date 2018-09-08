@@ -21,6 +21,7 @@
 
 [template ticket[number]'''<ulink url="https://svn.boost.org/trac/boost/ticket/'''[number]'''">'''#[number]'''</ulink>''']
 [template pull_request[number]'''<ulink url="https://github.com/boostorg/test/pull/'''[number]'''">'''#PR-[number]'''</ulink>''']
+[template github_issue[number]'''<ulink url="https://github.com/boostorg/test/issues/'''[number]'''">'''#GH-[number]'''</ulink>''']
 
 [def __UTF__ /Unit Test Framework/]
 [def __PEM__ /Program Execution Monitor]
@@ -99,6 +100,7 @@
 [/ Tests cases organization]
 [def __BOOST_AUTO_TEST_CASE__                   [link boost_test.utf_reference.test_org_reference.test_org_boost_auto_test_case `BOOST_AUTO_TEST_CASE`]]
 [def __BOOST_TEST_CASE__                        [link boost_test.utf_reference.test_org_reference.test_org_boost_test_case `BOOST_TEST_CASE`]]
+[def __BOOST_TEST_CASE_NAME__                   [link boost_test.utf_reference.test_org_reference.test_org_boost_test_case `BOOST_TEST_CASE_NAME`]]
 [def __BOOST_AUTO_TEST_CASE_TEMPLATE__          [link boost_test.utf_reference.test_org_reference.test_org_boost_test_case_auto_template `BOOST_AUTO_TEST_CASE_TEMPLATE`]]
 [def __BOOST_TEST_CASE_TEMPLATE__               [link boost_test.utf_reference.test_org_reference.test_org_boost_test_case_template `BOOST_TEST_CASE_TEMPLATE`]]
 [def __BOOST_TEST_CASE_TEMPLATE_FUNCTION__      [link boost_test.utf_reference.test_org_reference.test_org_boost_test_case_template_function `BOOST_TEST_CASE_TEMPLATE_FUNCTION`]]
