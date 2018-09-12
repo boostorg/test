@@ -133,9 +133,7 @@ protected:
 
     CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
     GetConsoleScreenBufferInfo(hConsole, &consoleInfo);
-    //if(!has_written_console_ext) {
-        saved_attributes = consoleInfo.wAttributes;
-    //}
+    saved_attributes = consoleInfo.wAttributes;
 
     WORD fg_attr = 0;
     switch(m_fg)
@@ -207,9 +205,7 @@ protected:
       break;
     }
 
-    SetConsoleTextAttribute(hConsole, fg_attr | bg_attr | text_attr); 
-
-    //has_written_console_ext = true;
+    SetConsoleTextAttribute(hConsole, fg_attr | bg_attr | text_attr);
     return;
   }
 
@@ -220,8 +216,7 @@ public:
     term_attr::_  attr = term_attr::NORMAL,
     term_color::_ fg   = term_color::ORIGINAL,
     term_color::_ bg   = term_color::ORIGINAL ) 
-  : /*has_written_console_ext(false)
-  , */m_is_color_output(is_color_output)
+  : m_is_color_output(is_color_output)
   , m_attr(attr)
   , m_fg(fg)
   , m_bg(bg)
@@ -243,7 +238,6 @@ private:
 protected:
   // Data members
   mutable WORD saved_attributes;
-  //mutable bool has_written_console_ext;
 };
 
 #endif
@@ -261,19 +255,21 @@ struct scope_setcolor {
                                 term_color::_ fg   = term_color::ORIGINAL,
                                 term_color::_ bg   = term_color::ORIGINAL )
     : m_os( &os )
+    , m_is_color_output( is_color_output )
     {
         os << setcolor( is_color_output, attr, fg, bg );
     }
     ~scope_setcolor()
     {
         if( m_os )
-            *m_os << setcolor();
+            *m_os << setcolor( m_is_color_output );
     }
 private:
     scope_setcolor(const scope_setcolor& r);
     scope_setcolor& operator=(const scope_setcolor& r);
     // Data members
     std::ostream* m_os;
+    bool m_is_color_output;
 };
 
 #else
@@ -286,9 +282,8 @@ struct scope_setcolor : setcolor {
     term_attr::_  attr = term_attr::NORMAL,
     term_color::_ fg   = term_color::ORIGINAL,
     term_color::_ bg   = term_color::ORIGINAL )
-    : 
-    setcolor(is_color_output, attr, fg, bg), 
-    m_os( &os )
+  : setcolor(is_color_output, attr, fg, bg)
+  , m_os( &os )
   {
     os << *this;
   }
