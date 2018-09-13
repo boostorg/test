@@ -27,7 +27,7 @@
 #include <boost/test/utils/setcolor.hpp>
 
 // Boost
-#include <boost/function/function2.hpp>
+#include <boost/function.hpp>
 #include <boost/algorithm/cxx11/all_of.hpp>
 
 // STL

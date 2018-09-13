@@ -393,8 +393,6 @@ alias "smoke-ts"
 [ run-fail smoke-ts-included-3 : --result_code=1 --run_test=case2 -t some_suite : : : cla-runtest-repeated-mixed-long-fail3 ]
 [ run smoke-ts-included-3 : --result_code=0 --run_test=case2 -t some_suite : : : cla-runtest-repeated-mixed-long-fail4 ]
 
-
-# : $(requirements_datasets)
 ;
 
 #_________________________________________________________________________________________________#
@@ -420,7 +418,7 @@ rule test-selfcontained ( path )
 {
     for local file in [ path.glob-tree $(path) : *.hpp ]
     {
-        result += [ compile selfcontained.cpp : <define>BOOST_HEADER_TEST_NAME=$(file) : [ regex.replace [ path.relative-to $(path) $(file) ] "/" "_" ] ] ;
+        result += [ compile selfcontained.cpp : $(requirements_datasets) <define>BOOST_HEADER_TEST_NAME=$(file) : [ regex.replace [ path.relative-to $(path) $(file) ] "/" "_" ] ] ;
     }
 
     return $(result) ;
