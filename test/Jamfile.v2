@@ -9,6 +9,7 @@ import path ;
 import project ;
 import property ;
 import property-set ;
+import regex ;
 import "class" : new ;
 
 import ../../config/checks/config : requires ;
@@ -414,5 +415,18 @@ alias test
 ;
 
 #_________________________________________________________________________________________________#
+
+rule test-selfcontained ( path )
+{
+    for local file in [ path.glob-tree $(path) : *.hpp ]
+    {
+        result += [ compile selfcontained.cpp : <define>BOOST_HEADER_TEST_NAME=$(file) : [ regex.replace [ path.relative-to $(path) $(file) ] "/" "_" ] ] ;
+    }
+
+    return $(result) ;
+}
+
+# Test for self-contained headers
+alias test_selfcontained_headers : [ test-selfcontained ../include ] ;
 
 # EOF
