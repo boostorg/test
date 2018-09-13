@@ -9,6 +9,7 @@ import path ;
 import project ;
 import property ;
 import property-set ;
+import regex ;
 import "class" : new ;
 
 import ../../config/checks/config : requires ;
@@ -141,7 +142,7 @@ test-suite "framework-ts"
   [ compile-fail framework-ts/master-test-suite-non-copyable-test.cpp ../build//included ]
 
   # ticket 13371: "Use-after-free with --log_sink=file"
-  # this single check is not enough as we should check for various command line options: we make extensive 
+  # this single check is not enough as we should check for various command line options: we make extensive
   # checks in the smoke-tests (see below)
   # [ boost.test-self-test run : framework-ts : check-streams-on-exit : included ]
 ;
@@ -306,12 +307,12 @@ rule boost.test-smoke-ts-logger ( test-name-prefix : logger ? : log_or_report ? 
                               : : $(requirements) $(conditions-format-sink)  : $(test-name-prefix)-3-$(log_or_report)-format-to-file-$(log_new_style)-all ]
       [ run smoke-ts-included : --run_test=test1/_2
                               : : $(requirements) $(conditions-format) : $(test-name-prefix)-4-$(log_or_report)-format-$(log_new_style)-filter ]
-      
+
       [ run check-streams-on-exit :
                               : : $(requirements) $(conditions-format) : $(test-name-prefix)-5--$(log_or_report)-format--newstyle-$(log_new_style) ]
       [ run check-streams-on-exit :
-                              : : $(requirements) $(conditions-format-sink) : $(test-name-prefix)-6--$(log_or_report)-format--newstyle-$(log_new_style)--with-sink ]                        
- 
+                              : : $(requirements) $(conditions-format-sink) : $(test-name-prefix)-6--$(log_or_report)-format--newstyle-$(log_new_style)--with-sink ]
+
       ;
 
    return $(to-return) ;
@@ -357,7 +358,7 @@ alias "smoke-ts"
 [ run smoke-ts-included : -x -c no --list_content=HRF : : $(requirements_datasets) : cla-mixed-long-short2 ]
 [ run smoke-ts-included : -x -c no --list_content=HRF -- --some-ignored : : $(requirements_datasets) : cla-mixed-long-short3 ]
 
-# those checks are mainly for consistency: we run a very simple thing, pass command line and 
+# those checks are mainly for consistency: we run a very simple thing, pass command line and
 # check behaviour wrt. to the command line arguments
 
 [ run-fail smoke-ts-included-3 : : : : cla-no-args-checking-fail ] # sanity check
@@ -414,5 +415,18 @@ alias test
 ;
 
 #_________________________________________________________________________________________________#
+
+rule test-selfcontained ( path )
+{
+    for local file in [ path.glob-tree $(path) : *.hpp ]
+    {
+        result += [ compile selfcontained.cpp : <define>BOOST_HEADER_TEST_NAME=$(file) : [ regex.replace [ path.relative-to $(path) $(file) ] "/" "_" ] ] ;
+    }
+
+    return $(result) ;
+}
+
+# Test for self-contained headers
+alias test_selfcontained_headers : [ test-selfcontained ../include ] ;
 
 # EOF
