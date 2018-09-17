@@ -1178,6 +1178,7 @@ finalize_setup_phase( test_unit_id master_tu_id )
         master_tu_id = master_test_suite().p_id;
 
     // 10. Apply all decorators to the auto test units
+    // 10. checks for consistency (duplicate names, etc)
     class apply_decorators : public test_tree_visitor {
     private:
         // test_tree_visitor interface
@@ -1185,6 +1186,7 @@ finalize_setup_phase( test_unit_id master_tu_id )
         virtual bool    test_suite_start( test_suite const& ts)
         {
             const_cast<test_suite&>(ts).generate();
+            const_cast<test_suite&>(ts).check_for_duplicate_test_cases();
             return test_tree_visitor::test_suite_start(ts);
         }
       

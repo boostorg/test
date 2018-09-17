@@ -187,6 +187,10 @@ public:
     //! Generates all the delayed test_units from the generators
     void            generate( );
 
+    //! Check for duplicates name in test cases
+    //!
+    //! Raises a setup_error if there are duplicates
+    void            check_for_duplicate_test_cases();
 
     // access methods
     test_unit_id    get( const_string tu_name ) const;

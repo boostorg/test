@@ -36,6 +36,7 @@
 // STL
 #include <algorithm>
 #include <vector>
+#include <set>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -241,14 +242,6 @@ test_suite::test_suite( const_string module_name )
 void
 test_suite::add( test_unit* tu, counter_t expected_failures, unsigned timeout )
 {
-    // check for clashing names #12597
-    for( test_unit_id_list::const_iterator it(m_children.begin()), ite(m_children.end());
-         it < ite;
-         ++it) {
-        BOOST_TEST_SETUP_ASSERT( tu->p_name != framework::get(*it, TUT_ANY).p_name,
-                                 "test unit with name '" + tu->p_name.value + std::string("' registered multiple times") );
-    }
-
     tu->p_timeout.value = timeout;
 
     m_children.push_back( tu->p_id );
@@ -284,6 +277,8 @@ test_suite::add( test_unit_generator const& gen, decorator::collector_t& decorat
     decorators.reset();
 }
 
+//____________________________________________________________________________//
+
 void
 test_suite::add( boost::shared_ptr<test_unit_generator> gen_ptr, decorator::collector_t& decorators )
 {
@@ -291,6 +286,8 @@ test_suite::add( boost::shared_ptr<test_unit_generator> gen_ptr, decorator::coll
     m_generators.push_back(tmp_p);
     decorators.reset();
 }
+
+//____________________________________________________________________________//
 
 void
 test_suite::generate( )
@@ -320,6 +317,27 @@ test_suite::generate( )
     #endif
 }
 
+//____________________________________________________________________________//
+
+void
+test_suite::check_for_duplicate_test_cases() {
+    // check for clashing names #12597
+    std::set<std::string> names;
+    for( test_unit_id_list::const_iterator it(m_children.begin()), ite(m_children.end());
+         it < ite;
+         ++it) {
+         std::string name = framework::get(*it, TUT_ANY).p_name;
+         std::pair<std::set<std::string>::iterator, bool> ret = names.insert(name);
+         BOOST_TEST_SETUP_ASSERT(ret.second,
+            "test unit with name '"
+            + name
+            + std::string("' registered multiple times in the test suite '")
+            + this->p_name.value
+            + "'");
+    }
+
+    return;
+}
 
 //____________________________________________________________________________//
 

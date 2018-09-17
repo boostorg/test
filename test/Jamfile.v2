@@ -186,6 +186,7 @@ test-suite "test-organization-ts"
   [ boost.test-self-test run : test-organization-ts : test-tree-management-test ]
   [ boost.test-self-test run : test-organization-ts : test-tree-several-suite-decl ]
   [ boost.test-self-test run : test-organization-ts : test_unit-report-clashing-names ]
+  [ boost.test-self-test run : test-organization-ts : test_unit-several-ts-same-name ]
   # cannot pass paramters from the command line, another test developed below
   # [ boost.test-self-test run : test-organization-ts : dataset-master-test-suite-accessible-test : : --param1=1 --param2=2 : : : : $(requirements_datasets) ]
 ;
