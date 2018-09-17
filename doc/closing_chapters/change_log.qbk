@@ -17,6 +17,7 @@
 [h5 Bugfixes and feature requests]
 # [pull_request 148] Colored output contradiction
 # [github_issue 149] Setting color_output=no does not disable the output of color format codes
+# [github_issue 163] Significant start slowdown on MSVC x64/Debug after upgrade to `v1.68.0`
 # [pull_request 151] Fix warning: `BOOST_CLANG` is not defined, evaluates to `0`
 # [pull_request 154] When specifying `--color_output=no`, don't output color codes
 # [ticket 13637] Fix for Bug [ticket 12597] causes a problem with `BOOST_TEST_CASE`
