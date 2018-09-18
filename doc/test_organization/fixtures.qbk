@@ -130,7 +130,7 @@ the `setup` and `teardown`:
           { BOOST_TEST_MESSAGE("ctor " << s); }
       void setup()
           { BOOST_TEST_MESSAGE("optional setup " << s); }
-      void setup()
+      void teardown()
           { BOOST_TEST_MESSAGE("optional teardown " << s); }
       ~Fx()
           { BOOST_TEST_MESSAGE("dtor " << s); }
