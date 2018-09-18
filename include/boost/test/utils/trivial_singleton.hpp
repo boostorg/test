@@ -32,7 +32,7 @@ namespace unit_test {
 // ************************************************************************** //
 
 template<typename Derived>
-class singleton {
+class BOOST_TEST_DECL singleton {
 public:
     static Derived& instance() { static Derived the_inst; return the_inst; }
 
