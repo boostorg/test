@@ -19,6 +19,7 @@
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/unit_test_log_formatter.hpp>
 #include <boost/test/execution_monitor.hpp>
+#include <boost/test/impl/trivial_singleton.ipp>
 #include <boost/test/framework.hpp>
 #include <boost/test/unit_test_parameters.hpp>
 

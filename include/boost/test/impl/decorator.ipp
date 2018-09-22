@@ -18,6 +18,7 @@
 // Boost.Test
 #include <boost/test/tree/decorator.hpp>
 #include <boost/test/tree/test_unit.hpp>
+#include <boost/test/impl/trivial_singleton.ipp>
 
 #include <boost/test/framework.hpp>
 #if BOOST_TEST_SUPPORT_TOKEN_ITERATOR
