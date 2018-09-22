@@ -16,6 +16,7 @@
 // Boost.Test
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/results_collector.hpp>
+#include <boost/test/impl/trivial_singleton.ipp>
 #include <boost/test/framework.hpp>
 
 #include <boost/test/tree/test_unit.hpp>

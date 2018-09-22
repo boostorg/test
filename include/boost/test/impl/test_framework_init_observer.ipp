@@ -14,6 +14,7 @@
 
 // Boost.Test
 #include <boost/test/test_framework_init_observer.hpp>
+#include <boost/test/impl/trivial_singleton.ipp>
 #include <boost/test/framework.hpp>
 #include <boost/test/detail/suppress_warnings.hpp>
 

@@ -34,7 +34,7 @@ namespace unit_test {
 template<typename Derived>
 class singleton {
 public:
-    static Derived& instance() { static Derived the_inst; return the_inst; }
+    BOOST_TEST_DECL static Derived& instance();
 
     BOOST_DELETED_FUNCTION(singleton(singleton const&))
     BOOST_DELETED_FUNCTION(singleton& operator=(singleton const&))

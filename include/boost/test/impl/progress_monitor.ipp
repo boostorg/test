@@ -17,6 +17,7 @@
 
 // Boost.Test
 #include <boost/test/progress_monitor.hpp>
+#include <boost/test/impl/trivial_singleton.ipp>
 #include <boost/test/unit_test_parameters.hpp>
 
 #include <boost/test/utils/setcolor.hpp>
