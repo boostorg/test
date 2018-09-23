@@ -17,7 +17,6 @@
 // Boost.Test
 #include <boost/test/execution_monitor.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
-#include <boost/test/utils/trivial_singleton.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 

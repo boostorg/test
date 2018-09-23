@@ -14,7 +14,6 @@
 
 // Boost.Test
 #include <boost/test/tree/observer.hpp>
-#include <boost/test/utils/trivial_singleton.hpp>
 
 // STL
 #include <iosfwd>   // for std::ostream&

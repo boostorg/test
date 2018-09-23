@@ -22,7 +22,6 @@
 #include <boost/test/tree/fixture.hpp>
 
 #include <boost/test/tools/assertion_result.hpp>
-#include <boost/test/utils/trivial_singleton.hpp>
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 
 // Boost

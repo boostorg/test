@@ -18,8 +18,6 @@
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
 
-#include <boost/test/utils/trivial_singleton.hpp>
-
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//

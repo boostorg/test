@@ -22,7 +22,6 @@
 #include <boost/test/detail/fwd_decl.hpp>
 
 #include <boost/test/utils/wrap_stringstream.hpp>
-#include <boost/test/utils/trivial_singleton.hpp>
 #include <boost/test/utils/lazy_ostream.hpp>
 
 // Boost
