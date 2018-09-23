@@ -18,8 +18,6 @@
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
 
-#include <boost/test/utils/trivial_singleton.hpp>
-
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
@@ -33,7 +31,7 @@ namespace unit_test {
 /// This class collects the state of the init/termination of the unit test framework.
 ///
 /// @see boost::unit_test::test_observer
-class BOOST_TEST_DECL framework_init_observer_t : public test_observer, public singleton<framework_init_observer_t> {
+class BOOST_TEST_DECL framework_init_observer_t : public test_observer {
 public:
 
     virtual void        test_start( counter_t );
@@ -49,7 +47,7 @@ public:
     /// Indicates if a failure has been recorded so far
     bool                has_failed( ) const;
 
-private:
+    /// Singleton pattern
     BOOST_TEST_SINGLETON_CONS( framework_init_observer_t )
 };
 
