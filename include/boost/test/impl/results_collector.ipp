@@ -139,6 +139,10 @@ results_collector_impl& s_rc_impl() { static results_collector_impl the_inst; re
 
 //____________________________________________________________________________//
 
+BOOST_TEST_SINGLETON_CONS_IMPL( results_collector_t )
+
+//____________________________________________________________________________//
+
 void
 results_collector_t::test_start( counter_t )
 {

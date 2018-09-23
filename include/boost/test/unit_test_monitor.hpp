@@ -30,7 +30,7 @@ namespace unit_test {
 // **************               unit_test_monitor              ************** //
 // ************************************************************************** //
 
-class BOOST_TEST_DECL unit_test_monitor_t : public singleton<unit_test_monitor_t>, public execution_monitor {
+class BOOST_TEST_DECL unit_test_monitor_t :public execution_monitor {
 public:
     enum error_level {
         test_ok                 =  0,
@@ -48,7 +48,7 @@ public:
     // monitor method
     error_level execute_and_translate( boost::function<void ()> const& func, unsigned timeout = 0 );
 
-private:
+    // singleton pattern
     BOOST_TEST_SINGLETON_CONS( unit_test_monitor_t )
 };
 

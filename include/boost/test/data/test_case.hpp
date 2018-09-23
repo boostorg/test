@@ -147,12 +147,12 @@ public:
     : m_dataset( ds )
     , m_generated( false )
     , m_tc_name( ut_detail::normalize_test_case_name( tc_name ) )
-    , m_tc_file( tc_file )    
+    , m_tc_file( tc_file )
     , m_tc_line( tc_line )
     , m_tc_index( 0 )
     {}
 #endif
-    
+
 public:
     virtual test_unit* next() const
     {
@@ -273,7 +273,7 @@ BOOST_AUTO_TU_REGISTRAR( BOOST_PP_CAT(test_name, case) )(               \
           BOOST_STRINGIZE( test_name ),                                 \
           __FILE__, __LINE__,                                           \
           boost::unit_test::data::ds_detail::seed{} ->* dataset ),      \
-    boost::unit_test::decorator::collector::instance() );               \
+    boost::unit_test::decorator::collector_t::instance() );             \
                                                                         \
 BOOST_AUTO_TEST_SUITE_END()                                             \
                                                                         \

@@ -274,7 +274,7 @@ test_suite::add( test_unit_generator const& gen, unsigned timeout )
 //____________________________________________________________________________//
 
 void
-test_suite::add( test_unit_generator const& gen, decorator::collector& decorators )
+test_suite::add( test_unit_generator const& gen, decorator::collector_t& decorators )
 {
     test_unit* tu;
     while((tu = gen.next()) != 0) {
@@ -285,7 +285,7 @@ test_suite::add( test_unit_generator const& gen, decorator::collector& decorator
 }
 
 void
-test_suite::add( boost::shared_ptr<test_unit_generator> gen_ptr, decorator::collector& decorators )
+test_suite::add( boost::shared_ptr<test_unit_generator> gen_ptr, decorator::collector_t& decorators )
 {
     std::pair<boost::shared_ptr<test_unit_generator>, std::vector<decorator::base_ptr> > tmp_p(gen_ptr, decorators.get_lazy_decorators() );
     m_generators.push_back(tmp_p);
@@ -453,7 +453,7 @@ normalize_test_case_name( const_string name )
 // **************           auto_test_unit_registrar           ************** //
 // ************************************************************************** //
 
-auto_test_unit_registrar::auto_test_unit_registrar( test_case* tc, decorator::collector& decorators, counter_t exp_fail )
+auto_test_unit_registrar::auto_test_unit_registrar( test_case* tc, decorator::collector_t& decorators, counter_t exp_fail )
 {
     framework::current_auto_test_suite().add( tc, exp_fail );
 
@@ -463,7 +463,7 @@ auto_test_unit_registrar::auto_test_unit_registrar( test_case* tc, decorator::co
 
 //____________________________________________________________________________//
 
-auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name, const_string ts_file, std::size_t ts_line, decorator::collector& decorators )
+auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name, const_string ts_file, std::size_t ts_line, decorator::collector_t& decorators )
 {
     test_unit_id id = framework::current_auto_test_suite().get( ts_name );
 
@@ -486,14 +486,14 @@ auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name, const_
 
 //____________________________________________________________________________//
 
-auto_test_unit_registrar::auto_test_unit_registrar( test_unit_generator const& tc_gen, decorator::collector& decorators )
+auto_test_unit_registrar::auto_test_unit_registrar( test_unit_generator const& tc_gen, decorator::collector_t& decorators )
 {
     framework::current_auto_test_suite().add( tc_gen, decorators );
 }
 
 //____________________________________________________________________________//
 
-auto_test_unit_registrar::auto_test_unit_registrar( boost::shared_ptr<test_unit_generator> tc_gen, decorator::collector& decorators )
+auto_test_unit_registrar::auto_test_unit_registrar( boost::shared_ptr<test_unit_generator> tc_gen, decorator::collector_t& decorators )
 {
     framework::current_auto_test_suite().add( tc_gen, decorators );
 }

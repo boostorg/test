@@ -176,10 +176,10 @@ public:
     void            add( test_unit_generator const& gen, unsigned timeout = 0 );
 
     /// @overload
-    void            add( test_unit_generator const& gen, decorator::collector& decorators );
+    void            add( test_unit_generator const& gen, decorator::collector_t& decorators );
   
     /// @overload
-    void            add( boost::shared_ptr<test_unit_generator> gen_ptr, decorator::collector& decorators );
+    void            add( boost::shared_ptr<test_unit_generator> gen_ptr, decorator::collector_t& decorators );
 
     //! Removes a test from the test suite.
     void            remove( test_unit_id id );

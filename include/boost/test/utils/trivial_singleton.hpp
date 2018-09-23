@@ -32,7 +32,7 @@ namespace unit_test {
 // ************************************************************************** //
 
 template<typename Derived>
-class singleton {
+class BOOST_TEST_DECL singleton {
 public:
     static Derived& instance() { static Derived the_inst; return the_inst; }
 
@@ -46,10 +46,24 @@ protected:
 
 //____________________________________________________________________________//
 
-#define BOOST_TEST_SINGLETON_CONS( type )       \
+#define BOOST_TEST_SINGLETON_CONS_OLD( type )       \
 friend class boost::unit_test::singleton<type>; \
 type() {}                                       \
 /**/
+
+#define BOOST_TEST_SINGLETON_CONS( type )               \
+public:                                                 \
+  static type& instance();                              \
+private:                                                \
+  BOOST_DELETED_FUNCTION(type(type const&))             \
+  BOOST_DELETED_FUNCTION(type& operator=(type const&))  \
+  BOOST_DEFAULTED_FUNCTION(type(), {})                  \
+  BOOST_DEFAULTED_FUNCTION(~type(), {})                 \
+
+#define BOOST_TEST_SINGLETON_CONS_IMPL( type )          \
+  type& type::instance() {                              \
+    static type the_inst; return the_inst;              \
+  }                                                     \
 
 #if BOOST_WORKAROUND(__DECCXX_VER, BOOST_TESTED_AT(60590042))
 
