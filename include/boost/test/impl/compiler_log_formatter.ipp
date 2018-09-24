@@ -228,7 +228,7 @@ void
 compiler_log_formatter::log_entry_finish( std::ostream& output )
 {
     if( m_color_output )
-        output << utils::setcolor();
+        output << utils::setcolor(m_color_output);
 
     output << std::endl;
 }
