@@ -27,8 +27,11 @@ BOOST_AUTO_TEST_CASE( test_clashing_suites )
     test_suite* t_suite1 = BOOST_TEST_SUITE( "suite1" );
     test_suite* t_suite2 = BOOST_TEST_SUITE( "suite1" );
     master_ts->add(t_suite1);
-    BOOST_CHECK_THROW( master_ts->add(t_suite2),
-                       boost::unit_test::framework::setup_error );
+    BOOST_CHECK_NO_THROW( master_ts->add(t_suite2) );
+
+    master_ts->p_default_status.value = test_unit::RS_ENABLED;
+    BOOST_CHECK_THROW(framework::finalize_setup_phase( master_ts->p_id ),
+                      boost::unit_test::framework::setup_error );
 }
 
 BOOST_AUTO_TEST_CASE( test_clashing_cases )
@@ -41,8 +44,9 @@ BOOST_AUTO_TEST_CASE( test_clashing_cases )
     master_ts->add(t_suite2);
 
     t_suite1->add( BOOST_TEST_CASE( suite1_test1 ) );
-    BOOST_CHECK_THROW( t_suite1->add( BOOST_TEST_CASE( suite1_test1 ) ),
-                       boost::unit_test::framework::setup_error );
+    BOOST_CHECK_NO_THROW( t_suite1->add( BOOST_TEST_CASE( suite1_test1 ) ) );
+    BOOST_CHECK_THROW(framework::finalize_setup_phase( master_ts->p_id ),
+                      boost::unit_test::framework::setup_error );
 
     BOOST_CHECK_NO_THROW( t_suite2->add( BOOST_TEST_CASE( suite1_test1 ) ) );
 }
@@ -65,8 +69,11 @@ BOOST_AUTO_TEST_CASE( test_clashing_cases_template_test_case )
     typedef boost::mpl::list<int, long, unsigned char, int> test_types2;
 
     BOOST_CHECK_NO_THROW( t_suite2->add( BOOST_TEST_CASE_TEMPLATE( template_test_case, test_types1 ) ) );
-    BOOST_CHECK_THROW( t_suite1->add( BOOST_TEST_CASE_TEMPLATE( template_test_case, test_types2 ) ),
-                       boost::unit_test::framework::setup_error );
+    BOOST_CHECK_NO_THROW(framework::finalize_setup_phase( master_ts->p_id ));
+
+    BOOST_CHECK_NO_THROW( t_suite1->add( BOOST_TEST_CASE_TEMPLATE( template_test_case, test_types2 ) ) );
+    BOOST_CHECK_THROW(framework::finalize_setup_phase( master_ts->p_id ),
+                      boost::unit_test::framework::setup_error );
 }
 
 void test2(int value)
@@ -84,8 +91,9 @@ BOOST_AUTO_TEST_CASE( test_clashing_cases_with_name )
     master_ts->add(t_suite1);
     t_suite1->add( BOOST_TEST_CASE( suite1_test1 ) );
     t_suite1->add( BOOST_TEST_CASE( boost::bind( test2, 0 ) ) );
-    BOOST_CHECK_THROW( t_suite1->add( BOOST_TEST_CASE( boost::bind( test2, 0 ) ) ),
-                       boost::unit_test::framework::setup_error );
+    BOOST_CHECK_NO_THROW( t_suite1->add( BOOST_TEST_CASE( boost::bind( test2, 0 ) ) ) );
+    BOOST_CHECK_THROW(framework::finalize_setup_phase( master_ts->p_id ),
+                      boost::unit_test::framework::setup_error );
 
     for(int i = 0; i < 10; i++) {
         t_suite1->add( BOOST_TEST_CASE_NAME( boost::bind( test2, i ), "test-X-" + boost::unit_test::utils::string_cast(i) ) );
