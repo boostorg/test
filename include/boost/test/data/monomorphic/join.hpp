@@ -16,6 +16,9 @@
 #include <boost/test/data/config.hpp>
 #include <boost/test/data/monomorphic/fwd.hpp>
 
+#include <boost/core/enable_if.hpp>
+#include <boost/mpl/identity.hpp>
+
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
