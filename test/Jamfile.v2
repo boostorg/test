@@ -126,6 +126,8 @@ test-suite "usage-variants-ts"
   [ boost.test-self-test run : usage-variants-ts : shared-library-test : boost_unit_test_framework/<link>shared ]
   [ boost.test-self-test run : usage-variants-ts : shared-library-custom-init-test : boost_unit_test_framework/<link>shared ]
   [ boost.test-self-test run : usage-variants-ts : shared-library-custom-main-test : boost_unit_test_framework/<link>shared ]
+
+  [ boost.test-self-test run : test-organization-ts : header-only-over-multiple-files : included : : usage-variants-ts/single-header-multiunit-1-test.cpp usage-variants-ts/single-header-multiunit-2-test.cpp ]
 ;
 
 #_________________________________________________________________________________________________#
@@ -186,7 +188,7 @@ test-suite "test-organization-ts"
   [ boost.test-self-test run : test-organization-ts : test-tree-management-test ]
   [ boost.test-self-test run : test-organization-ts : test-tree-several-suite-decl ]
   [ boost.test-self-test run : test-organization-ts : test_unit-report-clashing-names ]
-  # cannot pass paramters from the command line, another test developed below
+  # cannot pass parameters from the command line, another test developed below
   # [ boost.test-self-test run : test-organization-ts : dataset-master-test-suite-accessible-test : : --param1=1 --param2=2 : : : : $(requirements_datasets) ]
 ;
 
