@@ -58,7 +58,7 @@ catch clause? Like in a following example:
 
 [bt_example example25..Standard exception detection within the __PEM__..run-fail]
 
-[note Note that in both examples above we used [link boost_test.components.section_pem.section_pem_compilation.section_pem_full_include single-header variant]
+[note Note that in both examples above we used [link boost_test.components.section_pem.section_pem_compilation.section_pem_full_include header-only variant]
 of the __PEM__. Alternatively the binaries may be built and linked with
 a [link boost_test.components.section_pem.section_pem_compilation.section_pem_standalone standalone library] (in case of static library we are not required to include any __PEM__ related headers).
 ]

@@ -5,15 +5,14 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  Description : header-only usage variant test
+//  Description : header-only usage variant with multiple translation units test 
 // ***************************************************************************
 
 // Boost.Test
-#define BOOST_TEST_MODULE header only test
+#define BOOST_TEST_MODULE header-only multiunit test
 #include <boost/test/included/unit_test.hpp>
-using namespace boost::unit_test;
 
-BOOST_AUTO_TEST_CASE( test )
+BOOST_AUTO_TEST_CASE( test1 )
 {
     int i = 1;
     BOOST_CHECK( i*i == 1 );

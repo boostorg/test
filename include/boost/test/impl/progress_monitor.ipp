@@ -52,7 +52,7 @@ struct progress_display {
              << "\n|----|----|----|----|----|----|----|----|----|----|"
              << std::endl;
 
-        if( !m_expected_count ) 
+        if( !m_expected_count )
             m_expected_count = 1;  // prevent divide by zero
     }
 
@@ -63,7 +63,7 @@ struct progress_display {
 
         // use of floating point ensures that both large and small counts
         // work correctly.  static_cast<>() is also used several places
-        // to suppress spurious compiler warnings. 
+        // to suppress spurious compiler warnings.
         unsigned int tics_needed =  static_cast<unsigned int>(
             (static_cast<double>(m_count)/m_expected_count)*50.0 );
 
@@ -118,6 +118,10 @@ progress_monitor_impl& s_pm_impl() { static progress_monitor_impl the_inst; retu
     BOOST_TEST_SCOPE_SETCOLOR( s_pm_impl().m_color_output, *s_pm_impl().m_stream, term_attr::BRIGHT, term_color::MAGENTA )
 
 } // local namespace
+
+//____________________________________________________________________________//
+
+BOOST_TEST_SINGLETON_CONS_IMPL(progress_monitor_t)
 
 //____________________________________________________________________________//
 

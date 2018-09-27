@@ -176,10 +176,10 @@ public:
     void            add( test_unit_generator const& gen, unsigned timeout = 0 );
 
     /// @overload
-    void            add( test_unit_generator const& gen, decorator::collector& decorators );
+    void            add( test_unit_generator const& gen, decorator::collector_t& decorators );
   
     /// @overload
-    void            add( boost::shared_ptr<test_unit_generator> gen_ptr, decorator::collector& decorators );
+    void            add( boost::shared_ptr<test_unit_generator> gen_ptr, decorator::collector_t& decorators );
 
     //! Removes a test from the test suite.
     void            remove( test_unit_id id );
@@ -187,6 +187,10 @@ public:
     //! Generates all the delayed test_units from the generators
     void            generate( );
 
+    //! Check for duplicates name in test cases
+    //!
+    //! Raises a setup_error if there are duplicates
+    void            check_for_duplicate_test_cases();
 
     // access methods
     test_unit_id    get( const_string tu_name ) const;

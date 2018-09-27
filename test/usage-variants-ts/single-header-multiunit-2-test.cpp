@@ -5,15 +5,17 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
+//  File        : $RCSfile$
+//
+//  Version     : $Revision$
+//
 //  Description : header-only usage variant test
 // ***************************************************************************
 
 // Boost.Test
-#define BOOST_TEST_MODULE header only test
-#include <boost/test/included/unit_test.hpp>
-using namespace boost::unit_test;
+#include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE( test )
+BOOST_AUTO_TEST_CASE( test2 )
 {
     int i = 1;
     BOOST_CHECK( i*i == 1 );

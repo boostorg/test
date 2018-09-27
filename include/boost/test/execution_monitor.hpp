@@ -237,7 +237,7 @@ protected:
 /// this class never allocates any memory and assumes that strings it refers to are either some constants or live in a some kind of persistent (preallocated) memory.
 // ************************************************************************** //
 
-class BOOST_TEST_DECL execution_exception {
+class BOOST_SYMBOL_VISIBLE execution_exception {
     typedef boost::unit_test::const_string const_string;
 public:
     /// These values are sometimes used as program return codes.

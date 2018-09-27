@@ -28,6 +28,8 @@
 #include <boost/type_traits/is_abstract.hpp>
 #include <boost/type_traits/has_left_shift.hpp>
 
+#include <ios>
+#include <iostream>
 #include <limits>
 
 #if !defined(BOOST_NO_CXX11_NULLPTR)

@@ -29,6 +29,9 @@
 namespace boost {
 namespace unit_test {
 
+// singleton pattern
+BOOST_TEST_SINGLETON_CONS_IMPL(unit_test_monitor_t)
+
 // ************************************************************************** //
 // **************               unit_test_monitor              ************** //
 // ************************************************************************** //

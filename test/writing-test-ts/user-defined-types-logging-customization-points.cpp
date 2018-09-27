@@ -41,3 +41,16 @@ BOOST_AUTO_TEST_CASE(test1)
     BOOST_TEST(t == 10);
 #endif
 }
+
+// on unary expressions as well
+struct s {
+  operator bool() const { return true; }
+};
+std::ostream &boost_test_print_type(std::ostream &o, const s &) {
+  return o << "printed-s";
+}
+
+BOOST_AUTO_TEST_CASE( test_logs )
+{
+    BOOST_TEST(s());
+}

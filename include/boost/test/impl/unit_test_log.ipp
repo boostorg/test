@@ -159,6 +159,10 @@ unit_test_log_impl& s_log_impl() { static unit_test_log_impl the_inst; return th
 
 //____________________________________________________________________________//
 
+BOOST_TEST_SINGLETON_CONS_IMPL( unit_test_log_t )
+
+//____________________________________________________________________________//
+
 void
 unit_test_log_t::test_start( counter_t test_cases_amount )
 {

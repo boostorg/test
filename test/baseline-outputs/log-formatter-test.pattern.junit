@@ -15,7 +15,7 @@
 
 MESSAGE:
 - file   : boost.test framework
-- line   : 222
+- line   : 226
 - message: Test case 1 test cases inside/almost_good_foo did not check any assertions
 
 ]]></system-out>
