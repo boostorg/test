@@ -14,10 +14,12 @@
   was available but needed to be properly documented ([link boost_test.adv_scenarios.single_header_customizations.multiple_translation_units here]
   and [link boost_test.usage_variants here]).
 * It is now possible to manually add a test case by specifying its name, with __BOOST_TEST_CASE_NAME__
+* Better logging of messages in `boost::exception`
 
 [h5 Breaking changes]
 
 [h5 Bugfixes and feature requests]
+# [pull_request 147] Catch block for `boost::exception` appears after `std::exception` in `execution_monitor::execute()`
 # [pull_request 148] Colored output contradiction
 # [github_issue 149] Setting color_output=no does not disable the output of color format codes
 # [github_issue 150] Some headers fail to compile independently
