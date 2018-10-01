@@ -63,6 +63,6 @@ BOOST_AUTO_TEST_CASE( test_logs )
     BOOST_TEST(error_string.find("tag_error_code") != std::string::npos);
     BOOST_TEST(error_string.find("= 123") != std::string::npos);
     BOOST_TEST(error_string.find("Dynamic exception type") != std::string::npos);
-    BOOST_TEST(error_string.find("boost::exception_detail::clone_impl<") != std::string::npos);
+    BOOST_TEST(error_string.find("boost::wrapexcept<") != std::string::npos);
     BOOST_TEST(error_string.find("myexception>") != std::string::npos);
 }
