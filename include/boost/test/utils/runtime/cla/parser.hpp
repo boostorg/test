@@ -17,8 +17,6 @@
 #include <boost/test/utils/runtime/modifier.hpp>
 #include <boost/test/utils/runtime/parameter.hpp>
 
-#include <boost/test/utils/runtime/cla/fwd.hpp>
-#include <boost/test/utils/runtime/cla/modifier.hpp>
 #include <boost/test/utils/runtime/cla/argv_traverser.hpp>
 
 // Boost.Test
@@ -444,10 +442,6 @@ public:
         }
 
     }
-
-    // help/usage
-    void                usage( out_stream& ostr );
-    void                help(  out_stream& ostr );
 
 private:
     typedef rt_cla_detail::parameter_trie_ptr   trie_ptr;
