@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -84,7 +84,7 @@ enum tool_level {
 // **************         Tools offline implementation         ************** //
 // ************************************************************************** //
 
-BOOST_TEST_DECL bool 
+BOOST_TEST_DECL bool
 report_assertion( assertion_result const& pr, unit_test::lazy_ostream const& assertion_descr,
                   const_string file_name, std::size_t line_num,
                   tool_level tl, check_type ct,
@@ -92,12 +92,12 @@ report_assertion( assertion_result const& pr, unit_test::lazy_ostream const& ass
 
 //____________________________________________________________________________//
 
-BOOST_TEST_DECL assertion_result 
+BOOST_TEST_DECL assertion_result
 format_assertion_result( const_string expr_val, const_string details );
 
 //____________________________________________________________________________//
 
-BOOST_TEST_DECL assertion_result 
+BOOST_TEST_DECL assertion_result
 format_fpc_report( const_string expr_val, const_string details );
 
 //____________________________________________________________________________//

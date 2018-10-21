@@ -1,6 +1,6 @@
-//  (C) Copyright Gennadiy Rozental 2001-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -37,9 +37,10 @@ namespace ut_detail {
 
 struct BOOST_TEST_DECL auto_test_unit_registrar {
     // Constructors
-                auto_test_unit_registrar( test_case* tc, decorator::collector* decorators, counter_t exp_fail = 0 );
-    explicit    auto_test_unit_registrar( const_string ts_name, const_string ts_file, std::size_t ts_line, decorator::collector* decorators );
-    explicit    auto_test_unit_registrar( test_unit_generator const& tc_gen, decorator::collector* decorators );
+                auto_test_unit_registrar( test_case* tc, decorator::collector_t& decorators, counter_t exp_fail = 0 );
+    explicit    auto_test_unit_registrar( const_string ts_name, const_string ts_file, std::size_t ts_line, decorator::collector_t& decorators );
+    explicit    auto_test_unit_registrar( test_unit_generator const& tc_gen, decorator::collector_t& decorators );
+    explicit    auto_test_unit_registrar( boost::shared_ptr<test_unit_generator>  tc_gen, decorator::collector_t& decorators );
     explicit    auto_test_unit_registrar( int );
 };
 

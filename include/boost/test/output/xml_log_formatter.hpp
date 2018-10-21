@@ -1,6 +1,6 @@
-//  (C) Copyright Gennadiy Rozental 2005-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -43,7 +43,7 @@ public:
 
     void    test_unit_start( std::ostream&, test_unit const& tu );
     void    test_unit_finish( std::ostream&, test_unit const& tu, unsigned long elapsed );
-    void    test_unit_skipped( std::ostream&, test_unit const& tu );
+    void    test_unit_skipped( std::ostream&, test_unit const& tu, const_string reason );
 
     void    log_exception_start( std::ostream&, log_checkpoint_data const&, execution_exception const& ex );
     void    log_exception_finish( std::ostream& );
@@ -53,9 +53,9 @@ public:
     void    log_entry_value( std::ostream&, const_string value );
     void    log_entry_finish( std::ostream& );
 
-    void    entry_context_start( std::ostream& );
-    void    log_entry_context( std::ostream&, const_string );
-    void    entry_context_finish( std::ostream& );
+    void    entry_context_start( std::ostream&, log_level );
+    void    log_entry_context( std::ostream&, log_level, const_string );
+    void    entry_context_finish( std::ostream&, log_level );
 
 private:
     // Data members

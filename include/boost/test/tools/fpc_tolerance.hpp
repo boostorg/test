@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -36,7 +36,7 @@ template<typename FPT>
 inline FPT&
 fpc_tolerance()
 {
-    static FPT s_value = FPT();
+    static FPT s_value = 0;
     return s_value;
 }
 
@@ -75,7 +75,7 @@ template<typename FPT>
 inline fixture_t
 tolerance( FPT v )
 {
-    return fixture_t( test_unit_fixture_ptr( 
+    return fixture_t( test_unit_fixture_ptr(
         new unit_test::class_based_fixture<test_tools::local_fpc_tolerance<FPT>,FPT>( v ) ) );
 }
 
@@ -85,8 +85,8 @@ template<typename FPT>
 inline fixture_t
 tolerance( test_tools::fpc::percent_tolerance_t<FPT> v )
 {
-    return fixture_t( test_unit_fixture_ptr( 
-        new unit_test::class_based_fixture<test_tools::local_fpc_tolerance<FPT>,FPT>( v.m_value * static_cast<FPT>(0.01) ) ) );
+    return fixture_t( test_unit_fixture_ptr(
+        new unit_test::class_based_fixture<test_tools::local_fpc_tolerance<FPT>,FPT>( boost::math::fpc::fpc_detail::fraction_tolerance<FPT>( v ) ) ) );
 }
 
 //____________________________________________________________________________//

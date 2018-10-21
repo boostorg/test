@@ -1,6 +1,6 @@
-//  (C) Copyright Gennadiy Rozental 2001-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -24,13 +24,11 @@
 #include <boost/test/tools/detail/expression_holder.hpp>
 #endif
 
-// Boost
-#include <boost/preprocessor/control/iif.hpp>
-#include <boost/preprocessor/comparison/equal.hpp>
-#include <boost/preprocessor/variadic/size.hpp>
+#include <boost/test/detail/pp_variadic.hpp>
 
-// STL
 #ifdef BOOST_TEST_NO_OLD_TOOLS
+#include <boost/preprocessor/seq/to_tuple.hpp>
+
 #include <iterator>
 #endif // BOOST_TEST_NO_OLD_TOOLS
 
@@ -42,25 +40,9 @@
 // **************               BOOST_TEST_<level>             ************** //
 // ************************************************************************** //
 
-#ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
-#define BOOST_TEST_BUILD_ASSERTION( P )                         \
-    ::boost::test_tools::tt_detail::expression_holder const& E= \
-    ::boost::test_tools::tt_detail::hold_expression(            \
-        ::boost::test_tools::assertion::seed() ->* P )          \
+#define BOOST_TEST_BUILD_ASSERTION( P )             \
+    (::boost::test_tools::assertion::seed()->*P)    \
 /**/
-#else
-#define BOOST_TEST_BUILD_ASSERTION( P )                         \
-    auto const& E = ::boost::test_tools::assertion::seed()->*P  \
-/**/
-#endif
-
-//____________________________________________________________________________//
-
-#if BOOST_PP_VARIADICS_MSVC
-#  define BOOST_TEST_INVOKE_VARIADIC( tool, ... ) BOOST_PP_CAT( tool (__VA_ARGS__), )
-#else
-#  define BOOST_TEST_INVOKE_VARIADIC( tool, ... ) tool (__VA_ARGS__)
-#endif
 
 //____________________________________________________________________________//
 
@@ -85,10 +67,10 @@ do {                                                            \
 #define BOOST_TEST_TOOL_ET_IMPL( P, level )                     \
 do {                                                            \
     BOOST_TEST_PASSPOINT();                                     \
-    BOOST_TEST_BUILD_ASSERTION( P );                            \
+                                                                \
     ::boost::test_tools::tt_detail::                            \
     report_assertion(                                           \
-      E.evaluate(),                                             \
+      BOOST_TEST_BUILD_ASSERTION( P ).evaluate(),               \
       BOOST_TEST_LAZY_MSG( BOOST_TEST_STRINGIZE( P ) ),         \
       BOOST_TEST_L(__FILE__),                                   \
       static_cast<std::size_t>(__LINE__),                       \
@@ -104,10 +86,11 @@ do {                                                            \
 #define BOOST_TEST_TOOL_ET_IMPL_EX( P, level, arg )             \
 do {                                                            \
     BOOST_TEST_PASSPOINT();                                     \
-    BOOST_TEST_BUILD_ASSERTION( P );                            \
+                                                                \
     ::boost::test_tools::tt_detail::                            \
     report_assertion(                                           \
-      ::boost::test_tools::tt_detail::assertion_evaluate(E)     \
+      ::boost::test_tools::tt_detail::assertion_evaluate(       \
+        BOOST_TEST_BUILD_ASSERTION( P ) )                       \
           << arg,                                               \
       ::boost::test_tools::tt_detail::assertion_text(           \
           BOOST_TEST_LAZY_MSG( BOOST_TEST_STRINGIZE(P) ),       \
@@ -125,19 +108,27 @@ do {                                                            \
 
 #ifdef BOOST_TEST_TOOLS_UNDER_DEBUGGER
 
-#define BOOST_TEST_TOOL_UNIV( P, level )                                    \
+#define BOOST_TEST_TOOL_UNIV( level, P )                                    \
     BOOST_TEST_TOOL_DIRECT_IMPL( P, level, BOOST_TEST_STRINGIZE( P ) )      \
+/**/
+
+#define BOOST_TEST_TOOL_UNIV_EX( level, P, ... )                            \
+    BOOST_TEST_TOOL_UNIV( level, P )                                        \
 /**/
 
 #elif defined(BOOST_TEST_TOOLS_DEBUGGABLE)
 
-#define BOOST_TEST_TOOL_UNIV( P, level )                                    \
+#define BOOST_TEST_TOOL_UNIV( level, P )                                    \
 do {                                                                        \
-    if(::boost::debug::under_debugger() )                                   \
+    if( ::boost::debug::under_debugger() )                                  \
         BOOST_TEST_TOOL_DIRECT_IMPL( P, level, BOOST_TEST_STRINGIZE( P ) ); \
     else                                                                    \
-        BOOST_TEST_TOOL_ET_IMPL( P, level, __VA_ARGS__ );                   \
+        BOOST_TEST_TOOL_ET_IMPL( P, level );                                \
 } while( ::boost::test_tools::tt_detail::dummy_cond() )                     \
+/**/
+
+#define BOOST_TEST_TOOL_UNIV_EX( level, P, ... )                            \
+    BOOST_TEST_TOOL_UNIV( level, P )                                        \
 /**/
 
 #else
@@ -154,30 +145,18 @@ do {                                                                        \
 
 //____________________________________________________________________________//
 
-#define BOOST_TEST_WARN( ... )              BOOST_TEST_INVOKE_VARIADIC(     \
-    BOOST_PP_IIF(                                                           \
-        BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),1),              \
-        BOOST_TEST_TOOL_UNIV,                                               \
-        BOOST_TEST_TOOL_UNIV_EX), WARN, __VA_ARGS__ )                       \
+#define BOOST_TEST_WARN( ... )              BOOST_TEST_INVOKE_IF_N_ARGS(    \
+    2, BOOST_TEST_TOOL_UNIV, BOOST_TEST_TOOL_UNIV_EX, WARN, __VA_ARGS__ )   \
 /**/
-#define BOOST_TEST_CHECK( ... )             BOOST_TEST_INVOKE_VARIADIC(     \
-    BOOST_PP_IIF(                                                           \
-        BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),1),              \
-        BOOST_TEST_TOOL_UNIV,                                               \
-        BOOST_TEST_TOOL_UNIV_EX), CHECK, __VA_ARGS__ )                      \
+#define BOOST_TEST_CHECK( ... )             BOOST_TEST_INVOKE_IF_N_ARGS(    \
+    2, BOOST_TEST_TOOL_UNIV, BOOST_TEST_TOOL_UNIV_EX, CHECK, __VA_ARGS__ )  \
 /**/
-#define BOOST_TEST_REQUIRE( ... )           BOOST_TEST_INVOKE_VARIADIC(     \
-    BOOST_PP_IIF(                                                           \
-        BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),1),              \
-        BOOST_TEST_TOOL_UNIV,                                               \
-        BOOST_TEST_TOOL_UNIV_EX), REQUIRE, __VA_ARGS__ )                    \
+#define BOOST_TEST_REQUIRE( ... )           BOOST_TEST_INVOKE_IF_N_ARGS(    \
+    2, BOOST_TEST_TOOL_UNIV, BOOST_TEST_TOOL_UNIV_EX, REQUIRE, __VA_ARGS__ )\
 /**/
 
-#define BOOST_TEST( ... )                   BOOST_TEST_INVOKE_VARIADIC(     \
-    BOOST_PP_IIF(                                                           \
-        BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),1),              \
-        BOOST_TEST_TOOL_UNIV,                                               \
-        BOOST_TEST_TOOL_UNIV_EX), CHECK, __VA_ARGS__ )                      \
+#define BOOST_TEST( ... )                   BOOST_TEST_INVOKE_IF_N_ARGS(    \
+    2, BOOST_TEST_TOOL_UNIV, BOOST_TEST_TOOL_UNIV_EX, CHECK, __VA_ARGS__ )  \
 /**/
 
 //____________________________________________________________________________//
@@ -197,6 +176,19 @@ do {                                                                        \
 
 #define BOOST_CHECK_THROW_IMPL(S, E, TL, Ppassed, Mpassed, Pcaught, Mcaught)\
 do { try {                                                                  \
+    S;                                                                      \
+    BOOST_TEST_TOOL_DIRECT_IMPL( Ppassed, TL, Mpassed );                    \
+} catch( E ) {                                                              \
+    BOOST_TEST_TOOL_DIRECT_IMPL( Pcaught, TL, Mcaught );                    \
+}} while( ::boost::test_tools::tt_detail::dummy_cond() )                    \
+/**/
+
+#elif defined(BOOST_TEST_TOOLS_DEBUGGABLE)
+
+#define BOOST_CHECK_THROW_IMPL(S, E, TL, Ppassed, Mpassed, Pcaught, Mcaught)\
+do { try {                                                                  \
+    if( ::boost::debug::under_debugger() )                                  \
+        BOOST_TEST_PASSPOINT();                                             \
     S;                                                                      \
     BOOST_TEST_TOOL_DIRECT_IMPL( Ppassed, TL, Mpassed );                    \
 } catch( E ) {                                                              \
@@ -336,17 +328,20 @@ do { try {                                                                  \
 
 #define BOOST_WARN_EQUAL_COLLECTIONS( L_begin, L_end, R_begin, R_end )              \
     BOOST_TEST_WARN( ::boost::test_tools::tt_detail::make_it_pair(L_begin, L_end) ==\
-                     ::boost::test_tools::tt_detail::make_it_pair(R_begin, R_end) ) \
+                     ::boost::test_tools::tt_detail::make_it_pair(R_begin, R_end),  \
+                     ::boost::test_tools::per_element() )                           \
 /**/
 
 #define BOOST_CHECK_EQUAL_COLLECTIONS( L_begin, L_end, R_begin, R_end )              \
     BOOST_TEST_CHECK( ::boost::test_tools::tt_detail::make_it_pair(L_begin, L_end) ==\
-                      ::boost::test_tools::tt_detail::make_it_pair(R_begin, R_end) ) \
+                      ::boost::test_tools::tt_detail::make_it_pair(R_begin, R_end),  \
+                      ::boost::test_tools::per_element() )                           \
 /**/
 
 #define BOOST_REQUIRE_EQUAL_COLLECTIONS( L_begin, L_end, R_begin, R_end )              \
     BOOST_TEST_REQUIRE( ::boost::test_tools::tt_detail::make_it_pair(L_begin, L_end) ==\
-                        ::boost::test_tools::tt_detail::make_it_pair(R_begin, R_end) ) \
+                        ::boost::test_tools::tt_detail::make_it_pair(R_begin, R_end),  \
+                        ::boost::test_tools::per_element() )                           \
 /**/
 
 //____________________________________________________________________________//
@@ -354,6 +349,12 @@ do { try {                                                                  \
 #define BOOST_WARN_BITWISE_EQUAL( L, R )    BOOST_TEST_WARN( L == R, ::boost::test_tools::bitwise() )
 #define BOOST_CHECK_BITWISE_EQUAL( L, R )   BOOST_TEST_CHECK( L == R, ::boost::test_tools::bitwise() )
 #define BOOST_REQUIRE_BITWISE_EQUAL( L, R ) BOOST_TEST_REQUIRE( L == R, ::boost::test_tools::bitwise() )
+
+//____________________________________________________________________________//
+
+#define BOOST_WARN_PREDICATE( P, ARGS )     BOOST_TEST_WARN( P BOOST_PP_SEQ_TO_TUPLE(ARGS) )
+#define BOOST_CHECK_PREDICATE( P, ARGS )    BOOST_TEST_CHECK( P BOOST_PP_SEQ_TO_TUPLE(ARGS) )
+#define BOOST_REQUIRE_PREDICATE( P, ARGS )  BOOST_TEST_REQUIRE( P BOOST_PP_SEQ_TO_TUPLE(ARGS) )
 
 //____________________________________________________________________________//
 

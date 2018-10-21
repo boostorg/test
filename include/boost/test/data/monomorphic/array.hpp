@@ -1,15 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : defines monomorphic dataset based on stl sequence
+///@file
+///Defines monomorphic dataset based on C type arrays
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_ARRAY_HPP_121411GER
@@ -17,7 +14,7 @@
 
 // Boost.Test
 #include <boost/test/data/config.hpp>
-#include <boost/test/data/monomorphic/dataset.hpp>
+#include <boost/test/data/monomorphic/fwd.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -32,40 +29,25 @@ namespace monomorphic {
 // **************                     array                    ************** //
 // ************************************************************************** //
 
+/// Dataset view of a C array
 template<typename T>
-class array : public monomorphic::dataset<T> {
-    typedef monomorphic::dataset<T> base;
-    typedef typename base::iter_ptr iter_ptr;
-
-    struct iterator : public base::iterator {
-        // Constructor
-        explicit    iterator( T const* begin, data::size_t size )
-        : m_it( begin )
-        , m_singleton( size == 1 )
-        {}
-
-        // forward iterator interface 
-        virtual T const&    operator*()     { return *m_it; }
-        virtual void        operator++()    { if( !m_singleton ) ++m_it; }
-
-    private:
-        // Data members
-        T const*            m_it;
-        bool                m_singleton;
-    };
-
+class array {
 public:
+    typedef T sample;
+
     enum { arity = 1 };
 
+    typedef T const* iterator;
+
     // Constructor
-    array( T const* arr, std::size_t size )
-    : m_arr( arr )
-    , m_size( size )
+    array( T const* arr_, std::size_t size_ )
+    : m_arr( arr_ )
+    , m_size( size_ )
     {}
 
     // dataset interface
-    virtual data::size_t    size() const            { return m_size; } 
-    virtual iter_ptr        begin() const           { return boost::make_shared<iterator>( m_arr, m_size ); }
+    data::size_t    size() const    { return m_size; }
+    iterator        begin() const   { return m_arr; }
 
 private:
     // Data members
@@ -75,19 +57,21 @@ private:
 
 //____________________________________________________________________________//
 
+//! An array dataset is a dataset
 template<typename T>
-struct is_dataset<array<T> > : mpl::true_ {};
+struct is_dataset<array<T>> : mpl::true_ {};
 
 } // namespace monomorphic
 
+//____________________________________________________________________________//
+
+//! @overload boost::unit_test::data::make()
 template<typename T, std::size_t size>
-inline monomorphic::array<T>
+inline monomorphic::array<typename boost::remove_const<T>::type>
 make( T (&a)[size] )
 {
-    return monomorphic::array<T>( a, size );
+    return monomorphic::array<typename boost::remove_const<T>::type>( a, size );
 }
-
-//____________________________________________________________________________//
 
 } // namespace data
 } // namespace unit_test

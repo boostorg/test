@@ -1,15 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2004-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : enable previosly suppressed warnings
+//!@file
+//!@brief enable previously suppressed warnings
 // ***************************************************************************
 
 #ifdef BOOST_MSVC
@@ -29,6 +26,11 @@
 # pragma warning(pop)
 #endif
 
-#ifdef BOOST_CLANG
+#if defined(BOOST_CLANG) && (BOOST_CLANG == 1)
 #pragma clang diagnostic pop
 #endif
+
+#if defined(BOOST_GCC) && (BOOST_GCC >= 4 * 10000 + 6 * 100)
+# pragma GCC diagnostic pop
+#endif
+

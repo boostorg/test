@@ -1,15 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2001-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : some trivial global typedefs
+//!@file
+//!@brief some trivial global typedefs
 // ***************************************************************************
 
 #ifndef BOOST_TEST_GLOBAL_TYPEDEF_HPP_021005GER
@@ -21,13 +18,6 @@
 #define BOOST_TEST_L( s )         ::boost::unit_test::const_string( s, sizeof( s ) - 1 )
 #define BOOST_TEST_STRINGIZE( s ) BOOST_TEST_L( BOOST_STRINGIZE( s ) )
 #define BOOST_TEST_EMPTY_STRING   BOOST_TEST_L( "" )
-
-#define BOOST_TEST_SCOPE_SETCOLOR( os, attr, color )            \
-    scope_setcolor const& sc = runtime_config::color_output()   \
-           ? scope_setcolor( os, attr, color )                  \
-           : scope_setcolor();                                  \
-    ut_detail::ignore_unused_variable_warning( sc )             \
-/**/
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -44,7 +34,14 @@ enum report_level  { INV_REPORT_LEVEL, CONFIRMATION_REPORT, SHORT_REPORT, DETAIL
 
 //____________________________________________________________________________//
 
-enum output_format { OF_INVALID, OF_CLF /* compiler log format */, OF_XML /* OF_XML */ };
+//! Indicates the output format for the loggers or the test tree printing
+enum output_format { OF_INVALID,
+                     OF_CLF,      ///< compiler log format
+                     OF_XML,      ///< XML format for report and log,
+                     OF_JUNIT,    ///< JUNIT format for report and log,
+                     OF_CUSTOM_LOGGER, ///< User specified logger.
+                     OF_DOT       ///< dot format for output content
+};
 
 //____________________________________________________________________________//
 
@@ -74,20 +71,69 @@ test_id_2_unit_type( test_unit_id id )
     return (id & 0xFFFF0000) != 0 ? TUT_CASE : TUT_SUITE;
 }
 
+//! Helper class for restoring the current test unit ID in a RAII manner
+struct test_unit_id_restore {
+    test_unit_id_restore(test_unit_id& to_restore_, test_unit_id new_value)
+    : to_restore(to_restore_)
+    , bkup(to_restore_) {
+        to_restore = new_value;
+    }
+    ~test_unit_id_restore() {
+        to_restore = bkup;
+    }
+private:
+    test_unit_id& to_restore;
+    test_unit_id bkup;
+};
+
 //____________________________________________________________________________//
 
-// helper templates to prevent ODR violations 
-template<class T> 
-struct static_constant { 
-    static T value; 
-}; 
-
-template<class T> 
-T static_constant<T>::value; 
-
-//____________________________________________________________________________// 
-
 } // namespace ut_detail
+
+// helper templates to prevent ODR violations
+template<class T>
+struct static_constant {
+    static T value;
+};
+
+template<class T>
+T static_constant<T>::value;
+
+//____________________________________________________________________________//
+
+// helper defines for singletons.
+// BOOST_TEST_SINGLETON_CONS should appear in the class body,
+// BOOST_TEST_SINGLETON_CONS_IMPL should be in only one translation unit. The
+// global instance should be declared by BOOST_TEST_SINGLETON_INST.
+
+#define BOOST_TEST_SINGLETON_CONS( type )               \
+public:                                                 \
+  static type& instance();                              \
+private:                                                \
+  BOOST_DELETED_FUNCTION(type(type const&))             \
+  BOOST_DELETED_FUNCTION(type& operator=(type const&))  \
+  BOOST_DEFAULTED_FUNCTION(type(), {})                  \
+  BOOST_DEFAULTED_FUNCTION(~type(), {})                 \
+/**/
+
+#define BOOST_TEST_SINGLETON_CONS_IMPL( type )          \
+  type& type::instance() {                              \
+    static type the_inst; return the_inst;              \
+  }                                                     \
+/**/
+
+//____________________________________________________________________________//
+
+#if defined(__APPLE_CC__) && defined(__GNUC__) && __GNUC__ < 4
+#define BOOST_TEST_SINGLETON_INST( inst ) \
+static BOOST_JOIN( inst, _t)& inst = BOOST_JOIN (inst, _t)::instance();
+
+#else
+
+#define BOOST_TEST_SINGLETON_INST( inst ) \
+namespace { BOOST_JOIN( inst, _t)& inst = BOOST_JOIN( inst, _t)::instance(); }
+
+#endif
 
 } // namespace unit_test
 } // namespace boost

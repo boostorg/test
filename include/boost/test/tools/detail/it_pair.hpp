@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -34,13 +34,14 @@ struct it_pair {
     typedef It const_iterator;
     typedef typename std::iterator_traits<It>::value_type value_type;
 
-    it_pair( It const& b, It const& e ) : m_begin( b ), m_size( 0 ) 
+    it_pair( It const& b, It const& e ) : m_begin( b ), m_size( 0 )
     {
         It tmp = b;
         while( tmp != e ) { ++m_size; ++tmp; }
     }
 
     It      begin() const   { return m_begin; }
+    It      end() const     { return m_begin + m_size; }
     size_t  size() const    { return m_size; }
 
 private:

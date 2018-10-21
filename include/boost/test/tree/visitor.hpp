@@ -1,6 +1,6 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -36,7 +36,7 @@ public:
     // test tree visitor interface
     virtual bool    visit( test_unit const& )               { return true; }
     virtual void    visit( test_case const& tc )            { visit( (test_unit const&)tc ); }
-    virtual bool    test_suite_start(test_suite const& ts)  { return visit( (test_unit const&)ts ); }
+    virtual bool    test_suite_start( test_suite const& ts ){ return visit( (test_unit const&)ts ); }
     virtual void    test_suite_finish( test_suite const& )  {}
 
 protected:

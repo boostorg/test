@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -25,6 +25,7 @@
 
 // Boost
 #include <boost/limits.hpp>
+#include <boost/numeric/conversion/conversion_traits.hpp> // for numeric::conversion_traits
 #include <boost/type_traits/is_array.hpp>
 
 #include <boost/preprocessor/repetition/repeat.hpp>
@@ -207,7 +208,10 @@ struct equal_coll_impl {
         for( ; left_begin != left_end && right_begin != right_end; ++left_begin, ++right_begin, ++pos ) {
             if( *left_begin != *right_begin ) {
                 pr = false;
-                pr.message() << "\nMismatch in a position " << pos << ": "  << *left_begin << " != " << *right_begin;
+                pr.message() << "\nMismatch at position " << pos << ": "
+                  << ::boost::test_tools::tt_detail::print_helper(*left_begin)
+                  << " != "
+                  << ::boost::test_tools::tt_detail::print_helper(*right_begin);
             }
         }
 
@@ -256,7 +260,7 @@ struct bitwise_equal_impl {
         for( std::size_t counter = 0; counter < total_bits; ++counter ) {
             if( ( left & ( leftOne << counter ) ) != ( right & ( rightOne << counter ) ) ) {
                 pr = false;
-                pr.message() << "\nMismatch in a position " << counter;
+                pr.message() << "\nMismatch at position " << counter;
             }
         }
 
@@ -270,6 +274,16 @@ struct bitwise_equal_impl {
 };
 
 //____________________________________________________________________________//
+
+template<typename FPT1, typename FPT2>
+struct comp_supertype {
+    // deduce "better" type from types of arguments being compared
+    // if one type is floating and the second integral we use floating type and
+    // value of integral type is promoted to the floating. The same for float and double
+    // But we don't want to compare two values of integral types using this tool.
+    typedef typename numeric::conversion_traits<FPT1,FPT2>::supertype type;
+    BOOST_STATIC_ASSERT_MSG( !is_integral<type>::value, "Only floating-point types can be compared!");
+};
 
 } // namespace tt_detail
 
@@ -287,12 +301,12 @@ struct BOOST_TEST_DECL check_is_close_t {
     assertion_result
     operator()( FPT1 left, FPT2 right, ToleranceType tolerance ) const
     {
-        fpc::close_at_tolerance<typename fpc::comp_supertype<FPT1,FPT2>::type> pred( tolerance, fpc::FPC_STRONG );
+        fpc::close_at_tolerance<typename tt_detail::comp_supertype<FPT1,FPT2>::type> pred( tolerance, fpc::FPC_STRONG );
 
         assertion_result ar( pred( left, right ) );
 
         if( !ar )
-            ar.message() << pred.failed_fraction();
+            ar.message() << pred.tested_rel_diff();
 
         return ar;
     }

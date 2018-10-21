@@ -1,6 +1,6 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -21,13 +21,18 @@
 
 #include <boost/test/tree/fixture.hpp>
 
+#include <boost/test/tools/assertion_result.hpp>
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 
 // Boost
 #include <boost/shared_ptr.hpp>
 #include <boost/function/function0.hpp>
+#include <boost/function/function1.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
+
+// STL
+#include <vector>
 
 //____________________________________________________________________________//
 
@@ -39,71 +44,63 @@ class test_unit;
 namespace decorator {
 
 // ************************************************************************** //
-// **************             decorator::collector             ************** //
+// **************             decorator::collector_t             ************** //
 // ************************************************************************** //
 
-class for_test_unit;
-typedef boost::shared_ptr<for_test_unit> for_test_unit_ptr;
+class base;
+typedef boost::shared_ptr<base> base_ptr;
 
-class BOOST_TEST_DECL collector {
+class BOOST_TEST_DECL collector_t {
+
 public:
-    explicit                collector( for_test_unit const& );
-    static collector*&      instance();
+    collector_t&            operator*( base const& d );
 
     void                    store_in( test_unit& tu );
 
-private:
+    void                    reset();
+
+    std::vector<base_ptr>   get_lazy_decorators() const;
+
+    // singleton pattern
+    BOOST_TEST_SINGLETON_CONS( collector_t )
+
+    private:
     // Data members
-    for_test_unit_ptr       m_tu_decorator;
+    std::vector<base_ptr>   m_tu_decorators;
 };
 
+
 // ************************************************************************** //
-// **************           decorator::for_test_unit           ************** //
+// **************              decorator::base                 ************** //
 // ************************************************************************** //
 
-class BOOST_TEST_DECL for_test_unit {
+class BOOST_TEST_DECL base {
 public:
-    virtual                 ~for_test_unit() {}
-
-    // composition interface 1
-    for_test_unit const&    operator+() const { return *this; }
-    for_test_unit const&    operator+( for_test_unit const& rhs ) const;
-
-    // composition interface 2
-    for_test_unit const&    operator-() const { return *this; }
-    for_test_unit const&    operator-( for_test_unit const& rhs ) const { return *this + rhs; }
-
-    // composition interface 3
-    for_test_unit const&    operator*() const { return *this; }
-    for_test_unit const&    operator*( for_test_unit const& rhs ) const { return *this + rhs; }
+    // composition interface
+    collector_t&              operator*() const;
 
     // application interface
-    void                    apply( test_unit& tu );
-    for_test_unit*          clone() const;
+    virtual void            apply( test_unit& tu ) = 0;
 
-private:
-    friend class collector;
+    // deep cloning interface
+    virtual base_ptr        clone() const = 0;
 
-    // decorator::for_test_unit interface
-    virtual for_test_unit*  do_clone() const = 0;
-    virtual void            do_apply( test_unit& ) = 0;
-
-    // Data members
-    mutable for_test_unit_ptr m_next;
+protected:
+    virtual ~base() {}
 };
 
 // ************************************************************************** //
 // **************               decorator::label               ************** //
 // ************************************************************************** //
 
-class BOOST_TEST_DECL label : public decorator::for_test_unit {
+class BOOST_TEST_DECL label : public decorator::base {
 public:
     explicit                label( const_string l ) : m_label( l ) {}
 
 private:
-    // decorator::for_test_unit interface
-    virtual void            do_apply( test_unit& tu );
-    virtual for_test_unit*  do_clone() const            { return new label( m_label ); }
+    // decorator::base interface
+    virtual void            apply( test_unit& tu );
+    virtual base_ptr        clone() const { return base_ptr(new label( m_label )); }
 
     // Data members
     const_string            m_label;
@@ -113,14 +110,14 @@ private:
 // **************         decorator::expected_failures         ************** //
 // ************************************************************************** //
 
-class BOOST_TEST_DECL expected_failures : public decorator::for_test_unit {
+class BOOST_TEST_DECL expected_failures : public decorator::base {
 public:
     explicit                expected_failures( counter_t ef ) : m_exp_fail( ef ) {}
 
 private:
-    // decorator::for_test_unit interface
-    virtual void            do_apply( test_unit& tu );
-    virtual for_test_unit*  do_clone() const            { return new expected_failures( m_exp_fail ); }
+    // decorator::base interface
+    virtual void            apply( test_unit& tu );
+    virtual base_ptr        clone() const { return base_ptr(new expected_failures( m_exp_fail )); }
 
     // Data members
     counter_t               m_exp_fail;
@@ -130,14 +127,14 @@ private:
 // **************              decorator::timeout              ************** //
 // ************************************************************************** //
 
-class BOOST_TEST_DECL timeout : public decorator::for_test_unit {
+class BOOST_TEST_DECL timeout : public decorator::base {
 public:
     explicit                timeout( unsigned t ) : m_timeout( t ) {}
 
 private:
-    // decorator::for_test_unit interface
-    virtual void            do_apply( test_unit& tu );
-    virtual for_test_unit*  do_clone() const            { return new timeout( m_timeout ); }
+    // decorator::base interface
+    virtual void            apply( test_unit& tu );
+    virtual base_ptr        clone() const { return base_ptr(new timeout( m_timeout )); }
 
     // Data members
     unsigned                m_timeout;
@@ -147,14 +144,14 @@ private:
 // **************            decorator::description            ************** //
 // ************************************************************************** //
 
-class BOOST_TEST_DECL description : public decorator::for_test_unit {
+class BOOST_TEST_DECL description : public decorator::base {
 public:
     explicit                description( const_string descr ) : m_description( descr ) {}
 
 private:
-    // decorator::for_test_unit interface
-    virtual void            do_apply( test_unit& tu );
-    virtual for_test_unit*  do_clone() const            { return new description( m_description ); }
+    // decorator::base interface
+    virtual void            apply( test_unit& tu );
+    virtual base_ptr        clone() const { return base_ptr(new description( m_description )); }
 
     // Data members
     const_string            m_description;
@@ -164,57 +161,55 @@ private:
 // **************            decorator::depends_on             ************** //
 // ************************************************************************** //
 
-class BOOST_TEST_DECL depends_on : public decorator::for_test_unit {
+class BOOST_TEST_DECL depends_on : public decorator::base {
 public:
     explicit                depends_on( const_string dependency ) : m_dependency( dependency ) {}
 
 private:
-    // decorator::for_test_unit interface
-    virtual void            do_apply( test_unit& tu );
-    virtual for_test_unit*  do_clone() const            { return new depends_on( m_dependency ); }
+    // decorator::base interface
+    virtual void            apply( test_unit& tu );
+    virtual base_ptr        clone() const { return base_ptr(new depends_on( m_dependency )); }
 
     // Data members
     const_string            m_dependency;
 };
 
 // ************************************************************************** //
-// **************        decorator::enable_if/disable_if       ************** //
+// **************    decorator::enable_if/enabled/disabled     ************** //
 // ************************************************************************** //
 
-class BOOST_TEST_DECL enable_if : public decorator::for_test_unit {
-public:
-    explicit                enable_if( bool condition ) : m_condition( condition ) {}
+class BOOST_TEST_DECL enable_if_impl : public decorator::base {
+protected:
+    void                    apply_impl( test_unit& tu, bool condition );
+};
 
+template<bool condition>
+class enable_if : public enable_if_impl {
 private:
-    // decorator::for_test_unit interface
-    virtual void            do_apply( test_unit& tu );
-    virtual for_test_unit*  do_clone() const            { return new enable_if( m_condition ); }
-
-    // Data members
-    bool                    m_condition;
+    // decorator::base interface
+    virtual void            apply( test_unit& tu )   { this->apply_impl( tu, condition ); }
+    virtual base_ptr        clone() const            { return base_ptr(new enable_if<condition>()); }
 };
 
-class BOOST_TEST_DECL disable_if : public enable_if {
-public:
-    explicit    disable_if( bool condition ) : enable_if( !condition ) {}
-};
+typedef enable_if<true> enabled;
+typedef enable_if<false> disabled;
 
 // ************************************************************************** //
 // **************              decorator::fixture              ************** //
 // ************************************************************************** //
 
-class BOOST_TEST_DECL fixture_t : public decorator::for_test_unit {
+class BOOST_TEST_DECL fixture_t : public decorator::base {
 public:
     // Constructor
-    explicit    fixture_t( test_unit_fixture_ptr impl ) : m_impl( impl ) {}
+    explicit                fixture_t( test_unit_fixture_ptr impl ) : m_impl( impl ) {}
 
 private:
-    // decorator::for_test_unit interface
-    virtual void            do_apply( test_unit& tu );
-    virtual for_test_unit*  do_clone() const            { return new fixture_t( m_impl ); }
+    // decorator::base interface
+    virtual void            apply( test_unit& tu );
+    virtual base_ptr        clone() const { return base_ptr(new fixture_t( m_impl )); }
 
     // Data members
-    test_unit_fixture_ptr   m_impl;
+    test_unit_fixture_ptr m_impl;
 };
 
 //____________________________________________________________________________//
@@ -245,6 +240,25 @@ fixture( boost::function<void()> const& setup, boost::function<void()> const& te
 
 //____________________________________________________________________________//
 
+// ************************************************************************** //
+// **************            decorator::depends_on             ************** //
+// ************************************************************************** //
+
+class BOOST_TEST_DECL precondition : public decorator::base {
+public:
+    typedef boost::function<test_tools::assertion_result (test_unit_id)>   predicate_t;
+
+    explicit                precondition( predicate_t p ) : m_precondition( p ) {}
+
+private:
+    // decorator::base interface
+    virtual void            apply( test_unit& tu );
+    virtual base_ptr        clone() const { return base_ptr(new precondition( m_precondition )); }
+
+    // Data members
+    predicate_t             m_precondition;
+};
+
 } // namespace decorator
 
 using decorator::label;
@@ -253,8 +267,10 @@ using decorator::timeout;
 using decorator::description;
 using decorator::depends_on;
 using decorator::enable_if;
-using decorator::disable_if;
+using decorator::enabled;
+using decorator::disabled;
 using decorator::fixture;
+using decorator::precondition;
 
 } // namespace unit_test
 } // namespace boost
@@ -262,4 +278,3 @@ using decorator::fixture;
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_TREE_DECORATOR_HPP_091911GER
-

@@ -1,15 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2001-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : enhanced result for test predicate that include message explaining failure
+/// @file
+/// Enhanced result for test predicate that include message explaining failure
 // ***************************************************************************
 
 #ifndef BOOST_TEST_PREDICATE_RESULT_HPP_012705GER
@@ -38,14 +35,21 @@ namespace test_tools {
 // **************                assertion_result              ************** //
 // ************************************************************************** //
 
+//!@brief Type used for storing the result of an assertion.
 class BOOST_TEST_DECL assertion_result {
+
+    //!@internal
     typedef unit_test::const_string      const_string;
+
+    //!@internal
     struct dummy { void nonnull() {} };
+
+    //!@internal
     typedef void (dummy::*safe_bool)();
 
 public:
     // Constructor
-    assertion_result( bool pv_ ) 
+    assertion_result( bool pv_ )
     : p_predicate_value( pv_ )
     {}
 

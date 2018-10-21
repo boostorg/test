@@ -1,6 +1,6 @@
-//  (C) Copyright Gennadiy Rozental 2004-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -12,8 +12,8 @@
 //  Description : generic char traits class; wraps std::char_traits
 // ***************************************************************************
 
-#ifndef BOOST_TEST_BCS_CHAR_TRAITS_HPP_071894GER
-#define BOOST_TEST_BCS_CHAR_TRAITS_HPP_071894GER
+#ifndef BOOST_TEST_UTILS_BCS_CHAR_TRAITS_HPP
+#define BOOST_TEST_UTILS_BCS_CHAR_TRAITS_HPP
 
 // Boost
 #include <boost/config.hpp>
@@ -147,4 +147,4 @@ public:
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_TEST_BCS_CHAR_TRAITS_HPP_071894GER
+#endif // BOOST_TEST_UTILS_BCS_CHAR_TRAITS_HPP

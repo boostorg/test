@@ -1,15 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : forward declares monomorphic datasets interfaces
+/// @file
+/// Forward declares monomorphic datasets interfaces
 // ***************************************************************************
 
 #ifndef BOOST_TEST_DATA_MONOMORPHIC_FWD_HPP_102212GER
@@ -22,17 +19,18 @@
 #include <boost/test/utils/is_forward_iterable.hpp>
 
 // Boost
-#ifdef BOOST_NO_CXX11_RVALUE_REFERENCES
-#include <boost/utility/enable_if.hpp>
-#else
-#include <boost/utility/declval.hpp>
-#endif
+#include <boost/type_traits/remove_const.hpp>
+#include <boost/type_traits/remove_reference.hpp>
+#include <boost/type_traits/is_array.hpp>
 #include <boost/mpl/bool.hpp>
-#include <boost/smart_ptr/make_shared.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/type_traits/decay.hpp>
+
+// STL
+#include <tuple>
 
 #include <boost/test/detail/suppress_warnings.hpp>
+
+// STL
+#include <initializer_list>
 
 //____________________________________________________________________________//
 
@@ -42,11 +40,8 @@ namespace data {
 
 namespace monomorphic {
 
-template<typename T>
-struct traits;
 
-template<typename T>
-class dataset;
+#if !defined(BOOST_TEST_DOXYGEN_DOC__)
 
 template<typename T>
 class singleton;
@@ -57,30 +52,50 @@ class collection;
 template<typename T>
 class array;
 
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-#  define BOOST_TEST_ENABLE_IF std::enable_if
-#else
-#  define BOOST_TEST_ENABLE_IF boost::enable_if_c
+template<typename T>
+class init_list;
+
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
+    !defined(BOOST_NO_CXX11_HDR_TUPLE)
+template<class dataset_t, class ...Args>
+class delayed_dataset;
+#endif
+
 #endif
 
 // ************************************************************************** //
 // **************            monomorphic::is_dataset           ************** //
 // ************************************************************************** //
 
-template<typename DS>
+//! Helper metafunction indicating if the specified type is a dataset.
+template<typename DataSet>
 struct is_dataset : mpl::false_ {};
 
 //____________________________________________________________________________//
 
-template<typename DS>
-struct is_dataset<DS&> : is_dataset<DS> {};
+//! A reference to a dataset is a dataset
+template<typename DataSet>
+struct is_dataset<DataSet&> : is_dataset<DataSet> {};
+template<typename DataSet>
+struct is_dataset<DataSet&&> : is_dataset<DataSet> {};
 
 //____________________________________________________________________________//
 
-template<typename DS>
-struct is_dataset<DS const> : is_dataset<DS> {};
+//! A const dataset is a dataset
+template<typename DataSet>
+struct is_dataset<DataSet const> : is_dataset<DataSet> {};
 
-//____________________________________________________________________________//
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+
+//! Helper to check if a list of types contains a dataset
+template<class DataSet, class...>
+struct has_dataset : is_dataset<DataSet> {};
+
+template<class DataSet0, class DataSet1, class... DataSetTT>
+struct has_dataset<DataSet0, DataSet1, DataSetTT...>
+  : std::integral_constant<bool, is_dataset<DataSet0>::value || has_dataset<DataSet1, DataSetTT...>::value>
+{};
+#endif
 
 } // namespace monomorphic
 
@@ -88,91 +103,114 @@ struct is_dataset<DS const> : is_dataset<DS> {};
 // **************                  data::make                  ************** //
 // ************************************************************************** //
 
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-
-template<typename DS>
-inline typename BOOST_TEST_ENABLE_IF<monomorphic::is_dataset<DS>::value,DS>::type
-make(DS&& ds)
+//! @brief Creates a dataset from a value, a collection or an array
+//!
+//! This function has several overloads:
+//! @code
+//! // returns ds if ds is already a dataset
+//! template <typename DataSet> DataSet make(DataSet&& ds); 
+//!
+//! // creates a singleton dataset, for non forward iterable and non dataset type T
+//! // (a C string is not considered as a sequence).
+//! template <typename T> monomorphic::singleton<T> make(T&& v); 
+//! monomorphic::singleton<char*> make( char* str );
+//! monomorphic::singleton<char const*> make( char const* str );
+//!
+//! // creates a collection dataset, for forward iterable and non dataset type C
+//! template <typename C> monomorphic::collection<C> make(C && c);
+//!
+//! // creates an array dataset
+//! template<typename T, std::size_t size> monomorphic::array<T> make( T (&a)[size] );
+//! @endcode
+template<typename DataSet>
+inline typename std::enable_if<monomorphic::is_dataset<DataSet>::value,DataSet>::type
+make(DataSet&& ds)
 {
-    return std::forward<DS>( ds );
+    return std::forward<DataSet>( ds );
 }
 
 //____________________________________________________________________________//
 
+// warning: doxygen is apparently unable to handle @overload from different files, so if the overloads
+// below are not declared with @overload in THIS file, they do not appear in the documentation.
+
+//! @overload boost::unit_test::data::make()
 template<typename T>
-inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
-                                     !monomorphic::is_dataset<T>::value, 
-                                     monomorphic::singleton<T>
->::type
+inline typename std::enable_if<!is_container_forward_iterable<T>::value && 
+                               !monomorphic::is_dataset<T>::value &&
+                               !is_array<typename remove_reference<T>::type>::value, 
+                               monomorphic::singleton<T>>::type
 make( T&& v );
 
 //____________________________________________________________________________//
 
+//! @overload boost::unit_test::data::make()
 template<typename C>
-inline monomorphic::collection<typename BOOST_TEST_ENABLE_IF<unit_test::is_forward_iterable<C>::value,C>::type>
+inline typename std::enable_if<is_container_forward_iterable<C>::value,monomorphic::collection<C>>::type
 make( C&& c );
 
 //____________________________________________________________________________//
 
-#else
-
-template<typename DS>
-inline typename BOOST_TEST_ENABLE_IF<monomorphic::is_dataset<DS>::value,DS const&>::type
-make(DS const& ds)
-{
-    return ds;
-}
-
-//____________________________________________________________________________//
-
-template<typename T>
-inline typename BOOST_TEST_ENABLE_IF<!is_forward_iterable<T>::value && 
-                                     !monomorphic::is_dataset<T>::value, 
-                                     monomorphic::singleton<T>
->::type
-make( T const& v );
-
-//____________________________________________________________________________//
-
-template<typename C>
-inline monomorphic::collection<typename BOOST_TEST_ENABLE_IF<unit_test::is_forward_iterable<C>::value,C>::type>
-make( C const& c );
-
-//____________________________________________________________________________//
-
-#endif // BOOST_NO_CXX11_RVALUE_REFERENCES
-
+//! @overload boost::unit_test::data::make()
 template<typename T, std::size_t size>
-inline monomorphic::array<T>
+inline monomorphic::array< typename boost::remove_const<T>::type >
 make( T (&a)[size] );
 
 //____________________________________________________________________________//
 
+//! @overload boost::unit_test::data::make()
 inline monomorphic::singleton<char*>
 make( char* str );
 
 //____________________________________________________________________________//
 
+//! @overload boost::unit_test::data::make()
 inline monomorphic::singleton<char const*>
 make( char const* str );
 
 //____________________________________________________________________________//
 
-#ifndef BOOST_NO_CXX11_DECLTYPE
+//! @overload boost::unit_test::data::make()
+template<typename T>
+inline monomorphic::init_list<T>
+make( std::initializer_list<T>&& );
+
+//____________________________________________________________________________//
+
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
+    !defined(BOOST_TEST_ERRONEOUS_INIT_LIST)
+//! @overload boost::unit_test::data::make()
+template<class T, class ...Args>
+inline typename std::enable_if<
+  !monomorphic::has_dataset<T, Args...>::value,
+  monomorphic::init_list<T>
+>::type
+make( T&& arg0, Args&&... args );
+#endif
+
+//____________________________________________________________________________//
+
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
+    !defined(BOOST_NO_CXX11_HDR_TUPLE)
+template<class dataset_t, class ...Args>
+inline typename std::enable_if<
+  monomorphic::is_dataset< dataset_t >::value,
+  monomorphic::delayed_dataset<dataset_t, Args...>
+>::type
+make_delayed(Args... args);
+#endif
+
+//____________________________________________________________________________//
 
 namespace result_of {
 
-template<typename DS>
-struct make
-{
-    typedef decltype(data::make(boost::declval<DS>())) type;
+//! Result of the make call.
+template<typename DataSet>
+struct make {
+    typedef decltype( data::make( declval<DataSet>() ) ) type;
 };
 
 } // namespace result_of
-
-#endif // BOOST_NO_CXX11_DECLTYPE
-
-//____________________________________________________________________________//
 
 } // namespace data
 } // namespace unit_test

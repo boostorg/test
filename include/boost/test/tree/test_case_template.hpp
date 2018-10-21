@@ -1,15 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2001-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision: -1 $
-//
-//  Description : defines template_test_case_gen
+///@ file
+/// Defines template_test_case_gen
 // ***************************************************************************
 
 #ifndef BOOST_TEST_TREE_TEST_CASE_TEMPLATE_HPP_091911GER
@@ -20,6 +17,7 @@
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
 #include <boost/test/detail/workaround.hpp>
+#include <boost/test/tree/test_unit.hpp>
 
 #include <boost/test/utils/class_properties.hpp>
 
@@ -34,15 +32,21 @@
 #include <boost/type_traits/is_const.hpp>
 #include <boost/function/function0.hpp>
 
-#ifndef BOOST_NO_RTTI
-#include <typeinfo> // for typeid
+#if defined(BOOST_NO_TYPEID) || defined(BOOST_NO_RTTI)
+#  include <boost/current_function.hpp>
 #else
-#include <boost/current_function.hpp>
+#  include <boost/core/demangle.hpp>
 #endif
 
 // STL
 #include <string>   // for std::string
 #include <list>     // for std::list
+
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
+    !defined(BOOST_NO_CXX11_HDR_TUPLE) && \
+    !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
+  #include <tuple>
+#endif
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -67,7 +71,7 @@ public:
 // **************           generate_test_case_4_type          ************** //
 // ************************************************************************** //
 
-template<typename Generator,typename TestCaseTemplate>
+template<typename Generator, typename TestCaseTemplate>
 struct generate_test_case_4_type {
     explicit    generate_test_case_4_type( const_string tc_name, const_string tc_file, std::size_t tc_line, Generator& G )
     : m_test_case_name( tc_name )
@@ -82,17 +86,17 @@ struct generate_test_case_4_type {
         std::string full_name;
         assign_op( full_name, m_test_case_name, 0 );
         full_name += '<';
-#ifndef BOOST_NO_RTTI
-         full_name += typeid(TestType).name();
+#if !defined(BOOST_NO_TYPEID) && !defined(BOOST_NO_RTTI)
+        full_name += boost::core::demangle(typeid(TestType).name()); // same as execution_monitor.ipp
 #else
         full_name += BOOST_CURRENT_FUNCTION;
 #endif
         if( boost::is_const<TestType>::value )
-            full_name += " const";
+            full_name += "_const";
         full_name += '>';
 
-        m_holder.m_test_cases.push_back( new test_case( full_name,
-                                                        m_test_case_file, 
+        m_holder.m_test_cases.push_back( new test_case( ut_detail::normalize_test_case_name( full_name ),
+                                                        m_test_case_file,
                                                         m_test_case_line,
                                                         test_case_template_invoker<TestCaseTemplate,TestType>() ) );
     }
@@ -109,22 +113,13 @@ private:
 // **************              test_case_template              ************** //
 // ************************************************************************** //
 
-template<typename TestCaseTemplate,typename TestTypesList>
-class template_test_case_gen : public test_unit_generator {
+class template_test_case_gen_base : public test_unit_generator {
 public:
-    // Constructor
-    template_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line )
-    {
-        typedef generate_test_case_4_type<template_test_case_gen<TestCaseTemplate,TestTypesList>,TestCaseTemplate> single_test_gen;
-
-        mpl::for_each<TestTypesList,mpl::make_identity<mpl::_> >( single_test_gen( tc_name, tc_file, tc_line, *this ) );
-    }
-
     virtual test_unit* next() const
     {
         if( m_test_cases.empty() )
             return 0;
-    
+
         test_unit* res = m_test_cases.front();
         m_test_cases.pop_front();
 
@@ -135,6 +130,59 @@ public:
     mutable std::list<test_unit*> m_test_cases;
 };
 
+template<typename TestCaseTemplate,typename TestTypesList>
+class template_test_case_gen : public template_test_case_gen_base {
+public:
+    // Constructor
+    template_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line )
+    {
+        typedef generate_test_case_4_type<template_test_case_gen<TestCaseTemplate,TestTypesList>,TestCaseTemplate> single_test_gen;
+
+        mpl::for_each<TestTypesList,mpl::make_identity<mpl::_> >( single_test_gen( tc_name, tc_file, tc_line, *this ) );
+    }
+};
+
+// Describing template test cases with tuples
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
+    !defined(BOOST_NO_CXX11_HDR_TUPLE) && \
+    !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && \
+    !defined(BOOST_NO_CXX11_TEMPLATE_ALIASES)
+
+template<typename TestCaseTemplate, typename... tuple_parameter_pack>
+class template_test_case_gen<TestCaseTemplate, std::tuple<tuple_parameter_pack...> > : public template_test_case_gen_base {
+
+    template<int... Is>
+    struct seq { };
+
+    template<int N, int... Is>
+    struct gen_seq : gen_seq<N - 1, N - 1, Is...> { };
+
+    template<int... Is>
+    struct gen_seq<0, Is...> : seq<Is...> { };
+
+    template<typename tuple_t, typename F, int... Is>
+    void for_each(F &f, seq<Is...>)
+    {
+        auto l = { (f(mpl::identity<typename std::tuple_element<Is, tuple_t>::type>()), 0)... };
+        (void)l; // silence warning
+    }
+
+public:
+    // Constructor
+    template_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line )
+    {
+        using tuple_t = std::tuple<tuple_parameter_pack...>;
+        using this_type = template_test_case_gen<TestCaseTemplate, tuple_t >;
+        using single_test_gen = generate_test_case_4_type<this_type, TestCaseTemplate>;
+
+        single_test_gen op( tc_name, tc_file, tc_line, *this );
+
+        this->for_each<tuple_t>(op, gen_seq<sizeof...(tuple_parameter_pack)>());
+    }
+};
+
+#endif /* C++11 variadic, tuples and type alias */
+
 } // namespace ut_detail
 } // unit_test
 } // namespace boost
@@ -142,4 +190,3 @@ public:
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_TREE_TEST_CASE_TEMPLATE_HPP_091911GER
-

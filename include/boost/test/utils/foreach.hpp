@@ -1,5 +1,5 @@
 //  (C) Copyright Eric Niebler 2004-2005
-//  (C) Copyright Gennadiy Rozental 2005-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -11,14 +11,14 @@
 //  Version     : $Revision$
 //
 //  Description : this is an abridged version of an excelent BOOST_FOREACH facility
-//  presented by Eric Niebler. I am so fond of it so I can't wait till it 
-//  going to be accepted into Boost. Also I need version with less number of dependencies 
-//  and more portable. This version doesn't support rvalues and will reeveluate it's 
+//  presented by Eric Niebler. I am so fond of it so I can't wait till it
+//  going to be accepted into Boost. Also I need version with less number of dependencies
+//  and more portable. This version doesn't support rvalues and will reeveluate it's
 //  parameters, but should be good enough for my purposes.
 // ***************************************************************************
 
-#ifndef BOOST_TEST_FOREACH_HPP_021005GER
-#define BOOST_TEST_FOREACH_HPP_021005GER
+#ifndef BOOST_TEST_UTILS_FOREACH_HPP
+#define BOOST_TEST_UTILS_FOREACH_HPP
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
@@ -313,4 +313,4 @@ for( bool BOOST_TEST_FE_CON_VAR = true;                                         
 
 #include <boost/test/detail/enable_warnings.hpp>
 
-#endif // BOOST_TEST_FOREACH_HPP_021005GER
+#endif // BOOST_TEST_UTILS_FOREACH_HPP

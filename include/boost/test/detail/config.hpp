@@ -1,15 +1,12 @@
-//  (C) Copyright Gennadiy Rozental 2001-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : as a central place for global configuration switches
+//!@file
+//!@brief a central place for global configuration switches
 // ***************************************************************************
 
 #ifndef BOOST_TEST_CONFIG_HPP_071894GER
@@ -75,13 +72,6 @@ class type_info;
 
 //____________________________________________________________________________//
 
-#if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) && \
-    !BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530))
-#  define BOOST_TEST_SUPPORT_INTERACTION_TESTING 1
-#endif
-
-//____________________________________________________________________________//
-
 #if !defined(__BORLANDC__) && !BOOST_WORKAROUND( __SUNPRO_CC, < 0x5100 )
 #define BOOST_TEST_SUPPORT_TOKEN_ITERATOR 1
 #endif
@@ -116,8 +106,22 @@ class type_info;
 #define BOOST_TEST_MAIN BOOST_TEST_MODULE
 #endif
 
+
+
+#ifndef BOOST_PP_VARIADICS /* we can change this only if not already defined) */
+
 #ifdef __PGI
 #define BOOST_PP_VARIADICS 1
 #endif
+
+#if BOOST_CLANG
+#define BOOST_PP_VARIADICS 1
+#endif
+
+#if defined(BOOST_GCC) && (BOOST_GCC >= 4 * 10000 + 8 * 100)
+#define BOOST_PP_VARIADICS 1
+#endif
+
+#endif /* ifndef BOOST_PP_VARIADICS */
 
 #endif // BOOST_TEST_CONFIG_HPP_071894GER

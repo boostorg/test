@@ -1,6 +1,6 @@
-//  (C) Copyright Gennadiy Rozental 2001-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -9,12 +9,12 @@
 //
 //  Version     : $Revision$
 //
-//  Description : simple facility that mimmic notion of read-only read-write 
+//  Description : simple facility that mimmic notion of read-only read-write
 //  properties in C++ classes. Original idea by Henrik Ravn.
 // ***************************************************************************
 
-#ifndef BOOST_TEST_CLASS_PROPERTIES_HPP_071894GER
-#define BOOST_TEST_CLASS_PROPERTIES_HPP_071894GER
+#ifndef BOOST_TEST_UTILS_CLASS_PROPERTIES_HPP
+#define BOOST_TEST_UTILS_CLASS_PROPERTIES_HPP
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
@@ -192,4 +192,4 @@ public:
 
 #undef BOOST_TEST_NO_PROTECTED_USING
 
-#endif // BOOST_TEST_CLASS_PROPERTIES_HPP_071894GER
+#endif // BOOST_TEST_UTILS_CLASS_PROPERTIES_HPP

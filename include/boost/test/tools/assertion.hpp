@@ -1,34 +1,29 @@
-//  (C) Copyright Gennadiy Rozental 2011-2012.
+//  (C) Copyright Gennadiy Rozental 2001.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision: 74663 $
-//
-//  Description : defines framework for automated assertion construction
+//!@file
+//!@brief Defines framework for automated assertion construction
 // ***************************************************************************
 
 #ifndef BOOST_TEST_TOOLS_ASSERTION_HPP_100911GER
 #define BOOST_TEST_TOOLS_ASSERTION_HPP_100911GER
 
 // Boost.Test
-#include <boost/test/utils/is_forward_iterable.hpp>
-#include <boost/test/utils/is_cstring.hpp>
-#include <boost/test/utils/basic_cstring/compare.hpp>
-
-#include <boost/test/tools/floating_point_comparison.hpp>
-#include <boost/test/tools/fpc_tolerance.hpp>
+#include <boost/test/tools/assertion_result.hpp>
+#include <boost/test/tools/detail/print_helper.hpp>
+#include <boost/test/tools/detail/fwd.hpp>
 
 // Boost
+#include <boost/type.hpp>
+#include <boost/type_traits/decay.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/utility/declval.hpp>
-#include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/remove_reference.hpp>
-#include <boost/type_traits/is_floating_point.hpp>
+#include <boost/type_traits/remove_const.hpp>
 
 // STL
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
@@ -172,234 +167,6 @@ BOOST_TEST_FOR_EACH_CONST_OP( DEFINE_CONST_OPER )
 
 //____________________________________________________________________________//
 
-namespace op_detail {
-
-template <typename OP, typename Lhs, typename Rhs>
-inline assertion_result
-compare_collections( Lhs const& lhs, Rhs const& rhs )
-{
-    assertion_result pr( true );
-
-    if( lhs.size() != rhs.size() ) {
-        pr = false;
-        pr.message() << "Collections size mismatch: " << lhs.size() << " != " << rhs.size();
-        return pr;
-    }
-        
-    typename Lhs::const_iterator left  = lhs.begin();
-    typename Rhs::const_iterator right = rhs.begin();
-    std::size_t                  pos   = 0;
-
-    for( ; pos < lhs.size(); ++left, ++right, ++pos ) {
-        if( OP::eval( *left, *right ) )
-            continue;
-
-        pr = false;
-        pr.message() << "\nMismatch in a position " << pos << ": "  << *left << OP::revert() << *right;
-    }
-
-    return pr;
-}
-
-} // namespace op_detail
-
-//____________________________________________________________________________//
-
-#define DEFINE_CSTRING_COMPARISON( oper, name, rev )                \
-template<typename Lhs,typename Rhs>                                 \
-struct name<Lhs,Rhs,typename boost::enable_if_c<                    \
-    unit_test::is_cstring<Lhs>::value &&                            \
-    unit_test::is_cstring<Rhs>::value>::type> {                     \
-    typedef typename boost::add_const<                              \
-                typename remove_pointer<                            \
-                    typename decay<Lhs>::type>::type>::type         \
-        lhs_char_type;                                              \
-    typedef typename boost::add_const<                              \
-                typename remove_pointer<                            \
-                    typename decay<Rhs>::type>::type>::type         \
-        rhs_char_type;                                              \
-public:                                                             \
-    typedef assertion_result result_type;                           \
-                                                                    \
-    static bool                                                     \
-    eval( Lhs const& lhs, Rhs const& rhs)                           \
-    {                                                               \
-        return unit_test::basic_cstring<lhs_char_type>(lhs) oper    \
-               unit_test::basic_cstring<rhs_char_type>(rhs);        \
-    }                                                               \
-                                                                    \
-    template<typename PrevExprType>                                 \
-    static void                                                     \
-    report( std::ostream&       ostr,                               \
-            PrevExprType const& lhs,                                \
-            Rhs const&          rhs)                                \
-    {                                                               \
-        lhs.report( ostr );                                         \
-        ostr << revert()                                            \
-             << tt_detail::print_helper( rhs );                     \
-    }                                                               \
-                                                                    \
-    static char const* revert()                                     \
-    { return " " #rev " "; }                                        \
-};                                                                  \
-/**/
-
-BOOST_TEST_FOR_EACH_COMP_OP( DEFINE_CSTRING_COMPARISON )
-#undef DEFINE_CSTRING_COMPARISON
-
-//____________________________________________________________________________//
-
-#define DEFINE_COLLECTION_COMPARISON( oper, name, _ )               \
-template<typename Lhs,typename Rhs>                                 \
-struct name<Lhs,Rhs,typename boost::enable_if_c<                    \
-    unit_test::is_forward_iterable<Lhs>::value &&                   \
-    unit_test::is_forward_iterable<Rhs>::value>::type> {            \
-public:                                                             \
-    typedef assertion_result result_type;                           \
-                                                                    \
-    static assertion_result                                         \
-    eval( Lhs const& lhs, Rhs const& rhs)                           \
-    {                                                               \
-        typedef name<typename Lhs::value_type,                      \
-                     typename Rhs::value_type> OP;                  \
-        return op_detail::compare_collections<OP>(lhs, rhs);        \
-    }                                                               \
-                                                                    \
-    template<typename PrevExprType>                                 \
-    static void                                                     \
-    report( std::ostream&,                                          \
-            PrevExprType const&,                                    \
-            Rhs const& ) {}                                         \
-};                                                                  \
-/**/
-
-BOOST_TEST_FOR_EACH_COMP_OP( DEFINE_COLLECTION_COMPARISON )
-#undef DEFINE_COLLECTION_COMPARISON
-
-//____________________________________________________________________________//
-
-namespace op_detail {
-
-template<typename OP, typename FPT>
-struct compare_fpv {
-    enum { cmp_direct = true };
-
-    template <typename Lhs, typename Rhs>
-    static assertion_result
-    compare( Lhs const& lhs, Rhs const& rhs )
-    {
-        fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_STRONG );
-
-        assertion_result ar( P( lhs, rhs ) );
-        if( !ar )
-            ar.message() << "Relative difference exceeds tolerance ["
-                         << P.failed_fraction() << " > " << P.fraction_tolerance() << ']';
-        return ar;
-    }
-
-    static assertion_result
-    compare_0( FPT const& fpv )
-    {
-        fpc::small_with_tolerance<FPT> P( fpc_tolerance<FPT>() );
-
-        assertion_result ar( P( fpv ) );
-        if( !ar )
-            ar.message() << "Absolute value exceeds tolerance [|" << fpv << "| > "<< fpc_tolerance<FPT>() << ']';
-
-        return ar;
-    }
-};
-
-//____________________________________________________________________________//
-
-template<typename Lhs, typename Rhs, typename FPT>
-struct compare_fpv<op::NE<Lhs,Rhs>,FPT> {
-    enum { cmp_direct = false };
-
-    static assertion_result
-    compare( Lhs const& lhs, Rhs const& rhs )
-    {
-        fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_STRONG );
-        
-        assertion_result ar( !P( lhs, rhs ) );
-        if( !ar )
-            ar.message() << "Relative difference is within tolerance ["
-                         << P.failed_fraction() << " < " << fpc_tolerance<FPT>() << ']';
-        return ar;
-    }
-
-    static assertion_result
-    compare_0( FPT const& fpv )
-    {
-        fpc::small_with_tolerance<FPT> P( fpc_tolerance<FPT>() );
-
-        assertion_result ar( !P( fpv ) );
-        if( !ar )
-            ar.message() << "Absolute value is within tolerance [|" << fpv << "| < "<< fpc_tolerance<FPT>() << ']';
-        return ar;
-    }
-};
-
-//____________________________________________________________________________//
-
-} // namespace op_detail
-
-#define DEFINE_FPV_COMPARISON( oper, name, rev )                    \
-template<typename Lhs,typename Rhs>                                 \
-struct name<Lhs,Rhs,typename boost::enable_if_c<                    \
-    is_floating_point<Lhs>::value &&                                \
-    is_floating_point<Rhs>::value>::type> {                         \
-        typedef typename numeric::conversion_traits<Lhs,Rhs         \
-    >::supertype FPT;                                               \
-    typedef name<Lhs,Rhs> OP;                                       \
-public:                                                             \
-    typedef assertion_result result_type;                           \
-                                                                    \
-    static bool                                                     \
-    eval_direct( Lhs const& lhs, Rhs const& rhs)                    \
-    {                                                               \
-        return lhs oper rhs;                                        \
-    }                                                               \
-                                                                    \
-    static assertion_result                                         \
-    eval( Lhs const& lhs, Rhs const& rhs)                           \
-    {                                                               \
-        if( lhs == Lhs() )                                          \
-            return op_detail::compare_fpv<OP,Rhs>::compare_0(rhs);  \
-                                                                    \
-        if( rhs == Rhs() )                                          \
-            return op_detail::compare_fpv<OP,Lhs>::compare_0(lhs);  \
-                                                                    \
-        bool direct_res = eval_direct( lhs, rhs );                  \
-                                                                    \
-        if(direct_res && op_detail::compare_fpv<OP,FPT>::cmp_direct \
-            || fpc_tolerance<FPT>() == FPT())                       \
-            return direct_res;                                      \
-                                                                    \
-        return op_detail::compare_fpv<OP,FPT>::compare(lhs, rhs);   \
-    }                                                               \
-                                                                    \
-    template<typename PrevExprType>                                 \
-    static void                                                     \
-    report( std::ostream& ostr,                                     \
-            PrevExprType const& lhs,                                \
-            Rhs const& rhs )                                        \
-    {                                                               \
-        lhs.report( ostr );                                         \
-        ostr << revert()                                            \
-             << tt_detail::print_helper( rhs );                     \
-    }                                                               \
-                                                                    \
-    static char const* revert()                                     \
-    { return " " #rev " "; }                                        \
-};                                                                  \
-/**/
-
-BOOST_TEST_FOR_EACH_COMP_OP( DEFINE_FPV_COMPARISON )
-#undef DEFINE_FPV_COMPARISON
-
-//____________________________________________________________________________//
-
 } // namespace op
 
 // ************************************************************************** //
@@ -414,15 +181,17 @@ class expression_base {
 public:
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-
+    template<typename T>
+    struct RhsT : remove_const<typename remove_reference<T>::type> {};
+    
 #define ADD_OP_SUPPORT( oper, name, _ )                         \
     template<typename T>                                        \
     binary_expr<ExprType,T,                                     \
-        op::name<ValType,typename remove_reference<T>::type> >  \
+        op::name<ValType,typename RhsT<T>::type> >              \
     operator oper( T&& rhs )                                    \
     {                                                           \
         return binary_expr<ExprType,T,                          \
-         op::name<ValType,typename remove_reference<T>::type> > \
+         op::name<ValType,typename RhsT<T>::type> >             \
             ( std::forward<ExprType>(                           \
                 *static_cast<ExprType*>(this) ),                \
               std::forward<T>(rhs) );                           \
@@ -432,11 +201,11 @@ public:
 
 #define ADD_OP_SUPPORT( oper, name, _ )                         \
     template<typename T>                                        \
-    binary_expr<ExprType,typename decay<T const>::type,         \
-        op::name<ValType,typename decay<T const>::type> >       \
+    binary_expr<ExprType,typename boost::decay<T const>::type,  \
+        op::name<ValType,typename boost::decay<T const>::type> >\
     operator oper( T const& rhs ) const                         \
     {                                                           \
-        typedef typename decay<T const>::type Rhs;              \
+        typedef typename boost::decay<T const>::type Rhs;       \
         return binary_expr<ExprType,Rhs,op::name<ValType,Rhs> > \
             ( *static_cast<ExprType const*>(this),              \
               rhs );                                            \
@@ -482,7 +251,7 @@ public:
 // simple value expression
 
 template<typename T>
-class value_expr : public expression_base<value_expr<T>,typename remove_reference<T>::type> {
+class value_expr : public expression_base<value_expr<T>,typename remove_const<typename remove_reference<T>::type>::type> {
 public:
     // Public types
     typedef T                   result_type;
@@ -501,14 +270,14 @@ public:
     {}
 #endif
 
-    // Specific expresson interface
+    // Specific expression interface
     T const&                    value() const
     {
         return m_value;
     }
     void                        report( std::ostream& ostr ) const
     {
-        ostr << tt_detail::print_helper( m_value );
+        ostr << tt_detail::print_helper( value() );
     }
 
     // Mutating operators
@@ -540,8 +309,11 @@ public:
 
 private:
     template<typename U>
-    static void format_message( wrap_stringstream& ostr, U const& v )   { ostr << "[(bool)" << v << " is false]"; }
-    static void format_message( wrap_stringstream& /*ostr*/, bool /*v*/ )       {}
+    static void format_message( wrap_stringstream& ostr, U const& v )
+    {
+        ostr << "['" << tt_detail::print_helper(v) << "' evaluates to false]";
+    }
+    static void format_message( wrap_stringstream& /*ostr*/, bool /*v*/ ) {}
     static void format_message( wrap_stringstream& /*ostr*/, assertion_result const& /*v*/ ) {}
 
     // Data members
@@ -628,7 +400,6 @@ public:
         return value_expr<T>( v );
     }
 #endif
-
 };
 
 #undef BOOST_TEST_FOR_EACH_CONST_OP
@@ -640,4 +411,3 @@ public:
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_TOOLS_ASSERTION_HPP_100911GER
-

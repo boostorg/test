@@ -5,11 +5,8 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : forwarding source
+/// @file
+/// @brief forwarding source
 // ***************************************************************************
 
 #define BOOST_TEST_SOURCE
