@@ -73,8 +73,6 @@ public:
         dataset2_iter   m_iter2;
     };
 
-    typedef typename iterator::iterator_sample   sample;
-
     //! Constructor
     //!
     //! The datasets are moved and not copied.
