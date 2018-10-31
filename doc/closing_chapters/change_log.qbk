@@ -29,7 +29,8 @@
 # [pull_request 151] Fix warning: `BOOST_CLANG` is not defined, evaluates to `0`
 # [pull_request 154] When specifying `--color_output=no`, don't output color codes
 # [pull_request 161] add a self-containment test
-# [ticket 13380] data-driven tests' join operator `+` corrupts first column
+# [ticket 13380] data-driven tests' join operator `+` corrupts first column (duplicates [ticket 12216])
+# [ticket 13625] Boost.test fail to compile with `-Werror=missing-declarations` on some architectures 
 # [ticket 13637] Fix for Bug [ticket 12597] causes a problem with `BOOST_TEST_CASE`
 
 
