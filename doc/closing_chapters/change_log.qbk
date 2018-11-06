@@ -19,18 +19,21 @@
 [h5 Breaking changes]
 
 [h5 Bugfixes and feature requests]
-# [pull_request 147] Catch block for `boost::exception` appears after `std::exception` in `execution_monitor::execute()`
-# [pull_request 148] Colored output contradiction
+
 # [github_issue 149] Setting color_output=no does not disable the output of color format codes
 # [github_issue 150] Some headers fail to compile independently
 # [github_issue 156] `close_at_tolerance` always returns `false` for comparisons of infinity
 # [github_issue 158] Detecting `boost_test_print_type` does not work when testing a type with an explicit conversion to `bool`
 # [github_issue 163] Significant start slowdown on MSVC x64/Debug after upgrade to `v1.68.0`
+
+# [pull_request 147] Catch block for `boost::exception` appears after `std::exception` in `execution_monitor::execute()`
+# [pull_request 148] Colored output contradiction
 # [pull_request 151] Fix warning: `BOOST_CLANG` is not defined, evaluates to `0`
 # [pull_request 154] When specifying `--color_output=no`, don't output color codes
 # [pull_request 161] add a self-containment test
+
 # [ticket 13380] data-driven tests' join operator `+` corrupts first column (duplicates [ticket 12216])
-# [ticket 13625] Boost.test fail to compile with `-Werror=missing-declarations` on some architectures 
+# [ticket 13625] Boost.test fail to compile with `-Werror=missing-declarations` on some architectures
 # [ticket 13637] Fix for Bug [ticket 12597] causes a problem with `BOOST_TEST_CASE`
 
 
@@ -41,7 +44,7 @@
   let the dataset generator access the `argc` and `argv` of the master test suite. For indicating
   a dataset that should be instanciated in a delayed manner, a new `data::make_delayed` helper has
   been introduced.
-* It is now possible to create a dataset with `data::make`, with variable number of arguments. 
+* It is now possible to create a dataset with `data::make`, with variable number of arguments.
   As the datasets are monomorphic, those should be castable to the first element type.
 
 [h5 Breaking changes]
@@ -63,12 +66,12 @@
 
 [h5 Breaking changes]
 
-* Now colour is on by default for the output streams that are either `std::cout` or `std::cerr`. This can be 
-  disabled by passing [link boost_test.utf_reference.rt_param_reference.color_output `--no_color_ouput`] (or just `--no_color`) 
+* Now colour is on by default for the output streams that are either `std::cout` or `std::cerr`. This can be
+  disabled by passing [link boost_test.utf_reference.rt_param_reference.color_output `--no_color_ouput`] (or just `--no_color`)
   to the command line.
-* Adding test cases with the same name to the same test suite is reported as an error. This impacts 
+* Adding test cases with the same name to the same test suite is reported as an error. This impacts
   [link boost_test.tests_organization.test_cases.test_organization_templates template] and
-  [link boost_test.tests_organization.test_cases.param_test parametrized] test cases, as well as manually 
+  [link boost_test.tests_organization.test_cases.param_test parametrized] test cases, as well as manually
   registered tests. Make sure you have no duplicate names.
 
 [h5 New features]
@@ -92,7 +95,7 @@
 # [ticket 12969] Problem linking `print_helper_t<nullptr_t>` under Clang
 # [ticket 13058] `errors.hpp` in Boost Test requires warning `C4946` to be `off`
 # [ticket 13149] Dependency decorators on parent suites
-# [ticket 13170] `BOOST_AUTO_TEST_CASE_TEMPLATE` don't want `typedef` for list 
+# [ticket 13170] `BOOST_AUTO_TEST_CASE_TEMPLATE` don't want `typedef` for list
 # [ticket 13181] Boost test can't compare classes which have `begin` and `end` but not `const_iterator`
 # [ticket 13371] Use-after-free with `--log_sink=file`
 # [ticket 13387] Test header fails to compile
