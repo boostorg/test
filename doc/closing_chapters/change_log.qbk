@@ -65,6 +65,10 @@ Boost.Test releases:
 
 [#ref_CHANGE_LOG_3_13][h4 Boost.Test v3.13 / boost 1.73]
 
+[h5 Breaking changes]
+
+* Removing long time deprecated headers
+
 [h5 New features]
 
 * It is now possible to combine tolerance indication, user message and collection comparison modifier in a single `BOOST_TEST` expression
