@@ -137,8 +137,9 @@ you can just specialize [classref boost::math::fpc::tolerance_based] for your ty
 
 [h4 Refinement of]
 
-`MoveConstructible`, [@http://www.sgi.com/tech/stl/EqualityComparable.html `EqualityComparable`],
-[@http://www.sgi.com/tech/stl/LessThanComparable.html `LessThanComparable`]
+[@https://en.cppreference.com/w/cpp/named_req/MoveConstructible `MoveConstructible`],
+[@https://en.cppreference.com/w/cpp/named_req/EqualityComparable `EqualityComparable`],
+[@https://en.cppreference.com/w/cpp/named_req/LessThanComparable `LessThanComparable`]
 
 [h4 Notation]
 
