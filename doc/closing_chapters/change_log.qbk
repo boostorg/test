@@ -24,6 +24,8 @@ Boost.Test releases:
 [#ref_CHANGE_LOG_3_10][h4 Boost.Test v3.10 / boost 1.70]
 
 [h5 New features]
+* [link boost_test.tests_organization.test_cases.test_case_generation.datasets.dataset_interface Custom datasets]
+  are not required to declare a inner type `sample` anymore
 
 * It is now possible to pass several values for the same context via the tool
   __BOOST_TEST_CONTEXT__.
