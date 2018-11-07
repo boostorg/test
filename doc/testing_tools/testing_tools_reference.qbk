@@ -108,8 +108,12 @@ template <typename FPT>
 
 Decorator `tolerance` specifies the default comparison tolerance for floating point type `FTP` in the decorated test
 unit. The default tolerance only applies to a particular type, so it makes sense to provide more than one `tolerance`
-decorator if we are comparing different floating point types. For more details see __floating_points_testing_impl__.
-The variant with `percent_tolerance` uses value `eps / 100` as tolerance.
+decorator if we are comparing different floating point types.
+The variant with `percent_tolerance` uses value ``eps / 100`` as tolerance.
+
+[note For more details see the
+  [link boost_test.testing_tools.extended_comparison.floating_point floating points comparison] section.
+]
 
 [bt_example decorator_13..decorator tolerance..run-fail]
 
