@@ -26,7 +26,7 @@ BOOST_AUTO_TEST_SUITE( my_suite1,
 * bt::fixture<suite_fixture>()
 * bt::fixture<suite_fixture2>() )
 
-BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES(my_test1,1);
+BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES(my_test1,1)
 
 void some_setup()
 {
