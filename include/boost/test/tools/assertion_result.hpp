@@ -82,6 +82,10 @@ private:
 
 typedef assertion_result predicate_result;
 
+template<typename T>
+inline assertion_result const&
+operator<<(assertion_result const& as, T const&) { return as; }
+
 } // namespace test_tools
 } // namespace boost
 

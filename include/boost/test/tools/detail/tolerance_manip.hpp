@@ -68,15 +68,34 @@ operator<<(assertion_evaluate_t<E> const& ae, tolerance_manip<FPT> const& tol)
 
 //____________________________________________________________________________//
 
+struct tolerance_manip_terminal {
+    unit_test::lazy_ostream const& ostr;
+    operator boost::unit_test::lazy_ostream const&() const { return ostr; }
+};
+
 template<typename FPT>
-inline int
-operator<<( unit_test::lazy_ostream const&, tolerance_manip<FPT> const& )   { return 0; }
+inline tolerance_manip_terminal
+operator<<(unit_test::lazy_ostream const& ostr, tolerance_manip<FPT> const&) { return tolerance_manip_terminal{ ostr }; }
+
+template<typename T>
+inline tolerance_manip_terminal
+operator<<(tolerance_manip_terminal tmt, T const&) { return tmt; }
 
 //____________________________________________________________________________//
 
 template<typename FPT>
 inline check_type
 operator<<( assertion_type const& /*at*/, tolerance_manip<FPT> const& )         { return CHECK_BUILT_ASSERTION; }
+
+template<typename T>
+inline check_type
+operator<<(check_type chk, T const&) { return chk; }
+
+//____________________________________________________________________________//
+
+template<typename FPT>
+inline std::ostream&
+operator<<(std::ostream& ostr, tolerance_manip<FPT> const&)    { return ostr; }
 
 //____________________________________________________________________________//
 
