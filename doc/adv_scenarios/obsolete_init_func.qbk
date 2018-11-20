@@ -39,8 +39,8 @@ Even if you decide to us the obsolete initialization function, it is recommended
 # You access the command-line arguments through the interface of the __master_test_suite__,
   and ignore the function's arguments `argc` and `argv`.
 
-[caution The obsolete initialization function is deprecated. It is recommended, to move from the old initialization
-function API, and rely on the automated test unit registration and [link boost_test.tests_organization.fixtures
+[caution The obsolete initialization function is deprecated as its name indicates. It is recommended to migrate 
+ to the new API, and rely on the automated test unit registration and [link boost_test.tests_organization.fixtures
 fixtures] (including [link boost_test.tests_organization.fixtures.global global fixtures]) for other set-up. ]
 
 [endsect] [/section:obsolete_init_func]

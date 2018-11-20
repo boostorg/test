@@ -26,7 +26,6 @@ Boost.Test releases:
 [h5 New features]
 * [link boost_test.tests_organization.test_cases.test_case_generation.datasets.dataset_interface Custom datasets]
   are not required to declare a inner type `sample` anymore
-
 * Boost.Test does not depend on Boost.Timer any more (which was pulling also Boost.Chrono
   and Boost.System as transitive dependencies).
 * Now Boost.Test raises an exception when the test case times-out on Windows. Prior to this release,
