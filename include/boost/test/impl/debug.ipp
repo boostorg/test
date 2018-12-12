@@ -23,8 +23,11 @@
 #include <boost/test/debug.hpp>
 #include <boost/test/debug_config.hpp>
 
+// Boost
+#include <boost/predef.h>
+
 // Implementation on Windows
-#if defined(_WIN32) && !defined(UNDER_CE) && !defined(BOOST_DISABLE_WIN32) // ******* WIN32
+#if defined(_WIN32) && !defined(UNDER_CE) && !defined(BOOST_DISABLE_WIN32) && BOOST_PLAT_WINDOWS_DESKTOP // ******* WIN32
 
 #  define BOOST_WIN32_BASED_DEBUG
 
