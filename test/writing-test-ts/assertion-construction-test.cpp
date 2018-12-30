@@ -123,7 +123,7 @@ BOOST_AUTO_TEST_CASE( test_forward_iterable_concept )
   }
 
   {
-    typedef std::set<int, int> type;
+    typedef std::set<int> type;
     BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_size<type>::value, "has_member_size failed");
     BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
     BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_end<type>::value, "has_member_end failed");
@@ -705,4 +705,3 @@ BOOST_AUTO_TEST_CASE( test_comparison_with_arrays )
 }
 
 // EOF
-
