@@ -229,7 +229,7 @@ public:
     int      argc;
     char**   argv;
   
-    friend master_test_suite_t& boost::unit_test::framework::master_test_suite();
+    friend BOOST_TEST_DECL master_test_suite_t& boost::unit_test::framework::master_test_suite();
 };
 
 // ************************************************************************** //
