@@ -48,7 +48,9 @@
 #include <cassert>              // for assert
 #include <cstddef>              // for NULL
 #include <cstdio>               // for vsnprintf
+#include <stdio.h>
 #include <cstdarg>              // for varargs
+#include <stdarg.h>
 
 #include <iostream>              // for varargs
 
@@ -57,15 +59,7 @@ namespace std { using ::strerror; using ::strlen; using ::strncat; }
 #endif
 
 // to use vsnprintf
-#if defined(__SUNPRO_CC) || defined(__SunOS)
-#  include <stdio.h>
-#  include <stdarg.h>
-using std::va_list;
-#endif
-
-// to use vsnprintf
-#if defined(__QNXNTO__) || defined(__VXWORKS__)
-#  include <stdio.h>
+#if defined(__SUNPRO_CC) || defined(__SunOS) || defined(__QNXNTO__) || defined(__VXWORKS__)
 using std::va_list;
 #endif
 
