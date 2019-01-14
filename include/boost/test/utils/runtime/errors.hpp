@@ -61,7 +61,7 @@ protected:
     ~init_error() BOOST_NOEXCEPT_OR_NOTHROW {}
 };
 
-class input_error : public param_error {
+class BOOST_SYMBOL_VISIBLE input_error : public param_error {
 protected:
     explicit    input_error( cstring param_name ) : param_error( param_name ) {}
     ~input_error() BOOST_NOEXCEPT_OR_NOTHROW {}
@@ -133,7 +133,7 @@ public:
 // ************************************************************************** //
 
 #define SPECIFIC_EX_TYPE( type, base )                  \
-class type : public specific_param_error<type,base> {   \
+class BOOST_SYMBOL_VISIBLE type : public specific_param_error<type,base> {   \
 public:                                                 \
     explicit type( cstring param_name = cstring() )     \
     : specific_param_error<type,base>( param_name )     \
@@ -171,7 +171,7 @@ public:
     std::vector<cstring> m_amb_candidates;
 };
 
-class unrecognized_param : public specific_param_error<unrecognized_param, input_error> {
+class BOOST_SYMBOL_VISIBLE unrecognized_param : public specific_param_error<unrecognized_param, input_error> {
 public:
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     explicit    unrecognized_param( std::vector<cstring>&& type_candidates )
