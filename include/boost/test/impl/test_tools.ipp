@@ -16,6 +16,7 @@
 #define BOOST_TEST_TEST_TOOLS_IPP_012205GER
 
 // Boost.Test
+#include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/tools/context.hpp>
 #include <boost/test/tools/output_test_stream.hpp>
