@@ -9,8 +9,11 @@
 # bring in the rules for testing
 import testing ;
 
+# requirements
+import ../../config/checks/config : requires ;
+
 # Project
-project libs/test/example
+project boost/test-examples
     :
     : requirements
       <toolset>clang:<cxxflags>-Wno-c99-extensions
@@ -33,7 +36,7 @@ alias unit_test_framework
 explicit unit_test_framework ;
 explicit prg_exec_monitor ;
 
-test-suite boost_test_examples
+alias boost_test_examples
 :
     [ run      exec_mon_example.cpp prg_exec_monitor ]
     [ run-fail prg_exec_example.cpp prg_exec_monitor ]
@@ -43,10 +46,10 @@ test-suite boost_test_examples
     [ run-fail unit_test_example_01.cpp unit_test_framework ]
     [ run-fail unit_test_example_02.cpp unit_test_framework/<link>static ]
     [ run-fail unit_test_example_03.cpp unit_test_framework/<link>static ]
-    [ run-fail unit_test_example_04.cpp unit_test_framework ]
-    [ run-fail unit_test_example_05.cpp unit_test_framework ]
+    [ run-fail unit_test_example_04.cpp unit_test_framework : : : [ requires cxx11_variadic_macros cxx11_decltype cxx11_auto_declarations ] ]
+    [ run-fail unit_test_example_05.cpp unit_test_framework : : : [ requires cxx11_variadic_macros cxx11_decltype cxx11_auto_declarations ] ]
     [ run-fail unit_test_example_06.cpp unit_test_framework ]
-    [ run      unit_test_example_07.cpp unit_test_framework ]
+    [ run      unit_test_example_07.cpp unit_test_framework : : : [ requires cxx11_variadic_macros cxx11_decltype cxx11_auto_declarations ]  ]
     [ run      unit_test_example_08.cpp unit_test_framework ]
     [ run      unit_test_example_09_1.cpp
                unit_test_example_09_2.cpp unit_test_framework ]
@@ -54,7 +57,7 @@ test-suite boost_test_examples
     [ run-fail unit_test_example_11.cpp unit_test_framework/<link>static ]
     [ link     unit_test_example_12.cpp unit_test_framework/<link>static ]
     [ run      unit_test_example_13.cpp ]
-    [ run-fail unit_test_example_15.cpp ]
+    [ run-fail unit_test_example_15.cpp : : : [ requires cxx11_decltype cxx11_hdr_random cxx11_hdr_tuple cxx11_hdr_initializer_list cxx11_variadic_macros cxx11_trailing_result_types cxx11_template_aliases ] ]
 
     [ run      named_param_example.cpp ]
 
@@ -63,5 +66,5 @@ test-suite boost_test_examples
     [ run-fail external_main_example_1.cpp unit_test_framework ]
     [ run-fail external_main_example_2.cpp unit_test_framework ]
     [ run-fail external_main_example_3.cpp ]
-    [ run-fail filtering_example.cpp unit_test_framework/<link>static ]
+    [ run-fail filtering_example.cpp unit_test_framework/<link>static : : : [ requires cxx11_variadic_macros cxx11_decltype cxx11_auto_declarations ] ]
 ;
