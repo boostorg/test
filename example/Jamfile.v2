@@ -25,7 +25,7 @@ ECHO $(HAS_UBSAN:J) ;
 project boost/test-examples
     :
     : requirements
-      <toolset>clang:<cxxflags>-Wno-c99-extensions
+      <toolset>clang:<cxxflags>-Wno-c99-extensions <define>$(HAS_UBSAN:J)
     ;
 
 # Define aliases for the needed libs to get shorter names
