@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2003-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -30,7 +30,7 @@ namespace {
 class dangerous_call {
 public:
     dangerous_call( int argc ) : m_argc( argc ) {}
-    
+
     int operator()()
     {
         // here we perform some operation under monitoring that could throw my_exception
@@ -45,18 +45,18 @@ public:
     }
 
 private:
-    // Data members  
+    // Data members
     int     m_argc;
 };
 
 void translate_my_exception1( my_exception1 const& ex )
 {
-    std::cout << "Caught my_exception1(" << ex.m_res_code << ")"<< std::endl;   
+    std::cout << "Caught my_exception1(" << ex.m_res_code << ")"<< std::endl;
 }
 
 void translate_my_exception2( my_exception2 const& ex )
 {
-    std::cout << "Caught my_exception2(" << ex.m_res_code << ")"<< std::endl;   
+    std::cout << "Caught my_exception2(" << ex.m_res_code << ")"<< std::endl;
 }
 
 int generate_fpe()
@@ -93,6 +93,9 @@ int generate_int_div_0()
     return 1/i;
 }
 
+#if (defined(__clang__) && __clang_major__ >= 6) || (defined(__GNUC__) && __GNUC__ >= 8)
+__attribute__((no_sanitize("null")))
+#endif
 int generate_sigfault()
 {
     int* p = 0;
@@ -105,7 +108,7 @@ int generate_sigfault()
 
 int
 cpp_main( int argc , char *[] )
-{ 
+{
     ::boost::execution_monitor ex_mon;
 
     ///////////////////////////////////////////////////////////////
