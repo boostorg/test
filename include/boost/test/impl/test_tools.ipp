@@ -375,7 +375,9 @@ report_assertion( assertion_result const&   ar,
         framework::assertion_result( AR_FAILED );
         framework::test_unit_aborted( framework::current_test_unit() );
         BOOST_TEST_I_THROW( execution_aborted() );
-        return false;
+        // the previous line either throws or aborts and the return below is not reached
+        // return false;
+        BOOST_UNREACHABLE_RETURN(false);
     }
 
     return true;
