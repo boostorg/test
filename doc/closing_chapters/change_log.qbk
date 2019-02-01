@@ -11,6 +11,13 @@
 
 [h5 New features]
 
+* Boost.Test does not depend on Boost.Timer any more (which was pulling also Boost.Chrono
+  and Boost.System as transitive dependencies).
+* Now Boost.Test raises an exception when the test case times-out on Windows. Prior to this release,
+  times-out on Windows were not failing the test cases. Note that signaling is not available on Windows,
+  and it is not possible to interrupt a test even in case of time out.
+* Time-out now applies to test-suites as well: a test-suite is marked as timed-out if it exceeds the allocated
+  time. The test units that were not executed at the time-point of the time-out are skipped.
 * It is now possible to pass several values for the same context via the tool
   __BOOST_TEST_CONTEXT__.
 * A new macro __BOOST_TEST_INFO_SCOPE__ let define a context for the current scope in a sticky way.
@@ -64,6 +71,7 @@
 # [github_issue 181] `doc_example22` (and `23`) are expected to fail, but do not on clang with release variant builds
 # [github_issue 194] `master_test_suite` declared twice
 # [github_issue 199] Runtime `type_mismatch` after upgrade to `1.69`
+# [github_issue 202] `boost/timer.hpp` is deprecated
 # [github_issue 203] Test cases with datasets and fixtures don't support flexible fixture interface
 # [github_issue 204] Feature Request: Allow specifying timeouts for test cases with datasests.
 
@@ -75,6 +83,8 @@
 # [pull_request 197] Feature Request: `BOOST_TEST_CONTEXT` that doesn't require introducing a new scope with braces
 # [pull_request 205] Fix MinGW `vsnprintf` compile errors and warnings
 
+# [ticket 7397] Boost.Test, since boost `1.48` is using the deprecated `Boost.Timer` class (solved via [github_issue 202])
+# [ticket 9434] error: `namespace boost::timer {}` redeclared as different kind of symbol (solved via [github_issue 202])
 # [ticket 13106] `libs/test/tools/console_test_runner` does not compile
 
 
