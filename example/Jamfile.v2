@@ -8,15 +8,24 @@
 
 # bring in the rules for testing
 import testing ;
+import os ;
 
 # requirements
 import ../../config/checks/config : requires ;
+
+local HAS_UBSAN = "NO_UBSAN" ; # need to defined something
+if [ os.environ UBSAN ]
+{
+    HAS_UBSAN = "HAS_UBSAN=" [ os.environ UBSAN ] ;
+}
+
+ECHO $(HAS_UBSAN:J) ;
 
 # Project
 project boost/test-examples
     :
     : requirements
-      <toolset>clang:<cxxflags>-Wno-c99-extensions
+      <toolset>clang:<cxxflags>-Wno-c99-extensions <define>$(HAS_UBSAN:J)
       <toolset>gcc:<cxxflags>-std=c++11
 #      <toolset>msvc:<cxxflags>/P
     ;
