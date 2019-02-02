@@ -37,11 +37,19 @@ public:
     // Constructor
     global_configuration();
 
+    /// Unregisters the global fixture from the framework
+    ///
+    /// This is called by the framework at shutdown time
+    void unregister_from_framework();
+
     // Dtor
     virtual ~global_configuration();
 
     // Happens after the framework global observer init has been done
     virtual int     priority() { return 1; }
+
+private:
+    bool registered;
 };
 
 
@@ -56,8 +64,16 @@ public:
     // Constructor
     global_fixture();
 
+    /// Unregisters the global fixture from the framework
+    ///
+    /// This is called by the framework at shutdown time
+    void unregister_from_framework();
+
     // Dtor
     virtual ~global_fixture();
+
+private:
+    bool registered;
 };
 
 //____________________________________________________________________________//

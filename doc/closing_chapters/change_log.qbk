@@ -16,6 +16,7 @@
 
 [h5 Bugfixes and feature requests]
 
+# [github_issue 174] `UBSAN` identified a problem at exit time by `gcc-8` only
 # [github_issue 180] Unreachable code warning on MSVC builds in test matrix
 
 # [pull_request 182] fix use of `bind1st` in `example 12`
