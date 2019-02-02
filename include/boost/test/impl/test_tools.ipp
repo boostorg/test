@@ -16,6 +16,7 @@
 #define BOOST_TEST_TEST_TOOLS_IPP_012205GER
 
 // Boost.Test
+#include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/tools/context.hpp>
 #include <boost/test/tools/output_test_stream.hpp>
@@ -374,7 +375,9 @@ report_assertion( assertion_result const&   ar,
         framework::assertion_result( AR_FAILED );
         framework::test_unit_aborted( framework::current_test_unit() );
         BOOST_TEST_I_THROW( execution_aborted() );
-        return false;
+        // the previous line either throws or aborts and the return below is not reached
+        // return false;
+        BOOST_UNREACHABLE_RETURN(false);
     }
 
     return true;

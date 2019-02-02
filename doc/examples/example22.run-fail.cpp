@@ -5,6 +5,18 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 
+
+// compiler optimizations may cause this code NOT to crash.
+#if defined(_MSC_VER)
+  #pragma optimize("", off)
+  #define DISABLE_OPTIMIZATIONS
+#elif defined(__clang__)
+  #define DISABLE_OPTIMIZATIONS __attribute__ ((optnone))
+#elif defined(__GNUC__)
+  #define DISABLE_OPTIMIZATIONS __attribute__ ((optnone))
+#endif
+
+
 //[example_code
 #define BOOST_TEST_MODULE example
 #include <boost/test/included/unit_test.hpp>
@@ -19,21 +31,18 @@ BOOST_AUTO_TEST_CASE( test_external_interface )
   }
 }
 
+DISABLE_OPTIMIZATIONS
 void goo( int )
 {
 }
 
-#if defined(BOOST_MSVC) && (BOOST_MSVC > 1900)
-// VS2017+ compiler optimizations may cause this code NOT to crash.
-#pragma optimize("", off)
-#endif
-
+DISABLE_OPTIMIZATIONS
 void foo( int i )
 {
     goo( 2/(i-1) );
 }
+//]
 
 #if defined(BOOST_MSVC) && (BOOST_MSVC > 1900)
 #pragma optimize("", on)
 #endif
-//]
