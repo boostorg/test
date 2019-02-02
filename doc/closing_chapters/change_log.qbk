@@ -18,6 +18,7 @@
 
 # [github_issue 174] `UBSAN` identified a problem at exit time by `gcc-8` only
 # [github_issue 180] Unreachable code warning on MSVC builds in test matrix
+# [github_issue 194] `master_test_suite` declared twice
 
 # [pull_request 182] fix use of `bind1st` in `example 12`
 # [pull_request 183] remove superfluous semicolon in `example 04`
