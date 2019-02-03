@@ -18,6 +18,8 @@
 // Boost.Test
 #include <boost/test/detail/config.hpp>
 
+#include <boost/core/ignore_unused.hpp>
+
 // STL
 #include <iostream>
 #include <cstdio>
@@ -306,7 +308,7 @@ private:
 
 #define BOOST_TEST_SCOPE_SETCOLOR( is_color_output, os, attr, color )               \
     utils::scope_setcolor const sc(is_color_output, os, utils::attr, utils::color); \
-    ut_detail::ignore_unused_variable_warning( sc )                                 \
+    boost::ignore_unused( sc )                                                      \
 /**/
 
 } // namespace utils

@@ -741,7 +741,7 @@ struct print_log_value<double> {
 TEST_CASE( test_BOOST_TEST_fpv_comp )
 {
     ScientificNotationExponentOutputNormalizer norm;
-    ut::ut_detail::ignore_unused_variable_warning( norm );
+    boost::ignore_unused( norm );
 
     double d1 = 1.1e-5;
     double d2 = 1.101e-5;

@@ -107,7 +107,7 @@ struct guard {
 BOOST_AUTO_TEST_CASE( messages_in_datasets )
 {
     guard G;
-    ut_detail::ignore_unused_variable_warning( G );
+    boost::ignore_unused( G );
 
 #define PATTERN_FILE_NAME "messages-in-datasets-test.pattern"
 

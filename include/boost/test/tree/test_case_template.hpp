@@ -16,7 +16,6 @@
 #include <boost/test/detail/config.hpp>
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
-#include <boost/test/detail/workaround.hpp>
 #include <boost/test/tree/test_unit.hpp>
 
 #include <boost/test/utils/class_properties.hpp>
