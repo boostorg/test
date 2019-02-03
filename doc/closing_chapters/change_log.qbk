@@ -13,6 +13,29 @@
 
 [h5 Breaking changes]
 
+* Boost.Test `minimal.hpp` is now showing a deprecation warning. `minimal.hpp` has been
+  deprecated for a long time already, and will be removed in the near future. Please
+  switch to eg. the header only variable of Boost.Test. Tests using `minimal.hpp` can
+  readily be converted to the header variant. For instance, the following code:
+
+  ``
+  #include <boost/test/minimal.hpp>
+  int test_main( int, char *[] )
+  {
+    ...
+  }
+  ``
+
+  may be rewritten as:
+
+  ``
+  #include <boost/test/included/unit_test.hpp>
+  BOOST_AUTO_TEST_CASE(test_main)
+  {
+    ...
+  }
+  ``
+
 
 [h5 Bugfixes and feature requests]
 
