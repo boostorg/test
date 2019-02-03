@@ -21,6 +21,9 @@ if [ os.environ UBSAN ]
 
 ECHO $(HAS_UBSAN:J) ;
 
+# requirements
+import ../../config/checks/config : requires ;
+
 # Project
 project boost/test-examples
     :
