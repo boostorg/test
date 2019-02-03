@@ -183,7 +183,7 @@ void very_bad_exception()  {
 BOOST_AUTO_TEST_CASE( some_test )
 {
     guard G;
-    ut_detail::ignore_unused_variable_warning( G );
+    boost::ignore_unused( G );
 #line 275
     test_suite* ts_1 = BOOST_TEST_SUITE( "1 test cases inside" );
         ts_1->add( BOOST_TEST_CASE( good_foo ) );
