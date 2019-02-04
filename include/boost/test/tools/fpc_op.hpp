@@ -20,6 +20,7 @@
 
 // Boost
 #include <boost/type_traits/common_type.hpp>
+#include <boost/type_traits/is_arithmetic.hpp>
 #include <boost/utility/enable_if.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -108,10 +109,10 @@ inline assertion_result
 compare_fpv( Lhs const& lhs, Rhs const& rhs, op::EQ<Lhs,Rhs>* )
 {
     if( lhs == 0 ) {
-        return compare_fpv_near_zero( rhs, (op::EQ<Lhs,Rhs>*)0 );
+        return compare_fpv_near_zero<FPT>( rhs, (op::EQ<Lhs,Rhs>*)0 );
     }
     else if( rhs == 0) {
-        return compare_fpv_near_zero( lhs, (op::EQ<Lhs,Rhs>*)0 );
+        return compare_fpv_near_zero<FPT>( lhs, (op::EQ<Lhs,Rhs>*)0 );
     }
     else {
         fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_STRONG );
@@ -131,10 +132,10 @@ inline assertion_result
 compare_fpv( Lhs const& lhs, Rhs const& rhs, op::NE<Lhs,Rhs>* )
 {
     if( lhs == 0 ) {
-        return compare_fpv_near_zero( rhs, (op::NE<Lhs,Rhs>*)0 );
+        return compare_fpv_near_zero<FPT>( rhs, (op::NE<Lhs,Rhs>*)0 );
     }
     else if( rhs == 0 ) {
-        return compare_fpv_near_zero( lhs, (op::NE<Lhs,Rhs>*)0 );
+        return compare_fpv_near_zero<FPT>( lhs, (op::NE<Lhs,Rhs>*)0 );
     }
     else {
         fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_WEAK );
@@ -154,7 +155,12 @@ compare_fpv( Lhs const& lhs, Rhs const& rhs, op::NE<Lhs,Rhs>* )
 template<typename Lhs,typename Rhs>                                     \
 struct name<Lhs,Rhs,typename boost::enable_if_c<                        \
     (fpc::tolerance_based<Lhs>::value &&                                \
-     fpc::tolerance_based<Rhs>::value)>::type> {                        \
+     fpc::tolerance_based<Rhs>::value) ||                               \
+    (fpc::tolerance_based<Lhs>::value &&                                \
+     boost::is_arithmetic<Rhs>::value) ||                               \
+    (boost::is_arithmetic<Lhs>::value &&                                \
+     fpc::tolerance_based<Rhs>::value)                                  \
+     >::type> {                                                         \
 public:                                                                 \
     typedef typename common_type<Lhs,Rhs>::type FPT;                    \
     typedef name<Lhs,Rhs> OP;                                           \
@@ -211,4 +217,3 @@ BOOST_TEST_FOR_EACH_COMP_OP( DEFINE_FPV_COMPARISON )
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_TOOLS_FPC_OP_HPP_050915GER
-
