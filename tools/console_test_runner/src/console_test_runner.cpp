@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -12,7 +12,8 @@
 #include <boost/test/unit_test.hpp>
 
 // Boost.Runtime.Param
-#include <boost/test/utils/runtime/cla/named_parameter.hpp>
+//#include <boost/test/utils/runtime/cla/named_parameter.hpp>
+#include <boost/test/utils/named_params.hpp>
 #include <boost/test/utils/runtime/cla/parser.hpp>
 
 namespace rt  = boost::runtime;
@@ -65,10 +66,10 @@ error()
     LPTSTR msg = NULL;
 
     FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-                   NULL, 
-                   GetLastError(), 
+                   NULL,
+                   GetLastError(),
                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-                   (LPTSTR)&msg, 
+                   (LPTSTR)&msg,
                    0, NULL );
 
     std::string res( msg );
@@ -76,7 +77,7 @@ error()
     if( msg )
         LocalFree( msg );
 
-    return res;    
+    return res;
 }
 
 //_________________________________________________________________//
@@ -152,13 +153,13 @@ bool load_test_lib()
                                     .append( dyn_lib::error() ) );
 
     init_func =  dyn_lib::locate_symbol<init_func_ptr>( test_lib_handle, init_func_name );
-    
+
     if( !init_func )
         throw std::logic_error( std::string("Can't locate test initilization function ")
                                     .append( init_func_name )
                                     .append( ": " )
                                     .append( dyn_lib::error() ) );
-   
+
     return (*init_func)();
 }
 
@@ -167,17 +168,26 @@ bool load_test_lib()
 int main( int argc, char* argv[] )
 {
     try {
-        cla::parser P;
 
-        P - cla::ignore_mismatch 
-            << cla::named_parameter<rt::cstring>( "test" ) - (cla::prefix = "--")
-            << cla::named_parameter<rt::cstring>( "init" ) - (cla::prefix = "--",cla::optional);
+        rt::parameters_store store;
 
-        P.parse( argc, argv );
+        rt::parameter<rt::cstring, rt::REQUIRED_PARAM> p_test( "test" );
+        p_test.add_cla_id( "--", "test", " " );
+        store.add( p_test );
 
-        assign_op( test_lib_name, P.get( "test" ), 0 );
-        if( P["init"] )
-            assign_op( init_func_name, P.get( "init" ), 0 );
+        rt::parameter<rt::cstring> p_init( "init" );
+        p_init.add_cla_id( "--", "init", " " );
+        store.add( p_init );
+
+        rt::cla::parser P( store );
+
+        rt::arguments_store args_store;
+
+        P.parse( argc, argv, args_store );
+
+        test_lib_name = args_store.get<std::string>( "test" );
+        if( args_store.has("init") )
+            init_func_name = args_store.get<std::string>( "init" );
 
         int res = ::boost::unit_test::unit_test_main( &load_test_lib, argc, argv );
 
@@ -186,8 +196,8 @@ int main( int argc, char* argv[] )
 
         return res;
     }
-    catch( rt::logic_error const& ex ) {
-        std::cout << "Fail to parse command line arguments: " << ex.msg() << std::endl;
+    catch( rt::param_error const& ex ) {
+        std::cout << "Fail to parse command line arguments: " << ex.msg << std::endl;
         return -1;
     }
 }
