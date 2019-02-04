@@ -23,6 +23,7 @@
 # [pull_request 183] remove superfluous semicolon in `example 04`
 # [pull_request 184] fix example to use the correct variable and avoid unused variable warning
 
+# [ticket 13106] `libs/test/tools/console_test_runner` does not compile
 
 
 [#ref_CHANGE_LOG_3_9][h4 Boost.Test v3.9 / boost 1.69]
