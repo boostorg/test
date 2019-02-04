@@ -31,6 +31,9 @@
 #ifndef BOOST_TEST_MINIMAL_HPP_071894GER
 #define BOOST_TEST_MINIMAL_HPP_071894GER
 
+#include <boost/config/header_deprecated.hpp>
+BOOST_HEADER_DEPRECATED( "Boost.Test minimal is deprecated. Please convert to the header only variant of Boost.Test." )
+
 #define BOOST_CHECK(exp)       \
   ( (exp)                      \
       ? static_cast<void>(0)   \
