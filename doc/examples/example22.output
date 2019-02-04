@@ -1,8 +1,8 @@
 //[example_output
 > example
 Running 1 test case...
-unknown location(0): fatal error in "test_external_interface": signal: integer divide by zero; address of failing instruction: 0x00048090
-test.cpp(9): last checkpoint: Calling foo with i=1
+unknown location(0): fatal error: in "test_external_interface": std::runtime_error: Undefined Behaviour ahead!
+../doc/examples/example22.run-fail.cpp(17): last checkpoint: Calling 'foo' with i=1
 
-*** 1 failures is detected in test suite "example"
+*** 1 failure is detected in the test module "example"
 //]
