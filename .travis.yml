@@ -164,6 +164,7 @@ jobs:
         - B2_VARIANT=variant=debug
         - TESTFLAGS=testing.launcher=valgrind
         - VALGRIND_OPTS=--error-exitcode=1
+        - UBSAN=1
       addons: *clang-6
 
     #################### Jobs to run on pushes to master, develop ###################
