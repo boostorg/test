@@ -431,8 +431,8 @@ Boost.Test releases:
 # [ticket 6002] Failed to completely redirect TestLog to file (duplicates)
 # [ticket 6071] Boost Test (Boost 1.46.0) GCC 4.6.1 error: ambiguous overload for ‘operator[]’
 # [ticket 6074] warnings-as-errors not usable with Boost.test in release mode
-# [ticket 6161] SunOS: bad putenv declaration (duplicates #[ticket 6766])
-# [ticket 6766] incorrect declaration for putenv in `config.hpp`
+# [ticket 6161] SunOS: bad `putenv` declaration (duplicates [ticket 6766])
+# [ticket 6766] incorrect declaration for `putenv` in `config.hpp`
 # [ticket 6712] Eliminate warnings with GCC
 # [ticket 6748] Link in the documentation points to wrong page
 # [ticket 7046] Output full error message, not just 512 chars
