@@ -45,6 +45,7 @@
 # [github_issue 180] Unreachable code warning on MSVC builds in test matrix
 # [github_issue 181] `doc_example22` (and `23`) are expected to fail, but do not on clang with release variant builds
 # [github_issue 194] `master_test_suite` declared twice
+# [github_issue 199] Runtime `type_mismatch` after upgrade to `1.69`
 
 # [pull_request 172] Check for non-used variables when `NDEBUG` is defined
 # [pull_request 182] fix use of `bind1st` in `example 12`
