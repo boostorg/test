@@ -28,12 +28,13 @@
 #endif
 
 // Boost.Test
-// #define BOOST_TEST_NO_OLD_TOOLS
+#define BOOST_TEST_NO_OLD_TOOLS
 
 #if     defined(BOOST_TEST_MACRO_LIMITED_SUPPORT) \
     &&  (   !BOOST_PP_VARIADICS \
          || !(__cplusplus >= 201103L) && defined(BOOST_NO_CXX11_VARIADIC_MACROS))
 #  define BOOST_TEST_NO_NEW_TOOLS
+#  undef BOOST_TEST_NO_OLD_TOOLS
 #endif
 
 // #define BOOST_TEST_TOOLS_UNDER_DEBUGGER
@@ -44,8 +45,6 @@
 #ifndef BOOST_TEST_NO_OLD_TOOLS
 #  include <boost/test/tools/old/interface.hpp>
 #  include <boost/test/tools/old/impl.hpp>
-
-#  include <boost/test/tools/detail/print_helper.hpp>
 #endif
 
 #ifndef BOOST_TEST_NO_NEW_TOOLS
@@ -56,7 +55,7 @@
 #  include <boost/test/tools/cstring_comparison_op.hpp>
 
 #  include <boost/test/tools/detail/fwd.hpp>
-#  include <boost/test/tools/detail/print_helper.hpp>
+
 #  include <boost/test/tools/detail/it_pair.hpp>
 
 #  include <boost/test/tools/detail/bitwise_manip.hpp>
@@ -64,5 +63,7 @@
 #  include <boost/test/tools/detail/per_element_manip.hpp>
 #  include <boost/test/tools/detail/lexicographic_manip.hpp>
 #endif
+
+#include <boost/test/tools/detail/print_helper.hpp>
 
 #endif // BOOST_TEST_TOOLS_HPP_111812GER
