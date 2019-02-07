@@ -232,6 +232,7 @@ set(LIST_EXAMPLES
   unit_test_example_12.cpp,static,link
   unit_test_example_13.cpp,shared,run
   unit_test_example_15.cpp,shared,fail
+  unit_test_example_16.cpp,shared,run
 
   const_string_test.cpp,none,run
   named_param_example.cpp,none,run
