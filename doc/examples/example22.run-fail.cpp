@@ -14,26 +14,22 @@ extern void foo( int i );
 BOOST_AUTO_TEST_CASE( test_external_interface )
 {
   for( int i = 3; i >=0; i-- ) {
-    BOOST_TEST_CHECKPOINT( "Calling foo with i=" << i );
+    BOOST_TEST_CHECKPOINT( "Calling 'foo' with i=" << i );
     foo( i );
   }
 }
 
-void goo( int )
+void goo( int value )
 {
+  BOOST_TEST_CHECKPOINT( "Inside goo with value '" << value << "'");
 }
-
-#if defined(BOOST_MSVC) && (BOOST_MSVC > 1900)
-// VS2017+ compiler optimizations may cause this code NOT to crash.
-#pragma optimize("", off)
-#endif
 
 void foo( int i )
 {
-    goo( 2/(i-1) );
+  if( i == 1 )
+      throw std::runtime_error("Undefined Behaviour ahead!");
+  // following line may not raise an exception on some compilers:
+  // Undefined Behaviour is implementation specific
+  goo( 2/(i-1) );
 }
-
-#if defined(BOOST_MSVC) && (BOOST_MSVC > 1900)
-#pragma optimize("", on)
-#endif
 //]

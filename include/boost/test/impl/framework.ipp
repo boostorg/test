@@ -34,6 +34,7 @@
 #include <boost/test/tree/visitor.hpp>
 #include <boost/test/tree/traverse.hpp>
 #include <boost/test/tree/test_case_counter.hpp>
+#include <boost/test/tree/global_fixture.hpp>
 
 #if BOOST_TEST_SUPPORT_TOKEN_ITERATOR
 #include <boost/test/utils/iterator/token_iterator.hpp>
@@ -871,7 +872,7 @@ public:
     context_data    m_context;
     int             m_context_idx;
 
-    std::set<test_unit_fixture*>  m_global_fixtures;
+    std::set<global_fixture*>  m_global_fixtures;
 
     boost::execution_monitor m_aux_em;
 
@@ -917,6 +918,23 @@ shutdown_loggers_and_reports()
 {
     s_frk_state().m_log_sinks.clear();
     s_frk_state().m_report_sink.setup( "stderr" );
+}
+
+void
+unregister_global_fixture_and_configuration()
+{
+    // we make a copy as the set will change in the iteration
+    std::set<global_fixture*> gfixture_copy(s_frk_state().m_global_fixtures);
+    BOOST_TEST_FOREACH( global_fixture*, tuf, gfixture_copy ) {
+        tuf->unregister_from_framework();
+    }
+    s_frk_state().m_global_fixtures.clear();
+
+    state::observer_store gobserver_copy(s_frk_state().m_observers);
+    BOOST_TEST_FOREACH( test_observer*, to, gobserver_copy ) {
+        framework::deregister_observer( *to );
+    }
+    s_frk_state().m_observers.clear();
 }
 
 void
@@ -1225,7 +1243,13 @@ test_in_progress()
 void
 shutdown()
 {
+    // shuts down the loggers singleton to avoid any further reference to the
+    // framework during the destruction of those
     impl::shutdown_loggers_and_reports();
+
+    // unregisters any global fixture and configuration object
+    impl::unregister_global_fixture_and_configuration();
+
     // eliminating some fake memory leak reports. See for more details:
     // http://connect.microsoft.com/VisualStudio/feedback/details/106937/memory-leaks-reported-by-debug-crt-inside-typeinfo-name
 
@@ -1350,7 +1374,7 @@ deregister_observer( test_observer& to )
 // ************************************************************************** //
 
 void
-register_global_fixture( test_unit_fixture& tuf )
+register_global_fixture( global_fixture& tuf )
 {
     impl::s_frk_state().m_global_fixtures.insert( &tuf );
 }
@@ -1362,7 +1386,7 @@ register_global_fixture( test_unit_fixture& tuf )
 // ************************************************************************** //
 
 void
-deregister_global_fixture( test_unit_fixture &tuf )
+deregister_global_fixture( global_fixture &tuf )
 {
     impl::s_frk_state().m_global_fixtures.erase( &tuf );
 }

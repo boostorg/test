@@ -7,6 +7,54 @@
 
 [section Change log]
 
+[#ref_CHANGE_LOG_3_10][h4 Boost.Test v3.10 / boost 1.70]
+
+[h5 New features]
+
+[h5 Breaking changes]
+
+* Boost.Test `minimal.hpp` is now showing a deprecation warning. `minimal.hpp` has been
+  deprecated for a long time already, and will be removed in the near future. Please
+  switch to eg. the header only variable of Boost.Test. Tests using `minimal.hpp` can
+  readily be converted to the header variant. For instance, the following code:
+
+  ``
+  #include <boost/test/minimal.hpp>
+  int test_main( int, char *[] )
+  {
+    ...
+  }
+  ``
+
+  may be rewritten as:
+
+  ``
+  #include <boost/test/included/unit_test.hpp>
+  BOOST_AUTO_TEST_CASE(test_main)
+  {
+    ...
+  }
+  ``
+
+
+[h5 Bugfixes and feature requests]
+
+# [github_issue 160] suppress `-Wformat-overflow` when optimization is enabled on GCC 8.2.0
+# [github_issue 174] `UBSAN` identified a problem at exit time by `gcc-8` only
+# [github_issue 177] `boost_check_equal-str-test` failed on `llvm`
+# [github_issue 180] Unreachable code warning on MSVC builds in test matrix
+# [github_issue 181] `doc_example22` (and `23`) are expected to fail, but do not on clang with release variant builds
+# [github_issue 194] `master_test_suite` declared twice
+
+# [pull_request 172] Check for non-used variables when `NDEBUG` is defined
+# [pull_request 182] fix use of `bind1st` in `example 12`
+# [pull_request 183] remove superfluous semicolon in `example 04`
+# [pull_request 184] fix example to use the correct variable and avoid unused variable warning
+# [pull_request 195] Fix MinGW compilation problems
+
+# [ticket 13106] `libs/test/tools/console_test_runner` does not compile
+
+
 [#ref_CHANGE_LOG_3_9][h4 Boost.Test v3.9 / boost 1.69]
 
 [h5 New features]

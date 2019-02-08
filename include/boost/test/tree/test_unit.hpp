@@ -20,6 +20,7 @@
 
 #include <boost/test/tree/decorator.hpp>
 #include <boost/test/tree/fixture.hpp>
+#include <boost/test/framework.hpp>
 
 #include <boost/test/tools/assertion_result.hpp>
 
@@ -42,8 +43,7 @@ namespace boost {
 namespace unit_test {
 
 namespace framework {
-class state;
-BOOST_TEST_DECL master_test_suite_t& master_test_suite();
+  class state;
 }
 
 // ************************************************************************** //
@@ -229,7 +229,7 @@ public:
     int      argc;
     char**   argv;
   
-    friend master_test_suite_t& boost::unit_test::framework::master_test_suite();
+    friend BOOST_TEST_DECL master_test_suite_t& boost::unit_test::framework::master_test_suite();
 };
 
 // ************************************************************************** //

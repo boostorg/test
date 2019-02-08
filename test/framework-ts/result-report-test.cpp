@@ -56,7 +56,7 @@ struct log_guard {
 
 void very_bad_foo()  {
     log_guard lg;
-    ut_detail::ignore_unused_variable_warning( lg );
+    boost::ignore_unused( lg );
     onullstream_type null_out;
     unit_test_log.set_stream( null_out );
     BOOST_FAIL( "" );
@@ -112,7 +112,7 @@ struct guard {
 BOOST_AUTO_TEST_CASE( test_result_reports )
 {
     guard G;
-    ut_detail::ignore_unused_variable_warning( G );
+    boost::ignore_unused( G );
 
 #define PATTERN_FILE_NAME "result_report_test.pattern"
 
@@ -266,7 +266,7 @@ void check2( output_test_stream& output, test_suite* ts )
 BOOST_AUTO_TEST_CASE( test_result_reports_default_behaviour )
 {
     guard G;
-    ut_detail::ignore_unused_variable_warning( G );
+    boost::ignore_unused( G );
 
 #define PATTERN_FILE_NAME_DEFAULT_BEHAVIOUR "result_report_test.pattern.default_behaviour"
 

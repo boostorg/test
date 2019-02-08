@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE( test_forwarded_to_collection)
   }
   {
     int samples1(0);
-    utf::ut_detail::ignore_unused_variable_warning( samples1 );
+    boost::ignore_unused( samples1 );
 
     BOOST_TEST(!boost::unit_test::is_container_forward_iterable<decltype(samples1)>::value, "forward iterable");
     BOOST_TEST(!(forwarded_to_collection<decltype(data::make( samples1 ))>::value),

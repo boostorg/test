@@ -127,7 +127,7 @@ struct guard {
 BOOST_AUTO_TEST_CASE( test_logs )
 {
     guard G;
-    ut_detail::ignore_unused_variable_warning( G );
+    boost::ignore_unused( G );
 
 #define PATTERN_FILE_NAME "log-formatter-test.pattern"
 
@@ -201,7 +201,7 @@ BOOST_AUTO_TEST_CASE( test_logs )
 BOOST_AUTO_TEST_CASE( test_logs_junit_info_closing_tags )
 {
     guard G;
-    ut_detail::ignore_unused_variable_warning( G );
+    boost::ignore_unused( G );
 
 #define PATTERN_FILE_NAME_JUNIT "log-formatter-test.pattern.junit"
 

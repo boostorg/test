@@ -109,6 +109,14 @@ add_library(boost_test_framework
 target_include_directories(boost_test_framework PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
 set_target_properties(boost_test_framework PROPERTIES FOLDER "UTF")
 
+add_library(boost_test_framework_shared
+            SHARED
+            ${BOOST_UTF_HEADERS}
+            ${BOOST_UTF_SRC})
+target_compile_definitions(boost_test_framework_shared PUBLIC "-DBOOST_TEST_DYN_LINK=1")
+target_include_directories(boost_test_framework_shared PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
+set_target_properties(boost_test_framework_shared PROPERTIES FOLDER "UTF")
+
 
 ####
 # Documentation files (files only, no target)
@@ -148,6 +156,7 @@ endforeach()
 
 # unit tests folder
 set(BOOST_TEST_UNITTESTS_FOLDER ${BOOST_TEST_ROOT_DIR}/test)
+set(BOOST_TEST_EXAMPLES_FOLDER ${BOOST_TEST_ROOT_DIR}/example)
 
 # datasets
 file(GLOB
@@ -201,3 +210,70 @@ foreach(_ts IN LISTS BOOST_UTF_TESTS_IND_FILES)
   unset(_boost_utf_current_tsuite)
 
 endforeach() # test suite
+
+
+#
+# Example code
+#
+
+set(LIST_EXAMPLES
+  unit_test_example_01.cpp,shared,fail
+  unit_test_example_02.cpp,static,fail
+  unit_test_example_03.cpp,static,fail
+  unit_test_example_04.cpp,shared,fail
+  unit_test_example_05.cpp,shared,fail
+  unit_test_example_06.cpp,shared,fail
+  unit_test_example_07.cpp,shared,run
+  unit_test_example_08.cpp,shared,run
+  unit_test_example_09_1.cpp,unit_test_example_09_2.cpp,shared,run
+
+  unit_test_example_10.cpp,static,fail
+  unit_test_example_11.cpp,static,fail
+  unit_test_example_12.cpp,static,link
+  unit_test_example_13.cpp,shared,run
+  unit_test_example_15.cpp,shared,fail
+
+  const_string_test.cpp,none,run
+  named_param_example.cpp,none,run
+
+  external_main_example_1.cpp,shared,fail
+  external_main_example_2.cpp,shared,fail
+  external_main_example_3.cpp,none,fail
+  filtering_example.cpp,static,fail
+)
+
+foreach(_var IN LISTS LIST_EXAMPLES)
+    string(REPLACE "," ";" _var_to_list "${_var}")
+    list(REVERSE _var_to_list)
+    list(GET _var_to_list 0 action)
+    list(GET _var_to_list 1 boost_test_type)
+    list(REMOVE_AT _var_to_list 0)
+    list(REMOVE_AT _var_to_list 0)
+
+    list(GET _var_to_list 0 first_file)
+    get_filename_component(_name_example "${first_file}" NAME_WE)
+
+    set(_list_files)
+    foreach(_file IN LISTS _var_to_list)
+      set(_list_files ${_list_files} ${BOOST_TEST_EXAMPLES_FOLDER}/${_file})
+    endforeach()
+    add_executable(${_name_example} ${_list_files})
+    set_target_properties(${_name_example} PROPERTIES FOLDER "Examples")
+
+    if("${boost_test_type}" STREQUAL "shared")
+      target_link_libraries(${_name_example} PRIVATE boost_test_framework_shared)
+    elseif("${boost_test_type}" STREQUAL "static")
+      target_link_libraries(${_name_example} PRIVATE boost_test_framework)
+    elseif(NOT "${boost_test_type}" STREQUAL "none")
+      message(FATAL_ERROR "Wrong action for example target '${_name_example}'")
+    endif()
+
+    if("${action}" STREQUAL "run" OR "${action}" STREQUAL "run-fail")
+      add_test(NAME bt-exampletest-${_name_example}
+               COMMAND ${_name_example})
+
+      if("${action}" STREQUAL "run-fail")
+        set_tests_properties(bt-exampletest-${_name_example} PROPERTIES WILL_FAIL TRUE)
+      endif()
+    endif()
+endforeach()

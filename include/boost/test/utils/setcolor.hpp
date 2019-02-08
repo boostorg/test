@@ -18,6 +18,8 @@
 // Boost.Test
 #include <boost/test/detail/config.hpp>
 
+#include <boost/core/ignore_unused.hpp>
+
 // STL
 #include <iostream>
 #include <cstdio>
@@ -83,7 +85,11 @@ public:
                           term_color::_ bg   = term_color::ORIGINAL )
     : m_is_color_output(is_color_output)
     {
-        m_command_size = std::sprintf( m_control_command, "%c[%d;%d;%dm", 0x1B, attr, fg + 30, bg + 40 );
+        m_command_size = std::sprintf( m_control_command, "%c[%c;3%c;4%cm",
+          0x1B,
+          static_cast<char>(attr + '0'),
+          static_cast<char>(fg + '0'),
+          static_cast<char>(bg + '0'));
     }
 
     friend std::ostream&
@@ -306,7 +312,7 @@ private:
 
 #define BOOST_TEST_SCOPE_SETCOLOR( is_color_output, os, attr, color )               \
     utils::scope_setcolor const sc(is_color_output, os, utils::attr, utils::color); \
-    ut_detail::ignore_unused_variable_warning( sc )                                 \
+    boost::ignore_unused( sc )                                                      \
 /**/
 
 } // namespace utils

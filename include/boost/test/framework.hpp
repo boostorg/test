@@ -143,13 +143,13 @@ BOOST_TEST_DECL void                deregister_observer( test_observer& to );
 /// any other tests finished.
 /// Test unit fixture lifetime should exceed the testing execution timeframe
 /// @param[in]  tuf  fixture to add
-BOOST_TEST_DECL void                register_global_fixture( test_unit_fixture& tuf );
+BOOST_TEST_DECL void                register_global_fixture( global_fixture& tuf );
 
 /// Removes a test global fixture from the framework
 ///
 /// Test unit fixture lifetime should exceed the testing execution timeframe
 /// @param[in]  tuf  fixture to remove
-BOOST_TEST_DECL void                deregister_global_fixture( test_unit_fixture& tuf );
+BOOST_TEST_DECL void                deregister_global_fixture( global_fixture& tuf );
 /// @}
 
 /// @name Assertion/uncaught exception context support

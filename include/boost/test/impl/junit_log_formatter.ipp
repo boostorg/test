@@ -35,6 +35,7 @@
 
 // Boost
 #include <boost/version.hpp>
+#include <boost/core/ignore_unused.hpp>
 
 // STL
 #include <iostream>
@@ -525,10 +526,12 @@ junit_log_formatter::test_unit_start( std::ostream& /*ostr*/, test_unit const& t
 
 //____________________________________________________________________________//
 
+
 void
 junit_log_formatter::test_unit_finish( std::ostream& /*ostr*/, test_unit const& tu, unsigned long /*elapsed*/ )
 {
     // the time is already stored in the result_reporter
+    boost::ignore_unused( tu );
     assert( tu.p_id == list_path_to_root.back() );
     list_path_to_root.pop_back();
 }
@@ -536,6 +539,7 @@ junit_log_formatter::test_unit_finish( std::ostream& /*ostr*/, test_unit const& 
 void
 junit_log_formatter::test_unit_aborted( std::ostream& /*ostr*/, test_unit const& tu )
 {
+    boost::ignore_unused( tu );
     assert( tu.p_id == list_path_to_root.back() );
     //list_path_to_root.pop_back();
 }

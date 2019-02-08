@@ -28,7 +28,7 @@
 namespace boost {
 namespace unit_test {
 
-class lazy_ostream {
+class BOOST_TEST_DECL lazy_ostream {
 public:
     virtual                 ~lazy_ostream()                                         {}
 

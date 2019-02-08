@@ -37,6 +37,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <iomanip>
+#include <iterator>
 #include <set>
 
 #include <boost/test/detail/suppress_warnings.hpp>

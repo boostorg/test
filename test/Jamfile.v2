@@ -418,6 +418,7 @@ alias test
   prg_exec_monitor-ts
   execution_monitor-ts
   doc-examples-ts
+  # boost_test_examples
 ;
 
 #_________________________________________________________________________________________________#
@@ -435,4 +436,9 @@ rule test-selfcontained ( path )
 # Test for self-contained headers
 alias test_selfcontained_headers : [ test-selfcontained ../include ] ;
 
+
+#_________________________________________________________________________________________________#
+# Tests of the examples
+
+build-project ../example ;
 # EOF
