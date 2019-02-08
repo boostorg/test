@@ -81,7 +81,13 @@ if desired, as shown below.
 
 using namespace boost::multiprecision;
 
-
+#if 0
+BOOST_AUTO_TEST_CASE(multiprecision_types_are_arithmetic)
+{
+  typedef number<cpp_dec_float<50>, et_off> cpp_dec_float_50_noet;
+  BOOST_TEST((std::numeric_limits<cpp_dec_float_50_noet>::is_specialized));
+}
+#endif
 
 
 /*`Now `cpp_dec_float_50_noet` or `cpp_dec_float_50_et`

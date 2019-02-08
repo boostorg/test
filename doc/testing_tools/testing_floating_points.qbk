@@ -9,27 +9,32 @@
 [/ ################################################ ]
 [section:floating_point Floating point comparison]
 
-Unless you specify otherwise, when two values of floating-point type are compared inside assertion  __BOOST_TEST__,
-operators `==` and `!=` defined for these types are used. In most cases, however, what we need is not an ['exact] equality (or inequality),
-but to check that the two numbers are 'sufficiently close' or 'sufficiently different'. In order to do that we need to provide a ['tolerance]
-parameter that will instruct the framework what we consider 'sufficiently close'.
+Unless specified otherwise, when a value of floating-point type is compared inside a __BOOST_TEST__ assertion,
+operators `==`, `!=` , `<` etc. defined for this type are used. However for floating point type, in most cases what is needed is not an ['exact]
+equality (or inequality), but a verification that two numbers are ['sufficiently close] or ['sufficiently different]. For that purpose, a [*tolerance] parameter
+that will instruct the framework what is considered ['sufficiently close] needs to provided.
 
-We can define a per-[link ref_test_unit test unit] tolerance for a given floating point type by using
+[note
+  How the tolerance parameter is processed in detail is described [link boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_impl here].
+]
+
+[h4 Test-unit tolerance]
+It is possible to define a per-[link ref_test_unit test unit] tolerance for a given floating point type by using
 [link boost_test.tests_organization.decorators decorator] __decorator_tolerance__:
 
 [bt_example tolerance_01..specifying tolerance per test case..run-fail]
 
-How the tolerance parameter is processed in detail is described [link boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_impl here].
-
-It is possible to specify floating point comparison tolerance per single assertion, by providing ['manipulator] [funcref boost::test_tools::tolerance]
-as the second argument to __BOOST_TEST__.
+[h4 Assertion tolerance]
+It is possible to specify floating point comparison tolerance per single assertion, by providing the ['manipulator] [funcref boost::test_tools::tolerance]
+as the second argument to __BOOST_TEST__:
 
 [bt_example tolerance_02..specifying tolerance per assertion..run-fail]
 
-[caution The support for manipulators requires that your compiler supports variadic macros, `auto` for type deduction
+[caution Manipulators requires a compiler that supports variadic macros, `auto` for type deduction
  and `decltype`. These are C++11 features, but are also available on some pre-C++11 compilers. On compilers that are
- lacking these features resort to defining tolerance per test unit, or to compatibility test assertions: __BOOST_CHECK_CLOSE__ and __BOOST_CHECK_SMALL__.]
+ lacking these features, resort to defining tolerance per test unit or to compatibility test assertions: __BOOST_CHECK_CLOSE__ and __BOOST_CHECK_SMALL__.]
 
+[h4 Tolerance expressed in percentage]
 It is possible to specify the tolerance as percentage. At test unit level, the decorator syntax is:
 
 ```
@@ -45,6 +50,7 @@ boost::test_tools::tolerance( boost::test_tools::fpc::percent_tolerance(2.0) )
 // both equivalent to: boost::test_tools::tolerance( 2.0 / 100 )
 ```
 
+[h4 Type of the tolerance]
 Manipulator `tolerance` specifies the tolerance only for a single floating-point type. This type is deduced from form
 the numeric value passed along the manipulator:
 
@@ -60,7 +66,7 @@ the numeric value passed along the manipulator:
 [[`Decimal("5.0")% tolerance()`][tolerance for type `Decimal` changed to value `(Decimal("5.0") / 100)`]]
 ]
 
-This is also the case for decorator `tolerance`. In case of the decorator, however, it is possible to apply multiple
+This is also the case for decorator `tolerance`. In the case of the decorator however, it is possible to apply multiple
 decorators `tolerance` defining the tolerance for different types.
 
 When values of two different floating point types `T` and `U` are compared, __BOOST_TEST__ uses the tolerance
@@ -68,27 +74,41 @@ specified for type `boost::common_type<T, U>::type`. For instance, when setting 
 the tolerance for type `double` needs to be set.
 
 Given two floating point types `T` and `U` and their common type `C`, the tolerance specified for type `C` is applied only when
-types `T` and `U` are appear as sub-expressions of the full expression inside assertion __BOOST_TEST__. It is not applied when
+types `T` and `U` appear as sub-expressions of the full expression inside assertion __BOOST_TEST__. It is not applied when
 `T` and `U` are compared inside a function invoked during the evaluation of the expression:
 
-```
-BOOST_AUTO_TEST_CASE(test, * utf::tolerance(0.02))
-{
-  double                  d1 = 1.00, d2 = 0.99;
-  boost::optional<double> o1 = 1.00, o2 = 0.99;
+[bt_example tolerance_05..tolerance applied to different types..run-fail]
 
-  BOOST_TEST(d1 == d2);   // with tolerance    (double vs. double)
-  BOOST_TEST(o1 == o2);   // without tolerance (optional vs. optional)
-  BOOST_TEST(o1 == d2);   // without tolerance (optional vs. double)
-  BOOST_TEST(*o1 == *o2); // with tolerance    (double vs. double)
-}
-```
+[h4 Type promotion of the operands]
+Given two types `T` and `U` being compared inside an assertion __BOOST_TEST__, tolerance based comparison is invoked
 
-Finally, note that comparisons for tolerance are also applied to `operator<` with semantics 'less by more than some tolerance`,
+# whenever the types `T` and `U` are both [link boost_test.testing_tools.extended_comparison.floating_point.customizing_for_tolerance tolerance based] types
+# whenever `T` is /tolerance/ based and `U` is /arithmetic/, in the sense that `std::numeric_limits<U>::value` evaluates to `true` (or the other way round)
+
+In all cases, the type of the tolerance is deduced as `boost::common_type<T, U>::type`, and both type may be cast to this tolerance type.
+
+[note This behaviour has been introduced in Boost 1.70 / __UTF__ [link ref_CHANGE_LOG_3_10 3.10]. Previously tolerance based comparison was used only when the type of the two
+ operands were tolerance based types, which was silently ignoring the tolerance for expressions such as
+
+ ``
+ double x = 1E-9;
+ BOOST_TEST(x == 0); // U is int
+ ``
+]
+
+[bt_example tolerance_06..operands type promotion..run-fail]
+
+[h4 Other relational operators]
+
+Finally, note that comparisons for tolerance are also applied to `operator<` with semantics ['less by more than some tolerance],
 and other relational operators. Also, the tolerance-based comparisons are involved when a more complicated expression tree is
-processed within the assertion body:
+processed within the assertion body. The section on
+[link boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_impl.tolerance_in_operator relational operators]
+defines how `operator<` relates to tolerance.
 
 [bt_example tolerance_03..tolerance applied in more complex expressions..run-fail]
+
+
 
 
 [/############################################################################]
@@ -96,7 +116,7 @@ processed within the assertion body:
 [section:customizing_for_tolerance Enabling tolerance for user-defined types]
 
 The __UTF__ recognizes that a given type `T` is suitable for tolerance-based comparisons using the expression
-[classref boost::math::fpc::tolerance_based]`<T>::value`. This meta-function already returns true for built-in
+[classref boost::math::fpc::tolerance_based]`<T>::value`. This meta-function already returns `true` for built-in
 floating-point types as well as any other types that match the following compile-time expression:
 
 ```
