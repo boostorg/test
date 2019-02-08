@@ -11,6 +11,17 @@
 
 [h5 New features]
 
+* It is now possible to use [link boost_test.testing_tools.extended_comparison.floating_point floating point]
+  comparison without being required to cast both operands to floating point types. Now Boost.Test uses floating
+  point comparisons for expressions such as
+
+  ``
+  BOOST_TEST(3.0001 == 3);
+  ``
+
+  See [link boost_test.testing_tools.extended_comparison.floating_point.type_promotion_of_the_operands this section]
+  for more information.
+
 [h5 Breaking changes]
 
 * Boost.Test `minimal.hpp` is now showing a deprecation warning. `minimal.hpp` has been
@@ -35,7 +46,8 @@
     ...
   }
   ``
-
+* The floating point comparison behaviour change may use this type of comparison while previously
+  using straight relational operator comparison.
 
 [h5 Bugfixes and feature requests]
 
