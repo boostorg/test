@@ -265,7 +265,8 @@ private:                                                                \
     void _impl(BOOST_DATA_TEST_CASE_PARAMS( params ));                  \
 };                                                                      \
                                                                         \
-BOOST_AUTO_TEST_SUITE( test_name )                                      \
+BOOST_AUTO_TEST_SUITE( test_name,                                       \
+                       *boost::unit_test::decorator::stack_decorator()) \
                                                                         \
 BOOST_AUTO_TU_REGISTRAR( BOOST_PP_CAT(test_name, case) )(               \
     boost::unit_test::data::ds_detail::make_test_case_gen<              \
