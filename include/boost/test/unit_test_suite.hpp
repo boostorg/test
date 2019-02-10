@@ -235,12 +235,15 @@ struct BOOST_AUTO_TC_INVOKER( test_name ) {                             \
     template<typename TestType>                                         \
     static void run( boost::type<TestType>* = 0 )                       \
     {                                                                   \
-        BOOST_TEST_CHECKPOINT('"' << #test_name <<"\" fixture entry."); \
-        test_name<TestType> t; boost::unit_test::setup_conditional(t);  \
-        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" entry.");        \
+        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture ctor");  \
+        test_name<TestType> t;                                          \
+        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture setup"); \
+        boost::unit_test::setup_conditional(t);                         \
+        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" test entry");    \
         t.test_method();                                                \
-        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" exit.");         \
+        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture teardown");\
         boost::unit_test::teardown_conditional(t);                      \
+        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture dtor");  \
     }                                                                   \
 };                                                                      \
                                                                         \
