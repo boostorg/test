@@ -125,12 +125,12 @@ private:                                                \
 
 #if defined(__APPLE_CC__) && defined(__GNUC__) && __GNUC__ < 4
 #define BOOST_TEST_SINGLETON_INST( inst ) \
-static BOOST_JOIN( inst, _t)& inst = BOOST_JOIN (inst, _t)::instance();
+static BOOST_JOIN( inst, _t)& inst BOOST_ATTRIBUTE_UNUSED = BOOST_JOIN (inst, _t)::instance();
 
 #else
 
 #define BOOST_TEST_SINGLETON_INST( inst ) \
-namespace { BOOST_JOIN( inst, _t)& inst = BOOST_JOIN( inst, _t)::instance(); }
+namespace { BOOST_JOIN( inst, _t)& inst BOOST_ATTRIBUTE_UNUSED = BOOST_JOIN( inst, _t)::instance(); }
 
 #endif
 
