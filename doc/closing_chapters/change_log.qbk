@@ -53,6 +53,7 @@
 
 # [github_issue 160] suppress `-Wformat-overflow` when optimization is enabled on GCC 8.2.0
 # [github_issue 174] `UBSAN` identified a problem at exit time by `gcc-8` only
+# [github_issue 176] `[snippet_dataset1_3]` seems to be broken
 # [github_issue 177] `boost_check_equal-str-test` failed on `llvm`
 # [github_issue 180] Unreachable code warning on MSVC builds in test matrix
 # [github_issue 181] `doc_example22` (and `23`) are expected to fail, but do not on clang with release variant builds
