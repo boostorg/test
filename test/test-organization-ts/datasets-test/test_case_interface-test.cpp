@@ -170,5 +170,31 @@ BOOST_AUTO_TEST_CASE( test_has_dataset )
     BOOST_TEST((!data::monomorphic::has_dataset<int, float>::value));
 }
 
+//____________________________________________________________________________//
+
+
+static int index_fixture_setup_teardown = 0;
+
+struct SharedFixtureSetupTeardown {
+    SharedFixtureSetupTeardown()
+    : m_expected(1 + index_fixture_setup_teardown)
+    {}
+
+    void setup() {
+      m_expected *= m_expected;
+    }
+
+    void teardown() {
+      index_fixture_setup_teardown++;
+    }
+
+    int m_expected;
+};
+
+BOOST_DATA_TEST_CASE_F( SharedFixtureSetupTeardown, test_case_interface_setup_teardown, data::make({0,1,2,3}) )
+{
+    BOOST_TEST( sample == index_fixture_setup_teardown );
+    BOOST_TEST( m_expected == (1+sample)*(1+sample));
+}
 
 // EOF

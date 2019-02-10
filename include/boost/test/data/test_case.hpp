@@ -252,13 +252,21 @@ struct BOOST_PP_CAT(test_name, case) : public F {                       \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                 \
     static void test_method( BOOST_DATA_TEST_CASE_PARAMS( params ) )    \
     {                                                                   \
-        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture entry.");\
-        BOOST_PP_CAT(test_name, case) t;                                \
-        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" entry.");        \
         BOOST_TEST_CONTEXT( ""                                          \
             BOOST_PP_SEQ_FOR_EACH(BOOST_DATA_TEST_CONTEXT, _, params))  \
-        t._impl(BOOST_PP_SEQ_ENUM(params));                             \
-        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" exit.");         \
+        {                                                               \
+          BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture ctor");\
+          BOOST_PP_CAT(test_name, case) t;                              \
+          BOOST_TEST_CHECKPOINT('"'                                     \
+              << #test_name << "\" fixture setup");                     \
+          boost::unit_test::setup_conditional(t);                       \
+          BOOST_TEST_CHECKPOINT('"' << #test_name << "\" test entry");  \
+          t._impl(BOOST_PP_SEQ_ENUM(params));                           \
+          BOOST_TEST_CHECKPOINT('"'                                     \
+              << #test_name << "\" fixture teardown");                  \
+          boost::unit_test::teardown_conditional(t);                    \
+          BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture dtor");\
+        }                                                               \
     }                                                                   \
 private:                                                                \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                 \
