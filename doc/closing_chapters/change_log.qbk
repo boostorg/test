@@ -11,6 +11,10 @@
 
 [h5 New features]
 
+* It is now possible to pass several values for the same context via the tool
+  __BOOST_TEST_CONTEXT__.
+* A new macro __BOOST_TEST_INFO_SCOPE__ let define a context for the current scope in a sticky way.
+
 [h5 Breaking changes]
 
 * Boost.Test `minimal.hpp` is now showing a deprecation warning. `minimal.hpp` has been
@@ -51,6 +55,7 @@
 # [pull_request 183] remove superfluous semicolon in `example 04`
 # [pull_request 184] fix example to use the correct variable and avoid unused variable warning
 # [pull_request 195] Fix MinGW compilation problems
+# [pull_request 197] Feature Request: `BOOST_TEST_CONTEXT` that doesn't require introducing a new scope with braces
 
 # [ticket 13106] `libs/test/tools/console_test_runner` does not compile
 
