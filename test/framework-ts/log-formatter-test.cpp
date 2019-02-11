@@ -263,6 +263,20 @@ BOOST_AUTO_TEST_CASE( test_logs_junit_info_closing_tags )
         ts_timeout->add( tc_timeout );
 
     check( test_output, OF_JUNIT, ts_timeout->p_id, log_successful_tests );
+
+
+    test_suite* ts_account_failures = BOOST_TEST_SUITE( "1 junit failure is not error" );
+        ts_account_failures->add( BOOST_TEST_CASE( bad_foo ) );
+        ts_account_failures->add( BOOST_TEST_CASE( very_bad_foo ) );
+        ts_account_failures->add( BOOST_TEST_CASE( good_foo ) );
+        ts_account_failures->add( BOOST_TEST_CASE( bad_foo2 ) );
+
+    char const* argv2[] = { "a.exe", "--run_test=*", "--build_info=false"  };
+    int argc2 = sizeof(argv2)/sizeof(argv2[0]);
+    boost::unit_test::runtime_config::init( argc2, (char**)argv2 );
+    boost::unit_test::framework::impl::setup_for_execution( *ts_account_failures );
+
+    check( test_output, OF_JUNIT, ts_account_failures->p_id, log_messages );
 }
 
 // EOF

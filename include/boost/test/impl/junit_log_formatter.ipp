@@ -421,12 +421,25 @@ public:
         if( m_ts.p_id == ts.p_id ) {
             m_stream << "<testsuite";
 
+            // think about: maybe we should add the number of fixtures of a test_suite as
+            // independant tests (field p_fixtures).
+            // same goes for the timed-execution: we can think of that as a separate test-unit
+            // in the suite.
+            // see https://llg.cubic.org/docs/junit/ and
+            // http://svn.apache.org/viewvc/ant/core/trunk/src/main/org/apache/tools/ant/taskdefs/optional/junit/XMLJUnitResultFormatter.java?view=markup
             m_stream
               // << "disabled=\"" << tr.p_test_cases_skipped << "\" "
-              << " tests"     << utils::attr_value() << tr.p_test_cases_passed
+              << " tests"     << utils::attr_value()
+                  << tr.p_test_cases_passed
+                     + tr.p_test_cases_failed
+                     // + tr.p_test_cases_aborted // aborted is also failed, we avoid counting it twice
               << " skipped"   << utils::attr_value() << tr.p_test_cases_skipped
               << " errors"    << utils::attr_value() << tr.p_test_cases_aborted
-              << " failures"  << utils::attr_value() << tr.p_test_cases_failed + tr.p_test_suites_timed_out  + tr.p_test_cases_timed_out
+              << " failures"  << utils::attr_value()
+                  << tr.p_test_cases_failed
+                     + tr.p_test_suites_timed_out
+                     + tr.p_test_cases_timed_out
+                     - tr.p_test_cases_aborted // failed is not aborted in the Junit sense
               << " id"        << utils::attr_value() << m_id++
               << " name"      << utils::attr_value() << tu_name_normalize(ts.p_name)
               << " time"      << utils::attr_value() << (tr.p_duration_microseconds * 1E-6)
@@ -511,9 +524,9 @@ junit_log_formatter::log_finish( std::ostream& ostr )
 //____________________________________________________________________________//
 
 void
-junit_log_formatter::log_build_info( std::ostream& /*ostr*/ )
+junit_log_formatter::log_build_info( std::ostream& /*ostr*/, bool log_build_info )
 {
-    m_display_build_info = true;
+    m_display_build_info = log_build_info;
 }
 
 //____________________________________________________________________________//
