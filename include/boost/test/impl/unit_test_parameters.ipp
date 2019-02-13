@@ -69,36 +69,44 @@ namespace rt = boost::runtime;
 
 namespace runtime_config {
 
-// UTF parameters
-std::string btrt_auto_start_dbg    = "auto_start_dbg";
-std::string btrt_break_exec_path   = "break_exec_path";
-std::string btrt_build_info        = "build_info";
-std::string btrt_catch_sys_errors  = "catch_system_errors";
-std::string btrt_color_output      = "color_output";
-std::string btrt_detect_fp_except  = "detect_fp_exceptions";
-std::string btrt_detect_mem_leaks  = "detect_memory_leaks";
-std::string btrt_list_content      = "list_content";
-std::string btrt_list_labels       = "list_labels";
-std::string btrt_log_format        = "log_format";
-std::string btrt_log_level         = "log_level";
-std::string btrt_log_sink          = "log_sink";
-std::string btrt_combined_logger   = "logger";
-std::string btrt_output_format     = "output_format";
-std::string btrt_random_seed       = "random";
-std::string btrt_report_format     = "report_format";
-std::string btrt_report_level      = "report_level";
-std::string btrt_report_mem_leaks  = "report_memory_leaks_to";
-std::string btrt_report_sink       = "report_sink";
-std::string btrt_result_code       = "result_code";
-std::string btrt_run_filters       = "run_test";
-std::string btrt_save_test_pattern = "save_pattern";
-std::string btrt_show_progress     = "show_progress";
-std::string btrt_use_alt_stack     = "use_alt_stack";
-std::string btrt_wait_for_debugger = "wait_for_debugger";
+# ifdef BOOST_TEST_USE_QUALIFIED_COMMANDLINE_ARGUMENTS
+#  define BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "boost.test."
+# else
+#  define BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX
+# endif
 
-std::string btrt_help              = "help";
-std::string btrt_usage             = "usage";
-std::string btrt_version           = "version";
+// UTF parameters
+std::string btrt_auto_start_dbg    = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "auto_start_dbg";
+std::string btrt_break_exec_path   = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "break_exec_path";
+std::string btrt_build_info        = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "build_info";
+std::string btrt_catch_sys_errors  = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "catch_system_errors";
+std::string btrt_color_output      = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "color_output";
+std::string btrt_detect_fp_except  = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "detect_fp_exceptions";
+std::string btrt_detect_mem_leaks  = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "detect_memory_leaks";
+std::string btrt_list_content      = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "list_content";
+std::string btrt_list_labels       = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "list_labels";
+std::string btrt_log_format        = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "log_format";
+std::string btrt_log_level         = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "log_level";
+std::string btrt_log_sink          = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "log_sink";
+std::string btrt_combined_logger   = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "logger";
+std::string btrt_output_format     = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "output_format";
+std::string btrt_random_seed       = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "random";
+std::string btrt_report_format     = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "report_format";
+std::string btrt_report_level      = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "report_level";
+std::string btrt_report_mem_leaks  = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "report_memory_leaks_to";
+std::string btrt_report_sink       = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "report_sink";
+std::string btrt_result_code       = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "result_code";
+std::string btrt_run_filters       = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "run_test";
+std::string btrt_save_test_pattern = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "save_pattern";
+std::string btrt_show_progress     = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "show_progress";
+std::string btrt_use_alt_stack     = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "use_alt_stack";
+std::string btrt_wait_for_debugger = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "wait_for_debugger";
+
+std::string btrt_help              = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "help";
+std::string btrt_usage             = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "usage";
+std::string btrt_version           = BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX "version";
+
+# undef BOOST_TEST_COMMANDLINE_ARGUMENT_PREFIX
 
 //____________________________________________________________________________//
 

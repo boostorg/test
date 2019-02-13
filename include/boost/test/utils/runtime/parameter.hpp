@@ -108,7 +108,7 @@ struct parameter_cla_id {
     }
     static bool             valid_name_char( char c )
     {
-        return std::isalnum( c ) || c == '+' || c == '_' || c == '?';
+        return std::isalnum( c ) || c == '+' || c == '_' || c == '?' || c == '.';
     }
 
     std::string             m_prefix;

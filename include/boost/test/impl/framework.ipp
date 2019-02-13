@@ -58,6 +58,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <numeric>
+#include <vector>
+#include <string>
 #ifdef BOOST_NO_CXX98_RANDOM_SHUFFLE
 #include <iterator>
 #endif
@@ -499,6 +501,7 @@ public:
     , m_context_idx( 0 )
     , m_log_sinks( )
     , m_report_sink( std::cerr )
+    , m_is_initialized( false )
     {
     }
 
@@ -516,6 +519,19 @@ public:
             else
                 delete static_cast<test_case const*>(tu_ptr);
         }
+    }
+
+    void            reset()
+    {
+        clear();
+        m_observers.clear();
+        m_master_test_suite = 0;
+        m_curr_test_unit = INV_TEST_UNIT_ID;
+        m_next_test_case_id = MIN_TEST_CASE_ID;
+        m_next_test_suite_id = MIN_TEST_SUITE_ID;
+        m_test_in_progress = false;
+        m_context_idx = 0;
+        m_is_initialized = false;
     }
 
     void            set_tu_id( test_unit& tu, test_unit_id id ) { tu.p_id.value = id; }
@@ -878,6 +894,8 @@ public:
 
     std::map<output_format, runtime_config::stream_holder> m_log_sinks;
     runtime_config::stream_holder m_report_sink;
+
+    bool m_is_initialized;
 };
 
 //____________________________________________________________________________//
@@ -1135,10 +1153,25 @@ setup_loggers()
 void
 init( init_unit_test_func init_func, int argc, char* argv[] )
 {
+    // 00. We will mutate argv so to allow multiple calls to init() we need to
+    //     save it off and provide mutable copy
+    static std::vector<std::string> stored_args( argv, argv+argc );
+
+    std::vector<char*> mutable_argv{};
+    for( const auto& arg : stored_args )
+    {
+        mutable_argv.push_back( const_cast<char*>( arg.c_str() ) );
+    }
+
     using namespace impl;
 
+    if( s_frk_state().m_is_initialized )
+    {
+        s_frk_state().reset();
+    }
+
     // 10. Set up runtime parameters
-    runtime_config::init( argc, argv );
+    runtime_config::init( argc, &mutable_argv.front() );
 
     // 20. Set the desired log level, format and sink
     impl::setup_loggers();
@@ -1185,6 +1218,8 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     BOOST_TEST_I_CATCH( execution_exception, ex )  {
         BOOST_TEST_SETUP_ASSERT( false, ex.what() );
     }
+
+    s_frk_state().m_is_initialized = true;
 }
 
 //____________________________________________________________________________//
