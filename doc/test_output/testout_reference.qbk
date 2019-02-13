@@ -35,12 +35,18 @@ Outputs a custom message into the test log.
 [endsect]
 
 [section:test_output_macro_info `BOOST_TEST_INFO`]
-Defines a message to be printed as part of the context of the first encountered assertion, if it fails. 
+Defines a message to be printed as part of the context of the first encountered assertion, if it fails.
 For more details see [link boost_test.test_output.test_tools_support_for_logging.contexts here].
 [endsect]
 
 [section:test_output_macro_context `BOOST_TEST_CONTEXT`]
-Defines a scope and a message to be printed as part of the context of every failed assertion within the scope. 
+Defines a scope and a message to be printed as part of the context of every failed assertion within the scope.
+For more details see [link boost_test.test_output.test_tools_support_for_logging.contexts here].
+[endsect]
+
+[section:test_output_macro_context_sticky `BOOST_TEST_INFO_SCOPE`]
+Defines a sticky version of __BOOST_TEST_INFO__: the message stored in `BOOST_TEST_INFO_SCOPE` is printed for all failed assertions that come
+after the declaration of `BOOST_TEST_INFO_SCOPE` and within the current scope.
 For more details see [link boost_test.test_output.test_tools_support_for_logging.contexts here].
 [endsect]
 
