@@ -70,6 +70,7 @@
 # [pull_request 184] fix example to use the correct variable and avoid unused variable warning
 # [pull_request 195] Fix MinGW compilation problems
 # [pull_request 197] Feature Request: `BOOST_TEST_CONTEXT` that doesn't require introducing a new scope with braces
+# [pull_request 205] Fix MinGW `vsnprintf` compile errors and warnings
 
 # [ticket 13106] `libs/test/tools/console_test_runner` does not compile
 
