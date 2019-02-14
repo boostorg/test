@@ -39,12 +39,15 @@
 
 [h5 Bugfixes and feature requests]
 
+# [github_issue 133] Timeout effect on Windows
+# [github_issue 138] expected_failures doesnt work for `BOOST_DATA_TEST_CASE`
 # [github_issue 160] suppress `-Wformat-overflow` when optimization is enabled on GCC 8.2.0
 # [github_issue 174] `UBSAN` identified a problem at exit time by `gcc-8` only
 # [github_issue 177] `boost_check_equal-str-test` failed on `llvm`
 # [github_issue 180] Unreachable code warning on MSVC builds in test matrix
 # [github_issue 181] `doc_example22` (and `23`) are expected to fail, but do not on clang with release variant builds
 # [github_issue 194] `master_test_suite` declared twice
+# [github_issue 204] Feature Request: Allow specifying timeouts for test cases with datasests.
 
 # [pull_request 172] Check for non-used variables when `NDEBUG` is defined
 # [pull_request 182] fix use of `bind1st` in `example 12`
