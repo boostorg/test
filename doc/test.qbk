@@ -53,6 +53,7 @@
 [def __BOOST_TEST_MESSAGE__               [link boost_test.utf_reference.testout_reference.test_output_macro_message      `BOOST_TEST_MESSAGE`]]
 [def __BOOST_TEST_INFO__                  [link boost_test.utf_reference.testout_reference.test_output_macro_info         `BOOST_TEST_INFO`]]
 [def __BOOST_TEST_CONTEXT__               [link boost_test.utf_reference.testout_reference.test_output_macro_context      `BOOST_TEST_CONTEXT`]]
+[def __BOOST_TEST_INFO_SCOPE__            [link boost_test.utf_reference.testout_reference.test_output_macro_context_sticky `BOOST_TEST_INFO_SCOPE`]]
 [def __BOOST_TEST_DONT_PRINT_LOG_VALUE__  [link boost_test.utf_reference.testout_reference.test_output_macro_disable_type `BOOST_TEST_DONT_PRINT_LOG_VALUE`]]
 
 

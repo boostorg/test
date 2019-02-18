@@ -278,4 +278,32 @@ BOOST_AUTO_TEST_CASE( test_close_at_tolerance )
     BOOST_TEST( !::fpc::close_at_tolerance<double>( ::fpc::percent_tolerance( epsilon ) )(fp1, fp2) );
 }
 
+
+BOOST_AUTO_TEST_CASE( test_comparison_if_one_is_FPV, * boost::unit_test::tolerance(1E-6) )
+{
+  BOOST_TEST(1.000001 == 1);
+  BOOST_TEST(1 == 1.000001);
+
+  BOOST_TEST(0.000001 == 0);
+  BOOST_TEST(0 == 0.000001);
+}
+
+BOOST_AUTO_TEST_CASE( test_comparison_if_one_is_FPV_2 )
+{
+  BOOST_TEST(1.000001 == 1, tt::tolerance(1E-6));
+  BOOST_TEST(1 == 1.000001, tt::tolerance(1E-6));
+
+  BOOST_TEST(0.000001 == 0, tt::tolerance(1E-6));
+  BOOST_TEST(0 == 0.000001, tt::tolerance(1E-6));
+}
+
+BOOST_AUTO_TEST_CASE( test_check_close )
+{
+  // GH-162 BOOST_CHECK_CLOSE(0, smallnumber) fails
+  BOOST_CHECK_SMALL(-4.37113883e-08, 1.);
+  // does not compile with the old tools disabled
+  // never compiled with the old tools
+  //BOOST_CHECK_SMALL(-4.37113883e-08, 1);
+}
+
 // EOF

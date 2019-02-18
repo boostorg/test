@@ -36,6 +36,8 @@ BOOST_DATA_TEST_CASE( test_case_arity1, data::xrange(5), my_var )
 //]
 
 //[snippet_dataset1_3
+// The following definition of the dataset test case throws an exception before the
+// test module starts (zip of non infinite or singleton datasets of different length)
 BOOST_DATA_TEST_CASE( test_case_arity2, data::xrange(2) ^ data::xrange(5), apples, potatoes)
 {
   BOOST_TEST((apples <= 1 && apples >= 0));

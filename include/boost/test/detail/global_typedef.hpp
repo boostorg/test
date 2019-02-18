@@ -105,14 +105,19 @@ T static_constant<T>::value;
 // BOOST_TEST_SINGLETON_CONS_IMPL should be in only one translation unit. The
 // global instance should be declared by BOOST_TEST_SINGLETON_INST.
 
-#define BOOST_TEST_SINGLETON_CONS( type )               \
+#define BOOST_TEST_SINGLETON_CONS_NO_CTOR( type )       \
 public:                                                 \
   static type& instance();                              \
 private:                                                \
   BOOST_DELETED_FUNCTION(type(type const&))             \
   BOOST_DELETED_FUNCTION(type& operator=(type const&))  \
-  BOOST_DEFAULTED_FUNCTION(type(), {})                  \
   BOOST_DEFAULTED_FUNCTION(~type(), {})                 \
+/**/
+
+#define BOOST_TEST_SINGLETON_CONS( type )               \
+  BOOST_TEST_SINGLETON_CONS_NO_CTOR(type)               \
+private:                                                \
+  BOOST_DEFAULTED_FUNCTION(type(), {})                  \
 /**/
 
 #define BOOST_TEST_SINGLETON_CONS_IMPL( type )          \
@@ -125,12 +130,12 @@ private:                                                \
 
 #if defined(__APPLE_CC__) && defined(__GNUC__) && __GNUC__ < 4
 #define BOOST_TEST_SINGLETON_INST( inst ) \
-static BOOST_JOIN( inst, _t)& inst = BOOST_JOIN (inst, _t)::instance();
+static BOOST_JOIN( inst, _t)& inst BOOST_ATTRIBUTE_UNUSED = BOOST_JOIN (inst, _t)::instance();
 
 #else
 
 #define BOOST_TEST_SINGLETON_INST( inst ) \
-namespace { BOOST_JOIN( inst, _t)& inst = BOOST_JOIN( inst, _t)::instance(); }
+namespace { BOOST_JOIN( inst, _t)& inst BOOST_ATTRIBUTE_UNUSED = BOOST_JOIN( inst, _t)::instance(); }
 
 #endif
 

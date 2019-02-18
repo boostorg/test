@@ -11,8 +11,8 @@
   [
     [Macro]
     [Short description]
-  ] 
-  
+  ]
+
   [/ ###############################################################################################]
   [
     [__BOOST_TEST_MESSAGE__]
@@ -38,7 +38,11 @@
     [__BOOST_TEST_CONTEXT__]
     [Defines a scope and a message to be printed as part of the context of every failed assertion within the scope]
   ]
-  
+  [
+    [__BOOST_TEST_INFO_SCOPE__]
+    [Defines a sticky scoped version of __BOOST_TEST_INFO__ that is attached to all the assertions coming after this declaration and within the current scope.]
+  ]
+
 ]
 
 [endsect]

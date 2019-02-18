@@ -252,20 +252,29 @@ struct BOOST_PP_CAT(test_name, case) : public F {                       \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                 \
     static void test_method( BOOST_DATA_TEST_CASE_PARAMS( params ) )    \
     {                                                                   \
-        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture entry.");\
-        BOOST_PP_CAT(test_name, case) t;                                \
-        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" entry.");        \
         BOOST_TEST_CONTEXT( ""                                          \
             BOOST_PP_SEQ_FOR_EACH(BOOST_DATA_TEST_CONTEXT, _, params))  \
-        t._impl(BOOST_PP_SEQ_ENUM(params));                             \
-        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" exit.");         \
+        {                                                               \
+          BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture ctor");\
+          BOOST_PP_CAT(test_name, case) t;                              \
+          BOOST_TEST_CHECKPOINT('"'                                     \
+              << #test_name << "\" fixture setup");                     \
+          boost::unit_test::setup_conditional(t);                       \
+          BOOST_TEST_CHECKPOINT('"' << #test_name << "\" test entry");  \
+          t._impl(BOOST_PP_SEQ_ENUM(params));                           \
+          BOOST_TEST_CHECKPOINT('"'                                     \
+              << #test_name << "\" fixture teardown");                  \
+          boost::unit_test::teardown_conditional(t);                    \
+          BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture dtor");\
+        }                                                               \
     }                                                                   \
 private:                                                                \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                 \
     void _impl(BOOST_DATA_TEST_CASE_PARAMS( params ));                  \
 };                                                                      \
                                                                         \
-BOOST_AUTO_TEST_SUITE( test_name )                                      \
+BOOST_AUTO_TEST_SUITE( test_name,                                       \
+                       *boost::unit_test::decorator::stack_decorator()) \
                                                                         \
 BOOST_AUTO_TU_REGISTRAR( BOOST_PP_CAT(test_name, case) )(               \
     boost::unit_test::data::ds_detail::make_test_case_gen<              \
