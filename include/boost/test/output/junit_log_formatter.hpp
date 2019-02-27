@@ -107,6 +107,7 @@ public:
     void    test_unit_finish( std::ostream&, test_unit const& tu, unsigned long elapsed );
     void    test_unit_skipped( std::ostream&, test_unit const& tu, const_string reason );
     void    test_unit_aborted( std::ostream& os, test_unit const& tu );
+    void    test_unit_timed_out( std::ostream& os, test_unit const& tu);
 
     void    log_exception_start( std::ostream&, log_checkpoint_data const&, execution_exception const& ex );
     void    log_exception_finish( std::ostream& );

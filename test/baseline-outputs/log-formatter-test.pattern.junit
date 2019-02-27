@@ -10,14 +10,47 @@
 <testcase assertions="0" name="almost_good_foo" time="0.1234">
 <system-out><![CDATA[WARNING:
 - file   : log-formatter-test.cpp
-- line   : 44
+- line   : 46
 - message: condition 2>3 is not satisfied [2 <= 3]
 
 MESSAGE:
 - file   : boost.test framework
-- line   : 226
+- line   : 244
 - message: Test case 1 test cases inside/almost_good_foo did not check any assertions
 
 ]]></system-out>
+</testcase>
+</testsuite>
+* 3-format  *******************************************************************
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite tests="1" skipped="0" errors="0" failures="1" id="0" name="Timeout" time="0.1234">
+<properties>
+<property name="platform" value="BOOST_SOME_PLATFORM" />
+<property name="compiler" value="BOOST_SOME_COMPILER" />
+<property name="stl" value="BOOST_SOME_STDLIB" />
+<property name="boost" value="BOOST_1.XX.Y_SOME_VERSION" />
+</properties>
+<testcase assertions="0" name="good_foo" time="0.1234">
+<system-out><![CDATA[MESSAGE:
+- file   : boost.test framework
+- line   : 244
+- message: Test case Timeout/good_foo did not check any assertions
+
+]]></system-out>
+</testcase>
+<testcase assertions="1" name="timeout_foo" time="0.1234">
+<error message="unexpected exception" type="execution timeout"><![CDATA[
+UNCAUGHT EXCEPTION:
+- file: unknown location
+- line: 0
+
+
+EXCEPTION STACK TRACE: --------------
+fake  timeout
+-------------------------------------]]></error><system-err><![CDATA[Failures detected in:
+- test case: Timeout/timeout_foo
+- file: log-formatter-test.cpp
+- line: 231
+]]></system-err>
 </testcase>
 </testsuite>

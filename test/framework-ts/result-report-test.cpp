@@ -23,6 +23,7 @@
 #include <boost/test/framework.hpp>
 #include <boost/test/unit_test_parameters.hpp>
 #include <boost/test/utils/nullstream.hpp>
+#include <boost/test/execution_monitor.hpp>
 typedef boost::onullstream onullstream_type;
 
 // BOOST
@@ -60,6 +61,20 @@ void very_bad_foo()  {
     onullstream_type null_out;
     unit_test_log.set_stream( null_out );
     BOOST_FAIL( "" );
+}
+
+void timeout_foo()
+{
+    log_guard lg;
+    boost::ignore_unused( lg );
+    onullstream_type null_out;
+    unit_test_log.set_stream( null_out );
+    using boost::execution_exception;
+    execution_exception::location dummy;
+    throw execution_exception(
+          execution_exception::timeout_error,
+          "fake  timeout",
+          dummy);
 }
 
 //____________________________________________________________________________//
@@ -159,6 +174,20 @@ BOOST_AUTO_TEST_CASE( test_result_reports )
         i_have_problems->p_name.set("bad_foo<h>");
         ts_char_escaping->add( i_have_problems );
 
+    test_suite* ts_timeout = BOOST_TEST_SUITE( "Timeout" );
+        ts_timeout->add( BOOST_TEST_CASE( good_foo ) );
+        test_case * tc_timeout = BOOST_TEST_CASE( timeout_foo );
+        ts_timeout->add( tc_timeout );
+
+    test_suite* ts_timeout_nested = BOOST_TEST_SUITE( "Timeout-nested" );
+        ts_timeout_nested->add( BOOST_TEST_CASE( good_foo ) );
+        test_suite* ts_timeout_internal = BOOST_TEST_SUITE( "Timeout" );
+          ts_timeout_internal->add( BOOST_TEST_CASE( good_foo ) );
+          test_case * tc_timeout_internal = BOOST_TEST_CASE( timeout_foo );
+          ts_timeout_internal->add( tc_timeout_internal );
+        ts_timeout_nested->add( ts_timeout_internal );
+        ts_timeout_nested->add( BOOST_TEST_CASE_NAME( good_foo, "good_foo2" ) );
+
     check( test_output, ts_1 );
 
     check( test_output, ts_1b );
@@ -174,6 +203,10 @@ BOOST_AUTO_TEST_CASE( test_result_reports )
     check( test_output, ts_main );
 
     check( test_output, ts_char_escaping );
+
+    check( test_output, ts_timeout );
+
+    check( test_output, ts_timeout_nested );
 
     results_reporter::set_stream( std::cout );
 }
@@ -313,6 +346,20 @@ BOOST_AUTO_TEST_CASE( test_result_reports_default_behaviour )
         i_have_problems->p_name.set("bad_foo<h>");
         ts_char_escaping->add( i_have_problems );
 
+    test_suite* ts_timeout = BOOST_TEST_SUITE( "Timeout" );
+        ts_timeout->add( BOOST_TEST_CASE( good_foo ) );
+        test_case * tc_timeout = BOOST_TEST_CASE( timeout_foo );
+        ts_timeout->add( tc_timeout );
+
+    test_suite* ts_timeout_nested = BOOST_TEST_SUITE( "Timeout-nested" );
+        ts_timeout_nested->add( BOOST_TEST_CASE( good_foo ) );
+        test_suite* ts_timeout_internal = BOOST_TEST_SUITE( "Timeout" );
+          ts_timeout_internal->add( BOOST_TEST_CASE( good_foo ) );
+          test_case * tc_timeout_internal = BOOST_TEST_CASE( timeout_foo );
+          ts_timeout_internal->add( tc_timeout_internal );
+        ts_timeout_nested->add( ts_timeout_internal );
+        ts_timeout_nested->add( BOOST_TEST_CASE_NAME( good_foo, "good_foo2" ) );
+
     check2( test_output, ts_1 );
 
     check2( test_output, ts_1b );
@@ -328,6 +375,10 @@ BOOST_AUTO_TEST_CASE( test_result_reports_default_behaviour )
     check2( test_output, ts_main );
 
     check2( test_output, ts_char_escaping );
+
+    check2( test_output, ts_timeout );
+
+    check2( test_output, ts_timeout_nested );
 
     results_reporter::set_stream( std::cout );
 }

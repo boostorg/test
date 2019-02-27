@@ -30,9 +30,6 @@
 
 #include <boost/test/unit_test_parameters.hpp>
 
-// Boost
-#include <boost/timer.hpp>
-
 // STL
 #include <algorithm>
 #include <vector>

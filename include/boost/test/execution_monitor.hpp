@@ -111,7 +111,8 @@ namespace boost {
 ///
 /// @section DesignRationale Design Rationale
 ///
-/// The Execution Monitor design assumes that it can be used when no (or almost no) memory available. Also the Execution Monitor is intended to be portable to as many platforms as possible.
+/// The Execution Monitor design assumes that it can be used when no (or almost no) memory available. Also the Execution Monitor
+/// is intended to be portable to as many platforms as possible.
 ///
 /// @section UserGuide User's guide
 /// The Execution Monitor is designed to solve the problem of executing potentially dangerous function that may result in any number of error conditions,
@@ -337,9 +338,9 @@ public:
 
     ///  Specifies the seconds that elapse before a timer_error occurs.
     ///
-    /// The @em p_timeout property is an integer timeout (in seconds) for monitored function execution. Use this parameter to monitor code with possible deadlocks
-    /// or indefinite loops. This feature is only available for some operating systems (not yet Microsoft Windows).
-    unit_test::readwrite_property<unsigned>  p_timeout;
+    /// The @em p_timeout property is an integer timeout (in microseconds) for monitored function execution. Use this parameter to monitor code with possible deadlocks
+    /// or infinite loops. This feature is only available for some operating systems (not yet Microsoft Windows).
+    unit_test::readwrite_property<unsigned long int>  p_timeout;
 
     ///  Should monitor use alternative stack for the signal catching.
     ///
