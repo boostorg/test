@@ -136,12 +136,13 @@ jobs:
         - cd $BOOST_ROOT/libs/$SELF
         - ci/travis/codecov.sh
 
-    - os: linux
-      env:
-        - COMMENT=cppcheck
-      script:
-        - cd $BOOST_ROOT/libs/$SELF
-        - ci/travis/cppcheck.sh
+    # cppcheck taking too much time on travis and being killed
+    #- os: linux
+    #  env:
+    #    - COMMENT=cppcheck
+    #  script:
+    #    - cd $BOOST_ROOT/libs/$SELF
+    #    - ci/travis/cppcheck.sh
 
     - os: linux
       env:
