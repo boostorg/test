@@ -24,7 +24,7 @@ void test_operations(Processor& processor, int limit)
 ``
 
 In case of failure, in order to see in the logs at which point of the loops the failure occurred, we need some extra
-information in the assertion:
+information in the assertion, which can be achieved for instance [link boost_test.testing_tools.reports.custom_messages the following way]:
 
 
 ``
@@ -34,7 +34,7 @@ BOOST_TEST(processor.op1(i));
 replaced by
 
 ``
-BOOST_TEST_MESSAGE(processor.op1(i), "With parameter i = " << i);
+BOOST_TEST(processor.op1(i), "With parameter i = " << i);
 ``
 
 We see in this trivial example that a context, which is the variable `i` in this case, should be acknowledged by the
@@ -48,12 +48,12 @@ assertion and the context is tightly coupled as in the approach above is difficu
 void test_operations(Processor& processor, int limit, int level)
 {
   for (int i = 0; i < limit; ++i) {
-    BOOST_TEST_MESSAGE(processor.op1(i),
-                       "With optimization level " << level << ", With parameter i = " << i);
+    BOOST_TEST(processor.op1(i),
+               "With optimization level " << level << ", With parameter i = " << i);
     for (int j = 0; j < i; ++j) {
-      BOOST_TEST_MESSAGE(processor.op2(i, j),
-                         "With optimization level " << level <<
-                         ", With parameter i = " << i << ", With parameter j = " << j);
+      BOOST_TEST(processor.op2(i, j),
+                 "With optimization level " << level <<
+                 ", With parameter i = " << i << ", With parameter j = " << j);
     }
   }
 }

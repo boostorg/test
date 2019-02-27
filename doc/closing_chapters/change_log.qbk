@@ -7,9 +7,25 @@
 
 [section Change log]
 
+Boost.Test releases:
+
+* [link ref_CHANGE_LOG_3_10 Boost.Test v3.10 / boost 1.70]
+* [link ref_CHANGE_LOG_3_9 Boost.Test v3.9 / boost 1.69]
+* [link ref_CHANGE_LOG_3_8 Boost.Test v3.8 / boost 1.68]
+* [link ref_CHANGE_LOG_3_7 Boost.Test v3.7 / boost 1.67]
+* [link ref_CHANGE_LOG_3_6 Boost.Test v3.6 / boost 1.65]
+* [link ref_CHANGE_LOG_3_5 Boost.Test v3.5 / boost 1.64]
+* [link ref_CHANGE_LOG_3_4 Boost.Test v3.4 / boost 1.63]
+* [link ref_CHANGE_LOG_3_3 Boost.Test v3.3 / boost 1.62]
+* [link ref_CHANGE_LOG_3_2 Boost.Test v3.2 / boost 1.61]
+* [link ref_CHANGE_LOG_3_1 Boost.Test v3.1 / boost 1.60]
+* [link ref_CHANGE_LOG_3_0 Boost.Test v3 / boost 1.59]
+
 [#ref_CHANGE_LOG_3_10][h4 Boost.Test v3.10 / boost 1.70]
 
 [h5 New features]
+* [link boost_test.tests_organization.test_cases.test_case_generation.datasets.dataset_interface Custom datasets]
+  are not required to declare a inner type `sample` anymore
 
 * Boost.Test does not depend on Boost.Timer any more (which was pulling also Boost.Chrono
   and Boost.System as transitive dependencies).
@@ -80,6 +96,7 @@
 # [pull_request 182] fix use of `bind1st` in `example 12`
 # [pull_request 183] remove superfluous semicolon in `example 04`
 # [pull_request 184] fix example to use the correct variable and avoid unused variable warning
+# [pull_request 190] fix warning on gcc-7.3 in cygwin claiming `master_test_suite` is declared differently
 # [pull_request 195] Fix MinGW compilation problems
 # [pull_request 197] Feature Request: `BOOST_TEST_CONTEXT` that doesn't require introducing a new scope with braces
 # [pull_request 205] Fix MinGW `vsnprintf` compile errors and warnings
@@ -212,7 +229,7 @@
 # [ticket 12631] `BOOST_TEST_MESSAGE` generates incorrect output when used in `BOOST_DATA_TEST_CASE`
 # [ticket 13011] `BOOST_TEST` broken with floating point relational operators
 
-[h4 Boost.Test v3.5 / boost 1.64]
+[#ref_CHANGE_LOG_3_5][h4 Boost.Test v3.5 / boost 1.64]
 
 [h5 New features]
 * Now Boost.Test provides [link ref_log_output_custom_customization_point customization points] for logging user defined types:
@@ -232,7 +249,7 @@
 # [ticket 12748] Boost.Test defines a variable called `VERSION`
 # [ticket 12778] Boost.Test is broken against left shift operator in certain cases (`nullptr` issue)
 
-[h4 Boost.Test v3.4 / boost 1.63]
+[#ref_CHANGE_LOG_3_4][h4 Boost.Test v3.4 / boost 1.63]
 
 [h5 Breaking changes]
 # Now colons that appear in test case names are replaced with underscores. This affect mainly the
@@ -256,7 +273,7 @@
 # [ticket 12530] No way to find out Boost.Test version without running any tests
 # [ticket 12531] `--run_test` in Boost 1.62 does not accept test names which contain ':'
 
-[h4 Boost.Test v3.3 / boost 1.62]
+[#ref_CHANGE_LOG_3_3][h4 Boost.Test v3.3 / boost 1.62]
 
 [h5 New features]
 * Boost.Test now treats each sample of a dataset test case as being a uniquely named test case under the same test suite,
@@ -290,7 +307,7 @@
 # [ticket 12257] Incorrect line numbers in `test_units` generated from `test_case_gen`
 # [ticket 12378] Compilation errors with clang 3.8
 
-[h4 Boost.Test v3.2 / boost 1.61]
+[#ref_CHANGE_LOG_3_2][h4 Boost.Test v3.2 / boost 1.61]
 
 [h5 New features]
 * now datasets support any [link boost_test.tests_organization.test_cases.test_case_generation.datasets arity], using the
@@ -308,7 +325,7 @@
 # [ticket 11889] `BOOST_DATA_TEST_CASE` fails to compile for 4D and higher dimensional grids
 # [ticket 11983] Boost Test XML Report contains unescaped XML characters
 
-[h4 Boost.Test v3.1 / boost 1.60]
+[#ref_CHANGE_LOG_3_1][h4 Boost.Test v3.1 / boost 1.60]
 
 [h5 New major features]
 * improved API for datasets
@@ -348,7 +365,7 @@
 # [ticket 11625] `BOOST_TEST( ..., per_element() )` erroneously requires collections are comparable
 
 
-[h4 Boost.Test v3 / boost 1.59]
+[#ref_CHANGE_LOG_3_0][h4 Boost.Test v3 / boost 1.59]
 
 [h5 New major features]
 
@@ -425,8 +442,8 @@
 # [ticket 6002] Failed to completely redirect TestLog to file (duplicates)
 # [ticket 6071] Boost Test (Boost 1.46.0) GCC 4.6.1 error: ambiguous overload for ‘operator[]’
 # [ticket 6074] warnings-as-errors not usable with Boost.test in release mode
-# [ticket 6161] SunOS: bad putenv declaration (duplicates #[ticket 6766])
-# [ticket 6766] incorrect declaration for putenv in `config.hpp`
+# [ticket 6161] SunOS: bad `putenv` declaration (duplicates [ticket 6766])
+# [ticket 6766] incorrect declaration for `putenv` in `config.hpp`
 # [ticket 6712] Eliminate warnings with GCC
 # [ticket 6748] Link in the documentation points to wrong page
 # [ticket 7046] Output full error message, not just 512 chars

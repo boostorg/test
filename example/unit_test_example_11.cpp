@@ -33,7 +33,7 @@ test_suite*
 init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) {
     framework::master_test_suite().p_name.value = "Unit test example 11";
 
-    LOG_FATAL_ERROR( "something happend" );
+    LOG_FATAL_ERROR( "something happened" );
 
     // parameters have no requirements to stay alive beyond the next statement
     std::string const params[] = { "hdr1 ", "hdr2", "3  " };
