@@ -176,6 +176,10 @@ public:
     /// Invoked when a test unit is aborted
     virtual void        test_unit_aborted( std::ostream& /* os */, test_unit const& /* tu */) {}
 
+    /// Invoked when a test unit times-out
+    virtual void        test_unit_timed_out( std::ostream& /* os */, test_unit const& /* tu */) {}
+
+
     // @}
 
     // @name Uncaught exception report

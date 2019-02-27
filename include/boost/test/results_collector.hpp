@@ -62,6 +62,7 @@ public:
                                                 (test_results)
                                                 (results_collect_helper) ) bool_prop;
 
+    counter_prop    p_test_suites;              //!< Number of test suites
     counter_prop    p_assertions_passed;        //!< Number of successful assertions
     counter_prop    p_assertions_failed;        //!< Number of failing assertions
     counter_prop    p_warnings_failed;          //!< Number of warnings
@@ -72,6 +73,7 @@ public:
     counter_prop    p_test_cases_skipped;       //!< Number of skipped test cases
     counter_prop    p_test_cases_aborted;       //!< Number of aborted test cases
     counter_prop    p_test_cases_timed_out;     //!< Number of timed out test cases
+    counter_prop    p_test_suites_timed_out;    //!< Number of timed out test suites
     counter_prop    p_duration_microseconds;    //!< Duration of the test in microseconds
     bool_prop       p_aborted;                  //!< Indicates that the test unit execution has been aborted
     bool_prop       p_skipped;                  //!< Indicates that the test unit execution has been skipped

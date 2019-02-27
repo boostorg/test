@@ -94,6 +94,7 @@ test_results::result_code() const
 void
 test_results::operator+=( test_results const& tr )
 {
+    p_test_suites.value         += tr.p_test_suites;
     p_assertions_passed.value   += tr.p_assertions_passed;
     p_assertions_failed.value   += tr.p_assertions_failed;
     p_warnings_failed.value     += tr.p_warnings_failed;
@@ -103,6 +104,7 @@ test_results::operator+=( test_results const& tr )
     p_test_cases_skipped.value  += tr.p_test_cases_skipped;
     p_test_cases_aborted.value  += tr.p_test_cases_aborted;
     p_test_cases_timed_out.value += tr.p_test_cases_timed_out;
+    p_test_suites_timed_out.value += tr.p_test_suites_timed_out;
     p_duration_microseconds.value += tr.p_duration_microseconds;
 }
 
@@ -111,6 +113,7 @@ test_results::operator+=( test_results const& tr )
 void
 test_results::clear()
 {
+    p_test_suites.value         = 0;
     p_assertions_passed.value   = 0;
     p_assertions_failed.value   = 0;
     p_warnings_failed.value     = 0;
@@ -121,6 +124,7 @@ test_results::clear()
     p_test_cases_skipped.value  = 0;
     p_test_cases_aborted.value  = 0;
     p_test_cases_timed_out.value = 0;
+    p_test_suites_timed_out.value = 0;
     p_duration_microseconds.value= 0;
     p_aborted.value             = false;
     p_skipped.value             = false;
@@ -202,9 +206,10 @@ public:
             return true;
 
         m_tr += results_collector.results( ts.p_id );
+        m_tr.p_test_suites.value++;
 
         if( results_collector.results( ts.p_id ).p_timed_out )
-            m_tr.p_test_cases_timed_out.value++;
+            m_tr.p_test_suites_timed_out.value++;
         return false;
     }
 

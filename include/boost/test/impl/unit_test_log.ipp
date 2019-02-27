@@ -267,6 +267,20 @@ unit_test_log_t::test_unit_aborted( test_unit const& tu )
     }
 }
 
+void
+unit_test_log_t::test_unit_timed_out( test_unit const& tu )
+{
+    if( s_log_impl().has_entry_in_progress() )
+        *this << log::end();
+
+    BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
+        if( !current_logger_data.m_enabled || current_logger_data.get_log_level() > log_test_units )
+            continue;
+
+        current_logger_data.m_log_formatter->test_unit_timed_out(current_logger_data.stream(), tu );
+    }
+}
+
 //____________________________________________________________________________//
 
 void
