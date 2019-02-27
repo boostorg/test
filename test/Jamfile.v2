@@ -176,6 +176,10 @@ test-suite "writing-test-ts"
   [ boost.test-self-test run : writing-test-ts : test-fixture-detect-setup-teardown ]
   [ boost.test-self-test run : writing-test-ts : test-fixture-detect-setup-teardown-cpp11 : : : : : : [ requires cxx11_decltype cxx11_trailing_result_types ] ]
   [ boost.test-self-test run : writing-test-ts : test-with-precondition : : : : : : [ requires cxx11_auto_declarations cxx11_lambdas ] ]
+  [ boost.test-self-test run : writing-test-ts : test-timeout : : : : : : [ requires cxx11_hdr_thread cxx11_hdr_chrono ] ]
+  [ boost.test-self-test run-fail : writing-test-ts : test-timeout-fail : : : : : : [ requires cxx11_hdr_thread cxx11_hdr_chrono ] ]
+  [ boost.test-self-test run : writing-test-ts : test-timeout-suite : : : : : : $(requirements_datasets) [ requires cxx11_hdr_thread cxx11_hdr_chrono ] ]
+  [ boost.test-self-test run-fail : writing-test-ts : test-timeout-suite-fail : : : : : : $(requirements_datasets) [ requires cxx11_hdr_thread cxx11_hdr_chrono ] ]
 ;
 
 #_________________________________________________________________________________________________#

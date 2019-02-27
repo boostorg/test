@@ -50,11 +50,12 @@
 #include <stdio.h>
 #include <cstdarg>              // for varargs
 #include <stdarg.h>
+#include <cmath>                // for ceil
 
 #include <iostream>              // for varargs
 
 #ifdef BOOST_NO_STDC_NAMESPACE
-namespace std { using ::strerror; using ::strlen; using ::strncat; }
+namespace std { using ::strerror; using ::strlen; using ::strncat; using ::ceil; }
 #endif
 
 // to use vsnprintf
@@ -98,6 +99,10 @@ using std::va_list;
 #    define BOOST_TEST_CRT_ASSERT       2
 #    define BOOST_TEST_CRT_ERROR        1
 #    define BOOST_TEST_CRT_SET_HOOK(H)  (void*)(H)
+#  endif
+
+#  if defined(_MSC_VER) && (_WIN32_WINNT >= 0x0501) /* WinXP */
+#    define BOOST_TEST_WIN32_WAITABLE_TIMERS
 #  endif
 
 #  if (!BOOST_WORKAROUND(_MSC_VER,  >= 1400 ) && \
@@ -691,7 +696,7 @@ signal_action::~signal_action()
 class signal_handler {
 public:
     // Constructor
-    explicit signal_handler( bool catch_system_errors, bool detect_fpe, unsigned timeout, bool attach_dbg, char* alt_stack );
+    explicit signal_handler( bool catch_system_errors, bool detect_fpe, unsigned timeout_microseconds, bool attach_dbg, char* alt_stack );
 
     // Destructor
     ~signal_handler();
@@ -714,7 +719,7 @@ public:
 private:
     // Data members
     signal_handler*         m_prev_handler;
-    unsigned                m_timeout;
+    unsigned                m_timeout_microseconds;
 
     // Note: We intentionality do not catch SIGCHLD. Users have to deal with it themselves
     signal_action           m_ILL_action;
@@ -738,24 +743,24 @@ signal_handler* signal_handler::s_active_handler = signal_handler_ptr();
 
 //____________________________________________________________________________//
 
-signal_handler::signal_handler( bool catch_system_errors, bool detect_fpe, unsigned timeout, bool attach_dbg, char* alt_stack )
+signal_handler::signal_handler( bool catch_system_errors, bool detect_fpe, unsigned timeout_microseconds, bool attach_dbg, char* alt_stack )
 : m_prev_handler( s_active_handler )
-, m_timeout( timeout )
-, m_ILL_action ( SIGILL , catch_system_errors, attach_dbg, alt_stack )
-, m_FPE_action ( SIGFPE , detect_fpe         , attach_dbg, alt_stack )
-, m_SEGV_action( SIGSEGV, catch_system_errors, attach_dbg, alt_stack )
-, m_BUS_action ( SIGBUS , catch_system_errors, attach_dbg, alt_stack )
+, m_timeout_microseconds( timeout_microseconds )
+, m_ILL_action ( SIGILL , catch_system_errors,      attach_dbg, alt_stack )
+, m_FPE_action ( SIGFPE , detect_fpe         ,      attach_dbg, alt_stack )
+, m_SEGV_action( SIGSEGV, catch_system_errors,      attach_dbg, alt_stack )
+, m_BUS_action ( SIGBUS , catch_system_errors,      attach_dbg, alt_stack )
 #ifdef BOOST_TEST_CATCH_SIGPOLL
-, m_POLL_action( SIGPOLL, catch_system_errors, attach_dbg, alt_stack )
+, m_POLL_action( SIGPOLL, catch_system_errors,      attach_dbg, alt_stack )
 #endif
-, m_ABRT_action( SIGABRT, catch_system_errors, attach_dbg, alt_stack )
-, m_ALRM_action( SIGALRM, timeout > 0        , attach_dbg, alt_stack )
+, m_ABRT_action( SIGABRT, catch_system_errors,      attach_dbg, alt_stack )
+, m_ALRM_action( SIGALRM, timeout_microseconds > 0, attach_dbg, alt_stack )
 {
     s_active_handler = this;
 
-    if( m_timeout > 0 ) {
+    if( m_timeout_microseconds > 0 ) {
         ::alarm( 0 );
-        ::alarm( timeout );
+        ::alarm( static_cast<unsigned int>(std::ceil(timeout_microseconds / 1E6) )); // alarm has a precision to the seconds
     }
 
 #ifdef BOOST_TEST_USE_ALT_STACK
@@ -781,7 +786,7 @@ signal_handler::~signal_handler()
 {
     assert( s_active_handler == this );
 
-    if( m_timeout > 0 )
+    if( m_timeout_microseconds > 0 )
         ::alarm( 0 );
 
 #ifdef BOOST_TEST_USE_ALT_STACK
@@ -897,8 +902,10 @@ public:
     , m_se_id( 0 )
     , m_fault_address( 0 )
     , m_dir( false )
+    , m_timeout( false )
     {}
 
+    void                set_timed_out();
     void                report() const;
     int                 operator()( unsigned id, _EXCEPTION_POINTERS* exps );
 
@@ -909,6 +916,7 @@ private:
     unsigned            m_se_id;
     void*               m_fault_address;
     bool                m_dir;
+    bool                m_timeout;
 };
 
 //____________________________________________________________________________//
@@ -920,6 +928,14 @@ seh_catch_preventer( unsigned /* id */, _EXCEPTION_POINTERS* /* exps */ )
     throw;
 }
 #endif
+
+//____________________________________________________________________________//
+
+void
+system_signal_exception::set_timed_out()
+{
+    m_timeout = true;
+}
 
 //____________________________________________________________________________//
 
@@ -1074,7 +1090,12 @@ system_signal_exception::report() const
         break;
 
     default:
-        detail::report_error( execution_exception::system_error, "unrecognized exception. Id: 0x%08lx", m_se_id );
+        if( m_timeout ) {
+            detail::report_error(execution_exception::timeout_error, "timeout while executing function");
+        }
+        else {
+            detail::report_error( execution_exception::system_error, "unrecognized exception. Id: 0x%08lx", m_se_id );
+        }
         break;
     }
 }
@@ -1133,6 +1154,31 @@ execution_monitor::catch_signals( boost::function<int ()> const& F )
 #endif
     }
 
+#if defined(BOOST_TEST_WIN32_WAITABLE_TIMERS)
+    HANDLE htimer = INVALID_HANDLE_VALUE;
+    BOOL bTimerSuccess = FALSE;
+
+    if( p_timeout ) {
+        htimer = ::CreateWaitableTimer(
+            NULL,
+            TRUE,
+            TEXT("Boost.Test timer"));
+
+        if( htimer != INVALID_HANDLE_VALUE ) {
+            LARGE_INTEGER liDueTime;
+            liDueTime.QuadPart = - static_cast<signed int>(p_timeout) * 10; // resolution of 100 ns
+
+            bTimerSuccess = ::SetWaitableTimer(
+                htimer,
+                &liDueTime,
+                0,
+                0,
+                0,
+                FALSE);           // Do not restore a suspended system
+        }
+    }
+#endif 
+
     detail::system_signal_exception SSE( this );
 
     int ret_val = 0;
@@ -1146,8 +1192,26 @@ execution_monitor::catch_signals( boost::function<int ()> const& F )
         __except( SSE( GetExceptionCode(), GetExceptionInformation() ) ) {
             throw SSE;
         }
+
+        // we check for time outs: we do not have any signaling facility on Win32
+        // however, we signal a timeout as a hard error as for the other operating systems
+        // and throw the signal error handler
+        if( bTimerSuccess && htimer != INVALID_HANDLE_VALUE) {
+            if (::WaitForSingleObject(htimer, 0) == WAIT_OBJECT_0) {
+                SSE.set_timed_out();
+                throw SSE;
+            }
+        }
+
     }
     __finally {
+
+#if defined(BOOST_TEST_WIN32_WAITABLE_TIMERS)
+        if( htimer != INVALID_HANDLE_VALUE ) {
+            ::CloseHandle(htimer);
+        }
+#endif
+
         if( l_catch_system_errors ) {
             BOOST_TEST_CRT_SET_HOOK( old_crt_hook );
 
@@ -1250,15 +1314,8 @@ execution_monitor::execute( boost::function<int ()> const& F )
 #endif
 
     CATCH_AND_REPORT_STD_EXCEPTION( std::bad_alloc )
-
-#if BOOST_WORKAROUND(__BORLANDC__, <= 0x0551)
     CATCH_AND_REPORT_STD_EXCEPTION( std::bad_cast )
     CATCH_AND_REPORT_STD_EXCEPTION( std::bad_typeid )
-#else
-    CATCH_AND_REPORT_STD_EXCEPTION( std::bad_cast )
-    CATCH_AND_REPORT_STD_EXCEPTION( std::bad_typeid )
-#endif
-
     CATCH_AND_REPORT_STD_EXCEPTION( std::bad_exception )
     CATCH_AND_REPORT_STD_EXCEPTION( std::domain_error )
     CATCH_AND_REPORT_STD_EXCEPTION( std::invalid_argument )

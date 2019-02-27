@@ -110,6 +110,8 @@ plain_report_formatter::test_unit_report_start( test_unit const& tu, std::ostrea
         descr = "was skipped";
     else if( tr.p_aborted )
         descr = "was aborted";
+    else if( tr.p_timed_out )
+        descr = "has timed out";
     else
         descr = "has failed";
 
@@ -134,6 +136,7 @@ plain_report_formatter::test_unit_report_start( test_unit const& tu, std::ostrea
     print_stat_value( ostr, tr.p_test_cases_passed , m_indent, total_tc        , "test case", "passed" );
     print_stat_value( ostr, tr.p_test_cases_warned , m_indent, total_tc        , "test case", "passed with warnings" );
     print_stat_value( ostr, tr.p_test_cases_failed , m_indent, total_tc        , "test case", "failed" );
+    print_stat_value( ostr, tr.p_test_cases_timed_out, m_indent, total_tc        , "test case", "timed-out" );
     print_stat_value( ostr, tr.p_test_cases_skipped, m_indent, total_tc        , "test case", "skipped" );
     print_stat_value( ostr, tr.p_test_cases_aborted, m_indent, total_tc        , "test case", "aborted" );
     print_stat_value( ostr, tr.p_assertions_passed , m_indent, total_assertions, "assertion", "passed" );
