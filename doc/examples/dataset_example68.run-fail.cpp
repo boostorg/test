@@ -18,13 +18,12 @@ namespace bdata = boost::unit_test::data;
 class fibonacci_dataset {
 public:
     // Samples type is int
-    using sample=int;
     enum { arity = 1 };
 
     struct iterator {
 
         iterator() : a(1), b(1) {}
-    
+
         int operator*() const   { return b; }
         void operator++()
         {
@@ -35,12 +34,12 @@ public:
         int a;
         int b; // b is the output
     };
-  
+
     fibonacci_dataset()             {}
-  
+
     // size is infinite
     bdata::size_t   size() const    { return bdata::BOOST_TEST_DS_INFINITE_SIZE; }
-  
+
     // iterator
     iterator        begin() const   { return iterator(); }
 };
@@ -51,9 +50,9 @@ namespace boost { namespace unit_test { namespace data { namespace monomorphic {
   struct is_dataset<fibonacci_dataset> : boost::mpl::true_ {};
 }}}}
 
-// Creating a test-driven dataset 
-BOOST_DATA_TEST_CASE( 
-    test1, 
+// Creating a test-driven dataset
+BOOST_DATA_TEST_CASE(
+    test1,
     fibonacci_dataset() ^ bdata::make( { 1, 2, 3, 5, 8, 13, 21, 35, 56 } ),
     fib_sample, exp)
 {

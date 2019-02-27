@@ -242,7 +242,10 @@ public:
         }
 
         if( tu.p_type == TUT_SUITE ) {
-            name += "-setup-teardown";
+            if(tr->p_timed_out)
+              name += "-timed-execution";
+            else
+              name += "-setup-teardown";
         }
 
         m_stream << "<testcase assertions" << utils::attr_value() << nb_assertions;
@@ -360,7 +363,7 @@ public:
             }
         }
         else {
-            nb_assertions = tr->p_assertions_passed + tr->p_assertions_failed;
+            nb_assertions = static_cast<int>(tr->p_assertions_passed + tr->p_assertions_failed);
         }
 
         return nb_assertions;
@@ -423,7 +426,7 @@ public:
               << " tests"     << utils::attr_value() << tr.p_test_cases_passed
               << " skipped"   << utils::attr_value() << tr.p_test_cases_skipped
               << " errors"    << utils::attr_value() << tr.p_test_cases_aborted
-              << " failures"  << utils::attr_value() << tr.p_test_cases_failed
+              << " failures"  << utils::attr_value() << tr.p_test_cases_failed + tr.p_test_suites_timed_out  + tr.p_test_cases_timed_out
               << " id"        << utils::attr_value() << m_id++
               << " name"      << utils::attr_value() << tu_name_normalize(ts.p_name)
               << " time"      << utils::attr_value() << (tr.p_duration_microseconds * 1E-6)
@@ -542,6 +545,25 @@ junit_log_formatter::test_unit_aborted( std::ostream& /*ostr*/, test_unit const&
     boost::ignore_unused( tu );
     assert( tu.p_id == list_path_to_root.back() );
     //list_path_to_root.pop_back();
+}
+
+//____________________________________________________________________________//
+
+void
+junit_log_formatter::test_unit_timed_out( std::ostream& /*os*/, test_unit const& tu)
+{
+    if(tu.p_type == TUT_SUITE)
+    {
+        // if we reach this call, it means that the test has already started and
+        // test_unit_start has already been called on the tu.
+        junit_impl::junit_log_helper& last_entry = get_current_log_entry();
+        junit_impl::junit_log_helper::assertion_entry entry;
+        entry.logentry_message = "test-suite time out";
+        entry.logentry_type = "execution timeout";
+        entry.log_entry = junit_impl::junit_log_helper::assertion_entry::log_entry_error;
+        entry.output = "the current suite exceeded the allocated execution time";
+        last_entry.assertion_entries.push_back(entry);
+    }
 }
 
 //____________________________________________________________________________//

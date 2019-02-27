@@ -86,11 +86,25 @@ See [link boost_test.testing_tools.expected_failures here] for more details.
 [section:decorator_timeout timeout (decorator)]
 
 ``
-timeout(unsigned seconds);
+timeout(unsigned int seconds);
 ``
 
-Specifies a time-out for a *test-case*, above which the test-case is forced to stop and reported as failing.
+Specifies a time-out for a *test-case* or a *test-suite*, in wall-clock time. 
+
+If a test-case lasts longer than the timeout, the test is flagged as failed. On some systems (see below), 
+the test-case is forced to stop.
+
+For test-suites, the mechanism is similar: every test-unit under the test-suite is allocated a maximum 
+duration time that is the remainder of the timeout after the previous tests have been executed. If a timeout occurs 
+during the execution of the suite, the suite is flagged as timed-out and the remaining test-units are skipped.
+
 See [link boost_test.testing_tools.timeout here] for more details.
+
+[note The macro
+  `BOOST_SIGACTION_BASED_SIGNAL_HANDLING` is defined
+  if Boost.Test is able to force the test-case to stop.]
+
+[note The support for test suites has been added in [link ref_CHANGE_LOG_3_10 Boost 1.70 / __UTF__ v3.10]]
 
 [endsect] [/ section timeout]
 
@@ -108,8 +122,12 @@ template <typename FPT>
 
 Decorator `tolerance` specifies the default comparison tolerance for floating point type `FTP` in the decorated test
 unit. The default tolerance only applies to a particular type, so it makes sense to provide more than one `tolerance`
-decorator if we are comparing different floating point types. For more details see __floating_points_testing_impl__.
-The variant with `percent_tolerance` uses value `eps / 100` as tolerance.
+decorator if we are comparing different floating point types.
+The variant with `percent_tolerance` uses value ``eps / 100`` as tolerance.
+
+[note For more details see the
+  [link boost_test.testing_tools.extended_comparison.floating_point floating points comparison] section.
+]
 
 [bt_example decorator_13..decorator tolerance..run-fail]
 

@@ -17,6 +17,8 @@
 #include <boost/test/framework.hpp>
 #include <boost/test/unit_test_parameters.hpp>
 #include <boost/test/utils/nullstream.hpp>
+#include <boost/test/execution_monitor.hpp>
+
 typedef boost::onullstream onullstream_type;
 
 // BOOST
@@ -75,6 +77,16 @@ void very_bad_exception()  {
 }
 
 void bad_foo2() { bad_foo(); } // tests with clashing names
+
+void timeout_foo()
+{
+    using boost::execution_exception;
+    execution_exception::location dummy;
+    throw execution_exception(
+          execution_exception::timeout_error,
+          "fake  timeout",
+          dummy);
+}
 
 //____________________________________________________________________________//
 
@@ -178,6 +190,20 @@ BOOST_AUTO_TEST_CASE( test_logs )
         ts_main->add( ts_3 );
         ts_main->add( ts_4 );
 
+    test_suite* ts_timeout = BOOST_TEST_SUITE( "Timeout" );
+        ts_timeout->add( BOOST_TEST_CASE( good_foo ) );
+        test_case * tc_timeout = BOOST_TEST_CASE( timeout_foo );
+        ts_timeout->add( tc_timeout );
+
+    test_suite* ts_timeout_nested = BOOST_TEST_SUITE( "Timeout-nested" );
+        ts_timeout_nested->add( BOOST_TEST_CASE( good_foo ) );
+        test_suite* ts_timeout_internal = BOOST_TEST_SUITE( "Timeout" );
+          ts_timeout_internal->add( BOOST_TEST_CASE( good_foo ) );
+          test_case * tc_timeout_internal = BOOST_TEST_CASE( timeout_foo );
+          ts_timeout_internal->add( tc_timeout_internal );
+        ts_timeout_nested->add( ts_timeout_internal );
+        ts_timeout_nested->add( BOOST_TEST_CASE_NAME( good_foo, "good_foo2" ) );
+
     check( test_output, ts_1 );
 
     check( test_output, ts_1b );
@@ -194,6 +220,10 @@ BOOST_AUTO_TEST_CASE( test_logs )
     ts_3->depends_on( ts_1 );
 
     check( test_output, ts_main );
+
+    check( test_output, ts_timeout );
+
+    check( test_output, ts_timeout_nested );
 }
 
 //____________________________________________________________________________//
@@ -226,6 +256,13 @@ BOOST_AUTO_TEST_CASE( test_logs_junit_info_closing_tags )
     boost::unit_test::framework::impl::setup_for_execution( *ts_main );
 
     check( test_output, OF_JUNIT, ts_main->p_id, log_successful_tests );
+
+    test_suite* ts_timeout = BOOST_TEST_SUITE( "Timeout" );
+        ts_timeout->add( BOOST_TEST_CASE( good_foo ) );
+        test_case * tc_timeout = BOOST_TEST_CASE( timeout_foo );
+        ts_timeout->add( tc_timeout );
+
+    check( test_output, OF_JUNIT, ts_timeout->p_id, log_successful_tests );
 }
 
 // EOF
