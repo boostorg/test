@@ -75,6 +75,9 @@ Boost.Test releases:
 * The floating point comparison behaviour change may use this type of comparison while previously
   using straight relational operator comparison.
 
+* the member function [memberref boost::unit_test::unit_test_log_formatter::log_build_info] has slightly changed 
+  to accept an additional boolean argument. If you have a custom logger, you will need to update its signature.
+
 [h5 Bugfixes and feature requests]
 
 # [github_issue 133] Timeout effect on Windows
@@ -87,6 +90,7 @@ Boost.Test releases:
 # [github_issue 180] Unreachable code warning on MSVC builds in test matrix
 # [github_issue 181] `doc_example22` (and `23`) are expected to fail, but do not on clang with release variant builds
 # [github_issue 194] `master_test_suite` declared twice
+# [github_issue 196] junit report: test error is also reported as failure
 # [github_issue 199] Runtime `type_mismatch` after upgrade to `1.69`
 # [github_issue 202] `boost/timer.hpp` is deprecated
 # [github_issue 203] Test cases with datasets and fixtures don't support flexible fixture interface
