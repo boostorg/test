@@ -80,14 +80,16 @@ compiler_log_formatter::log_finish( std::ostream& ostr )
 //____________________________________________________________________________//
 
 void
-compiler_log_formatter::log_build_info( std::ostream& output )
+compiler_log_formatter::log_build_info( std::ostream& output, bool log_build_info )
 {
-    output  << "Platform: " << BOOST_PLATFORM            << '\n'
-            << "Compiler: " << BOOST_COMPILER            << '\n'
-            << "STL     : " << BOOST_STDLIB              << '\n'
-            << "Boost   : " << BOOST_VERSION/100000      << "."
-                            << BOOST_VERSION/100 % 1000  << "."
-                            << BOOST_VERSION % 100       << std::endl;
+    if(log_build_info) {
+        output  << "Platform: " << BOOST_PLATFORM            << '\n'
+                << "Compiler: " << BOOST_COMPILER            << '\n'
+                << "STL     : " << BOOST_STDLIB              << '\n'
+                << "Boost   : " << BOOST_VERSION/100000      << "."
+                                << BOOST_VERSION/100 % 1000  << "."
+                                << BOOST_VERSION % 100       << std::endl;
+    }
 }
 
 //____________________________________________________________________________//

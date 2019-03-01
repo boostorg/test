@@ -26,8 +26,6 @@ project boost/test-examples
     :
     : requirements
       <toolset>clang:<cxxflags>-Wno-c99-extensions <define>$(HAS_UBSAN:J)
-      <toolset>gcc:<cxxflags>-std=c++11
-#      <toolset>msvc:<cxxflags>/P
     ;
 
 # Define aliases for the needed libs to get shorter names

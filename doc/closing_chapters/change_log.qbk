@@ -75,27 +75,32 @@ Boost.Test releases:
 * The floating point comparison behaviour change may use this type of comparison while previously
   using straight relational operator comparison.
 
+* the member function [memberref boost::unit_test::unit_test_log_formatter::log_build_info] has slightly changed 
+  to accept an additional boolean argument. If you have a custom logger, you will need to update its signature.
+
 [h5 Bugfixes and feature requests]
 
 # [github_issue 133] Timeout effect on Windows
 # [github_issue 138] expected_failures doesnt work for `BOOST_DATA_TEST_CASE`
 # [github_issue 160] suppress `-Wformat-overflow` when optimization is enabled on GCC 8.2.0
-# [pull_request 171] Correct library name in test runner help screen
 # [github_issue 174] `UBSAN` identified a problem at exit time by `gcc-8` only
 # [github_issue 176] `[snippet_dataset1_3]` seems to be broken
 # [github_issue 177] `boost_check_equal-str-test` failed on `llvm`
 # [github_issue 180] Unreachable code warning on MSVC builds in test matrix
 # [github_issue 181] `doc_example22` (and `23`) are expected to fail, but do not on clang with release variant builds
 # [github_issue 194] `master_test_suite` declared twice
+# [github_issue 196] junit report: test error is also reported as failure
 # [github_issue 199] Runtime `type_mismatch` after upgrade to `1.69`
 # [github_issue 202] `boost/timer.hpp` is deprecated
 # [github_issue 203] Test cases with datasets and fixtures don't support flexible fixture interface
 # [github_issue 204] Feature Request: Allow specifying timeouts for test cases with datasests.
 
+# [pull_request 171] Correct library name in test runner help screen
 # [pull_request 172] Check for non-used variables when `NDEBUG` is defined
 # [pull_request 182] fix use of `bind1st` in `example 12`
 # [pull_request 183] remove superfluous semicolon in `example 04`
 # [pull_request 184] fix example to use the correct variable and avoid unused variable warning
+# [pull_request 185] Added CI framework
 # [pull_request 190] fix warning on gcc-7.3 in cygwin claiming `master_test_suite` is declared differently
 # [pull_request 195] Fix MinGW compilation problems
 # [pull_request 197] Feature Request: `BOOST_TEST_CONTEXT` that doesn't require introducing a new scope with braces
