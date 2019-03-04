@@ -29,6 +29,10 @@
 #include <boost/mpl/identity.hpp>
 #include <boost/type.hpp>
 #include <boost/type_traits/is_const.hpp>
+#include <boost/type_traits/is_volatile.hpp>
+#include <boost/type_traits/is_lvalue_reference.hpp>
+#include <boost/type_traits/is_rvalue_reference.hpp>
+#include <boost/type_traits/remove_reference.hpp>
 #include <boost/function/function0.hpp>
 
 #if defined(BOOST_NO_TYPEID) || defined(BOOST_NO_RTTI)
@@ -90,8 +94,16 @@ struct generate_test_case_4_type {
 #else
         full_name += BOOST_CURRENT_FUNCTION;
 #endif
-        if( boost::is_const<TestType>::value )
+        typedef typename boost::remove_reference<TestType>::type TestTypewoRef;
+        if( boost::is_const<TestTypewoRef>::value )
             full_name += "_const";
+        if( boost::is_volatile<TestTypewoRef>::value )
+            full_name += "_volatile";
+        if( boost::is_rvalue_reference<TestType>::value )
+            full_name += "_refref";
+        else if( boost::is_lvalue_reference<TestType>::value )
+            full_name += "_ref";
+
         full_name += '>';
 
         m_holder.m_test_cases.push_back( new test_case( ut_detail::normalize_test_case_name( full_name ),
