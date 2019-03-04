@@ -42,9 +42,9 @@
 #include <list>     // for std::list
 
 #if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
-    !defined(BOOST_NO_CXX11_HDR_TUPLE) && \
     !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
-  #include <tuple>
+  #include <type_traits>
+  #include <boost/mpl/is_sequence.hpp>
 #endif
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -129,7 +129,7 @@ public:
     mutable std::list<test_unit*> m_test_cases;
 };
 
-template<typename TestCaseTemplate,typename TestTypesList>
+template<typename TestCaseTemplate,typename TestTypesList, typename enabler = void>
 class template_test_case_gen : public template_test_case_gen_base {
 public:
     // Constructor
@@ -143,26 +143,22 @@ public:
 
 // Describing template test cases with tuples
 #if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
-    !defined(BOOST_NO_CXX11_HDR_TUPLE) && \
     !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && \
     !defined(BOOST_NO_CXX11_TEMPLATE_ALIASES)
 
-template<typename TestCaseTemplate, typename... tuple_parameter_pack>
-class template_test_case_gen<TestCaseTemplate, std::tuple<tuple_parameter_pack...> > : public template_test_case_gen_base {
+template<typename TestCaseTemplate,
+         template <class ...> class C,
+         typename... parameter_pack>
+class template_test_case_gen<
+    TestCaseTemplate,
+    C<parameter_pack...>,
+    typename std::enable_if<!boost::mpl::is_sequence<C<parameter_pack...>>::value>::type >
+  : public template_test_case_gen_base {
 
-    template<int... Is>
-    struct seq { };
-
-    template<int N, int... Is>
-    struct gen_seq : gen_seq<N - 1, N - 1, Is...> { };
-
-    template<int... Is>
-    struct gen_seq<0, Is...> : seq<Is...> { };
-
-    template<typename tuple_t, typename F, int... Is>
-    void for_each(F &f, seq<Is...>)
+    template<typename F>
+    void for_each(F &f)
     {
-        auto l = { (f(mpl::identity<typename std::tuple_element<Is, tuple_t>::type>()), 0)... };
+        auto l = { (f(mpl::identity<parameter_pack>()), 0)... };
         (void)l; // silence warning
     }
 
@@ -170,17 +166,19 @@ public:
     // Constructor
     template_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line )
     {
-        using tuple_t = std::tuple<tuple_parameter_pack...>;
-        using this_type = template_test_case_gen<TestCaseTemplate, tuple_t >;
+        using this_type = template_test_case_gen<
+            TestCaseTemplate,
+            C<parameter_pack...>,
+            typename std::enable_if<!boost::mpl::is_sequence<C<parameter_pack...>>::value>::type>;
         using single_test_gen = generate_test_case_4_type<this_type, TestCaseTemplate>;
 
         single_test_gen op( tc_name, tc_file, tc_line, *this );
 
-        this->for_each<tuple_t>(op, gen_seq<sizeof...(tuple_parameter_pack)>());
+        this->for_each(op);
     }
 };
 
-#endif /* C++11 variadic, tuples and type alias */
+#endif /* C++11 variadic, type alias */
 
 } // namespace ut_detail
 } // unit_test
