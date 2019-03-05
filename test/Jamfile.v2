@@ -189,6 +189,7 @@ test-suite "test-organization-ts"
   [ boost.test-self-test run : test-organization-ts : parameterized_test-test ]
   [ boost.test-self-test run : test-organization-ts : test_case_template-test ]
   [ boost.test-self-test run : test-organization-ts : test_case_template-with-tuples-test : : : : : : [ requires cxx11_hdr_tuple cxx11_auto_declarations cxx11_variadic_templates ] ]
+  [ boost.test-self-test run : test-organization-ts : test_case_template-with-variadic-typelist : : : : : : [ requires cxx11_hdr_tuple cxx11_auto_declarations cxx11_variadic_templates ] ]
   [ boost.test-self-test run : test-organization-ts : datasets-test : : : [ glob test-organization-ts/datasets-test/*.cpp ] : : : $(requirements_datasets) ]
   [ boost.test-self-test run : test-organization-ts : dataset-variadic_and_move_semantic-test : : : : : : $(requirements_datasets) ]
   [ boost.test-self-test run : test-organization-ts : test_unit-order-test ]

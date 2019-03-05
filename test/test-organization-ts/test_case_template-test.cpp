@@ -23,7 +23,10 @@ typedef boost::onullstream onullstream_type;
 // BOOST
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/list_c.hpp>
+#include <boost/mpl/vector.hpp>
 #include <boost/scoped_ptr.hpp>
+
+#include <boost/config.hpp>
 
 namespace ut = boost::unit_test;
 namespace mpl = boost::mpl;
@@ -159,5 +162,38 @@ BOOST_AUTO_TEST_CASE( test2_one_to_three )
 }
 
 //____________________________________________________________________________//
+
+// checks if volatile, const, ... are properly handled
+typedef boost::mpl::vector<int,int const, int volatile,int const volatile> test_types_ints_variations;
+BOOST_AUTO_TEST_CASE_TEMPLATE( tctempl2, T, test_types_ints_variations )
+{
+    BOOST_TEST( sizeof(T) == sizeof(int) );
+}
+
+// checks if references are properly handled
+typedef boost::mpl::vector<
+      int
+    , int&
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    , int&&
+#endif
+    , int const
+    , int const&
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    , int const&&
+#endif
+> test_types_ints_ref_variations;
+BOOST_AUTO_TEST_CASE_TEMPLATE( tctempl3, T, test_types_ints_ref_variations )
+{
+    BOOST_TEST( (sizeof(T) == sizeof(int&) || sizeof(T) == sizeof(int)) );
+}
+
+// checks if pointers are properly handled
+typedef boost::mpl::vector<int,int*,int const*, int const volatile*, int const*const, int*&> test_types_ints_pointer_variations;
+BOOST_AUTO_TEST_CASE_TEMPLATE( tctempl4, T, test_types_ints_pointer_variations )
+{
+    BOOST_TEST( (sizeof(T) == sizeof(int*) || sizeof(T) == sizeof(int)));
+}
+
 
 // EOF
