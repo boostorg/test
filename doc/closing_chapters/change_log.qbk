@@ -97,6 +97,7 @@ Boost.Test releases:
 # [github_issue 202] `boost/timer.hpp` is deprecated
 # [github_issue 203] Test cases with datasets and fixtures don't support flexible fixture interface
 # [github_issue 204] Feature Request: Allow specifying timeouts for test cases with datasests.
+# [github_issue 208] Incorrect handling of timed-tests on Windows
 
 # [pull_request 171] Correct library name in test runner help screen
 # [pull_request 172] Check for non-used variables when `NDEBUG` is defined

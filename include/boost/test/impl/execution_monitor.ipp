@@ -68,6 +68,11 @@ using std::va_list;
 #endif
 
 #ifdef BOOST_SEH_BASED_SIGNAL_HANDLING
+
+# if !defined(_WIN32_WINNT) // WinXP
+#   define _WIN32_WINNT  0x0501
+# endif
+
 #  include <windows.h>
 
 #  if defined(__MWERKS__) || (defined(_MSC_VER) && !defined(UNDER_CE))
@@ -101,7 +106,7 @@ using std::va_list;
 #    define BOOST_TEST_CRT_SET_HOOK(H)  (void*)(H)
 #  endif
 
-#  if defined(_MSC_VER) && (_WIN32_WINNT >= 0x0501) /* WinXP */
+#  if defined(_WIN32_WINNT) && (_WIN32_WINNT >= 0x0501) /* WinXP */
 #    define BOOST_TEST_WIN32_WAITABLE_TIMERS
 #  endif
 
