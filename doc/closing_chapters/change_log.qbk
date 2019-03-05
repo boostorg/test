@@ -92,6 +92,7 @@ Boost.Test releases:
 # [github_issue 181] `doc_example22` (and `23`) are expected to fail, but do not on clang with release variant builds
 # [github_issue 194] `master_test_suite` declared twice
 # [github_issue 196] junit report: test error is also reported as failure
+# [github_issue 198] Support `BOOST_UNIT_TEST_FRAMEWORK_DYN_LINK` et al
 # [github_issue 199] Runtime `type_mismatch` after upgrade to `1.69`
 # [github_issue 202] `boost/timer.hpp` is deprecated
 # [github_issue 203] Test cases with datasets and fixtures don't support flexible fixture interface

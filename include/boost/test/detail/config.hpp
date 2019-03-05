@@ -82,6 +82,14 @@ class type_info;
 #  define BOOST_TEST_DYN_LINK
 #endif
 
+// in case any of the define from cmake/b2 is set
+#if !defined(BOOST_TEST_DYN_LINK) \
+    && (defined(BOOST_UNIT_TEST_FRAMEWORK_DYN_LINK) \
+        || defined(BOOST_TEST_EXEC_MONITOR_DYN_LINK) \
+        || defined(BOOST_PRG_EXEC_MONITOR_DYN_LINK) )
+#  define BOOST_TEST_DYN_LINK
+#endif
+
 #if defined(BOOST_TEST_INCLUDED)
 #  undef BOOST_TEST_DYN_LINK
 #endif
