@@ -82,6 +82,8 @@ Boost.Test releases:
 
 # [github_issue 133] Timeout effect on Windows
 # [github_issue 138] expected_failures doesnt work for `BOOST_DATA_TEST_CASE`
+# [github_issue 141] Support for Boost.MP11 and Boost.Hana type lists
+# [github_issue 157] Test name should handle `const`-`volatile` specifiers
 # [github_issue 160] suppress `-Wformat-overflow` when optimization is enabled on GCC 8.2.0
 # [github_issue 174] `UBSAN` identified a problem at exit time by `gcc-8` only
 # [github_issue 176] `[snippet_dataset1_3]` seems to be broken
@@ -90,10 +92,12 @@ Boost.Test releases:
 # [github_issue 181] `doc_example22` (and `23`) are expected to fail, but do not on clang with release variant builds
 # [github_issue 194] `master_test_suite` declared twice
 # [github_issue 196] junit report: test error is also reported as failure
+# [github_issue 198] Support `BOOST_UNIT_TEST_FRAMEWORK_DYN_LINK` et al
 # [github_issue 199] Runtime `type_mismatch` after upgrade to `1.69`
 # [github_issue 202] `boost/timer.hpp` is deprecated
 # [github_issue 203] Test cases with datasets and fixtures don't support flexible fixture interface
 # [github_issue 204] Feature Request: Allow specifying timeouts for test cases with datasests.
+# [github_issue 208] Incorrect handling of timed-tests on Windows
 
 # [pull_request 171] Correct library name in test runner help screen
 # [pull_request 172] Check for non-used variables when `NDEBUG` is defined
@@ -109,6 +113,7 @@ Boost.Test releases:
 # [ticket 7397] Boost.Test, since boost `1.48` is using the deprecated `Boost.Timer` class (solved via [github_issue 202])
 # [ticket 9434] error: `namespace boost::timer {}` redeclared as different kind of symbol (solved via [github_issue 202])
 # [ticket 13106] `libs/test/tools/console_test_runner` does not compile
+# [ticket 13418] Request: allow general typelist types in `BOOST_AUTO_TEST_CASE_TEMPLATE()`
 
 
 [#ref_CHANGE_LOG_3_9][h4 Boost.Test v3.9 / boost 1.69]
