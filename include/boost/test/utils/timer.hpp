@@ -29,7 +29,7 @@
 # endif
 
 # if defined(BOOST_TEST_TIMER_WINDOWS_API)
-#   include <Windows.h>
+#   include <windows.h>
 # elif defined(BOOST_TEST_TIMER_MACH_API)
 #   include <mach/mach_time.h>
 //#   include <mach/mach.h>      /* host_get_clock_service, mach_... */
