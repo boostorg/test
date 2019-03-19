@@ -64,4 +64,8 @@ specified tests passed. (It assumes that the tests are registered in the specifi
 * test case `test4` has a precondition that either `test2` or `test3` passed. Since they both failed, the
   precondition is not satisfied, therefore `test4` is skipped.
 
+[note A __decorator_precondition__ that evaluates to `false` does not yield an error and does not fail the attached unit test. However
+ the __UTF__ returns an error if the test tree is empty (see [link boost_test.tests_organization.test_tree.test_tree_content this section]
+ for more details). ]
+
 [endsect]

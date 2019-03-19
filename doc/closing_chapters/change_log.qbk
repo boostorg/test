@@ -160,7 +160,7 @@ Boost.Test releases:
   As the datasets are monomorphic, those should be castable to the first element type.
 
 [h5 Breaking changes]
-* the [link boost_test.tests_organization.test_suite.master_test_suite `master_test_suite_t`] is not copyable anymore.
+* the [link boost_test.tests_organization.test_tree.master_test_suite `master_test_suite_t`] is not copyable anymore.
 * As datasets can now be delayed, it might be that additional copies of the dataset arguments are performed.
   This is especially the case for datasets created out of an `std::initializer_list`.
 
