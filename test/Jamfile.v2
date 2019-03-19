@@ -406,6 +406,37 @@ alias "smoke-ts"
 [ run smoke-ts-included-3 : -c no --run_test=case2 -t some_suite : : : cla-runtest-repeated-mixed-long-no-fail3 ]
 [ run-fail smoke-ts-included-3 : --result_code=1 --run_test=case2 -t some_suite : : : cla-runtest-repeated-mixed-long-fail3 ]
 [ run smoke-ts-included-3 : --result_code=0 --run_test=case2 -t some_suite : : : cla-runtest-repeated-mixed-long-fail4 ]
+;
+
+exe custom-command-line-binary-1 : ../doc/examples/runtime-configuration_1.run-fail.cpp ;
+exe custom-command-line-binary-2 : ../doc/examples/runtime-configuration_2.run-fail.cpp
+                                 : $(requirements_boost_test_full_support) ;
+exe custom-command-line-binary-3 : ../doc/examples/runtime-configuration_3.run-fail.cpp
+                                 : $(requirements_boost_test_full_support) ;
+exe custom-command-line-binary-4 : ../doc/examples/runtime-configuration_4.run-fail.cpp
+                                 : $(requirements_datasets) ;
+
+alias "custom-command-line-ts"
+:
+# custom command line interface tests
+[ run custom-command-line-binary-1 : -- --specific-param \"'additional value with quotes'\" : : : cla-specific-api1-test-1-1 ]
+[ run custom-command-line-binary-1 : --log_level=all --no_color -- --specific-param \"'additional value with quotes'\" : : : cla-specific-api1-test-1-2 ]
+
+[ run-fail custom-command-line-binary-2 : -- --random-string \"mock_device\" : : $(requirements_boost_test_full_support) : cla-specific-api1-test-2-0 ]
+[ run custom-command-line-binary-2 : -- --device-name \"mock_device\" : : $(requirements_boost_test_full_support) : cla-specific-api1-test-2-1 ]
+[ run custom-command-line-binary-2 : --log_level=all --no_color -- --device-name \"mock_device\" : : $(requirements_boost_test_full_support) : cla-specific-api1-test-2-2 ]
+
+[ run-fail custom-command-line-binary-3 : -- : : $(requirements_boost_test_full_support) : cla-specific-api1-test-3-0 ]
+[ run-fail custom-command-line-binary-3 : -- --create-parametrized : : $(requirements_boost_test_full_support) : cla-specific-api1-test-3-1 ]
+[ run-fail custom-command-line-binary-3 : -- --create-parametrized 3 : : $(requirements_boost_test_full_support) : cla-specific-api1-test-3-2 ]
+[ run custom-command-line-binary-3 : -- --create-parametrized 3 2 : : $(requirements_boost_test_full_support) : cla-specific-api1-test-3-3 ]
+
+[ run-fail custom-command-line-binary-4 : -- : : $(requirements_datasets) : cla-specific-api1-test-4-0 ]
+[ run-fail custom-command-line-binary-4 : -- --test-file : : $(requirements_datasets) : cla-specific-api1-test-4-1 ]
+[ run-fail custom-command-line-binary-4 : -- --test-file ../doc/examples/runtime-configuration_4-test-fail.txt : : $(requirements_datasets) : cla-specific-api1-test-4-2 ]
+[ run-fail custom-command-line-binary-4 : --log_level=all --no_color -- --test-file ../doc/examples/runtime-configuration_4-test-fail.txt : : $(requirements_datasets) : cla-specific-api1-test-4-3 ]
+[ run custom-command-line-binary-4 : -- --test-file ../doc/examples/runtime-configuration_4-test.txt : : $(requirements_datasets) : cla-specific-api1-test-4-4 ]
+[ run custom-command-line-binary-4 : --log_level=all --no_color -- --test-file ../doc/examples/runtime-configuration_4-test.txt : : $(requirements_datasets) : cla-specific-api1-test-4-5 ]
 
 ;
 
@@ -424,7 +455,7 @@ alias test
   prg_exec_monitor-ts
   execution_monitor-ts
   doc-examples-ts
-  # boost_test_examples
+  custom-command-line-ts
 ;
 
 #_________________________________________________________________________________________________#

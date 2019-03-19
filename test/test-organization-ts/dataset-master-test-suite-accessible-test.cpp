@@ -18,7 +18,6 @@
 class dataset_loader
 {
 public:
-    typedef std::string sample;
     enum { arity = 1 };
   
     // this constructor access the master test suite
@@ -154,7 +153,6 @@ public:
     data_type m_expected;
     data_type m_input;
   
-    typedef std::string sample;
     enum { arity = 3 };
 
 public:

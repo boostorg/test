@@ -129,12 +129,14 @@ add_custom_target(
 set_property(TARGET quickbook PROPERTY FOLDER "Documentation/")
 
 
+
 ####
 # Unit tests
 
 # documentation tests
 file(GLOB_RECURSE
      BOOST_UTF_DOC_EXAMPLES
+     CONFIGURE_DEPENDS
      ${BOOST_TEST_ROOT_DIR}/doc/examples/*.cpp)
 
 foreach(_h IN LISTS BOOST_UTF_DOC_EXAMPLES)
@@ -161,6 +163,7 @@ set(BOOST_TEST_EXAMPLES_FOLDER ${BOOST_TEST_ROOT_DIR}/example)
 # datasets
 file(GLOB
      BOOST_TEST_UNITTESTS_DATASET
+     CONFIGURE_DEPENDS
      ${BOOST_TEST_UNITTESTS_FOLDER}/test-organization-ts/datasets-test/*.cpp
      ${BOOST_TEST_UNITTESTS_FOLDER}/test-organization-ts/datasets-test/*.hpp)
 add_executable(boost_test_datasets ${BOOST_TEST_UNITTESTS_DATASET})
