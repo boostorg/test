@@ -41,8 +41,6 @@ namespace monomorphic {
 template<typename T>
 class init_list {
 public:
-    typedef T sample;
-
     enum { arity = 1 };
 
     typedef typename std::vector<T>::const_iterator iterator;

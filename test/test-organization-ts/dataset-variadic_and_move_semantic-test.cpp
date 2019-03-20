@@ -82,8 +82,6 @@ int non_copyable_type::nb_destructs = 0;
 template <class return_t = int>
 class fibonacci_dataset {
 public:
-    // Samples type is int
-    using sample=return_t;
     enum { arity = 1 };
 
     struct iterator {

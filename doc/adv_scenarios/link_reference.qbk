@@ -44,6 +44,20 @@ An example may be found [link ref_BOOST_TEST_MODULE here].
 [/-----------------------------------------------------------------]
 [section:link_boost_test_alternative_init_macro `BOOST_TEST_ALTERNATIVE_INIT_API`]
 
+[warning This macro should be defined before any include directive to the __UTF__ headers and is 
+mutually exclusive with the __BOOST_TEST_MODULE__ macro.]
+
+In case of custom initialization of the test module entry point, this macro indicates the __UTF__ to 
+use the new API. The differences between the new and old APIs are described in [link
+boost_test.adv_scenarios.obsolete_init_func this section]. 
+
+The way to customize the entry point of the test-module depends on the variant of the __UTF__ in use.
+Several sections in the documentation are devoted to this:
+
+* [link boost_test.adv_scenarios.single_header_customizations.entry_point this section] for single header variant,
+* [link boost_test.adv_scenarios.static_lib_customizations.init_func this section] for static link variant,
+* [link boost_test.adv_scenarios.shared_lib_customizations.init_func this section] for shared link variant
+
 [endsect]
 
 [/-----------------------------------------------------------------]
