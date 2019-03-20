@@ -85,16 +85,8 @@ public:
     //! - an unexpected exception is caught by the Boost.Test framework
     virtual void    test_unit_aborted( test_unit const& ) {}
 
-    virtual void    assertion_result( unit_test::assertion_result ar )
+    virtual void    assertion_result( unit_test::assertion_result /* ar */ )
     {
-        /*
-        switch( ar ) {
-        case AR_PASSED: assertion_result( true ); break;
-        case AR_FAILED: assertion_result( false ); break;
-        case AR_TRIGGERED: break;
-        default: break;
-        }
-        */
     }
 
     //! Called when an exception is intercepted
