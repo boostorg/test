@@ -99,6 +99,7 @@ Boost.Test releases:
 # [github_issue 203] Test cases with datasets and fixtures don't support flexible fixture interface
 # [github_issue 204] Feature Request: Allow specifying timeouts for test cases with datasests.
 # [github_issue 208] Incorrect handling of timed-tests on Windows
+# [github_issue 211] `windows.h` should be lower case
 
 # [pull_request 171] Correct library name in test runner help screen
 # [pull_request 172] Check for non-used variables when `NDEBUG` is defined
