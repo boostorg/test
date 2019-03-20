@@ -47,6 +47,11 @@ addons:
       - gdb
       - libc6-dbg
 
+branches:
+  only:
+    - develop
+    - master
+
 script:
   - cd $BOOST_ROOT/libs/$SELF
   - ci/travis/build.sh
@@ -171,6 +176,7 @@ jobs:
       env:
         - COMMENT="Coverity Scan"
         - TOOLSET=gcc-7
+        - CXXSTD=11
       addons: *gcc-7
       script:
         - cd $BOOST_ROOT/libs/$SELF
