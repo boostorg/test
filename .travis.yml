@@ -171,6 +171,7 @@ jobs:
       env:
         - COMMENT="Coverity Scan"
         - TOOLSET=gcc-7
+        - CXXSTD=11
       addons: *gcc-7
       script:
         - cd $BOOST_ROOT/libs/$SELF
