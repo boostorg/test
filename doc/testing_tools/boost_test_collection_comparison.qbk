@@ -181,20 +181,26 @@ through the macro `BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE` that might be used
 [#what_is_a_collection][h3 What is a sequence?]
 A /sequence/ is given by the iteration over a /forward iterable/ container. A forward iterable container is:
 
-* either a C-array, where the underlying type is neither `char` or `wchar_t`
-* or a `class`/`struct` that implements the member functions `begin` and `end` and for which `value_type` is neither
-  `char` or `wchar_t`
+* either a C-array,
+* or a `class`/`struct` that implements the member functions `begin` and `end`.
 
-When the stored type `char` or `wchar_t`, then the container is considered as a string and is dispatched on
-[link boost_test.testing_tools.extended_comparison.strings string comparison] instead.
+For collection comparisons, both sequences are also required to be different than `string` sequences. In that case, the sequences are 
+dispatched to string [link boost_test.testing_tools.extended_comparison.strings comparison instead]. 
 
-[note Since [link ref_CHANGE_LOG_3_6 Boost.Test 3.6] (Boost 1.65) the requirements for the collection concepts have been relaxed to include C-arrays as well]
-[note Since [link ref_CHANGE_LOG_3_7 Boost.Test 3.7] (Boost 1.67) the definition of `const_iterator` in the container type is not required anymore (for 
- the compilers properly supporting `decltype`). ]
+[warning `string` (or `wstring`) meets the sequence concept by definition, but their handling with __BOOST_TEST__ is done differently.
+ See [link boost_test.testing_tools.extended_comparison.strings Strings and C-strings comparison] for more details.]
+
+[tip If the behaviour of __BOOST_TEST__ is not the one you expect, you can always use raw comparison. See [link boost_test_statement_limitations this section]
+ for details.]
+
+[note Since [link ref_CHANGE_LOG_3_6 Boost.Test 3.6] (Boost 1.65) the requirements for the collection concepts have been relaxed to 
+ include C-arrays as well]
+[note Since [link ref_CHANGE_LOG_3_7 Boost.Test 3.7] (Boost 1.67) the definition of `const_iterator` and `value_type` in the collection 
+ type is not required anymore (for the compilers properly supporting `decltype`). ]
 
 The detection of the types that meet these requirements containers is delegated to the class [classref boost::unit_test::is_forward_iterable],
-which for C++11 detects the required member functions and fields. However for C++03, the types providing the sequences should be explicitly indicated
-to the __UTF__ by a specialization of [classref boost::unit_test::is_forward_iterable]
+which for C++11 detects the required member functions and fields. However for C++03, the types providing the sequences should be explicitly 
+indicated to the __UTF__ by a specialization of [classref boost::unit_test::is_forward_iterable]
 [footnote Standard containers of the `STL` are recognized as /forward iterable/ container.].
 
 [endsect] [/ sequences]
