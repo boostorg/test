@@ -122,8 +122,8 @@ The size of the tuple will be by definition the *arity* of the sample itself.
 A *dataset* is a /collection of samples/, that
 
 * is forward iterable,
-* can be queried for its `size`, which in turn can be infinite,
-* has an arity, which is the arity of the samples it contains.
+* can be queried for its `size` which in turn can be infinite,
+* has an arity which is the arity of the samples it contains.
 
 Hence the dataset implements the notion of /sequence/.
 
@@ -134,16 +134,18 @@ The descriptive power of the datasets in __UTF__ comes from
 * their interface with other type of collections (`stl` containers, `C` arrays)
 * the available built-in [link boost_test.tests_organization.test_cases.test_case_generation.generators /dataset generators/]
 
-[tip Only "monomorphic" datasets are supported, which means that all samples in a dataset have the same type and same arity
+[tip Only "monomorphic" datasets are supported, which means that all samples within a single dataset have the same type and same arity
  [footnote polymorphic datasets will be considered in the future. Their need is mainly driven by the replacement of the
  [link boost_test.tests_organization.test_cases.test_organization_templates typed parametrized test cases] by the dataset-like API.]
- .
+ . However, dataset of different sample types may be combined together with zip and cartesian product.
  ]
 
 As we will see in the next sections, datasets representing collections of different types may be combined together (e.g.. /zip/ or /grid/).
 These operations result in new datasets, in which the samples are of an augmented type.
 
-[h4 Dataset interface]
+[/ ######################################################################  ]
+
+[section Dataset interface]
 The interface of the /dataset/ should implement the two following functions/fields:
 
 * `iterator begin()` where /iterator/ is a forward iterator,
@@ -151,12 +153,47 @@ The interface of the /dataset/ should implement the two following functions/fiel
   class [classref boost::unit_test::data::size_t size_t] that can indicate an /infinite/ dataset size.
 * an enum called `arity` indicating the arity of the samples returned by the dataset
 
-Once a dataset class `D` is declared, it should be registered to the framework by specializing the class ``boost::unit_test::data::monomorphic::is_dataset``
+Once a dataset class `D` is declared, it should be registered to the framework by specializing the template class
+``boost::unit_test::data::monomorphic::is_dataset``
 with the condition that ``boost::unit_test::data::monomorphic::is_dataset<D>::value`` evaluates to `true`.
 
 The following example implements a custom dataset generating a Fibonacci sequence.
 
 [bt_example dataset_example68..Example of custom dataset..run-fail]
+
+[endsect]
+
+[/ ######################################################################  ]
+
+[section Dataset creation and delayed creation]
+Datasets as defined above are constructed before even the test module starts its execution as global objects. This makes impossible to access,
+from within the dataset generator and during their iteration, elements like `argc` / `argv`, the
+[link boost_test.tests_organization.test_tree.master_test_suite master test suite] (and the preprocessed `argc` / `argv`), or any other object
+that has been instanciated after the `main` of the test module entry.
+
+To overcome this, a [*delayed] dataset instanciation interface has been introduced. This effectively wraps the dataset inside another one,
+which [*lazyly] instanciates the dataset.
+
+To instanciate a delayed dataset, the [funcref boost::unit_test::data::monomorphic::make_delayed] function should be used in the 
+__BOOST_DATA_TEST_CASE__ call. The following snippet:
+
+```
+BOOST_DATA_TEST_CASE(dataset_test_case,
+    boost::unit_test::data::make_delayed<custom_dataset>(arg1, ... ), ...)
+{
+}
+```
+
+creates a delayed dataset test case with a generator of type `custom_dataset`. The generator is ['lazily] constructed
+with `arg1`, `...`.
+
+[tip A detailed example of delayed creation is given in the section about [link boost_test.runtime_config.custom_command_line_arguments custom command line]
+ arguments.]
+
+[tip See the class [classref boost::unit_test::data::monomorphic::delayed_dataset `monomorphic::delayed_dataset`] for more details on the
+ wrapping object.]
+
+[endsect]
 
 [endsect] [/ datasets]
 
@@ -219,19 +256,22 @@ More precisely, what
 does is the following:
 
 * it registers a *test suite* named "`test_case_name`",
-* it registers as many test cases as they are in "`dataset`", each of which with the name corresponding to the index of the sample in the database prefixed by `_` and
-  starting at index `0` ("`_0`", "`_1`", ... "`_(N-1)`" where `N` is the size of the dataset)
+* it registers as many test cases as they are in "`dataset`", each of which with the name corresponding to the index of the sample
+  in the database prefixed by `_` and starting at index `0` ("`_0`", "`_1`", ... "`_(N-1)`" where `N` is the size of the dataset)
 
 This make it easy to:
 
-* identify which sample is failing (say "`test_case_name/_3`")
-* allows a replay of one or several samples (or the full dataset) from the command line using the [link boost_test.runtime_config.test_unit_filtering test filtering facility] provided by the __UTF__
+* identify which sample is failing (say "`test_case_name/_3`"),
+* replay the test for one or several samples (or the full dataset) from the command line using the [link boost_test.runtime_config.test_unit_filtering test filtering features] provided by the __UTF__,
+* apply a [link boost_test.tests_organization.decorators.explicit_decorator_declaration decorator] to each individual test cases of the
+  dataset, as the decorator would apply to the test suite.
 
-Exactly as regular test cases, each test case (associated to a specific sample) is executed within the test body in a /guarded manner/:
+Exactly as regular test cases, each test case (associated to a specific sample) is executed in /monitored manner/:
 
-* the test execution are independent: if an error occurs for one sample, the remaining samples execution is not affected
-* in case of error, the [link boost_test.test_output.test_tools_support_for_logging.contexts context] within which the error occurred is reported in the [link boost_test.test_output log] along with
-  the failing sample index. This context contains the sample for which the test failed, which would ease the debugging.
+* the test execution are independent: if an error occurs for one sample, the remaining samples execution is not affected,
+* in case of error, the [link boost_test.test_output.test_tools_support_for_logging.contexts context] along with the index of the sample
+  within which the error occurred is reported in the [link boost_test.test_output log].
+  This context contains the sample names and values for which the test failed, which would ease the debugging.
 
 [endsect]
 

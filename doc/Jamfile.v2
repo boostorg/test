@@ -55,6 +55,7 @@ doxygen doxygen_reference_generated_doc
       $(BOOST_ROOT)/libs/test/include/boost/test/data/test_case.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/for_each_sample.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/size.hpp
+      $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/delayed.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/initializer_list.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/array.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/data/monomorphic/collection.hpp

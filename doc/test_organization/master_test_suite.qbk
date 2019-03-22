@@ -5,7 +5,7 @@
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
-[section:master_test_suite Master Test Suite]
+[section:master_test_suite Master test suite]
 
 As defined in introduction section the master test suite is the *root* node of the test tree. Each test module built
 with the __UTF__ always has the (unique) master test suite defined. The __UTF__ maintain the master test suite instance

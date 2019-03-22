@@ -100,6 +100,8 @@ struct is_dataset< delayed_dataset<dataset_t, Args...> > : boost::mpl::true_ {};
 
 } // namespace monomorphic
 
+
+//! Delayed dataset instanciation
 template<class dataset_t, class ...Args>
 inline typename std::enable_if<
   monomorphic::is_dataset< dataset_t >::value,
