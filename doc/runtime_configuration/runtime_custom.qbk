@@ -36,7 +36,7 @@ arguments, different set of tests are created. There are mainly two options for 
 The error handling of the command line parameters needs however to be adapted.
 
 [#ref_consuming_cmd_test_case][h4 Consuming custom arguments from a test case]
-The [link boost_test.tests_organization.test_suite.master_test_suite master test suite] collects the custom arguments
+The [link boost_test.tests_organization.test_tree.master_test_suite master test suite] collects the custom arguments
 passed to the test module in the following way:
 
 * `argv[0]`, usually set by the operating system as the executable name, remains unchanged
@@ -110,7 +110,7 @@ to indicate a delay for the evaluation of the dataset by constructing the datase
 
 With the `make_delayed`, the construction of the dataset will happen at the same time as the construction of the 
 test tree during the test module initialization, and not before. It is this way possible to access the 
-[link boost_test.tests_organization.test_suite.master_test_suite master test suite] and its command line arguments.
+[link boost_test.tests_organization.test_tree.master_test_suite master test suite] and its command line arguments.
 
 The example below shows a complex dataset generation from the content of an external file. The data contained
 in the file participates to the definition of the test case.
@@ -135,7 +135,7 @@ Some additional notes:
 
 * an exception occuring in a global fixture or the initialization function will be caught by the framework and will abort 
   the test module
-* a global fixture is attached to the [link boost_test.tests_organization.test_suite.master_test_suite master test suite], and 
+* a global fixture is attached to the [link boost_test.tests_organization.test_tree.master_test_suite master test suite], and 
   any failure there will be reported by the loggers properly. 
 * A global fixture cannot manipulate the test tree, while the data-driven tests or custom initialization functions can.
 

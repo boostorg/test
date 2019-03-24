@@ -172,7 +172,7 @@ This macro is deprecated in favor of __BOOST_TEST_GLOBAL_FIXTURE__ and __BOOST_T
 [/-----------------------------------------------------------------]
 [section:test_org_boost_test_global_fixture `BOOST_TEST_GLOBAL_FIXTURE`]
 Declares and registers a global fixture. The global fixture acts exactly as a suite fixture attached to the
-[link boost_test.tests_organization.test_suite.master_test_suite master test suite],
+[link boost_test.tests_organization.test_tree.master_test_suite master test suite],
 and is called before any of the test case in the test tree is executed.
 
 The class implementing the fixture should have the appropriate [link boost_test.tests_organization.fixtures.models interface].

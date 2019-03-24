@@ -7,7 +7,7 @@
 
 [section:decorators Decorators]
 
-Decorator is a uniform mechanism for updating various attributes of the automatically registered test units. These
+"Decorator" is a uniform mechanism for updating various attributes of the automatically registered test units. These
 attributes affect how the test tree is processed during the execution of the test module and include test unit
 description, floating-point tolerance and the number of expected failures among others. They are listed in detail in
 the following sections.

@@ -259,7 +259,7 @@ Any global initialization that needs to be performed before any test begins, or 
 performed after all tests are finished is called a /global fixture/. A global fixture is equivalent to a
 [link boost_test.tests_organization.fixtures.per_test_suite_fixture test-suite
 entry/exit] fixture (executed once), where in this case the test-suite is the
-[link boost_test.tests_organization.test_suite.master_test_suite master test suite].
+[link boost_test.tests_organization.test_tree.master_test_suite master test suite].
 
 The __UTF__ global fixture design is based on the
 [link boost_test.tests_organization.fixtures.models generic test class fixture model]. The global

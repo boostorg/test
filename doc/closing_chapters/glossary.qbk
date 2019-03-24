@@ -24,6 +24,7 @@ The test runner part is optional. If a test module is built as
 an executable, the test runner is built-in. If a test module is built as a dynamic library, it is run by an
 [link boost_test.adv_scenarios.external_test_runner external test runner].
 
+[warning The test module should have at least one test-case defined, otherwise it is considered as an error.]
 
 [#test_body][h3 Test body]
 This is the part of a test module that actually performs the test.
