@@ -1171,7 +1171,7 @@ execution_monitor::catch_signals( boost::function<int ()> const& F )
 
         if( htimer != INVALID_HANDLE_VALUE ) {
             LARGE_INTEGER liDueTime;
-            liDueTime.QuadPart = - static_cast<signed int>(p_timeout) * 10; // resolution of 100 ns
+            liDueTime.QuadPart = - static_cast<signed long int>(p_timeout) * 10; // resolution of 100 ns
 
             bTimerSuccess = ::SetWaitableTimer(
                 htimer,
