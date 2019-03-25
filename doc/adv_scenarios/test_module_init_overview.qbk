@@ -13,7 +13,7 @@ function]. the module's initialization function is called only once during the e
 a default definition of initialization function. The only thing you have to do is to instruct the framework in which translation 
 unit (`cpp` file) it needs to provide the definition. You do it by defining macro __BOOST_TEST_MODULE__ in the designated file. 
 The default implementation assigns the name to the [link ref_test_module test module] as well as the 
-[link boost_test.tests_organization.test_suite.master_test_suite master test suite]. The name to be assigned is specified by 
+[link boost_test.tests_organization.test_tree.master_test_suite master test suite]. The name to be assigned is specified by 
 the value of the macro __BOOST_TEST_MODULE__.
 
 [important
@@ -25,7 +25,7 @@ There is practically no need to ever alter the default behavior of the test modu
 
 * for automatic registration of test cases and test suites in the test tree, see section [link boost_test.tests_organization Tests organization];
 * in order to assign the custom name to the master test suite define macro __BOOST_TEST_MODULE__ to desired value;
-* in order to access the command-line parameters (except the ones consumed by the __UTF__), use the interface of the [link boost_test.tests_organization.test_suite.master_test_suite master test suite];
+* in order to access the command-line parameters (except the ones consumed by the __UTF__), use the interface of the [link boost_test.tests_organization.test_tree.master_test_suite master test suite];
 * in order to perform a global initialization of the state required by the test cases, [link boost_test.tests_organization.fixtures.global global fixtures] offer a superior alternative: you can specify global set-up and tear-down in one place, allow access to the global data from every test case, and guarantee that clean-up and tear-down is repeated each time the tests are re-run during the execution of the program;
 * if the need for custom module initialization is only driven by legacy code (written against old versions of the __UTF__), it is recommended to update your program's code.
 

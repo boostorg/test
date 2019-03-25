@@ -17,7 +17,7 @@ namespace bdata = boost::unit_test::data;
 // Dataset generating a Fibonacci sequence
 class fibonacci_dataset {
 public:
-    // Samples type is int
+    // the type of the samples is deduced
     enum { arity = 1 };
 
     struct iterator {
@@ -50,7 +50,7 @@ namespace boost { namespace unit_test { namespace data { namespace monomorphic {
   struct is_dataset<fibonacci_dataset> : boost::mpl::true_ {};
 }}}}
 
-// Creating a test-driven dataset
+// Creating a test-driven dataset, the zip is for checking
 BOOST_DATA_TEST_CASE(
     test1,
     fibonacci_dataset() ^ bdata::make( { 1, 2, 3, 5, 8, 13, 21, 35, 56 } ),

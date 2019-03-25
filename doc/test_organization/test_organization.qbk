@@ -31,10 +31,12 @@ These units are the *test cases*, the *test suites* and the *fixtures*.
   ]
   [
     [Organization]
-    [The __UTF__ provides facilities to group several test cases into [link boost_test.tests_organization.test_suite test suites].
-    The test suites can be nested, and the set of test suites and test cases defines the /test tree/, where the leaves are the test cases.
-    Besides hierarchical structure the __UTF__ allows you to organize the test tree using /logical grouping/ and /dependencies/
-    and provides you with controls to utilize the defined test tree organization the way you want.
+    [The __UTF__ provides facilities to group several test cases into [link boost_test.tests_organization.test_tree.test_suite test suites].
+    The test suites can be nested, and the set of test suites and test cases defines the [link boost_test.tests_organization.test_tree test tree], 
+    where the leaves are the test cases.
+    Besides hierarchical structure the __UTF__ allows you to organize the test tree using [link boost_test.tests_organization.tests_grouping logical grouping] 
+    and [link boost_test.tests_organization.tests_dependencies dependencies]
+    and provides you with controls to utilize the defined test tree organization the way you want (eg. from command line).
     ]
   ]
   [
@@ -53,8 +55,7 @@ These units are the *test cases*, the *test suites* and the *fixtures*.
 ]
 
 [include test_cases.qbk]
-[include test_suites.qbk]
-[include test_naming.qbk]
+[include test_tree.qbk]
 [include decorators.qbk]
 [include fixtures.qbk]
 [include managing_tests_dependencies.qbk]
@@ -62,7 +63,6 @@ These units are the *test cases*, the *test suites* and the *fixtures*.
 [include test_enabling_disabling.qbk]
 [include semantic.qbk]
 [include testorg_summary.qbk]
-
 
 [endsect] [/ test organization]
 
