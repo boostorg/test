@@ -78,6 +78,7 @@ class type_info;
 
 //____________________________________________________________________________//
 
+// Sun compiler does not support visibility on enums
 #if defined(__SUNPRO_CC)
 #define BOOST_TEST_ENUM_SYMBOL_VISIBLE
 #else
