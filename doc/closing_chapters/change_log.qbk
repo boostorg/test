@@ -24,7 +24,7 @@ Boost.Test releases:
 [#ref_CHANGE_LOG_3_10][h4 Boost.Test v3.10 / boost 1.70]
 
 [h5 New features]
-* new documentation section about [link boost_test.runtime_config.custom_command_line_arguments custom command line] 
+* new documentation section about [link boost_test.runtime_config.custom_command_line_arguments custom command line]
   arguments
 * [link boost_test.tests_organization.test_cases.test_case_generation.datasets.dataset_interface Custom datasets]
   are not required to declare a inner type `sample` anymore
@@ -100,7 +100,8 @@ Boost.Test releases:
 # [github_issue 204] Feature Request: Allow specifying timeouts for test cases with datasests.
 # [github_issue 208] Incorrect handling of timed-tests on Windows
 # [github_issue 211] `windows.h` should be lower case
-# [github_issue 212] Comment `ar` parameter of `assertion_result` to avoid warning 
+# [github_issue 212] Comment `ar` parameter of `assertion_result` to avoid warning
+# [github_issue 213] `BOOST_SYMBOL_VISIBLE` cannot be used for `enums` with Sun Studio
 
 # [pull_request 171] Correct library name in test runner help screen
 # [pull_request 172] Check for non-used variables when `NDEBUG` is defined
@@ -112,6 +113,7 @@ Boost.Test releases:
 # [pull_request 195] Fix MinGW compilation problems
 # [pull_request 197] Feature Request: `BOOST_TEST_CONTEXT` that doesn't require introducing a new scope with braces
 # [pull_request 205] Fix MinGW `vsnprintf` compile errors and warnings
+# [pull_request 214] Fixes an issue with sun_cc lacking the __global attribute for enums
 
 # [ticket 7397] Boost.Test, since boost `1.48` is using the deprecated `Boost.Timer` class (solved via [github_issue 202])
 # [ticket 9434] error: `namespace boost::timer {}` redeclared as different kind of symbol (solved via [github_issue 202])
