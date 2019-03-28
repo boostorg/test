@@ -39,7 +39,7 @@ namespace unit_test {
 // ************************************************************************** //
 
 template<typename CharT>
-class basic_cstring {
+class BOOST_SYMBOL_VISIBLE basic_cstring {
     typedef basic_cstring<CharT>                        self_type;
 public:
     // Subtypes
@@ -163,7 +163,13 @@ private:
     // Data members
     iterator        m_begin;
     iterator        m_end;
+    static CharT null;
 };
+
+//____________________________________________________________________________//
+
+template<typename CharT>
+CharT basic_cstring<CharT>::null = 0;
 
 //____________________________________________________________________________//
 
@@ -171,7 +177,6 @@ template<typename CharT>
 inline typename basic_cstring<CharT>::pointer
 basic_cstring<CharT>::null_str()
 {
-    static CharT null = 0;
     return &null;
 }
 

@@ -22,7 +22,7 @@ namespace unit_test {
 // ************************************************************************** //
 
 //  each log level includes all subsequent higher loging levels
-enum BOOST_SYMBOL_VISIBLE log_level {
+enum BOOST_TEST_ENUM_SYMBOL_VISIBLE log_level {
     invalid_log_level        = -1,
     log_successful_tests     = 0,
     log_test_units           = 1,

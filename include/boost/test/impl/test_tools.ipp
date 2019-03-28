@@ -60,6 +60,13 @@ namespace std { using ::wcscmp; }
 #endif
 # endif
 
+
+namespace boost {
+namespace unit_test {
+  // local static variable, needed here for visibility reasons
+  lazy_ostream lazy_ostream::inst = lazy_ostream();
+}}
+
 namespace boost {
 namespace test_tools {
 namespace tt_detail {
