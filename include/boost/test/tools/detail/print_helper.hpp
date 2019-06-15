@@ -35,6 +35,13 @@
 #include <cstddef>
 #endif
 
+#if !defined(BOOST_NO_CXX11_SMART_PTR)
+#include <memory>
+#if !defined(BOOST_NO_TYPEID) && !defined(BOOST_NO_RTTI)
+#  include <boost/core/demangle.hpp>
+#endif
+#endif
+
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
@@ -182,6 +189,20 @@ struct print_log_value<std::nullptr_t> {
 };
 #endif
 
+#if !defined(BOOST_NO_CXX11_SMART_PTR)
+template<class T>
+struct print_log_value<std::unique_ptr<T>> {
+    void    operator()( std::ostream& ostr, std::unique_ptr<T> const& t) {
+
+#if !defined(BOOST_NO_TYPEID) && !defined(BOOST_NO_RTTI)
+        ostr << "std::unique_ptr<" << boost::core::demangle(typeid(T).name()) << ">";
+#else
+        ostr << "std::unique_ptr<T>";
+#endif
+    }
+};
+#endif
+
 //____________________________________________________________________________//
 
 // ************************************************************************** //
@@ -240,7 +261,7 @@ operator<<( std::ostream& ostr, print_helper_t<T> const& ph )
 #define BOOST_TEST_DONT_PRINT_LOG_VALUE( the_type )         \
 namespace boost{ namespace test_tools{ namespace tt_detail{ \
 template<>                                                  \
-struct print_log_value<the_type > {                         \
+struct print_log_value< the_type >  {                       \
     void    operator()( std::ostream&, the_type const& ) {} \
 };                                                          \
 }}}                                                         \
