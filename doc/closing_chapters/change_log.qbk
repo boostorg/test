@@ -9,6 +9,7 @@
 
 Boost.Test releases:
 
+* [link ref_CHANGE_LOG_3_11 Boost.Test v3.11 / boost 1.71]
 * [link ref_CHANGE_LOG_3_10 Boost.Test v3.10 / boost 1.70]
 * [link ref_CHANGE_LOG_3_9 Boost.Test v3.9 / boost 1.69]
 * [link ref_CHANGE_LOG_3_8 Boost.Test v3.8 / boost 1.68]
@@ -20,6 +21,13 @@ Boost.Test releases:
 * [link ref_CHANGE_LOG_3_2 Boost.Test v3.2 / boost 1.61]
 * [link ref_CHANGE_LOG_3_1 Boost.Test v3.1 / boost 1.60]
 * [link ref_CHANGE_LOG_3_0 Boost.Test v3 / boost 1.59]
+
+[#ref_CHANGE_LOG_3_11][h4 Boost.Test v3.11 / boost 1.71]
+
+[h5 Bugfixes and feature requests]
+
+* Fixing a small bug on named timers (Windows only). The bug is visible when
+  several test modules are executed in parallel on the same machine.
 
 [#ref_CHANGE_LOG_3_10][h4 Boost.Test v3.10 / boost 1.70]
 
