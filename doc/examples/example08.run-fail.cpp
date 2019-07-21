@@ -8,7 +8,7 @@
 //[example_code
 #define BOOST_TEST_ALTERNATIVE_INIT_API
 #include <boost/test/included/unit_test.hpp>
-#include <boost/test/floating_point_comparison.hpp>
+#include <boost/test/tools/floating_point_comparison.hpp>
 #include <boost/test/parameterized_test.hpp>
 #include <boost/bind.hpp>
 using namespace boost::unit_test;
