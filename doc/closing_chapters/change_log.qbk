@@ -24,6 +24,9 @@ Boost.Test releases:
 
 [#ref_CHANGE_LOG_3_11][h4 Boost.Test v3.11 / boost 1.71]
 
+[h5 New features]
+* Now `BOOST_TEST` can be used to compare abstract types
+
 [h5 Breaking changes]
 
 * Marking more headers as deprecated: this might break some compilations
@@ -34,13 +37,15 @@ Boost.Test releases:
 # Fixing a small bug on named timers (Windows only). The bug is visible when
   several test modules are executed in parallel on the same machine.
 
+# [github_issue 209] `BOOST_TEST_CHECK` can't compare abstract classes using gcc
+
 # [pull_request 219] Commented out unused argument name (`stack_decorator::apply`)
 # [pull_request 224] Add `BOOST_HEADER_DEPRECATED` to deprecated headers
 
 [#ref_CHANGE_LOG_3_10][h4 Boost.Test v3.10 / boost 1.70]
 
 [h5 New features]
-* new documentation section about [link boost_test.runtime_config.custom_command_line_arguments custom command line]
+* New documentation section about [link boost_test.runtime_config.custom_command_line_arguments custom command line]
   arguments
 * [link boost_test.tests_organization.test_cases.test_case_generation.datasets.dataset_interface Custom datasets]
   are not required to declare a inner type `sample` anymore
