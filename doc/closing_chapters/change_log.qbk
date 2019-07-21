@@ -26,8 +26,11 @@ Boost.Test releases:
 
 [h5 Bugfixes and feature requests]
 
-* Fixing a small bug on named timers (Windows only). The bug is visible when
+# Fixing a small bug on named timers (Windows only). The bug is visible when
   several test modules are executed in parallel on the same machine.
+
+# [pull_request 219] Commented out unused argument name (`stack_decorator::apply`)
+
 
 [#ref_CHANGE_LOG_3_10][h4 Boost.Test v3.10 / boost 1.70]
 
