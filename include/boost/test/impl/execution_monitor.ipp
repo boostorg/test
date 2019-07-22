@@ -242,7 +242,7 @@ extract( boost::exception const* ex )
 //____________________________________________________________________________//
 
 static void
-#ifdef __GNUC__
+#if __GNUC__ >= 3
 __attribute__((__format__ (__printf__, 3, 0)))
 #endif
 report_error( execution_exception::error_code ec, boost::exception const* be, char const* format, va_list* args )
@@ -263,7 +263,7 @@ report_error( execution_exception::error_code ec, boost::exception const* be, ch
 //____________________________________________________________________________//
 
 static void
-#ifdef __GNUC__
+#if __GNUC__ >= 3
 __attribute__((__format__ (__printf__, 3, 4)))
 #endif
 report_error( execution_exception::error_code ec, boost::exception const* be, char const* format, ... )
@@ -279,7 +279,7 @@ report_error( execution_exception::error_code ec, boost::exception const* be, ch
 //____________________________________________________________________________//
 
 static void
-#ifdef __GNUC__
+#if __GNUC__ >= 3
 __attribute__((__format__ (__printf__, 2, 3)))
 #endif
 report_error( execution_exception::error_code ec, char const* format, ... )
