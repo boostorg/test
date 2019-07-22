@@ -34,6 +34,8 @@ Boost.Test releases:
 # Fixing a small bug on named timers (Windows only). The bug is visible when
   several test modules are executed in parallel on the same machine.
 
+# [github_issue 218] Default file name (for logger output files)
+
 # [pull_request 219] Commented out unused argument name (`stack_decorator::apply`)
 # [pull_request 224] Add `BOOST_HEADER_DEPRECATED` to deprecated headers
 
