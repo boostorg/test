@@ -9,6 +9,7 @@
 
 Boost.Test releases:
 
+* [link ref_CHANGE_LOG_3_11 Boost.Test v3.11 / boost 1.71]
 * [link ref_CHANGE_LOG_3_10 Boost.Test v3.10 / boost 1.70]
 * [link ref_CHANGE_LOG_3_9 Boost.Test v3.9 / boost 1.69]
 * [link ref_CHANGE_LOG_3_8 Boost.Test v3.8 / boost 1.68]
@@ -20,6 +21,21 @@ Boost.Test releases:
 * [link ref_CHANGE_LOG_3_2 Boost.Test v3.2 / boost 1.61]
 * [link ref_CHANGE_LOG_3_1 Boost.Test v3.1 / boost 1.60]
 * [link ref_CHANGE_LOG_3_0 Boost.Test v3 / boost 1.59]
+
+[#ref_CHANGE_LOG_3_11][h4 Boost.Test v3.11 / boost 1.71]
+
+[h5 Breaking changes]
+
+* Marking more headers as deprecated: this might break some compilations
+  depending on the warning policies.
+
+[h5 Bugfixes and feature requests]
+
+# Fixing a small bug on named timers (Windows only). The bug is visible when
+  several test modules are executed in parallel on the same machine.
+
+# [pull_request 219] Commented out unused argument name (`stack_decorator::apply`)
+# [pull_request 224] Add `BOOST_HEADER_DEPRECATED` to deprecated headers
 
 [#ref_CHANGE_LOG_3_10][h4 Boost.Test v3.10 / boost 1.70]
 
@@ -50,7 +66,6 @@ Boost.Test releases:
   for more information.
 
 [h5 Breaking changes]
-
 * Boost.Test `minimal.hpp` is now showing a deprecation warning. `minimal.hpp` has been
   deprecated for a long time already, and will be removed in the near future. Please
   switch to eg. the header only variable of Boost.Test. Tests using `minimal.hpp` can
@@ -129,8 +144,6 @@ Boost.Test releases:
   and [link boost_test.usage_variants here]).
 * It is now possible to manually add a test case by specifying its name, with __BOOST_TEST_CASE_NAME__
 * Better logging of messages in `boost::exception`
-
-[h5 Breaking changes]
 
 [h5 Bugfixes and feature requests]
 
