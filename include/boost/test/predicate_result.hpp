@@ -11,7 +11,8 @@
 // ***************************************************************************
 
 #include <boost/config/header_deprecated.hpp>
-BOOST_HEADER_DEPRECATED( "<boost/test/tools/assertion_result.hpp>" )
+BOOST_HEADER_DEPRECATED( "This header is deprecated. Please use <boost/test/tools/assertion_result.hpp> instead." )
+
 
 // Boost.Test
 #include <boost/test/tools/assertion_result.hpp>
