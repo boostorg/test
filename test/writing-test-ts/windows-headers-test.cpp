@@ -16,7 +16,7 @@
 #endif
 
 #include <boost/test/unit_test.hpp>
-#include <boost/test/floating_point_comparison.hpp> // Extra test tool for FP comparison.
+#include <boost/test/tools/floating_point_comparison.hpp> // Extra test tool for FP comparison.
 
 BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES( test, 2 )
 

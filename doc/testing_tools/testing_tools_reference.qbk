@@ -263,8 +263,9 @@ The first parameter is the ['left] compared value. The second parameter is the
       resolve any type mismatch to select which type to use for comparison.
 ]
 
-[note Note that to use these tools you need to include additional header `floating_point_comparison.hpp`.
-]
+[note The floating point comparison tools are automatically added if the __UTF__
+  is included as indicated in the previous sections. The tools are implemented is in the header
+  [headerref boost/test/tools/floating_point_comparison.hpp `boost/test/tools/floating_point_comparison.hpp`].]
 
 [bt_example example42..BOOST_<level>_CLOSE usage with small values..run-fail]
 [bt_example example43..BOOST_<level>_CLOSE usage with big values..run]
@@ -299,7 +300,10 @@ The first parameter is the ['left] compared value. The second parameter is the
 [note It is required for left and right parameters to be of the same floating point type. You will need to explicitly
       resolve any type mismatch to select which type to use for comparison.]
 
-[note Note that to use these tools you need to include additional header `floating_point_comparison.hpp`.]
+[note The floating point comparison tools are automatically added if the __UTF__
+  is included as indicated in the previous sections. The tools are implemented is in the header
+  [headerref boost/test/tools/floating_point_comparison.hpp `boost/test/tools/floating_point_comparison.hpp`].]
+
 
 [bt_example example44..BOOST_<level>_CLOSE_FRACTION usage..run-fail]
 
@@ -587,7 +591,9 @@ it's preferable to use __BOOST_LEVEL_CLOSE__ tools instead.
 
 The first parameter is the value to check. The second parameter is the tolerance.
 
-[note Note that to use these tools you need to include additional header `floating_point_comparison.hpp`.]
+[note The floating point comparison tools are automatically added if the __UTF__
+  is included as indicated in the previous sections. The tools are implemented is in the header
+  [headerref boost/test/tools/floating_point_comparison.hpp `boost/test/tools/floating_point_comparison.hpp`].]
 
 [bt_example example41..BOOST_<level>_SMALL usage..run-fail]
 

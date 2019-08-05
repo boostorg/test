@@ -22,7 +22,7 @@
 #include <iostream>
 #include <boost/multiprecision/cpp_dec_float.hpp>
 
-#include <boost/test/floating_point_comparison.hpp> // Extra test tool for FP comparison.
+#include <boost/test/tools/floating_point_comparison.hpp> // Extra test tool for FP comparison.
 #include <boost/test/unit_test.hpp>
 
 
