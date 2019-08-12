@@ -24,7 +24,10 @@ namespace boost {
 namespace benchmark {
 namespace sampling {
 
-// !! Add validations to all methods to avoid misuse
+/*! Sampling policy taking a single sample of the run
+ *
+ * @todo Add validations to all methods to avoid misuse
+ */
 template<typename SamplingUnits = chrono::nanoseconds>
 class single_sample {
 public:

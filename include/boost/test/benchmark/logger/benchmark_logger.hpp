@@ -1,4 +1,4 @@
-//  (C) Copyright Raffi Enficiaud 2018.
+//  (C) Copyright Raffi Enficiaud 2019.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -6,14 +6,14 @@
 //  See http://www.boost.org/libs/test for the library home page.
 //
 //! @file
-//! @brief Contains the logger abstraction for storing results
+//! @brief Contains the benchmark logger interface
 // ***************************************************************************
 
-#ifndef BOOST_TEST_BENCHMARK_LOGGER_HRF_HPP__
-#define BOOST_TEST_BENCHMARK_LOGGER_HRF_HPP__
+#ifndef BOOST_TEST_BENCHMARK_LOGGER_HPP__
+#define BOOST_TEST_BENCHMARK_LOGGER_HPP__
 
-// Boost.Test Benchmark
-#include <boost/test/benchmark/logger/benchmark_logger.hpp>
+#include <boost/test/benchmark/config.hpp>
+#include <boost/test/benchmark/result.hpp>
 
 namespace boost {
 namespace benchmark {
@@ -36,21 +36,17 @@ struct benchmark_logger {
     //! Outputs the logs to the selected stream
     virtual void produce_logs(std::ostream& ost) const = 0;
 
-protected:
-    e_time_units t_unit;
-    result baseline;
-};
+    virtual void start_benchmark() = 0;
+    virtual void stop_benchmark() = 0;
 
-struct hrf_logger : public benchmark_logger {
+    virtual void enter_benchmark_scope(std::string const &scope_name) = 0;
+    virtual void exit_benchmark_scope() = 0;
 
-
-    virtual void produce_logs(std::ostream& ost) const {
-
-
-    }
+    virtual void add_result(result const& measurements);
+    virtual void add_comparative_result(result const& measurements, result const& baseline);
 
 };
 
-}}} // namespace boost::benchmark::logger
+}}}
 
-#endif /* BOOST_TEST_BENCHMARK_LOGGER_HPP__ */
+#endif /* benchmark_logger_h */
