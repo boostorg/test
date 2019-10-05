@@ -460,6 +460,35 @@ void const_conversion()
 
 //____________________________________________________________________________//
 
+#if defined(BOOST_TEST_STRING_VIEW)
+BOOST_TEST_CASE_TEMPLATE_FUNCTION( string_view_support, CharT )
+{
+  using namespace std::literals;
+  typedef std::basic_string_view<CharT> string_view_t;
+  namespace utf = boost::unit_test;
+
+  {
+    string_view_t sv = LITERAL("");
+
+    utf::stringview_cstring_helper<CharT, string_view_t> svh = sv;
+    BOOST_TEST( svh.size() == 0U );
+    BOOST_TEST( svh.is_empty() );
+  }
+
+
+  {
+    string_view_t sv = LITERAL("bla");
+
+    utf::stringview_cstring_helper<CharT, string_view_t> svh = sv;
+    BOOST_TEST( svh.size() == 3U );
+    BOOST_TEST( !svh.is_empty() );
+  }
+}
+#endif
+
+
+//____________________________________________________________________________//
+
 utf::test_suite*
 init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 {
@@ -479,6 +508,10 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
     test->add( BOOST_TEST_CASE_TEMPLATE( io_test, io_test_types ) );
     test->add( BOOST_TEST_CASE_TEMPLATE( find_test, char_types ) );
     test->add( BOOST_TEST_CASE( &const_conversion ) );
+  
+#if defined(BOOST_TEST_STRING_VIEW)
+    test->add( BOOST_TEST_CASE_TEMPLATE( string_view_support, char_types ) );
+#endif
 
     return test;
 }
