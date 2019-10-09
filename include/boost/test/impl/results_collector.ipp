@@ -105,7 +105,7 @@ test_results::operator+=( test_results const& tr )
     p_test_cases_aborted.value  += tr.p_test_cases_aborted;
     p_test_cases_timed_out.value += tr.p_test_cases_timed_out;
     p_test_suites_timed_out.value += tr.p_test_suites_timed_out;
-    p_duration_microseconds.value += tr.p_duration_microseconds;
+    // p_duration_microseconds.value += tr.p_duration_microseconds; // duration already counted in the test framework. 
 }
 
 //____________________________________________________________________________//
