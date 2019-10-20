@@ -197,4 +197,19 @@ BOOST_DATA_TEST_CASE_F( SharedFixtureSetupTeardown, test_case_interface_setup_te
     BOOST_TEST( m_expected == (1+sample)*(1+sample));
 }
 
+//____________________________________________________________________________//
+// GH-217
+
+#ifndef BOOST_TEST_ERRONEOUS_INIT_LIST
+
+const bool ExpectedValues[] = { false, true, true, true, false, false};
+BOOST_DATA_TEST_CASE(BoostDataTest
+  , boost::unit_test::data::make({ false, true, true, true, false, false }) ^
+    boost::unit_test::data::make(ExpectedValues)
+  , value, expectedValue)
+{
+  BOOST_TEST(value == expectedValue);
+}
+#endif
+
 // EOF
