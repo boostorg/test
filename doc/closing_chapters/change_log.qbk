@@ -9,6 +9,7 @@
 
 Boost.Test releases:
 
+* [link ref_CHANGE_LOG_3_12 Boost.Test v3.12 / boost 1.72]
 * [link ref_CHANGE_LOG_3_11 Boost.Test v3.11 / boost 1.71]
 * [link ref_CHANGE_LOG_3_10 Boost.Test v3.10 / boost 1.70]
 * [link ref_CHANGE_LOG_3_9 Boost.Test v3.9 / boost 1.69]
@@ -21,6 +22,20 @@ Boost.Test releases:
 * [link ref_CHANGE_LOG_3_2 Boost.Test v3.2 / boost 1.61]
 * [link ref_CHANGE_LOG_3_1 Boost.Test v3.1 / boost 1.60]
 * [link ref_CHANGE_LOG_3_0 Boost.Test v3 / boost 1.59]
+
+[#ref_CHANGE_LOG_3_12][h4 Boost.Test v3.12 / boost 1.72]
+
+[h5 New features]
+
+[h5 Breaking changes]
+
+[h5 Bugfixes and feature requests]
+
+# [github_issue 217] Data test cases fail with `bool` initializer list
+# [github_issue 229] Random shuffle deprecated
+
+# [pull_request 227] Add `printf` format checking attribute to `report_error`
+# [pull_request 231] OpenBSD is missing `SI_ASYNCIO` and `SI_MESGQ`
 
 [#ref_CHANGE_LOG_3_11][h4 Boost.Test v3.11 / boost 1.71]
 
