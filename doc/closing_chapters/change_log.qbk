@@ -32,6 +32,7 @@ Boost.Test releases:
 [h5 Bugfixes and feature requests]
 
 # [github_issue 217] Data test cases fail with `bool` initializer list
+# [github_issue 223] Unable to filter test by name (`-t`, `--run_test`) if template type contains multiple parameters
 # [github_issue 229] Random shuffle deprecated
 
 # [pull_request 227] Add `printf` format checking attribute to `report_error`
