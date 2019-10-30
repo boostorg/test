@@ -46,9 +46,6 @@ int BOOST_TEST_DECL unit_test_main( init_unit_test_func init_func, int argc, cha
 
 }
 
-// !! ?? to remove
-namespace unit_test_framework=unit_test;
-
 }
 
 #if defined(BOOST_TEST_DYN_LINK) && defined(BOOST_TEST_MAIN) && !defined(BOOST_TEST_NO_MAIN)
