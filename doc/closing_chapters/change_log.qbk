@@ -27,7 +27,7 @@ Boost.Test releases:
 
 [h5 New features]
 
-[h5 Breaking changes]
+* Support for C++17 `std::string_view` has been added.
 
 [h5 Bugfixes and feature requests]
 

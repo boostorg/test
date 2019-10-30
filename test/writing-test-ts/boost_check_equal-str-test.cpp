@@ -29,6 +29,14 @@ BOOST_AUTO_TEST_CASE( check_is_cstring_concept )
   BOOST_TEST((!bp::is_cstring< std::vector<char> >::value));
 }
 
+#if defined(BOOST_TEST_STRING_VIEW)
+BOOST_AUTO_TEST_CASE( check_is_cstring_concept_string_view )
+{
+  namespace bp = boost::unit_test;
+  BOOST_TEST((!bp::is_cstring< std::string_view >::value));
+}
+#endif
+
 BOOST_AUTO_TEST_CASE( check_is_cstring_comparable_concept )
 {
   namespace bp = boost::unit_test;
@@ -41,6 +49,14 @@ BOOST_AUTO_TEST_CASE( check_is_cstring_comparable_concept )
 
   BOOST_TEST((!bp::is_cstring_comparable< std::vector<char> >::value));
 }
+
+#if defined(BOOST_TEST_STRING_VIEW)
+BOOST_AUTO_TEST_CASE( check_is_cstring_comparable_concept_string_view )
+{
+  namespace bp = boost::unit_test;
+  BOOST_TEST((bp::is_cstring_comparable< std::string_view >::value));
+}
+#endif
 
 //____________________________________________________________________________//
 
@@ -128,5 +144,71 @@ BOOST_AUTO_TEST_CASE( check_string_compare )
 #endif
 
 }
+
+#if defined(BOOST_TEST_STRING_VIEW)
+BOOST_AUTO_TEST_CASE( check_string_view_compare )
+{
+    namespace bp = boost::unit_test;
+    using namespace std::literals;
+
+    std::string str = "str";
+    std::string_view sv = "sv";
+
+    BOOST_TEST((!bp::is_cstring< decltype(sv) >::value));
+
+    BOOST_TEST_CHECK(str == str);
+    BOOST_TEST_CHECK(sv == sv);
+    BOOST_TEST_CHECK(str != sv);
+    BOOST_TEST_CHECK(sv != str);
+
+    //  comparisons based on size
+    BOOST_TEST_CHECK(str >= sv);
+    BOOST_TEST_CHECK(sv <= str);
+    BOOST_TEST_CHECK(str > sv);
+    BOOST_TEST_CHECK(sv < str);
+  
+    BOOST_TEST_CHECK(str <= sv, boost::test_tools::lexicographic());
+    BOOST_TEST_CHECK(sv >= str, boost::test_tools::lexicographic());
+    BOOST_TEST_CHECK(str < sv, boost::test_tools::lexicographic());
+    BOOST_TEST_CHECK(sv > str, boost::test_tools::lexicographic());
+  
+    std::string_view s1 = "this_is_string_view"sv;
+    BOOST_TEST(s1 == s1);
+    BOOST_TEST(s1 <= s1);
+    BOOST_TEST(s1 >= s1);
+    BOOST_TEST(s1 == "this_is_string_view"s);
+  
+    BOOST_TEST(s1 <= "this_is_string_view2"sv);
+  
+    // lexicographic compare
+    BOOST_TEST_CHECK("str" <= sv, boost::test_tools::lexicographic());
+    BOOST_TEST_CHECK(sv >= "str", boost::test_tools::lexicographic());
+    BOOST_TEST_CHECK("str" < sv, boost::test_tools::lexicographic());
+    BOOST_TEST_CHECK(sv > "str", boost::test_tools::lexicographic());
+
+    BOOST_TEST_CHECK("str"sv <= sv, boost::test_tools::lexicographic());
+    BOOST_TEST_CHECK(sv >= "str"sv, boost::test_tools::lexicographic());
+    BOOST_TEST_CHECK("str"sv < sv, boost::test_tools::lexicographic());
+    BOOST_TEST_CHECK(sv > "str"sv, boost::test_tools::lexicographic());
+
+    // per element, left-right operand
+    BOOST_TEST( "sv" <= sv , boost::test_tools::per_element() );
+    BOOST_TEST( "sv" >= sv , boost::test_tools::per_element() );
+    BOOST_TEST( "sv" == sv , boost::test_tools::per_element() );
+
+    BOOST_TEST( sv <= "sv" , boost::test_tools::per_element() );
+    BOOST_TEST( sv >= "sv" , boost::test_tools::per_element() );
+    BOOST_TEST( sv == "sv" , boost::test_tools::per_element() );
+
+    BOOST_TEST( "rv" <= sv , boost::test_tools::per_element() );
+    BOOST_TEST( "tv" >= sv , boost::test_tools::per_element() );
+    BOOST_TEST( "tw" != sv , boost::test_tools::per_element() );
+
+    BOOST_TEST( sv <= "tv" , boost::test_tools::per_element() );
+    BOOST_TEST( sv >= "rv" , boost::test_tools::per_element() );
+    BOOST_TEST( sv != "ru" , boost::test_tools::per_element() );
+
+}
+#endif
 
 // EOF
