@@ -1,14 +1,14 @@
 [/
- / Copyright (c) 2003 Boost.Test contributors 
+ / Copyright (c) 2003 Boost.Test contributors
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
- 
+
 [section:test_organization_templates Template test cases]
 
 In order to test a template based component, it is frequently necessary to perform the same set of checks for a
-component instantiated with different template parameters. 
+component instantiated with different template parameters.
 
 One way to perform the same set of checks for a component instantiated with different template parameters would be:
 
@@ -34,7 +34,7 @@ There several problems/inconveniences with above approach, including:
 * You need two functions to implement the test
 
 The __UTF__ provides a facility, the *template test case*, to create a series of
-test cases based on a list of desired types and /nullary/ function. This facility comes with an 
+test cases based on a list of desired types and /nullary/ function. This facility comes with an
 [link ref_BOOST_AUTO_TEST_CASE_TEMPLATE automatic] and
 [link ref_BOOST_TEST_CASE_TEMPLATE manual] registration interface.
 
@@ -57,9 +57,14 @@ The arguments are as follow:
 # `test_case_name`: the test case template name: unique test cases template identifier
 # `formal_type_parameter_name`: the name of a formal template parameter:
          name of the type the test case template is instantiated with
-# `collection_of_types`: the collection of types to instantiate test case template with. 
+# `collection_of_types`: the collection of types to instantiate test case template with.
   This is an *arbitrary MPL sequence* or a sequence of types wrapped in a `std::tuple`
-  (since [link ref_CHANGE_LOG_3_7 __UTF__ v3.7], if supported by the compiler) 
+  (since [link ref_CHANGE_LOG_3_7 __UTF__ v3.7], if supported by the compiler)
+
+The resulting name of the test is a composition of the `test_case_name` parameter and the current
+type being tested. Since [link ref_CHANGE_LOG_3_12 __UTF__ v3.12], the framework tries to unify
+the name of the resulting type across various platforms such that they are easier to reference
+from the [link boost_test.runtime_config.test_unit_filtering command line filter].
 
 [bt_example example10..Test case template with automated registration..run-fail]
 
@@ -75,7 +80,7 @@ The arguments are as follow:
   ``
   #include <boost/utility/identity_type.hpp>
 
-  BOOST_AUTO_TEST_CASE_TEMPLATE( 
+  BOOST_AUTO_TEST_CASE_TEMPLATE(
     my_test,
     T,
     BOOST_IDENTITY_TYPE((boost::mpl::list<
@@ -95,9 +100,9 @@ To manually register template test cases, two macros should be used:
 * __BOOST_TEST_CASE_TEMPLATE_FUNCTION__ to define the template test case body
 * __BOOST_TEST_CASE_TEMPLATE__ to register the test case based on the previous declaration
 
-The macro __BOOST_TEST_CASE_TEMPLATE_FUNCTION__ requires two arguments: 
+The macro __BOOST_TEST_CASE_TEMPLATE_FUNCTION__ requires two arguments:
 
-# the name of the test case template and 
+# the name of the test case template and
 # the name of the format type parameter
 
 ``
@@ -125,10 +130,10 @@ void test_case_name()
 The only difference is that the __BOOST_TEST_CASE_TEMPLATE_FUNCTION__ makes the test case template name usable in
 the template argument list.
 
-__BOOST_TEST_CASE_TEMPLATE__ requires two arguments: 
+__BOOST_TEST_CASE_TEMPLATE__ requires two arguments:
 
-# the name of the test case template and 
-# Boost.MPL compatible collection of types to instantiate it with. 
+# the name of the test case template and
+# Boost.MPL compatible collection of types to instantiate it with.
 
 The names passed to both macros should be the same.
 
@@ -144,7 +149,7 @@ the supplied collection of types and registers it immediately in the test suite.
 case template body instantiated with a particular test type.
 
 The names for the ['sub test cases] are deduced from the macro argument `test_case_name`. If you prefer to assign
-different test case names, you need to use the underlying [headerref boost/test/tree/test_unit.hpp `make_test_case`] interface instead. 
+different test case names, you need to use the underlying [headerref boost/test/tree/test_unit.hpp `make_test_case`] interface instead.
 Both test cases creation and registration is performed in the test module initialization function.
 
 [warning Since [link ref_CHANGE_LOG_3_7 __UTF__ v3.7], the __UTF__ does not allow for duplicate test case name

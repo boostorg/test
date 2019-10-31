@@ -87,7 +87,7 @@ Given two types `T` and `U` being compared inside an assertion __BOOST_TEST__, t
 
 In all cases, the type of the tolerance is deduced as `boost::common_type<T, U>::type`, and both type may be cast to this tolerance type.
 
-[note This behaviour has been introduced in Boost 1.70 / __UTF__ [link ref_CHANGE_LOG_3_10 3.10]. Previously tolerance based comparison was used only when the type of the two
+[note This behavior has been introduced in Boost 1.70 / __UTF__ [link ref_CHANGE_LOG_3_10 3.10]. Previously tolerance based comparison was used only when the type of the two
  operands were tolerance based types, which was silently ignoring the tolerance for expressions such as
 
  ``
@@ -265,7 +265,7 @@ defines a ['close enough with tolerance `epsilon`] relationship between `u` and 
 Both relationships are commutative but are not transitive. The relationship defined in
 [link equ2 (2)] is stronger that the relationship defined in [link equ3 (3)] since [link equ2 (2)] necessarily implies [link equ3 (3)].
 
-The multiplication in the right side of inequations may cause an unwanted underflow condition. To prevent this,
+The multiplication in the right side of inequalities may cause an unwanted underflow condition. To prevent this,
 the implementation is using modified version of [link equ2 (2)] and [link equ3 (3)], which scales the checked difference rather than `epsilon`:
 
 [#equ4]

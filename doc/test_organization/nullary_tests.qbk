@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003 Boost.Test contributors 
+ / Copyright (c) 2003 Boost.Test contributors
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -7,20 +7,20 @@
 
 [section:test_organization_nullary Test cases without parameters]
 
-The most common scenario is that you want to write test case without any parameters. The __UTF__ provides you with both 
+The most common scenario is that you want to write test case without any parameters. The __UTF__ provides you with both
 automatic and manual registration APIs to declare such test case.
 
 [#ref_BOOST_AUTO_TEST_CASE][h4 Automated registration]
 
 To declare a test case without parameters, which is registered in place of implementation, employ the
 macro __BOOST_AUTO_TEST_CASE__.
- 
+
 ``
   __BOOST_AUTO_TEST_CASE__(test_case_name);
 ``
 
-This API is designed to closely mimic nullary free function declaration syntax. 
-In comparison with free function all you need to do is to skip result type and brackets and wrap test 
+This API is designed to closely mimic nullary free function declaration syntax.
+In comparison with free function all you need to do is to skip result type and brackets and wrap test
 case name into BOOST_AUTO_TEST_CASE:
 
 [bt_example example06..Nullary function based test case with automated registration..run]
@@ -40,13 +40,13 @@ instances). To do this, employ the macro __BOOST_TEST_CASE__:
 
 __BOOST_TEST_CASE__ creates an instance of the class [classref boost::unit_test::test_case] and returns a pointer to the
 constructed instance. The test case name is deduced from the macro argument test_function. If you prefer to
-assign a different test case name, you have either to 
+assign a different test case name, you have either to
 
 * use the macro __BOOST_TEST_CASE_NAME__ instead
 * or use the underlying [headerref boost/test/tree/test_unit.hpp `make_test_case`] interface instead.
 
-To register a new test case, employ the method [memberref boost::unit_test::test_suite::add `test_suite::add`]. 
-Both test case creation and registration are performed in the 
+To register a new test case, employ the method [memberref boost::unit_test::test_suite::add `test_suite::add`].
+Both test case creation and registration are performed in the
 [link boost_test.adv_scenarios.test_module_init_overview test module initialization function].
 
 Here is the simplest example of manually registered test case. A single test case is created and registered inside

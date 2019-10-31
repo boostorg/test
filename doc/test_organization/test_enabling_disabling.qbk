@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003 Boost.Test contributors 
+ / Copyright (c) 2003 Boost.Test contributors
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,7 +17,7 @@ filtering] section covers this feature in details.
 
 [warning There is a difference between a disabled test and a skipped test:
 
-  * a disabled test has a run status set to disabled, and is completely discarded by the __UTF__. 
+  * a disabled test has a run status set to disabled, and is completely discarded by the __UTF__.
   * a skipped test is a test that has a run status set to enabled, but which execution has been skipped at runtime.
 ]
 
@@ -29,7 +29,7 @@ be run by default, unless otherwise specified.
 
 [bt_example decorator_05..decorators enabled and disabled..run-fail]
 
-Syntactically, it is possible to apply both decorators `enabled` and `disabled` to the same test unit. This is reported 
+Syntactically, it is possible to apply both decorators `enabled` and `disabled` to the same test unit. This is reported
 as set-up error when the test program is run.
 
 [h3 Compilation-time run status]
@@ -41,8 +41,8 @@ default.
 
 [bt_example decorator_06..decorator enable_if..run-fail]
 
-Decorator `enable_if<true>()` is equivalent to decorator `enabled()`. Similarly, `enable_if<false>()` is equivalent to 
-decorator `disabled()`. 
+Decorator `enable_if<true>()` is equivalent to decorator `enabled()`. Similarly, `enable_if<false>()` is equivalent to
+decorator `disabled()`.
 
 [/-----------------------------------------------------------------]
 [h3 Runtime run status]
@@ -57,9 +57,9 @@ unit is skipped. Skipping a test suite means skipping the execution of every tes
 [bt_example decorator_08..decorator precondition..run-fail]
 
 In the example above, the user defined a custom predicate `if_either` that evaluates to `true` if at least one of the two
-specified tests passed. (It assumes that the tests are registered in the specific order.) 
+specified tests passed. (It assumes that the tests are registered in the specific order.)
 
-* Test case `test3` has a precondition that at either `test1` or `test2` passed. The precondition is satisfied, 
+* Test case `test3` has a precondition that at either `test1` or `test2` passed. The precondition is satisfied,
   therefore `test3` is run (and fails),
 * test case `test4` has a precondition that either `test2` or `test3` passed. Since they both failed, the
   precondition is not satisfied, therefore `test4` is skipped.

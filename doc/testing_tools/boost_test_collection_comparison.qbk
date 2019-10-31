@@ -45,10 +45,10 @@ More details about the concept of /collection/ in the __UTF__ is given [link wha
 [#ref_boost_test_coll_default_comp][h3 Default comparison]
 The default comparison dispatches to the existing overloaded comparison operator. The __UTF__ distinguishes two use cases
 
-# none of the comparison operand is a C-Array, in which case we use the [link ref_boost_test_coll_default_comp_container container default behaviour]
-# one of the comparison operand is a C-array, in which case we [link ref_boost_test_coll_c_arrays mimic `std::vector`] behaviour
+# none of the comparison operand is a C-Array, in which case we use the [link ref_boost_test_coll_default_comp_container container default behavior]
+# one of the comparison operand is a C-array, in which case we [link ref_boost_test_coll_c_arrays mimic `std::vector`] behavior
 
-[#ref_boost_test_coll_default_comp_container][h4 Container default behaviour]
+[#ref_boost_test_coll_default_comp_container][h4 Container default behavior]
 Given two containers `c_a` and `c_b` that are not C-arrays,
 
 ``
@@ -70,9 +70,9 @@ compile if the corresponding lines were uncommented (`std::vector` uses lexicogr
 
 [bt_example boost_test_container_default..BOOST_TEST containers comparison default..run-fail]
 
-[#ref_boost_test_coll_c_arrays][h4 C-arrays default behaviour]
-As soon as one of the operands is a C-array, there is no /default behaviour/ the __UTF__ can dispatch to.
-This is why in that case, the comparison mimics the `std::vector` behaviour.
+[#ref_boost_test_coll_c_arrays][h4 C-arrays default behavior]
+As soon as one of the operands is a C-array, there is no /default behavior/ the __UTF__ can dispatch to.
+This is why in that case, the comparison mimics the `std::vector` behavior.
 
 [bt_example boost_test_macro_container_c_array..BOOST_TEST C-arrays..run-fail]
 
@@ -184,22 +184,22 @@ A /sequence/ is given by the iteration over a /forward iterable/ container. A fo
 * either a C-array,
 * or a `class`/`struct` that implements the member functions `begin` and `end`.
 
-For collection comparisons, both sequences are also required to be different than `string` sequences. In that case, the sequences are 
-dispatched to string [link boost_test.testing_tools.extended_comparison.strings comparison instead]. 
+For collection comparisons, both sequences are also required to be different than `string` sequences. In that case, the sequences are
+dispatched to string [link boost_test.testing_tools.extended_comparison.strings comparison instead].
 
 [warning `string` (or `wstring`) meets the sequence concept by definition, but their handling with __BOOST_TEST__ is done differently.
  See [link boost_test.testing_tools.extended_comparison.strings Strings and C-strings comparison] for more details.]
 
-[tip If the behaviour of __BOOST_TEST__ is not the one you expect, you can always use raw comparison. See [link boost_test_statement_limitations this section]
+[tip If the behavior of __BOOST_TEST__ is not the one you expect, you can always use raw comparison. See [link boost_test_statement_limitations this section]
  for details.]
 
-[note Since [link ref_CHANGE_LOG_3_6 Boost.Test 3.6] (Boost 1.65) the requirements for the collection concepts have been relaxed to 
+[note Since [link ref_CHANGE_LOG_3_6 Boost.Test 3.6] (Boost 1.65) the requirements for the collection concepts have been relaxed to
  include C-arrays as well]
-[note Since [link ref_CHANGE_LOG_3_7 Boost.Test 3.7] (Boost 1.67) the definition of `const_iterator` and `value_type` in the collection 
+[note Since [link ref_CHANGE_LOG_3_7 Boost.Test 3.7] (Boost 1.67) the definition of `const_iterator` and `value_type` in the collection
  type is not required anymore (for the compilers properly supporting `decltype`). ]
 
 The detection of the types that meet these requirements containers is delegated to the class [classref boost::unit_test::is_forward_iterable],
-which for C++11 detects the required member functions and fields. However for C++03, the types providing the sequences should be explicitly 
+which for C++11 detects the required member functions and fields. However for C++03, the types providing the sequences should be explicitly
 indicated to the __UTF__ by a specialization of [classref boost::unit_test::is_forward_iterable]
 [footnote Standard containers of the `STL` are recognized as /forward iterable/ container.].
 
