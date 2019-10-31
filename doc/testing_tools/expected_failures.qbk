@@ -1,10 +1,10 @@
 [/
- / Copyright (c) 2003 Boost.Test contributors 
+ / Copyright (c) 2003 Boost.Test contributors
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
- 
+
 [section:expected_failures Expected failures specification]
 
 While in a perfect world all test assertions should pass in order for a test module to pass, in some situations
@@ -32,25 +32,25 @@ unexpected failure to occur to satisfy this quota.
 
 [note If an assertion at fault is fixed and passed while an expected failures specification still present,
       the number of failures becomes smaller than expected. The test is going to be reported as passed; instead,
-      a warning message will be issued.      
+      a warning message will be issued.
 ]
 
 
 [/-----------------------------------------------------------------]
 [#l_expected_failure][h3 Expected failure specification]
 
-The decorator __decorator_expected_failures__ defines the number of assertions that are expected to fail within the corresponding test 
-unit. It is reported as failure when the number of failed assertions is greater than the declared expected number of 
-failures. If the number of failed assertions is less than the number of expected failures a message is reported. The 
-total number of expected failures for a given test suite `S` is the sum of the declared expected failures in `S` and the 
+The decorator __decorator_expected_failures__ defines the number of assertions that are expected to fail within the corresponding test
+unit. It is reported as failure when the number of failed assertions is greater than the declared expected number of
+failures. If the number of failed assertions is less than the number of expected failures a message is reported. The
+total number of expected failures for a given test suite `S` is the sum of the declared expected failures in `S` and the
 sum of expected failures in all nested test units:
 
 [bt_example decorator_10..decorator expected_failures..run-fail]
 
-In the above example, we first run all test cases with four failed assertions. The total number of expected failures 
-is 3: 1 (for test `suite1`) + 2 (for `test1`). Because the expected failure count is exceeded, the error is reported. 
-In the second case, we only run test case `suite1/test1`: two failures occur, two failures are expected, therefore no 
-error is reported. 
+In the above example, we first run all test cases with four failed assertions. The total number of expected failures
+is 3: 1 (for test `suite1`) + 2 (for `test1`). Because the expected failure count is exceeded, the error is reported.
+In the second case, we only run test case `suite1/test1`: two failures occur, two failures are expected, therefore no
+error is reported.
 
 
 
@@ -58,10 +58,10 @@ error is reported.
 [/-----------------------------------------------------------------]
 [h3 Usage with automatically registered test cases]
 
-[caution this usage is considered as deprecated. Please consider using the [link l_expected_failure `expected_failures`] 
+[caution this usage is considered as deprecated. Please consider using the [link l_expected_failure `expected_failures`]
  decorator instead.]
 
-For backwards compatibility, it is possible to indicate the expected failures with 
+For backwards compatibility, it is possible to indicate the expected failures with
 __BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ [footnote deprecated] before the test case definition.
 
 ``
@@ -69,7 +69,7 @@ BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES(test_case_name, number_of_expected_failur
 ``
 
 You can use this macro both on a file scope and inside a test suite. Moreover you can use it even if name of test
-units coincide in different test suites. Expected failures specification applies to the test unit belonging to the same 
+units coincide in different test suites. Expected failures specification applies to the test unit belonging to the same
 test suite where __BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ resides.
 
 [bt_example example17..Expected failures specification for automatically registered test case..run]
@@ -78,7 +78,7 @@ test suite where __BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES__ resides.
 [/-----------------------------------------------------------------]
 [h3 Usage with manually registered test cases]
 
-[caution this usage is considered as deprecated. Please consider using the [link l_expected_failure `expected_failures`] 
+[caution this usage is considered as deprecated. Please consider using the [link l_expected_failure `expected_failures`]
  decorator instead.]
 
 To set the value of expected failures for the manually registered test unit pass it as a second argument for the

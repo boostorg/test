@@ -19,7 +19,7 @@ on
 The progress display output is enabled using the __UTF__ parameter
 [link boost_test.utf_reference.rt_param_reference.show_progress `show_progress`].
 
-The __UTF__ has no ability to estimate how long (in time duration) the test case execution is going to take and the manual test 
+The __UTF__ has no ability to estimate how long (in time duration) the test case execution is going to take and the manual test
 progress update is not supported at this point. The __UTF__ tracks the progress on test case level. If you want to
 see more frequent progress update, you need to split the test into multiple test cases.
 

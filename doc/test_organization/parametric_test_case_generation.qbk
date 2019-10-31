@@ -169,12 +169,12 @@ The following example implements a custom dataset generating a Fibonacci sequenc
 Datasets as defined above are constructed before even the test module starts its execution as global objects. This makes impossible to access,
 from within the dataset generator and during their iteration, elements like `argc` / `argv`, the
 [link boost_test.tests_organization.test_tree.master_test_suite master test suite] (and the preprocessed `argc` / `argv`), or any other object
-that has been instanciated after the `main` of the test module entry.
+that has been instantiated after the `main` of the test module entry.
 
-To overcome this, a [*delayed] dataset instanciation interface has been introduced. This effectively wraps the dataset inside another one,
-which [*lazyly] instanciates the dataset.
+To overcome this, a [*delayed] dataset instantiation interface has been introduced. This effectively wraps the dataset inside another one,
+which [*lazyly] instantiates the dataset.
 
-To instanciate a delayed dataset, the [funcref boost::unit_test::data::monomorphic::make_delayed] function should be used in the 
+To instantiate a delayed dataset, the [funcref boost::unit_test::data::monomorphic::make_delayed] function should be used in the
 __BOOST_DATA_TEST_CASE__ call. The following snippet:
 
 ```

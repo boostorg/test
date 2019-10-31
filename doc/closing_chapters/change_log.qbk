@@ -109,7 +109,7 @@ Boost.Test releases:
     ...
   }
   ``
-* The floating point comparison behaviour change may use this type of comparison while previously
+* The floating point comparison behavior change may use this type of comparison while previously
   using straight relational operator comparison. In particular this may causes ['new warnings].
 
 * the member function [memberref boost::unit_test::unit_test_log_formatter::log_build_info] has slightly changed
@@ -118,7 +118,7 @@ Boost.Test releases:
 [h5 Bugfixes and feature requests]
 
 # [github_issue 133] Timeout effect on Windows
-# [github_issue 138] expected_failures doesnt work for `BOOST_DATA_TEST_CASE`
+# [github_issue 138] expected_failures doesn't work for `BOOST_DATA_TEST_CASE`
 # [github_issue 141] Support for Boost.MP11 and Boost.Hana type lists
 # [github_issue 157] Test name should handle `const`-`volatile` specifiers
 # [github_issue 160] suppress `-Wformat-overflow` when optimization is enabled on GCC 8.2.0
@@ -152,7 +152,7 @@ Boost.Test releases:
 # [pull_request 214] Fixes an issue with sun_cc lacking the __global attribute for enums
 
 # [ticket 7397] Boost.Test, since boost `1.48` is using the deprecated `Boost.Timer` class (solved via [github_issue 202])
-# [ticket 9434] error: `namespace boost::timer {}` redeclared as different kind of symbol (solved via [github_issue 202])
+# [ticket 9434] error: `namespace boost::timer {}` re-declared as different kind of symbol (solved via [github_issue 202])
 # [ticket 13106] `libs/test/tools/console_test_runner` does not compile
 # [ticket 13418] Request: allow general typelist types in `BOOST_AUTO_TEST_CASE_TEMPLATE()`
 
@@ -188,12 +188,12 @@ Boost.Test releases:
 [#ref_CHANGE_LOG_3_8][h4 Boost.Test v3.8 / boost 1.68]
 
 [h5 New features]
-* The tests generated from a dataset are now instanciated during the framework setup. This
+* The tests generated from a dataset are now instantiated during the framework setup. This
   let the dataset generator access the `argc` and `argv` of the master test suite. For indicating
-  a dataset that should be instanciated in a delayed manner, a new `data::make_delayed` helper has
+  a dataset that should be instantiated in a delayed manner, a new `data::make_delayed` helper has
   been introduced.
 * It is now possible to create a dataset with `data::make`, with variable number of arguments.
-  As the datasets are monomorphic, those should be castable to the first element type.
+  As the datasets are monomorphic, it should be possible to cast all elements to the first element type.
 
 [h5 Breaking changes]
 * the [link boost_test.tests_organization.test_tree.master_test_suite `master_test_suite_t`] is not copyable anymore.
@@ -287,13 +287,13 @@ Boost.Test releases:
   [link boost_test.test_output.log_formats.test_log_output log-level] set between `success` and
   `non-fatal error`, and defaults to `general information`.
 * [link boost_test.test_output.log_formats.log_junit_format JUnit output format] is now more
-  performant in case a lot of checks are done in a test module.
+  efficient in case a lot of checks are done in a test module.
 
 [h5 Bugfixes and feature requests]
 # [pull_request 107] `BOOST_NO_EXCEPTIONS` typo making `throw_exception` unusable under some circumstances
 # [pull_request 108] Change capital variable names to lowercase
 # [ticket 11756] boost.Test: non standards compliant use of `FE_*` macros (unable to compile boost test library on FPU-less arches) (reopened)
-# [ticket 12540] Provide customisation point for printing types in tests
+# [ticket 12540] Provide customization point for printing types in tests
 # [ticket 12712] `BOOST_AUTO_TEST_SUITE`: Generate unique names by using `__COUNTER__`
 # [ticket 12748] Boost.Test defines a variable called `VERSION`
 # [ticket 12778] Boost.Test is broken against left shift operator in certain cases (`nullptr` issue)
@@ -446,8 +446,8 @@ Boost.Test releases:
 # [ticket 3182] `_CrtSetReportFile` can be used to redirect memory leaks report
 # [ticket 3316] Access violation when trying to log from `init_tests_func`
 # [ticket 3392] Boost::Test: Wrong contents for documentation of the `BOOST_TEST_PASSPOINT` macro
-# [ticket 3402] Invalid define name in docummentation (duplicates #[ticket 2717])
-# [ticket 3445] incorreect link in the docs
+# [ticket 3402] Invalid define name in documentation (duplicates #[ticket 2717])
+# [ticket 3445] incorrect link in the docs
 # [ticket 3463] `GT` is GREAT!
 # [ticket 3542] Bug in documentation of detect_memory_leak parameter (duplicates #[ticket 2018])
 # [ticket 3481] Boost Testing doesn't work under Sun Solaris Containers (duplicates #[ticket 3592])
@@ -458,9 +458,9 @@ Boost.Test releases:
 # [ticket 3664] `SIGCHLD` always considered fatal error
 # [ticket 3784] Documentation errors in Execution Monitor Compilation
 # [ticket 3785] Documentation errors in Program Execution Monitor implementation
-# [ticket 3811] global namespace polution
+# [ticket 3811] global namespace pollution
 # [ticket 3834] doc: probably incorrect HTML rendering (duplicates #[ticket 2450])
-# [ticket 3896] erroneous documentation in boost test commandline parameter description
+# [ticket 3896] erroneous documentation in boost test command line parameter description
 # [ticket 3932] Error in `BOOST_<level>_GT` description (duplicates #[ticket 3463])
 # [ticket 3938] doc: incorrect macro name (duplicates #[ticket 2759])
 # [ticket 3964] Documentation for `BOOST_<level>_CLOSE_FRACTION` is incorrect
@@ -476,7 +476,7 @@ Boost.Test releases:
 # [ticket 4923] Missing semicolon in documentation example
 # [ticket 4924] Minor typo in Boost::Test docs
 # [ticket 4982] Boost.Test has misspelled Gennadiy Rozental e-mail address
-# [ticket 5008] Boost.Test does not do checkpointing of entry/exit of test cases
+# [ticket 5008] Boost.Test does not do check-pointing of entry/exit of test cases
 # [ticket 5036] Boost.Test VC memory leak report should direct to `stderr`
 # [ticket 5262] Run tests by name utility doesn't support negation
 # [ticket 5374] Errors from Boost.Test are no more shown in the Error list in VS2010

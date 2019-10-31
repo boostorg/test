@@ -87,7 +87,7 @@ default no errors are expected.
 The third optional parameter - `timeout` - defines the timeout value for the test unit. As of now the __UTF__
 isn't able to set a timeout for the test suite execution, so this parameter makes sense only for test case
 registration. By default no timeout is set. See the method
-[memberref boost::unit_test::test_suite::add] for more details about the timeout value. 
+[memberref boost::unit_test::test_suite::add] for more details about the timeout value.
 
 To register group of test units in one function call, the [classref boost::unit_test::test_suite `test_suite`] class provides another
 [memberref boost::unit_test::test_suite::add `add`] interface covered in the advanced section of this documentation.

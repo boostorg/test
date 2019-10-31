@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003 Boost.Test contributors 
+ / Copyright (c) 2003 Boost.Test contributors
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -13,7 +13,7 @@ How should a test program report errors? Displaying an error message is an obvio
 if( something_bad_detected )
   std::cout << "something bad has been detected" << std::endl;
 ``
- 
+
 But that requires inspection of the program's output after each run to determine if an error occurred. Since test
 programs are often run as part of a regression test suite, human inspection of output to detect error messages is time
 consuming and unreliable. Test frameworks like GNU/expect can do the inspections automatically, but are overly complex
@@ -65,7 +65,7 @@ __BOOST_AUTO_TEST_CASE__( my_test )
   BOOST_TEST( test_object.is_valid() );
 }
 ``
- 
+
 Now, you not only receive uniform result code, even in case of exception, but also nicely formatted output from
 __BOOST_TEST__ tool, would you choose to see it. Is there any other ways to perform checks? The following example test
 program shows several different ways to detect and report an error in the `add()` function.

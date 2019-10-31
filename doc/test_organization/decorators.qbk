@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003 Boost.Test contributors 
+ / Copyright (c) 2003 Boost.Test contributors
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -29,18 +29,18 @@ and one of type `description`.
 [/ ############################]
 [section Suite-level decorators]
 
-Similarly to test case it is possible to apply list of decorators to test suite. It is done by specifying a list of 
-decorators as the second argument to the macro __BOOST_AUTO_TEST_SUITE__ or the third argument to the macro 
+Similarly to test case it is possible to apply list of decorators to test suite. It is done by specifying a list of
+decorators as the second argument to the macro __BOOST_AUTO_TEST_SUITE__ or the third argument to the macro
 __BOOST_FIXTURE_TEST_SUITE__.
 
 [bt_example decorator_02..Test suite decorators..run]
 
-How a test suite decorator affects the processing of the test units inside of it varies with the decorator 
-and is described for each decorator in subsequent sections. For instance, the function of the decorator in the above 
+How a test suite decorator affects the processing of the test units inside of it varies with the decorator
+and is described for each decorator in subsequent sections. For instance, the function of the decorator in the above
 example is that when tests are filtered by label `"trivial"`, every test unit in suite `suite1` will be run.
 
-Similar to C++ namespace test suite can be closed and reopened within the same test file or span more than one file 
-and you are allowed to apply different decorators in each point, where test suite is opened. If this is the case, 
+Similar to C++ namespace test suite can be closed and reopened within the same test file or span more than one file
+and you are allowed to apply different decorators in each point, where test suite is opened. If this is the case,
 the list of decorators applied to the test suite is the union of decorators specified in each place. Here an example.
 
 [bt_example decorator_03..Decorators on multiple suite openings..run]
@@ -58,7 +58,7 @@ described below.]
 [/ ############################]
 [section Explicit decorator declaration]
 
-There is another way of associating a decorator set with test units. Macro __BOOST_TEST_DECORATOR__ indicates that its set 
+There is another way of associating a decorator set with test units. Macro __BOOST_TEST_DECORATOR__ indicates that its set
 of decorators is to be applied to the test unit or /test case sequence/ that immediately follows the declaration.
 
 [bt_example decorator_00..explicit decorator declaration..run]
@@ -74,7 +74,7 @@ in the following table:
 
 [table
   [[Test unit to register][Concise syntax][Universal syntax]]
-  [[test case][```  
+  [[test case][```
 BOOST_AUTO_TEST_CASE(test_case, *decor1() *decor2())
 {
   // assertions
@@ -86,7 +86,7 @@ BOOST_AUTO_TEST_CASE(test_case)
   // assertions
 }
   ```]]
-  
+
   [[test case with fixture][```
 BOOST_FIXTURE_TEST_CASE(test_case, Fx, *decor1() *decor2())
 {
@@ -99,7 +99,7 @@ BOOST_FIXTURE_TEST_CASE(test_case, Fx)
   // assertions
 }
   ```]]
-  
+
   [[test suite][```
 BOOST_AUTO_TEST_SUITE(test_suite, *decor1() *decor2())
 
@@ -112,10 +112,10 @@ BOOST_AUTO_TEST_SUITE(test_suite)
 
   // test units
 
-BOOST_AUTO_TEST_SUITE_END() 
+BOOST_AUTO_TEST_SUITE_END()
   ```]]
-  
-[[test suite with fixture][``` 
+
+[[test suite with fixture][```
 BOOST_FIXTURE_TEST_SUITE(test_suite, Fx, *decor1() *decor2())
 
   // test units
@@ -127,9 +127,9 @@ BOOST_FIXTURE_TEST_SUITE(test_suite, Fx)
 
   // test units
 
-BOOST_AUTO_TEST_SUITE_END() 
+BOOST_AUTO_TEST_SUITE_END()
   ```]]
-  
+
 [[data-driven test case][```
 // not doable
   ```][```
@@ -139,7 +139,7 @@ BOOST_DATA_TEST_CASE(test_case, data, var)
   // assertions
 }
   ```]]
-  
+
 [[test case template][```
 // not doable
   ```][```
@@ -149,7 +149,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_case, T, type_list)
   // assertions
 }
   ```]]
-  
+
 [[test case template with fixture][```
 // not doable
   ```][```

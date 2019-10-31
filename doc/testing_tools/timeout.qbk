@@ -15,14 +15,14 @@ For test-cases, the time-out value sets the maximum allowed duration for the tes
 exceeded, the test case is reported as failed. On some systems, the __UTF__ is able to force the test-case
 to stop through a `SIGALRM` signal (see below).
 
-For test-suites, the time-out value sets the maximum allowed duration for the entire suite to complete. This duration 
+For test-suites, the time-out value sets the maximum allowed duration for the entire suite to complete. This duration
 is the accumulated time of all the test-cases contained in the sub-tree rooted on the test-suite, plus some extra
-execution time needed by the __UTF__. For each test-units under a test-suite with time-out, the maximum allowed duration 
+execution time needed by the __UTF__. For each test-units under a test-suite with time-out, the maximum allowed duration
 is set as being the test-suite time out minus the accumulated execution time before the execution of the test-unit.
 If this test-unit is a test-case, it is equivalent to setting the decorator __decorator_timeout__ to the test-case
 with a time-out value expressed as before.
 
-In case the test-suite times out, the 
+In case the test-suite times out, the
 suite is flagged as `timed-out` and `failed`, and all the test units (suites and cases) that have not been executed
 up to the time-out point are all skipped.
 
