@@ -15,7 +15,7 @@
 
 MESSAGE:
 - file   : boost.test framework
-- line   : 244
+- line   : 0
 - message: Test case 1 test cases inside/almost_good_foo did not check any assertions
 
 ]]></system-out>
@@ -33,7 +33,7 @@ MESSAGE:
 <testcase assertions="0" name="good_foo" time="0.1234">
 <system-out><![CDATA[MESSAGE:
 - file   : boost.test framework
-- line   : 244
+- line   : 0
 - message: Test case Timeout/good_foo did not check any assertions
 
 ]]></system-out>
@@ -111,7 +111,7 @@ ASSERTION FAILURE:
 <testcase assertions="0" name="good_foo" time="0.1234">
 <system-out><![CDATA[MESSAGE:
 - file   : boost.test framework
-- line   : 244
+- line   : 0
 - message: Test case 1 junit failure is not error/good_foo did not check any assertions
 
 ]]></system-out>
