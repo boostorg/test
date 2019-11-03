@@ -9,7 +9,7 @@
 
 Once a test case has been declared, the body of this test should be written. A test case is a
 sequence of operations in which *assertions* are inserted. Those assertions evaluate /statements/ that implement the expectation being validated,
-and report failures and/or informations in a uniform manner, depending on the [link boost_test.utf_reference.rt_param_reference.log_level log level].
+and report failures and/or information in a uniform manner, depending on the [link boost_test.utf_reference.rt_param_reference.log_level log level].
 
 The __UTF__'s supplies a toolbox of assertions to ease the creation and maintenance of test cases and
 provide a uniform error reporting mechanism. The toolbox supplied is in most part in a form of macro declarations.

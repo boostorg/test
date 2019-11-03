@@ -89,13 +89,13 @@ See [link boost_test.testing_tools.expected_failures here] for more details.
 timeout(unsigned int seconds);
 ``
 
-Specifies a time-out for a *test-case* or a *test-suite*, in wall-clock time. 
+Specifies a time-out for a *test-case* or a *test-suite*, in wall-clock time.
 
-If a test-case lasts longer than the timeout, the test is flagged as failed. On some systems (see below), 
+If a test-case lasts longer than the timeout, the test is flagged as failed. On some systems (see below),
 the test-case is forced to stop.
 
-For test-suites, the mechanism is similar: every test-unit under the test-suite is allocated a maximum 
-duration time that is the remainder of the timeout after the previous tests have been executed. If a timeout occurs 
+For test-suites, the mechanism is similar: every test-unit under the test-suite is allocated a maximum
+duration time that is the remainder of the timeout after the previous tests have been executed. If a timeout occurs
 during the execution of the suite, the suite is flagged as timed-out and the remaining test-units are skipped.
 
 See [link boost_test.testing_tools.timeout here] for more details.

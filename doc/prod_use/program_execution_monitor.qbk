@@ -188,7 +188,7 @@ library all C++ files (.cpp), that constitute __PEM__ [link ref_pem_implementati
 listed as source files in your makefile [footnote There are varieties of make systems that can be used. To name
 a few: ['GNU] make (and other make clones) and build systems integrated into ['IDE]s
 (for example ['Microsoft Visual Studio]). The Boost preferred solution is Boost.Build system that is based on top of
-`bjam`  tool. Make  systems require some kind of configuration file that lists all files that constitute the library
+`b2`  tool. Make  systems require some kind of configuration file that lists all files that constitute the library
 and all build  options. For example the makefile that is used by make, or the Microsoft Visual Studio project file,
 Jamfile is used by Boost.Build. For the sake of simplicity let's call this file the makefile.].
 
@@ -209,7 +209,7 @@ There are no additional build defines or options required to build static librar
 can build the static library with a following command from `libs/test/build` directory:
 
 ``
-bjam -sTOOLS=<your-tool-name> -sBUILD=boost_prg_exec_monitor
+b2 -sTOOLS=<your-tool-name> -sBUILD=boost_prg_exec_monitor
 ``
 
 Also on Windows you can use the Microsoft Visual Studio .NET project file provided.
@@ -224,7 +224,7 @@ need to add __BOOST_TEST_DYN_LINK__ to the list of macro definitions in the
 ``libs/test/build`` directory:
 
 ``
-bjam -sTOOLS=<your-tool-name> -sBUILD=boost_prg_exec_monitor
+b2 -sTOOLS=<your-tool-name> -sBUILD=boost_prg_exec_monitor
 ``
 
 Also on Windows you can use the Microsoft Visual Studio .NET project file provided.

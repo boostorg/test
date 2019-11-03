@@ -31,8 +31,8 @@ Download xsltproc
 This program is needed by Docbook, in order to be able to transform XMLs into HTMLs.
 `xsltproc` should be accessible from the ``PATH``.
 
-Construct bjam
---------------
+Construct b2
+------------
 
 Simply by typing in a console at the root of the Boost repository:
 
@@ -43,7 +43,7 @@ Simply by typing in a console at the root of the Boost repository:
 Build the documentation
 -----------------------
 
-Running the following commands will construct the documentation with `bjam` and
+Running the following commands will construct the documentation with `b2` and
 all the needed dependencies:
 
 ````

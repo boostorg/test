@@ -8,9 +8,9 @@
 [section:tests_dependencies Managing test dependencies]
 
 In general, it is a good practice to write any test as independent as possible from any other, there are however
-cases where a dependency cannot be avoided and an order for executing the tests is needed. 
+cases where a dependency cannot be avoided and an order for executing the tests is needed.
 
-In the general setup and for any two test cases `TA` and `TB`, `TB` should not take for granted that `TA` has already 
+In the general setup and for any two test cases `TA` and `TB`, `TB` should not take for granted that `TA` has already
 executed, even if `TA` is declared before `TB` in the same translation unit.
 The only ordering-related guarantee that __UTF__ makes by default is that if test cases `TA` and `TB` are declared in the
 same test suite, no test case (call it `TX`) from any other test suite is executed between `TA` and `TB`, even if the

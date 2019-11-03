@@ -34,12 +34,12 @@ Even if you decide to us the obsolete initialization function, it is recommended
 # You always return a null-pointer value and install the master test suite via
   [memberref boost::unit_test::test_suite::add `test_suite::add`] as illustrated
   [link ref_BOOST_TEST_CASE here]. The current framework does no longer treat the
-  null-pointer value as failure. 
+  null-pointer value as failure.
 # You signal the failure by throwing [classref boost::unit_test::framework::setup_error] exception.
 # You access the command-line arguments through the interface of the __master_test_suite__,
   and ignore the function's arguments `argc` and `argv`.
 
-[caution The obsolete initialization function is deprecated as its name indicates. It is recommended to migrate 
+[caution The obsolete initialization function is deprecated as its name indicates. It is recommended to migrate
  to the new API, and rely on the automated test unit registration and [link boost_test.tests_organization.fixtures
 fixtures] (including [link boost_test.tests_organization.fixtures.global global fixtures]) for other set-up. ]
 

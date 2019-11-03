@@ -342,6 +342,9 @@ exe smoke-ts-included-2 : smoke-ts/basic-smoke-test2.cpp ;
 
 exe smoke-ts-included-3 : smoke-ts/basic-smoke-test3.cpp ;
 
+# for template test case filtering from the command line
+exe smoke-ts-included-4 : smoke-ts/basic-smoke-test4.cpp ;
+
 exe check-streams-on-exit : framework-ts/check-streams-on-exit.cpp ;
 
 exe dataset-master-test-suite-accessible-test : test-organization-ts/dataset-master-test-suite-accessible-test.cpp
@@ -409,6 +412,25 @@ alias "smoke-ts"
 [ run smoke-ts-included-3 : -c no --run_test=case2 -t some_suite : : : cla-runtest-repeated-mixed-long-no-fail3 ]
 [ run-fail smoke-ts-included-3 : --result_code=1 --run_test=case2 -t some_suite : : : cla-runtest-repeated-mixed-long-fail3 ]
 [ run smoke-ts-included-3 : --result_code=0 --run_test=case2 -t some_suite : : : cla-runtest-repeated-mixed-long-fail4 ]
+
+# template test case filtering command line
+[ run-fail smoke-ts-included-4 : : : : cla-template-test-case-sanity-1 ]
+[ run-fail smoke-ts-included-4 : \"--run_test=test<my_struct<int_ float>>\" : : : cla-template-test-case-sanity-2 ]
+[ run smoke-ts-included-4 : \"--run_test=test<my_struct<int_ int>>\" : : : cla-template-test-case-sanity-3 ]
+[ run smoke-ts-included-4 : \"--run_test=test<my_struct<int_ int>>,test<my_struct<float_ float>>\" : : : cla-template-test-case-sanity-4 ]
+[ run-fail smoke-ts-included-4 : \"--run_test=test<my_struct<int_ int>>,test<my_struct<char_ float>>\" : : : cla-template-test-case-sanity-5 ]
+[ run-fail smoke-ts-included-4 : \"--run_test=some_suite/*\" : : : cla-template-test-case-sanity-6 ]
+[ run-fail smoke-ts-included-4 : \"--run_test=some_suite/test<my_struct<float_ int>>\" : : : cla-template-test-case-sanity-7 ]
+[ run-fail smoke-ts-included-4 : \"--run_test=some_suite/test<my_struct<int_ float>>\" : : : cla-template-test-case-sanity-8 ]
+[ run-fail smoke-ts-included-4 : \"--run_test=some_suite/test<my_struct<int_ float>>,test<my_struct<float_ int>>\" : : : cla-template-test-case-sanity-9 ]
+[ run smoke-ts-included-4 : \"--run_test=some_suite/test<my_struct<float_ float>>\" : : : cla-template-test-case-sanity-10 ]
+# test<my_struct<double_ double>> does not exist: error because test tree empty
+[ run-fail smoke-ts-included-4 : \"--run_test=some_suite/test<my_struct<double_ double>>\" : : : cla-template-test-case-sanity-11 ]
+# test<my_struct<double_ double>> does not exist, but this is not reported as error since there is at least one test case running
+[ run smoke-ts-included-4 : \"--run_test=some_suite/test<my_struct<float_ float>>,test<my_struct<double_ double>>\" : : : cla-template-test-case-sanity-12 ]
+[ run smoke-ts-included-4 : \"--run_test=some_suite/test<my_struct<float_ float>>,test<my_struct<char_ char>>\" : : : cla-template-test-case-sanity-13 ]
+[ run smoke-ts-included-4 : \"--run_test=some_suite/test<my_struct<float_ float>>\" \"--run_test=test<my_struct<int_ int>>\" : : : cla-template-test-case-sanity-14 ]
+[ run smoke-ts-included-4 : \"--run_test=some_suite/test<my_struct<float_ float>>,test<my_struct<char_ char>>\" \"--run_test=test<my_struct<int_ int>>\" : : : cla-template-test-case-sanity-15 ]
 ;
 
 exe custom-command-line-binary-1 : ../doc/examples/runtime-configuration_1.run-fail.cpp ;

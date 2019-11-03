@@ -1,24 +1,24 @@
 [/
- / Copyright (c) 2003 Boost.Test contributors 
+ / Copyright (c) 2003 Boost.Test contributors
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
-[section:shared_lib_customizations Shared-library variant customizations] 
+[section:shared_lib_customizations Shared-library variant customizations]
 
-[caution Macro __BOOST_TEST_DYN_LINK__ (which instructs the compiler/linker to dynamically link against a shared 
+[caution Macro __BOOST_TEST_DYN_LINK__ (which instructs the compiler/linker to dynamically link against a shared
 library variant) may be implicitly defined when macro `BOOST_ALL_DYN_LINK` is defined.]
 
 [caution In order to be able to run a test built with the dynamic variant, the operating system should be able
- to find the dynamic library of the __UTF__. This means, for example on Linux and MacOSX respectively, setting the environment 
+ to find the dynamic library of the __UTF__. This means, for example on Linux and MacOSX respectively, setting the environment
  variable `LD_LIBRARY_PATH` or `DYLD_LIBRARY_PATH` properly prior to the execution of the test module.]
 
 [section:entry_point Customizing the module's entry point]
 
-In this variant, in one of the source files, you now have to define your custom entry point, and invoke the default 
-[link boost_test.adv_scenarios.test_module_runner_overview test runner] `unit_test_main` manually with the default 
-[link boost_test.adv_scenarios.test_module_init_overview initialization function] `init_unit_test` as argument. 
+In this variant, in one of the source files, you now have to define your custom entry point, and invoke the default
+[link boost_test.adv_scenarios.test_module_runner_overview test runner] `unit_test_main` manually with the default
+[link boost_test.adv_scenarios.test_module_init_overview initialization function] `init_unit_test` as argument.
 You need to define __BOOST_TEST_NO_MAIN__ (its value is irrelevant) in the main file:
 
 [table
@@ -51,11 +51,11 @@ int main(int argc, char* argv[], char* envp[])
 
 [section:init_func Customizing the module's initialization function]
 
-In the shared-library variant, it is impossible to customize the initialization function without 
-[link boost_test.adv_scenarios.shared_lib_customizations.entry_point customizing the entry point]. We have 
-to customize both. In one of the source files, you now have to define your custom entry point and 
-[link boost_test.adv_scenarios.test_module_init_overview initialization function] `init_unit_test`; next invoke 
-the default [link boost_test.adv_scenarios.test_module_runner_overview test runner] `unit_test_main` manually 
+In the shared-library variant, it is impossible to customize the initialization function without
+[link boost_test.adv_scenarios.shared_lib_customizations.entry_point customizing the entry point]. We have
+to customize both. In one of the source files, you now have to define your custom entry point and
+[link boost_test.adv_scenarios.test_module_init_overview initialization function] `init_unit_test`; next invoke
+the default [link boost_test.adv_scenarios.test_module_runner_overview test runner] `unit_test_main` manually
 with `init_unit_test` as argument. You ['do not] define __BOOST_TEST_MODULE__ in the main file:
 
 [table
@@ -92,7 +92,7 @@ int main(int argc, char* argv[])
 ```]]
 ]
 
-For reporting errors that may occur during the initialization, 
+For reporting errors that may occur during the initialization,
 
 * either you return `false` (valid only for the new API only, see __BOOST_TEST_ALTERNATIVE_INIT_API__)
 * or you raise an exception such as `std::runtime_error` or [classref boost::unit_test::framework::setup_error]

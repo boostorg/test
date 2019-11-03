@@ -58,4 +58,10 @@ BOOST_AUTO_TEST_CASE( test_case_sanitize )
     BOOST_TEST( master_ts->get("my@whateve!r test case 2") == INV_TEST_UNIT_ID );
     BOOST_TEST( master_ts->get("  my_whateve_r test case 2  ") == INV_TEST_UNIT_ID );
     BOOST_TEST( master_ts->get("my_whateve_r test case 2") == tc2->p_id );
+
+    test_case* tc3 = make_test_case(suite1_test1, "  some_type < bla, blabla>  ", __FILE__, __LINE__);
+    master_ts->add( tc3 );
+    BOOST_TEST( master_ts->get("some_type < bla, blabla>") == INV_TEST_UNIT_ID );
+    BOOST_TEST( master_ts->get("  some_type < bla, blabla>  ") == INV_TEST_UNIT_ID );
+    BOOST_TEST( master_ts->get("some_type < bla_ blabla>") == tc3->p_id );
 }

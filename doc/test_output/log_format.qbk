@@ -222,7 +222,7 @@ This format is in fact both a log and a report format: most of the Continuous Bu
 the content of a JUNIT file and show an overview of the failing/succeeding tests of a module (report format)
 while letting the user inspect the detailed logs (log format).
 
-[caution The minimal log-level for the JUnit logger is [link test_log_output_table `non fatal error`]. 
+[caution The minimal log-level for the JUnit logger is [link test_log_output_table `non fatal error`].
  Any set-up to higher log level will default to that minimal log-level.]
 
 [note Until Boost 1.64, the log level was previously defaulting to `success` and was causing a heavy load

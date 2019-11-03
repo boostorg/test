@@ -14,7 +14,7 @@ I will write tests before the coding, during the design stage. I have read a lot
 tests, I have the unit test framework in hand and an idea of new class. So let's get started.
 
 Let say I want to encapsulate an unchangeable C character buffer with a length into the simple class `const_string`.
-Rationale: a string class that does not allocate a memory and provide a convenient read-only access to the preallocated
+Rationale: a string class that does not allocate a memory and provide a convenient read-only access to the pre-allocated
 character buffer. I will probably want `const_string` to have an interface similar to the class std::string. What will I
 do first? In my new life I will start with writing a test module for future class `const_string`. It will look like
 this:
