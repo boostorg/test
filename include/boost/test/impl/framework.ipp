@@ -666,8 +666,11 @@ public:
 
         execution_result result = unit_test_monitor_t::test_ok;
 
-        if( !tu.is_enabled() )
+        if( !tu.is_enabled() ) {
+            BOOST_TEST_FOREACH( test_observer*, to, m_observers )
+                to->test_unit_skipped( tu, "disabled" );
             return result;
+        }
 
         // 10. Check preconditions, including zero time left for execution and
         // successful execution of all dependencies

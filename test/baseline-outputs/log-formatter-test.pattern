@@ -7,14 +7,14 @@ xxx/log-formatter-test.cpp:210: Leaving test case "good_foo"
 xxx/log-formatter-test.cpp:209: Leaving test suite "1 test cases inside"
 
 * 2-format  *******************************************************************
-<TestLog><TestSuite name="1 test cases inside" file="xxx/log-formatter-test.cpp" line="209"><TestCase name="good_foo" file="xxx/log-formatter-test.cpp" line="210"><Message file="boost.test framework" line="244"><![CDATA[Test case Fake Test Suite Hierarchy/1 test cases inside/good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase></TestSuite></TestLog>
+<TestLog><TestSuite name="1 test cases inside" file="xxx/log-formatter-test.cpp" line="209"><TestCase name="good_foo" file="xxx/log-formatter-test.cpp" line="210"><Message file="boost.test framework" line="0"><![CDATA[Test case Fake Test Suite Hierarchy/1 test cases inside/good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase></TestSuite></TestLog>
 * 3-format  *******************************************************************
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuite tests="1" skipped="0" errors="0" failures="0" id="0" name="1_test_cases_inside" time="0.1234">
 <testcase assertions="0" name="good_foo" time="0.1234">
 <system-out><![CDATA[MESSAGE:
 - file   : boost.test framework
-- line   : 244
+- line   : 0
 - message: Test case Fake Test Suite Hierarchy/1 test cases inside/good_foo did not check any assertions
 
 ]]></system-out>
@@ -130,7 +130,7 @@ xxx/log-formatter-test.cpp:216: Leaving test case "almost_good_foo"
 xxx/log-formatter-test.cpp:215: Leaving test suite "1 almost good test case inside"
 
 * 2-format  *******************************************************************
-<TestLog><TestSuite name="1 almost good test case inside" file="xxx/log-formatter-test.cpp" line="215"><TestCase name="almost_good_foo" file="xxx/log-formatter-test.cpp" line="216"><Warning file="xxx/log-formatter-test.cpp" line="46"><![CDATA[condition 2>3 is not satisfied [2 <= 3]]]></Warning><Message file="boost.test framework" line="244"><![CDATA[Test case 1 almost good test case inside/almost_good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase></TestSuite></TestLog>
+<TestLog><TestSuite name="1 almost good test case inside" file="xxx/log-formatter-test.cpp" line="215"><TestCase name="almost_good_foo" file="xxx/log-formatter-test.cpp" line="216"><Warning file="xxx/log-formatter-test.cpp" line="46"><![CDATA[condition 2>3 is not satisfied [2 <= 3]]]></Warning><Message file="boost.test framework" line="0"><![CDATA[Test case 1 almost good test case inside/almost_good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase></TestSuite></TestLog>
 * 3-format  *******************************************************************
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuite tests="0" skipped="0" errors="0" failures="0" id="0" name="1_almost_good_test_case_inside" time="0.1234">
@@ -142,7 +142,7 @@ xxx/log-formatter-test.cpp:215: Leaving test suite "1 almost good test case insi
 
 MESSAGE:
 - file   : boost.test framework
-- line   : 244
+- line   : 0
 - message: Test case 1 almost good test case inside/almost_good_foo did not check any assertions
 
 ]]></system-out>
@@ -173,14 +173,14 @@ xxx/log-formatter-test.cpp:220: Leaving test case "bad_foo"
 xxx/log-formatter-test.cpp:218: Leaving test suite "2 test cases inside"
 
 * 2-format  *******************************************************************
-<TestLog><TestSuite name="2 test cases inside" file="xxx/log-formatter-test.cpp" line="218"><TestCase name="good_foo" file="xxx/log-formatter-test.cpp" line="219"><Message file="boost.test framework" line="244"><![CDATA[Test case Fake Test Suite Hierarchy/2 test cases inside/good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="bad_foo" file="xxx/log-formatter-test.cpp" line="220"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase></TestSuite></TestLog>
+<TestLog><TestSuite name="2 test cases inside" file="xxx/log-formatter-test.cpp" line="218"><TestCase name="good_foo" file="xxx/log-formatter-test.cpp" line="219"><Message file="boost.test framework" line="0"><![CDATA[Test case Fake Test Suite Hierarchy/2 test cases inside/good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="bad_foo" file="xxx/log-formatter-test.cpp" line="220"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase></TestSuite></TestLog>
 * 3-format  *******************************************************************
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuite tests="2" skipped="0" errors="0" failures="1" id="0" name="2_test_cases_inside" time="0.1234">
 <testcase assertions="0" name="good_foo" time="0.1234">
 <system-out><![CDATA[MESSAGE:
 - file   : boost.test framework
-- line   : 244
+- line   : 0
 - message: Test case Fake Test Suite Hierarchy/2 test cases inside/good_foo did not check any assertions
 
 ]]></system-out>
@@ -698,6 +698,7 @@ ASSERTION FAILURE:
 * 1-format  *******************************************************************
 Running 11 test cases...
 xxx/log-formatter-test.cpp:236: Entering test suite "Fake Test Suite Hierarchy"
+xxx/log-formatter-test.cpp:207: Test suite "Fake Test Suite Hierarchy/0 test cases inside" is skipped because disabled
 xxx/log-formatter-test.cpp:209: Entering test suite "1 test cases inside"
 xxx/log-formatter-test.cpp:210: Entering test case "good_foo"
 Test case Fake Test Suite Hierarchy/1 test cases inside/good_foo did not check any assertions
@@ -769,14 +770,14 @@ xxx/log-formatter-test.cpp:222: Test suite "Fake Test Suite Hierarchy/3 test cas
 xxx/log-formatter-test.cpp:236: Leaving test suite "Fake Test Suite Hierarchy"
 
 * 2-format  *******************************************************************
-<TestLog><TestSuite name="Fake Test Suite Hierarchy" file="xxx/log-formatter-test.cpp" line="236"><TestSuite name="1 test cases inside" file="xxx/log-formatter-test.cpp" line="209"><TestCase name="good_foo" file="xxx/log-formatter-test.cpp" line="210"><Message file="boost.test framework" line="244"><![CDATA[Test case Fake Test Suite Hierarchy/1 test cases inside/good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="bad_foo" file="xxx/log-formatter-test.cpp" line="269"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase></TestSuite><TestSuite name="2 test cases inside" file="xxx/log-formatter-test.cpp" line="218"><TestCase name="good_foo" file="xxx/log-formatter-test.cpp" line="219"><Message file="boost.test framework" line="244"><![CDATA[Test case Fake Test Suite Hierarchy/2 test cases inside/good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="bad_foo" file="xxx/log-formatter-test.cpp" line="220"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase></TestSuite><TestSuite name="4 test cases inside" file="xxx/log-formatter-test.cpp" line="230"><TestCase name="bad_foo" file="xxx/log-formatter-test.cpp" line="231"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="very_bad_foo" file="xxx/log-formatter-test.cpp" line="232"><FatalError file="xxx/log-formatter-test.cpp" line="64"><![CDATA[very_bad_foo is fatal]]><Context><Frame><![CDATA[some context]]></Frame></Context></FatalError><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="very_bad_exception" file="xxx/log-formatter-test.cpp" line="233"><Error file="xxx/log-formatter-test.cpp" line="73"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Exception file="unknown location" line="0"><![CDATA[unknown type]]><LastCheckpoint file="xxx/log-formatter-test.cpp" line="73"><![CDATA[]]></LastCheckpoint><Context><Frame><![CDATA[exception context should be shown]]></Frame></Context></Exception><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="bad_foo2" file="xxx/log-formatter-test.cpp" line="234"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase></TestSuite><TestSuite name="3 test cases inside" skipped="yes" reason="dependency test suite &quot;Fake Test Suite Hierarchy/1 test cases inside&quot; has failed"/></TestSuite></TestLog>
+<TestLog><TestSuite name="Fake Test Suite Hierarchy" file="xxx/log-formatter-test.cpp" line="236"><TestSuite name="0 test cases inside" skipped="yes" reason="disabled"/><TestSuite name="1 test cases inside" file="xxx/log-formatter-test.cpp" line="209"><TestCase name="good_foo" file="xxx/log-formatter-test.cpp" line="210"><Message file="boost.test framework" line="0"><![CDATA[Test case Fake Test Suite Hierarchy/1 test cases inside/good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="bad_foo" file="xxx/log-formatter-test.cpp" line="269"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase></TestSuite><TestSuite name="2 test cases inside" file="xxx/log-formatter-test.cpp" line="218"><TestCase name="good_foo" file="xxx/log-formatter-test.cpp" line="219"><Message file="boost.test framework" line="0"><![CDATA[Test case Fake Test Suite Hierarchy/2 test cases inside/good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="bad_foo" file="xxx/log-formatter-test.cpp" line="220"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase></TestSuite><TestSuite name="4 test cases inside" file="xxx/log-formatter-test.cpp" line="230"><TestCase name="bad_foo" file="xxx/log-formatter-test.cpp" line="231"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="very_bad_foo" file="xxx/log-formatter-test.cpp" line="232"><FatalError file="xxx/log-formatter-test.cpp" line="64"><![CDATA[very_bad_foo is fatal]]><Context><Frame><![CDATA[some context]]></Frame></Context></FatalError><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="very_bad_exception" file="xxx/log-formatter-test.cpp" line="233"><Error file="xxx/log-formatter-test.cpp" line="73"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Exception file="unknown location" line="0"><![CDATA[unknown type]]><LastCheckpoint file="xxx/log-formatter-test.cpp" line="73"><![CDATA[]]></LastCheckpoint><Context><Frame><![CDATA[exception context should be shown]]></Frame></Context></Exception><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="bad_foo2" file="xxx/log-formatter-test.cpp" line="234"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase></TestSuite><TestSuite name="3 test cases inside" skipped="yes" reason="dependency test suite &quot;Fake Test Suite Hierarchy/1 test cases inside&quot; has failed"/></TestSuite></TestLog>
 * 3-format  *******************************************************************
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuite tests="8" skipped="3" errors="2" failures="4" id="0" name="Fake_Test_Suite_Hierarchy" time="0.1234">
 <testcase assertions="0" classname="1_test_cases_inside" name="good_foo" time="0.1234">
 <system-out><![CDATA[MESSAGE:
 - file   : boost.test framework
-- line   : 244
+- line   : 0
 - message: Test case Fake Test Suite Hierarchy/1 test cases inside/good_foo did not check any assertions
 
 ]]></system-out>
@@ -824,7 +825,7 @@ INFO:
 <testcase assertions="0" classname="2_test_cases_inside" name="good_foo" time="0.1234">
 <system-out><![CDATA[MESSAGE:
 - file   : boost.test framework
-- line   : 244
+- line   : 0
 - message: Test case Fake Test Suite Hierarchy/2 test cases inside/good_foo did not check any assertions
 
 ]]></system-out>
@@ -1230,14 +1231,14 @@ xxx/log-formatter-test.cpp:245: Leaving test case "timeout_foo"
 xxx/log-formatter-test.cpp:243: Leaving test suite "Timeout"
 
 * 2-format  *******************************************************************
-<TestLog><TestSuite name="Timeout" file="xxx/log-formatter-test.cpp" line="243"><TestCase name="good_foo" file="xxx/log-formatter-test.cpp" line="244"><Message file="boost.test framework" line="244"><![CDATA[Test case Timeout/good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="timeout_foo" file="xxx/log-formatter-test.cpp" line="245"><Exception file="unknown location" line="0"><![CDATA[fake  timeout]]></Exception><TestingTime>ZZZ</TestingTime></TestCase></TestSuite></TestLog>
+<TestLog><TestSuite name="Timeout" file="xxx/log-formatter-test.cpp" line="243"><TestCase name="good_foo" file="xxx/log-formatter-test.cpp" line="244"><Message file="boost.test framework" line="0"><![CDATA[Test case Timeout/good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="timeout_foo" file="xxx/log-formatter-test.cpp" line="245"><Exception file="unknown location" line="0"><![CDATA[fake  timeout]]></Exception><TestingTime>ZZZ</TestingTime></TestCase></TestSuite></TestLog>
 * 3-format  *******************************************************************
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuite tests="1" skipped="0" errors="0" failures="1" id="0" name="Timeout" time="0.1234">
 <testcase assertions="0" name="good_foo" time="0.1234">
 <system-out><![CDATA[MESSAGE:
 - file   : boost.test framework
-- line   : 244
+- line   : 0
 - message: Test case Timeout/good_foo did not check any assertions
 
 ]]></system-out>
@@ -1299,14 +1300,14 @@ xxx/log-formatter-test.cpp:255: Leaving test case "good_foo2"
 xxx/log-formatter-test.cpp:248: Leaving test suite "Timeout-nested"
 
 * 2-format  *******************************************************************
-<TestLog><TestSuite name="Timeout-nested" file="xxx/log-formatter-test.cpp" line="248"><TestCase name="good_foo" file="xxx/log-formatter-test.cpp" line="249"><Message file="boost.test framework" line="244"><![CDATA[Test case Timeout-nested/good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase><TestSuite name="Timeout" file="xxx/log-formatter-test.cpp" line="250"><TestCase name="good_foo" file="xxx/log-formatter-test.cpp" line="251"><Message file="boost.test framework" line="244"><![CDATA[Test case Timeout-nested/Timeout/good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="timeout_foo" file="xxx/log-formatter-test.cpp" line="252"><Exception file="unknown location" line="0"><![CDATA[fake  timeout]]></Exception><TestingTime>ZZZ</TestingTime></TestCase></TestSuite><TestCase name="good_foo2" file="xxx/log-formatter-test.cpp" line="255"><Message file="boost.test framework" line="244"><![CDATA[Test case Timeout-nested/good_foo2 did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase></TestSuite></TestLog>
+<TestLog><TestSuite name="Timeout-nested" file="xxx/log-formatter-test.cpp" line="248"><TestCase name="good_foo" file="xxx/log-formatter-test.cpp" line="249"><Message file="boost.test framework" line="0"><![CDATA[Test case Timeout-nested/good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase><TestSuite name="Timeout" file="xxx/log-formatter-test.cpp" line="250"><TestCase name="good_foo" file="xxx/log-formatter-test.cpp" line="251"><Message file="boost.test framework" line="0"><![CDATA[Test case Timeout-nested/Timeout/good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="timeout_foo" file="xxx/log-formatter-test.cpp" line="252"><Exception file="unknown location" line="0"><![CDATA[fake  timeout]]></Exception><TestingTime>ZZZ</TestingTime></TestCase></TestSuite><TestCase name="good_foo2" file="xxx/log-formatter-test.cpp" line="255"><Message file="boost.test framework" line="0"><![CDATA[Test case Timeout-nested/good_foo2 did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase></TestSuite></TestLog>
 * 3-format  *******************************************************************
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuite tests="3" skipped="0" errors="0" failures="1" id="0" name="Timeout-nested" time="0.1234">
 <testcase assertions="0" name="good_foo" time="0.1234">
 <system-out><![CDATA[MESSAGE:
 - file   : boost.test framework
-- line   : 244
+- line   : 0
 - message: Test case Timeout-nested/good_foo did not check any assertions
 
 ]]></system-out>
@@ -1314,7 +1315,7 @@ xxx/log-formatter-test.cpp:248: Leaving test suite "Timeout-nested"
 <testcase assertions="0" classname="Timeout" name="good_foo" time="0.1234">
 <system-out><![CDATA[MESSAGE:
 - file   : boost.test framework
-- line   : 244
+- line   : 0
 - message: Test case Timeout-nested/Timeout/good_foo did not check any assertions
 
 ]]></system-out>
@@ -1337,7 +1338,7 @@ fake  timeout
 <testcase assertions="0" name="good_foo2" time="0.1234">
 <system-out><![CDATA[MESSAGE:
 - file   : boost.test framework
-- line   : 244
+- line   : 0
 - message: Test case Timeout-nested/good_foo2 did not check any assertions
 
 ]]></system-out>
