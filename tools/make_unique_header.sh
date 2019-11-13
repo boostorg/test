@@ -1,7 +1,7 @@
 pcpp ../include/boost/test/unit_test.hpp \
     -I ../include/ \
     -I ../../preprocessor/include/ \
-    -I ../../config/include/ \
+    -I pcpp \
     --passthru-defines \
     --passthru-unknown-exprs \
     --line-directive \
@@ -9,7 +9,6 @@ pcpp ../include/boost/test/unit_test.hpp \
     -U BOOST_CLASSIC_IOSTREAMS \
     -U BOOST_NO_STD_DISTANCE \
     -U BOOST_NO_STRINGSTREAM \
-    -D BOOST_TEST_SUPPORT_TOKEN_ITERATOR \
     -U BOOST_USER_CONFIG -D BOOST_NO_USER_CONFIG -U BOOST_COMPILER_CONFIG -U BOOST_NO_COMPILER_CONFIG -U BOOST_NO_CONFIG \
     -U BOOST_NO_CXX11_TEMPLATE_ALIASES \
     -U BOOST_NO_CXX11_NUMERIC_LIMITS \
@@ -21,7 +20,15 @@ pcpp ../include/boost/test/unit_test.hpp \
     -U BOOST_NO_CXX11_DECLTYPE \
     -U BOOST_NO_CXX11_NOEXCEPT \
     -U BOOST_NO_CXX11_CONSTEXPR \
-    -D BOOST_TEST_NO_OLD_TOOLS \
+    -U BOOST_NO_CXX11_TRAILING_RESULT_TYPES \
+    -U BOOST_NO_CXX11_SMART_PTR \
+    -U BOOST_WORKAROUND \
+    -D BOOST_PP_VARIADICS=1 \
+    -U BOOST_DISABLE_WIN32 \
+    \
+    -D BOOST_TEST_SUPPORT_TOKEN_ITERATOR \
+    -D BOOST_TEST_DATASET_VARIADIC \
     -U BOOST_TEST_NO_NEW_TOOLS \
     -U BOOST_TEST_DOXYGEN_DOC__ \
-    -o test10.hpp                                                                                                               
+    -D BOOST_TEST_NO_OLD_TOOLS \
+    -o test10.hpp
