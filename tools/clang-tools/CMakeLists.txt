@@ -24,28 +24,44 @@ target_link_libraries(clang_tool PRIVATE
     #
     #clangAST
 #
-    #clangFrontendTool 
-    #clangFrontend 
-    #clangDriver 
+    #clangFrontendTool
+    #clangFrontend
+    #clangDriver
     #clangSerialization
-    #clangCodeGen 
-    #clangParse 
-    #clangSema 
-    #clangStaticAnalyzerFrontend 
+    #clangCodeGen
+    #clangParse
+    #clangSema
+    #clangStaticAnalyzerFrontend
     #clangStaticAnalyzerCheckers
     #clangStaticAnalyzerCore
-    #clangAnalysis 
-    #clangIndex 
-    #clangRewrite 
-    #clangLex 
-    #clangBasic    
+    #clangAnalysis
+    #clangIndex
+    #clangRewrite
+    #clangLex
+    #clangBasic
 #
 #
-    clangTooling 
-    clangFrontendTool 
-    clangFrontend 
-    clangDriver 
-    clangSerialization clangCodeGen clangParse clangSema clangStaticAnalyzerFrontend clangStaticAnalyzerCheckers clangStaticAnalyzerCore clangAnalysis clangARCMigrate clangRewrite clangRewriteFrontend clangEdit clangAST clangLex clangBasic clang
+    clangTooling
+    clangFrontendTool
+    clangFrontend
+    clangDriver
+    clangSerialization
+    clangCodeGen
+    clangParse
+    clangSema
+    clangStaticAnalyzerFrontend
+    clangStaticAnalyzerCheckers
+    clangStaticAnalyzerCore
+    clangAnalysis
+    clangARCMigrate
+    clangRewrite
+    clangRewriteFrontend
+    clangEdit
+    clangAST
+    clangASTMatchers
+    clangLex
+    clangBasic
+    clang
 )
 
 target_include_directories(clang_tool PRIVATE
