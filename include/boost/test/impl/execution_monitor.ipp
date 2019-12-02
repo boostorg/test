@@ -1309,11 +1309,7 @@ execution_monitor::execute( boost::function<int ()> const& F )
     catch( boost::exception const& ex )
       { detail::report_error( execution_exception::cpp_exception_error,
                               &ex,
-#if defined(BOOST_NO_TYPEID) || defined(BOOST_NO_RTTI)
-                              "unknown boost::exception" ); }
-#else
                               "%s", boost::diagnostic_information(ex).c_str() ); }
-#endif
 
     //  std:: exceptions
 #if defined(BOOST_NO_TYPEID) || defined(BOOST_NO_RTTI)
