@@ -30,6 +30,8 @@ Boost.Test releases:
 
 [h5 Bugfixes and feature requests]
 
+# [github_issue 237] Clang-cl's `-Wdelete-non-abstract-non-virtual-dtor` triggered by `test_case_gen`
+
 [#ref_CHANGE_LOG_3_12][h4 Boost.Test v3.12 / boost 1.72]
 
 [h5 New features]
