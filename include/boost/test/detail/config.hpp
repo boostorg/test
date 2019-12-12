@@ -64,10 +64,10 @@ class type_info;
 
 //____________________________________________________________________________//
 
-#if defined(__GNUC__) || BOOST_WORKAROUND(BOOST_MSVC, == 1400)
-#define BOOST_TEST_PROTECTED_VIRTUAL virtual
-#else
+#if BOOST_WORKAROUND(BOOST_MSVC, < 1400)
 #define BOOST_TEST_PROTECTED_VIRTUAL
+#else
+#define BOOST_TEST_PROTECTED_VIRTUAL virtual
 #endif
 
 //____________________________________________________________________________//
