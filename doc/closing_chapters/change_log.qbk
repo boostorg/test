@@ -31,6 +31,7 @@ Boost.Test releases:
 [h5 Bugfixes and feature requests]
 
 # [github_issue 237] Clang-cl's `-Wdelete-non-abstract-non-virtual-dtor` triggered by `test_case_gen`
+# [github_issue 241] warning: comparing floating point with == or != is unsafe `[-Wfloat-equal]`
 
 # [pull_request 41] Fix: activate virtual destructors for all `msvc` versions
 
