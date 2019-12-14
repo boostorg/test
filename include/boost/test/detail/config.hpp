@@ -112,7 +112,11 @@ class type_info;
 #    define BOOST_TEST_DECL BOOST_SYMBOL_IMPORT BOOST_SYMBOL_VISIBLE
 #  endif  // BOOST_TEST_SOURCE
 #else
-#  define BOOST_TEST_DECL BOOST_SYMBOL_VISIBLE
+#  if defined(BOOST_TEST_INCLUDED)
+#     define BOOST_TEST_DECL
+#  else
+#     define BOOST_TEST_DECL BOOST_SYMBOL_VISIBLE
+#  endif
 #endif
 
 #if !defined(BOOST_TEST_MAIN) && defined(BOOST_AUTO_TEST_MAIN)
