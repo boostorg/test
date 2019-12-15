@@ -32,6 +32,10 @@ Boost.Test releases:
 
 # [github_issue 237] Clang-cl's `-Wdelete-non-abstract-non-virtual-dtor` triggered by `test_case_gen`
 
+# [pull_request 41] Fix: activate virtual destructors for all `msvc` versions
+
+# [ticket 11107] A lot of warnings on MSVC due to protected destructor being non-virtual
+
 [#ref_CHANGE_LOG_3_12][h4 Boost.Test v3.12 / boost 1.72]
 
 [h5 New features]
