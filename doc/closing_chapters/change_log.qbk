@@ -35,6 +35,7 @@ Boost.Test releases:
 # [pull_request 41] Fix: activate virtual destructors for all `msvc` versions
 
 # [ticket 11107] A lot of warnings on MSVC due to protected destructor being non-virtual
+# [ticket 12072] Lots of `C4265` warnings in test when using Visual Studio 2015 (duplicates [ticket 11107])
 
 [#ref_CHANGE_LOG_3_12][h4 Boost.Test v3.12 / boost 1.72]
 
