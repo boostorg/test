@@ -30,6 +30,7 @@ Boost.Test releases:
 
 [h5 Bugfixes and feature requests]
 
+# [github_issue 235] Ugly GCC `-Wattributes` warnings that cannot be suppressed using /included/ variant
 # [github_issue 237] Clang-cl's `-Wdelete-non-abstract-non-virtual-dtor` triggered by `test_case_gen`
 
 # [pull_request 41] Fix: activate virtual destructors for all `msvc` versions
