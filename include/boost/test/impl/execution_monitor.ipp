@@ -1365,7 +1365,7 @@ execution_monitor::execute( boost::function<int ()> const& F )
 
 #endif // !BOOST_NO_EXCEPTIONS
 
-    return 0;  // never reached; supplied to quiet compiler warnings
+    BOOST_TEST_UNREACHABLE_RETURN(0);  // never reached; supplied to quiet compiler warnings
 } // execute
 
 //____________________________________________________________________________//

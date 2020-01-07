@@ -96,7 +96,7 @@ jobs:
   include:
     # libstdc++
     - { os: "linux", env: [ "TOOLSET=gcc-4.8",   "CXXSTD=03"             ], addons: *gcc-48    }
-    - { os: "linux", env: [ "TOOLSET=gcc-4.8",   "CXXSTD=11"             ], addons: *gcc-48    }
+    #- { os: "linux", env: [ "TOOLSET=gcc-4.8",   "CXXSTD=11"             ], addons: *gcc-48    }
     - { os: "linux", env: [ "TOOLSET=gcc-5",     "CXXSTD=03"             ], addons: *gcc-5     }
     - { os: "linux", env: [ "TOOLSET=gcc-5",     "CXXSTD=11"             ], addons: *gcc-5     }
     - { os: "linux", env: [ "TOOLSET=gcc-6",     "CXXSTD=11"             ], addons: *gcc-6     }
@@ -106,7 +106,7 @@ jobs:
     - { os: "linux", env: [ "TOOLSET=gcc-8",     "CXXSTD=17"             ], addons: *gcc-8     }
     - { os: "linux", env: [ "TOOLSET=gcc-8",     "CXXSTD=2a"             ], addons: *gcc-8     }
     - { os: "linux", env: [ "TOOLSET=clang-3.4", "CXXSTD=03"             ], addons: *clang-34  }
-    - { os: "linux", env: [ "TOOLSET=clang-3.4", "CXXSTD=11"             ], addons: *clang-34  }
+    #- { os: "linux", env: [ "TOOLSET=clang-3.4", "CXXSTD=11"             ], addons: *clang-34  }
     - { os: "linux", env: [ "TOOLSET=clang-3.8", "CXXSTD=03"             ], addons: *clang-38  }
     - { os: "linux", env: [ "TOOLSET=clang-3.8", "CXXSTD=11"             ], addons: *clang-38  }
     - { os: "linux", env: [ "TOOLSET=clang-4.0", "CXXSTD=11"             ], addons: *clang-4   }

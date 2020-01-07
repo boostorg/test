@@ -9,6 +9,7 @@
 
 Boost.Test releases:
 
+* [link ref_CHANGE_LOG_3_13 Boost.Test v3.13 / boost 1.73]
 * [link ref_CHANGE_LOG_3_12 Boost.Test v3.12 / boost 1.72]
 * [link ref_CHANGE_LOG_3_11 Boost.Test v3.11 / boost 1.71]
 * [link ref_CHANGE_LOG_3_10 Boost.Test v3.10 / boost 1.70]
@@ -22,6 +23,23 @@ Boost.Test releases:
 * [link ref_CHANGE_LOG_3_2 Boost.Test v3.2 / boost 1.61]
 * [link ref_CHANGE_LOG_3_1 Boost.Test v3.1 / boost 1.60]
 * [link ref_CHANGE_LOG_3_0 Boost.Test v3 / boost 1.59]
+
+[#ref_CHANGE_LOG_3_13][h4 Boost.Test v3.13 / boost 1.73]
+
+[h5 New features]
+
+[h5 Bugfixes and feature requests]
+
+# [github_issue 235] Ugly GCC `-Wattributes` warnings that cannot be suppressed using /included/ variant
+# [github_issue 237] Clang-cl's `-Wdelete-non-abstract-non-virtual-dtor` triggered by `test_case_gen`
+# [github_issue 241] warning: comparing floating point with == or != is unsafe `[-Wfloat-equal]`
+
+# [pull_request 41] Fix: activate virtual destructors for all `msvc` versions
+# [pull_request 114] Silence unreachable code warning in MSVC (`/W4`)
+# [pull_request 239] Fix unused variable warning in `unit_test_main.ipp`
+
+# [ticket 11107] A lot of warnings on MSVC due to protected destructor being non-virtual
+# [ticket 12072] Lots of `C4265` warnings in test when using Visual Studio 2015 (duplicates [ticket 11107])
 
 [#ref_CHANGE_LOG_3_12][h4 Boost.Test v3.12 / boost 1.72]
 
