@@ -124,7 +124,7 @@ print_log_value<char const*>::operator()( std::ostream& ostr, char const* t )
 void
 print_log_value<wchar_t const*>::operator()( std::ostream& ostr, wchar_t const* t )
 {
-    ostr << ( t ? t : L"null string" );
+    ostr << ( t ? reinterpret_cast<char const*>(t) : "null string" );
 }
 
 //____________________________________________________________________________//
