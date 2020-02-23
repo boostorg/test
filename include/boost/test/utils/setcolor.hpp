@@ -137,9 +137,12 @@ protected:
       return;
     }
 
-    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
-    GetConsoleScreenBufferInfo(hConsole, &consoleInfo);
-    saved_attributes = consoleInfo.wAttributes;
+    if (!s_default_attrs_initialized) {
+      CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+      GetConsoleScreenBufferInfo(hConsole, &consoleInfo);
+      s_default_attrs = consoleInfo.wAttributes;
+      s_default_attrs_initialized = true;
+    }
 
     WORD fg_attr = 0;
     switch(m_fg)
@@ -170,7 +173,7 @@ protected:
       break;
     case term_color::ORIGINAL:    
     default:
-      fg_attr = saved_attributes & (FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+      fg_attr = s_default_attrs & (FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
       break;
     }
 
@@ -194,7 +197,7 @@ protected:
       break;
     case term_color::ORIGINAL:    
     default:
-      bg_attr = saved_attributes & (BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE);
+      bg_attr = s_default_attrs & (BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE);
       break;
     }
 
@@ -242,11 +245,15 @@ private:
   term_color::_ m_bg;
 
 protected:
-  // Data members
-  mutable WORD saved_attributes;
+  static bool s_default_attrs_initialized;
+  static WORD s_default_attrs;
 };
 
+bool setcolor::s_default_attrs_initialized = false;
+unsigned short setcolor::s_default_attrs;
+
 #endif
+
 // ************************************************************************** //
 // **************                 scope_setcolor               ************** //
 // ************************************************************************** //
@@ -297,16 +304,16 @@ struct scope_setcolor : setcolor {
   ~scope_setcolor()
   {
     if (m_os) {
-      set_console_color(*m_os, &this->saved_attributes);
+      set_console_color(*m_os, &s_default_attrs);
     }
   }
+
 private:
   scope_setcolor(const scope_setcolor& r);
   scope_setcolor& operator=(const scope_setcolor& r);
   // Data members
   std::ostream* m_os;
 };
-
 
 #endif
 
