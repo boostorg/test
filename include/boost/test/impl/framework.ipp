@@ -49,7 +49,7 @@
 
 // Boost
 #include <boost/test/utils/timer.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 
 // STL
 #include <limits>
