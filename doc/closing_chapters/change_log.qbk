@@ -35,6 +35,7 @@ Boost.Test releases:
 # [github_issue 235] Ugly GCC `-Wattributes` warnings that cannot be suppressed using /included/ variant
 # [github_issue 237] Clang-cl's `-Wdelete-non-abstract-non-virtual-dtor` triggered by `test_case_gen`
 # [github_issue 241] warning: comparing floating point with == or != is unsafe `[-Wfloat-equal]`
+# [github_issue 245] code coverity test defect
 # [github_issue 246] Incorrect usage of `BOOST_HEADER_DEPRECATED`
 
 # [pull_request 41] Fix: activate virtual destructors for all `msvc` versions
