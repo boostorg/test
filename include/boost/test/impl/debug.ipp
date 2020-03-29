@@ -84,7 +84,7 @@ namespace std { using ::memset; using ::sprintf; }
 
 #    include <procfs.h>
 
-#  elif defined(linux) || defined(__linux)
+#  elif defined(linux) || defined(__linux__)
 
 #    define BOOST_LINUX_BASED_DEBUG
 

@@ -143,6 +143,10 @@ class type_info;
 #define BOOST_PP_VARIADICS 1
 #endif
 
+#if defined(__NVCC__)
+#define BOOST_PP_VARIADICS 1
+#endif
+
 #endif /* ifndef BOOST_PP_VARIADICS */
 
 // some versions of VC exibit a manifest error with this BOOST_UNREACHABLE_RETURN

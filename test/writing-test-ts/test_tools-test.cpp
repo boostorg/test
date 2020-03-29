@@ -25,7 +25,7 @@
 #include <boost/test/detail/suppress_warnings.hpp>
 
 // Boost
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 #include <boost/noncopyable.hpp>
 
 // STL
@@ -464,6 +464,7 @@ TEST_CASE( test_BOOST_CHECK_PREDICATE )
     using std::not_equal_to;
     BOOST_CHECK_PREDICATE( not_equal_to<int>(), (i)(17) );
 
+    using namespace boost::placeholders;
     int j=15;
     BOOST_CHECK_PREDICATE( boost::bind( is_even, boost::bind( &foo, _1, _2 ) ), (i)(j) );
 
