@@ -79,11 +79,11 @@ using std::va_list;
 #    include <eh.h>
 #  endif
 
-#  if defined(__BORLANDC__) && __BORLANDC__ >= 0x560 || defined(__MWERKS__)
+#  if defined(BOOST_BORLANDC) && BOOST_BORLANDC >= 0x560 || defined(__MWERKS__)
 #    include <stdint.h>
 #  endif
 
-#  if defined(__BORLANDC__) && __BORLANDC__ < 0x560
+#  if defined(BOOST_BORLANDC) && BOOST_BORLANDC < 0x560
     typedef unsigned uintptr_t;
 #  endif
 
@@ -123,7 +123,7 @@ _set_invalid_parameter_handler( _invalid_parameter_handler arg )
 
 #  endif
 
-#  if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x0564)) || defined(UNDER_CE)
+#  if BOOST_WORKAROUND(BOOST_BORLANDC, BOOST_TESTED_AT(0x0564)) || defined(UNDER_CE)
 
 namespace { void _set_se_translator( void* ) {} }
 
@@ -214,7 +214,7 @@ void throw_exception( std::exception const & e ) { abort(); }
 
 namespace detail {
 
-#ifdef __BORLANDC__
+#ifdef BOOST_BORLANDC
 #  define BOOST_TEST_VSNPRINTF( a1, a2, a3, a4 ) std::vsnprintf( (a1), (a2), (a3), (a4) )
 #elif BOOST_WORKAROUND(_MSC_VER, <= 1310) || \
       BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3000)) || \
@@ -903,7 +903,7 @@ execution_monitor::catch_signals( boost::function<int ()> const& F )
 // **************   Microsoft structured exception handling    ************** //
 // ************************************************************************** //
 
-#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x0564))
+#if BOOST_WORKAROUND(BOOST_BORLANDC, BOOST_TESTED_AT(0x0564))
 namespace { void _set_se_translator( void* ) {} }
 #endif
 

@@ -16,8 +16,9 @@
 #include <boost/config.hpp> // compilers workarounds
 #include <boost/detail/workaround.hpp>
 
-#if defined(_WIN32) && !defined(BOOST_DISABLE_WIN32) &&                  \
-    (!defined(__COMO__) && !defined(__MWERKS__) && !defined(__GNUC__) || \
+#if defined(_WIN32) && !defined(BOOST_DISABLE_WIN32) && \
+    (!defined(__COMO__) && !defined(__MWERKS__)      && \
+     !defined(__GNUC__) && !defined(BOOST_EMBTC)     || \
     BOOST_WORKAROUND(__MWERKS__, >= 0x3000))
 #  define BOOST_SEH_BASED_SIGNAL_HANDLING
 #endif
