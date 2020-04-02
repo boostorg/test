@@ -29,3 +29,4 @@ Master_Test_Suite*.xml
 smoke-ts-sink.*
 smoke-ts-sink-new-style.*
 build/build_dir
+build/build_*/
