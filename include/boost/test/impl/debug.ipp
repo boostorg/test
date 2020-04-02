@@ -95,7 +95,7 @@ namespace std { using ::memset; using ::sprintf; }
 #    endif
 
 #    ifndef BOOST_TEST_DBG_LIST
-#      define BOOST_TEST_DBG_LIST gdb
+#      define BOOST_TEST_DBG_LIST gdb;lldb
 #    endif
 
 #    define BOOST_TEST_CNL_DBG  gdb
