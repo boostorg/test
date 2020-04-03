@@ -169,7 +169,7 @@ BOOST_AUTO_TEST_CASE( test_logs )
         ts_3->add( BOOST_TEST_CASE( bad_foo ) );
         test_case* tc1 = BOOST_TEST_CASE( very_bad_foo );
         ts_3->add( tc1 );
-        test_case* tc2 = BOOST_TEST_CASE( bad_foo2 );
+        test_case* tc2 = BOOST_TEST_CASE_NAME( bad_foo2 , "bad_foo2<int>" ); // this is for skipped message GH-253
         ts_3->add( tc2 );
         tc2->depends_on( tc1 );
 
@@ -212,7 +212,7 @@ BOOST_AUTO_TEST_CASE( test_logs )
 
     check( test_output, ts_4 );
 
-    ts_1->add( BOOST_TEST_CASE( bad_foo ) );
+    ts_1->add( BOOST_TEST_CASE_NAME( bad_foo, "bad<bool>" ) );
     ts_3->depends_on( ts_1 );
 
     check( test_output, ts_main );
