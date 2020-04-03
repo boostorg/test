@@ -37,6 +37,7 @@ Boost.Test releases:
 # [github_issue 241] warning: comparing floating point with == or != is unsafe `[-Wfloat-equal]`
 # [github_issue 245] code coverity test defect
 # [github_issue 246] Incorrect usage of `BOOST_HEADER_DEPRECATED`
+# [github_issue 254] Console colors are not restored on Windows
 
 # [pull_request 41] Fix: activate virtual destructors for all `msvc` versions
 # [pull_request 114] Silence unreachable code warning in MSVC (`/W4`)
