@@ -1185,7 +1185,6 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     // 40. Register default test observers
     register_observer( results_collector );
     register_observer( unit_test_log );
-    register_observer( framework_init_observer );
 
     if( runtime_config::get<bool>( runtime_config::btrt_show_progress ) ) {
         progress_monitor.set_stream( std::cout ); // defaults to stdout
@@ -1605,6 +1604,33 @@ struct swap_on_delete {
     Cont& m_c2;
 };
 
+struct register_observer_helper {
+  register_observer_helper(test_observer& observer)
+  : m_observer(observer)
+  { 
+    register_obs();
+  }
+
+  ~register_observer_helper() {
+    if(m_registered)
+      deregister_observer( m_observer );
+  }
+
+  void deregister_obs() {
+    m_registered = false;
+    deregister_observer( m_observer );
+  }
+
+  void register_obs() {
+    m_registered = true;
+    register_observer( m_observer );
+  }
+  
+
+  test_observer& m_observer;
+  bool m_registered;
+};
+
 void
 run( test_unit_id id, bool continue_test )
 {
@@ -1626,6 +1652,9 @@ run( test_unit_id id, bool continue_test )
     bool    init_ok             = true;
     const_string setup_error;
 
+    framework_init_observer_t local_init_observer;
+    register_observer_helper init_observer_helper( local_init_observer );
+
     if( call_start_finish ) {
         // indicates the framework that no test is in progress now if observers need to be notified
         impl::s_frk_state().m_test_in_progress = false;
@@ -1639,7 +1668,7 @@ run( test_unit_id id, bool continue_test )
                         init_ok = false;
                     }
                     else {
-                        if( unit_test::framework_init_observer.has_failed() ) {
+                        if( local_init_observer.has_failed() ) {
                             init_ok = false;
                         }
                     }
@@ -1655,6 +1684,9 @@ run( test_unit_id id, bool continue_test )
             }
         }
     }
+
+    // removing this observer as it should not be of any use for the tests
+    init_observer_helper.deregister_obs();
 
     if( init_ok ) {
 
@@ -1694,7 +1726,10 @@ run( test_unit_id id, bool continue_test )
 
     results_reporter::make_report( INV_REPORT_LEVEL, id );
 
-    unit_test::framework_init_observer.clear();
+    // reinstalling this observer
+    init_observer_helper.register_obs();
+
+    local_init_observer.clear();
     if( call_start_finish ) {
         // indicates the framework that no test is in progress anymore if observers need to be notified
         // and this is a teardown, so assertions should not raise any exception otherwise an exception
@@ -1709,7 +1744,7 @@ run( test_unit_id id, bool continue_test )
     impl::s_frk_state().m_test_in_progress = was_in_progress;
 
     // propagates the init/teardown error if any
-    BOOST_TEST_SETUP_ASSERT( init_ok && !unit_test::framework_init_observer.has_failed(), setup_error );
+    BOOST_TEST_SETUP_ASSERT( init_ok && !local_init_observer.has_failed(), setup_error );
 }
 
 //____________________________________________________________________________//
