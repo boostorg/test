@@ -62,10 +62,6 @@ void check( output_test_stream& output,
             test_unit_id id,
             log_level ll = log_successful_tests )
 {
-    boost::unit_test::unit_test_log.set_format(log_format);
-    boost::unit_test::unit_test_log.set_stream(output);
-    boost::unit_test::unit_test_log.set_threshold_level(ll);
-  
     class reset_status : public test_tree_visitor {
     private:
         virtual bool    visit( test_unit const& tu )
@@ -75,21 +71,22 @@ void check( output_test_stream& output,
             return true;
         }
     } rstatus;
-  
-    // reinit the default/run status otherwise we cannot apply the decorators
-    // after the first run
-    traverse_test_tree( id, rstatus, true );
-    framework::get<test_suite>(id).p_default_status.value = test_unit::RS_ENABLED;
 
-    output << "* " << log_format << "-format  *******************************************************************";
-    output << std::endl;
-  
-    framework::finalize_setup_phase( id );
-    framework::run( id, false ); // do not continue the test tree to have the test_log_start/end
-    output << std::endl;
+    {
+      log_setup_teardown holder(output, log_format, ll);
 
-    boost::unit_test::unit_test_log.set_format(OF_CLF);
-    boost::unit_test::unit_test_log.set_stream(std::cout);
+      // reinit the default/run status otherwise we cannot apply the decorators
+      // after the first run
+      traverse_test_tree( id, rstatus, true );
+      framework::get<test_suite>(id).p_default_status.value = test_unit::RS_ENABLED;
+
+      output << "* " << log_format << "-format  *******************************************************************";
+      output << std::endl;
+  
+      framework::finalize_setup_phase( id );
+      framework::run( id, false ); // do not continue the test tree to have the test_log_start/end
+      output << std::endl;
+    }
 
     BOOST_TEST( output.match_pattern(true) ); // flushes the stream at the end of the comparison.
 }

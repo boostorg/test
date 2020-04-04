@@ -95,18 +95,14 @@ void check( output_test_stream& output,
             test_unit_id id,
             log_level ll = log_successful_tests )
 {
-    boost::unit_test::unit_test_log.set_format(log_format);
-    boost::unit_test::unit_test_log.set_stream(output);
-    boost::unit_test::unit_test_log.set_threshold_level(ll);
-
-    output << "* " << log_format << "-format  *******************************************************************";
-    output << std::endl;
-    framework::finalize_setup_phase( id );
-    framework::run( id, false ); // do not continue the test tree to have the test_log_start/end
-    output << std::endl;
-
-    boost::unit_test::unit_test_log.set_format(OF_CLF);
-    boost::unit_test::unit_test_log.set_stream(std::cout);
+    {
+      log_setup_teardown holder(output, log_format, ll);
+      output << "* " << log_format << "-format  *******************************************************************";
+      output << std::endl;
+      framework::finalize_setup_phase( id );
+      framework::run( id, false ); // do not continue the test tree to have the test_log_start/end
+      output << std::endl;
+    }
 
     BOOST_TEST( output.match_pattern(true) ); // flushes the stream at the end of the comparison.
 }
@@ -153,7 +149,7 @@ BOOST_AUTO_TEST_CASE( test_logs )
                                                 true,
                                                 __FILE__ );
 
-#line 207
+#line 157
     test_suite* ts_0 = BOOST_TEST_SUITE( "0 test cases inside" );
 
     test_suite* ts_1 = BOOST_TEST_SUITE( "1 test cases inside" );
@@ -245,7 +241,7 @@ BOOST_AUTO_TEST_CASE( test_logs_junit_info_closing_tags )
                                                 true,
                                                 __FILE__ );
 
-#line 218
+#line 249
     test_suite* ts_main = BOOST_TEST_SUITE( "1 test cases inside" );
     ts_main->add( BOOST_TEST_CASE( almost_good_foo ) );
 
