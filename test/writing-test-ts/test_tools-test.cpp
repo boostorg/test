@@ -37,6 +37,8 @@
 # pragma warning(disable: 4702) // unreachable code
 #endif
 
+#include "../framework-ts/logger-for-tests.hpp"
+
 namespace ut=boost::unit_test;
 namespace tt=boost::test_tools;
 
@@ -122,22 +124,27 @@ BOOST_AUTO_TEST_CASE( name )                                        \
                                              __LINE__ );            \
     impl->p_default_status.value = ut::test_unit::RS_ENABLED;       \
                                                                     \
-    ut::unit_test_log.set_stream( ots() );                          \
-    ut::unit_test_log.set_threshold_level( ut::log_nothing );       \
-    ut::unit_test_log.set_formatter( new shorten_lf );              \
-    ut::framework::finalize_setup_phase( impl->p_id );              \
-    ut::framework::run( impl );                                     \
+    /* to detect for issues concerning the file pattern, we take    
+       the stream now */                                            \
+    tt::output_test_stream& stream = ots();                         \
                                                                     \
-    ut::log_level ll = ut::runtime_config::get<ut::log_level>(      \
-        ut::runtime_config::btrt_log_level );                       \
-    ut::output_format lf = ut::runtime_config::get<ut::output_format>( \
-        ut::runtime_config::btrt_log_format );                      \
+    {                                                               \
+        ut::log_level ll = ut::runtime_config::get<ut::log_level>(  \
+              ut::runtime_config::btrt_log_level );                 \
+        ut::unit_test_log.set_formatter( new shorten_lf );          \
+        log_setup_teardown holder(stream,                           \
+                                  OF_CUSTOM_LOGGER,                 \
+                                  ut::log_nothing,                  \
+                                  ll != ut::invalid_log_level ?     \
+                                      ll                            \
+                                      : ut::log_all_errors );       \
                                                                     \
-    ut::unit_test_log.set_threshold_level(                          \
-        ll != ut::invalid_log_level ? ll : ut::log_all_errors );    \
-    ut::unit_test_log.set_format( lf );                             \
-    ut::unit_test_log.set_stream( std::cout );                      \
-    BOOST_CHECK( ots().match_pattern() );                           \
+        ut::framework::finalize_setup_phase( impl->p_id );          \
+        ut::framework::run( impl );                                 \
+                                                                    \
+    }                                                               \
+                                                                    \
+    BOOST_CHECK( stream.match_pattern() );                          \
 }                                                                   \
                                                                     \
 void name ## _impl()                                                \
