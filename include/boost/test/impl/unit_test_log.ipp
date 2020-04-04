@@ -162,6 +162,33 @@ struct unit_test_log_impl {
 
 unit_test_log_impl& s_log_impl() { static unit_test_log_impl the_inst; return the_inst; }
 
+
+//____________________________________________________________________________//
+
+void
+log_entry_context( log_level l, unit_test_log_data_helper_impl& current_logger_data)
+{
+    framework::context_generator const& context = framework::get_context();
+    if( context.is_empty() )
+        return;
+
+    const_string frame;
+    current_logger_data.m_log_formatter->entry_context_start( current_logger_data.stream(), l );
+    while( !(frame=context.next()).is_empty() )
+    {
+        current_logger_data.m_log_formatter->log_entry_context( current_logger_data.stream(), l, frame );
+    }
+    current_logger_data.m_log_formatter->entry_context_finish( current_logger_data.stream(), l );
+}
+
+//____________________________________________________________________________//
+
+void
+clear_entry_context()
+{
+    framework::clear_context();
+}
+
 // convenience
 typedef unit_test_log_impl::vp_formatter_data_t vp_logger_t;
 typedef unit_test_log_impl::v_formatter_data_t v_logger_t;
@@ -348,7 +375,7 @@ unit_test_log_t::exception_caught( execution_exception const& ex )
 
           current_logger_data.m_log_formatter->log_exception_start( current_logger_data.stream(), s_log_impl().m_checkpoint_data, ex );
 
-          log_entry_context( l );
+          log_entry_context( l, current_logger_data );
 
           current_logger_data.m_log_formatter->log_exception_finish( current_logger_data.stream() );
       }
@@ -405,13 +432,15 @@ unit_test_log_t&
 unit_test_log_t::operator<<( log::end const& )
 {
     if( s_log_impl().has_entry_in_progress() ) {
-        log_entry_context( s_log_impl().m_entry_data.m_level );
-
         vp_logger_t& vloggers = s_log_impl().m_active_log_formatter_data;
+        log_level l = s_log_impl().m_entry_data.m_level;
         for( vp_logger_t::iterator it(vloggers.begin()), ite(vloggers.end()); it < ite; ++it)
         {
             unit_test_log_data_helper_impl& current_logger_data = **it;
             if( current_logger_data.m_entry_in_progress ) {
+                if( l >= current_logger_data.get_log_level() ) {
+                    log_entry_context( l, current_logger_data );
+                }
                 current_logger_data.m_log_formatter->log_entry_finish( current_logger_data.stream() );
             }
             current_logger_data.m_entry_in_progress = false;
@@ -497,9 +526,10 @@ unit_test_log_t::operator<<( const_string value )
     for( vp_logger_t::iterator it(vloggers.begin()), ite(vloggers.end()); it < ite; ++it)
     {
         unit_test_log_data_helper_impl& current_logger_data = **it;
-        if( s_log_impl().m_entry_data.m_level >= current_logger_data.get_log_level() && log_entry_start(current_logger_data) )
-            current_logger_data.m_log_formatter->log_entry_value( current_logger_data.stream(), value );
-
+        if( s_log_impl().m_entry_data.m_level >= current_logger_data.get_log_level() )
+            if( log_entry_start(current_logger_data) ) {
+                current_logger_data.m_log_formatter->log_entry_value( current_logger_data.stream(), value );
+            }
     }
     return *this;
 }
@@ -524,48 +554,6 @@ unit_test_log_t::operator<<( lazy_ostream const& value )
         }
     }
     return *this;
-}
-
-//____________________________________________________________________________//
-
-void
-unit_test_log_t::log_entry_context( log_level l )
-{
-    framework::context_generator const& context = framework::get_context();
-    if( context.is_empty() )
-        return;
-
-    const_string frame;
-
-    vp_logger_t& vloggers = s_log_impl().m_active_log_formatter_data;
-    for( vp_logger_t::iterator it(vloggers.begin()), ite(vloggers.end()); it < ite; ++it)
-    {
-        unit_test_log_data_helper_impl& current_logger_data = **it;
-        current_logger_data.m_log_formatter->entry_context_start( current_logger_data.stream(), l );
-    }
-
-    while( !(frame=context.next()).is_empty() )
-    {
-        for( vp_logger_t::iterator it(vloggers.begin()), ite(vloggers.end()); it < ite; ++it)
-        {
-            unit_test_log_data_helper_impl& current_logger_data = **it;
-            current_logger_data.m_log_formatter->log_entry_context( current_logger_data.stream(), l, frame );
-        }
-    }
-
-    for( vp_logger_t::iterator it(vloggers.begin()), ite(vloggers.end()); it < ite; ++it)
-    {
-        unit_test_log_data_helper_impl& current_logger_data = **it;
-        current_logger_data.m_log_formatter->entry_context_finish( current_logger_data.stream(), l );
-    }
-}
-
-//____________________________________________________________________________//
-
-void
-unit_test_log_t::clear_entry_context()
-{
-    framework::clear_context();
 }
 
 //____________________________________________________________________________//
