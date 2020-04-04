@@ -991,6 +991,7 @@ setup_loggers()
                                      log_cleaner );
             }
             unit_test_log.set_stream( stream_logger.ref() );
+            unit_test_log.configure();
         }
         else
         {
