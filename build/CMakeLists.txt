@@ -60,9 +60,6 @@ set(BOOST_ROOT_DIR ${BOOST_TEST_ROOT_DIR}/../..)
 get_filename_component(BOOST_TEST_ROOT_DIR_ABS ${BoostTest_SOURCE_DIR}/.. ABSOLUTE)
 get_filename_component(BOOST_ROOT_DIR_ABS ${BOOST_ROOT_DIR} ABSOLUTE)
 
-# global include on boost
-include_directories(${BOOST_ROOT_DIR_ABS}/)
-
 # include globs
 file(GLOB_RECURSE
      BOOST_UTF_HEADERS
@@ -106,7 +103,10 @@ add_library(boost_test_framework
             ${BOOST_UTF_HEADERS}
             ${BOOST_UTF_SRC})
 #target_compile_definitions(boost_test_framework PUBLIC "-DBOOST_TEST_DYN_LINK=0")
-target_include_directories(boost_test_framework PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
+target_include_directories(boost_test_framework 
+    PUBLIC 
+        ${BOOST_TEST_ROOT_DIR}/include/ 
+        ${BOOST_ROOT_DIR_ABS}/)
 set_target_properties(boost_test_framework PROPERTIES FOLDER "UTF")
 
 add_library(boost_test_framework_shared
@@ -114,7 +114,10 @@ add_library(boost_test_framework_shared
             ${BOOST_UTF_HEADERS}
             ${BOOST_UTF_SRC})
 target_compile_definitions(boost_test_framework_shared PUBLIC "-DBOOST_TEST_DYN_LINK=1")
-target_include_directories(boost_test_framework_shared PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
+target_include_directories(boost_test_framework_shared 
+    PUBLIC 
+        ${BOOST_TEST_ROOT_DIR}/include/ 
+        ${BOOST_ROOT_DIR_ABS}/)
 set_target_properties(boost_test_framework_shared PROPERTIES FOLDER "UTF")
 
 
@@ -142,7 +145,10 @@ file(GLOB_RECURSE
 foreach(_h IN LISTS BOOST_UTF_DOC_EXAMPLES)
   get_filename_component(_hh ${_h} NAME_WE)
   add_executable(doc-${_hh} ${_h} ${BOOST_TEST_ROOT_DIR}/doc/examples/${_hh}.output)
-  target_include_directories(doc-${_hh} PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
+  target_include_directories(doc-${_hh} 
+    PUBLIC 
+        ${BOOST_TEST_ROOT_DIR}/include/
+        ${BOOST_ROOT_DIR_ABS}/)
   set_target_properties(doc-${_hh} PROPERTIES FOLDER "Doc examples")
 
   add_test(NAME doc-${_hh}-test
@@ -167,7 +173,10 @@ file(GLOB
      ${BOOST_TEST_UNITTESTS_FOLDER}/test-organization-ts/datasets-test/*.cpp
      ${BOOST_TEST_UNITTESTS_FOLDER}/test-organization-ts/datasets-test/*.hpp)
 add_executable(boost_test_datasets ${BOOST_TEST_UNITTESTS_DATASET})
-target_include_directories(boost_test_datasets PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
+target_include_directories(boost_test_datasets 
+    PUBLIC 
+        ${BOOST_TEST_ROOT_DIR}/include/
+        ${BOOST_ROOT_DIR_ABS}/)
 target_link_libraries(boost_test_datasets boost_test_framework)
 #target_compile_definitions(boost_test_datasets PUBLIC "BOOST_TEST_DYN_LINK=0")
 set_target_properties(boost_test_datasets PROPERTIES FOLDER "Unit tests")
