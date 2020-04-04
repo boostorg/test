@@ -111,7 +111,7 @@ private:
 class BOOST_TEST_DECL unit_test_log_t : public test_observer {
 public:
     // test_observer interface implementation
-    virtual void        test_start( counter_t test_cases_amount );
+    virtual void        test_start( counter_t test_cases_amount, test_unit_id );
     virtual void        test_finish();
     virtual void        test_aborted();
 

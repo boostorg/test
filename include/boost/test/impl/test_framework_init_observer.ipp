@@ -38,7 +38,7 @@ framework_init_observer_t::clear()
 //____________________________________________________________________________//
 
 void
-framework_init_observer_t::test_start( counter_t )
+framework_init_observer_t::test_start( counter_t, test_unit_id )
 {
     clear();
 }

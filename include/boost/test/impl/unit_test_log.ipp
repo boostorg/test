@@ -164,7 +164,7 @@ BOOST_TEST_SINGLETON_CONS_IMPL( unit_test_log_t )
 //____________________________________________________________________________//
 
 void
-unit_test_log_t::test_start( counter_t test_cases_amount )
+unit_test_log_t::test_start( counter_t test_cases_amount, test_unit_id )
 {
     BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
       if( !current_logger_data.m_enabled || current_logger_data.get_log_level() == log_nothing )
