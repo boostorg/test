@@ -279,11 +279,11 @@ xxx/log-formatter-test.cpp:64: fatal error: in "Fake Test Suite Hierarchy/3 test
 Failure occurred in a following context:
     some context
 xxx/log-formatter-test.cpp:174: Leaving test case "very_bad_foo"
-xxx/log-formatter-test.cpp:176: Test case "Fake Test Suite Hierarchy/3 test cases inside/bad_foo2" is skipped because dependency test case "Fake Test Suite Hierarchy/3 test cases inside/very_bad_foo" has failed
+xxx/log-formatter-test.cpp:176: Test case "Fake Test Suite Hierarchy/3 test cases inside/bad_foo2<int>" is skipped because dependency test case "Fake Test Suite Hierarchy/3 test cases inside/very_bad_foo" has failed
 xxx/log-formatter-test.cpp:172: Leaving test suite "3 test cases inside"
 
 * 2-format  *******************************************************************
-<TestLog><TestSuite name="3 test cases inside" file="xxx/log-formatter-test.cpp" line="172"><TestCase name="bad_foo" file="xxx/log-formatter-test.cpp" line="173"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="very_bad_foo" file="xxx/log-formatter-test.cpp" line="174"><FatalError file="xxx/log-formatter-test.cpp" line="64"><![CDATA[very_bad_foo is fatal]]><Context><Frame><![CDATA[some context]]></Frame></Context></FatalError><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="bad_foo2" skipped="yes" reason="dependency test case &quot;Fake Test Suite Hierarchy/3 test cases inside/very_bad_foo&quot; has failed"/></TestSuite></TestLog>
+<TestLog><TestSuite name="3 test cases inside" file="xxx/log-formatter-test.cpp" line="172"><TestCase name="bad_foo" file="xxx/log-formatter-test.cpp" line="173"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="very_bad_foo" file="xxx/log-formatter-test.cpp" line="174"><FatalError file="xxx/log-formatter-test.cpp" line="64"><![CDATA[very_bad_foo is fatal]]><Context><Frame><![CDATA[some context]]></Frame></Context></FatalError><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="bad_foo2&lt;int&gt;" skipped="yes" reason="dependency test case &quot;Fake Test Suite Hierarchy/3 test cases inside/very_bad_foo&quot; has failed"/></TestSuite></TestLog>
 * 3-format  *******************************************************************
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuite tests="2" skipped="1" errors="1" failures="1" id="0" name="3_test_cases_inside" time="0.1234">
@@ -343,10 +343,10 @@ ASSERTION FAILURE:
 - line: 174
 ]]></system-err>
 </testcase>
-<testcase assertions="0" name="bad_foo2" time="0.1234">
+<testcase assertions="0" name="bad_foo2&lt;int&gt;" time="0.1234">
 <skipped/>
 <system-out><![CDATA[Test case disabled because of the following chain of decision:
-- disabled test unit: 'Fake Test Suite Hierarchy/3 test cases inside/bad_foo2'
+- disabled test unit: 'Fake Test Suite Hierarchy/3 test cases inside/bad_foo2<int>'
 - reason: 'dependency test case "Fake Test Suite Hierarchy/3 test cases inside/very_bad_foo" has failed']]></system-out>
 </testcase>
 </testsuite>
@@ -398,10 +398,10 @@ ASSERTION FAILURE:
 - line: 174
 ]]></system-err>
 </testcase>
-<testcase assertions="0" name="bad_foo2" time="0.1234">
+<testcase assertions="0" name="bad_foo2&lt;int&gt;" time="0.1234">
 <skipped/>
 <system-out><![CDATA[Test case disabled because of the following chain of decision:
-- disabled test unit: 'Fake Test Suite Hierarchy/3 test cases inside/bad_foo2'
+- disabled test unit: 'Fake Test Suite Hierarchy/3 test cases inside/bad_foo2<int>'
 - reason: 'dependency test case "Fake Test Suite Hierarchy/3 test cases inside/very_bad_foo" has failed']]></system-out>
 </testcase>
 </testsuite>
@@ -703,16 +703,16 @@ xxx/log-formatter-test.cpp:159: Entering test suite "1 test cases inside"
 xxx/log-formatter-test.cpp:160: Entering test case "good_foo"
 Test case Fake Test Suite Hierarchy/1 test cases inside/good_foo did not check any assertions
 xxx/log-formatter-test.cpp:160: Leaving test case "good_foo"
-xxx/log-formatter-test.cpp:219: Entering test case "bad_foo"
-xxx/log-formatter-test.cpp:50: error: in "Fake Test Suite Hierarchy/1 test cases inside/bad_foo": 
+xxx/log-formatter-test.cpp:219: Entering test case "bad<bool>"
+xxx/log-formatter-test.cpp:50: error: in "Fake Test Suite Hierarchy/1 test cases inside/bad<bool>": 
 this is a message
 xxx/log-formatter-test.cpp:53: info: check true has passed
-xxx/log-formatter-test.cpp:57: error: in "Fake Test Suite Hierarchy/1 test cases inside/bad_foo": with some message
+xxx/log-formatter-test.cpp:57: error: in "Fake Test Suite Hierarchy/1 test cases inside/bad<bool>": with some message
 Failure occurred in a following context:
     Context value=something
     Context value2=something different
-xxx/log-formatter-test.cpp:59: error: in "Fake Test Suite Hierarchy/1 test cases inside/bad_foo": non sense
-xxx/log-formatter-test.cpp:219: Leaving test case "bad_foo"
+xxx/log-formatter-test.cpp:59: error: in "Fake Test Suite Hierarchy/1 test cases inside/bad<bool>": non sense
+xxx/log-formatter-test.cpp:219: Leaving test case "bad<bool>"
 xxx/log-formatter-test.cpp:159: Leaving test suite "1 test cases inside"
 xxx/log-formatter-test.cpp:168: Entering test suite "2 test cases inside"
 xxx/log-formatter-test.cpp:169: Entering test case "good_foo"
@@ -770,7 +770,7 @@ xxx/log-formatter-test.cpp:172: Test suite "Fake Test Suite Hierarchy/3 test cas
 xxx/log-formatter-test.cpp:186: Leaving test suite "Fake Test Suite Hierarchy"
 
 * 2-format  *******************************************************************
-<TestLog><TestSuite name="Fake Test Suite Hierarchy" file="xxx/log-formatter-test.cpp" line="186"><TestSuite name="0 test cases inside" skipped="yes" reason="disabled"/><TestSuite name="1 test cases inside" file="xxx/log-formatter-test.cpp" line="159"><TestCase name="good_foo" file="xxx/log-formatter-test.cpp" line="160"><Message file="boost.test framework" line="0"><![CDATA[Test case Fake Test Suite Hierarchy/1 test cases inside/good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="bad_foo" file="xxx/log-formatter-test.cpp" line="219"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase></TestSuite><TestSuite name="2 test cases inside" file="xxx/log-formatter-test.cpp" line="168"><TestCase name="good_foo" file="xxx/log-formatter-test.cpp" line="169"><Message file="boost.test framework" line="0"><![CDATA[Test case Fake Test Suite Hierarchy/2 test cases inside/good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="bad_foo" file="xxx/log-formatter-test.cpp" line="170"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase></TestSuite><TestSuite name="4 test cases inside" file="xxx/log-formatter-test.cpp" line="180"><TestCase name="bad_foo" file="xxx/log-formatter-test.cpp" line="181"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="very_bad_foo" file="xxx/log-formatter-test.cpp" line="182"><FatalError file="xxx/log-formatter-test.cpp" line="64"><![CDATA[very_bad_foo is fatal]]><Context><Frame><![CDATA[some context]]></Frame></Context></FatalError><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="very_bad_exception" file="xxx/log-formatter-test.cpp" line="183"><Error file="xxx/log-formatter-test.cpp" line="73"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Exception file="unknown location" line="0"><![CDATA[unknown type]]><LastCheckpoint file="xxx/log-formatter-test.cpp" line="73"><![CDATA[]]></LastCheckpoint><Context><Frame><![CDATA[exception context should be shown]]></Frame></Context></Exception><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="bad_foo2" file="xxx/log-formatter-test.cpp" line="184"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase></TestSuite><TestSuite name="3 test cases inside" skipped="yes" reason="dependency test suite &quot;Fake Test Suite Hierarchy/1 test cases inside&quot; has failed"/></TestSuite></TestLog>
+<TestLog><TestSuite name="Fake Test Suite Hierarchy" file="xxx/log-formatter-test.cpp" line="186"><TestSuite name="0 test cases inside" skipped="yes" reason="disabled"/><TestSuite name="1 test cases inside" file="xxx/log-formatter-test.cpp" line="159"><TestCase name="good_foo" file="xxx/log-formatter-test.cpp" line="160"><Message file="boost.test framework" line="0"><![CDATA[Test case Fake Test Suite Hierarchy/1 test cases inside/good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="bad&lt;bool&gt;" file="xxx/log-formatter-test.cpp" line="219"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase></TestSuite><TestSuite name="2 test cases inside" file="xxx/log-formatter-test.cpp" line="168"><TestCase name="good_foo" file="xxx/log-formatter-test.cpp" line="169"><Message file="boost.test framework" line="0"><![CDATA[Test case Fake Test Suite Hierarchy/2 test cases inside/good_foo did not check any assertions]]></Message><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="bad_foo" file="xxx/log-formatter-test.cpp" line="170"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase></TestSuite><TestSuite name="4 test cases inside" file="xxx/log-formatter-test.cpp" line="180"><TestCase name="bad_foo" file="xxx/log-formatter-test.cpp" line="181"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="very_bad_foo" file="xxx/log-formatter-test.cpp" line="182"><FatalError file="xxx/log-formatter-test.cpp" line="64"><![CDATA[very_bad_foo is fatal]]><Context><Frame><![CDATA[some context]]></Frame></Context></FatalError><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="very_bad_exception" file="xxx/log-formatter-test.cpp" line="183"><Error file="xxx/log-formatter-test.cpp" line="73"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Exception file="unknown location" line="0"><![CDATA[unknown type]]><LastCheckpoint file="xxx/log-formatter-test.cpp" line="73"><![CDATA[]]></LastCheckpoint><Context><Frame><![CDATA[exception context should be shown]]></Frame></Context></Exception><TestingTime>ZZZ</TestingTime></TestCase><TestCase name="bad_foo2" file="xxx/log-formatter-test.cpp" line="184"><Error file="xxx/log-formatter-test.cpp" line="50"><![CDATA[]]></Error><Message file="xxx/log-formatter-test.cpp" line="52"><![CDATA[this is a message]]></Message><Info file="xxx/log-formatter-test.cpp" line="53"><![CDATA[check true has passed]]></Info><Error file="xxx/log-formatter-test.cpp" line="57"><![CDATA[with some message]]><Context><Frame><![CDATA[Context value=something]]></Frame><Frame><![CDATA[Context value2=something different]]></Frame></Context></Error><Error file="xxx/log-formatter-test.cpp" line="59"><![CDATA[non sense]]></Error><TestingTime>ZZZ</TestingTime></TestCase></TestSuite><TestSuite name="3 test cases inside" skipped="yes" reason="dependency test suite &quot;Fake Test Suite Hierarchy/1 test cases inside&quot; has failed"/></TestSuite></TestLog>
 * 3-format  *******************************************************************
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuite tests="8" skipped="3" errors="2" failures="4" id="0" name="Fake_Test_Suite_Hierarchy" time="0.1234">
@@ -782,7 +782,7 @@ xxx/log-formatter-test.cpp:186: Leaving test suite "Fake Test Suite Hierarchy"
 
 ]]></system-out>
 </testcase>
-<testcase assertions="4" classname="1_test_cases_inside" name="bad_foo" time="0.1234">
+<testcase assertions="4" classname="1_test_cases_inside" name="bad&lt;bool&gt;" time="0.1234">
 <failure message="failure" type="assertion error"><![CDATA[
 ASSERTION FAILURE:
 - file   : log-formatter-test.cpp
@@ -817,7 +817,7 @@ INFO:
 
 ]]></system-out>
 <system-err><![CDATA[Failures detected in:
-- test case: Fake Test Suite Hierarchy/1 test cases inside/bad_foo
+- test case: Fake Test Suite Hierarchy/1 test cases inside/bad<bool>
 - file: log-formatter-test.cpp
 - line: 219
 ]]></system-err>
@@ -884,10 +884,10 @@ INFO:
 - disabled test unit: 'Fake Test Suite Hierarchy/3 test cases inside'
 - reason: 'dependency test suite "Fake Test Suite Hierarchy/1 test cases inside" has failed']]></system-out>
 </testcase>
-<testcase assertions="0" classname="3_test_cases_inside" name="bad_foo2" time="0.1234">
+<testcase assertions="0" classname="3_test_cases_inside" name="bad_foo2&lt;int&gt;" time="0.1234">
 <skipped/>
 <system-out><![CDATA[Test case disabled because of the following chain of decision:
-- disabled test unit: 'Fake Test Suite Hierarchy/3 test cases inside/bad_foo2'
+- disabled test unit: 'Fake Test Suite Hierarchy/3 test cases inside/bad_foo2<int>'
 - disabled test unit: 'Fake Test Suite Hierarchy/3 test cases inside'
 - reason: 'dependency test suite "Fake Test Suite Hierarchy/1 test cases inside" has failed']]></system-out>
 </testcase>
@@ -1028,7 +1028,7 @@ INFO:
 <testsuite tests="8" skipped="3" errors="2" failures="4" id="0" name="Fake_Test_Suite_Hierarchy" time="0.1234">
 <testcase assertions="0" classname="1_test_cases_inside" name="good_foo" time="0.1234">
 </testcase>
-<testcase assertions="4" classname="1_test_cases_inside" name="bad_foo" time="0.1234">
+<testcase assertions="4" classname="1_test_cases_inside" name="bad&lt;bool&gt;" time="0.1234">
 <failure message="failure" type="assertion error"><![CDATA[
 ASSERTION FAILURE:
 - file   : log-formatter-test.cpp
@@ -1052,7 +1052,7 @@ ASSERTION FAILURE:
 - message: non sense
 
 ]]></failure><system-err><![CDATA[Failures detected in:
-- test case: Fake Test Suite Hierarchy/1 test cases inside/bad_foo
+- test case: Fake Test Suite Hierarchy/1 test cases inside/bad<bool>
 - file: log-formatter-test.cpp
 - line: 219
 ]]></system-err>
@@ -1102,10 +1102,10 @@ ASSERTION FAILURE:
 - disabled test unit: 'Fake Test Suite Hierarchy/3 test cases inside'
 - reason: 'dependency test suite "Fake Test Suite Hierarchy/1 test cases inside" has failed']]></system-out>
 </testcase>
-<testcase assertions="0" classname="3_test_cases_inside" name="bad_foo2" time="0.1234">
+<testcase assertions="0" classname="3_test_cases_inside" name="bad_foo2&lt;int&gt;" time="0.1234">
 <skipped/>
 <system-out><![CDATA[Test case disabled because of the following chain of decision:
-- disabled test unit: 'Fake Test Suite Hierarchy/3 test cases inside/bad_foo2'
+- disabled test unit: 'Fake Test Suite Hierarchy/3 test cases inside/bad_foo2<int>'
 - disabled test unit: 'Fake Test Suite Hierarchy/3 test cases inside'
 - reason: 'dependency test suite "Fake Test Suite Hierarchy/1 test cases inside" has failed']]></system-out>
 </testcase>
