@@ -32,7 +32,7 @@ The corresponding environment variable name is also case sensitive and is requir
 parameter specification.
 
 All information about the currently supported parameters of the __UTF__ is summarized in
-the section [link boost_test.runtime_config.summary].
+the [link boost_test.runtime_config.summary summary section].
 
 [h4 Test filtering]
 The __UTF__ provides an extensive filtering facility making it easy to run a specific test or a subset of tests. The
