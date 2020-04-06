@@ -220,10 +220,6 @@ public:
     //! Prepares internal states after log levels, streams and format has been set up
     void                configure();
 private:
-    // Implementation helpers
-    void                log_entry_context( log_level l );
-    void                clear_entry_context();
-
     // Singleton
     BOOST_TEST_SINGLETON_CONS( unit_test_log_t )
 }; // unit_test_log_t
