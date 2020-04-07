@@ -20,6 +20,9 @@
 
 #include <boost/test/tools/assertion_result.hpp>
 
+#include <boost/shared_ptr.hpp>
+#include <list>
+
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
@@ -28,16 +31,41 @@ namespace boost {
 namespace test_tools {
 namespace tt_detail {
 
+struct assertion_evaluation_context 
+{
+    assertion_evaluation_context(bool has_report = false)
+    : m_has_report(has_report)
+    {}
+
+    bool m_has_report;
+};
+
 // ************************************************************************** //
 // **************        assertion_evaluate indirection        ************** //
 // ************************************************************************** //
 
 template<typename E>
 struct assertion_evaluate_t {
-    assertion_evaluate_t( E const& e ) : m_e( e ) {}
-    operator assertion_result() { return m_e.evaluate( true ); }
+
+    typedef shared_ptr<assertion_evaluation_context> context_holder;
+
+    assertion_evaluate_t( E const& e ) : m_e( e ), m_evaluate( true ) 
+    {}
+    
+    operator assertion_result() { return m_e.evaluate( m_evaluate ); }
+
+    assertion_evaluate_t<E> 
+    stack_context(context_holder context) const {
+        assertion_evaluate_t<E> added_context(*this);
+    
+        added_context.m_context_holder.push_back(context);
+        added_context.m_evaluate = !context->m_has_report;
+        return added_context;
+    }
 
     E const& m_e;
+    std::list< context_holder > m_context_holder;
+    bool m_evaluate;
 };
 
 //____________________________________________________________________________//

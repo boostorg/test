@@ -55,15 +55,26 @@ operator%( FPT v, tolerance_manip_delay const& )
     return tolerance_manip<FPT>( FPT(v / 100) );
 }
 
+template <typename FPT>
+struct tolerance_evaluation_context: assertion_evaluation_context {
+    tolerance_evaluation_context(FPT tol)
+    : assertion_evaluation_context( true ) // has report
+    , m_tolerance_context(tol)
+    {}
+
+    local_fpc_tolerance<FPT> m_tolerance_context;
+};
+
 //____________________________________________________________________________//
 
 template<typename E, typename FPT>
-inline assertion_result
+inline assertion_evaluate_t<E>
 operator<<(assertion_evaluate_t<E> const& ae, tolerance_manip<FPT> const& tol)
 {
-    local_fpc_tolerance<FPT> lt( tol.m_value );
-
-    return ae.m_e.evaluate();
+    return ae.stack_context(
+      typename assertion_evaluate_t<E>::context_holder(
+        new tolerance_evaluation_context<FPT>( tol.m_value ))
+    );
 }
 
 //____________________________________________________________________________//
