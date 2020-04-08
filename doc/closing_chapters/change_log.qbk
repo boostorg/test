@@ -28,8 +28,17 @@ Boost.Test releases:
 
 [h5 New features]
 
+* It is now possible to combine tolerance indication, user message and collection comparison modifier in a single `BOOST_TEST` expression 
+
+  ``
+  std::vector<double> v1 = f();
+  std::vector<double> v2{1.1, 1.19};
+  BOOST_TEST(v1 == v2, boost::test_tools::tolerance( 1e-3 ) << "comparison to ground truth failed" << boost::test_tools::per_element());
+  ``
+
 [h5 Bugfixes and feature requests]
 
+# [github_issue 173] Compare collections of floating point values with tolerance
 # [github_issue 220] Support for cuda `nvcc` 
 # [github_issue 221] Coverity security issue (minor) (`umask`)
 # [github_issue 235] Ugly GCC `-Wattributes` warnings that cannot be suppressed using /included/ variant
@@ -44,6 +53,7 @@ Boost.Test releases:
 
 # [pull_request 41] Fix: activate virtual destructors for all `msvc` versions
 # [pull_request 114] Silence unreachable code warning in MSVC (`/W4`)
+# [pull_request 187] enable `BOOST_TEST` with tolerance and user-message (through [github_issue 173])
 # [pull_request 239] Fix unused variable warning in `unit_test_main.ipp`
 # [pull_request 247] Use `__linux__` instead of `__linux`
 # [pull_request 252] Fix compilation issue due to deleted `std::basic_ostream::operator<<` from `wchar_t`
