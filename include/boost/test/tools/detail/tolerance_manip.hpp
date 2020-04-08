@@ -19,8 +19,11 @@
 #include <boost/test/tools/detail/fwd.hpp>
 #include <boost/test/tools/detail/indirections.hpp>
 
+#include <boost/test/utils/lazy_ostream.hpp>
 #include <boost/test/tools/fpc_tolerance.hpp>
 #include <boost/test/tools/floating_point_comparison.hpp>
+
+#include <ostream>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -34,6 +37,8 @@ namespace tt_detail {
 // **************           fpc tolerance manipulator          ************** //
 // ************************************************************************** //
 
+//! Tolerance manipulator, not to be used directly
+//! This is not a terminal of the expression
 template<typename FPT>
 struct tolerance_manip {
     explicit tolerance_manip( FPT const & tol ) : m_value( tol ) {}
@@ -80,14 +85,22 @@ operator<<(assertion_evaluate_t<E> const& ae, tolerance_manip<FPT> const& tol)
 //____________________________________________________________________________//
 
 template<typename FPT>
-inline int
-operator<<( unit_test::lazy_ostream const&, tolerance_manip<FPT> const& )   { return 0; }
+unit_test::lazy_ostream &
+operator<<( unit_test::lazy_ostream &o, tolerance_manip<FPT> const& )   { return o; }
+
+// needed for the lazy evaluation in lazy_ostream as for commutativity with other arguments
+template<typename FPT>
+std::ostream& 
+operator<<( std::ostream& o, tolerance_manip<FPT> const& )              { return o; }
+
 
 //____________________________________________________________________________//
 
 template<typename FPT>
-inline check_type
-operator<<( assertion_type const& /*at*/, tolerance_manip<FPT> const& )         { return CHECK_BUILT_ASSERTION; }
+inline assertion_type
+operator<<( assertion_type const& /*at*/, tolerance_manip<FPT> const& ) {
+    return assertion_type(CHECK_BUILT_ASSERTION); 
+}
 
 //____________________________________________________________________________//
 

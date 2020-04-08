@@ -19,6 +19,7 @@
 #include <boost/test/tools/detail/fwd.hpp>
 
 #include <boost/test/tools/assertion_result.hpp>
+#include <boost/test/utils/lazy_ostream.hpp>
 
 #include <boost/shared_ptr.hpp>
 #include <list>
@@ -86,14 +87,12 @@ operator<<( assertion_evaluate_t<E> const& ae, T const& ) { return ae; }
 // **************          assertion_text indirection          ************** //
 // ************************************************************************** //
 
-template<typename T>
 inline unit_test::lazy_ostream const&
-assertion_text( unit_test::lazy_ostream const& /*et*/, T const& m ) { return m; }
-
-//____________________________________________________________________________//
-
-inline unit_test::lazy_ostream const&
-assertion_text( unit_test::lazy_ostream const& et, int ) { return et; }
+assertion_text( unit_test::lazy_ostream const& et, unit_test::lazy_ostream const& s) { 
+    if(!s.empty())
+        return s;
+    return et; 
+}
 
 //____________________________________________________________________________//
 
@@ -102,7 +101,11 @@ assertion_text( unit_test::lazy_ostream const& et, int ) { return et; }
 // ************************************************************************** //
 
 struct assertion_type {
-    operator check_type() { return CHECK_MSG; }
+    assertion_type(check_type ct = CHECK_MSG) : m_check_type(ct)
+    {}
+
+    operator check_type() { return m_check_type; }
+    check_type m_check_type;
 };
 
 //____________________________________________________________________________//
