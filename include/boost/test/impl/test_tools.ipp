@@ -404,7 +404,7 @@ format_assertion_result( const_string expr_val, const_string details )
 
     if( !details.is_empty() ) {
         if( first_char(details) != '[' )
-            res.message().stream() << ". ";
+            res.message().stream() << ": ";
         else
             res.message().stream() << " ";
 
