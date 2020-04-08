@@ -55,7 +55,6 @@ Boost.Test releases:
 # [pull_request 114] Silence unreachable code warning in MSVC (`/W4`)
 # [pull_request 187] enable `BOOST_TEST` with tolerance and user-message (through [github_issue 173])
 # [pull_request 239] Fix unused variable warning in `unit_test_main.ipp`
-# [pull_request 242] Allow per-element comparison of string against non-string iterable (through [github_issue 173])
 # [pull_request 247] Use `__linux__` instead of `__linux`
 # [pull_request 252] Fix compilation issue due to deleted `std::basic_ostream::operator<<` from `wchar_t`
 # [pull_request 259] Avoid deprecated bind placeholders in global namespace
