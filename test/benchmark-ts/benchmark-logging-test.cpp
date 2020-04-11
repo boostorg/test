@@ -17,6 +17,15 @@
 #include <boost/test/benchmark/sampling/stop_on_convergence.hpp>
 #include <boost/test/benchmark/sampling/chain.hpp>
 
+#define BOOST_TEST_MODULE benchmark::logging test
+#include <boost/test/unit_test.hpp>
+#include <boost/test/data/test_case.hpp>
+
+namespace ut = boost::unit_test;
+namespace tt = boost::test_tools;
+namespace bm = boost::benchmark;
+namespace data=boost::unit_test::data;
+namespace chrono=boost::chrono;
 
 
 BOOST_AUTO_TEST_CASE( hrf_logger_with_baseline )

@@ -16,7 +16,7 @@
 #include <boost/test/benchmark/config.hpp>
 
 // Boost.Chrono
-#include <boost/chrono/system_clocks.hpp>
+#include <chrono>
 
 //____________________________________________________________________________//
 
@@ -35,7 +35,7 @@ public:
     duration_t elapsed() const
     {
         typename clock_t::time_point now = clock_t::now();
-        return chrono::duration_cast<duration_t>(now - m_start);
+        return std::chrono::duration_cast<duration_t>(now - m_start);
     }
 
 private:
@@ -43,10 +43,10 @@ private:
     typename clock_t::time_point m_start;
 };
 
-using high_resolution   = chrono_based<chrono::high_resolution_clock>;
-using process_real_cpu  = chrono_based<chrono::process_real_cpu_clock>;
-using process_user_cpu  = chrono_based<chrono::process_user_cpu_clock>;
-using process_system_cpu= chrono_based<chrono::process_system_cpu_clock>;
+using high_resolution   = chrono_based<std::chrono::high_resolution_clock>;
+//using process_real_cpu  = chrono_based<std::chrono::process_real_cpu_clock>;
+//using process_user_cpu  = chrono_based<std::chrono::process_user_cpu_clock>;
+//using process_system_cpu= chrono_based<std::chrono::process_system_cpu_clock>;
 
 } // namespace timer
 } // namespace benchmark

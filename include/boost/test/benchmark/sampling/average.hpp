@@ -23,7 +23,7 @@ namespace benchmark {
 namespace sampling {
 
 // !! Add validations to all methods to avoid misuse
-template<typename SamplingUnits = chrono::duration<double>>
+template<typename SamplingUnits = std::chrono::duration<double>>
 class average {
 public:
     using units_t = SamplingUnits;

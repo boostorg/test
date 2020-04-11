@@ -19,6 +19,32 @@ void register_benchmark(
 
 
 
+
+#if defined(__COUNTER__)
+  #define BOOST_TEST_INTERNAL_HAS_COUNTER
+#endif
+
+#define BOOST_TEST_PROBE_UNIQUE_ID( name ) \
+    BOOST_JOIN(bt_test, BOOST_JOIN(name, __LINE__))
+
+#if defined(BOOST_TEST_INTERNAL_HAS_COUNTER)
+  #define BOOST_TEST_PROBE_INSTANCE_UNIQUE_ID( name ) \
+    BOOST_JOIN(BOOST_TEST_PROBE_UNIQUE_ID(name), __COUNTER__)
+#else
+  #define BOOST_TEST_PROBE_INSTANCE_UNIQUE_ID( name ) \
+    BOOST_TEST_PROBE_UNIQUE_ID(name)
+#endif
+
+
+
+
+
+// TODO pass the ID
+#define BOOST_TEST_BENCHMARK_PROBE( name ) \
+  thread_local BOOST_TEST_PROBE_INSTANCE_UNIQUE_ID( name ) = \
+    get_probe_register().get_probe(\
+    BOOST_TEST_PROBE_UNIQUE_ID( name ))
+
 #define BOOST_TEST_BENCHMARK(benchmark_name) \
   struct benchmark ## benchmark_name { \
 \
