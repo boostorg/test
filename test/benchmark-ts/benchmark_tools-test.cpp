@@ -44,44 +44,69 @@ template <
 struct probe_observer_impl;
 
 
+// Delays the sampling_policy_t
+template <
+  class derived,
+  class timer_t = boost::benchmark::timer::high_resolution
+  >
+struct probe_crtp {
+
+  struct scoped_time_t {
+    timer_t time;
+    scoped_time_t(probe_crtp& ref)
+    : m_collector(ref)
+    {}
+
+    ~scoped_time_t() {
+      m_collector.add_sample( time.elapsed() );
+    }
+
+    probe_crtp& m_collector;
+  };
+
+
+  scoped_time_t time() {
+      return scoped_time_t(*this);
+  }
+
+  void add_sample(typename timer_t::duration_t d) {
+    static_cast<derived*>(this)->add_sample(d);
+  }
+};
+
+
 // thread acc
 // at destruction (when thread exits) contributes to global acc
 template <
   class timer_t = boost::benchmark::timer::high_resolution,
   class sampling_policy_t = boost::benchmark::sampling::average<typename timer_t::duration> >
-struct probe_observer_thread_impl {
+struct probe_observer_thread_impl
+: probe_crtp<
+    probe_observer_thread_impl<timer_t, sampling_policy_t>,
+    timer_t> {
 
+  using base = probe_observer_thread_impl<timer_t, sampling_policy_t>;
   using observer = probe_observer_impl<timer_t, sampling_policy_t>;
 
   probe_observer_thread_impl(observer& ref_probe)
-  : probe(&ref_probe)
-  {}
+  : probe(ref_probe)
+  {
+    probe.register_child_probe(*this);
+  }
 
   ~probe_observer_thread_impl() {
     collect_results();
+    probe.deregister_child_probe(*this);
   }
 
-  struct scoped_time_t {
-    timer_t time;
-    scoped_time_t(probe_observer_thread_impl& ref)
-    : m_collector(ref)
-    {}
-
-    ~scoped_time_t() {
-      m_collector.samples.add_sample( time.elapsed() );
-    }
-
-    probe_observer_thread_impl& m_collector;
-  };
-
-
-  scoped_time_t time() {
-    return scoped_time_t(*this);
+  void add_sample(typename timer_t::duration_t d) {
+    samples.add_sample(d);
   }
+
 
   void collect_results();
 
-  observer* probe;
+  observer& probe;
   std::thread::id m_thread_id = std::this_thread::get_id();
   sampling_policy_t samples;
 };
@@ -95,24 +120,43 @@ struct probe_observer_impl {
 
   using thread_observer = probe_observer_thread_impl<timer_t, sampling_policy_t>;
 
-  thread_observer& get_scope_probe() {
+  typename thread_observer::base& get_scope_probe() {
     static thread_local thread_observer thread_inst = thread_observer(*this);
     return thread_inst;
   }
 
-  void collect_results(std::thread::id) {
+  void register_child_probe(thread_observer& child) {
+    std::lock_guard<std::mutex> guard(collect_mutex);
+    m_children_probes.insert(&child);
+  }
 
+  void deregister_child_probe(thread_observer& child) {
+    std::lock_guard<std::mutex> guard(collect_mutex);
+    m_children_probes.erase(&child);
+  }
+
+  void add_results(std::thread::id) {
+    std::lock_guard<std::mutex> guard(collect_mutex);
+  }
+
+  void collect_results() {
+    std::lock_guard<std::mutex> guard(collect_mutex);
   }
 
   std::mutex collect_mutex;
 
+  std::set<thread_observer*> m_children_probes;
 };
 
 template <class timer_t, class sampling_policy_t>
 void probe_observer_thread_impl<timer_t, sampling_policy_t>::collect_results() {
-  probe->collect_results(this->m_thread_id);
+  probe->add_results(this->m_thread_id);
 }
 
+
+enum sampling_type {
+  average,
+};
 
 
 struct probe_register_impl {
@@ -146,6 +190,7 @@ struct probe_register_impl {
 
   struct probe_observer {
     probe_observer_t observer;
+    sampling_type sampling = sampling_type::average;
   };
 
 
