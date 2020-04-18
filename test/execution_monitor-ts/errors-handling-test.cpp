@@ -33,7 +33,7 @@
 using namespace boost::unit_test;
 using namespace boost::test_tools;
 
-#if defined(__GNUC__) || defined(__SUNPRO_CC) || defined(__DECCXX_VER)
+#if defined(__GNUC__) || defined(__SUNPRO_CC) || defined(__DECCXX_VER) || defined(BOOST_EMBTC)
 #define LIMITED_TEST
 #endif
 
