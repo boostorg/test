@@ -28,7 +28,7 @@ Boost.Test releases:
 
 [h5 New features]
 
-* It is now possible to combine tolerance indication, user message and collection comparison modifier in a single `BOOST_TEST` expression 
+* It is now possible to combine tolerance indication, user message and collection comparison modifier in a single `BOOST_TEST` expression
 
   ``
   std::vector<double> v1 = f();
@@ -39,7 +39,7 @@ Boost.Test releases:
 [h5 Bugfixes and feature requests]
 
 # [github_issue 173] Compare collections of floating point values with tolerance
-# [github_issue 220] Support for cuda `nvcc` 
+# [github_issue 220] Support for cuda `nvcc`
 # [github_issue 221] Coverity security issue (minor) (`umask`)
 # [github_issue 235] Ugly GCC `-Wattributes` warnings that cannot be suppressed using /included/ variant
 # [github_issue 237] Clang-cl's `-Wdelete-non-abstract-non-virtual-dtor` triggered by `test_case_gen`
@@ -58,6 +58,7 @@ Boost.Test releases:
 # [pull_request 247] Use `__linux__` instead of `__linux`
 # [pull_request 252] Fix compilation issue due to deleted `std::basic_ostream::operator<<` from `wchar_t`
 # [pull_request 259] Avoid deprecated bind placeholders in global namespace
+# [pull_request 265] Suppress the unused parameter warning for `root_test_unit_id`
 
 # [ticket 11107] A lot of warnings on MSVC due to protected destructor being non-virtual
 # [ticket 12072] Lots of `C4265` warnings in test when using Visual Studio 2015 (duplicates [ticket 11107])
