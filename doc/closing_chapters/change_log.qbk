@@ -28,7 +28,7 @@ Boost.Test releases:
 
 [h5 New features]
 
-* It is now possible to combine tolerance indication, user message and collection comparison modifier in a single `BOOST_TEST` expression 
+* It is now possible to combine tolerance indication, user message and collection comparison modifier in a single `BOOST_TEST` expression
 
   ``
   std::vector<double> v1 = f();
@@ -39,7 +39,8 @@ Boost.Test releases:
 [h5 Bugfixes and feature requests]
 
 # [github_issue 173] Compare collections of floating point values with tolerance
-# [github_issue 220] Support for cuda `nvcc` 
+# [github_issue 179] `test_tools-test` failed on some archs
+# [github_issue 220] Support for cuda `nvcc`
 # [github_issue 221] Coverity security issue (minor) (`umask`)
 # [github_issue 235] Ugly GCC `-Wattributes` warnings that cannot be suppressed using /included/ variant
 # [github_issue 237] Clang-cl's `-Wdelete-non-abstract-non-virtual-dtor` triggered by `test_case_gen`
