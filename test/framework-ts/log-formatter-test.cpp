@@ -92,7 +92,7 @@ void context_mixed_foo()  {
     BOOST_TEST_CONTEXT("some context") {
         BOOST_TEST( true );
     }
-    
+
     BOOST_TEST_INFO("other context");
     throw local_exception();
 }
@@ -144,18 +144,44 @@ struct guard {
 struct save_arguments {
     static bool save_pattern() {
       if(m_first) {
-          m_save_pattern = runtime_config::save_pattern();
-          m_first = false;
+            m_save_pattern = runtime_config::save_pattern();
+            m_first = false;
       }
       return m_save_pattern;
     }
 
+    static const std::vector<std::string>& saved_argv() {
+        if(argv.empty()) {
+            for(size_t i = 0; i < static_cast<size_t>(framework::master_test_suite().argc); i++) {
+                argv.push_back(framework::master_test_suite().argv[i]);
+            }
+        }
+        return argv;
+    }
+
+    static std::string get_pattern_file(const std::string &to_retrieve) {
+        if(argv.empty()) {
+            for(size_t i = 0; i < static_cast<size_t>(framework::master_test_suite().argc); i++) {
+                argv.push_back(framework::master_test_suite().argv[i]);
+            }
+        }
+
+        for(size_t i = 0; i < static_cast<size_t>(framework::master_test_suite().argc); i++) {
+            if(argv[i].find(to_retrieve) != std::string::npos)
+                return argv[i];
+        }
+
+        return "";
+    }
+
+    static std::vector<std::string> argv;
     static bool m_first;
     static bool m_save_pattern;
 };
 
 bool save_arguments::m_save_pattern = false;
 bool save_arguments::m_first = true;
+std::vector<std::string> save_arguments::argv = std::vector<std::string>();
 
 //____________________________________________________________________________//
 
@@ -170,9 +196,12 @@ BOOST_AUTO_TEST_CASE( test_logs )
     std::string pattern_file_name(
             // we cannot use runtime_config::save_arguments() as one of the test is mutating
             // the arguments for testing purposes
-            (save_arguments::save_pattern()  
-              ? PATTERN_FILE_NAME 
-              : "./baseline-outputs/" PATTERN_FILE_NAME ));
+            // we have to inspect argv as b2 may run the program from an unknown location
+            save_arguments::saved_argv().size() <= 1
+            ? (save_arguments::save_pattern()
+               ? PATTERN_FILE_NAME
+               : "./baseline-outputs/" PATTERN_FILE_NAME )
+            : save_arguments::get_pattern_file(PATTERN_FILE_NAME));
 
     output_test_stream_for_loggers test_output( pattern_file_name,
                                                 !save_arguments::save_pattern(),
@@ -263,9 +292,12 @@ BOOST_AUTO_TEST_CASE( test_logs_junit_info_closing_tags )
     std::string pattern_file_name(
             // we cannot use runtime_config::save_arguments() as one of the test is mutating
             // the arguments for testing purposes
-            (save_arguments::save_pattern()  
-              ? PATTERN_FILE_NAME_JUNIT 
-              : "./baseline-outputs/" PATTERN_FILE_NAME_JUNIT ));
+            // we have to inspect argv as b2 may run the program from an unknown location
+            save_arguments::saved_argv().size() <= 1
+            ?  (save_arguments::save_pattern()
+                ? PATTERN_FILE_NAME_JUNIT
+                : "./baseline-outputs/" PATTERN_FILE_NAME_JUNIT )
+            : save_arguments::get_pattern_file(PATTERN_FILE_NAME_JUNIT));
 
     output_test_stream_for_loggers test_output( pattern_file_name,
                                                 !save_arguments::save_pattern(),
@@ -317,9 +349,12 @@ BOOST_AUTO_TEST_CASE( test_logs_context )
     std::string pattern_file_name(
             // we cannot use runtime_config::save_arguments() as one of the test is mutating
             // the arguments for testing purposes
-            (save_arguments::save_pattern()  
-              ? PATTERN_FILE_NAME_CONTEXT 
-              : "./baseline-outputs/" PATTERN_FILE_NAME_CONTEXT ));
+            // we have to inspect argv as b2 may run the program from an unknown location
+            save_arguments::saved_argv().size() <= 1
+            ?  (save_arguments::save_pattern()
+                ? PATTERN_FILE_NAME_CONTEXT
+                : "./baseline-outputs/" PATTERN_FILE_NAME_CONTEXT )
+            : save_arguments::get_pattern_file(PATTERN_FILE_NAME_CONTEXT));
 
     output_test_stream_for_loggers test_output( pattern_file_name,
                                                 !save_arguments::save_pattern(),
