@@ -26,6 +26,7 @@
 #include <boost/test/unit_test_parameters.hpp>
 #include <boost/test/output/compiler_log_formatter.hpp>
 #include <boost/test/results_reporter.hpp>
+#include "../framework-ts/logger-for-tests.hpp"
 // STL
 #include <iostream>
 #include <stdexcept>
@@ -38,7 +39,6 @@ using namespace boost::test_tools;
 #endif
 
 namespace {
-
 struct this_test_log_formatter : public boost::unit_test::output::compiler_log_formatter
 {
     void    print_prefix( std::ostream& output, boost::unit_test::const_string, std::size_t line )
@@ -178,18 +178,13 @@ BOOST_AUTO_TEST_CASE( test_errors_handling )
             test_output << "\n===========================\n"
                         << "log level: "       << log_level_name[level] << ';'
                         << " error type: "     << error_type_name[error_type] << ";\n" << std::endl;
+            {
+                unit_test_log.set_formatter( new this_test_log_formatter );
+                log_setup_teardown holder(test_output, OF_CUSTOM_LOGGER, level);
 
-            unit_test_log.set_stream( test_output );
-            unit_test_log.set_threshold_level( level );
-            unit_test_log.set_formatter( new this_test_log_formatter );
-            framework::run( test );
+                framework::run( test );
 
-            unit_test_log.set_stream( std::cout );
-            unit_test_log.set_format( runtime_config::get<output_format>( runtime_config::btrt_log_format ) );
-
-            log_level ll = runtime_config::get<log_level>( runtime_config::btrt_log_level );
-            unit_test_log.set_threshold_level( ll != invalid_log_level? ll : log_all_errors );
-
+            }
             BOOST_CHECK( test_output.match_pattern() );
         }
     }

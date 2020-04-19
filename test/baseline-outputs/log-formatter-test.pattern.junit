@@ -50,7 +50,7 @@ fake  timeout
 -------------------------------------]]></error><system-err><![CDATA[Failures detected in:
 - test case: Timeout/timeout_foo
 - file: log-formatter-test.cpp
-- line: 231
+- line: 262
 ]]></system-err>
 </testcase>
 </testsuite>
@@ -89,7 +89,7 @@ ASSERTION FAILURE:
 <system-err><![CDATA[Failures detected in:
 - test case: 1 junit failure is not error/bad_foo
 - file: log-formatter-test.cpp
-- line: 238
+- line: 269
 ]]></system-err>
 </testcase>
 <testcase assertions="1" name="very_bad_foo" time="0.1234">
@@ -105,7 +105,7 @@ ASSERTION FAILURE:
 ]]></failure><system-err><![CDATA[Failures detected in:
 - test case: 1 junit failure is not error/very_bad_foo
 - file: log-formatter-test.cpp
-- line: 239
+- line: 270
 ]]></system-err>
 </testcase>
 <testcase assertions="0" name="good_foo" time="0.1234">
@@ -148,7 +148,7 @@ ASSERTION FAILURE:
 <system-err><![CDATA[Failures detected in:
 - test case: 1 junit failure is not error/bad_foo2
 - file: log-formatter-test.cpp
-- line: 241
+- line: 272
 ]]></system-err>
 </testcase>
 </testsuite>

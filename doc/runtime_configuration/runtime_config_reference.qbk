@@ -111,6 +111,9 @@ If option ['catch_system_errors] has value "no" the __UTF__ does not attempt to 
 within an IDE or to get a coredump for a stack analysis. See
 [link ref_usage_recommendations usage recommendations] pages for more details.
 
+[note If the __UTF__ detects that the current process is being run under a debugger, the `catch_system_errors` is
+ automatically disabled.]
+
 [h4 Acceptable values]
 
 [link boolean_param_value Boolean] with default value [*no].

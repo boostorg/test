@@ -37,6 +37,8 @@
 # pragma warning(disable: 4702) // unreachable code
 #endif
 
+#include "../framework-ts/logger-for-tests.hpp"
+
 namespace ut=boost::unit_test;
 namespace tt=boost::test_tools;
 
@@ -122,22 +124,27 @@ BOOST_AUTO_TEST_CASE( name )                                        \
                                              __LINE__ );            \
     impl->p_default_status.value = ut::test_unit::RS_ENABLED;       \
                                                                     \
-    ut::unit_test_log.set_stream( ots() );                          \
-    ut::unit_test_log.set_threshold_level( ut::log_nothing );       \
-    ut::unit_test_log.set_formatter( new shorten_lf );              \
-    ut::framework::finalize_setup_phase( impl->p_id );              \
-    ut::framework::run( impl );                                     \
+    /* to detect for issues concerning the file pattern, we take    
+       the stream now */                                            \
+    tt::output_test_stream& stream = ots();                         \
                                                                     \
-    ut::log_level ll = ut::runtime_config::get<ut::log_level>(      \
-        ut::runtime_config::btrt_log_level );                       \
-    ut::output_format lf = ut::runtime_config::get<ut::output_format>( \
-        ut::runtime_config::btrt_log_format );                      \
+    {                                                               \
+        ut::log_level ll = ut::runtime_config::get<ut::log_level>(  \
+              ut::runtime_config::btrt_log_level );                 \
+        ut::unit_test_log.set_formatter( new shorten_lf );          \
+        log_setup_teardown holder(stream,                           \
+                                  OF_CUSTOM_LOGGER,                 \
+                                  ut::log_nothing,                  \
+                                  ll != ut::invalid_log_level ?     \
+                                      ll                            \
+                                      : ut::log_all_errors );       \
                                                                     \
-    ut::unit_test_log.set_threshold_level(                          \
-        ll != ut::invalid_log_level ? ll : ut::log_all_errors );    \
-    ut::unit_test_log.set_format( lf );                             \
-    ut::unit_test_log.set_stream( std::cout );                      \
-    BOOST_CHECK( ots().match_pattern() );                           \
+        ut::framework::finalize_setup_phase( impl->p_id );          \
+        ut::framework::run( impl );                                 \
+                                                                    \
+    }                                                               \
+                                                                    \
+    BOOST_CHECK( stream.match_pattern() );                          \
 }                                                                   \
                                                                     \
 void name ## _impl()                                                \
@@ -734,7 +741,7 @@ struct print_log_value<double> {
     void    operator()( std::ostream& os, double d )
   {
     std::streamsize curr_prec = os.precision();
-    os << std::setprecision(1) << d << std::setprecision( curr_prec );
+    os << std::setprecision(3) << d << std::setprecision( curr_prec );
   }
 };
 }}}
@@ -899,5 +906,123 @@ BOOST_AUTO_TEST_CASE( test_rvalue_erasure )
 }
 
 #endif
+
+
+TEST_CASE( test_BOOST_TEST_fpv_comp_on_collections )
+{
+    ScientificNotationExponentOutputNormalizer norm;
+    boost::ignore_unused( norm );
+
+    using namespace boost::test_tools;
+    ut::unit_test_log.set_threshold_level( ut::log_successful_tests ); // we log everything
+
+    double d1 = 1.1e-5;
+    double d2 = 1.11e-5;
+    float  f1 = 1.1e-5f;
+
+    std::vector<double> v1(3, d1), v2(3, d2), v3(3, d2);
+    std::vector<float> v1f(3, static_cast<float>(d1)), v2f(3, static_cast<float>(d2));
+
+    BOOST_TEST( d1 == d2, tt::tolerance( 1e-3 ) );
+    BOOST_TEST( d1 == d2, tt::tolerance( 1e-2 ) );
+    BOOST_TEST( v1 == v2, tt::tolerance( 1e-3 ) );
+
+    // tolerance and per element
+    BOOST_TEST( v1  == v2,  tt::tolerance( 1e-3 )   << tt::per_element() );
+    BOOST_TEST( v1f == v2f, tt::tolerance( 1e-3 )   << tt::per_element() ); // tolerance is on double, does not apply to vectors.
+    BOOST_TEST( v1  <= v2,  tt::tolerance( 1e-3 )   << tt::per_element() );
+    BOOST_TEST( v1  <  v2,  tt::tolerance( 1e-3 )   << tt::per_element() );
+    BOOST_TEST( v1  <= v2,  tt::tolerance( 1e-2 )   << tt::per_element() ); // high tolerance
+    BOOST_TEST( v1  <  v2,  tt::tolerance( 1e-2 )   << tt::per_element() );
+    BOOST_TEST( v1f <  v2f, tt::tolerance( 1e-2 )   << tt::per_element() ); // not float tolerance
+
+    // tolerance and custom message
+    BOOST_TEST( v1  == v2,  tt::tolerance( 1e-3 )   << "'custom error message v1  == v2   tolerance<double>       ' " << v1[0]  << " != " << v2[0] );
+    BOOST_TEST( v1f == v2f, tt::tolerance( 1e-3 )   << "'custom error message v1f == v2f  tolerance<double>       ' " << v1f[0] << " != " << v2f[0]);
+    BOOST_TEST( v1  <= v2,  tt::tolerance( 1e-3 )   << "'custom error message v1  <= v2   tolerance<double>       ' " << v1[0]  << " >  " << v2[0] );
+    BOOST_TEST( v1  <  v2,  tt::tolerance( 1e-3 )   << "'custom error message v1  <  v2   tolerance<double>       ' " << v1[0]  << " >= " << v2[0] );
+    BOOST_TEST( v1  <= v2,  tt::tolerance( 1e-3 )   << "'custom error message v1  <= v2   high_tolerance<double>  ' " << v1[0]  << " >  " << v2[0] );
+    BOOST_TEST( v1  <  v2,  tt::tolerance( 1e-2 )   << "'custom error message v1  <  v2   high_tolerance<double>  ' " << v1[0]  << " >= " << v2[0] );
+    BOOST_TEST( v1f <  v2f, tt::tolerance( 1e-2 )   << "'custom error message v1f <  v2f  high_tolerance<double>  ' " << v1f[0] << " >= " << v2f[0]); // not float tolerance
+
+    // tolerance, custom message and per element
+    BOOST_TEST( v1  == v2,  tt::tolerance( 1e-3 )   << "'custom error message v1  == v2   tolerance<double>       ' " << v1[0]  << " != " << v2[0]   << tt::per_element() );
+    BOOST_TEST( v1f == v2f, tt::tolerance( 1e-3 )   << "'custom error message v1f == v2f  tolerance<double>       ' " << v1f[0] << " != " << v2f[0]  << tt::per_element() );
+    BOOST_TEST( v1  <= v2,  tt::tolerance( 1e-3 )   << "'custom error message v1  <= v2   tolerance<double>       ' " << v1[0]  << " >  " << v2[0]   << tt::per_element() );
+    BOOST_TEST( v1  <  v2,  tt::tolerance( 1e-3 )   << "'custom error message v1  <  v2   tolerance<double>       ' " << v1[0]  << " >= " << v2[0]   << tt::per_element() );
+    BOOST_TEST( v1  <= v2,  tt::tolerance( 1e-3 )   << "'custom error message v1  <= v2   high_tolerance<double>  ' " << v1[0]  << " >  " << v2[0]   << tt::per_element() );
+    BOOST_TEST( v1  <  v2,  tt::tolerance( 1e-2 )   << "'custom error message v1  <  v2   high_tolerance<double>  ' " << v1[0]  << " >= " << v2[0]   << tt::per_element() );
+    BOOST_TEST( v1f <  v2f, tt::tolerance( 1e-2 )   << "'custom error message v1f <  v2f  high_tolerance<double>  ' " << v1f[0] << " >= " << v2f[0]  << tt::per_element() ); // not float tolerance
+
+    // swapping tolerance and custom message
+    BOOST_TEST( v1  == v2,  "'custom error message v1  == v2   tolerance<double>       ' " << v1[0]  << " != " << v2[0]   << tt::tolerance( 1e-3 )   << tt::per_element() );
+    BOOST_TEST( v1f == v2f, "'custom error message v1f == v2f  tolerance<double>       ' " << v1f[0] << " != " << v2f[0]  << tt::tolerance( 1e-3 )   << tt::per_element() );
+    BOOST_TEST( v1  <= v2,  "'custom error message v1  <= v2   tolerance<double>       ' " << v1[0]  << " >  " << v2[0]   << tt::tolerance( 1e-3 )   << tt::per_element() );
+    BOOST_TEST( v1  <  v2,  "'custom error message v1  <  v2   tolerance<double>       ' " << v1[0]  << " >= " << v2[0]   << tt::tolerance( 1e-3 )   << tt::per_element() );
+    BOOST_TEST( v1  <= v2,  "'custom error message v1  <= v2   high_tolerance<double>  ' " << v1[0]  << " >  " << v2[0]   << tt::tolerance( 1e-3 )   << tt::per_element() );
+    BOOST_TEST( v1  <  v2,  "'custom error message v1  <  v2   high_tolerance<double>  ' " << v1[0]  << " >= " << v2[0]   << tt::tolerance( 1e-2 )   << tt::per_element() );
+    BOOST_TEST( v1f <  v2f, "'custom error message v1f <  v2f  high_tolerance<double>  ' " << v1f[0] << " >= " << v2f[0]  << tt::tolerance( 1e-2 )   << tt::per_element() ); // not float tolerance
+
+    // custom message and per_element
+    BOOST_TEST( v1  == v2,  "'custom error message v1  == v2  ' " << v1[0]  << " != " << v2[0]   << tt::per_element() );
+    BOOST_TEST( v1f == v2f, "'custom error message v1f == v2f ' " << v1f[0] << " != " << v2f[0]  << tt::per_element() );
+    BOOST_TEST( v1  <= v2,  "'custom error message v1  <= v2  ' " << v1[0]  << " >  " << v2[0]   << tt::per_element() );
+    BOOST_TEST( v1  <  v2,  "'custom error message v1  <  v2  ' " << v1[0]  << " >= " << v2[0]   << tt::per_element() );
+    BOOST_TEST( v1f <  v2f, "'custom error message v1f <  v2f ' " << v1f[0] << " >= " << v2f[0]  << tt::per_element() ); // not float tolerance
+
+    // tolerance and lexicographic
+    // BOOST_TEST( v1 == v2, tt::tolerance( 1e-3 ) << tt::lexicographic());
+    // BOOST_TEST( v1f == v2f, tt::tolerance( 1e-3 ) << tt::lexicographic()); // tolerance is on double, does not apply to vectors.
+    v3[1] = d1;
+    BOOST_TEST( v1  <= v2,  tt::tolerance( 1e-3 )   << tt::lexicographic() );
+    BOOST_TEST( v1  <  v2,  tt::tolerance( 1e-3 )   << tt::lexicographic() );
+    BOOST_TEST( v2  <= v3,  tt::tolerance( 1e-3 )   << tt::lexicographic() );
+    BOOST_TEST( v2  <  v3,  tt::tolerance( 1e-3 )   << tt::lexicographic() );
+    BOOST_TEST( v3  <= v2,  tt::tolerance( 1e-3 )   << tt::lexicographic() );
+    BOOST_TEST( v3  <  v2,  tt::tolerance( 1e-3 )   << tt::lexicographic() );
+    BOOST_TEST( v1  <= v2,  tt::tolerance( 1e-2 )   << tt::lexicographic() ); // high tolerance
+    BOOST_TEST( v1  <  v2,  tt::tolerance( 1e-2 )   << tt::lexicographic() );
+    BOOST_TEST( v2  <= v3,  tt::tolerance( 1e-2 )   << tt::lexicographic() );
+    BOOST_TEST( v2  <  v3,  tt::tolerance( 1e-2 )   << tt::lexicographic() );
+    BOOST_TEST( v3  <= v2,  tt::tolerance( 1e-2 )   << tt::lexicographic() );
+    BOOST_TEST( v3  <  v2,  tt::tolerance( 1e-2 )   << tt::lexicographic() );
+
+    // custom and lexico
+    BOOST_TEST( v1  <= v2,  "'custom error message v1  <= v2   ' " << v1[0]  << " != " << v2[0]   << tt::lexicographic() );
+    BOOST_TEST( v1  <  v2,  "'custom error message v1  <  v2   ' " << v1f[0] << " != " << v2f[0]  << tt::lexicographic() );
+    BOOST_TEST( v2  <= v3,  "'custom error message v2  <= v3   ' " << v1[0]  << " >  " << v2[0]   << tt::lexicographic() );
+    BOOST_TEST( v2  <  v3,  "'custom error message v2  <  v3   ' " << v1[0]  << " >= " << v2[0]   << tt::lexicographic() );
+    BOOST_TEST( v3  <= v2,  "'custom error message v3  <= v2   ' " << v1[0]  << " >  " << v2[0]   << tt::lexicographic() );
+    BOOST_TEST( v3  <  v2,  "'custom error message v3  <  v2   ' " << v1[0]  << " >= " << v2[0]   << tt::lexicographic() );
+
+    // custom, tolerance and lexico
+    BOOST_TEST( v1  <= v2,  "'custom error message v1  <= v2   tolerance<double>       ' " << v1[0]  << " != " << v2[0]   << tt::tolerance( 1e-3 )  << tt::lexicographic() );
+    BOOST_TEST( v1  <  v2,  "'custom error message v1  <  v2   tolerance<double>       ' " << v1f[0] << " != " << v2f[0]  << tt::tolerance( 1e-3 )  << tt::lexicographic() );
+    BOOST_TEST( v2  <= v3,  "'custom error message v2  <= v3   tolerance<double>       ' " << v1[0]  << " >  " << v2[0]   << tt::tolerance( 1e-3 )  << tt::lexicographic() );
+    BOOST_TEST( v2  <  v3,  "'custom error message v2  <  v3   tolerance<double>       ' " << v1[0]  << " >= " << v2[0]   << tt::tolerance( 1e-3 )  << tt::lexicographic() );
+    BOOST_TEST( v3  <= v2,  "'custom error message v3  <= v2   tolerance<double>       ' " << v1[0]  << " >  " << v2[0]   << tt::tolerance( 1e-3 )  << tt::lexicographic() );
+    BOOST_TEST( v3  <  v2,  "'custom error message v3  <  v2   tolerance<double>       ' " << v1[0]  << " >= " << v2[0]   << tt::tolerance( 1e-3 )  << tt::lexicographic() );
+    BOOST_TEST( v1  <= v2,  "'custom error message v1  <= v2   high_tolerance<double>  ' " << v1[0]  << " != " << v2[0]   << tt::tolerance( 1e-2 )  << tt::lexicographic() ); // high tolerance
+    BOOST_TEST( v1  <  v2,  "'custom error message v1  <  v2   high_tolerance<double>  ' " << v1f[0] << " != " << v2f[0]  << tt::tolerance( 1e-2 )  << tt::lexicographic() );
+    BOOST_TEST( v2  <= v3,  "'custom error message v2  <= v3   high_tolerance<double>  ' " << v1[0]  << " >  " << v2[0]   << tt::tolerance( 1e-2 )  << tt::lexicographic() );
+    BOOST_TEST( v2  <  v3,  "'custom error message v2  <  v3   high_tolerance<double>  ' " << v1[0]  << " >= " << v2[0]   << tt::tolerance( 1e-2 )  << tt::lexicographic() );
+    BOOST_TEST( v3  <= v2,  "'custom error message v3  <= v2   high_tolerance<double>  ' " << v1[0]  << " >  " << v2[0]   << tt::tolerance( 1e-2 )  << tt::lexicographic() );
+    BOOST_TEST( v3  <  v2,  "'custom error message v3  <  v2   high_tolerance<double>  ' " << v1[0]  << " >= " << v2[0]   << tt::tolerance( 1e-2 )  << tt::lexicographic() );
+
+    // swapping custom and tolerance
+    BOOST_TEST( v1  <= v2,  tt::tolerance( 1e-3 )  << "'custom error message v1  <= v2   tolerance<double>       ' " << v1[0]  << " != " << v2[0]   << tt::lexicographic() );
+    BOOST_TEST( v1  <  v2,  tt::tolerance( 1e-3 )  << "'custom error message v1  <  v2   tolerance<double>       ' " << v1f[0] << " != " << v2f[0]  << tt::lexicographic() );
+    BOOST_TEST( v2  <= v3,  tt::tolerance( 1e-3 )  << "'custom error message v2  <= v3   tolerance<double>       ' " << v1[0]  << " >  " << v2[0]   << tt::lexicographic() );
+    BOOST_TEST( v2  <  v3,  tt::tolerance( 1e-3 )  << "'custom error message v2  <  v3   tolerance<double>       ' " << v1[0]  << " >= " << v2[0]   << tt::lexicographic() );
+    BOOST_TEST( v3  <= v2,  tt::tolerance( 1e-3 )  << "'custom error message v3  <= v2   tolerance<double>       ' " << v1[0]  << " >  " << v2[0]   << tt::lexicographic() );
+    BOOST_TEST( v3  <  v2,  tt::tolerance( 1e-3 )  << "'custom error message v3  <  v2   tolerance<double>       ' " << v1[0]  << " >= " << v2[0]   << tt::lexicographic() );
+    BOOST_TEST( v1  <= v2,  tt::tolerance( 1e-2 )  << "'custom error message v1  <= v2   high_tolerance<double>  ' " << v1[0]  << " != " << v2[0]   << tt::lexicographic() ); // high tolerance
+    BOOST_TEST( v1  <  v2,  tt::tolerance( 1e-2 )  << "'custom error message v1  <  v2   high_tolerance<double>  ' " << v1f[0] << " != " << v2f[0]  << tt::lexicographic() );
+    BOOST_TEST( v2  <= v3,  tt::tolerance( 1e-2 )  << "'custom error message v2  <= v3   high_tolerance<double>  ' " << v1[0]  << " >  " << v2[0]   << tt::lexicographic() );
+    BOOST_TEST( v2  <  v3,  tt::tolerance( 1e-2 )  << "'custom error message v2  <  v3   high_tolerance<double>  ' " << v1[0]  << " >= " << v2[0]   << tt::lexicographic() );
+    BOOST_TEST( v3  <= v2,  tt::tolerance( 1e-2 )  << "'custom error message v3  <= v2   high_tolerance<double>  ' " << v1[0]  << " >  " << v2[0]   << tt::lexicographic() );
+    BOOST_TEST( v3  <  v2,  tt::tolerance( 1e-2 )  << "'custom error message v3  <  v2   high_tolerance<double>  ' " << v1[0]  << " >= " << v2[0]   << tt::lexicographic() );
+}
+
 
 // EOF

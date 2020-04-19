@@ -87,32 +87,29 @@ void check_global_fixture(
     bool has_setup_error = false,
     log_level ll = log_successful_tests )
 {
-    boost::unit_test::unit_test_log.set_format(log_format);
-    boost::unit_test::unit_test_log.set_stream(output);
-    boost::unit_test::unit_test_log.set_threshold_level(ll);
-
-    // output before fixture registration
-    output << "* " << log_format << "-format  *******************************************************************";
-    output << std::endl;
-
-    // register this as a global fixture
-    boost::unit_test::ut_detail::global_fixture_impl<global_fixture_t> fixture_stack_element;
-    framework::finalize_setup_phase( id );
-
     bool setup_error_caught = false;
-    try {
-        framework::run( id, false ); // do not continue the test tree to have the test_log_start/end
-    }
-    catch (framework::setup_error&) {
-        BOOST_TEST_MESSAGE("Framework setup_error caught");
-        setup_error_caught = true;
-    }
+    
+    {
+      log_setup_teardown holder(output, log_format, ll);
 
-    output << std::endl;
+      // output before fixture registration
+      output << "* " << log_format << "-format  *******************************************************************";
+      output << std::endl;
 
-    // we do not want the result of the comparison go to the "output" stream
-    boost::unit_test::unit_test_log.set_format(OF_CLF);
-    boost::unit_test::unit_test_log.set_stream(std::cout);
+      // register this as a global fixture
+      boost::unit_test::ut_detail::global_fixture_impl<global_fixture_t> fixture_stack_element;
+      framework::finalize_setup_phase( id );
+
+      try {
+          framework::run( id, false ); // do not continue the test tree to have the test_log_start/end
+      }
+      catch (framework::setup_error&) {
+          BOOST_TEST_MESSAGE("Framework setup_error caught");
+          setup_error_caught = true;
+      }
+
+      output << std::endl;
+    }
 
     BOOST_TEST( setup_error_caught == has_setup_error );
     BOOST_TEST( bt_module_failed == (( results_collector.results( id ).result_code() != 0 ) || setup_error_caught ));
