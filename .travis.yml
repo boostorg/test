@@ -51,6 +51,8 @@ branches:
   only:
     - develop
     - master
+    - /topic\/.*/
+    - next-internal
 
 script:
   - cd $BOOST_ROOT/libs/$SELF
