@@ -39,7 +39,7 @@ class type_info;
 
 //____________________________________________________________________________//
 
-#if defined(BOOST_MSVC) || (defined(BOOST_BORLANDC) && !defined(BOOST_DISABLE_WIN32))
+#if defined(BOOST_MSVC) || (defined(__BORLANDC__) && !defined(BOOST_DISABLE_WIN32))
 #  define BOOST_TEST_CALL_DECL __cdecl
 #else
 #  define BOOST_TEST_CALL_DECL /**/
