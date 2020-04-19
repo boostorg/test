@@ -59,6 +59,7 @@ Boost.Test releases:
 # [pull_request 247] Use `__linux__` instead of `__linux`
 # [pull_request 252] Fix compilation issue due to deleted `std::basic_ostream::operator<<` from `wchar_t`
 # [pull_request 259] Avoid deprecated bind placeholders in global namespace
+# [pull_request 265] Suppress the unused parameter warning for `root_test_unit_id`
 
 # [ticket 11107] A lot of warnings on MSVC due to protected destructor being non-virtual
 # [ticket 12072] Lots of `C4265` warnings in test when using Visual Studio 2015 (duplicates [ticket 11107])
