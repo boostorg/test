@@ -160,10 +160,14 @@ struct BOOST_TEST_DECL print_log_value<char const*> {
 
 //____________________________________________________________________________//
 
+#if __cplusplus <= 201703L
+
 template<>
 struct BOOST_TEST_DECL print_log_value<wchar_t const*> {
     void    operator()( std::ostream& ostr, wchar_t const* t );
 };
+
+#endif
 
 #if !defined(BOOST_NO_CXX11_NULLPTR)
 template<>

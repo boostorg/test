@@ -121,11 +121,15 @@ print_log_value<char const*>::operator()( std::ostream& ostr, char const* t )
 
 //____________________________________________________________________________//
 
+#if __cplusplus <= 201703L
+
 void
 print_log_value<wchar_t const*>::operator()( std::ostream& ostr, wchar_t const* t )
 {
     ostr << ( t ? reinterpret_cast<const void*>(t) : "null string" );
 }
+
+#endif
 
 //____________________________________________________________________________//
 
