@@ -9,6 +9,7 @@
 
 Boost.Test releases:
 
+* [link ref_CHANGE_LOG_3_14 Boost.Test v3.14 / boost 1.74]
 * [link ref_CHANGE_LOG_3_13 Boost.Test v3.13 / boost 1.73]
 * [link ref_CHANGE_LOG_3_12 Boost.Test v3.12 / boost 1.72]
 * [link ref_CHANGE_LOG_3_11 Boost.Test v3.11 / boost 1.71]
@@ -23,6 +24,16 @@ Boost.Test releases:
 * [link ref_CHANGE_LOG_3_2 Boost.Test v3.2 / boost 1.61]
 * [link ref_CHANGE_LOG_3_1 Boost.Test v3.1 / boost 1.60]
 * [link ref_CHANGE_LOG_3_0 Boost.Test v3 / boost 1.59]
+
+[#ref_CHANGE_LOG_3_14][h4 Boost.Test v3.14 / boost 1.74]
+
+[h5 New features]
+
+
+[h5 Bugfixes and feature requests]
+
+# [pull_request 267] Use macOS API only on macOS
+
 
 [#ref_CHANGE_LOG_3_13][h4 Boost.Test v3.13 / boost 1.73]
 
