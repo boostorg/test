@@ -13,7 +13,7 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/utils/string_cast.hpp>
 #include <boost/mpl/list.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 
 void suite1_test1()
 {
