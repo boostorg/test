@@ -225,6 +225,14 @@ namespace detail {
 #  define BOOST_TEST_VSNPRINTF( a1, a2, a3, a4 ) vsnprintf( (a1), (a2), (a3), (a4) )
 #endif
 
+
+/* checks the printf formatting by adding a decorator to the function */
+#if __GNUC__ >= 3 || defined(BOOST_EMBTC)
+#define BOOST_TEST_PRINTF_ATTRIBUTE_CHECK(x, y) __attribute__((__format__ (__printf__, x, y)))
+#else
+#define BOOST_TEST_PRINTF_ATTRIBUTE_CHECK(x, y)
+#endif
+
 #ifndef BOOST_NO_EXCEPTIONS
 
 template <typename ErrorInfo>
@@ -242,9 +250,7 @@ extract( boost::exception const* ex )
 //____________________________________________________________________________//
 
 static void
-#if __GNUC__ >= 3 || defined(BOOST_EMBTC)
-__attribute__((__format__ (__printf__, 3, 0)))
-#endif
+BOOST_TEST_PRINTF_ATTRIBUTE_CHECK(3, 0)
 report_error( execution_exception::error_code ec, boost::exception const* be, char const* format, va_list* args )
 {
     static const int REPORT_ERROR_BUFFER_SIZE = 4096;
@@ -263,9 +269,7 @@ report_error( execution_exception::error_code ec, boost::exception const* be, ch
 //____________________________________________________________________________//
 
 static void
-#if __GNUC__ >= 3 || defined(BOOST_EMBTC)
-__attribute__((__format__ (__printf__, 3, 4)))
-#endif
+BOOST_TEST_PRINTF_ATTRIBUTE_CHECK(3, 4)
 report_error( execution_exception::error_code ec, boost::exception const* be, char const* format, ... )
 {
     va_list args;
@@ -279,9 +283,7 @@ report_error( execution_exception::error_code ec, boost::exception const* be, ch
 //____________________________________________________________________________//
 
 static void
-#if __GNUC__ >= 3 || defined(BOOST_EMBTC)
-__attribute__((__format__ (__printf__, 2, 3)))
-#endif
+BOOST_TEST_PRINTF_ATTRIBUTE_CHECK(2, 3)
 report_error( execution_exception::error_code ec, char const* format, ... )
 {
     va_list args;
