@@ -76,7 +76,7 @@ public:
     {
     }
 
-    virtual std::ostream&   operator()( std::ostream& ostr ) const
+    std::ostream&   operator()( std::ostream& ostr ) const BOOST_OVERRIDE
     {
         return m_prev(ostr) << m_value;
     }
