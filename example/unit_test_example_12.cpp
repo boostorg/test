@@ -16,7 +16,7 @@ using namespace boost::unit_test;
 #include <boost/functional.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/mem_fn.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 
 // STL
 #include <string>

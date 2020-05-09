@@ -10,10 +10,10 @@
 #include <boost/test/included/unit_test.hpp>
 #include <boost/test/tools/floating_point_comparison.hpp>
 #include <boost/test/parameterized_test.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 using namespace boost::unit_test;
 namespace tt=boost::test_tools;
-using namespace boost;
+
 
 class test_class {
 public:
@@ -25,6 +25,8 @@ public:
 
 bool init_unit_test()
 {
+  using boost::bind;
+  using boost::placeholders::_1;
   double params[] = { 1., 1.1, 1.01, 1.001, 1.0001 };
 
   boost::function<void (double)> test_method = bind( &test_class::test_method, &tester, _1);

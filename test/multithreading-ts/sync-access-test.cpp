@@ -18,7 +18,7 @@
 
 #include <boost/thread.hpp>
 #include <boost/thread/barrier.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 #include <boost/ref.hpp>
 
 using namespace boost;

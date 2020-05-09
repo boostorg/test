@@ -7,7 +7,7 @@
 
 //[example_code
 #include <boost/test/included/unit_test.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 using namespace boost::unit_test;
 
 class test_class
