@@ -29,9 +29,11 @@ Boost.Test releases:
 
 [h5 New features]
 
+* Adding support for Embarcadero C++ clang-based compilers, thanks to [@https://github.com/eldiener Edward Diener]
 
 [h5 Bugfixes and feature requests]
 
+# [pull_request 266] Changes for Embarcadero C++ clang-based compilers
 # [pull_request 267] Use macOS API only on macOS
 
 
