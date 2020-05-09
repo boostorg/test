@@ -32,13 +32,14 @@ Boost.Test releases:
 * Now able to detect when running under a debugger on macOS/iOS. When running under a debugger, Boost.Test does not
   try to catch system errors and the behaviour is the same as if the command line [link boost_test.utf_reference.rt_param_reference.catch_system `catch_system_error`]
   option was set to `no`. Thanks to [@https://github.com/thughes Tom Hughes] for this feature.
-
+* Adding support for Embarcadero C++ clang-based compilers, thanks to [@https://github.com/eldiener Edward Diener]
 
 [h5 Bugfixes and feature requests]
 
 # [github_issue 269] Deprecated bind placeholders in tests
 
 # [pull_request 142] Make `under_debugger` work on apple (iOS/macOS)
+# [pull_request 266] Changes for Embarcadero C++ clang-based compilers
 # [pull_request 267] Use macOS API only on macOS
 
 

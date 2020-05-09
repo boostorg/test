@@ -717,7 +717,7 @@ debugger_break()
 #if defined(BOOST_WIN32_BASED_DEBUG) // *********************** WIN32
 
 #if defined(__GNUC__) && !defined(__MINGW32__)   ||  \
-    defined(__INTEL_COMPILER)
+    defined(__INTEL_COMPILER) || defined(BOOST_EMBTC)
 #   define BOOST_DEBUG_BREAK    __debugbreak
 #else
 #   define BOOST_DEBUG_BREAK    DebugBreak
