@@ -21,6 +21,8 @@
 #include <boost/test/debug.hpp>
 #include <boost/test/unit_test_parameters.hpp>
 
+#include <boost/test/utils/boost_helpers.hpp>
+
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/unit_test_log_formatter.hpp>
 #include <boost/test/unit_test_monitor.hpp>
@@ -270,7 +272,7 @@ private:
 
         // look for match
         using namespace boost::placeholders;
-        return std::find_if( filters.begin(), filters.end(), bind( &component::pass, _1, boost::ref(tu) ) ) != filters.end();
+        return std::find_if( filters.begin(), filters.end(), bind( &component::pass, _1, BOOST_TEST_REF(tu) ) ) != filters.end();
     }
 
     // test_tree_visitor interface
@@ -986,7 +988,7 @@ setup_loggers()
                 // we remove all streams in this case, so we do not specify the format
                 boost::function< void () > log_cleaner = boost::bind( &unit_test_log_t::set_stream,
                                                                       &unit_test_log,
-                                                                      boost::ref(std::cout)
+                                                                      BOOST_TEST_REF(std::cout)
                                                                       );
                 stream_logger.setup( runtime_config::get<std::string>( runtime_config::btrt_log_sink ),
                                      log_cleaner );
@@ -1120,7 +1122,7 @@ setup_loggers()
                     boost::function< void () > log_cleaner = boost::bind( &unit_test_log_t::set_stream,
                                                                           &unit_test_log,
                                                                           format,
-                                                                          boost::ref(std::cout) );
+                                                                          BOOST_TEST_REF(std::cout) );
                     if( ++current_format_specs != utils::string_token_iterator() &&
                         current_format_specs->size() ) {
                         stream_logger.setup( *current_format_specs,
@@ -1176,7 +1178,7 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
 
     if( runtime_config::has( runtime_config::btrt_report_sink ) ) {
         boost::function< void () > report_cleaner = boost::bind( &results_reporter::set_stream,
-                                                                 boost::ref(std::cerr)
+                                                                 BOOST_TEST_REF(std::cerr)
                                                                 );
         s_frk_state().m_report_sink.setup( runtime_config::get<std::string>( runtime_config::btrt_report_sink ),
                                            report_cleaner );

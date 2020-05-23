@@ -15,8 +15,7 @@
 // Boost.Test
 #include <boost/test/data/config.hpp>
 #include <boost/test/data/monomorphic/fwd.hpp>
-
-#include <boost/core/ref.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -87,7 +86,7 @@ public:
     data::size_t    size() const            { return m_generator.capacity(); }
 
     //! Iterator on the beginning of the dataset
-    iterator        begin() const           { return iterator( boost::ref(const_cast<Generator&>(m_generator)) ); }
+    iterator        begin() const           { return iterator( BOOST_TEST_REF(const_cast<Generator&>(m_generator)) ); }
 
 private:
     // Data members
