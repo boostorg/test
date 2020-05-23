@@ -59,7 +59,9 @@ The arguments are as follow:
          name of the type the test case template is instantiated with
 # `collection_of_types`: the collection of types to instantiate test case template with.
   This is an *arbitrary MPL sequence* or a sequence of types wrapped in a `std::tuple`
-  (since [link ref_CHANGE_LOG_3_7 __UTF__ v3.7], if supported by the compiler)
+  (since [link ref_CHANGE_LOG_3_7 __UTF__ v3.7], if supported by the compiler), or
+  the parameter pack of any variadic template class (since [link ref_CHANGE_LOG_3_10 __UTF__ v3.10],
+  compatible with `std::tuple`).
 
 The resulting name of the test is a composition of the `test_case_name` parameter and the current
 type being tested. Since [link ref_CHANGE_LOG_3_12 __UTF__ v3.12], the framework tries to unify
