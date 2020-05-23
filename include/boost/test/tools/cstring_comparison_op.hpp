@@ -34,7 +34,7 @@ namespace op {
 
 #define DEFINE_CSTRING_COMPARISON( oper, name, rev, name_inverse )  \
 template<typename Lhs,typename Rhs>                                 \
-struct name<Lhs,Rhs, BOOST_TEST_ENABLE_IF<                          \
+struct name<Lhs,Rhs, typename BOOST_TEST_ENABLE_IF<                 \
     (   unit_test::is_cstring_comparable<Lhs>::value                \
      && unit_test::is_cstring_comparable<Rhs>::value)               \
     >::type >                                                       \

@@ -26,7 +26,6 @@
 #include <boost/type_traits/is_reference.hpp>
 #include <boost/type_traits/is_void.hpp>
 #include <boost/type_traits/conditional.hpp>
-#include <boost/utility/enable_if.hpp>
 
 // STL
 #include <iosfwd>

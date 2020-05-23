@@ -175,7 +175,7 @@ compare_fpv( Lhs const& lhs, Rhs const& rhs, op::NE<Lhs,Rhs>* )
 
 #define DEFINE_FPV_COMPARISON( oper, name, rev, name_inverse )          \
 template<typename Lhs,typename Rhs>                                     \
-struct name<Lhs,Rhs, BOOST_TEST_ENABLE_IF<                              \
+struct name<Lhs,Rhs, typename BOOST_TEST_ENABLE_IF<                     \
     (fpc::tolerance_based<Lhs>::value &&                                \
      fpc::tolerance_based<Rhs>::value) ||                               \
     (fpc::tolerance_based<Lhs>::value &&                                \
