@@ -15,6 +15,7 @@
 
 // Boost.Test
 #include <boost/detail/workaround.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/framework.hpp>
 #include <boost/test/results_collector.hpp>
@@ -486,7 +487,7 @@ auto_test_unit_registrar::auto_test_unit_registrar( const_string ts_name, const_
 
     if( id != INV_TEST_UNIT_ID ) {
         ts = &framework::get<test_suite>( id );
-        BOOST_ASSERT( ts->p_parent_id == framework::current_auto_test_suite().p_id );
+        BOOST_TEST_ASSERT( ts->p_parent_id == framework::current_auto_test_suite().p_id );
     }
     else {
         ts = new test_suite( ts_name, ts_file, ts_line );
