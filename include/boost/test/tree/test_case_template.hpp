@@ -90,7 +90,7 @@ struct generate_test_case_4_type {
 #if !defined(BOOST_NO_TYPEID) && !defined(BOOST_NO_RTTI)
         full_name += boost::core::demangle(typeid(TestType).name()); // same as execution_monitor.ipp
 #else
-        full_name += BOOST_CURRENT_FUNCTION;
+        full_name += BOOST_TEST_CURRENT_FUNCTION;
 #endif
 
         // replacing ',' by ', ' first, and then removing any double space

@@ -107,11 +107,9 @@ struct bt_bool<false> : bt_false_type {
 // current function
 #if defined(BOOST_TEST_USE_BOOST)
   #include <boost/current_function.hpp>
+  #define BOOST_TEST_CURRENT_FUNCTION BOOST_CURRENT_FUNCTION
 #else
-  #if defined(BOOST_CURRENT_FUNCTION)
-    #error BOOST_CURRENT_FUNCTION already defined
-  #endif
-  #define BOOST_CURRENT_FUNCTION __func__
+  #define BOOST_TEST_CURRENT_FUNCTION __func__
 #endif
 
 #endif /* BOOST_TEST_BOOST_HELPERS_HPP__ */

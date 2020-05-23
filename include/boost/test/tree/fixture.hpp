@@ -14,12 +14,12 @@
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 // Boost
 #include <boost/shared_ptr.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/utility/declval.hpp>
-#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
