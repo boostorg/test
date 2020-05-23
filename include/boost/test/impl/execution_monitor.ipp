@@ -23,6 +23,7 @@
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 #include <boost/test/detail/throw_exception.hpp>
 #include <boost/test/execution_monitor.hpp>
 #include <boost/test/debug.hpp>
@@ -1167,7 +1168,7 @@ invalid_param_handler( wchar_t const* /* expr */,
 // ************************************************************************** //
 
 int
-execution_monitor::catch_signals( boost::function<int ()> const& F )
+execution_monitor::catch_signals( result_func_t const& F )
 {
     _invalid_parameter_handler old_iph = _invalid_parameter_handler();
     BOOST_TEST_CRT_HOOK_TYPE old_crt_hook = 0;
