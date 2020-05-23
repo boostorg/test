@@ -17,11 +17,11 @@
 
 #include <boost/test/tools/floating_point_comparison.hpp>
 #include <boost/test/tools/fpc_tolerance.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 // Boost
 #include <boost/type_traits/common_type.hpp>
 #include <boost/type_traits/is_arithmetic.hpp>
-#include <boost/utility/enable_if.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -175,7 +175,7 @@ compare_fpv( Lhs const& lhs, Rhs const& rhs, op::NE<Lhs,Rhs>* )
 
 #define DEFINE_FPV_COMPARISON( oper, name, rev, name_inverse )          \
 template<typename Lhs,typename Rhs>                                     \
-struct name<Lhs,Rhs,typename boost::enable_if_c<                        \
+struct name<Lhs,Rhs, BOOST_TEST_ENABLE_IF<                              \
     (fpc::tolerance_based<Lhs>::value &&                                \
      fpc::tolerance_based<Rhs>::value) ||                               \
     (fpc::tolerance_based<Lhs>::value &&                                \

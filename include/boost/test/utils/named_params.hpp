@@ -22,6 +22,7 @@
 // Boost.Test
 #include <boost/test/utils/rtti.hpp>
 #include <boost/test/utils/assign_op.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/type_traits/remove_cv.hpp>
@@ -33,7 +34,7 @@
 #include <boost/mpl/or.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/remove_cv.hpp>
-#include <boost/utility/enable_if.hpp>
+
 #include <boost/mpl/bool.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -330,7 +331,7 @@ struct typed_keyword<bool,unique_id,required>
 // ************************************************************************** //
 
 template<typename T, typename Params, typename Keyword>
-inline typename enable_if_c<!has_param<Params,Keyword>::value,void>::type
+inline typename BOOST_TEST_ENABLE_IF<!has_param<Params,Keyword>::value,void>::type
 opt_assign( T& /*target*/, Params const& /*p*/, Keyword /*k*/ )
 {
 }
@@ -338,7 +339,7 @@ opt_assign( T& /*target*/, Params const& /*p*/, Keyword /*k*/ )
 //____________________________________________________________________________//
 
 template<typename T, typename Params, typename Keyword>
-inline typename enable_if_c<has_param<Params,Keyword>::value,void>::type
+inline typename BOOST_TEST_ENABLE_IF<has_param<Params,Keyword>::value,void>::type
 opt_assign( T& target, Params const& p, Keyword k )
 {
     using namespace unit_test;
@@ -364,7 +365,7 @@ opt_get( Params const& p, Keyword k, T default_val )
 // ************************************************************************** //
 
 template<typename Params, typename NP>
-inline typename enable_if_c<!has_param<Params,keyword<typename NP::id> >::value,
+inline typename BOOST_TEST_ENABLE_IF<!has_param<Params,keyword<typename NP::id> >::value,
 named_parameter_combine<NP,Params> >::type
 opt_append( Params const& params, NP const& np )
 {
@@ -374,7 +375,7 @@ opt_append( Params const& params, NP const& np )
 //____________________________________________________________________________//
 
 template<typename Params, typename NP>
-inline typename enable_if_c<has_param<Params,keyword<typename NP::id> >::value,Params>::type
+inline typename BOOST_TEST_ENABLE_IF<has_param<Params,keyword<typename NP::id> >::value,Params>::type
 opt_append( Params const& params, NP const& )
 {
     return params;

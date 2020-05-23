@@ -19,11 +19,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/utility/declval.hpp>
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-  #include <boost/function/function0.hpp>
-#else
-  #include <functional>
-#endif
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -32,11 +28,7 @@
 namespace boost {
 namespace unit_test {
 
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-    typedef boost::function<void ()> fixture_func_t;
-#else
-    using fixture_func_t = std::function<void ()>;
-#endif
+typedef BOOST_TEST_FUNCTION<void ()> fixture_func_t;
 
 // ************************************************************************** //
 // **************               test_unit_fixture              ************** //

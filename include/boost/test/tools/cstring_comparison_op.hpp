@@ -17,9 +17,7 @@
 
 #include <boost/test/utils/is_cstring.hpp>
 #include <boost/test/utils/basic_cstring/compare.hpp>
-
-// Boost
-#include <boost/utility/enable_if.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -36,7 +34,7 @@ namespace op {
 
 #define DEFINE_CSTRING_COMPARISON( oper, name, rev, name_inverse )  \
 template<typename Lhs,typename Rhs>                                 \
-struct name<Lhs,Rhs,typename boost::enable_if_c<                    \
+struct name<Lhs,Rhs, BOOST_TEST_ENABLE_IF<                          \
     (   unit_test::is_cstring_comparable<Lhs>::value                \
      && unit_test::is_cstring_comparable<Rhs>::value)               \
     >::type >                                                       \

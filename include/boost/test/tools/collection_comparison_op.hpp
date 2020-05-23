@@ -13,6 +13,7 @@
 #define BOOST_TEST_TOOLS_COLLECTION_COMPARISON_OP_HPP_050815GER
 
 // Boost.Test
+#include <boost/test/utils/boost_helpers.hpp>
 #include <boost/test/tools/assertion.hpp>
 
 #include <boost/test/utils/is_forward_iterable.hpp>
@@ -21,7 +22,6 @@
 // Boost
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/if.hpp>
-#include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/decay.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -64,7 +64,7 @@ namespace op {
 template <typename OP, bool can_be_equal, bool prefer_shorter,
           typename Lhs, typename Rhs>
 inline
-typename boost::enable_if_c<
+typename BOOST_TEST_ENABLE_IF<
        unit_test::is_forward_iterable<Lhs>::value && !unit_test::is_cstring<Lhs>::value
     && unit_test::is_forward_iterable<Rhs>::value && !unit_test::is_cstring<Rhs>::value,
     assertion_result>::type
@@ -129,7 +129,7 @@ lexicographic_compare( Lhs const& lhs, Rhs const& rhs )
 template <typename OP, bool can_be_equal, bool prefer_shorter,
           typename Lhs, typename Rhs>
 inline
-typename boost::enable_if_c<
+typename BOOST_TEST_ENABLE_IF<
     (unit_test::is_cstring<Lhs>::value || unit_test::is_cstring<Rhs>::value),
     assertion_result>::type
 lexicographic_compare( Lhs const& lhs, Rhs const& rhs )
@@ -150,7 +150,7 @@ lexicographic_compare( Lhs const& lhs, Rhs const& rhs )
 
 template <typename OP, typename Lhs, typename Rhs>
 inline
-typename boost::enable_if_c<
+typename BOOST_TEST_ENABLE_IF<
        unit_test::is_forward_iterable<Lhs>::value && !unit_test::is_cstring<Lhs>::value
     && unit_test::is_forward_iterable<Rhs>::value && !unit_test::is_cstring<Rhs>::value,
     assertion_result>::type
@@ -192,7 +192,7 @@ element_compare( Lhs const& lhs, Rhs const& rhs )
 // In case string comparison is branching here
 template <typename OP, typename Lhs, typename Rhs>
 inline
-typename boost::enable_if_c<
+typename BOOST_TEST_ENABLE_IF<
     (unit_test::is_cstring<Lhs>::value || unit_test::is_cstring<Rhs>::value),
     assertion_result>::type
 element_compare( Lhs const& lhs, Rhs const& rhs )
@@ -390,7 +390,7 @@ compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::GE<L, R> >*
 
 #define DEFINE_COLLECTION_COMPARISON( oper, name, rev, name_inverse ) \
 template<typename Lhs,typename Rhs>                                 \
-struct name<Lhs,Rhs,typename boost::enable_if_c<                    \
+struct name<Lhs,Rhs, typename BOOST_TEST_ENABLE_IF<                 \
     unit_test::is_forward_iterable<Lhs>::value                      \
     &&   !unit_test::is_cstring_comparable<Lhs>::value              \
     && unit_test::is_forward_iterable<Rhs>::value                   \

@@ -14,13 +14,13 @@
 
 // Boost.Test
 #include <boost/test/data/config.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/data/monomorphic/generators/keywords.hpp>
 #include <boost/test/data/monomorphic/generate.hpp>
 
 // Boost
 #include <boost/optional.hpp>
-#include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/is_unsigned.hpp>
 
 // STL
@@ -179,7 +179,7 @@ xrange( SampleType const& end_val )
 
 /// @overload boost::unit_test::data::xrange()
 template<typename SampleType, typename Params>
-inline typename enable_if_c<nfp::is_named_param_pack<Params>::value,
+inline typename BOOST_TEST_ENABLE_IF<nfp::is_named_param_pack<Params>::value,
                             monomorphic::generated_by<monomorphic::xrange_t<SampleType>>>::type
 xrange( SampleType const& end_val, Params const& params )
 {

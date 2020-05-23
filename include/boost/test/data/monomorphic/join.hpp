@@ -15,8 +15,8 @@
 // Boost.Test
 #include <boost/test/data/config.hpp>
 #include <boost/test/data/monomorphic/fwd.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
-#include <boost/core/enable_if.hpp>
 #include <boost/mpl/identity.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -121,7 +121,7 @@ struct join {
 //____________________________________________________________________________//
 
 template<typename DataSet1, typename DataSet2>
-inline typename boost::lazy_enable_if_c<is_dataset<DataSet1>::value && is_dataset<DataSet2>::value,
+inline typename BOOST_TEST_ENABLE_IF<is_dataset<DataSet1>::value && is_dataset<DataSet2>::value,
                                         result_of::join<mpl::identity<DataSet1>,mpl::identity<DataSet2>>
 >::type
 operator+( DataSet1&& ds1, DataSet2&& ds2 )
@@ -132,7 +132,7 @@ operator+( DataSet1&& ds1, DataSet2&& ds2 )
 //____________________________________________________________________________//
 
 template<typename DataSet1, typename DataSet2>
-inline typename boost::lazy_enable_if_c<is_dataset<DataSet1>::value && !is_dataset<DataSet2>::value,
+inline typename BOOST_TEST_ENABLE_IF<is_dataset<DataSet1>::value && !is_dataset<DataSet2>::value,
                                         result_of::join<mpl::identity<DataSet1>,data::result_of::make<DataSet2>>
 >::type
 operator+( DataSet1&& ds1, DataSet2&& ds2 )
@@ -143,7 +143,7 @@ operator+( DataSet1&& ds1, DataSet2&& ds2 )
 //____________________________________________________________________________//
 
 template<typename DataSet1, typename DataSet2>
-inline typename boost::lazy_enable_if_c<!is_dataset<DataSet1>::value && is_dataset<DataSet2>::value,
+inline typename BOOST_TEST_ENABLE_IF<!is_dataset<DataSet1>::value && is_dataset<DataSet2>::value,
                                         result_of::join<data::result_of::make<DataSet1>,mpl::identity<DataSet2>>
 >::type
 operator+( DataSet1&& ds1, DataSet2&& ds2 )
