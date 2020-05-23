@@ -19,17 +19,15 @@
 #include <boost/test/detail/throw_exception.hpp>
 
 #include <boost/test/utils/class_properties.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 // Boost
 #include <boost/shared_ptr.hpp>
 #include <boost/scoped_array.hpp>
 #include <boost/type.hpp>
 #include <boost/cstdlib.hpp>
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-#include <boost/function/function0.hpp>
-#else
-#include <functional>
-#endif
+
+
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -101,13 +99,8 @@
 
 namespace boost {
 
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-    typedef boost::function<void ()> test_func_t;
-    typedef boost::function<int ()> result_func_t;
-#else
-    using test_func_t = std::function<void ()>;
-    using result_func_t = std::function<int ()>;
-#endif
+    typedef BOOST_TEST_FUNCTION<void ()> test_func_t;
+    typedef BOOST_TEST_FUNCTION<int ()> result_func_t;
 
 /// @defgroup ExecutionMonitor Function Execution Monitor
 /// @{
