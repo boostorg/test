@@ -22,11 +22,6 @@
 #include <boost/type_traits/remove_const.hpp>
 
 #include <boost/bind/bind.hpp>
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-#include <boost/function/function1.hpp>
-#else
-#include <functional>
-#endif
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -125,11 +120,11 @@ struct user_param_tc_method_invoker {
 template<typename ParamType, typename ParamIter>
 inline ut_detail::param_test_case_generator<ParamType,ParamIter>
 make_test_case( BOOST_TEST_FUNCTION<void (ParamType)> const& test_func,
-                const_string                             tc_name,
-                const_string                             tc_file,
-                std::size_t                              tc_line,
-                ParamIter                                par_begin,
-                ParamIter                                par_end )
+                const_string                                 tc_name,
+                const_string                                 tc_file,
+                std::size_t                                  tc_line,
+                ParamIter                                    par_begin,
+                ParamIter                                    par_end )
 {
     return ut_detail::param_test_case_generator<ParamType,ParamIter>( test_func, tc_name, tc_file, tc_line, par_begin, par_end );
 }

@@ -14,6 +14,7 @@
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
 #include <boost/test/tree/test_unit.hpp>
@@ -33,21 +34,14 @@
 #include <boost/type_traits/is_lvalue_reference.hpp>
 #include <boost/type_traits/is_rvalue_reference.hpp>
 #include <boost/type_traits/remove_reference.hpp>
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-#include <boost/function/function0.hpp>
-#else
-#include <functional>
-#endif
 
-#if defined(BOOST_NO_TYPEID) || defined(BOOST_NO_RTTI)
-#  include <boost/current_function.hpp>
-#else
+#if !defined(BOOST_NO_TYPEID) && !defined(BOOST_NO_RTTI)
 #  include <boost/core/demangle.hpp>
 #endif
 
 // STL
-#include <string>   // for std::string
-#include <list>     // for std::list
+#include <string>
+#include <list>
 
 #if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
     !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)

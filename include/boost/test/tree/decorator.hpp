@@ -26,12 +26,6 @@
 
 // Boost
 #include <boost/shared_ptr.hpp>
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-#include <boost/function/function0.hpp>
-#include <boost/function/function1.hpp>
-#else
-#include <functional>
-#endif
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -279,11 +273,8 @@ fixture( fixture_func_t const& setup, fixture_func_t const& teardown = fixture_f
 
 class BOOST_TEST_DECL precondition : public decorator::base {
 public:
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-    typedef boost::function<test_tools::assertion_result (test_unit_id)>   predicate_t;
-#else
-    using predicate_t = std::function<test_tools::assertion_result (test_unit_id)>;
-#endif
+    typedef BOOST_TEST_FUNCTION<test_tools::assertion_result (test_unit_id)>   predicate_t;
+
     explicit                precondition( predicate_t p ) : m_precondition( p ) {}
 
 private:

@@ -14,6 +14,10 @@
 
 #include <boost/test/detail/config.hpp>
 
+#if (__cplusplus < 201103L)
+  #define BOOST_TEST_USE_BOOST
+#endif
+
 #undef BOOST_NO_CXX11_HDR_FUNCTIONAL
 
 
@@ -84,8 +88,30 @@ struct bt_bool<false> : bt_false_type {
 // static_assert with or without message
 // addressof
 // shared_ptr
+// bind
+
+
+// boost::reference_wrapper
+#if defined(BOOST_TEST_USE_BOOST)
+#include <boost/core/ref.hpp>
+#define BOOST_TEST_REFERENCE_WRAPPER boost::reference_wrapper
+#define BOOST_TEST_REF boost::ref
+#else
+#include <functional>
+#define BOOST_TEST_REFERENCE_WRAPPER std::reference_wrapper
+#define BOOST_TEST_REF std::ref
+#endif
 
 
 
+// current function
+#if defined(BOOST_TEST_USE_BOOST)
+  #include <boost/current_function.hpp>
+#else
+  #if defined(BOOST_CURRENT_FUNCTION)
+    #error BOOST_CURRENT_FUNCTION already defined
+  #endif
+  #define BOOST_CURRENT_FUNCTION __func__
+#endif
 
 #endif /* BOOST_TEST_BOOST_HELPERS_HPP__ */

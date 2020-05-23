@@ -16,6 +16,7 @@
 #define BOOST_TEST_UTILS_RUNTIME_PARAMETER_HPP
 
 // Boost.Test Runtime parameters
+#include <boost/test/utils/boost_helpers.hpp>
 #include <boost/test/utils/runtime/fwd.hpp>
 #include <boost/test/utils/runtime/modifier.hpp>
 #include <boost/test/utils/runtime/argument.hpp>
@@ -28,12 +29,6 @@
 
 // Boost
 #include <boost/algorithm/cxx11/all_of.hpp>
-
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-#include <boost/function/function2.hpp>
-#else
-#include <functional>
-#endif
 
 // STL
 #include <algorithm>
@@ -132,11 +127,7 @@ cstring const help_prefix("////");
 
 class basic_param {
 
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-    typedef function<void (cstring)>            callback_type;
-#else
-    using callback_type = std::function<void (cstring)>;
-#endif
+    typedef BOOST_TEST_FUNCTION<void (cstring)> callback_type;
     typedef unit_test::readwrite_property<bool> bool_property;
 
 protected:

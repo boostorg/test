@@ -16,6 +16,7 @@
 #define BOOST_TEST_UTILS_RUNTIME_ARGUMENT_FACTORY_HPP
 
 // Boost.Test Runtime parameters
+#include <boost/test/utils/boost_helpers.hpp>
 #include <boost/test/utils/runtime/errors.hpp>
 #include <boost/test/utils/runtime/argument.hpp>
 #include <boost/test/utils/runtime/modifier.hpp>
@@ -24,13 +25,6 @@
 #include <boost/test/utils/basic_cstring/io.hpp>
 #include <boost/test/utils/basic_cstring/compare.hpp>
 #include <boost/test/utils/string_cast.hpp>
-
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-// Boost
-#include <boost/function/function2.hpp>
-#else
-#include <functional>
-#endif
 
 // STL
 #include <vector>

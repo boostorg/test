@@ -13,6 +13,7 @@
 #define BOOST_TEST_UTILS_RUNTIME_CLA_PARSER_HPP
 
 // Boost.Test Runtime parameters
+#include <boost/test/utils/boost_helpers.hpp>
 #include <boost/test/utils/runtime/argument.hpp>
 #include <boost/test/utils/runtime/modifier.hpp>
 #include <boost/test/utils/runtime/parameter.hpp>
@@ -28,7 +29,6 @@
 #include <boost/algorithm/cxx11/all_of.hpp> // !! ?? unnecessary after cxx11
 
 // STL
-// !! ?? #include <unordered_set>
 #include <set>
 #include <iostream>
 
@@ -47,11 +47,7 @@ namespace rt_cla_detail {
 struct parameter_trie;
 typedef shared_ptr<parameter_trie> parameter_trie_ptr;
 typedef std::map<char,parameter_trie_ptr> trie_per_char;
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-    typedef std::vector<boost::reference_wrapper<parameter_cla_id const> > param_cla_id_list;
-#else
-    using param_cla_id_list = std::vector<std::reference_wrapper<parameter_cla_id const>>;
-#endif
+typedef std::vector<BOOST_TEST_REFERENCE_WRAPPER<parameter_cla_id const> > param_cla_id_list;
 
 struct parameter_trie {
     parameter_trie() : m_has_final_candidate( false ) {}
@@ -86,11 +82,8 @@ struct parameter_trie {
                               << "parameter cla id " << m_id_candidates.back().get().m_tag );
 
         m_has_final_candidate = final;
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-        m_id_candidates.push_back( boost::ref(param_id) );
-#else
-        m_id_candidates.push_back( std::ref(param_id) );
-#endif
+        m_id_candidates.push_back( BOOST_TEST_REF(param_id) );
+
         if( m_id_candidates.size() == 1 )
             m_param_candidate = param_candidate;
         else
