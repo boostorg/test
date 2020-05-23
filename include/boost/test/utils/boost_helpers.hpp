@@ -82,6 +82,9 @@ struct bt_bool<false> : bt_false_type {
 
 // boost::ref
 // static_assert with or without message
+// addressof
+// shared_ptr
+
 
 
 

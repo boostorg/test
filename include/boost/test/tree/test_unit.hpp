@@ -17,6 +17,7 @@
 #include <boost/test/detail/config.hpp>
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/tree/decorator.hpp>
 #include <boost/test/tree/fixture.hpp>
@@ -26,13 +27,7 @@
 
 #include <boost/test/utils/class_properties.hpp>
 
-// Boost
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-#include <boost/function/function0.hpp>
-#include <boost/function/function1.hpp>
-#else
-#include <functional>
-#endif
+
 // STL
 #include <vector>
 #include <string>
@@ -54,12 +49,7 @@ namespace framework {
 // ************************************************************************** //
 
 typedef std::vector<test_unit_id> test_unit_id_list;
-
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-    typedef boost::function<void ()> test_func_t;
-#else
-    using test_func_t = std::function<void ()>;
-#endif
+typedef BOOST_TEST_FUNCTION<void ()> test_func_t;
 
 class BOOST_TEST_DECL test_unit {
 public:
@@ -74,11 +64,7 @@ public:
     typedef std::vector<decorator::base_ptr>                                decor_list_t;
     typedef BOOST_READONLY_PROPERTY(std::vector<std::string>,(test_unit))   label_list_t;
 
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-    typedef boost::function<test_tools::assertion_result (test_unit_id)>    precondition_t;
-#else
-    using precondition_t = std::function<test_tools::assertion_result (test_unit_id)>;
-#endif
+    typedef BOOST_TEST_FUNCTION<test_tools::assertion_result (test_unit_id)> precondition_t;
     typedef BOOST_READONLY_PROPERTY(std::vector<precondition_t>,(test_unit)) precond_list_t;
 
     // preconditions management
