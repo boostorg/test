@@ -15,6 +15,7 @@
 // Boost.Test
 #include <boost/test/unit_test_suite.hpp>
 #include <boost/test/utils/string_cast.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 // Boost
 #include <boost/type_traits/remove_reference.hpp>
@@ -59,11 +60,7 @@ namespace ut_detail {
 template<typename ParamType, typename ParamIter>
 class param_test_case_generator : public test_unit_generator {
 public:
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-    typedef boost::function<void (ParamType)> param_func_t;
-#else
-    using param_func_t = std::function<void (ParamType)>;
-#endif
+    typedef BOOST_TEST_FUNCTION<void (ParamType)> param_func_t;
 
     param_test_case_generator( param_func_t const&                      test_func,
                                const_string                             tc_name,
@@ -108,11 +105,8 @@ private:
 
 template<typename UserTestCase,typename ParamType>
 struct user_param_tc_method_invoker {
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
     typedef void (UserTestCase::*test_method)( ParamType );
-#else
-    using test_method = std::function<void (ParamType)>;
-#endif
+
     // Constructor
     user_param_tc_method_invoker( shared_ptr<UserTestCase> inst, test_method test_method )
     : m_inst( inst ), m_test_method( test_method ) {}
@@ -130,11 +124,7 @@ struct user_param_tc_method_invoker {
 
 template<typename ParamType, typename ParamIter>
 inline ut_detail::param_test_case_generator<ParamType,ParamIter>
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-make_test_case( boost::function<void (ParamType)> const& test_func,
-#else
-make_test_case( std::function<void (ParamType)> const& test_func,
-#endif
+make_test_case( BOOST_TEST_FUNCTION<void (ParamType)> const& test_func,
                 const_string                             tc_name,
                 const_string                             tc_file,
                 std::size_t                              tc_line,
