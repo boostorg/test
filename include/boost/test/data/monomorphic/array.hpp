@@ -59,7 +59,7 @@ private:
 
 //! An array dataset is a dataset
 template<typename T>
-struct is_dataset<array<T>> : mpl::true_ {};
+struct is_dataset<array<T>> : bt_true_type {};
 
 } // namespace monomorphic
 

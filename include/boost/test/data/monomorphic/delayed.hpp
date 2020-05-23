@@ -94,7 +94,7 @@ private:
 
 //! A lazy/delayed dataset is a dataset.
 template <class dataset_t, class ...Args>
-struct is_dataset< delayed_dataset<dataset_t, Args...> > : boost::mpl::true_ {};
+struct is_dataset< delayed_dataset<dataset_t, Args...> > : bt_true_type {};
 
 //____________________________________________________________________________//
 

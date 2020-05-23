@@ -67,7 +67,7 @@ private:
 
 //! A collection from a forward iterable container is a dataset.
 template<typename C>
-struct is_dataset<collection<C>> : mpl::true_ {};
+struct is_dataset<collection<C>> : bt_true_type {};
 
 } // namespace monomorphic
 
