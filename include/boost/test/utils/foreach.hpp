@@ -23,6 +23,8 @@
 // Boost.Test
 #include <boost/test/detail/config.hpp>
 
+//#error "to remove"
+
 // Boost
 #include <boost/type.hpp>
 #include <boost/mpl/bool.hpp>

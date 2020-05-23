@@ -162,8 +162,8 @@ assign_sibling_rank( test_unit_id tu_id, order_info_per_tu& tuoi )
     tu.p_sibling_rank.value = (std::numeric_limits<counter_t>::max)();
 
     counter_t new_rank = 1;
-    BOOST_TEST_FOREACH( test_unit_id, sibling_id, info.dependant_siblings )
-        new_rank = (std::max)(new_rank, assign_sibling_rank( sibling_id, tuoi ) + 1);
+    for( std::vector<test_unit_id>::const_iterator it=info.dependant_siblings.begin(); it < info.dependant_siblings.end(); ++it)
+        new_rank = (std::max)(new_rank, assign_sibling_rank( *it, tuoi ) + 1);
 
     return tu.p_sibling_rank.value = new_rank;
 }
