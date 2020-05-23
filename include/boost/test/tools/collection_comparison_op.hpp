@@ -15,7 +15,6 @@
 // Boost.Test
 #include <boost/test/utils/boost_helpers.hpp>
 #include <boost/test/tools/assertion.hpp>
-#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/utils/is_forward_iterable.hpp>
 #include <boost/test/utils/is_cstring.hpp>

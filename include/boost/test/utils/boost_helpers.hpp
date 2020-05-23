@@ -18,20 +18,15 @@
   #define BOOST_TEST_USE_BOOST
 #endif
 
-#undef BOOST_NO_CXX11_HDR_FUNCTIONAL
-
-
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-#include <boost/function/function0.hpp>
-#else
-#include <functional>
-#endif
-
 
 // std::function abstract
 #if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
+#include <boost/function/function0.hpp>
+#include <boost/function/function1.hpp>
+#include <boost/function/function2.hpp>
 #define BOOST_TEST_FUNCTION boost::function
 #else
+#include <functional>
 #define BOOST_TEST_FUNCTION std::function
 #endif
 

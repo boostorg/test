@@ -70,7 +70,7 @@ struct dbg_startup_info {
 };
 
 /// Signature of debugger starter routine. Takes an instance of dbg_startup_into as only argument
-    typedef BOOST_TEST_FUNCTION<void (dbg_startup_info const&)> dbg_starter;
+typedef BOOST_TEST_FUNCTION<void (dbg_startup_info const&)> dbg_starter;
 
 // ************************************************************************** //
 /// Specifies which debugger to use when attaching and optionally what routine to use to start that debugger
