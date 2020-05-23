@@ -83,7 +83,7 @@ template<typename T>
 struct print_log_value {
     void    operator()( std::ostream& ostr, T const& t )
     {
-        typedef typename mpl::or_<is_array<T>,is_function<T>,is_abstract<T> >::type cant_use_nl;
+        typedef typename unit_test::bt_bool< is_array<T>::value || is_function<T>::value || is_abstract<T>::value >::type cant_use_nl;
 
         std::streamsize old_precision = set_precision( ostr, cant_use_nl() );
 
@@ -95,7 +95,7 @@ struct print_log_value {
             ostr.precision( old_precision );
     }
 
-    std::streamsize set_precision( std::ostream& ostr, mpl::false_ )
+    std::streamsize set_precision( std::ostream& ostr, unit_test::bt_false_type )
     {
         if( std::numeric_limits<T>::is_specialized && std::numeric_limits<T>::radix == 2 )
             return ostr.precision( 2 + std::numeric_limits<T>::digits * 301/1000 );

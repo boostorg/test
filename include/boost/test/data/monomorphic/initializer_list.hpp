@@ -15,6 +15,7 @@
 // Boost.Test
 #include <boost/test/data/config.hpp>
 #include <boost/test/data/monomorphic/fwd.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/core/ignore_unused.hpp>
 
@@ -121,7 +122,7 @@ private:
 
 //! An array dataset is a dataset
 template<typename T>
-struct is_dataset<init_list<T>> : mpl::true_ {};
+struct is_dataset<init_list<T>> : bt_true_type {};
 
 } // namespace monomorphic
 

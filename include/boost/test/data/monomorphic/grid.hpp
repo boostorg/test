@@ -141,7 +141,7 @@ struct grid {
 template<typename DataSet1, typename DataSet2>
 inline typename BOOST_TEST_ENABLE_IF<is_dataset<DataSet1>::value && is_dataset<DataSet2>::value,
                                         result_of::grid<mpl::identity<DataSet1>,mpl::identity<DataSet2>>
->::type
+>::type::type
 operator*( DataSet1&& ds1, DataSet2&& ds2 )
 {
     return grid<DataSet1,DataSet2>( std::forward<DataSet1>( ds1 ),  std::forward<DataSet2>( ds2 ) );
@@ -153,7 +153,7 @@ operator*( DataSet1&& ds1, DataSet2&& ds2 )
 template<typename DataSet1, typename DataSet2>
 inline typename BOOST_TEST_ENABLE_IF<is_dataset<DataSet1>::value && !is_dataset<DataSet2>::value,
                                         result_of::grid<mpl::identity<DataSet1>,data::result_of::make<DataSet2>>
->::type
+>::type::type
 operator*( DataSet1&& ds1, DataSet2&& ds2 )
 {
     return std::forward<DataSet1>(ds1) * data::make(std::forward<DataSet2>(ds2));
@@ -165,7 +165,7 @@ operator*( DataSet1&& ds1, DataSet2&& ds2 )
 template<typename DataSet1, typename DataSet2>
 inline typename BOOST_TEST_ENABLE_IF<!is_dataset<DataSet1>::value && is_dataset<DataSet2>::value,
                                         result_of::grid<data::result_of::make<DataSet1>,mpl::identity<DataSet2>>
->::type
+>::type::type
 operator*( DataSet1&& ds1, DataSet2&& ds2 )
 {
     return data::make(std::forward<DataSet1>(ds1)) * std::forward<DataSet2>(ds2);

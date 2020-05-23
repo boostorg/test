@@ -49,11 +49,11 @@ struct is_c_array<T [N]> : public unit_test::bt_true_type {};
 template<typename T, std::size_t N>
 struct is_c_array<T (&)[N]> : public unit_test::bt_true_type {};
 
-#define BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE(Col)          \
-namespace boost { namespace test_tools { namespace assertion {  \
-template<>                                                      \
-struct specialized_compare<Col> : public mpl::true_ {};         \
-}}}                                                             \
+#define BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE(Col)               \
+namespace boost { namespace test_tools { namespace assertion {       \
+template<>                                                           \
+struct specialized_compare<Col> : public unit_test::bt_true_type {}; \
+}}}                                                                  \
 /**/
 
 // ************************************************************************** //

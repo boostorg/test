@@ -77,7 +77,7 @@ struct tolerance_based_delegate<T, true>
 
 /*!@brief Indicates if a type can be compared using a tolerance scheme
  *
- * This is a metafunction that should evaluate to @c mpl::true_ if the type
+ * This is a metafunction that should evaluate to @c bt_true_type if the type
  * @c T can be compared using a tolerance based method, typically for floating point
  * types.
  *

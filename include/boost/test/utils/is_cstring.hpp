@@ -13,7 +13,7 @@
 #define BOOST_TEST_UTILS_IS_CSTRING_HPP
 
 // Boost
-#include <boost/mpl/bool.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/decay.hpp>
 #include <boost/type_traits/remove_pointer.hpp>
@@ -39,7 +39,7 @@ namespace unit_test {
 namespace ut_detail {
 
 template<typename T>
-struct is_cstring_impl : public mpl::false_ {};
+struct is_cstring_impl : public bt_false_type {};
 
 template<typename T>
 struct is_cstring_impl<T const*> : public is_cstring_impl<T*> {};
@@ -48,10 +48,10 @@ template<typename T>
 struct is_cstring_impl<T const* const> : public is_cstring_impl<T*> {};
 
 template<>
-struct is_cstring_impl<char*> : public mpl::true_ {};
+struct is_cstring_impl<char*> : public bt_true_type {};
 
 template<>
-struct is_cstring_impl<wchar_t*> : public mpl::true_ {};
+struct is_cstring_impl<wchar_t*> : public bt_true_type {};
 
 template <typename T, bool is_cstring = is_cstring_impl<typename boost::decay<T>::type>::value >
 struct deduce_cstring_transform_impl;
@@ -102,21 +102,21 @@ template<typename T>
 struct is_cstring : public ut_detail::is_cstring_impl<typename decay<T>::type> {};
 
 template<typename T, bool is_cstring = is_cstring<typename boost::decay<T>::type>::value >
-struct is_cstring_comparable: public mpl::false_ {};
+struct is_cstring_comparable: public bt_false_type {};
 
 template<typename T>
-struct is_cstring_comparable< T, true > : public mpl::true_ {};
+struct is_cstring_comparable< T, true > : public bt_true_type {};
 
 template<typename T>
-struct is_cstring_comparable< std::basic_string<T, std::char_traits<T> >, false > : public mpl::true_ {};
+struct is_cstring_comparable< std::basic_string<T, std::char_traits<T> >, false > : public bt_true_type {};
 
 #if defined(BOOST_TEST_STRING_VIEW)
 template<typename T>
-struct is_cstring_comparable< std::basic_string_view<T, std::char_traits<T> >, false > : public mpl::true_ {};
+struct is_cstring_comparable< std::basic_string_view<T, std::char_traits<T> >, false > : public bt_true_type {};
 #endif
 
 template<typename T>
-struct is_cstring_comparable< boost::unit_test::basic_cstring<T>, false > : public mpl::true_ {};
+struct is_cstring_comparable< boost::unit_test::basic_cstring<T>, false > : public bt_true_type {};
 
 template <class T>
 struct deduce_cstring_transform {

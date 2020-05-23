@@ -18,6 +18,7 @@
 // Boost
 #include <boost/config.hpp>
 #include <boost/detail/workaround.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 // Boost.Test
 #include <boost/test/utils/rtti.hpp>
@@ -61,13 +62,13 @@ template<typename NP1,typename NP2>                             struct named_par
 /// is_named_param_pack<T>::value is true if T is parameters pack
 
 template<typename T>
-struct is_named_param_pack : public mpl::false_ {};
+struct is_named_param_pack : public unit_test::bt_false_type {};
 
 template<typename T, typename unique_id, typename RefType>
-struct is_named_param_pack<named_parameter<T,unique_id,RefType> > : public mpl::true_ {};
+struct is_named_param_pack<named_parameter<T,unique_id,RefType> > : public unit_test::bt_true_type {};
 
 template<typename NP, typename Rest>
-struct is_named_param_pack<named_parameter_combine<NP,Rest> > : public mpl::true_ {};
+struct is_named_param_pack<named_parameter_combine<NP,Rest> > : public unit_test::bt_true_type {};
 
 // ************************************************************************** //
 // **************                  param_type                  ************** //

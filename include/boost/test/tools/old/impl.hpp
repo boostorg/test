@@ -142,7 +142,7 @@ struct equal_impl_frwd {
     inline assertion_result
     operator()( Left const& left, Right const& right ) const
     {
-        typedef typename is_array<Left>::type left_is_array;
+        typedef unit_test::specialized_comparebt_bool<is_array<Left>::value> left_is_array;
         return call_impl( left, right, left_is_array() );
     }
 };
