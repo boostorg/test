@@ -23,7 +23,6 @@
 // Boost.Test
 #include <boost/test/utils/rtti.hpp>
 #include <boost/test/utils/assign_op.hpp>
-#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/type_traits/remove_cv.hpp>
