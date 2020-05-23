@@ -19,6 +19,7 @@
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/tools/assertion_result.hpp>
 #include <boost/test/tools/floating_point_comparison.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/tools/detail/fwd.hpp>
 #include <boost/test/tools/detail/print_helper.hpp>
@@ -125,14 +126,14 @@ inline assertion_result equal_impl( wchar_t* left, wchar_t* right )       { retu
 struct equal_impl_frwd {
     template <typename Left, typename Right>
     inline assertion_result
-    call_impl( Left const& left, Right const& right, mpl::false_ ) const
+    call_impl( Left const& left, Right const& right, unit_test::bt_false_type ) const
     {
         return equal_impl( left, right );
     }
 
     template <typename Left, typename Right>
     inline assertion_result
-    call_impl( Left const& left, Right const& right, mpl::true_ ) const
+    call_impl( Left const& left, Right const& right, unit_test::bt_true_type ) const
     {
         return (*this)( right, &left[0] );
     }

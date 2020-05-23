@@ -18,6 +18,7 @@
 // Boost.Test
 #include <boost/test/detail/config.hpp>
 #include <boost/test/detail/global_typedef.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 // Boost
 #include <boost/mpl/or.hpp>
@@ -115,7 +116,7 @@ struct print_log_value {
         return (std::streamsize)-1;
     }
 
-    std::streamsize set_precision( std::ostream&, mpl::true_ ) { return (std::streamsize)-1; }
+    std::streamsize set_precision( std::ostream&, unit_test::bt_true_type ) { return (std::streamsize)-1; }
 };
 
 //____________________________________________________________________________//

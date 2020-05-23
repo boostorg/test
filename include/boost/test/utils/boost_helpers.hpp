@@ -31,7 +31,7 @@
 #define BOOST_TEST_FUNCTION std::function
 #endif
 
-#ifndef BOOST_OVERRIDE
+#if !defined(BOOST_TEST_USE_BOOST)
 #define BOOST_OVERRIDE override
 #endif
 
@@ -50,16 +50,39 @@
 // true_type
 #if defined(BOOST_TEST_USE_BOOST)
 #include <boost/mpl/bool.hpp>
-namespace boost { namespace test {
+namespace boost { namespace unit_test {
   typedef mpl::true_  bt_true_type;
   typedef mpl::false_ bt_false_type;
 }}
 #else
 #include <type_traits>
-namespace boost { namespace test {
+namespace boost { namespace unit_test {
   using bt_true_type = std::true_type;
   using bt_false_type = std::false_type;
 }}
 #endif
+
+namespace boost { namespace unit_test {
+template <bool b>
+struct bt_bool : bt_true_type {
+};
+template <>
+struct bt_bool<false> : bt_false_type {
+};
+}}
+
+#if !defined(BOOST_TEST_USE_BOOST)
+#define BOOST_DEDUCED_TYPENAME typename
+#define BOOST_CTOR_TYPENAME typename
+#endif
+
+# include <cassert>
+# define BOOST_TEST_ASSERT(expr) assert(expr)
+
+
+// boost::ref
+// static_assert with or without message
+
+
 
 #endif /* BOOST_TEST_BOOST_HELPERS_HPP__ */

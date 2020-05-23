@@ -15,12 +15,12 @@
 // Boost.Test
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/tools/assertion_result.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 // Boost
 #include <boost/limits.hpp>  // for std::numeric_limits
 #include <boost/static_assert.hpp>
 #include <boost/assert.hpp>
-#include <boost/mpl/bool.hpp>
 #include <boost/type_traits/is_floating_point.hpp>
 #include <boost/type_traits/is_array.hpp>
 #include <boost/type_traits/is_reference.hpp>
@@ -49,7 +49,7 @@ template <typename T, bool enabled>
 struct tolerance_based_delegate;
 
 template <typename T>
-struct tolerance_based_delegate<T, false> : mpl::false_ {};
+struct tolerance_based_delegate<T, false> : unit_test::bt_false_type {};
 
 // from https://stackoverflow.com/a/16509511/1617295
 template<typename T>
@@ -70,7 +70,7 @@ public:
 // prior to the specialization below
 template <typename T>
 struct tolerance_based_delegate<T, true>
-: mpl::bool_<
+: unit_test::bt_bool<
     is_floating_point<T>::value ||
     (!std::numeric_limits<T>::is_integer && std::numeric_limits<T>::is_specialized && !std::numeric_limits<T>::is_exact)>
 {};

@@ -123,7 +123,7 @@ private:
 
 //! Zipped datasets results in a dataset.
 template<typename DataSet1, typename DataSet2>
-struct is_dataset<zip<DataSet1,DataSet2>> : mpl::true_ {};
+struct is_dataset<zip<DataSet1,DataSet2>> : bt_true_type {};
 
 //____________________________________________________________________________//
 

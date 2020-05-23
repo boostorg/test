@@ -121,7 +121,7 @@ private:
 
 // A grid dataset is a dataset
 template<typename DataSet1, typename DataSet2>
-struct is_dataset<grid<DataSet1,DataSet2>> : mpl::true_ {};
+struct is_dataset<grid<DataSet1,DataSet2>> : bt_true_type {};
 
 //____________________________________________________________________________//
 

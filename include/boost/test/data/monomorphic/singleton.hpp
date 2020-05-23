@@ -15,6 +15,7 @@
 // Boost.Test
 #include <boost/test/data/config.hpp>
 #include <boost/test/data/monomorphic/fwd.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -75,7 +76,7 @@ private:
 
 // a singleton is a dataset
 template<typename T>
-struct is_dataset<singleton<T>> : mpl::true_ {};
+struct is_dataset<singleton<T>> : bt_true_type {};
 
 //____________________________________________________________________________//
 

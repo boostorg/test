@@ -15,6 +15,7 @@
 // Boost.Test
 #include <boost/test/utils/boost_helpers.hpp>
 #include <boost/test/tools/assertion.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/utils/is_forward_iterable.hpp>
 #include <boost/test/utils/is_cstring.hpp>
@@ -37,16 +38,16 @@ namespace assertion {
 // ************************************************************************** //
 
 template<typename T>
-struct specialized_compare : public mpl::false_ {};
+struct specialized_compare : public unit_test::bt_false_type {};
 
 template <typename T>
-struct is_c_array : public mpl::false_ {};
+struct is_c_array : public unit_test::bt_false_type {};
 
 template<typename T, std::size_t N>
-struct is_c_array<T [N]> : public mpl::true_ {};
+struct is_c_array<T [N]> : public unit_test::bt_true_type {};
 
 template<typename T, std::size_t N>
-struct is_c_array<T (&)[N]> : public mpl::true_ {};
+struct is_c_array<T (&)[N]> : public unit_test::bt_true_type {};
 
 #define BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE(Col)          \
 namespace boost { namespace test_tools { namespace assertion {  \
@@ -296,7 +297,7 @@ struct cctraits<op::GE<Lhs, Rhs> > {
 
 template <typename Lhs, typename Rhs, typename L, typename R>
 inline assertion_result
-compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::EQ<L, R> >*, mpl::true_ )
+compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::EQ<L, R> >*, unit_test::bt_true_type )
 {
     return assertion::op::element_compare<op::EQ<L, R> >( lhs, rhs );
 }
@@ -305,7 +306,7 @@ compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::EQ<L, R> >*
 
 template <typename Lhs, typename Rhs, typename L, typename R>
 inline assertion_result
-compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::EQ<L, R> >*, mpl::false_ )
+compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::EQ<L, R> >*, unit_test::bt_false_type )
 {
     return lhs == rhs;
 }
@@ -314,7 +315,7 @@ compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::EQ<L, R> >*
 
 template <typename Lhs, typename Rhs, typename L, typename R>
 inline assertion_result
-compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::NE<L, R> >*, mpl::true_ )
+compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::NE<L, R> >*, unit_test::bt_true_type )
 {
     return assertion::op::non_equality_compare<op::NE<L, R> >( lhs, rhs );
 }
@@ -323,7 +324,7 @@ compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::NE<L, R> >*
 
 template <typename Lhs, typename Rhs, typename L, typename R>
 inline assertion_result
-compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::NE<L, R> >*, mpl::false_ )
+compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::NE<L, R> >*, unit_test::bt_false_type )
 {
     return lhs != rhs;
 }
@@ -341,7 +342,7 @@ lexicographic_compare( Lhs const& lhs, Rhs const& rhs )
 
 template <typename Lhs, typename Rhs, typename OP>
 inline assertion_result
-compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<OP>*, mpl::true_ )
+compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<OP>*, unit_test::bt_true_type )
 {
     return lexicographic_compare<OP>( lhs, rhs );
 }
@@ -350,7 +351,7 @@ compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<OP>*, mpl::true
 
 template <typename Lhs, typename Rhs, typename L, typename R>
 inline assertion_result
-compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::LT<L, R> >*, mpl::false_ )
+compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::LT<L, R> >*, unit_test::bt_false_type )
 {
     return lhs < rhs;
 }
@@ -359,7 +360,7 @@ compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::LT<L, R> >*
 
 template <typename Lhs, typename Rhs, typename L, typename R>
 inline assertion_result
-compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::LE<L, R> >*, mpl::false_ )
+compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::LE<L, R> >*, unit_test::bt_false_type )
 {
     return lhs <= rhs;
 }
@@ -368,7 +369,7 @@ compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::LE<L, R> >*
 
 template <typename Lhs, typename Rhs, typename L, typename R>
 inline assertion_result
-compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::GT<L, R> >*, mpl::false_ )
+compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::GT<L, R> >*, unit_test::bt_false_type )
 {
     return lhs > rhs;
 }
@@ -377,7 +378,7 @@ compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::GT<L, R> >*
 
 template <typename Lhs, typename Rhs, typename L, typename R>
 inline assertion_result
-compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::GE<L, R> >*, mpl::false_ )
+compare_collections( Lhs const& lhs, Rhs const& rhs, boost::type<op::GE<L, R> >*, unit_test::bt_false_type )
 {
     return lhs >= rhs;
 }
@@ -409,12 +410,12 @@ public:                                                             \
               typename is_c_array<Lhs>::type,                       \
               typename is_c_array<Rhs>::type                        \
           >::value,                                                 \
-          mpl::true_,                                               \
+          unit_test::bt_true_type,                                  \
           typename                                                  \
               mpl::if_c<is_same<typename decay<Lhs>::type,          \
                                 typename decay<Rhs>::type>::value,  \
                         typename cctraits<OP>::is_specialized,      \
-                        mpl::false_>::type                          \
+                        unit_test::bt_false_type>::type             \
           >::type is_specialized;                                   \
                                                                     \
     typedef name<typename t_Lhs_iterator_helper::value_type,        \

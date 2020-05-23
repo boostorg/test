@@ -14,10 +14,9 @@
 
 // Boost.Test
 #include <boost/test/data/config.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 #include <boost/test/data/monomorphic/fwd.hpp>
 #include <boost/test/data/index_sequence.hpp>
-
-#include <boost/core/ref.hpp>
 
 #include <algorithm>
 #include <memory>
@@ -94,7 +93,7 @@ private:
 
 //! A lazy/delayed dataset is a dataset.
 template <class dataset_t, class ...Args>
-struct is_dataset< delayed_dataset<dataset_t, Args...> > : bt_true_type {};
+struct is_dataset< delayed_dataset<dataset_t, Args...> > : unit_test::bt_true_type {};
 
 //____________________________________________________________________________//
 
