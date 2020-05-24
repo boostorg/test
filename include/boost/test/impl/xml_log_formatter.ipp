@@ -70,9 +70,9 @@ xml_log_formatter::log_build_info( std::ostream& ostr, bool log_build_info )
                 << " platform"  << utils::attr_value() << BOOST_PLATFORM
                 << " compiler"  << utils::attr_value() << BOOST_COMPILER
                 << " stl"       << utils::attr_value() << BOOST_STDLIB
-                << " boost=\""  << BOOST_VERSION/100000     << "."
-                                << BOOST_VERSION/100 % 1000 << "."
-                                << BOOST_VERSION % 100      << '\"'
+                << " boost=\""  << BOOST_TEST_VERSION/100000     << "."
+                                << BOOST_TEST_VERSION/100 % 1000 << "."
+                                << BOOST_TEST_VERSION % 100      << '\"'
                 << "/>";
     }
 }

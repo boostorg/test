@@ -18,6 +18,7 @@
 // Boost.Test
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/results_reporter.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -36,13 +37,13 @@ public:
     plain_report_formatter() : m_indent( 0 ), m_color_output( false ) {}
 
     // Formatter interface
-    void    results_report_start( std::ostream& ostr ) BOOST_OVERRIDE;
-    void    results_report_finish( std::ostream& ostr ) BOOST_OVERRIDE;
+    void    results_report_start( std::ostream& ostr ) BOOST_TEST_OVERRIDE;
+    void    results_report_finish( std::ostream& ostr ) BOOST_TEST_OVERRIDE;
 
-    void    test_unit_report_start( test_unit const&, std::ostream& ostr ) BOOST_OVERRIDE;
-    void    test_unit_report_finish( test_unit const&, std::ostream& ostr ) BOOST_OVERRIDE;
+    void    test_unit_report_start( test_unit const&, std::ostream& ostr ) BOOST_TEST_OVERRIDE;
+    void    test_unit_report_finish( test_unit const&, std::ostream& ostr ) BOOST_TEST_OVERRIDE;
 
-    void    do_confirmation_report( test_unit const&, std::ostream& ostr ) BOOST_OVERRIDE;
+    void    do_confirmation_report( test_unit const&, std::ostream& ostr ) BOOST_TEST_OVERRIDE;
 
 private:
     // Data members

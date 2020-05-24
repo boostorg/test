@@ -14,6 +14,7 @@
 
 // Boost.Test
 #include <boost/test/tree/observer.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 // STL
 #include <iosfwd>   // for std::ostream&
@@ -34,13 +35,13 @@ class BOOST_TEST_DECL progress_monitor_t : public test_observer {
 public:
     /// @name Test observer interface
     /// @{
-    void    test_start( counter_t test_cases_amount, test_unit_id ) BOOST_OVERRIDE;
-    void    test_aborted() BOOST_OVERRIDE;
+    void    test_start( counter_t test_cases_amount, test_unit_id ) BOOST_TEST_OVERRIDE;
+    void    test_aborted() BOOST_TEST_OVERRIDE;
 
-    void    test_unit_finish( test_unit const&, unsigned long ) BOOST_OVERRIDE;
-    void    test_unit_skipped( test_unit const&, const_string ) BOOST_OVERRIDE;
+    void    test_unit_finish( test_unit const&, unsigned long ) BOOST_TEST_OVERRIDE;
+    void    test_unit_skipped( test_unit const&, const_string ) BOOST_TEST_OVERRIDE;
 
-    int     priority() BOOST_OVERRIDE { return 4; }
+    int     priority() BOOST_TEST_OVERRIDE { return 4; }
     /// @}
 
     /// @name Configuration

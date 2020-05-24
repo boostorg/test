@@ -32,9 +32,6 @@
 
 #include <boost/test/utils/algorithm.hpp>
 
-// Boost
-#include <boost/config.hpp>
-
 // STL
 #include <fstream>
 #include <string>

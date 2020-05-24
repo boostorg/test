@@ -15,7 +15,6 @@
 // Boost.Test
 #include <boost/test/unit_test_suite.hpp>
 #include <boost/test/utils/string_cast.hpp>
-#include <boost/test/utils/boost_helpers.hpp>
 
 // Boost
 #include <boost/type_traits/remove_reference.hpp>

@@ -20,6 +20,7 @@
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/detail/log_level.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/utils/wrap_stringstream.hpp>
 #include <boost/test/utils/lazy_ostream.hpp>
@@ -111,19 +112,19 @@ private:
 class BOOST_TEST_DECL unit_test_log_t : public test_observer {
 public:
     // test_observer interface implementation
-    void        test_start( counter_t test_cases_amount, test_unit_id ) BOOST_OVERRIDE;
-    void        test_finish() BOOST_OVERRIDE;
-    void        test_aborted() BOOST_OVERRIDE;
+    void        test_start( counter_t test_cases_amount, test_unit_id ) BOOST_TEST_OVERRIDE;
+    void        test_finish() BOOST_TEST_OVERRIDE;
+    void        test_aborted() BOOST_TEST_OVERRIDE;
 
-    void        test_unit_start( test_unit const& ) BOOST_OVERRIDE;
-    void        test_unit_finish( test_unit const&, unsigned long elapsed ) BOOST_OVERRIDE;
-    void        test_unit_skipped( test_unit const&, const_string ) BOOST_OVERRIDE;
-    void        test_unit_aborted( test_unit const& ) BOOST_OVERRIDE;
-    void        test_unit_timed_out( test_unit const& ) BOOST_OVERRIDE;
+    void        test_unit_start( test_unit const& ) BOOST_TEST_OVERRIDE;
+    void        test_unit_finish( test_unit const&, unsigned long elapsed ) BOOST_TEST_OVERRIDE;
+    void        test_unit_skipped( test_unit const&, const_string ) BOOST_TEST_OVERRIDE;
+    void        test_unit_aborted( test_unit const& ) BOOST_TEST_OVERRIDE;
+    void        test_unit_timed_out( test_unit const& ) BOOST_TEST_OVERRIDE;
 
-    void        exception_caught( execution_exception const& ex ) BOOST_OVERRIDE;
+    void        exception_caught( execution_exception const& ex ) BOOST_TEST_OVERRIDE;
 
-    int         priority() BOOST_OVERRIDE { return 2; }
+    int         priority() BOOST_TEST_OVERRIDE { return 2; }
 
     // log configuration methods
     //! Sets the stream for all loggers
@@ -244,7 +245,7 @@ BOOST_TEST_SINGLETON_INST( unit_test_log )
    (::boost::unit_test::unit_test_log                           \
         << ::boost::unit_test::log::begin(                      \
                 "boost.test framework",                         \
-                0 ))                                     \
+                0 ))                                            \
              ( ::boost::unit_test::log_messages )               \
     << BOOST_TEST_LAZY_MSG( M )                                 \
 /**/

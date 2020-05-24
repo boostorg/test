@@ -14,7 +14,6 @@
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
-#include <boost/test/utils/boost_helpers.hpp>
 
 // Boost
 #include <boost/shared_ptr.hpp>
@@ -134,8 +133,8 @@ public:
 
 private:
     // Fixture interface
-    void    setup() BOOST_OVERRIDE         { m_inst.reset( new F( m_arg ) ); setup_conditional(*m_inst); }
-    void    teardown() BOOST_OVERRIDE      { teardown_conditional(*m_inst); m_inst.reset(); }
+    void    setup() BOOST_TEST_OVERRIDE         { m_inst.reset( new F( m_arg ) ); setup_conditional(*m_inst); }
+    void    teardown() BOOST_TEST_OVERRIDE      { teardown_conditional(*m_inst); m_inst.reset(); }
 
     // Data members
     scoped_ptr<F>   m_inst;
@@ -152,8 +151,8 @@ public:
 
 private:
     // Fixture interface
-    void    setup() BOOST_OVERRIDE         { m_inst.reset( new F ); setup_conditional(*m_inst); }
-    void    teardown() BOOST_OVERRIDE      { teardown_conditional(*m_inst); m_inst.reset(); }
+    void    setup() BOOST_TEST_OVERRIDE         { m_inst.reset( new F ); setup_conditional(*m_inst); }
+    void    teardown() BOOST_TEST_OVERRIDE      { teardown_conditional(*m_inst); m_inst.reset(); }
 
     // Data members
     scoped_ptr<F>   m_inst;
@@ -176,8 +175,8 @@ public:
 
 private:
     // Fixture interface
-    void                setup() BOOST_OVERRIDE     { if( m_setup ) m_setup(); }
-    void                teardown() BOOST_OVERRIDE  { if( m_teardown ) m_teardown(); }
+    void                setup() BOOST_TEST_OVERRIDE     { if( m_setup ) m_setup(); }
+    void                teardown() BOOST_TEST_OVERRIDE  { if( m_teardown ) m_teardown(); }
 
     // Data members
     fixture_func_t              m_setup;

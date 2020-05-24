@@ -21,6 +21,7 @@
 #include <boost/test/utils/xml_printer.hpp>
 #include <boost/test/utils/string_cast.hpp>
 #include <boost/test/framework.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/tree/visitor.hpp>
 #include <boost/test/tree/traverse.hpp>
@@ -397,7 +398,7 @@ public:
         m_stream << "</testcase>" << std::endl;
     }
 
-    void    visit( test_case const& tc ) BOOST_OVERRIDE
+    void    visit( test_case const& tc ) BOOST_TEST_OVERRIDE
     {
 
         test_results const& tr = results_collector.results( tc.p_id );
@@ -412,7 +413,7 @@ public:
         }
     }
 
-    bool    test_suite_start( test_suite const& ts ) BOOST_OVERRIDE
+    bool    test_suite_start( test_suite const& ts ) BOOST_TEST_OVERRIDE
     {
         test_results const& tr = results_collector.results( ts.p_id );
 
@@ -452,7 +453,7 @@ public:
                 m_stream  << "<property name=\"stl\" value" << utils::attr_value() << BOOST_STDLIB << " />" << std::endl;
 
                 std::ostringstream o;
-                o << BOOST_VERSION/100000 << "." << BOOST_VERSION/100 % 1000 << "." << BOOST_VERSION % 100;
+                o << BOOST_TEST_VERSION/100000 << "." << BOOST_TEST_VERSION/100 % 1000 << "." << BOOST_TEST_VERSION % 100;
                 m_stream  << "<property name=\"boost\" value" << utils::attr_value() << o.str() << " />" << std::endl;
                 m_stream  << "</properties>" << std::endl;
             }
@@ -471,7 +472,7 @@ public:
         return true; // indicates that the children should also be parsed
     }
 
-    void    test_suite_finish( test_suite const& ts ) BOOST_OVERRIDE
+    void    test_suite_finish( test_suite const& ts ) BOOST_TEST_OVERRIDE
     {
         if( m_ts.p_id == ts.p_id ) {
             write_testcase_system_out(runner_log, 0, false);

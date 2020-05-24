@@ -27,9 +27,6 @@
 #include <boost/test/utils/basic_cstring/io.hpp>
 #include <boost/test/utils/lazy_ostream.hpp>
 
-// Boost
-#include <boost/version.hpp>
-
 // STL
 #include <iostream>
 
@@ -81,12 +78,12 @@ void
 compiler_log_formatter::log_build_info( std::ostream& output, bool log_build_info )
 {
     if(log_build_info) {
-        output  << "Platform: " << BOOST_PLATFORM            << '\n'
-                << "Compiler: " << BOOST_COMPILER            << '\n'
-                << "STL     : " << BOOST_STDLIB              << '\n'
-                << "Boost   : " << BOOST_VERSION/100000      << "."
-                                << BOOST_VERSION/100 % 1000  << "."
-                                << BOOST_VERSION % 100       << std::endl;
+        output  << "Platform: " << BOOST_PLATFORM                << '\n'
+                << "Compiler: " << BOOST_COMPILER                << '\n'
+                << "STL     : " << BOOST_STDLIB                  << '\n'
+                << "Boost   : " << BOOST_TEST_VERSION/100000     << "."
+                                << BOOST_TEST_VERSION/100 % 1000 << "."
+                                << BOOST_TEST_VERSION % 100      << std::endl;
     }
 }
 

@@ -12,8 +12,9 @@
 #ifndef BOOST_TEST_CONFIG_HPP_071894GER
 #define BOOST_TEST_CONFIG_HPP_071894GER
 
-// Boost
-#include <boost/config.hpp> // compilers workarounds
+// Boost wrappers
+#include <boost/test/utils/boost_helpers.hpp>
+
 #include <boost/detail/workaround.hpp>
 
 #if defined(_WIN32) && !defined(BOOST_DISABLE_WIN32) && \

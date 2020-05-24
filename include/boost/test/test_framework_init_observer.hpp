@@ -36,13 +36,13 @@ public:
 
     framework_init_observer_t(): m_has_failure( false ) {}
 
-    void        test_start( counter_t, test_unit_id ) BOOST_OVERRIDE;
+    void        test_start( counter_t, test_unit_id ) BOOST_TEST_OVERRIDE;
 
-    void        assertion_result( unit_test::assertion_result ) BOOST_OVERRIDE;
-    void        exception_caught( execution_exception const& ) BOOST_OVERRIDE;
-    void        test_aborted() BOOST_OVERRIDE;
+    void        assertion_result( unit_test::assertion_result ) BOOST_TEST_OVERRIDE;
+    void        exception_caught( execution_exception const& ) BOOST_TEST_OVERRIDE;
+    void        test_aborted() BOOST_TEST_OVERRIDE;
 
-    int         priority() BOOST_OVERRIDE { return 0; }
+    int         priority() BOOST_TEST_OVERRIDE { return 0; }
 
     void                clear();
 

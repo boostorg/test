@@ -445,7 +445,7 @@ public:
     : translator_holder_base( next, tag ), m_translator( tr ) {}
 
     // translator holder interface
-    int operator()( result_func_t const& F ) BOOST_OVERRIDE
+    int operator()( result_func_t const& F ) BOOST_TEST_OVERRIDE
     {
         BOOST_TEST_I_TRY {
             return m_next ? (*m_next)( F ) : F();
@@ -456,7 +456,7 @@ public:
         }
     }
 #ifndef BOOST_NO_RTTI
-    translator_holder_base_ptr erase( translator_holder_base_ptr this_, std::type_info const& ti ) BOOST_OVERRIDE
+    translator_holder_base_ptr erase( translator_holder_base_ptr this_, std::type_info const& ti ) BOOST_TEST_OVERRIDE
     {
         return ti == typeid(ExceptionType) ? m_next : this_;
     }

@@ -276,13 +276,13 @@ private:
     }
 
     // test_tree_visitor interface
-    void    visit( test_case const& tc ) BOOST_OVERRIDE
+    void    visit( test_case const& tc ) BOOST_TEST_OVERRIDE
     {
         // make sure we only accept test cases if we match last component of the filter
         if( m_depth == m_components.size() && filter_unit( tc ) )
             m_targ_list.push_back( tc.p_id ); // found a test case
     }
-    bool    test_suite_start( test_suite const& ts ) BOOST_OVERRIDE
+    bool    test_suite_start( test_suite const& ts ) BOOST_TEST_OVERRIDE
     {
         if( !filter_unit( ts ) )
             return false;
@@ -296,7 +296,7 @@ private:
 
         return false;
     }
-    void    test_suite_finish( test_suite const& /*ts*/ ) BOOST_OVERRIDE
+    void    test_suite_finish( test_suite const& /*ts*/ ) BOOST_TEST_OVERRIDE
     {
         --m_depth;
     }
@@ -322,7 +322,7 @@ public:
 
 private:
     // test_tree_visitor interface
-    bool    visit( test_unit const& tu ) BOOST_OVERRIDE
+    bool    visit( test_unit const& tu ) BOOST_TEST_OVERRIDE
     {
         if( tu.has_label( m_label ) ) {
             // found a test unit; add it to list of tu to enable with children and stop recursion in case of suites
@@ -350,7 +350,7 @@ public:
     {}
 
     // test_tree_visitor interface
-    bool    visit( test_unit const& tu ) BOOST_OVERRIDE
+    bool    visit( test_unit const& tu ) BOOST_TEST_OVERRIDE
     {
         const_cast<test_unit&>(tu).p_run_status.value = m_new_status == test_unit::RS_INVALID ? tu.p_default_status : m_new_status;
         if( m_dep_collector ) {
@@ -462,12 +462,12 @@ void random_shuffle( RandomIt first, RandomIt last, RandomFunc &r )
 class global_fixture_handle : public test_unit_fixture {
 public:
     global_fixture_handle(test_unit_fixture* fixture) : m_global_fixture(fixture) {}
-    ~global_fixture_handle() BOOST_OVERRIDE {}
+    ~global_fixture_handle() BOOST_TEST_OVERRIDE {}
 
-    void    setup() BOOST_OVERRIDE {
+    void    setup() BOOST_TEST_OVERRIDE {
         m_global_fixture->setup();
     }
-    void    teardown() BOOST_OVERRIDE {
+    void    teardown() BOOST_TEST_OVERRIDE {
         m_global_fixture->teardown();
     }
 
@@ -986,10 +986,10 @@ setup_loggers()
             runtime_config::stream_holder& stream_logger = s_frk_state().m_log_sinks[format];
             if( runtime_config::has( runtime_config::btrt_log_sink ) ) {
                 // we remove all streams in this case, so we do not specify the format
-                boost::function< void () > log_cleaner = boost::bind( &unit_test_log_t::set_stream,
-                                                                      &unit_test_log,
-                                                                      BOOST_TEST_REF(std::cout)
-                                                                      );
+                BOOST_TEST_FUNCTION< void () > log_cleaner = boost::bind( &unit_test_log_t::set_stream,
+                                                                          &unit_test_log,
+                                                                          BOOST_TEST_REF(std::cout)
+                                                                         );
                 stream_logger.setup( runtime_config::get<std::string>( runtime_config::btrt_log_sink ),
                                      log_cleaner );
             }
@@ -1119,10 +1119,10 @@ setup_loggers()
                     unit_test_log.set_threshold_level( format, formatter_log_level );
 
                     runtime_config::stream_holder& stream_logger = s_frk_state().m_log_sinks[format];
-                    boost::function< void () > log_cleaner = boost::bind( &unit_test_log_t::set_stream,
-                                                                          &unit_test_log,
-                                                                          format,
-                                                                          BOOST_TEST_REF(std::cout) );
+                    BOOST_TEST_FUNCTION< void () > log_cleaner = boost::bind( &unit_test_log_t::set_stream,
+                                                                              &unit_test_log,
+                                                                              format,
+                                                                              BOOST_TEST_REF(std::cout) );
                     if( ++current_format_specs != utils::string_token_iterator() &&
                         current_format_specs->size() ) {
                         stream_logger.setup( *current_format_specs,
@@ -1177,9 +1177,9 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     results_reporter::set_format( runtime_config::get<output_format>( runtime_config::btrt_report_format ) );
 
     if( runtime_config::has( runtime_config::btrt_report_sink ) ) {
-        boost::function< void () > report_cleaner = boost::bind( &results_reporter::set_stream,
-                                                                 BOOST_TEST_REF(std::cerr)
-                                                                );
+        BOOST_TEST_FUNCTION< void () > report_cleaner = boost::bind( &results_reporter::set_stream,
+                                                                     BOOST_TEST_REF(std::cerr)
+                                                                    );
         s_frk_state().m_report_sink.setup( runtime_config::get<std::string>( runtime_config::btrt_report_sink ),
                                            report_cleaner );
     }
@@ -1229,14 +1229,14 @@ finalize_setup_phase( test_unit_id master_tu_id )
     private:
         // test_tree_visitor interface
 
-        bool    test_suite_start( test_suite const& ts) BOOST_OVERRIDE
+        bool    test_suite_start( test_suite const& ts) BOOST_TEST_OVERRIDE
         {
             const_cast<test_suite&>(ts).generate();
             const_cast<test_suite&>(ts).check_for_duplicate_test_cases();
             return test_tree_visitor::test_suite_start(ts);
         }
 
-        bool    visit( test_unit const& tu ) BOOST_OVERRIDE
+        bool    visit( test_unit const& tu ) BOOST_TEST_OVERRIDE
         {
             BOOST_TEST_FOREACH( decorator::base_ptr, d, tu.p_decorators.get() )
                 d->apply( const_cast<test_unit&>(tu) );

@@ -19,6 +19,7 @@
 #include <boost/test/framework.hpp>
 #include <boost/test/results_collector.hpp>
 #include <boost/test/results_reporter.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/tree/visitor.hpp>
 #include <boost/test/tree/test_unit.hpp>
@@ -68,15 +69,15 @@ private:
 
         m_os << "\n";
     }
-    void    visit( test_case const& tc ) BOOST_OVERRIDE { report_test_unit( tc ); }
-    bool    test_suite_start( test_suite const& ts ) BOOST_OVERRIDE
+    void    visit( test_case const& tc ) BOOST_TEST_OVERRIDE { report_test_unit( tc ); }
+    bool    test_suite_start( test_suite const& ts ) BOOST_TEST_OVERRIDE
     {
         if( m_indent >= 0 )
             report_test_unit( ts );
         m_indent += 4;
         return true;
     }
-    void    test_suite_finish( test_suite const& ) BOOST_OVERRIDE
+    void    test_suite_finish( test_suite const& ) BOOST_TEST_OVERRIDE
     {
         m_indent -= 4;
     }
@@ -133,11 +134,11 @@ private:
         }
 
     }
-    void    visit( test_case const& tc ) BOOST_OVERRIDE
+    void    visit( test_case const& tc ) BOOST_TEST_OVERRIDE
     { 
         report_test_unit( tc );
     }
-    bool    test_suite_start( test_suite const& ts ) BOOST_OVERRIDE
+    bool    test_suite_start( test_suite const& ts ) BOOST_TEST_OVERRIDE
     {
         if( ts.p_parent_id == INV_TEST_UNIT_ID )
             m_os << "digraph G {rankdir=LR;\n";
@@ -148,7 +149,7 @@ private:
 
         return true;
     }
-    void    test_suite_finish( test_suite const& ts ) BOOST_OVERRIDE
+    void    test_suite_finish( test_suite const& ts ) BOOST_TEST_OVERRIDE
     {
         m_os << "}\n";
         if( ts.p_parent_id == INV_TEST_UNIT_ID )
@@ -166,7 +167,7 @@ struct labels_collector : test_tree_visitor {
     std::set<std::string> const& labels() const { return m_labels; }
 
 private:
-    bool            visit( test_unit const& tu ) BOOST_OVERRIDE
+    bool            visit( test_unit const& tu ) BOOST_TEST_OVERRIDE
     {
         m_labels.insert( tu.p_labels->begin(), tu.p_labels->end() );
         return true;

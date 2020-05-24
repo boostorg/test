@@ -309,9 +309,9 @@ public:
 
        ostr << "in executable '" << m_program_name << "'\n";
        ostr << "Compiled from Boost version "
-            << BOOST_VERSION/100000      << "."
-            << BOOST_VERSION/100 % 1000  << "."
-            << BOOST_VERSION % 100       ;
+            << BOOST_TEST_VERSION/100000      << "."
+            << BOOST_TEST_VERSION/100 % 1000  << "."
+            << BOOST_TEST_VERSION % 100       ;
        ostr << " with ";
 #if defined(BOOST_TEST_INCLUDED)
        ostr << "header-only inclusion of";

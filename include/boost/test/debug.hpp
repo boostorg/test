@@ -16,7 +16,6 @@
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
-#include <boost/test/utils/boost_helpers.hpp>
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 
 // STL

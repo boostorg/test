@@ -121,18 +121,18 @@ public:
 class BOOST_TEST_DECL results_collector_t : public test_observer {
 public:
 
-    void        test_start( counter_t, test_unit_id ) BOOST_OVERRIDE;
+    void        test_start( counter_t, test_unit_id ) BOOST_TEST_OVERRIDE;
 
-    void        test_unit_start( test_unit const& ) BOOST_OVERRIDE;
-    void        test_unit_finish( test_unit const&, unsigned long ) BOOST_OVERRIDE;
-    void        test_unit_skipped( test_unit const&, const_string ) BOOST_OVERRIDE;
-    void        test_unit_aborted( test_unit const& ) BOOST_OVERRIDE;
-    void        test_unit_timed_out( test_unit const& ) BOOST_OVERRIDE;
+    void        test_unit_start( test_unit const& ) BOOST_TEST_OVERRIDE;
+    void        test_unit_finish( test_unit const&, unsigned long ) BOOST_TEST_OVERRIDE;
+    void        test_unit_skipped( test_unit const&, const_string ) BOOST_TEST_OVERRIDE;
+    void        test_unit_aborted( test_unit const& ) BOOST_TEST_OVERRIDE;
+    void        test_unit_timed_out( test_unit const& ) BOOST_TEST_OVERRIDE;
 
-    void        assertion_result( unit_test::assertion_result ) BOOST_OVERRIDE;
-    void        exception_caught( execution_exception const& ) BOOST_OVERRIDE;
+    void        assertion_result( unit_test::assertion_result ) BOOST_TEST_OVERRIDE;
+    void        exception_caught( execution_exception const& ) BOOST_TEST_OVERRIDE;
 
-    int         priority() BOOST_OVERRIDE { return 3; }
+    int         priority() BOOST_TEST_OVERRIDE { return 3; }
 
     /// Results access per test unit
     ///

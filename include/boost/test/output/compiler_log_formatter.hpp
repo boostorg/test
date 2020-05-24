@@ -15,6 +15,7 @@
 // Boost.Test
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/unit_test_log_formatter.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/utils/setcolor.hpp>
 
@@ -36,25 +37,25 @@ public:
     compiler_log_formatter() : m_color_output( false ), m_color_state() {}
 
     // Formatter interface
-    void    log_start( std::ostream&, counter_t test_cases_amount ) BOOST_OVERRIDE;
-    void    log_finish( std::ostream& ) BOOST_OVERRIDE;
-    void    log_build_info( std::ostream&, bool ) BOOST_OVERRIDE;
+    void    log_start( std::ostream&, counter_t test_cases_amount ) BOOST_TEST_OVERRIDE;
+    void    log_finish( std::ostream& ) BOOST_TEST_OVERRIDE;
+    void    log_build_info( std::ostream&, bool ) BOOST_TEST_OVERRIDE;
 
-    void    test_unit_start( std::ostream&, test_unit const& tu ) BOOST_OVERRIDE;
-    void    test_unit_finish( std::ostream&, test_unit const& tu, unsigned long elapsed ) BOOST_OVERRIDE;
-    void    test_unit_skipped( std::ostream&, test_unit const& tu, const_string reason ) BOOST_OVERRIDE;
+    void    test_unit_start( std::ostream&, test_unit const& tu ) BOOST_TEST_OVERRIDE;
+    void    test_unit_finish( std::ostream&, test_unit const& tu, unsigned long elapsed ) BOOST_TEST_OVERRIDE;
+    void    test_unit_skipped( std::ostream&, test_unit const& tu, const_string reason ) BOOST_TEST_OVERRIDE;
 
-    void    log_exception_start( std::ostream&, log_checkpoint_data const&, execution_exception const& ex ) BOOST_OVERRIDE;
-    void    log_exception_finish( std::ostream& ) BOOST_OVERRIDE;
+    void    log_exception_start( std::ostream&, log_checkpoint_data const&, execution_exception const& ex ) BOOST_TEST_OVERRIDE;
+    void    log_exception_finish( std::ostream& ) BOOST_TEST_OVERRIDE;
 
-    void    log_entry_start( std::ostream&, log_entry_data const&, log_entry_types let ) BOOST_OVERRIDE;
-    void    log_entry_value( std::ostream&, const_string value ) BOOST_OVERRIDE;
-    void    log_entry_value( std::ostream&, lazy_ostream const& value ) BOOST_OVERRIDE;
-    void    log_entry_finish( std::ostream& ) BOOST_OVERRIDE;
+    void    log_entry_start( std::ostream&, log_entry_data const&, log_entry_types let ) BOOST_TEST_OVERRIDE;
+    void    log_entry_value( std::ostream&, const_string value ) BOOST_TEST_OVERRIDE;
+    void    log_entry_value( std::ostream&, lazy_ostream const& value ) BOOST_TEST_OVERRIDE;
+    void    log_entry_finish( std::ostream& ) BOOST_TEST_OVERRIDE;
 
-    void    entry_context_start( std::ostream&, log_level ) BOOST_OVERRIDE;
-    void    log_entry_context( std::ostream&, log_level l, const_string ) BOOST_OVERRIDE;
-    void    entry_context_finish( std::ostream&, log_level l ) BOOST_OVERRIDE;
+    void    entry_context_start( std::ostream&, log_level ) BOOST_TEST_OVERRIDE;
+    void    log_entry_context( std::ostream&, log_level l, const_string ) BOOST_TEST_OVERRIDE;
+    void    entry_context_finish( std::ostream&, log_level l ) BOOST_TEST_OVERRIDE;
 
 protected:
     virtual void    print_prefix( std::ostream&, const_string file, std::size_t line );

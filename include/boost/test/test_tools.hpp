@@ -14,12 +14,7 @@
 #ifndef BOOST_TEST_TOOLS_HPP_111812GER
 #define BOOST_TEST_TOOLS_HPP_111812GER
 
-#include <boost/config.hpp>
-
-// brings some compiler configuration like BOOST_PP_VARIADICS
 #include <boost/test/detail/config.hpp>
-
-#include <boost/preprocessor/config/config.hpp>
 
 #if    defined(BOOST_NO_CXX11_VARIADIC_MACROS) \
     || defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) \

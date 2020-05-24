@@ -15,6 +15,7 @@
 // Boost.Test
 #include <boost/test/detail/config.hpp>
 #include <boost/test/utils/class_properties.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/tree/test_unit.hpp>
 #include <boost/test/tree/visitor.hpp>
@@ -43,8 +44,8 @@ public:
     BOOST_READONLY_PROPERTY( counter_t, (test_case_counter)) p_count;
 private:
     // test tree visitor interface
-    void    visit( test_case const& tc ) BOOST_OVERRIDE                { if( m_ignore_status || tc.is_enabled() ) ++p_count.value; }
-    bool    test_suite_start( test_suite const& ts ) BOOST_OVERRIDE    { return m_ignore_status || ts.is_enabled(); }
+    void    visit( test_case const& tc ) BOOST_TEST_OVERRIDE                { if( m_ignore_status || tc.is_enabled() ) ++p_count.value; }
+    bool    test_suite_start( test_suite const& ts ) BOOST_TEST_OVERRIDE    { return m_ignore_status || ts.is_enabled(); }
   
     bool m_ignore_status;
 };

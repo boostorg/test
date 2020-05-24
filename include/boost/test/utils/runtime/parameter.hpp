@@ -186,7 +186,6 @@ public:
         // 
         ostr  << "  ";
         {
-
           BOOST_TEST_SCOPE_SETCOLOR( use_color, ostr, term_attr::BRIGHT, term_color::GREEN );
           ostr << p_name;
         }
@@ -323,15 +322,15 @@ public:
     }
 
 private:
-    basic_param_ptr clone() const BOOST_OVERRIDE
+    basic_param_ptr clone() const BOOST_TEST_OVERRIDE
     {
         return basic_param_ptr( new parameter( *this ) );
     }
-    void    produce_argument( cstring token, bool , arguments_store& store ) const BOOST_OVERRIDE
+    void    produce_argument( cstring token, bool , arguments_store& store ) const BOOST_TEST_OVERRIDE
     {
         m_arg_factory.produce_argument( token, this->p_name, store );
     }
-    void    produce_default( arguments_store& store ) const BOOST_OVERRIDE
+    void    produce_default( arguments_store& store ) const BOOST_TEST_OVERRIDE
     {
         if( !this->p_has_default_value )
             return;
@@ -367,12 +366,12 @@ public:
     }
 
 private:
-    basic_param_ptr clone() const BOOST_OVERRIDE
+    basic_param_ptr clone() const BOOST_TEST_OVERRIDE
     {
         return basic_param_ptr( new option( *this ) );
     }
 
-    void    produce_argument( cstring token, bool negative_form, arguments_store& store ) const BOOST_OVERRIDE
+    void    produce_argument( cstring token, bool negative_form, arguments_store& store ) const BOOST_TEST_OVERRIDE
     {
         if( token.empty() )
             store.set( p_name, !negative_form );
@@ -384,11 +383,11 @@ private:
         }
     }
 
-    void    produce_default( arguments_store& store ) const BOOST_OVERRIDE
+    void    produce_default( arguments_store& store ) const BOOST_TEST_OVERRIDE
     {
         m_arg_factory.produce_default( p_name, store );
     }
-    void    cla_name_help( std::ostream& ostr, cstring cla_tag, cstring negation_prefix_, bool use_color = true ) const BOOST_OVERRIDE
+    void    cla_name_help( std::ostream& ostr, cstring cla_tag, cstring negation_prefix_, bool use_color = true ) const BOOST_TEST_OVERRIDE
     {
         namespace utils = unit_test::utils;
         namespace ut_detail = unit_test::ut_detail;
@@ -399,7 +398,7 @@ private:
         }
         ostr << cla_tag;
     }
-    void    value_help( std::ostream& ostr ) const BOOST_OVERRIDE
+    void    value_help( std::ostream& ostr ) const BOOST_TEST_OVERRIDE
     {
         if( p_value_hint.empty() )
             ostr << "<boolean value>";
@@ -442,12 +441,12 @@ public:
     }
 
 private:
-    basic_param_ptr clone() const BOOST_OVERRIDE
+    basic_param_ptr clone() const BOOST_TEST_OVERRIDE
     {
         return basic_param_ptr( new enum_parameter( *this ) );
     }
 
-    void    value_help( std::ostream& ostr ) const BOOST_OVERRIDE
+    void    value_help( std::ostream& ostr ) const BOOST_TEST_OVERRIDE
     {
         if( this->p_value_hint.empty() ) {
             ostr << "<";

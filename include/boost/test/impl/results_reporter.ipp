@@ -19,6 +19,7 @@
 #include <boost/test/results_reporter.hpp>
 #include <boost/test/results_collector.hpp>
 #include <boost/test/framework.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/output/plain_report_formatter.hpp>
 #include <boost/test/output/xml_report_formatter.hpp>
@@ -59,12 +60,12 @@ struct results_reporter_impl : test_tree_visitor {
     {}
 
     // test tree visitor interface implementation
-    void    visit( test_case const& tc ) BOOST_OVERRIDE
+    void    visit( test_case const& tc ) BOOST_TEST_OVERRIDE
     {
         m_formatter->test_unit_report_start( tc, *m_stream );
         m_formatter->test_unit_report_finish( tc, *m_stream );
     }
-    bool    test_suite_start( test_suite const& ts ) BOOST_OVERRIDE
+    bool    test_suite_start( test_suite const& ts ) BOOST_TEST_OVERRIDE
     {
         m_formatter->test_unit_report_start( ts, *m_stream );
 
@@ -74,7 +75,7 @@ struct results_reporter_impl : test_tree_visitor {
         m_formatter->test_unit_report_finish( ts, *m_stream );
         return false;
     }
-    void    test_suite_finish( test_suite const& ts ) BOOST_OVERRIDE
+    void    test_suite_finish( test_suite const& ts ) BOOST_TEST_OVERRIDE
     {
         m_formatter->test_unit_report_finish( ts, *m_stream );
     }

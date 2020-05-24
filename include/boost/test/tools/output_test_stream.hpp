@@ -16,6 +16,7 @@
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/utils/wrap_stringstream.hpp>
 #include <boost/test/tools/assertion_result.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 // STL
 #include <cstddef>          // for std::size_t
@@ -51,7 +52,7 @@ public:
                                         bool            text_or_binary    = true );
 
     // Destructor
-    ~output_test_stream() BOOST_OVERRIDE;
+    ~output_test_stream() BOOST_TEST_OVERRIDE;
 
     //! Checks if the stream is empty
     //!

@@ -15,6 +15,7 @@
 // Boost.Test
 #include <boost/test/detail/config.hpp>
 #include <boost/test/detail/global_typedef.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/tree/observer.hpp>
 #include <boost/test/tree/fixture.hpp>
@@ -43,10 +44,10 @@ public:
     void unregister_from_framework();
 
     // Dtor
-    ~global_configuration() BOOST_OVERRIDE;
+    ~global_configuration() BOOST_TEST_OVERRIDE;
 
     // Happens after the framework global observer init has been done
-    int     priority() BOOST_OVERRIDE { return 1; }
+    int     priority() BOOST_TEST_OVERRIDE { return 1; }
 
 private:
     bool registered;
@@ -70,7 +71,7 @@ public:
     void unregister_from_framework();
 
     // Dtor
-    ~global_fixture() BOOST_OVERRIDE;
+    ~global_fixture() BOOST_TEST_OVERRIDE;
 
 private:
     bool registered;
@@ -87,12 +88,12 @@ struct global_configuration_impl : public global_configuration {
     }
 
     // test observer interface
-    void    test_start( counter_t, test_unit_id ) BOOST_OVERRIDE {
+    void    test_start( counter_t, test_unit_id ) BOOST_TEST_OVERRIDE {
         m_configuration_observer = new F;
     }
 
     // test observer interface
-    void    test_finish() BOOST_OVERRIDE           {
+    void    test_finish() BOOST_TEST_OVERRIDE           {
         if(m_configuration_observer) {
             delete m_configuration_observer;
             m_configuration_observer = 0;
@@ -110,13 +111,13 @@ struct global_fixture_impl : public global_fixture {
     }
 
     // test fixture interface
-    void setup() BOOST_OVERRIDE                    {
+    void setup() BOOST_TEST_OVERRIDE                    {
         m_fixture = new F;
         setup_conditional(*m_fixture);
     }
 
     // test fixture interface
-    void teardown() BOOST_OVERRIDE                 {
+    void teardown() BOOST_TEST_OVERRIDE                 {
         if(m_fixture) {
             teardown_conditional(*m_fixture);
         }

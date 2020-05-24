@@ -13,7 +13,7 @@
 #define BOOST_TEST_DETAIL_THROW_EXCEPTION_HPP
 
 // Boost
-#include <boost/config.hpp> // BOOST_NO_EXCEPTIONS
+#include <boost/test/detail/config.hpp>
 
 #ifdef BOOST_NO_EXCEPTIONS
 // C RUNTIME

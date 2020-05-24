@@ -17,10 +17,6 @@
 // Boost.Test
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/utils/runtime/argument.hpp>
-#include <boost/make_shared.hpp>
-
-// Boost
-#include <boost/function/function0.hpp>
 
 // STL
 #include <iostream>
@@ -105,7 +101,7 @@ public:
     }
 
     void            setup( const const_string& stream_name,
-                           boost::function<void ()> const &cleaner_callback = boost::function<void ()>() )
+                           BOOST_TEST_FUNCTION<void ()> const &cleaner_callback = BOOST_TEST_FUNCTION<void ()>() )
     {
         if(stream_name.empty())
             return;
@@ -113,7 +109,7 @@ public:
         if( stream_name == "stderr" ) {
             m_stream = &std::cerr;
             if(cleaner_callback) {
-                m_cleaner = boost::make_shared<callback_cleaner>(cleaner_callback);
+                m_cleaner = BOOST_TEST_MAKE_SHARED<callback_cleaner>(cleaner_callback);
             }
             else {
                 m_cleaner.reset();
@@ -122,14 +118,14 @@ public:
         else if( stream_name == "stdout" ) {
             m_stream = &std::cout;
             if (cleaner_callback) {
-                m_cleaner = boost::make_shared<callback_cleaner>(cleaner_callback);
+                m_cleaner = BOOST_TEST_MAKE_SHARED<callback_cleaner>(cleaner_callback);
             }
             else {
                 m_cleaner.reset();
             }
         }
         else {
-            m_cleaner = boost::make_shared<callback_cleaner>(cleaner_callback);
+            m_cleaner = BOOST_TEST_MAKE_SHARED<callback_cleaner>(cleaner_callback);
             m_cleaner->m_file.open( std::string(stream_name.begin(), stream_name.end()).c_str() );
             m_stream = &m_cleaner->m_file;
         }
@@ -140,7 +136,7 @@ public:
 
 private:
     struct callback_cleaner {
-        callback_cleaner(boost::function<void ()> cleaner_callback)
+        callback_cleaner(BOOST_TEST_FUNCTION<void ()> cleaner_callback)
         : m_cleaner_callback(cleaner_callback)
         , m_file() {
         }
@@ -148,13 +144,13 @@ private:
             if( m_cleaner_callback )
                 m_cleaner_callback();
         }
-        boost::function<void ()> m_cleaner_callback;
+        BOOST_TEST_FUNCTION<void ()> m_cleaner_callback;
         std::ofstream m_file;
     };
 
     // Data members
-    boost::shared_ptr<callback_cleaner>   m_cleaner;
-    std::ostream*                         m_stream;
+    BOOST_TEST_SHARE_PTR<callback_cleaner> m_cleaner;
+    std::ostream*                          m_stream;
 };
 
 } // namespace runtime_config
