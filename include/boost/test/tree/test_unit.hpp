@@ -176,7 +176,7 @@ public:
     void            add( test_unit_generator const& gen, decorator::collector_t& decorators );
   
     /// @overload
-    void            add( boost::shared_ptr<test_unit_generator> gen_ptr, decorator::collector_t& decorators );
+    void            add( BOOST_TEST_SHARE_PTR<test_unit_generator> gen_ptr, decorator::collector_t& decorators );
 
     //! Removes a test from the test suite.
     void            remove( test_unit_id id );
@@ -208,7 +208,7 @@ protected:
     test_unit_id_list   m_children;
     children_per_rank   m_ranked_children; ///< maps child sibling rank to list of children with that rank
   
-    std::vector< std::pair<boost::shared_ptr<test_unit_generator>, std::vector<decorator::base_ptr> > > m_generators; /// lazy evaluation
+    std::vector< std::pair<BOOST_TEST_SHARE_PTR<test_unit_generator>, std::vector<decorator::base_ptr> > > m_generators; /// lazy evaluation
 };
 
 // ************************************************************************** //
@@ -243,13 +243,13 @@ template<typename InstanceType,typename UserTestCase>
 struct user_tc_method_invoker {
     typedef void (UserTestCase::*TestMethod )();
 
-    user_tc_method_invoker( shared_ptr<InstanceType> inst, TestMethod test_method )
+    user_tc_method_invoker( BOOST_TEST_SHARE_PTR<InstanceType> inst, TestMethod test_method )
     : m_inst( inst ), m_test_method( test_method ) {}
 
     void operator()() { ((*m_inst).*m_test_method)(); }
 
-    shared_ptr<InstanceType> m_inst;
-    TestMethod               m_test_method;
+    BOOST_TEST_SHARE_PTR<InstanceType> m_inst;
+    TestMethod                         m_test_method;
 };
 
 } // namespace ut_detail
@@ -272,7 +272,7 @@ make_test_case( void (UserTestCase::*           test_method )(),
                 const_string                    tc_name,
                 const_string                    tc_file,
                 std::size_t                     tc_line,
-                boost::shared_ptr<InstanceType> user_test_case )
+                BOOST_TEST_SHARE_PTR<InstanceType> user_test_case )
 {
     return new test_case( ut_detail::normalize_test_case_name( tc_name ),
                           tc_file,

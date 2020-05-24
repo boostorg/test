@@ -21,7 +21,6 @@
 #include <boost/test/tools/assertion_result.hpp>
 #include <boost/test/utils/lazy_ostream.hpp>
 
-#include <boost/shared_ptr.hpp>
 #include <list>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -48,7 +47,7 @@ struct assertion_evaluation_context
 template<typename E>
 struct assertion_evaluate_t {
 
-    typedef shared_ptr<assertion_evaluation_context> context_holder;
+    typedef BOOST_TEST_SHARE_PTR<assertion_evaluation_context> context_holder;
 
     assertion_evaluate_t( E const& e ) : m_e( e ), m_evaluate( true ) 
     {}

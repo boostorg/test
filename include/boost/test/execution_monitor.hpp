@@ -22,7 +22,6 @@
 #include <boost/test/utils/boost_helpers.hpp>
 
 // Boost
-#include <boost/shared_ptr.hpp>
 #include <boost/scoped_array.hpp>
 #include <boost/type.hpp>
 #include <boost/cstdlib.hpp>
@@ -184,7 +183,7 @@ namespace boost {
 namespace detail {
 
 class translator_holder_base;
-typedef boost::shared_ptr<translator_holder_base> translator_holder_base_ptr;
+typedef BOOST_TEST_SHARE_PTR<translator_holder_base> translator_holder_base_ptr;
 
 class BOOST_TEST_DECL translator_holder_base {
 protected:

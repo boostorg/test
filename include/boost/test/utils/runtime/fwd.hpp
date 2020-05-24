@@ -20,9 +20,6 @@
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp> // operator<<(boost::runtime::cstring)
 
-// Boost
-#include <boost/shared_ptr.hpp>
-
 // STL
 #include <map>
 
@@ -32,12 +29,12 @@ namespace runtime {
 typedef unit_test::const_string     cstring;
 
 class argument;
-typedef shared_ptr<argument> argument_ptr;
+typedef BOOST_TEST_SHARE_PTR<argument> argument_ptr;
 
 template<typename T> class typed_argument;
 
 class basic_param;
-typedef shared_ptr<basic_param> basic_param_ptr;
+typedef BOOST_TEST_SHARE_PTR<basic_param> basic_param_ptr;
 
 } // namespace runtime
 } // namespace boost

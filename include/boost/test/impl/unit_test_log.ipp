@@ -30,8 +30,8 @@
 #include <boost/test/output/junit_log_formatter.hpp>
 
 // Boost
-#include <boost/shared_ptr.hpp>
 #include <boost/io/ios_state.hpp>
+
 typedef ::boost::io::ios_base_all_saver io_saver_type;
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -85,8 +85,8 @@ namespace {
 
 // log data
 struct unit_test_log_data_helper_impl {
-  typedef boost::shared_ptr<unit_test_log_formatter> formatter_ptr;
-  typedef boost::shared_ptr<io_saver_type>           saver_ptr;
+  typedef BOOST_TEST_SHARE_PTR<unit_test_log_formatter> formatter_ptr;
+  typedef BOOST_TEST_SHARE_PTR<io_saver_type>           saver_ptr;
 
   bool                m_enabled;
   output_format       m_format;

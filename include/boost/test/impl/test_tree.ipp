@@ -278,9 +278,9 @@ test_suite::add( test_unit_generator const& gen, decorator::collector_t& decorat
 //____________________________________________________________________________//
 
 void
-test_suite::add( boost::shared_ptr<test_unit_generator> gen_ptr, decorator::collector_t& decorators )
+test_suite::add( BOOST_TEST_SHARE_PTR<test_unit_generator> gen_ptr, decorator::collector_t& decorators )
 {
-    std::pair<boost::shared_ptr<test_unit_generator>, std::vector<decorator::base_ptr> > tmp_p(gen_ptr, decorators.get_lazy_decorators() );
+    std::pair<BOOST_TEST_SHARE_PTR<test_unit_generator>, std::vector<decorator::base_ptr> > tmp_p(gen_ptr, decorators.get_lazy_decorators() );
     m_generators.push_back(tmp_p);
     decorators.reset();
 }
@@ -290,7 +290,7 @@ test_suite::add( boost::shared_ptr<test_unit_generator> gen_ptr, decorator::coll
 void
 test_suite::generate( )
 {
-    typedef std::pair<boost::shared_ptr<test_unit_generator>, std::vector<decorator::base_ptr> > element_t;
+    typedef std::pair<BOOST_TEST_SHARE_PTR<test_unit_generator>, std::vector<decorator::base_ptr> > element_t;
   
     for(std::vector<element_t>::iterator it(m_generators.begin()), ite(m_generators.end());
         it < ite;
@@ -509,7 +509,7 @@ auto_test_unit_registrar::auto_test_unit_registrar( test_unit_generator const& t
 
 //____________________________________________________________________________//
 
-auto_test_unit_registrar::auto_test_unit_registrar( boost::shared_ptr<test_unit_generator> tc_gen, decorator::collector_t& decorators )
+auto_test_unit_registrar::auto_test_unit_registrar( BOOST_TEST_SHARE_PTR<test_unit_generator> tc_gen, decorator::collector_t& decorators )
 {
     framework::current_auto_test_suite().add( tc_gen, decorators );
 }

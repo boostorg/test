@@ -25,7 +25,6 @@
 
 
 // Boost
-#include <boost/shared_ptr.hpp>
 #include <boost/mpl/for_each.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/type.hpp>

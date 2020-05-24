@@ -102,14 +102,14 @@ struct user_param_tc_method_invoker {
     typedef void (UserTestCase::*test_method)( ParamType );
 
     // Constructor
-    user_param_tc_method_invoker( shared_ptr<UserTestCase> inst, test_method test_method )
+    user_param_tc_method_invoker( BOOST_TEST_SHARE_PTR<UserTestCase> inst, test_method test_method )
     : m_inst( inst ), m_test_method( test_method ) {}
 
     void operator()( ParamType p ) { ((*m_inst).*m_test_method)( p ); }
 
     // Data members
-    shared_ptr<UserTestCase> m_inst;
-    test_method              m_test_method;
+    BOOST_TEST_SHARE_PTR<UserTestCase> m_inst;
+    test_method                        m_test_method;
 };
 
 //____________________________________________________________________________//
@@ -153,7 +153,7 @@ make_test_case( void (UserTestCase::*test_method )( ParamType ),
                 const_string                           tc_name,
                 const_string                           tc_file,
                 std::size_t                            tc_line,
-                boost::shared_ptr<UserTestCase> const& user_test_case,
+                BOOST_TEST_SHARE_PTR<UserTestCase> const& user_test_case, // TODO breaks users' code
                 ParamIter                              par_begin,
                 ParamIter                              par_end )
 {

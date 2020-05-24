@@ -45,7 +45,7 @@ namespace cla {
 namespace rt_cla_detail {
 
 struct parameter_trie;
-typedef shared_ptr<parameter_trie> parameter_trie_ptr;
+typedef BOOST_TEST_SHARE_PTR<parameter_trie> parameter_trie_ptr;
 typedef std::map<char,parameter_trie_ptr> trie_per_char;
 typedef std::vector<BOOST_TEST_REFERENCE_WRAPPER<parameter_cla_id const> > param_cla_id_list;
 

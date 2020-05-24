@@ -656,7 +656,7 @@ static rt::parameters_store s_parameters_store;
 void
 init( int& argc, char** argv )
 {
-    shared_ptr<rt::cla::parser> parser;
+    BOOST_TEST_SHARE_PTR<rt::cla::parser> parser;
 
     BOOST_TEST_I_TRY {
         // Initialize parameters list

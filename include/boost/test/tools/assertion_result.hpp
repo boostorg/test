@@ -18,7 +18,6 @@
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 
 // Boost
-#include <boost/shared_ptr.hpp>
 #include <boost/detail/workaround.hpp>
 
 // STL
@@ -77,7 +76,7 @@ public:
 
 private:
     // Data members
-    shared_ptr<wrap_stringstream> m_message;
+    BOOST_TEST_SHARE_PTR<wrap_stringstream> m_message;
 };
 
 typedef assertion_result predicate_result;

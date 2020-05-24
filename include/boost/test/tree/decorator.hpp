@@ -25,9 +25,6 @@
 #include <boost/test/tools/assertion_result.hpp>
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 
-// Boost
-#include <boost/shared_ptr.hpp>
-
 #include <boost/test/detail/suppress_warnings.hpp>
 
 // STL
@@ -47,7 +44,7 @@ namespace decorator {
 // ************************************************************************** //
 
 class base;
-typedef boost::shared_ptr<base> base_ptr;
+typedef BOOST_TEST_SHARE_PTR<base> base_ptr;
 
 class BOOST_TEST_DECL collector_t {
 

@@ -217,10 +217,10 @@ private:
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 template<typename TestCase,typename DataSet>
-boost::shared_ptr<test_unit_generator> //test_case_gen<TestCase,DataSet>
+BOOST_TEST_SHARE_PTR<test_unit_generator> //test_case_gen<TestCase,DataSet>
 make_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_line, DataSet&& ds )
 {
-    return boost::shared_ptr<test_unit_generator>(new test_case_gen<TestCase,DataSet>( tc_name, tc_file, tc_line, std::forward<DataSet>(ds) ));
+    return BOOST_TEST_SHARE_PTR<test_unit_generator>(new test_case_gen<TestCase,DataSet>( tc_name, tc_file, tc_line, std::forward<DataSet>(ds) ));
 }
 #else
 template<typename TestCase,typename DataSet>

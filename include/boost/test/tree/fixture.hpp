@@ -16,7 +16,6 @@
 #include <boost/test/detail/config.hpp>
 
 // Boost
-#include <boost/shared_ptr.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/utility/declval.hpp>
 
@@ -42,7 +41,7 @@ public:
     virtual void    teardown() = 0;
 };
 
-typedef shared_ptr<test_unit_fixture> test_unit_fixture_ptr;
+typedef BOOST_TEST_SHARE_PTR<test_unit_fixture> test_unit_fixture_ptr;
 
 // ************************************************************************** //
 // **************               fixture helper functions       ************** //
