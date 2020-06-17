@@ -26,7 +26,7 @@ private:
     std::size_t m_line_end;
 
 public:
-    enum { arity = 2 };
+    BOOST_STATIC_CONSTEXPR std::size_t arity = 2;
 
 public:
     file_dataset(std::size_t line_start = 0, std::size_t line_end = std::size_t(-1))

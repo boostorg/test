@@ -48,7 +48,7 @@ class zip {
     typedef typename dataset2_decay::iterator       dataset2_iter;
 
 public:
-    enum { arity = dataset1_decay::arity + dataset2_decay::arity };
+    BOOST_STATIC_CONSTEXPR std::size_t arity = dataset1_decay::arity + dataset2_decay::arity;
 
     struct iterator {
         // Constructor

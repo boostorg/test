@@ -35,7 +35,7 @@ class array {
 public:
     typedef T sample;
 
-    enum { arity = 1 };
+    BOOST_STATIC_CONSTEXPR std::size_t arity = 1;
 
     typedef T const* iterator;
 

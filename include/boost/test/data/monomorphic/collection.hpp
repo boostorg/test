@@ -41,7 +41,7 @@ class collection {
 public:
     typedef typename col_type::value_type sample;
 
-    enum { arity = 1 };
+    BOOST_STATIC_CONSTEXPR std::size_t arity = 1;
 
     typedef typename col_type::const_iterator iterator;
 
