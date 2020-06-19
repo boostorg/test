@@ -48,8 +48,14 @@ namespace tt_detail {
 // ************************************************************************** //
 
     namespace impl {
+        struct boost_test_print_type_default_tag {};
+
         template <class T>
-        std::ostream& boost_test_print_type(std::ostream& ostr, T const& t) {
+        std::ostream& boost_test_print_type(
+            std::ostream& ostr,
+            T const& t,
+            boost_test_print_type_default_tag const& = boost_test_print_type_default_tag())
+        {
             BOOST_STATIC_ASSERT_MSG( (boost::has_left_shift<std::ostream,T>::value),
                                     "Type has to implement operator<< to be printable");
             ostr << t;
