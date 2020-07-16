@@ -25,9 +25,9 @@ namespace unit_test {
 namespace data {
 
 namespace {
-nfp::keyword<struct begin_t>    begin BOOST_ATTRIBUTE_UNUSED;
-nfp::keyword<struct end_t>      end   BOOST_ATTRIBUTE_UNUSED;
-nfp::keyword<struct step_t>     step  BOOST_ATTRIBUTE_UNUSED;
+nfp::keyword<struct begin_t>    begin BOOST_TEST_ATTRIBUTE_UNUSED;
+nfp::keyword<struct end_t>      end   BOOST_TEST_ATTRIBUTE_UNUSED;
+nfp::keyword<struct step_t>     step  BOOST_TEST_ATTRIBUTE_UNUSED;
 } // local namespace
 
 } // namespace data

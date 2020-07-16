@@ -16,9 +16,8 @@
 #define BOOST_TEST_UTILS_BCS_CHAR_TRAITS_HPP
 
 // Boost
-#include <boost/config.hpp>
-#include <boost/detail/workaround.hpp>
 #include <boost/test/detail/config.hpp>
+#include <boost/detail/workaround.hpp>
 #include <boost/type_traits/add_const.hpp>
 
 // STL

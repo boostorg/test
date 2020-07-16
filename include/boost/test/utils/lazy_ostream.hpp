@@ -14,7 +14,6 @@
 // Boost.Test
 #include <boost/test/detail/config.hpp>
 #include <boost/test/tools/detail/print_helper.hpp>
-#include <boost/test/utils/boost_helpers.hpp>
 
 // STL
 #include <iosfwd>
@@ -37,15 +36,15 @@ public:
     static lazy_ostream&    instance()                                              { return inst; }
 
     #if !defined(BOOST_EMBTC)
-      
+
     friend std::ostream&    operator<<( std::ostream& ostr, lazy_ostream const& o ) { return o( ostr ); }
 
     #else
-      
+
     friend std::ostream&    operator<<( std::ostream& ostr, lazy_ostream const& o );
 
     #endif
-      
+
     // access method
     bool                    empty() const                                           { return m_empty; }
 
@@ -65,7 +64,7 @@ private:
     inline std::ostream&    operator<<( std::ostream& ostr, lazy_ostream const& o ) { return o( ostr ); }
 
 #endif
-    
+
 //____________________________________________________________________________//
 
 template<typename PrevType, typename T, typename StorageT=T const&>

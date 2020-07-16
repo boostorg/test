@@ -19,9 +19,7 @@
 #include <boost/test/tree/test_case_template.hpp>
 #include <boost/test/tree/global_fixture.hpp>
 
-
 #include <boost/test/detail/suppress_warnings.hpp>
-
 
 #include <boost/test/detail/pp_variadic.hpp>
 
@@ -328,7 +326,7 @@ static boost::unit_test::ut_detail::global_fixture_impl<F> BOOST_TEST_JOIN( gf_,
 
 #define BOOST_TEST_DECORATOR( D )                                       \
 static boost::unit_test::decorator::collector_t const&                  \
-BOOST_TEST_APPEND_UNIQUE_ID(decorator_collector) BOOST_ATTRIBUTE_UNUSED = D; \
+BOOST_TEST_APPEND_UNIQUE_ID(decorator_collector) BOOST_TEST_ATTRIBUTE_UNUSED = D; \
 /**/
 
 // ************************************************************************** //
@@ -368,7 +366,7 @@ typedef ::boost::unit_test::ut_detail::nil_t BOOST_AUTO_TEST_CASE_FIXTURE;
 
 #define BOOST_AUTO_TU_REGISTRAR( test_name )                       \
 static boost::unit_test::ut_detail::auto_test_unit_registrar       \
-BOOST_TEST_APPEND_UNIQUE_ID( BOOST_TEST_JOIN( test_name, _registrar ) ) BOOST_ATTRIBUTE_UNUSED \
+BOOST_TEST_APPEND_UNIQUE_ID( BOOST_TEST_JOIN( test_name, _registrar ) ) BOOST_TEST_ATTRIBUTE_UNUSED \
 /**/
 #define BOOST_AUTO_TC_INVOKER( test_name )      BOOST_TEST_JOIN( test_name, _invoker )
 #define BOOST_AUTO_TC_UNIQUE_ID( test_name )    BOOST_TEST_JOIN( test_name, _id )

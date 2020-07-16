@@ -19,7 +19,6 @@
 
 // Boost
 #include <boost/limits.hpp>  // for std::numeric_limits
-#include <boost/static_assert.hpp>
 #include <boost/type_traits/is_floating_point.hpp>
 #include <boost/type_traits/is_array.hpp>
 #include <boost/type_traits/is_reference.hpp>
