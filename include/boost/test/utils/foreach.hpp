@@ -278,9 +278,9 @@ deref( static_any_t cur, C const&, ::boost::type<RefType>, mpl::true_ )
 #define BOOST_TEST_LINE_NUM     __LINE__
 #endif
 
-#define BOOST_TEST_FE_CUR_VAR   BOOST_JOIN( _fe_cur_, BOOST_TEST_LINE_NUM )
-#define BOOST_TEST_FE_END_VAR   BOOST_JOIN( _fe_end_, BOOST_TEST_LINE_NUM )
-#define BOOST_TEST_FE_CON_VAR   BOOST_JOIN( _fe_con_, BOOST_TEST_LINE_NUM )
+#define BOOST_TEST_FE_CUR_VAR   BOOST_TEST_JOIN( _fe_cur_, BOOST_TEST_LINE_NUM )
+#define BOOST_TEST_FE_END_VAR   BOOST_TEST_JOIN( _fe_end_, BOOST_TEST_LINE_NUM )
+#define BOOST_TEST_FE_CON_VAR   BOOST_TEST_JOIN( _fe_con_, BOOST_TEST_LINE_NUM )
 
 #define BOOST_TEST_FOREACH( RefType, var, COL )                                             \
 if( BOOST_TEST_FE_ANY BOOST_TEST_FE_CUR_VAR = BOOST_TEST_FE_BEG( COL ) ) {} else            \

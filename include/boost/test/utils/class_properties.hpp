@@ -144,17 +144,17 @@ public:
 
 #define BOOST_READONLY_PROPERTY_DECLARE_FRIEND(r, data, elem) friend class elem;
 
-#define BOOST_READONLY_PROPERTY( property_type, friends )                           \
-class BOOST_JOIN( readonly_property, __LINE__ )                                     \
-: public boost::unit_test::readonly_property<property_type > {                      \
-    typedef boost::unit_test::readonly_property<property_type > base_prop;          \
-    BOOST_PP_SEQ_FOR_EACH( BOOST_READONLY_PROPERTY_DECLARE_FRIEND, ' ', friends )   \
-    typedef base_prop::write_param_t  write_param_t;                                \
-public:                                                                             \
-                BOOST_JOIN( readonly_property, __LINE__ )() {}                      \
-    explicit    BOOST_JOIN( readonly_property, __LINE__ )( write_param_t init_v  )  \
-    : base_prop( init_v ) {}                                                        \
-}                                                                                   \
+#define BOOST_READONLY_PROPERTY( property_type, friends )                                \
+class BOOST_TEST_JOIN( readonly_property, __LINE__ )                                     \
+: public boost::unit_test::readonly_property<property_type > {                           \
+    typedef boost::unit_test::readonly_property<property_type > base_prop;               \
+    BOOST_PP_SEQ_FOR_EACH( BOOST_READONLY_PROPERTY_DECLARE_FRIEND, ' ', friends )        \
+    typedef base_prop::write_param_t  write_param_t;                                     \
+public:                                                                                  \
+                BOOST_TEST_JOIN( readonly_property, __LINE__ )() {}                      \
+    explicit    BOOST_TEST_JOIN( readonly_property, __LINE__ )( write_param_t init_v  )  \
+    : base_prop( init_v ) {}                                                             \
+}                                                                                        \
 /**/
 
 #endif

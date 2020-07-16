@@ -61,8 +61,8 @@ private:
     ::boost::unit_test::framework::add_context( BOOST_TEST_LAZY_MSG( context_descr ) , false )  \
 /**/
 
-#define BOOST_TEST_INFO_SCOPE( context_descr )                                                 \
-    ::boost::test_tools::tt_detail::context_frame BOOST_JOIN( context_frame_, __LINE__ ) =      \
+#define BOOST_TEST_INFO_SCOPE( context_descr )                                                  \
+    ::boost::test_tools::tt_detail::context_frame BOOST_TEST_JOIN( context_frame_, __LINE__ ) = \
        ::boost::test_tools::tt_detail::context_frame(BOOST_TEST_LAZY_MSG( context_descr ) )     \
 /**/
 
@@ -76,7 +76,7 @@ private:
 
 #define BOOST_CONTEXT_PARAMS( params )                                                           \
         BOOST_PP_SEQ_FOR_EACH_I(BOOST_CONTEXT_PARAM,                                             \
-                                BOOST_JOIN( context_frame_, __LINE__ ),                          \
+                                BOOST_TEST_JOIN( context_frame_, __LINE__ ),                     \
                                 params)                                                          \
 /**/
 

@@ -284,18 +284,18 @@ BOOST_FIXTURE_TEST_CASE_TEMPLATE( test_name, type_name, TL,             \
 
 #define BOOST_TEST_CASE_TEMPLATE_FUNCTION( name, type_name )            \
 template<typename type_name>                                            \
-void BOOST_JOIN( name, _impl )( boost::type<type_name>* );              \
+void BOOST_TEST_JOIN( name, _impl )( boost::type<type_name>* );         \
                                                                         \
 struct name {                                                           \
     template<typename TestType>                                         \
     static void run( boost::type<TestType>* frwrd = 0 )                 \
     {                                                                   \
-       BOOST_JOIN( name, _impl )( frwrd );                              \
+       BOOST_TEST_JOIN( name, _impl )( frwrd );                         \
     }                                                                   \
 };                                                                      \
                                                                         \
 template<typename type_name>                                            \
-void BOOST_JOIN( name, _impl )( boost::type<type_name>* )               \
+void BOOST_TEST_JOIN( name, _impl )( boost::type<type_name>* )          \
 /**/
 
 // ************************************************************************** //
@@ -303,7 +303,7 @@ void BOOST_JOIN( name, _impl )( boost::type<type_name>* )               \
 // ************************************************************************** //
 
 #define BOOST_GLOBAL_FIXTURE( F ) \
-static boost::unit_test::ut_detail::global_configuration_impl<F> BOOST_JOIN( gf_, F ) \
+static boost::unit_test::ut_detail::global_configuration_impl<F> BOOST_TEST_JOIN( gf_, F ) \
 /**/
 
 // ************************************************************************** //
@@ -311,7 +311,7 @@ static boost::unit_test::ut_detail::global_configuration_impl<F> BOOST_JOIN( gf_
 // ************************************************************************** //
 
 #define BOOST_TEST_GLOBAL_CONFIGURATION( F ) \
-static boost::unit_test::ut_detail::global_configuration_impl<F> BOOST_JOIN( gf_, F ) \
+static boost::unit_test::ut_detail::global_configuration_impl<F> BOOST_TEST_JOIN( gf_, F ) \
 /**/
 
 // ************************************************************************** //
@@ -319,7 +319,7 @@ static boost::unit_test::ut_detail::global_configuration_impl<F> BOOST_JOIN( gf_
 // ************************************************************************** //
 
 #define BOOST_TEST_GLOBAL_FIXTURE( F ) \
-static boost::unit_test::ut_detail::global_fixture_impl<F> BOOST_JOIN( gf_, F ) \
+static boost::unit_test::ut_detail::global_fixture_impl<F> BOOST_TEST_JOIN( gf_, F ) \
 /**/
 
 // ************************************************************************** //
@@ -357,21 +357,21 @@ typedef ::boost::unit_test::ut_detail::nil_t BOOST_AUTO_TEST_CASE_FIXTURE;
 
 #if defined(BOOST_TEST_INTERNAL_HAS_COUNTER)
   #define BOOST_TEST_APPEND_UNIQUE_ID( name ) \
-  BOOST_JOIN( BOOST_JOIN( name, __LINE__ ), __COUNTER__)
+  BOOST_TEST_JOIN( BOOST_TEST_JOIN( name, __LINE__ ), __COUNTER__)
   /**/
 #else
   #define BOOST_TEST_APPEND_UNIQUE_ID( name ) \
-  BOOST_JOIN( name, __LINE__ )
+  BOOST_TEST_JOIN( name, __LINE__ )
   /**/
 #endif
 /**/
 
 #define BOOST_AUTO_TU_REGISTRAR( test_name )                       \
 static boost::unit_test::ut_detail::auto_test_unit_registrar       \
-BOOST_TEST_APPEND_UNIQUE_ID( BOOST_JOIN( test_name, _registrar ) ) BOOST_ATTRIBUTE_UNUSED \
+BOOST_TEST_APPEND_UNIQUE_ID( BOOST_TEST_JOIN( test_name, _registrar ) ) BOOST_ATTRIBUTE_UNUSED \
 /**/
-#define BOOST_AUTO_TC_INVOKER( test_name )      BOOST_JOIN( test_name, _invoker )
-#define BOOST_AUTO_TC_UNIQUE_ID( test_name )    BOOST_JOIN( test_name, _id )
+#define BOOST_AUTO_TC_INVOKER( test_name )      BOOST_TEST_JOIN( test_name, _invoker )
+#define BOOST_AUTO_TC_UNIQUE_ID( test_name )    BOOST_TEST_JOIN( test_name, _id )
 
 // ************************************************************************** //
 // **************                BOOST_TEST_MAIN               ************** //

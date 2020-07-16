@@ -52,19 +52,19 @@ namespace tt_detail {
 // arguments only once
 
 #ifndef BOOST_TEST_PROD
-#define TEMPL_PARAMS( z, m, dummy ) , typename BOOST_JOIN( Arg, m )
+#define TEMPL_PARAMS( z, m, dummy ) , typename BOOST_TEST_JOIN( Arg, m )
 
 #define FUNC_PARAMS( z, m, dummy )                                                  \
- , BOOST_JOIN( Arg, m ) const& BOOST_JOIN( arg, m )                                 \
- , char const* BOOST_JOIN( BOOST_JOIN( arg, m ), _descr )                           \
+ , BOOST_TEST_JOIN( Arg, m ) const& BOOST_TEST_JOIN( arg, m )                       \
+ , char const* BOOST_TEST_JOIN( BOOST_TEST_JOIN( arg, m ), _descr )                 \
 /**/
 
-#define PRED_PARAMS( z, m, dummy ) BOOST_PP_COMMA_IF( m ) BOOST_JOIN( arg, m )
+#define PRED_PARAMS( z, m, dummy ) BOOST_PP_COMMA_IF( m ) BOOST_TEST_JOIN( arg, m )
 
-#define ARG_INFO( z, m, dummy )                                                     \
- , BOOST_JOIN( BOOST_JOIN( arg, m ), _descr )                                       \
- , &static_cast<const unit_test::lazy_ostream&>(unit_test::lazy_ostream::instance() \
-        << ::boost::test_tools::tt_detail::print_helper( BOOST_JOIN( arg, m ) ))    \
+#define ARG_INFO( z, m, dummy )                                                       \
+ , BOOST_TEST_JOIN( BOOST_TEST_JOIN( arg, m ), _descr )                               \
+ , &static_cast<const unit_test::lazy_ostream&>(unit_test::lazy_ostream::instance()   \
+        << ::boost::test_tools::tt_detail::print_helper( BOOST_TEST_JOIN( arg, m ) )) \
 /**/
 
 #define IMPL_FRWD( z, n, dummy )                                                    \

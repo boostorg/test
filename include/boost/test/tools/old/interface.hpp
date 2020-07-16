@@ -65,13 +65,13 @@ do {                                                                            
     BOOST_TEST_PASSPOINT();                                                     \
     ::boost::test_tools::tt_detail::                                            \
     BOOST_PP_IF( frwd_type, report_assertion, check_frwd ) (                    \
-        BOOST_JOIN( BOOST_TEST_TOOL_PASS_PRED, frwd_type )( P, ARGS ),          \
+        BOOST_TEST_JOIN( BOOST_TEST_TOOL_PASS_PRED, frwd_type )( P, ARGS ),     \
         BOOST_TEST_LAZY_MSG( assertion_descr ),                                 \
         BOOST_TEST_L(__FILE__),                                                 \
         static_cast<std::size_t>(__LINE__),                                     \
         ::boost::test_tools::tt_detail::TL,                                     \
         ::boost::test_tools::tt_detail::CT                                      \
-        BOOST_JOIN( BOOST_TEST_TOOL_PASS_ARGS, frwd_type )( ARGS ) );           \
+        BOOST_TEST_JOIN( BOOST_TEST_TOOL_PASS_ARGS, frwd_type )( ARGS ) );      \
 } while( ::boost::test_tools::tt_detail::dummy_cond() )                         \
 /**/
 
